@@ -881,3 +881,430 @@ The document headings match commit c4ba0585 in all five documents.
 OpenSpec show gives valid JSON. OpenSpec validate passes.
 Git diff --check reports no error.
 The lead must run the image commands and both review agents. This host pass gives no image or review verdict.
+
+### Pass 4
+
+Tree read: branch vendored-tolerance, commit 25ba5d2d1bce13b0aace29d49a7779043003493a, with the Pass 4 corrections.
+The pre-review 2 reports read commit 975a62305917a83080c0433ec6ec0a67dfb65367.
+The past records above stay as they were. The records below give the corrected titles, tags, words and line pointers.
+The two pre-review folders have no changes.
+
+#### Past record corrections
+
+The repeated titles script is pass4/check-repeated-titles.py. The script checks current documents and this Pass 4 block.
+Past records describe their recorded tree and do not supply current title or tag evidence.
+
+The named mutation for scenario 155 removes the total count guard.
+The named mutation for scenario 154 stops the ratchet command before it writes.
+The origin of each selected count is the ledger entry or the current gap. Adopted source means only file content.
+
+Pass 2 script commit means the script commit of the recorded pass 2 command.
+The pass 3 tree means the tree of the recorded pass 3 command.
+At that attempt the line pointers named the tree at code commit 04554050; they do not name the Pass 4 tree.
+At the first pass 3 attempt, the red test for scenario 154 stops the work.
+
+The historical row 35 correction is at evidence.md:595. Its owner heading correction points to evidence.md:467.
+The historical row 41 correction concerns the title for scenario 153 at ledger.test.mjs:1606.
+The count rule compares current counts with ledger entry counts and uses no time word.
+
+#### Finding corrections
+
+Each row below describes commit 25ba5d2d with the Pass 4 corrections.
+
+Command: python /home/ianblenke/docker/gev-tools/vendored-tolerance/pass4/corrections.py.
+
+| Finding | Commit with Pass 4 corrections | First words | Correction | Search output |
+| --- | --- | --- | --- | --- |
+| Spec major | 25ba5d2d | The exception names | Name each base clause and limit the exception to adopted-source conditions without base content. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:12` |
+| Spec minor 1 | 25ba5d2d | neverWorseCounts reads | Write the current total count when ledger total counts are absent. | `scripts/spec/lib/ledger.mjs:242` |
+| Spec minor 2 | 25ba5d2d | The expected | Check the LCOV replacement and both positive ratchet reports. | `src/tooling/spec/gates.test.mjs:301` |
+| Spec minor 3 | 25ba5d2d | neverWorseCounts writes | Name the covered count fall at each ratchet run. | `openspec/changes/vendored-coverage-tolerance/proposal.md:56` |
+| Spec minor 4 | 25ba5d2d | The limit names | Name slack after a partial improvement. | `openspec/changes/vendored-coverage-tolerance/proposal.md:62` |
+| Spec minor 5 | 25ba5d2d | The typo | Restore the comment to the main text. | `src/tooling/spec/ledger.test.mjs:716` |
+| STE major 1 | 25ba5d2d | when the not-covered | Name both operands of each count comparison. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:36` |
+| STE major 2 | 25ba5d2d | MUST use toleranceCounts | Bound both count functions by their conditions. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:34` |
+| STE major 3 | 25ba5d2d | names the tolerance | Name all total-only conditions and the stale exception. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:124` |
+| STE major 4 | 25ba5d2d | adopt line | Define adopt line and valid adopt line separately. | `openspec/changes/vendored-coverage-tolerance/design.md:73` |
+| STE major 5 | 25ba5d2d | records total differences | Make the ledger entry the object of stale. | `src/tooling/spec/ledger.test.mjs:1588` |
+| STE major 6 | 25ba5d2d | selects larger equal | Name the count result and toleranceCounts in the titles. | `src/tooling/spec/ledger.test.mjs:1620` |
+| STE major 7 | 25ba5d2d | tags | Remove the two tags that name other WHEN conditions. | `src/tooling/spec/ledger.test.mjs:1643` |
+| STE major 8 | 25ba5d2d | Correct | Use two tasks with the real finding names. | `openspec/changes/vendored-coverage-tolerance/tasks.md:64` |
+| STE minor 1 | 25ba5d2d | These are | Define adopted-source conditions once. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:11` |
+| STE minor 2 | 25ba5d2d | MUST apply | Apply rules and report errors with one actor name. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:29` |
+| STE minor 3 | 25ba5d2d | keep | Use write for ledger values and do not change for fixed code. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:38` |
+| STE minor 4 | 25ba5d2d | smaller or equal | Name both count operands in the design. | `openspec/changes/vendored-coverage-tolerance/design.md:33` |
+| STE minor 5 | 25ba5d2d | the not-covered count rise | Use rises and falls as verbs. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:73` |
+| STE minor 6 | 25ba5d2d | count tolerance | Use tolerance for the number and count tolerance for the rule. | `openspec/changes/vendored-coverage-tolerance/design.md:83` |
+| STE minor 7 | 25ba5d2d | entry | Use ledger entry throughout current prose. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:71` |
+| STE minor 8 | 25ba5d2d | the base comparison reports | Name the ratchet command as the actor. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:99` |
+| STE minor 9 | 25ba5d2d | the current gap still | State that the ratchet command does not change current totals. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:102` |
+| STE minor 10 | 25ba5d2d | MUST not | Use MUST NOT. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:30` |
+| STE minor 11 | 25ba5d2d | the titles | Define both requirement titles as labels. | `openspec/changes/vendored-coverage-tolerance/design.md:70` |
+| STE minor 12 | 25ba5d2d | an entry total | Use ledger entry total count. | `openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:142` |
+| STE minor 13 | 25ba5d2d | merged commit | Define merged commit and base commit without a cycle. | `openspec/changes/vendored-coverage-tolerance/design.md:87` |
+| STE minor 14 | 25ba5d2d | never-worse counts | Define counts, rather than an instruction. | `openspec/changes/vendored-coverage-tolerance/design.md:94` |
+| STE minor 15 | 25ba5d2d | lead | Add image checks and both review passes to the lead duties. | `openspec/changes/vendored-coverage-tolerance/design.md:110` |
+| STE minor 16 | 25ba5d2d | CI artifact | Use CI run for the artifact origin. | `openspec/changes/vendored-coverage-tolerance/design.md:117` |
+| STE minor 17 | 25ba5d2d | blank lines | Write one continuous glossary table. | `openspec/changes/vendored-coverage-tolerance/design.md:111` |
+| STE minor 18 | 25ba5d2d | adopt line not-covered | Name counts in the adopt line and compareLedger. | `openspec/changes/vendored-coverage-tolerance/design.md:29` |
+| STE minor 19 | 25ba5d2d | sets no bound | Name the requirement and both covered counts. | `openspec/changes/vendored-coverage-tolerance/proposal.md:42` |
+| STE minor 20 | 25ba5d2d | gives no tolerance | Name the count tolerance requirement in the limit. | `openspec/changes/vendored-coverage-tolerance/proposal.md:36` |
+| STE minor 21 | 25ba5d2d | This has no effect | Name base content, true coverage and refusal for untrue coverage. | `openspec/changes/vendored-coverage-tolerance/proposal.md:49` |
+| STE minor 22 | 25ba5d2d | The full gate command | Name the actual image command and remove the timer cause. | `openspec/changes/vendored-coverage-tolerance/proposal.md:53` |
+| STE minor 23 | 25ba5d2d | Run all host checks | Point to Host commands and verdicts in this change. | `openspec/changes/vendored-coverage-tolerance/tasks.md:71` |
+| STE minor 24 | 25ba5d2d | Check the title | Use repeated titles and the Pass 4 script. | `openspec/changes/vendored-coverage-tolerance/tasks.md:74` |
+| STE minor 25 | 25ba5d2d | Run the CI artifact | Use Replay the real CI data. | `openspec/changes/vendored-coverage-tolerance/tasks.md:76` |
+| STE minor 26 | 25ba5d2d | metric tests | Name lines, branches and functions. | `openspec/changes/vendored-coverage-tolerance/tasks.md:67` |
+| STE minor 27 | 25ba5d2d | the script | Use the repeated titles script in the Pass 4 record. | `openspec/changes/vendored-coverage-tolerance/evidence.md:894` |
+| STE minor 28 | 25ba5d2d | The named | Use named mutation for each test fault. | `openspec/changes/vendored-coverage-tolerance/evidence.md:897` |
+| STE minor 29 | 25ba5d2d | the source of each | Use origin of a value. | `openspec/changes/vendored-coverage-tolerance/evidence.md:899` |
+| STE minor 30 | 25ba5d2d | Current script commit | Label the historical commits by pass. | `openspec/changes/vendored-coverage-tolerance/evidence.md:901` |
+| STE minor 31 | 25ba5d2d | the pointers | Limit old line pointers to their recorded attempt. | `openspec/changes/vendored-coverage-tolerance/evidence.md:903` |
+| STE minor 32 | 25ba5d2d | stops the work | Name the red test as the actor. | `openspec/changes/vendored-coverage-tolerance/evidence.md:904` |
+| STE minor 33 | 25ba5d2d | the pointers of rows | Correct both historical pointer meanings in this block. | `openspec/changes/vendored-coverage-tolerance/evidence.md:906` |
+| STE minor 34 | 25ba5d2d | time word | State the comparator without a time word. | `openspec/changes/vendored-coverage-tolerance/evidence.md:908` |
+| STE minor 35 | 25ba5d2d | the gate givess | Restore gives from main. | `src/tooling/spec/ledger.test.mjs:716` |
+| STE minor 36 | 25ba5d2d | A valid adopt line allows | Make the gate the actor of acceptance. | `scripts/spec/lib/ledger.mjs:446` |
+| STE minor 37 | 25ba5d2d | keeps the entry counts | Use write and name both covered counts. | `scripts/spec/lib/ledger.mjs:215` |
+| STE minor 38 | 25ba5d2d | writes better counts | Use never-worse counts in the scenario and title. | `src/tooling/spec/ledger.test.mjs:1540` |
+| STE minor 39 | 25ba5d2d | reports the exact result | Name no total count exception as the result. | `src/tooling/spec/ledger.test.mjs:1606` |
+| STE minor 40 | 25ba5d2d | another ledger hash | Name the content hash and ledger entry hash. | `src/tooling/spec/ledger.test.mjs:1511` |
+| STE minor 41 | 25ba5d2d | outside the count limits | Use outside the count tolerance. | `src/tooling/spec/ledger.test.mjs:1532` |
+| STE minor 42 | 25ba5d2d | the adopted source requirement | Name the requirement and another change outcome. | `src/tooling/spec/gates.test.mjs:2700` |
+| STE minor 43 | 25ba5d2d | the gate needs | Name no tolerance or a stale ledger entry as the result. | `src/tooling/spec/gates.test.mjs:2785` |
+| STE minor 44 | 25ba5d2d | rejects an invalid from | Name the stale ledger entry and LEDGER-ADOPT-FROM. | `src/tooling/spec/gates.test.mjs:2805` |
+
+Search output:
+
+```text
+Spec major: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:12: This requirement is an exception to the base content condition of "Count tolerance" and to gap-ledger-028, gap-ledger-073 and gap-ledger-074.
+Spec minor 1: scripts/spec/lib/ledger.mjs:242:     next.totals[metric] = entry.totals?.[metric] ?? gap.totals[metric];
+Spec minor 2: src/tooling/spec/gates.test.mjs:301:     assert.match(result.output, /Ratchet: \d+ history lines for add-demo\./);
+Spec minor 3: openspec/changes/vendored-coverage-tolerance/proposal.md:56: The covered count can fall by up to the tolerance at each ratchet run.
+Spec minor 4: openspec/changes/vendored-coverage-tolerance/proposal.md:62: A partial improvement leaves slack that can hide a later fall back to the old count.
+Spec minor 5: src/tooling/spec/ledger.test.mjs:716:   // count is still not a loss, so the gate gives no LEDGER-LOST-COVERAGE, only LEDGER-STALE.
+STE major 1: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:36: For each metric, never-worse counts MUST write current counts when the current not-covered count is smaller than or equal to the ledger entry not-covered count.
+STE major 2: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:34: When a file has the adopted-source conditions and no base content, the ratchet command MUST use never-worse counts.
+STE major 3: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:124: The exception applies only to a file with a valid adopt line of the checked change and equal content hashes.
+STE major 4: openspec/changes/vendored-coverage-tolerance/design.md:73: | valid adopt line | Adopt line of the checked change that meets Adoption of merged code. |
+STE major 5: src/tooling/spec/ledger.test.mjs:1588: test('[gap-ledger-149] the gate records the ledger entry as stale for total differences without an adopt line', () => {
+STE major 6: src/tooling/spec/ledger.test.mjs:1620: test('[gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger count, per metric', () => {
+STE major 7: src/tooling/spec/ledger.test.mjs:1643: test('[gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source', () => {
+STE major 8: openspec/changes/vendored-coverage-tolerance/tasks.md:64: - [x] Correct the eight spec findings of pre-review 1.
+STE minor 1: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:11: The four conditions above are the adopted-source conditions.
+STE minor 2: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:29: Each command MUST apply the count tolerance of the requirement "Count tolerance" and report its coverage loss errors.
+STE minor 3: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:38: For a current not-covered count larger than the ledger entry not-covered count, never-worse counts MUST write ledger entry counts.
+STE minor 4: openspec/changes/vendored-coverage-tolerance/design.md:33: A current not-covered count smaller than or equal to the ledger entry not-covered count selects current counts.
+STE minor 5: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:73: - **AND** when the not-covered count rises by more than the tolerance and the covered count falls by more than the tolerance
+STE minor 6: openspec/changes/vendored-coverage-tolerance/design.md:83: | count tolerance | Rule from the requirement Count tolerance. |
+STE minor 7: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:71: - **AND** a not-covered line count is above the ledger entry count plus the tolerance
+STE minor 8: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:99: - **AND** the ratchet command reports no LEDGER-NOT-IN-BASE and no LEDGER-MORE-THAN-BASE
+STE minor 9: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:102: - **AND** the ratchet command does not change the total counts of the current gap
+STE minor 10: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:30: The gate MUST NOT record a ledger entry as stale for counts inside this count tolerance.
+STE minor 11: openspec/changes/vendored-coverage-tolerance/design.md:70: | requirement titles | Labels: Count tolerance for adopted files uses adopted-source conditions; Total counts for adopted files uses a valid adopt line. |
+STE minor 12: openspec/changes/vendored-coverage-tolerance/specs/gap-ledger/spec.md:142: - **AND** the ratchet command writes the current total counts, for example 399 or 401 for a ledger entry total count of 400
+STE minor 13: openspec/changes/vendored-coverage-tolerance/design.md:87: | merged commit | A parent of a merge commit, except the first parent. |
+STE minor 14: openspec/changes/vendored-coverage-tolerance/design.md:94: | never-worse counts | Counts that use current counts when the current not-covered count does not exceed the ledger entry not-covered count; otherwise, ledger entry counts. |
+STE minor 15: openspec/changes/vendored-coverage-tolerance/design.md:110: | lead | Person who decides design corrections, runs image checks and gets both review passes. |
+STE minor 16: openspec/changes/vendored-coverage-tolerance/design.md:117: | CI artifact | Coverage and guard files from the CI run. |
+STE minor 17: openspec/changes/vendored-coverage-tolerance/design.md:111: | metric | Lines, branches or functions. |
+STE minor 18: openspec/changes/vendored-coverage-tolerance/design.md:29: An adopt line has no total counts. compareWithBase bounds a ledger entry without base content by the not-covered counts in the adopt line.
+STE minor 19: openspec/changes/vendored-coverage-tolerance/proposal.md:42: The requirement "Total counts for adopted files" sets no bound on the size of a total difference.
+STE minor 20: openspec/changes/vendored-coverage-tolerance/proposal.md:36: This limit applies to the requirement "Count tolerance for adopted files".
+STE minor 21: openspec/changes/vendored-coverage-tolerance/proposal.md:49: A file with base content already gets this exception from "Count tolerance" when its coverage is true.
+STE minor 22: openspec/changes/vendored-coverage-tolerance/proposal.md:53: make gates CHANGE=vendored-coverage-tolerance in the Node image on the upstream-sync-3 tree must supply the project verdict.
+STE minor 23: openspec/changes/vendored-coverage-tolerance/tasks.md:71: - [x] Run the host checks that evidence.md lists under Host commands and verdicts.
+STE minor 24: openspec/changes/vendored-coverage-tolerance/tasks.md:74: - [x] Check each document title against the live test titles with the repeated titles script.
+STE minor 25: openspec/changes/vendored-coverage-tolerance/tasks.md:76: - [x] Replay the real CI data on s3-replay3.
+STE minor 26: openspec/changes/vendored-coverage-tolerance/tasks.md:67: - [x] Write the tests of lines, branches and functions for gap-ledger-154 before its code.
+STE minor 27: openspec/changes/vendored-coverage-tolerance/evidence.md:894: The repeated titles script is pass4/check-repeated-titles.py. The script checks current documents and this Pass 4 block.
+STE minor 28: openspec/changes/vendored-coverage-tolerance/evidence.md:897: The named mutation for scenario 155 removes the total count guard.
+STE minor 29: openspec/changes/vendored-coverage-tolerance/evidence.md:899: The origin of each selected count is the ledger entry or the current gap. Adopted source means only file content.
+STE minor 30: openspec/changes/vendored-coverage-tolerance/evidence.md:901: Pass 2 script commit means the script commit of the recorded pass 2 command.
+STE minor 31: openspec/changes/vendored-coverage-tolerance/evidence.md:903: At that attempt the line pointers named the tree at code commit 04554050; they do not name the Pass 4 tree.
+STE minor 32: openspec/changes/vendored-coverage-tolerance/evidence.md:904: At the first pass 3 attempt, the red test for scenario 154 stops the work.
+STE minor 33: openspec/changes/vendored-coverage-tolerance/evidence.md:906: The historical row 35 correction is at evidence.md:595. Its owner heading correction points to evidence.md:467.
+STE minor 34: openspec/changes/vendored-coverage-tolerance/evidence.md:908: The count rule compares current counts with ledger entry counts and uses no time word.
+STE minor 35: src/tooling/spec/ledger.test.mjs:716:   // count is still not a loss, so the gate gives no LEDGER-LOST-COVERAGE, only LEDGER-STALE.
+STE minor 36: scripts/spec/lib/ledger.mjs:446:     // The gate accepts a total-only difference for a file with a valid adopt line when the not-covered counts are equal.
+STE minor 37: scripts/spec/lib/ledger.mjs:215:  * For branches and functions, the command writes ledger entry counts when the current covered count is smaller than the ledger entry covered count.
+STE minor 38: src/tooling/spec/ledger.test.mjs:1540: test('[gap-ledger-143] the ratchet command writes never-worse counts for a file that equals its adopted source', () => {
+STE minor 39: src/tooling/spec/ledger.test.mjs:1606: test('[gap-ledger-153] the gate gives no total count exception for untrue or unloaded coverage', () => {
+STE minor 40: src/tooling/spec/ledger.test.mjs:1511: test('[gap-ledger-137] the gate compares a content hash that differs from the hash in the ledger entry with no tolerance', () => {
+STE minor 41: src/tooling/spec/ledger.test.mjs:1532: test('[gap-ledger-142] the gate reports an error for counts outside the count tolerance', () => {
+STE minor 42: src/tooling/spec/gates.test.mjs:2700: test('[gap-ledger-139] the gate gives no tolerance for an adopt line of another change', () => {
+STE minor 43: src/tooling/spec/gates.test.mjs:2785: test('[gap-ledger-149] the gate records the ledger entry as stale when no valid adopt line names the file', () => {
+STE minor 44: src/tooling/spec/gates.test.mjs:2805: test('[gap-ledger-151] the gate records the ledger entry as stale and reports LEDGER-ADOPT-FROM for an invalid from commit', () => {
+```
+
+#### Title and body check
+
+Command: python /home/ianblenke/docker/gev-tools/vendored-tolerance/pass4/check-verbs.py.
+
+The command lists every test title that differs from main, with each body assertion.
+The table below names the actual results: written counts, stale ledger entries, error reports and refusal of exceptions.
+For each title, the body asserts the result that its verb names.
+The count tests assert literal values. The metric test also checks that the ratchet command does not change current gap totals.
+The base content test asserts toleranceCounts results when both content predicates return true.
+
+```text
+| Test title | Body result assertions |
+| --- | --- |
+| `[gap-ledger-136 gap-ledger-140] the gate allows a count difference inside tolerance for a file that equals its adopted source` | `assert.deepEqual(compareLedger({ ledger, current, adoptedAsIs: (name) => name === file }), { errors: [], stale: [] });`; `assert.deepEqual(codes(compareLedger({ ledger, current })), ['LEDGER-LARGER-GAP', 'LEDGER-LOST-COVERAGE', 'LEDGER-LOST-COVERAGE']);`; `assert.deepEqual(compareLedger({ ledger, current: smaller, adoptedAsIs: () => true }), { errors: [], stale: [] });`; `assert.deepEqual(compareLedger({ ledger, current: complete, adoptedAsIs: name => name === file }), { errors: [], stale: [] });` |
+| `[gap-ledger-137] the gate compares a content hash that differs from the hash in the ledger entry with no tolerance` | `assert.deepEqual(codes(compareLedger({ ledger, current, adoptedAsIs: () => true })), ['LEDGER-LARGER-GAP', 'LEDGER-LARGER-GAP', 'LEDGER-LARGER-GAP']);` |
+| `[gap-ledger-141] the gate compares untrue or unloaded coverage with no tolerance` | `assert.equal(codes(compareLedger({ ledger, current, adoptedAsIs: () => true })).includes('LEDGER-LARGER-GAP'), true);`; `assert.equal(codes(compareLedger({ ledger, current: gaps([record]), adoptedAsIs: () => true })).includes('LEDGER-LARGER-GAP'), true);` |
+| `[gap-ledger-142] the gate reports an error for counts outside the count tolerance` | `assert.deepEqual(codes(compareLedger({ ledger, current: gaps([loaded(file, 19, 19, 19, 'same', BIG)]), adoptedAsIs: () => true })), ['LEDGER-LARGER-GAP', 'LEDGER-LOST-COVERAGE', 'LEDGER-LOST-COVERAGE']);`; `assert.deepEqual(codes(compareLedger({ ledger: small, current: gaps([loaded(file, 2, 2, 2, 'same', { lines: 24, branches: 24, functions: 24 })]), adoptedAsIs: () => true })), ['LEDGER-LARGER-GAP', 'LEDGER-LOST-COVERAGE', 'LEDGER-LOST-COVERAGE']);` |
+| `[gap-ledger-143] the ratchet command writes never-worse counts for a file that equals its adopted source` | `assert.deepEqual(result.ledger.coverage[file], { sha: 'same', untrue: false, origin: 'pre-spec', since: '2026-01-01', loaded: true, lines: 10, branches: 10, functions: 10, totals: { lines: 400, branches: 400, functions: 400 } });`; `assert.deepEqual(result.history, []);`; `assert.equal(better.ledger.coverage[file].lines, 9);`; `assert.equal(better.ledger.coverage[file].branches, 9);`; `assert.equal(better.ledger.coverage[file].functions, 9);` |
+| `[gap-ledger-147] the gate accepts total differences for a file with a valid adopt line` | `assert.deepEqual(compareLedger({ ledger, current, adoptedFile: name => name === file }), { errors: [], stale: [] });`; `assert.deepEqual(compareLedger({ ledger, current }).stale, [{ kind: 'coverage', file: 'src/new.js' }]);`; `assert.deepEqual(ratchet(ledger, lower).ledger.coverage[file].totals, { lines: 399, branches: 399, functions: 399 });`; `assert.deepEqual(ratchet(ledger, higher).ledger.coverage[file].totals, { lines: 401, branches: 401, functions: 401 });` |
+| `[gap-ledger-148] the gate compares not-covered counts with no tolerance for a file that differs from its adopted source` | `assert.deepEqual(current.coverage.get(file).totals, { lines: 400, branches: 400, functions: 400 });`; `assert.deepEqual(codes(result), [metric === 'lines' ? 'LEDGER-LARGER-GAP' : 'LEDGER-LOST-COVERAGE']);`; `assert.deepEqual(codes(better), ['LEDGER-STALE']);`; `assert.deepEqual(better.stale, [{ kind: 'coverage', file: 'src/new.js' }]);`; `assert.deepEqual(codes(compareLedger({ ledger: ledgerWith(), current, adoptedFile: () => true })), ['LEDGER-NEW-COVERAGE-GAP']);` |
+| `[gap-ledger-149] the gate records the ledger entry as stale for total differences without an adopt line` | `assert.deepEqual(codes(result), ['LEDGER-STALE']);`; `assert.deepEqual(result.stale, [{ kind: 'coverage', file: 'src/new.js' }]);` |
+| `[gap-ledger-152] the gate records the ledger entry as stale for a content hash that differs from the ledger entry` | `assert.deepEqual(codes(result), ['LEDGER-STALE']);`; `assert.deepEqual(result.stale, [{ kind: 'coverage', file: 'src/new.js' }]);` |
+| `[gap-ledger-153] the gate gives no total count exception for untrue or unloaded coverage` | `assert.deepEqual(codes(result), side === 'entry' ? ['LEDGER-STALE'] : [extra.untrue ? 'COVERAGE-FAKE' : 'LEDGER-UNLOADED']);`; `assert.deepEqual(result.stale, side === 'entry' ? [{ kind: 'coverage', file: 'src/new.js' }] : []);` |
+| `[gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger count, per metric` | `assert.deepEqual(current.coverage.get(file).totals, { lines: 401, branches: 401, functions: 401 });`; `assert.equal(next[metric], count === 11 ? 10 : count === 9 ? 9 : 10);`; `assert.equal(next.totals[metric], count === 11 ? 400 : 401);`; `assert.equal(next[other], 10);`; `assert.equal(next.totals[other], 401);`; `assert.deepEqual([next.lines, next.branches, next.functions], [10, 10, 9]);`; `assert.deepEqual(next.totals, { lines: 400, branches: 399, functions: 399 });` |
+| `[gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source` | `assert.deepEqual(larger.ledger.coverage[file].totals, { lines: 400, branches: 400, functions: 400 });`; `assert.deepEqual(equal.ledger.coverage[file].totals, { lines: 399, branches: 399, functions: 399 });`; `assert.deepEqual([smaller.ledger.coverage[file].lines, smaller.ledger.coverage[file].branches, smaller.ledger.coverage[file].functions], [9, 9, 9]);`; `assert.deepEqual(smaller.ledger.coverage[file].totals, { lines: 398, branches: 398, functions: 398 });` |
+| `[gap-ledger-143] the ratchet command uses toleranceCounts for a file with base content that also equals its adopted source` | `assert.deepEqual([next.lines, next.branches, next.functions], [10, 11, 11]);`; `assert.deepEqual(next.totals, { lines: 401, branches: 401, functions: 401 });`; `assert.deepEqual(lower.totals, { lines: 399, branches: 400, functions: 400 });` |
+| `[gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent` | `assert.deepEqual([next.lines, next.branches, next.functions], [10, 10, 10]);`; `assert.deepEqual(next.totals, { lines: 400, branches: 400, functions: 400 });` |
+| `[gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count` | `assert.deepEqual([next.lines, next.branches, next.functions], [0, 0, 0]);`; `assert.deepEqual(next.totals, { lines: 0, branches: 0, functions: 0 });` |
+| `[gap-ledger-136 gap-ledger-140 gap-ledger-144] the gate uses the adopted source in the check, ci and ratchet commands` | `assert.match(result.output, /Ledger: 0 entries do not match the current gaps\./);`; `assert.doesNotMatch(result.output, /ERROR GATES-RATCHET/);`; `assert.doesNotMatch(result.output, /ERROR LEDGER-(?:STALE&#124;LARGER-GAP&#124;LOST-COVERAGE)[^\n]*src\/merged\.js/);`; `assert.equal(JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/merged.js'].branches, 0);` |
+| `[gap-ledger-137] the gate gives no count tolerance to a file that differs from its adopted source` | `assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);` |
+| `[gap-ledger-138] the gate uses no tolerance from the requirement Count tolerance for adopted files for an invalid adopt line` | `assert.match(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);`; `assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);` |
+| `[gap-ledger-139] the gate gives no tolerance for an adopt line of another change` | `assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);` |
+| `[gap-ledger-145] the gate gives no tolerance from the requirement Count tolerance for adopted files to an absent file with a valid adopt line` | `assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);` |
+| `[gap-ledger-146] the gate gives no tolerance to a code file that no valid adopt line names` | `assert.equal(lines.length, 1);`; `assert.equal(lines[0].file, 'src/merged.test.mjs');`; `assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);` |
+| `[gap-ledger-069] the gate applies count tolerance to a file with base content` | `assert.doesNotMatch(result.output, /ERROR LEDGER-(?:STALE&#124;LOST-COVERAGE)[^\n]*src\/legacy\.js/);`; `assert.match(result.output, /Ledger: 0 entries do not match the current gaps\./);` |
+| `[gap-ledger-081] the gate applies the waived count to a file that differs from its adopted source` | `assert.doesNotMatch(result.output, /ERROR LEDGER-LARGER-GAP src\/merged\.js/);`; `assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);` |
+| `[gap-ledger-147] the gate accepts total differences for a file with a valid adopt line in the check, ci and ratchet commands` | `assert.match(result.output, /Ledger: 0 entries do not match the current gaps\./);`; `assert.doesNotMatch(result.output, /ERROR LEDGER-(?:STALE&#124;LARGER-GAP&#124;LOST-COVERAGE)[^\n]*src\/merged\.js/);`; `assert.equal(JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/merged.js'].totals.branches, 100);` |
+| `[gap-ledger-149] the gate records the ledger entry as stale when no valid adopt line names the file` | `assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);` |
+| `[gap-ledger-150] the gate ignores another change for total differences` | `assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);` |
+| `[gap-ledger-151] the gate records the ledger entry as stale and reports LEDGER-ADOPT-FROM for an invalid from commit` | `assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);`; `assert.match(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);` |
+| `[gap-ledger-154] the ratchet command writes no larger count for a file that equals its adopted source` | `assert.notEqual(split, text);`; `assert.deepEqual([next.branches, next.totals.branches], [1, 100]);`; `assert.equal(next.lines, 0);`; `assert.deepEqual(written.map(line => [line.before, line.after]), [[1, 0]]);`; `assert.match(result.output, /Ratchet: \d+ history lines for sync\./);`; `assert.match(result.output, /Ledger: 0 entries do not match the current gaps\./);`; `assert.doesNotMatch(result.output, /ERROR LEDGER-(?:NOT-IN-BASE&#124;MORE-THAN-BASE)/, result.output);` |
+```
+
+#### Base clauses and QA
+
+Command: rg -n 'tolerance conditions' openspec/specs/gap-ledger/spec.md.
+
+The base clauses at lines 45, 68, 74, 118, 232 and 258 name scenarios 004, 078, 054, 008, 013 and 057.
+The clauses at lines 268, 275, 287 and 294 name scenarios 069, 070, 072 and 073.
+Scenario 071 does not use the term; its tolerance sizes do not change.
+Scenario 074 names the base content restriction. Scenario 028 directs the ratchet command to write the larger branch count.
+
+The exception clauses name all of these bounds. Base content still uses the base rules.
+
+The scenario 154 mutation output has this QA line:
+
+```text
+QA: no script covers the capabilities of this change.
+```
+
+No project QA script changes. Each Pass 4 tool script has a QA purpose header.
+
+#### Host commands and verdicts
+
+All tool paths below start at /home/ianblenke/docker/gev-tools/vendored-tolerance/pass4.
+Each host Node process uses taskset -c 0-3 nice -n 19. Each test process names one test file.
+The host Node version is 26.8.2. No test uses an API absent from Node 24.14.0.
+
+The first sandbox attempt at scenario 155 gives no individual test report. It gives no test verdict.
+The direct host command before the code change reports the expected TypeError.
+
+Command: taskset -c 0-3 nice -n 19 node --test-name-pattern=gap-ledger-155 src/tooling/spec/ledger.test.mjs.
+
+
+```text
+✖ [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent
+TypeError: Cannot read properties of undefined (reading 'lines')
+```
+
+The same host command after the guard change reports one test and one pass.
+The test uses both absent totals and an empty totals object.
+The guard writes the current gap total count for each absent metric.
+
+Command: python pass4/run-checks.py named.
+
+The scratch command first stops at a missing host dependency. That attempt gives no mutation verdict.
+The repeated scratch command uses /home/ianblenke/docker/gev-work/node_modules.
+The command output in named-guard.log reports scenario 155 as a failed test and shows the TypeError.
+The command output in named-stop.log reports scenario 154 as a failed test at its literal written line count assertion.
+The stopped fixture ratchet gives no comparison verdict.
+
+Command: taskset -c 0-3 nice -n 19 node --import pass3/strict-host.mjs --test-name-pattern=gap-ledger-154 src/tooling/spec/gates.test.mjs.
+
+The actual command uses the full path of pass3/strict-host.mjs.
+The output in gate-green.log reports one test and one pass.
+The test checks the LCOV replacement, the literal pair 1 and 100, and both positive command reports.
+
+Command: taskset -c 0-3 nice -n 19 node --test-name-pattern=gap-ledger-156 src/tooling/spec/ledger.test.mjs.
+
+The scratch tree uses the logical operator mutation for this command.
+The output in zero-red.log reports scenario 156 as a failed test.
+The mutation writes total counts of 400 instead of the literal total counts of 0.
+
+Command: taskset -c 0-3 nice -n 19 node --test src/tooling/spec/ledger.test.mjs.
+
+The output in ledger-final.log reports 105 tests, 105 passes and no failure.
+The recorded pass 3 command reports 103 tests. Scenarios 155 and 156 add two tests.
+
+Command: taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/vct/coverage-detail.mjs scripts/spec/lib/ledger.mjs /tmp/vct4-raw-ledger.
+
+The output in ledger-coverage-final.log reports the literal counts below.
+
+```json
+{"file":"scripts/spec/lib/ledger.mjs","processes":2,"counts":{"LF":837,"LH":837,"BRF":546,"BRH":546,"FNF":100,"FNH":100},"missingLines":[],"missingFunctions":[]}
+```
+
+The library has 100% line, branch and function coverage.
+
+Command: taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/automut/automut.mjs gen --root . --files scripts/spec/lib/ledger.mjs --out pass4/all-mutants.json.
+
+The actual command uses the full project root and full output path.
+The generator output in automut-gen.log reports 5457 candidates.
+
+Command: python pass4/automatic.py.
+
+The runner selects the 14 candidates on the changed guard line. Comment changes supply no code mutations.
+The first run kills 13 candidates. The logical operator mutation passes that run.
+
+Scenario 156 then fails against that mutation and passes against the correct code.
+The repeated campaign kills all 14 candidates with the full ledger test file. No candidate has an unresolved status.
+
+The proof is proof-pass4.json. Automatic results and each actual command output are in the Pass 4 tools folder.
+
+| Named mutation | Failed test |
+| --- | --- |
+| Remove the total count guard | gap-ledger-155 |
+| Stop the ratchet command before it writes | gap-ledger-154 |
+| Use logical OR instead of nullish fallback | gap-ledger-156 |
+
+Command: cp -a /home/ianblenke/docker/gev-work/upstream-sync-3 /tmp/claude-1000/gcr/s3-replay4.
+
+The scratch tree receives ledger.mjs and gates.mjs from the Pass 4 tree.
+
+Command: taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/stale-check-s3.mjs /tmp/claude-1000/gcr/s3-replay4 /tmp/claude-1000/gcr/pr18-art.
+
+The output in replay.log has no stale coverage record for the four target files.
+The untraced records and QA errors from the script copy give no project gate verdict.
+
+| File | Stale coverage record |
+| --- | --- |
+| server/providers/mapillary/tiles.js | None |
+| src/data/localGeojsonCore.js | None |
+| src/keySetupCore.mjs | None |
+| src/voice/turnMetrics.js | None |
+
+#### Complete gate test reports
+
+Command: python pass4/run-checks.py tests.
+The ledger file completes. The full gate file attempt stops before a final report and gives no suite verdict.
+
+Command: python pass4/exact.py.
+Each Node process names only gates.test.mjs and one test title.
+The command reads each verdict from Node output. It records 238 complete passes.
+Tests at indexes 10 and 45 reach the time limit and give no verdict.
+
+Command: python pass4/retry.py.
+The command repeats those two titles, one at a time. Both output logs report one test, one pass and no cancellation.
+The merged complete reports give the counts below. The gate file test count stays at 240.
+
+```json
+{
+  "tests": 240,
+  "pass": 240,
+  "fail": 0,
+  "complete": 240
+}
+```
+
+The complete reports are exact-results.json and retry-results.json, with the actual Node output in each named log.
+These files are tool records, not .gev-cache/spec/results.json.
+
+Command: taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/vct/coverage-detail.mjs scripts/spec/gates.mjs /tmp/vct4-raw-gates.
+
+The output in gate-coverage-complete.log reports the literal counts below.
+
+```json
+{"file": "scripts/spec/gates.mjs", "processes": 659, "counts": {"LF": 741, "LH": 741, "BRF": 387, "BRH": 387, "FNF": 91, "FNH": 91}, "missingLines": [], "missingFunctions": []}
+```
+
+The gate script has 100% line, branch and function coverage.
+The progress coverage command has one uncovered branch; the complete reports cover that branch.
+No code changes make that branch smaller or remove it.
+
+#### Self-check and lead work
+
+Command: python pass4/check-repeated-titles.py.
+
+```json
+{
+  "live_titles": 345,
+  "repeated_titles": 38,
+  "stale_labels": [],
+  "scope": "Current documents and Pass 4 evidence; past records stay unchanged."
+}
+```
+
+Command: python pass4/check-words.py.
+
+```json
+{
+  "command": "git diff --unified=0 25ba5d2d",
+  "banned_word_forms": [],
+  "scope": "Added document, test and code lines."
+}
+```
+
+The word check includes prefixed forms on all added document, test and code lines.
+The glossary has no blank row inside its table.
+The comment at ledger.test.mjs:716 equals main. The diff against main has no comment change there.
+Scenarios 155 and 156 have no match in the base specs, archive, ID registry or retired ID registry.
+
+Command: python pass4/final-checks.py.
+
+```text
+Show JSON: vendored-coverage-tolerance
+Change 'vendored-coverage-tolerance' is valid
+Document headings: all five files match commit 25ba5d2d.
+```
+
+The show command prints JSON. The validate command accepts the active change.
+The five documents have the same level two headings as commit 25ba5d2d.
+The Pass 4 evidence block uses a level three heading so that the past level two headings do not change.
+
+Command: taskset -c 0-3 nice -n 19 node scripts/spec/gates.mjs lint --change vendored-coverage-tolerance.
+The final lint output goes in lint-final.log.
+The correction attempts that exceed paragraph or code span limits have no passed lint verdict.
+The corrected prose passes the lint command before the commit.
+
+The lead still runs the Node image ratchet command, image gates and both review agents.
+This pass runs no image, archive, current-tree ratchet command, push or remote contribution command.
+The host test reports give no Node image gate verdict.
+
+The final count-selection title uses per metric to meet the 25-word sentence limit after the ledger entry correction.
+The command logs and mutation proof record the title that existed for each actual run.
+
+Command: taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/vendored-tolerance/pass4/check-test-titles.mjs.
+
+The title lint checks each title that differs from main.
+
+```json
+{
+  "titles": 28,
+  "errors": [],
+  "warnings": []
+}
+```
+
+Command: taskset -c 0-3 nice -n 19 node --test src/tooling/spec/ledger.test.mjs.
+
+The output in ledger-title-final.log reports 105 tests, 105 passes and no failure with the final title.
+
+Command: taskset -c 0-3 nice -n 19 node --import pass3/strict-host.mjs --test-name-pattern=gap-ledger-154 src/tooling/spec/gates.test.mjs.
+
+The actual command uses the full path of pass3/strict-host.mjs.
+The output in gate-history-final.log reports one test, one pass and no failure.
+The final fixture has a ledger line count of 1 before the ratchet command. The command must write the literal line count 0.
+The test also asserts the actual history pair 1 and 0 for the coverage line record.
+A stopped ratchet command leaves 1 and writes no history pair; the repeated named mutation fails this test.
+
+The final gate reports consist of the 239 other complete tests and the final scenario 154 command above.
+The total stays at 240 complete passes. Neither the gate code nor its coverage counts change.

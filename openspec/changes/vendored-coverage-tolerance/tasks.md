@@ -61,16 +61,37 @@
 - [x] Write the test for `gap-ledger-154`.
 - [x] Run the test for `gap-ledger-154` against commit 04554050.
 
-- [x] Correct T1 to T8 and all STE findings.
+- [x] Correct the eight spec findings of pre-review 1.
+- [x] Correct the 43 STE findings of pre-review 1.
 - [x] Change each tagged test for each changed scenario.
-- [x] Write the metric tests for gap-ledger-154 before its code.
+- [x] Write the tests of lines, branches and functions for gap-ledger-154 before its code.
 - [x] Repeat the red test for gap-ledger-154.
 - [x] Add neverWorseCounts.
 - [x] Run the green test for gap-ledger-154.
-- [x] Run all host checks from prompt-3.md.
+- [x] Run the host checks that evidence.md lists under Host commands and verdicts.
 - [x] Run each named mutation.
 - [x] Run automatic mutations on the changed code.
-- [x] Check the title echoes with check-echoes.py.
+- [x] Check each document title against the live test titles with the repeated titles script.
 - [x] Record the self-check in evidence.md.
-- [x] Run the CI artifact command on s3-replay3.
+- [x] Replay the real CI data on s3-replay3.
+- [x] Commit the code, the tests and the change folder.
+
+### Pass 4
+
+- [x] Correct the glossary.
+- [x] Correct the exception clauses.
+- [x] Write the test for gap-ledger-155 before its code.
+- [x] Add the total count guard.
+- [x] Write the test for gap-ledger-156.
+- [x] Run the logical operator mutation for gap-ledger-156.
+- [x] Check the ratchet output in the gate test.
+- [x] Run the host checks.
+- [x] Run each named mutation.
+- [x] Run automatic mutations.
+- [x] Check repeated titles.
+- [x] Check each test title against its body.
+- [x] Replay the real CI data on s3-replay4.
+- [x] Check the JSON output of openspec show.
+- [x] Validate the change with OpenSpec.
+- [x] Compare document headings with commit 25ba5d2d.
 - [x] Commit the code, the tests and the change folder.
