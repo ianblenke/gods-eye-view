@@ -84,7 +84,7 @@
 - [x] Write the Pass 4 glossary.
 - [x] Correct the specs before the tests.
 - [x] Add the anchor control row.
-- [x] Watch all console channels in both fixtures.
+- [x] Watch the six console channels in both fixtures.
 - [x] Write the tests for both initial warning flags.
 - [x] Run the Pass 4 data tests.
 - [x] Run the Pass 4 media provider tests.

@@ -2,7 +2,7 @@
 
 ## Ontario 511 key — October 8, 2026
 
-Ontario 511 camera requests need `ONTARIO_511_API_KEY` (2026-10-08). The Ontario pack makes no request without it.
+Ontario 511 camera requests need `ONTARIO_511_API_KEY`. The Ontario pack makes no request without it.
 
 ## Cyber HUD — September 23, 2026
 

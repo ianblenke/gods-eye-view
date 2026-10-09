@@ -1,0 +1,51 @@
+diff --git a/server/providers/cctv/constants.js b/server/providers/cctv/constants.js
+index da0f2fcd..e576f296 100644
+--- a/server/providers/cctv/constants.js
++++ b/server/providers/cctv/constants.js
+@@ -119,7 +119,7 @@ export const TFL_IMAGE_ORIGIN =
+   'https://s3-eu-west-1.amazonaws.com/jamcams.tfl.gov.uk/';
+ export const DEFAULT_TFL_MAX_SOURCES = 250;
+ export const LONDON_CENTER = { lat: 51.5074, lon: -0.1278 };
+-/** Ontario 511: keyless CARS/511 camera catalog; frame URLs are still images. */
++/** Ontario 511: camera list needs a server key; frame URLs are still images. */
+ export const ONTARIO_511_CAMERAS_URL =
+   'https://511on.ca/api/v2/get/cameras?format=json&lang=en';
+ export const ONTARIO_511_IMAGE_ORIGIN = 'https://511on.ca/map/Cctv/';
+diff --git a/server/providers/cctv/ontarioRequest.js b/server/providers/cctv/ontarioRequest.js
+index d812c636..f3a58933 100644
+--- a/server/providers/cctv/ontarioRequest.js
++++ b/server/providers/cctv/ontarioRequest.js
+@@ -6,6 +6,11 @@ import {
+ let warnedMissingKey = false;
+ let warnedRequestError = false;
+ 
++export function _resetOntarioRequestForTest() {
++  warnedMissingKey = false;
++  warnedRequestError = false;
++}
++
+ export async function readOntarioCameraRows() {
+   const key = (process.env.ONTARIO_511_API_KEY || '').trim();
+   if (!key) {
+@@ -28,7 +33,7 @@ export async function readOntarioCameraRows() {
+     if (!warnedRequestError) {
+       warnedRequestError = true;
+       console.warn(
+-        '[CCTV] Ontario 511 camera request failed. Check the server key.',
++        '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
+       );
+     }
+     return [];
+diff --git a/server/providers/cctv/sources.js b/server/providers/cctv/sources.js
+index f97b9efe..fb206d71 100644
+--- a/server/providers/cctv/sources.js
++++ b/server/providers/cctv/sources.js
+@@ -534,7 +534,7 @@ export async function loadOntarioSourcesFromOpenData() {
+     );
+     return prioritized;
+   } catch {
+-    console.warn('[CCTV] Ontario 511 camera data error.');
++    console.warn('[CCTV] Ontario 511 camera data has an error.');
+     return [];
+   }
+ }

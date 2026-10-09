@@ -20,11 +20,12 @@ async function fixture(t, value, response) {
     if (response instanceof Error) throw response;
     return response;
   });
-  t.mock.method(console, 'warn', (...args) => logs.push(args.join(' ')));
-  t.mock.method(console, 'log', (...args) => logs.push(args.join(' ')));
-  t.mock.method(console, 'error', (...args) => logs.push(args.join(' ')));
-  t.mock.method(console, 'info', (...args) => logs.push(args.join(' ')));
-  t.mock.method(console, 'debug', (...args) => logs.push(args.join(' ')));
+  t.mock.method(console, 'warn', (...args) => logs.push(['warn', args.join(' ')]));
+  t.mock.method(console, 'log', (...args) => logs.push(['log', args.join(' ')]));
+  t.mock.method(console, 'error', (...args) => logs.push(['error', args.join(' ')]));
+  t.mock.method(console, 'info', (...args) => logs.push(['info', args.join(' ')]));
+  t.mock.method(console, 'debug', (...args) => logs.push(['debug', args.join(' ')]));
+  t.mock.method(console, 'dir', (...args) => logs.push(['dir', args.join(' ')]));
   return { ...ontarioRequest, calls, logs };
 }
 
@@ -51,7 +52,7 @@ test('[live-sources-003] make no request without a key', async (t) => {
   const f = await fixture(t, undefined, { ok: true, json: async () => [] });
   let nested;
   t.mock.method(console, 'warn', (...args) => {
-    f.logs.push(args.join(' '));
+    f.logs.push(['warn', args.join(' ')]);
     if (f.logs.length === 1) nested = f.readOntarioCameraRows();
   });
   for (const value of [undefined, '', '   ']) {
@@ -62,11 +63,11 @@ test('[live-sources-003] make no request without a key', async (t) => {
   }
   await nested;
   assert.equal(f.calls.length, 0);
-  assert.deepEqual(f.logs, ['[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']);
+  assert.deepEqual(f.logs, [['warn', '[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']]);
   ontarioRequest._resetOntarioRequestForTest();
   f.logs.length = 0;
   assert.deepEqual(await f.readOntarioCameraRows(), []);
-  assert.deepEqual(f.logs, ['[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']);
+  assert.deepEqual(f.logs, [['warn', '[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']]);
 });
 
 test('[live-sources-004] write one warning for an invalid key', async (t) => {
@@ -79,7 +80,7 @@ test('[live-sources-004] write one warning for an invalid key', async (t) => {
   );
   let nested;
   t.mock.method(console, 'warn', (...args) => {
-    f.logs.push(args.join(' '));
+    f.logs.push(['warn', args.join(' ')]);
     if (f.logs.length === 1) nested = f.readOntarioCameraRows();
   });
   assert.deepEqual(await f.readOntarioCameraRows(), []);
@@ -87,7 +88,7 @@ test('[live-sources-004] write one warning for an invalid key', async (t) => {
   assert.deepEqual(await f.readOntarioCameraRows(), []);
   assert.equal(f.calls.length, 3);
   assert.deepEqual(f.logs, [
-    '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
+    ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],
   ]);
   assert.equal(f.logs.join().includes(key), false);
 });
@@ -108,7 +109,7 @@ for (const type of ['fetch', 'json']) {
     assert.deepEqual(await f.readOntarioCameraRows(), []);
     assert.equal(f.logs.join().includes(key), false);
     assert.deepEqual(f.logs, [
-      '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
+      ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],
     ]);
     assert.deepEqual(await f.readOntarioCameraRows(), []);
     assert.equal(f.logs.length, 1);
@@ -149,18 +150,18 @@ test('[live-sources-005] keep the camera data error secret', async (t) => {
   const { loadOntarioSourcesFromOpenData } =
     await import('../../server/providers/cctv/sources.js');
   assert.deepEqual(await loadOntarioSourcesFromOpenData(), []);
-  assert.deepEqual(f.logs, ['[CCTV] Ontario 511 camera data has an error.']);
+  assert.deepEqual(f.logs, [['warn', '[CCTV] Ontario 511 camera data has an error.']]);
   assert.equal(f.logs.join().includes(key), false);
 });
 
-test('[live-sources-004] return an empty list for an HTTP error with JSON rows', async (t) => {
+test('[live-sources-004] return an empty row list for an HTTP error with JSON rows', async (t) => {
   const f = await fixture(t, key, {
     ok: false,
     json: async () => [{ Id: 455 }],
   });
   assert.deepEqual(await f.readOntarioCameraRows(), []);
   assert.deepEqual(f.logs, [
-    '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
+    ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],
   ]);
   assert.equal(f.logs.join().includes(key), false);
 });
@@ -200,7 +201,7 @@ test('[live-sources-005] keep the key text of a fetch error out of the warning',
   const f = await fixture(t, key, new Error('Request for ' + key + ' failed'));
   assert.deepEqual(await f.readOntarioCameraRows(), []);
   assert.deepEqual(f.logs, [
-    '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
+    ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],
   ]);
   assert.equal(f.logs.join().includes(key), false);
 });
