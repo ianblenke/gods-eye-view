@@ -28,7 +28,9 @@ The ratchet command uses toleranceCounts when a file has the tolerance condition
 For a file with the adopted-source conditions and no base content, the ratchet command uses neverWorseCounts.
 An adopt line has no total counts.
 compareWithBase limits the ledger entry of a file with no base content by the not-covered counts in the adopt line.
-If the base ledger also has that file, compareWithBase uses the larger of the adopt count and the base count plus waived counts.
+If the base ledger also has that file, the limit is the larger of two numbers.
+These numbers are the adopted count, and the base count plus the waived count.
+
 The covered-count rule of toleranceCounts cannot apply to that file.
 neverWorseCounts selects the counts of each metric separately.
 
@@ -37,7 +39,7 @@ Those counts are the current not-covered count and total count.
 neverWorseCounts selects ledger entry counts when the current not-covered count is larger than the ledger entry not-covered count.
 Those counts are the ledger entry not-covered count and total count.
 If the ledger entry total count is absent, neverWorseCounts selects the current gap total count.
-This change leaves compareWithBase, compareLedger, toleranceOf and the coverage error rules as they are.
+This change leaves the error rules of compareLedger, compareWithBase and toleranceOf as they are.
 
 ### Total count exception
 
@@ -94,7 +96,7 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | gate | Code that checks the spec and ledger rules. |
 | tolerant file | File with the tolerance conditions or the adopted-source conditions. |
 | toleranceCounts | Function that selects counts for a file with base content and count tolerance. |
-| never-worse counts | Current counts for a current not-covered count at or below the ledger entry not-covered count. Ledger entry counts if not. |
+| never-worse counts | Current counts for a current not-covered count smaller than or equal to the ledger entry not-covered count. Ledger entry counts if not. The current gap total count if the ledger entry total count is absent. |
 | neverWorseCounts | Function that selects never-worse counts. |
 | adoptedAsIs | Predicate for a file that equals its adopted source. |
 | adoptedFile | Predicate for a file with a valid adopt line of the checked change. |
@@ -130,3 +132,11 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | mutation | Code change that tests must reject. |
 | probe | Command that compares two code versions. |
 | code AST | JavaScript syntax tree without comments or source offsets. |
+
+### Pass 7 words
+
+| Word | Meaning |
+| --- | --- |
+| adopted count | Largest not-covered count of a metric for a file in its valid adopt lines. Zero with no such line. |
+| base count | Not-covered count of a metric for a file in the base ledger. |
+| ledger entry not-covered count, ledger entry total count, current gap total count | The not-covered count or the total count of a ledger entry, or of the current gap. |
