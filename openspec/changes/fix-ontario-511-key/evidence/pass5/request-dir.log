@@ -1,0 +1,40 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none --test-name-pattern=keep the key text of a fetch error src/data/cctvOntarioKey.test.mjs
+Tree: ede1c684 plus Pass 5 tests and the scratch mutation
+✖ [live-sources-005] keep the key text of a fetch error out of the warning (33.654149ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 163.406126
+
+✖ failing tests:
+
+test at src/data/cctvOntarioKey.test.mjs:200:1
+✖ [live-sources-005] keep the key text of a fetch error out of the warning (33.654149ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      [
+  +     'dir',
+  +     'Error: Request for ONTARIO_FAKE_SECRET_A&+? failed'
+  +   ],
+  +   [
+        'warn',
+        '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'
+      ]
+    ]
+  
+      at TestContext.<anonymous> (file:///tmp/ont-pass5-tree/src/data/cctvOntarioKey.test.mjs:203:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

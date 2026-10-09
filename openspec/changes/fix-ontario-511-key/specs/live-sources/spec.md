@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: Ontario camera key
-The Ontario pack MUST use a server key, make no request without it and keep its text out of all console channels.
+The Ontario pack MUST use a server key, make no request without the key and keep the key text out of the console channels.
 Origin: spec-first
 
 #### Scenario: Send the server key `live-sources-002`
@@ -15,12 +15,13 @@ Origin: spec-first
 - **THEN** the request helper makes no request and returns an empty row list each time
 - **AND** the process writes one warning: "[CCTV] Ontario 511 needs ONTARIO_511_API_KEY."
 
-#### Scenario: Return an empty list for an invalid key `live-sources-004`
+#### Scenario: Return an empty row list for an invalid key `live-sources-004`
 - **WHEN** the camera endpoint answers with an HTTP error, such as HTTP 400 with `Invalid Key`, twice
 - **THEN** the request helper returns an empty row list each time
 - **AND** the first request error in the process writes "[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY."
 - **AND** later request errors write no warning
-- **AND** no warning and no log line on any console channel contains the key text, and no thrown error escapes the pack
+- **AND** no log line on the six console channels contains the key text
+- **AND** the request helper and the loader throw no error
 
 #### Scenario: Keep error text secret `live-sources-005`
 - **WHEN** the fetch, the JSON reader or the code that reads a row throws an error with the key text
@@ -28,7 +29,8 @@ Origin: spec-first
 - **AND** the first request error in the process writes "[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY."
 - **AND** later request errors write no warning
 - **AND** the loader returns an empty source list for a row error and writes "[CCTV] Ontario 511 camera data has an error."
-- **AND** no warning and no log line on any console channel contains the key text, and no thrown error escapes the pack
+- **AND** no log line on the six console channels contains the key text
+- **AND** the request helper and the loader throw no error
 
 ### Requirement: Ontario row rules
 The Ontario pack MUST apply its current row, view, source and cap rules to the camera list that the request returns.
@@ -40,9 +42,10 @@ Origin: backfill
 - **AND** the loader accepts only enabled views with HTTPS URLs on the exact URL host name 511on.ca or a traveliq.co subdomain
 - **AND** the loader accepts only the URL path /map/Cctv/ with one view ID of ASCII letters, digits, underscores, periods or hyphens
 - **AND** the loader selects the first accepted view without the word down, or the first accepted view if all have that word
-- **AND** a views list that is not an array, an empty views list and views whose status is not Enabled cause no warning
-- **AND** the loader trims status text and ignores letter case; an empty capitalized Status uses the lower case status field
-- **AND** an empty row list returns an empty source list
+- **AND** a views list that is not an array, an empty views list and views whose status text is not enabled cause no warning
+- **AND** the loader trims status text and treats upper case and lower case letters as equal
+- **AND** the loader uses the lower case status field when the capitalized Status field is empty
+- **AND** the loader returns an empty source list for an empty row list
 - **AND** the loader converts URL objects to text and removes spaces at the start and end of URL text
 - **AND** the loader reads no coordinate after a blank ID and no view after invalid coordinates
 
@@ -50,7 +53,7 @@ Origin: backfill
 - **WHEN** the loader accepts a row with capitalized or lower case field names
 - **THEN** the source has the row ID with the on- prefix and the 511on.ca image URL that the loader builds
 - **AND** the name is the Location text, or else the Roadway text, or else Ontario 511 Camera and the ID
-- **AND** the loader adds a dash and the view description when a view description is not empty and has no word down
+- **AND** the loader adds a dash and the view description when the view description is not empty and has no word down
 - **AND** the city uses location, roadway or Ontario
 - **AND** the source uses the row direction, then the view description, then the ID hash for its heading
 - **AND** a known heading has high confidence, pitch -24 degrees, field of view 56 degrees, range 210 meters and mount height 10 meters

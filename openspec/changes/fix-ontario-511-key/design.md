@@ -35,7 +35,7 @@ Measure each changed code file on the host. Run each CCTV test file in one proce
 Run the prose lint after each edit group. The lead runs the Docker image checks.
 The purpose of the browser QA for the CCTV layer stays the same. Camera markers and feeds work in the browser.
 
-## Pass 4 words
+## Pass 5 words
 
 | Word | Meaning |
 |---|---|
@@ -48,6 +48,7 @@ The purpose of the browser QA for the CCTV layer stays the same. Camera markers 
 | row | One record from Ontario 511. |
 | source | One camera object that the loader returns. |
 | view | One item in the upstream Views list. |
+| console channel | One of console.log, console.info, console.debug, console.warn, console.error and console.dir. |
 | warning | Text that console.warn writes. |
 | log line | Text that any console channel writes. |
 | developer key | The key that Ontario 511 gives to an account holder. |

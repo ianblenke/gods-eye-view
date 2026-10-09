@@ -495,7 +495,7 @@ The first ordinary test processes returned a file failure with no assertion outp
 The next commands used --test-isolation=none. Five key tests and one row test failed on the old warning text.
 The code then changed the two warning strings. The code has no other runtime correction in Pass 3.
 
-The final key file has 12 tests. The final Rows test file has 69 tests. Each passes.
+At Pass 3, the final key file has 12 tests. The final Rows test file has 69 tests. Each passes.
 The run-alone.py command runs each of the 12 key tests with an exact --test-name-pattern. Each process returns zero.
 The reverse.mjs command reverses the key test groups and the fetch/JSON case order on the scratch tree.
 
@@ -503,7 +503,7 @@ The reverse test process passes all 12 tests.
 
 The all-tests.py and layer-tests.py commands run each current CCTV file and mediaProviders.test.mjs.
 The sandbox has three loopback failures in cctvMediaRange.test.mjs. The host repeat passes all 21 tests in that file.
-The final counts use that repeat once and the final key file once:
+At Pass 3, the final counts use that repeat once and the final key file once:
 
 ```json
 {
@@ -521,6 +521,8 @@ The new URL cases cover x511on.ca, www.511on.ca, %20 and a non-ASCII ID characte
 
 The named.py command makes each mutation on a scratch copy and restores the source after each process.
 All 13 mutations return exit code 1 and fail the named target test.
+
+At Pass 3, the tests had these titles. Pass 4 renamed five of them.
 
 | Mutation | Failed test |
 |---|---|
@@ -591,7 +593,7 @@ That probe gives these counts:
 ```
 
 The host probe shows an instrument issue with the required fresh module tests. It gives no image gate verdict.
-The worker told the lead. The worker made no test change and no gate change to satisfy the instrument.
+The worker told the lead. At Pass 3, the worker made no test change and no gate change to satisfy the instrument.
 At Pass 3, the lead must resolve this issue before the next ratchet can close the change.
 
 ### Repeated titles and verbs
@@ -627,8 +629,8 @@ The run command uses the automut tool, root /tmp/ont-pass3-tree, mutants pass3/m
 It names the key and Rows test files, with one file per process. Phase 1 uses --phase 1.
 Phase 2 uses --phase 2 and --resume with the same output file.
 
-The first host campaign had 11 key tests. The final campaign has fresh baselines for 12 key tests and 69 row tests.
-The final output is results-final.json. Each full-test probe passes all 81 Ontario tests.
+At Pass 3, the first host campaign had 11 key tests. The final campaign has fresh baselines for 12 key tests and 69 row tests.
+At Pass 3, the final output is results-final.json. Each full-test probe passes all 81 Ontario tests.
 The totals from that file are:
 
 ```json
@@ -922,7 +924,7 @@ Phase 1 has 14 kills and 1 survivor. Phase 2 has 1 survivor, b14, which swaps th
 
 The equivalent.mjs probe checks each of the four initial flag states for both statement orders.
 Each result equals the literal array `[false, false]`. The statements have no call between them.
-Fault b14 is EQUIVALENT. The run has no timeout or crash.
+Mutation b14 is EQUIVALENT. The run has no timeout or crash.
 The result files are `automatic-results.json` and `equivalent.json`.
 
 The sandbox automatic runs stopped at the baseline with no test output. They gave no mutation verdict.
@@ -958,9 +960,9 @@ The lead must run the image gates and both reviews before a merge.
 
 Tree read: `1911403e1798366a39d9bba455f4b1ac7ffa03ae`, branch `fix-ontario-511-key`, with the Pass 4 edits.
 
-The scratch tree has no branch. It copies the code and tests from that commit with these edits.
+The scratch tree has no branch. It copies the code and tests from that commit and adds the edits of Pass 4.
 
-No production code changes in Pass 4. Both pre-review folders stay unchanged.
+Pass 4 changes no production code. Both pre-review folders stay unchanged.
 
 The records above describe past runs. Their new time markers do not change their counts.
 
@@ -970,14 +972,14 @@ The records above describe past runs. Their new time markers do not change their
 | Finding | Correction |
 |---|---|
 | Spec major 1 | Scenario 008 has a control row about 3 kilometers from Kitchener, after all six anchor rows. Its order assertion names all eight sources. |
-| Spec major 2 | Both fixtures watch warn, log, error, info and debug. Scenarios 004 and 005 name console output and state that no thrown error escapes the pack. |
-| Spec minors | The 003 test loses its unused key assertion. Impact names the loader and three helpers. Scenario 006 names status trim, letter case and field choice. |
-| Other spec minors | Scenario 007 needs a view description that is not empty for the dash. Known limits name stderr, all request failure kinds and the reset hook. |
+| Spec major 2 | At Pass 4, both fixtures watch warn, log, error, info and debug. Scenarios 004 and 005 name console channels and state that no thrown error escapes the pack. |
+| Spec minors | The 003 test loses its unused key assertion. Impact names the loader and three other functions. Scenario 006 names the trim of status text, letter case and field choice. |
+| Other spec minors | Scenario 007 needs a view description that is not empty for the dash. Known limits name stderr, all kinds of request error and the reset hook. |
 | Records and tasks | Pass 3 records have time markers. The fresh module tasks name their replacement. The coverage reader task stays unchecked until the Docker image ratchet. |
 | STE major 1 | The 49-test sentence names the second test loop of Pass 2. |
 | STE major 2 | Each Pass 3B check has its own task. Pass 3B has its own section. |
 | STE majors 3 to 5 | The title names the view description. The spec distinguishes a views list from a view. All six URL titles name the view ID. |
-| STE major 6 | README says that poses are first estimates. The sources publish positions, and a user moves a gizmo. |
+| STE major 6 | At Pass 4, README says that poses are first estimates. The sources publish positions, and a user moves a gizmo. |
 | STE minors | The glossary defines the developer key, view ID, two image terms, two empty lists, request helper, reset hook and beforeEach callback. |
 | Other STE minors | The prose uses mutations, absent-key, prose lint and format check. The current-state entry follows the section title style. Past evidence has time markers. |
 
@@ -987,20 +989,22 @@ The command prefix for each test process is taskset -c 8-11 nice -n 19.
 
 The checks.py command runs each data test file and the media provider test file in a separate process.
 
-The initial loop has 318 tests and 315 passes. Three media range tests fail at `listen EPERM` in the sandbox.
+The initial loop has 318 tests and 315 tests pass. Three media range tests fail at `listen EPERM` in the sandbox.
 
-The separate host run of cctvMediaRange.test.mjs has 21 tests and 21 passes.
+The separate host run of cctvMediaRange.test.mjs has 21 tests and 21 tests pass.
 
-The final Rows run adds two tests for the initial warning flags. It has 71 tests and 71 passes.
+The final Rows test file has two new tests for the initial warning flags. All 71 tests pass.
 
-The key file has 12 tests and 12 passes. Each key test also passes alone. The reverse run has 12 passes.
+The key file has 12 tests and all 12 tests pass. Each key test also passes alone. All 12 tests pass in the reverse run.
 
-The final total is 320 tests in 22 files, with 320 passes and no failure. test-summary.json records this total.
+At Pass 4, all 320 tests in 22 files pass. test-summary.json records this total.
+The three src/layers/cctv test files, with 16 tests, did not run at Pass 4.
+The Pass 4 command selected the data files and mediaProviders.test.mjs, as the Pass 4 brief instructed.
 
 
-The old Windsor mutation runs first. It removes the Windsor anchor and passes the old scenario 008 test.
+The Windsor mutation runs first, against the old scenario 008 test. The old test still passes.
 
-The named.py command then runs the six removals with the control row. Each removal fails the same scenario 008 test.
+The named.py command then runs the six removals with the control row. Each removal makes the scenario 008 test fail.
 
 No mutation enters the commit.
 
@@ -1016,11 +1020,13 @@ No mutation enters the commit.
 | Add console.error(error) in the request catch | [live-sources-005] keep the key text of a fetch error out of the warning |
 | Add console.info(error) in the request catch | [live-sources-005] keep the key text of a fetch error out of the warning |
 
-The first automatic run shows two valid survivors: an initial warning flag set to true.
+The first automatic run shows two survivors that set an initial warning flag to true.
 
-The reset hook masks those mutations in the key tests. Two new Rows tests run without that hook.
+The reset hook sets both flags to false before each key test, so the key tests do not see those mutations.
+Two new Rows tests run without that hook.
 
-The initial.py command makes each test fail with its opposite initial flag value. The unchanged code passes both tests.
+The initial.py command sets one initial flag to true on the scratch tree for each run. Each run makes one test fail.
+The unchanged code passes both tests.
 
 The first test expects the literal absent-key warning. The second expects the literal request-error warning from scenario 004.
 
@@ -1125,7 +1131,7 @@ The equivalent.mjs command tests each survivor with absent, blank, HTTP, fetch a
 
 Each fixture runs with and without a nested warning call. The reset probe checks all four initial flag states.
 
-Each mutation and the unchanged code pass 28 probe cases in total. The probe asserts the literal warning and empty row list.
+Each mutation and the unchanged code pass all 28 probe cases. The probe asserts the literal warning and empty row list.
 
 
 | ID | EQUIVALENT reason |
@@ -1143,21 +1149,22 @@ The repeated titles script reads 83 live titles and finds no stale reference in 
 
 It excludes past evidence and review reports. Its output is repeated-titles.json.
 
-The verb script reads all 83 test bodies. It also lists negative, after, at and result clauses with their assertions.
+The verb script reads all 83 test bodies. It also lists clauses with a negative word, the word after, the word at, or a result verb, with their assertions.
 
 The worker reads each listed body. Each changed title has an assertion for every result clause.
 
-The output is verbs.json. One flag names the absent-key fixture; it does not indicate a false title.
+The output is verbs.json. One flag names the absent-key fixture. It does not show a false title.
 
-The body deletes ONTARIO_511_API_KEY and asserts the literal absent-key warning through its fixture table. No key value exists there.
+The body deletes ONTARIO_511_API_KEY and asserts the literal absent-key warning through its fixture table. The test sets no key value.
 
-The new HTTP-error title asserts the literal request-error warning through the other fixture table item.
+The body of the HTTP error test asserts the literal request-error warning through the other fixture table item.
 
-The Roadway title asserts Upper road, Upper road - East and heading 90 after a blank Direction value.
+The body of the Roadway test asserts Upper road, Upper road - East and heading 90 after a blank Direction value.
 
 The no-break-space title has a no-break-space fixture. The view ID titles name URL path values.
 
-The empty-source-list titles assert an empty source list. Their warning clauses assert the exact console list.
+The bodies of the empty source list tests assert an empty source list.
+Their warning clauses assert the exact list of console output.
 
 
 The banned-word search finds no new prose hit. Its only hit is an old code quotation in Pass 3.
@@ -1179,7 +1186,7 @@ The package boundary check passes. The prose lint has zero errors after each cor
 
 The OpenSpec show command prints valid JSON. The OpenSpec validate command states that the change is valid.
 
-The sources.js diff against commit `05736e82` changes only the catch string to "[CCTV] Ontario 511 camera data has an error."
+The sources.js diff against commit `05736e82` shows only a change of the catch string to "[CCTV] Ontario 511 camera data has an error."
 
 The named mutation logs and probes hold their command output under evidence/pass4.
 
@@ -1292,3 +1299,398 @@ The section title diff is:
 ```
 
 The prose lint prints "STE: 0 errors, 540 warnings."
+
+
+## Pass 5
+
+Tree read: `ede1c684b94a133d7c699c7a45e5860d4c3dd5a6`, branch `fix-ontario-511-key`, with the Pass 5 edits.
+The scratch tree has no branch. It copies this code and the Pass 5 tests.
+Pass 5 changes no production code. The three pre-review folders and the trace files stay unchanged.
+
+### Corrections of pre-review 3
+
+| Finding | Correction |
+|---|---|
+| Spec major 1 and F1 | Both fixtures record pairs of console method and text. Each warning and source count assertion checks both values. |
+| Spec major 2 and STE major 3 | Both fixtures also replace console.dir. The glossary names the six methods. The spec and tasks use those terms. |
+| STE majors 1 and 2 | The Roadway title names the capitalized field. The requirement names the key twice, with no unclear pronoun. |
+| Spec minor: README | The CCTV table line has the words from e2437f94, with only the banned noun replaced by first estimates. |
+| Spec minor: Windsor record | The old log has a Pass 5 note, the removed line and input hashes. The new run repeats the old test that passes. |
+| Spec minor: Pass 4 count | The record states why the three layer files and their 16 tests did not run at Pass 4. |
+| Spec minor: past counts | The Pass 3 counts and final campaign claims have Pass 3 markers. The old numbers stay unchanged. |
+| Spec minor: anchor limits | Known limits name a seventh distant anchor and a move of less than about 3 kilometers. |
+| Spec minor: empty list | Scenario 004 and its HTTP error test name the empty row list. |
+| Spec minor: unrun channel cases | The named runs include debug, log and dir in the request catch, and error and dir in the loader catch. |
+| STE part 2 | The spec names status text, letter case, field choice, the loader result and the view description. Error throw checks have separate items. |
+| Other STE part 2 | Impact names three other functions. Known limits state the warning advice and the removed HTTP status log. |
+| STE part 3 | The evidence uses mutation, test bodies and time markers. CURRENT-STATE loses the repeated date. README names the key. |
+| Past image word | Known limits accept image in the Pass 3 and Pass 3B records by name. Those records stay unchanged. |
+
+The README line follows decision A4. It keeps the old count and the old sentence form.
+Decision A4 takes precedence over the STE replacement for that line.
+The old source at e2437f94 writes resp.status through console.warn when the Ontario response is not OK.
+
+### Red runs for the console method checks
+
+The named.py command changes one scratch file, runs one test file and restores the source for each mutation.
+Each test command uses taskset -c 8-11 nice -n 19 node --test --test-isolation=none and a test name pattern.
+All 14 runs return exit code 1. Each fails the test below. The logs show the assertion differences.
+No mutation enters the commit.
+
+| Mutation | Test that fails |
+|---|---|
+| A: absent-key warn to error | [live-sources-003] make no request without a key |
+| A2: absent-key warn to log | [live-sources-003] make no request without a key |
+| B: request-error warn to error | [live-sources-004] return an empty row list for an HTTP error with JSON rows |
+| C: loader warn to error | [live-sources-005] keep the camera data error secret |
+| D: count log to warn | [live-sources-008] log both source counts |
+| D: count log to warn, invalid rows and views | [live-sources-006] return an empty source list without a warning for invalid rows and views |
+| D: count log to warn, numeric status | [live-sources-006] return an empty source list without a warning for a numeric status |
+| Add console.debug(error) in the request catch | [live-sources-005] keep the key text of a fetch error out of the warning |
+| Add console.log(error) in the request catch | [live-sources-005] keep the key text of a fetch error out of the warning |
+| Add console.dir(error) in the request catch | [live-sources-005] keep the key text of a fetch error out of the warning |
+| Add console.error(error) in the request catch | [live-sources-005] keep the key text of a fetch error out of the warning |
+| Add console.info(error) in the request catch | [live-sources-005] keep the key text of a fetch error out of the warning |
+| Add console.error(error) in the loader catch | [live-sources-005] write the warning for a row error with the key text |
+| Add console.dir(error) in the loader catch | [live-sources-005] write the warning for a row error with the key text |
+
+Mutation B runs the HTTP error test with JSON rows. That test has no call count assertion.
+Its deepEqual fails on error versus warn. The warning text stays equal.
+Mutation D fails both tests with without a warning in their titles.
+The pairs restore the method distinction that Pass 4 lost.
+
+### Console method probe
+
+Command: taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/fix-ontario-511/pass5/console-probe.mjs
+The command runs once on Node v26.8.2. Its output is console-probe.json.
+
+```json
+{
+  "node": "v26.8.2",
+  "results": [
+    {
+      "method": "table",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "group",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "groupCollapsed",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "groupEnd",
+      "watchedVia": [],
+      "direct": []
+    },
+    {
+      "method": "count",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "countReset",
+      "watchedVia": [],
+      "direct": []
+    },
+    {
+      "method": "time",
+      "watchedVia": [],
+      "direct": []
+    },
+    {
+      "method": "timeLog",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "timeEnd",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "dirxml",
+      "watchedVia": [],
+      "direct": [
+        [
+          "stdout",
+          "probe\n"
+        ]
+      ]
+    },
+    {
+      "method": "trace",
+      "watchedVia": [
+        "error"
+      ],
+      "direct": []
+    },
+    {
+      "method": "assert",
+      "watchedVia": [
+        "warn"
+      ],
+      "direct": []
+    },
+    {
+      "method": "dir",
+      "watchedVia": [
+        "dir"
+      ],
+      "direct": []
+    }
+  ]
+}
+```
+
+The fixture watches table, group labels, count, timeLog and timeEnd indirectly through console.log.
+It watches trace through console.error and a failed assert through console.warn.
+The host dirxml writes directly to stdout. The six mocks do not watch that method.
+GroupEnd, a valid countReset and time write no text in this probe.
+
+Direct writes to process.stdout and process.stderr are not console channels. The fixtures do not watch those writes.
+The lead must check these routes on Node 24.14.0.
+
+### Old Windsor case
+
+The windsor.py command loads the old Rows test from commit 1911403e and removes the Windsor anchor on a scratch copy.
+The new run is windsor-old-rerun.log. It records both input hashes and this removed line:
+
+```js
+{ lat: 42.3149, lon: -83.0364 }, // Windsor
+```
+
+The old scenario 008 test still passes. The Pass 4 record has the same input data as a new Pass 5 note.
+
+### Runs that stopped
+
+The first scratch copy stopped at a stale node_modules link. It gave no test result.
+The first automatic command stopped at the child baseline with no test output. It gave no mutation verdict.
+
+The sandbox check loop had three listen EPERM failures in the media range file.
+The loop then stopped during the format command. It gave no format verdict and no completed loop total.
+The host commands repeat these checks.
+
+The first limit paragraph has nine sentences. The prose lint reports one error for that paragraph.
+The correction splits the paragraph. The next lint command reports zero errors.
+
+
+### Host tests and coverage
+
+Command: python /home/ianblenke/docker/gev-tools/fix-ontario-511/pass5/checks.py
+The host loop runs each data CCTV file, mediaProviders.test.mjs and each of the three CCTV layer files in a separate process.
+Each Node command uses taskset -c 8-11 nice -n 19. checks.json records the exit codes and test counts.
+The host total is:
+
+```json
+{
+  "files": 25,
+  "tests": 336,
+  "pass": 336,
+  "fail": 0,
+  "nonzero_exit": 0
+}
+```
+
+The key file has 12 tests. The Rows file has 71 tests. All 83 Ontario tests pass.
+Each of the 12 key tests also passes alone with an exact test name pattern.
+The reverse.mjs command reverses the test groups and the fetch and JSON cases on the scratch tree.
+All 12 tests pass in reverse.log.
+
+Command: taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/fix-ontario-511/pass5/probe.mjs
+The coverage command measures the key file and the Rows file in separate processes.
+The probe reads their lcov files and calls the project parseLcov function.
+Its output is:
+
+```json
+{
+  "moduleRecords": [
+    "SF:server/providers/cctv/ontarioRequest.js"
+  ],
+  "counts": {
+    "lines": {
+      "total": 41,
+      "covered": 41
+    },
+    "branches": {
+      "total": 12,
+      "covered": 12
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2
+    }
+  },
+  "gaps": {
+    "lines": 0,
+    "branches": 0,
+    "functions": 0
+  },
+  "result": "NO GAP",
+  "Ontario": [
+    {
+      "name": "isLikelyOntarioCoordinate",
+      "start": 403,
+      "end": 413,
+      "branches": 7,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7088,isLikelyOntarioCoordinate"
+    },
+    {
+      "name": "normalizeOntarioCctvUrl",
+      "start": 414,
+      "end": 439,
+      "branches": 11,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7075,normalizeOntarioCctvUrl"
+    },
+    {
+      "name": "pickOntarioCctvView",
+      "start": 440,
+      "end": 463,
+      "branches": 17,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7079,pickOntarioCctvView"
+    },
+    {
+      "name": "loadOntarioSourcesFromOpenData",
+      "start": 464,
+      "end": 540,
+      "branches": 52,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7097,loadOntarioSourcesFromOpenData"
+    }
+  ]
+}
+```
+
+The request helper has 100% line, branch and function coverage. It has one module record.
+The four Ontario functions have 87 branch ranges. None has a zero count.
+The host probe gives no Docker image gate verdict.
+
+### Automatic mutations
+
+Command: taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/fix-ontario-511/pass5/gen.mjs
+The generator selects the request helper and the changed loader catch.
+Its output is:
+
+```json
+{"helper":131,"catch":9,"total":140}
+```
+
+The automut command uses root /tmp/ont-pass5-tree, the Pass 5 mutants.json file and one job.
+It runs each Ontario test file in its own process. Phase 2 uses resume after Phase 1 completes.
+The command lines and output are in automatic-phase1-host.log and automatic-phase2-host.log.
+The completed counts from automatic-results.json are:
+
+```json
+{
+  "phaseComplete": {
+    "1": true,
+    "2": true
+  },
+  "phases": {
+    "1": {
+      "KILLED": 131,
+      "SURVIVED": 9,
+      "CRASH": 0,
+      "TIMEOUT": 0
+    },
+    "2": {
+      "KILLED": 0,
+      "SURVIVED": 9,
+      "CRASH": 0,
+      "TIMEOUT": 0
+    }
+  },
+  "survivors": [
+    "h43",
+    "h44",
+    "h91",
+    "h103",
+    "h104",
+    "h113",
+    "h126",
+    "h127",
+    "h130"
+  ]
+}
+```
+
+Command: taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/fix-ontario-511/pass5/equivalent.mjs
+The equivalent probe passes all 28 cases for each survivor and the unchanged code.
+The output is equivalent-probe.json. The nine IDs and reasons match the Pass 4 table.
+
+The two private flags accept truthy values. The two reset assignments have no dependency.
+The catch reads no Error message. A nested request reads the warning flag after the outer call sets it.
+No survivor changes the required result in those cases.
+
+### Title, prose and structure checks
+
+The repeated title script reads 83 live titles and checks 14 current references. It reports zero flags.
+The clause script reads all 83 test bodies. It reports one absent-key fixture flag.
+That fixture sets no key value and asserts the literal absent-key warning from its table.
+
+The script also names D-invalid and D-numeric for the two titles with without a warning.
+Both named runs fail on the method pair assertion.
+
+The banned-word script checks prefixed forms in the change prose, tests and added user-document lines.
+It finds no new prose hit. Its one hit is an old code quote at evidence.md:674.
+The final search reads the corrected files again. Its output is corrections-search.log.
+
+The format shim command prints:
+
+```text
+Checked 1159 source files.
+```
+
+The node scripts/check-package-boundaries.mjs command returns exit code 0.
+Its output lists each package group in boundaries.log.
+The prose lint runs after each correction group. The final command prints:
+
+```text
+STE: 0 errors, 540 warnings.
+```
+
+The new evidence had two paragraph errors. The corrections split both paragraphs and remove two nontechnical words with -ing forms.
+The next lint command has zero errors.
+
+The result summary then had three paragraph errors. The correction splits those paragraphs.
+The final lint output is lint-final.log.
+
+The openspec show fix-ontario-511-key --json command prints valid JSON.
+The openspec validate fix-ontario-511-key command prints:
+
+```text
+Change 'fix-ontario-511-key' is valid
+```
+
+The section title diff keeps all proposal headings.
+Design changes Pass 4 words to Pass 5 words. Evidence adds Pass 5. No other section title changes.
+
+The server diff against 05736e82 matches the Pass 4 server diff byte for byte.
+It shows only the Ontario comment, reset hook and two warning strings.
+Pass 5 adds no server change.
+
+### Limits of this pass
+
+No Docker command, make command, ratchet, gate comparison, ledger change, archive, push, gh command or review command ran.
+The lead must run the Node 24.14.0 Docker image checks and both reviews before merge.
+The host results do not replace those checks.

@@ -32,11 +32,12 @@ async function load(t, rows, cap, logs = []) {
     ok: true,
     json: async () => rows,
   }));
-  t.mock.method(console, 'log', (...args) => logs.push(args.join(' ')));
-  t.mock.method(console, 'error', (...args) => logs.push(args.join(' ')));
-  t.mock.method(console, 'info', (...args) => logs.push(args.join(' ')));
-  t.mock.method(console, 'debug', (...args) => logs.push(args.join(' ')));
-  t.mock.method(console, 'warn', (...args) => logs.push(args.join(' ')));
+  t.mock.method(console, 'log', (...args) => logs.push(['log', args.join(' ')]));
+  t.mock.method(console, 'error', (...args) => logs.push(['error', args.join(' ')]));
+  t.mock.method(console, 'info', (...args) => logs.push(['info', args.join(' ')]));
+  t.mock.method(console, 'debug', (...args) => logs.push(['debug', args.join(' ')]));
+  t.mock.method(console, 'dir', (...args) => logs.push(['dir', args.join(' ')]));
+  t.mock.method(console, 'warn', (...args) => logs.push(['warn', args.join(' ')]));
   return loadOntarioSourcesFromOpenData();
 }
 const rowCauses = [
@@ -314,7 +315,7 @@ test('[live-sources-005] write the warning for a row error with the key text', a
     ),
     [],
   );
-  assert.deepEqual(logs, ['[CCTV] Ontario 511 camera data has an error.']);
+  assert.deepEqual(logs, [['warn', '[CCTV] Ontario 511 camera data has an error.']]);
   assert.equal(logs.join().includes('FAKE_ROW_KEY'), false);
 });
 
@@ -375,7 +376,7 @@ test('[live-sources-008] use each nearest anchor', async (t) => {
 test('[live-sources-006] return an empty source list for null ID fields', async (t) => {
   assert.deepEqual(await load(t, [row({ Id: null, id: null })]), []);
 });
-test('[live-sources-007] use the Roadway text first and the view description after a blank Direction value', async (t) => {
+test('[live-sources-007] use the capitalized Roadway text and the view description after a blank Direction value', async (t) => {
   const [source] = await load(t, [
     row({
       Roadway: ' Upper road ',
@@ -405,7 +406,7 @@ test('[live-sources-008] log both source counts', async (t) => {
   rows.push(row({ Id: '0' }));
   assert.equal((await load(t, rows, '8', logs)).length, 8);
   assert.deepEqual(logs, [
-    '[CCTV] Loaded Ontario 511 camera sources: 9 enabled (using nearest 8)',
+    ['log', '[CCTV] Loaded Ontario 511 camera sources: 9 enabled (using nearest 8)'],
   ]);
 });
 
@@ -428,7 +429,7 @@ test('[live-sources-006] return an empty source list without a warning for inval
     [],
   );
   assert.deepEqual(logs, [
-    '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)',
+    ['log', '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'],
   ]);
 });
 
@@ -487,7 +488,7 @@ test('[live-sources-006] return an empty source list without a warning for a num
     [],
   );
   assert.deepEqual(logs, [
-    '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)',
+    ['log', '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'],
   ]);
 });
 for (const title of [
@@ -597,7 +598,7 @@ test('[live-sources-006] skip fields after a row guard', async (t) => {
   assert.equal(result.length, 1);
   assert.equal(result[0].id, 'on-1');
   assert.deepEqual(logs, [
-    '[CCTV] Loaded Ontario 511 camera sources: 1 enabled (using nearest 1)',
+    ['log', '[CCTV] Loaded Ontario 511 camera sources: 1 enabled (using nearest 1)'],
   ]);
 });
 
@@ -644,13 +645,13 @@ for (const [title, value, warning] of [
     if (value === undefined) delete process.env.ONTARIO_511_API_KEY;
     else process.env.ONTARIO_511_API_KEY = value;
     const logs = [];
-    for (const channel of ['warn', 'log', 'error', 'info', 'debug']) {
-      t.mock.method(console, channel, (...args) => logs.push(args.join(' ')));
+    for (const channel of ['warn', 'log', 'error', 'info', 'debug', 'dir']) {
+      t.mock.method(console, channel, (...args) => logs.push([channel, args.join(' ')]));
     }
     t.mock.method(globalThis, 'fetch', async () => ({ ok: false }));
     const { readOntarioCameraRows } =
       await import('../../server/providers/cctv/ontarioRequest.js');
     assert.deepEqual(await readOntarioCameraRows(), []);
-    assert.deepEqual(logs, [warning]);
+    assert.deepEqual(logs, [['warn', warning]]);
   });
 }
