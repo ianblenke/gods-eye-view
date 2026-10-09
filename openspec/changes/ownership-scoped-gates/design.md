@@ -157,8 +157,8 @@ An absent base manifest is empty. An invalid base manifest gives OWNERSHIP-MANIF
 
 The QA register uses a synthetic header for a base script only when the base script has no QA tag in its first comment block.
 For a new script, the QA register needs a valid adopt record.
-A new script that no valid adopt record names keeps QA-HEADER.
-A script whose base script had a QA tag in its first comment block also keeps QA-HEADER.
+A new script that no valid adopt record names prints QA-HEADER.
+A script whose base script had a QA tag in its first comment block also prints QA-HEADER.
 
 Git diff uses a 256 MiB output buffer.
 
@@ -257,6 +257,12 @@ The gate prints LEDGER-ADOPT-FROM for a null byte in `from`, as for another inva
 | owned coverage check | ownership.mjs: coverageFaults owned file loop |
 | gap report function | ownership.mjs: gapReport |
 
+### Pass 7 words
+
+| Word | Meaning |
+|---|---|
+| coverage item | Coverage data for one file, with gap counts and waiver counts |
+
 ## Pass 5 decisions
 
 D7: The source check accepts only a full hash of 40 lowercase hexadecimal digits and a merge parent after the base.
@@ -265,12 +271,12 @@ The adopt command resolves the `--from` option before the source check and write
 D8: The base QA tag blocks the synthetic header even when a valid adopt record names the file.
 The function adoptableQaScript checks the class, current tag and base tag.
 The adopt command takes QA candidates from the QA register scripts and QA-HEADER errors.
-The adopt command also checks that the merged commit changed the file.
+The adopt command also checks that the adopt source changed the file.
 The adopt command writes the zero-count record and removes only that file's QA-HEADER error.
 
 D9: The Order note states the real test order. Requirements for ownership-045 through ownership-049 have Origin: backfill.
 
-D10: The bad history scenario names the error line. The init scenario states its early stop.
+D10: The scenario ownership-038 names the error code and the stable prefix of the message. The init scenario states its early stop.
 The known limits name the source check cost and the absence of a real sync run.
 
 ### Purpose after archive

@@ -125,11 +125,15 @@ function oneMeasurement(root, { loaded = true, assertions = 1 } = {}) {
   return { spawn, openSpec, calls: () => calls };
 }
 
-test('[ownership-001] stops for an absent manifest', () => withFixture(root => {
+test('[ownership-001] prints OWNERSHIP-MANIFEST for an absent or bad manifest', () => withFixture(root => {
   rmSync(path.join(root, 'openspec/ownership.json'));
   const result = run(root, ['check'], { spawn: () => assert.fail('No test run') });
   assert.equal(result.status, 1);
   assert.match(result.output, /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/);
+  write(root, { 'openspec/ownership.json': '{}' });
+  const bad = run(root, ['check'], { spawn: () => assert.fail('No test run') });
+  assert.equal(bad.status, 1);
+  assert.match(bad.output, /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/);
 }));
 
 test('[ownership-011] reads the ledger without tests or a base', () => withFixture(root => {
@@ -353,7 +357,7 @@ test('[ownership-029] stops for an invalid base manifest before the test run', (
   assert.equal(result.status, 1);
   assert.match(result.output, /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/);
 }));
-test('[ownership-029 ownership-027] rejects a gap after its base owned path is removed', () => withFixture(root => {
+test('[ownership-029 ownership-027] rejects a gap in a file after a change removes the base owned path of that file', () => withFixture(root => {
   const source = 'export function add(a, b) {\n  if (a < 0) {\n    return 8;\n  }\n  return a + b;\n}\n';
   write(root, { 'src/math.js': source, 'openspec/ownership.json': '{"version":1,"owned":["src/"]}' });
   passes(root, ['init'], oneMeasurement(root));
@@ -536,6 +540,7 @@ test('[ownership-053] omits the Class, Ownership and Owned gaps lines from CI an
   for (const [command, status] of [['ci', 0], ['init', 1]]) {
     const result = run(root, [command], oneMeasurement(root));
     assert.equal(result.status, status, result.output);
+    if (command === 'init') assert.match(result.output, /ERROR GATES-INIT .*openspec\/trace\/gaps.json exists\. The init command does not replace it\./);
     assert.doesNotMatch(result.output, /^(Class:|Ownership:|Owned gaps:)/m);
   }
 }));
@@ -554,7 +559,7 @@ function mergeQa(root, files = { 'scripts/qa-merge.mjs': 'export {};\n' }) {
   return from;
 }
 
-test('[ownership-031 ownership-041] stops for revision names in a history with a merge HEAD', () => withFixture(root => {
+test('[ownership-031 ownership-041] stops the check command for a name that is not a full hash in a history with a merge HEAD', () => withFixture(root => {
   const from = mergeQa(root, { 'src/math.js': 'export function add(a, b) {\n  return a + b + 0;\n}\n' });
   assert.equal(git(root, 'rev-parse', 'HEAD^1'), git(root, 'rev-parse', 'main'));
   assert.equal(git(root, 'rev-parse', 'HEAD^2'), from);
@@ -629,7 +634,7 @@ test('[ownership-054] writes no QA record for an absent current file', () => wit
 }));
 
 
-test('[ownership-054] stops for a coverage ignore error in the eligible QA file', () => withFixture(root => {
+test('[ownership-054] stops for a coverage ignore error in an eligible new QA script', () => withFixture(root => {
   const from = mergeQa(root, { 'scripts/qa-merge.mjs': '/* node:coverage ignore next */\nexport {};\n' });
   const result = run(root, ['adopt', '--change', 'add-demo', '--from', from], oneMeasurement(root));
   assert.equal(result.status, 1, result.output);

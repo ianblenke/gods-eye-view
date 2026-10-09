@@ -44,7 +44,7 @@ test('[ownership-001] rejects each bad manifest field', () => {
   }
   assert.throws(() => parseOwnership('{'), SyntaxError);
 });
-test('[ownership-001] prints an absent or bad manifest file', () => fixture(({ root, put }) => {
+test('[ownership-001] returns OWNERSHIP-MANIFEST for an absent or bad manifest file', () => fixture(({ root, put }) => {
   assert.equal(readOwnership(root).errors[0].code, 'OWNERSHIP-MANIFEST');
   assert.equal(readOwnership(root).errors[0].file, 'openspec/ownership.json');
   put('openspec/ownership.json', '{}');
@@ -88,7 +88,7 @@ test('[ownership-005] reads real edited new and deleted files', () => fixture(({
   assert.deepEqual(changedLines({ root, base, files: ['a.js', 'new.js', 'empty.js', 'gone.js', 'binary.js', 'trail.js'] }), { 'a.js': [2, 4], 'new.js': [1, 2], 'empty.js': [], 'binary.js': [1], 'trail.js': [1, 2] });
   assert.throws(() => changedLines({ root, base: 'bad-ref', files: ['a.js'] }), /Git cannot read/);
 }));
-test('[ownership-006] keeps only lines that every duplicate record covers', () => {
+test('[ownership-006] keeps only lines that every duplicate LCOV record covers', () => {
   const text = 'DA:9,1\nSF:/repo/a.js\nDA:1,2\nDA:2,0\nDA:3,1\nend_of_record\nSF:/repo/a.js\nDA:1,1\nDA:2,1\nDA:4,1\nend_of_record\nSF:b.js\nDA:7,1\n';
   assert.deepEqual(parseLineCoverage(text, '/repo'), { 'a.js': [1], 'b.js': [7] });
   assert.deepEqual(parseLineCoverage('SF:a.js\nDA:1,0\nSF:a.js\nDA:1,1\n', '/repo'), { 'a.js': [] });
@@ -119,7 +119,7 @@ test('[ownership-011] separates code and test gaps by class', () => {
   ]);
   assert.deepEqual(gapReport(manifest, { coverage: {}, untracedTests: {} }), ['Owned gaps: 0 code files, 0 lines, 0 test files, 0 tests.', 'Upstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.']);
 });
-test('[ownership-012] has the process rules in AGENTS.md and config.yaml', () => {
+test('[ownership-012] has the process rules and QA context in AGENTS.md and config.yaml', () => {
   const root = new URL('../../../', import.meta.url);
   const text = readFileSync(new URL('AGENTS.md', root), 'utf8');
   assert.match(text, /Keep each owned code file that a change adds or edits at 100% line, branch and function coverage\./);
@@ -188,11 +188,11 @@ test('[ownership-016] sorts all line numbers as numbers', () => {
   assert.deepEqual(parseDiffLines('@@ -1 +20 @@\n@@ -1 +2 @@\n@@ -1 +10 @@\n'), [2, 10, 20]);
   assert.deepEqual(parseLineCoverage('SF:a.js\nDA:20,1\nDA:2,1\nDA:10,1\n', '/repo'), { 'a.js': [2, 10, 20] });
 });
-test('[ownership-017] ignores extra line record text', () => {
+test('[ownership-017] ignores extra text around a DA line or a diff header', () => {
   assert.deepEqual(parseDiffLines('prefix@@ -1 +2 @@\n'), []);
   assert.deepEqual(parseLineCoverage('SF:a.js\nprefixDA:2,1\nDA:3,1suffix\n', '/repo'), { 'a.js': [] });
 });
-test('[ownership-018] adds owned file gaps and waiver counts', () => {
+test('[ownership-018] adds owned file gaps and waiver counts across coverage items', () => {
   assert.deepEqual(gapReport(manifest, { coverage: { 'src/own/a.js': { lines: 2 }, 'src/own/b.js': { lines: 3 } }, untracedTests: {} }), ['Owned gaps: 2 code files, 5 lines, 0 test files, 0 tests.', 'owned code: src/own/a.js', 'owned code: src/own/b.js', 'Upstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.']);
   assert.deepEqual(faults({ coverage: [record(undefined, { lines: { total: 4, uncovered: 2 } })], waivers: [waiver(), waiver('lines', { lines: [3] }), waiver('branches'), waiver('functions')] }), []);
   assert.deepEqual(faults({ coverage: [record(undefined, { lines: { total: 4, uncovered: 2 } })], waivers: [waiver('lines', { count: 2, lines: [2, 3] }), waiver('branches'), waiver('functions')] }), []);
@@ -462,7 +462,7 @@ test('[ownership-052] returns false when Git cannot read the merge parents', () 
   finally { childProcess.spawnSync = native; syncBuiltinESMExports(); }
 });
 
-test('[ownership-031 ownership-041] rejects strings outside the hash pattern before it reads merge parents', () => {
+test('[ownership-031 ownership-041] rejects strings outside the hash pattern and reads no merge parents', () => {
   const native = childProcess.spawnSync;
   let calls = 0;
   childProcess.spawnSync = () => { calls += 1; throw new Error('Git must not start.'); };

@@ -1,8 +1,8 @@
 ## Why
 
-The owner accepts whole-file coverage checks for owned code only. Each changed line in upstream code still needs coverage.
+The owner accepts whole-file coverage checks for owned code only. Each changed line in upstream code still needs coverage, except a line that a sync brings unchanged from the adopt source.
 
-Changed owned files and owned files without a ledger entry need full coverage. Each changed line needs coverage in every code file.
+Changed owned files and owned files without a ledger entry need full coverage. Each changed line needs coverage, except a line that a sync brings unchanged from the adopt source.
 
 Upstream code keeps its ledger gap after the merge and the adopt command.
 
@@ -57,9 +57,9 @@ The first review round still uses Scope: full. Later rounds can use Scope: diff 
 QA scripts with valid register headers remain outside the code inventory, as before.
 
 Upstream QA scripts with a synthetic header also stay outside the code inventory.
-Before this change, header-less upstream QA scripts were in the code inventory.
-A script with a synthetic header gets no coverage check, COVERAGE-IGNORE check, test-import check or coverage-flag check.
-It also gets no line check, even for lines that a person wrote or resolved by hand.
+Before this change, upstream QA scripts with no QA tag were in the code inventory.
+A script with a synthetic header has no coverage check, COVERAGE-IGNORE check or test-import check.
+It also has no line check, even for lines that a person wrote or resolved by hand.
 
 The owner must review new code outside the manifest and the reason for its class.
 
@@ -115,9 +115,12 @@ Pass 4 adds the ci and init cases for the known limit L4 of evidence.md. Both ca
 
 A full check run calls mergeParents three times for each valid adopt record. A sync with many adopt records can be slow.
 
-No real sync, and no change that moves a path to the upstream class, ran through the new gates. The first sync will be the first real use.
+No real sync used the new gate. No change that moves a path to the upstream class used it. The first sync will be the first real use.
 
-The repository-state test qa-scripts-023 calls readQaRegister with no manifest and pins 83 scripts.
-A sync that brings a header-less upstream QA script must update that test and its count in the same change.
+The repository-state test qa-scripts-023 calls readQaRegister with no manifest and expects 83 scripts.
+A sync that brings an upstream QA script with no QA tag must change that test and the count 83 in the same change.
 
-The literal "merged upstream commit" stays in the output message that the sync tests pin (S109).
+The text "merged upstream commit" stays in the output message that the sync tests check.
+
+This change accepts S135 by name. The message "A merge after the base must bring that hash." stays in the five places that check it.
+The message means the commit of that hash.
