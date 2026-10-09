@@ -26,7 +26,9 @@ The ci command selects the change first. The ci, check and ratchet commands use 
 The ratchet command uses toleranceCounts when a file has the tolerance conditions, also when adoptedAsIs returns true.
 
 For a file with the adopted-source conditions and no base content, the ratchet command uses neverWorseCounts.
-An adopt line has no total counts. compareWithBase limits a ledger entry without base content by the not-covered counts in the adopt line.
+An adopt line has no total counts.
+compareWithBase limits the ledger entry of a file with no base content by the not-covered counts in the adopt line.
+If the base ledger also has that file, compareWithBase uses the larger of the adopt count and the base count plus waived counts.
 The covered-count rule of toleranceCounts cannot apply to that file.
 neverWorseCounts selects the counts of each metric separately.
 
@@ -67,11 +69,12 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | Word | Meaning |
 | --- | --- |
 | file that equals its adopted source | File with current content equal to its adopted source. |
-| requirement titles | Labels: Count tolerance for adopted files names adopted-source conditions; Total counts for adopted files names a valid adopt line. |
-| file with a valid adopt line | File that the valid adopt line names, with any current content. |
+| title Count tolerance for adopted files | Adopted files means files with the adopted-source conditions. |
+| title Total counts for adopted files | Adopted files means files with a valid adopt line of the checked change. |
+| file with a valid adopt line | File that a valid adopt line of the checked change names, with any current content. |
 | adopt line | History line with the kind adopt. |
 | valid adopt line | Adopt line that meets Adoption of merged code. |
-| adopted-source conditions | Loaded file, true coverage, equal ledger content hash, and content equal to its adopted source through a valid adopt line. |
+| adopted-source conditions | Loaded file, true coverage, equal ledger content hash, and content equal to its adopted source through a valid adopt line of the checked change. |
 | adopted source | Content of the file at the `from` commit. |
 | ledger entry | Coverage record in gaps.json. |
 | current gap | Coverage record from the current measurement. |
@@ -91,10 +94,10 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | gate | Code that checks the spec and ledger rules. |
 | tolerant file | File with the tolerance conditions or the adopted-source conditions. |
 | toleranceCounts | Function that selects counts for a file with base content and count tolerance. |
-| never-worse counts | Current counts when the current not-covered count is smaller than or equal to the ledger entry not-covered count; otherwise, ledger entry counts. |
+| never-worse counts | Current counts for a current not-covered count at or below the ledger entry not-covered count. Ledger entry counts if not. |
 | neverWorseCounts | Function that selects never-worse counts. |
 | adoptedAsIs | Predicate for a file that equals its adopted source. |
-| adoptedFile | Predicate for a file with a valid adopt line. |
+| adoptedFile | Predicate for a file with a valid adopt line of the checked change. |
 | current measurement | Coverage data from the test command. |
 | covered count | Total count minus not-covered count. |
 | base content | File content at the base commit. |

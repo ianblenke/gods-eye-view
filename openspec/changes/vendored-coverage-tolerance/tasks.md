@@ -84,11 +84,11 @@
 - [x] Add the total count guard.
 - [x] Write the test for gap-ledger-156.
 
-Historical record:
-
-```text
-Pass 4 wrote the test of gap-ledger-156 after the guard code; the mutation run showed the `||` mutant alive, and the test kills it; the red run is zero-red.log.
-```
+Pass 4 wrote the test of gap-ledger-156 after the guard code.
+The mutation run showed the `||` mutant alive.
+The test fails against that mutant; zero-red.log records that run.
+This order differs from spec-first.
+The lead decides in review.md whether to accept it by name.
 
 - [x] Run the logical operator mutation for gap-ledger-156.
 - [x] Check the ratchet output in the gate test.
@@ -123,6 +123,6 @@ Pass 4 wrote the test of gap-ledger-156 after the guard code; the mutation run s
 - [x] Measure gate coverage.
 - [x] Check the JSON output of openspec show.
 - [x] Validate the active change with OpenSpec.
-- [x] Diff the level 2 and level 3 headings against parent commit 9357d762.
+- [x] Compare the level 2 and level 3 headings with parent commit 9357d762.
 - [x] Record the Pass 5 evidence.
 - [x] Run STE lint after each correction group.
