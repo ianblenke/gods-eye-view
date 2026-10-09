@@ -291,4 +291,10 @@ These titles are the names in the red logs. Later corrections renamed some title
 ## 13. Pass 11
 
 - [x] 13.1 Correct the faults that pre-review 8 found.
-- [x] 13.2 Run the host checks, the format check and the document checks.
+- [x] 13.2 Run the ownership, ownershipGate and ledger host tests, the two named faults, lint, OpenSpec show and OpenSpec validate.
+- [x] 13.3 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
+
+## 14. Pass 12
+
+- [x] 14.1 Correct the faults that pre-review 9 found.
+- [x] 14.2 Run the ownership and ownershipGate host tests, lint, OpenSpec show and OpenSpec validate.
