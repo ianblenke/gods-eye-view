@@ -85,8 +85,8 @@
 - [x] Write the test for gap-ledger-156.
 
 Pass 4 wrote the test of gap-ledger-156 after the guard code.
-The mutation run showed the `||` mutant alive.
-The test fails against that mutant; zero-red.log records that run.
+Before this test, the `||` mutation made no test fail.
+The test fails with that mutation; proof-pass6.json records that run for mutation gap-ledger-156.
 This order differs from spec-first.
 The lead decides in review.md whether to accept it by name.
 
@@ -126,3 +126,30 @@ The lead decides in review.md whether to accept it by name.
 - [x] Compare the level 2 and level 3 headings with parent commit 9357d762.
 - [x] Record the Pass 5 evidence.
 - [x] Run STE lint after each correction group.
+
+### Pass 6
+
+- [x] Restore the file scope of the three count rules for D1.
+- [x] Restore the checked change in the glossary rows for D2.
+- [x] Correct the stale rule pointers for D3.
+- [x] Remove the prose fence and name the mutation run for D4.
+- [x] Restore the Pass 4 table row and command fences for D5.
+- [x] State the per-run limits and metric limits for D6.
+- [x] Move the metric condition and change four titles for D7.
+- [x] Correct the two code comment lines for D8.
+- [x] Correct the glossary rows and prose for D9.
+
+### Pass 7
+
+- [x] Correct the file scope and metric scope for G1 and G2.
+- [x] Correct the glossary cases and base limit for G3 and G4.
+- [x] Correct the scope record, proof citation and task record for G5.
+- [x] Correct the listed prose and test title for G6.
+- [x] Run the scope check and title checks.
+- [x] Run both host test files and measure coverage.
+- [x] Run the logical operator mutation for gap-ledger-156.
+- [x] Run STE lint and the banned word check.
+- [x] Compare the level 2 and level 3 headings with commit fa34f8cb.
+- [x] Check OpenSpec show and validate the change.
+- [x] Replay the four coverage targets.
+- [x] Record the Pass 7 evidence.

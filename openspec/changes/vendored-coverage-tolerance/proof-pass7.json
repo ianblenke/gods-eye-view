@@ -1,0 +1,16 @@
+{
+  "tree_read": "fa34f8cb28d4cd31cbca72771ddc5796424f4533 with Pass 7 edits",
+  "source_sha256": "5f36769d866bf958eeac2673d8219469ccb07c34d2414902576584dd60e4cc23",
+  "mutations": [
+    {
+      "id": "gap-ledger-156",
+      "before": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "after": "entry.totals?.[metric] || gap.totals[metric]",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-156] the ratchet command writes the ledger entry total count of zero for a file with no base content and a larger current not-covered count (28.66537ms)"
+      ],
+      "log": "gap-ledger-156-mutation.log"
+    }
+  ]
+}

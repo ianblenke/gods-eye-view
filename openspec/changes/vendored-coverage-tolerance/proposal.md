@@ -53,13 +53,14 @@ The gate refuses the exception for untrue coverage.
 The script for the CI artifact uses a copy of the gate predicates.
 The command `make gates CHANGE=vendored-coverage-tolerance` in the Node image on the upstream-sync-3 tree must supply the project verdict.
 
-For a file that equals its adopted source and has no base content, neverWorseCounts selects the current total count.
+For a file that equals its adopted source and has no base content, neverWorseCounts selects the current gap total count.
 This applies when the current not-covered count is smaller than or equal to the ledger entry not-covered count.
-The current total count can be larger or smaller than the ledger entry total count.
-When the total count is smaller and the not-covered count is equal, the covered count can fall by any amount.
+The current gap total count can be larger or smaller than the ledger entry total count.
+When the not-covered counts are equal, the covered count can fall by any amount.
+This applies when the current gap total count is smaller than the ledger entry total count.
 For branches and functions, when the not-covered count falls, the covered count can fall by at most the tolerance per ratchet run.
 
-When the ratchet command writes a lower total for that file, the next check starts from that total.
+When the ratchet command writes a smaller total count for that file, the gate then uses that total count as the ledger entry total count.
 See scripts/spec/lib/ledger.mjs:237-246 and src/tooling/spec/ledger.test.mjs:1643-1653.
 
 For a file with base content, toleranceCounts selects ledger entry branch and function counts.
@@ -69,12 +70,17 @@ For lines, toleranceCounts selects the smaller not-covered count and the current
 The gate never records the ledger entry of a tolerant file as stale for a smaller gap of any size.
 See scripts/spec/lib/ledger.mjs:454 for the closed-gap path and :436 and :449 for an open smaller gap.
 The test at src/tooling/spec/ledger.test.mjs:1508 asserts 0 against 10 with tolerance 8.
-A partial improvement leaves a difference between the ledger entry count and the current count.
-For each metric, the not-covered count can then rise to the ledger entry count plus the tolerance with no error.
+A partial improvement leaves a difference between the ledger entry not-covered count and the current not-covered count.
+For lines, the not-covered count can then rise to the ledger entry not-covered count plus the tolerance with no error.
+For branches and functions, the covered count decides, as the lines above state.
 
 Pass 4 wrote the test of gap-ledger-156 after the guard code.
 This order differs from spec-first. The lead decides in review.md whether to accept it by name.
-The test fails against the `||` mutant; pass4/zero-red.log records that run.
+The test fails when the code has the `||` mutation; proof-pass6.json records that run for mutation gap-ledger-156.
 
 For a file with no base content, the gate fixtures cover only a file absent at the base commit.
 They do not cover a file whose current content differs from its content at the base commit.
+
+The title of the test for gap-ledger-143 and gap-ledger-154 uses the words not above in place of smaller than or equal to.
+This meets the sentence limit.
+The lead accepts this.
