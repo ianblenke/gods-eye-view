@@ -4,7 +4,7 @@ The lead ran 20 mutations with the runner `mutate-pins.py`. The file `evidence/m
 Each mutation changes `.claude/agents/ste-adversary.md` or `AGENTS.md` at one place.
 The runner runs the tests of `change-review-034`, `change-review-035` and `change-review-036` after each mutation. Then the runner restores the file.
 
-The runs used the code files and test files of commit f8e9109d. The file `evidence/runs-head.txt` holds the commit.
+The runs used the code files and test files of commit d7e4e6b8. The file `evidence/runs-head.txt` holds the commit.
 The file `evidence/mutations.txt` holds one line for each mutation. The line names the failed test, the expected test and the word OK.
 The last line shows the run without a mutation.
 
