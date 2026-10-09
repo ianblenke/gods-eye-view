@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -406,4 +406,53 @@ test('[change-review-032] stops for a review command without the scope rules', (
     });
   }
   assert.deepEqual(checkReviewCommand(PROJECT_ROOT), []);
+});
+
+const STE_AGENT = '.claude/agents/ste-adversary.md';
+
+function pinned(file, lines, absent = []) {
+  const text = readFileSync(path.join(PROJECT_ROOT, file), 'utf8');
+  for (const line of lines) assert.ok(text.includes(line), `${file} lacks: ${line}`);
+  for (const line of absent) assert.equal(text.includes(line), false, `${file} still has: ${line}`);
+}
+
+test('[change-review-034] gives the severity minor to two possible meanings in other text', () => {
+  pinned(STE_AGENT, [
+    'Normative text is a requirement, a scenario, a rule of AGENTS.md or openspec/config.yaml, a message of the gate or the instructions of an agent.',
+    'Other text includes proposal.md, design.md, evidence.md, tasks.md, the review.md of the change and the title of a test.',
+    'Two possible meanings in other text are minor when the text is true under each meaning.',
+    '- **minor**: Two possible meanings in other text, when the text is true under each meaning.',
+    'A text that does not obey an STE rule is minor, except for the faults in the major items below.',
+    '- **minor**: A text that has one clear meaning but does not obey an STE rule, when no major item above names the fault.',
+  ]);
+});
+
+test('[change-review-035] gives the severity major to the faults that the requirement names', () => {
+  pinned(STE_AGENT, [
+    'A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word with the suffix -s, -ed or -ing that the lists do not name is also a banned word.',
+    '- **major**: A banned word in normative text or in a test title.',
+    '- **major**: Two possible meanings in normative text.',
+    '- **major**: A text or a title that does not agree with the code, the specs or the other prose of the change.',
+    '- **major**: A task that gives two instructions, except for actions at the same time.',
+    'A text that disagrees with the code, the specs or the other prose of the change is major in all text.',
+    'Give the two meanings, describe the disagreement with the code, the specs or the other prose, or quote the banned word or the two instructions.',
+    'Report a form of a banned word that the lint does not find.',
+  ], [
+    'The text is major only when it gives two meanings or disagrees with the code, the specs or the other prose of the change.',
+    '- **major**: The text has two possible meanings, or the text does not agree with the code, the specs or the other prose of the change.',
+    '- **minor**: The text has one clear meaning, but it does not obey an STE rule.',
+  ]);
+  const majorLines = readFileSync(path.join(PROJECT_ROOT, STE_AGENT), 'utf8').split('\n').filter((line) => line.startsWith('- **major**:'));
+  assert.deepEqual(majorLines, [
+    '- **major**: A banned word in normative text or in a test title.',
+    '- **major**: Two possible meanings in normative text.',
+    '- **major**: A text or a title that does not agree with the code, the specs or the other prose of the change.',
+    '- **major**: A task that gives two instructions, except for actions at the same time.',
+  ]);
+});
+
+test('[change-review-036] names the severities critical, major and minor in rule 16 of AGENTS.md', () => {
+  const rule = readFileSync(path.join(PROJECT_ROOT, 'AGENTS.md'), 'utf8').split('\n').find((line) => line.startsWith('16. '));
+  assert.ok(rule.includes('Put the severity after that word, as `critical`, `major` or `minor`.'));
+  assert.equal(rule.includes('blocker'), false);
 });

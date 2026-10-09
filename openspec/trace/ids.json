@@ -164,6 +164,21 @@
     "since": "2026-10-07",
     "change": "gates-one-measurement"
   },
+  "change-review-034": {
+    "hash": "8f3dd2a6e745a5694897e7d57a6aaf53d4dd6bc2efe2ea216353d80c6c8fa399",
+    "since": "2026-10-09",
+    "change": "review-severity-scope"
+  },
+  "change-review-035": {
+    "hash": "b8b9f67c723b64cf9966dd3fcac90324783764c3555f6882d24b98351b987101",
+    "since": "2026-10-09",
+    "change": "review-severity-scope"
+  },
+  "change-review-036": {
+    "hash": "47550870546fa62834f227a9dea856f48b5647520dab5c9f4a4814fcec54c6c9",
+    "since": "2026-10-09",
+    "change": "review-severity-scope"
+  },
   "ci-gates-001": {
     "hash": "6344005c90cfdf7d391ff0ddfd31bff01cde4a3ddb729ba5741cb6740be7d202",
     "since": "2026-09-14",
