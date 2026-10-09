@@ -22,6 +22,6 @@ It lists the files that the merge adds. All six added files are upstream code.
 
 ## Checks
 
-The lead ran the format check, the import direction check, the package boundary check, the layer token check, the STE lint and `openspec validate --specs` on the host.
+The lead ran the format check, the import direction check, the package boundary check and the layer token check on the host. The lead also ran the STE lint and `openspec validate --specs`.
 
 The file `evidence/checks.log` starts with the commit and the changed files of the tree. It holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
