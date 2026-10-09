@@ -177,7 +177,7 @@ test('[director-087] GeoJSON keeps stable geometry IDs without properties or rem
   assert.throws(decode, /ring/);
 });
 
-test('[director-089] The data pack session removes resources and cancels the transport on Stop', async () => {
+test('[director-089] The session disposes resources and aborts the source signal after the clear and destroy calls', async () => {
   let disposed = 0,
     signal;
   const session = createDataPackSession({

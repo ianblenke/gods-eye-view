@@ -1553,7 +1553,7 @@ The loop table lists 52 collection traversals in six of the seven source files.
 ## 13. Correct pre-review 8 findings
 
 - [x] 13.1 Correct the false title claims.
-- [x] 13.2 Correct each live test label.
+- [x] 13.2 Correct each test label that names a current test.
 - [x] 13.3 Correct the scenario conditions.
 - [x] 13.4 Restore the Pass 7 records.
 - [x] 13.5 Correct the prose findings.
@@ -1571,3 +1571,25 @@ The loop table lists 52 collection traversals in six of the seven source files.
 - [x] 13.17 Check the OpenSpec change.
 - [x] 13.18 Compare every document heading.
 - [x] 13.19 Record the Pass 10 evidence.
+
+## 14. Correct pre-review 9 findings
+
+- [x] 14.1 Add the text promise marker to the director-107 test.
+- [x] 14.2 Show that the old test passes m480 and the new test fails m480.
+- [x] 14.3 Add hand row m480 and its current title to the tables.
+- [x] 14.4 Restore every line of both original Pass 7 record sections.
+- [x] 14.5 Correct the three added Pass 8 New records.
+- [x] 14.6 Count the changed tag cells against f057b89a.
+- [x] 14.7 Correct each title and its current labels.
+- [x] 14.8 Remove the blank line inside the proposal bullet.
+- [x] 14.9 Correct the glossary note and the task label.
+- [x] 14.10 Record the current prose claims in Pass 11.
+- [x] 14.11 Run the three test files in separate host processes.
+- [x] 14.12 Check host coverage for each production file.
+- [x] 14.13 Run a code mutation for each time or collection clause.
+- [x] 14.14 Run all 480 hand rows with mut-host.py.
+- [x] 14.15 Check each place that repeats a current test title.
+- [x] 14.16 Run lint and check the banned words and their prefixed forms.
+- [x] 14.17 Run the host format, predispatch and title checks.
+- [x] 14.18 Run OpenSpec show and validate.
+- [x] 14.19 Compare source edits and document headings with the read commit.
