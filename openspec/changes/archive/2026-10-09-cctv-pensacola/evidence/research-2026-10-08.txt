@@ -1,0 +1,8 @@
+Quotes from the research of 2026-10-08 (workflow output wlrp4r0ov, 12 agents). The lead copied these lines without a change on 2026-10-09.
+They are the only source for the statement that another ArcGIS account owns the layer item, and for the earlier dead-frame count.
+The last quote shows that the earlier figures (66 cameras, 60 fresh, 5 dead) have no standalone probe record. The census of 2026-10-09 in frame-census.txt is the measured count.
+
+- The item is owned by a personal account (`jray5500`). It has no licence text. It was created 2022-03-08.
+- The layer data was last edited 2026-07-20 20:31 UTC, about 80 days ago.
+- Today 60 of the 66 Escambia and Santa Rosa frame URLs return a fresh JPEG (`image/jpeg`, 720x480, median age 1.9 minutes). Five return HTTP 404 HTML (channels 12227, 12228, 7315, 7316, 7317). One does not connect (`EM-Trailer-1`, host `snapshots.divas.cloud`, row stamped 2020-10-21).
+- **Mirror numbers.** There is no standalone probe record of the mirror in the supplied results. The 66 / 60 / 5 / 1 and 1.9-minute figures come from the plan, and the method for frame age is not stated. The discovery summary counted 62 (Escambia 46, Santa Rosa 16) in a smaller box and found 9 sampled images fresh.
