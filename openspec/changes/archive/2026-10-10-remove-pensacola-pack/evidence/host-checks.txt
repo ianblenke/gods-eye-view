@@ -1,12 +1,13 @@
 Host checks of remove-pensacola-pack, 2026-10-10, host Node v26.8.2.
 
-## git grep -in pensacola (without openspec/changes, openspec/trace, openspec/specs, src/data/local_data)
-CHANGELOG.md:3:- Remove the Pensacola traffic camera pack (2026-10-10). Only 17 of the 65 cameras served a frame, and FL511 limits its content to indi
+## git grep -inE 'pensacola|fl511|divas\.cloud|images-dis|escambia|cctvPensacola|CCTV_PENSACOLA|3wFbqsFPLeKqOlIK' (without openspec/changes, openspec/trace, openspec/specs, src/data/local_data)
+CHANGELOG.md:3:- Remove the Pensacola traffic camera pack (2026-10-10). On 2026-10-09 only 17 of the 65 cameras served a frame, and FL511 limits its content to individual
 CHANGELOG.md:4:  The settings `CCTV_PENSACOLA_ENABLED`, `CCTV_PENSACOLA_MAX_SOURCES` and `CCTV_PENSACOLA_ROWS_URL` have no use now.
 CHANGELOG.md:6:- Add Pensacola traffic cameras as an FL511 pack that needs no key. Frames are stills from `images-dis.divas.cloud`.
+CHANGELOG.md:7:  FL511 content is for individual non-commercial use only. On 2026-10-09 only 17 of the 65 listed cameras served a frame.
 CHANGELOG.md:8:  The default cap is 120 cameras, the nearest to Pensacola.
 CHANGELOG.md:9:  `CCTV_PENSACOLA_MAX_SOURCES` sets the cap, and `CCTV_PENSACOLA_ENABLED=0` stops the pack.
-(The matches are the removal entry and the old add entry of CHANGELOG.md. The files src/data/local_data hold place names.)
+(The matches are the removal entry and the old add entry of CHANGELOG.md. The files in src/data/local_data hold place names and were left out. The last name in the pattern is the item id of the layer.)
 
 ## CCTV test files (src/data/cctv*.test.mjs, server/providers/cctv*.test.mjs, server/providers/cctv/*.test.mjs): 22 files, each 'fail 0' (run: one node --test process for each file)
 
