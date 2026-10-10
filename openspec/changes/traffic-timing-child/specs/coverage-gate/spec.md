@@ -12,6 +12,6 @@ Origin: spec-first
 - **AND** the child process has the setting NODE_V8_COVERAGE with a new folder, and the settings GEV_SPEC_OUT, GEV_SPEC_ROOT and GEV_SPEC_INVENTORY with the value ""
 - **AND** the setting GEV_TRAFFIC_TIMING_CHILD of the child process names that folder
 - **AND** the child process exits with the status 0, and the folder holds a file whose name starts with "coverage-"
-- **AND** after its last check the child process writes the file "scenario-done.json" with its process number into the folder
-- **AND** that process number differs from the process number of the test
-- **AND** the scenario runs only in the child process
+- **AND** the child process writes the file "scenario-done.json" into the folder after its last check
+- **AND** the file holds the process number of the child process
+- **AND** the traffic timing scenario runs only in the child process
