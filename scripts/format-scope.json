@@ -534,7 +534,6 @@
   "src/data/cctvCalgary.test.mjs",
   "src/data/cctvVegvesen.test.mjs",
   "src/tooling/appContainer.test.mjs",
-  "src/data/cctvPensacola.test.mjs",
   "src/data/cctvNswSource.test.mjs",
   "src/data/cctvTxdotSource.test.mjs",
   "src/layers/cctv/source.test.mjs",
