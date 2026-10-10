@@ -1,8 +1,9 @@
 # Read-only checks of the merged tree
 
 The lead ran a workflow with four analysts. Each analyst read the merged tree (the files of commit `5bfdffed`, which equal the files of the tested tree). Each analyst changed no file in the clone.
-A skeptic agent checked the one finding with the severity blocker or major.
-The numbers below come from the reports of the analysts. The lead checked the facts of the Known limits against the code.
+One analyst rated one finding as a blocker. A skeptic agent checked it (see the section about the fork specs).
+
+The numbers below come from the reports of the analysts. The file `evidence/workflow-result.txt` has the full reports with their commands. The lead checked the facts of the Known limits against the code.
 
 ## The OSH layer and the new source composition
 
@@ -23,7 +24,8 @@ The numbers below come from the reports of the analysts. The lead checked the fa
 
 - No test with a scenario ID fails. So rule 25 needs no retired scenario and no new scenario.
 - The registry has 30 entries and the catalog has 31 layers. The two changed numbers are the only count pins that the merge breaks.
-- The upstream part adds untagged tests: 29 by the count of the analyst. Eight are in new files with no ledger entry. Two of them are in test files with fork tests that all carry IDs. The adopt command records them.
+- The ratchet counts 28 more untraced tests than fork main (5923 against 5895). The five new test files hold 18 of them: the adopt records show `untraced` 1, 7, 3, 2 and 5. Two more are the added tests in `src/layers/recentImagery/rendering.test.mjs` and `src/layers/recentImagery/thumbnails.test.mjs` (`untraced` 1 for each). The adopt command records them.
+- The analyst rated these two added tests as a blocker, because each file had fork tests that all carry IDs and no ledger entry. The skeptic found the fact true and the severity too high. Every sync meets this state until the adopt command runs, and the lead ran it (39 records).
 - No fork document has a sentence that the upstream part makes false. The Known limits `share-options` and `osh-source` come from this check.
 - `src/tooling/spec/gates.test.mjs` stopped at 280 s in the run of the analyst, and it also stops on fork main. The lead ran it alone with a longer limit (241 of 241 tests pass).
 

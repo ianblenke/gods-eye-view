@@ -12,6 +12,13 @@ Upstream check of upstream-sync-5, 2026-10-10.
 ## upstream commits after the sync 4 point 6be25595
 23
 
+## pull requests merged upstream after 6be25595 (git log --merges, lines with 'pull request')
+591f299d Merge pull request #986 from bilawalsidhu/fix/healthy-empty-vessel-coverage
+89e566aa Merge pull request #985 from bilawalsidhu/fix/street-level-provider-sharing
+90a1442c Merge pull request #984 from bilawalsidhu/refactor/route-imagery-sources
+2fe70f63 Merge pull request #983 from bilawalsidhu/feat/optional-catalog-sources
+e626137a Merge pull request #982 from bilawalsidhu/fix/optional-street-level-providers
+
 ## the 50 files that the merge changes (status, name)
 M CHANGELOG.md
 M docs/CURRENT-STATE.md

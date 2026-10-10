@@ -1,6 +1,6 @@
 ## Why
 
-The owner asks for syncs more often than once each week, and answered "Yes" on 2026-10-10 to a fifth sync.
+The owner wants a sync more often than once each week. On 2026-10-10 the owner answered "Yes" to a fifth sync.
 Upstream has 23 commits after the fourth sync.
 The commits come from five pull requests (#982 to #986). They make the sources of Street Level, Directions and Recent Imagery replaceable. They keep custom Street Level provider switches in share links, and they accept healthy empty vessel coverage.
 
@@ -30,7 +30,7 @@ Rule 23: the nine added files are upstream code, because the fork does not write
 The nine added files are `src/app/layers/streetLevel.test.mjs`, `src/app/sourceComposition.js`, `src/app/sourceComposition.test.mjs`, `src/data/idSwitches.js`, `src/layers/directions/source.js`, `src/layers/directions/source.test.mjs`, `src/layers/recentImagery/source.js`, `src/layers/recentImagery/source.test.mjs` and `src/layers/streetLevel/providerSwitches.test.mjs`.
 
 Rule 25: the merge breaks no test with a scenario ID. The change retires no scenario and writes none again.
-The tests that the merge adds or changes have no scenario ID. This includes one added test in each of the files `src/layers/recentImagery/rendering.test.mjs` and `src/layers/recentImagery/thumbnails.test.mjs`, which have fork tests with scenario IDs.
+The tests that the merge adds or changes have no scenario ID. This includes one added test in each of the files `src/layers/recentImagery/rendering.test.mjs` and `src/layers/recentImagery/thumbnails.test.mjs`, The two files have fork tests with scenario IDs.
 The change opens no new coverage gap for owned code. The adopt command records the gaps of the upstream files that the merge brings.
 
 The upstream code adds no route and no dependency. It adds two export lines to `package.json` for the new source modules.
@@ -44,5 +44,6 @@ The change has no spec delta, because the merge changes no requirement of the fo
 - Known limit `credit`: Recent Imagery passes the credit of its source to Cesium. Cesium turns a text credit into HTML (`Credit.js`, `div.innerHTML`). Only code that builds the catalog sets the credit, and no URL or share link reaches it.
 - Known limit `empty-vessels`: The upstream text says that vessel sources can report healthy empty coverage. In the stock adapter, a response with no observation time has the freshness `unknown`, so only a custom source reaches the healthy empty state.
 - Known limit `share-options`: `docs/CURRENT-STATE.md` has the upstream text about the `r` option of Street Level. The older Street Level section lists the share options `m`, `p` and `s` and does not list `r`. The fork does not edit the text of upstream.
+- Known limit `catalog-count`: The fork edits the layer count of two upstream tests from 30 to 31. A later sync conflicts in these two lines when upstream changes the count.
 - Known limit `token-collision`: Upstream has 29 reserved layer tokens and none is `3`. The next new upstream layer can take `3`, which the OSH layer owns. The conflict then shows in `src/data/layerStateTokenReservations.json` at the next sync.
 - Known limit `manifest-path`: `openspec/ownership.json` lists `src/layers/oshTasking/`, and that folder does not exist. This is older than this change.
