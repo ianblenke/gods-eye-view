@@ -29,7 +29,7 @@ The file `compose.codex.yaml` changes three things for the container.
 - The container shares the network of the host. It can reach services on the loopback address of the host, and a port conflict can stop it.
 - Any code in the container can read `auth.json`, as on the host. The file holds a refresh token.
 - The mount shows the whole folder `~/.codex` to the container, with the settings and the history of Codex. The server reads only `auth.json`.
-- The container user `node` has the number 1000. It reads `auth.json` only when the file belongs to the host user with the number 1000. The author did not check rootless Docker.
+- The container user `node` has the number 1000. It can read `auth.json` when the file belongs to the host user with the number 1000. For another number, the file mode decides, and the author did not check it. The author did not check rootless Docker.
 - Run `codex login` before you start the app for the first time. When `~/.codex` does not exist, Docker creates it as an empty folder that belongs to root.
 - Any program on the host passes the check for the same machine, because the container shares the network of the host. `SECURITY.md` describes this limit.
 - The override uses `!reset`, so it needs a new version of Docker Compose. The author ran `docker compose config` with Compose 5.5.1 and does not know the lowest version.

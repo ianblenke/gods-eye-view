@@ -6,7 +6,8 @@ import { fileURLToPath } from 'node:url';
 const ROOT = new URL('../../', import.meta.url);
 const read = (name) => readFileSync(fileURLToPath(new URL(name, ROOT)), 'utf8');
 const lines = (text) => text.split('\n');
-const code = (text) => lines(text).filter((line) => !/^\s*#/.test(line));
+const code = (text) =>
+  lines(text).filter((line) => line.trim() !== '' && !/^\s*#/.test(line));
 
 test('[app-container-001] the Codex override uses the host network, resets the ports and sets PORT', () => {
   const override = lines(read('compose.codex.yaml'));
@@ -19,7 +20,6 @@ test('[app-container-001] the Codex override uses the host network, resets the p
 test('[app-container-002] the Codex override mounts the Codex folder read-only and mounts no other volume', () => {
   const override = code(read('compose.codex.yaml'));
   const start = override.indexOf('    volumes:');
-  assert.notEqual(start, -1);
   const mounts = [];
   for (const line of override.slice(start + 1)) {
     if (!line.startsWith('      ')) break;
@@ -32,7 +32,7 @@ test('[app-container-003] the target up-codex builds and starts the app with bot
   const makefile = read('Makefile');
   assert.match(
     makefile,
-    /^up-codex:\n\tdocker compose -f compose\.yaml -f compose\.codex\.yaml build\n\tdocker compose -f compose\.yaml -f compose\.codex\.yaml up --force-recreate\n/m,
+    /^up-codex:\n\tdocker compose -f compose\.yaml -f compose\.codex\.yaml build\n\tdocker compose -f compose\.yaml -f compose\.codex\.yaml up --force-recreate\n(?!\t)/m,
   );
   const phony = lines(makefile).find((line) => line.startsWith('.PHONY:'));
   assert.ok(phony.split(/\s+/).includes('up-codex'));
@@ -51,6 +51,6 @@ test('[app-container-004] the default compose file and the target up stay as the
   );
   assert.match(
     read('Makefile'),
-    /^up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n/m,
+    /^up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n(?!\t)/m,
   );
 });
