@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readdirSync, rmSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { readLayerSource } from '../testSupport/readLayerSource.mjs';
@@ -10,32 +10,37 @@ import { fileURLToPath } from 'node:url';
 import { getTrafficTimingDiagnostics } from './traffic.js';
 
 const SOURCE = readLayerSource(new URL('./traffic.js', import.meta.url), 'utf8').replace(/parts\.(?:model|timing)\./g, '');
-// The scenario test below loads project code through a vite server that changes the source of
-// 51 files. The gate guard finds that code under the name of each file and counts the file as
-// untrue, so the gate would drop the real coverage of every other test for those files. The
-// scenario therefore runs in a child process of this file, with its own V8 coverage folder
-// and blank guard settings, so the guard installs nothing in the child process.
+// The scenario test below loads project code through a vite server. The server changes the
+// source of many files. The gate guard finds that code under the name of each file and
+// marks the file untrue. The scenario therefore runs in a child process with its own V8
+// coverage folder and blank guard settings.
 const CHILD_FOLDER = process.env.GEV_TRAFFIC_TIMING_CHILD;
 
 function runScenarioInChild() {
   const folder = mkdtempSync(path.join(tmpdir(), 'gev-traffic-timing-'));
   try {
+    const env = {
+      ...process.env,
+      GEV_TRAFFIC_TIMING_CHILD: folder,
+      NODE_V8_COVERAGE: folder,
+      GEV_SPEC_OUT: '',
+      GEV_SPEC_ROOT: '',
+      GEV_SPEC_INVENTORY: '',
+    };
+    // The gate runs this file with NODE_TEST_CONTEXT, which makes a child print binary frames.
+    delete env.NODE_TEST_CONTEXT;
     const result = spawnSync(process.execPath, [fileURLToPath(import.meta.url)], {
-      env: {
-        ...process.env,
-        GEV_TRAFFIC_TIMING_CHILD: folder,
-        NODE_V8_COVERAGE: folder,
-        GEV_SPEC_OUT: '',
-        GEV_SPEC_ROOT: '',
-        GEV_SPEC_INVENTORY: '',
-      },
+      env,
       encoding: 'utf8',
+      timeout: 300000,
     });
     assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
     assert.ok(
       readdirSync(folder).some((file) => file.startsWith('coverage-')),
       'the child process must write V8 coverage into its own folder',
     );
+    const done = JSON.parse(readFileSync(path.join(folder, 'scenario-done.json'), 'utf8'));
+    assert.notEqual(done.pid, process.pid, 'the scenario must run in the child process');
   } finally {
     rmSync(folder, { recursive: true, force: true });
   }
@@ -359,6 +364,7 @@ test('[coverage-gate-101] traffic timing pairs real ordering to the scheduling c
     assert.ok(performance.getEntriesByType('measure').every((entry) => (
       entry.detail?.interactionId !== anchorB.interactionId
     )), 'the canceled/stale B load must never emit a correlated trace');
+    writeFileSync(path.join(CHILD_FOLDER, 'scenario-done.json'), JSON.stringify({ pid: process.pid }));
   } finally {
     trafficLayer?.disable(viewer);
     await server?.close();
