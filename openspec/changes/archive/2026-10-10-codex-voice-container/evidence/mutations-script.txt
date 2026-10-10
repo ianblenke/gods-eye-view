@@ -24,6 +24,12 @@ faults=[
  ('app-container-003','Add a third recipe line to up-codex','Makefile',[("\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n","\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n\tdocker compose -f compose.yaml -f compose.codex.yaml logs\n")]),
  ('app-container-004','Add a third recipe line to up','Makefile',[("up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n","up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n\tdocker compose logs\n")]),
  ('app-container-004','Remove the build line of up','Makefile',[("up:\n\tdocker compose build\n","up:\n")]),
+ ('app-container-001','Remove the reset from the ports of the override','compose.codex.yaml',[("    ports: !reset []\n","    ports: []\n")]),
+ ('app-container-002','Mount another folder of the host at the Codex path','compose.codex.yaml',[("- ${HOME}/.codex:/home/node/.codex:ro","- ${HOME}/.config:/home/node/.codex:ro")]),
+ ('app-container-003','Remove the Codex file from the build line of up-codex','Makefile',[("\tdocker compose -f compose.yaml -f compose.codex.yaml build\n","\tdocker compose -f compose.yaml build\n")]),
+ ('app-container-003','Add a third recipe line after a blank line to up-codex','Makefile',[("\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n","\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n\n\tdocker compose -f compose.yaml -f compose.codex.yaml logs\n")]),
+ ('app-container-004','Swap the lines of up','Makefile',[("up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n","up:\n\tdocker compose up --force-recreate\n\tdocker compose build\n")]),
+ ('app-container-004','Add a third recipe line after a blank line to up','Makefile',[("up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n","up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n\n\tdocker compose logs\n")]),
  ('app-container-004','Change the target up','Makefile',[("up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n","up:\n\tdocker compose build\n\tdocker compose up\n")]),
 ]
 out=[];log=[]

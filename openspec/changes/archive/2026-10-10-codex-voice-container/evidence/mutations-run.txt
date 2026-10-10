@@ -1,4 +1,4 @@
-Run of the 22 named faults, 2026-10-10, host Node v26.8.2. Each fault is a text change of compose.codex.yaml, compose.yaml or the Makefile; the script restores the files and checks that they are the originals.
+Run of the 28 named faults, 2026-10-10, host Node v26.8.2. Each fault is a text change of compose.codex.yaml, compose.yaml or the Makefile; the script restores the files and checks that they are the originals.
 Command for each fault: node --test --test-force-exit --test-reporter=spec src/tooling/appContainer.test.mjs. Baseline without a fault: 4 tests, 4 pass, 0 fail.
 Lines: fault | exit status | failing test lines | first failing test
 Remove network_mode from the override | exit 1 | failing test lines 2 | [app-container-001] the Codex override uses the host network, resets the ports and sets PORT
@@ -22,4 +22,10 @@ Swap the build line and the up line of up-codex | exit 1 | failing test lines 2 
 Add a third recipe line to up-codex | exit 1 | failing test lines 2 | [app-container-003] the target up-codex builds and starts the app with both compose files
 Add a third recipe line to up | exit 1 | failing test lines 2 | [app-container-004] the default compose file and the target up stay as they are
 Remove the build line of up | exit 1 | failing test lines 2 | [app-container-004] the default compose file and the target up stay as they are
+Remove the reset from the ports of the override | exit 1 | failing test lines 2 | [app-container-001] the Codex override uses the host network, resets the ports and sets PORT
+Mount another folder of the host at the Codex path | exit 1 | failing test lines 2 | [app-container-002] the Codex override mounts the Codex folder read-only and mounts no other volume
+Remove the Codex file from the build line of up-codex | exit 1 | failing test lines 2 | [app-container-003] the target up-codex builds and starts the app with both compose files
+Add a third recipe line after a blank line to up-codex | exit 1 | failing test lines 2 | [app-container-003] the target up-codex builds and starts the app with both compose files
+Swap the lines of up | exit 1 | failing test lines 2 | [app-container-004] the default compose file and the target up stay as they are
+Add a third recipe line after a blank line to up | exit 1 | failing test lines 2 | [app-container-004] the default compose file and the target up stay as they are
 Change the target up | exit 1 | failing test lines 2 | [app-container-004] the default compose file and the target up stay as they are

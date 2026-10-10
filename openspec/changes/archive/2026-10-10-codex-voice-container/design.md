@@ -22,7 +22,7 @@ The server gets its port from the setting PORT, so the override sets PORT to `${
 
 ### D3: No Codex program in the image
 
-The sign-in button starts `codex login` with no terminal, and Codex opens the browser itself. This cannot work in this image, which has no Codex program. So the user signs in on the host, and the image stays as it is.
+When the sign-in is missing or has expired, the sign-in button starts `codex login` with no terminal, and the command needs a browser. This cannot work in this image, which has no Codex program. So the user signs in on the host, and the image stays as it is.
 
 The container needs only the file `auth.json`. The override mounts the folder `${HOME}/.codex` as `/home/node/.codex` with the flag `ro`, so the container cannot change a Codex file.
 The override mounts the folder and not the file, because a mount of one file can keep the old file when a program replaces it. The folder also holds the settings and the history of Codex, which the server does not read.

@@ -32,7 +32,7 @@ test('[app-container-003] the target up-codex builds and starts the app with bot
   const makefile = read('Makefile');
   assert.match(
     makefile,
-    /^up-codex:\n\tdocker compose -f compose\.yaml -f compose\.codex\.yaml build\n\tdocker compose -f compose\.yaml -f compose\.codex\.yaml up --force-recreate\n(?!\t)/m,
+    /^up-codex:\n\tdocker compose -f compose\.yaml -f compose\.codex\.yaml build\n\tdocker compose -f compose\.yaml -f compose\.codex\.yaml up --force-recreate\n(?!\s*\t)/m,
   );
   const phony = lines(makefile).find((line) => line.startsWith('.PHONY:'));
   assert.ok(phony.split(/\s+/).includes('up-codex'));
@@ -51,6 +51,6 @@ test('[app-container-004] the default compose file and the target up stay as the
   );
   assert.match(
     read('Makefile'),
-    /^up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n(?!\t)/m,
+    /^up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n(?!\s*\t)/m,
   );
 });
