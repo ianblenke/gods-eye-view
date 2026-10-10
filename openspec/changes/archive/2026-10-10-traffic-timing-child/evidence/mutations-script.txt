@@ -1,0 +1,43 @@
+import subprocess,re
+R='/home/ianblenke/docker/gev-work/traffic-timing-child/'
+F=R+'src/data/trafficTiming.test.mjs'
+orig=open(F).read()
+WRITE="""    writeFileSync(
+      path.join(CHILD_FOLDER, 'scenario-done.json'),
+      JSON.stringify({ pid: process.pid, diagnostics: traffic.getTrafficTimingDiagnostics() }),
+    );
+"""
+faults=[
+ ('Remove the blank GEV_SPEC_OUT of the child process',[("      GEV_SPEC_OUT: '',\n","")]),
+ ('Remove the blank GEV_SPEC_ROOT of the child process',[("      GEV_SPEC_ROOT: '',\n","")]),
+ ('Remove the blank GEV_SPEC_INVENTORY of the child process',[("      GEV_SPEC_INVENTORY: '',\n","")]),
+ ('Remove the own coverage folder of the child process',[("      NODE_V8_COVERAGE: folder,\n","")]),
+ ('Give the child process another GEV_TRAFFIC_TIMING_CHILD value',[("      GEV_TRAFFIC_TIMING_CHILD: folder,\n","      GEV_TRAFFIC_TIMING_CHILD: `${folder}-other`,\n")]),
+ ('Run another script in the child process',[("[fileURLToPath(import.meta.url)], {","['-e', ''], {")]),
+ ('Write the process number of the parent in the file of the child process',[("pid: process.pid, diagnostics","pid: process.ppid, diagnostics")]),
+ ('Write the process number 1 in the file of the child process',[("pid: process.pid, diagnostics","pid: 1, diagnostics")]),
+ ('Exit the child process with the status 1 after it wrote the file',[(WRITE,WRITE+"    process.exitCode = 1;\n")]),
+ ('Write the file before the scenario runs',[(WRITE,""),("    trafficLayer = traffic.default;\n","    trafficLayer = traffic.default;\n"+WRITE)]),
+ ('Run the scenario in the parent process',[("if (!CHILD_FOLDER) {","if (false) {")]),
+ ('Break an assertion inside the scenario',[("assert.equal(matches.length, 1, 'exactly one traffic debounce must be pending');","assert.equal(matches.length, 2, 'exactly one traffic debounce must be pending');")]),
+ ('Look for another coverage file name',[("file.startsWith('coverage-')","file.startsWith('zzz-')")]),
+]
+out=[];log=[]
+try:
+  for desc,pairs in faults:
+    text=orig
+    for old,new in pairs:
+        assert text.count(old)==1,(desc,old[:60],text.count(old))
+        text=text.replace(old,new,1)
+    open(F,'w').write(text)
+    p=subprocess.run('taskset -c 8-11 timeout 150 node --test --test-force-exit --test-reporter=spec src/data/trafficTiming.test.mjs',shell=True,cwd=R,capture_output=True,text=True)
+    fails=[re.sub(r' \(\d+(\.\d+)?ms\)$','',l.strip()[2:].strip()) for l in (p.stdout+p.stderr).splitlines() if l.strip().startswith('✖ ')]
+    first=fails[0] if fails else 'NONE'
+    out.append(f'coverage-gate-101 | {desc} | {first}')
+    log.append(f'{desc} | exit {p.returncode} | failing tests {len(fails)} | {first}')
+    print(log[-1])
+finally:
+  open(F,'w').write(orig)
+assert open(F).read()==orig
+open('/home/ianblenke/docker/gev-tools/cctv-pensacola/scratch/faults-ttc2.txt','w').write('\n'.join(out)+'\n')
+open('/home/ianblenke/docker/gev-tools/cctv-pensacola/scratch/faults-ttc2-run.txt','w').write('\n'.join(log)+'\n')

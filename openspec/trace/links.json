@@ -619,6 +619,9 @@
   "coverage-gate-100": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-100] check QA capability names without tests"
   ],
+  "coverage-gate-101": [
+    "src/data/trafficTiming.test.mjs › [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms"
+  ],
   "credential-boundary-001": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] a fixture build has only the four allowed sentinels",
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] every secret sentinel stays out of the built output, by name"

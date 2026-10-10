@@ -1,0 +1,13 @@
+Host time of the test file, 2026-10-10, host Node v26.8.2.
+Command: node --test --test-force-exit --test-reporter=spec src/data/trafficTiming.test.mjs
+✔ traffic timing stays inert when the DEV flag is off under bare Node (11.940738ms)
+✔ [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms (11642.285273ms)
+✔ the timed parser stays source-equivalent to the production parser (24.188895ms)
+ℹ tests 3
+ℹ pass 3
+ℹ fail 0
+ℹ duration_ms 18349.219697
+
+real	0m18.616s
+user	0m19.004s
+sys	0m1.590s

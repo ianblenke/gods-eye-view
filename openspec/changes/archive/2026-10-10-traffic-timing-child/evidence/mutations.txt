@@ -1,0 +1,13 @@
+coverage-gate-101 | Remove the blank GEV_SPEC_OUT of the child process | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Remove the blank GEV_SPEC_ROOT of the child process | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Remove the blank GEV_SPEC_INVENTORY of the child process | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Remove the own coverage folder of the child process | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Give the child process another GEV_TRAFFIC_TIMING_CHILD value | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Run another script in the child process | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Write the process number of the parent in the file of the child process | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Write the process number 1 in the file of the child process | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Exit the child process with the status 1 after it wrote the file | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Write the file before the scenario runs | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Run the scenario in the parent process | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Break an assertion inside the scenario | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+coverage-gate-101 | Look for another coverage file name | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms

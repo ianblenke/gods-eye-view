@@ -1,0 +1,56 @@
+Guard record of the gate run of 2026-10-09 (file .gev-cache/spec/guard-1951.jsonl of the clone of the change cctv-pensacola, final make gates).
+The record has one process. It lists 51 violations with the code COVERAGE-FAKE, and the assertions of the test file: src/data/trafficTiming.test.mjs.
+The 51 files equal the 51 entries of openspec/trace/gaps.json with untrue true (the lead compared the two lists).
+
+Files with a violation:
+src/app/layers/traffic.js
+src/data/cameraSensitivity.js
+src/data/dataCredits.js
+src/data/flowMatch.js
+src/data/geoid.js
+src/data/groundFloor.js
+src/data/terrainHeights.js
+src/data/tomtomTiles.js
+src/data/traffic.js
+src/data/trafficBounds.js
+src/data/trafficFlowStyle.js
+src/data/trafficPresetStyle.js
+src/data/trafficQueue.js
+src/layers/traffic/animation.js
+src/layers/traffic/controls.js
+src/layers/traffic/flow.js
+src/layers/traffic/flowDecode.js
+src/layers/traffic/flowSource.js
+src/layers/traffic/footprint.js
+src/layers/traffic/index.js
+src/layers/traffic/ingestion.js
+src/layers/traffic/lifecycle.js
+src/layers/traffic/model.js
+src/layers/traffic/policy.js
+src/layers/traffic/rendering.js
+src/layers/traffic/retention.js
+src/layers/traffic/roadModes.js
+src/layers/traffic/source.js
+src/layers/traffic/state.js
+src/layers/traffic/style.js
+src/layers/traffic/surface.js
+src/layers/traffic/timing.js
+src/layers/traffic/viewport.js
+src/renderGovernor.js
+src/services/application.js
+src/services/groundFloor.js
+src/services/requests.js
+src/services/terrainHeights.js
+src/sources/capability.js
+src/sources/featureGeometry.js
+src/sources/featureSource.js
+src/sources/httpBody.js
+src/sources/militaryTileGeometry.js
+src/sources/openFreeMap.js
+src/sources/overpassFeatures.js
+src/sources/overpassFeaturesRecords.js
+src/sources/overpassRoads.js
+src/sources/phaseTiming.js
+src/sources/requestDeadline.js
+src/sources/sourceSlot.js
+src/sources/vectorTiles.js
