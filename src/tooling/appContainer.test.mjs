@@ -16,10 +16,15 @@ test('[app-container-001] the Codex override uses the host network, resets the p
   assert.ok(override.includes('      PORT: ${GEV_PORT:-4173}'));
 });
 
-test('[app-container-002] the Codex override mounts the Codex folder read-only and nothing else of it', () => {
-  const mounts = code(read('compose.codex.yaml')).filter((line) =>
-    line.includes('.codex'),
-  );
+test('[app-container-002] the Codex override mounts the Codex folder read-only and mounts no other volume', () => {
+  const override = code(read('compose.codex.yaml'));
+  const start = override.indexOf('    volumes:');
+  assert.notEqual(start, -1);
+  const mounts = [];
+  for (const line of override.slice(start + 1)) {
+    if (!line.startsWith('      ')) break;
+    mounts.push(line);
+  }
   assert.deepEqual(mounts, ['      - ${HOME}/.codex:/home/node/.codex:ro']);
 });
 
