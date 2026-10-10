@@ -9,7 +9,7 @@ Without the fault, both layer count tests pass. With the fault, the two tests wi
 The lead ran each test file on the host, one process for each file. `evidence/host-run.txt` has one line for each of the 592 files. The run has 9585 tests, 9570 pass, 0 fail and 15 skip.
 
 The file `src/tooling/spec/gates.test.mjs` needs more than 590 s. The lead ran it alone with a limit of 2400 s, and all 241 tests pass.
-Three files skip tests on the host: `src/data/focusAllocations.test.mjs` (1), `src/keySetupHardening.test.mjs` (1) and `src/overlays/worldOverlayAllocation.test.mjs` (13). The host has Node 26, and the image has Node 24.21.0. The file `evidence/host-node.txt` shows both versions.
+Two files skip 14 tests on the host, because the host has Node 26 and the tests need Node 24: `src/data/focusAllocations.test.mjs` (1) and `src/overlays/worldOverlayAllocation.test.mjs` (13). One Windows test in `src/keySetupHardening.test.mjs` skips on Linux. The file `evidence/host-node.txt` shows both Node versions, the function that checks the version and the three skip lines.
 
 ## Upstream check
 
