@@ -1,5 +1,8 @@
 # Changelog
 
+- Remove the Pensacola traffic camera pack (2026-10-10). Only 17 of the 65 cameras served a frame, and FL511 limits its content to individual non-commercial use.
+  The settings `CCTV_PENSACOLA_ENABLED`, `CCTV_PENSACOLA_MAX_SOURCES` and `CCTV_PENSACOLA_ROWS_URL` have no use now.
+
 - Add Pensacola traffic cameras as an FL511 pack that needs no key. Frames are stills from `images-dis.divas.cloud`.
   FL511 content is for individual non-commercial use only. On 2026-10-09 only 17 of the 65 listed cameras served a frame.
   The default cap is 120 cameras, the nearest to Pensacola.
