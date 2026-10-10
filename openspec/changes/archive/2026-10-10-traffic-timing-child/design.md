@@ -2,7 +2,7 @@
 
 Base commit: `4f0db4ae` (main, after the merge of the Pensacola pack).
 The guard record of the last gate run lists 51 violations COVERAGE-FAKE. The record has the assertions of the test file `src/data/trafficTiming.test.mjs` only.
-The 51 files are the 51 entries of `openspec/trace/gaps.json` with `untrue: true`. The file `evidence/guard-record.txt` holds the list, because each run of a gates target of `make` deletes the folder of the record.
+The 51 files are the 51 entries of `openspec/trace/gaps.json` with `untrue: true`. The file `evidence/guard-record.txt` holds the list, because each gate run deletes the folder of the record.
 
 ## Key decisions
 
@@ -18,8 +18,8 @@ The pattern is in `src/tooling/spec/runParallel.test.mjs`.
 
 ### D3: The checks of the test
 
-The child asserts its own settings before the scenario starts. After its last check the child writes the file "scenario-done.json" with its process number.
-The parent asserts three things. The status is 0. The folder holds a file whose name starts with "coverage-". The file "scenario-done.json" holds the process number of the child process.
+The child asserts its own settings before the scenario starts. After its last check the child writes the file "scenario-done.json" with its process number and the final diagnostics of the traffic timing.
+The parent asserts three things. The status is 0. The folder holds a file whose name starts with "coverage-". The file "scenario-done.json" holds the process number of the child process and the literal final diagnostics.
 
 A parent that runs the scenario itself fails the check of the child settings. A child with a wrong setting makes the status 1.
 
