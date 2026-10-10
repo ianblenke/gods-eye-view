@@ -1,0 +1,54 @@
+Ledger change of traffic-timing-child (openspec/trace/gaps.json, main 4f0db4ae against the archived tree)
+entries: 771 -> 762; untrue entries: 51 -> 0; uncovered lines of all entries: 56328 -> 46573
+file | lines before -> after | branches before -> after | functions before -> after | loaded before -> after
+src/app/layers/traffic.js | 12 -> removed (fully covered)
+src/data/cameraSensitivity.js | 93 -> 0 | None -> 4 | None -> 0 | False -> True
+src/data/dataCredits.js | 475 -> 23 | None -> 1 | None -> 2 | False -> True
+src/data/flowMatch.js | 294 -> 0 | None -> 8 | None -> 0 | False -> True
+src/data/geoid.js | 99 -> 14 | None -> 1 | None -> 3 | False -> True
+src/data/groundFloor.js | 32 -> removed (fully covered)
+src/data/terrainHeights.js | 10 -> removed (fully covered)
+src/data/tomtomTiles.js | 172 -> 0 | None -> 2 | None -> 0 | False -> True
+src/data/traffic.js | 21 -> 0 | None -> 0 | None -> 2 | False -> True
+src/data/trafficBounds.js | 190 -> removed (fully covered)
+src/data/trafficFlowStyle.js | 80 -> removed (fully covered)
+src/data/trafficPresetStyle.js | 150 -> removed (fully covered)
+src/data/trafficQueue.js | 93 -> 1 | None -> 2 | None -> 0 | False -> True
+src/layers/traffic/animation.js | 344 -> 32 | None -> 34 | None -> 0 | False -> True
+src/layers/traffic/controls.js | 350 -> 58 | None -> 17 | None -> 2 | False -> True
+src/layers/traffic/flow.js | 559 -> 110 | None -> 37 | None -> 4 | False -> True
+src/layers/traffic/flowDecode.js | 83 -> 2 | None -> 12 | None -> 0 | False -> True
+src/layers/traffic/flowSource.js | 57 -> 0 | None -> 2 | None -> 0 | False -> True
+src/layers/traffic/footprint.js | 166 -> 1 | None -> 6 | None -> 0 | False -> True
+src/layers/traffic/index.js | 65 -> 3 | None -> 3 | None -> 1 | False -> True
+src/layers/traffic/ingestion.js | 646 -> 67 | None -> 35 | None -> 5 | False -> True
+src/layers/traffic/lifecycle.js | 207 -> 29 | None -> 6 | None -> 1 | False -> True
+src/layers/traffic/model.js | 381 -> 6 | None -> 19 | None -> 0 | False -> True
+src/layers/traffic/policy.js | 187 -> 0 | None -> 3 | None -> 0 | False -> True
+src/layers/traffic/rendering.js | 318 -> 152 | None -> 22 | None -> 4 | False -> True
+src/layers/traffic/retention.js | 256 -> 0 | None -> 5 | None -> 0 | False -> True
+src/layers/traffic/roadModes.js | 247 -> 7 | None -> 13 | None -> 0 | False -> True
+src/layers/traffic/source.js | 374 -> 4 | None -> 15 | None -> 4 | False -> True
+src/layers/traffic/state.js | 299 -> removed (fully covered)
+src/layers/traffic/style.js | 156 -> 42 | None -> 6 | None -> 4 | False -> True
+src/layers/traffic/surface.js | 435 -> 5 | None -> 13 | None -> 1 | False -> True
+src/layers/traffic/timing.js | 420 -> 313 | None -> 1 | None -> 13 | False -> True
+src/layers/traffic/viewport.js | 249 -> 9 | None -> 12 | None -> 0 | False -> True
+src/renderGovernor.js | 147 -> 0 | None -> 3 | None -> 0 | False -> True
+src/services/application.js | 47 -> 15 | None -> 0 | None -> 1 | False -> True
+src/services/groundFloor.js | 666 -> 1 | None -> 17 | None -> 2 | False -> True
+src/services/requests.js | 192 -> 3 | None -> 9 | None -> 0 | False -> True
+src/services/terrainHeights.js | 361 -> 0 | None -> 4 | None -> 0 | False -> True
+src/sources/capability.js | 21 -> removed (fully covered)
+src/sources/featureGeometry.js | 272 -> 106 | None -> 12 | None -> 5 | False -> True
+src/sources/featureSource.js | 20 -> removed (fully covered)
+src/sources/httpBody.js | 126 -> 1 | None -> 3 | None -> 5 | False -> True
+src/sources/militaryTileGeometry.js | 352 -> 2 | None -> 15 | None -> 0 | False -> True
+src/sources/openFreeMap.js | 234 -> 1 | None -> 8 | None -> 0 | False -> True
+src/sources/overpassFeatures.js | 232 -> 7 | None -> 4 | None -> 1 | False -> True
+src/sources/overpassFeaturesRecords.js | 76 -> 0 | None -> 6 | None -> 0 | False -> True
+src/sources/overpassRoads.js | 27 -> 25 | None -> 0 | None -> 1 | False -> True
+src/sources/phaseTiming.js | 9 -> 4 | None -> 2 | None -> 0 | False -> True
+src/sources/requestDeadline.js | 43 -> 0 | None -> 1 | None -> 0 | False -> True
+src/sources/sourceSlot.js | 52 -> 0 | None -> 1 | None -> 0 | False -> True
+src/sources/vectorTiles.js | 424 -> 23 | None -> 13 | None -> 4 | False -> True
