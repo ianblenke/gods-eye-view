@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Container check of codex-voice-container (task 4.1 to 4.3). One non-app container at a time.
+# Prints no secret: only HTTP codes and key names of JSON bodies.
+set -u
+CLONE=/home/ianblenke/docker/gev-work/codex-voice-container
+IMG=gev-e2e:codex
+LAN=$(ip -4 route get 1.1.1.1 | sed -n 's/.* src \([0-9.]*\).*/\1/p')
+keys() { node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log("keys:",Object.keys(JSON.parse(s)).sort().join(","))}catch{console.log("body:",s.slice(0,80).replace(/\s+/g," "))}})'; }
+get() { # url -> "HTTP code" and body summary
+  local out; out=$(curl -s -m 10 -o /tmp/claude-1000/e2e-body.txt -w '%{http_code}' "$1"); echo "GET $2 -> HTTP $out; $(keys < /tmp/claude-1000/e2e-body.txt)"; }
+wait_up() { for i in $(seq 1 90); do c=$(curl -s -m 3 -o /dev/null -w '%{http_code}' "$1"); [ "$c" != "000" ] && return 0; sleep 2; done; echo "server did not start"; return 1; }
+echo "Container check of codex-voice-container, $(date -u +%F), host $(uname -sr), Docker $(docker --version | cut -d' ' -f3 | tr -d ,)."
+echo "LAN address of the host: $(echo "$LAN" | sed 's/[0-9]*$/x/') (last number hidden)"
+echo
+echo "## Image"
+docker build -q -t "$IMG" "$CLONE" >/dev/null 2>&1 && echo "built $IMG from the clone" || { echo "build failed"; exit 1; }
+echo
+echo "## 4.1a Host network (the setup of make up-codex): PORT=4199, mount of the Codex folder, read-only"
+docker rm -f gev-e2e-host >/dev/null 2>&1
+docker run -d --name gev-e2e-host --network host -e PORT=4199 -v "$HOME/.codex:/home/node/.codex:ro" "$IMG" >/dev/null && echo "started with --network host"
+wait_up http://127.0.0.1:4199/api/realtime/oauth-status
+get http://127.0.0.1:4199/api/realtime/oauth-status "127.0.0.1:4199/api/realtime/oauth-status"
+get "http://localhost:4199/api/realtime/oauth-status" "localhost:4199/api/realtime/oauth-status"
+get "http://$LAN:4199/api/realtime/oauth-status" "LAN-address:4199/api/realtime/oauth-status"
+get http://127.0.0.1:4199/api/setup/status "127.0.0.1:4199/api/setup/status (Provider Settings)"
+echo "mount flags seen in the container:"; docker exec gev-e2e-host sh -c 'grep " /home/node/.codex " /proc/mounts | cut -d" " -f2,4 | cut -c1-80'
+echo "write test in the mount (expect failure):"; docker exec gev-e2e-host sh -c 'touch /home/node/.codex/e2e-write-test 2>&1 | tr -d "\n"; echo'
+docker rm -f gev-e2e-host >/dev/null 2>&1 && echo "removed gev-e2e-host"
+echo
+echo "## 4.1b Bridge network (the setup of make up): published port 4198"
+docker rm -f gev-e2e-bridge >/dev/null 2>&1
+docker run -d --name gev-e2e-bridge -p 127.0.0.1:4198:4173 -v "$HOME/.codex:/home/node/.codex:ro" "$IMG" >/dev/null && echo "started with a bridge network"
+wait_up http://127.0.0.1:4198/api/realtime/oauth-status
+get http://127.0.0.1:4198/api/realtime/oauth-status "127.0.0.1:4198/api/realtime/oauth-status"
+curl -s -m 10 http://127.0.0.1:4198/api/realtime/oauth-status | tr -d '\n' | cut -c1-120; echo
+docker rm -f gev-e2e-bridge >/dev/null 2>&1 && echo "removed gev-e2e-bridge"
+echo
+echo "## 4.2 Host network with a published port kept (the engine reaction)"
+docker run --rm --network host -p 4197:4197 --entrypoint true "$IMG" 2>&1 | head -3; echo "exit status ${PIPESTATUS[0]}"
+echo
+echo "## 4.3 Codex folder that does not exist (short volume syntax, as in compose)"
+rm -rf /tmp/gev-e2e-parent; mkdir -p /tmp/gev-e2e-parent
+docker run --rm -v /tmp/gev-e2e-parent/.codex:/home/node/.codex:ro --entrypoint true "$IMG" && echo "container ran"
+echo "folder on the host after the run: owner $(stat -c '%U' /tmp/gev-e2e-parent/.codex 2>&1), mode $(stat -c '%a' /tmp/gev-e2e-parent/.codex 2>&1)"
+docker run --rm -v /tmp/gev-e2e-parent:/p --entrypoint rmdir "$IMG" /p/.codex 2>&1 | head -2; rmdir /tmp/gev-e2e-parent && echo "cleaned"
+echo
+docker ps --format 'left running: {{.Names}}' | grep -v gods-eye-view-gods-eye-view-1 || echo "no e2e container left"
