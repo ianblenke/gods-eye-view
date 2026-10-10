@@ -1,0 +1,55 @@
+Live check of cctv-pensacola, 2026-10-09 about 22:20 UTC (tasks 5.1 and 5.2). Script: live-check.mjs (stored outside the change; the fetch function sends only the FL511 layer URL and images-dis.divas.cloud frames to the network, every other pack gets an empty answer).
+Command: node live-check.mjs <clone> 6
+
+## sources
+status 200 FL511 sources 65 all sources 65
+headings {"low:0":8,"low:180":12,"low:90":33,"low:270":12}
+bounds {"minLat":30.370412,"maxLat":30.678627,"minLon":-87.402892,"maxLon":-86.817783}
+sample {"id":"fl-6577","name":"I110-MM 0.6-M-Cervantes St","lat":30.421975,"lon":-87.214147,"headingDeg":0,"headingConfidence":"low","feedType":"image","license":"FL511 (FDOT), individual non-commercial use only","code":"6577"}
+sample {"id":"fl-6588","name":"I110-MM 0.2M-Chase St","lat":30.415331,"lon":-87.210831,"headingDeg":0,"headingConfidence":"low","feedType":"image","license":"FL511 (FDOT), individual non-commercial use only","code":"6588"}
+sample {"id":"fl-6576","name":"I110-MM 0.1NB-Civic Center","lat":30.417347,"lon":-87.208319,"headingDeg":0,"headingConfidence":"low","feedType":"image","license":"FL511 (FDOT), individual non-commercial use only","code":"6576"}
+## frames
+fl-6577 status 200 content-type image/svg+xml x-cctv-source synthetic bytes 2017 jpeg-magic false
+fl-9507 status 200 content-type image/svg+xml x-cctv-source synthetic bytes 2026 jpeg-magic false
+fl-11924 status 200 content-type image/svg+xml x-cctv-source synthetic bytes 2012 jpeg-magic false
+fl-6578 status 200 content-type image/svg+xml x-cctv-source synthetic bytes 2009 jpeg-magic false
+fl-10432 status 200 content-type image/svg+xml x-cctv-source synthetic bytes 2024 jpeg-magic false
+fl-6591 status 200 content-type image/svg+xml x-cctv-source synthetic bytes 2011 jpeg-magic false
+## requests sent to the network (7)
+GET https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/FL511_Traffic_Cameras/FeatureServer/0/query?where=1%3D1&geometryType=esriGeometryEnvelope&inSR=4326&outSR=4326&spatialRel=esriSpatialR
+GET https://images-dis.divas.cloud/DGI/chan-6577_h.jpg
+GET https://images-dis.divas.cloud/DGI/chan-9507_h.jpg
+GET https://images-dis.divas.cloud/DGI/chan-11924_h.jpg
+GET https://images-dis.divas.cloud/DGI/chan-6578_h.jpg
+GET https://images-dis.divas.cloud/DGI/chan-10432_h.jpg
+GET https://images-dis.divas.cloud/DGI/chan-6591_h.jpg
+
+## Why the frame route answered with the placeholder (frame-debug.mjs, one request)
+upstream status 404 type text/html redirected false url https://images-dis.divas.cloud/DGI/chan-6577_h.jpg
+request headers {"User-Agent":"gods-eye-view-cctv-proxy/1.0"} redirect option manual
+result null
+
+## Control requests with curl (the server User-Agent is not the cause)
+chan-10416 UA=gods-eye-view-research/1.0 -> 200 image/jpeg 33015B
+chan-10416 UA=gods-eye-view-cctv-proxy/1.0 -> 200 image/jpeg 33015B
+chan-6577 UA=gods-eye-view-research/1.0 -> 404 text/html 1245B
+
+Summary of runs 1 and 2: the layer answer and the mapper work (65 sources in the pack area). The six sampled frames are dead channels (HTTP 404), so the frame route used its placeholder. See frame-census.txt: 17 of 65 channels serve a frame.
+
+## Run 3: two channels that serve a frame, through the route (live-check.mjs <clone> 0 fl-10416,fl-9183)
+## sources
+status 200 FL511 sources 65 all sources 65
+headings {"low:0":8,"low:180":12,"low:90":33,"low:270":12}
+bounds {"minLat":30.370412,"maxLat":30.678627,"minLon":-87.402892,"maxLon":-86.817783}
+sample {"id":"fl-6577","name":"I110-MM 0.6-M-Cervantes St","lat":30.421975,"lon":-87.214147,"headingDeg":0,"headingConfidence":"low","feedType":"image","license":"FL511 (FDOT), individual non-commercial use only","code":"6577"}
+sample {"id":"fl-6588","name":"I110-MM 0.2M-Chase St","lat":30.415331,"lon":-87.210831,"headingDeg":0,"headingConfidence":"low","feedType":"image","license":"FL511 (FDOT), individual non-commercial use only","code":"6588"}
+sample {"id":"fl-6576","name":"I110-MM 0.1NB-Civic Center","lat":30.417347,"lon":-87.208319,"headingDeg":0,"headingConfidence":"low","feedType":"image","license":"FL511 (FDOT), individual non-commercial use only","code":"6576"}
+## frames
+fl-10416 status 200 content-type image/jpeg x-cctv-source upstream-image bytes 32880 jpeg-magic true
+fl-9183 status 200 content-type image/jpeg x-cctv-source upstream-image bytes 35046 jpeg-magic true
+## requests sent to the network (3)
+GET https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/FL511_Traffic_Cameras/FeatureServer/0/query?where=1%3D1&geometryType=esriGeometryEnvelope&inSR=4326&outSR=4326&spatialRel=esriSpatialR
+GET https://images-dis.divas.cloud/DGI/chan-10416_h.jpg
+GET https://images-dis.divas.cloud/DGI/chan-9183_h.jpg
+
+Summary of run 3: the frame route answered HTTP 200 with content type image/jpeg and the header X-CCTV-Source upstream-image for fl-10416 and fl-9183. The first bytes are the JPEG signature. So a live frame passes the checks of the route (content type, redirect mode, size) end to end.
