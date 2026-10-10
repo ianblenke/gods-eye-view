@@ -1,5 +1,5 @@
 # Override for the Codex OAuth voice feature (the ChatGPT sign-in) in Docker.
-# Start with: make up-codex. Sign in once on the host with: codex login
+# Start with: make up-codex. Sign in on the host with: codex login
 #
 # The server answers the OAuth routes only for connections from the same
 # machine. A bridge network gives the server the address of the bridge, and not
