@@ -29,16 +29,17 @@ The default setup stays as it is: the file `compose.yaml` and the target `up` do
 ## Known limits and later changes
 
 - Known limit `sign-in`: The image has no Codex program. The sign-in button of the app starts `codex login` and shows an error. The user signs in on the host with `codex login`.
-- Known limit `host-program`: The server also looks for a Codex program in `~/.codex/packages`. When the host has a standalone Codex install there, the mount brings it into the container, and the button can start it.
+- Known limit `host-program`: The server also looks for a Codex program in `~/.codex/packages`. When the host has a standalone Codex program there, the mount brings it into the container, and the button can start it.
 - Known limit `expiry`: The server never refreshes the token. When the token expires, the user runs `codex login` on the host again.
 - Known limit `host-network`: The container shares the network of the host. It can reach services on the loopback address of the host, and a port conflict can stop it.
 - Known limit `tokens`: Any code in the container can read the file `auth.json`, as on the host. The file holds a refresh token.
 - Known limit `linux`: The author checked the host network on Linux only. The target `up-codex` is optional.
 - Known limit `user`: The container user `node` has the number 1000. It reads `auth.json` only when the file belongs to the host user with the number 1000. The author did not check rootless Docker.
-- Known limit `folder`: The mount shows the whole folder `~/.codex` to the container, with the config and the history of Codex. The override mounts the folder because a mount of one file can keep the old file when a program replaces it.
-- Known limit `missing-folder`: When `~/.codex` does not exist, Docker creates it as an empty folder that belongs to root. The document tells the user to run `codex login` before the first start.
+- Known limit `folder`: The mount shows the whole folder `~/.codex` to the container, with the settings and the history of Codex. The override mounts the folder because a mount of one file can keep the old file when a program replaces it.
+- Known limit `missing-folder`: When `~/.codex` does not exist, Docker creates it as an empty folder that belongs to root. The document tells the user to run `codex login` before the user starts the app for the first time.
 - Known limit `all-interfaces`: The setting `HOST` stays "0.0.0.0", so the app listens on all addresses of the host. A browser on another computer can open the app, but the OAuth routes refuse it.
 - Known limit `local-programs`: With the host network, any program on the host passes the check for the same machine. A tunnel or a reverse proxy on the host, such as `ssh -L`, also passes it. `SECURITY.md` describes this limit.
 - Known limit `provider-settings`: With the host network, the Provider Settings panel can save keys, because its connection looks local. The server writes them to `.env` in the container, and `make up-codex` removes them. The comment in `compose.yaml` about this panel is true for `make up` only.
-- Known limit `compose`: The override uses `!reset`, so it needs a recent Docker Compose. The check ran with Compose 5.5.1. The lowest version that reads `!reset` is not known.
+- Known limit `compose`: The override uses `!reset`, so it needs a new version of Docker Compose. The author ran `docker compose config` with Compose 5.5.1 and does not know the lowest version that reads `!reset`.
 - Known limit `e2e`: The tests read the files. The lead checks the real behavior with test containers and stores the output in `evidence/e2e.txt`.
+- Known limit `not-run`: The lead did not run `make up-codex`, because it replaces the app container of the owner. The container check used `docker run` with the same network, mount and image, and the port 4199.

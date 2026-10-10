@@ -26,11 +26,12 @@
 
 ## 4. Lead work before and in Docker
 
-- [x] 4.1 Start one container with the host network and one with a bridge.
-- [x] 4.2 Start one container with the host network and the ports kept.
-- [x] 4.3 Start one container with a Codex folder that does not exist.
-- [x] 4.4 Write `evidence/e2e.txt` with the output of the four containers.
-- [ ] 4.5 Run `make ratchet CHANGE=codex-voice-container`.
-- [ ] 4.6 Run the two review agents.
-- [ ] 4.7 Write review.md.
-- [ ] 4.8 Run `make gates CHANGE=codex-voice-container` on the final tree.
+- [x] 4.1 Start one container with the host network.
+- [x] 4.2 Start one container with a bridge network.
+- [x] 4.3 Start one container with the host network and the ports kept.
+- [x] 4.4 Start one container with a Codex folder that does not exist.
+- [x] 4.5 Write `evidence/e2e.txt` with the output of the four containers.
+- [ ] 4.6 Run `make ratchet CHANGE=codex-voice-container`.
+- [ ] 4.7 Run the two review agents.
+- [ ] 4.8 Write review.md.
+- [ ] 4.9 Run `make gates CHANGE=codex-voice-container` on the final tree.
