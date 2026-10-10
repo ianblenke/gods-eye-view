@@ -8,7 +8,7 @@ A fork edit of such a file raises an error that no waiver clears. For this reaso
 ## What Changes
 
 - Change the test `src/data/trafficTiming.test.mjs`. The test with the Vite server starts a child process that runs the same file.
-- The child process has a folder of its own for V8 coverage and blank guard settings. The child checks both. The parent checks the status 0, the V8 coverage file in the folder and the process number in the file "scenario-done.json".
+- The child process has a folder of its own for V8 coverage and blank guard settings. The child checks both. The parent checks the status 0 and the V8 coverage file in the folder. It also checks the process number and the final diagnostics in the file "scenario-done.json".
 - Run the image ratchet. It records the new numbers of the 51 ledger entries.
 
 ## Capabilities
@@ -33,7 +33,7 @@ The ratchet records the closed gaps and the new scenario ID. No line gap becomes
 
 - Known limit `scope`: Only the test of traffic timing makes a violation in the last gate run. Other tests that use a Vite server make none.
 - Known limit `new-numbers`: An untrue entry had no numbers for branches and functions. After the ratchet, 39 entries show branch gaps with 377 branches in all, and 20 entries show function gaps with 65 functions in all. These are the first real measures of those files. The code of those files did not change. The file `evidence/ledger-change.txt` lists each entry.
-- Known limit `child-unguarded`: The gate counts the assertions of the parent test only. A deleted assertion of the scenario in the child does not stop the gate. A child that writes the expected file by hand also passes. The child must still exit with the status 0 and write the file "scenario-done.json" with the final diagnostics.
+- Known limit `child-unguarded`: The gate counts the assertions of the parent test only. A deleted assertion of the scenario in the child does not stop the gate. A child that writes the expected file by hand also passes. The test does not pin the place of the write before the last two assertions of the scenario. The scenario text names the process number only, and the test also compares the final diagnostics. The child must still exit with the status 0 and write the file "scenario-done.json" with the final diagnostics.
 - Known limit `child-cost`: The test file runs twice, in the parent process and in the child process. On the host the file takes about 19 seconds, and 12 seconds of them are in the child process. The file `evidence/timing.txt` records the run.
 - Known limit `upstream-test`: The test file is upstream code. A later sync can conflict with this change.
 - Known limit `result`: The ratchet closed the untrue mark of all 51 entries. The uncovered lines of the ledger fell from 56328 to 46573, and 9 entries left the ledger. The entry of `src/data/dataCredits.js` fell from 475 to 23 uncovered lines.

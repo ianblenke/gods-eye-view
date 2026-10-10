@@ -8,7 +8,7 @@ The 51 files are the 51 entries of `openspec/trace/gaps.json` with `untrue: true
 
 ### D1: A child process for the Vite scenario
 
-The test with the Vite server runs in a child process. The child process runs the same test file with the setting GEV_TRAFFIC_TIMING_CHILD. The change adds no new file, because a new script would be a new code file with a gap.
+The test with the Vite server runs in a child process. The child process runs the same test file with the setting GEV_TRAFFIC_TIMING_CHILD. The change adds no new code file, because a new script would be a new code file with a gap.
 
 ### D2: The settings of the child process
 

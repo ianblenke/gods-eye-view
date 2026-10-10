@@ -18,6 +18,7 @@ Checked 1336 source files.
 exit status 0
 
 ## node scripts/spec/gates.mjs lint --change traffic-timing-child
+(The lines below are the last two lines of the output: one warning line and the total.)
 WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
 STE: 0 errors, 708 warnings.
 exit status 0
