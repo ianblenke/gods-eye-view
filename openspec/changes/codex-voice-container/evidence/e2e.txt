@@ -1,0 +1,46 @@
+Container check of codex-voice-container, 2026-10-10, host Linux 7.2.7-1-cachyos, Docker 29.8.1.
+LAN address of the host: 192.168.51.x (last number hidden)
+
+## Image
+built gev-e2e:codex from the clone
+
+## 4.1a Host network (the setup of make up-codex): PORT=4199, mount of the Codex folder, read-only
+started with --network host
+GET 127.0.0.1:4199/api/realtime/oauth-status -> HTTP 200; keys: available
+GET localhost:4199/api/realtime/oauth-status -> HTTP 200; keys: available
+GET LAN-address:4199/api/realtime/oauth-status -> HTTP 403; keys: available,error
+GET 127.0.0.1:4199/api/setup/status (Provider Settings) -> HTTP 200; keys: keys,setCount,store,total
+mount flags seen in the container:
+/home/node/.codex ro,lazytime,noatime,inode64,logbufs=8,logbsize=32k,noquota
+write test in the mount (expect failure):
+touch: cannot touch '/home/node/.codex/e2e-write-test': Read-only file system
+removed gev-e2e-host
+
+## 4.1b Bridge network (the setup of make up): published port 4198
+started with a bridge network
+GET 127.0.0.1:4198/api/realtime/oauth-status -> HTTP 403; keys: available,error
+{"available":false,"error":"ChatGPT OAuth is available only from this machine"}
+
+removed gev-e2e-bridge
+
+## 4.2 Host network with a published port kept (the engine reaction)
+WARNING: Published ports are discarded when using host network mode
+exit status 0
+
+## 4.3 Codex folder that does not exist (short volume syntax, as in compose)
+container ran
+folder on the host after the run: owner root, mode 755
+cleaned
+
+no e2e container left
+
+## Reading of the output (written by the lead)
+
+- The body of the status route has the key `available` alone when the container read `auth.json` and found a valid token. A failure adds the keys `error`, `code` and `reauthRequired` (codex-auth.js:238-255). So "keys: available" with HTTP 200 means `{"available":true}`: the container user node read the file of the host user through the read-only mount.
+- With the host network, a connection to 127.0.0.1 and to localhost gets HTTP 200, and a connection to the LAN address of the host gets HTTP 403. The browser must open `localhost`.
+- With a bridge network and a published port, the same connection gets HTTP 403 and the text "ChatGPT OAuth is available only from this machine". This is the reason for the override.
+- With the host network, the route `/api/setup/status` of Provider Settings answers HTTP 200. So the panel can save keys with this override (Known limit `provider-settings`).
+- The engine discards a published port with the host network and prints the warning "Published ports are discarded when using host network mode" (task 4.2). The exit status is 0.
+- A Codex folder that does not exist is created on the host with the owner root and the mode 755 (task 4.3).
+- The mount has the flag `ro`, and a write in the mount fails with "Read-only file system".
+- The script of this check is in e2e-script.txt. The check did not touch the app container, and it did not call the route that makes a voice token.
