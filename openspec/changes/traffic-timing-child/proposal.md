@@ -8,7 +8,7 @@ A fork edit of such a file raises an error that no waiver clears. For this reaso
 ## What Changes
 
 - Change the test `src/data/trafficTiming.test.mjs`. The test with the Vite server starts a child process that runs the same file.
-- The child process has a folder of its own for V8 coverage and blank guard settings. The test checks both in the child and in the parent.
+- The child process has a folder of its own for V8 coverage and blank guard settings. The child checks both. The parent checks the status 0, the V8 coverage file in the folder and the process number in the file "scenario-done.json".
 - Run the image ratchet. It records the new numbers of the 51 ledger entries.
 
 ## Capabilities
@@ -24,14 +24,15 @@ None.
 ## Impact
 
 The change edits no code file. It edits one test file of the upstream class, and it adds no file.
-The guard stays as it is, and the gate stays as strict as before. The code that the Vite server changes is not counted, as before.
+The guard stays as it is. The code that the Vite server changes is not counted, as before. The child process has no guard, so the gate does not count the assertions of the child or check its leaks.
 
 The ratchet closes the untrue mark of 51 entries of `openspec/trace/gaps.json`. It sets the numbers of lines from the real coverage of the other tests. A file that no other test loads gets the state "not loaded".
-The ratchet records the closed gaps and the new scenario ID. No gap opens.
+The ratchet records the closed gaps and the new scenario ID. No line gap becomes larger.
 
 ## Known limits and later changes
 
 - Known limit `scope`: Only the test of traffic timing makes a violation in the last gate run. Other tests that use a Vite server make none.
+- Known limit `child-unguarded`: The gate counts the assertions of the parent test only. A deleted assertion of the scenario in the child does not stop the gate. The child must still exit with the status 0 and write the marker file.
 - Known limit `child-cost`: The test file runs twice, in the parent process and in the child process. The test takes more time.
 - Known limit `upstream-test`: The test file is upstream code. A later sync can conflict with this change.
 - Known limit `result`: The new numbers of the 51 entries are known only after the ratchet.
