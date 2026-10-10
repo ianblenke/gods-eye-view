@@ -1,4 +1,8 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, readdirSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 import { readLayerSource } from '../testSupport/readLayerSource.mjs';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -6,6 +10,36 @@ import { fileURLToPath } from 'node:url';
 import { getTrafficTimingDiagnostics } from './traffic.js';
 
 const SOURCE = readLayerSource(new URL('./traffic.js', import.meta.url), 'utf8').replace(/parts\.(?:model|timing)\./g, '');
+// The scenario test below loads project code through a vite server that changes the source of
+// 51 files. The gate guard finds that code under the name of each file and counts the file as
+// untrue, so the gate would drop the real coverage of every other test for those files. The
+// scenario therefore runs in a child process of this file, with its own V8 coverage folder
+// and blank guard settings, so the guard installs nothing in the child process.
+const CHILD_FOLDER = process.env.GEV_TRAFFIC_TIMING_CHILD;
+
+function runScenarioInChild() {
+  const folder = mkdtempSync(path.join(tmpdir(), 'gev-traffic-timing-'));
+  try {
+    const result = spawnSync(process.execPath, [fileURLToPath(import.meta.url)], {
+      env: {
+        ...process.env,
+        GEV_TRAFFIC_TIMING_CHILD: folder,
+        NODE_V8_COVERAGE: folder,
+        GEV_SPEC_OUT: '',
+        GEV_SPEC_ROOT: '',
+        GEV_SPEC_INVENTORY: '',
+      },
+      encoding: 'utf8',
+    });
+    assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+    assert.ok(
+      readdirSync(folder).some((file) => file.startsWith('coverage-')),
+      'the child process must write V8 coverage into its own folder',
+    );
+  } finally {
+    rmSync(folder, { recursive: true, force: true });
+  }
+}
 
 function functionBody(name) {
   const declaration = `function ${name}(`;
@@ -122,7 +156,15 @@ test('traffic timing stays inert when the DEV flag is off under bare Node', () =
   );
 });
 
-test('traffic timing pairs real ordering to the scheduling change and guards re-arms', async () => {
+test('[coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms', async () => {
+  if (!CHILD_FOLDER) {
+    runScenarioInChild();
+    return;
+  }
+  assert.equal(process.env.NODE_V8_COVERAGE, CHILD_FOLDER);
+  assert.equal(process.env.GEV_SPEC_OUT, '');
+  assert.equal(process.env.GEV_SPEC_ROOT, '');
+  assert.equal(process.env.GEV_SPEC_INVENTORY, '');
   const { createServer } = await import('vite');
   const originalWindow = globalThis.window;
   const originalDocument = globalThis.document;
