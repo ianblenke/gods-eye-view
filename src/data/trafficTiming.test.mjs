@@ -40,7 +40,14 @@ function runScenarioInChild() {
       'the child process must write V8 coverage into its own folder',
     );
     const done = JSON.parse(readFileSync(path.join(folder, 'scenario-done.json'), 'utf8'));
-    assert.equal(done.pid, result.pid, 'the scenario must run in the child process');
+    assert.deepEqual(
+      done,
+      {
+        pid: result.pid,
+        diagnostics: { enabled: true, marksInstalled: 1, traceObjectsCreated: 2, uncorrelatedTracesDropped: 1 },
+      },
+      'the child process must run the whole scenario',
+    );
   } finally {
     rmSync(folder, { recursive: true, force: true });
   }
@@ -364,7 +371,10 @@ test('[coverage-gate-101] traffic timing pairs real ordering to the scheduling c
     assert.ok(performance.getEntriesByType('measure').every((entry) => (
       entry.detail?.interactionId !== anchorB.interactionId
     )), 'the canceled/stale B load must never emit a correlated trace');
-    writeFileSync(path.join(CHILD_FOLDER, 'scenario-done.json'), JSON.stringify({ pid: process.pid }));
+    writeFileSync(
+      path.join(CHILD_FOLDER, 'scenario-done.json'),
+      JSON.stringify({ pid: process.pid, diagnostics: traffic.getTrafficTimingDiagnostics() }),
+    );
   } finally {
     trafficLayer?.disable(viewer);
     await server?.close();
@@ -389,6 +399,7 @@ test('[coverage-gate-101] traffic timing pairs real ordering to the scheduling c
     // src/tooling/previewServing.test.mjs, these two started the timers that the tracer named.
     // The wait remains: a module request can still start a 50ms timer in vite (read in the
     // vite 6.4.3 source, not confirmed by a run).
+    // The scenario now runs in a child process, so this wait lets the child exit with no live vite timer.
     await new Promise((resolve) => originalSetTimeout(resolve, 750));
   }
 });

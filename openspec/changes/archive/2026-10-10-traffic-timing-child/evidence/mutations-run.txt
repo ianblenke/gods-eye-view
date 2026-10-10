@@ -1,0 +1,17 @@
+Run of the thirteen named faults on the final test file, 2026-10-10, host Node v26.8.2.
+Command for each fault: node --test --test-force-exit --test-reporter=spec src/data/trafficTiming.test.mjs (the fault is a text change of the test file; the script restores the file and checks that it is the original).
+Baseline without a fault: 3 tests, 3 pass, 0 fail.
+Lines: fault | exit status | failing lines | first failing test
+Remove the blank GEV_SPEC_OUT of the child process | exit 1 | failing tests 6 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Remove the blank GEV_SPEC_ROOT of the child process | exit 1 | failing tests 6 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Remove the blank GEV_SPEC_INVENTORY of the child process | exit 1 | failing tests 6 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Remove the own coverage folder of the child process | exit 1 | failing tests 6 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Give the child process another GEV_TRAFFIC_TIMING_CHILD value | exit 1 | failing tests 6 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Run another script in the child process | exit 1 | failing tests 3 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Write the process number of the parent in the file of the child process | exit 1 | failing tests 3 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Write the process number 1 in the file of the child process | exit 1 | failing tests 3 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Exit the child process with the status 1 after it wrote the file | exit 1 | failing tests 3 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Write the file before the scenario runs | exit 1 | failing tests 3 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Run the scenario in the parent process | exit 1 | failing tests 3 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Break an assertion inside the scenario | exit 1 | failing tests 6 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
+Look for another coverage file name | exit 1 | failing tests 3 | [coverage-gate-101] traffic timing pairs real ordering to the scheduling change and guards re-arms
