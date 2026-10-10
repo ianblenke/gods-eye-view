@@ -39,7 +39,7 @@ The change has no spec delta, because the merge changes no requirement of the fo
 ## Known limits and later changes
 
 - Known limit `host-node`: Host tests run on Node 26, and the image uses Node 24.21.0. Host coverage cannot replace the image measurement.
-- Known limit `host-skip`: Three test files skip 15 tests on the host: `src/data/focusAllocations.test.mjs` (1), `src/keySetupHardening.test.mjs` (1) and `src/overlays/worldOverlayAllocation.test.mjs` (13). The image runs them.
+- Known limit `host-skip`: Two test files skip 14 tests on the host, because the host has Node 26 and the tests need Node 24. They are `src/data/focusAllocations.test.mjs` (1) and `src/overlays/worldOverlayAllocation.test.mjs` (13). The image runs them. One Windows test in `src/keySetupHardening.test.mjs` skips on Linux.
 - Known limit `osh-source`: The OSH layer is not in the new catalog source contracts. With no sources set, the OSH layer stays available, while the upstream layers with a contract report unavailable. The fork does not change this.
 - Known limit `credit`: Recent Imagery passes the credit of its source to Cesium. Cesium turns a text credit into HTML (`Credit.js`, `div.innerHTML`). Only code that builds the catalog sets the credit, and no URL or share link reaches it.
 - Known limit `empty-vessels`: The upstream text says that vessel sources can report healthy empty coverage. In the stock adapter, a response with no observation time has the freshness `unknown`, so only a custom source reaches the healthy empty state.
