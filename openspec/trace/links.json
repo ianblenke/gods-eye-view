@@ -1,4 +1,16 @@
 {
+  "app-container-001": [
+    "src/tooling/appContainer.test.mjs › [app-container-001] the Codex override uses the host network, resets the ports and sets PORT"
+  ],
+  "app-container-002": [
+    "src/tooling/appContainer.test.mjs › [app-container-002] the Codex override mounts the Codex folder read-only and mounts no other volume"
+  ],
+  "app-container-003": [
+    "src/tooling/appContainer.test.mjs › [app-container-003] the target up-codex builds and starts the app with both compose files"
+  ],
+  "app-container-004": [
+    "src/tooling/appContainer.test.mjs › [app-container-004] the default compose file and the target up stay as they are"
+  ],
   "change-review-001": [
     "src/tooling/spec/review.test.mjs › [change-review-001] does not stop for a passed review with all the fields, the closed findings and the agent outputs"
   ],
