@@ -18,6 +18,7 @@ faults=[
  ('app-container-003','Start up-codex with the base file only','Makefile',[("\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n","\tdocker compose -f compose.yaml up --force-recreate\n")]),
  ('app-container-003','Remove up-codex from the list PHONY','Makefile',[(".PHONY: up up-codex down",".PHONY: up down")]),
  ('app-container-004','Remove the published port of the base file','compose.yaml',[('      - "${GEV_PORT:-4173}:4173"\n',"")]),
+ ('app-container-004','Change the published port value of the base file','compose.yaml',[('      - "${GEV_PORT:-4173}:4173"\n','      - "${GEV_PORT:-4173}:4174"\n')]),
  ('app-container-004','Add network_mode to the base file','compose.yaml',[("    restart: unless-stopped\n","    restart: unless-stopped\n    network_mode: host\n")]),
  ('app-container-004','Add a Codex mount to the base file','compose.yaml',[("      - gev-logs:/app/.gev-logs\n","      - gev-logs:/app/.gev-logs\n      - ${HOME}/.codex:/home/node/.codex:ro\n")]),
  ('app-container-003','Swap the build line and the up line of up-codex','Makefile',[("\tdocker compose -f compose.yaml -f compose.codex.yaml build\n\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n","\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n\tdocker compose -f compose.yaml -f compose.codex.yaml build\n")]),
