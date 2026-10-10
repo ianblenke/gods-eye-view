@@ -6,7 +6,7 @@ Date: 2026-10-10
 Gates: make gates CHANGE=remove-pensacola-pack passed
 Rounds: 4
 Scope: diff 5f35f3453137698dacaf623404e55798f7f7b8b0
-Reviewed-Tree: TREE_HASH_PLACEHOLDER
+Reviewed-Tree: b4c6e600e8fed7fbd7ede69a8338122ed1443971e5954e96f65cfa6a8247dd11
 
 ## Findings
 
