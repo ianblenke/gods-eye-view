@@ -1,4 +1,24 @@
 {
+  "app-container-001": {
+    "hash": "63021a28a511ff0f4518f4d5ae9e712fad511ef10ad8e2773ab57e3f35410ec7",
+    "since": "2026-10-10",
+    "change": "codex-voice-container"
+  },
+  "app-container-002": {
+    "hash": "ed0fc0ec8bc725b2f31d0c0bfeca155afd5b88b999b788729c8b0529e3927a4e",
+    "since": "2026-10-10",
+    "change": "codex-voice-container"
+  },
+  "app-container-003": {
+    "hash": "e5c9660bbd9b53e0cbc49487680f8e891ab2eedf63fe6435dc5564a096d9025e",
+    "since": "2026-10-10",
+    "change": "codex-voice-container"
+  },
+  "app-container-004": {
+    "hash": "f42cfbce3ac51a8fa5068bca7a1f8446bb28b7913e8df3d7b0796d1f9a551e33",
+    "since": "2026-10-10",
+    "change": "codex-voice-container"
+  },
   "change-review-001": {
     "hash": "21c5b8e200f5c036a2697637ba12b6943b5e0217d7fe5c8a0e2ab9e31d62e28e",
     "since": "2026-09-14",
@@ -2228,111 +2248,6 @@
     "hash": "6eb30c866639e4297e40a45c97a39f3922ec85a776a726fb8138d666a07b7f21",
     "since": "2026-10-09",
     "change": "fix-ontario-511-key"
-  },
-  "live-sources-010": {
-    "hash": "ade99854f38d86dde1c01fab5813efe055c20817768d418cae3cbb4dd57df7e7",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-011": {
-    "hash": "fc6c314c7a0c5f47039a8cc66fe49b08536857e5cb59a94c216402fca9670fc5",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-012": {
-    "hash": "bcd38637b208d6ebf492eae594fe75c0737d47e8266b1a4c690c2ebc842adf94",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-013": {
-    "hash": "eff70031582d99bf3c230f235c9caefea9f072d512d188ed9fae22fded309f78",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-014": {
-    "hash": "546fbd06fa49b442154b40e56a690173eb98d2a09f77c56ad0868ff8442728eb",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-015": {
-    "hash": "f10919c09c7fd6f75812c0b0f0f6d929a71e14e27922ca755869e5ab2dc04747",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-016": {
-    "hash": "b7bb6b9ed42ea430f938c0164dd6858ade15a1add3fe394883cc1a1a55962b32",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-017": {
-    "hash": "94f11115873a1f09a09ab25e452e2e267af459b7507cf7470bcf90b231cb7e0f",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-018": {
-    "hash": "5c1707d24669f0644e999da79716ac309906ad03bcf7168978bc4e4b81c67d90",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-019": {
-    "hash": "ac682d4d5707f668aedef7307e715228b01c1514693de4ea03c95174dcf0d216",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-020": {
-    "hash": "77b3e5756b416a12a87e2fde3a06a9933ea53ccaf1062a8c7e147ec88f013949",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-021": {
-    "hash": "7f17c560cd60fa81d3731a397dd524ea20092a07ad18c1a0f7c451c6324f6741",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-022": {
-    "hash": "2b56bac0899c3b851530c6cf84237ead7cf28a7f6edfa640e16711ad5ea9ecd7",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-023": {
-    "hash": "b5f0593f229e6c5233403e64f72ec6fcbe564fe1deaaf9f8f7fb7b7b4f1eaa69",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-024": {
-    "hash": "59bad032ace4d072dd24dd2a7d876b0309c24ab89e8b39d2541c91eb1aa74a13",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-025": {
-    "hash": "9c5952e4e887be0eb88eec02f8ba779914b2a5860f04f03f3cb259aa4f1a8f9a",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-026": {
-    "hash": "5e5de48b58751013786e07036c20c0b9a9151f7b5b5ee592b4c2a6e3859e51d7",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-027": {
-    "hash": "413db4319ce2451ccba1b59171c4099a5a132b9bd63cb8443d9ccd7c88790530",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-028": {
-    "hash": "62dd82ce65d43fa4e3de9de90f229b04e23365b825bc790a0ef8f6260948432b",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-029": {
-    "hash": "b9e07f72a26fbb3ee47575bb78ab1ab73cb5c20027713feb1e0f93e8ae5a14fe",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
-  },
-  "live-sources-030": {
-    "hash": "c1e72bd0d90d0546484f39422928eb34a010595c3d179a314e0fca5f5ada5802",
-    "since": "2026-10-09",
-    "change": "cctv-pensacola"
   },
   "location-presets-001": {
     "hash": "0522fe9936ceec4087e54a6ddebd46847313b613e50b7fdc5deef7ed94569f5b",
