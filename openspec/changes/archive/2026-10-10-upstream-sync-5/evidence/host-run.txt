@@ -1,5 +1,5 @@
 Host run of upstream-sync-5, 2026-10-10, host Node v26.8.2. One node --test process for each test file (--test-force-exit), 4 files at a time on 4 cores.
-Tree of the run: commit 5bfdffed, an earlier build of this branch (kept in the clone as the branch old-sync5-merge). The command `git diff --stat 5bfdffed c394af4a -- . ':!openspec'` printed no line, so the files of this branch equal the files that the run used.
+Tree of the run: commit 5bfdffed, an earlier build of this branch (kept in the clone as the branch old-sync5-merge). The command was: git diff --stat 5bfdffed c394af4a -- . ':!openspec'. It printed no line, so the files of this branch equal the files that the run used.
 Files: 592. Tests: 9585. Pass: 9570. Fail: 0. Skipped: 15.
 Each line: file | tests | pass | fail | skipped.
 server/providers/firePerimeters.test.mjs | tests 13 pass 13 fail 0 skipped 0

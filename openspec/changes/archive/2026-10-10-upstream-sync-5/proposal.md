@@ -30,7 +30,8 @@ Rule 23: the nine added files are upstream code, because the fork does not write
 The nine added files are `src/app/layers/streetLevel.test.mjs`, `src/app/sourceComposition.js`, `src/app/sourceComposition.test.mjs`, `src/data/idSwitches.js`, `src/layers/directions/source.js`, `src/layers/directions/source.test.mjs`, `src/layers/recentImagery/source.js`, `src/layers/recentImagery/source.test.mjs` and `src/layers/streetLevel/providerSwitches.test.mjs`.
 
 Rule 25: the merge breaks no test with a scenario ID. The change retires no scenario and writes none again.
-The tests that the merge adds or changes have no scenario ID. This includes one added test in each of the files `src/layers/recentImagery/rendering.test.mjs` and `src/layers/recentImagery/thumbnails.test.mjs`, The two files have fork tests with scenario IDs.
+The tests that the merge adds or changes have no scenario ID. This includes one added test in each of the files `src/layers/recentImagery/rendering.test.mjs` and `src/layers/recentImagery/thumbnails.test.mjs`. The two files have fork tests with scenario IDs.
+
 The change opens no new coverage gap for owned code. The adopt command records the gaps of the upstream files that the merge brings.
 
 The upstream code adds no route and no dependency. It adds two export lines to `package.json` for the new source modules.
@@ -43,7 +44,8 @@ The change has no spec delta, because the merge changes no requirement of the fo
 - Known limit `osh-source`: The OSH layer is not in the new catalog source contracts. With no sources set, the OSH layer stays available, while the upstream layers with a contract report unavailable. The fork does not change this.
 - Known limit `credit`: Recent Imagery passes the credit of its source to Cesium. Cesium turns a text credit into HTML (`Credit.js`, `div.innerHTML`). Only code that builds the catalog sets the credit, and no URL or share link reaches it.
 - Known limit `empty-vessels`: The upstream text says that vessel sources can report healthy empty coverage. In the stock adapter, a response with no observation time has the freshness `unknown`, so only a custom source reaches the healthy empty state.
-- Known limit `share-options`: `docs/CURRENT-STATE.md` has the upstream text about the `r` option of Street Level. The older Street Level section lists the share options `m`, `p` and `s` and does not list `r`. The fork does not edit the text of upstream.
-- Known limit `catalog-count`: The fork edits the layer count of two upstream tests from 30 to 31. A later sync conflicts in these two lines when upstream changes the count.
+- Known limit `share-options`: `docs/CURRENT-STATE.md` has the upstream text about the `r` option of Street Level. The older Street Level section lists the share options `m`, `p` and `s` and does not list `r`. The section on adding a provider (lines 3142 to 3144) still says to add a boolean option to the `street-level` group in `src/data/layerState.js`. The fork does not edit the text of upstream.
+- Known limit `catalog-count`: The fork edits the layer count of two upstream tests from 30 to 31. The test `src/app/constructCatalog.test.mjs` holds the number 31 in a third line (line 43), from an older fork edit. A later sync conflicts in these lines when upstream changes the count.
+- Known limit `link-size`: Provider registration caps the switch field at 256 characters (`src/layers/streetLevel/registry.js`). The link decoder rejects a whole `lo` field over 512 characters (`src/data/layerState.js`). So a link with many custom providers can fail to decode. The fork has no custom provider now.
 - Known limit `token-collision`: Upstream has 29 reserved layer tokens and none is `3`. The next new upstream layer can take `3`, which the OSH layer owns. The conflict then shows in `src/data/layerStateTokenReservations.json` at the next sync.
 - Known limit `manifest-path`: `openspec/ownership.json` lists `src/layers/oshTasking/`, and that folder does not exist. This is older than this change.

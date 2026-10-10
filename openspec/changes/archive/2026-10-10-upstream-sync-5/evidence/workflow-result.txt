@@ -1,4 +1,5 @@
 Full result of the workflow sync5-verify: the findings, the skeptic verdicts and the notes of the four analysts. JSON text.
+Note of the lead: this file is a verbatim record of the analyst run on the tree of commit 5bfdffed, an earlier build of this branch with the same files. In it, 0b51002b is the merge commit of that earlier build. The merged upstream commit is 591f299d. The analyst of the fork specs counts 9326 tests in 591 files, and host-run.txt has 9344 tests in the same 591 files (9585 less the 241 tests of gates.test.mjs). The lead did not reconcile the difference of 18 tests.
 {
  "confirmed": [
   {
