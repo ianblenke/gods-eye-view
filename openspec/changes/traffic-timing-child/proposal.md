@@ -32,8 +32,8 @@ The ratchet records the closed gaps and the new scenario ID. No line gap becomes
 ## Known limits and later changes
 
 - Known limit `scope`: Only the test of traffic timing makes a violation in the last gate run. Other tests that use a Vite server make none.
-- Known limit `child-unguarded`: The gate counts the assertions of the parent test only. A deleted assertion of the scenario in the child does not stop the gate. The child must still exit with the status 0 and write the marker file.
-- Known limit `child-cost`: The test file runs twice, in the parent process and in the child process. The test takes more time.
+- Known limit `child-unguarded`: The gate counts the assertions of the parent test only. A deleted assertion of the scenario in the child does not stop the gate. The child must still exit with the status 0 and write the file "scenario-done.json".
+- Known limit `child-cost`: The test file runs twice, in the parent process and in the child process. On the host the file takes about 19 seconds, and 12 seconds of them are in the child process.
 - Known limit `upstream-test`: The test file is upstream code. A later sync can conflict with this change.
 - Known limit `result`: The new numbers of the 51 entries are known only after the ratchet.
 - Later change: The Pensacola pack can get its data credit after this change, with a test for the changed lines.

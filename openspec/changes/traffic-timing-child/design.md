@@ -2,7 +2,7 @@
 
 Base commit: `4f0db4ae` (main, after the merge of the Pensacola pack).
 The guard record of the last gate run lists 51 violations COVERAGE-FAKE. The record has the assertions of the test file `src/data/trafficTiming.test.mjs` only.
-The 51 files are the 51 entries of `openspec/trace/gaps.json` with `untrue: true`. The file `evidence/guard-record.txt` holds the list, because each run of `make` deletes the folder of the record.
+The 51 files are the 51 entries of `openspec/trace/gaps.json` with `untrue: true`. The file `evidence/guard-record.txt` holds the list, because each run of a gates target of `make` deletes the folder of the record.
 
 ## Key decisions
 
@@ -13,13 +13,13 @@ The test with the Vite server runs in a child process. The child process runs th
 ### D2: The settings of the child process
 
 The parent gives the child a new folder in NODE_V8_COVERAGE and the value "" for GEV_SPEC_OUT, GEV_SPEC_ROOT and GEV_SPEC_INVENTORY.
-The wrapper of the guard puts its values over the settings of the child only when the folder is the folder of the gate run. In other cases the settings of the test win, and a setting that the test leaves out gets the gate value. So the test sets the value "" and does not leave the settings out. The preload of the guard then installs nothing.
+The wrapper of the guard replaces the settings of the child with its values only when the folder is the folder of the gate run. In other cases the settings of the test win, and a setting that the test does not set gets the gate value. So the test sets the value "" and does not leave the settings out. The preload of the guard then installs nothing.
 The pattern is in `src/tooling/spec/runParallel.test.mjs`.
 
 ### D3: The checks of the test
 
 The child asserts its own settings before the scenario starts. After its last check the child writes the file "scenario-done.json" with its process number.
-The parent asserts three things. The status is 0. The folder holds a file whose name starts with "coverage-". The marker file holds a process number that differs from its own.
+The parent asserts three things. The status is 0. The folder holds a file whose name starts with "coverage-". The file "scenario-done.json" holds the process number of the child process.
 
 A parent that runs the scenario itself fails the check of the child settings. A child with a wrong setting makes the status 1.
 

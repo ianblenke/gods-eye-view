@@ -27,7 +27,7 @@ function runScenarioInChild() {
       GEV_SPEC_ROOT: '',
       GEV_SPEC_INVENTORY: '',
     };
-    // The gate runs this file with NODE_TEST_CONTEXT, which makes a child print binary frames.
+    // The test runner sets NODE_TEST_CONTEXT, which makes a child print binary frames.
     delete env.NODE_TEST_CONTEXT;
     const result = spawnSync(process.execPath, [fileURLToPath(import.meta.url)], {
       env,
@@ -40,7 +40,7 @@ function runScenarioInChild() {
       'the child process must write V8 coverage into its own folder',
     );
     const done = JSON.parse(readFileSync(path.join(folder, 'scenario-done.json'), 'utf8'));
-    assert.notEqual(done.pid, process.pid, 'the scenario must run in the child process');
+    assert.equal(done.pid, result.pid, 'the scenario must run in the child process');
   } finally {
     rmSync(folder, { recursive: true, force: true });
   }

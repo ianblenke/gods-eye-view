@@ -1,5 +1,5 @@
 Guard record of the gate run of 2026-10-09 (file .gev-cache/spec/guard-1951.jsonl of the clone of the change cctv-pensacola, final make gates).
-The record has one process. It lists 51 violations with the code COVERAGE-FAKE, and the assertions of the test file(s): src/data/trafficTiming.test.mjs.
+The record has one process. It lists 51 violations with the code COVERAGE-FAKE, and the assertions of the test file: src/data/trafficTiming.test.mjs.
 The 51 files equal the 51 entries of openspec/trace/gaps.json with untrue true (the lead compared the two lists).
 
 Files with a violation:
