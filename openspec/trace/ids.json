@@ -734,6 +734,11 @@
     "since": "2026-10-08",
     "change": "gates-one-measurement"
   },
+  "coverage-gate-101": {
+    "hash": "7786e97682903d11870a6cb46c4110eeff68ae85d6430102d487166b9da38e2a",
+    "since": "2026-10-10",
+    "change": "traffic-timing-child"
+  },
   "credential-boundary-001": {
     "hash": "85a103eb9d7ba249fb78bf1b422b413ad69259efa0985971941c2ef466b6a623",
     "since": "2026-09-23",
