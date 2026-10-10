@@ -32,7 +32,7 @@
 - [x] 4.4 Start one container with a Codex folder that does not exist.
 - [x] 4.5 Save a test key in Provider Settings of one container with the host network.
 - [x] 4.6 Write `evidence/e2e.txt` with the output of the five containers.
-- [ ] 4.7 Run `make ratchet CHANGE=codex-voice-container`.
+- [x] 4.7 Run `make ratchet CHANGE=codex-voice-container`.
 - [ ] 4.8 Run the two review agents.
 - [ ] 4.9 Write review.md.
 - [ ] 4.10 Run `make gates CHANGE=codex-voice-container` on the final tree.
