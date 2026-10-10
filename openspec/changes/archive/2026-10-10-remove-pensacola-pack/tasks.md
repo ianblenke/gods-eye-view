@@ -25,8 +25,8 @@
 
 ## 4. Lead work before and in Docker
 
-- [ ] 4.1 Run `make ratchet CHANGE=remove-pensacola-pack`.
-- [ ] 4.2 Add the IDs `live-sources-010` to `live-sources-030` to `openspec/trace/retired-ids.json`.
+- [x] 4.1 Run `make ratchet CHANGE=remove-pensacola-pack`.
+- [x] 4.2 Add the IDs `live-sources-010` to `live-sources-030` to `openspec/trace/retired-ids.json`.
 - [ ] 4.3 Run the two review agents.
 - [ ] 4.4 Write review.md.
 - [ ] 4.5 Run `make gates CHANGE=remove-pensacola-pack` on the final tree.
