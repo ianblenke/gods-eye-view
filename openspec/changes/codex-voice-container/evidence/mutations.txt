@@ -2,10 +2,13 @@ app-container-001 | Remove network_mode from the override | [app-container-001] 
 app-container-001 | Use the bridge network in the override | [app-container-001] the Codex override uses the host network, resets the ports and sets PORT
 app-container-001 | Keep the ports of the base file in the override | [app-container-001] the Codex override uses the host network, resets the ports and sets PORT
 app-container-001 | Give PORT a fixed value in the override | [app-container-001] the Codex override uses the host network, resets the ports and sets PORT
+app-container-001 | Rename the service of the override | [app-container-001] the Codex override uses the host network, resets the ports and sets PORT
 app-container-002 | Make the Codex mount writable | [app-container-002] the Codex override mounts the Codex folder read-only and mounts no other volume
 app-container-002 | Mount the Codex folder at another path | [app-container-002] the Codex override mounts the Codex folder read-only and mounts no other volume
 app-container-002 | Add a second mount of a Codex file | [app-container-002] the Codex override mounts the Codex folder read-only and mounts no other volume
 app-container-002 | Add a mount of the host home folder | [app-container-002] the Codex override mounts the Codex folder read-only and mounts no other volume
+app-container-002 | Remove the mount line of the override | [app-container-002] the Codex override mounts the Codex folder read-only and mounts no other volume
+app-container-002 | Add a mount after a blank line | [app-container-002] the Codex override mounts the Codex folder read-only and mounts no other volume
 app-container-003 | Remove the build line of up-codex | [app-container-003] the target up-codex builds and starts the app with both compose files
 app-container-003 | Start up-codex with the base file only | [app-container-003] the target up-codex builds and starts the app with both compose files
 app-container-003 | Remove up-codex from the list PHONY | [app-container-003] the target up-codex builds and starts the app with both compose files
@@ -13,5 +16,7 @@ app-container-004 | Remove the published port of the base file | [app-container-
 app-container-004 | Add network_mode to the base file | [app-container-004] the default compose file and the target up stay as they are
 app-container-004 | Add a Codex mount to the base file | [app-container-004] the default compose file and the target up stay as they are
 app-container-003 | Swap the build line and the up line of up-codex | [app-container-003] the target up-codex builds and starts the app with both compose files
+app-container-003 | Add a third recipe line to up-codex | [app-container-003] the target up-codex builds and starts the app with both compose files
+app-container-004 | Add a third recipe line to up | [app-container-004] the default compose file and the target up stay as they are
 app-container-004 | Remove the build line of up | [app-container-004] the default compose file and the target up stay as they are
 app-container-004 | Change the target up | [app-container-004] the default compose file and the target up stay as they are

@@ -34,13 +34,24 @@ cleaned
 
 no e2e container left
 
+## 4.5 Provider Settings save with the host network (test value, port 4196)
+started with --network host
+before: file /app/.env in the container: absent
+POST without Origin (a script) -> HTTP 403; keys: error ok: undefined saved: undefined; text: {"error":"Provider Settings requires an exact local Origin"}
+POST with Origin http://localhost:4196 (as a browser sends it) {LL2_API_TOKEN: test value} -> HTTP 200; keys: ok,restarting,saved,status ok: true saved: ["LL2_API_TOKEN"]
+after: file /app/.env in the container: exists; names in the file: # Keys added by the in-app POWER UP panel LL2_API_TOKEN 
+file on the host mount: 32 entries in the mounted Codex folder, unchanged
+removed gev-e2e-save
+new container from the same image has /app/.env: absent
+no e2e container left
+
 ## Reading of the output (written by the lead)
 
-- The body of the status route has the key `available` alone when the container read `auth.json` and found a valid token. A failure adds the keys `error`, `code` and `reauthRequired` (codex-auth.js:238-255). So "keys: available" with HTTP 200 means `{"available":true}`: the container user node read the file of the host user through the read-only mount.
+- The body of the status route has the key `available` alone when the container read `auth.json` and found a valid token. A failure adds the keys `error`, `code` and `reauthRequired` (codex-auth.js:241-259). So "keys: available" with HTTP 200 means `{"available":true}`: the container user node read the file of the host user through the read-only mount.
 - With the host network, a connection to 127.0.0.1 and to localhost gets HTTP 200, and a connection to the LAN address of the host gets HTTP 403. The browser must open `localhost`.
 - With a bridge network and a published port, the same connection gets HTTP 403 and the text "ChatGPT OAuth is available only from this machine". This is the reason for the override.
-- With the host network, the route `/api/setup/status` of Provider Settings answers HTTP 200. So the panel can save keys with this override (Known limit `provider-settings`).
+- With the host network, the route `/api/setup/status` of Provider Settings answers HTTP 200 (task 4.1). In task 4.5 a save with the `Origin` that a browser sends gives HTTP 200 and creates `/app/.env` in the container. A save with no `Origin` gives HTTP 403 with the text "Provider Settings requires an exact local Origin", so the loopback and host checks had passed. A new container from the same image has no `/app/.env`. So the panel can save keys with this override, and `make up-codex` removes them (Known limit `provider-settings`). The value was a fake test value.
 - The engine discards a published port with the host network and prints the warning "Published ports are discarded when using host network mode" (task 4.3). The exit status is 0.
 - A Codex folder that does not exist is created on the host with the owner root and the mode 755 (task 4.4).
 - The mount has the flag `ro`, and a write in the mount fails with "Read-only file system".
-- The script of this check is in e2e-script.txt. The check did not touch the app container, and it did not call the route that makes a voice token.
+- The scripts of this check are in e2e-script.txt (tasks 4.1 to 4.4) and e2e-save-script.txt (task 4.5). The check did not touch the app container, and it did not call the route that makes a voice token.
