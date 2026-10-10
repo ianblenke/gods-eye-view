@@ -9,7 +9,7 @@ CHANGELOG.md:8:  The default cap is 120 cameras, the nearest to Pensacola.
 CHANGELOG.md:9:  `CCTV_PENSACOLA_MAX_SOURCES` sets the cap, and `CCTV_PENSACOLA_ENABLED=0` stops the pack.
 (The matches are the removal entry and the old add entry of CHANGELOG.md. The files in src/data/local_data hold place names and were left out. The last two names in the pattern are the id of the ArcGIS account in the layer address and the id of the layer item.)
 
-## CCTV test files: 31 files with cctv in the file name (git ls-files, every folder) and 2 test files that import the CCTV provider modules (src/tooling/mediaProviders.test.mjs, src/tooling/previewServing.test.mjs): 33 files, 381 tests, each 'fail 0' (run: one node --test process for each file, 4 at a time, host Node v26.8.2)
+## CCTV test files: 31 files with cctv in the path (git ls-files, every folder) and 2 test files that load the CCTV provider modules (src/tooling/mediaProviders.test.mjs, src/tooling/previewServing.test.mjs): 33 files, 381 tests, each 'fail 0' (run: one node --test process for each file, 4 at a time, host Node v26.8.2)
 src/cctvFocusPolicy.test.mjs | tests 4 pass 4 fail 0
 src/cctvFocusRequest.test.mjs | tests 3 pass 3 fail 0
 src/data/cctvCalgary.test.mjs | tests 13 pass 13 fail 0
