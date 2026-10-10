@@ -10,11 +10,15 @@ faults=[
  ('app-container-002','Make the Codex mount writable','compose.codex.yaml',[(":/home/node/.codex:ro",":/home/node/.codex")]),
  ('app-container-002','Mount the Codex folder at another path','compose.codex.yaml',[("/home/node/.codex:ro","/home/node/.codex-x:ro")]),
  ('app-container-002','Add a second mount of a Codex file','compose.codex.yaml',[("/home/node/.codex:ro\n","/home/node/.codex:ro\n      - ${HOME}/.codex/auth.json:/tmp/auth.json:ro\n")]),
+ ('app-container-002','Add a mount of the host home folder','compose.codex.yaml',[("/home/node/.codex:ro\n","/home/node/.codex:ro\n      - ${HOME}:/home/node/host:ro\n")]),
  ('app-container-003','Remove the build line of up-codex','Makefile',[("\tdocker compose -f compose.yaml -f compose.codex.yaml build\n","")]),
  ('app-container-003','Start up-codex with the base file only','Makefile',[("\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n","\tdocker compose -f compose.yaml up --force-recreate\n")]),
  ('app-container-003','Remove up-codex from the list PHONY','Makefile',[(".PHONY: up up-codex down",".PHONY: up down")]),
  ('app-container-004','Remove the published port of the base file','compose.yaml',[('      - "${GEV_PORT:-4173}:4173"\n',"")]),
  ('app-container-004','Add network_mode to the base file','compose.yaml',[("    restart: unless-stopped\n","    restart: unless-stopped\n    network_mode: host\n")]),
+ ('app-container-004','Add a Codex mount to the base file','compose.yaml',[("      - gev-logs:/app/.gev-logs\n","      - gev-logs:/app/.gev-logs\n      - ${HOME}/.codex:/home/node/.codex:ro\n")]),
+ ('app-container-003','Swap the build line and the up line of up-codex','Makefile',[("\tdocker compose -f compose.yaml -f compose.codex.yaml build\n\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n","\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n\tdocker compose -f compose.yaml -f compose.codex.yaml build\n")]),
+ ('app-container-004','Remove the build line of up','Makefile',[("up:\n\tdocker compose build\n","up:\n")]),
  ('app-container-004','Change the target up','Makefile',[("up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n","up:\n\tdocker compose build\n\tdocker compose up\n")]),
 ]
 out=[];log=[]

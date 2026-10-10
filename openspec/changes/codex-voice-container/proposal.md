@@ -1,14 +1,14 @@
 ## Why
 
 The owner wants the Codex OAuth voice feature (the ChatGPT sign-in) in the Docker app. The server answers its three OAuth routes only for connections from the same machine, and it reads the Codex file `auth.json` on that machine.
-The Docker app has a bridge network and no Codex folder, so the routes would refuse the browser.
+The Docker app has a bridge network and no Codex folder. So the routes refuse the browser, and the server finds no `auth.json`.
 
 ## What Changes
 
 - Add the file `compose.codex.yaml`. It gives the app container the host network, the port from `GEV_PORT` and a read-only mount of `${HOME}/.codex`.
 - Add the Makefile target `up-codex`. It builds and starts the app with both compose files.
 - Add the document `docs/fork/codex-voice-docker.md` with the steps to use the feature.
-- Add the test file `src/tooling/appContainer.test.mjs`. Add it and the new compose file to `openspec/ownership.json`, and the test file to `scripts/format-scope.json`.
+- Add the test file `src/tooling/appContainer.test.mjs`. Add the test file and the new compose file to `openspec/ownership.json`, and the test file to `scripts/format-scope.json`.
 
 ## Capabilities
 
@@ -28,9 +28,17 @@ The default setup stays as it is: the file `compose.yaml` and the target `up` do
 
 ## Known limits and later changes
 
-- Known limit `sign-in`: The container has no Codex program. The sign-in button of the app starts `codex login` and shows an error. The user signs in on the host with `codex login`.
+- Known limit `sign-in`: The image has no Codex program. The sign-in button of the app starts `codex login` and shows an error. The user signs in on the host with `codex login`.
+- Known limit `host-program`: The server also looks for a Codex program in `~/.codex/packages`. When the host has a standalone Codex install there, the mount brings it into the container, and the button can start it.
 - Known limit `expiry`: The server never refreshes the token. When the token expires, the user runs `codex login` on the host again.
 - Known limit `host-network`: The container shares the network of the host. It can reach services on the loopback address of the host, and a port conflict can stop it.
 - Known limit `tokens`: Any code in the container can read the file `auth.json`, as on the host. The file holds a refresh token.
-- Known limit `linux`: Host networking works on Linux only. The target `up-codex` is optional.
-- Known limit `e2e`: The tests read the files. The lead checks the real behavior with two containers and stores the output in `evidence/e2e.txt`.
+- Known limit `linux`: The author checked the host network on Linux only. The target `up-codex` is optional.
+- Known limit `user`: The container user `node` has the number 1000. It reads `auth.json` only when the file belongs to the host user with the number 1000. The author did not check rootless Docker.
+- Known limit `folder`: The mount shows the whole folder `~/.codex` to the container, with the config and the history of Codex. The override mounts the folder because a mount of one file can keep the old file when a program replaces it.
+- Known limit `missing-folder`: When `~/.codex` does not exist, Docker creates it as an empty folder that belongs to root. The document tells the user to run `codex login` before the first start.
+- Known limit `all-interfaces`: The setting `HOST` stays "0.0.0.0", so the app listens on all addresses of the host. A browser on another computer can open the app, but the OAuth routes refuse it.
+- Known limit `local-programs`: With the host network, any program on the host passes the check for the same machine. A tunnel or a reverse proxy on the host, such as `ssh -L`, also passes it. `SECURITY.md` describes this limit.
+- Known limit `provider-settings`: With the host network, the Provider Settings panel can save keys, because its connection looks local. The server writes them to `.env` in the container, and `make up-codex` removes them. The comment in `compose.yaml` about this panel is true for `make up` only.
+- Known limit `compose`: The override uses `!reset`, so it needs a recent Docker Compose. The check ran with Compose 5.5.1. The lowest version that reads `!reset` is not known.
+- Known limit `e2e`: The tests read the files. The lead checks the real behavior with test containers and stores the output in `evidence/e2e.txt`.
