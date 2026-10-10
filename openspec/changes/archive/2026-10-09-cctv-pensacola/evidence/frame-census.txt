@@ -1,0 +1,72 @@
+Frame census of the Pensacola pack area, 2026-10-09 about 22:30 UTC.
+Method: one query of the FL511 layer with the query of live-sources-019 (outFields without ID, 66 rows, 65 valid rows), then one HEAD request for each channel at https://images-dis.divas.cloud/DGI/chan-<channel>_h.jpg, 0.25 seconds apart, User-Agent gods-eye-view-research/1.0.
+Result: HTTP 200 for 17 channels, HTTP 404 for 48 channels.
+Lines: channel, HTTP status, description.
+
+9183 200 Pensacola Bay Bridge (Under Flyover)
+9180 200 Pensacola Bay Bridge (Round-a-bout Flyover)
+9179 200 Pensacola Bay Bridge
+9178 404 Pensacola Bay Bridge
+9176 404 Pensacola Bay Bridge / Mid-Bridge
+9175 404 Pensacola Bay Bridge
+9174 404 Pensacola Bay Bridge
+9172 404 Pensacola Bay Bridge / Gulf Breeze EB
+9173 404 Pensacola Bay Bridge / Gulf Breeze WB
+9182 200 Pensacola Bay Bridge (Round-a-bout EB)
+9507 404 Brent Lane and PCC Main Drive
+9508 404 Brent Lane and Davis Highway
+11924 404 I10-MM 011-MED
+12075 404 I10-MM 027.7-M
+12227 404 I10-MM 006-M-B-Nine Mile Rd
+12228 404 I10-MM 006-M-A-Nine Mile Rd
+6576 404 I110-MM 0.1NB-Civic Center
+6588 404 I110-MM 0.2M-Chase St
+6577 404 I110-MM 0.6-M-Cervantes St
+6579 404 I110-MM 2.3NB-Texar Dr
+6580 404 I110-MM 2.9SB-Fairfield Dr
+6581 404 I110-MM 4SB-Brent Lane
+6582 404 I110-MM 4.7SB- Airport Blvd
+10398 200 I10-MM 003.3EB-Weigh Station
+10419 404 I10-MM 001.5EB-Beulah Rd
+10414 404 I10-MM 004.3EB-Welcome Center
+10412 200 I10-MM 007M-Pine Forest Rd
+6583 200 I110-MM 5.9NB-Creighton Rd
+6575 404 I10-MM 032.8EB-E of SR87
+10432 404 I10-MM 000.7EB-Agriculture Sta
+10395 200 I10-MM 005.5M-Nine Mile Rd
+6574 404 I10-MM 031.2M SR-87
+6573 404 I10-MM 030.1EB- SR Rest Area
+6572 404 I10-MM 028.3EB-Ward Basin Rd
+6590 404 I10-MM 008.1EB-Kersey Rd
+6571 200 I10-MM 026.9WB-Blackwater Brdg
+10402 404 I10-MM 009.2EB-W of Pncla Blvd
+6570 404 I10-MM 025.9M-Garcon Point Rd
+10416 200 I10-MM 010.2EB-Pensacola Blvd
+10400 200 I10-MM 010.2WB-Pensacola Blvd
+6587 404 I10-MM 023.7EB-E of Avalon
+10410 404 I10-MM 010.8WB-N Palafox St
+7289 404 I10-MM 021.7M-Avalon Blvd
+10403 404 I10-MM 011.4EB W of I110
+6578 404 I10-MM 020WB
+6589 404 I10-MM 012.4EB-I110
+6568 404 I10-MM 019.2M
+10396 404 I10-MM 012.9EB-Davis Hwy
+6567 404 I10-MM 018.2EB-Escambia Bay Bridge
+10406 200 I10-MM 013.9EB E of Davis Hwy
+6566 404 I10-MM 017.5EB-Escambia Bay Bridge
+10405 200 I10-MM 015.2EB-N 9th Ave
+10458 200 I10-MM 015.9EB-E of N 9th Ave
+6565 404 I10-MM 016.5WB-Scenic Hwy
+7732 404 I10-MM 036.9WB-Miller Bluff Rd
+6584 200 I110-MM 1.5M-Maxwell St
+7733 404 I10-MM 038.9WB
+7731 200 I10-MM 035.6WB
+7315 404 I10 @ 3.1 EB Weigh Station
+7316 404 I10 @ 3.3 WB Weigh Station
+7317 404 MM 04 Welcome Center EB
+7318 404 MM 29.8 Rest Area-EB
+7319 404 MM 30 Rest Area-WB
+6591 404 I10-MM 040.9WB
+7730 200 I10-MM 034.2WB-SA Jones Rd
+
+Other names for the dead channel 9178 (chan-9178_l.jpg, chan-9178.jpg, chan-9178_m.jpg): HTTP 404 each.
