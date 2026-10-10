@@ -1,0 +1,54 @@
+Host checks of remove-pensacola-pack, 2026-10-10, host Node v26.8.2.
+
+## git grep -inE 'pensacola|fl511|divas\.cloud|images-dis|escambia|cctvPensacola|CCTV_PENSACOLA|3wFbqsFPLeKqOlIK|8c0046dd833347bea1c39decec1d3abb' (without openspec/changes, openspec/trace, openspec/specs, src/data/local_data)
+CHANGELOG.md:3:- Remove the Pensacola traffic camera pack (2026-10-10). On 2026-10-09 only 17 of the 65 cameras served a frame, and FL511 limits its content to individual
+CHANGELOG.md:4:  The settings `CCTV_PENSACOLA_ENABLED`, `CCTV_PENSACOLA_MAX_SOURCES` and `CCTV_PENSACOLA_ROWS_URL` have no use now.
+CHANGELOG.md:6:- Add Pensacola traffic cameras as an FL511 pack that needs no key. Frames are stills from `images-dis.divas.cloud`.
+CHANGELOG.md:7:  FL511 content is for individual non-commercial use only. On 2026-10-09 only 17 of the 65 listed cameras served a frame.
+CHANGELOG.md:8:  The default cap is 120 cameras, the nearest to Pensacola.
+CHANGELOG.md:9:  `CCTV_PENSACOLA_MAX_SOURCES` sets the cap, and `CCTV_PENSACOLA_ENABLED=0` stops the pack.
+(The matches are the removal entry and the old add entry of CHANGELOG.md. The files in src/data/local_data hold place names and were left out. The last two names in the pattern are the id of the ArcGIS account in the layer address and the id of the layer item.)
+
+## CCTV test files: 31 files with cctv in the path (git ls-files, every folder) and 2 test files that load the CCTV provider modules (src/tooling/mediaProviders.test.mjs, src/tooling/previewServing.test.mjs): 33 files, 381 tests, each 'fail 0' (run: one node --test process for each file, 4 at a time, host Node v26.8.2)
+src/cctvFocusPolicy.test.mjs | tests 4 pass 4 fail 0
+src/cctvFocusRequest.test.mjs | tests 3 pass 3 fail 0
+src/data/cctvCalgary.test.mjs | tests 13 pass 13 fail 0
+src/data/cctvCards.test.mjs | tests 23 pass 23 fail 0
+src/data/cctvCatalogCap.test.mjs | tests 8 pass 8 fail 0
+src/data/cctvDisplayCode.test.mjs | tests 2 pass 2 fail 0
+src/data/cctvDriveBcSource.test.mjs | tests 6 pass 6 fail 0
+src/data/cctvEstonia.test.mjs | tests 3 pass 3 fail 0
+src/data/cctvFintraffic.test.mjs | tests 8 pass 8 fail 0
+src/data/cctvFootprint.test.mjs | tests 3 pass 3 fail 0
+src/data/cctvGizmo.test.mjs | tests 10 pass 10 fail 0
+src/data/cctvGroundHeights.test.mjs | tests 2 pass 2 fail 0
+src/data/cctvHlsStream.test.mjs | tests 10 pass 10 fail 0
+src/data/cctvLod.test.mjs | tests 29 pass 29 fail 0
+src/data/cctvMediaRange.test.mjs | tests 21 pass 21 fail 0
+src/data/cctvNswSource.test.mjs | tests 6 pass 6 fail 0
+src/data/cctvOntarioKey.test.mjs | tests 12 pass 12 fail 0
+src/data/cctvOntarioRows.test.mjs | tests 71 pass 71 fail 0
+src/data/cctvProxy.test.mjs | tests 14 pass 14 fail 0
+src/data/cctv.test.mjs | tests 55 pass 55 fail 0
+src/data/cctvTxdotSource.test.mjs | tests 10 pass 10 fail 0
+src/data/cctvVegvesen.test.mjs | tests 6 pass 6 fail 0
+src/data/cctvViewshed.test.mjs | tests 7 pass 7 fail 0
+src/data/cctvWarendorf.test.mjs | tests 3 pass 3 fail 0
+src/devCctv.test.mjs | tests 4 pass 4 fail 0
+src/layers/cctv/headingConfidence.test.mjs | tests 7 pass 7 fail 0
+src/layers/cctv/source.test.mjs | tests 6 pass 6 fail 0
+src/layers/cctv/videoPlayback.test.mjs | tests 4 pass 4 fail 0
+src/tooling/mediaProviders.test.mjs | tests 5 pass 5 fail 0
+src/tooling/precomputeCctvHeights.test.mjs | tests 15 pass 15 fail 0
+src/tooling/previewServing.test.mjs | tests 3 pass 3 fail 0
+src/ui/cctvControls.test.mjs | tests 7 pass 7 fail 0
+src/ui/cctvVideo.test.mjs | tests 1 pass 1 fail 0
+
+## test files that read README.md, DATA_SOURCES.md, CHANGELOG.md, .env.example, CURRENT-STATE.md, ownership.json, package-boundaries or format-scope: 17 files, each 'fail 0'
+
+## node scripts/check-import-directions.mjs -> exit 0 {"modules":970,"portableEntries":76}
+## node scripts/check-package-boundaries.mjs -> exit 0 Checked osh-layer: 1 exports, 10 owned modules.
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main -> exit 0 Layer tokens valid against origin/main: 30 published, 0 new.
+## node scripts/format.mjs --check -> exit 0 Checked 1334 source files.
+## node scripts/spec/gates.mjs lint --change remove-pensacola-pack -> STE: 0 errors, 710 warnings.
+## openspec validate remove-pensacola-pack -> Change 'remove-pensacola-pack' is valid
