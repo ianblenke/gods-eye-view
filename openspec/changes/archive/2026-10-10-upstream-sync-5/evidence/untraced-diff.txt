@@ -1,0 +1,29 @@
+Untraced tests per test file in openspec/trace/gaps.json: fork main (commit 13d71551) against this tree, 2026-10-10.
+Command (run in the clone; the sum of the values of the map names is the number of untraced tests of a file):
+python3 - <<'EOF'
+import json,subprocess
+base=json.loads(subprocess.run(['git','show','13d71551:openspec/trace/gaps.json'],capture_output=True,text=True).stdout)
+cur=json.load(open('openspec/trace/gaps.json'))
+b=base['untracedTests']; c=cur['untracedTests']
+tot=lambda e: 0 if e is None else sum(e['names'].values())
+for f in sorted(set(b)|set(c)):
+    d=tot(c.get(f))-tot(b.get(f))
+    if d: print(f, tot(b.get(f)), tot(c.get(f)), d)
+EOF
+
+Files with a different number (file, base, now, difference):
+src/app/constructCatalog.test.mjs                            base   2 now   3 diff +1
+src/app/layers/streetLevel.test.mjs                          base   0 now   1 diff +1
+src/app/sourceComposition.test.mjs                           base   0 now   7 diff +7
+src/data/layerState.test.mjs                                 base  63 now  64 diff +1
+src/layers/directions/source.test.mjs                        base   0 now   3 diff +3
+src/layers/recentImagery/rendering.test.mjs                  base   0 now   1 diff +1
+src/layers/recentImagery/source.test.mjs                     base   0 now   2 diff +2
+src/layers/recentImagery/thumbnails.test.mjs                 base   0 now   1 diff +1
+src/layers/streetLevel/index.test.mjs                        base  18 now  19 diff +1
+src/layers/streetLevel/providerSwitches.test.mjs             base   0 now   5 diff +5
+src/layers/streetLevel/registry.test.mjs                     base   5 now   6 diff +1
+src/layers/vessels/ownership.test.mjs                        base  11 now  13 diff +2
+src/ui/layerPanel.test.mjs                                   base   4 now   5 diff +1
+src/ui/streetLevelPresentation.test.mjs                      base  17 now  18 diff +1
+Sum of the differences: 28. Sum over all files: base 5895, now 5923. Files with untraced tests: base 497, now 504.
