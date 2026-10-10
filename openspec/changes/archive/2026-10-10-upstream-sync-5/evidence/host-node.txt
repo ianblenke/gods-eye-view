@@ -1,0 +1,15 @@
+##### date (UTC), after the host run, on the same machine
+2026-10-10T10:16Z
+##### node --version (the Node version of the host)
+v26.8.2
+##### cat .node-version (the Node version that the image and the tests need)
+24.21.0
+##### sed -n 12,14p scripts/run-unit-tests.mjs (the function that accepts only Node major 24)
+export function isCalibratedAllocationRuntime(version = process.versions.node) {
+  return Number.parseInt(String(version).split('.')[0], 10) === 24;
+}
+##### grep -n skip src/data/focusAllocations.test.mjs src/overlays/worldOverlayAllocation.test.mjs (the two skips for Node 24)
+src/data/focusAllocations.test.mjs:16:    return t.skip(`allocation budgets are calibrated for Node 24; running ${process.versions.node}`);
+src/overlays/worldOverlayAllocation.test.mjs:317:      return t.skip(`allocation budgets are calibrated for Node 24; running ${process.versions.node}`);
+##### sed -n 405p src/keySetupHardening.test.mjs (the skip of the Windows test)
+  skip: process.platform !== 'win32',

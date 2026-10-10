@@ -1863,15 +1863,15 @@
     },
     "src/app/constructCatalog.js": {
       "loaded": true,
-      "lines": 3,
-      "branches": 4,
+      "lines": 0,
+      "branches": 3,
       "functions": 1,
       "totals": {
-        "lines": 217,
-        "branches": 16,
-        "functions": 4
+        "lines": 191,
+        "branches": 13,
+        "functions": 3
       },
-      "sha": "a520aac68e728872de034b460c04b5204ff959262c0d1a99071ca1422cc2b518",
+      "sha": "9c6c70bba40260aa4a13a556d4d3204fa7544d26b86215d58497225ded58d772",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -1897,11 +1897,11 @@
       "branches": 4,
       "functions": 3,
       "totals": {
-        "lines": 62,
+        "lines": 63,
         "branches": 12,
         "functions": 6
       },
-      "sha": "e6a247531a9cc1cd6f66b81f83a2cb9a0cbb58ee731ffc54163ef30e68a630da",
+      "sha": "3cf9ed82314472ec3e1fea8cb85fbceb604fdceb537bbb2aa74395308b1859ac",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -2056,6 +2056,21 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/app/layers/recentImagery.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 3,
+      "totals": {
+        "lines": 19,
+        "branches": 4,
+        "functions": 4
+      },
+      "sha": "0dafbbf77629fa01a5f8c3322e1f406f60cc4baeaca41f1ab498d4236d901170",
+      "untrue": false,
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
+    },
     "src/app/layers/submarineCables.js": {
       "loaded": true,
       "lines": 0,
@@ -2100,6 +2115,21 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
+    },
+    "src/app/sourceComposition.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 3,
+      "functions": 0,
+      "totals": {
+        "lines": 113,
+        "branches": 25,
+        "functions": 10
+      },
+      "sha": "e6c244553b4ef787132f8ae3411d633ed99fdeb76b4aca46767fa4875f364e21",
+      "untrue": false,
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
     },
     "src/app/sources.js": {
       "loaded": false,
@@ -3061,6 +3091,21 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/data/idSwitches.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 2,
+      "functions": 0,
+      "totals": {
+        "lines": 63,
+        "branches": 42,
+        "functions": 9
+      },
+      "sha": "42e78e28517958cf3c5b2bd207e733c074d9167c09cf73b5cf8c9ba51951f155",
+      "untrue": false,
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
+    },
     "src/data/installationFeedback.js": {
       "loaded": true,
       "lines": 0,
@@ -3112,11 +3157,11 @@
       "branches": 37,
       "functions": 1,
       "totals": {
-        "lines": 1072,
-        "branches": 296,
-        "functions": 70
+        "lines": 1082,
+        "branches": 298,
+        "functions": 72
       },
-      "sha": "347c4845ee33600b018784011dca0e3b036d0810f94e69c2b73839439499fb33",
+      "sha": "fc868d6b241fcbd44fb38a395c2ecfa98bc649791b1efd4e92301c74bed739a1",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3127,11 +3172,11 @@
       "branches": 42,
       "functions": 4,
       "totals": {
-        "lines": 742,
-        "branches": 189,
+        "lines": 756,
+        "branches": 194,
         "functions": 37
       },
-      "sha": "cf9f7ab92eca8dc45d3f64a8c7a37022cef429fbfb3d2af8cf337dac35690c60",
+      "sha": "3817093d612d0255c31ad3a6f17203f69250c0ec9d82f97f71be240d6d3478c2",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -3139,14 +3184,14 @@
     "src/data/lifecycle.js": {
       "loaded": true,
       "lines": 228,
-      "branches": 123,
+      "branches": 124,
       "functions": 15,
       "totals": {
-        "lines": 2328,
-        "branches": 604,
-        "functions": 116
+        "lines": 2350,
+        "branches": 618,
+        "functions": 117
       },
-      "sha": "a5d06cef52480b4aea4d0b051e7f2ac8b54e451fce7ba8063fc4a798d1a3d987",
+      "sha": "1fa17ff88f4252ab4a4ea38c82518aadc6da68edb2e0afd84fdb0393232b2b40",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -3833,7 +3878,7 @@
       "functions": 0,
       "totals": {
         "lines": 167,
-        "branches": 51,
+        "branches": 56,
         "functions": 13
       },
       "sha": "63c25df38dec4b014448368257912eb1e58f2cd6e1b0315d90527a01d7a18900",
@@ -4668,18 +4713,33 @@
     },
     "src/layers/directions/index.js": {
       "loaded": true,
-      "lines": 277,
+      "lines": 271,
       "branches": 35,
       "functions": 16,
       "totals": {
-        "lines": 1434,
-        "branches": 282,
-        "functions": 71
+        "lines": 1427,
+        "branches": 281,
+        "functions": 70
       },
-      "sha": "5b9f701872582740d985805d55cd1b24efd354a5af44b3e220949b6522d43975",
+      "sha": "cd1ecbcb917741806ffbf42b98268edfb6d046a97094ef9ecd937e621ad0c10e",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
+    },
+    "src/layers/directions/source.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 2,
+      "functions": 0,
+      "totals": {
+        "lines": 34,
+        "branches": 14,
+        "functions": 4
+      },
+      "sha": "73cc9e6b92b9dde2ee679fc48343a5562e8212ac9ea6f76f1bab926c75b7e0d5",
+      "untrue": false,
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
     },
     "src/layers/earthquakes/index.js": {
       "loaded": true,
@@ -6091,17 +6151,32 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/layers/recentImagery/thumbnails.js": {
+    "src/layers/recentImagery/source.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 1,
+      "branches": 0,
+      "functions": 1,
+      "totals": {
+        "lines": 32,
+        "branches": 6,
+        "functions": 5
+      },
+      "sha": "84fbfffcec047768eeb0a9b5e1ba5e0c2ec620e2146e675e79c42b52f7b73b17",
+      "untrue": false,
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
+    },
+    "src/layers/recentImagery/thumbnails.js": {
+      "loaded": true,
+      "lines": 1,
+      "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 284,
+        "lines": 282,
         "branches": 100,
         "functions": 25
       },
-      "sha": "dc2489feab9d4e716052b1856daf23f1d7d6dc95a7b2154f26ab40422d4b80d2",
+      "sha": "32927efeeec65521bd2c26ed4b1d433d49f4783ddb54246532e91802cc535c6f",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -6337,11 +6412,11 @@
       "branches": 32,
       "functions": 16,
       "totals": {
-        "lines": 542,
-        "branches": 126,
-        "functions": 62
+        "lines": 552,
+        "branches": 142,
+        "functions": 63
       },
-      "sha": "c8662ec39b53237fc3835633229c3448fee2dccb0a6923575237e83f07de2cfd",
+      "sha": "4c837a642bb638bcc3d855367b82f0d247525b8719c22fea6a5a21f4212d63ad",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -6499,14 +6574,14 @@
     "src/layers/streetLevel/registry.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 1,
+      "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 141,
-        "branches": 34,
-        "functions": 3
+        "lines": 156,
+        "branches": 38,
+        "functions": 5
       },
-      "sha": "727c5a6655d72d6e029039540d131a689c941bc6e3f79394b08f2ba2e5e8ee6e",
+      "sha": "c1f196c6b42b99fb22de9dde9ad5af7f8e88f8740332ebb57092405295f039bc",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -7253,10 +7328,10 @@
       "functions": 0,
       "totals": {
         "lines": 232,
-        "branches": 64,
+        "branches": 65,
         "functions": 9
       },
-      "sha": "8d7c41cd9991cb8e2d2bfe60f46bf312ca246fce786c49a8142ff1d9c945eda5",
+      "sha": "e0229a8be40450fae46f0497c7e8ec18a609885885844c34e714dbf84542b875",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7297,11 +7372,11 @@
       "branches": 27,
       "functions": 3,
       "totals": {
-        "lines": 540,
-        "branches": 132,
+        "lines": 550,
+        "branches": 140,
         "functions": 24
       },
-      "sha": "3bcd7d4e67a54ecc91b8ead5a6b7272ab89680f5e5ab1995d96a798e085beda3",
+      "sha": "06854ef5afe6042232a8d48f2b629a7f88cc9bc1357d26f7160dc1265ddea36e",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -8898,30 +8973,30 @@
     },
     "src/standalone/application.js": {
       "loaded": false,
-      "lines": 74,
+      "lines": 78,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 74,
+        "lines": 78,
         "branches": null,
         "functions": null
       },
-      "sha": "ce0d6bf6af5f299e78f1db66baf8e66f967ac2cb5ba5c52b417f18520b4ea71a",
+      "sha": "256a420cde6022c18f015cdff30daef126611a9ef2ef80ce1ee328ebfad686d5",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/standalone/catalog.js": {
       "loaded": false,
-      "lines": 32,
+      "lines": 35,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 32,
+        "lines": 35,
         "branches": null,
         "functions": null
       },
-      "sha": "7938e711d56fcb8c5390ab6fba7c2e5d5a5cff8b96faca0f5971dfa778b34766",
+      "sha": "c03b48cb52d52db82efd419c6291584d81e0929c05580fbd483a29a8bbb73cbc",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -8974,14 +9049,14 @@
     "src/standalone/layerSources.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 2,
+      "branches": 3,
       "functions": 1,
       "totals": {
-        "lines": 54,
-        "branches": 4,
+        "lines": 65,
+        "branches": 8,
         "functions": 2
       },
-      "sha": "155fc6037b9d9eb1138c345091cbb36f85015528f1c2eb84cb65f6b4d88a5275",
+      "sha": "9954acdf5f612ad24de7c12c0acd4a0d9a1c827d28105d8266a3be1a9a73ebd5",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -10069,14 +10144,14 @@
     "src/ui/layerPanel.js": {
       "loaded": true,
       "lines": 35,
-      "branches": 22,
+      "branches": 21,
       "functions": 4,
       "totals": {
-        "lines": 650,
-        "branches": 227,
+        "lines": 660,
+        "branches": 239,
         "functions": 39
       },
-      "sha": "76e0268e60fd238183adc1bb252e53b3525975d854d0c39c950e58f6b1608613",
+      "sha": "6a56abe5bd4acfcc5657c6fb719ccb4930d26eaea7e86a067698f534a0508cf4",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -10609,14 +10684,14 @@
     "src/ui/streetLevelPresentation.js": {
       "loaded": true,
       "lines": 2,
-      "branches": 8,
+      "branches": 9,
       "functions": 0,
       "totals": {
-        "lines": 162,
-        "branches": 86,
+        "lines": 163,
+        "branches": 90,
         "functions": 9
       },
-      "sha": "0670766743242a635cb2df0f6b5d357350872690e3a826e01c730fecaff1e062",
+      "sha": "a773658ff471de747617d7cbc91e1f13ccd31cc9e672711e88cfc3a9c8d3eae6",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -11655,6 +11730,7 @@
     },
     "src/app/constructCatalog.test.mjs": {
       "names": {
+        "Mapillary can be omitted or replaced without changing catalog membership": 1,
         "catalogs construct distinct layers and classification from their supplied source": 1,
         "invalid or already cancelled construction fails before classification can acquire": 1
       },
@@ -11675,6 +11751,13 @@
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
+    },
+    "src/app/layers/streetLevel.test.mjs": {
+      "names": {
+        "explicit providers replace the default source and an empty list removes it": 1
+      },
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
     },
     "src/app/layers/transit.test.mjs": {
       "names": {
@@ -11702,6 +11785,19 @@
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
+    },
+    "src/app/sourceComposition.test.mjs": {
+      "names": {
+        "absent military acquisition does not poll, suppress flights, or erase supplied classification": 1,
+        "all acquisition sources may be absent, and enable fails before initializing or fetching": 1,
+        "availability lookup accepts frozen layers and uses their display names": 1,
+        "configured sources retain identity; invalid implementations never become unavailable silently": 1,
+        "empty Street Level uses the shared unavailable lifecycle without initialization": 1,
+        "every acquisition source can be omitted without losing catalog membership": 1,
+        "standalone defaults allow exact replacements and explicit removal, and reject typos": 1
+      },
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
     },
     "src/app/sourceSlot.test.mjs": {
       "names": {
@@ -13953,6 +14049,7 @@
         "explicit manager params and visibility revoke module-owned pending tracking restore": 1,
         "explicit navigation preserves unrelated visibility and option restoration": 1,
         "explicit navigation tracking clear removes the active durable ID from the generated hash": 1,
+        "explicit provider switches reach durable state without adopting unrelated live switches": 1,
         "feed failure is not misreported as target absence and malformed time never says expired": 1,
         "fire perimeters uses digit 2 without colliding with wind or recent imagery": 1,
         "historical share payload suppresses unrelated local layer preferences": 1,
@@ -15902,6 +15999,15 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/layers/directions/source.test.mjs": {
+      "names": {
+        "aborting during route parsing discards the result": 1,
+        "route acquisition uses only the supplied transport and endpoint": 1,
+        "route failures are surfaced without fallback requests": 1
+      },
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
+    },
     "src/layers/earthquakes/ownership.test.mjs": {
       "names": {
         "USGS body completion honors cancellation even with an uncooperative transport": 1,
@@ -16141,6 +16247,28 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/layers/recentImagery/rendering.test.mjs": {
+      "names": {
+        "replacement imagery uses source-owned tile URLs and credit and tears down normally": 1
+      },
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
+    },
+    "src/layers/recentImagery/source.test.mjs": {
+      "names": {
+        "cancelled thumbnail acquisition does not return stale responses or retry": 1,
+        "imagery source routes catalog, thumbnails and tiles through supplied adapters": 1
+      },
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
+    },
+    "src/layers/recentImagery/thumbnails.test.mjs": {
+      "names": {
+        "injected thumbnail acquisition owns requests while the loader releases object URLs": 1
+      },
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
+    },
     "src/layers/satellites/source.test.mjs": {
       "names": {
         "satellite factories keep control state separate and construct without requests": 1,
@@ -16207,6 +16335,7 @@
       "names": {
         "FOLLOW is available only while the Google 3D map stack is active": 1,
         "a provider withdraws only the error it reported": 1,
+        "an empty provider composition enables and tears down without acquiring imagery": 1,
         "an image picked during a nearest lookup wins over its late answer": 1,
         "an older nearest lookup that answers late cannot replace a newer one": 1,
         "closing the photo leaves a newer navigation flight alone": 1,
@@ -16277,6 +16406,17 @@
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
+    },
+    "src/layers/streetLevel/providerSwitches.test.mjs": {
+      "names": {
+        "custom switches survive sharing and storage without depending on provider order": 1,
+        "editing a receiving composition drops unknown IDs before enforcing the share bound": 1,
+        "legacy links retain Mapillary semantics and leave custom defaults alone": 1,
+        "neutral switch codec preserves hyphens and numeric suffixes in IDs": 1,
+        "switches reject ambiguous or oversized fields and cannot override the legacy token": 1
+      },
+      "origin": "upstream-sync-5",
+      "since": "2026-10-10"
     },
     "src/layers/streetLevel/providers/mapillary/coverage.test.mjs": {
       "names": {
@@ -16365,8 +16505,9 @@
     "src/layers/streetLevel/registry.test.mjs": {
       "names": {
         "a valid list is frozen in registration order": 1,
-        "an empty list, duplicate ids and malformed ids are rejected": 1,
+        "an empty provider list is valid and has no key requirement": 1,
         "every required field is checked by name": 1,
+        "non-arrays, duplicate ids and malformed ids are rejected": 1,
         "overlapping pick prefixes are rejected either way round": 1,
         "requiresKeyIdFor is the shared key, or null once providers differ": 1
       },
@@ -16786,7 +16927,9 @@
       "names": {
         "a complete feed still removes an absent unselected vessel immediately": 1,
         "an incomplete feed bounds its retained union to the configured row budget": 1,
+        "authoritative empty coverage clears old contacts without declaring an outage": 1,
         "destroy cancels pending observations and ignores their later completion": 1,
+        "empty coverage cannot hide stale, incomplete or rejected source data": 1,
         "missing vessel source fails before mutating the viewer": 1,
         "partial observations retain missing contacts only until their receipt deadline": 1,
         "partial vessel snapshots preserve freshness and recover after a complete update": 1,
@@ -19295,6 +19438,7 @@
     },
     "src/ui/layerPanel.test.mjs": {
       "names": {
+        "an omitted source is visibly unavailable and cannot be toggled on": 1,
         "panel presentation places Transit between Street Traffic and Bike Share in Movement": 1,
         "partial feed controls distinguish incomplete records from stale data and outages": 1,
         "readout rows contain only toggles and metadata; ordinary rows retain controls": 1,
@@ -19583,6 +19727,7 @@
         "a key problem outranks loading on the pill: KEY REJECTED, then KEY REQUIRED (M65)": 1,
         "a key-gated layer disables every control and flags KEY REQUIRED": 1,
         "a provider error is explained on its chip": 1,
+        "an empty composition explains unavailable imagery even while disabled": 1,
         "an image without a creator name leaves the left caption empty": 1,
         "chips are dark while the layer is off, so the chip is the layer switch": 1,
         "each provider chip carries its source colour": 1,
