@@ -30,7 +30,7 @@
 - [x] 4.2 Start one container with a bridge network.
 - [x] 4.3 Start one container with the host network and the ports kept.
 - [x] 4.4 Start one container with a Codex folder that does not exist.
-- [x] 4.5 Start one container with the host network and save a test key in Provider Settings.
+- [x] 4.5 Save a test key in Provider Settings of one container with the host network.
 - [x] 4.6 Write `evidence/e2e.txt` with the output of the five containers.
 - [ ] 4.7 Run `make ratchet CHANGE=codex-voice-container`.
 - [ ] 4.8 Run the two review agents.

@@ -19,9 +19,11 @@ Origin: spec-first
 #### Scenario: Start the app with the override `app-container-003`
 - **WHEN** a test reads the Makefile
 - **THEN** the target `up-codex` runs "docker compose -f compose.yaml -f compose.codex.yaml build" and then "docker compose -f compose.yaml -f compose.codex.yaml up --force-recreate"
+- **AND** the target `up-codex` runs no other command
 - **AND** the list `.PHONY` names `up-codex`
 
 #### Scenario: Keep the default setup `app-container-004`
 - **WHEN** a test reads the file `compose.yaml` and the Makefile
 - **THEN** the file `compose.yaml` publishes the port "${GEV_PORT:-4173}:4173", and it has no `network_mode` and no ".codex"
 - **AND** the target `up` runs "docker compose build" and then "docker compose up --force-recreate"
+- **AND** the target `up` runs no other command

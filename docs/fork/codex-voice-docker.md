@@ -33,7 +33,7 @@ The file `compose.codex.yaml` changes three things for the container.
 - Run `codex login` before you start the app for the first time. When `~/.codex` does not exist, Docker creates it as an empty folder that belongs to root.
 - Any program on the host passes the check for the same machine, because the container shares the network of the host. `SECURITY.md` describes this limit.
 - The override uses `!reset`, so it needs a new version of Docker Compose. The author ran `docker compose config` with Compose 5.5.1 and does not know the lowest version.
-- The author did not run `make up-codex`, because it replaces your app container. The check used `docker run` with the same network, mount and image.
-- The Provider Settings panel can save keys with this override, because its connection looks local. The server writes them to `.env` in the container, and `make up-codex` removes them. Put your keys in `.env` on the host.
+- The author did not run `make up-codex`, because it replaces the app container of the owner. The author used `docker run` with the network and the mount of the override, and an image built from the same Dockerfile.
+- The Provider Settings panel can save keys with this override, because its connection looks local. The server writes them to `.env` in the container, and a new container has no such file. The target `make up-codex` creates a new container. Put your keys in `.env` on the host.
 - The author checked the host network on Linux only.
 - To refuse voice sessions with an API key, set `GEV_PREFER_CODEX_OAUTH=true` in `.env`.
