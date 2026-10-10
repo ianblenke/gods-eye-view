@@ -1,0 +1,16 @@
+# Override for the Codex OAuth voice feature (the ChatGPT sign-in) in Docker.
+# Start with: make up-codex. Sign in once on the host with: codex login
+#
+# The server answers the OAuth routes only for connections from the same
+# machine. A bridge network shows the browser to the server as the address of
+# the bridge, so this file gives the container the network of the host.
+# See docs/fork/codex-voice-docker.md.
+services:
+  gods-eye-view:
+    network_mode: host
+    ports: !reset []
+    environment:
+      PORT: ${GEV_PORT:-4173}
+    volumes:
+      # The server reads auth.json only. The mount is read-only.
+      - ${HOME}/.codex:/home/node/.codex:ro
