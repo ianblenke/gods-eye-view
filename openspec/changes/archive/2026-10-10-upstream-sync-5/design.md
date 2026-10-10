@@ -33,7 +33,7 @@ The fault is to remove `createApplicationOsh()` from the catalog. Both tests the
 ### D2: No spec delta
 
 The merge changes no requirement of the fork. No test with a scenario ID fails on the merged tree.
-So the change has no spec delta, as sync 3 had none.
+So the change has no spec delta, as sync 2 had none.
 
 ### D3: The adopt command
 
@@ -43,7 +43,7 @@ The adopt command records them. The rule 21 check of the second parent goes into
 ### D4: The OSH layer and the source composition
 
 The fork OSH layer has no entry in the catalog source contracts of upstream. The availability lookup treats a layer with no contract as available.
-The change keeps this. An entry for OSH would need a default source, and this is a later change.
+The change keeps this. An entry for OSH would need a default source, and that work is for a later change.
 
 ## Files and measures
 

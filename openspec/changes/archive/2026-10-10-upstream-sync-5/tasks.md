@@ -3,7 +3,7 @@
 - [x] 1.1 Write the change plan.
 - [x] 1.2 Merge the upstream commit.
 - [x] 1.3 Resolve the six conflicts.
-- [x] 1.4 Commit the merge first.
+- [x] 1.4 Commit the merge before the edit of the two tests.
 - [x] 1.5 Change the layer count of two upstream tests from 30 to 31.
 - [x] 1.6 Run the fault that removes `createApplicationOsh()` from the catalog.
 
@@ -11,7 +11,7 @@
 
 - [x] 2.1 Run each test file of `src/tooling/spec` on the host, except `gates.test.mjs`.
 - [x] 2.2 Run `src/tooling/spec/gates.test.mjs` on the host.
-- [x] 2.3 Run each test file under `src` outside `src/tooling/spec` on the host.
+- [x] 2.3 Run each test file outside `src/tooling/spec` on the host.
 - [x] 2.4 Run the four checks of `make precheck` on the host.
 - [x] 2.5 Run the lint on the host.
 - [x] 2.6 Run `openspec validate --specs` on the host.
