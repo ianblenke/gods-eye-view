@@ -17,7 +17,7 @@ A connection from the browser to a published port of a bridge network reaches th
 
 With `network_mode: host` the container uses the network of the host. A connection from the browser to `localhost` has the address `127.0.0.1`, and the routes answer it. A connection to the LAN address of the host keeps that address, and the routes refuse it.
 
-The list `ports` is reset, because Docker discards published ports with the host network and prints a warning.
+The override resets the list `ports`, because Docker discards published ports with the host network and prints a warning.
 The server gets its port from the setting PORT, so the override sets PORT to `${GEV_PORT:-4173}`.
 
 ### D3: No Codex program in the image
@@ -25,7 +25,7 @@ The server gets its port from the setting PORT, so the override sets PORT to `${
 The sign-in button starts `codex login` with no terminal, and Codex opens the browser itself. This cannot work in this image, which has no Codex program. So the user signs in on the host, and the image stays as it is.
 
 The container needs only the file `auth.json`. The override mounts the folder `${HOME}/.codex` as `/home/node/.codex` with the flag `ro`, so the container cannot change a Codex file.
-The override mounts the folder and not the file, because a mount of one file can keep the old file when a program replaces it. The folder also holds the config and the history of Codex, which the server does not read.
+The override mounts the folder and not the file, because a mount of one file can keep the old file when a program replaces it. The folder also holds the settings and the history of Codex, which the server does not read.
 
 ### D4: The tests read the files
 

@@ -2,7 +2,7 @@
 
 ### Requirement: Codex sign-in in the app container
 The file `compose.codex.yaml` MUST give the app container the host network and a read-only Codex folder.
-The Makefile MUST have the target `up-codex` that starts the app with that file and the file `compose.yaml`. The file `compose.yaml` MUST publish the port "${GEV_PORT:-4173}:4173" and MUST have no `network_mode` and no Codex mount. The target `up` MUST stay as it is.
+The Makefile MUST have the target `up-codex` that starts the app with the files `compose.yaml` and `compose.codex.yaml`. The file `compose.yaml` MUST publish the port "${GEV_PORT:-4173}:4173" and MUST have no `network_mode` and no Codex mount. The target `up` MUST stay as it is.
 Origin: spec-first
 
 #### Scenario: Use the host network `app-container-001`
@@ -14,7 +14,7 @@ Origin: spec-first
 #### Scenario: Mount the Codex folder read-only `app-container-002`
 - **WHEN** a test reads the file `compose.codex.yaml`
 - **THEN** the service `gods-eye-view` has the volume "${HOME}/.codex:/home/node/.codex:ro"
-- **AND** the service has no other volume
+- **AND** the file lists no other volume for the service
 
 #### Scenario: Start the app with the override `app-container-003`
 - **WHEN** a test reads the Makefile
