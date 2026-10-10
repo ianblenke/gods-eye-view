@@ -1,0 +1,29 @@
+Commit of the files tested: c394af4aff45a1d8eddbe3beb2c630efa31af1ba (plan folder excluded; the files outside openspec/changes/upstream-sync-5 equal commit 5bfdffed, which the runs used).
+Changed files of the tree against the base 13d71551:
+54 (50 files of the merge and 4 files of the plan)
+
+## node scripts/check-import-directions.mjs
+{"modules":974,"portableEntries":78}
+exit status 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 14 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit status 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 30 published, 0 new.
+exit status 0
+
+## node scripts/format.mjs --check
+Checked 1339 source files.
+exit status 0
+
+## node scripts/spec/gates.mjs lint --change upstream-sync-5
+STE: 0 errors, 706 warnings.
+exit status 0
+
+## openspec validate --specs
+✓ spec/wind
+Totals: 23 passed, 0 failed (23 items)
+exit status 0
