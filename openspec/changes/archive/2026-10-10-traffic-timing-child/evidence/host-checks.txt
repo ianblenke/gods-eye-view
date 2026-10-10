@@ -1,0 +1,29 @@
+Host checks of traffic-timing-child on the final test file, 2026-10-10, host Node v26.8.2.
+
+## node scripts/check-import-directions.mjs
+{"modules":971,"portableEntries":76}
+exit status 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 14 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit status 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 30 published, 0 new.
+exit status 0
+
+## node scripts/format.mjs --check
+Checked 1336 source files.
+exit status 0
+
+## node scripts/spec/gates.mjs lint --change traffic-timing-child
+(The lines below are the last two lines of the output: one warning line and the total.)
+WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
+STE: 0 errors, 708 warnings.
+exit status 0
+
+## openspec validate --specs
+(The change is archived, so the check names the specs. Before the archive, `openspec validate traffic-timing-child` gave: Change 'traffic-timing-child' is valid.)
+Totals: 22 passed, 0 failed (22 items)
+exit status 0

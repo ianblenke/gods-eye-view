@@ -1,0 +1,4 @@
+Guard records of the image ratchet run of 2026-10-10 (commit 06a0f21c, log first line Command: ratchet).
+Method: read every file .gev-cache/spec/guard-*.jsonl of the run and count the violations.
+Result: 927 guard files, 0 violations (none).
+Before the change one guard file (guard-1951.jsonl) had 51 violations COVERAGE-FAKE (see guard-record.txt).

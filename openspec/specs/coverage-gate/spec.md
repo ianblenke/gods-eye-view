@@ -1,7 +1,7 @@
 # coverage-gate Specification
 
 ## Purpose
-Measure line, branch and function coverage for each tracked code file. Count only coverage from the real source of each file.
+Measure line, branch and function coverage for each tracked code file. Count only coverage from the real source of each file. The capability also has a requirement for transformed code. A test runs that code in a child process.
 ## Requirements
 ### Requirement: Code inventory
 The coverage gate MUST measure each code file that Git tracks. A code file has one of these extensions: `.js`, `.mjs`, `.cjs`, `.ts`, `.mts`, `.cts`, `.jsx`, `.tsx`, `.html` or `.sh`. A file with a name that ends with `.test.mjs` is a test file and is not in the inventory.
@@ -669,4 +669,20 @@ Origin: spec-first
 - **WHEN** a QA script names `pending:x` and a document adds `openspec/specs/x/`
 - **THEN** the mode reports `QA-COVERS-LANDED`
 - **AND** a QA capability name without current specs gives `QA-COVERS-UNKNOWN`
+
+### Requirement: Transformed code outside the guard
+A test that loads project code through a Vite server that changes the source MUST run that code in a child process.
+The child process MUST have a folder of its own for V8 coverage. It MUST have the value "" for the settings GEV_SPEC_OUT, GEV_SPEC_ROOT and GEV_SPEC_INVENTORY.
+So the gate counts no code that runs under the name of a file with other source.
+Origin: spec-first
+
+#### Scenario: Run the traffic timing scenario in a child process `coverage-gate-101`
+- **WHEN** the test with the Vite server in the file `src/data/trafficTiming.test.mjs` runs and the setting GEV_TRAFFIC_TIMING_CHILD is not set
+- **THEN** the test starts a child process that runs the same test file
+- **AND** the child process has the setting NODE_V8_COVERAGE with a new folder, and the settings GEV_SPEC_OUT, GEV_SPEC_ROOT and GEV_SPEC_INVENTORY with the value ""
+- **AND** the setting GEV_TRAFFIC_TIMING_CHILD of the child process names that folder
+- **AND** the child process exits with the status 0, and the folder holds a file whose name starts with "coverage-"
+- **AND** the child process writes the file "scenario-done.json" into the folder after its last check
+- **AND** the file holds the process number of the child process
+- **AND** the traffic timing scenario runs only in the child process
 
