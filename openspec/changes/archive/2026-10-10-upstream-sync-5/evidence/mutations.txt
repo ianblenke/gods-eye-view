@@ -1,0 +1,19 @@
+Fault: remove the line "createApplicationOsh()," from src/app/constructCatalog.js. The lead restored the file after the run, and `git diff` of the file is empty.
+Host Node v26.8.2, one process for each test file, cores 4-7.
+
+Without the fault:
+src/app/constructCatalog.test.mjs | tests 3 pass 3 fail 0
+src/app/sourceComposition.test.mjs | tests 7 pass 7 fail 0
+
+With the fault:
+src/app/constructCatalog.test.mjs | tests 3 pass 1 fail 2
+src/app/sourceComposition.test.mjs | tests 7 pass 3 fail 4
+
+The two tests with the changed number 31 fail under the fault:
+- Mapillary can be omitted or replaced without changing catalog membership (src/app/constructCatalog.test.mjs)
+- all acquisition sources may be absent, and enable fails before initializing or fetching (src/app/sourceComposition.test.mjs)
+Four other tests fail too, because they also need the OSH layer in the catalog:
+- catalogs construct distinct layers and classification from their supplied source
+- absent military acquisition does not poll, suppress flights, or erase supplied classification
+- empty Street Level uses the shared unavailable lifecycle without initialization
+- every acquisition source can be omitted without losing catalog membership

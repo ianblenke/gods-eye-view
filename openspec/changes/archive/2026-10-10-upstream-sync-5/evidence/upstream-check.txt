@@ -1,0 +1,83 @@
+Upstream check of upstream-sync-5, 2026-10-10.
+
+## git ls-remote upstream main
+591f299d11f38a612629a274463196d57ae3862e	refs/heads/main
+
+## local ref upstream/main
+591f299d11f38a612629a274463196d57ae3862e
+
+## parents of the merge commit 1ac580d5
+09bfb5e5344769e685809e0dcd5093c86b006ec0 591f299d11f38a612629a274463196d57ae3862e
+
+## upstream commits after the sync 4 point 6be25595
+23
+
+## pull requests merged upstream after 6be25595 (git log --merges, lines with 'pull request')
+591f299d Merge pull request #986 from bilawalsidhu/fix/healthy-empty-vessel-coverage
+89e566aa Merge pull request #985 from bilawalsidhu/fix/street-level-provider-sharing
+90a1442c Merge pull request #984 from bilawalsidhu/refactor/route-imagery-sources
+2fe70f63 Merge pull request #983 from bilawalsidhu/feat/optional-catalog-sources
+e626137a Merge pull request #982 from bilawalsidhu/fix/optional-street-level-providers
+
+## the 50 files that the merge changes (status, name)
+M CHANGELOG.md
+M docs/CURRENT-STATE.md
+M package.json
+M scripts/package-boundaries.json
+M scripts/qa-street-level.mjs
+M src/app/catalog.test.mjs
+M src/app/constructCatalog.js
+M src/app/constructCatalog.test.mjs
+M src/app/data.js
+M src/app/layers/directions.js
+M src/app/layers/recentImagery.js
+M src/app/layers/streetLevel.js
+A src/app/layers/streetLevel.test.mjs
+A src/app/sourceComposition.js
+A src/app/sourceComposition.test.mjs
+M src/data/directions.js
+A src/data/idSwitches.js
+M src/data/layerState.js
+M src/data/layerState.test.mjs
+M src/data/layerStateCoordinator.js
+M src/data/layerStateTokenLedger.test.mjs
+M src/data/lifecycle.js
+M src/data/sharedOsmDisplays.test.mjs
+M src/layers/directions/index.js
+A src/layers/directions/source.js
+A src/layers/directions/source.test.mjs
+M src/layers/recentImagery/rendering.js
+M src/layers/recentImagery/rendering.test.mjs
+A src/layers/recentImagery/source.js
+A src/layers/recentImagery/source.test.mjs
+M src/layers/recentImagery/thumbnails.js
+M src/layers/recentImagery/thumbnails.test.mjs
+M src/layers/streetLevel/index.js
+M src/layers/streetLevel/index.test.mjs
+M src/layers/streetLevel/params.js
+M src/layers/streetLevel/params.test.mjs
+A src/layers/streetLevel/providerSwitches.test.mjs
+M src/layers/streetLevel/registry.js
+M src/layers/streetLevel/registry.test.mjs
+M src/layers/streetLevel/uiState.js
+M src/layers/vessels/ingestion.js
+M src/layers/vessels/ownership.test.mjs
+M src/layers/vessels/queries.js
+M src/standalone/application.js
+M src/standalone/catalog.js
+M src/standalone/layerSources.js
+M src/ui/layerPanel.js
+M src/ui/layerPanel.test.mjs
+M src/ui/streetLevelPresentation.js
+M src/ui/streetLevelPresentation.test.mjs
+
+## files of the merge in openspec/ownership.json
+count: 0
+
+## files of the merge under openspec (not the plan), .claude, AGENTS.md, Makefile, scripts/spec or server
+0
+
+## order of the commits (first parent only)
+c394af4a chore(sync): the catalog has 31 layers with the OSH layer
+1ac580d5 Merge upstream/main (591f299d) into upstream-sync-5
+09bfb5e5 docs(spec): plan upstream-sync-5
