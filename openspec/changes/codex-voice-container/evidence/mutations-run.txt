@@ -1,0 +1,16 @@
+Run of the 13 named faults, 2026-10-10, host Node v26.8.2. Each fault is a text change of compose.codex.yaml, compose.yaml or the Makefile; the script restores the files and checks that they are the originals.
+Command for each fault: node --test --test-force-exit --test-reporter=spec src/tooling/appContainer.test.mjs. Baseline without a fault: 4 tests, 4 pass, 0 fail.
+Lines: fault | exit status | failing test lines | first failing test
+Remove network_mode from the override | exit 1 | failing test lines 2 | [app-container-001] the Codex override uses the host network, resets the ports and sets PORT
+Use the bridge network in the override | exit 1 | failing test lines 2 | [app-container-001] the Codex override uses the host network, resets the ports and sets PORT
+Keep the ports of the base file in the override | exit 1 | failing test lines 2 | [app-container-001] the Codex override uses the host network, resets the ports and sets PORT
+Give PORT a fixed value in the override | exit 1 | failing test lines 2 | [app-container-001] the Codex override uses the host network, resets the ports and sets PORT
+Make the Codex mount writable | exit 1 | failing test lines 2 | [app-container-002] the Codex override mounts the Codex folder read-only and nothing else of it
+Mount the Codex folder at another path | exit 1 | failing test lines 2 | [app-container-002] the Codex override mounts the Codex folder read-only and nothing else of it
+Add a second mount of a Codex file | exit 1 | failing test lines 2 | [app-container-002] the Codex override mounts the Codex folder read-only and nothing else of it
+Remove the build line of up-codex | exit 1 | failing test lines 2 | [app-container-003] the target up-codex builds and starts the app with both compose files
+Start up-codex with the base file only | exit 1 | failing test lines 2 | [app-container-003] the target up-codex builds and starts the app with both compose files
+Remove up-codex from the list PHONY | exit 1 | failing test lines 2 | [app-container-003] the target up-codex builds and starts the app with both compose files
+Remove the published port of the base file | exit 1 | failing test lines 2 | [app-container-004] the default compose file and the target up stay as they are
+Add network_mode to the base file | exit 1 | failing test lines 2 | [app-container-004] the default compose file and the target up stay as they are
+Change the target up | exit 1 | failing test lines 2 | [app-container-004] the default compose file and the target up stay as they are

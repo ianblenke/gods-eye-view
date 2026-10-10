@@ -1,0 +1,39 @@
+import subprocess,re
+R='/home/ianblenke/docker/gev-work/codex-voice-container/'
+orig={f:open(R+f).read() for f in ['compose.codex.yaml','compose.yaml','Makefile']}
+UPC="up-codex:\n\tdocker compose -f compose.yaml -f compose.codex.yaml build\n\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n"
+faults=[
+ ('app-container-001','Remove network_mode from the override','compose.codex.yaml',[("    network_mode: host\n","")]),
+ ('app-container-001','Use the bridge network in the override','compose.codex.yaml',[("network_mode: host","network_mode: bridge")]),
+ ('app-container-001','Keep the ports of the base file in the override','compose.codex.yaml',[("    ports: !reset []\n","")]),
+ ('app-container-001','Give PORT a fixed value in the override','compose.codex.yaml',[("PORT: ${GEV_PORT:-4173}","PORT: 4173")]),
+ ('app-container-002','Make the Codex mount writable','compose.codex.yaml',[(":/home/node/.codex:ro",":/home/node/.codex")]),
+ ('app-container-002','Mount the Codex folder at another path','compose.codex.yaml',[("/home/node/.codex:ro","/home/node/.codex-x:ro")]),
+ ('app-container-002','Add a second mount of a Codex file','compose.codex.yaml',[("/home/node/.codex:ro\n","/home/node/.codex:ro\n      - ${HOME}/.codex/auth.json:/tmp/auth.json:ro\n")]),
+ ('app-container-003','Remove the build line of up-codex','Makefile',[("\tdocker compose -f compose.yaml -f compose.codex.yaml build\n","")]),
+ ('app-container-003','Start up-codex with the base file only','Makefile',[("\tdocker compose -f compose.yaml -f compose.codex.yaml up --force-recreate\n","\tdocker compose -f compose.yaml up --force-recreate\n")]),
+ ('app-container-003','Remove up-codex from the list PHONY','Makefile',[(".PHONY: up up-codex down",".PHONY: up down")]),
+ ('app-container-004','Remove the published port of the base file','compose.yaml',[('      - "${GEV_PORT:-4173}:4173"\n',"")]),
+ ('app-container-004','Add network_mode to the base file','compose.yaml',[("    restart: unless-stopped\n","    restart: unless-stopped\n    network_mode: host\n")]),
+ ('app-container-004','Change the target up','Makefile',[("up:\n\tdocker compose build\n\tdocker compose up --force-recreate\n","up:\n\tdocker compose build\n\tdocker compose up\n")]),
+]
+out=[];log=[]
+try:
+  for sid,desc,fname,pairs in faults:
+    text=orig[fname]
+    for old,new in pairs:
+        assert text.count(old)==1,(desc,old[:60],text.count(old))
+        text=text.replace(old,new,1)
+    open(R+fname,'w').write(text)
+    p=subprocess.run('taskset -c 8-11 node --test --test-force-exit --test-reporter=spec src/tooling/appContainer.test.mjs',shell=True,cwd=R,capture_output=True,text=True)
+    fails=[re.sub(r' \(\d+(\.\d+)?ms\)$','',l.strip()[2:].strip()) for l in (p.stdout+p.stderr).splitlines() if l.strip().startswith('✖ [')]
+    first=next((f for f in fails if f.startswith('['+sid)),fails[0] if fails else 'NONE')
+    out.append(f'{sid} | {desc} | {first}')
+    log.append(f'{desc} | exit {p.returncode} | failing test lines {len(fails)} | {first}')
+    print(log[-1])
+    open(R+fname,'w').write(orig[fname])
+finally:
+  for f,t in orig.items(): open(R+f,'w').write(t)
+for f,t in orig.items(): assert open(R+f).read()==t
+open('/home/ianblenke/docker/gev-tools/cctv-pensacola/scratch/faults-acc.txt','w').write('\n'.join(out)+'\n')
+open('/home/ianblenke/docker/gev-tools/cctv-pensacola/scratch/faults-acc-run.txt','w').write('\n'.join(log)+'\n')

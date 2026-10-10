@@ -1,0 +1,69 @@
+Output of: docker compose -f compose.yaml -f compose.codex.yaml config  (2026-10-10, Docker Compose version 5.5.1; the project name is the name of the working folder)
+name: codex-voice-container
+services:
+  gods-eye-view:
+    build:
+      context: /home/ianblenke/docker/gev-work/codex-voice-container
+      dockerfile: Dockerfile
+    environment:
+      HOST: 0.0.0.0
+      PORT: "4173"
+    image: gods-eye-view:local
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: gev-cache
+        target: /app/.gev-cache
+        volume: {}
+      - type: volume
+        source: gev-logs
+        target: /app/.gev-logs
+        volume: {}
+      - type: bind
+        source: /home/ianblenke/.codex
+        target: /home/node/.codex
+        read_only: true
+        bind: {}
+volumes:
+  gev-cache:
+    name: codex-voice-container_gev-cache
+  gev-logs:
+    name: codex-voice-container_gev-logs
+
+Output of: docker compose config  (the default setup, for comparison)
+name: codex-voice-container
+services:
+  gods-eye-view:
+    build:
+      context: /home/ianblenke/docker/gev-work/codex-voice-container
+      dockerfile: Dockerfile
+    environment:
+      HOST: 0.0.0.0
+      PORT: "4173"
+    image: gods-eye-view:local
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 4173
+        published: "4173"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: gev-cache
+        target: /app/.gev-cache
+        volume: {}
+      - type: volume
+        source: gev-logs
+        target: /app/.gev-logs
+        volume: {}
+networks:
+  default:
+    name: codex-voice-container_default
+volumes:
+  gev-cache:
+    name: codex-voice-container_gev-cache
+  gev-logs:
+    name: codex-voice-container_gev-logs
