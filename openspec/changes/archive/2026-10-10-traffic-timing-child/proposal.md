@@ -35,5 +35,5 @@ The ratchet records the closed gaps and the new scenario ID. No line gap becomes
 - Known limit `child-unguarded`: The gate counts the assertions of the parent test only. A deleted assertion of the scenario in the child does not stop the gate. The child must still exit with the status 0 and write the file "scenario-done.json".
 - Known limit `child-cost`: The test file runs twice, in the parent process and in the child process. On the host the file takes about 19 seconds, and 12 seconds of them are in the child process.
 - Known limit `upstream-test`: The test file is upstream code. A later sync can conflict with this change.
-- Known limit `result`: The new numbers of the 51 entries are known only after the ratchet.
+- Known limit `result`: The ratchet closed the untrue mark of all 51 entries. The uncovered lines of the ledger fell from 56328 to 46573, and 9 entries left the ledger. The entry of `src/data/dataCredits.js` fell from 475 to 23 uncovered lines.
 - Later change: The Pensacola pack can get its data credit after this change, with a test for the changed lines.

@@ -14,8 +14,8 @@
 
 ## 3. Lead work before and in Docker
 
-- [ ] 3.1 Run `make ratchet CHANGE=traffic-timing-child`.
-- [ ] 3.2 Check that the last gate run has no violation COVERAGE-FAKE.
+- [x] 3.1 Run `make ratchet CHANGE=traffic-timing-child`.
+- [x] 3.2 Check that the last gate run has no violation COVERAGE-FAKE.
 - [ ] 3.3 Run the two review agents.
 - [ ] 3.4 Write review.md.
 - [ ] 3.5 Run `make gates CHANGE=traffic-timing-child` on the final tree.
