@@ -36,11 +36,11 @@ no e2e container left
 
 ## 4.5 Provider Settings save with the host network (test value, port 4196)
 started with --network host
-before: file /app/.env in the container: absent
+before: file /app/.env in the container: absent; entries in the mounted Codex folder: 35
 POST without Origin (a script) -> HTTP 403; keys: error ok: undefined saved: undefined; text: {"error":"Provider Settings requires an exact local Origin"}
 POST with Origin http://localhost:4196 (as a browser sends it) {LL2_API_TOKEN: test value} -> HTTP 200; keys: ok,restarting,saved,status ok: true saved: ["LL2_API_TOKEN"]
 after: file /app/.env in the container: exists; names in the file: # Keys added by the in-app POWER UP panel LL2_API_TOKEN 
-file on the host mount: 32 entries in the mounted Codex folder, unchanged
+after: entries in the mounted Codex folder: 35 (before: 35)
 removed gev-e2e-save
 new container from the same image has /app/.env: absent
 no e2e container left
