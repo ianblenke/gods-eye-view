@@ -1,0 +1,2 @@
+host Node: v26.8.2
+.node-version (image): 24.21.0
