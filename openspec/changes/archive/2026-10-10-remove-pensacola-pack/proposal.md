@@ -10,7 +10,9 @@ A check on 2026-10-09 found that 17 of the 65 cameras of the pack served a frame
 - Remove the module from `scripts/package-boundaries.json`, the test file from `scripts/format-scope.json`, and both files from `openspec/ownership.json`.
 - Remove the three settings from `.env.example`, the row and the bullet from `DATA_SOURCES.md`, and the pack name from the CCTV rows of `README.md` and `docs/CURRENT-STATE.md`.
 - Write an entry in `CHANGELOG.md`.
-- Remove the three requirements, and add the retired IDs `live-sources-010` to `live-sources-030` to `openspec/trace/retired-ids.json`.
+- Remove the three requirements.
+- Add the retired IDs `live-sources-010` to `live-sources-030` to `openspec/trace/retired-ids.json`.
+- Remove the 21 empty links of the retired IDs from `openspec/trace/links.json`.
 
 ## Capabilities
 

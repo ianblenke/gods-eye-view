@@ -7,7 +7,7 @@ The change `cctv-pensacola` (archive date 2026-10-09) added the pack to main `4f
 
 ### D1: Remove the whole pack
 
-The module, its test, the catalog entry, the settings, the manifest entries and the pack text of the documents go together. Only the history stays: the add entry of `CHANGELOG.md` (see D3), the archived change folder and the trace records.
+The module, its test, the catalog entry, the settings, the manifest entries and the pack text of the documents go together. Four texts stay: the add entry of `CHANGELOG.md` and the archived change folder. The old lines of `openspec/trace/history.jsonl` and the count text in the README row also stay (see D3). D2 names the trace entries that stay for now.
 The catalog loads one pack less, and no other pack changes.
 
 ### D2: Retire the scenario IDs
