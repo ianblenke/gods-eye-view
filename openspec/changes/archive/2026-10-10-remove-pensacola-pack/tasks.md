@@ -17,7 +17,7 @@
 
 ## 3. Check on the host
 
-- [x] 3.1 Search the repository for the word Pensacola, the three settings and the names of the layer.
+- [x] 3.1 Search the repository for the word Pensacola, the three settings and the names of the pack and the layer.
 - [x] 3.2 Run each CCTV test file on the host.
 - [x] 3.3 Run the four checks of `make precheck` on the host.
 - [x] 3.4 Run the STE lint on the host.
