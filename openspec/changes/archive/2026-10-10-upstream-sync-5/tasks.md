@@ -21,7 +21,7 @@
 
 - [x] 3.1 Check the second parent of the merge commit against the upstream remote.
 - [x] 3.2 Run `make adopt CHANGE=upstream-sync-5 FROM=591f299d11f38a612629a274463196d57ae3862e`.
-- [ ] 3.3 Run `make ratchet CHANGE=upstream-sync-5`.
+- [x] 3.3 Run `make ratchet CHANGE=upstream-sync-5`.
 - [ ] 3.4 Run the two review agents.
 - [ ] 3.5 Write review.md.
 - [ ] 3.6 Run `make gates CHANGE=upstream-sync-5` on the final tree.
