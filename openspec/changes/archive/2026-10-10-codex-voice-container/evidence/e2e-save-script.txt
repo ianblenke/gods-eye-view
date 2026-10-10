@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Container check 4.5 of codex-voice-container: save a TEST key in Provider Settings with the host network.
+# The value is a fake test value. One non-app container at a time. Prints no secret.
+set -u
+IMG=gev-e2e:codex
+keys() { node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{const j=JSON.parse(s);console.log("keys:",Object.keys(j).sort().join(","),"ok:",j.ok,"saved:",JSON.stringify(j.saved))}catch{console.log("body:",s.slice(0,100).replace(/\s+/g," "))}})'; }
+wait_up() { for i in $(seq 1 90); do c=$(curl -s -m 3 -o /dev/null -w '%{http_code}' "$1"); [ "$c" != "000" ] && return 0; sleep 2; done; echo "server did not start"; return 1; }
+echo "## 4.5 Provider Settings save with the host network (test value, port 4196)"
+docker rm -f gev-e2e-save >/dev/null 2>&1
+docker run -d --name gev-e2e-save --network host -e PORT=4196 -v "$HOME/.codex:/home/node/.codex:ro" "$IMG" >/dev/null && echo "started with --network host"
+wait_up http://127.0.0.1:4196/api/setup/status
+N0=$(docker exec gev-e2e-save sh -c 'ls -A /home/node/.codex | wc -l')
+echo "before: file /app/.env in the container: $(docker exec gev-e2e-save sh -c 'test -e /app/.env && echo exists || echo absent'); entries in the mounted Codex folder: $N0"
+c=$(curl -s -m 20 -o /tmp/claude-1000/e2e-save-body.txt -w '%{http_code}' -X POST -H 'Content-Type: application/json' -d '{"LL2_API_TOKEN":"e2e-test-value-not-a-key"}' http://127.0.0.1:4196/api/setup/keys)
+echo "POST without Origin (a script) -> HTTP $c; $(keys < /tmp/claude-1000/e2e-save-body.txt); text: $(tr -d '\n' < /tmp/claude-1000/e2e-save-body.txt | cut -c1-90)"
+c=$(curl -s -m 20 -o /tmp/claude-1000/e2e-save-body.txt -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H 'Origin: http://localhost:4196' -d '{"LL2_API_TOKEN":"e2e-test-value-not-a-key"}' http://localhost:4196/api/setup/keys)
+echo "POST with Origin http://localhost:4196 (as a browser sends it) {LL2_API_TOKEN: test value} -> HTTP $c; $(keys < /tmp/claude-1000/e2e-save-body.txt)"
+sleep 3
+echo "after: file /app/.env in the container: $(docker exec gev-e2e-save sh -c 'test -e /app/.env && echo exists || echo absent'); names in the file: $(docker exec gev-e2e-save sh -c 'cut -d= -f1 /app/.env 2>/dev/null | tr "\n" " "')"
+echo "after: entries in the mounted Codex folder: $(docker exec gev-e2e-save sh -c 'ls -A /home/node/.codex | wc -l') (before: $N0)"
+docker rm -f gev-e2e-save >/dev/null 2>&1 && echo "removed gev-e2e-save"
+echo "new container from the same image has /app/.env: $(docker run --rm --entrypoint sh "$IMG" -c 'test -e /app/.env && echo exists || echo absent')"
+docker ps --format 'left running: {{.Names}}' | grep -v gods-eye-view-gods-eye-view-1 || echo "no e2e container left"

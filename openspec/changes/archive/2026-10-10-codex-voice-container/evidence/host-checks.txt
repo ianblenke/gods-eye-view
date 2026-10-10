@@ -1,0 +1,26 @@
+Host checks of codex-voice-container, 2026-10-10, host Node v26.8.2.
+
+## node scripts/check-import-directions.mjs
+{"modules":971,"portableEntries":76}
+exit status 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 14 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit status 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 30 published, 0 new.
+exit status 0
+
+## node scripts/format.mjs --check
+Checked 1337 source files.
+exit status 0
+
+## node scripts/spec/gates.mjs lint --change codex-voice-container
+STE: 0 errors, 713 warnings.
+exit status 0
+
+## openspec validate codex-voice-container
+Change 'codex-voice-container' is valid
+exit status 0

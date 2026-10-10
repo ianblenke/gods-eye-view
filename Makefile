@@ -17,11 +17,15 @@ CHANGE_ARG := $(if $(CHANGE),--change $(CHANGE),)
 BASE_ARG := $(if $(BASE),--base $(BASE),)
 FROM_ARG := $(if $(FROM),--from $(FROM),)
 
-.PHONY: up down image ensure-image test gates gates-docs precheck gates-init ratchet adopt lint tree
+.PHONY: up up-codex down image ensure-image test gates gates-docs precheck gates-init ratchet adopt lint tree
 
 up:
 	docker compose build
 	docker compose up --force-recreate
+
+up-codex:
+	docker compose -f compose.yaml -f compose.codex.yaml build
+	docker compose -f compose.yaml -f compose.codex.yaml up --force-recreate
 
 down:
 	docker compose down
