@@ -1,0 +1,13 @@
+Run of the 10 named faults, 2026-10-10, host Node v26.8.2. Each fault changes the deny list in build/vite.js; the script restores the file and checks that it equals the original.
+Command for each fault: node --test --test-force-exit --test-reporter=spec src/tooling/devServerFiles.test.mjs. Baseline without a fault: 2 tests, 2 pass, 0 fail.
+Lines: fault | exit status | failing tests
+Remove the entry of the log folder | exit 1 | failing tests: [dev-server-files-001], [dev-server-files-002]
+Remove the entry of the cache folder | exit 1 | failing tests: [dev-server-files-001], [dev-server-files-002]
+Remove the old entry .env.* | exit 1 | failing tests: [dev-server-files-001]
+Remove the old entry for ENVIRONMENT files | exit 1 | failing tests: [dev-server-files-001]
+Remove the old entry for the .git folder | exit 1 | failing tests: [dev-server-files-001]
+Drop the suffix of the log folder entry | exit 1 | failing tests: [dev-server-files-001], [dev-server-files-002]
+Drop the prefix of the cache folder entry | exit 1 | failing tests: [dev-server-files-001], [dev-server-files-002]
+Name the log folder in lower depth only | exit 1 | failing tests: [dev-server-files-001], [dev-server-files-002]
+Deny package.json too | exit 1 | failing tests: [dev-server-files-002]
+Deny the src folder too | exit 1 | failing tests: [dev-server-files-002]

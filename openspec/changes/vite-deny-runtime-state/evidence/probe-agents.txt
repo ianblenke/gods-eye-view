@@ -1,0 +1,889 @@
+Full result of the workflow deny-list-probe (four agents): summary, bypasses, forms and notes. JSON text. The first agent was stopped before it sent a request.
+
+[
+ {
+  "area": "vite-deny-runtime-state / Vite dev server fs.deny probe",
+  "summary": "Task interrupted by a safety classifier before any HTTP probe requests were sent. I set up the harness (confirmed /tmp/claude-1000/vite-probe/serve.mjs starts real Vite servers; confirmed patched config's server.fs.deny = ['.env','.env.*','*.{crt,pem}','**/.git/**','**/ENVIRONMENT','**/.gev-logs/**','**/.gev-cache/**'] vs base's deny without the last two entries) and started both scratch servers on the assigned ports 5401 (patched) and 5402 (base), confirming their READY lines and scratch roots. Before issuing any Family A (encoding/normalization) curl or raw-socket requests, the response was stopped by a safety classifier and withheld. I did not retry or reword that content. I killed both server PIDs (626221, 626223) by PID only; ports 5401/5402 confirmed closed afterward. No request was ever sent to any server, no file outside /tmp was touched, nothing reached the internet or port 4173. I'm not reporting a bypass verdict because none was actually observed \u2014 zero requests were sent in this run.",
+  "bypasses": [],
+  "forms": [],
+  "otherFindings": [
+   "Harness/config verified only: serve.mjs (/tmp/claude-1000/vite-probe/serve.mjs) correctly builds patched config from /home/ianblenke/docker/gev-work/vite-deny-runtime-state/build/vite.js createBrowserViteConfig(), and base variant strips entries containing 'gev-' from the deny array, matching the task's description of old vs new deny lists.",
+   "Both scratch servers were confirmed live (READY patched http://127.0.0.1:5401 root=/tmp/gev-probe-patched-vN6EhE; READY base http://127.0.0.1:5402 root=/tmp/gev-probe-base-yJIll5) with the expected deny arrays printed, immediately before the interruption.",
+   "Vite version in use: 6.4.3 (from /home/ianblenke/docker/gev-work/node_modules/vite/package.json); Node v26.8.2."
+  ],
+  "notChecked": "Everything in Family A (percent-encoding, double-encoding, dot-segments, repeated slashes, trailing slash/dot/space, null bytes, unicode look-alikes, semicolon params, query/fragment tricks, HTTP/1.0 absolute-form requests, and raw-socket nc/node requests) against both the patched and base servers. No requests of any kind were sent before the run was stopped, so there is no observed leak or non-leak to report for any attack form. This needs to be re-run in a fresh turn/session to get an actual verdict."
+ },
+ {
+  "area": "vite-deny-runtime-state: server.fs.deny additions ('**/.gev-logs/**', '**/.gev-cache/**') in /home/ianblenke/docker/gev-work/vite-deny-runtime-state/build/vite.js, commit 9c43e897 on branch vite-deny-runtime-state (working tree has an untracked openspec/changes/.../evidence/ dir, otherwise clean)",
+  "summary": "Tested with real Vite 6.4.3 dev servers (patched on 127.0.0.1:5411, base/control on 127.0.0.1:5412, both started and killed only by their own PIDs 626376/626378; no request ever left 127.0.0.1 or touched port 4173). The control is valid: every request form leaked all canaries on base. On patched, every single Family-B form I tried against the two new deny entries was correctly blocked: /@fs/<path> (plain and URL-encoded, incl. double-encoded %252F), ?raw/?url/?import/?inline/?worker/?direct/?html-proxy/?v=1/?t=1/?commonjs-proxy suffixes (both as direct requests and as the module-transform-rewritten import URL after injecting `import log from '/.gev-logs/realtime-conversations.jsonl?raw'` into src/main.js), extension-as-query tricks (?.svg/?.js/?x.svg/?.css/?.html), HEAD and Range requests, the sec-fetch-dest:script header forced onto a non-JS extension and onto a renamed .js file inside .gev-logs, every path-normalization trick I tried (./, ../, //, %2e, %2e%2e, %2f) that actually resolves to the real file, and the html-fallback-to-a-denied-directory's-index.html case (/.gev-cache/ -> .gev-cache/index.html). /@id/, /@vite/client and /__open-in-editor never echo file contents on either variant, so they are not leak vectors. I did find two genuine ways around the deny list, detailed in `bypasses` \u2014 but both are inherent to how Vite's fs.deny itself works (string-glob match on the request URL, never on the resolved real path, and a hard-coded skip of the deny check inside servePublicMiddleware for anything under publicDir), not specific weaknesses of the two new entries the lead added. They would defeat any fs.deny entry, old or new, equally, and I could not find a request form that bypassed `**/.gev-logs/**`/`**/.gev-cache/**` specifically while leaving the pre-existing entries ('.env', '*.{crt,pem}', '**/.git/**', '**/ENVIRONMENT') intact.",
+  "bypasses": [
+   {
+    "url": "http://127.0.0.1:5411/linked.jsonl (symlink I created at the scratch root -> .gev-logs/realtime-conversations.jsonl); also http://127.0.0.1:5411/linkdir/adsbdb.json (dir symlink linkdir -> .gev-cache); also via /@fs/<path-to-the-symlink-itself>",
+    "evidence": "curl -s -m5 http://127.0.0.1:5411/linked.jsonl -> HTTP 200, body contains CANARY-LOG. Identical result on base (5412). Root cause (read in dep-Dm0c1Wj2.js, isFileLoadingAllowed/fsDenyGlob around line 35606): the deny glob is matched against the literal requested URL string only; Vite never calls realpath/lstat to see where a path segment-free symlink actually points, so a symlink whose OWN path contains no '.gev-logs'/'.gev-cache' segment sails straight past server.fs.deny even though readFile() dereferences it to a denied file. Caveat: this requires the ability to place a symlink on the server's filesystem first (e.g. chained with a separate local-write/upload bug); it is not, by itself, a pure remote-HTTP primitive, and nothing in the task's harness or the real app gives an unauthenticated HTTP client that write capability today.",
+    "severity": "major",
+    "variant": "patched (identical on base; the gap is in Vite's glob-matching itself, not in which entries are listed)"
+   },
+   {
+    "url": "http://127.0.0.1:5411/.gev-logs/p.jsonl (a file I placed at public/.gev-logs/p.jsonl inside the scratch root, i.e. physically under Vite's publicDir)",
+    "evidence": "curl -s -m5 http://127.0.0.1:5411/.gev-logs/p.jsonl -> HTTP 200, body contains CANARY-PUBLICLOG. Identical on base. Root cause (dep-Dm0c1Wj2.js, servePublicMiddleware/sirvOptions around line 35475): servePublicMiddleware calls sirv with disableFsServeCheck: true, so checkLoadingAccess/server.fs.deny is never consulted for anything Vite resolves as a publicDir asset -- not for these two new entries, not for the pre-existing ones either. Caveat on reachability in the real app: I grepped the actual source and the real .gev-logs/.gev-cache directories are created under the project root, not under public/ -- server/providers/openai/debug-log.js:79 and server/providers/osh-control/log.js:31 both do `path.join(sourceRoot, '.gev-logs')`, and server/mcp/panelKey.js:10 resolves .gev-cache the same way (relative to the project root via import.meta.url). The real public/ directory (checked: public/location.svg, logo.svg, mic.svg, pin.svg, visual-presets.svg, public/events/, public/models/) holds only static icons/models today, so this specific path is not reachable with the app's current file layout -- it is a latent, unconditional hole rather than a live one.",
+    "severity": "minor",
+    "variant": "patched (identical on base; not reachable today given the app's actual .gev-logs/.gev-cache locations)"
+   }
+  ],
+  "forms": [
+   {
+    "url": "/@fs/<abs-path>/.gev-logs/realtime-conversations.jsonl (plain, URI-encoded, and double-%2F-encoded)",
+    "patched": "403 (every encoding)",
+    "base": "200, body contains CANARY-LOG (every encoding)"
+   },
+   {
+    "url": "/.gev-logs/realtime-conversations.jsonl with each of ?raw ?url ?import ?inline ?worker ?direct ?html-proxy ?v=1 ?t=1 ?commonjs-proxy",
+    "patched": "403 for every suffix",
+    "base": "200 CANARY-LOG for every suffix"
+   },
+   {
+    "url": "/.gev-logs/realtime-conversations.jsonl with ?.svg ?.js ?x.svg ?.css ?.html (extension-as-query trick) on the EXISTING protected path",
+    "patched": "403 for every suffix",
+    "base": "200 CANARY-LOG for every suffix"
+   },
+   {
+    "url": "/src/main.js after injecting `import log from '/.gev-logs/realtime-conversations.jsonl?raw'; export const leaked = log;` into src/main.js on both scratch roots, then requesting the rewritten import URL /.gev-logs/realtime-conversations.jsonl?import&raw directly",
+    "patched": "/src/main.js itself returns 200 but only rewrites the specifier to '...?import&raw', never inlines content; requesting that rewritten URL returns 403",
+    "base": "/src/main.js 200 (specifier rewritten the same way); requesting the rewritten URL returns 200 CANARY-LOG"
+   },
+   {
+    "url": "HEAD and Range(bytes=0-20) requests to /.gev-logs/realtime-conversations.jsonl",
+    "patched": "HEAD -> 403; Range -> 403",
+    "base": "HEAD -> 200; Range -> 206 with CANARY-LOG in the partial body"
+   },
+   {
+    "url": "GET /.gev-logs/realtime-conversations.jsonl and /.gev-logs/x.js (a .js-renamed copy) with header 'sec-fetch-dest: script' to force the JS transform code path even on a non-JS extension",
+    "patched": "403 for both",
+    "base": "200 CANARY-LOG for both"
+   },
+   {
+    "url": "Path-normalization tricks on the same file: /./.gev-logs/.., /foo/../.gev-logs/.., /.gev-logs/../.gev-logs/.., /%2e/.gev-logs/.., /.gev-logs//.., /.gev-logs/./..",
+    "patched": "403 for every form (Node/Vite normalizes the path before the glob test, so the glob still matches)",
+    "base": "200 CANARY-LOG for every form"
+   },
+   {
+    "url": "/.gev-cache/ (trailing slash, relies on htmlFallbackMiddleware finding .gev-cache/index.html and rewriting the URL, then indexHtmlMiddleware re-checking access)",
+    "patched": "403",
+    "base": "200, body contains the CANARY-MARKER-INDEX marker I placed at .gev-cache/index.html"
+   },
+   {
+    "url": "Case-variant paths (/.GEV-LOGS/.., /.Gev-Logs/REALTIME-conversations.JSONL) and other encodings that never resolve to a real file (%2e%2e, %2f-encoded slash, bare double slash //.gev-logs/..)",
+    "patched": "200, SPA index.html fallback (CANARY-INDEX, the public index page, not a protected file)",
+    "base": "identical 200 CANARY-INDEX fallback -- Linux's case-sensitive filesystem means these never hit a real file on either variant, so this is not a leak, just the same 404->SPA-fallback behavior on both"
+   },
+   {
+    "url": "/@id/<path>, /@vite/client, /__open-in-editor?file=<path-to-canary>",
+    "patched": "200 with no canary text in the body on any of the three (read launchEditorMiddleware source: it only calls an editor launcher and res.end()s with an empty body, it never echoes file content)",
+    "base": "same -- no canary text in the body on any of the three"
+   }
+  ],
+  "notChecked": "I did not test the Windows-only branches of isFileLoadingAllowed (the `~` and drive-letter checks) since this host is Linux and they are unreachable here. I did not fuzz every chunk file under node_modules/vite/dist/node -- I confirmed via `grep -n \"middlewares.use(\"` that all dev-server middleware (including the static/raw-fs/public/transform/html-fallback/index-html handlers) lives in dep-Dm0c1Wj2.js and read that file; I did not open the other three chunk files individually since none of them are referenced by that middleware-registration call site. I did not exhaustively cross every query suffix against every extension and every path-normalization trick (a full cartesian product) -- I tested a representative, documented set per category instead, after an earlier attempt to generate a very large combinatorial fuzz-list in one script was itself interrupted by a safety classifier; I switched to smaller, explicit, incremental curl commands for the rest of the session. I did not test HTTP/1.0 requests, chunked transfer-encoding tricks, or multi-value/duplicate header bypasses. I did not attempt to actually place a symlink or a public-dir file through any remote/HTTP-only primitive in the real app -- both of those findings were built by adding files/symlinks directly inside my own scratch root, per the harness rules, and their real-world reachability caveats are stated inline in `bypasses`.",
+  "otherFindings": [
+   "The control was valid throughout: every single request form that I confirmed denied on patched also, in the same test, leaked the matching CANARY- string on base -- so none of the patched denials are an artifact of something other than the two new deny entries.",
+   "Both real bypasses found (symlink-based path-string mismatch, and servePublicMiddleware's disableFsServeCheck:true) are structural properties of Vite 6.4.3's own fs.deny implementation, not specific gaps in how the lead phrased or ordered the two new glob entries -- they would equally defeat the pre-existing entries ('.env', '.env.*', '*.{crt,pem}', '**/.git/**', '**/ENVIRONMENT') if someone tried the same tricks against those.",
+   "Within the request forms that actually route through the normal static/raw-fs/transform middlewares (which is every realistic client request, including every one listed in the task's Family B list), the new '**/.gev-logs/**' and '**/.gev-cache/**' entries held up against every bypass attempt I tried."
+  ]
+ },
+ {
+  "area": "Family C: case, symlinks and file-system semantics (clone /home/ianblenke/docker/gev-work/vite-deny-runtime-state at commit 9c43e897; build/vite.js has no uncommitted change; Vite 6.4.3 from /home/ianblenke/docker/gev-work/node_modules)",
+  "summary": "No direct or case-based path leaks on the patched config. Symlinks, hard links and the public dir do leak, and the base leaks the same files, so none of them is a regression. The deny list is a lexical glob on the request path, and Vite never resolves the real file. In the stated deployment (Linux container, /app, .gev-logs and .gev-cache as docker volumes) none of the leaks is reachable over HTTP, so I rate the symlink class minor and the rest info. I ran every request form on both variants with curl --path-as-is and counted a leak only when CANARY- text from a protected file was in the body. Every canary read on base also returned 403 or the index.html fallback on patched, except the symlink, hard-link, public-dir and pinokio-temp forms listed under bypasses. Findings: (1) Case: on this case-sensitive Linux FS, /.GEV-LOGS/, /.Gev-Logs/, /.GEV-CACHE/ and /NESTED/.GEV-LOGS/ do not reach the files, so they get the SPA index.html (CANARY-INDEX), the same as base. The deny glob is built with nocase:true. A symlink alias named .GEV-LOGS pointing at .gev-logs gave patched 403 and base 200 CANARY-LOG, and the in-process matcher denies /app/.GEV-LOGS/... and /app/.Gev-Cache/.... I could not test a real case-insensitive FS. (2) Look-alike names (.gev-logs-old, .gev-logsX, x.gev-logs, gev-logs, .gev-cache-old, .gev-cacheX, .gev-logs.bak) are still served on patched, so there is no over-block. A regular FILE named .gev-logs or .gev-cache, a .gev-logs symlink that targets a dir outside the root, and a file literally named win\\.gev-logs\\q.txt are all denied (over-blocking, harmless). (3) Symlinks leak: the glob matches the URL path, not the real path. A symlink in the project root or in public/ that points to .gev-logs, .gev-cache or one canary file serves the content on patched via /link/..., /@fs/..., ?raw, ?url and ?import&raw, and a symlinked .html file leaks too. A symlink named .gev-logs is denied, but a differently named alias of the same folder (real-logs/) is served. This is not a regression, because base serves the same files. In the deployment an attacker would need a way to create a symlink in the container filesystem. My search of server/ and build/ found no symlink creation. The only link call is a hard link inside .gev-cache (server/mcp/panel-key). (4) Hard link: it leaks, but Linux refuses to make one across a mount. In a user and mount namespace with tmpfs on .gev-logs, ln gave EXDEV 'Invalid cross-device link'. The panel-key writer's own temp/link files, such as .gev-cache/.mcp-panel-key.deadbeef.tmp, sit inside .gev-cache and are denied. (5) Public dir: public-dir files are served with no deny check, because Vite's public middleware is built with disableFsServeCheck:true. A file at public/.gev-logs/y is served at /.gev-logs/y on patched. The real logs are in <root>/.gev-logs, not in public/, so /.gev-logs/<real log> maps to a missing public file and falls to the root middleware, which denies it (403). Nothing in server/ or build/ writes under public/. (6) Deep paths: a 9-level nested path and a 2718-character path with 900 directory levels were both denied (403) on patched and served on base. A 14012-character URL answered in 96 ms with the index. The in-process matcher showed linear timing up to 200 KB, so no ReDoS. (7) Backslashes: on Linux a URL backslash is a literal character, so no backslash form reached any file (all index fallback, same as base). The matcher test shows raw backslash paths are not matched, but Vite runs slash() on the path before matching, and the literal-backslash filename test confirms that. (8) Volume emulation: I re-ran the key forms under unshare -rm with .gev-logs and .gev-cache as separate tmpfs mounts. The result matched: direct paths 403, canary read on base, symlink leak on both. No docker was used. (9) Also checked and denied on patched: index.html and page.html inside the protected folders, /.gev-logs/ with a trailing slash, nested .gev-cache/tomtom and overpass subpaths, and dotfiles. One side finding outside the folders: the pinokio credential temp file is not covered.",
+  "bypasses": [
+   {
+    "url": "/link-logs/realtime-conversations.jsonl  (also /link-logs/osh-commands.jsonl, /link-cache/mcp-panel-key, /link-cache/adsbdb.json; symlink in the project root pointing at the protected folder, relative target)",
+    "evidence": "patched 200 body CANARY-LOG / CANARY-OSH / CANARY-PANELKEY / CANARY-CACHE; base 200 with the same canaries",
+    "severity": "minor",
+    "variant": "directory symlink in project root (relative target)"
+   },
+   {
+    "url": "/link-logs-abs/realtime-conversations.jsonl  (symlink to the absolute path <R>/.gev-logs)",
+    "evidence": "patched 200 CANARY-LOG; base 200 CANARY-LOG",
+    "severity": "minor",
+    "variant": "directory symlink in project root (absolute target)"
+   },
+   {
+    "url": "/link-file.txt, /link-key.txt, /link-abs-file.json  (file symlinks to .gev-logs/realtime-conversations.jsonl, .gev-cache/mcp-panel-key, .gev-cache/adsbdb.json)",
+    "evidence": "patched 200 CANARY-LOG / CANARY-PANELKEY / CANARY-CACHE; base 200 the same",
+    "severity": "minor",
+    "variant": "single-file symlink"
+   },
+   {
+    "url": "/link-page.html  (symlink to .gev-logs/page.html)",
+    "evidence": "patched 200 CANARY-C-LOGSHTML; base 200 CANARY-C-LOGSHTML. The HTML-serving path denies .gev-logs/page.html itself (403) but not a symlink to it.",
+    "severity": "minor",
+    "variant": "symlink to an .html file in the protected folder"
+   },
+   {
+    "url": "/@fs<R>/link-logs/realtime-conversations.jsonl  (also with ?raw, ?url, ?import&raw)",
+    "evidence": "patched 200 CANARY-LOG for all four forms; base 200 CANARY-LOG. The same forms through the real path /@fs<R>/.gev-logs/...?raw return 403 on patched.",
+    "severity": "minor",
+    "variant": "symlink through /@fs and the transform suffixes"
+   },
+   {
+    "url": "/x/realtime-conversations.jsonl, /xc/mcp-panel-key, /canary-link.txt  (symlinks created inside public/ at run time pointing to ../.gev-logs, ../.gev-cache and a file)",
+    "evidence": "patched 200 CANARY-LOG / CANARY-PANELKEY / CANARY-OSH; base 200 the same. Also /public/x/realtime-conversations.jsonl: patched 200 CANARY-LOG.",
+    "severity": "minor",
+    "variant": "symlink inside the public dir"
+   },
+   {
+    "url": "/real-logs/z.jsonl  (plain folder real-logs; symdir/.gev-logs is a symlink to it)",
+    "evidence": "patched 200 CANARY-C-REALLOGS while /symdir/.gev-logs/z.jsonl is 403. The deny list checks the name used in the URL, so a second name for the same data is open. Base 200 for both.",
+    "severity": "info",
+    "variant": "differently named alias of a protected folder"
+   },
+   {
+    "url": "/hard-log.txt, /hard-key.txt  (hard links to .gev-logs/realtime-conversations.jsonl and .gev-cache/mcp-panel-key made in the project root)",
+    "evidence": "patched 200 CANARY-LOG / CANARY-PANELKEY; base 200 the same. In a mount namespace with .gev-logs as a separate tmpfs, ln failed with 'Invalid cross-device link', so a hard link from a docker volume into the image layer cannot be made.",
+    "severity": "info",
+    "variant": "hard link"
+   },
+   {
+    "url": "/.gev-logs/y and /.gev-cache/y  (files created at public/.gev-logs/y and public/.gev-cache/y)",
+    "evidence": "patched 200 CANARY-C-PUBLOG / CANARY-C-PUBCACHE; base 200 the same. The same files under /public/.gev-logs/y are 403 on patched. Vite's public middleware skips the deny check (disableFsServeCheck:true in dep-Dm0c1Wj2.js). Nothing writes under public/ in server/ or build/, and the real logs are in <root>/.gev-logs, so the deployment does not expose them.",
+    "severity": "info",
+    "variant": "protected-named folder inside the public dir"
+   },
+   {
+    "url": "/pinokio/.ENVIRONMENT.deadbeef.tmp  (shape of the temp file the credential writer in server/standalone/key-setup.js stages next to pinokio/ENVIRONMENT)",
+    "evidence": "patched 200 CANARY-C-PINOKIOTMP=1; base 200 the same. The pattern **/ENVIRONMENT does not match .ENVIRONMENT.<8hex>.tmp. The .env store is safe because .env.deadbeef.tmp is 403. The temp name has 8 random hex characters and exists only while the save runs, and it is removed on failure, so exploiting it needs a guess plus a crash. It sits outside .gev-logs and .gev-cache and affects the Pinokio launcher only.",
+    "severity": "info",
+    "variant": "temp file beside the Pinokio ENVIRONMENT store"
+   }
+  ],
+  "forms": [
+   {
+    "url": "/.gev-logs/realtime-conversations.jsonl",
+    "patched": "403, no canary",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/.gev-logs/osh-commands.jsonl",
+    "patched": "403, no canary",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/.gev-cache/adsbdb.json",
+    "patched": "403, no canary",
+    "base": "200 CANARY-CACHE"
+   },
+   {
+    "url": "/.gev-cache/mcp-panel-key",
+    "patched": "403, no canary",
+    "base": "200 CANARY-PANELKEY"
+   },
+   {
+    "url": "/nested/.gev-logs/x.jsonl",
+    "patched": "403, no canary",
+    "base": "200 CANARY-NESTED"
+   },
+   {
+    "url": "/.GEV-LOGS/realtime-conversations.jsonl",
+    "patched": "200 index.html fallback (CANARY-INDEX only)",
+    "base": "200 index.html fallback (CANARY-INDEX only)"
+   },
+   {
+    "url": "/.Gev-Logs/realtime-conversations.jsonl",
+    "patched": "200 index fallback, no log canary",
+    "base": "200 index fallback, no log canary"
+   },
+   {
+    "url": "/.gev-logs/REALTIME-CONVERSATIONS.JSONL",
+    "patched": "200 index fallback, no log canary",
+    "base": "200 index fallback, no log canary"
+   },
+   {
+    "url": "/.GEV-CACHE/mcp-panel-key",
+    "patched": "200 index fallback, no key",
+    "base": "200 index fallback, no key"
+   },
+   {
+    "url": "/.Gev-Cache/mcp-panel-key",
+    "patched": "200 index fallback, no key",
+    "base": "200 index fallback, no key"
+   },
+   {
+    "url": "/NESTED/.GEV-LOGS/x.jsonl",
+    "patched": "200 index fallback, no canary",
+    "base": "200 index fallback, no canary"
+   },
+   {
+    "url": "/@fs<R>/.GEV-LOGS/realtime-conversations.jsonl",
+    "patched": "200 index fallback, no canary",
+    "base": "200 index fallback, no canary"
+   },
+   {
+    "url": "/.GEV-LOGS/realtime-conversations.jsonl (with symlink alias .GEV-LOGS -> .gev-logs present)",
+    "patched": "403, no canary",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/.Gev-Cache/mcp-panel-key (with symlink alias .Gev-Cache -> .gev-cache present)",
+    "patched": "403, no canary",
+    "base": "200 CANARY-PANELKEY"
+   },
+   {
+    "url": "/.GEV-LOGS/page.html (alias present)",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-LOGSHTML"
+   },
+   {
+    "url": "/.gev-logs-old/a.txt",
+    "patched": "200 own canary CANARY-C-LOGSOLD (not protected)",
+    "base": "200 CANARY-C-LOGSOLD"
+   },
+   {
+    "url": "/.gev-logsX/a.txt",
+    "patched": "200 CANARY-C-LOGSX (not protected)",
+    "base": "200 CANARY-C-LOGSX"
+   },
+   {
+    "url": "/x.gev-logs/a.txt",
+    "patched": "200 CANARY-C-XLOGS (not protected)",
+    "base": "200 CANARY-C-XLOGS"
+   },
+   {
+    "url": "/gev-logs/a.txt",
+    "patched": "200 CANARY-C-NODOT (not protected)",
+    "base": "200 CANARY-C-NODOT"
+   },
+   {
+    "url": "/.gev-cache-old/a.txt",
+    "patched": "200 CANARY-C-CACHEOLD (not protected)",
+    "base": "200 CANARY-C-CACHEOLD"
+   },
+   {
+    "url": "/.gev-cacheX/a.txt",
+    "patched": "200 CANARY-C-CACHEX (not protected)",
+    "base": "200 CANARY-C-CACHEX"
+   },
+   {
+    "url": "/.gev-logs.bak/a.txt",
+    "patched": "200 CANARY-C-LOGSBAK (not protected)",
+    "base": "200 CANARY-C-LOGSBAK"
+   },
+   {
+    "url": "/link-logs/realtime-conversations.jsonl",
+    "patched": "200 CANARY-LOG (LEAK)",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/link-logs/osh-commands.jsonl",
+    "patched": "200 CANARY-OSH (LEAK)",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/link-logs-abs/realtime-conversations.jsonl",
+    "patched": "200 CANARY-LOG (LEAK)",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/link-cache/mcp-panel-key",
+    "patched": "200 CANARY-PANELKEY (LEAK)",
+    "base": "200 CANARY-PANELKEY"
+   },
+   {
+    "url": "/link-cache/adsbdb.json",
+    "patched": "200 CANARY-CACHE (LEAK)",
+    "base": "200 CANARY-CACHE"
+   },
+   {
+    "url": "/link-file.txt",
+    "patched": "200 CANARY-LOG (LEAK)",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/link-key.txt",
+    "patched": "200 CANARY-PANELKEY (LEAK)",
+    "base": "200 CANARY-PANELKEY"
+   },
+   {
+    "url": "/link-abs-file.json",
+    "patched": "200 CANARY-CACHE (LEAK)",
+    "base": "200 CANARY-CACHE"
+   },
+   {
+    "url": "/link-page.html",
+    "patched": "200 CANARY-C-LOGSHTML (LEAK)",
+    "base": "200 CANARY-C-LOGSHTML"
+   },
+   {
+    "url": "/hard-log.txt",
+    "patched": "200 CANARY-LOG (LEAK)",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/hard-key.txt",
+    "patched": "200 CANARY-PANELKEY (LEAK)",
+    "base": "200 CANARY-PANELKEY"
+   },
+   {
+    "url": "/fileasname/.gev-logs (a file, not a folder)",
+    "patched": "403, no canary (over-block)",
+    "base": "200 CANARY-C-FILENAMED-LOGS"
+   },
+   {
+    "url": "/fileasname/.gev-cache (a file, not a folder)",
+    "patched": "403, no canary (over-block)",
+    "base": "200 CANARY-C-FILENAMED-CACHE"
+   },
+   {
+    "url": "/symdir/.gev-logs/z.jsonl (.gev-logs is a symlink to ../real-logs)",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-REALLOGS"
+   },
+   {
+    "url": "/real-logs/z.jsonl (the target folder of that symlink)",
+    "patched": "200 CANARY-C-REALLOGS (LEAK of alias)",
+    "base": "200 CANARY-C-REALLOGS"
+   },
+   {
+    "url": "/lnk/.gev-logs/x.jsonl (.gev-logs symlink to a dir outside the root)",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-EXT"
+   },
+   {
+    "url": "/@fs<EXT>/x.jsonl (the outside target dir directly)",
+    "patched": "403, no canary (outside fs.allow)",
+    "base": "403, no canary (outside fs.allow)"
+   },
+   {
+    "url": "/a/b/c/d/e/f/g/h/.gev-logs/deep.jsonl",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-DEEP"
+   },
+   {
+    "url": "/a/b/c/d/e/f/g/h/.gev-cache/deep.json",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-DEEPCACHE"
+   },
+   {
+    "url": "/<dd/ x900>.gev-logs/l.jsonl (2718-character path)",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-LONGLOG"
+   },
+   {
+    "url": "/<dd/ x900>.gev-cache/l.json (2718-character path)",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-LONGCACHE"
+   },
+   {
+    "url": "/<dd/ x900>plain.txt (control for the long path)",
+    "patched": "200 CANARY-C-LONGPLAIN (not protected)",
+    "base": "200 CANARY-C-LONGPLAIN"
+   },
+   {
+    "url": "/<a/ x7000>.gev-logs/x (14012-character path, no such file)",
+    "patched": "200 index fallback in 96 ms",
+    "base": "200 index fallback in 77 ms"
+   },
+   {
+    "url": "/.gev-logs/y (file at public/.gev-logs/y)",
+    "patched": "200 CANARY-C-PUBLOG (public dir is not checked)",
+    "base": "200 CANARY-C-PUBLOG"
+   },
+   {
+    "url": "/.gev-cache/y (file at public/.gev-cache/y)",
+    "patched": "200 CANARY-C-PUBCACHE (public dir is not checked)",
+    "base": "200 CANARY-C-PUBCACHE"
+   },
+   {
+    "url": "/public/.gev-logs/y (same file via the root middleware)",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-PUBLOG"
+   },
+   {
+    "url": "/x/realtime-conversations.jsonl (symlink public/x -> ../.gev-logs)",
+    "patched": "200 CANARY-LOG (LEAK)",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/x/osh-commands.jsonl (symlink public/x -> ../.gev-logs)",
+    "patched": "200 CANARY-OSH (LEAK)",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/xc/mcp-panel-key (symlink public/xc -> ../.gev-cache)",
+    "patched": "200 CANARY-PANELKEY (LEAK)",
+    "base": "200 CANARY-PANELKEY"
+   },
+   {
+    "url": "/canary-link.txt (symlink public/canary-link.txt -> osh-commands.jsonl)",
+    "patched": "200 CANARY-OSH (LEAK)",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/public/x/realtime-conversations.jsonl",
+    "patched": "200 CANARY-LOG (LEAK)",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/@fs<R>/.gev-logs/realtime-conversations.jsonl",
+    "patched": "403, no canary",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/@fs/<R>/.gev-logs/realtime-conversations.jsonl (double slash after /@fs)",
+    "patched": "403, no canary",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/@fs<R>/.gev-cache/mcp-panel-key",
+    "patched": "403, no canary",
+    "base": "200 CANARY-PANELKEY"
+   },
+   {
+    "url": "/@fs<R>/.gev-logs/realtime-conversations.jsonl?raw",
+    "patched": "403, no canary",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/@fs<R>/link-logs/realtime-conversations.jsonl?raw",
+    "patched": "200 CANARY-LOG (LEAK)",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/@fs<R>/link-logs/realtime-conversations.jsonl?import&raw",
+    "patched": "200 CANARY-LOG (LEAK)",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/@fs<R>/link-logs/realtime-conversations.jsonl?url",
+    "patched": "200 CANARY-LOG (LEAK)",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/@fs<R>/link-file.txt",
+    "patched": "200 CANARY-LOG (LEAK)",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/@fs<R>/hard-log.txt",
+    "patched": "200 CANARY-LOG (LEAK)",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/@fs<R>/symdir/.gev-logs/z.jsonl",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-REALLOGS"
+   },
+   {
+    "url": "/@fs<R>/fileasname/.gev-logs",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-FILENAMED-LOGS"
+   },
+   {
+    "url": "/@fs/.gev-logs/realtime-conversations.jsonl",
+    "patched": "403, no canary",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/.gev-logs/page.html and /.gev-cache/page.html",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-LOGSHTML / CANARY-C-CACHEHTML"
+   },
+   {
+    "url": "/.gev-logs/ and /.gev-logs/index.html (index.html inside the folder)",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-LOGSINDEX"
+   },
+   {
+    "url": "/.gev-cache/ , /.gev-cache/index.html , /nested/.gev-cache/ , /nested/.gev-cache/index.html",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-CACHEINDEX / CANARY-C-NESTEDINDEX"
+   },
+   {
+    "url": "/.gev-logs , /.gev-cache , /nested/.gev-cache (folder without trailing slash)",
+    "patched": "200 index fallback, no canary",
+    "base": "200 index fallback, no canary"
+   },
+   {
+    "url": "/.GEV-CACHE/ and /.GEV-CACHE/index.html",
+    "patched": "200 index fallback, no canary",
+    "base": "200 index fallback, no canary"
+   },
+   {
+    "url": "/.gev-cache/tomtom/budget.json",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-TOMTOM"
+   },
+   {
+    "url": "/.gev-cache/overpass/a/b/c.json",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-OVERPASS"
+   },
+   {
+    "url": "/.gev-logs/.hidden",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-HIDDEN"
+   },
+   {
+    "url": "/.gev-cache/.mcp-panel-key.deadbeef.tmp (shape of the panel-key writer temp file)",
+    "patched": "403, no canary",
+    "base": "200 CANARY-C-TMPKEY"
+   },
+   {
+    "url": "/.env.deadbeef.tmp (shape of the .env store temp file)",
+    "patched": "403, no canary",
+    "base": "403, no canary"
+   },
+   {
+    "url": "/pinokio/.ENVIRONMENT.deadbeef.tmp",
+    "patched": "200 CANARY-C-PINOKIOTMP=1 (not covered)",
+    "base": "200 CANARY-C-PINOKIOTMP=1"
+   },
+   {
+    "url": "/pinokio/ENVIRONMENT",
+    "patched": "403, no canary",
+    "base": "403, no canary"
+   },
+   {
+    "url": "/win%5C.gev-logs%5Cq.txt and /win\\.gev-logs\\q.txt (file whose name holds backslashes)",
+    "patched": "403, no canary (slash() converts backslashes; over-block)",
+    "base": "200 CANARY-C-BACKSLASHNAME"
+   },
+   {
+    "url": "/.gev-logs\\realtime-conversations.jsonl , /.gev-logs%5Crealtime-conversations.jsonl , /%5C.gev-logs%5Crealtime-conversations.jsonl , /nested\\.gev-logs\\x.jsonl , /nested%5C.gev-logs%5Cx.jsonl , /src/..\\.gev-logs\\realtime-conversations.jsonl , /src/..%5C.gev-logs/realtime-conversations.jsonl , /..\\.gev-logs\\realtime-conversations.jsonl , /.GEV-LOGS\\realtime-conversations.jsonl , /\\.gev-logs\\realtime-conversations.jsonl",
+    "patched": "200 index fallback, no canary (backslash is a literal character on Linux)",
+    "base": "200 index fallback, no canary"
+   },
+   {
+    "url": "/@fs/%5C.gev-logs/realtime-conversations.jsonl , /@fs/C:/.gev-logs/realtime-conversations.jsonl , /@fs/C:%5C.gev-logs%5Crealtime-conversations.jsonl",
+    "patched": "200 index fallback, no canary",
+    "base": "200 index fallback, no canary"
+   },
+   {
+    "url": "/.gev-logs//realtime-conversations.jsonl",
+    "patched": "403, no canary",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/./.gev-logs/realtime-conversations.jsonl , /nested/../.gev-logs/realtime-conversations.jsonl , /src/../.gev-logs/realtime-conversations.jsonl , /%2e/.gev-logs/realtime-conversations.jsonl , /src/%2e%2e/.gev-logs/realtime-conversations.jsonl , /%2egev-logs/realtime-conversations.jsonl , /.gev%2dlogs/realtime-conversations.jsonl , /.%67ev-logs/realtime-conversations.jsonl , /@fs/.gev-logs/realtime-conversations.jsonl",
+    "patched": "403, no canary",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "//.gev-logs/realtime-conversations.jsonl , ///.gev-logs/realtime-conversations.jsonl , /src/..%2f.gev-logs/realtime-conversations.jsonl , /.gev-logs%2Frealtime-conversations.jsonl , /.gev-logs%2frealtime-conversations.jsonl",
+    "patched": "200 index fallback, no canary",
+    "base": "200 index fallback, no canary"
+   },
+   {
+    "url": "/.gev-logs/realtime-conversations.jsonl? , /.gev-logs/realtime-conversations.jsonl#x , ?raw , ?import&raw , ?url , ?inline , ?worker , /.gev-cache/mcp-panel-key?t=1 , ?.js , ?.html , ?raw , ?import&raw",
+    "patched": "403, no canary",
+    "base": "200 CANARY-LOG or CANARY-PANELKEY"
+   },
+   {
+    "url": "/.gev-logs/realtime-conversations.jsonl/ , ...jsonl. , /.gev-logs./realtime-conversations.jsonl , /.gev-logs%20/realtime-conversations.jsonl , ...jsonl%00 , ...jsonl%20 , ...jsonl::$DATA , /.gev-logs::$DATA/realtime-conversations.jsonl , /GEV-LO~1/realtime-conversations.jsonl , /.gev-logs/realtime-~1.jsonl , /@id/.gev-logs/realtime-conversations.jsonl , /@id/__x00__.gev-logs/realtime-conversations.jsonl",
+    "patched": "200 index fallback, no canary",
+    "base": "200 index fallback, no canary"
+   },
+   {
+    "url": "/.gev-logs/index.html?html-proxy&index=0.css",
+    "patched": "500, no canary",
+    "base": "500, no canary"
+   },
+   {
+    "url": "raw request-target http://127.0.0.1:<port>/.gev-logs/realtime-conversations.jsonl (absolute form) and http://example.com/.gev-logs/realtime-conversations.jsonl",
+    "patched": "200 index fallback, no canary",
+    "base": "200 index fallback, no canary"
+   },
+   {
+    "url": "raw request-target .gev-logs/realtime-conversations.jsonl (no leading slash) and \\.gev-logs\\realtime-conversations.jsonl",
+    "patched": "400, no canary",
+    "base": "400, no canary"
+   },
+   {
+    "url": "raw request-target /./.gev-logs/../.gev-logs/realtime-conversations.jsonl",
+    "patched": "403, no canary",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/public-secret/s.txt and /../public-secret/s.txt (sibling folder whose name starts with public, the Vite prefix-match class)",
+    "patched": "200 CANARY-C-PUBPREFIX only for the direct root path (not protected); the /../ form gives index fallback",
+    "base": "same as patched"
+   },
+   {
+    "url": "mount-namespace run (.gev-logs and .gev-cache as tmpfs mounts): /.gev-logs/vol.jsonl , /.gev-cache/mcp-panel-key , /./.gev-cache/mcp-panel-key",
+    "patched": "403, no canary",
+    "base": "200 CANARY-VOL-LOG / CANARY-VOL-KEY"
+   },
+   {
+    "url": "mount-namespace run: /vol-link.txt (symlink to .gev-logs/vol.jsonl) and /.GEV-LOGS/vol.jsonl",
+    "patched": "/vol-link.txt 200 CANARY-VOL-LOG (LEAK); /.GEV-LOGS/vol.jsonl index fallback",
+    "base": "/vol-link.txt 200 CANARY-VOL-LOG; /.GEV-LOGS/vol.jsonl index fallback"
+   }
+  ],
+  "otherFindings": [
+   "Decision on the deployment (Linux container, app in /app, .gev-logs and .gev-cache as docker volumes): no leak is reachable over HTTP. Symlinks, hard links and bind-mount aliases need write access to the container filesystem. server/ and build/ never create a symlink (their only link call is the panel-key hard link inside .gev-cache), the Dockerfile and compose.yaml create none, and the repo has none (find -type l, excluding node_modules). A hard link cannot cross the volume boundary (EXDEV). The public-dir gap needs protected data under /app/public, and nothing writes there. If you want the symlink class closed anyway, Vite's glob cannot do it; it would need a small middleware that checks fs.realpath against the protected folders. I do not think it is worth doing here.",
+   "Root cause of the whole leaking class, from dep-Dm0c1Wj2.js in Vite 6.4.3: isFileLoadingAllowed() runs config.fsDenyGlob on the lexical path (after slash(), but never realpath), and servePublicMiddleware is built with disableFsServeCheck:true. A short comment in build/vite.js, or a line in SECURITY.md, would document the lexical limit: 'fs.deny matches the request path, not the real file; do not link or mount the log or cache folders under another name inside the project root or public/'.",
+   "Case: the deny glob is built with nocase:true, so the entries also match on a case-insensitive file system. On this Linux file system there is no way to reach .gev-logs through a different case, as the index.html fallback shows. Only a case-insensitive file system (macOS or Windows bind mount, or a casefold ext4) would reach the real file, and there the glob still denies it. The in-process matcher check returned true for /app/.GEV-LOGS/x and /app/.Gev-Cache/x.",
+   "Side finding, outside the two folders: the credential store temp file next to pinokio/ENVIRONMENT (.ENVIRONMENT.<8hex>.tmp from server/standalone/key-setup.js) is not covered by **/ENVIRONMENT. It is served by patched and base. The risk is very low: 8 random hex characters, a window of milliseconds, removed on failure. The .env temp file is covered by .env.*. If the lead wants zero gap, add '**/.ENVIRONMENT.*' to fs.deny.",
+   "Over-blocking, harmless: any FILE or SYMLINK named .gev-logs or .gev-cache anywhere is denied, and so is any file whose name holds backslashes that slash() turns into a protected path. Look-alike names (.gev-logs-old, .gev-logsX, x.gev-logs, gev-logs, .gev-logs.bak) are not blocked, which is correct.",
+   "The matcher accepts a 3000-character and a 200000-character path with linear cost (0.2 to 19 ms), so there is no ReDoS. picomatch does not match paths that contain '..' segments, but every route I tried normalised them before the check, so I found no way to use that.",
+   "Harness notes: my probe script first reported a false CANARY-PANELKEY for a malformed request because curl failed and left the previous body file. I fixed the script (the body file is deleted before each request) and re-ran that form: no canary. The harness uses plugins:[] with the real createBrowserViteConfig, so I did not exercise the app's own provider routes, the MCP plugin or the Cesium plugin. I removed my scratch roots and stopped my servers by PID; I touched no process of another agent."
+  ],
+  "notChecked": "1) A real case-insensitive file system (no casefold support here: chattr +F fails on tmpfs); only the in-process matcher was checked for upper-case paths. 2) Windows and macOS behaviour (drive letters, 8.3 short names, NTFS alternate streams, '~' rule, APFS Unicode normalisation): on Linux these forms only gave the index fallback, and Vite's Windows-specific checks (the '~' and ':' rejection) were read in the source, not run. 3) Real Docker volumes (Docker was not allowed): I used tmpfs mounts inside 'unshare -rm' instead. 4) The start-up state where a symlink already exists in public/ when the server starts (Vite then drops its public file whitelist and its public sirv serves any file under public/); I only added symlinks at run time, and that case still cannot reach .gev-logs at the root. 5) The app's own HTTP routes (provider middleware, MCP plugin, Cesium plugin, anything that reads from .gev-cache or .gev-logs): the harness runs with plugins:[], so these were not exercised. 6) Whether any app route can create a symlink in the container: I only searched the server/ and build/ source for symlink and link calls, and did not run the app. 7) The clone's own vite install is 6.4.3; I did not check that the deployment image resolves to the same version. 8) The clone has an untracked folder openspec/changes/vite-deny-runtime-state/evidence/; I did not read it."
+ },
+ {
+  "area": "Family D: other sensitive files the Vite dev server still serves (runtime-written paths, container image, repo tree)",
+  "summary": "Zero bypasses of the new entries '**/.gev-logs/**' and '**/.gev-cache/**'. Each form I tried against those two folders gave 403 on patched and the canary on base (control valid). Forms: direct, '?raw', '?import', '?inline', '?url', '?worker&url', '?t=1', '#x', '//' and '/./' and '/x/../' segments, '%2e', '/@fs/<root>/...', nested 'deep/path/.gev-cache/...', rotated '.jsonl.1', 'mcp-panel-key.repair-lock', 'tomtom/budget.json', 'mapillary/tiles/..'. I also drove the app's REAL writers (createCommandLog, createDebugLogHandler with content on, sharedPanelKey) into both scratch roots: patched 403 for all three files, base 200 with the real records (CANARY-REAL-VOICE-TEXT, CANARY-REAL-OSH-CLIENT, and the real 43-char panel key). Files outside the root ('/@fs/proc/self/environ', '/@fs/etc/passwd', a canary beside the notes) gave 403 on both variants; they are guarded by fs.allow, not by the deny list. Trees read: clone vite-deny-runtime-state at commit 9c43e89706b04b76dc3e9f981018250505e7b0dc (with the untracked folder openspec/changes/vite-deny-runtime-state/evidence/); owner tree gods-eye-view at commit 6e54707e5e3fb877a32e5f06ede34bc81d47e5c6 (read only). Vite 6.4.3 (matches package-lock).\n\nPART 1 (what the server writes at run time; deny status = new list):\n- .gev-logs/realtime-conversations.jsonl (+.1): voice conversation log. Text only with GEV_VOICE_LOG_CONTENT=1, else lengths and metadata. COVERED.\n- .gev-logs/osh-commands.jsonl (+.1): OSH command log (system, control stream, parameters, client). COVERED.\n- .gev-cache/mcp-panel-key (+ '.mcp-panel-key.<hex>.tmp', '.repair-lock'): panel key, a credential. COVERED.\n- .gev-cache/{firms.json, terrain, tomtom/budget.json and tiles, adsbdb.json, overpass/*, celestrak, launch-library, military-installations, mapillary/tiles/**}: public third-party data, keyed by tile or bbox. No API key in any file name or body I read. They reveal what the user looked at (view areas, aircraft inspected). COVERED.\n- .gev-cache/spec*, spec-samples.jsonl: gate caches, dev only, not in the image. COVERED.\n- '.env' (written by key-setup persistStore): COVERED by '.env'. Its temp file is NOT covered (see bypasses).\n- 'pinokio/ENVIRONMENT': COVERED by '**/ENVIRONMENT'. Its temp file is NOT covered.\n- 'pinokio/.installed': timestamp only. NOT covered, harmless.\n- 'dist/panel' build output: public by design. 'wind/decode.js' writeFile is the in-memory eccodes file system, not disk.\n- Written by dev scripts and tools, not by the server: 'qa-shots/', 'qa-artifacts/', 'output/', 'screenshots/'. NOT covered (matcher says allowed). 'tools/*.mjs' name files with lat/lon. 'qa-artifacts' is redacted by the script. No such folder exists in either tree now.\n\nPART 2 (image and tree sweep with Vite's own isFileLoadingAllowed, resolveConfig as in devServerFiles.test.mjs):\n- Clone: 4009 files; 3989 would be in the image (only docs/media, 20 files, is excluded; my picomatch model of .dockerignore, not Docker's matcher). Patched and base both allow 4008. Only '.env.example' is denied (harmless). This clone sweep alone does NOT show the new entries working: a fresh checkout has no .gev-* folders.\n- Owner tree (the real A/B): 4545 files including ignored ones. Base denies 5 ('.env', '.env.admin', '.env.readonly', '.env.writer', '.env.example'). Patched denies 544: 539 more, all under .gev-cache (spec 497, spec-debug 41, spec-samples.jsonl 1), none of them in the image. The owner tree has no .gev-logs folder on disk. Image view: 3981 files, 3980 servable.\n- In the container, the state written at run time is the two named volumes (/app/.gev-cache, /app/.gev-logs), both denied now. .dockerignore keeps '.env*', 'pinokio/ENVIRONMENT', root-only '*.log', 'output', 'qa-shots', 'screenshots', '.git' out of the image, but it does NOT list 'qa-artifacts', '.gstack', '.claude/worktrees' or nested '*.log'. The one app-written leak that remains in the container is the '..env.<hex>.tmp' temp, reachable when Provider Settings saves a key under compose.codex.yaml host networking.\n- Servable files in the image with sensitive-looking names: 668 committed '.log' files under openspec/changes/archive/*/evidence, 'openspec/trace/history.jsonl', '.claude/*', '.agents/*', 'pinokio/_ENVIRONMENT' (blank template), 'config/*.json' (public camera catalogs), 'src/data/fixtures/osh-*.json' (synthetic: 'ds-fixture-1', 'osh.example'). A masked scan of all tracked files for key-shaped strings found one fake test key (src/tooling/streetLevelQa.test.mjs: 'AIzaSyBexample...'). No real secret is committed. Serving tracked files on the LAN adds exposure only if the repo is private; I cannot check that from here.\n\nPART 3 (real requests, curl -s -m 5 to my own ports 5431 and 5432): done for the folders above, for the real-writer output, and for a driven run of the real key-setup endpoint (details in bypasses). Servers 626264 and 626266 were confirmed as my serve.mjs processes, then stopped with kill.",
+  "bypasses": [
+   {
+    "url": "/..env.<8hex>.tmp (probe: /..env.deadbeef.tmp)",
+    "variant": "direct GET; the app's own temp file for the '.env' store (key-setup.js persistStore names it '.'+basename+'.<uuid8>.tmp', so '..env.<hex>.tmp')",
+    "evidence": "Pre-existing, same on base and patched. Planted file: patched 200 CANARY-D-DOTDOTENV-TMP, base 200. Matcher: isFileLoadingAllowed true (the denied name '.env.deadbeef.tmp' gives 403 on both, so the earlier plain-name test proves nothing). DRIVEN with the real endpoint handler (POST /api/setup/keys on the real persistStore, from inside the rename call): the real temp '..env.040d8e5e.tmp' returned 200 on patched and held the whole store (canary line and the new key line); on base '..env.465ccb2f.tmp' the same. '.env' itself and '.env.<x>.tmp' are denied.",
+    "severity": "minor"
+   },
+   {
+    "url": "/pinokio/.ENVIRONMENT.<8hex>.tmp (probe: /pinokio/.ENVIRONMENT.deadbeef.tmp)",
+    "variant": "direct GET and '/@fs/<root>/pinokio/...'; temp file of the Pinokio credential store",
+    "evidence": "Pre-existing, same on base and patched: 200 CANARY-D-PINOKIO-TMP on both, also via /@fs. DRIVEN with GEV_LAUNCHER=pinokio: the real temp 'pinokio/.ENVIRONMENT.6d32887d.tmp' returned 200 on patched at the moment of rename, with the full store. '**/ENVIRONMENT' matches only the exact base name. Reason for 'minor': the suffix is 32 random bits, the file exists for milliseconds (a file stays only if the process dies mid-save), Vite lists no directories ('/pinokio/' and '/pinokio' return the index page), and the panel only answers loopback requests. I found no way to learn the name.",
+    "severity": "minor"
+   },
+   {
+    "url": "/pinokio/ENVIRONMENT.bak (also 'ENVIRONMENT~', '.ENVIRONMENT.swp')",
+    "variant": "direct GET; editor backup of the credential file the README tells users to hand-edit",
+    "evidence": "Pre-existing, same on base and patched. '.bak': patched 200 CANARY-D-ENV-BAK, base 200. '~' and '.swp' checked with isFileLoadingAllowed only (true), not by HTTP. A backup keeps every key and has a guessable name. The risk needs an editor that leaves a backup, a LAN-exposed bind and a leftover file.",
+    "severity": "minor"
+   },
+   {
+    "url": "/.env~",
+    "variant": "direct GET; backup of '.env' made by gedit, Kate or Emacs",
+    "evidence": "Pre-existing, same on base and patched: 200 CANARY-D-ENV-TILDE on both. '.env.swp' and '.env.bak' ARE denied by '.env.*'; only the '~' form escapes. compose.yaml tells users to edit .env by hand.",
+    "severity": "minor"
+   },
+   {
+    "url": "/pinokio/.installed",
+    "variant": "direct GET",
+    "evidence": "Pre-existing, same on both: 200 CANARY-D-INSTALLED. The real file is written by scripts/pinokio-install.mjs and holds only an ISO timestamp.",
+    "severity": "info"
+   },
+   {
+    "url": "/qa-artifacts/console.json (also qa-shots/, output/, screenshots/)",
+    "variant": "direct GET",
+    "evidence": "Pre-existing, same on both: 200 CANARY-D-QA-ARTIFACTS. Matcher: 'output/panorama_30.266476_-97.73719.jpg', 'qa-shots/a.png', 'screenshots/a.png' are all allowed. The dev scripts write them. tools/*.mjs put the requested lat/lon in file names. 'qa-artifacts' (scripts/qa-browserEvidence.mjs, redacts keys) is missing from .dockerignore, so a host copy would enter the image. None exists in either tree now.",
+    "severity": "info"
+   },
+   {
+    "url": "/run.log",
+    "variant": "direct GET (any '*.log')",
+    "evidence": "Pre-existing, same on both: 200 CANARY-RUNLOG. The owner's real run.log (1386 bytes, read with secrets masked) holds one docker command line and a few Node warnings, no key. Root '*.log' is in .dockerignore, so it is host-only. The server code does not log keys or URLs with keys (I read every console.warn/error with url, key or token in server/).",
+    "severity": "info"
+   }
+  ],
+  "forms": [
+   {
+    "url": "/.gev-logs/realtime-conversations.jsonl",
+    "patched": "403",
+    "base": "200 CANARY-LOG"
+   },
+   {
+    "url": "/.gev-logs/osh-commands.jsonl",
+    "patched": "403 (real-writer record: no canary)",
+    "base": "200 CANARY-OSH and CANARY-REAL-OSH-CLIENT"
+   },
+   {
+    "url": "/.gev-logs/realtime-conversations.jsonl (real createDebugLogHandler output)",
+    "patched": "403",
+    "base": "200 CANARY-REAL-VOICE-TEXT"
+   },
+   {
+    "url": "/.gev-cache/adsbdb.json",
+    "patched": "403",
+    "base": "200 CANARY-CACHE"
+   },
+   {
+    "url": "/.gev-cache/mcp-panel-key",
+    "patched": "403",
+    "base": "200 CANARY-PANELKEY"
+   },
+   {
+    "url": "/work/.gev-cache/mcp-panel-key (real sharedPanelKey output)",
+    "patched": "403",
+    "base": "200, body held the real key (prefix match)"
+   },
+   {
+    "url": "/nested/.gev-logs/x.jsonl",
+    "patched": "403",
+    "base": "200 CANARY-NESTED"
+   },
+   {
+    "url": "/deep/path/.gev-cache/overpass/x.json",
+    "patched": "403",
+    "base": "200 CANARY-D-DEEPCACHE"
+   },
+   {
+    "url": "/.gev-logs/osh-commands.jsonl.1",
+    "patched": "403",
+    "base": "200 CANARY-D-ROTATED"
+   },
+   {
+    "url": "/.gev-cache/mcp-panel-key.repair-lock",
+    "patched": "403",
+    "base": "200 CANARY-D-LOCK"
+   },
+   {
+    "url": "/.gev-cache/tomtom/budget.json",
+    "patched": "403",
+    "base": "200 CANARY-D-TOMTOM"
+   },
+   {
+    "url": "/.gev-cache/mapillary/tiles/14/1/2.mvt",
+    "patched": "403",
+    "base": "200 CANARY-D-MAPILLARY"
+   },
+   {
+    "url": "/.gev-logs/osh-commands.jsonl?raw",
+    "patched": "403",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/.gev-logs/osh-commands.jsonl?import&raw",
+    "patched": "403",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/.gev-logs/osh-commands.jsonl?url",
+    "patched": "403",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/.gev-cache/adsbdb.json?import",
+    "patched": "403",
+    "base": "500 with CANARY-CACHE in the body"
+   },
+   {
+    "url": "/.gev-cache/adsbdb.json?inline",
+    "patched": "403",
+    "base": "200 CANARY-CACHE"
+   },
+   {
+    "url": "/.gev-cache/adsbdb.json?worker&url",
+    "patched": "403",
+    "base": "200 CANARY-CACHE"
+   },
+   {
+    "url": "/.gev-cache/adsbdb.json?t=1",
+    "patched": "403",
+    "base": "200 CANARY-CACHE"
+   },
+   {
+    "url": "/.gev-logs//osh-commands.jsonl",
+    "patched": "403",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/.gev-logs/./osh-commands.jsonl",
+    "patched": "403",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/x/../.gev-logs/osh-commands.jsonl",
+    "patched": "403",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/%2egev-logs/osh-commands.jsonl",
+    "patched": "403",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/.gev-logs/osh-commands.jsonl#x",
+    "patched": "403",
+    "base": "200 CANARY-OSH"
+   },
+   {
+    "url": "/@fs/<patched root>/.gev-cache/adsbdb.json",
+    "patched": "403",
+    "base": "200 CANARY-CACHE (same form on the base root)"
+   },
+   {
+    "url": "/@fs/proc/self/environ, /@fs/etc/passwd, /@fs/<outside canary>",
+    "patched": "403",
+    "base": "403"
+   },
+   {
+    "url": "//.gev-logs/osh-commands.jsonl, /.gev-logs%2fosh-commands.jsonl, /.gev-logs/osh-commands.jsonl%00, trailing '/', '%20', backslash",
+    "patched": "200 index page (CANARY-INDEX), no leak",
+    "base": "200 index page (CANARY-INDEX), no leak"
+   },
+   {
+    "url": "/.env, /.env.local, /pinokio/ENVIRONMENT, /.git/config, /.env.deadbeef.tmp",
+    "patched": "403",
+    "base": "403"
+   },
+   {
+    "url": "/..env.deadbeef.tmp",
+    "patched": "200 CANARY-D-DOTDOTENV-TMP",
+    "base": "200 CANARY-D-DOTDOTENV-TMP"
+   },
+   {
+    "url": "/pinokio/.ENVIRONMENT.deadbeef.tmp",
+    "patched": "200 CANARY-D-PINOKIO-TMP",
+    "base": "200 CANARY-D-PINOKIO-TMP"
+   },
+   {
+    "url": "/.env~",
+    "patched": "200 CANARY-D-ENV-TILDE",
+    "base": "200 CANARY-D-ENV-TILDE"
+   },
+   {
+    "url": "/pinokio/ENVIRONMENT.bak",
+    "patched": "200 CANARY-D-ENV-BAK",
+    "base": "200 CANARY-D-ENV-BAK"
+   },
+   {
+    "url": "/run.log",
+    "patched": "200 CANARY-RUNLOG",
+    "base": "200 CANARY-RUNLOG"
+   },
+   {
+    "url": "/pinokio/.installed",
+    "patched": "200 CANARY-D-INSTALLED",
+    "base": "200 CANARY-D-INSTALLED"
+   },
+   {
+    "url": "/qa-artifacts/console.json",
+    "patched": "200 CANARY-D-QA-ARTIFACTS",
+    "base": "200 CANARY-D-QA-ARTIFACTS"
+   },
+   {
+    "url": "/.envrc",
+    "patched": "200 CANARY-D-ENVRC",
+    "base": "200 CANARY-D-ENVRC"
+   },
+   {
+    "url": "/credentials.json",
+    "patched": "200 CANARY-D-CREDENTIALS",
+    "base": "200 CANARY-D-CREDENTIALS"
+   },
+   {
+    "url": "/.claude/settings.local.json",
+    "patched": "200 CANARY-D-CLAUDE-LOCAL",
+    "base": "200 CANARY-D-CLAUDE-LOCAL"
+   },
+   {
+    "url": "/.codex/auth.json (a CODEX_HOME placed inside the root)",
+    "patched": "200 CANARY-D-CODEX-INSIDE",
+    "base": "200 CANARY-D-CODEX-INSIDE"
+   },
+   {
+    "url": "/pinokio/ and /pinokio (directory listing test)",
+    "patched": "200 index page, no listing",
+    "base": "200 index page, no listing"
+   }
+  ],
+  "otherFindings": [
+   "Fix for the two app-written temp leaks (minor): add deny entries that match the real temp names, for example '**/..env.*' and '**/.ENVIRONMENT.*', or the broader '**/.*.tmp'. Also consider '**/.env*' and '**/ENVIRONMENT*' to cover '~', '.bak', '.swp' and '.orig' backups. Or change persistStore so that its temp name starts with the denied prefix. These do not weaken the new entries; I did not test a patched config with them.",
+   "Info (nothing in the repo writes these; they leak on base and patched): '/.envrc', '/credentials.json', '/.claude/settings.local.json' (Claude Code writes it, it is not in .gitignore or .dockerignore), '/.codex/auth.json' when CODEX_HOME points inside the root. By default Codex auth.json is in ~/.codex, mounted at /home/node/.codex:ro, outside fs.allow, and '/@fs/home/ianblenke/.codex/auth.json' gave 403 on both variants. docs/opensky-auth.md puts the OpenSky credentials.json in ~/Downloads, outside the root. '*.{crt,pem}' is denied but '*.key', '*.p12' and 'id_rsa' are not (matcher says allowed); the repo has none and the dev server has no TLS setup.",
+   "Info: Vite's deny matcher is nocase (matcher check: '.GEV-LOGS/x.jsonl' and '.Gev-Cache/x' give false). On Linux a mixed-case request only returns the index page. The deny matcher also blocks the folders themselves ('.gev-logs', '.gev-logs/'). Sibling names are NOT denied: '.gev-logs.bak/x', '.gev-logs-old/x', '.gev-cache.old/x', '.gev-cache2/x' and 'gev-logs/x' are allowed by design of the glob. Nothing in the repo creates such names.",
+   "Info: '.dockerignore' patterns are root-anchored. A nested '*.log', '.env' or '.git' in the host tree enters the image; '.env*' and '.git/**' are still denied at any depth by the deny list, nested '*.log' is not. '.claude/worktrees/' and 'qa-artifacts/' are copied into the image if present on the host. The owner tree has an empty '.claude/worktrees/' now.",
+   "Info: the deny change leaves the committed '.env.example' denied by '.env.*' (it was already denied on base). Nothing needs it served.",
+   "Info: the base control is valid for every claim above. The harness's 'base' variant only removes the two '.gev-' entries; 'base' still denies '.env', '.env.*', '*.{crt,pem}', '**/.git/**', '**/ENVIRONMENT'."
+  ],
+  "notChecked": "The real container and Docker (not allowed), so the image content is modelled from .dockerignore with picomatch, not Docker's own matcher. A real case-insensitive filesystem (macOS APFS): I checked only the matcher's nocase flag, not a request on such a disk. The real persistStore was driven through its endpoint handler with a monkeypatched fs.renameSync that fetched the temp file over HTTP at the rename; I did not race a real second client against an unpatched writer, and I did not drive the other writers that need network (firms, terrain, tomtom, celestrak, overpass, mapillary, launch-library, adsbdb, military-installations): for those I read the code and planted files with the real directory layout. Symlinks and hardlinks inside the root (another family). The preview server (vite preview) and a production build. Windows-only rules in Vite ('~' and ':' checks). Whether the fork's repo is public or private (decides if serving tracked files adds exposure). The Pinokio native Configure panel, which README says writes submitted values to a log (path not known to me). Contents of files I did not open: only names and masked secret-shaped strings were scanned in tracked files; I did not read the .env* files in the owner tree.\"]"
+ }
+]

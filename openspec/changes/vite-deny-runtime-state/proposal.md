@@ -33,4 +33,7 @@ Nothing in the app loads the two folders over HTTP. The voice diagnostics only p
 
 - Known limit `upstream-line`: Upstream draft pull request #948 and pull request #894 change the same array. A later sync can conflict in this line. Keep the entries of both sides then.
 - Known limit `files-stay`: The change stops the development server from serving the folders. The files stay in the project folder, and a program on the host can still read them.
+- Known limit `lexical-match`: Vite matches the deny glob against the request path, not against the real file. The server serves a symlink or a hard link in the project folder that points to a protected file. It also serves a file under the `public` folder. The base config does the same. Nothing in the app creates a link or writes under `public`.
+- Known limit `older-names`: The deny list leaves some older names open: `.env~`, `ENVIRONMENT.bak`, and the temp files `..env.<8 hex>.tmp` and `.ENVIRONMENT.<8 hex>.tmp` of the credential writer. The temp files exist for a few milliseconds. A later change can add entries for them.
+- Known limit `platform`: The probe ran on Linux only. A case-insensitive file system and Windows are not checked.
 - Known limit `dist`: Draft #948 also adds an entry for `dist`. This change adds none, because the build output is served on purpose.

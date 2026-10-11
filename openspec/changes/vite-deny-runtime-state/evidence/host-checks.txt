@@ -1,0 +1,38 @@
+Host checks of vite-deny-runtime-state, 2026-10-11, host Node v26.8.2. Commit of the code: 9c43e897.
+
+## node --test --test-force-exit src/tooling/devServerFiles.test.mjs
+ℹ tests 2
+ℹ pass 2
+ℹ fail 0
+ℹ skipped 0
+
+## node --test --test-force-exit src/tooling/viteBuild.test.mjs
+ℹ tests 6
+ℹ pass 6
+ℹ fail 0
+ℹ skipped 0
+
+## node scripts/check-import-directions.mjs
+{"modules":974,"portableEntries":78}
+exit status 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 14 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit status 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 30 published, 0 new.
+exit status 0
+
+## node scripts/format.mjs --check
+Checked 1340 source files.
+exit status 0
+
+## node scripts/spec/gates.mjs lint --change vite-deny-runtime-state
+STE: 0 errors, 716 warnings.
+exit status 0
+
+## openspec validate vite-deny-runtime-state
+Change 'vite-deny-runtime-state' is valid
+exit status 0
