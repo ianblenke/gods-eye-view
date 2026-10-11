@@ -22,7 +22,7 @@ Origin: spec-first
 - **AND** its southwest point is 27.8 degrees north and 82.65 degrees west
 - **AND** its northeast point is 28.1 degrees north and 82.3 degrees west
 - **AND** it has five POIs with finite camera numbers inside these bounds
-- **AND** its POIs are "Bank of America Plaza, Tampa", "Raymond James Stadium", "Tampa International Airport", "Henry B. Plant Museum" and "Ybor City"
+- **AND** its POIs, in this order, are "Bank of America Plaza, Tampa", "Raymond James Stadium", "Tampa International Airport", "Henry B. Plant Museum" and "Ybor City"
 
 ### Requirement: Tampa pill position
 The location controls MUST put the Tampa pill between the Taiwan pill and the Austin pill.
