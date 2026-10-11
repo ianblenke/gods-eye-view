@@ -67,8 +67,10 @@ src/ui/shellLifetime.test.mjs
 src/voice/gevActions.test.mjs
 src/voice/gevRealtime.test.mjs
 
-## node scripts/spec/gates.mjs lint --change tampa-preset
+## node scripts/spec/gates.mjs lint --change tampa-preset (on the documents of the commit e897866a0ccd01442272a0792f0a5028f6d811c8)
 STE: 0 errors, 718 warnings.
 
-## openspec validate tampa-preset
+## openspec validate tampa-preset (on the documents of the commit e897866a0ccd01442272a0792f0a5028f6d811c8)
 Change 'tampa-preset' is valid
+
+The image ratchet runs the lint again.
