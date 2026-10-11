@@ -13,11 +13,12 @@
 ## 3. Check on the host
 
 - [x] 3.1 Run the test file `src/tooling/devServerFiles.test.mjs` on the host.
-- [x] 3.2 Run the named faults of the deny list and write `evidence/mutations.txt`.
-- [x] 3.3 Run the four checks of `make precheck` on the host.
-- [x] 3.4 Run the STE lint on the host.
-- [x] 3.5 Run `openspec validate vite-deny-runtime-state` on the host.
-- [x] 3.6 Write `evidence/probe.md` with the requests to a scratch server that uses the new config.
+- [x] 3.2 Run the named faults of the deny list.
+- [x] 3.3 Write `evidence/mutations.txt` with the result of each fault.
+- [x] 3.4 Run the four checks of `make precheck` on the host.
+- [x] 3.5 Run the STE lint on the host.
+- [x] 3.6 Run `openspec validate vite-deny-runtime-state` on the host.
+- [x] 3.7 Write `evidence/probe.md` with the requests to a scratch server that uses the new config.
 
 ## 4. Lead work in the image
 

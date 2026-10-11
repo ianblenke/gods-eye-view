@@ -1,0 +1,5 @@
+HEAD requests to the running app container, read just before 2026-10-11T01:33:26Z, the time of writing this file (2026-10-10 in local time). This run repeats the check that the proposal names. The requests used curl -I. They downloaded no file content. The fix is not in that container yet.
+/.gev-logs/realtime-conversations.jsonl       HTTP 200
+Content-Length: 1724319
+/.gev-logs/osh-commands.jsonl                 HTTP 200
+Content-Length: 608
