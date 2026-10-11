@@ -2,10 +2,9 @@
 
 - [x] 1.1 Change the test of `location-presets-001` in `src/locations.test.mjs`.
 - [x] 1.2 Write the test for `location-presets-006` in the same file.
-- [x] 1.3 Keep the test for `location-presets-002` and `location-presets-004`.
-- [x] 1.4 Change the test of `location-presets-003` in `src/ui/locationControls.test.mjs`.
-- [x] 1.5 Write the test for `location-presets-007` in the same file.
-- [x] 1.6 Write the test for `location-presets-008` in the same file.
+- [x] 1.3 Change the test of `location-presets-003` in `src/ui/locationControls.test.mjs`.
+- [x] 1.4 Write the test for `location-presets-007` in the same file.
+- [x] 1.5 Write the test for `location-presets-008` in the same file.
 
 ## 2. Write the code and the documents
 

@@ -34,6 +34,13 @@ def remove_austin():
     aa = orig.index('  austin: {\n'); ab = orig.index('  sf: {\n')
     return orig[:aa] + orig[ab:]
 
+def move_austin_first():
+    aa = orig.index('  austin: {\n'); ab = orig.index('  sf: {\n')
+    austin = orig[aa:ab]
+    without = orig[:aa] + orig[ab:]
+    i = without.index('  taiwan: {\n')
+    return without[:i] + austin + without[i:]
+
 faults = [
  # (scenario targeted, description, function returning the faulty text)
  ('location-presets-001', 'Put Tampa after Austin', lambda: move_block('after-austin')),
@@ -41,6 +48,7 @@ faults = [
  ('location-presets-001', 'Rename the key tampa to tpa', lambda: in_block('  tampa: {\n', '  tpa: {\n')),
  ('location-presets-001', 'Remove the Tampa preset', lambda: orig[:a] + orig[b:]),
  ('location-presets-001', 'Put sf between tampa and austin', lambda: move_sf()),
+ ('location-presets-003', 'Put Austin before Taiwan', lambda: move_austin_first()),
  ('location-presets-003', 'Remove the Austin preset', lambda: remove_austin()),
  ('location-presets-006', 'Remove the city from the name of the first place', lambda: in_block("name: 'Bank of America Plaza, Tampa',", "name: 'Bank of America Plaza',")),
  ('location-presets-006', 'Change the name to Tampa Bay', lambda: in_block("name: 'Tampa',\n    groundElevation", "name: 'Tampa Bay',\n    groundElevation")),

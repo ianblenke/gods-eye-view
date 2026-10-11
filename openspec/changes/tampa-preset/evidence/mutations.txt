@@ -4,6 +4,7 @@ location-presets-001 | Put Tampa before Taiwan | failing: [location-presets-001]
 location-presets-001 | Rename the key tampa to tpa | failing: [location-presets-001], [location-presets-006], [location-presets-007], [location-presets-008]
 location-presets-001 | Remove the Tampa preset | failing: [location-presets-001], [location-presets-006], [location-presets-007], [location-presets-008]
 location-presets-001 | Put sf between tampa and austin | failing: [location-presets-001]
+location-presets-003 | Put Austin before Taiwan | failing: [location-presets-001], [location-presets-003], [location-presets-004], [location-presets-007]
 location-presets-003 | Remove the Austin preset | failing: [location-presets-001], [location-presets-003], [location-presets-007], untagged: city and landmark flights expose completion and cancellation, untagged: globe and city-overview flights name the world frame explici
 location-presets-006 | Remove the city from the name of the first place | failing: [location-presets-006]
 location-presets-006 | Change the name to Tampa Bay | failing: [location-presets-006], [location-presets-007]
@@ -27,5 +28,6 @@ location-presets-008 | Change the range of the first place | failing: [location-
 location-presets-008 | Change the pitch of the first place | failing: [location-presets-006], [location-presets-008]
 location-presets-008 | Change the heading of the first place | failing: [location-presets-006], [location-presets-008]
 location-presets-007 | Change the name shown on the pill | failing: [location-presets-006], [location-presets-007]
-Note: The faults "Move a place outside the view box" and "Give a place a non-finite pitch" also fail one generic test of src/cityPresets.test.mjs. The check of the view bounds in the test of location-presets-006 cannot fail alone, because the test compares the whole preset with literal values first.
+Note: The loops of the test of location-presets-006 (finite numbers, inside the view bounds) come before the comparison of the whole preset. So the faults "Move a place outside the view box" and "Give a place a non-finite pitch" fail first in a loop. The file mutations-run.txt shows the line of the first failing assertion.
+Note: The line `ids.indexOf('taiwan') < ids.indexOf('austin')` of the test of location-presets-003 comes after the checks of the first pill. The fault "Remove the Austin preset" keeps Taiwan first, so it fails at this line. The fault "Put Austin before Taiwan" fails at the first pill, like the fault "Put Tampa before Taiwan".
 Note: The fault "Remove the Austin preset" also fails other tests that use Austin (the names are in mutations-run.txt).

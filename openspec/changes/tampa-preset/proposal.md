@@ -2,7 +2,7 @@
 
 The location bar shows one pill for each preset city. The order of the pills is the order of the keys of `CITY_POIS` in `src/locations.js`.
 The owner asked in chat on 2026-10-11 for a Tampa pill between the Taiwan pill and the Austin pill.
-The table has ten presets now, and Austin is second. The requirement "Preset order" says that Taiwan is first and Austin is second, so this change must change that requirement.
+Before this change, the table had ten presets, and Austin was second. The requirement "Preset order" says that Taiwan is first and Austin is second, so this change must change that requirement.
 
 ## What Changes
 
@@ -42,4 +42,5 @@ The lead ran the 33 test files that import these modules: 789 tests pass.
 - Known limit `name-match`: The voice function `findPoiByName()` matches a query that holds all words of a place name. A query for another place that holds the words `ybor` and `city` still flies to the fifth place. The other presets have the same rule.
 - Known limit `voice-schema`: The lists of location ids in `src/voice/actionSchemas.js` do not name `tampa`, like they do not name `taiwan` or `tallinn`. A spoken request for Tampa uses the field `query`. A later change can add the id.
 - Known limit `scripts-as-text`: The files `mutations-script.txt` and `name-collision.txt` hold scripts as text. No gate measures them.
-- Known limit `upstream-line`: Upstream can add a preset in the same place of the table. A later sync can conflict there. Keep both presets then.
+- Known limit `pill-width`: The location bar has eleven pills now. The bar scrolls sideways (`overflow-x: auto` in `src/ui/styles/location.css`). The lead did not look at its width on screen.
+- Known limit `upstream-line`: Upstream can add a preset in the same place of the table. The test files `src/locations.test.mjs` and `src/ui/locationControls.test.mjs` are upstream files with fork tests. A later sync can conflict in these places. Keep both sides then.

@@ -1,4 +1,4 @@
-Host checks of tampa-preset, 2026-10-11, host Node v26.8.2. The checks ran on the files of the commit 619ceb87c3b2dbc4b59eba883c2a64f65388c77e; later commits change the evidence files and the documents only.
+Host checks of tampa-preset, 2026-10-11, host Node v26.8.2. The checks ran on the files of the commit bc525a6efe65f5d764c980ecb5c8c23645936d4e; later commits change the evidence files and the documents only.
 
 ## node scripts/check-import-directions.mjs
 {"modules":974,"portableEntries":78}

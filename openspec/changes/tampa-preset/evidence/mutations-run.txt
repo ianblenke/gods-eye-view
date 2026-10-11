@@ -1,4 +1,4 @@
-Run of the 28 named faults, 2026-10-11, host Node v26.8.2. Each fault changes the Tampa block of src/locations.js, or moves a block; the script restores the file and checks that it equals the original.
+Run of the 29 named faults, 2026-10-11, host Node v26.8.2. Each fault changes the Tampa block of src/locations.js, or moves a block; the script restores the file and checks that it equals the original.
 Command for each fault: node --test --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs. Baseline without a fault: 54 tests, 54 pass, 0 fail.
 Lines: fault | exit status | failing tests
 Put Tampa after Austin | exit 1 | failing tests: [location-presets-001], [location-presets-007]
@@ -6,6 +6,7 @@ Put Tampa before Taiwan | exit 1 | failing tests: [location-presets-001], [locat
 Rename the key tampa to tpa | exit 1 | failing tests: [location-presets-001], [location-presets-006], [location-presets-007], [location-presets-008]
 Remove the Tampa preset | exit 1 | failing tests: [location-presets-001], [location-presets-006], [location-presets-007], [location-presets-008]
 Put sf between tampa and austin | exit 1 | failing tests: [location-presets-001]
+Put Austin before Taiwan | exit 1 | failing tests: [location-presets-001], [location-presets-003], [location-presets-004], [location-presets-007]
 Remove the Austin preset | exit 1 | failing tests: [location-presets-001], [location-presets-003], [location-presets-007], untagged: city and landmark flights expose completion and cancellation, untagged: globe and city-overview flights name the world frame explici
 Remove the city from the name of the first place | exit 1 | failing tests: [location-presets-006]
 Change the name to Tampa Bay | exit 1 | failing tests: [location-presets-006], [location-presets-007]
@@ -30,4 +31,26 @@ Change the pitch of the first place | exit 1 | failing tests: [location-presets-
 Change the heading of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
 Change the name shown on the pill | exit 1 | failing tests: [location-presets-006], [location-presets-007]
 
-Note on the option --test-force-exit: A first version of the script used it. In 5 of 112 runs of the fault set (4 rounds of 28 faults) the reporter showed a file-level failure of src/locations.test.mjs and lost the name of a failing test. The runs of the same files with no fault gave 0 such failures (100 runs on the code of main, 37 runs on the code with Tampa). This script runs without the option. Two runs of the 28 faults gave the same lines.
+First failing assertion of three faults (from the failure text of the reporter; the paths are the paths of the clone):
+## Remove the Austin preset ([location-presets-003])
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+    assert.ok(ids.indexOf('taiwan') < ids.indexOf('austin'))
+      at TestContext.<anonymous> (file://src/ui/locationControls.test.mjs:175:10)
+    actual: false,
+    expected: true,
+test at src/ui/locationControls.test.mjs:180:1
+
+## Move a place outside the view box ([location-presets-006])
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+    assert.ok(
+      at TestContext.<anonymous> (file://src/locations.test.mjs:785:12)
+    actual: false,
+    expected: true,
+
+## Give a place a non-finite pitch ([location-presets-006])
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+      at TestContext.<anonymous> (file://src/locations.test.mjs:780:14)
+    actual: false,
+    expected: true,
+
+Note on the option --test-force-exit: A first version of the script used it. In 5 of 112 runs of the fault set (4 rounds of 28 faults) the reporter showed a file-level failure of src/locations.test.mjs and lost the name of a failing test. The runs of the same files with no fault gave 0 such failures (100 runs on the code of main, 37 runs on the code with Tampa). This script runs without the option. Two runs of the 29 faults gave the same lines.
