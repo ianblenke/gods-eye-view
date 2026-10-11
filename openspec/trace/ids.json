@@ -974,6 +974,16 @@
     "since": "2026-09-26",
     "change": "backfill-cyclones"
   },
+  "cyclones-026": {
+    "hash": "4227037526be099852310c94844c579abea494162505ae3adc855e60ec54ca34",
+    "since": "2026-10-11",
+    "change": "cyclones-early-advisory"
+  },
+  "cyclones-027": {
+    "hash": "4ad6b8857cb19fd2dbce6a5a5a199dc717973dc8d776e0391fd9a713be26ea26",
+    "since": "2026-10-11",
+    "change": "cyclones-early-advisory"
+  },
   "dev-server-files-001": {
     "hash": "f230e5dd2a1876cc8b8ecf653c743d67e5db1188acf36fe79fec2ef8c9c7fad2",
     "since": "2026-10-11",
