@@ -1,7 +1,7 @@
 ## Context
 
 Base commit: `6e54707e` (main, after the merge of `upstream-sync-5`).
-The function `iso()` in `server/providers/cyclones.js` checks every time of the status file. It rejects a time that is more than 5 minutes ahead of its clock, or more than 12 hours behind it.
+The function `iso()` in `server/providers/cyclones.js` checks each time that `parseCycloneStatus()` gives to it. It rejects a time that is more than 5 minutes ahead of its clock, or more than 12 hours behind it.
 `parseCycloneStatus()` calls `iso()` for the advisory time and for the position time of each storm. One rejected time rejects the whole file.
 
 ## Decisions
@@ -26,5 +26,5 @@ The lower limit of 12 hours stays. The client validator in `src/layers/cyclones/
 The change edits `server/providers/cyclones.js`, `CHANGELOG.md`, `openspec/ownership.json` and `scripts/format-scope.json`. It adds the test file, the spec delta and the evidence.
 
 The trace gate checks that the tests carry the IDs `cyclones-026` and `cyclones-027`. The format check measures the edited files. The prose lint checks STE.
-The named faults measure whether a change of the window makes a test fail.
+The named faults measure whether a change of the window or of the two fields makes a test fail.
 The lead runs the gates in Docker and both review agents on the final tree.

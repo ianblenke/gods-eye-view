@@ -1,5 +1,6 @@
 Hunk of upstream pull request #741 for server/providers/cyclones.js, read on 2026-10-11 with: gh -R bilawalsidhu/gods-eye-view pr diff 741
 The pull request is open and its head is 9c15f093.
+The author is bilawalsidhu, who owns the repository bilawalsidhu/gods-eye-view (read on 2026-10-11 with: gh -R bilawalsidhu/gods-eye-view pr view 741 --json author,state,headRefOid).
 
 diff --git a/server/providers/cyclones.js b/server/providers/cyclones.js
 index fede1aadee..d580357ced 100644

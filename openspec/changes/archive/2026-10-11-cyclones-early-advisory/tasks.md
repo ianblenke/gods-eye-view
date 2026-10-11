@@ -14,7 +14,7 @@
 
 - [x] 3.1 Run the test file `src/data/cyclonesEarlyAdvisory.test.mjs` on the host.
 - [x] 3.2 Run the test file `src/data/cyclonesProxy.test.mjs` on the host.
-- [x] 3.3 Run the named faults of the window.
+- [x] 3.3 Run the named faults of the window and of the two fields.
 - [x] 3.4 Write `evidence/mutations.txt` with the result of each fault.
 - [x] 3.5 Run the four checks of `make precheck` on the host.
 - [x] 3.6 Run the STE lint on the host.

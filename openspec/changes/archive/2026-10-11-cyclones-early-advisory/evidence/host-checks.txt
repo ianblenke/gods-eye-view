@@ -1,4 +1,4 @@
-Host checks of cyclones-early-advisory, 2026-10-11, host Node v26.8.2. The tests ran on the files of the commit 2685df14; the evidence files and the documents changed in later commits only.
+Host checks of cyclones-early-advisory, 2026-10-11, host Node v26.8.2. The checks below ran on the files of the commit 2685df14. Later commits change the evidence files and the documents of this change, and the merge commit a835553e brings the files of the change vite-deny-runtime-state. The last section runs the checks again on a later commit.
 
 ## node --test --test-force-exit src/data/cyclonesEarlyAdvisory.test.mjs
 ℹ tests 2
