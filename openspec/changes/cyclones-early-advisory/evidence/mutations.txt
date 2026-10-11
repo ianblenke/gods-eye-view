@@ -1,0 +1,8 @@
+cyclones-026 | Restore the old limit of 5 minutes | failing: [cyclones-026]
+cyclones-026 | Set the window to 89 minutes | failing: [cyclones-026]
+cyclones-026 | Reject a time exactly at the limit | failing: [cyclones-026]
+cyclones-026 | Keep the old limit for the advisory time | failing: [cyclones-026]
+cyclones-026 | Keep the old limit for the position time | failing: [cyclones-026]
+cyclones-027 | Set the window to 91 minutes | failing: [cyclones-027]
+cyclones-027 | Accept one millisecond more | failing: [cyclones-027]
+cyclones-027 | Remove the upper limit | failing: [cyclones-027]

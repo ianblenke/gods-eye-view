@@ -1,0 +1,34 @@
+import subprocess,re
+R='/home/ianblenke/docker/gev-work/cyclones-early-advisory/'
+F='server/providers/cyclones.js'
+orig=open(R+F).read()
+faults=[
+ ('cyclones-026','Restore the old limit of 5 minutes',[("const EARLY_ADVISORY_MS = 90 * 60_000;","const EARLY_ADVISORY_MS = 5 * 60_000;")]),
+ ('cyclones-026','Set the window to 89 minutes',[("const EARLY_ADVISORY_MS = 90 * 60_000;","const EARLY_ADVISORY_MS = 89 * 60_000;")]),
+ ('cyclones-026','Reject a time exactly at the limit',[("n > now + EARLY_ADVISORY_MS ||","n >= now + EARLY_ADVISORY_MS ||")]),
+ ('cyclones-026','Keep the old limit for the advisory time',[("iso(forecast?.issuance, now)","iso(forecast?.issuance, now - 85 * 60_000)")]),
+ ('cyclones-026','Keep the old limit for the position time',[("iso(raw.lastUpdate, now)","iso(raw.lastUpdate, now - 85 * 60_000)")]),
+ ('cyclones-027','Set the window to 91 minutes',[("const EARLY_ADVISORY_MS = 90 * 60_000;","const EARLY_ADVISORY_MS = 91 * 60_000;")]),
+ ('cyclones-027','Accept one millisecond more',[("n > now + EARLY_ADVISORY_MS ||","n > now + EARLY_ADVISORY_MS + 1 ||")]),
+ ('cyclones-027','Remove the upper limit',[("    n > now + EARLY_ADVISORY_MS ||\n","")]),
+]
+out=[];log=[]
+try:
+  for sid,desc,pairs in faults:
+    text=orig
+    for old,new in pairs:
+        assert text.count(old)==1,(desc,old[:50],text.count(old))
+        text=text.replace(old,new,1)
+    open(R+F,'w').write(text)
+    p=subprocess.run('taskset -c 8-11 node --test --test-force-exit --test-reporter=spec src/data/cyclonesEarlyAdvisory.test.mjs',shell=True,cwd=R,capture_output=True,text=True)
+    fails=[re.sub(r' \(\d+(\.\d+)?ms\)$','',l.strip()[2:].strip()) for l in (p.stdout+p.stderr).splitlines() if l.strip().startswith('✖ [')]
+    uniq=sorted(set(f.split(']')[0]+']' for f in fails))
+    out.append(f'{sid} | {desc} | failing: {", ".join(uniq) if uniq else "NONE"}')
+    log.append(f'{desc} | exit {p.returncode} | failing tests: {", ".join(uniq) if uniq else "NONE"}')
+    print(log[-1])
+    open(R+F,'w').write(orig)
+finally:
+  open(R+F,'w').write(orig)
+assert open(R+F).read()==orig
+open('/home/ianblenke/docker/gev-tools/cyclones-early/faults.txt','w').write('\n'.join(out)+'\n')
+open('/home/ianblenke/docker/gev-tools/cyclones-early/faults-run.txt','w').write('\n'.join(log)+'\n')

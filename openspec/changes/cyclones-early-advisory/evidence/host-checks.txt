@@ -1,0 +1,38 @@
+Host checks of cyclones-early-advisory, 2026-10-11, host Node v26.8.2. Files tested: the commit 26926eb0 and the evidence files.
+
+## node --test --test-force-exit src/data/cyclonesEarlyAdvisory.test.mjs
+ℹ tests 2
+ℹ pass 2
+ℹ fail 0
+ℹ skipped 0
+
+## node --test --test-force-exit src/data/cyclonesProxy.test.mjs
+ℹ tests 11
+ℹ pass 11
+ℹ fail 0
+ℹ skipped 0
+
+## node scripts/check-import-directions.mjs
+{"modules":974,"portableEntries":78}
+exit status 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 14 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit status 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 30 published, 0 new.
+exit status 0
+
+## node scripts/format.mjs --check
+Checked 1340 source files.
+exit status 0
+
+## node scripts/spec/gates.mjs lint --change cyclones-early-advisory
+STE: 0 errors, 709 warnings.
+exit status 0
+
+## openspec validate cyclones-early-advisory
+Change 'cyclones-early-advisory' is valid
+exit status 0
