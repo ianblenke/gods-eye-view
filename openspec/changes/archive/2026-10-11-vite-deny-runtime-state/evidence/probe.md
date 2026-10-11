@@ -22,4 +22,4 @@ The lead asked Vite with `isFileLoadingAllowed`. The names `.env~`, `..env.deadb
 
 ## What this shows and what it does not show
 
-The two new entries hold against every form above. The two inherent limits of Vite and the older names are in the Known limits of the proposal. The agents could not check a case-insensitive file system or Windows. The full reports of the agents are in `probe-agents.txt`.
+The two new entries hold against every request form for the two folders. The two inherent limits of Vite and the older names are in the Known limits of the proposal. The agents could not check a case-insensitive file system or Windows. The full reports of the agents are in `probe-agents.txt`.

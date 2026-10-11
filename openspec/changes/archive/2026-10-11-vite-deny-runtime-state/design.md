@@ -16,6 +16,8 @@ An entry without the suffix, such as `**/.gev-logs`, matches the folder name onl
 The test of `dev-server-files-001` reads the list. It pins the new entries and the five old entries.
 The test of `dev-server-files-002` resolves the browser config with a scratch root and asks Vite itself, with `isFileLoadingAllowed`, whether it loads a file. So the test shows that the glob matches the paths that the server serves, and not only that the list holds a text.
 
+The fault run shows the difference. For the two faults that deny too much, only `dev-server-files-002` fails. For the fault `fs.strict: false`, only `dev-server-files-002` fails, because Vite allows each file before it reads the list.
+
 ### D3: What the change leaves out
 
 The change adds no entry for `dist`. The preview server and the build serve `dist` on purpose.
