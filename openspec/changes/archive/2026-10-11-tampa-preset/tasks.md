@@ -26,7 +26,7 @@
 
 ## 4. Lead work in the image
 
-- [ ] 4.1 Run `make ratchet CHANGE=tampa-preset`.
+- [x] 4.1 Run `make ratchet CHANGE=tampa-preset`.
 - [ ] 4.2 Run the two review agents.
 - [ ] 4.3 Write review.md.
 - [ ] 4.4 Run `make gates CHANGE=tampa-preset` on the final tree.
