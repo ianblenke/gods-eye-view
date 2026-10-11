@@ -88,7 +88,7 @@ export const CITY_POIS = {
     },
     pois: [
       {
-        name: 'Bank of America Plaza',
+        name: 'Bank of America Plaza, Tampa',
         lat: 27.9468,
         lon: -82.4591,
         alt: 650,

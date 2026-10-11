@@ -770,7 +770,7 @@ test('[location-presets-006] gives Tampa five valid places', () => {
   });
   assert.deepEqual(city.pois, [
     {
-      name: 'Bank of America Plaza',
+      name: 'Bank of America Plaza, Tampa',
       lat: 27.9468,
       lon: -82.4591,
       alt: 650,
@@ -816,7 +816,7 @@ test('[location-presets-006] gives Tampa five valid places', () => {
     },
   ]);
   assert.equal(city.pois.length, 5);
-  assert.equal(city.pois[0].name, 'Bank of America Plaza');
+  assert.equal(city.pois[0].name, 'Bank of America Plaza, Tampa');
   for (const poi of city.pois) {
     for (const key of [
       'lat',

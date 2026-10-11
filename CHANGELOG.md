@@ -1,6 +1,6 @@
 # Changelog
 
-- Add Tampa to the location bar, between Taiwan and Austin (2026-10-11). The Tampa pill flies to Bank of America Plaza, and four more places are in the row of places: Raymond James Stadium, Tampa International Airport, Henry B. Plant Museum and Ybor City.
+- Add Tampa to the location bar, between Taiwan and Austin (2026-10-11). The Tampa pill flies to Bank of America Plaza. The row of places has four more places: Raymond James Stadium, Tampa International Airport, Henry B. Plant Museum and Ybor City.
 
 - The development server no longer serves the folders `.gev-logs` and `.gev-cache` (2026-10-10). Before this change, a request for `/.gev-logs/realtime-conversations.jsonl` returned the voice conversation log to any computer that could reach the server.
 
