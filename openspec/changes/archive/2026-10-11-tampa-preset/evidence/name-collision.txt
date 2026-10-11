@@ -50,3 +50,25 @@ const poi = CITY_POIS.tampa.pois[0];
 console.log(composeLocalityTag({ poi: poi.name, city: CITY_POIS.tampa.name, distKm: 0.4 }, poi.lat, poi.lon));
 const stadium = CITY_POIS.tampa.pois[1];
 console.log(composeLocalityTag({ poi: stadium.name, city: CITY_POIS.tampa.name, distKm: 0.4 }, stadium.lat, stadium.lon));
+
+## Preset geocoder queries for Tampa (the claims of the Known limit `search`), run on 2026-10-11 on the code of the commit 21ae2165
+Command: node geotmp.mjs (the script is below). A decline means place: null; the search then goes to the next geocoder.
+"Tampa"                            answers Tampa (27.9468, -82.4591) viewport {"southwest":{"lat":27.8,"lng":-82.65},"northeast":{"lat":28.1,"lng":-82.3}}
+"tampa"                            answers Tampa (27.9468, -82.4591) viewport {"southwest":{"lat":27.8,"lng":-82.65},"northeast":{"lat":28.1,"lng":-82.3}}
+"TAMPA"                            answers Tampa (27.9468, -82.4591) viewport {"southwest":{"lat":27.8,"lng":-82.65},"northeast":{"lat":28.1,"lng":-82.3}}
+"Tampa International Airport"      answers Tampa International Airport (27.9792, -82.5349) viewport {"southwest":{"lat":27.9742,"lng":-82.53989999999999},"northeast":{"lat":27.984199999999998,"lng":-82.5299}}
+"Henry B. Plant Museum"            answers Henry B. Plant Museum (27.9462, -82.4642) viewport {"southwest":{"lat":27.941200000000002,"lng":-82.4692},"northeast":{"lat":27.9512,"lng":-82.45920000000001}}
+"Raymond James Stadium"            answers Raymond James Stadium (27.976, -82.5034) viewport {"southwest":{"lat":27.971,"lng":-82.5084},"northeast":{"lat":27.980999999999998,"lng":-82.4984}}
+"Ybor City"                        answers Ybor City (27.96, -82.4412) viewport {"southwest":{"lat":27.955000000000002,"lng":-82.44619999999998},"northeast":{"lat":27.965,"lng":-82.43619999999999}}
+"Bank of America Plaza, Tampa"     answers Bank of America Plaza, Tampa (27.9468, -82.4591) viewport {"southwest":{"lat":27.9418,"lng":-82.46410000000003},"northeast":{"lat":27.9518,"lng":-82.45410000000004}}
+"Tampa, FL"                        declines
+"tampa bay"                        declines
+"Tampa Florida"                    declines
+--- script ---
+import { createPresetGeocoder } from './src/search/presetGeocoder.js';
+import { CITY_POIS } from './src/locations.js';
+const g = createPresetGeocoder({ presets: CITY_POIS });
+for (const q of ['Tampa', 'tampa', 'TAMPA', 'Tampa International Airport', 'Henry B. Plant Museum', 'Raymond James Stadium', 'Ybor City', 'Bank of America Plaza, Tampa', 'Tampa, FL', 'tampa bay', 'Tampa Florida']) {
+  const r = await g.geocode(q);
+  console.log(JSON.stringify(q).padEnd(34), r.place ? `answers ${r.place.name} (${r.place.lat}, ${r.place.lng})${r.place.viewport ? ' viewport ' + JSON.stringify(r.place.viewport) : ''}` : 'declines');
+}
