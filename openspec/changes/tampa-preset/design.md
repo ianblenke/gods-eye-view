@@ -3,17 +3,21 @@
 Base commit: `09255a9f` (main, after the merge of `cyclones-early-advisory`).
 The table `CITY_POIS` in `src/locations.js` holds the presets. `LOCATIONS` and the pills of the location bar follow the order of its keys.
 
-The test file `src/cityPresets.test.mjs` already checks every preset as data. It checks the keys, the finite numbers, the camera angles and the view box. It also checks that each place is inside the view box. It checks Tampa with no change.
+The test file `src/cityPresets.test.mjs` already checks every preset as data. It checks the keys, the finite numbers, the camera angles and the view bounds. It also checks that each place is inside the view bounds. It checks Tampa with no change.
 
 ## Decisions
 
 ### D1: The data of the Tampa preset
 
-The first place is Bank of America Plaza, a tower in downtown Tampa. The OpenStreetMap height tag of the tower is 178.87 m. The other four places are Raymond James Stadium, Tampa International Airport, Henry B. Plant Museum and Ybor City.
+The first place is Bank of America Plaza, Tampa, a tower in downtown Tampa. The OpenStreetMap height tag of the tower is 178.87 m. The other four places are Raymond James Stadium, Tampa International Airport, Henry B. Plant Museum and Ybor City.
 The lead took the latitude and the longitude of each place from a search in OpenStreetMap on 2026-10-11 and rounded them to four decimals. The file `evidence/places.txt` holds the results.
 
-The view box runs from 27.8 N, 82.65 W to 28.1 N, 82.3 W. It holds the five places and the downtown of Tampa. The ground elevation of 10 m follows the other presets, which use approximate values in meters.
-The camera numbers follow the Austin and San Francisco presets. The range of 650 m lies between two values. Frost Bank Tower in the Austin preset has 550 m, and Salesforce Tower in the San Francisco preset has 680 m.
+The view bounds run from 27.8 N, 82.65 W to 28.1 N, 82.3 W. They hold the five places and the downtown of Tampa. The ground elevation of 10 m follows the other presets, which use approximate values in meters.
+
+The name of the first place holds the city, because two functions match place names. The voice function `findPoiByName()` matches a query that holds all words of a name, and the preset geocoder matches an exact name. The plain name `Bank of America Plaza` would take a request for the same name in another city. The file `evidence/name-collision.txt` shows this.
+
+The Austin preset has ranges of 500 to 550 m and pitches of -28 to -18 degrees. The San Francisco preset has ranges of 420 to 1400 m and pitches of -30 to -20 degrees.
+The first place (650 m, -22 degrees) and the museum (450 m, -28 degrees) lie inside the values of the San Francisco preset. The stadium, the airport and Ybor City have a steeper pitch than both presets, and the airport and Ybor City also have a larger range.
 
 ### D2: The order
 
@@ -22,7 +26,7 @@ The pill order is the key order of the table, so the entry goes between `taiwan`
 ### D3: The shape of the spec change
 
 Only the requirement "Preset order" becomes false, so it is the only changed requirement. It has one scenario, `location-presets-001`.
-The three new requirements are added and do not change an existing requirement. The scenario `location-presets-003` keeps its text. Its test no longer reads the second pill as Austin and compares the positions of the Taiwan pill and the Austin pill.
+The three new requirements are added, and they do not change a requirement that exists. The scenario `location-presets-003` keeps its text. Its test no longer reads the second pill as Austin and compares the positions of the Taiwan pill and the Austin pill.
 
 ### D4: The tests
 

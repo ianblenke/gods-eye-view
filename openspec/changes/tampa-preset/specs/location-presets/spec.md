@@ -22,7 +22,7 @@ Origin: spec-first
 - **AND** its southwest point is 27.8 degrees north and 82.65 degrees west
 - **AND** its northeast point is 28.1 degrees north and 82.3 degrees west
 - **AND** it has five POIs with finite camera numbers inside these bounds
-- **AND** its first POI is Bank of America Plaza
+- **AND** its first POI is Bank of America Plaza, Tampa
 
 ### Requirement: Tampa pill position
 The location controls MUST put the Tampa pill between the Taiwan pill and the Austin pill.

@@ -15,13 +15,15 @@
 ## 3. Check on the host
 
 - [x] 3.1 Run the three test files `src/locations.test.mjs`, `src/ui/locationControls.test.mjs` and `src/cityPresets.test.mjs`.
-- [x] 3.2 Run the 33 test files that import the table.
+- [x] 3.2 Run the 33 test files that import the table or its consumers.
 - [x] 3.3 Run the named faults of the order and of the data.
 - [x] 3.4 Write `evidence/mutations.txt` with the result of each fault.
 - [x] 3.5 Run the four checks of `make precheck` on the host.
 - [x] 3.6 Run the STE lint on the host.
 - [x] 3.7 Run `openspec validate tampa-preset` on the host.
 - [x] 3.8 Write `evidence/places.txt` with the OpenStreetMap searches for the five places.
+- [ ] 3.9 Write `evidence/name-collision.txt` with the result of both name matchers.
+- [ ] 3.10 Write `evidence/red-green.txt` with a test run on the base code and on the new code.
 
 ## 4. Lead work in the image
 
