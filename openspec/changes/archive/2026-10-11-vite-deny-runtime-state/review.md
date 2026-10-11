@@ -6,7 +6,7 @@ Date: 2026-10-11
 Gates: make gates CHANGE=vite-deny-runtime-state passed
 Rounds: 3
 Scope: diff 3abf4d84dc0020a3f53694361fb4a6fecd673a78
-Reviewed-Tree: TREE_PLACEHOLDER
+Reviewed-Tree: 897188b62dbf34199de9526f2a392043d37779b0d38738e80cc89319a27bb21b
 
 ## Findings
 
