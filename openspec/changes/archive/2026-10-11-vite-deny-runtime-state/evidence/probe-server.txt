@@ -1,0 +1,41 @@
+// Scratch probe server: a real Vite dev server with the browser config of the clone, on a scratch root with canary files.
+// usage: node serve.mjs <patched|base> <port>
+import { createServer } from '/home/ianblenke/docker/gev-work/node_modules/vite/dist/node/index.js';
+import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+const [variant, portArg] = process.argv.slice(2);
+const { createBrowserViteConfig } = await import('/home/ianblenke/docker/gev-work/vite-deny-runtime-state/build/vite.js');
+const root = mkdtempSync(path.join(tmpdir(), `gev-probe-${variant}-`));
+const files = {
+  '.gev-logs/realtime-conversations.jsonl': 'CANARY-LOG',
+  '.gev-logs/osh-commands.jsonl': 'CANARY-OSH',
+  '.gev-cache/adsbdb.json': 'CANARY-CACHE',
+  '.gev-cache/mcp-panel-key': 'CANARY-PANELKEY',
+  'nested/.gev-logs/x.jsonl': 'CANARY-NESTED',
+  '.env': 'CANARY-ENV=1',
+  '.env.local': 'CANARY-ENVLOCAL=1',
+  'pinokio/ENVIRONMENT': 'CANARY-PINOKIO=1',
+  'run.log': 'CANARY-RUNLOG',
+  'package.json': '{"name":"probe","canary":"CANARY-PACKAGE"}',
+  'src/main.js': 'export const x = "CANARY-MAIN";\n',
+  'index.html': '<!doctype html><html><body>CANARY-INDEX<script type="module" src="/src/main.js"></script></body></html>',
+};
+for (const [file, body] of Object.entries(files)) {
+  const full = path.join(root, file);
+  mkdirSync(path.dirname(full), { recursive: true });
+  writeFileSync(full, body);
+}
+const config = createBrowserViteConfig({ plugins: [] });
+if (variant === 'base') config.server.fs.deny = config.server.fs.deny.filter((entry) => !entry.includes('gev-'));
+const server = await createServer({
+  ...config,
+  configFile: false,
+  root,
+  logLevel: 'silent',
+  server: { ...config.server, host: '127.0.0.1', port: Number(portArg), strictPort: true },
+});
+await server.listen();
+console.log(`READY ${variant} http://127.0.0.1:${portArg} root=${root}`);
+console.log('DENY ' + JSON.stringify(config.server.fs.deny));
+setInterval(() => {}, 1 << 30);

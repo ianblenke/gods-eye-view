@@ -73,6 +73,7 @@
     "src/search/reverseGeocodeRoute.test.mjs",
     "src/tooling/appContainer.test.mjs",
     "src/tooling/bundleCredentials.test.mjs",
+    "src/tooling/devServerFiles.test.mjs",
     "src/tooling/spec/ci.test.mjs",
     "src/tooling/spec/ciFiles.test.mjs",
     "src/tooling/spec/coverage.test.mjs",

@@ -1,0 +1,33 @@
+import http from 'node:http';
+const forms = [
+  '/.gev-logs/realtime-conversations.jsonl',
+  '/%2egev-logs/realtime-conversations.jsonl', '/%2Egev-logs/realtime-conversations.jsonl',
+  '/.gev-logs%2Frealtime-conversations.jsonl', '/.gev-logs%2frealtime-conversations.jsonl',
+  '/.gev-logs%252Frealtime-conversations.jsonl', '/%252egev-logs/realtime-conversations.jsonl',
+  '//.gev-logs/realtime-conversations.jsonl', '/.gev-logs//realtime-conversations.jsonl',
+  '/./.gev-logs/realtime-conversations.jsonl', '/.gev-logs/./realtime-conversations.jsonl',
+  '/x/../.gev-logs/realtime-conversations.jsonl', '/x/%2e%2e/.gev-logs/realtime-conversations.jsonl',
+  '/.gev-logs/realtime-conversations.jsonl%00', '/.gev-logs/realtime-conversations.jsonl%20',
+  '/.gev-logs./realtime-conversations.jsonl', '/.gev-logs%20/realtime-conversations.jsonl',
+  '/.gev-logs/realtime-conversations.jsonl;x=1', '/.gev-logs;x=1/realtime-conversations.jsonl',
+  '/.gev-logs/realtime-conversations.jsonl?', '/.gev-logs/realtime-conversations.jsonl#x', '/.gev-logs/realtime-conversations.jsonl?a=b&c',
+  '/.gev-logs\\realtime-conversations.jsonl', '/%5c.gev-logs/realtime-conversations.jsonl', '/.gev-logs%5Crealtime-conversations.jsonl',
+  '/.gev-logs/realtime-conversations.jsonl/', '/.gev-logs/realtime-conversations.jsonl/.', '/.gev-logs/realtime-conversations.jsonl/..;/',
+  '/%c0%ae%c0%aegev-logs/x', '/.gev-logs/realtime-conversations%2ejsonl', '/.gev-l%6fgs/realtime-conversations.jsonl',
+  '/.gev-cache/adsbdb.json', '/.gev-cache/mcp-panel-key', '/%2egev-cache/mcp-panel-key', '/.gev-cache%2Fmcp-panel-key',
+  '/nested/.gev-logs/x.jsonl', '/nested/%2egev-logs/x.jsonl', '/nested/../nested/.gev-logs/x.jsonl',
+  'http://127.0.0.1/.gev-logs/realtime-conversations.jsonl',
+];
+const get = (port, path, extra = {}) => new Promise((resolve) => {
+  const req = http.request({ host: '127.0.0.1', port, path, method: 'GET', headers: { Host: `127.0.0.1:${port}`, ...extra }, timeout: 5000 }, (res) => {
+    let body = ''; res.on('data', (d) => { if (body.length < 4000) body += d; }); res.on('end', () => resolve({ status: res.statusCode, leak: (body.match(/CANARY-(LOG|OSH|CACHE|PANELKEY|NESTED)/) || [null])[0] }));
+  });
+  req.on('error', (e) => resolve({ status: 'ERR ' + e.code, leak: null })); req.on('timeout', () => { req.destroy(); resolve({ status: 'TIMEOUT', leak: null }); }); req.end();
+});
+let patchedLeaks = 0, baseLeaks = 0;
+for (const f of forms) {
+  const p = await get(5391, f); const b = await get(5392, f);
+  if (p.leak) patchedLeaks++; if (b.leak) baseLeaks++;
+  console.log(`${String(p.status).padEnd(5)} ${String(p.leak).padEnd(15)} | base ${String(b.status).padEnd(5)} ${String(b.leak).padEnd(15)} | ${f}`);
+}
+console.log(`FORMS ${forms.length}; patched leaks ${patchedLeaks}; base leaks ${baseLeaks}`);
