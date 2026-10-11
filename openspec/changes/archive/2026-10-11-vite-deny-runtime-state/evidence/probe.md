@@ -6,7 +6,7 @@ The harness never touched the real app on port 4173.
 ## Encoding and normalization forms (run by the lead)
 
 The file `probe-encodings.txt` sends 39 request paths with a raw HTTP client that does not normalize the path. The paths use percent codes, double percent codes, repeated slashes, dot segments, null bytes, spaces, semicolons, query strings, backslashes and an absolute-form request line.
-The result: the new config leaked 0 times, and the base config leaked the canary 19 times. The other 20 paths give the index page on both servers, because they do not name a real file.
+The result: the new config leaked 0 times, and the base config leaked the canary 19 times. Of the other 20 paths, 18 give HTTP 200 and no canary on both servers, because they do not name a real file. The other two give an error on both servers: HTTP 400 and HTTP 500.
 
 ## Four attack families (run by agents)
 
@@ -22,4 +22,4 @@ The lead asked Vite with `isFileLoadingAllowed`. The names `.env~`, `..env.deadb
 
 ## What this shows and what it does not show
 
-The two new entries hold against every request form for the two folders. The two inherent limits of Vite and the older names are in the Known limits of the proposal. The agents could not check a case-insensitive file system or Windows. The full reports of the agents are in `probe-agents.txt`.
+The two new entries hold against every request form that the probe sent for the two folders. The two inherent limits of Vite and the older names are in the Known limits of the proposal. The agents could not check a case-insensitive file system or Windows. The full reports of the agents are in `probe-agents.txt`.

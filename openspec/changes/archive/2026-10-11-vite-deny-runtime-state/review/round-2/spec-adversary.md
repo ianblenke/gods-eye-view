@@ -1,0 +1,17 @@
+Verdict: FAIL
+Commit read: 3abf4d84dc0020a3f53694361fb4a6fecd673a78 (clone vite-deny-runtime-state, scope diff 42151bc8). I ran no code and sent no request. Paths are under openspec/changes/archive/2026-10-11-vite-deny-runtime-state/.
+
+- [ ] FINDING major proposal.md:40 (Known limit `nested-paths`) "The fault `**/.gev-logs/*` (one star) passes both tests" is false. mutations-run.txt:12 and :19 and mutations.txt:9 show it fails `dev-server-files-001`, because 001 pins the text of the entry. The error began in my round 1 report, which said the fault passes both tests; I did not see that 001 pins the text. Write: "The fault `**/.gev-logs/*` (one star) fails only `dev-server-files-001`, because that test pins the text of the entry. Test 002 alone passes with it, and `evidence/nested-paths.txt` shows that Vite then loads a file in a subfolder of the log folder." (17 and 22 words; the bullet keeps 5 sentences)
+- [ ] FINDING major evidence/probe.md:9 "The other 20 paths give the index page on both servers" is contradicted by the new evidence/probe-encodings-output.txt: 18 paths answer HTTP 200 (the body is not recorded), the path with `#x` answers 400 (line 22) and the path with `%c0%ae` answers 500 (line 30), on both servers. Write: "The other 20 paths leaked nothing on both servers, because they do not name a real file. 18 answered HTTP 200, one answered 400 and one answered 500."
+
+- [ ] FINDING minor evidence/mutations.txt:9 (and mutations-script.txt:14) the fault "Use one star instead of two" is listed under dev-server-files-002, but only 001 fails. Move it to 001, as the notes in mutations-run.txt:19 say.
+- [ ] FINDING minor evidence/probe.md:25 "hold against every request form for the two folders" is wider than the evidence and than the limits (probe-agents.txt: a file placed under public/.gev-logs is served). Write "every request form that the probe sent for the two folders".
+- [ ] FINDING minor evidence/head-requests.txt:1 and probe-encodings-output.txt:1 carry the same second (01:33:26Z) for a 78-request run and for the HEAD requests. Say that the stamp is the time of writing the file, or give each its own time.
+
+Item check:
+- Items 1 to 9 are in the files. Task 3.2 and 3.3 are split and 3.4 to 3.7 are renumbered. SECURITY.md:80 is two sentences (14 and 17 words). The 14 faults are the same in mutations.txt, mutations-run.txt and the script (the added script text matches the names; strict goes into `fs`; 14 result lines). The edit of `older-names` and the `lexical-match` sentence are true (panelKey.js:103 is the only link; the bullet has 6 sentences). The history totals paragraph is true (gaps 37 and 13).
+- The output file has 39 forms, patched leaks 0 and base leaks 19 (I counted 19 lines with CANARY in the base column). head-requests.txt agrees with proposal.md:5 (1724319 and 608). nested-paths.txt agrees with picomatch (`*` does not cross `/`).
+- No new banned word, and the new sentences are within the limits (the longest has 24 words).
+- Accepted by name (item 10): none is major. "name the folders" is resolved by "so that Vite refuses to serve their files" and by design D1. "available" is resolved by scenario 002 (Vite allows two named files). "files" in the title of 001 is not a banned word. The CHANGELOG date 2026-10-10 matches the local date of the fix commit (1791678757 is 2026-10-10 20:32 -0400).
+
+Could not check: running code; the 18 bodies of HTTP 200; whether 01:33:26Z is the real run time.

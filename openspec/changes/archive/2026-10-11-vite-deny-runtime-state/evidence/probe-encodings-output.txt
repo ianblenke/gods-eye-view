@@ -1,4 +1,4 @@
-Output of probe-encodings.txt against the scratch servers, run on 2026-10-11T01:33:26Z. Lines: patched status, patched leak, base status, base leak, request path. No file content is recorded, only the canary name.
+Output of probe-encodings.txt against the scratch servers, run just before 2026-10-11T01:33:26Z, the time of writing this file. Lines: patched status, patched leak, base status, base leak, request path. No file content is recorded, only the canary name.
 403   null            | base 200   CANARY-LOG      | /.gev-logs/realtime-conversations.jsonl
 403   null            | base 200   CANARY-LOG      | /%2egev-logs/realtime-conversations.jsonl
 403   null            | base 200   CANARY-LOG      | /%2Egev-logs/realtime-conversations.jsonl
