@@ -1,0 +1,10 @@
+OpenStreetMap searches for the places of the Tampa preset, made on 2026-10-11T14:14Z with curl against nominatim.openstreetmap.org (format=jsonv2, limit=1, extratags=1). One request each, 1.2 seconds apart. The command for each line is: curl -s -A "<user agent>" -G --data-urlencode "q=<query>" -d "format=jsonv2&limit=1&extratags=1" https://nominatim.openstreetmap.org/search
+Columns: query | place in the preset | OSM type and id | latitude | longitude | OSM class | height tag
+Bank of America Plaza, Tampa | Bank of America Plaza | way 906720268 | 27.9468284 | -82.4590793 | building/office | 178.87
+Raymond James Stadium, Tampa | Raymond James Stadium | way 154387076 | 27.9759793 | -82.5033545 | leisure/stadium | none
+Tampa International Airport | Tampa International Airport | way 69575571 | 27.9791649 | -82.5349276 | aeroway/aerodrome | none
+Henry B. Plant Museum, Tampa | Henry B. Plant Museum | node 282685801 | 27.9462133 | -82.4641818 | tourism/museum | none
+Ybor City, Tampa, Florida | Ybor City | node 154312872 | 27.9600475 | -82.4411596 | place/suburb | none
+Sunshine Skyway Bridge | (not a place of the preset; outside the view box) | way 1087109061 | 27.6175650 | -82.6535188 | man_made/bridge | none
+
+Rounded to four decimals in src/locations.js: Bank of America Plaza 27.9468, -82.4591; Raymond James Stadium 27.976, -82.5034; Tampa International Airport 27.9792, -82.5349; Henry B. Plant Museum 27.9462, -82.4642; Ybor City 27.96, -82.4412.

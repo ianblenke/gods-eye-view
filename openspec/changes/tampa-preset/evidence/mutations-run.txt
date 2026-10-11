@@ -1,0 +1,30 @@
+Run of the 25 named faults, 2026-10-11, host Node v26.8.2. Each fault changes the Tampa block of src/locations.js, or moves it; the script restores the file and checks that it equals the original.
+Command for each fault: node --test --test-force-exit --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs. Baseline without a fault: 54 tests, 54 pass, 0 fail (25 runs in a row, all pass).
+Lines: fault | exit status | failing tests
+Put Tampa after Austin | exit 1 | failing tests: [location-presets-001], [location-presets-007]
+Put Tampa before Taiwan | exit 1 | failing tests: [location-presets-001], [location-presets-003], [location-presets-004], [location-presets-007]
+Rename the key tampa to tpa | exit 1 | failing tests: [location-presets-001], [location-presets-006], [location-presets-007], [location-presets-008]
+Remove the Tampa preset | exit 1 | failing tests: [location-presets-001], [location-presets-006], [location-presets-007], [location-presets-008]
+Change the name to Tampa Bay | exit 1 | failing tests: [location-presets-006], [location-presets-007]
+Change the ground elevation to 11 | exit 1 | failing tests: [location-presets-006]
+Change the southwest latitude to 27.7 | exit 1 | failing tests: [location-presets-006]
+Change the southwest longitude to -82.7 | exit 1 | failing tests: [location-presets-006]
+Change the northeast latitude to 28.2 | exit 1 | failing tests: [location-presets-006]
+Change the northeast longitude to -82.2 | exit 1 | failing tests: [location-presets-006]
+Remove the last place | exit 1 | failing tests: [location-presets-006]
+Move a place outside the view box | exit 1 | failing tests: [location-presets-006], untagged: every POI lies inside the frame its own destination opens on
+Change the second place name | exit 1 | failing tests: [location-presets-006]
+Change the latitude of the second place | exit 1 | failing tests: [location-presets-006]
+Change the heading of the third place | exit 1 | failing tests: [location-presets-006]
+Change the range of the fourth place | exit 1 | failing tests: [location-presets-006]
+Change the building height of the fifth place | exit 1 | failing tests: [location-presets-006]
+Give a place a non-finite pitch | exit 1 | failing tests: [location-presets-006], untagged: every camera angle is one a camera can hold
+Swap the first and second places | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the latitude of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the longitude of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the range of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the pitch of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the heading of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the name shown on the pill | exit 1 | failing tests: [location-presets-006], [location-presets-007]
+
+Note: The first run of the script gave "failing tests: [location-presets-008], untagged: src/locations.test.mjs" for the fault "Swap the first and second places". This was a single event. The second run gave [location-presets-006] and [location-presets-008]. Ten more runs of this fault gave the same two tests each time.

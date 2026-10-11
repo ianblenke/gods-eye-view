@@ -28,7 +28,7 @@ Rule 23: the change adds no code file. It edits `src/locations.js`, which is ups
 The 55 added lines of `src/locations.js` are data in the table, and they run when the module loads. The change opens no coverage gap.
 
 Other code reads the table and now sees Tampa. The preset geocoder answers an exact search for `Tampa` and for each of the five place names. The HUD and the voice tool for nearby places list the five places. The voice tool accepts `tampa` as a location id.
-The lead ran the 33 test files that import these modules: 760 tests pass.
+The lead ran the 33 test files that import these modules: 789 tests pass.
 
 ## Known limits and later changes
 

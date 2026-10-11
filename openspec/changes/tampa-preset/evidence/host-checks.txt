@@ -1,0 +1,39 @@
+Host checks of tampa-preset, 2026-10-11, host Node v26.8.2. The checks ran on the files of the commit 5d19481b67bbf0bf5709e47749b89128b29159e6; later commits change the evidence files only.
+
+## node scripts/check-import-directions.mjs
+{"modules":974,"portableEntries":78}
+exit: 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 14 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit: 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 30 published, 0 new.
+exit: 0
+
+## node scripts/format.mjs --check
+Checked 1341 source files.
+exit: 0
+
+## node --test --test-force-exit --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs
+ℹ tests 54
+ℹ pass 54
+ℹ fail 0
+ℹ skipped 0
+
+## The 33 test files that import the table or its consumers (grep for locations.js, CITY_POIS, gevActions, hud.js, offlineGeocoders, placeSearch, locationNavigation, locationSearch, cctv/catalog, cctv/policy)
+Command: node --test --test-reporter=spec <the 33 files>
+exit: 0
+ℹ tests 789
+ℹ pass 789
+ℹ fail 0
+ℹ skipped 0
+Note: With the option --test-force-exit the count of tests changed from run to run (734, 781, 789 and 768 in four runs), because the option can drop reporter output. The exit status was 0 and the count of failed tests was 0 in each run.
+
+## node scripts/spec/gates.mjs lint --change tampa-preset
+STE: 0 errors, 719 warnings.
+
+## openspec validate tampa-preset
+Change 'tampa-preset' is valid
