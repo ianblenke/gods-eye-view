@@ -1,0 +1,16 @@
+Red then green for the tests of tampa-preset, 2026-10-11, host Node v26.8.2.
+Command: node --test --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs
+
+## RED: the tests of the commit 619ceb87 with src/locations.js of main (09255a9f), which has no Tampa preset
+ℹ fail 4
+ℹ pass 50
+ℹ tests 54
+✖ [location-presets-001] puts Tampa between Taiwan and Austin
+✖ [location-presets-006] gives Tampa five valid places
+✖ [location-presets-007] shows the Tampa pill between the Taiwan and Austin pills
+✖ [location-presets-008] a click on the Tampa pill flies to the downtown view
+
+## GREEN: the same tests with src/locations.js of the commit 619ceb87
+ℹ tests 54
+ℹ pass 54
+ℹ fail 0

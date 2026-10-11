@@ -1,4 +1,4 @@
-Host checks of tampa-preset, 2026-10-11, host Node v26.8.2. The checks ran on the files of the commit 5d19481b67bbf0bf5709e47749b89128b29159e6; later commits change the evidence files only.
+Host checks of tampa-preset, 2026-10-11, host Node v26.8.2. The checks ran on the files of the commit 619ceb87c3b2dbc4b59eba883c2a64f65388c77e; later commits change the evidence files and the documents only.
 
 ## node scripts/check-import-directions.mjs
 {"modules":974,"portableEntries":78}
@@ -17,23 +17,58 @@ exit: 0
 Checked 1341 source files.
 exit: 0
 
-## node --test --test-force-exit --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs
+## node --test --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs
+exit: 0
 ℹ tests 54
 ℹ pass 54
 ℹ fail 0
 ℹ skipped 0
 
-## The 33 test files that import the table or its consumers (grep for locations.js, CITY_POIS, gevActions, hud.js, offlineGeocoders, placeSearch, locationNavigation, locationSearch, cctv/catalog, cctv/policy)
-Command: node --test --test-reporter=spec <the 33 files>
+## The 33 test files that import the table or its consumers
+Command that makes the list: grep -rlE "locations\.js|CITY_POIS|gevActions|hud\.js|offlineGeocoders|placeSearch|locationNavigation|locationSearch|cctv/catalog|cctv/policy" src server --include=*.test.mjs | sort -u
+Command for the run: node --test --test-reporter=spec <the files>
 exit: 0
 ℹ tests 789
 ℹ pass 789
 ℹ fail 0
 ℹ skipped 0
-Note: With the option --test-force-exit the count of tests changed from run to run (734, 781, 789 and 768 in four runs), because the option can drop reporter output. The exit status was 0 and the count of failed tests was 0 in each run.
+Files:
+src/annotations/adminOutline.test.mjs
+src/annotations/annotationEngine.test.mjs
+src/annotations/annotationResolver.test.mjs
+src/cameraHandoff.test.mjs
+src/cityPresets.test.mjs
+src/cockpitMarkup.test.mjs
+src/costEndpointThrottle.test.mjs
+src/data/cctvCalgary.test.mjs
+src/data/cctvCatalogCap.test.mjs
+src/data/cctvDriveBcSource.test.mjs
+src/data/cctvVegvesen.test.mjs
+src/data/tr3bRegistry.test.mjs
+src/hudAltitudeDatum.test.mjs
+src/hudLocality.test.mjs
+src/hudMarkings.test.mjs
+src/keylessGeocoder.test.mjs
+src/locationReadouts.test.mjs
+src/locations.test.mjs
+src/mapSourceFocus.test.mjs
+src/panelEscape.test.mjs
+src/search/nominatim.test.mjs
+src/search/offlineGeocoders.test.mjs
+src/search/placeSearch.test.mjs
+src/sharelink.celestial.test.mjs
+src/tooling/spec/ledger.test.mjs
+src/tools/queries/places.test.mjs
+src/ui/cyberSonarControls.test.mjs
+src/ui/cyberTheme.test.mjs
+src/ui/locationControls.test.mjs
+src/ui/locationSearch.test.mjs
+src/ui/shellLifetime.test.mjs
+src/voice/gevActions.test.mjs
+src/voice/gevRealtime.test.mjs
 
 ## node scripts/spec/gates.mjs lint --change tampa-preset
-STE: 0 errors, 719 warnings.
+STE: 0 errors, 718 warnings.
 
 ## openspec validate tampa-preset
 Change 'tampa-preset' is valid

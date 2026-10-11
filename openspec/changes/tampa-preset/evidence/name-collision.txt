@@ -1,0 +1,40 @@
+Name matching of the first Tampa place, 2026-10-11, host Node v26.8.2. Two matchers read the names of the places: the voice function findPoiByName() in src/locations.js (a query that holds all words of a name matches) and the preset geocoder in src/search/presetGeocoder.js (an exact name matches).
+Command: node nametmp.mjs (the script is below). BEFORE uses a copy of src/locations.js from the commit 96624f9d, with the plain name; AFTER uses the file of the commit 619ceb87.
+Columns: query | voice function | preset geocoder
+
+## BEFORE (first place named "Bank of America Plaza", commit 96624f9d)
+"Bank of America Plaza"                    voice tampa#0 Bank of America Plaza | geocoder Bank of America Plaza
+"Bank of America Plaza in Atlanta"         voice tampa#0 Bank of America Plaza | geocoder declines
+"fly to Bank of America Plaza, Tampa"      voice tampa#0 Bank of America Plaza | geocoder declines
+"Bank of America Plaza Tampa"              voice tampa#0 Bank of America Plaza | geocoder declines
+"Bank of America Plaza, Tampa"             voice tampa#0 Bank of America Plaza | geocoder declines
+"Raymond James Stadium"                    voice tampa#1 Raymond James Stadium | geocoder Raymond James Stadium
+"Ybor City"                                voice tampa#4 Ybor City | geocoder Ybor City
+"Ybor City Brewing Company"                voice tampa#4 Ybor City | geocoder declines
+
+## AFTER (first place named "Bank of America Plaza, Tampa")
+"Bank of America Plaza"                    voice no match | geocoder declines
+"Bank of America Plaza in Atlanta"         voice no match | geocoder declines
+"fly to Bank of America Plaza, Tampa"      voice tampa#0 Bank of America Plaza, Tampa | geocoder declines
+"Bank of America Plaza Tampa"              voice tampa#0 Bank of America Plaza, Tampa | geocoder Bank of America Plaza, Tampa
+"Bank of America Plaza, Tampa"             voice tampa#0 Bank of America Plaza, Tampa | geocoder Bank of America Plaza, Tampa
+"Raymond James Stadium"                    voice tampa#1 Raymond James Stadium | geocoder Raymond James Stadium
+"Ybor City"                                voice tampa#4 Ybor City | geocoder Ybor City
+"Ybor City Brewing Company"                voice tampa#4 Ybor City | geocoder declines
+
+--- script ---
+import { findPoiByName as findBefore, CITY_POIS as POIS_BEFORE } from './src/locationsBeforeTmp.js';
+import { findPoiByName as findAfter, CITY_POIS as POIS_AFTER } from './src/locations.js';
+import { createPresetGeocoder } from './src/search/presetGeocoder.js';
+const gBefore = createPresetGeocoder({ presets: POIS_BEFORE });
+const gAfter = createPresetGeocoder({ presets: POIS_AFTER });
+const queries = ['Bank of America Plaza', 'Bank of America Plaza in Atlanta', 'fly to Bank of America Plaza, Tampa', 'Bank of America Plaza Tampa', 'Bank of America Plaza, Tampa', 'Raymond James Stadium', 'Ybor City', 'Ybor City Brewing Company'];
+const show = (find, pois, r, q) => {
+  const m = find(q);
+  return `voice ${m ? `${m.cityId}#${m.index} ${pois[m.cityId].pois[m.index].name}` : 'no match'} | geocoder ${r.place ? r.place.name : 'declines'}`;
+};
+for (const [label, find, pois, g] of [['BEFORE (first place named "Bank of America Plaza", commit 96624f9d)', findBefore, POIS_BEFORE, gBefore], ['AFTER (first place named "Bank of America Plaza, Tampa")', findAfter, POIS_AFTER, gAfter]]) {
+  console.log(`## ${label}`);
+  for (const q of queries) console.log(`${JSON.stringify(q).padEnd(42)} ${show(find, pois, await g.geocode(q), q)}`);
+  console.log('');
+}

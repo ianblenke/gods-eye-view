@@ -23,12 +23,26 @@ def move_block(where):
         i = without.index('  taiwan: {\n')
     return without[:i] + block + without[i:]
 
+def move_sf():
+    sfa = orig.index('  sf: {\n'); sfb = orig.index('  nyc: {\n')
+    sf = orig[sfa:sfb]
+    without = orig[:sfa] + orig[sfb:]
+    i = without.index('  austin: {\n')
+    return without[:i] + sf + without[i:]
+
+def remove_austin():
+    aa = orig.index('  austin: {\n'); ab = orig.index('  sf: {\n')
+    return orig[:aa] + orig[ab:]
+
 faults = [
  # (scenario targeted, description, function returning the faulty text)
  ('location-presets-001', 'Put Tampa after Austin', lambda: move_block('after-austin')),
  ('location-presets-001', 'Put Tampa before Taiwan', lambda: move_block('first')),
  ('location-presets-001', 'Rename the key tampa to tpa', lambda: in_block('  tampa: {\n', '  tpa: {\n')),
  ('location-presets-001', 'Remove the Tampa preset', lambda: orig[:a] + orig[b:]),
+ ('location-presets-001', 'Put sf between tampa and austin', lambda: move_sf()),
+ ('location-presets-003', 'Remove the Austin preset', lambda: remove_austin()),
+ ('location-presets-006', 'Remove the city from the name of the first place', lambda: in_block("name: 'Bank of America Plaza, Tampa',", "name: 'Bank of America Plaza',")),
  ('location-presets-006', 'Change the name to Tampa Bay', lambda: in_block("name: 'Tampa',\n    groundElevation", "name: 'Tampa Bay',\n    groundElevation")),
  ('location-presets-006', 'Change the ground elevation to 11', lambda: in_block('groundElevation: 10,', 'groundElevation: 11,')),
  ('location-presets-006', 'Change the southwest latitude to 27.7', lambda: in_block('southwest: { lat: 27.8, lng: -82.65 }', 'southwest: { lat: 27.7, lng: -82.65 }')),
@@ -53,7 +67,7 @@ faults = [
  ('location-presets-006', 'Change the building height of the fifth place', lambda: in_block('buildingHeight: 15,', 'buildingHeight: 16,')),
  ('location-presets-006', 'Give a place a non-finite pitch', lambda: in_block('pitch: -45,', 'pitch: NaN,')),
  ('location-presets-006', 'Swap the first and second places', lambda: in_block("""      {
-        name: 'Bank of America Plaza',
+        name: 'Bank of America Plaza, Tampa',
         lat: 27.9468,
         lon: -82.4591,
         alt: 650,
@@ -80,7 +94,7 @@ faults = [
         buildingHeight: 25,
       },
       {
-        name: 'Bank of America Plaza',
+        name: 'Bank of America Plaza, Tampa',
         lat: 27.9468,
         lon: -82.4591,
         alt: 650,
@@ -96,7 +110,7 @@ faults = [
  ('location-presets-008', 'Change the heading of the first place', lambda: in_block('heading: 0,\n        buildingHeight: 90,', 'heading: 1,\n        buildingHeight: 90,')),
  ('location-presets-007', 'Change the name shown on the pill', lambda: in_block("name: 'Tampa',\n    groundElevation", "name: 'TPA',\n    groundElevation")),
 ]
-cmd = 'node --test --test-force-exit --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs'
+cmd = 'node --test --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs'
 out, log = [], []
 try:
     for sid, desc, fn in faults:

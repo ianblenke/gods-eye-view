@@ -41,4 +41,5 @@ The lead ran the 33 test files that import these modules: 789 tests pass.
 - Known limit `search`: An exact search for `Tampa` goes to the bundled preset and no longer goes to the online geocoder. A query such as `Tampa, FL` still goes to the online geocoders, because the preset geocoder matches exact names only.
 - Known limit `name-match`: The voice function `findPoiByName()` matches a query that holds all words of a place name. A query for another place that holds the words `ybor` and `city` still flies to the fifth place. The other presets have the same rule.
 - Known limit `voice-schema`: The lists of location ids in `src/voice/actionSchemas.js` do not name `tampa`, like they do not name `taiwan` or `tallinn`. A spoken request for Tampa uses the field `query`. A later change can add the id.
+- Known limit `scripts-as-text`: The files `mutations-script.txt` and `name-collision.txt` hold scripts as text. No gate measures them.
 - Known limit `upstream-line`: Upstream can add a preset in the same place of the table. A later sync can conflict there. Keep both presets then.
