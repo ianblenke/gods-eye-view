@@ -171,8 +171,30 @@ test('[location-presets-003] shows the Taiwan pill first', () => {
   );
   assert.equal(pills[0].dataset.locationId, 'taiwan');
   assert.equal(pills[0].textContent, 'Taiwan');
-  assert.equal(pills[1].dataset.locationId, 'austin');
-  assert.equal(pills[1].textContent, 'Austin');
+  const ids = pills.map((pill) => pill.dataset.locationId);
+  assert.ok(ids.indexOf('taiwan') < ids.indexOf('austin'));
+  assert.equal(pills[ids.indexOf('austin')].textContent, 'Austin');
+  controls.destroy();
+});
+
+test('[location-presets-007] shows the Tampa pill between the Taiwan and Austin pills', () => {
+  const f = fixture();
+  f.controls.destroy();
+  const controls = new LocationControls({
+    elements: f.elements,
+    cities: CITY_POIS,
+    getExpandedCity: () => null,
+    onCity: () => {},
+    onPoi: () => {},
+    onSearch: () => {},
+    onReset: () => {},
+    doc: f.doc,
+  });
+  const pills = f.elements.pills.children;
+  const ids = pills.map((pill) => pill.dataset.locationId);
+  assert.ok(ids.indexOf('taiwan') < ids.indexOf('tampa'));
+  assert.ok(ids.indexOf('tampa') < ids.indexOf('austin'));
+  assert.equal(pills[ids.indexOf('tampa')].textContent, 'Tampa');
   controls.destroy();
 });
 
@@ -221,5 +243,56 @@ test('[location-presets-004] a click on the Taiwan pill flies to the island view
   const point = Cesium.Cartographic.fromCartesian(result.targetPosition);
   assert.ok(Math.abs(Cesium.Math.toDegrees(point.latitude) - 23.7) < 1e-8);
   assert.ok(Math.abs(Cesium.Math.toDegrees(point.longitude) - 121.0) < 1e-8);
+  controls.destroy();
+});
+
+test('[location-presets-008] a click on the Tampa pill flies to the downtown view', () => {
+  const f = fixture();
+  f.controls.destroy();
+  const flights = [];
+  const viewer = {
+    scene: { globe: null, canvas: { clientWidth: 0, clientHeight: 0 } },
+    camera: {
+      positionCartographic: { longitude: 0, latitude: 0, height: 1200 },
+      cancelFlight() {},
+      flyTo(options) {
+        flights.push(options);
+      },
+      flyToBoundingSphere(sphere, options) {
+        flights.push({ sphere, ...options });
+      },
+      lookAt() {},
+      lookAtTransform() {},
+    },
+  };
+  const ids = [];
+  let result = null;
+  const controls = new LocationControls({
+    elements: f.elements,
+    cities: CITY_POIS,
+    getExpandedCity: () => null,
+    onCity: (id) => {
+      ids.push(id);
+      result = flyToPresetLocation(viewer, id);
+    },
+    onPoi: () => {},
+    onSearch: () => {},
+    onReset: () => {},
+    doc: f.doc,
+  });
+  const pill = f.elements.pills.children.find(
+    (child) => child.dataset.locationId === 'tampa',
+  );
+  pill.fire('click');
+  assert.deepEqual(ids, ['tampa']);
+  assert.equal(flights.length, 1);
+  assert.equal(flights[0].offset.range, 650);
+  assert.ok(
+    Math.abs(Cesium.Math.toDegrees(flights[0].offset.pitch) + 22) < 1e-8,
+  );
+  assert.equal(Cesium.Math.toDegrees(flights[0].offset.heading), 0);
+  const point = Cesium.Cartographic.fromCartesian(result.targetPosition);
+  assert.ok(Math.abs(Cesium.Math.toDegrees(point.latitude) - 27.9468) < 1e-8);
+  assert.ok(Math.abs(Cesium.Math.toDegrees(point.longitude) + 82.4591) < 1e-8);
   controls.destroy();
 });

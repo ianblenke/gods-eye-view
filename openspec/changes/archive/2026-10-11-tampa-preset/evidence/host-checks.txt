@@ -1,0 +1,76 @@
+Host checks of tampa-preset, 2026-10-11, host Node v26.8.2. The checks ran on the files of the commit bc525a6efe65f5d764c980ecb5c8c23645936d4e; later commits change the evidence files and the documents only.
+
+## node scripts/check-import-directions.mjs
+{"modules":974,"portableEntries":78}
+exit: 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 14 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit: 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 30 published, 0 new.
+exit: 0
+
+## node scripts/format.mjs --check
+Checked 1341 source files.
+exit: 0
+
+## node --test --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs
+exit: 0
+ℹ tests 54
+ℹ pass 54
+ℹ fail 0
+ℹ skipped 0
+
+## The 33 test files that import the table or its consumers
+Command that makes the list: grep -rlE "locations\.js|CITY_POIS|gevActions|hud\.js|offlineGeocoders|placeSearch|locationNavigation|locationSearch|cctv/catalog|cctv/policy" src server --include=*.test.mjs | sort -u
+Command for the run: node --test --test-reporter=spec <the files>
+exit: 0
+ℹ tests 789
+ℹ pass 789
+ℹ fail 0
+ℹ skipped 0
+Files:
+src/annotations/adminOutline.test.mjs
+src/annotations/annotationEngine.test.mjs
+src/annotations/annotationResolver.test.mjs
+src/cameraHandoff.test.mjs
+src/cityPresets.test.mjs
+src/cockpitMarkup.test.mjs
+src/costEndpointThrottle.test.mjs
+src/data/cctvCalgary.test.mjs
+src/data/cctvCatalogCap.test.mjs
+src/data/cctvDriveBcSource.test.mjs
+src/data/cctvVegvesen.test.mjs
+src/data/tr3bRegistry.test.mjs
+src/hudAltitudeDatum.test.mjs
+src/hudLocality.test.mjs
+src/hudMarkings.test.mjs
+src/keylessGeocoder.test.mjs
+src/locationReadouts.test.mjs
+src/locations.test.mjs
+src/mapSourceFocus.test.mjs
+src/panelEscape.test.mjs
+src/search/nominatim.test.mjs
+src/search/offlineGeocoders.test.mjs
+src/search/placeSearch.test.mjs
+src/sharelink.celestial.test.mjs
+src/tooling/spec/ledger.test.mjs
+src/tools/queries/places.test.mjs
+src/ui/cyberSonarControls.test.mjs
+src/ui/cyberTheme.test.mjs
+src/ui/locationControls.test.mjs
+src/ui/locationSearch.test.mjs
+src/ui/shellLifetime.test.mjs
+src/voice/gevActions.test.mjs
+src/voice/gevRealtime.test.mjs
+
+## node scripts/spec/gates.mjs lint --change tampa-preset (on the documents of the commit e897866a0ccd01442272a0792f0a5028f6d811c8)
+STE: 0 errors, 718 warnings.
+
+## openspec validate tampa-preset (on the documents of the commit e897866a0ccd01442272a0792f0a5028f6d811c8)
+Change 'tampa-preset' is valid
+
+The image ratchet runs the lint again.

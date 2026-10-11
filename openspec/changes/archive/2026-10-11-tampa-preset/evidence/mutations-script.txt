@@ -1,0 +1,148 @@
+import subprocess, re
+R = '/home/ianblenke/docker/gev-work/tampa-preset/'
+F = 'src/locations.js'
+orig = open(R + F).read()
+START = '  tampa: {\n'
+END = '  austin: {\n'
+a, b = orig.index(START), orig.index(END)
+block = orig[a:b]
+
+def in_block(old, new, nth=1):
+    # replace the nth occurrence of old inside the Tampa block only
+    idx = -1
+    for _ in range(nth):
+        idx = block.index(old, idx + 1)
+    nb = block[:idx] + new + block[idx + len(old):]
+    return orig[:a] + nb + orig[b:]
+
+def move_block(where):
+    without = orig[:a] + orig[b:]
+    if where == 'after-austin':
+        i = without.index('  sf: {\n')
+    elif where == 'first':
+        i = without.index('  taiwan: {\n')
+    return without[:i] + block + without[i:]
+
+def move_sf():
+    sfa = orig.index('  sf: {\n'); sfb = orig.index('  nyc: {\n')
+    sf = orig[sfa:sfb]
+    without = orig[:sfa] + orig[sfb:]
+    i = without.index('  austin: {\n')
+    return without[:i] + sf + without[i:]
+
+def remove_austin():
+    aa = orig.index('  austin: {\n'); ab = orig.index('  sf: {\n')
+    return orig[:aa] + orig[ab:]
+
+def move_austin_first():
+    aa = orig.index('  austin: {\n'); ab = orig.index('  sf: {\n')
+    austin = orig[aa:ab]
+    without = orig[:aa] + orig[ab:]
+    i = without.index('  taiwan: {\n')
+    return without[:i] + austin + without[i:]
+
+faults = [
+ # (scenario targeted, description, function returning the faulty text)
+ ('location-presets-001', 'Put Tampa after Austin', lambda: move_block('after-austin')),
+ ('location-presets-001', 'Put Tampa before Taiwan', lambda: move_block('first')),
+ ('location-presets-001', 'Rename the key tampa to tpa', lambda: in_block('  tampa: {\n', '  tpa: {\n')),
+ ('location-presets-001', 'Remove the Tampa preset', lambda: orig[:a] + orig[b:]),
+ ('location-presets-001', 'Put sf between tampa and austin', lambda: move_sf()),
+ ('location-presets-003', 'Put Austin before Taiwan', lambda: move_austin_first()),
+ ('location-presets-003', 'Remove the Austin preset', lambda: remove_austin()),
+ ('location-presets-006', 'Remove the city from the name of the first place', lambda: in_block("name: 'Bank of America Plaza, Tampa',", "name: 'Bank of America Plaza',")),
+ ('location-presets-006', 'Change the name to Tampa Bay', lambda: in_block("name: 'Tampa',\n    groundElevation", "name: 'Tampa Bay',\n    groundElevation")),
+ ('location-presets-006', 'Change the ground elevation to 11', lambda: in_block('groundElevation: 10,', 'groundElevation: 11,')),
+ ('location-presets-006', 'Change the southwest latitude to 27.7', lambda: in_block('southwest: { lat: 27.8, lng: -82.65 }', 'southwest: { lat: 27.7, lng: -82.65 }')),
+ ('location-presets-006', 'Change the southwest longitude to -82.7', lambda: in_block('southwest: { lat: 27.8, lng: -82.65 }', 'southwest: { lat: 27.8, lng: -82.7 }')),
+ ('location-presets-006', 'Change the northeast latitude to 28.2', lambda: in_block('northeast: { lat: 28.1, lng: -82.3 }', 'northeast: { lat: 28.2, lng: -82.3 }')),
+ ('location-presets-006', 'Change the northeast longitude to -82.2', lambda: in_block('northeast: { lat: 28.1, lng: -82.3 }', 'northeast: { lat: 28.1, lng: -82.2 }')),
+ ('location-presets-006', 'Remove the last place', lambda: in_block("""      {
+        name: 'Ybor City',
+        lat: 27.96,
+        lon: -82.4412,
+        alt: 1500,
+        pitch: -35,
+        heading: 0,
+        buildingHeight: 15,
+      },
+""", '')),
+ ('location-presets-006', 'Move a place outside the view bounds', lambda: in_block('lon: -82.5349,', 'lon: -82.7,')),
+ ('location-presets-006', 'Change the second place name', lambda: in_block("name: 'Raymond James Stadium'", "name: 'Stadium'")),
+ ('location-presets-006', 'Change the third place name', lambda: in_block("name: 'Tampa International Airport'", "name: 'Airport'")),
+ ('location-presets-006', 'Change the fourth place name', lambda: in_block("name: 'Henry B. Plant Museum'", "name: 'Plant Museum'")),
+ ('location-presets-006', 'Change the fifth place name', lambda: in_block("name: 'Ybor City'", "name: 'Ybor'")),
+ ('location-presets-006', 'Change the latitude of the second place', lambda: in_block('lat: 27.976,', 'lat: 27.977,')),
+ ('location-presets-006', 'Change the heading of the third place', lambda: in_block('heading: 0,\n        buildingHeight: 20,', 'heading: 10,\n        buildingHeight: 20,')),
+ ('location-presets-006', 'Change the range of the fourth place', lambda: in_block('alt: 450,', 'alt: 451,')),
+ ('location-presets-006', 'Change the building height of the fifth place', lambda: in_block('buildingHeight: 15,', 'buildingHeight: 16,')),
+ ('location-presets-006', 'Give a place a non-finite pitch', lambda: in_block('pitch: -45,', 'pitch: NaN,')),
+ ('location-presets-006', 'Swap the first and second places', lambda: in_block("""      {
+        name: 'Bank of America Plaza, Tampa',
+        lat: 27.9468,
+        lon: -82.4591,
+        alt: 650,
+        pitch: -22,
+        heading: 0,
+        buildingHeight: 90,
+      },
+      {
+        name: 'Raymond James Stadium',
+        lat: 27.976,
+        lon: -82.5034,
+        alt: 800,
+        pitch: -35,
+        heading: 135,
+        buildingHeight: 25,
+      },
+""", """      {
+        name: 'Raymond James Stadium',
+        lat: 27.976,
+        lon: -82.5034,
+        alt: 800,
+        pitch: -35,
+        heading: 135,
+        buildingHeight: 25,
+      },
+      {
+        name: 'Bank of America Plaza, Tampa',
+        lat: 27.9468,
+        lon: -82.4591,
+        alt: 650,
+        pitch: -22,
+        heading: 0,
+        buildingHeight: 90,
+      },
+""")),
+ ('location-presets-008', 'Change the latitude of the first place', lambda: in_block('lat: 27.9468,', 'lat: 27.9469,')),
+ ('location-presets-008', 'Change the longitude of the first place', lambda: in_block('lon: -82.4591,', 'lon: -82.4592,')),
+ ('location-presets-008', 'Change the range of the first place', lambda: in_block('alt: 650,', 'alt: 651,')),
+ ('location-presets-008', 'Change the pitch of the first place', lambda: in_block('pitch: -22,', 'pitch: -23,')),
+ ('location-presets-008', 'Change the heading of the first place', lambda: in_block('heading: 0,\n        buildingHeight: 90,', 'heading: 1,\n        buildingHeight: 90,')),
+ ('location-presets-007', 'Change the name shown on the pill', lambda: in_block("name: 'Tampa',\n    groundElevation", "name: 'TPA',\n    groundElevation")),
+]
+cmd = 'node --test --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs'
+out, log = [], []
+try:
+    for sid, desc, fn in faults:
+        text = fn()
+        assert text != orig, desc
+        open(R + F, 'w').write(text)
+        p = subprocess.run(cmd, shell=True, cwd=R, capture_output=True, text=True)
+        names = set()
+        for l in (p.stdout + p.stderr).splitlines():
+            l = l.strip()
+            if l.startswith('✖ ') and 'failing tests' not in l:
+                n = re.sub(r' \(\d+(\.\d+)?ms\)$', '', l[2:].strip())
+                m = re.match(r'(\[[a-z-]+-\d+\])', n)
+                names.add(m.group(1) if m else 'untagged: ' + n[:60])
+        uniq = sorted(names)
+        out.append(f'{sid} | {desc} | failing: {", ".join(uniq) if uniq else "NONE"}')
+        log.append(f'{desc} | exit {p.returncode} | failing tests: {", ".join(uniq) if uniq else "NONE"}')
+        print(log[-1], flush=True)
+        open(R + F, 'w').write(orig)
+finally:
+    open(R + F, 'w').write(orig)
+assert open(R + F).read() == orig
+open('/home/ianblenke/docker/gev-tools/tampa-preset/faults.txt', 'w').write('\n'.join(out) + '\n')
+open('/home/ianblenke/docker/gev-tools/tampa-preset/faults-run.txt', 'w').write('\n'.join(log) + '\n')

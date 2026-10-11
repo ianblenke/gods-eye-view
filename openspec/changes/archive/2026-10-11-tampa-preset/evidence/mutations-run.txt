@@ -1,0 +1,61 @@
+Run of the 32 named faults, 2026-10-11, host Node v26.8.2. Each fault changes the Tampa block of src/locations.js, or moves or removes a block; the script restores the file and checks that it equals the original.
+Command for each fault: node --test --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs. Baseline without a fault: 54 tests, 54 pass, 0 fail.
+Lines: fault | exit status | failing tests
+Put Tampa after Austin | exit 1 | failing tests: [location-presets-001], [location-presets-007]
+Put Tampa before Taiwan | exit 1 | failing tests: [location-presets-001], [location-presets-003], [location-presets-004], [location-presets-007]
+Rename the key tampa to tpa | exit 1 | failing tests: [location-presets-001], [location-presets-006], [location-presets-007], [location-presets-008]
+Remove the Tampa preset | exit 1 | failing tests: [location-presets-001], [location-presets-006], [location-presets-007], [location-presets-008]
+Put sf between tampa and austin | exit 1 | failing tests: [location-presets-001]
+Put Austin before Taiwan | exit 1 | failing tests: [location-presets-001], [location-presets-003], [location-presets-004], [location-presets-007]
+Remove the Austin preset | exit 1 | failing tests: [location-presets-001], [location-presets-003], [location-presets-007], untagged: city and landmark flights expose completion and cancellation, untagged: globe and city-overview flights name the world frame explici
+Remove the city from the name of the first place | exit 1 | failing tests: [location-presets-006]
+Change the name to Tampa Bay | exit 1 | failing tests: [location-presets-006], [location-presets-007]
+Change the ground elevation to 11 | exit 1 | failing tests: [location-presets-006]
+Change the southwest latitude to 27.7 | exit 1 | failing tests: [location-presets-006]
+Change the southwest longitude to -82.7 | exit 1 | failing tests: [location-presets-006]
+Change the northeast latitude to 28.2 | exit 1 | failing tests: [location-presets-006]
+Change the northeast longitude to -82.2 | exit 1 | failing tests: [location-presets-006]
+Remove the last place | exit 1 | failing tests: [location-presets-006]
+Move a place outside the view bounds | exit 1 | failing tests: [location-presets-006], untagged: every POI lies inside the frame its own destination opens on
+Change the second place name | exit 1 | failing tests: [location-presets-006]
+Change the third place name | exit 1 | failing tests: [location-presets-006]
+Change the fourth place name | exit 1 | failing tests: [location-presets-006]
+Change the fifth place name | exit 1 | failing tests: [location-presets-006]
+Change the latitude of the second place | exit 1 | failing tests: [location-presets-006]
+Change the heading of the third place | exit 1 | failing tests: [location-presets-006]
+Change the range of the fourth place | exit 1 | failing tests: [location-presets-006]
+Change the building height of the fifth place | exit 1 | failing tests: [location-presets-006]
+Give a place a non-finite pitch | exit 1 | failing tests: [location-presets-006], untagged: every camera angle is one a camera can hold
+Swap the first and second places | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the latitude of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the longitude of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the range of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the pitch of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the heading of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
+Change the name shown on the pill | exit 1 | failing tests: [location-presets-006], [location-presets-007]
+
+First failing assertion of three faults (from the failure text of the reporter, with the path prefix of the clone cut; each block starts with the line of the test). The names of untagged tests are cut at 60 characters:
+## Remove the Austin preset ([location-presets-003])
+test at src/ui/locationControls.test.mjs:153:1
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+    assert.ok(ids.indexOf('taiwan') < ids.indexOf('austin'))
+      at TestContext.<anonymous> (src/ui/locationControls.test.mjs:175:10)
+    actual: false,
+    expected: true,
+
+## Move a place outside the view bounds ([location-presets-006])
+test at src/locations.test.mjs:763:1
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+    assert.ok(
+      at TestContext.<anonymous> (src/locations.test.mjs:785:12)
+    actual: false,
+    expected: true,
+
+## Give a place a non-finite pitch ([location-presets-006])
+test at src/locations.test.mjs:763:1
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+      at TestContext.<anonymous> (src/locations.test.mjs:780:14)
+    actual: false,
+    expected: true,
+
+Note on the option --test-force-exit: A first version of the script used it. In 5 of 112 fault runs the reporter showed a file-level failure of src/locations.test.mjs and lost the name of a failing test. The runs of the same files with no fault gave 0 such failures (100 runs on the code of main, 37 runs on the code with Tampa). This script runs without the option. Two runs of the 32 faults gave the same lines.

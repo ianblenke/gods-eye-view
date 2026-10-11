@@ -2970,7 +2970,7 @@
     "src/data/cctvOntarioRows.test.mjs › [live-sources-009] return an empty source list for non-array data {}"
   ],
   "location-presets-001": [
-    "src/locations.test.mjs › [location-presets-001] puts Taiwan before Austin"
+    "src/locations.test.mjs › [location-presets-001] puts Tampa between Taiwan and Austin"
   ],
   "location-presets-002": [
     "src/locations.test.mjs › [location-presets-002] gives Taiwan five valid places"
@@ -2984,6 +2984,15 @@
   ],
   "location-presets-005": [
     "src/search/offlineGeocoders.test.mjs › [location-presets-005] finds Taiwan by name or id"
+  ],
+  "location-presets-006": [
+    "src/locations.test.mjs › [location-presets-006] gives Tampa five valid places"
+  ],
+  "location-presets-007": [
+    "src/ui/locationControls.test.mjs › [location-presets-007] shows the Tampa pill between the Taiwan and Austin pills"
+  ],
+  "location-presets-008": [
+    "src/ui/locationControls.test.mjs › [location-presets-008] a click on the Tampa pill flies to the downtown view"
   ],
   "osh-001": [
     "src/data/oshProxy.test.mjs › [osh-001] reports no key on the status route when OSH_URL is not set"

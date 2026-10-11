@@ -1,5 +1,7 @@
 # Changelog
 
+- Add Tampa to the location bar, between Taiwan and Austin (2026-10-11). The Tampa pill flies to Bank of America Plaza. The row of places has four more places: Raymond James Stadium, Tampa International Airport, Henry B. Plant Museum and Ybor City.
+
 - The development server no longer serves the folders `.gev-logs` and `.gev-cache` (2026-10-10). Before this change, a request for `/.gev-logs/realtime-conversations.jsonl` returned the voice conversation log to any computer that could reach the server.
 
 - The cyclone layer now shows an advisory that the National Hurricane Center publishes ahead of its nominal time (2026-10-10). The server accepts an advisory time and a position time up to 90 minutes ahead of its clock. Before this change the limit was 5 minutes. A time over the limit made the server reject the whole status file, and the layer showed the cached storms or none.
