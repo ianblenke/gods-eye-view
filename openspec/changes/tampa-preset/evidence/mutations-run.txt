@@ -34,7 +34,7 @@ Change the pitch of the first place | exit 1 | failing tests: [location-presets-
 Change the heading of the first place | exit 1 | failing tests: [location-presets-006], [location-presets-008]
 Change the name shown on the pill | exit 1 | failing tests: [location-presets-006], [location-presets-007]
 
-First failing assertion of three faults (from the failure text of the reporter; each block starts with the line of the test):
+First failing assertion of three faults (from the failure text of the reporter, with the path prefix of the clone cut; each block starts with the line of the test). The names of untagged tests are cut at 60 characters:
 ## Remove the Austin preset ([location-presets-003])
 test at src/ui/locationControls.test.mjs:153:1
   AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
