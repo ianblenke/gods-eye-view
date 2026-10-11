@@ -62,6 +62,7 @@
   "server/standalone/vite.config.js",
   "vite.config.js",
   "src/tooling/viteBuild.test.mjs",
+  "src/tooling/devServerFiles.test.mjs",
   "src/tooling/allowedHosts.test.mjs",
   "server/providers/common/http.js",
   "server/providers/common/query.js",

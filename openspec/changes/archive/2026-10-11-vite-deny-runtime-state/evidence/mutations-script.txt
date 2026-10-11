@@ -1,0 +1,40 @@
+import subprocess,re
+R='/home/ianblenke/docker/gev-work/vite-deny-runtime-state/'
+F='build/vite.js'
+orig=open(R+F).read()
+faults=[
+ ('dev-server-files-001','Remove the entry of the log folder',[("          '**/.gev-logs/**',\n","")]),
+ ('dev-server-files-001','Remove the entry of the cache folder',[("          '**/.gev-cache/**',\n","")]),
+ ('dev-server-files-001','Remove the old entry .env.*',[("          '.env.*',\n","")]),
+ ('dev-server-files-001','Remove the old entry for ENVIRONMENT files',[("          '**/ENVIRONMENT',\n","")]),
+ ('dev-server-files-001','Remove the old entry for the .git folder',[("          '**/.git/**',\n","")]),
+ ('dev-server-files-001','Remove the old entry .env',[("          '.env',\n","")]),
+ ('dev-server-files-001','Remove the old entry for certificate files',[("          '*.{crt,pem}',\n","")]),
+ ('dev-server-files-002','Turn off the strict file check of Vite',[("      fs: {\n","      fs: {\n        strict: false,\n")]),
+ ('dev-server-files-002','Use one star instead of two in the log entry',[("'**/.gev-logs/**'","'**/.gev-logs/*'")]),
+ ('dev-server-files-002','Drop the suffix of the log folder entry',[("'**/.gev-logs/**'","'**/.gev-logs'")]),
+ ('dev-server-files-002','Drop the prefix of the cache folder entry',[("'**/.gev-cache/**'","'.gev-cache/**'")]),
+ ('dev-server-files-002','Name the log folder in lower depth only',[("'**/.gev-logs/**'","'.gev-logs/**'")]),
+ ('dev-server-files-002','Deny package.json too',[("          '**/.gev-cache/**',\n","          '**/.gev-cache/**',\n          '**/package.json',\n")]),
+ ('dev-server-files-002','Deny the src folder too',[("          '**/.gev-cache/**',\n","          '**/.gev-cache/**',\n          '**/src/**',\n")]),
+]
+out=[];log=[]
+try:
+  for sid,desc,pairs in faults:
+    text=orig
+    for old,new in pairs:
+        assert text.count(old)==1,(desc,old[:50],text.count(old))
+        text=text.replace(old,new,1)
+    open(R+F,'w').write(text)
+    p=subprocess.run('taskset -c 8-11 node --test --test-force-exit --test-reporter=spec src/tooling/devServerFiles.test.mjs',shell=True,cwd=R,capture_output=True,text=True)
+    fails=[re.sub(r' \(\d+(\.\d+)?ms\)$','',l.strip()[2:].strip()) for l in (p.stdout+p.stderr).splitlines() if l.strip().startswith('✖ [')]
+    uniq=sorted(set(f.split(']')[0]+']' for f in fails))
+    out.append(f'{sid} | {desc} | failing: {", ".join(uniq) if uniq else "NONE"}')
+    log.append(f'{desc} | exit {p.returncode} | failing tests: {", ".join(uniq) if uniq else "NONE"}')
+    print(log[-1])
+    open(R+F,'w').write(orig)
+finally:
+  open(R+F,'w').write(orig)
+assert open(R+F).read()==orig
+open('/home/ianblenke/docker/gev-tools/vite-deny/faults.txt','w').write('\n'.join(out)+'\n')
+open('/home/ianblenke/docker/gev-tools/vite-deny/faults-run.txt','w').write('\n'.join(log)+'\n')

@@ -974,6 +974,16 @@
     "since": "2026-09-26",
     "change": "backfill-cyclones"
   },
+  "dev-server-files-001": {
+    "hash": "f230e5dd2a1876cc8b8ecf653c743d67e5db1188acf36fe79fec2ef8c9c7fad2",
+    "since": "2026-10-11",
+    "change": "vite-deny-runtime-state"
+  },
+  "dev-server-files-002": {
+    "hash": "6d9feb498120e4eef45f587c6d6f35d949bdd027e5171cabead0daff3c0a305c",
+    "since": "2026-10-11",
+    "change": "vite-deny-runtime-state"
+  },
   "director-001": {
     "hash": "69c9aa4ee85ebc2223875997ec3b90df7ea60e224377e93abd44737f58e39ae1",
     "since": "2026-10-07",

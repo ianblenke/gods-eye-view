@@ -1,0 +1,19 @@
+Check of the Known limit nested-paths, run on the host with the Vite of this project on 2026-10-11T01:35:30Z. The script is below the output. Lines: deny list, file, result of isFileLoadingAllowed (true = Vite loads the file).
+["**/.gev-logs/*"] .gev-logs/a.jsonl false
+["**/.gev-logs/*"] .gev-logs/voice-auth/a.png true
+["**/.gev-logs/**"] .gev-logs/a.jsonl false
+["**/.gev-logs/**"] .gev-logs/voice-auth/a.png false
+
+--- script ---
+import { resolveConfig, isFileLoadingAllowed } from 'vite';
+import path from 'node:path';
+import os from 'node:os';
+import fs from 'node:fs';
+const root = fs.mkdtempSync(path.join(os.tmpdir(), 'onestar-'));
+for (const deny of [['**/.gev-logs/*'], ['**/.gev-logs/**']]) {
+  const config = await resolveConfig({ root, configFile: false, logLevel: 'silent', server: { fs: { deny } } }, 'serve');
+  for (const f of ['.gev-logs/a.jsonl', '.gev-logs/voice-auth/a.png']) {
+    console.log(JSON.stringify(deny), f, isFileLoadingAllowed(config, path.join(root, f)));
+  }
+}
+fs.rmSync(root, { recursive: true });

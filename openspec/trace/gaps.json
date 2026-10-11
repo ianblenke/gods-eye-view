@@ -52,11 +52,11 @@
       "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 119,
+        "lines": 129,
         "branches": 7,
         "functions": 1
       },
-      "sha": "002d9f3c80b2cfd6b2f077ad9ad2011ffe27be07f6afa05ba3a9660aa2d4fd72",
+      "sha": "b1690280e682a3818553221fe8aabe5990919d982f40384fe6c29f54d76bbc33",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6818,7 +6818,7 @@
       "functions": 4,
       "totals": {
         "lines": 559,
-        "branches": 196,
+        "branches": 198,
         "functions": 30
       },
       "sha": "3141322855ca56fd4ec4106c4954525cabb60d55dc84e43a901c8c47c1c26773",
@@ -7028,7 +7028,7 @@
       "functions": 1,
       "totals": {
         "lines": 435,
-        "branches": 165,
+        "branches": 166,
         "functions": 18
       },
       "sha": "94b137f752addecaaa5a6e5808db53a375a53dde8fbb9b7254eee97213114826",

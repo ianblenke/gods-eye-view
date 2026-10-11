@@ -1,0 +1,20 @@
+Run of the 14 named faults, 2026-10-11, host Node v26.8.2. Each fault changes the deny list in build/vite.js; the script restores the file and checks that it equals the original.
+Command for each fault: node --test --test-force-exit --test-reporter=spec src/tooling/devServerFiles.test.mjs. Baseline without a fault: 2 tests, 2 pass, 0 fail.
+Lines: fault | exit status | failing tests
+Remove the entry of the log folder | exit 1 | failing tests: [dev-server-files-001], [dev-server-files-002]
+Remove the entry of the cache folder | exit 1 | failing tests: [dev-server-files-001], [dev-server-files-002]
+Remove the old entry .env.* | exit 1 | failing tests: [dev-server-files-001]
+Remove the old entry for ENVIRONMENT files | exit 1 | failing tests: [dev-server-files-001]
+Remove the old entry for the .git folder | exit 1 | failing tests: [dev-server-files-001]
+Remove the old entry .env | exit 1 | failing tests: [dev-server-files-001]
+Remove the old entry for certificate files | exit 1 | failing tests: [dev-server-files-001]
+Turn off the strict file check of Vite | exit 1 | failing tests: [dev-server-files-002]
+Use one star instead of two in the log entry | exit 1 | failing tests: [dev-server-files-001]
+Drop the suffix of the log folder entry | exit 1 | failing tests: [dev-server-files-001], [dev-server-files-002]
+Drop the prefix of the cache folder entry | exit 1 | failing tests: [dev-server-files-001], [dev-server-files-002]
+Name the log folder in lower depth only | exit 1 | failing tests: [dev-server-files-001], [dev-server-files-002]
+Deny package.json too | exit 1 | failing tests: [dev-server-files-002]
+Deny the src folder too | exit 1 | failing tests: [dev-server-files-002]
+
+Notes: The fault "Use one star instead of two in the log entry" fails only [dev-server-files-001]. The test [dev-server-files-002] uses files one level below each folder, so it passes. This is the Known limit "nested-paths" in proposal.md.
+The faults "Remove the old entry .env", "Remove the old entry for certificate files" and "Turn off the strict file check of Vite" answer the round 1 findings of the review.

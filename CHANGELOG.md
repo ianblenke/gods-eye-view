@@ -1,5 +1,7 @@
 # Changelog
 
+- The development server no longer serves the folders `.gev-logs` and `.gev-cache` (2026-10-10). Before this change, a request for `/.gev-logs/realtime-conversations.jsonl` returned the voice conversation log to any computer that could reach the server.
+
 - Remove the Pensacola traffic camera pack (2026-10-10). On 2026-10-09 only 17 of the 65 cameras served a frame, and FL511 limits its content to individual non-commercial use.
   The settings `CCTV_PENSACOLA_ENABLED`, `CCTV_PENSACOLA_MAX_SOURCES` and `CCTV_PENSACOLA_ROWS_URL` have no use now.
 
