@@ -3,7 +3,8 @@
 The National Hurricane Center stamps each advisory in `CurrentStorms.json` with its nominal time, for example 21:00Z. Upstream reports that the file appears up to about half an hour before that time.
 The server function `parseCycloneStatus()` rejects a time that is more than 5 minutes ahead of the server clock. So it rejects the whole file for part of each advisory cycle, and every storm disappears from the layer.
 
-On 2026-10-11 at 00:35Z the lead read the public feed. It had 3 storms and the header `Last-Modified: Sat, 10 Oct 2026 23:56:00 GMT`. Two storms had the position time 00:00Z, which is 4 minutes ahead of that header.
+On 2026-10-11 at 00:35Z the lead read the public feed. It had 3 storms and the header Last-Modified with the value 23:56:00 GMT on 10 October. Two storms had the position time 00:00Z, which is 4 minutes ahead of that header.
+
 The file `evidence/live-feed.txt` runs both parsers on this payload with a clock 26 minutes before the stamp. The parser with 5 minutes rejects the file, and the parser with 90 minutes gives all 3 storms.
 Upstream pull request #741 by the maintainer makes the same change. It is open and has not been merged.
 
