@@ -673,8 +673,12 @@ test('a precise search without an outline frames against the resolved ground, no
   assert.ok(eye > 171 + 100, `eye ${eye} must clear the 171 m surface`);
 });
 
-test('[location-presets-001] puts Taiwan before Austin', () => {
-  assert.deepEqual(Object.keys(CITY_POIS).slice(0, 2), ['taiwan', 'austin']);
+test('[location-presets-001] puts Tampa between Taiwan and Austin', () => {
+  assert.deepEqual(Object.keys(CITY_POIS).slice(0, 3), [
+    'taiwan',
+    'tampa',
+    'austin',
+  ]);
 });
 
 test('[location-presets-002] gives Taiwan five valid places', () => {
@@ -735,6 +739,84 @@ test('[location-presets-002] gives Taiwan five valid places', () => {
   assert.equal(city.pois.length, 5);
   assert.equal(city.pois[0].name, 'Taiwan');
   assert.ok(city.pois[0].alt >= 500000);
+  for (const poi of city.pois) {
+    for (const key of [
+      'lat',
+      'lon',
+      'alt',
+      'pitch',
+      'heading',
+      'buildingHeight',
+    ])
+      assert.equal(Number.isFinite(poi[key]), true);
+    assert.ok(
+      poi.lat >= city.viewBounds.southwest.lat &&
+        poi.lat <= city.viewBounds.northeast.lat,
+    );
+    assert.ok(
+      poi.lon >= city.viewBounds.southwest.lng &&
+        poi.lon <= city.viewBounds.northeast.lng,
+    );
+  }
+});
+
+test('[location-presets-006] gives Tampa five valid places', () => {
+  const city = CITY_POIS.tampa;
+  assert.equal(city.name, 'Tampa');
+  assert.equal(city.groundElevation, 10);
+  assert.deepEqual(city.viewBounds, {
+    southwest: { lat: 27.8, lng: -82.65 },
+    northeast: { lat: 28.1, lng: -82.3 },
+  });
+  assert.deepEqual(city.pois, [
+    {
+      name: 'Bank of America Plaza',
+      lat: 27.9468,
+      lon: -82.4591,
+      alt: 650,
+      pitch: -22,
+      heading: 0,
+      buildingHeight: 90,
+    },
+    {
+      name: 'Raymond James Stadium',
+      lat: 27.976,
+      lon: -82.5034,
+      alt: 800,
+      pitch: -35,
+      heading: 135,
+      buildingHeight: 25,
+    },
+    {
+      name: 'Tampa International Airport',
+      lat: 27.9792,
+      lon: -82.5349,
+      alt: 3500,
+      pitch: -45,
+      heading: 0,
+      buildingHeight: 20,
+    },
+    {
+      name: 'Henry B. Plant Museum',
+      lat: 27.9462,
+      lon: -82.4642,
+      alt: 450,
+      pitch: -28,
+      heading: 270,
+      buildingHeight: 25,
+    },
+    {
+      name: 'Ybor City',
+      lat: 27.96,
+      lon: -82.4412,
+      alt: 1500,
+      pitch: -35,
+      heading: 0,
+      buildingHeight: 15,
+    },
+  ]);
+  assert.equal(city.pois.length, 5);
+  assert.equal(city.pois[0].name, 'Bank of America Plaza');
   for (const poi of city.pois) {
     for (const key of [
       'lat',
