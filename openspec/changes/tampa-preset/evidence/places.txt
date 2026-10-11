@@ -8,3 +8,4 @@ Ybor City, Tampa, Florida | Ybor City | node 154312872 | 27.9600475 | -82.441159
 Sunshine Skyway Bridge | (not a place of the preset; outside the view box) | way 1087109061 | 27.6175650 | -82.6535188 | man_made/bridge | none
 
 Rounded to four decimals in src/locations.js: Bank of America Plaza 27.9468, -82.4591; Raymond James Stadium 27.976, -82.5034; Tampa International Airport 27.9792, -82.5349; Henry B. Plant Museum 27.9462, -82.4642; Ybor City 27.96, -82.4412.
+Name of the first place in src/locations.js since the commit 0f18d842: Bank of America Plaza, Tampa (the OpenStreetMap name is Bank of America Plaza). The reason is in name-collision.txt.

@@ -22,7 +22,7 @@
 - [x] 3.7 Run `openspec validate tampa-preset` on the host.
 - [x] 3.8 Write `evidence/places.txt` with the OpenStreetMap searches for the five places.
 - [x] 3.9 Write `evidence/name-collision.txt` with the result of both name matchers.
-- [x] 3.10 Write `evidence/red-green.txt` with a test run on the base code and on the new code.
+- [x] 3.10 Write `evidence/red-green.txt` with the result of the tests on the base code and on the new code.
 
 ## 4. Lead work in the image
 

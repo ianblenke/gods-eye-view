@@ -9,12 +9,12 @@ The test file `src/cityPresets.test.mjs` already checks every preset as data. It
 
 ### D1: The data of the Tampa preset
 
-The first place is Bank of America Plaza, Tampa, a tower in downtown Tampa. The OpenStreetMap height tag of the tower is 178.87 m. The other four places are Raymond James Stadium, Tampa International Airport, Henry B. Plant Museum and Ybor City.
+The first place is "Bank of America Plaza, Tampa", a tower in downtown Tampa. The OpenStreetMap height tag of the tower is 178.87 m. The other four places are Raymond James Stadium, Tampa International Airport, Henry B. Plant Museum and Ybor City.
 The lead took the latitude and the longitude of each place from a search in OpenStreetMap on 2026-10-11 and rounded them to four decimals. The file `evidence/places.txt` holds the results.
 
 The view bounds run from 27.8 N, 82.65 W to 28.1 N, 82.3 W. They hold the five places and the downtown of Tampa. The ground elevation of 10 m follows the other presets, which use approximate values in meters.
 
-The name of the first place holds the city, because two functions match place names. The voice function `findPoiByName()` matches a query that holds all words of a name, and the preset geocoder matches an exact name. The plain name `Bank of America Plaza` would take a request for the same name in another city. The file `evidence/name-collision.txt` shows this.
+The name of the first place holds the city, because two functions match place names. The voice function `findPoiByName()` matches a query that holds all words of a name, and the preset geocoder matches an exact name. With the plain name `Bank of America Plaza`, the voice function matches a request for the same name in another city. The file `evidence/name-collision.txt` shows this.
 
 The Austin preset has ranges of 500 to 550 m and pitches of -28 to -18 degrees. The San Francisco preset has ranges of 420 to 1400 m and pitches of -30 to -20 degrees.
 The first place (650 m, -22 degrees) and the museum (450 m, -28 degrees) lie inside the values of the San Francisco preset. The stadium, the airport and Ybor City have a steeper pitch than both presets, and the airport and Ybor City also have a larger range.

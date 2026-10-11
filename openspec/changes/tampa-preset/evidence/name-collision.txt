@@ -38,3 +38,15 @@ for (const [label, find, pois, g] of [['BEFORE (first place named "Bank of Ameri
   for (const q of queries) console.log(`${JSON.stringify(q).padEnd(42)} ${show(find, pois, await g.geocode(q), q)}`);
   console.log('');
 }
+
+## HUD tag (src/hudLocality.js, composeLocalityTag with the first and second place of the Tampa preset and a distance of 0.4 km), run on 2026-10-11
+Command: node hudtmp.mjs (the script is below)
+NEAR BANK OF AMERICA PLAZA, TAMPA (TAMPA) 0KM
+NEAR RAYMOND JAMES STADIUM (TAMPA) 0KM
+--- script ---
+import { composeLocalityTag } from './src/hudLocality.js';
+import { CITY_POIS } from './src/locations.js';
+const poi = CITY_POIS.tampa.pois[0];
+console.log(composeLocalityTag({ poi: poi.name, city: CITY_POIS.tampa.name, distKm: 0.4 }, poi.lat, poi.lon));
+const stadium = CITY_POIS.tampa.pois[1];
+console.log(composeLocalityTag({ poi: stadium.name, city: CITY_POIS.tampa.name, distKm: 0.4 }, stadium.lat, stadium.lon));

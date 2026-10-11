@@ -1,4 +1,4 @@
-Run of the 29 named faults, 2026-10-11, host Node v26.8.2. Each fault changes the Tampa block of src/locations.js, or moves a block; the script restores the file and checks that it equals the original.
+Run of the 32 named faults, 2026-10-11, host Node v26.8.2. Each fault changes the Tampa block of src/locations.js, or moves or removes a block; the script restores the file and checks that it equals the original.
 Command for each fault: node --test --test-reporter=spec src/locations.test.mjs src/ui/locationControls.test.mjs src/cityPresets.test.mjs. Baseline without a fault: 54 tests, 54 pass, 0 fail.
 Lines: fault | exit status | failing tests
 Put Tampa after Austin | exit 1 | failing tests: [location-presets-001], [location-presets-007]
@@ -16,8 +16,11 @@ Change the southwest longitude to -82.7 | exit 1 | failing tests: [location-pres
 Change the northeast latitude to 28.2 | exit 1 | failing tests: [location-presets-006]
 Change the northeast longitude to -82.2 | exit 1 | failing tests: [location-presets-006]
 Remove the last place | exit 1 | failing tests: [location-presets-006]
-Move a place outside the view box | exit 1 | failing tests: [location-presets-006], untagged: every POI lies inside the frame its own destination opens on
+Move a place outside the view bounds | exit 1 | failing tests: [location-presets-006], untagged: every POI lies inside the frame its own destination opens on
 Change the second place name | exit 1 | failing tests: [location-presets-006]
+Change the third place name | exit 1 | failing tests: [location-presets-006]
+Change the fourth place name | exit 1 | failing tests: [location-presets-006]
+Change the fifth place name | exit 1 | failing tests: [location-presets-006]
 Change the latitude of the second place | exit 1 | failing tests: [location-presets-006]
 Change the heading of the third place | exit 1 | failing tests: [location-presets-006]
 Change the range of the fourth place | exit 1 | failing tests: [location-presets-006]
@@ -40,7 +43,7 @@ test at src/ui/locationControls.test.mjs:153:1
     actual: false,
     expected: true,
 
-## Move a place outside the view box ([location-presets-006])
+## Move a place outside the view bounds ([location-presets-006])
 test at src/locations.test.mjs:763:1
   AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
     assert.ok(
@@ -55,4 +58,4 @@ test at src/locations.test.mjs:763:1
     actual: false,
     expected: true,
 
-Note on the option --test-force-exit: A first version of the script used it. In 5 of 112 runs of the fault set (4 rounds of the 28 faults that the script had before the fault "Put Austin before Taiwan" was added) the reporter showed a file-level failure of src/locations.test.mjs and lost the name of a failing test. The runs of the same files with no fault gave 0 such failures (100 runs on the code of main, 37 runs on the code with Tampa). This script runs without the option. Two runs of the 29 faults gave the same lines.
+Note on the option --test-force-exit: A first version of the script used it. In 5 of 112 fault runs the reporter showed a file-level failure of src/locations.test.mjs and lost the name of a failing test. The runs of the same files with no fault gave 0 such failures (100 runs on the code of main, 37 runs on the code with Tampa). This script runs without the option. Two runs of the 32 faults gave the same lines.

@@ -14,8 +14,11 @@ location-presets-006 | Change the southwest longitude to -82.7 | failing: [locat
 location-presets-006 | Change the northeast latitude to 28.2 | failing: [location-presets-006]
 location-presets-006 | Change the northeast longitude to -82.2 | failing: [location-presets-006]
 location-presets-006 | Remove the last place | failing: [location-presets-006]
-location-presets-006 | Move a place outside the view box | failing: [location-presets-006], untagged: every POI lies inside the frame its own destination opens on
+location-presets-006 | Move a place outside the view bounds | failing: [location-presets-006], untagged: every POI lies inside the frame its own destination opens on
 location-presets-006 | Change the second place name | failing: [location-presets-006]
+location-presets-006 | Change the third place name | failing: [location-presets-006]
+location-presets-006 | Change the fourth place name | failing: [location-presets-006]
+location-presets-006 | Change the fifth place name | failing: [location-presets-006]
 location-presets-006 | Change the latitude of the second place | failing: [location-presets-006]
 location-presets-006 | Change the heading of the third place | failing: [location-presets-006]
 location-presets-006 | Change the range of the fourth place | failing: [location-presets-006]
@@ -28,7 +31,7 @@ location-presets-008 | Change the range of the first place | failing: [location-
 location-presets-008 | Change the pitch of the first place | failing: [location-presets-006], [location-presets-008]
 location-presets-008 | Change the heading of the first place | failing: [location-presets-006], [location-presets-008]
 location-presets-007 | Change the name shown on the pill | failing: [location-presets-006], [location-presets-007]
-Note: The loops of the test of location-presets-006 (finite numbers, inside the view bounds) come before the comparison of the whole preset. So the faults "Move a place outside the view box" and "Give a place a non-finite pitch" fail first in a loop. The file mutations-run.txt shows the line of the first failing assertion.
+Note: The loops of the test of location-presets-006 (finite numbers, inside the view bounds) come before the comparison of the whole preset. So the faults "Move a place outside the view bounds" and "Give a place a non-finite pitch" fail first in a loop. The file mutations-run.txt shows the line of the first failing assertion.
 Note: The line `ids.indexOf('taiwan') < ids.indexOf('austin')` of the test of location-presets-003 comes after the checks of the first pill. The fault "Remove the Austin preset" keeps Taiwan first, so it fails at this line. The fault "Put Austin before Taiwan" fails at the first pill, like the fault "Put Tampa before Taiwan".
 Note: The fault "Remove the Austin preset" also fails other tests that use Austin (the names are in mutations-run.txt).
 Note: The names of untagged tests are cut at 60 characters.
