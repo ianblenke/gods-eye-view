@@ -1012,11 +1012,11 @@
       "branches": 12,
       "functions": 2,
       "totals": {
-        "lines": 416,
+        "lines": 419,
         "branches": 179,
         "functions": 45
       },
-      "sha": "81a4ca66a4c03e494625a115359ffe3eb862b918a56113d40faeeff848c57b87",
+      "sha": "d2bb7481bf6b238ab505cdfffcf2f012fdf4e811d930aa96dc1e2fcbb190b787",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"

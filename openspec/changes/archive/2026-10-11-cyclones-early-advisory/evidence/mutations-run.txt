@@ -1,0 +1,15 @@
+Run of the 12 named faults, 2026-10-11, host Node v26.8.2. Each fault changes the time window or the fields in server/providers/cyclones.js; the script restores the file and checks that it equals the original.
+Command for each fault: node --test --test-force-exit --test-reporter=spec src/data/cyclonesEarlyAdvisory.test.mjs. Baseline without a fault: 2 tests, 2 pass, 0 fail.
+Lines: fault | exit status | failing tests
+Restore the old limit of 5 minutes | exit 1 | failing tests: [cyclones-026]
+Set the window to 89 minutes | exit 1 | failing tests: [cyclones-026]
+Reject a time exactly at the limit | exit 1 | failing tests: [cyclones-026]
+Keep the old limit for the advisory time | exit 1 | failing tests: [cyclones-026]
+Keep the old limit for the position time | exit 1 | failing tests: [cyclones-026]
+Put the position time in issuedAt | exit 1 | failing tests: [cyclones-026]
+Put the advisory time in positionAt | exit 1 | failing tests: [cyclones-026]
+Move the upper limit of the advisory time up | exit 1 | failing tests: [cyclones-027]
+Move the upper limit of the position time up | exit 1 | failing tests: [cyclones-027]
+Set the window to 91 minutes | exit 1 | failing tests: [cyclones-027]
+Accept one millisecond more | exit 1 | failing tests: [cyclones-027]
+Remove the upper limit | exit 1 | failing tests: [cyclones-027]

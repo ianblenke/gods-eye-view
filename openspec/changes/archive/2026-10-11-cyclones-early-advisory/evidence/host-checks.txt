@@ -1,0 +1,73 @@
+Host checks of cyclones-early-advisory, 2026-10-11, host Node v26.8.2. The first sections below ran on the files of the commit 2685df14. Later commits change the evidence files and the documents of this change, and the merge commit a835553e brings the files of the change vite-deny-runtime-state. The last section runs the four checks of `make precheck`, the two cyclone test files and the lint again on the commit cd5716e2. It omits `openspec validate`, because that command does not accept an archived change.
+
+## node --test --test-force-exit src/data/cyclonesEarlyAdvisory.test.mjs
+ℹ tests 2
+ℹ pass 2
+ℹ fail 0
+ℹ skipped 0
+
+## node --test --test-force-exit src/data/cyclonesProxy.test.mjs
+ℹ tests 11
+ℹ pass 11
+ℹ fail 0
+ℹ skipped 0
+
+## node scripts/check-import-directions.mjs
+{"modules":974,"portableEntries":78}
+exit status 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 14 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit status 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 30 published, 0 new.
+exit status 0
+
+## node scripts/format.mjs --check
+Checked 1340 source files.
+exit status 0
+
+## node scripts/spec/gates.mjs lint --change cyclones-early-advisory
+STE: 0 errors, 707 warnings.
+exit status 0
+
+## openspec validate cyclones-early-advisory
+Change 'cyclones-early-advisory' is valid
+exit status 0
+
+## Checks again on the commit cd5716e2e6b611f4c0e8de4c1cea81b51ea2dbc7, read on 2026-10-11T02:21:11Z, host Node v26.8.2
+The commit holds the merge a835553e of the change vite-deny-runtime-state and the trace records of this change. The command `make gates` does not run `make precheck`. The checks below ran on the host.
+
+### node scripts/check-import-directions.mjs
+{"modules":974,"portableEntries":78}
+exit: 0
+
+### node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 14 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit: 0
+
+### node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 30 published, 0 new.
+exit: 0
+
+### node scripts/format.mjs --check
+Checked 1341 source files.
+exit: 0
+
+### node --test --test-force-exit --test-reporter=spec src/data/cyclonesEarlyAdvisory.test.mjs
+ℹ tests 2
+ℹ pass 2
+ℹ fail 0
+ℹ skipped 0
+
+### node --test --test-force-exit --test-reporter=spec src/data/cyclonesProxy.test.mjs
+ℹ tests 11
+ℹ pass 11
+ℹ fail 0
+ℹ skipped 0
+
+### node scripts/spec/gates.mjs lint --change cyclones-early-advisory
+STE: 0 errors, 716 warnings.

@@ -1,0 +1,50 @@
+Hunk of upstream pull request #741 for server/providers/cyclones.js, read on 2026-10-11 with: gh -R bilawalsidhu/gods-eye-view pr diff 741
+The pull request is open and its head is 9c15f093.
+The author is bilawalsidhu, who owns the repository bilawalsidhu/gods-eye-view (read on 2026-10-11 with: gh -R bilawalsidhu/gods-eye-view pr view 741 --json author,state,headRefOid).
+
+diff --git a/server/providers/cyclones.js b/server/providers/cyclones.js
+index fede1aadee..d580357ced 100644
+--- a/server/providers/cyclones.js
++++ b/server/providers/cyclones.js
+@@ -41,6 +41,9 @@ function number(value, min, max) {
+   const n = Number(value);
+   return Number.isFinite(n) && n >= min && n <= max ? n : null;
+ }
++// NHC stamps an advisory with its nominal time (e.g. 03:00Z) and publishes it
++// up to about half an hour before; allow that, but not a clock far ahead.
++const EARLY_ADVISORY_MS = 90 * 60_000;
+ function iso(value, now) {
+   if (
+     typeof value !== 'string' ||
+@@ -50,7 +53,7 @@ function iso(value, now) {
+   const n = Date.parse(value);
+   if (
+     !Number.isFinite(n) ||
+-    n > now + 5 * 60_000 ||
++    n > now + EARLY_ADVISORY_MS ||
+     now - n > 12 * HOUR ||
+     new Date(n).toISOString().replace('.000Z', 'Z') !==
+       value.replace('.000Z', 'Z')
+
+Hunk of the same pull request for src/data/cyclonesProxy.test.mjs (the fork does not carry it):
+
+diff --git a/src/data/cyclonesProxy.test.mjs b/src/data/cyclonesProxy.test.mjs
+index 04729d33a3..31433b326f 100644
+--- a/src/data/cyclonesProxy.test.mjs
++++ b/src/data/cyclonesProxy.test.mjs
+@@ -162,6 +162,15 @@ test('malformed, duplicate, oversized, future and expired status is rejected rat
+   assert.deepEqual(parseCycloneStatus({ activeStorms: [] }, NOW), []);
+ });
+ 
++test('advisories published before their nominal time are accepted, far-future ones are not', () => {
++  // NHC wrote the 03:00Z advisory at 02:34Z.
++  const early = Date.UTC(2026, 8, 16, 2, 34);
++  assert.equal(parseCycloneStatus(status(), early)[0].issuedAt, TIME);
++  assert.throws(() =>
++    parseCycloneStatus(status(), Date.UTC(2026, 8, 16, 1, 25)),
++  );
++});
++
+ test('coherent geometry is retained with holes/dateline while older advisory geometry is omitted', () => {
+   const storms = parseCycloneStatus(status(), NOW);
+   const parts = collections();

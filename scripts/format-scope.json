@@ -828,6 +828,7 @@
   "server/providers/cyclones.js",
   "server/providers/firePerimeters.js",
   "src/data/cyclonesProxy.test.mjs",
+  "src/data/cyclonesEarlyAdvisory.test.mjs",
   "src/data/firePerimetersProxy.test.mjs",
   "src/layers/cyclones/index.js",
   "src/layers/cyclones/rendering.js",

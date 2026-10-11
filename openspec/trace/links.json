@@ -912,6 +912,12 @@
     "src/layers/cyclones/index.test.mjs › [cyclones-025] with no global matchMedia and no global open the focus uses the full duration and the link does nothing",
     "src/layers/cyclones/index.test.mjs › [cyclones-025] with no options the layer reads the global matchMedia and opens the advisory with the global open"
   ],
+  "cyclones-026": [
+    "src/data/cyclonesEarlyAdvisory.test.mjs › [cyclones-026] parseCycloneStatus accepts an advisory time and a position time 26 or 90 minutes ahead of the clock"
+  ],
+  "cyclones-027": [
+    "src/data/cyclonesEarlyAdvisory.test.mjs › [cyclones-027] parseCycloneStatus throws invalid_cyclone_data for a time 90 minutes and 1 millisecond ahead of the clock"
+  ],
   "dev-server-files-001": [
     "src/tooling/devServerFiles.test.mjs › [dev-server-files-001] the browser config denies the log folder, the cache folder and the old files"
   ],
