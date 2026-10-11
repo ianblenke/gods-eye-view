@@ -6,7 +6,7 @@ Date: 2026-10-11
 Gates: make gates CHANGE=tampa-preset passed
 Rounds: 1
 Scope: full
-Reviewed-Tree: TREE_PLACEHOLDER
+Reviewed-Tree: 70c8cf491785135302e005742f9b01b8f1501b248f395aa77c59c292b3c6504d
 
 ## Findings
 
