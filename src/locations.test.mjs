@@ -768,6 +768,25 @@ test('[location-presets-006] gives Tampa five valid places', () => {
     southwest: { lat: 27.8, lng: -82.65 },
     northeast: { lat: 28.1, lng: -82.3 },
   });
+  for (const poi of city.pois) {
+    for (const key of [
+      'lat',
+      'lon',
+      'alt',
+      'pitch',
+      'heading',
+      'buildingHeight',
+    ])
+      assert.equal(Number.isFinite(poi[key]), true);
+    assert.ok(
+      poi.lat >= city.viewBounds.southwest.lat &&
+        poi.lat <= city.viewBounds.northeast.lat,
+    );
+    assert.ok(
+      poi.lon >= city.viewBounds.southwest.lng &&
+        poi.lon <= city.viewBounds.northeast.lng,
+    );
+  }
   assert.deepEqual(city.pois, [
     {
       name: 'Bank of America Plaza, Tampa',
@@ -817,25 +836,6 @@ test('[location-presets-006] gives Tampa five valid places', () => {
   ]);
   assert.equal(city.pois.length, 5);
   assert.equal(city.pois[0].name, 'Bank of America Plaza, Tampa');
-  for (const poi of city.pois) {
-    for (const key of [
-      'lat',
-      'lon',
-      'alt',
-      'pitch',
-      'heading',
-      'buildingHeight',
-    ])
-      assert.equal(Number.isFinite(poi[key]), true);
-    assert.ok(
-      poi.lat >= city.viewBounds.southwest.lat &&
-        poi.lat <= city.viewBounds.northeast.lat,
-    );
-    assert.ok(
-      poi.lon >= city.viewBounds.southwest.lng &&
-        poi.lon <= city.viewBounds.northeast.lng,
-    );
-  }
 });
 
 test('[location-presets-004] flies to the island view', () => {
