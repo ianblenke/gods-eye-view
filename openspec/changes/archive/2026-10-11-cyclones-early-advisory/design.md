@@ -2,7 +2,7 @@
 
 Base commit: `6e54707e` (main, after the merge of `upstream-sync-5`).
 The function `iso()` in `server/providers/cyclones.js` checks each time that `parseCycloneStatus()` gives to it. It rejects a time that is more than 5 minutes ahead of its clock, or more than 12 hours behind it.
-`parseCycloneStatus()` calls `iso()` for the advisory time and for the position time of each storm. One rejected time rejects the whole file.
+`parseCycloneStatus()` calls `iso()` for the advisory time and for the position time of each storm. One rejected time rejects the whole status file.
 
 ## Decisions
 
