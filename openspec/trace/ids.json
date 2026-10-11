@@ -2270,7 +2270,7 @@
     "change": "fix-ontario-511-key"
   },
   "location-presets-001": {
-    "hash": "0522fe9936ceec4087e54a6ddebd46847313b613e50b7fdc5deef7ed94569f5b",
+    "hash": "86322f62435802f125df640fa1f5e5c294ef2fbf4cd8d89f1a45fb322402a336",
     "since": "2026-09-27",
     "change": "add-taiwan-location"
   },
@@ -2293,6 +2293,21 @@
     "hash": "c968fed5cdea7a4e784fd46ee5f1c758f4d9bbf751eb68d4cbb46752b2f0b278",
     "since": "2026-09-27",
     "change": "add-taiwan-location"
+  },
+  "location-presets-006": {
+    "hash": "86a77feb60752faa28e6f2cbc5c46652add3af7f138d1fa8d2b9ab76ac0adc0b",
+    "since": "2026-10-11",
+    "change": "tampa-preset"
+  },
+  "location-presets-007": {
+    "hash": "67fdd9885bdf91560f81c35df8cd227ca1b2f8d6a3e9f94d926e5ec7d3dbfba4",
+    "since": "2026-10-11",
+    "change": "tampa-preset"
+  },
+  "location-presets-008": {
+    "hash": "3bb91fa60e05b14bfe5e3a630baf6f96dd98b5cb9a142054067cce68c2fec9b3",
+    "since": "2026-10-11",
+    "change": "tampa-preset"
   },
   "osh-001": {
     "hash": "f03ccb41a7a278d75f8d994cf5005dcc4d6660b42d2d42420c6824c0c4814255",
