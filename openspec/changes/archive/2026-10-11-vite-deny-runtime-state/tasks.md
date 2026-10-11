@@ -21,7 +21,7 @@
 
 ## 4. Lead work in the image
 
-- [ ] 4.1 Run `make ratchet CHANGE=vite-deny-runtime-state`.
+- [x] 4.1 Run `make ratchet CHANGE=vite-deny-runtime-state`.
 - [ ] 4.2 Run the two review agents.
 - [ ] 4.3 Write review.md.
 - [ ] 4.4 Run `make gates CHANGE=vite-deny-runtime-state` on the final tree.
