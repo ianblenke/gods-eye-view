@@ -1,4 +1,4 @@
-Live feed check of cyclones-early-advisory, read on 2026-10-11 at about 00:36Z, host Node v26.8.2.
+Live feed check of cyclones-early-advisory, read on 2026-10-11 at 00:35Z, host Node v26.8.2.
 
 ## Command: curl -s -D headers -o payload https://www.nhc.noaa.gov/CurrentStorms.json (headers that matter)
 HTTP/2 200 
@@ -11,6 +11,11 @@ al092026 Isaias 2026-10-10T21:00:00.000Z 2026-10-10T21:00:00.000Z
 ep182026 Rachel 2026-10-10T21:00:00.000Z 2026-10-11T00:00:00.000Z
 ep202026 Simon 2026-10-10T21:00:00.000Z 2026-10-11T00:00:00.000Z
 
+## The advisory files are updated before the stamp (field publicAdvisory.fileUpdateTime against lastUpdate, computed with python3 fromisoformat)
+al092026 Isaias | stamp lastUpdate 2026-10-10T21:00:00.000Z | publicAdvisory.fileUpdateTime 2026-10-10T20:37:18.185Z | -22.7 minutes
+ep182026 Rachel | stamp lastUpdate 2026-10-11T00:00:00.000Z | publicAdvisory.fileUpdateTime 2026-10-10T23:32:59.005Z | -27.0 minutes
+ep202026 Simon | stamp lastUpdate 2026-10-11T00:00:00.000Z | publicAdvisory.fileUpdateTime 2026-10-10T23:35:28.578Z | -24.5 minutes
+
 ## The old parser is server/providers/cyclones.js of main (limit 5 minutes). The new parser is the file of this branch (limit 90 minutes).
 ## Both parsers read the payload above. Only the clock argument of parseCycloneStatus() changes.
 clock 00:35:52Z (the Date header of the response)                        | old parser (limit 5 min): 3 storms                 | new parser (limit 90 min): 3 storms
@@ -19,4 +24,4 @@ clock 23:34:00Z (26 minutes before the stamp 00:00Z)                     | old p
 clock 22:30:00Z (90 minutes before the stamp 00:00Z)                     | old parser (limit 5 min): error invalid_cyclone_data | new parser (limit 90 min): 3 storms
 clock 22:29:59.999Z (90 minutes and 1 millisecond before the stamp)      | old parser (limit 5 min): error invalid_cyclone_data | new parser (limit 90 min): error invalid_cyclone_data
 
-## The script is /tmp/claude-1000/cyc-base/run.mjs; it imports the old file from a copy of main and the new file from the clone.
+## The script is run-script.txt in this folder. It imports the old file from a copy of main and the new file from the clone. The clocks are values that the lead chose.

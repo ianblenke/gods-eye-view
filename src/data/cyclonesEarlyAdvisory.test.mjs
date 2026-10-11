@@ -37,7 +37,7 @@ const FIELDS = [
   ['position time', (time) => status({ lastUpdate: time }), 'positionAt'],
 ];
 
-test('[cyclones-026] a time 26 or 90 minutes ahead of the clock is accepted for the advisory and for the position', () => {
+test('[cyclones-026] parseCycloneStatus accepts an advisory time and a position time 26 or 90 minutes ahead of the clock', () => {
   for (const [name, build, key] of FIELDS) {
     for (const ahead of [26, 90]) {
       const storms = parseCycloneStatus(build(TIME), STAMP - ahead * MINUTE);
@@ -47,7 +47,7 @@ test('[cyclones-026] a time 26 or 90 minutes ahead of the clock is accepted for 
   }
 });
 
-test('[cyclones-027] a time 90 minutes and 1 millisecond ahead of the clock throws invalid_cyclone_data', () => {
+test('[cyclones-027] parseCycloneStatus throws invalid_cyclone_data for a time 90 minutes and 1 millisecond ahead of the clock', () => {
   for (const [name, build] of FIELDS) {
     assert.throws(
       () => parseCycloneStatus(build(TIME), STAMP - 90 * MINUTE - 1),

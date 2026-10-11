@@ -1,0 +1,14 @@
+import { readFileSync } from 'node:fs';
+const payload = JSON.parse(readFileSync('/tmp/claude-1000/nhc-current.json', 'utf8'));
+const base = await import('/tmp/claude-1000/cyc-base/server/providers/cyclones.js');
+const fixed = await import('/home/ianblenke/docker/gev-work/cyclones-early-advisory/server/providers/cyclones.js');
+const stamp = Date.parse('2026-10-11T00:00:00.000Z');
+const rows = [
+  ['clock 00:35:52Z (the Date header of the response)', Date.parse('2026-10-11T00:35:52Z')],
+  ['clock 23:56:00Z (the Last-Modified header; stamp 4 minutes ahead)', Date.parse('2026-10-10T23:56:00Z')],
+  ['clock 23:34:00Z (26 minutes before the stamp 00:00Z)', stamp - 26 * 60_000],
+  ['clock 22:30:00Z (90 minutes before the stamp 00:00Z)', stamp - 90 * 60_000],
+  ['clock 22:29:59.999Z (90 minutes and 1 millisecond before the stamp)', stamp - 90 * 60_000 - 1],
+];
+const run = (mod, now) => { try { return `${mod.parseCycloneStatus(payload, now).length} storms`; } catch (e) { return `error ${e.message}`; } };
+for (const [label, now] of rows) console.log(`${label.padEnd(72)} | old parser (limit 5 min): ${run(base, now).padEnd(24)} | new parser (limit 90 min): ${run(fixed, now)}`);

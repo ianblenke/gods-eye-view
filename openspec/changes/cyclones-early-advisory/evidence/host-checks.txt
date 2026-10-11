@@ -1,4 +1,4 @@
-Host checks of cyclones-early-advisory, 2026-10-11, host Node v26.8.2. Files tested: the commit 26926eb0 and the evidence files.
+Host checks of cyclones-early-advisory, 2026-10-11, host Node v26.8.2. Files tested: the commit ca5a5158 plus the edits of the pre-review (test titles, spec text).
 
 ## node --test --test-force-exit src/data/cyclonesEarlyAdvisory.test.mjs
 ℹ tests 2
@@ -30,7 +30,7 @@ Checked 1340 source files.
 exit status 0
 
 ## node scripts/spec/gates.mjs lint --change cyclones-early-advisory
-STE: 0 errors, 709 warnings.
+STE: 0 errors, 708 warnings.
 exit status 0
 
 ## openspec validate cyclones-early-advisory

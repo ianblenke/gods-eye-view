@@ -8,13 +8,14 @@ The function `iso()` in `server/providers/cyclones.js` checks every time of the 
 
 ### D1: The same hunk as upstream
 
-The change replaces `5 * 60_000` with the constant `EARLY_ADVISORY_MS`, which is `90 * 60_000`, and adds the comment of upstream. The hunk equals the hunk of pull request #741, so a later sync brings the same lines.
+The change replaces `5 * 60_000` with the constant `EARLY_ADVISORY_MS`, which is `90 * 60_000`, and adds the comment of upstream. The hunk equals the hunk of pull request #741, so a later sync brings the same lines. The file `evidence/upstream-hunk.txt` holds the hunk of the pull request.
 
 ### D2: The tests
 
 The fork writes its own tests in a new file, because the test file of the status function is upstream code.
-The test of `cyclones-026` gives `parseCycloneStatus()` a clock 26 minutes before the time of the feed and a clock exactly 90 minutes before it. It does this for the advisory time and for the position time.
-The test of `cyclones-027` uses a clock 90 minutes and 1 millisecond before the time.
+The test time is 2026-09-16T03:00:00.000Z. The test puts it in one field and an earlier time in the other field.
+The test of `cyclones-026` gives `parseCycloneStatus()` a clock 26 minutes before the test time and a clock exactly 90 minutes before it. It does this for the advisory time and for the position time.
+The test of `cyclones-027` uses a clock 90 minutes and 1 millisecond before the test time.
 
 ### D3: What the change leaves out
 
