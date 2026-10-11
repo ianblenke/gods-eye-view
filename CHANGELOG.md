@@ -1,5 +1,7 @@
 # Changelog
 
+- The cyclone layer no longer loses all storms while the National Hurricane Center publishes an advisory ahead of its nominal time. The server now accepts an advisory time and a position time up to 90 minutes ahead of its clock. Before this change the limit was 5 minutes, and the server rejected the whole file.
+
 - Remove the Pensacola traffic camera pack (2026-10-10). On 2026-10-09 only 17 of the 65 cameras served a frame, and FL511 limits its content to individual non-commercial use.
   The settings `CCTV_PENSACOLA_ENABLED`, `CCTV_PENSACOLA_MAX_SOURCES` and `CCTV_PENSACOLA_ROWS_URL` have no use now.
 
