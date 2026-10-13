@@ -1,6 +1,6 @@
 # Changelog
 
-- Add the layer "Reticulum Network" (2026-10-13). It shows the interfaces that Reticulum operators publish on purpose as points on the globe. The color shows the type, and the size and the alpha show the status. A label shows the name of up to 48 interfaces. The layer reads the route `/api/reticulum`, so it needs the listener of `make up-reticulum`. It is in the group Infrastructure, its share token is `4`, and it is not in voice.
+- Add the layer "Reticulum Network" (2026-10-13). It shows, as points on the globe, the interfaces that Reticulum operators publish on purpose. The color shows the type, and the size and the alpha show the status. A label shows the name of up to 48 interfaces. The layer reads the route `/api/reticulum`, so it needs the listener of `make up-reticulum`. It is in the group Infrastructure, its share token is `4`, and it is not in voice.
 
 - Add the Reticulum listener container (2026-10-13). `make up-reticulum` runs a node that only listens, hears the discoverable interfaces and serves 12 fields of each one to the app. It publishes no port. `make up-codex-reticulum` does the same for the app with the host network. The node connects out to public nodes, and their operators see your IP address. See `docs/fork/reticulum-docker.md`.
 

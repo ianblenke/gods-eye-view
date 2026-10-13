@@ -25,7 +25,7 @@ Origin: spec-first
 #### Scenario: Read the route `reticulum-layer-003`
 - **WHEN** `getSnapshot` runs with a signal and the fetch answers a valid document
 - **THEN** the fetch gets the path "/api/reticulum" and the same signal
-- **AND** the result has the lists `interfaces` and the object `meta`
+- **AND** the result has the list `interfaces` and the object `meta`
 
 #### Scenario: Refuse a bad answer `reticulum-layer-004`
 - **WHEN** the fetch answers with the status 503, or with text that is not JSON, or with a document that has no `schemaVersion` 1
@@ -58,14 +58,14 @@ Origin: spec-first
 
 #### Scenario: Clean the names `reticulum-layer-007`
 - **WHEN** a name holds characters that the requirement removes, such as control characters, characters that change the text direction, zero width characters, `<` and `>`
-- **THEN** the cleaned name has none of these characters, one space between words, and at most 40 characters
-- **AND** a name that is empty after the cleaning, or is not text, becomes "Unnamed" and the type, for example "Unnamed rnode"
+- **THEN** the cleaned name has none of these characters, one space between words, and at most 40 code points
+- **AND** a name that is empty after the normalizer cleans it, or is not text, becomes "Unnamed" and the type, for example "Unnamed rnode"
 - **AND** the characters `&`, quotation marks and letters of any script stay
 
 #### Scenario: Read the meta of the document `reticulum-layer-008`
 - **WHEN** the normalizer reads a document
 - **THEN** `meta.unavailable` and `meta.stale` are true only when the document says true
-- **AND** `meta.reason` is the text of the document, cleaned like a name, with at most 120 characters, or null
+- **AND** `meta.reason` is the text of the document, cleaned like a name, with at most 120 code points, or null
 - **AND** `meta.reason` is "Reticulum listener unavailable" when `meta.unavailable` is true and the text of the document is empty or missing
 - **AND** `meta.fetchedAt` is a date or null, and `meta.total` is a whole number that is not negative
 - **AND** the normalizer returns null for a value that is not a document of the schema version 1 with a list `interfaces`
@@ -83,19 +83,19 @@ Origin: spec-first
 
 #### Scenario: Choose the labels `reticulum-layer-010`
 - **WHEN** the model chooses the labels of a list of interfaces
-- **THEN** it keeps at most 48 interfaces, ordered by status ("available", then "unknown", then "stale"), then by the newest `lastHeard`, then by `id`
-- **AND** each label title is the name cut to 24 characters, and the accent is the color of the type
+- **THEN** it keeps at most 48 interfaces. It orders them by status ("available", then "unknown", then "stale"), then by the newest `lastHeard`, then by `id` in ascending text order
+- **AND** each label title is the name cut to 24 code points, and the accent is the color of the type
 - **AND** the priority of the first label is 100000, and each next label has a priority that is 1 less
 - **AND** each entry has the `variant` "label", the `collisionGroup` and the `paintLane` "ambient-label", and `interactive` false
 - **AND** each entry has `edgeFade` "keyhole", `horizonCull` true, `terrainOcclusion` false, `gapPx` 15, `verticalOnly` true and `placement` "above"
 
 ### Requirement: Layer display
-The layer MUST show the points and the labels of the last good list. It MUST poll only while it is enabled.
+The layer MUST show the points and the labels of the last answer that the source returns. It MUST poll only while it is enabled.
 Origin: spec-first
 
 #### Scenario: Show the points and the labels `reticulum-layer-011`
 - **WHEN** the layer is enabled and `update` reads a list of 3 positioned interfaces
-- **THEN** the data source has 3 entities with the ids "reticulum:" and the `id` of the interface
+- **THEN** the data source has 3 entities, and the id of each entity is "reticulum:" followed by the `id` of the interface
 - **AND** each entity has a point on the ground at the position of the interface
 - **AND** the point has the color, the alpha and the size of the model
 - **AND** the overlay host gets the entries of the labels for the source "reticulum"

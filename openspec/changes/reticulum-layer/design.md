@@ -16,7 +16,7 @@ Only `index.js` imports Cesium. Its test needs the image, because the folder `no
 The names come from anonymous operators through the provider. The provider removes control characters and the characters `<` and `>`.
 
 The layer cleans the names again in the browser. It removes control characters, characters that change the text direction, zero width characters and the characters `<` and `>`.
-The overlay draws a title with `fillText` of a canvas, and the layer panel writes text with `textContent`. So a name cannot inject HTML. The cleaning stops text that hides or reorders other text.
+The overlay draws a title with `fillText` of a canvas, and the layer panel writes text with `textContent`. So a name cannot inject HTML. A cleaned name cannot hide or reorder other text.
 The layer has no analyst entry and no voice entry, because the voice model would read the names.
 
 ### D3: Unavailable and stale documents
@@ -46,4 +46,4 @@ The named faults measure whether a change of a rule, a limit or a color makes a 
 ## Purpose at archive time
 
 The lead sets this Purpose at archive time:
-"Show the interfaces that Reticulum operators publish as points on the globe. Treat every name as untrusted text, and keep the layer out of voice."
+"Show, as points on the globe, the interfaces that Reticulum operators publish. Treat every name as untrusted text, and keep the layer out of voice."

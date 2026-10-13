@@ -28,7 +28,7 @@ None.
 
 The suite shows which registrations a new layer needs. The layer needs a catalog entry, a source contract, a reference source, a share token and a voice entry (here: voice-off). The tests that count layers also change.
 
-The panel group, the credits and the package files are not tested by the suite. This change adds them for the user.
+No test of the suite before this change needs the panel group, the credits or the package files. This change adds them, and adds scenarios for the group and the credit.
 The share token is "4". The check of `make precheck` needs the next free digit, so there is no choice.
 The new files are files that the fork writes, so they go into `openspec/ownership.json` and `scripts/format-scope.json`. The upstream files get as few new lines as possible.
 
