@@ -160,6 +160,12 @@ export const DATA_CREDITS = [
       ' · Incident information: ' +
       '<a href="https://inciweb.wildfire.gov/" target="_blank" rel="noopener">InciWeb</a>',
   },
+  {
+    key: 'reticulum',
+    html:
+      'Reticulum network: interface announces that operators publish on purpose, heard by a listener that you run · ' +
+      '<a href="https://reticulum.network/" target="_blank" rel="noopener">reticulum.network</a>',
+  },
   OSM_CREDIT,
   OPENMAPTILES_CREDIT,
   {
