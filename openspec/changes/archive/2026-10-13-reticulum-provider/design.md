@@ -33,7 +33,7 @@ The provider removes control characters and angle brackets from a name. The cont
 The provider caches the document for 60 seconds. Requests that come while the first waits share one request to the listener. When the listener fails, the provider serves the last good document for 2 hours with `stale` true. The timeout is 8 seconds and the byte cap is 4 MiB.
 The request to the listener refuses a redirect, so a listener cannot send the server to another host.
 
-The provider also refuses a host that a URL parser reads as another address. The shared rule reads `010.0.0.1` as 10.0.0.1, and a URL parser reads it as 8.0.0.1.
+The provider also refuses a host that a URL parser reads as another address. The shared rule reads `010.0.0.1` as 10.0.0.1, and a URL parser reads it as 8.0.0.1. It also refuses a host that a URL parser rejects, such as `10.0.0.08`.
 
 ### D5: The tests
 

@@ -12,7 +12,7 @@ This is change 1 of 3. This change adds the server provider and its privacy filt
 - Add the provider `server/providers/reticulum.js` and register it in `server/providers/local.js`. The route is `/api/reticulum`.
 - Add the capability `reticulum-source` with fourteen scenarios, `reticulum-source-001` to `reticulum-source-014`.
 - Add the test file `src/data/reticulumProxy.test.mjs`. Add both new files to `openspec/ownership.json` and `scripts/format-scope.json`.
-- Write a section in `DATA_SOURCES.md`, a note and one setting in `.env.example` and one entry in `CHANGELOG.md`.
+- Write a section in `DATA_SOURCES.md`, a note and one variable in `.env.example` and one entry in `CHANGELOG.md`.
 
 ## Capabilities
 
@@ -36,6 +36,7 @@ This change adds no layer, no panel and no listener. Without a listener, the rou
 - Known limit `names`: Operators choose the names. The provider removes control characters and angle brackets and cuts the length. A name can still be rude or wrong. A name can also hold an address or a contact that the operator typed. Format characters such as U+202E stay in a name after the provider cleans it. The cut counts UTF-16 units, so it can split a character that has two units.
 - Known limit `id`: Reticulum builds the field `discovery_hash` from `transport_id` and the name. The provider drops `transport_id` and keeps the name. So the `id` is a stable pseudonym of a node and not a secret.
 - Known limit `address`: The provider checks the text of the address and does not resolve a name. The local receivers resolve a name and pin the connection. Neither route has a same-site gate or a rate limit. The shared rule in `src/data/tapAddress.js` accepts the text `010.0.0.1`. The local receivers read the host through a URL parser first, so they refuse it. This provider refuses it with its own check.
+- Known limit `scenario-order`: The file order of the scenarios is 012, 014, 013, because 014 belongs under the requirement "Source failure". No gate reads the order.
 - Known limit `licence`: The Reticulum software has a licence that forbids use in systems built to harm people and use as data to train AI. This change holds no Reticulum code. Change 2 runs the software as a separate service.
 - Known limit `upstream`: Upstream issue #241 asks for one mesh layer for MeshCore and Reticulum. This change adds a separate source and does not wait for that issue.
 - Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.
