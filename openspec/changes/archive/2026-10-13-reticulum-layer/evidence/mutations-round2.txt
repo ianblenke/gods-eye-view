@@ -12,3 +12,5 @@ reticulum-layer-005 | Copy every field of the radio | failing: [reticulum-layer-
 reticulum-layer-005 | Accept a radio number that is not finite | failing: [reticulum-layer-005]
 reticulum-layer-008 | Use the length of the list as the total | failing: [reticulum-layer-008]
 reticulum-layer-008 | Test the raw reason for the default | failing: [reticulum-layer-008]
+reticulum-layer-008 | Use the default reason for every unavailable document | failing: [reticulum-layer-008]
+reticulum-layer-006 | Accept a date that is not a text | failing: [reticulum-layer-006], [reticulum-layer-008]

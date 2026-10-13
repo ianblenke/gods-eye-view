@@ -1,4 +1,4 @@
-Host checks of reticulum-layer, 2026-10-13, host Node v26.8.2. The checks ran on the files of the commit 078b9ff84233a771ec97cba820a775f9ef757735; later commits change the evidence files and the documents only.
+Host checks of reticulum-layer, 2026-10-13, host Node v26.8.2. The checks ran on the files of the commit d58140d74ff6acf094fe7117c8257bb3687c08dc; later commits change evidence files, documents and trace files only.
 
 ## node scripts/check-import-directions.mjs
 {"modules":980,"portableEntries":79}
@@ -24,11 +24,11 @@ exit: 0
 ℹ fail 0
 ℹ skipped 0
 
-## node scripts/spec/gates.mjs lint --change reticulum-layer (on the documents of the commit 078b9ff84233a771ec97cba820a775f9ef757735)
-STE: 0 errors, 740 warnings.
+## node scripts/spec/gates.mjs lint --change reticulum-layer (on the documents of the commit d58140d74ff6acf094fe7117c8257bb3687c08dc)
+STE: 0 errors, 744 warnings.
 
-## openspec validate reticulum-layer (on the documents of the commit 078b9ff84233a771ec97cba820a775f9ef757735)
-Change 'reticulum-layer' is valid
+## openspec validate reticulum-layer (on the documents of the commit d58140d74ff6acf094fe7117c8257bb3687c08dc)
+Specification 'reticulum-layer' is valid
 
 ## Non-ASCII characters in the new files of the layer (grep -nP '[^\x00-\x7f]')
 lines: 1

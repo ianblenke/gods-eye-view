@@ -15,6 +15,8 @@ f('005', 'Copy every field of the radio', 'rec', "  return { frequency, bandwidt
 f('005', 'Accept a radio number that is not finite', 'rec', ".every(finite))", ".every((value) => value !== undefined))")
 f('008', 'Use the length of the list as the total', 'rec', "        Number.isSafeInteger(total) && total >= 0\n          ? total\n          : payload.interfaces.length,", "        payload.interfaces.length,")
 f('008', 'Test the raw reason for the default', 'rec', "      reason:\n        clean(payload.reason, REASON_MAX) ||\n        (unavailable ? DEFAULT_REASON : null),", "      reason:\n        payload.reason == null || payload.reason === ''\n          ? unavailable\n            ? DEFAULT_REASON\n            : null\n          : clean(payload.reason, REASON_MAX),")
+f('008', 'Use the default reason for every unavailable document', 'rec', "      reason:\n        clean(payload.reason, REASON_MAX) ||\n        (unavailable ? DEFAULT_REASON : null),", "      reason: unavailable\n        ? DEFAULT_REASON\n        : clean(payload.reason, REASON_MAX) || null,")
+f('006', 'Accept a date that is not a text', 'rec', "typeof value === 'string' && Number.isFinite(Date.parse(value));", "Number.isFinite(Date.parse(value));")
 if __name__ == '__main__':
     D = base.D0
     for n in ('faults.txt', 'faults-run.txt'):
