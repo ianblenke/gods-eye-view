@@ -1,0 +1,28 @@
+Visual check of reticulum-layer, 2026-10-13, on the files of the commit 14f942bf (the code files are the files of the commit 7d2a17ae; the commit after it adds evidence files only).
+
+What this check shows: the layer works with the real listener program, the real provider, the real Vite server and a real Chrome. It does not use the owner's app container. That container does not have this change.
+
+Setup (no container was started for this check; the owner's app container was not touched)
+1. Listener. The file docker/reticulum/listener.py of the commit, with three constants changed by sed: CONFIG_DIR, PORT (18081) and the bind address (127.0.0.1). The changed lines are the only difference (the output of diff, shortened, is below). It ran on the host in a venv with rns 1.5.7 and lxmf 1.2.0, the versions of the Dockerfile. Its config has an empty [interfaces] section, so it made no outbound link. It served the 424 discovery files that the spike node of the research phase stored in about 5 hours of running on this machine (the node was stopped before this check).
+   16c16  < CONFIG_DIR = "/data/rns"  >  CONFIG_DIR = "/tmp/claude-1000/layer-visual/rns"
+   18c18  < PORT = 8081  >  PORT = 18081
+   79c79  < ("0.0.0.0", PORT)  >  ("127.0.0.1", PORT)
+   Raw list of the listener (curl http://127.0.0.1:18081/interfaces.json): 424 records, 346 with a latitude and a longitude; types BackboneInterface 187, RNodeInterface 166, I2PInterface 45, TCPServerInterface 26.
+2. App. git archive of the commit 14f942bf in a scratch folder, with node_modules copied from the image gods-eye-view:local (docker create, docker cp, docker rm). Vite 6.4.3 on the host: HOST=127.0.0.1 PORT=18082 RETICULUM_LISTENER=127.0.0.1:18081 node node_modules/.bin/vite. No .env file, so the app had no Google key and no Cesium token; the globe is the keyless globe. The bright half of the globe in the screenshots is the lit side without imagery. The layer does not cause it.
+   Provider answer (curl http://127.0.0.1:18082/api/reticulum): unavailable False; counts total 424, positioned 345, byType rnode 153, backbone 149, i2p 30, tcpserver 13; 345 interfaces.
+3. Browser. google-chrome-stable 147.0.7727.101 in headless mode with SwiftShader (the extension of Claude in Chrome was not connected). The driver script is gev-tools/reticulum-layer3/cdp.mjs (outside this repository). It opens the share link
+   http://127.0.0.1:18082/#v=2&lat=48&lon=9&alt=3500000&heading=0&pitch=-90&roll=0&l=4
+   (the token 4 turns the layer on), waits, runs a script in the page and saves a screenshot.
+
+Results
+A. Healthy listener. The card of the layer in the page (data-layer-id="reticulum"): icon, name "Reticulum Network", count 345, button "Reticulum Network: ON", meta line "Reticulum discovery · just now". The count is the number of interfaces that the provider sent. The page showed points in four colors that match the model (teal rnode, orange backbone, purple i2p, yellow tcpserver) and about 17 labels in the view of Europe (counted by eye). Each label had a colored bar at its left side and a vertical line to its point. The labels near the edge of the globe faded out. The names of the labels came from the real list, for example the names of public volunteer nodes.
+B. Listener not running (the provider restarted, so it had no cached answer). Provider answer: unavailable True, reason "Reticulum listener unavailable", 0 interfaces. Card text: count "—", meta line "Reticulum discovery · Reticulum listener unavailable", button still ON. No point and no label.
+C. Recovery. The page loaded while the listener was down (card as in B). The listener started 30 seconds after the browser started. The card stayed as in B until the layer was turned off and on again with its button: after "OFF" the card read "— OFF · Reticulum listener unavailable", after "ON" and 10 seconds it read count 345, "Reticulum discovery · just now". The next 5-minute update does the same without a click (this was not waited for; the unit tests 012 and 014 cover it).
+D. Turning the layer off keeps the last count in the card (345 OFF, "15s ago" in the run of the first toggle test). This check did not look at the screen after OFF. The unit test 015 checks that the points and the labels go away.
+
+Not checked here
+- The owner's app container and the container of the listener with this layer (the container form of the listener was run in change 2: evidence of reticulum-listener).
+- Labels at street level, names with hostile text in a browser (the unit tests 007 and 011 cover the cleaning and the use of the text), the voice assistant, the share link of a layer with other layers.
+- A listener that is slow or returns an invalid answer in a browser (the unit tests 004, 013 and 014 cover them).
+
+Cleanup: the listener, Vite and Chrome processes of this check were stopped (ps shows none), and docker ps shows only the app container of the owner.
