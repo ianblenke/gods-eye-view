@@ -135,6 +135,23 @@ export function normalizeInterfaces(list, now) {
   };
 }
 
+/**
+ * The host that a URL parser reads from an address of the tap rule, or null
+ * when the parser refuses it. `010.0.0.1` passes the tap rule as 10.0.0.1, but
+ * a URL parser reads the leading zero as octal and connects to 8.0.0.1.
+ * `10.0.0.08` passes the tap rule and the URL parser refuses it.
+ *
+ * @param {{origin: string}} address An address from `parseTapAddress`.
+ * @returns {string|null}
+ */
+function urlHostOf(address) {
+  try {
+    return new URL(address.origin).hostname;
+  } catch {
+    return null;
+  }
+}
+
 function documentOf(fields) {
   return {
     schemaVersion: 1,
@@ -216,9 +233,7 @@ export function reticulumProxy({
     const setting = String(env.RETICULUM_LISTENER ?? '').trim();
     if (!setting) return unavailable('Reticulum listener not configured');
     const address = parseTapAddress(setting);
-    // `010.0.0.1` passes the tap rule as 10.0.0.1, but a URL parser reads the
-    // leading zero as octal and connects to 8.0.0.1. Refuse such a host.
-    if (!address || new URL(address.origin).hostname !== address.host)
+    if (!address || urlHostOf(address) !== address.host)
       return unavailable('Reticulum listener address not allowed');
     const time = now();
     if (cache && time - cache.fetchedAt < CACHE_MS) return cache.document;

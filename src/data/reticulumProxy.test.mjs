@@ -436,6 +436,10 @@ test('[reticulum-source-011] reports a listener that is not set or not local and
     ['172.016.0.1:8081', 'Reticulum listener address not allowed'],
     ['10.0.0.01:8081', 'Reticulum listener address not allowed'],
     ['10.00.0.1:8081', 'Reticulum listener address not allowed'],
+    ['10.0.0.08:8081', 'Reticulum listener address not allowed'],
+    ['192.168.0.09:8081', 'Reticulum listener address not allowed'],
+    ['11.20.0.1:8081', 'Reticulum listener address not allowed'],
+    ['11.168.0.1:8081', 'Reticulum listener address not allowed'],
   ];
   for (const [value, reason] of unusable) {
     const calls = [];

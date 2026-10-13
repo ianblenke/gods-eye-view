@@ -86,7 +86,7 @@ Origin: spec-first
 - **AND** the provider sends no request to the listener
 
 ### Requirement: Source address
-The provider MUST read the listener only at a local address that the operator sets. A local address is a `host:port` with an IPv4 loopback host, an IPv4 private host, `localhost` or a `.local` name. A loopback host is in 127.0.0.0/8. A private host is in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16. A host with a part that has a leading zero and more digits, such as `010.0.0.1`, is not a local address.
+The provider MUST read the listener only at a local address that the operator sets. A local address is a `host:port` with an IPv4 loopback host, an IPv4 private host, `localhost` or a `.local` name. A loopback host is in 127.0.0.0/8. A private host is in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16. An IPv4 host with a part that has a leading zero and more digits, such as `010.0.0.1`, is not a local address.
 Origin: spec-first
 
 #### Scenario: Report a listener that is not set or not local `reticulum-source-011`
