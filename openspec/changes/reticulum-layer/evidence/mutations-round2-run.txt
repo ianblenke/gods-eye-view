@@ -1,8 +1,9 @@
-Supplement run of 10 named faults, 2026-10-13.
-The run was on the code and test files of the commit e5ddf643. The run started before that commit, on the same files. Later commits change evidence files and documents only. The image is gods-eye-view:local. The command is the one of mutations-run.txt: docker exec <container> sh -c "env -u NODE_ENV timeout 60 node --test --test-reporter=spec src/layers/reticulum/*.test.mjs". Baseline without a fault: 21 tests, 21 pass, 0 fail.
+Supplement run of 13 named faults, 2026-10-13.
+The run was on the code and test files of the commit 078b9ff8, the same files as the run of the 221 faults in mutations-run.txt. Later commits change evidence files, documents and trace files only. The image is gods-eye-view:local. The command is the one of mutations-run.txt: docker exec <container> sh -c "env -u NODE_ENV timeout 60 node --test --test-reporter=spec src/layers/reticulum/*.test.mjs". Baseline without a fault: 21 tests, 21 pass, 0 fail.
 Why (1): pre-review 1 found that no fault targeted scenario 013 (a stale list keeps its points). It also found that no fault changed the disposition of the share registry. The corrections of that pre-review added a sentence and an assertion for the layer without getAnalystRecords. They also added three sentences to scenario 017: the catalog order, the source contract and the message for a missing source. Test 017 had the assertions for these three sentences before.
-Why (2): pre-review 2 found that no fault changed that message. Pre-review 3 found that no fault cleared the labels on an error. It also found that test 014 did not read the overlay source. The last fault of the list clears the labels on an error, and test 014 now reads the overlay source. The 221 faults of mutations.txt ran before these changes.
-Why (3): round 1 of the formal review found that no test input of scenario 005 had a field outside the list, so a fault that copies every field of the record would survive. The test has such fields now (in the record and in the radio), and the last two faults of the list copy every field.
+Why (2): pre-review 2 found that no fault changed that message. Pre-review 3 found that no fault cleared the labels on an error. It also found that test 014 did not read the overlay source. The faults "Change the text of the error for a missing source" and "Clear the labels on an error" answer these two findings, and test 014 now reads the overlay source.
+Why (3): round 1 of the formal review found that no test input of scenario 005 had a field outside the list, so a fault that copies every field of the record would survive. The test has such fields now (in the record and in the radio), and the faults "Copy every field of the record" and "Copy every field of the radio" check it.
+Why (4): pre-review 6 found that the radio test used only the value undefined for a radio number, and that no fault changed the fallback of meta.total. Pre-review 7 found that no test used a reason that cleans to the empty text for an unavailable document. The last three faults of the list answer these findings.
 Lines: fault | exit status | failing tests
 Treat a stale list as unavailable | exit 1 | failing tests: [reticulum-layer-013]
 Show no point for a stale list | exit 1 | failing tests: [reticulum-layer-013]
@@ -14,5 +15,8 @@ Change the text of the error for a missing source | exit 1 | failing tests: [ret
 Clear the labels on an error | exit 1 | failing tests: [reticulum-layer-014]
 Copy every field of the record | exit 1 | failing tests: [reticulum-layer-005]
 Copy every field of the radio | exit 1 | failing tests: [reticulum-layer-005]
+Accept a radio number that is not finite | exit 1 | failing tests: [reticulum-layer-005]
+Use the length of the list as the total | exit 1 | failing tests: [reticulum-layer-008]
+Test the raw reason for the default | exit 1 | failing tests: [reticulum-layer-008]
 
-Two runs gave the same lines (the command diff of the two files, with the exit status removed, gave no output). The script is in mutations-round2-script.txt as text; it imports the script of the first run (mutations-script.txt).
+Two runs gave the same lines (the command diff of the two files, with the exit status removed, gave no output). The command grep -c 'NONE\|untagged\|TIMEOUT' on the run file gave 0, and the target scenario of each fault is among the failing tests (a Python check found 0 problems). The script is in mutations-round2-script.txt as text; it imports the script of the first run (mutations-script.txt).

@@ -12,6 +12,9 @@ f('017', 'Change the text of the error for a missing source', 'comp', "super(`Da
 f('014', 'Clear the labels on an error', 'idx', "        if (_request === request)\n          _lastError = error?.message || 'Reticulum source unavailable';", "        if (_request === request) {\n          overlayHost.clearSource(SOURCE_ID);\n          _lastError = error?.message || 'Reticulum source unavailable';\n        }")
 f('005', 'Copy every field of the record', 'rec', "  return {\n    id,\n    type,\n    name:", "  return {\n    ...record,\n    id,\n    type,\n    name:")
 f('005', 'Copy every field of the radio', 'rec', "  return { frequency, bandwidth, spreadingFactor, codingRate };", "  return { ...radio, frequency, bandwidth, spreadingFactor, codingRate };")
+f('005', 'Accept a radio number that is not finite', 'rec', ".every(finite))", ".every((value) => value !== undefined))")
+f('008', 'Use the length of the list as the total', 'rec', "        Number.isSafeInteger(total) && total >= 0\n          ? total\n          : payload.interfaces.length,", "        payload.interfaces.length,")
+f('008', 'Test the raw reason for the default', 'rec', "      reason:\n        clean(payload.reason, REASON_MAX) ||\n        (unavailable ? DEFAULT_REASON : null),", "      reason:\n        payload.reason == null || payload.reason === ''\n          ? unavailable\n            ? DEFAULT_REASON\n            : null\n          : clean(payload.reason, REASON_MAX),")
 if __name__ == '__main__':
     D = base.D0
     for n in ('faults.txt', 'faults-run.txt'):
