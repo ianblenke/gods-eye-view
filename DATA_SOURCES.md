@@ -80,6 +80,8 @@ The route `/api/reticulum` reads the list from your listener at `RETICULUM_LISTE
 
 The listener is a separate container. `make up-reticulum` starts it with the app, and `make up-codex-reticulum` starts it with the app that uses the host network. The listener sends only 12 fields of each interface and publishes no port. Its node connects out to public Reticulum nodes, and the operators of those nodes see your IP address. See `docs/fork/reticulum-docker.md`.
 
+The layer "Reticulum Network" shows each interface that has a position as a point on the globe. The color shows the type, and the size and the alpha show the status. The names come from anonymous operators, so the browser cleans each name again, and the layer is not in voice.
+
 The data is infrastructure that the operator chose to publish. The operator sets the position and nobody checks it. A name is free text, so it can hold an address that the operator typed. The `id` is a hash of the node identity and the name, so it is a stable pseudonym of the node.
 
 The Reticulum software has its own licence. The licence forbids use in any system that can purposefully harm people. It also forbids use of the software in the creation of a training dataset for AI. The software runs as a separate service and is not part of this repository. The map feed `rmap.world` states no terms of use, so this project does not use it. See `openspec/specs/reticulum-source/spec.md`.

@@ -93,42 +93,42 @@ function normalizeInterface(record) {
 /**
  * Keep the valid interfaces of a document of the schema version 1.
  *
- * @param {unknown} document The parsed answer of the route.
+ * @param {unknown} payload The parsed answer of the route.
  * @returns {{interfaces: object[], meta: object}|null} Null when the value is
  *   not a document of the schema version 1 with a list of interfaces.
  */
-export function normalizeReticulumSnapshot(document) {
+export function normalizeReticulumSnapshot(payload) {
   if (
-    !document ||
-    typeof document !== 'object' ||
-    document.schemaVersion !== 1 ||
-    !Array.isArray(document.interfaces)
+    !payload ||
+    typeof payload !== 'object' ||
+    payload.schemaVersion !== 1 ||
+    !Array.isArray(payload.interfaces)
   )
     return null;
   const interfaces = [];
   const seen = new Set();
-  for (const record of document.interfaces) {
+  for (const record of payload.interfaces) {
     if (interfaces.length >= MAX_INTERFACES) break;
     const item = normalizeInterface(record);
     if (!item || seen.has(item.id)) continue;
     seen.add(item.id);
     interfaces.push(item);
   }
-  const unavailable = document.unavailable === true;
-  const total = document.counts?.total;
+  const unavailable = payload.unavailable === true;
+  const total = payload.counts?.total;
   return {
     interfaces,
     meta: {
       unavailable,
-      stale: document.stale === true,
+      stale: payload.stale === true,
       reason:
-        clean(document.reason, REASON_MAX) ||
+        clean(payload.reason, REASON_MAX) ||
         (unavailable ? DEFAULT_REASON : null),
-      fetchedAt: validDate(document.fetchedAt) ? document.fetchedAt : null,
+      fetchedAt: validDate(payload.fetchedAt) ? payload.fetchedAt : null,
       total:
         Number.isSafeInteger(total) && total >= 0
           ? total
-          : document.interfaces.length,
+          : payload.interfaces.length,
     },
   };
 }

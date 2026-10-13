@@ -129,7 +129,8 @@ test('[reticulum-layer-001] describes the layer and refuses a missing source or 
     TypeError,
   );
   assert.throws(
-    () => createReticulumLayer({ source: { getSnapshot() {} }, overlayHost: null }),
+    () =>
+      createReticulumLayer({ source: { getSnapshot() {} }, overlayHost: null }),
     TypeError,
   );
 });
@@ -247,9 +248,7 @@ test('[reticulum-layer-012] shows no point for an unavailable listener and gives
 });
 
 test('[reticulum-layer-013] keeps the points of a stale list', async () => {
-  const h = enabled(async () =>
-    snapshot(THREE.slice(0, 2), { stale: true }),
-  );
+  const h = enabled(async () => snapshot(THREE.slice(0, 2), { stale: true }));
   assert.equal(await h.layer.update(h.viewer), true);
   assert.equal(entitiesOf(h).length, 2);
   const stats = h.layer.getStats();
