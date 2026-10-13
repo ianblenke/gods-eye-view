@@ -80,7 +80,7 @@ Origin: spec-first
 - **AND** the provider sends no request to the listener
 
 #### Scenario: Refuse a query or a sub-path `reticulum-source-010`
-- **WHEN** a GET request has a query, or has a path other than `/` and the empty path, such as `/other`
+- **WHEN** a GET request has a query, or has a path that is neither `/` nor the empty path, such as `/other`
 - **THEN** the status is 400 with the error `invalid_reticulum_query`
 - **AND** the provider sends no request to the listener
 
@@ -111,10 +111,10 @@ Origin: spec-first
 - **AND** `counts.total` counts all the entries of the list
 
 ### Requirement: Cache and shared request
-The provider MUST cache the document for 60 seconds. Requests that come while the first waits MUST share one request.
+The provider MUST cache the document for 60 seconds. Requests that come while a request waits for the listener MUST share that request.
 Origin: spec-first
 
-#### Scenario: Cache the document for 60 seconds `reticulum-source-013`
+#### Scenario: Cache the document and share one request `reticulum-source-013`
 - **WHEN** a second request comes while the first waits for the listener, and a third comes less than 60 seconds after the first
 - **THEN** the provider sends one request to the listener for all three
 - **AND** a fourth request that comes 60 seconds after the first gets a new request
