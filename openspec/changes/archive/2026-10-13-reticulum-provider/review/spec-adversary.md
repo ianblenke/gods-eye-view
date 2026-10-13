@@ -1,0 +1,14 @@
+Verdict: PASS
+Commit read: b7a71a1bc5c0bfea6acd207b08e8a98a7b5512d7 (code ffbd9f04). Round 2, scope diff 821ca9a9. I read the final files again. No critical and no major finding.
+- [ ] FINDING minor openspec/specs/reticulum-source/spec.md:113 The file order of the scenarios is 012, 014, 013 (the archive spec has the same order). You accepted it by name; it stays open as a minor. No gate reads the order.
+Checked, no finding:
+- Round 1 major fixed. Spec.md:92 names the IPv4 hosts and the ranges. Reticulum.js:236 refuses a host when `urlHostOf(address)` differs from the host text, and `urlHostOf` (:147-153) returns null when the URL parser throws. Any leading-zero part is read as octal and written without the zero, so it always differs from the text. Test 011 refuses 010.0.0.1, 172.016.0.1, 10.0.0.01, 10.00.0.1, 10.0.0.08 and 192.168.0.09. The 10.0.0.08 and 192.168.0.09 rows reach the catch branch; the provider has 100% coverage.
+- Test 011 also refuses [::1], 100.64.0.1, 11.0.0.1, 172.15 and 172.32, 192.169, 11.20.0.1 and 11.168.0.1. It accepts 127.1.2.3, 10.1.2.3, 172.16.0.1 and 172.31.255.254. This agrees with tapAddress.js:79-93 and :125-127.
+- Faults: 137 rows (mutations-run.txt:4-140); the 011 faults fail 011 only; "Let the URL error escape" and the two faults that drop the first part (11.20, 11.168) cover the parts I named in pre-review 5. Lines 146-147 count 11 and 3.
+- Round 1 minors: stalled-body test (test:513-525, :546) with its fault; Content-Type and status 200 ANDs; the faults for the empty and slash paths name 008; Known limit `names` states the UTF-16 cut and the format characters (both true to reticulum.js:58-60); proposal.md:15 says "a note and one setting".
+- Known limit `address` (proposal.md:74) is true: local-receivers.js:62 and :73 give the rule a host that the URL parser has already read, so they refuse 010.0.0.1.
+- Privacy path and source rules on the final code: allowlist (reticulum.js:92-109), `redirect: 'error'` (:199), 8 s timer cleared in `finally` (:207-209), 4 MiB cap, 60 s cache, shared request, stale answer for 2 hours, constant reasons. No new output path.
+- Trace: two history lines name this change (history.jsonl:2698-2699, append-only); the gate says 940 verified, 0 open, 0 untrue; task 4.1 is ticked and the ratchet ran; 4.2-4.4 stay open until review.md.
+- Prose: spec.md:92 has 22 words and 6 sentences with the Origin line (the limit); Known limits `names` and `address` have 6 sentences; no banned word in the spec, change documents, test titles or new DATA_SOURCES text.
+Note for review.md: your brief says 10 faults on the shared rule; the evidence has 12 (rows 128-137 and 139-140). Write 12, or count again with a command.
+Could not check: the ratchet output beyond your gate lines; the two-run claim beyond your diff command; the rmap.world claims.

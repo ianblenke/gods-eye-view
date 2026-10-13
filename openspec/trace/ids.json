@@ -3789,6 +3789,76 @@
     "since": "2026-10-07",
     "change": "fix-recent-imagery-defects"
   },
+  "reticulum-source-001": {
+    "hash": "443d736330f0203c29c3cfc78878cba1df3309af8300dd9f91b225d9098cf4b0",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-002": {
+    "hash": "3d5d7924eec51d976ed7e00f9eeab9977c52a82bf1500bdbcc98865d38f420bc",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-003": {
+    "hash": "a8441eeef49be07ca569682aa4a2b412bd092c5744b15da2f1dbce21ca2429eb",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-004": {
+    "hash": "6190f77599e53848525da7b3fa4c26febf4a285a10bcd76ca0e68f9c103f5eb4",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-005": {
+    "hash": "c1e20b0b479f53ab3768859b3e70190cbcca8f0ad00e22f0de7153aa0126047c",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-006": {
+    "hash": "9bc43d086b37d84c51f1b4868acc9664ae66a68aa3c20a3785d0ce0455e5e6d8",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-007": {
+    "hash": "6d6d2523f135ff3928156150a46dddd5383667a255bd643aae5a7e2263564f75",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-008": {
+    "hash": "91dfd35e35ef988d000989f024aac14a87fdbb97746a3f4ff1a42d371f246be3",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-009": {
+    "hash": "1f3039ae15d69ce693ece0762b66881e4fddacdbc083d69b9cba7bcd1cd7d29e",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-010": {
+    "hash": "91d2bb3d77cc4452593d818d668c91834b4f1b7ae53fc9e6518fe78e5bb5c3d9",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-011": {
+    "hash": "784f81b434fa9171af12cc02a0c76e869281df777a9ee71a3508e2ec22b98c52",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-012": {
+    "hash": "f89746a920c37a08327ff93372931340442cf75bd62bf2870787755cc717c233",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-013": {
+    "hash": "5d2f3277e68625c5dd9543c7db8450fb6e1f4352c128821106b05e1bcd910e5b",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
+  "reticulum-source-014": {
+    "hash": "3d19cb62e6cdafdcb24a8245ea86a73ba9795e74a003c420c98728c0727d4014",
+    "since": "2026-10-13",
+    "change": "reticulum-provider"
+  },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",
     "since": "2026-09-14",

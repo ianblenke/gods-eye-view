@@ -1,0 +1,10 @@
+Supplement of review round 2 (rule 13), 2026-10-13, host Node v26.8.2. The STE reviewer found that no named fault removes the arms of the shared rule for 192.168/16, localhost and a .local name. Each fault below changed src/data/tapAddress.js of the commit b7a71a1bc5c0bfea6acd207b08e8a98a7b5512d7; the script restores the file and checks that it equals the original.
+Command for each fault: node --test --test-reporter=spec src/data/reticulumProxy.test.mjs (limit 90 seconds). Baseline without a fault: 14 tests, 14 pass, 0 fail.
+The first version of the fault 'Refuse the host 192.168' left a trailing operator in the file, so the whole test file failed to load and no test name showed. The fault below replaces the arm with false.
+Lines: fault | exit status | failing tests
+Refuse the host 192.168 (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+Refuse localhost (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+Refuse a .local name (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+
+Two runs of the 3 faults gave the same lines: the command diff <(sed 's/ | exit [0-9-]* | / | /' run1) <(sed 's/ | exit [0-9-]* | / | /' run2) gave no output.
+The 137 faults of mutations-run.txt are not run again. None of them failed without a test name: the command grep -c untagged on the run file gave 0.

@@ -1,0 +1,213 @@
+import subprocess, re, os, signal
+R = '/home/ianblenke/docker/gev-work/reticulum-provider/'
+F = 'server/providers/reticulum.js'
+orig = open(R + F).read()
+TAP = 'src/data/tapAddress.js'
+orig_tap = open(R + TAP).read()
+
+def rept(old, new):
+    assert orig_tap.count(old) == 1, (old[:60], orig_tap.count(old))
+    return orig_tap.replace(old, new)
+
+def rep(old, new, count=1):
+    assert orig.count(old) == count, (old[:60], orig.count(old))
+    return orig.replace(old, new)
+
+faults = [
+ # 001 allowed fields
+ ('reticulum-source-001', 'Pass every field of the record through', lambda: rep("      id: String(record.discovery_hash).slice(0, 16),", "      ...record,\n      id: String(record.discovery_hash).slice(0, 16),")),
+ ('reticulum-source-001', 'Cut the id to 15 characters', lambda: rep(".slice(0, 16)", ".slice(0, 15)")),
+ ('reticulum-source-001', 'Keep the word Interface in the type', lambda: rep("value.replace(/Interface$/, '').toLowerCase() || null", "value.toLowerCase() || null")),
+ ('reticulum-source-001', 'Keep the case of the type', lambda: rep("value.replace(/Interface$/, '').toLowerCase() || null", "value.replace(/Interface$/, '') || null")),
+ ('reticulum-source-004', 'Allow a longer type name', lambda: rep("{1,40}", "{1,80}")),
+ ('reticulum-source-004', 'Allow a type with other characters', lambda: rep("/^[A-Za-z0-9]{1,40}$/", "/^.{1,40}$/")),
+ ('reticulum-source-001', 'Give the radio to every type', lambda: rep("  if (type !== 'rnode') return null;\n", "")),
+ ('reticulum-source-001', 'Accept a radio with a missing number', lambda: rep("[frequency, bandwidth, sf, cr].every(finite)", "[frequency, bandwidth, sf, cr].some(finite)")),
+ ('reticulum-source-001', 'Keep the height with decimals', lambda: rep("Math.round(record.height)", "record.height")),
+ ('reticulum-source-001', 'Allow 256 hops', lambda: rep("record.hops <= MAX_HOPS", "record.hops <= 256")),
+ ('reticulum-source-001', 'Allow negative hops', lambda: rep("record.hops >= 0 &&", "")),
+ ('reticulum-source-001', 'Allow a hop count that is not an integer', lambda: rep("Number.isInteger(record.hops)", "finite(record.hops)")),
+ ('reticulum-source-004', 'Accept a short discovery hash', lambda: rep("/^[0-9a-f]{64}$/", "/^[0-9a-f]{8,}$/")),
+ ('reticulum-source-004', 'Accept an uppercase discovery hash', lambda: rep("/^[0-9a-f]{64}$/", "/^[0-9a-fA-F]{64}$/")),
+ ('reticulum-source-004', 'Accept a time that is not a number', lambda: rep("  if (!finite(record.last_heard)) return null;\n", "")),
+ ('reticulum-source-004', 'Accept a time that is not a date', lambda: rep("  if (Number.isNaN(heardAt.getTime())) return null;\n", "")),
+ ('reticulum-source-004', 'Accept a record that is not an object', lambda: rep("  if (!record || typeof record !== 'object') return null;\n", "")),
+ # 002 and 003 sensitive fields (send each field through under its own name)
+ ('reticulum-source-002', 'Add the config entry to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      config_entry: record.config_entry,\n")),
+ ('reticulum-source-002', 'Add the host address to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      reachable_on: record.reachable_on,\n")),
+ ('reticulum-source-002', 'Add the port to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      port: record.port,\n")),
+ ('reticulum-source-002', 'Add the network name to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      ifac_netname: record.ifac_netname,\n")),
+ ('reticulum-source-002', 'Add the network key to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      ifac_netkey: record.ifac_netkey,\n")),
+ ('reticulum-source-002', 'Add the contact address to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      operator_lxmf_address: record.operator_lxmf_address,\n")),
+ ('reticulum-source-003', 'Add the transport id to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      transport_id: record.transport_id,\n")),
+ ('reticulum-source-003', 'Add the network id to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      network_id: record.network_id,\n")),
+ ('reticulum-source-003', 'Add the stamp to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      stamp: record.stamp,\n")),
+ ('reticulum-source-003', 'Add the stamp value to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      value: record.value,\n")),
+ ('reticulum-source-003', 'Add the software name to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      impl_name: record.impl_name,\n")),
+ ('reticulum-source-003', 'Add the software version to the record', lambda: rep("      radio: radioOf(record, type),\n", "      radio: radioOf(record, type),\n      version: record.version,\n")),
+ # 004 position
+ ('reticulum-source-005', 'Round to two decimals', lambda: rep("Math.round(value * 1000) / 1000 + 0", "Math.round(value * 100) / 100 + 0")),
+ ('reticulum-source-005', 'Do not round the position', lambda: rep("Math.round(value * 1000) / 1000 + 0", "value")),
+ ('reticulum-source-005', 'Keep negative zero', lambda: rep("Math.round(value * 1000) / 1000 + 0", "Math.round(value * 1000) / 1000")),
+ ('reticulum-source-005', 'Accept a latitude above 90', lambda: rep("latitude < -90 || latitude > 90", "latitude < -90")),
+ ('reticulum-source-005', 'Accept a latitude below -90', lambda: rep("latitude < -90 || latitude > 90", "latitude > 90")),
+ ('reticulum-source-005', 'Accept a longitude above 180', lambda: rep("longitude < -180 || longitude > 180", "longitude < -180")),
+ ('reticulum-source-005', 'Accept a longitude below -180', lambda: rep("longitude < -180 || longitude > 180", "longitude > 180")),
+ ('reticulum-source-005', 'Refuse a latitude of exactly 90', lambda: rep("latitude > 90", "latitude >= 90")),
+ ('reticulum-source-005', 'Refuse a longitude of exactly -180', lambda: rep("longitude < -180", "longitude <= -180")),
+ ('reticulum-source-005', 'Accept the pair zero and zero', lambda: rep("  if (latitude === 0 && longitude === 0) return null;\n", "")),
+ ('reticulum-source-005', 'Refuse a latitude of zero alone', lambda: rep("latitude === 0 && longitude === 0", "latitude === 0 || longitude === 0")),
+ ('reticulum-source-005', 'Accept a latitude that is not a number', lambda: rep("!finite(latitude) || !finite(longitude)", "!finite(longitude)")),
+ ('reticulum-source-005', 'Accept a longitude that is not a number', lambda: rep("!finite(latitude) || !finite(longitude)", "!finite(latitude)")),
+ ('reticulum-source-005', 'Accept a text number as a position', lambda: rep("const finite = (value) => typeof value === 'number' && Number.isFinite(value);", "const finite = (value) => Number.isFinite(Number(value)) && value !== null && value !== undefined;")),
+ ('reticulum-source-005', 'Count only the listed records in the total', lambda: rep("counts: { total: list.length,", "counts: { total: interfaces.length,")),
+ # 005 age
+ ('reticulum-source-006', 'Mark unknown after 25 hours', lambda: rep("const UNKNOWN_AFTER_MS = DAY;", "const UNKNOWN_AFTER_MS = DAY + HOUR;")),
+ ('reticulum-source-006', 'Mark unknown from exactly 24 hours', lambda: rep("age > UNKNOWN_AFTER_MS", "age >= UNKNOWN_AFTER_MS")),
+ ('reticulum-source-006', 'Mark stale after 2 days', lambda: rep("const STALE_AFTER_MS = 3 * DAY;", "const STALE_AFTER_MS = 2 * DAY;")),
+ ('reticulum-source-006', 'Mark stale from exactly 3 days', lambda: rep("age > STALE_AFTER_MS", "age >= STALE_AFTER_MS")),
+ ('reticulum-source-006', 'Drop after 8 days', lambda: rep("const DROP_AFTER_MS = 7 * DAY;", "const DROP_AFTER_MS = 8 * DAY;")),
+ ('reticulum-source-006', 'Drop from exactly 7 days', lambda: rep("age > DROP_AFTER_MS", "age >= DROP_AFTER_MS")),
+ ('reticulum-source-006', 'Never drop an old record', lambda: rep("  if (age > DROP_AFTER_MS) return null;\n", "")),
+ ('reticulum-source-006', 'Read the time in milliseconds', lambda: rep("Math.round(record.last_heard * 1000)", "Math.round(record.last_heard)")),
+ # 006 names and size
+ ('reticulum-source-007', 'Keep control characters in the name', lambda: rep("/[\\u0000-\\u001f\\u007f-\\u009f<>]/g", "/[<>]/g")),
+ ('reticulum-source-007', 'Keep the delete character in the name', lambda: rep("/[\\u0000-\\u001f\\u007f-\\u009f<>]/g", "/[\\u0000-\\u001f\\u0080-\\u009f<>]/g")),
+ ('reticulum-source-007', 'Keep angle brackets in the name', lambda: rep("/[\\u0000-\\u001f\\u007f-\\u009f<>]/g", "/[\\u0000-\\u001f\\u007f-\\u009f]/g")),
+ ('reticulum-source-007', 'Keep the first control character', lambda: rep("/[\\u0000-\\u001f\\u007f-\\u009f<>]/g", "/[\\u0001-\\u001f\\u007f-\\u009f<>]/g")),
+ ('reticulum-source-007', 'Cut the name at 81 characters', lambda: rep("const NAME_MAX = 80;", "const NAME_MAX = 81;")),
+ ('reticulum-source-007', 'Do not cut the name', lambda: rep(".slice(0, NAME_MAX)", "")),
+ ('reticulum-source-007', 'Do not trim the name', lambda: rep("          .trim()\n          .slice(0, NAME_MAX)\n          .trim()", "          .slice(0, NAME_MAX)")),
+ ('reticulum-source-007', 'Do not trim after the cut', lambda: rep("          .slice(0, NAME_MAX)\n          .trim()", "          .slice(0, NAME_MAX)")),
+ ('reticulum-source-007', 'Accept a name that is not text', lambda: rep("typeof value === 'string'\n      ?", "true\n      ?")),
+ ('reticulum-source-007', 'Leave an empty name empty', lambda: rep("return text || `Unnamed ${type}`;", "return text;")),
+ ('reticulum-source-007', 'Keep 5001 interfaces', lambda: rep("const MAX_INTERFACES = 5000;", "const MAX_INTERFACES = 5001;")),
+ ('reticulum-source-007', 'Keep 4999 interfaces', lambda: rep("const MAX_INTERFACES = 5000;", "const MAX_INTERFACES = 4999;")),
+ ('reticulum-source-007', 'Sort the oldest first', lambda: rep("b.heardMs - a.heardMs", "a.heardMs - b.heardMs")),
+ ('reticulum-source-007', 'Do not sort', lambda: rep("  kept.sort((a, b) => b.heardMs - a.heardMs);\n", "")),
+ ('reticulum-source-008', 'Count the types wrongly', lambda: rep("(Object.hasOwn(byType, type) ? byType[type] : 0) + 1", "1")),
+ ('reticulum-source-008', 'Count a type that is named like an inherited property wrongly', lambda: rep("(Object.hasOwn(byType, type) ? byType[type] : 0) + 1", "(byType[type] ?? 0) + 1")),
+ # 007 and 008 route
+ ('reticulum-source-008', 'Send a different schema version', lambda: rep("schemaVersion: 1,", "schemaVersion: 2,")),
+ ('reticulum-source-008', 'Send a different source name', lambda: rep("const SOURCE = 'Reticulum interface discovery';", "const SOURCE = 'Reticulum';")),
+ ('reticulum-source-008', 'Allow the browser to cache the answer', lambda: rep("'Cache-Control': 'no-store',", "'Cache-Control': 'max-age=60',")),
+ ('reticulum-source-008', 'Send the answer as text', lambda: rep("'Content-Type': 'application/json',", "'Content-Type': 'text/plain',")),
+ ('reticulum-source-008', 'Mark the answer stale', lambda: rep("    stale: false,\n    unavailable: false,", "    stale: true,\n    unavailable: false,")),
+ ('reticulum-source-008', 'Mark the answer unavailable', lambda: rep("    stale: false,\n    unavailable: false,", "    stale: false,\n    unavailable: true,")),
+ ('reticulum-source-008', 'Use another route path', lambda: rep("middlewares.use('/api/reticulum', handler);\n    },\n    configurePreviewServer", "middlewares.use('/api/reticulum2', handler);\n    },\n    configurePreviewServer")),
+ ('reticulum-source-008', 'Use another route path in the preview server', lambda: rep("middlewares.use('/api/reticulum', handler);\n    },\n  };", "middlewares.use('/api/reticulum2', handler);\n    },\n  };")),
+ ('reticulum-source-009', 'Allow any method', lambda: rep("    if (req.method !== 'GET') return json(405, { error: 'method_not_allowed' });\n", "")),
+ ('reticulum-source-010', 'Allow a query', lambda: rep("    if (req.url !== '/' && req.url !== '')\n      return json(400, { error: 'invalid_reticulum_query' });\n", "")),
+ ('reticulum-source-008', 'Refuse the empty path', lambda: rep("req.url !== '/' && req.url !== ''", "req.url !== '/'")),
+ ('reticulum-source-008', 'Refuse the slash path', lambda: rep("req.url !== '/' && req.url !== ''", "req.url !== ''")),
+ # 009 source rules
+ ('reticulum-source-011', 'Treat a blank setting as not allowed', lambda: rep("String(env.RETICULUM_LISTENER ?? '').trim()", "String(env.RETICULUM_LISTENER ?? '')")),
+ ('reticulum-source-011', 'Read a missing setting as the text undefined', lambda: rep("String(env.RETICULUM_LISTENER ?? '').trim()", "String(env.RETICULUM_LISTENER).trim()")),
+ ('reticulum-source-011', 'Use another variable name', lambda: rep("env.RETICULUM_LISTENER ?? ''", "env.RETICULUM_HOST ?? ''")),
+ ('reticulum-source-011', 'Skip the address check', lambda: rep("    if (!address || urlHostOf(address) !== address.host)\n      return unavailable('Reticulum listener address not allowed');\n", "")),
+ ('reticulum-source-008', 'Use another path on the listener', lambda: rep("'/interfaces.json'", "'/status'")),
+ ('reticulum-source-011', 'Say the same reason for both cases', lambda: rep("unavailable('Reticulum listener address not allowed')", "unavailable('Reticulum listener not configured')")),
+ # 010 failures
+ ('reticulum-source-012', 'Accept an error status', lambda: rep("      if (!response.ok) throw new Error('listener_status');\n", "")),
+ ('reticulum-source-012', 'Accept an answer that is not a list', lambda: rep("      if (!Array.isArray(list)) throw new Error('listener_format');\n", "")),
+ ('reticulum-source-012', 'Allow a larger answer', lambda: rep("const MAX_BYTES = 4 * 1024 * 1024;", "const MAX_BYTES = 8 * 1024 * 1024;")),
+ ('reticulum-source-012', 'Wait 9 seconds', lambda: rep("const TIMEOUT_MS = 8000;", "const TIMEOUT_MS = 9000;")),
+ ('reticulum-source-012', 'Never stop the request', lambda: rep("setTimer(() => controller.abort(), TIMEOUT_MS)", "setTimer(() => {}, TIMEOUT_MS)")),
+ ('reticulum-source-012', 'Never clear the timer', lambda: rep("      clearTimer(timer);\n", "")),
+ ('reticulum-source-012', 'Serve the old document for 3 hours', lambda: rep("const STALE_SERVE_MS = 2 * HOUR;", "const STALE_SERVE_MS = 3 * HOUR;")),
+ ('reticulum-source-012', 'Serve the old document for 1 hour', lambda: rep("const STALE_SERVE_MS = 2 * HOUR;", "const STALE_SERVE_MS = HOUR;")),
+ ('reticulum-source-012', 'Serve the old document for exactly 2 hours', lambda: rep("time - cache.fetchedAt < STALE_SERVE_MS", "time - cache.fetchedAt <= STALE_SERVE_MS")),
+ ('reticulum-source-012', 'Do not mark the old document stale', lambda: rep("return { ...cache.document, stale: true };", "return cache.document;")),
+ ('reticulum-source-012', 'Cache a failed answer', lambda: rep("      return unavailable('Reticulum listener unavailable');\n", "      cache = { fetchedAt: time, document: unavailable('Reticulum listener unavailable') };\n      return cache.document;\n")),
+ ('reticulum-source-012', 'Say another reason for a failure', lambda: rep("unavailable('Reticulum listener unavailable')", "unavailable('Reticulum listener not configured')")),
+ # 011 cache
+ ('reticulum-source-013', 'Cache for 59 seconds', lambda: rep("const CACHE_MS = 60_000;", "const CACHE_MS = 59_000;")),
+ ('reticulum-source-013', 'Cache for 61 seconds', lambda: rep("const CACHE_MS = 60_000;", "const CACHE_MS = 61_000;")),
+ ('reticulum-source-013', 'Cache for exactly 60 seconds', lambda: rep("time - cache.fetchedAt < CACHE_MS", "time - cache.fetchedAt <= CACHE_MS")),
+ ('reticulum-source-013', 'Never cache', lambda: rep("    if (cache && time - cache.fetchedAt < CACHE_MS) return cache.document;\n", "")),
+ ('reticulum-source-013', 'Never refresh the cache', lambda: rep("      cache = { fetchedAt: time, document };\n", "      cache ??= { fetchedAt: time, document };\n")),
+
+ # added after pre-review 1
+ ('reticulum-source-007', 'Keep the C1 control characters in the name', lambda: rep("/[\\u0000-\\u001f\\u007f-\\u009f<>]/g", "/[\\u0000-\\u001f\\u007f<>]/g")),
+ ('reticulum-source-007', 'Start the C1 range at U+0081', lambda: rep("\\u007f-\\u009f", "\\u007f\\u0081-\\u009f")),
+ ('reticulum-source-007', 'End the C1 range at U+009E', lambda: rep("\\u007f-\\u009f", "\\u007f-\\u009e")),
+ ('reticulum-source-007', 'End the C1 range at the no-break space', lambda: rep("\\u007f-\\u009f", "\\u007f-\\u00a0")),
+ ('reticulum-source-001', 'Keep a height that is not a number', lambda: rep("finite(record.height) ? Math.round(record.height) : null", "Math.round(record.height)")),
+ ('reticulum-source-012', 'Follow a redirect', lambda: rep("        redirect: 'error',\n", "")),
+ ('reticulum-source-012', 'Follow a redirect by the option follow', lambda: rep("redirect: 'error'", "redirect: 'follow'")),
+ ('reticulum-source-014', 'Refuse a list of exactly 4 MiB', lambda: rep("const MAX_BYTES = 4 * 1024 * 1024;", "const MAX_BYTES = 4 * 1024 * 1024 - 1;")),
+ ('reticulum-source-012', 'Accept a list of 4 MiB and one byte', lambda: rep("const MAX_BYTES = 4 * 1024 * 1024;", "const MAX_BYTES = 4 * 1024 * 1024 + 1;")),
+ ('reticulum-source-013', 'Send one request for each caller', lambda: rep("    return coalesceProxyRequest(inFlight, 'interfaces', () =>\n      refresh(address, time),\n    ).promise;\n", "    return refresh(address, time);\n")),
+
+ # added after pre-review 2
+ ('reticulum-source-004', 'Count the type without the word Interface', lambda: rep("  if (typeof value !== 'string' || !/^[A-Za-z0-9]{1,40}$/.test(value))\n    return null;\n  return value.replace(/Interface$/, '').toLowerCase() || null;", "  if (typeof value !== 'string') return null;\n  const bare = value.replace(/Interface$/, '');\n  if (!/^[A-Za-z0-9]{1,40}$/.test(bare)) return null;\n  return bare.toLowerCase();")),
+ ('reticulum-source-001', 'Refuse zero hops', lambda: rep("record.hops >= 0 &&", "record.hops > 0 &&")),
+ ('reticulum-source-001', 'Change the value of the hops', lambda: rep("          ? record.hops\n", "          ? record.hops + 1\n")),
+ ('reticulum-source-001', 'Use the type as the name', lambda: rep("      name: cleanName(record.name, type),", "      name: type,")),
+ ('reticulum-source-001', 'Swap the spreading factor and the coding rate', lambda: rep("spreadingFactor: sf, codingRate: cr", "spreadingFactor: cr, codingRate: sf")),
+ ('reticulum-source-001', 'Swap the frequency and the bandwidth', lambda: rep("{ frequency, bandwidth, spreadingFactor: sf, codingRate: cr }", "{ frequency: bandwidth, bandwidth: frequency, spreadingFactor: sf, codingRate: cr }")),
+ ('reticulum-source-009', 'Ask the listener before the method is refused', lambda: rep("    if (req.method !== 'GET') return json(405, { error: 'method_not_allowed' });\n", "    if (req.method !== 'GET') {\n      await load();\n      return json(405, { error: 'method_not_allowed' });\n    }\n")),
+ ('reticulum-source-010', 'Ask the listener before the path is refused', lambda: rep("    if (req.url !== '/' && req.url !== '')\n      return json(400, { error: 'invalid_reticulum_query' });\n", "    if (req.url !== '/' && req.url !== '') {\n      await load();\n      return json(400, { error: 'invalid_reticulum_query' });\n    }\n")),
+
+ # added in review round 1
+ ('reticulum-source-012', 'Clear the timer when the headers arrive', lambda: rep("      if (!response.ok) throw new Error('listener_status');\n", "      clearTimer(timer);\n      if (!response.ok) throw new Error('listener_status');\n")),
+ ('reticulum-source-011', 'Answer 503 when the listener is unavailable', lambda: rep("    return json(200, await load());", "    const document = await load();\n    return json(document.unavailable ? 503 : 200, document);")),
+
+ # added after pre-review 4
+ ('reticulum-source-011', 'Accept a host that the URL parser reads as another address', lambda: rep("    if (!address || urlHostOf(address) !== address.host)\n", "    if (!address)\n")),
+ ('reticulum-source-011', 'Allow the host 172.32 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(a === 172 && b >= 16 && b <= 32)"), TAP),
+ ('reticulum-source-011', 'Allow the host 172.15 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(a === 172 && b >= 15 && b <= 31)"), TAP),
+ ('reticulum-source-011', 'Refuse the host 172.31 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(a === 172 && b >= 16 && b <= 30)"), TAP),
+ ('reticulum-source-011', 'Refuse the host 172.16 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(a === 172 && b >= 17 && b <= 31)"), TAP),
+ ('reticulum-source-011', 'Allow the host 100.64 (rule of the tap address)', lambda: rept("    (a === 192 && b === 168) // 192.168/16\n", "    (a === 192 && b === 168) || // 192.168/16\n    (a === 100 && b >= 64 && b <= 127)\n"), TAP),
+ ('reticulum-source-011', 'Allow the host 11.0.0.1 (rule of the tap address)', lambda: rept("    a === 10 || // 10/8\n", "    (a >= 10 && a <= 11) || // 10/8\n"), TAP),
+ ('reticulum-source-011', 'Refuse the host 10.1.2.3 (rule of the tap address)', lambda: rept("    a === 10 || // 10/8\n", ""), TAP),
+ ('reticulum-source-011', 'Allow the host 192.169 (rule of the tap address)', lambda: rept("(a === 192 && b === 168)", "(a === 192 && b >= 168)"), TAP),
+ ('reticulum-source-011', 'Refuse the loopback range except 127.0.0.1 (rule of the tap address)', lambda: rept("    a === 127 || // loopback\n", "    host === '127.0.0.1' || // loopback\n"), TAP),
+ ('reticulum-source-011', 'Allow an IPv6 host (rule of the tap address)', lambda: rept("host === 'localhost' || MDNS_RE.test(host) || isLocalIpv4(host);", "host === 'localhost' || host === '[::1]' || MDNS_RE.test(host) || isLocalIpv4(host);"), TAP),
+
+ # added after pre-review 5
+ ('reticulum-source-011', 'Let the URL error escape', lambda: rep("  try {\n    return new URL(address.origin).hostname;\n  } catch {\n    return null;\n  }\n", "  return new URL(address.origin).hostname;\n")),
+ ('reticulum-source-011', 'Allow the host 11.20 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(b >= 16 && b <= 31)"), TAP),
+ ('reticulum-source-011', 'Allow the host 11.168 (rule of the tap address)', lambda: rept("(a === 192 && b === 168)", "(b === 168)"), TAP),
+]
+cmd = 'node --test --test-reporter=spec src/data/reticulumProxy.test.mjs'
+out, log = [], []
+try:
+    for sid, desc, fn, *rest in faults:
+        target = rest[0] if rest else F
+        original = orig_tap if target == TAP else orig
+        text = fn()
+        assert text != original, desc
+        open(R + target, 'w').write(text)
+        proc = subprocess.Popen(cmd, shell=True, cwd=R, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, start_new_session=True)
+        hung = False
+        try:
+            text_out, _ = proc.communicate(timeout=90)
+        except subprocess.TimeoutExpired:
+            hung = True
+            os.killpg(proc.pid, signal.SIGKILL)
+            text_out, _ = proc.communicate()
+        class _P: pass
+        p = _P(); p.stdout = text_out; p.stderr = ''; p.returncode = -9 if hung else proc.returncode
+        names = set()
+        if hung:
+            names.add('TIMEOUT (the tests hung)')
+        for l in (p.stdout + p.stderr).splitlines():
+            l = l.strip()
+            if l.startswith('✖ ') and 'failing tests' not in l:
+                n = re.sub(r' \(\d+(\.\d+)?ms\)$', '', l[2:].strip())
+                m = re.match(r'(\[[a-z-]+-\d+\])', n)
+                names.add(m.group(1) if m else 'untagged: ' + n[:60])
+        uniq = sorted(names)
+        out.append(f'{sid} | {desc} | failing: {", ".join(uniq) if uniq else "NONE"}')
+        log.append(f'{desc} | exit {p.returncode} | failing tests: {", ".join(uniq) if uniq else "NONE"}')
+        print(log[-1], flush=True)
+        open(R + target, 'w').write(original)
+finally:
+    open(R + F, 'w').write(orig)
+    open(R + TAP, 'w').write(orig_tap)
+assert open(R + F).read() == orig
+assert open(R + TAP).read() == orig_tap
+open('/home/ianblenke/docker/gev-tools/reticulum-provider/faults.txt', 'w').write('\n'.join(out) + '\n')
+open('/home/ianblenke/docker/gev-tools/reticulum-provider/faults-run.txt', 'w').write('\n'.join(log) + '\n')

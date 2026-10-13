@@ -1,0 +1,18 @@
+Listener test of 2026-10-13 (host Node-free; Python 3.14.7, rns 1.5.7, lxmf 1.2.0 in a scratch environment outside this repository).
+The node ran as a client only: enable_transport = no, share_instance = no, discover_interfaces = yes. It connected out to five public entry points that the community directory directory.rns.recipes lists (the directory is named in the Reticulum README for this use). It announced nothing.
+Command to read the list: rnstatus --config <dir> -d --json (it can print a log line on the same stream before the JSON; read from the first "[{").
+The names and positions of the operators are NOT recorded in this repository.
+
+Counts of discovered interfaces, sampled every 3 minutes (discovered / with a latitude and longitude / by type):
+sample 1 (about 3 minutes): 8 / 8 / backbone 4, rnode 4
+sample 2 (about 6 minutes): 17 / 16 / rnode 9, backbone 8
+sample 3 (about 9 minutes): 26 / 23 / backbone 13, rnode 13
+sample 4 (about 12 minutes): 35 / 31 / backbone 18, rnode 16, i2p 1
+sample 5 (about 15 minutes): 40 / 32 / backbone 22, rnode 16, i2p 2
+sample 6 (about 18 minutes): 43 / 35 / backbone 24, rnode 17, i2p 2
+sample 7 (about 21 minutes): 49 / 39 / backbone 27, rnode 18, i2p 4
+sample 8 (about 24 minutes): 54 / 43 / backbone 28, rnode 20, i2p 4, tcpserver 2
+sample 9 (about 27 minutes): 61 / 49 / backbone 32, rnode 22, i2p 5, tcpserver 2
+
+From the installed Reticulum source (RNS/Discovery.py, RNS/Reticulum.py): the default announce interval of a discoverable interface is 6 hours (the smallest value is 5 minutes). An entry becomes "unknown" after 24 hours, "stale" after 3 days and is removed after 7 days.
+So a short test cannot show the final count. The listener container of change 2 keeps its registry on disk.

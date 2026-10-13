@@ -5095,6 +5095,48 @@
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-056] a footprint with an absent point gives unknown coverage",
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-056] the invalid coordinates give unknown coverage"
   ],
+  "reticulum-source-001": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-001] keeps the allowed fields of a discovered RNode and sets the radio of other interfaces to null"
+  ],
+  "reticulum-source-002": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-002] drops the address, key and contact fields"
+  ],
+  "reticulum-source-003": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-003] drops the identity, stamp and software fields"
+  ],
+  "reticulum-source-004": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-004] drops the records that are not valid and counts all of them"
+  ],
+  "reticulum-source-005": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-005] lists only records with a valid position and rounds it to three decimals"
+  ],
+  "reticulum-source-006": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-006] sets the status from the age and drops records heard more than 7 days ago"
+  ],
+  "reticulum-source-007": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-007] cleans the names and keeps at most 5000 interfaces, newest first"
+  ],
+  "reticulum-source-008": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-008] answers a GET request with the document"
+  ],
+  "reticulum-source-009": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-009] refuses the methods other than GET and sends no request"
+  ],
+  "reticulum-source-010": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-010] refuses a query or a sub-path and sends no request"
+  ],
+  "reticulum-source-011": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-011] reports a listener that is not set or not local and sends no request"
+  ],
+  "reticulum-source-012": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-012] serves the last good document for 2 hours when the listener fails"
+  ],
+  "reticulum-source-013": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-013] caches the document for 60 seconds and shares one request"
+  ],
+  "reticulum-source-014": [
+    "src/data/reticulumProxy.test.mjs › [reticulum-source-014] accepts a list of exactly 4 MiB"
+  ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
   ],

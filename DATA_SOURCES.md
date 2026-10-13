@@ -72,6 +72,16 @@ How to read this:
 
 The optional Local ADS-B layer and the broadcast-FM receiver use radio you receive yourself: a USB RTL-SDR opened in the browser through WebUSB, or the `aircraft.json` of a decoder you run on your own machine or network (`LOCAL_RECEIVER_FEEDS`). Radio samples, audio and the optional receiver location stay in the browser. Decoder feeds are read by your local GEV server and relayed only to your browser, with about a second of in-memory caching. When you select a local aircraft, its ICAO address (and an airline-style callsign) is looked up, and aircraft that qualify for a 3D model are looked up by ICAO address, through the same adsbdb proxy the public flight layers use; your server caches those answers on disk and treats them as fresh for 24 hours. Received radio data is not stored or redistributed. ADS-B is an unauthenticated public broadcast and may be incomplete, delayed, spoofed or decoded in error; it is not suitable for navigation or operational use.
 
+### Reticulum interface discovery (read from a listener that you run)
+
+Reticulum carries no location in its core. An operator who marks an interface `discoverable = yes` publishes its name, type and position on purpose, and a listener node hears the announce.
+
+The route `/api/reticulum` reads the list from your listener at `RETICULUM_LISTENER`, an IPv4 loopback or private `host:port`, `localhost` or a `.local` name. It keeps only `id`, `type`, `name`, `latitude`, `longitude`, `heightM`, `hops`, `lastHeard`, `status` and, for an RNode, the radio numbers. It drops addresses, interface keys, contact addresses and node identities. Positions are rounded to three decimals, which is about 110 m.
+
+The data is infrastructure that the operator chose to publish. The operator sets the position and nobody checks it. A name is free text, so it can hold an address that the operator typed. The `id` is a hash of the node identity and the name, so it is a stable pseudonym of the node.
+
+The Reticulum software has its own licence. The licence forbids use in systems built to harm people and use as data to train AI. The software runs as a separate service and is not part of this repository. The map feed `rmap.world` states no terms of use, so this project does not use it. See `openspec/specs/reticulum-source/spec.md`.
+
 ### Notes on the live sources
 
 - **Google Maps Platform.** You supply your own API key and are bound by [Google's ToS](https://cloud.google.com/maps-platform/terms). Google Maps Content (tiles, geocodes, places) **may not be cached, stored, rehosted, or committed** — this app only ever uses it live, which is the compliant pattern. The "Google" attribution is displayed on the globe and must stay visible. Restrict your key (see [SECURITY.md](SECURITY.md)).

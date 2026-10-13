@@ -1,0 +1,127 @@
+# reticulum-source Specification
+
+## Purpose
+Show the public infrastructure of the Reticulum network. Keep only the public fields of each discoverable interface, and drop keys, host addresses and contact addresses.
+## Requirements
+### Requirement: Public interface fields only
+The Reticulum provider MUST keep only the allowed fields of a discovered interface and MUST drop every other field.
+Origin: spec-first
+
+#### Scenario: Keep the allowed fields `reticulum-source-001`
+- **WHEN** the provider normalizes a discovered RNode interface that has a position
+- **THEN** the record has exactly the fields `id`, `type`, `name`, `latitude`, `longitude`, `heightM`, `hops`, `lastHeard`, `status` and `radio`
+- **AND** the id is "ab12cd34ef56ab12", the first 16 characters of the field `discovery_hash`
+- **AND** the type is "rnode", the name is "Example Gateway", the latitude is 12.346 and the longitude is -45.679
+- **AND** the height 43.4 m gives `heightM` 43, the hops are 3, the status is "available" and `lastHeard` is "2026-10-13T11:00:00.000Z"
+- **AND** the radio has the frequency 914875000 Hz, the bandwidth 125000 Hz, the spreading factor 8 and the coding rate 5
+- **AND** `radio` is null for an interface that is not an RNode, and for an RNode that lacks a radio number
+- **AND** `hops` is null unless it is an integer from 0 to 255, and `heightM` is null unless the height is a number
+
+#### Scenario: Drop the address, key and contact fields `reticulum-source-002`
+- **WHEN** the provider normalizes a record that holds a value in each of the fields `config_entry`, `reachable_on`, `port`, `ifac_netname`, `ifac_netkey` and `operator_lxmf_address`
+- **THEN** the JSON text of the result holds none of these values
+
+#### Scenario: Drop the identity, stamp and software fields `reticulum-source-003`
+- **WHEN** the provider normalizes a record that holds a value in each of the fields `transport_id`, `network_id`, `stamp`, `value`, `impl_name` and `version`
+- **THEN** the JSON text of the result holds none of these values
+
+### Requirement: Record rules
+The provider MUST drop a record that is not an object. It MUST drop a record whose `discovery_hash` is not 64 lowercase hexadecimal characters. It MUST drop a record whose raw `type` is not 1 to 40 letters or digits, or is only the word "Interface". The 1 to 40 characters of the raw `type` include the word "Interface". It MUST drop a record whose `last_heard` is not a number or not a valid date.
+Origin: spec-first
+
+#### Scenario: Drop invalid records `reticulum-source-004`
+- **WHEN** the provider normalizes a list that holds one record of each kind that these rules name, and one valid record
+- **THEN** the result lists only the valid record
+- **AND** `counts.total` counts all the records
+
+### Requirement: Position rules
+The provider MUST list only the interfaces that have a valid position, and MUST round the position to three decimals.
+Origin: spec-first
+
+#### Scenario: List only positioned interfaces `reticulum-source-005`
+- **WHEN** the provider normalizes records whose latitude or longitude is missing, is not a number, is outside the valid range, or is zero for both
+- **THEN** the result lists none of these records
+- **AND** `counts.total` counts all records and `counts.positioned` counts the listed records
+- **AND** the latitudes -90 and 90 and the longitudes -180 and 180 are valid
+- **AND** the latitude 5.5555 becomes 5.556 and the latitude -0.0004 becomes 0
+
+### Requirement: Age rules
+The provider MUST set the status of an interface from the time since it was last heard. It MUST drop an interface that it last heard more than 7 days ago.
+Origin: spec-first
+
+#### Scenario: Set the status from the age `reticulum-source-006`
+- **WHEN** the provider normalizes records that were last heard 23 hours, 25 hours, 73 hours and 169 hours ago
+- **THEN** the first three statuses are "available", "unknown" and "stale"
+- **AND** the result does not list the record of 169 hours
+
+### Requirement: Text and size bounds
+The provider MUST clean the name of an interface. A control character is a character from U+0000 to U+001F or from U+007F to U+009F. The provider MUST keep at most 5000 interfaces.
+Origin: spec-first
+
+#### Scenario: Clean the names and bound the list `reticulum-source-007`
+- **WHEN** a name holds control characters or angle brackets, is longer than 80 characters, is empty after the provider cleans it, or is not text
+- **THEN** the cleaned name has no control character, no angle bracket and at most 80 characters
+- **AND** an empty name or a name that is not text becomes "Unnamed" and the type, for example "Unnamed rnode"
+- **AND** the result lists at most 5000 interfaces, the most recently heard first
+
+### Requirement: Route document
+The route `/api/reticulum` MUST answer a GET request with one JSON document. It MUST refuse a method other than GET, a query and a sub-path.
+Origin: spec-first
+
+#### Scenario: Answer with the document `reticulum-source-008`
+- **WHEN** a GET request with no query comes to the route and the listener answers with records
+- **THEN** the status is 200 and the header `Cache-Control` is "no-store"
+- **AND** the header `Content-Type` is "application/json"
+- **AND** the body has `schemaVersion` 1, `source` "Reticulum interface discovery", `stale` false, `unavailable` false and `reason` null
+- **AND** the body also has `attribution`, `coverage`, `fetchedAt`, `counts` and `interfaces`
+- **AND** for one RNode record, `counts` is 1 in `total`, 1 in `positioned` and 1 in `byType.rnode`
+- **AND** `byType` holds a count of its own for each type, also for a type with the name of an inherited property, such as `constructor`
+- **AND** the provider asks the listener for the path `/interfaces.json`, and the preview server serves the same route
+
+#### Scenario: Refuse other methods `reticulum-source-009`
+- **WHEN** a request uses a method other than GET
+- **THEN** the status is 405 with the error `method_not_allowed`
+- **AND** the provider sends no request to the listener
+
+#### Scenario: Refuse a query or a sub-path `reticulum-source-010`
+- **WHEN** a GET request has a query, or has a path that is neither `/` nor the empty path, such as `/other`
+- **THEN** the status is 400 with the error `invalid_reticulum_query`
+- **AND** the provider sends no request to the listener
+
+### Requirement: Source address
+The provider MUST read the listener only at a local address that the operator sets. A local address is a `host:port` with an IPv4 loopback host, an IPv4 private host, `localhost` or a `.local` name. A loopback host is in 127.0.0.0/8. A private host is in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16. An IPv4 host with a part that has a leading zero and more digits, such as `010.0.0.1`, is not a local address.
+Origin: spec-first
+
+#### Scenario: Report a listener that is not set or not local `reticulum-source-011`
+- **WHEN** the variable `RETICULUM_LISTENER` is not set, is empty or only spaces, or is not a local address, for example `010.0.0.1:8081`
+- **THEN** the document says `unavailable` true
+- **AND** the reason is "Reticulum listener not configured" for a variable that is not set, empty or only spaces
+- **AND** the reason is "Reticulum listener address not allowed" for any other value
+- **AND** the status is 200
+- **AND** the provider sends no request
+
+### Requirement: Source failure
+The provider MUST serve the last good document for 2 hours when the listener fails. The listener fails when it cannot connect, or does not send the whole answer in 8 seconds. It also fails when it answers with an error status, sends more than 4 MiB, or sends text that is not a JSON list. The provider MUST NOT follow a redirect, and a redirect is a failure. A list of exactly 4 MiB is not a failure.
+Origin: spec-first
+
+#### Scenario: Serve the last good document when the listener fails `reticulum-source-012`
+- **WHEN** the listener fails
+- **THEN** the provider answers with the last good document and `stale` true when that document is younger than 2 hours
+- **AND** otherwise the provider answers with `unavailable` true and the reason "Reticulum listener unavailable"
+- **AND** a failed answer is not cached, so the next request tries the listener again
+
+#### Scenario: Accept a list of exactly 4 MiB `reticulum-source-014`
+- **WHEN** the listener sends a JSON list of exactly 4 MiB
+- **THEN** the document says `unavailable` false and `stale` false
+- **AND** `counts.total` counts all the entries of the list
+
+### Requirement: Cache and shared request
+The provider MUST cache the document for 60 seconds. Requests that come while a request waits for the listener MUST share that request.
+Origin: spec-first
+
+#### Scenario: Cache the document and share one request `reticulum-source-013`
+- **WHEN** a second request comes while the first waits for the listener, and a third comes less than 60 seconds after the first
+- **THEN** the provider sends one request to the listener for all three
+- **AND** a fourth request that comes 60 seconds after the first gets a new request
+- **AND** a fifth request that comes 30 seconds after the fourth uses the new document and sends no request
+

@@ -1,0 +1,60 @@
+import subprocess, re, os, signal
+R = '/home/ianblenke/docker/gev-work/reticulum-provider/'
+F = 'server/providers/reticulum.js'
+orig = open(R + F).read()
+TAP = 'src/data/tapAddress.js'
+orig_tap = open(R + TAP).read()
+
+def rept(old, new):
+    assert orig_tap.count(old) == 1, (old[:60], orig_tap.count(old))
+    return orig_tap.replace(old, new)
+
+def rep(old, new, count=1):
+    assert orig.count(old) == count, (old[:60], orig.count(old))
+    return orig.replace(old, new)
+
+faults = [
+ ('reticulum-source-011', 'Refuse the host 192.168 (rule of the tap address)', lambda: rept("    (a === 192 && b === 168) // 192.168/16\n", "    false // 192.168/16\n"), TAP),
+ ('reticulum-source-011', 'Refuse localhost (rule of the tap address)', lambda: rept("host === 'localhost' || MDNS_RE.test(host) || isLocalIpv4(host);", "MDNS_RE.test(host) || isLocalIpv4(host);"), TAP),
+ ('reticulum-source-011', 'Refuse a .local name (rule of the tap address)', lambda: rept("host === 'localhost' || MDNS_RE.test(host) || isLocalIpv4(host);", "host === 'localhost' || isLocalIpv4(host);"), TAP),
+]
+cmd = 'node --test --test-reporter=spec src/data/reticulumProxy.test.mjs'
+out, log = [], []
+try:
+    for sid, desc, fn, *rest in faults:
+        target = rest[0] if rest else F
+        original = orig_tap if target == TAP else orig
+        text = fn()
+        assert text != original, desc
+        open(R + target, 'w').write(text)
+        proc = subprocess.Popen(cmd, shell=True, cwd=R, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, start_new_session=True)
+        hung = False
+        try:
+            text_out, _ = proc.communicate(timeout=90)
+        except subprocess.TimeoutExpired:
+            hung = True
+            os.killpg(proc.pid, signal.SIGKILL)
+            text_out, _ = proc.communicate()
+        class _P: pass
+        p = _P(); p.stdout = text_out; p.stderr = ''; p.returncode = -9 if hung else proc.returncode
+        names = set()
+        if hung:
+            names.add('TIMEOUT (the tests hung)')
+        for l in (p.stdout + p.stderr).splitlines():
+            l = l.strip()
+            if l.startswith('✖ ') and 'failing tests' not in l:
+                n = re.sub(r' \(\d+(\.\d+)?ms\)$', '', l[2:].strip())
+                m = re.match(r'(\[[a-z-]+-\d+\])', n)
+                names.add(m.group(1) if m else 'untagged: ' + n[:60])
+        uniq = sorted(names)
+        out.append(f'{sid} | {desc} | failing: {", ".join(uniq) if uniq else "NONE"}')
+        log.append(f'{desc} | exit {p.returncode} | failing tests: {", ".join(uniq) if uniq else "NONE"}')
+        print(log[-1], flush=True)
+        open(R + target, 'w').write(original)
+finally:
+    open(R + F, 'w').write(orig)
+    open(R + TAP, 'w').write(orig_tap)
+assert open(R + F).read() == orig
+assert open(R + TAP).read() == orig_tap
+open('/home/ianblenke/docker/gev-tools/reticulum-provider/faults-r2.txt', 'w').write('\n'.join(out) + '\n')
+open('/home/ianblenke/docker/gev-tools/reticulum-provider/faults-r2-run.txt', 'w').write('\n'.join(log) + '\n')
