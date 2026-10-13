@@ -4,7 +4,7 @@
 - [x] 1.2 Write the tests for `reticulum-source-004`, `reticulum-source-005` and `reticulum-source-006` in the same file.
 - [x] 1.3 Write the tests for `reticulum-source-007`, `reticulum-source-008` and `reticulum-source-009` in the same file.
 - [x] 1.4 Write the tests for `reticulum-source-010` and `reticulum-source-011` in the same file.
-- [x] 1.5 Write the tests for `reticulum-source-012` and `reticulum-source-013` in the same file.
+- [x] 1.5 Write the tests for `reticulum-source-012`, `reticulum-source-013` and `reticulum-source-014` in the same file.
 
 ## 2. Write the code and the documents
 

@@ -42,7 +42,7 @@ The tests of the route use a fake request and a fake response, like the tests of
 
 The change adds `server/providers/reticulum.js` and `src/data/reticulumProxy.test.mjs`. It edits `server/providers/local.js`, `openspec/ownership.json`, `scripts/format-scope.json`, `DATA_SOURCES.md`, `.env.example` and `CHANGELOG.md`.
 
-The trace gate checks that the tests carry the IDs `reticulum-source-001` to `reticulum-source-013`. The coverage gate needs 100% of lines, branches and functions in `server/providers/reticulum.js`. The test file is not in the coverage inventory. The prose lint checks STE.
+The trace gate checks that the tests carry the IDs `reticulum-source-001` to `reticulum-source-014`. The coverage gate needs 100% of lines, branches and functions in `server/providers/reticulum.js`. The test file is not in the coverage inventory. The prose lint checks STE.
 The named faults measure whether a change of a field list, a limit or a rule makes a test fail.
 The lead runs the gates in Docker and both review agents on the final tree.
 

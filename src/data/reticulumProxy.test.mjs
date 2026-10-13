@@ -90,6 +90,10 @@ test('[reticulum-source-001] keeps the allowed fields of a discovered RNode and 
     255,
   );
   assert.equal(
+    normalizeInterfaces([raw({ hops: 0 })], NOW).interfaces[0].hops,
+    0,
+  );
+  assert.equal(
     normalizeInterfaces([raw({ hops: -1 })], NOW).interfaces[0].hops,
     null,
   );
@@ -141,6 +145,7 @@ test('[reticulum-source-004] drops the records that are not valid and counts all
     [
       valid,
       raw({ type: 'x'.repeat(41) }),
+      raw({ type: 'x'.repeat(35) + 'Interface' }),
       raw({ type: 'Bad Type!' }),
       raw({ type: 'Interface' }),
       raw({ discovery_hash: 'short' }),
@@ -159,11 +164,12 @@ test('[reticulum-source-004] drops the records that are not valid and counts all
   );
   assert.deepEqual(names(result), ['Example Gateway']);
   assert.equal(result.interfaces[0].id, hash(1).slice(0, 16));
-  assert.equal(result.counts.total, 15);
+  assert.equal(result.counts.total, 16);
   assert.equal(result.counts.positioned, 1);
   for (const [label, overrides] of [
     ['type 40', { type: 'x'.repeat(40) }],
     ['type 1', { type: 'x' }],
+    ['raw type 40', { type: 'x'.repeat(31) + 'Interface' }],
     ['digits', { type: 'Rnode2' }],
   ])
     assert.equal(
@@ -455,7 +461,6 @@ test('[reticulum-source-011] reports a listener that is not set or not local and
 });
 
 const GOOD = [raw()];
-const MIB4 = 4 * 1024 * 1024;
 /** A valid JSON list of exactly 4 MiB (2097150 zeros, then padding). */
 const EXACT = '[' + '0,'.repeat(2097150) + '0]' + ' ';
 /** A valid JSON list of 4 MiB and one byte. */
@@ -541,15 +546,7 @@ test('[reticulum-source-012] serves the last good document for 2 hours when the 
     assert.equal(timers.length, 4, label);
     assert.deepEqual(cleared, [1, 2, 3, 4], label);
   }
-  assert.equal(Buffer.byteLength(EXACT), 4194304);
   assert.equal(Buffer.byteLength(OVER), 4194305);
-  assert.equal(MIB4, 4194304);
-  const exact = await install({
-    fetchImpl: async () => new Response(EXACT),
-  }).request('/');
-  assert.equal(exact.body.unavailable, false);
-  assert.equal(exact.body.counts.total, 2097151);
-  assert.deepEqual(exact.body.interfaces, []);
   let calls = 0;
   let healthy = false;
   const { request } = install({
@@ -601,4 +598,14 @@ test('[reticulum-source-013] caches the document for 60 seconds and shares one r
   const fifth = await request('/');
   assert.equal(calls.length, 2);
   assert.equal(fifth.body.fetchedAt, '2026-10-13T12:01:00.000Z');
+});
+
+test('[reticulum-source-014] accepts a list of exactly 4 MiB', async () => {
+  assert.equal(Buffer.byteLength(EXACT), 4194304);
+  const { request } = install({ fetchImpl: async () => new Response(EXACT) });
+  const res = await request('/');
+  assert.equal(res.body.unavailable, false);
+  assert.equal(res.body.stale, false);
+  assert.equal(res.body.counts.total, 2097151);
+  assert.deepEqual(res.body.interfaces, []);
 });

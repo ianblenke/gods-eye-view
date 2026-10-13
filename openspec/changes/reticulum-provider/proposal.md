@@ -10,7 +10,7 @@ This is change 1 of 3. This change adds the server provider and its privacy filt
 ## What Changes
 
 - Add the provider `server/providers/reticulum.js` and register it in `server/providers/local.js`. The route is `/api/reticulum`.
-- Add the capability `reticulum-source` with thirteen scenarios, `reticulum-source-001` to `reticulum-source-013`.
+- Add the capability `reticulum-source` with fourteen scenarios, `reticulum-source-001` to `reticulum-source-014`.
 - Add the test file `src/data/reticulumProxy.test.mjs`. Add both new files to `openspec/ownership.json` and `scripts/format-scope.json`.
 - Write a section in `DATA_SOURCES.md`, one line in `.env.example` and one entry in `CHANGELOG.md`.
 
@@ -18,7 +18,7 @@ This is change 1 of 3. This change adds the server provider and its privacy filt
 
 ### New Capabilities
 
-- `reticulum-source`: Eight requirements. They cover the fields, the records, the positions, the age, the text bounds, the route, the source address and the source failure and cache.
+- `reticulum-source`: Nine requirements. They cover the fields, the records, the positions, the age, the text bounds, the route, the source address, the source failure and the cache.
 
 ### Modified Capabilities
 
@@ -34,8 +34,8 @@ This change adds no layer, no panel and no listener. Without a listener, the rou
 - Known limit `coverage`: The provider lists only the operators who opt in with `discoverable = yes`. The operator sets the position, and nobody checks it. A new listener has a partial list for its first hours.
 - Known limit `privacy`: The data describes infrastructure and not people. The provider rounds each position to three decimals, which is about 110 m, and drops contact addresses, keys and host addresses. User locations travel in encrypted messages and a listener cannot read them.
 - Known limit `names`: Operators choose the names. The provider removes control characters and angle brackets and cuts the length. A name can still be rude or wrong. A name can also hold an address or a contact that the operator typed.
-- Known limit `id`: The `id` is a hash of the dropped fields `transport_id` and `name`. It is a stable pseudonym of a node and not a secret.
-- Known limit `address`: The provider checks the text of the address, as the other taps do, and does not resolve a name. It has no same-site gate and no rate limit. The route of the local receivers has none either.
+- Known limit `id`: Reticulum builds the field `discovery_hash` from `transport_id` and the name. The provider drops `transport_id` and keeps the name. So the `id` is a stable pseudonym of a node and not a secret.
+- Known limit `address`: The provider checks the text of the address and does not resolve a name. The local receivers resolve a name and pin the connection. Neither route has a same-site gate or a rate limit.
 - Known limit `licence`: The Reticulum software has a licence that forbids use in systems built to harm people and use as data to train AI. This change holds no Reticulum code. Change 2 runs the software as a separate service.
 - Known limit `upstream`: Upstream issue #241 asks for one mesh layer for MeshCore and Reticulum. This change adds a separate source and does not wait for that issue.
 - Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.
