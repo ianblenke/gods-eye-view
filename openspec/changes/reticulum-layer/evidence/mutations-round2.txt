@@ -5,3 +5,4 @@ reticulum-layer-017 | Change the disposition in the share registry | failing: [r
 reticulum-layer-001 | Add an analyst function to the layer | failing: [reticulum-layer-001]
 reticulum-layer-017 | Name another layer in the source contract | failing: [reticulum-layer-017]
 reticulum-layer-017 | Name another method in the source contract | failing: [reticulum-layer-017]
+reticulum-layer-017 | Change the text of the error for a missing source | failing: [reticulum-layer-017]

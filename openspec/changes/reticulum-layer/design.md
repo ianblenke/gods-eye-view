@@ -15,8 +15,8 @@ Only `index.js` imports Cesium. Its test needs the image, because the folder `no
 
 The names come from anonymous operators through the provider. The provider removes control characters and the characters `<` and `>`.
 
-The layer cleans the names again in the browser. It removes control characters, characters that change the text direction, zero width characters and the characters `<` and `>`.
-The overlay draws a title with `fillText` of a canvas, and the layer panel writes text with `textContent`. So a name cannot inject HTML. A cleaned name cannot hide or reorder other text.
+The layer cleans the names again in the browser. It removes control characters, characters that change the text direction, zero width characters, line and paragraph separators and the characters `<` and `>`.
+The overlay draws a title with `fillText` of a canvas, and the layer panel writes text with `textContent`. So a name cannot inject HTML. A cleaned name has no direction mark and no zero width character.
 The layer has no analyst entry and no voice entry, because the voice model would read the names.
 
 ### D3: Unavailable and stale documents

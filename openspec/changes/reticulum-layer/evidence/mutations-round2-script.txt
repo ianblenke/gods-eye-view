@@ -8,6 +8,7 @@ f('017', 'Change the disposition in the share registry', 'ls', "    id: 'reticul
 f('001', 'Add an analyst function to the layer', 'idx', "    getStats() {", "    getAnalystRecords() {\n      return [];\n    },\n\n    getStats() {")
 f('017', 'Name another layer in the source contract', 'comp', "  reticulum: contract(['reticulum'], ['getSnapshot']),", "  reticulum: contract(['reticulum2'], ['getSnapshot']),")
 f('017', 'Name another method in the source contract', 'comp', "  reticulum: contract(['reticulum'], ['getSnapshot']),", "  reticulum: contract(['reticulum'], ['getSnapshots']),")
+f('017', 'Change the text of the error for a missing source', 'comp', "super(`Data source not configured: ${name}`);", "super(`Data source missing: ${name}`);")
 if __name__ == '__main__':
     D = base.D0
     for n in ('faults.txt', 'faults-run.txt'):
