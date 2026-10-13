@@ -72,7 +72,7 @@ function radioOf(record, type) {
 
 function normalizeRecord(record, now) {
   if (!record || typeof record !== 'object') return null;
-  if (!/^[0-9a-f]{64}$/i.test(String(record.discovery_hash))) return null;
+  if (!/^[0-9a-f]{64}$/.test(String(record.discovery_hash))) return null;
   const type = typeName(record.type);
   if (!type) return null;
   const place = position(record);
@@ -92,7 +92,7 @@ function normalizeRecord(record, now) {
   return {
     heardMs,
     item: {
-      id: String(record.discovery_hash).slice(0, 16).toLowerCase(),
+      id: String(record.discovery_hash).slice(0, 16),
       type,
       name: cleanName(record.name, type),
       ...place,

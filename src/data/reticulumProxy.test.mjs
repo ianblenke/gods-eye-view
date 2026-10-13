@@ -24,7 +24,7 @@ function raw(overrides = {}) {
     hops: 3,
     latitude: 12.3456,
     longitude: -45.6789,
-    height: 43.0,
+    height: 43.4,
     frequency: 914875000,
     bandwidth: 125000,
     sf: 8,
@@ -107,8 +107,29 @@ test('[reticulum-source-001] keeps the allowed fields of a discovered RNode and 
     0,
   );
   assert.equal(
+    normalizeInterfaces([raw({ discovery_hash: HASH.toUpperCase() })], NOW)
+      .interfaces.length,
+    0,
+  );
+  assert.equal(
     normalizeInterfaces([raw({ last_heard: 'soon' })], NOW).interfaces.length,
     0,
+  );
+  assert.equal(
+    normalizeInterfaces([raw({ last_heard: String(heard(HOUR)) })], NOW)
+      .interfaces.length,
+    0,
+  );
+  for (const shape of ['abcdef0123', HASH + 'a', HASH.slice(0, 63)])
+    assert.equal(
+      normalizeInterfaces([raw({ discovery_hash: shape })], NOW).interfaces
+        .length,
+      0,
+      shape,
+    );
+  assert.equal(
+    normalizeInterfaces([raw({ hops: 3.5 })], NOW).interfaces[0].hops,
+    null,
   );
   assert.equal(
     normalizeInterfaces([raw({ last_heard: 1e20 })], NOW).interfaces.length,
@@ -179,13 +200,14 @@ test('[reticulum-source-004] lists only records with a valid position and rounds
     raw({ latitude: -90, longitude: -180, discovery_hash: hash(101) }),
     raw({ latitude: 0, longitude: 5.5555, discovery_hash: hash(102) }),
     raw({ latitude: 5.5555, longitude: 0, discovery_hash: hash(103) }),
+    raw({ latitude: -0.0004, longitude: 7, discovery_hash: hash(104) }),
   ];
   const result = normalizeInterfaces(list, NOW);
-  assert.equal(list.length, 16);
+  assert.equal(list.length, 17);
   assert.deepEqual(result.counts, {
-    total: 16,
-    positioned: 4,
-    byType: { rnode: 4 },
+    total: 17,
+    positioned: 5,
+    byType: { rnode: 5 },
   });
   const places = result.interfaces
     .map((item) => [item.latitude, item.longitude])
@@ -193,6 +215,7 @@ test('[reticulum-source-004] lists only records with a valid position and rounds
   assert.deepEqual(places, [
     [-90, -180],
     [0, 5.556],
+    [0, 7],
     [5.556, 0],
     [90, 180],
   ]);
@@ -224,6 +247,7 @@ test('[reticulum-source-006] cleans the names and keeps at most 5000 interfaces,
   assert.equal(clean('A\u0000B\u001fC\u007fD<script>E'), 'ABCDscriptE');
   assert.equal(clean('  spaced  '), 'spaced');
   assert.equal(clean('x'.repeat(100)), 'x'.repeat(80));
+  assert.equal(clean('z'.repeat(79) + ' tail'), 'z'.repeat(79));
   assert.equal(clean('y'.repeat(80)), 'y'.repeat(80));
   assert.equal(clean(''), 'Unnamed rnode');
   assert.equal(clean('   '), 'Unnamed rnode');
@@ -252,10 +276,22 @@ const ADDRESS = '127.0.0.1:8081';
 function install(options = {}, preview = false) {
   let handler;
   const clock = { t: NOW };
+  const timers = [];
+  const cleared = [];
+  const { useRealTimers, ...rest } = options;
   const plugin = reticulumProxy({
     now: () => clock.t,
     env: { RETICULUM_LISTENER: ADDRESS },
-    ...options,
+    ...(useRealTimers
+      ? {}
+      : {
+          setTimer: (fn, ms) => {
+            timers.push({ fn, ms });
+            return timers.length;
+          },
+          clearTimer: (id) => cleared.push(id),
+        }),
+    ...rest,
   });
   plugin[preview ? 'configurePreviewServer' : 'configureServer']({
     middlewares: {
@@ -277,7 +313,7 @@ function install(options = {}, preview = false) {
     await handler({ url, method }, res);
     return res;
   };
-  return { request, clock, plugin };
+  return { request, clock, plugin, timers, cleared };
 }
 function listFetch(list, calls = []) {
   return async (url, options) => {
@@ -289,7 +325,7 @@ function listFetch(list, calls = []) {
 test('[reticulum-source-007] answers a GET request with the document', async () => {
   for (const preview of [false, true]) {
     const calls = [];
-    const { request, plugin } = install(
+    const { request, plugin, timers, cleared } = install(
       { fetchImpl: listFetch([raw()], calls) },
       preview,
     );
@@ -327,8 +363,17 @@ test('[reticulum-source-007] answers a GET request with the document', async () 
     assert.equal(res.body.interfaces[0].name, 'Example Gateway');
     assert.equal(calls.length, 1);
     assert.equal(calls[0].url, 'http://127.0.0.1:8081/interfaces.json');
+    assert.equal(timers.length, 1);
+    assert.equal(timers[0].ms, 8000);
+    assert.deepEqual(cleared, [1]);
     assert.equal((await request('')).statusCode, 200);
   }
+  const real = install({
+    fetchImpl: listFetch([raw()]),
+    useRealTimers: true,
+  });
+  assert.equal((await real.request('/')).body.unavailable, false);
+  assert.equal(reticulumProxy().name, 'reticulum');
 });
 
 test('[reticulum-source-008] refuses other methods and any query', async () => {
@@ -392,7 +437,6 @@ test('[reticulum-source-009] reports a missing or not local listener and sends n
 
 const GOOD = [raw()];
 function failures() {
-  const timers = [];
   const timeoutFetch = (url, { signal }) =>
     new Promise((resolve, reject) => {
       signal.addEventListener('abort', () =>
@@ -402,6 +446,11 @@ function failures() {
   return [
     ['network error', async () => Promise.reject(new Error('refused')), {}],
     ['error status', async () => new Response('no', { status: 503 }), {}],
+    [
+      'error status with a list',
+      async () => new Response(JSON.stringify(GOOD), { status: 503 }),
+      {},
+    ],
     [
       'declared size',
       async () =>
@@ -417,63 +466,53 @@ function failures() {
     ],
     ['not json', async () => new Response('not json at all'), {}],
     ['not a list', async () => Response.json({ interfaces: [] }), {}],
-    [
-      'timeout',
-      timeoutFetch,
-      {
-        setTimer: (fn, ms) => {
-          timers.push({ fn, ms });
-          return timers.length;
-        },
-        clearTimer: () => {},
-      },
-      timers,
-    ],
+    ['a JSON string', async () => Response.json('text'), {}],
+    ['timeout', timeoutFetch, {}, true],
   ];
 }
 
 test('[reticulum-source-010] serves the last good document for 2 hours when the listener fails', async () => {
-  for (const [label, failing, extra, timers] of failures()) {
+  for (const [label, failing, extra, hangs] of failures()) {
     let mode = 'good';
-    const calls = [];
+    const signals = [];
     const fetchImpl = (url, options) => {
-      calls.push(url);
+      signals.push(options.signal);
       return mode === 'good' ? Response.json(GOOD) : failing(url, options);
     };
-    const { request, clock } = install({ fetchImpl, ...extra });
+    const { request, clock, timers, cleared } = install({
+      fetchImpl,
+      ...extra,
+    });
+    const attempt = async () => {
+      const run = request('/');
+      if (hangs) {
+        await new Promise((resolve) => setImmediate(resolve));
+        assert.equal(timers.at(-1).ms, 8000, label);
+        assert.equal(signals.at(-1).aborted, false, label);
+        timers.at(-1).fn();
+        assert.equal(signals.at(-1).aborted, true, label);
+      }
+      return run;
+    };
     const first = await request('/');
     assert.equal(first.body.unavailable, false, label);
     mode = 'bad';
     clock.t = NOW + 90_000;
-    const run = request('/');
-    if (timers) {
-      await new Promise((resolve) => setImmediate(resolve));
-      assert.equal(timers.at(-1).ms, 8000);
-      timers.at(-1).fn();
-    }
-    const stale = await run;
+    const stale = await attempt();
     assert.equal(stale.body.stale, true, label);
     assert.equal(stale.body.unavailable, false, label);
     assert.equal(stale.body.fetchedAt, '2026-10-13T12:00:00.000Z', label);
     assert.equal(stale.body.interfaces.length, 1, label);
     clock.t = NOW + 2 * HOUR - 1;
-    const edge = request('/');
-    if (timers) {
-      await new Promise((resolve) => setImmediate(resolve));
-      timers.at(-1).fn();
-    }
-    assert.equal((await edge).body.stale, true, label);
+    assert.equal((await attempt()).body.stale, true, label);
     clock.t = NOW + 2 * HOUR;
-    const last = request('/');
-    if (timers) {
-      await new Promise((resolve) => setImmediate(resolve));
-      timers.at(-1).fn();
-    }
-    const gone = await last;
+    const gone = await attempt();
     assert.equal(gone.body.unavailable, true, label);
     assert.equal(gone.body.stale, false, label);
     assert.equal(gone.body.reason, 'Reticulum listener unavailable', label);
     assert.deepEqual(gone.body.interfaces, [], label);
+    assert.equal(timers.length, 4, label);
+    assert.deepEqual(cleared, [1, 2, 3, 4], label);
   }
   let calls = 0;
   let healthy = false;
@@ -504,4 +543,8 @@ test('[reticulum-source-011] caches the document for 60 seconds', async () => {
   const third = await request('/');
   assert.equal(calls.length, 2);
   assert.equal(third.body.fetchedAt, '2026-10-13T12:01:00.000Z');
+  clock.t = NOW + 90_000;
+  const fourth = await request('/');
+  assert.equal(calls.length, 2);
+  assert.equal(fourth.body.fetchedAt, '2026-10-13T12:01:00.000Z');
 });
