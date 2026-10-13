@@ -38,7 +38,7 @@ The new files are files that the fork writes, so they go into `openspec/ownershi
 - Known limit `names`: The normalizer removes U+200C and U+200D from a name, so a name in a script that uses joiners loses them. Other invisible characters stay, for example U+00AD, U+180E, U+2800, U+3164 and U+E0000 to U+E007F, so a name can look empty.
 - Known limit `labels`: The layer shows at most 48 labels. The overlay host decides which of them fit on the screen.
 - Known limit `voice`: The layer is in the list `VOICE_OFF_LAYERS`, and it has no analyst entry. The names are untrusted text, and the voice model would read them. A later change can add numeric and type fields only.
-- Known limit `token`: The share token "4" is the next free digit in this fork. Many open upstream pull requests claim "4" for other layers. A sync must renumber the token, and then share links with "4" change their meaning.
+- Known limit `token`: The share token "4" is the next free digit in this fork. On the date in `evidence/upstream-token-claims.txt`, at least 3 of the open upstream pull requests claim "4" for other layers. A sync must renumber the token, and then share links with "4" change their meaning.
 - Known limit `stale`: The layer keeps the points of a stale list, and the panel shows no sign of it.
 - Known limit `position`: The operator sets the position of an interface and nobody checks it. The provider rounds it to three decimals.
 - Known limit `refresh`: The layer asks the route every 5 minutes, and the provider caches its answer for 60 seconds. An interface that an operator turns off stays on the globe until it is older than 7 days.
