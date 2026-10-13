@@ -1,6 +1,6 @@
 # Changelog
 
-- Add the route `/api/reticulum` for Reticulum interface discovery (2026-10-13). It reads a listener that you run, keeps only the public fields of each discoverable interface, and rounds each position to three decimals. It drops keys, host addresses and contact addresses. Without a listener the route says it is unavailable. The globe layer comes in a later change.
+- Add the route `/api/reticulum` for Reticulum interface discovery (2026-10-13). It reads a listener that you run, keeps only the public fields of each discoverable interface, and rounds each position to three decimals. It drops keys, host addresses and contact addresses. A name is free text, so it can hold an address that the operator typed. Without a listener the route says it is unavailable. The globe layer comes in a later change.
 
 - Add Tampa to the location bar, between Taiwan and Austin (2026-10-11). The Tampa pill flies to Bank of America Plaza. The row of places has four more places: Raymond James Stadium, Tampa International Airport, Henry B. Plant Museum and Ybor City.
 

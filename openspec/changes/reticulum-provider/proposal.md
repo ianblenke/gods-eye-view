@@ -2,7 +2,7 @@
 
 The owner asked on 2026-10-12 for a Reticulum data source. Reticulum carries no location in its core protocol. An operator who marks an interface as discoverable publishes its name, type, latitude and longitude as an infrastructure announce, and other nodes hear the announce.
 
-A listener-only node ran on 2026-10-13 and heard 43 interfaces in 18 minutes. 35 of them had a position. Operators announce every 6 hours by default, so the count was still rising. See `evidence/spike.txt`.
+A listener-only node ran on 2026-10-13 and heard 43 interfaces in 18 minutes. 35 of them had a position. Operators announce every 6 hours by default, so the count was not final. See `evidence/spike.txt`.
 
 The owner chose to run our own listener and not to use a third-party map feed. The map feed `rmap.world` states no terms of use, and its data holds host addresses, interface keys and contact addresses.
 This is change 1 of 3. This change adds the server provider and its privacy filter. Change 2 adds the listener container. Change 3 adds the globe layer.
@@ -10,7 +10,7 @@ This is change 1 of 3. This change adds the server provider and its privacy filt
 ## What Changes
 
 - Add the provider `server/providers/reticulum.js` and register it in `server/providers/local.js`. The route is `/api/reticulum`.
-- Add the capability `reticulum-source` with eleven scenarios, `reticulum-source-001` to `reticulum-source-011`.
+- Add the capability `reticulum-source` with thirteen scenarios, `reticulum-source-001` to `reticulum-source-013`.
 - Add the test file `src/data/reticulumProxy.test.mjs`. Add both new files to `openspec/ownership.json` and `scripts/format-scope.json`.
 - Write a section in `DATA_SOURCES.md`, one line in `.env.example` and one entry in `CHANGELOG.md`.
 
@@ -18,7 +18,7 @@ This is change 1 of 3. This change adds the server provider and its privacy filt
 
 ### New Capabilities
 
-- `reticulum-source`: The requirements "Public interface fields only", "Position rules", "Age rules", "Text and size bounds", "Route document" and "Source rules".
+- `reticulum-source`: Eight requirements. They cover the fields, the records, the positions, the age, the text bounds, the route, the source address and the source failure and cache.
 
 ### Modified Capabilities
 
@@ -33,7 +33,9 @@ This change adds no layer, no panel and no listener. Without a listener, the rou
 
 - Known limit `coverage`: The provider lists only the operators who opt in with `discoverable = yes`. The operator sets the position, and nobody checks it. A new listener has a partial list for its first hours.
 - Known limit `privacy`: The data describes infrastructure and not people. The provider rounds each position to three decimals, which is about 110 m, and drops contact addresses, keys and host addresses. User locations travel in encrypted messages and a listener cannot read them.
-- Known limit `names`: Operators choose the names. The provider removes control characters and angle brackets and cuts the length. A name can still be rude or misleading.
+- Known limit `names`: Operators choose the names. The provider removes control characters and angle brackets and cuts the length. A name can still be rude or wrong. A name can also hold an address or a contact that the operator typed.
+- Known limit `id`: The `id` is a hash of the dropped fields `transport_id` and `name`. It is a stable pseudonym of a node and not a secret.
+- Known limit `address`: The provider checks the text of the address, as the other taps do, and does not resolve a name. It has no same-site gate and no rate limit. The route of the local receivers has none either.
 - Known limit `licence`: The Reticulum software has a licence that forbids use in systems built to harm people and use as data to train AI. This change holds no Reticulum code. Change 2 runs the software as a separate service.
 - Known limit `upstream`: Upstream issue #241 asks for one mesh layer for MeshCore and Reticulum. This change adds a separate source and does not wait for that issue.
 - Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.

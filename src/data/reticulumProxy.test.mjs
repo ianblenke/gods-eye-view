@@ -35,7 +35,7 @@ function raw(overrides = {}) {
 const hash = (n) => n.toString(16).padStart(16, '0') + HASH.slice(16);
 const names = (result) => result.interfaces.map((item) => item.name);
 
-test('[reticulum-source-001] keeps the allowed fields of a discovered RNode and nulls the radio of other interfaces', () => {
+test('[reticulum-source-001] keeps the allowed fields of a discovered RNode and sets the radio of other interfaces to null', () => {
   const result = normalizeInterfaces([raw()], NOW);
   assert.equal(result.interfaces.length, 1);
   const [record] = result.interfaces;
@@ -94,54 +94,12 @@ test('[reticulum-source-001] keeps the allowed fields of a discovered RNode and 
     null,
   );
   assert.equal(
-    normalizeInterfaces([raw({ type: 'x'.repeat(41) })], NOW).interfaces.length,
-    0,
-  );
-  assert.equal(
-    normalizeInterfaces([raw({ type: 'Bad Type!' })], NOW).interfaces.length,
-    0,
-  );
-  assert.equal(
-    normalizeInterfaces([raw({ discovery_hash: 'short' })], NOW).interfaces
-      .length,
-    0,
-  );
-  assert.equal(
-    normalizeInterfaces([raw({ discovery_hash: HASH.toUpperCase() })], NOW)
-      .interfaces.length,
-    0,
-  );
-  assert.equal(
-    normalizeInterfaces([raw({ last_heard: 'soon' })], NOW).interfaces.length,
-    0,
-  );
-  assert.equal(
-    normalizeInterfaces([raw({ last_heard: String(heard(HOUR)) })], NOW)
-      .interfaces.length,
-    0,
-  );
-  for (const shape of ['abcdef0123', HASH + 'a', HASH.slice(0, 63)])
-    assert.equal(
-      normalizeInterfaces([raw({ discovery_hash: shape })], NOW).interfaces
-        .length,
-      0,
-      shape,
-    );
-  assert.equal(
     normalizeInterfaces([raw({ hops: 3.5 })], NOW).interfaces[0].hops,
     null,
   );
   assert.equal(
-    normalizeInterfaces([raw({ last_heard: 1e20 })], NOW).interfaces.length,
-    0,
-  );
-  assert.equal(
-    normalizeInterfaces([raw({ type: 'Interface' })], NOW).interfaces.length,
-    0,
-  );
-  assert.equal(
-    normalizeInterfaces(['text', null, 7], NOW).interfaces.length,
-    0,
+    normalizeInterfaces([raw({ height: 'tall' })], NOW).interfaces[0].heightM,
+    null,
   );
 });
 
@@ -161,7 +119,7 @@ test('[reticulum-source-002] drops the address, key and contact fields', () => {
     assert.equal(text.includes(String(value)), false, field);
 });
 
-test('[reticulum-source-003] drops the identity and software fields', () => {
+test('[reticulum-source-003] drops the identity, stamp and software fields', () => {
   const canaries = {
     transport_id: 'CANARY-transport-id',
     network_id: 'CANARY-network-id',
@@ -177,7 +135,45 @@ test('[reticulum-source-003] drops the identity and software fields', () => {
     assert.equal(text.includes(String(value)), false, field);
 });
 
-test('[reticulum-source-004] lists only records with a valid position and rounds it to three decimals', () => {
+test('[reticulum-source-004] drops the records that are not valid and counts all of them', () => {
+  const valid = raw({ discovery_hash: hash(1) });
+  const result = normalizeInterfaces(
+    [
+      valid,
+      raw({ type: 'x'.repeat(41) }),
+      raw({ type: 'Bad Type!' }),
+      raw({ type: 'Interface' }),
+      raw({ discovery_hash: 'short' }),
+      raw({ discovery_hash: HASH.toUpperCase() }),
+      raw({ discovery_hash: HASH + 'a' }),
+      raw({ discovery_hash: HASH.slice(0, 63) }),
+      raw({ discovery_hash: undefined }),
+      raw({ last_heard: 'soon' }),
+      raw({ last_heard: String(heard(HOUR)) }),
+      raw({ last_heard: 1e20 }),
+      'text',
+      null,
+      7,
+    ],
+    NOW,
+  );
+  assert.deepEqual(names(result), ['Example Gateway']);
+  assert.equal(result.interfaces[0].id, hash(1).slice(0, 16));
+  assert.equal(result.counts.total, 15);
+  assert.equal(result.counts.positioned, 1);
+  for (const [label, overrides] of [
+    ['type 40', { type: 'x'.repeat(40) }],
+    ['type 1', { type: 'x' }],
+    ['digits', { type: 'Rnode2' }],
+  ])
+    assert.equal(
+      normalizeInterfaces([raw(overrides)], NOW).interfaces.length,
+      1,
+      label,
+    );
+});
+
+test('[reticulum-source-005] lists only records with a valid position and rounds it to three decimals', () => {
   const invalid = [
     { latitude: undefined },
     { longitude: undefined },
@@ -221,7 +217,7 @@ test('[reticulum-source-004] lists only records with a valid position and rounds
   ]);
 });
 
-test('[reticulum-source-005] sets the status from the age and drops records heard more than 7 days ago', () => {
+test('[reticulum-source-006] sets the status from the age and drops records heard more than 7 days ago', () => {
   const at = (ageMs, n) =>
     raw({ last_heard: heard(ageMs), discovery_hash: hash(n) });
   const status = (ageMs) =>
@@ -241,10 +237,12 @@ test('[reticulum-source-005] sets the status from the age and drops records hear
   assert.deepEqual(result.counts, { total: 1, positioned: 0, byType: {} });
 });
 
-test('[reticulum-source-006] cleans the names and keeps at most 5000 interfaces, newest first', () => {
+test('[reticulum-source-007] cleans the names and keeps at most 5000 interfaces, newest first', () => {
   const clean = (name) =>
     normalizeInterfaces([raw({ name })], NOW).interfaces[0].name;
   assert.equal(clean('A\u0000B\u001fC\u007fD<script>E'), 'ABCDscriptE');
+  assert.equal(clean('A\u0080B\u009fC'), 'ABC');
+  assert.equal(clean('A\u00a0B A'), 'A\u00a0B A');
   assert.equal(clean('  spaced  '), 'spaced');
   assert.equal(clean('x'.repeat(100)), 'x'.repeat(80));
   assert.equal(clean('z'.repeat(79) + ' tail'), 'z'.repeat(79));
@@ -322,7 +320,7 @@ function listFetch(list, calls = []) {
   };
 }
 
-test('[reticulum-source-007] answers a GET request with the document', async () => {
+test('[reticulum-source-008] answers a GET request with the document', async () => {
   for (const preview of [false, true]) {
     const calls = [];
     const { request, plugin, timers, cleared } = install(
@@ -368,6 +366,17 @@ test('[reticulum-source-007] answers a GET request with the document', async () 
     assert.deepEqual(cleared, [1]);
     assert.equal((await request('')).statusCode, 200);
   }
+  const typed = install({
+    fetchImpl: listFetch([
+      raw({ type: 'Constructor', discovery_hash: hash(1) }),
+      raw({ type: 'Constructor', discovery_hash: hash(2) }),
+      raw({ type: 'LoRaInterface', discovery_hash: hash(3) }),
+    ]),
+  });
+  assert.deepEqual((await typed.request('/')).body.counts.byType, {
+    constructor: 2,
+    lora: 1,
+  });
   const real = install({
     fetchImpl: listFetch([raw()]),
     useRealTimers: true,
@@ -376,22 +385,32 @@ test('[reticulum-source-007] answers a GET request with the document', async () 
   assert.equal(reticulumProxy().name, 'reticulum');
 });
 
-test('[reticulum-source-008] refuses other methods and any query', async () => {
+test('[reticulum-source-009] refuses the methods other than GET and sends no request', async () => {
   const calls = [];
   const { request } = install({ fetchImpl: listFetch([raw()], calls) });
   const post = await request('/', 'POST');
   assert.equal(post.statusCode, 405);
   assert.deepEqual(post.body, { error: 'method_not_allowed' });
+  for (const method of ['DELETE', 'PUT', 'HEAD']) {
+    const res = await request('/x', method);
+    assert.equal(res.statusCode, 405, method);
+    assert.deepEqual(res.body, { error: 'method_not_allowed' });
+  }
+  assert.equal(calls.length, 0);
+});
+
+test('[reticulum-source-010] refuses a query or a sub-path and sends no request', async () => {
+  const calls = [];
+  const { request } = install({ fetchImpl: listFetch([raw()], calls) });
   for (const url of ['/?x=1', '/other', '/?']) {
     const res = await request(url);
     assert.equal(res.statusCode, 400, url);
     assert.deepEqual(res.body, { error: 'invalid_reticulum_query' });
   }
-  assert.equal((await request('/x', 'DELETE')).statusCode, 405);
   assert.equal(calls.length, 0);
 });
 
-test('[reticulum-source-009] reports a missing or not local listener and sends no request', async () => {
+test('[reticulum-source-011] reports a listener that is not set or not local and sends no request', async () => {
   const unusable = [
     ['', 'Reticulum listener not configured'],
     [undefined, 'Reticulum listener not configured'],
@@ -436,6 +455,17 @@ test('[reticulum-source-009] reports a missing or not local listener and sends n
 });
 
 const GOOD = [raw()];
+const MIB4 = 4 * 1024 * 1024;
+/** A valid JSON list of exactly 4 MiB (2097150 zeros, then padding). */
+const EXACT = '[' + '0,'.repeat(2097150) + '0]' + ' ';
+/** A valid JSON list of 4 MiB and one byte. */
+const OVER = EXACT + ' ';
+/** A listener that sends a redirect to a host that serves a good list. */
+const redirectFetch = async (url, { redirect }) => {
+  if (redirect === 'error') throw new TypeError('redirect refused');
+  if (redirect === 'manual') return new Response(null, { status: 302 });
+  return Response.json(GOOD);
+};
 function failures() {
   const timeoutFetch = (url, { signal }) =>
     new Promise((resolve, reject) => {
@@ -459,11 +489,8 @@ function failures() {
         }),
       {},
     ],
-    [
-      'streamed size',
-      async () => new Response(new Uint8Array(4 * 1024 * 1024 + 1)),
-      {},
-    ],
+    ['streamed size', async () => new Response(OVER), {}],
+    ['redirect', redirectFetch, {}],
     ['not json', async () => new Response('not json at all'), {}],
     ['not a list', async () => Response.json({ interfaces: [] }), {}],
     ['a JSON string', async () => Response.json('text'), {}],
@@ -471,7 +498,7 @@ function failures() {
   ];
 }
 
-test('[reticulum-source-010] serves the last good document for 2 hours when the listener fails', async () => {
+test('[reticulum-source-012] serves the last good document for 2 hours when the listener fails', async () => {
   for (const [label, failing, extra, hangs] of failures()) {
     let mode = 'good';
     const signals = [];
@@ -514,6 +541,15 @@ test('[reticulum-source-010] serves the last good document for 2 hours when the 
     assert.equal(timers.length, 4, label);
     assert.deepEqual(cleared, [1, 2, 3, 4], label);
   }
+  assert.equal(Buffer.byteLength(EXACT), 4194304);
+  assert.equal(Buffer.byteLength(OVER), 4194305);
+  assert.equal(MIB4, 4194304);
+  const exact = await install({
+    fetchImpl: async () => new Response(EXACT),
+  }).request('/');
+  assert.equal(exact.body.unavailable, false);
+  assert.equal(exact.body.counts.total, 2097151);
+  assert.deepEqual(exact.body.interfaces, []);
   let calls = 0;
   let healthy = false;
   const { request } = install({
@@ -531,20 +567,38 @@ test('[reticulum-source-010] serves the last good document for 2 hours when the 
   assert.equal(retried.body.unavailable, false);
 });
 
-test('[reticulum-source-011] caches the document for 60 seconds', async () => {
+test('[reticulum-source-013] caches the document for 60 seconds and shares one request', async () => {
   const calls = [];
-  const { request, clock } = install({ fetchImpl: listFetch(GOOD, calls) });
-  await request('/');
-  clock.t = NOW + 59_999;
-  const second = await request('/');
+  let release;
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  const { request, clock } = install({
+    fetchImpl: async (url, options) => {
+      calls.push({ url: String(url), options });
+      await gate;
+      return Response.json(GOOD);
+    },
+  });
+  const first = request('/');
+  const second = request('/');
+  await new Promise((resolve) => setImmediate(resolve));
   assert.equal(calls.length, 1);
-  assert.equal(second.body.fetchedAt, '2026-10-13T12:00:00.000Z');
-  clock.t = NOW + 60_000;
+  release();
+  const [one, two] = await Promise.all([first, second]);
+  assert.equal(calls.length, 1);
+  assert.equal(one.body.fetchedAt, '2026-10-13T12:00:00.000Z');
+  assert.equal(two.body.fetchedAt, '2026-10-13T12:00:00.000Z');
+  clock.t = NOW + 59_999;
   const third = await request('/');
-  assert.equal(calls.length, 2);
-  assert.equal(third.body.fetchedAt, '2026-10-13T12:01:00.000Z');
-  clock.t = NOW + 90_000;
+  assert.equal(calls.length, 1);
+  assert.equal(third.body.fetchedAt, '2026-10-13T12:00:00.000Z');
+  clock.t = NOW + 60_000;
   const fourth = await request('/');
   assert.equal(calls.length, 2);
   assert.equal(fourth.body.fetchedAt, '2026-10-13T12:01:00.000Z');
+  clock.t = NOW + 90_000;
+  const fifth = await request('/');
+  assert.equal(calls.length, 2);
+  assert.equal(fifth.body.fetchedAt, '2026-10-13T12:01:00.000Z');
 });

@@ -1,8 +1,10 @@
 ## 1. Write the tests
 
-- [x] 1.1 Write the tests for `reticulum-source-001` to `reticulum-source-006` in `src/data/reticulumProxy.test.mjs`.
-- [x] 1.2 Write the tests for `reticulum-source-007` and `reticulum-source-008` in the same file.
-- [x] 1.3 Write the tests for `reticulum-source-009` to `reticulum-source-011` in the same file.
+- [x] 1.1 Write the tests for `reticulum-source-001`, `reticulum-source-002` and `reticulum-source-003` in `src/data/reticulumProxy.test.mjs`.
+- [x] 1.2 Write the tests for `reticulum-source-004`, `reticulum-source-005` and `reticulum-source-006` in the same file.
+- [x] 1.3 Write the tests for `reticulum-source-007`, `reticulum-source-008` and `reticulum-source-009` in the same file.
+- [x] 1.4 Write the tests for `reticulum-source-010` and `reticulum-source-011` in the same file.
+- [x] 1.5 Write the tests for `reticulum-source-012` and `reticulum-source-013` in the same file.
 
 ## 2. Write the code and the documents
 

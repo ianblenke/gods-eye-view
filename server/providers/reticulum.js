@@ -1,5 +1,5 @@
 import { parseTapAddress, tapUrl } from '../../src/data/tapAddress.js';
-import { readResponseTextCapped } from './common/http.js';
+import { coalesceProxyRequest, readResponseTextCapped } from './common/http.js';
 
 /**
  * Reticulum interface discovery, read from a listener that the operator runs.
@@ -55,7 +55,7 @@ function cleanName(value, type) {
   const text =
     typeof value === 'string'
       ? value
-          .replace(/[\u0000-\u001f\u007f<>]/g, '')
+          .replace(/[\u0000-\u001f\u007f-\u009f<>]/g, '')
           .trim()
           .slice(0, NAME_MAX)
           .trim()
@@ -127,7 +127,8 @@ export function normalizeInterfaces(list, now) {
   kept.sort((a, b) => b.heardMs - a.heardMs);
   const interfaces = kept.slice(0, MAX_INTERFACES).map(({ item }) => item);
   const byType = {};
-  for (const { type } of interfaces) byType[type] = (byType[type] ?? 0) + 1;
+  for (const { type } of interfaces)
+    byType[type] = (Object.hasOwn(byType, type) ? byType[type] : 0) + 1;
   return {
     interfaces,
     counts: { total: list.length, positioned: interfaces.length, byType },
@@ -170,6 +171,7 @@ export function reticulumProxy({
   clearTimer = clearTimeout,
 } = {}) {
   let cache = null;
+  const inFlight = new Map();
 
   async function fetchList(address) {
     const controller = new AbortController();
@@ -177,7 +179,7 @@ export function reticulumProxy({
     try {
       const response = await fetchImpl(tapUrl(address, '/interfaces.json'), {
         signal: controller.signal,
-        headers: { Accept: 'application/json' },
+        redirect: 'error',
       });
       if (!response.ok) throw new Error('listener_status');
       const list = JSON.parse(
@@ -190,13 +192,7 @@ export function reticulumProxy({
     }
   }
 
-  async function load() {
-    const setting = String(env.RETICULUM_LISTENER ?? '').trim();
-    if (!setting) return unavailable('Reticulum listener not configured');
-    const address = parseTapAddress(setting);
-    if (!address) return unavailable('Reticulum listener address not allowed');
-    const time = now();
-    if (cache && time - cache.fetchedAt < CACHE_MS) return cache.document;
+  async function refresh(address, time) {
     try {
       const { interfaces, counts } = normalizeInterfaces(
         await fetchList(address),
@@ -214,6 +210,18 @@ export function reticulumProxy({
         return { ...cache.document, stale: true };
       return unavailable('Reticulum listener unavailable');
     }
+  }
+
+  async function load() {
+    const setting = String(env.RETICULUM_LISTENER ?? '').trim();
+    if (!setting) return unavailable('Reticulum listener not configured');
+    const address = parseTapAddress(setting);
+    if (!address) return unavailable('Reticulum listener address not allowed');
+    const time = now();
+    if (cache && time - cache.fetchedAt < CACHE_MS) return cache.document;
+    return coalesceProxyRequest(inFlight, 'interfaces', () =>
+      refresh(address, time),
+    ).promise;
   }
 
   async function handler(req, res) {
