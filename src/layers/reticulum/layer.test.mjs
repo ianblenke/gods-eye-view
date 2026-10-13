@@ -108,6 +108,7 @@ test('[reticulum-layer-001] describes the layer and refuses a missing source or 
   assert.equal(layer.icon, '\u{1f4e1}');
   assert.equal(layer.source, 'Reticulum discovery');
   assert.equal(layer.updateInterval, 300000);
+  assert.equal('getAnalystRecords' in layer, false);
   assert.deepEqual(layer.getStats(), {
     count: 0,
     lastUpdate: null,

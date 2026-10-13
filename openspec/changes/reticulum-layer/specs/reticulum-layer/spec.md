@@ -9,6 +9,7 @@ Origin: spec-first
 - **THEN** the `id` is "reticulum", the `name` is "Reticulum Network" and the `icon` is "📡"
 - **AND** the `source` is "Reticulum discovery" and the `updateInterval` is 300000
 - **AND** the creation throws a `TypeError` when the source has no function `getSnapshot`, or when the overlay host is missing
+- **AND** the layer has no function `getAnalystRecords`
 
 #### Scenario: Make no request before the first update `reticulum-layer-002`
 - **WHEN** a test calls `init` and then `enable` on the layer
@@ -29,12 +30,12 @@ Origin: spec-first
 #### Scenario: Refuse a bad answer `reticulum-layer-004`
 - **WHEN** the fetch answers with the status 503, or with text that is not JSON, or with a document that has no `schemaVersion` 1
 - **THEN** `getSnapshot` throws, and the message for the status 503 is "Reticulum HTTP 503"
-- **AND** it throws "Invalid Reticulum snapshot" for a document whose `interfaces` is not a list
-- **AND** it throws for a body of more than 8 MiB
+- **AND** it throws "Invalid Reticulum snapshot" for a document whose `interfaces` is not a list, and for a document that has no `schemaVersion` 1
+- **AND** it throws for a body of more than 8 MiB, and it accepts a valid body of exactly 8 MiB
 - **AND** it throws when the signal is already aborted, and then it sends no request
 
 ### Requirement: Interface records
-The normalizer MUST keep only the interfaces that meet the rules, MUST clean the names, and MUST keep at most 5000 interfaces.
+The normalizer MUST keep only the interfaces that meet the rules, MUST clean the names, and MUST keep at most 5000 interfaces. A character is one code point. The normalizer removes `<`, `>`, U+0000 to U+001F, U+007F to U+009F and U+061C from a name. It also removes U+200B to U+200F, U+2028 to U+202E, U+2060 to U+2064, U+2066 to U+2069 and U+FEFF.
 Origin: spec-first
 
 #### Scenario: Keep the fields of a valid interface `reticulum-layer-005`
@@ -50,10 +51,13 @@ Origin: spec-first
 - **AND** the list also holds interfaces whose position is not valid, or whose `lastHeard` is not a date
 - **THEN** the result lists none of these interfaces
 - **AND** a second interface with the same `id` is dropped
+- **AND** a position is valid when the latitude and the longitude are finite numbers, and the pair is not 0 and 0
+- **AND** the latitude of a valid position is from -90 to 90, and the longitude is from -180 to 180
+- **AND** a text is a date when `Date.parse` reads it as a date
 - **AND** the result holds at most 5000 interfaces, in the order of the input
 
 #### Scenario: Clean the names `reticulum-layer-007`
-- **WHEN** a name holds control characters, characters that change the text direction, zero width characters, or the characters `<` and `>`
+- **WHEN** a name holds characters that the requirement removes, such as control characters, characters that change the text direction, zero width characters, `<` and `>`
 - **THEN** the cleaned name has none of these characters, one space between words, and at most 40 characters
 - **AND** a name that is empty after the cleaning, or is not text, becomes "Unnamed" and the type, for example "Unnamed rnode"
 - **AND** the characters `&`, quotation marks and letters of any script stay
@@ -63,7 +67,8 @@ Origin: spec-first
 - **THEN** `meta.unavailable` and `meta.stale` are true only when the document says true
 - **AND** `meta.reason` is the text of the document, cleaned like a name, with at most 120 characters, or null
 - **AND** `meta.reason` is "Reticulum listener unavailable" when `meta.unavailable` is true and the text of the document is empty or missing
-- **AND** `meta.fetchedAt` is a valid date text or null, and `meta.total` is a whole number that is not negative
+- **AND** `meta.fetchedAt` is a date or null, and `meta.total` is a whole number that is not negative
+- **AND** the normalizer returns null for a value that is not a document of the schema version 1 with a list `interfaces`
 
 ### Requirement: Display model
 The model MUST give each interface a color, a size and an alpha from its type and status. It MUST choose at most 48 labels.
@@ -133,6 +138,9 @@ Origin: spec-first
 - **THEN** the catalog has the layer "reticulum" and the reference sources have the key "reticulum" with a function `getSnapshot`
 - **AND** the share link registry has the entry "reticulum" with the token "4" and the disposition "enabled-only"
 - **AND** the share link "v=2&l=4" decodes to the enabled layer "reticulum"
+- **AND** the layer comes right after the layer "earthquakes" in the order of the catalog
+- **AND** the source contract "reticulum" names the layer "reticulum" and the method `getSnapshot`
+- **AND** a catalog without the source "reticulum" gives the layer the stats error "Data source not configured: reticulum"
 
 #### Scenario: Put the layer in the Infrastructure group `reticulum-layer-018`
 - **WHEN** a test reads the groups of the layer panel

@@ -35,6 +35,7 @@ The new files are files that the fork writes, so they go into `openspec/ownershi
 ## Known limits and later changes
 
 - Known limit `no-card`: The layer has no detail card. The viewer has no info box, and the earthquake layer has none either. A label shows the name of an interface, and a click does nothing.
+- Known limit `names`: The normalizer removes U+200C and U+200D from a name, so a name in a script that uses joiners loses them. Other invisible characters stay, for example U+00AD, U+180E, U+2800, U+3164 and U+E0000 to U+E007F, so a name can look empty.
 - Known limit `labels`: The layer shows at most 48 labels. The overlay host decides which of them fit on the screen.
 - Known limit `voice`: The layer is in the list `VOICE_OFF_LAYERS`, and it has no analyst entry. The names are untrusted text, and the voice model would read them. A later change can add numeric and type fields only.
 - Known limit `token`: The share token "4" is the next free digit in this fork. Many open upstream pull requests claim "4" for other layers. A sync must renumber the token, and then share links with "4" change their meaning.
