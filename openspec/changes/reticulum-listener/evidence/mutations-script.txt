@@ -164,6 +164,10 @@ f('010', 'Add a capability', Y, '    init: true\n', '    init: true\n    cap_add
 f('010', 'Run privileged', Y, '    init: true\n', '    init: true\n    privileged: true\n')
 f('010', 'Run as root', Y, '    init: true\n', '    init: true\n    user: "0"\n')
 
+# added after pre-review 2
+f('004', 'Add the record to the result', P, '        result.append(item)', '        result.append(record)')
+f('004', 'Return an empty list', P, '    return result', '    return []')
+
 out, log = [], []
 try:
     for sid, desc, key, old, new, first in faults:

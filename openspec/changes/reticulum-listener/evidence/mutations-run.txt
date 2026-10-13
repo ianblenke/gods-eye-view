@@ -1,4 +1,4 @@
-Run of the 125 named faults, 2026-10-13, host Node v26.8.2. Each fault changed one file of the listener (Dockerfile, listener.py, config, compose.reticulum.yaml, Makefile or the document) of the commit 37d10dd74969751f45565788fa15736042f592a0; the script restores the files and checks that each one equals the original.
+Run of the 127 named faults, 2026-10-13, host Node v26.8.2. Each fault changed one file of the listener (Dockerfile, listener.py, config, compose.reticulum.yaml, Makefile or the document) of the commit 13afe028a148671cca4a9950447d56aab40e00f1; the script restores the files and checks that each one equals the original.
 Command for each fault: node --test --test-reporter=spec src/data/reticulumListener.test.mjs (limit 90 seconds; a run that hangs is killed and recorded as TIMEOUT). Baseline without a fault: 14 tests, 14 pass, 0 fail.
 Lines: fault | exit status | failing tests
 Use another Python image | exit 1 | failing tests: [reticulum-listener-001]
@@ -126,8 +126,11 @@ Skip the step for byte values | exit 1 | failing tests: [reticulum-listener-004]
 Add a capability | exit 1 | failing tests: [reticulum-listener-010]
 Run privileged | exit 1 | failing tests: [reticulum-listener-010]
 Run as root | exit 1 | failing tests: [reticulum-listener-010]
+Add the record to the result | exit 1 | failing tests: [reticulum-listener-004]
+Return an empty list | exit 1 | failing tests: [reticulum-listener-004]
 
-Two runs of the 125 faults gave the same lines: the command diff <(sed 's/ | exit [0-9-]* | / | /' run1) <(sed 's/ | exit [0-9-]* | / | /' run2) gave no output. The command grep -c 'failing tests: NONE' on the run file gave 0, and the same command with untagged gave 0. For each fault, the scenario that it targets is among the failing tests (a Python check on mutations.txt printed no line).
+Two runs of the 127 faults gave the same lines: the command diff <(sed 's/ | exit [0-9-]* | / | /' run1) <(sed 's/ | exit [0-9-]* | / | /' run2) gave no output. The command grep -c 'failing tests: NONE' on the run file gave 0, and the same command with untagged gave 0. For each fault, the scenario that it targets is among the failing tests (a Python check on mutations.txt printed no problem).
 The first complete run of the first 114 faults caught 112. The faults "Name no Codex start command" and "Name no volume" changed only the first of two mentions in the document, so the term stayed in the document. The faults now change every mention, and the test of reticulum-listener-014 fails for both.
 Pre-review 1 found 11 more cases, and the list holds a fault for each: 3 faults of the folder /data in the Dockerfile, 5 faults of the way listener.py builds the list (a loop over the record, a copy of the record, an index read, the raw list, and no step for byte values), and 3 faults of the capability rule in the compose file (cap_add, privileged and user).
+Pre-review 2 found 2 more cases, and the list holds a fault for each: the item that the function adds to the result (the record in place of the item), and the list that the function returns (an empty list in place of the result).
 The faults are in the file mutations-script.txt as text. None of them runs the program listener.py: no test does that (see the Known limit python in the proposal). The real run is in real-run.txt.

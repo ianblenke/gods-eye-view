@@ -124,3 +124,5 @@ reticulum-listener-004 | Skip the step for byte values | failing: [reticulum-lis
 reticulum-listener-010 | Add a capability | failing: [reticulum-listener-010]
 reticulum-listener-010 | Run privileged | failing: [reticulum-listener-010]
 reticulum-listener-010 | Run as root | failing: [reticulum-listener-010]
+reticulum-listener-004 | Add the record to the result | failing: [reticulum-listener-004]
+reticulum-listener-004 | Return an empty list | failing: [reticulum-listener-004]
