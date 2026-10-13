@@ -1,4 +1,5 @@
-Run of the 221 named faults, 2026-10-13, Node v24.21.0 in the image gods-eye-view:local. Each fault changed one or two files of the commit 7d2a17aef267134dfae8c2e4e8ab3204fff03129; the script restores the files and checks that each one equals the original.
+Run of the 221 named faults, 2026-10-13, Node v24.21.0 in the image gods-eye-view:local.
+The run was on the code and test files of the commit a65c249f. Each fault changed one or two files of that commit. The script restores the files and checks that each one equals the original.
 Command for each fault: docker exec <container> sh -c "env -u NODE_ENV timeout 60 node --test --test-reporter=spec src/layers/reticulum/*.test.mjs" (one long-lived container with the clone mounted; a run that hangs is recorded as TIMEOUT). Baseline without a fault: 21 tests, 21 pass, 0 fail.
 Lines: fault | exit status | failing tests
 Keep a height that is not a number | exit 1 | failing tests: [reticulum-layer-005]
@@ -118,7 +119,7 @@ Sort the input list | exit 1 | failing tests: [reticulum-layer-010]
 Keep 47 labels | exit 1 | failing tests: [reticulum-layer-010], [reticulum-layer-011]
 Keep 49 labels | exit 1 | failing tests: [reticulum-layer-010], [reticulum-layer-011]
 Change the collision capacity | exit 1 | failing tests: [reticulum-layer-010], [reticulum-layer-011]
-Change the overlay source id | exit 1 | failing tests: [reticulum-layer-002], [reticulum-layer-010], [reticulum-layer-011], [reticulum-layer-015], [reticulum-layer-016]
+Change the overlay source id | exit 1 | failing tests: [reticulum-layer-002], [reticulum-layer-010], [reticulum-layer-011], [reticulum-layer-014], [reticulum-layer-015], [reticulum-layer-016]
 Cut the title at 25 characters | exit 1 | failing tests: [reticulum-layer-010]
 Cut the title at 23 characters | exit 1 | failing tests: [reticulum-layer-010]
 Cut the title by UTF-16 units | exit 1 | failing tests: [reticulum-layer-010]
@@ -176,7 +177,7 @@ Do not clamp the points to the ground | exit 1 | failing tests: [reticulum-layer
 Send the labels of all interfaces | exit 1 | failing tests: [reticulum-layer-011]
 Start the label index at 1 | exit 1 | failing tests: [reticulum-layer-011]
 Anchor the label at another position | exit 1 | failing tests: [reticulum-layer-011]
-Send the labels to another source | exit 1 | failing tests: [reticulum-layer-011], [reticulum-layer-015]
+Send the labels to another source | exit 1 | failing tests: [reticulum-layer-011], [reticulum-layer-014], [reticulum-layer-015]
 Change the cohort limit | exit 1 | failing tests: [reticulum-layer-011]
 Change the collision capacity of the call | exit 1 | failing tests: [reticulum-layer-011]
 Say that the labels move | exit 1 | failing tests: [reticulum-layer-011]
@@ -223,10 +224,10 @@ Change the credit key | exit 1 | failing tests: [reticulum-layer-020]
 Change the credit link | exit 1 | failing tests: [reticulum-layer-020]
 Change the credit text | exit 1 | failing tests: [reticulum-layer-020]
 
-Two runs of the 221 faults gave the same lines: the command diff <(sed 's/ | exit [0-9-]* | / | /' run1) <(sed 's/ | exit [0-9-]* | / | /' run2) gave no output. The command grep -c 'failing tests: NONE' on the run file gave 0, and the same command with untagged gave 0. For each fault, the scenario that it targets is among the failing tests (a Python check on mutations.txt printed no problem).
-The first complete run of an earlier version caught 203 of 224 faults. The survivors showed real gaps in the tests: the records tests used no status other than available, no id of 15 characters and no id that is a number; the layer tests had no list of more than 48 interfaces and no check of the label priority and the label positions; disable and destroy did not check the labels, the guidance and the error; and the catalog test did not check the source contract and the source of the layer. Each gap has a test now.
-The same run showed duplicate code: the test of the signal of the request and the test of the identity of the request gave the same result, because disable and a new update always replace the request. The code keeps the identity check only, and one fault for a replaced request replaces the four faults of the duplicate.
-Two faults were mislabeled or showed a gap of the spec. The fault "Use the raw name" belongs to the scenario 007. The fault "Add the points without removing the old ones" showed that no scenario said that a second update replaces the points, so the scenario 011 has that sentence now.
-Three faults of the share token broke the import of the module, so the file of the tests failed to load. They changed the registry only. They now change the registry and the ledger, and the test of reticulum-layer-017 fails for them.
+Two runs of the 221 faults gave the same lines: the command diff <(sed 's/ | exit [0-9-]* | / | /' run1) <(sed 's/ | exit [0-9-]* | / | /' run2) gave no output. The command grep -c 'failing tests: NONE' on the run file gave 0, and the same command with untagged gave 0, and with TIMEOUT gave 0. For each fault, the scenario that it targets is among the failing tests (a Python check on mutations.txt found 0 problems).
 The scripts are in the file mutations-script.txt as text.
-Pre-reviews 1 to 3 added 8 more faults (scenario 013, the share disposition, the analyst function, the source contract, the message for a missing source and the labels on an error). They are in mutations-round2.txt and mutations-round2-run.txt.
+History of this list. The first complete run of an earlier version caught 203 of 224 faults. The survivors showed real gaps in the tests: the records tests used no status other than available, no id of 15 characters and no id that is a number; the layer tests had no list of more than 48 interfaces and no check of the label priority and the label positions; disable and destroy did not check the labels, the guidance and the error; and the catalog test did not check the source contract and the source of the layer. Each gap has a test now.
+The same run showed duplicate code: the test of the signal of the request and the test of the identity of the request gave the same result, because disable and a new update always replace the request. The code keeps the identity check only, and two faults for a replaced request replace the four faults of the duplicate.
+Three faults of the share token broke the import of the module, so the file of the tests failed to load. They now change the registry and the ledger, and the test of reticulum-layer-017 fails for them.
+The fault "Add the points without removing the old ones" showed that no scenario said that a second update replaces the points, so the scenario 011 has that sentence now.
+Pre-reviews 1 to 3 added 8 more faults (scenario 013, the share disposition, the analyst function, the source contract, the message for a missing source and the labels on an error). They are in mutations-round2.txt and mutations-round2-run.txt. They ran on the same code and test files as the 221 faults above.
