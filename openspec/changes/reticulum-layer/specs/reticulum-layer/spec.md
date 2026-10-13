@@ -8,12 +8,14 @@ Origin: spec-first
 - **WHEN** a test creates the layer with a fake source and a fake overlay host
 - **THEN** the `id` is "reticulum", the `name` is "Reticulum Network" and the `icon` is "📡"
 - **AND** the `source` is "Reticulum discovery" and the `updateInterval` is 300000
+- **AND** the creation throws a `TypeError` when the source has no function `getSnapshot`, or when the overlay host is missing
 
 #### Scenario: Make no request before the first update `reticulum-layer-002`
 - **WHEN** a test calls `init` and then `enable` on the layer
 - **THEN** the source gets no call
 - **AND** the data source is hidden after `init` and shown after `enable`
 - **AND** the overlay source "reticulum" is hidden after `init` and visible after `enable`
+- **AND** a second `init` without `destroy` throws "Reticulum layer is already initialized"
 
 ### Requirement: Browser source
 The source MUST read the route `/api/reticulum` of the same origin with the abort signal of the caller. It MUST refuse an answer that is not a Reticulum document of the schema version 1.
@@ -39,7 +41,8 @@ Origin: spec-first
 - **WHEN** the normalizer reads a document with one valid RNode interface
 - **THEN** the record has exactly the fields `id`, `type`, `name`, `latitude`, `longitude`, `heightM`, `hops`, `lastHeard`, `status` and `radio`
 - **AND** the values are the values of the input, with the position and the radio numbers unchanged
-- **AND** `radio` is null when the input has no radio object, and `heightM` and `hops` are null when the input has no number
+- **AND** `radio` is null when the input has no radio object, or when one of its four numbers is missing
+- **AND** `heightM` and `hops` are null when the input has no number
 
 #### Scenario: Drop the interfaces that are not valid `reticulum-layer-006`
 - **WHEN** the normalizer reads interfaces whose `id` is not 16 lowercase hexadecimal characters, or whose `type` is not 1 to 40 lowercase letters or digits
@@ -58,7 +61,8 @@ Origin: spec-first
 #### Scenario: Read the meta of the document `reticulum-layer-008`
 - **WHEN** the normalizer reads a document
 - **THEN** `meta.unavailable` and `meta.stale` are true only when the document says true
-- **AND** `meta.reason` is the text of the document with at most 120 characters, or null
+- **AND** `meta.reason` is the text of the document, cleaned like a name, with at most 120 characters, or null
+- **AND** `meta.reason` is "Reticulum listener unavailable" when `meta.unavailable` is true and the text of the document is empty or missing
 - **AND** `meta.fetchedAt` is a valid date text or null, and `meta.total` is a whole number that is not negative
 
 ### Requirement: Display model
@@ -77,6 +81,8 @@ Origin: spec-first
 - **THEN** it keeps at most 48 interfaces, ordered by status ("available", then "unknown", then "stale"), then by the newest `lastHeard`, then by `id`
 - **AND** each label title is the name cut to 24 characters, and the accent is the color of the type
 - **AND** the priority of the first label is 100000, and each next label has a priority that is 1 less
+- **AND** each entry has the `variant` "label", the `collisionGroup` and the `paintLane` "ambient-label", and `interactive` false
+- **AND** each entry has `edgeFade` "keyhole", `horizonCull` true, `terrainOcclusion` false, `gapPx` 15, `verticalOnly` true and `placement` "above"
 
 ### Requirement: Layer display
 The layer MUST show the points and the labels of the last good list. It MUST poll only while it is enabled.
@@ -115,6 +121,7 @@ Origin: spec-first
 - **WHEN** a test calls `destroy` on a layer that shows points
 - **THEN** the viewer has no data source of the layer and the overlay source has no entry
 - **AND** the stats have `count` 0 and `lastUpdate` null
+- **AND** `destroy` aborts the request in flight, and a second `destroy` does nothing
 
 ### Requirement: Registration
 The application MUST register the layer in the catalog, the share link, the layer panel and the credits, and MUST keep it out of voice.
