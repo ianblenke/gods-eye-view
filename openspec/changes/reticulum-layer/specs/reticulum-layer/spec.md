@@ -37,7 +37,7 @@ Origin: spec-first
 ### Requirement: Interface records
 The normalizer MUST keep only the interfaces that meet the rules, MUST clean the names, and MUST keep at most 5000 interfaces. A character is one code point. The normalizer MUST remove `<`, `>`, U+0000 to U+001F, U+007F to U+009F and U+061C from a name. It MUST also remove U+200B to U+200F, U+2028 to U+202E, U+2060 to U+2064, U+2066 to U+2069 and U+FEFF.
 
-A position is not valid when the latitude or the longitude is not a finite number, or when both are 0. A position is not valid when the latitude is outside -90 to 90, or when the longitude is outside -180 to 180. A value is a date when it is a text and `Date.parse` gives a finite number for it, and not otherwise.
+A position is not valid when the latitude or the longitude is not a finite number, or when both are 0. A position is not valid when the latitude is outside -90 to 90, or when the longitude is outside -180 to 180. A value is a date when it is a text and `Date.parse` gives a finite number for it. A value is not a date if it does not meet both rules.
 Origin: spec-first
 
 #### Scenario: Keep the fields of a valid interface `reticulum-layer-005`
