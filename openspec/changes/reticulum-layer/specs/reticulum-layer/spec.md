@@ -66,7 +66,7 @@ Origin: spec-first
 #### Scenario: Read the meta of the document `reticulum-layer-008`
 - **WHEN** the normalizer reads a document
 - **THEN** `meta.unavailable` and `meta.stale` are true only when the document says true
-- **AND** `meta.reason` is the text of the document, cleaned like a name, with at most 120 code points
+- **AND** `meta.reason` is the text of the document, cleaned like a name and cut to 120 code points, when that cleaned text is not empty
 - **AND** the cleaned text of a value that is not a text is empty
 - **AND** when the cleaned text is empty, `meta.reason` is "Reticulum listener unavailable" if `meta.unavailable` is true, and null if not
 - **AND** `meta.fetchedAt` is a date or null
