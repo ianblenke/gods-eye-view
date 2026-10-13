@@ -37,7 +37,7 @@ Origin: spec-first
 ### Requirement: Interface records
 The normalizer MUST keep only the interfaces that meet the rules, MUST clean the names, and MUST keep at most 5000 interfaces. A character is one code point. The normalizer MUST remove `<`, `>`, U+0000 to U+001F, U+007F to U+009F and U+061C from a name. It MUST also remove U+200B to U+200F, U+2028 to U+202E, U+2060 to U+2064, U+2066 to U+2069 and U+FEFF.
 
-A position is not valid when the latitude or the longitude is not a finite number, or when both are 0. A position is not valid when the latitude is outside -90 to 90, or when the longitude is outside -180 to 180. A text is a date when `Date.parse` gives a finite number for it.
+A position is not valid when the latitude or the longitude is not a finite number, or when both are 0. A position is not valid when the latitude is outside -90 to 90, or when the longitude is outside -180 to 180. A value is a date only when it is a text and `Date.parse` gives a finite number for it.
 Origin: spec-first
 
 #### Scenario: Keep the fields of a valid interface `reticulum-layer-005`
@@ -58,6 +58,7 @@ Origin: spec-first
 #### Scenario: Clean the names `reticulum-layer-007`
 - **WHEN** a name holds characters that the requirement removes, such as control characters, characters that change the text direction, zero width characters, `<` and `>`
 - **THEN** the cleaned name has none of these characters and at most 40 code points
+- **AND** the normalizer removes white space at the start and the end of the name
 - **AND** every run of white space between words becomes one space
 - **AND** a name that is empty after the normalizer cleans it, or is not text, becomes "Unnamed" and the type, for example "Unnamed rnode"
 - **AND** the characters `&`, quotation marks and letters of any script stay
@@ -83,7 +84,7 @@ Origin: spec-first
 
 #### Scenario: Choose the labels `reticulum-layer-010`
 - **WHEN** the model chooses the labels of a list of interfaces
-- **THEN** it sorts the interfaces by status ("available", then "unknown", then "stale"), then by the newest `lastHeard`, then by `id` with the lowest text first
+- **THEN** it sorts the interfaces by status ("available", then "unknown", then "stale"), then by the newest `lastHeard`, then by `id`, with the smaller `id` first
 - **AND** it keeps the first 48 interfaces of that order
 - **AND** each label title is the name cut to 24 code points, and the accent is the color of the type
 - **AND** the priority of the first label is 100000, and each next label has a priority that is 1 less
@@ -115,7 +116,7 @@ Origin: spec-first
 
 #### Scenario: Keep the last points when a request fails `reticulum-layer-014`
 - **WHEN** `update` runs after a good update and the source rejects with the message "Reticulum HTTP 503"
-- **THEN** the data source keeps its entities and `update` returns false
+- **THEN** the data source keeps its entities, the overlay source keeps its entries, and `update` returns false
 - **AND** the stats have `error` "Reticulum HTTP 503", and the text "Reticulum source unavailable" when the error has no message
 
 #### Scenario: Poll only while enabled `reticulum-layer-015`

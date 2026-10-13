@@ -322,12 +322,14 @@ test('[reticulum-layer-014] keeps the last points when a request fails and gives
   await h.layer.update(h.viewer);
   assert.equal(await h.layer.update(h.viewer), false);
   assert.equal(entitiesOf(h).length, 3);
+  assert.equal(h.overlay.entries.get(ID).length, 3);
   assert.equal(h.layer.getStats().error, 'Reticulum HTTP 503');
   assert.equal(await h.layer.update(h.viewer), false);
   assert.equal(h.layer.getStats().error, 'Reticulum source unavailable');
   assert.equal(await h.layer.update(h.viewer), false);
   assert.equal(h.layer.getStats().error, 'Reticulum source unavailable');
   assert.equal(entitiesOf(h).length, 3);
+  assert.equal(h.overlay.entries.get(ID).length, 3);
   step = 0;
   assert.equal(await h.layer.update(h.viewer), true);
   assert.equal(h.layer.getStats().error, null);
