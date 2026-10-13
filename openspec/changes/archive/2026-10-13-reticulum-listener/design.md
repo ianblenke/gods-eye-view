@@ -12,7 +12,7 @@ The app container runs in one of two modes. In the default mode it is on a bridg
 
 The program `listener.py` creates `RNS.Reticulum(configdir=CONFIG_DIR)` and then serves HTTP from the same process. The config sets `discover_interfaces = yes`, so Reticulum stores each discovered interface in a file.
 
-The lock of the discovery code is a class attribute (`discovery_lock` in `RNS/Discovery.py`). A read of the list and a write of an announce in one process cannot run at the same time. A second process, such as `rnstatus`, does not share that lock.
+The lock of the discovery code is a class attribute (`discovery_lock` in `RNS/Discovery.py`). The code cannot read the list and write an announce at the same time in one process. A second process, such as `rnstatus`, does not share that lock.
 
 The public function `RNS.Reticulum.discovered_interfaces()` reads the list. It also deletes the files of entries that are older than 7 days, which is what Reticulum does itself.
 
@@ -22,7 +22,7 @@ The program sends the twelve fields that the provider reads: `discovery_hash`, `
 
 The route of the listener has no login. The dropped fields hold interface keys, host addresses and contact addresses, so they must not leave the container.
 
-The size is a second reason. A test node held 415 interfaces (see `evidence/size.txt`). The raw JSON had 371,878 bytes (896 bytes for each record), and the twelve fields had 129,990 bytes (313 bytes for each record). The raw list would reach the 4 MiB cap of the provider at about 4,700 records.
+The size is a second reason. A test node held 415 interfaces (see `evidence/size.txt`). The raw JSON had 371,878 bytes (896 bytes for each record), and the twelve fields had 129,990 bytes (313 bytes for each record). The raw list reaches the 4 MiB cap of the provider at about 4,700 records.
 
 The provider stays the tested filter. The list in the program is a second layer, and a text test pins it.
 
@@ -34,7 +34,7 @@ On the network `reticulum` it has the fixed address 10.213.77.10 in the subnet 1
 
 The file does not set `networks` or `network_mode` for the app service. Both `docker compose config` commands (base with the listener, and base with the Codex file and the listener) print a valid file.
 
-The subnet is free on this machine. The Docker networks use 172.17.0.0/16, 172.18.0.0/16, 172.19.0.0/16 and 172.22.0.0/16, and the LAN is 192.168.51.0/24. The variables `GEV_RETICULUM_SUBNET` and `GEV_RETICULUM_ADDRESS` change the values.
+The subnet is free on this machine (see `evidence/networks.txt`). The Docker networks use 172.17.0.0/16, 172.18.0.0/16, 172.19.0.0/16 and 172.22.0.0/16, and the LAN is 192.168.51.0/24. The variables `GEV_RETICULUM_SUBNET` and `GEV_RETICULUM_ADDRESS` change the values.
 
 The service publishes no port. The app value of `RETICULUM_LISTENER` comes from the variable `GEV_RETICULUM_LISTENER`. The target `up-codex-reticulum` sets it to the fixed address. The target `down-reticulum` stops both containers, because `make down` does not know the service `reticulum`.
 

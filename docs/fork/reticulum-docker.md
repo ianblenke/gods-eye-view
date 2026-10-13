@@ -48,4 +48,4 @@ docker compose -f compose.yaml -f compose.reticulum.yaml restart reticulum
 - The list is partial for the first hours. The public nodes can go away, and then the listener hears less.
 - No test runs the program of the listener. The tests read its text. The author ran it once on one machine.
 - The author checked the files on Linux with Docker Compose 5.5.1. The host network has other rules on Docker Desktop.
-- The image is built on your machine from a Python image tag and a fixed version of `rns`. The repository holds no Reticulum code, because the licence of Reticulum limits some uses.
+- The image is built on your machine from a Python image tag and fixed versions of `rns` and `lxmf`. The repository holds no Reticulum code, because the licence of Reticulum limits some uses.

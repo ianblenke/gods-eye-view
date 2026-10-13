@@ -82,7 +82,7 @@ The listener is a separate container. `make up-reticulum` starts it with the app
 
 The data is infrastructure that the operator chose to publish. The operator sets the position and nobody checks it. A name is free text, so it can hold an address that the operator typed. The `id` is a hash of the node identity and the name, so it is a stable pseudonym of the node.
 
-The Reticulum software has its own licence. The licence forbids use in systems built to harm people and use as data to train AI. The software runs as a separate service and is not part of this repository. The map feed `rmap.world` states no terms of use, so this project does not use it. See `openspec/specs/reticulum-source/spec.md`.
+The Reticulum software has its own licence. The licence forbids use in any system that can purposefully harm people. It also forbids use of the software in the creation of a training dataset for AI. The software runs as a separate service and is not part of this repository. The map feed `rmap.world` states no terms of use, so this project does not use it. See `openspec/specs/reticulum-source/spec.md`.
 
 ### Notes on the live sources
 
