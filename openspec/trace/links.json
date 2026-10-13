@@ -5095,6 +5095,48 @@
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-056] a footprint with an absent point gives unknown coverage",
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-056] the invalid coordinates give unknown coverage"
   ],
+  "reticulum-listener-001": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-001] installs Reticulum and LXMF with pip at fixed versions and copies two files"
+  ],
+  "reticulum-listener-002": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-002] runs as user 10001 with a port, a health check, an entrypoint and a data folder that the user owns"
+  ],
+  "reticulum-listener-003": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-003] serves GET for one route, answers other paths with 404 and sends no-store"
+  ],
+  "reticulum-listener-004": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-004] sends the twelve fields of the provider and none of the dropped fields"
+  ],
+  "reticulum-listener-005": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-005] sends a byte value as lower case hexadecimal text"
+  ],
+  "reticulum-listener-006": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-006] runs Reticulum and the HTTP server in one process on 0.0.0.0 and port 8081"
+  ],
+  "reticulum-listener-007": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-007] makes a node that listens and publishes nothing"
+  ],
+  "reticulum-listener-008": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-008] connects to the bootstrap hosts with client interfaces that are enabled"
+  ],
+  "reticulum-listener-009": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-009] copies the default config only when the config of the volume does not exist"
+  ],
+  "reticulum-listener-010": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-010] limits the listener service and publishes no port"
+  ],
+  "reticulum-listener-011": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-011] gives the listener a fixed address inside its subnet and an alias on the default network"
+  ],
+  "reticulum-listener-012": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-012] tells the app where the listener is and leaves the network of the app alone"
+  ],
+  "reticulum-listener-013": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-013] starts the app with the listener in both network modes"
+  ],
+  "reticulum-listener-014": [
+    "src/data/reticulumListener.test.mjs › [reticulum-listener-014] documents the start, the stop, the egress and the config"
+  ],
   "reticulum-source-001": [
     "src/data/reticulumProxy.test.mjs › [reticulum-source-001] keeps the allowed fields of a discovered RNode and sets the radio of other interfaces to null"
   ],

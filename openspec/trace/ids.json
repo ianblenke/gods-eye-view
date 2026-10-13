@@ -3789,6 +3789,76 @@
     "since": "2026-10-07",
     "change": "fix-recent-imagery-defects"
   },
+  "reticulum-listener-001": {
+    "hash": "57411c04807991ed4ca9cdfa058c23997dbd18ad50eb564d2f519455d7e2b476",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-002": {
+    "hash": "f23a4cc86149632a80a7d3acdb831e9b063204abfc18276213e1d84f5023b660",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-003": {
+    "hash": "ea2a984fead7eb5e6cde572e2ccac2a1ed104277d3e9d4db1d76df0f50a9b8c8",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-004": {
+    "hash": "85132c6d145258a02e9e048a540973844d74d44b3b9e74a21d7a425f20e967d9",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-005": {
+    "hash": "c3ac85b9b82cd7817ae96ca9eccea36381020533888eb9b97789b9e894b47d1e",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-006": {
+    "hash": "85827019644e7935a9b7a179369ba1890d02e9d24ec0c69ae10f3162eb66f58d",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-007": {
+    "hash": "f8a1932f3b8cc0f6460360c878bb933af9be72991dbf5c2c43ee4b6482836acb",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-008": {
+    "hash": "959c1f7d03ee60d88899e384128f6859859c06fb5216493de8fa9ff8d173a7e2",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-009": {
+    "hash": "b77d31ae5f7857c3428d1874569ce0f862292a89734977ddcac0f33fc1dc8a49",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-010": {
+    "hash": "ad942b86fc017daf843a8cccb67bb8b2642d455dbef4024761e41e49b005aca4",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-011": {
+    "hash": "b98c324e72aa9496baaa4fcd313e17f622dd681d33eac71625ecc4d16e282da4",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-012": {
+    "hash": "ce787acbbef36d6864bbe433beceae92eb12ea45148ea7025e105941b4511443",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-013": {
+    "hash": "25a6450d46900b8115b39f20ffbeaf824829f46ae69d3fb93521c43495dd36ed",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
+  "reticulum-listener-014": {
+    "hash": "6b39225e67c4d273a8fb8b319207a5b86ba23e0bc6a3eab06cf2de7ca4f002db",
+    "since": "2026-10-13",
+    "change": "reticulum-listener"
+  },
   "reticulum-source-001": {
     "hash": "443d736330f0203c29c3cfc78878cba1df3309af8300dd9f91b225d9098cf4b0",
     "since": "2026-10-13",
