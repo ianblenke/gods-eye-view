@@ -34,7 +34,8 @@ Verdicts (spec adversary / STE adversary): round 1 FAIL / PASS; round 2 PASS / P
 
 - [x] FINDING minor (spec-adversary) The file order of the scenarios is 012, 014, 013. Kept: scenario 014 belongs under the requirement "Source failure". Recorded as the Known limit `scenario-order`.
 - [x] FINDING minor (spec-adversary) The brief said 10 faults on the shared rule, and the evidence holds 12. Corrected in the brief by a message to both reviewers. The evidence says 10 for pre-review 4 and 2 for pre-review 5.
-- [x] FINDING minor (spec-adversary) A later message of the reviewer corrects the line numbers of the stalled-body test (lines 521 to 533 and 554). The verdict and the findings stay. The report file keeps the first text.
+- [x] FINDING minor (spec-adversary) A later message of the reviewer corrects the line numbers of the stalled-body test (lines 521 to 533 and 554). The verdict and the findings stay. The reviewer then sent the corrected report as a second message. The report file keeps the first text.
+- [x] FINDING minor (ste-adversary) A later message of the reviewer corrects one count in the "Checked" part. Test 011 has 22 refused values and 8 accepted hosts, not 14 and 9. The verdict and the findings stay. The report file keeps the first text.
 - [x] FINDING minor (ste-adversary) No named fault removes the arms of the shared rule for 192.168/16, `localhost` and a `.local` name. Corrected: three faults in `evidence/mutations-round2.txt`, and two runs gave the same lines.
 - [x] FINDING minor (ste-adversary) The first version of the fault for 192.168/16 left a trailing operator, so the test file did not load. Corrected: the fault replaces the arm with `false`, and `mutations-round2.txt` says so.
 - [x] FINDING minor (ste-adversary) The paragraph in design D4 did not say that the provider also refuses a host that a URL parser rejects. Corrected.
