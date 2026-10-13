@@ -133,6 +133,7 @@ test('[reticulum-layer-006] drops the interfaces that are not valid, repeated id
     ['lastHeard not a date', { lastHeard: 'soon' }],
     ['lastHeard empty', { lastHeard: '' }],
     ['lastHeard a number', { lastHeard: 1760000000 }],
+    ['lastHeard a number that Date.parse reads', { lastHeard: 2026 }],
     ['lastHeard missing', { lastHeard: null }],
   ];
   const list = [iface({ id: hex(1) })];
@@ -243,6 +244,7 @@ test('[reticulum-layer-008] reads the meta of the document', () => {
     total: 1,
   });
   assert.equal(meta({ unavailable: true, reason: 'Down' }).unavailable, true);
+  assert.equal(meta({ unavailable: true, reason: 'Down' }).reason, 'Down');
   assert.equal(meta({ unavailable: 'yes' }).unavailable, false);
   assert.equal(meta({ unavailable: 1 }).unavailable, false);
   assert.equal(meta({ stale: true }).stale, true);
@@ -278,6 +280,7 @@ test('[reticulum-layer-008] reads the meta of the document', () => {
   );
   assert.equal(meta({ fetchedAt: 'soon' }).fetchedAt, null);
   assert.equal(meta({ fetchedAt: 5 }).fetchedAt, null);
+  assert.equal(meta({ fetchedAt: 2026 }).fetchedAt, null);
   assert.equal(meta({ fetchedAt: null }).fetchedAt, null);
   assert.equal(meta({ counts: { total: 7 } }).total, 7);
   assert.equal(meta({ counts: { total: 0 } }).total, 0);
