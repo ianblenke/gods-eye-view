@@ -218,6 +218,24 @@ test('[reticulum-layer-011] shows the points on the ground and the labels, and f
   assert.equal(stats.status, undefined);
   assert.equal(stats.statusMessage, undefined);
 
+  let step = 0;
+  const twice = enabled(async () => {
+    step += 1;
+    return snapshot(step === 1 ? THREE : THREE.slice(1, 2));
+  });
+  await twice.layer.update(twice.viewer);
+  assert.equal(entitiesOf(twice).length, 3);
+  await twice.layer.update(twice.viewer);
+  assert.deepEqual(
+    entitiesOf(twice).map((entity) => entity.id),
+    [`reticulum:${hex(2)}`],
+  );
+  assert.deepEqual(
+    twice.overlay.entries.get(ID).map((entry) => entry.id),
+    [hex(2)],
+  );
+  assert.equal(twice.layer.getStats().count, 1);
+
   const crowded = [];
   for (let n = 1; n <= 60; n += 1)
     crowded.push(

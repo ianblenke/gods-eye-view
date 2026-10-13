@@ -96,6 +96,7 @@ Origin: spec-first
 - **AND** the overlay host gets the entries of the labels for the source "reticulum"
 - **AND** that call has the cohort limit 48, the collision capacity 24 and `moving` false
 - **AND** the stats have `count` 3, a `lastUpdate` and `error` null
+- **AND** a second `update` replaces the points and the labels of the update before
 
 #### Scenario: Report an unavailable listener `reticulum-layer-012`
 - **WHEN** `update` reads a document with `meta.unavailable` true and the reason "Reticulum listener not configured"
