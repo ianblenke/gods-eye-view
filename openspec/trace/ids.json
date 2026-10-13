@@ -2470,7 +2470,7 @@
     "change": "osh-fusion"
   },
   "osh-033": {
-    "hash": "f64b34c358a789ac9c33fdd7ef3d9acd94615f5bb17f11f8c3ba382526fd5941",
+    "hash": "c691657f3454b5772e5fc9ea2a562b600e599a0ea3dded614b1e1660edc5d0d0",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -3788,6 +3788,106 @@
     "hash": "456ed1b486c64171f8acd9c6c84394c1d7228e5b6dca04141da0822580a0ed7f",
     "since": "2026-10-07",
     "change": "fix-recent-imagery-defects"
+  },
+  "reticulum-layer-001": {
+    "hash": "052b4a9bc24af4356e245574885f6e95f8219841fbf5ecb64634d4c16dbdc983",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-002": {
+    "hash": "dc65e49a2e1588250906836e8c815543900bd5e1fcf181c477d04f868b422b04",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-003": {
+    "hash": "89e55919cb0d69f162f48471bb4114a09fdd4092cdff09a9ee6266b0989d83dc",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-004": {
+    "hash": "23f7005d956089c46f6f87cec88a3c1d8eb5e4bdcf1b580bc9cff7b767b36a6f",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-005": {
+    "hash": "2e0a7c99d3615d540631fa7e0e56e52ab1d0934a7071f50a92956d5c78cb7ab2",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-006": {
+    "hash": "9c36d3d3d4b82821d4f4ccad8be2eeb9171c7e575174d5774422f5d0efbf0d7a",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-007": {
+    "hash": "a6e9de608a0f64dacbd543da9bdc9c875c95a7e019433e57a698304b6c31de2b",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-008": {
+    "hash": "665e3aba5f475accb93617f3565d323381cb82c0d15cd7f3b6712a0950374b04",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-009": {
+    "hash": "abe4b6f85309d8258f34b26ce3ec94bf25b314e717fd5adfec85a7c8ec55165b",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-010": {
+    "hash": "4862000b8e6f48d89baf200e9efd92196d892348a4e078dcc03d7f9c2904bc51",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-011": {
+    "hash": "2f8a1bbd01a9eda2957090ed1c905c245c180bb3871a32cb1a619ab57b1a539d",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-012": {
+    "hash": "63e358ee4ce6aface1ad9f21168780868542c335756e2ac4153d8b7ba4a41810",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-013": {
+    "hash": "980033f4fdad8d504e8890e6a40cf19177838ab0c517611cc2efea7a7cb34947",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-014": {
+    "hash": "4b1db3431d615ef92fbc2fd5b0a4c0a52a25b703616d157f74bd31d4318ae22b",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-015": {
+    "hash": "31f74a2404f3a410f0dac5347842f78bcc32d32b811598cd057f509dcc24d9ba",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-016": {
+    "hash": "4eab612c7d42eae737a21eba8ea86f7e748d461877ab28c480eb08aa2f15d0de",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-017": {
+    "hash": "544b70e46219a222675d40ed00fee350e8f937cd5d8e9c8fa6616f27e2fb936f",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-018": {
+    "hash": "f118020b83a025609a84e5cafa3cdb9372996d542904a891cec8f1901270943d",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-019": {
+    "hash": "597b27afb7f6a051b122ab3290bee29baace12dea73f2e715172987096ec47b3",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
+  },
+  "reticulum-layer-020": {
+    "hash": "7cec15fcbfa8bd7676c10dad439722f4f09061530cfc265eaf5ef4e62df60275",
+    "since": "2026-10-13",
+    "change": "reticulum-layer"
   },
   "reticulum-listener-001": {
     "hash": "57411c04807991ed4ca9cdfa058c23997dbd18ad50eb564d2f519455d7e2b476",

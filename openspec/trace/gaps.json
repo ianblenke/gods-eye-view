@@ -1867,11 +1867,11 @@
       "branches": 3,
       "functions": 1,
       "totals": {
-        "lines": 191,
+        "lines": 193,
         "branches": 13,
         "functions": 3
       },
-      "sha": "9c6c70bba40260aa4a13a556d4d3204fa7544d26b86215d58497225ded58d772",
+      "sha": "c374c0fa8fecc00e5f380fbfd9079e8f294096f4285b6673a045a79b35cffa98",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -2122,11 +2122,11 @@
       "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 113,
+        "lines": 114,
         "branches": 25,
         "functions": 10
       },
-      "sha": "e6c244553b4ef787132f8ae3411d633ed99fdeb76b4aca46767fa4875f364e21",
+      "sha": "58e097397921701b5977b6a79d89d363ae1e21be6771d3a1f2acdbd956d3f414",
       "untrue": false,
       "origin": "upstream-sync-5",
       "since": "2026-10-10"
@@ -2872,11 +2872,11 @@
       "branches": 1,
       "functions": 2,
       "totals": {
-        "lines": 475,
+        "lines": 481,
         "branches": 23,
         "functions": 6
       },
-      "sha": "06806895f065eef33d7ab2daa4995168dcb5848e3c637eb9e137655ae43abbe7",
+      "sha": "055d0f6cc4ff7ed660bbaca76e4abf5a40ee4d387b7b4400ee5ea81f648e4190",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3157,11 +3157,11 @@
       "branches": 37,
       "functions": 1,
       "totals": {
-        "lines": 1082,
-        "branches": 298,
+        "lines": 1087,
+        "branches": 300,
         "functions": 72
       },
-      "sha": "fc868d6b241fcbd44fb38a395c2ecfa98bc649791b1efd4e92301c74bed739a1",
+      "sha": "8aadf34e52d9c8851d2bf5f3e23e0f06f476692d44e8bac471c152d988b89cd9",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -10147,11 +10147,11 @@
       "branches": 21,
       "functions": 4,
       "totals": {
-        "lines": 660,
+        "lines": 661,
         "branches": 239,
         "functions": 39
       },
-      "sha": "6a56abe5bd4acfcc5657c6fb719ccb4930d26eaea7e86a067698f534a0508cf4",
+      "sha": "22b22028ab458ff95df50b55b0eeb80e0ba3c527b2899c0c24f2a0c0251b92d1",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -10912,11 +10912,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 525,
+        "lines": 526,
         "branches": 45,
         "functions": 21
       },
-      "sha": "821af504ad70a1acbd6dc3194a8e668729310cc32deabb319c8622d3c51c650f",
+      "sha": "7944d10216dd1a1aeb29eb9945712e5fbfda9f807b7bebff592b252573021091",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"

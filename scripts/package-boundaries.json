@@ -2027,6 +2027,11 @@
       "src/layers/perimeters/records.js",
       "src/layers/perimeters/cards.js",
       "src/layers/perimeters/inciweb.js",
+      "src/app/layers/reticulum.js",
+      "src/layers/reticulum/index.js",
+      "src/layers/reticulum/source.js",
+      "src/layers/reticulum/records.js",
+      "src/layers/reticulum/model.js",
       "src/layers/cctv/sourcePolicy.js",
       "src/sources/reference.js",
       "src/search/nominatim.js",
@@ -2618,6 +2623,11 @@
       "src/layers/perimeters/records.js",
       "src/layers/perimeters/cards.js",
       "src/layers/perimeters/inciweb.js",
+      "src/app/layers/reticulum.js",
+      "src/layers/reticulum/index.js",
+      "src/layers/reticulum/source.js",
+      "src/layers/reticulum/records.js",
+      "src/layers/reticulum/model.js",
       "src/layers/cctv/sourcePolicy.js",
       "src/search/nominatim.js",
       "src/nominatimGeocode.js",
@@ -3125,6 +3135,8 @@
       "src/sources/httpBody.js",
       "src/layers/perimeters/source.js",
       "src/layers/perimeters/records.js",
+      "src/layers/reticulum/source.js",
+      "src/layers/reticulum/records.js",
       "src/layers/submarineCables/bundledSource.js"
     ],
     "external": []
@@ -3345,6 +3357,26 @@
     ],
     "external": []
   },
+  "reticulum": {
+    "exports": ["./layers/reticulum"],
+    "modules": [
+      "src/layers/reticulum/index.js",
+      "src/sources/httpBody.js",
+      "src/layers/reticulum/source.js",
+      "src/layers/reticulum/records.js",
+      "src/layers/reticulum/model.js"
+    ],
+    "external": ["cesium"]
+  },
+  "reticulum-source": {
+    "exports": ["./layers/reticulum/source"],
+    "modules": [
+      "src/layers/reticulum/records.js",
+      "src/sources/httpBody.js",
+      "src/layers/reticulum/source.js"
+    ],
+    "external": []
+  },
   "tools": {
     "exports": ["./tools"],
     "modules": [
@@ -3445,6 +3477,7 @@
       "src/data/militaryInstallationData.js",
       "src/layers/launches/source.js",
       "src/layers/perimeters/source.js",
+      "src/layers/reticulum/source.js",
       "src/layers/radio/source.js",
       "src/layers/radio/policy.js",
       "src/layers/satellites/source.js",

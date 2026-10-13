@@ -1,0 +1,61 @@
+Host checks of reticulum-layer, 2026-10-13, host Node v26.8.2. The checks ran on the files of the commit d58140d74ff6acf094fe7117c8257bb3687c08dc; later commits change evidence files, documents and trace files only.
+
+## node scripts/check-import-directions.mjs
+{"modules":980,"portableEntries":79}
+exit: 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 14 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit: 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 30 published, 1 new.
+exit: 0
+
+## node scripts/format.mjs --check
+Checked 1354 source files.
+exit: 0
+
+## node --test --test-reporter=spec src/layers/reticulum/records.test.mjs src/layers/reticulum/source.test.mjs src/layers/reticulum/model.test.mjs (the three pure modules, on the host)
+exit: 0
+ℹ tests 9
+ℹ pass 9
+ℹ fail 0
+ℹ skipped 0
+
+## node scripts/spec/gates.mjs lint --change reticulum-layer (on the documents of the commit d58140d74ff6acf094fe7117c8257bb3687c08dc)
+STE: 0 errors, 744 warnings.
+
+## openspec validate reticulum-layer (on the documents of the commit d58140d74ff6acf094fe7117c8257bb3687c08dc)
+Specification 'reticulum-layer' is valid
+
+## Non-ASCII characters in the new files of the layer (grep -nP '[^\x00-\x7f]')
+lines: 1
+src/layers/reticulum/index.js:77:    icon: '📡',
+
+## The tests of the layer folder, in the image, with coverage
+Command: docker exec <container> sh -c "env -u NODE_ENV node --test --experimental-test-coverage --test-coverage-include='src/layers/reticulum/*.js' --test-reporter=spec src/layers/reticulum/*.test.mjs" (the clone mounted in a container of gods-eye-view:local). The run was on the same commit as the host checks above.
+Result:
+ℹ tests 21
+ℹ pass 21
+ℹ fail 0
+ℹ skipped 0
+ℹ    index.js   | 100.00 |   100.00 |  100.00 | 
+ℹ    model.js   | 100.00 |   100.00 |  100.00 | 
+ℹ    records.js | 100.00 |   100.00 |  100.00 | 
+ℹ    source.js  | 100.00 |   100.00 |  100.00 |
+
+## The tests that read the changed documents or pin the layer count and the share token, in the image
+Command: node --test on src/firstRunExperience.test.mjs, src/locations.test.mjs, src/annotations/drawTool.test.mjs, src/data/transitFeeds.test.mjs, src/tooling/transitQa.test.mjs, src/tooling/panelStorageDocs.test.mjs, src/data/reticulumListener.test.mjs, src/app/constructCatalog.test.mjs, src/app/sourceComposition.test.mjs, src/data/layerState.test.mjs, src/data/layerStateTokenLedger.test.mjs and src/sources/reference.test.mjs (12 files), in the same container.
+Result:
+ℹ tests 199
+ℹ pass 199
+ℹ fail 0
+ℹ skipped 0
+
+## npm test in the image gods-eye-view:local (the whole unit suite)
+Command: docker run --rm -v <clone>:/app -v /app/node_modules -w /app gods-eye-view:local npm test
+Run on the code files of the commit 7d2a17ae. Later commits changed the test files layer.test.mjs, records.test.mjs and layerStateTokenLedger.test.mjs, the order of two rows in layerStateTokenReservations.json, and documents. The whole unit suite runs again in the final gates run.
+Result: tests 9666, pass 9665, fail 0, cancelled 0, skipped 1, exit 0. The skipped test is "Windows production hardener applies its exact DACL with native tools" (a Windows test that skips itself on Linux).
+

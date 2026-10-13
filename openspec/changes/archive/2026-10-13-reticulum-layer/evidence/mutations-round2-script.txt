@@ -1,0 +1,29 @@
+import os, shutil
+import faults as base
+f = base.f
+base.faults.clear()
+f('013', 'Treat a stale list as unavailable', 'idx', "          if (meta.unavailable) {", "          if (meta.unavailable || meta.stale) {")
+f('013', 'Show no point for a stale list', 'idx', "            showInterfaces(interfaces);", "            showInterfaces(meta.stale ? [] : interfaces);")
+f('017', 'Change the disposition in the share registry', 'ls', "    id: 'reticulum',\n    token: '4',\n    disposition: 'enabled-only',", "    id: 'reticulum',\n    token: '4',\n    disposition: 'enabled+mirrored-options',\n    optionOwner: 'flights',")
+f('001', 'Add an analyst function to the layer', 'idx', "    getStats() {", "    getAnalystRecords() {\n      return [];\n    },\n\n    getStats() {")
+f('017', 'Name another layer in the source contract', 'comp', "  reticulum: contract(['reticulum'], ['getSnapshot']),", "  reticulum: contract(['reticulum2'], ['getSnapshot']),")
+f('017', 'Name another method in the source contract', 'comp', "  reticulum: contract(['reticulum'], ['getSnapshot']),", "  reticulum: contract(['reticulum'], ['getSnapshots']),")
+f('017', 'Change the text of the error for a missing source', 'comp', "super(`Data source not configured: ${name}`);", "super(`Data source missing: ${name}`);")
+f('014', 'Clear the labels on an error', 'idx', "        if (_request === request)\n          _lastError = error?.message || 'Reticulum source unavailable';", "        if (_request === request) {\n          overlayHost.clearSource(SOURCE_ID);\n          _lastError = error?.message || 'Reticulum source unavailable';\n        }")
+f('005', 'Copy every field of the record', 'rec', "  return {\n    id,\n    type,\n    name:", "  return {\n    ...record,\n    id,\n    type,\n    name:")
+f('005', 'Copy every field of the radio', 'rec', "  return { frequency, bandwidth, spreadingFactor, codingRate };", "  return { ...radio, frequency, bandwidth, spreadingFactor, codingRate };")
+f('005', 'Accept a radio number that is not finite', 'rec', ".every(finite))", ".every((value) => value !== undefined))")
+f('008', 'Use the length of the list as the total', 'rec', "        Number.isSafeInteger(total) && total >= 0\n          ? total\n          : payload.interfaces.length,", "        payload.interfaces.length,")
+f('008', 'Test the raw reason for the default', 'rec', "      reason:\n        clean(payload.reason, REASON_MAX) ||\n        (unavailable ? DEFAULT_REASON : null),", "      reason:\n        payload.reason == null || payload.reason === ''\n          ? unavailable\n            ? DEFAULT_REASON\n            : null\n          : clean(payload.reason, REASON_MAX),")
+f('008', 'Use the default reason for every unavailable document', 'rec', "      reason:\n        clean(payload.reason, REASON_MAX) ||\n        (unavailable ? DEFAULT_REASON : null),", "      reason: unavailable\n        ? DEFAULT_REASON\n        : clean(payload.reason, REASON_MAX) || null,")
+f('006', 'Accept a date that is not a text', 'rec', "typeof value === 'string' && Number.isFinite(Date.parse(value));", "Number.isFinite(Date.parse(value));")
+if __name__ == '__main__':
+    D = base.D0
+    for n in ('faults.txt', 'faults-run.txt'):
+        if os.path.exists(D + n):
+            shutil.copy(D + n, D + n + '.round1')
+    base.main()
+    shutil.move(D + 'faults.txt', D + 'faults-round2.txt')
+    shutil.move(D + 'faults-run.txt', D + 'faults-round2-run.txt')
+    for n in ('faults.txt', 'faults-run.txt'):
+        shutil.move(D + n + '.round1', D + n)

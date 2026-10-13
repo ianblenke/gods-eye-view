@@ -1,7 +1,7 @@
 # Reticulum listener in Docker
 
 The listener is a separate container. It runs a Reticulum node that only listens. The node hears the announces of the interfaces that operators make discoverable, and it serves the list over HTTP.
-The route `/api/reticulum` of the app reads that list and keeps only the public fields. The globe layer comes in a later change.
+The route `/api/reticulum` of the app reads that list and keeps only the public fields. The layer "Reticulum Network" shows the interfaces as points on the globe.
 
 ## Start
 

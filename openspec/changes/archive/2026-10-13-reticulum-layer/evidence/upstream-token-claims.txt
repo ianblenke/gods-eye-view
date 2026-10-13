@@ -1,0 +1,18 @@
+Share token claims of the open upstream pull requests, 2026-10-13 (UTC).
+The upstream repository is bilawalsidhu/gods-eye-view. All commands are read-only calls of the GitHub API through the gh program.
+
+Command 1: gh pr list -R bilawalsidhu/gods-eye-view --state open --limit 400 --json number,files
+Result: 293 open pull requests. 58 of them change the file src/data/layerStateTokenReservations.json or the file src/data/layerState.js.
+
+Command 2, for each of those pull requests: gh api "repos/bilawalsidhu/gods-eye-view/pulls/<number>/files?per_page=100", then the added lines of src/data/layerStateTokenReservations.json that match the pattern  +  ["<layer>", "4"],
+Result:
+  PR 1099: +  ["air-quality", "4"],
+  PR 1069: +  ["mapped-mobile-sites", "4"],
+  PR 1002: +  ["san-antonio-trails", "4"],
+
+Command 3, the same for the added lines of src/data/layerState.js that match  token: '4',
+Result:
+  PR 1099: +    token: '4',
+  PR 1002: +    token: '4',
+
+So at least 3 open pull requests claim the token "4" for another layer (#1099, #1069 and #1002). The list of files of a pull request in command 1 holds at most 100 files, so the number is a lower bound. The count can change each day.

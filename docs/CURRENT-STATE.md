@@ -761,6 +761,11 @@ and snapshot source. The standalone adapter keeps the existing USGS daily feed,
 M2.5+ filtering, static discs, magnitude labels and analyst records. Disabling or
 destroying the layer cancels pending work and ignores late results.
 
+The package entry `./layers/reticulum` gives the Reticulum layer. The layer shows
+the interfaces of the route `/api/reticulum` as points with name labels. The
+modules `records.js`, `source.js` and `model.js` do not import Cesium. The
+browser cleans every name again, and the layer has no voice tools.
+
 ## Vessel components and sources
 
 `src/data/aisLiveVessels.js` assembles `createVesselLayer` from the
