@@ -35,7 +35,7 @@
 
 ## 4. Lead work in the image
 
-- [ ] 4.1 Run `make ratchet CHANGE=reticulum-listener`.
+- [x] 4.1 Run `make ratchet CHANGE=reticulum-listener`.
 - [ ] 4.2 Run the two review agents.
 - [ ] 4.3 Write review.md.
 - [ ] 4.4 Run `make gates CHANGE=reticulum-listener` on the final tree.
