@@ -133,4 +133,7 @@ reticulum-source-011 | Refuse the host 10.1.2.3 (rule of the tap address) | fail
 reticulum-source-011 | Allow the host 192.169 (rule of the tap address) | failing: [reticulum-source-011]
 reticulum-source-011 | Refuse the loopback range except 127.0.0.1 (rule of the tap address) | failing: [reticulum-source-011]
 reticulum-source-011 | Allow an IPv6 host (rule of the tap address) | failing: [reticulum-source-011]
+reticulum-source-011 | Let the URL error escape | failing: [reticulum-source-011]
+reticulum-source-011 | Allow the host 11.20 (rule of the tap address) | failing: [reticulum-source-011]
+reticulum-source-011 | Allow the host 11.168 (rule of the tap address) | failing: [reticulum-source-011]
 Note: A fault that removes the check of the time limit of the request ("Never stop the request") made the first version of the tests hang. The test of reticulum-source-012 now fires the injected timer and checks the abort signal before it waits, so that fault fails the test and does not hang it.

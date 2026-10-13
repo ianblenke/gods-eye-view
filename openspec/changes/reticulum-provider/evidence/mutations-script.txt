@@ -104,7 +104,7 @@ faults = [
  ('reticulum-source-011', 'Treat a blank setting as not allowed', lambda: rep("String(env.RETICULUM_LISTENER ?? '').trim()", "String(env.RETICULUM_LISTENER ?? '')")),
  ('reticulum-source-011', 'Read a missing setting as the text undefined', lambda: rep("String(env.RETICULUM_LISTENER ?? '').trim()", "String(env.RETICULUM_LISTENER).trim()")),
  ('reticulum-source-011', 'Use another variable name', lambda: rep("env.RETICULUM_LISTENER ?? ''", "env.RETICULUM_HOST ?? ''")),
- ('reticulum-source-011', 'Skip the address check', lambda: rep("    if (!address || new URL(address.origin).hostname !== address.host)\n      return unavailable('Reticulum listener address not allowed');\n", "")),
+ ('reticulum-source-011', 'Skip the address check', lambda: rep("    if (!address || urlHostOf(address) !== address.host)\n      return unavailable('Reticulum listener address not allowed');\n", "")),
  ('reticulum-source-008', 'Use another path on the listener', lambda: rep("'/interfaces.json'", "'/status'")),
  ('reticulum-source-011', 'Say the same reason for both cases', lambda: rep("unavailable('Reticulum listener address not allowed')", "unavailable('Reticulum listener not configured')")),
  # 010 failures
@@ -154,7 +154,7 @@ faults = [
  ('reticulum-source-011', 'Answer 503 when the listener is unavailable', lambda: rep("    return json(200, await load());", "    const document = await load();\n    return json(document.unavailable ? 503 : 200, document);")),
 
  # added after pre-review 4
- ('reticulum-source-011', 'Accept a host that the URL parser reads as another address', lambda: rep("    if (!address || new URL(address.origin).hostname !== address.host)\n", "    if (!address)\n")),
+ ('reticulum-source-011', 'Accept a host that the URL parser reads as another address', lambda: rep("    if (!address || urlHostOf(address) !== address.host)\n", "    if (!address)\n")),
  ('reticulum-source-011', 'Allow the host 172.32 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(a === 172 && b >= 16 && b <= 32)"), TAP),
  ('reticulum-source-011', 'Allow the host 172.15 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(a === 172 && b >= 15 && b <= 31)"), TAP),
  ('reticulum-source-011', 'Refuse the host 172.31 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(a === 172 && b >= 16 && b <= 30)"), TAP),
@@ -165,6 +165,11 @@ faults = [
  ('reticulum-source-011', 'Allow the host 192.169 (rule of the tap address)', lambda: rept("(a === 192 && b === 168)", "(a === 192 && b >= 168)"), TAP),
  ('reticulum-source-011', 'Refuse the loopback range except 127.0.0.1 (rule of the tap address)', lambda: rept("    a === 127 || // loopback\n", "    host === '127.0.0.1' || // loopback\n"), TAP),
  ('reticulum-source-011', 'Allow an IPv6 host (rule of the tap address)', lambda: rept("host === 'localhost' || MDNS_RE.test(host) || isLocalIpv4(host);", "host === 'localhost' || host === '[::1]' || MDNS_RE.test(host) || isLocalIpv4(host);"), TAP),
+
+ # added after pre-review 5
+ ('reticulum-source-011', 'Let the URL error escape', lambda: rep("  try {\n    return new URL(address.origin).hostname;\n  } catch {\n    return null;\n  }\n", "  return new URL(address.origin).hostname;\n")),
+ ('reticulum-source-011', 'Allow the host 11.20 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(b >= 16 && b <= 31)"), TAP),
+ ('reticulum-source-011', 'Allow the host 11.168 (rule of the tap address)', lambda: rept("(a === 192 && b === 168)", "(b === 168)"), TAP),
 ]
 cmd = 'node --test --test-reporter=spec src/data/reticulumProxy.test.mjs'
 out, log = [], []
