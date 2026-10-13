@@ -44,7 +44,7 @@ const ids = (snapshot) => snapshot.interfaces.map((item) => item.id);
 const nameOf = (name, type = 'rnode') =>
   normalizeReticulumSnapshot(doc([iface({ name, type })])).interfaces[0].name;
 
-test('[reticulum-layer-005] keeps the fields of a valid interface and sets the numbers that the input lacks to null', () => {
+test('[reticulum-layer-005] keeps exactly the fields of a valid interface and sets a number that the input does not have to null', () => {
   const [record] = normalizeReticulumSnapshot(
     doc([
       iface({
@@ -88,12 +88,13 @@ test('[reticulum-layer-005] keeps the fields of a valid interface and sets the n
   assert.equal(first({ radio: null }).radio, null);
   assert.equal(first({ radio: undefined }).radio, null);
   assert.equal(first({ radio: 'text' }).radio, null);
-  for (const missing of Object.keys(RADIO))
-    assert.equal(
-      first({ radio: { ...RADIO, [missing]: undefined } }).radio,
-      null,
-      missing,
-    );
+  for (const name of Object.keys(RADIO))
+    for (const bad of [undefined, Number.NaN, Number.POSITIVE_INFINITY, '8'])
+      assert.equal(
+        first({ radio: { ...RADIO, [name]: bad } }).radio,
+        null,
+        `${name} ${String(bad)}`,
+      );
   assert.equal(first({ heightM: null }).heightM, null);
   assert.equal(first({ heightM: 'tall' }).heightM, null);
   assert.equal(first({ heightM: Number.NaN }).heightM, null);

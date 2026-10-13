@@ -37,7 +37,7 @@ Origin: spec-first
 ### Requirement: Interface records
 The normalizer MUST keep only the interfaces that meet the rules, MUST clean the names, and MUST keep at most 5000 interfaces. A character is one code point. The normalizer MUST remove `<`, `>`, U+0000 to U+001F, U+007F to U+009F and U+061C from a name. It MUST also remove U+200B to U+200F, U+2028 to U+202E, U+2060 to U+2064, U+2066 to U+2069 and U+FEFF.
 
-A position is not valid when the latitude or the longitude is not a finite number, or when both are 0. A position is not valid when the latitude is outside -90 to 90, or when the longitude is outside -180 to 180. A value is a date when it is a text and `Date.parse` gives a finite number for it. A value that is not a text, or that `Date.parse` does not turn into a finite number, is not a date.
+A position is not valid when the latitude or the longitude is not a finite number, or when both are 0. A position is not valid when the latitude is outside -90 to 90, or when the longitude is outside -180 to 180. A value is a date when it is a text and `Date.parse` gives a finite number for it. A value that is not a text, or for which `Date.parse` gives no finite number, is not a date.
 Origin: spec-first
 
 #### Scenario: Keep the fields of a valid interface `reticulum-layer-005`
@@ -67,7 +67,7 @@ Origin: spec-first
 - **WHEN** the normalizer reads a document
 - **THEN** `meta.unavailable` and `meta.stale` are true only when the document says true
 - **AND** `meta.reason` is the text of the document, cleaned like a name, with at most 120 code points, or null
-- **AND** `meta.reason` is "Reticulum listener unavailable" when `meta.unavailable` is true and the document has no text for it, or the text is empty
+- **AND** when `meta.unavailable` is true, `meta.reason` is "Reticulum listener unavailable" if the document has no text for it or the text is empty
 - **AND** `meta.fetchedAt` is a date or null
 - **AND** `meta.total` is the `counts.total` of the document when that is a whole number that is not negative
 - **AND** `meta.total` is the length of the list `interfaces` of the document when `counts.total` is not such a number

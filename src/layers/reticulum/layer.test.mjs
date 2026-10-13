@@ -101,7 +101,7 @@ function enabled(getSnapshot) {
 const entitiesOf = (h) => h.added[0].entities.values;
 const now = () => Cesium.JulianDate.now();
 
-test('[reticulum-layer-001] describes the layer and refuses a layer with no source or no overlay host', () => {
+test('[reticulum-layer-001] describes the layer and refuses to create a layer with no source or no overlay host', () => {
   const { layer } = harness();
   assert.equal(layer.id, 'reticulum');
   assert.equal(layer.name, 'Reticulum Network');
