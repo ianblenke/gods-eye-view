@@ -5095,6 +5095,67 @@
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-056] a footprint with an absent point gives unknown coverage",
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-056] the invalid coordinates give unknown coverage"
   ],
+  "reticulum-layer-001": [
+    "src/layers/reticulum/layer.test.mjs › [reticulum-layer-001] describes the layer and refuses a missing source or overlay host"
+  ],
+  "reticulum-layer-002": [
+    "src/layers/reticulum/layer.test.mjs › [reticulum-layer-002] makes no request on init and enable, and refuses a second init"
+  ],
+  "reticulum-layer-003": [
+    "src/layers/reticulum/source.test.mjs › [reticulum-layer-003] reads the route with the signal of the caller and gives the normalized snapshot"
+  ],
+  "reticulum-layer-004": [
+    "src/layers/reticulum/source.test.mjs › [reticulum-layer-004] refuses a bad answer"
+  ],
+  "reticulum-layer-005": [
+    "src/layers/reticulum/records.test.mjs › [reticulum-layer-005] keeps the fields of a valid interface and sets missing numbers to null"
+  ],
+  "reticulum-layer-006": [
+    "src/layers/reticulum/records.test.mjs › [reticulum-layer-006] drops the interfaces that are not valid, repeated ids and all after 5000"
+  ],
+  "reticulum-layer-007": [
+    "src/layers/reticulum/records.test.mjs › [reticulum-layer-007] cleans the names"
+  ],
+  "reticulum-layer-008": [
+    "src/layers/reticulum/records.test.mjs › [reticulum-layer-008] reads the meta of the document",
+    "src/layers/reticulum/records.test.mjs › [reticulum-layer-008] refuses a value that is not a document of the schema version 1"
+  ],
+  "reticulum-layer-009": [
+    "src/layers/reticulum/model.test.mjs › [reticulum-layer-009] styles the points by type and status"
+  ],
+  "reticulum-layer-010": [
+    "src/layers/reticulum/model.test.mjs › [reticulum-layer-010] chooses at most 48 labels in order and builds their entries"
+  ],
+  "reticulum-layer-011": [
+    "src/layers/reticulum/layer.test.mjs › [reticulum-layer-011] shows the points on the ground and the labels, and fills the stats"
+  ],
+  "reticulum-layer-012": [
+    "src/layers/reticulum/layer.test.mjs › [reticulum-layer-012] shows no point for an unavailable listener and gives the reason as guidance"
+  ],
+  "reticulum-layer-013": [
+    "src/layers/reticulum/layer.test.mjs › [reticulum-layer-013] keeps the points of a stale list"
+  ],
+  "reticulum-layer-014": [
+    "src/layers/reticulum/layer.test.mjs › [reticulum-layer-014] keeps the last points when a request fails and gives the error"
+  ],
+  "reticulum-layer-015": [
+    "src/layers/reticulum/layer.test.mjs › [reticulum-layer-015] polls only while enabled, aborts on disable and on a new update"
+  ],
+  "reticulum-layer-016": [
+    "src/layers/reticulum/layer.test.mjs › [reticulum-layer-016] releases everything on destroy, aborts the request in flight and survives a second destroy"
+  ],
+  "reticulum-layer-017": [
+    "src/layers/reticulum/registration.test.mjs › [reticulum-layer-017] registers the layer in the catalog, the source contract, the reference sources and the share link"
+  ],
+  "reticulum-layer-018": [
+    "src/layers/reticulum/registration.test.mjs › [reticulum-layer-018] puts the layer at the end of the Infrastructure group of the panel"
+  ],
+  "reticulum-layer-019": [
+    "src/layers/reticulum/registration.test.mjs › [reticulum-layer-019] keeps the layer out of voice"
+  ],
+  "reticulum-layer-020": [
+    "src/layers/reticulum/registration.test.mjs › [reticulum-layer-020] credits the Reticulum network"
+  ],
   "reticulum-listener-001": [
     "src/data/reticulumListener.test.mjs › [reticulum-listener-001] installs Reticulum and LXMF with pip at fixed versions and copies two files"
   ],
