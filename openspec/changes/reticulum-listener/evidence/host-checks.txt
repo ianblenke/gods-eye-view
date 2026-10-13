@@ -1,4 +1,4 @@
-Host checks of reticulum-listener, 2026-10-13, host Node v26.8.2. The checks ran on the files of the commit 52d07aa7da1cd434daf8627d1b735c052a890e5d; later commits change the evidence files and the documents only.
+Host checks of reticulum-listener, 2026-10-13, host Node v26.8.2. The checks ran on the files of the commit 37d10dd74969751f45565788fa15736042f592a0; later commits change the evidence files and the documents only.
 
 ## node scripts/check-import-directions.mjs
 {"modules":975,"portableEntries":78}
@@ -60,8 +60,8 @@ src/tooling/transitQa.test.mjs
 src/tooling/viteBuild.test.mjs
 (The test file src/tooling/spec/gates.test.mjs needs more than 590 seconds and runs in the image gates.)
 
-## node scripts/spec/gates.mjs lint --change reticulum-listener (on the documents of the commit 52d07aa7da1cd434daf8627d1b735c052a890e5d)
-STE: 0 errors, 732 warnings.
+## node scripts/spec/gates.mjs lint --change reticulum-listener (on the documents of the commit 37d10dd74969751f45565788fa15736042f592a0)
+STE: 0 errors, 733 warnings.
 
-## openspec validate reticulum-listener (on the documents of the commit 52d07aa7da1cd434daf8627d1b735c052a890e5d)
+## openspec validate reticulum-listener (on the documents of the commit 37d10dd74969751f45565788fa15736042f592a0)
 Change 'reticulum-listener' is valid

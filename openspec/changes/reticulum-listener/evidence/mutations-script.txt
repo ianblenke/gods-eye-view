@@ -150,6 +150,20 @@ f('014', 'Say nothing about the IP address', DOC, 'The operators of the public n
 f('014', 'Name no volume', DOC, '`gev-reticulum`', 'the volume', every=True)
 f('014', 'Name no config file', DOC, '`/data/rns/config`', 'the config', first=True)
 
+# added after pre-review 1
+FOLDER = 'RUN mkdir -p /data && chown 10001:10001 /data\n'
+f('002', 'Make no folder for the volume', D, FOLDER, '')
+f('002', 'Give the folder to another user', D, 'chown 10001:10001 /data', 'chown 10002:10002 /data')
+f('002', 'Make the folder after the user line', D, FOLDER + '\nCOPY listener.py /opt/reticulum/listener.py\nCOPY config /opt/reticulum/config\n\nUSER 10001\n', 'COPY listener.py /opt/reticulum/listener.py\nCOPY config /opt/reticulum/config\n\nUSER 10001\n' + FOLDER)
+f('004', 'Loop over the record and not over the list', P, '        for name in FIELDS:', '        for name in record:')
+f('004', 'Copy the whole record', P, '        item = {}', '        item = dict(record)')
+f('004', 'Index the record', P, '            value = record.get(name)', '            value = record[name]')
+f('004', 'Send the raw list', P, 'json.dumps(public_list())', 'json.dumps(RNS.Reticulum.discovered_interfaces())')
+f('004', 'Skip the step for byte values', P, '            item[name] = value', '            item[name] = record.get(name)')
+f('010', 'Add a capability', Y, '    init: true\n', '    init: true\n    cap_add:\n      - NET_ADMIN\n')
+f('010', 'Run privileged', Y, '    init: true\n', '    init: true\n    privileged: true\n')
+f('010', 'Run as root', Y, '    init: true\n', '    init: true\n    user: "0"\n')
+
 out, log = [], []
 try:
     for sid, desc, key, old, new, first in faults:
