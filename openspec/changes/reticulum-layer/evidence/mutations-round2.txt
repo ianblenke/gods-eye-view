@@ -1,0 +1,7 @@
+Columns: scenario that the fault targets | fault | tests that fail.
+reticulum-layer-013 | Treat a stale list as unavailable | failing: [reticulum-layer-013]
+reticulum-layer-013 | Show no point for a stale list | failing: [reticulum-layer-013]
+reticulum-layer-017 | Change the disposition in the share registry | failing: [reticulum-layer-017]
+reticulum-layer-001 | Add an analyst function to the layer | failing: [reticulum-layer-001]
+reticulum-layer-017 | Name another layer in the source contract | failing: [reticulum-layer-017]
+reticulum-layer-017 | Name another method in the source contract | failing: [reticulum-layer-017]

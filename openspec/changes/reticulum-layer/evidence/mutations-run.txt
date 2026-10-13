@@ -229,3 +229,4 @@ The same run showed duplicate code: the test of the signal of the request and th
 Two faults were mislabeled or showed a gap of the spec. The fault "Use the raw name" belongs to the scenario 007. The fault "Add the points without removing the old ones" showed that no scenario said that a second update replaces the points, so the scenario 011 has that sentence now.
 Three faults of the share token broke the import of the module, so the file of the tests failed to load. They changed the registry only. They now change the registry and the ledger, and the test of reticulum-layer-017 fails for them.
 The scripts are in the file mutations-script.txt as text.
+Pre-review 1 added 6 more faults (scenario 013, the share disposition, the analyst function and the source contract). They are in mutations-round2.txt and mutations-round2-run.txt.
