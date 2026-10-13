@@ -41,4 +41,4 @@ The new files are files that the fork writes, so they go into `openspec/ownershi
 - Known limit `stale`: The layer keeps the points of a stale list, and the panel shows no sign of it.
 - Known limit `position`: The operator sets the position of an interface and nobody checks it. The provider rounds it to three decimals.
 - Known limit `refresh`: The layer asks the route every 5 minutes, and the provider caches its answer for 60 seconds. An interface that an operator turns off stays on the globe until it is older than 7 days.
-- Known limit `visual`: The author looked at the layer on one machine in one browser. No test draws the points.
+- Known limit `visual`: The author looked at the layer on one machine in one headless Chrome with a software renderer and a stored list. No test draws the points.

@@ -26,7 +26,7 @@ A document with `stale` true keeps its points. A request that fails keeps the la
 
 ### D4: Registrations from the suite
 
-A skeleton layer in a throwaway copy showed what the suite needs. It needs the catalog entry, the source contract in `sourceComposition.js` and the key in the reference sources. It needs the entry in the share link registry and in the token ledger, the entry in `VOICE_OFF_LAYERS`, and new counts in 8 tests.
+A skeleton layer in a throwaway copy showed what the suite needs. It needs the catalog entry, the source contract in `sourceComposition.js` and the key in the reference sources. It needs the entry in the share link registry and in the token ledger, and the entry in `VOICE_OFF_LAYERS`. The tests that count layers need new counts.
 
 The tests of the token ledger use the digits 4 and 5 for fixtures, and they move up by one.
 The suite does not need the group in the layer panel, the credit, the package exports and the package boundaries. This change adds them. A user needs the group and the credit, and `make precheck` needs the package files.
@@ -35,8 +35,8 @@ The suite does not need the group in the layer panel, the credit, the package ex
 
 The pure modules have tests on the host. The layer has a test with a fake viewer in the image.
 
-The named faults for the pure modules run on the host. The faults for `index.js` run in one long-lived container with the clone mounted. The lead stops that container before a ratchet or a gates run (rule 12).
-A visual check uses an isolated Compose project: the listener and a throwaway app container that the lead builds from the clone, on another port. The app container of the owner is not touched.
+All named faults run in one long-lived container with the clone mounted. The lead stops that container before a ratchet or a gates run (rule 12).
+The visual check runs without a container. The lead starts the listener program on the host, with a stored list and no outbound link. The lead starts a Vite server from a copy of the commit and drives a headless Chrome. The app container of the owner is not touched.
 
 ## Files and measures
 
