@@ -288,6 +288,11 @@ test('[reticulum-layer-015] polls only while enabled, aborts on disable and on a
   assert.equal(await idle.layer.update(idle.viewer), false);
   assert.equal(idle.calls.length, 0);
 
+  const done = enabled();
+  assert.equal(await done.layer.update(done.viewer), true);
+  done.layer.disable(done.viewer);
+  assert.equal(done.calls[0].signal.aborted, false);
+
   const waits = [];
   const h = enabled(() => {
     const wait = deferred();
@@ -342,6 +347,24 @@ test('[reticulum-layer-016] releases everything on destroy, aborts the request i
   });
   h.layer.destroy(h.viewer);
   assert.equal(h.removed.length, 1);
+
+  let step = 0;
+  const k = enabled(async () => {
+    step += 1;
+    if (step === 1)
+      return snapshot([], { unavailable: true, reason: 'Not configured' });
+    throw new Error('Reticulum HTTP 503');
+  });
+  await k.layer.update(k.viewer);
+  await k.layer.update(k.viewer);
+  assert.equal(k.layer.getStats().status, 'idle');
+  assert.equal(k.layer.getStats().error, 'Reticulum HTTP 503');
+  k.layer.destroy(k.viewer);
+  assert.deepEqual(k.layer.getStats(), {
+    count: 0,
+    lastUpdate: null,
+    error: null,
+  });
 
   const waits = [];
   const g = enabled(() => {
