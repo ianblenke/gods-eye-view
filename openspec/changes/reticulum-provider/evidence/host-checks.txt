@@ -1,4 +1,4 @@
-Host checks of reticulum-provider, 2026-10-13, host Node v26.8.2. The checks ran on the files of the commit c7deeba0e0005e0b80ebc6d466655a647a3c86d7; later commits change the evidence files and the documents only.
+Host checks of reticulum-provider, 2026-10-13, host Node v26.8.2. The checks ran on the files of the commit 1d39ca8dd88a04e9ed55e2015adea4ceaaa9b83e; later commits change the evidence files and the documents only.
 
 ## node scripts/check-import-directions.mjs
 {"modules":975,"portableEntries":78}
@@ -19,11 +19,10 @@ exit: 0
 
 ## node --test --experimental-test-coverage --test-coverage-include=server/providers/reticulum.js --test-reporter=spec src/data/reticulumProxy.test.mjs
 exit: 0
-ℹ tests 11
-ℹ pass 11
+ℹ tests 13
+ℹ pass 13
 ℹ fail 0
 ℹ skipped 0
-ℹ file           | line % | branch % | funcs % | uncovered lines
 ℹ   reticulum.js | 100.00 |   100.00 |  100.00 | 
 
 ## The 20 test files that list providers or read the manifests and the docs
@@ -57,8 +56,8 @@ src/tooling/transitQa.test.mjs
 src/tooling/viteBuild.test.mjs
 (The test file src/tooling/spec/gates.test.mjs needs more than 590 seconds and runs in the image gates.)
 
-## node scripts/spec/gates.mjs lint --change reticulum-provider (on the documents of the commit c7deeba0e0005e0b80ebc6d466655a647a3c86d7)
-STE: 0 errors, 727 warnings.
+## node scripts/spec/gates.mjs lint --change reticulum-provider (on the documents of the commit 1d39ca8dd88a04e9ed55e2015adea4ceaaa9b83e)
+STE: 0 errors, 724 warnings.
 
-## openspec validate reticulum-provider (on the documents of the commit c7deeba0e0005e0b80ebc6d466655a647a3c86d7)
+## openspec validate reticulum-provider (on the documents of the commit 1d39ca8dd88a04e9ed55e2015adea4ceaaa9b83e)
 Change 'reticulum-provider' is valid
