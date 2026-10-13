@@ -1,0 +1,41 @@
+# Override for the Reticulum listener. See docs/fork/reticulum-docker.md.
+# Start with: make up-reticulum (default network)
+# or with: make up-codex-reticulum (host network; use it where you use make up-codex).
+#
+# The listener serves the discovered interfaces on port 8081 and publishes no
+# port. The app reaches it by the alias reticulum.local on the default network,
+# or by the fixed address on the network reticulum (the host network can route
+# to that address).
+services:
+  reticulum:
+    build: ./docker/reticulum
+    image: gods-eye-view-reticulum:local
+    restart: unless-stopped
+    init: true
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    pids_limit: 256
+    volumes:
+      - gev-reticulum:/data
+    networks:
+      default:
+        aliases:
+          - reticulum.local
+      reticulum:
+        ipv4_address: ${GEV_RETICULUM_ADDRESS:-10.213.77.10}
+  gods-eye-view:
+    environment:
+      RETICULUM_LISTENER: ${GEV_RETICULUM_LISTENER:-reticulum.local:8081}
+
+networks:
+  reticulum:
+    ipam:
+      config:
+        - subnet: ${GEV_RETICULUM_SUBNET:-10.213.77.0/24}
+
+volumes:
+  gev-reticulum:

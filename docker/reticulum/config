@@ -1,0 +1,48 @@
+# Default config of the Reticulum listener.
+# The listener copies this file to /data/rns/config on the first start.
+# It never overwrites that file, so you can edit the copy in the volume.
+#
+# This node only listens. It does not forward traffic for other nodes, it does
+# not publish itself, and it has no server interface.
+[reticulum]
+  enable_transport = no
+  share_instance = no
+  discover_interfaces = yes
+  panic_on_interface_error = no
+
+[logging]
+  loglevel = 4
+
+# Public nodes of the community, taken from a public directory on 2026-10-13.
+# The operators of these nodes see the IP address of your node.
+# Replace them with nodes that you choose.
+[interfaces]
+  [[Birdsnet BR]]
+    type = TCPClientInterface
+    enabled = yes
+    target_host = rns.birdsnet.com.br
+    target_port = 4242
+
+  [[Swiss RNS]]
+    type = TCPClientInterface
+    enabled = yes
+    target_host = swiss-rns.cl0ud.ch
+    target_port = 4242
+
+  [[Sydney RNS]]
+    type = TCPClientInterface
+    enabled = yes
+    target_host = sydney.reticulum.au
+    target_port = 4242
+
+  [[Synalysis]]
+    type = TCPClientInterface
+    enabled = yes
+    target_host = reticulum.synalysis.com
+    target_port = 4242
+
+  [[RNS Wiegand]]
+    type = TCPClientInterface
+    enabled = yes
+    target_host = rns.wiegandtech.net
+    target_port = 4242

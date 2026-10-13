@@ -1,0 +1,18 @@
+Networks on this machine, 2026-10-13 10:52 UTC. The subnet of the listener (10.213.77.0/24) must not overlap with any of them. Only subnets are listed.
+
+## Docker networks (command: docker network inspect <each network> --format '{{.Name}} {{range .IPAM.Config}}{{.Subnet}} {{end}}')
+bridge 172.17.0.0/16 
+ctf 172.22.0.0/16 
+gods-eye-view_default 172.18.0.0/16 
+host 
+kind fc00:f853:ccd:e793::/64 172.19.0.0/16 
+none 
+
+## Routes of the host (command: ip -4 route | awk '{print $1}')
+default
+172.17.0.0/16
+172.18.0.0/16
+172.19.0.0/16
+172.22.0.0/16
+192.168.51.0/24
+192.168.51.0/24

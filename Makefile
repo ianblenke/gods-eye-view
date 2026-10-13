@@ -17,7 +17,7 @@ CHANGE_ARG := $(if $(CHANGE),--change $(CHANGE),)
 BASE_ARG := $(if $(BASE),--base $(BASE),)
 FROM_ARG := $(if $(FROM),--from $(FROM),)
 
-.PHONY: up up-codex down image ensure-image test gates gates-docs precheck gates-init ratchet adopt lint tree
+.PHONY: up up-codex up-reticulum up-codex-reticulum down-reticulum down image ensure-image test gates gates-docs precheck gates-init ratchet adopt lint tree
 
 up:
 	docker compose build
@@ -26,6 +26,17 @@ up:
 up-codex:
 	docker compose -f compose.yaml -f compose.codex.yaml build
 	docker compose -f compose.yaml -f compose.codex.yaml up --force-recreate
+
+up-reticulum:
+	docker compose -f compose.yaml -f compose.reticulum.yaml build
+	docker compose -f compose.yaml -f compose.reticulum.yaml up --force-recreate
+
+up-codex-reticulum:
+	docker compose -f compose.yaml -f compose.codex.yaml -f compose.reticulum.yaml build
+	GEV_RETICULUM_LISTENER=$${GEV_RETICULUM_LISTENER:-10.213.77.10:8081} docker compose -f compose.yaml -f compose.codex.yaml -f compose.reticulum.yaml up --force-recreate
+
+down-reticulum:
+	docker compose -f compose.yaml -f compose.reticulum.yaml down
 
 down:
 	docker compose down

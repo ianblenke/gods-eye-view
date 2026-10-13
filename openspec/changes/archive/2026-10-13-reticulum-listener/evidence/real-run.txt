@@ -1,0 +1,165 @@
+Real run of the listener, 2026-10-13 09:36 UTC, commit 52d07aa7da1cd434daf8627d1b735c052a890e5d.
+Project name gevrns (not the project of the app). The app container was not touched.
+
+## docker compose version
+Docker Compose version 5.5.1
+
+## node version on the host, and in the image of the app
+v26.8.2
+v24.21.0
+
+## image of the listener
+gods-eye-view-reticulum:local 208MB
+
+## packages in the container
+rns 1.5.7 lxmf 1.2.0
+python 3.13.16
+
+## containers of the project
+gevrns-reticulum-1 | Up 8 minutes (healthy) | ports: 8081/tcp
+
+## settings of the listener container
+ReadonlyRootfs=true CapDrop=[ALL] SecurityOpt=[no-new-privileges:true] Init=true Memory=536870912 PidsLimit=256 User=10001 PortBindings=map[] Restart=unless-stopped
+gevrns_default 172.20.0.2 aliases=[gevrns-reticulum-1 reticulum reticulum.local]
+gevrns_reticulum 10.213.77.10 aliases=[gevrns-reticulum-1 reticulum]
+
+Mounts: volume gevrns_gev-reticulum -> /data rw=true; 
+
+## log lines by level since the start
+(The command printed nothing: the container had no log line at that time.)
+
+## log lines with Error, Traceback or Critical (count)
+0
+
+## config of the volume equals the default config
+equal
+
+## probe from the host (the real provider of change 1 against the fixed address)
+{
+  "address": "10.213.77.10:8081",
+  "listener": {
+    "status": 200,
+    "contentType": "application/json",
+    "cacheControl": "no-store",
+    "bytes": 7245,
+    "records": 23,
+    "keys": [
+      "bandwidth",
+      "cr",
+      "discovery_hash",
+      "frequency",
+      "height",
+      "hops",
+      "last_heard",
+      "latitude",
+      "longitude",
+      "name",
+      "sf",
+      "type"
+    ],
+    "keysEqualTheTwelveFields": true,
+    "discoveryHashShape": true
+  },
+  "provider": {
+    "status": 200,
+    "unavailable": false,
+    "stale": false,
+    "reason": null,
+    "counts": {
+      "total": 23,
+      "positioned": 18,
+      "byType": {
+        "backbone": 7,
+        "rnode": 11
+      }
+    },
+    "outputKeys": [
+      "heightM",
+      "hops",
+      "id",
+      "lastHeard",
+      "latitude",
+      "longitude",
+      "name",
+      "radio",
+      "status",
+      "type"
+    ],
+    "forbiddenInOutput": []
+  }
+}
+
+## probe from a container on the default network (the real provider against the alias)
+{
+  "address": "reticulum.local:8081",
+  "listener": {
+    "status": 200,
+    "contentType": "application/json",
+    "cacheControl": "no-store",
+    "bytes": 7245,
+    "records": 23,
+    "keys": [
+      "bandwidth",
+      "cr",
+      "discovery_hash",
+      "frequency",
+      "height",
+      "hops",
+      "last_heard",
+      "latitude",
+      "longitude",
+      "name",
+      "sf",
+      "type"
+    ],
+    "keysEqualTheTwelveFields": true,
+    "discoveryHashShape": true
+  },
+  "provider": {
+    "status": 200,
+    "unavailable": false,
+    "stale": false,
+    "reason": null,
+    "counts": {
+      "total": 23,
+      "positioned": 18,
+      "byType": {
+        "backbone": 7,
+        "rnode": 11
+      }
+    },
+    "outputKeys": [
+      "heightM",
+      "hops",
+      "id",
+      "lastHeard",
+      "latitude",
+      "longitude",
+      "name",
+      "radio",
+      "status",
+      "type"
+    ],
+    "forbiddenInOutput": []
+  }
+}
+
+## port 8081 from the host loopback (nothing is published)
+curl http://127.0.0.1:8081/ -> 000 (000 means no connection)
+
+## restart test: edit the config in the volume, restart, look again
+records before the restart: 23
+ Container gevrns-reticulum-1 Restarting 
+ Container gevrns-reticulum-1 Started 
+records after the restart: 23
+# edited in the volume
+config was kept (it differs from the default)
+
+## stop with the project command (the command of the target down-reticulum), keep the volume
+ Container gevrns-reticulum-1 Removed 
+ Network gevrns_default Removing 
+ Network gevrns_reticulum Removing 
+ Network gevrns_default Removed 
+ Network gevrns_reticulum Removed 
+gevrns_gev-reticulum
+(the volume is still there)

@@ -831,6 +831,7 @@
   "src/data/cyclonesEarlyAdvisory.test.mjs",
   "src/data/firePerimetersProxy.test.mjs",
   "server/providers/reticulum.js",
+  "src/data/reticulumListener.test.mjs",
   "src/data/reticulumProxy.test.mjs",
   "src/layers/cyclones/index.js",
   "src/layers/cyclones/rendering.js",

@@ -1,0 +1,98 @@
+// Probe of the real listener and the real provider (change 1).
+// usage: node probe.mjs <repository root> <host:port of the listener>
+// It prints counts and key names only. It prints no name and no position.
+import { pathToFileURL } from 'node:url';
+
+const [root, address] = process.argv.slice(2);
+const { reticulumProxy } = await import(
+  pathToFileURL(`${root}/server/providers/reticulum.js`).href
+);
+const FIELDS = [
+  'discovery_hash',
+  'type',
+  'name',
+  'last_heard',
+  'hops',
+  'latitude',
+  'longitude',
+  'height',
+  'frequency',
+  'bandwidth',
+  'sf',
+  'cr',
+];
+const FORBIDDEN = [
+  'config_entry',
+  'reachable_on',
+  'ifac_netname',
+  'ifac_netkey',
+  'operator_lxmf_address',
+  'transport_id',
+  'network_id',
+  'impl_name',
+  '"stamp"',
+  '"version"',
+  '"port"',
+  '"value"',
+];
+
+const rawResponse = await fetch(`http://${address}/interfaces.json`);
+const rawText = await rawResponse.text();
+const raw = JSON.parse(rawText);
+const rawKeys = [...new Set(raw.flatMap((record) => Object.keys(record)))].sort();
+
+const plugin = reticulumProxy({ env: { RETICULUM_LISTENER: address } });
+let handler;
+plugin.configureServer({
+  middlewares: {
+    use(_path, callback) {
+      handler = callback;
+    },
+  },
+});
+const res = {};
+res.writeHead = (code, headers) => {
+  res.statusCode = code;
+  res.headers = headers;
+};
+res.end = (body) => {
+  res.text = body;
+  res.body = JSON.parse(body);
+};
+await handler({ url: '/', method: 'GET' }, res);
+const out = res.body;
+const outputKeys = [
+  ...new Set(out.interfaces.flatMap((item) => Object.keys(item))),
+].sort();
+
+console.log(
+  JSON.stringify(
+    {
+      address,
+      listener: {
+        status: rawResponse.status,
+        contentType: rawResponse.headers.get('content-type'),
+        cacheControl: rawResponse.headers.get('cache-control'),
+        bytes: rawText.length,
+        records: raw.length,
+        keys: rawKeys,
+        keysEqualTheTwelveFields:
+          JSON.stringify(rawKeys) === JSON.stringify([...FIELDS].sort()),
+        discoveryHashShape: raw.every((record) =>
+          /^[0-9a-f]{64}$/.test(record.discovery_hash),
+        ),
+      },
+      provider: {
+        status: res.statusCode,
+        unavailable: out.unavailable,
+        stale: out.stale,
+        reason: out.reason,
+        counts: out.counts,
+        outputKeys,
+        forbiddenInOutput: FORBIDDEN.filter((word) => res.text.includes(word)),
+      },
+    },
+    null,
+    2,
+  ),
+);

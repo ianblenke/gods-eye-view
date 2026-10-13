@@ -1,0 +1,142 @@
+Output of docker compose config on 2026-10-13, Docker Compose 5.5.1, commit 52d07aa7da1cd434daf8627d1b735c052a890e5d. The command starts nothing. HOME is set to /home/example so that the Codex folder has no real path. The path of the clone is replaced with <clone> in this file.
+
+## base file with the listener file (make up-reticulum)
+$ docker compose -p probe -f compose.yaml -f compose.reticulum.yaml config
+name: probe
+services:
+  gods-eye-view:
+    build:
+      context: <clone>
+      dockerfile: Dockerfile
+    environment:
+      HOST: 0.0.0.0
+      PORT: "4173"
+      RETICULUM_LISTENER: reticulum.local:8081
+    image: gods-eye-view:local
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 4173
+        published: "4173"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: gev-cache
+        target: /app/.gev-cache
+        volume: {}
+      - type: volume
+        source: gev-logs
+        target: /app/.gev-logs
+        volume: {}
+  reticulum:
+    build:
+      context: <clone>/docker/reticulum
+      dockerfile: Dockerfile
+    cap_drop:
+      - ALL
+    image: gods-eye-view-reticulum:local
+    init: true
+    mem_limit: "536870912"
+    networks:
+      default:
+        aliases:
+          - reticulum.local
+      reticulum:
+        ipv4_address: 10.213.77.10
+    pids_limit: 256
+    read_only: true
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - type: volume
+        source: gev-reticulum
+        target: /data
+        volume: {}
+networks:
+  default:
+    name: probe_default
+  reticulum:
+    name: probe_reticulum
+    ipam:
+      config:
+        - subnet: 10.213.77.0/24
+volumes:
+  gev-cache:
+    name: probe_gev-cache
+  gev-logs:
+    name: probe_gev-logs
+  gev-reticulum:
+    name: probe_gev-reticulum
+
+## base file with the Codex file and the listener file (make up-codex-reticulum)
+$ HOME=/home/example GEV_RETICULUM_LISTENER=10.213.77.10:8081 docker compose -p probe -f compose.yaml -f compose.codex.yaml -f compose.reticulum.yaml config
+name: probe
+services:
+  gods-eye-view:
+    build:
+      context: <clone>
+      dockerfile: Dockerfile
+    environment:
+      HOST: 0.0.0.0
+      PORT: "4173"
+      RETICULUM_LISTENER: 10.213.77.10:8081
+    image: gods-eye-view:local
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: gev-cache
+        target: /app/.gev-cache
+        volume: {}
+      - type: volume
+        source: gev-logs
+        target: /app/.gev-logs
+        volume: {}
+      - type: bind
+        source: /home/example/.codex
+        target: /home/node/.codex
+        read_only: true
+        bind: {}
+  reticulum:
+    build:
+      context: <clone>/docker/reticulum
+      dockerfile: Dockerfile
+    cap_drop:
+      - ALL
+    image: gods-eye-view-reticulum:local
+    init: true
+    mem_limit: "536870912"
+    networks:
+      default:
+        aliases:
+          - reticulum.local
+      reticulum:
+        ipv4_address: 10.213.77.10
+    pids_limit: 256
+    read_only: true
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - type: volume
+        source: gev-reticulum
+        target: /data
+        volume: {}
+networks:
+  default:
+    name: probe_default
+  reticulum:
+    name: probe_reticulum
+    ipam:
+      config:
+        - subnet: 10.213.77.0/24
+volumes:
+  gev-cache:
+    name: probe_gev-cache
+  gev-logs:
+    name: probe_gev-logs
+  gev-reticulum:
+    name: probe_gev-reticulum

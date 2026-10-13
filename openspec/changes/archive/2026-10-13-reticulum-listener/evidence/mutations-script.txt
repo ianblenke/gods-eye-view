@@ -1,0 +1,208 @@
+import subprocess, re, os, signal
+R = '/home/ianblenke/docker/gev-work/reticulum-listener/'
+T = 'src/data/reticulumListener.test.mjs'
+cmd = 'node --test --test-reporter=spec ' + T
+FILES = {
+    'docker': 'docker/reticulum/Dockerfile',
+    'py': 'docker/reticulum/listener.py',
+    'cfg': 'docker/reticulum/config',
+    'yml': 'compose.reticulum.yaml',
+    'mk': 'Makefile',
+    'doc': 'docs/fork/reticulum-docker.md',
+}
+orig = {k: open(R + v).read() for k, v in FILES.items()}
+faults = []
+
+def f(sid, desc, key, old, new, first=False, every=False):
+    n = orig[key].count(old)
+    assert n >= 1 and (first or every or n == 1), (desc, old[:60], n)
+    faults.append((sid, desc, key, old, new, first))
+
+D, P, C, Y, M, DOC = 'docker', 'py', 'cfg', 'yml', 'mk', 'doc'
+# 001 image
+f('001', 'Use another Python image', D, 'FROM python:3.13-slim', 'FROM python:3.12-slim')
+f('001', 'Use a floating Python image', D, 'FROM python:3.13-slim', 'FROM python:3-slim')
+f('001', 'Install rns with a range', D, 'rns==1.5.7', 'rns>=1.5.7')
+f('001', 'Install another rns version', D, 'rns==1.5.7', 'rns==1.5.6')
+f('001', 'Install no rns', D, 'rns==1.5.7 ', '')
+f('001', 'Install lxmf with a range', D, 'lxmf==1.2.0', 'lxmf>=1.2.0')
+f('001', 'Install another lxmf version', D, 'lxmf==1.2.0', 'lxmf==1.2.1')
+f('001', 'Install no lxmf', D, ' lxmf==1.2.0', '')
+f('001', 'Install a second package line', D, 'RUN mkdir -p /data', 'RUN pip install --no-cache-dir requests\nRUN mkdir -p /data')
+f('001', 'Copy the whole folder', D, 'COPY listener.py /opt/reticulum/listener.py', 'COPY . /opt/reticulum/')
+f('001', 'Copy no config', D, 'COPY config /opt/reticulum/config\n', '')
+f('001', 'Copy a third file', D, 'COPY config /opt/reticulum/config\n', 'COPY config /opt/reticulum/config\nCOPY Dockerfile /opt/reticulum/Dockerfile\n')
+# 002 user, port, health check, entrypoint
+f('002', 'Run as root', D, 'USER 10001', 'USER 0')
+f('002', 'Run as another user number', D, 'USER 10001', 'USER 10002')
+f('002', 'Run as a user name', D, 'USER 10001', 'USER nobody')
+f('002', 'Expose another port', D, 'EXPOSE 8081', 'EXPOSE 8082')
+f('002', 'Expose no port', D, 'EXPOSE 8081\n', '')
+f('002', 'Check the health on another port', D, "http://127.0.0.1:8081/interfaces.json', timeout", "http://127.0.0.1:8082/interfaces.json', timeout")
+f('002', 'Check the health on another path', D, 'http://127.0.0.1:8081/interfaces.json', 'http://127.0.0.1:8081/')
+f('002', 'Have no health check', D, 'HEALTHCHECK --interval', '#HEALTHCHECK --interval')
+f('002', 'Start another program', D, 'ENTRYPOINT ["python", "/opt/reticulum/listener.py"]', 'ENTRYPOINT ["python", "/opt/reticulum/other.py"]')
+f('002', 'Start python3', D, 'ENTRYPOINT ["python", ', 'ENTRYPOINT ["python3", ')
+# 003 route
+f('003', 'Add a POST method', P, '    def log_message', '    def do_POST(self):\n        self.send_error(404)\n\n    def log_message')
+f('003', 'Rename the GET method', P, '    def do_GET(self):', '    def do_HEAD(self):')
+f('003', 'Accept every path', P, '        if self.path != "/interfaces.json":', '        if False:')
+f('003', 'Accept a path with a prefix', P, '        if self.path != "/interfaces.json":', '        if not self.path.startswith("/interfaces.json"):')
+f('003', 'Answer another path with 403', P, '            self.send_error(404)', '            self.send_error(403)')
+f('003', 'Let the browser cache the answer', P, '"Cache-Control", "no-store"', '"Cache-Control", "max-age=60"')
+f('003', 'Send no Cache-Control header', P, '        self.send_header("Cache-Control", "no-store")\n', '')
+# 004 fields
+f('004', 'Send the config entry', P, '    "cr",\n]', '    "cr",\n    "config_entry",\n]')
+f('004', 'Send the host address', P, '    "cr",\n]', '    "cr",\n    "reachable_on",\n]')
+f('004', 'Send the port', P, '    "cr",\n]', '    "cr",\n    "port",\n]')
+f('004', 'Send the network name', P, '    "cr",\n]', '    "cr",\n    "ifac_netname",\n]')
+f('004', 'Send the network key', P, '    "cr",\n]', '    "cr",\n    "ifac_netkey",\n]')
+f('004', 'Send the contact address', P, '    "cr",\n]', '    "cr",\n    "operator_lxmf_address",\n]')
+f('004', 'Send the transport id', P, '    "cr",\n]', '    "cr",\n    "transport_id",\n]')
+f('004', 'Send the network id', P, '    "cr",\n]', '    "cr",\n    "network_id",\n]')
+f('004', 'Send the stamp', P, '    "cr",\n]', '    "cr",\n    "stamp",\n]')
+f('004', 'Send the stamp value', P, '    "cr",\n]', '    "cr",\n    "value",\n]')
+f('004', 'Send the software name', P, '    "cr",\n]', '    "cr",\n    "impl_name",\n]')
+f('004', 'Send the software version', P, '    "cr",\n]', '    "cr",\n    "version",\n]')
+f('004', 'Send no coding rate', P, '    "cr",\n]', ']')
+f('004', 'Send no discovery hash', P, '    "discovery_hash",\n', '')
+f('004', 'Send no height', P, '    "height",\n', '')
+f('004', 'Swap two fields', P, '    "latitude",\n    "longitude",\n', '    "longitude",\n    "latitude",\n')
+f('004', 'Name a dropped field in code', P, 'PORT = 8081\n', 'PORT = 8081\nSKIPPED = "stamp"\n')
+f('004', 'Name a dropped field in single quotes', P, 'PORT = 8081\n', "PORT = 8081\nSKIPPED = 'transport_id'\n")
+# 005 bytes
+f('005', 'Send bytes with delimiters', P, 'delimit=False', 'delimit=True')
+f('005', 'Send bytes with hex()', P, 'value = RNS.hexrep(value, delimit=False)', 'value = value.hex()')
+f('005', 'Send no hex text for bytes', P, '            if isinstance(value, bytes):\n                value = RNS.hexrep(value, delimit=False)\n', '')
+f('005', 'Test another type', P, 'isinstance(value, bytes)', 'isinstance(value, str)')
+# 006 one process
+f('006', 'Serve on another port', P, 'PORT = 8081', 'PORT = 8082')
+f('006', 'Serve on the loopback only', P, '("0.0.0.0", PORT)', '("127.0.0.1", PORT)')
+f('006', 'Use a plain server', P, 'ThreadingHTTPServer(("0.0.0.0", PORT), Handler)', 'HTTPServer(("0.0.0.0", PORT), Handler)')
+f('006', 'Import no threading server', P, 'from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer', 'from http.server import BaseHTTPRequestHandler, HTTPServer as ThreadingHTTPServer')
+f('006', 'Start Reticulum without the config folder', P, 'RNS.Reticulum(configdir=CONFIG_DIR)', 'RNS.Reticulum()')
+f('006', 'Read the list from another call', P, 'RNS.Reticulum.discovered_interfaces()', 'RNS.Discovery.InterfaceDiscovery(discover_interfaces=False).list_discovered_interfaces()')
+# 007 config: listen and publish nothing
+f('007', 'Turn on transport', C, 'enable_transport = no', 'enable_transport = yes')
+f('007', 'Share the instance', C, 'share_instance = no', 'share_instance = yes')
+f('007', 'Turn off discovery', C, 'discover_interfaces = yes', 'discover_interfaces = no')
+f('007', 'Publish the node', C, '  discover_interfaces = yes\n', '  discover_interfaces = yes\n  discoverable = yes\n')
+LAST = '    target_host = rns.wiegandtech.net\n    target_port = 4242\n'
+f('007', 'Listen on an address', C, LAST, LAST + '    listen_on = 0.0.0.0\n')
+f('007', 'Add a local network interface', C, '  [[Synalysis]]', '  [[Local]]\n    type = AutoInterface\n    enabled = yes\n\n  [[Synalysis]]')
+f('007', 'Add a server interface word', C, LAST, LAST + '# TCPServerInterface\n')
+f('007', 'Connect found interfaces', C, '  panic_on_interface_error = no\n', '  panic_on_interface_error = no\n  autoconnect_discovered_interfaces = 3\n')
+# 008 client interfaces
+f('008', 'Disable the first interface', C, 'enabled = yes', 'enabled = no', first=True)
+f('008', 'Use another interface type', C, 'type = TCPClientInterface', 'type = UDPInterface', first=True)
+f('008', 'Remove every interface', C, orig[C][orig[C].index('  [[Birdsnet BR]]'):], '')
+extra = ''.join('\n  [[Extra %d]]\n    type = TCPClientInterface\n    enabled = yes\n    target_host = example.invalid\n    target_port = 4242\n' % n for n in range(6))
+f('008', 'Add more than ten interfaces', C, LAST, LAST + extra)
+# 009 config copy
+f('009', 'Copy the config every time', P, '    if not os.path.exists(os.path.join(CONFIG_DIR, "config")):', '    if True:')
+f('009', 'Use another config folder', P, 'CONFIG_DIR = "/data/rns"', 'CONFIG_DIR = "/tmp/rns"')
+f('009', 'Use another default config', P, 'DEFAULT_CONFIG = "/opt/reticulum/config"', 'DEFAULT_CONFIG = "/opt/reticulum/config.default"')
+f('009', 'Do not make the config folder', P, '    os.makedirs(CONFIG_DIR, exist_ok=True)\n', '')
+f('009', 'Copy before the guard', P, '    if not os.path.exists(os.path.join(CONFIG_DIR, "config")):\n        shutil.copyfile(DEFAULT_CONFIG, os.path.join(CONFIG_DIR, "config"))\n', '    shutil.copyfile(DEFAULT_CONFIG, os.path.join(CONFIG_DIR, "config"))\n    if not os.path.exists(os.path.join(CONFIG_DIR, "config")):\n        pass\n')
+# 010 service limits
+f('010', 'Build from another folder', Y, '    build: ./docker/reticulum', '    build: ./reticulum')
+f('010', 'Restart always', Y, '    restart: unless-stopped', '    restart: always')
+f('010', 'Write to the root file system', Y, '    read_only: true', '    read_only: false')
+f('010', 'Run no init process', Y, '    init: true', '    init: false')
+f('010', 'Allow more memory', Y, '    mem_limit: 512m', '    mem_limit: 1g')
+f('010', 'Allow more processes', Y, '    pids_limit: 256', '    pids_limit: 512')
+f('010', 'Keep the capabilities', Y, '    cap_drop:\n      - ALL\n', '')
+f('010', 'Drop another capability', Y, '    cap_drop:\n      - ALL\n', '    cap_drop:\n      - NET_RAW\n')
+f('010', 'Allow new privileges', Y, '    security_opt:\n      - no-new-privileges:true\n', '')
+f('010', 'Publish a port', Y, '    restart: unless-stopped\n', '    restart: unless-stopped\n    ports:\n      - "127.0.0.1:8081:8081"\n')
+f('010', 'Mount another volume', Y, '      - gev-reticulum:/data\n', '      - gev-reticulum:/data\n      - ./docker:/docker:ro\n')
+f('010', 'Mount the volume in another place', Y, '      - gev-reticulum:/data', '      - gev-reticulum:/var/lib/data')
+# 011 networks
+f('011', 'Put the address outside the subnet', Y, '10.213.77.10}', '10.213.78.10}')
+f('011', 'Use a small subnet', Y, '10.213.77.0/24}', '10.213.77.0/30}')
+f('011', 'Use another alias', Y, '          - reticulum.local', '          - reticulum')
+f('011', 'Leave the default network', Y, '      default:\n        aliases:\n          - reticulum.local\n', '')
+f('011', 'Use no fixed address', Y, '        ipv4_address: ${GEV_RETICULUM_ADDRESS:-10.213.77.10}', '        aliases:\n          - fixed')
+f('011', 'Use no subnet', Y, '      config:\n        - subnet: ${GEV_RETICULUM_SUBNET:-10.213.77.0/24}\n', '      config: []\n')
+# 012 app environment
+f('012', 'Use a name that the rule refuses', Y, 'reticulum.local:8081}', 'reticulum:8081}')
+f('012', 'Use another port for the app', Y, 'reticulum.local:8081}', 'reticulum.local:8082}')
+f('012', 'Set no listener for the app', Y, '    environment:\n      RETICULUM_LISTENER: ${GEV_RETICULUM_LISTENER:-reticulum.local:8081}\n', '    environment: {}\n')
+f('012', 'Set the network of the app', Y, '  gods-eye-view:\n', '  gods-eye-view:\n    networks:\n      - default\n')
+f('012', 'Set the host network for the app', Y, '  gods-eye-view:\n', '  gods-eye-view:\n    network_mode: host\n')
+# 013 Makefile
+f('013', 'Start the default target without build', M, 'up-reticulum:\n\tdocker compose -f compose.yaml -f compose.reticulum.yaml build\n', 'up-reticulum:\n')
+f('013', 'Start the default target without recreate', M, 'compose.reticulum.yaml up --force-recreate\n\nup-codex-reticulum', 'compose.reticulum.yaml up\n\nup-codex-reticulum')
+f('013', 'Start the default target with another file', M, 'up-reticulum:\n\tdocker compose -f compose.yaml -f compose.reticulum.yaml build', 'up-reticulum:\n\tdocker compose -f compose.reticulum.yaml build')
+f('013', 'Start the Codex target without the Codex file', M, 'up-codex-reticulum:\n\tdocker compose -f compose.yaml -f compose.codex.yaml -f compose.reticulum.yaml build', 'up-codex-reticulum:\n\tdocker compose -f compose.yaml -f compose.reticulum.yaml build')
+f('013', 'Start the Codex target without the variable', M, 'GEV_RETICULUM_LISTENER=$${GEV_RETICULUM_LISTENER:-10.213.77.10:8081} docker compose', 'docker compose')
+f('013', 'Use another default address in the Codex target', M, ':-10.213.77.10:8081}', ':-10.213.77.11:8081}')
+f('013', 'Stop with another command', M, 'down-reticulum:\n\tdocker compose -f compose.yaml -f compose.reticulum.yaml down\n', 'down-reticulum:\n\tdocker compose -f compose.yaml -f compose.reticulum.yaml down -v\n')
+f('013', 'Stop with the base file only', M, 'down-reticulum:\n\tdocker compose -f compose.yaml -f compose.reticulum.yaml down', 'down-reticulum:\n\tdocker compose -f compose.yaml down')
+f('013', 'Forget the default target in PHONY', M, 'up-reticulum up-codex-reticulum down-reticulum', 'up-codex-reticulum down-reticulum')
+f('013', 'Forget the Codex target in PHONY', M, 'up-reticulum up-codex-reticulum down-reticulum', 'up-reticulum down-reticulum')
+f('013', 'Forget the stop target in PHONY', M, 'up-reticulum up-codex-reticulum down-reticulum', 'up-reticulum up-codex-reticulum')
+# 014 document
+f('014', 'Name no default start command', DOC, '`make up-reticulum`', 'make up-reticulum', first=True)
+f('014', 'Name no Codex start command', DOC, '`make up-codex-reticulum`', 'make up-codex-reticulum', every=True)
+f('014', 'Name no stop command', DOC, '`make down-reticulum`', 'make down-reticulum', first=True)
+f('014', 'Say nothing about the IP address', DOC, 'The operators of the public nodes see your IP address.', 'The operators of the public nodes see nothing.')
+f('014', 'Name no volume', DOC, '`gev-reticulum`', 'the volume', every=True)
+f('014', 'Name no config file', DOC, '`/data/rns/config`', 'the config', first=True)
+
+# added after pre-review 1
+FOLDER = 'RUN mkdir -p /data && chown 10001:10001 /data\n'
+f('002', 'Make no folder for the volume', D, FOLDER, '')
+f('002', 'Give the folder to another user', D, 'chown 10001:10001 /data', 'chown 10002:10002 /data')
+f('002', 'Make the folder after the user line', D, FOLDER + '\nCOPY listener.py /opt/reticulum/listener.py\nCOPY config /opt/reticulum/config\n\nUSER 10001\n', 'COPY listener.py /opt/reticulum/listener.py\nCOPY config /opt/reticulum/config\n\nUSER 10001\n' + FOLDER)
+f('004', 'Loop over the record and not over the list', P, '        for name in FIELDS:', '        for name in record:')
+f('004', 'Copy the whole record', P, '        item = {}', '        item = dict(record)')
+f('004', 'Index the record', P, '            value = record.get(name)', '            value = record[name]')
+f('004', 'Send the raw list', P, 'json.dumps(public_list())', 'json.dumps(RNS.Reticulum.discovered_interfaces())')
+f('004', 'Skip the step for byte values', P, '            item[name] = value', '            item[name] = record.get(name)')
+f('010', 'Add a capability', Y, '    init: true\n', '    init: true\n    cap_add:\n      - NET_ADMIN\n')
+f('010', 'Run privileged', Y, '    init: true\n', '    init: true\n    privileged: true\n')
+f('010', 'Run as root', Y, '    init: true\n', '    init: true\n    user: "0"\n')
+
+# added after pre-review 2
+f('004', 'Add the record to the result', P, '        result.append(item)', '        result.append(record)')
+f('004', 'Return an empty list', P, '    return result', '    return []')
+
+out, log = [], []
+try:
+    for sid, desc, key, old, new, first in faults:
+        path = R + FILES[key]
+        text = orig[key].replace(old, new, 1) if first else orig[key].replace(old, new)
+        assert text != orig[key], desc
+        open(path, 'w').write(text)
+        proc = subprocess.Popen(cmd, shell=True, cwd=R, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, start_new_session=True)
+        hung = False
+        try:
+            text_out, _ = proc.communicate(timeout=90)
+        except subprocess.TimeoutExpired:
+            hung = True
+            os.killpg(proc.pid, signal.SIGKILL)
+            text_out, _ = proc.communicate()
+        names = set()
+        if hung:
+            names.add('TIMEOUT (the tests hung)')
+        for l in text_out.splitlines():
+            l = l.strip()
+            if l.startswith('✖ ') and 'failing tests' not in l:
+                n = re.sub(r' \(\d+(\.\d+)?ms\)$', '', l[2:].strip())
+                m = re.match(r'(\[[a-z-]+-\d+\])', n)
+                names.add(m.group(1) if m else 'untagged: ' + n[:60])
+        uniq = sorted(names)
+        rc = -9 if hung else proc.returncode
+        out.append(f'reticulum-listener-{sid} | {desc} | failing: {", ".join(uniq) if uniq else "NONE"}')
+        log.append(f'{desc} | exit {rc} | failing tests: {", ".join(uniq) if uniq else "NONE"}')
+        print(log[-1], flush=True)
+        open(path, 'w').write(orig[key])
+finally:
+    for key, rel in FILES.items():
+        open(R + rel, 'w').write(orig[key])
+for key, rel in FILES.items():
+    assert open(R + rel).read() == orig[key], rel
+D0 = '/home/ianblenke/docker/gev-tools/reticulum-listener/'
+open(D0 + 'faults.txt', 'w').write('\n'.join(out) + '\n')
+open(D0 + 'faults-run.txt', 'w').write('\n'.join(log) + '\n')

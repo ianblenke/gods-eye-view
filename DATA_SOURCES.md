@@ -78,9 +78,11 @@ Reticulum carries no location in its core. An operator who marks an interface `d
 
 The route `/api/reticulum` reads the list from your listener at `RETICULUM_LISTENER`, an IPv4 loopback or private `host:port`, `localhost` or a `.local` name. It keeps only `id`, `type`, `name`, `latitude`, `longitude`, `heightM`, `hops`, `lastHeard`, `status` and, for an RNode, the radio numbers. It drops addresses, interface keys, contact addresses and node identities. Positions are rounded to three decimals, which is about 110 m.
 
+The listener is a separate container. `make up-reticulum` starts it with the app, and `make up-codex-reticulum` starts it with the app that uses the host network. The listener sends only 12 fields of each interface and publishes no port. Its node connects out to public Reticulum nodes, and the operators of those nodes see your IP address. See `docs/fork/reticulum-docker.md`.
+
 The data is infrastructure that the operator chose to publish. The operator sets the position and nobody checks it. A name is free text, so it can hold an address that the operator typed. The `id` is a hash of the node identity and the name, so it is a stable pseudonym of the node.
 
-The Reticulum software has its own licence. The licence forbids use in systems built to harm people and use as data to train AI. The software runs as a separate service and is not part of this repository. The map feed `rmap.world` states no terms of use, so this project does not use it. See `openspec/specs/reticulum-source/spec.md`.
+The Reticulum software has its own licence. The licence forbids use in any system that can purposefully harm people. It also forbids use of the software in the creation of a training dataset for AI. The software runs as a separate service and is not part of this repository. The map feed `rmap.world` states no terms of use, so this project does not use it. See `openspec/specs/reticulum-source/spec.md`.
 
 ### Notes on the live sources
 
