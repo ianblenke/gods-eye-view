@@ -44,7 +44,7 @@ const ids = (snapshot) => snapshot.interfaces.map((item) => item.id);
 const nameOf = (name, type = 'rnode') =>
   normalizeReticulumSnapshot(doc([iface({ name, type })])).interfaces[0].name;
 
-test('[reticulum-layer-005] keeps exactly the fields of a valid interface and sets a number that the input does not have to null', () => {
+test('[reticulum-layer-005] keeps exactly the fields of a valid interface and sets a bad number or a bad radio to null', () => {
   const [record] = normalizeReticulumSnapshot(
     doc([
       iface({
@@ -266,6 +266,14 @@ test('[reticulum-layer-008] reads the meta of the document', () => {
   );
   assert.equal(
     meta({ unavailable: true, reason: undefined }).reason,
+    'Reticulum listener unavailable',
+  );
+  assert.equal(
+    meta({ unavailable: true, reason: cp(0x200b) }).reason,
+    'Reticulum listener unavailable',
+  );
+  assert.equal(
+    meta({ unavailable: true, reason: 5 }).reason,
     'Reticulum listener unavailable',
   );
   assert.equal(meta({ fetchedAt: 'soon' }).fetchedAt, null);

@@ -66,8 +66,9 @@ Origin: spec-first
 #### Scenario: Read the meta of the document `reticulum-layer-008`
 - **WHEN** the normalizer reads a document
 - **THEN** `meta.unavailable` and `meta.stale` are true only when the document says true
-- **AND** `meta.reason` is the text of the document, cleaned like a name, with at most 120 code points, or null
-- **AND** when `meta.unavailable` is true, `meta.reason` is "Reticulum listener unavailable" if the document has no text for it or the text is empty
+- **AND** `meta.reason` is the text of the document, cleaned like a name, with at most 120 code points
+- **AND** the cleaned text of a value that is not a text is empty
+- **AND** when the cleaned text is empty, `meta.reason` is "Reticulum listener unavailable" if `meta.unavailable` is true, and null if not
 - **AND** `meta.fetchedAt` is a date or null
 - **AND** `meta.total` is the `counts.total` of the document when that is a whole number that is not negative
 - **AND** `meta.total` is the length of the list `interfaces` of the document when `counts.total` is not such a number
