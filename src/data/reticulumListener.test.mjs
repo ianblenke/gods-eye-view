@@ -152,7 +152,9 @@ test('[reticulum-listener-006] runs Reticulum and the HTTP server in one process
     ),
   );
   assert.ok(
-    program.some((line) => line.includes('RNS.Reticulum.discovered_interfaces()')),
+    program.some((line) =>
+      line.includes('RNS.Reticulum.discovered_interfaces()'),
+    ),
   );
 });
 
@@ -296,11 +298,16 @@ test('[reticulum-listener-013] starts the app with the listener in both network 
     makefile,
     /^up-codex-reticulum:\n\tdocker compose -f compose\.yaml -f compose\.codex\.yaml -f compose\.reticulum\.yaml build\n\tGEV_RETICULUM_LISTENER=\$\$\{GEV_RETICULUM_LISTENER:-10\.213\.77\.10:8081\} docker compose -f compose\.yaml -f compose\.codex\.yaml -f compose\.reticulum\.yaml up --force-recreate\n(?!\t)/m,
   );
+  assert.match(
+    makefile,
+    /^down-reticulum:\n\tdocker compose -f compose\.yaml -f compose\.reticulum\.yaml down\n(?!\t)/m,
+  );
   const phony = lines(makefile)
     .find((line) => line.startsWith('.PHONY:'))
     .split(/\s+/);
   assert.ok(phony.includes('up-reticulum'));
   assert.ok(phony.includes('up-codex-reticulum'));
+  assert.ok(phony.includes('down-reticulum'));
 });
 
 test('[reticulum-listener-014] documents the start, the stop, the egress and the config', () => {
@@ -308,7 +315,7 @@ test('[reticulum-listener-014] documents the start, the stop, the egress and the
   for (const text of [
     '`make up-reticulum`',
     '`make up-codex-reticulum`',
-    '`make down`',
+    '`make down-reticulum`',
     'The operators of the public nodes see your IP address.',
     '`gev-reticulum`',
     '`/data/rns/config`',

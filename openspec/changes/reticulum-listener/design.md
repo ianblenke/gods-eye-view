@@ -36,13 +36,13 @@ The file does not set `networks` or `network_mode` for the app service. Both `do
 
 The subnet is free on this machine. The Docker networks use 172.17.0.0/16, 172.18.0.0/16, 172.19.0.0/16 and 172.22.0.0/16, and the LAN is 192.168.51.0/24. The variables `GEV_RETICULUM_SUBNET` and `GEV_RETICULUM_ADDRESS` change the values.
 
-The service publishes no port. The app value of `RETICULUM_LISTENER` comes from the variable `GEV_RETICULUM_LISTENER`. The target `up-codex-reticulum` sets it to the fixed address.
+The service publishes no port. The app value of `RETICULUM_LISTENER` comes from the variable `GEV_RETICULUM_LISTENER`. The target `up-codex-reticulum` sets it to the fixed address. The target `down-reticulum` stops both containers, because `make down` does not know the service `reticulum`.
 
 ### D4: Config and volume
 
 The image holds a default config at `/opt/reticulum/config`. On the first start the program copies it to `/data/rns/config` in the volume `gev-reticulum`, and it never overwrites that file. The volume also keeps the node identity and the discovery files, so a restart keeps the list.
 
-The default config makes a node that only listens. It has no transport, no shared instance and no `discoverable` line. It has five client interfaces to public nodes that a community directory listed on 2026-10-13. The owner can change them in the volume.
+The default config makes a node that only listens. It has no transport, no shared instance and no `discoverable` line. It has three client interfaces to public nodes that a community directory listed on 2026-10-13. The owner can change them in the volume.
 
 ### D5: Tests and evidence
 

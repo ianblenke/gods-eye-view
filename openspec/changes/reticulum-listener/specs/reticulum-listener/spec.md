@@ -91,7 +91,7 @@ Origin: spec-first
 - **AND** for each of the two addresses, the host in the URL is equal to the host in the text
 
 ### Requirement: Makefile targets
-The Makefile MUST have the target `up-reticulum` for the default network and the target `up-codex-reticulum` for the host network. The targets `up` and `up-codex` MUST stay as they are.
+The Makefile MUST have the target `up-reticulum` for the default network and the target `up-codex-reticulum` for the host network. It MUST have the target `down-reticulum` that stops both containers. The targets `up` and `up-codex` MUST stay as they are.
 Origin: spec-first
 
 #### Scenario: Start the app with the listener `reticulum-listener-013`
@@ -99,7 +99,8 @@ Origin: spec-first
 - **THEN** the target `up-reticulum` runs "docker compose -f compose.yaml -f compose.reticulum.yaml build" and then "docker compose -f compose.yaml -f compose.reticulum.yaml up --force-recreate"
 - **AND** the target `up-codex-reticulum` runs the same two commands with the three files `compose.yaml`, `compose.codex.yaml` and `compose.reticulum.yaml`
 - **AND** the command `up` of that target starts with "GEV_RETICULUM_LISTENER=$${GEV_RETICULUM_LISTENER:-10.213.77.10:8081}"
-- **AND** the list `.PHONY` names both targets
+- **AND** the target `down-reticulum` runs "docker compose -f compose.yaml -f compose.reticulum.yaml down" and no other command
+- **AND** the list `.PHONY` names the three targets
 
 ### Requirement: Listener document
 The file `docs/fork/reticulum-docker.md` MUST tell the owner how to start and stop the listener. The document MUST state that the node connects out to public nodes whose operators see the IP address.
@@ -107,6 +108,6 @@ Origin: spec-first
 
 #### Scenario: Document the start, the stop and the egress `reticulum-listener-014`
 - **WHEN** a test reads `docs/fork/reticulum-docker.md`
-- **THEN** the document names the commands `make up-reticulum`, `make up-codex-reticulum` and `make down`
+- **THEN** the document names the commands `make up-reticulum`, `make up-codex-reticulum` and `make down-reticulum`
 - **AND** it says that the operators of the public nodes see your IP address
 - **AND** it names the volume `gev-reticulum` and the file `/data/rns/config`

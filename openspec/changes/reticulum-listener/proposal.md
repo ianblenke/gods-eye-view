@@ -11,7 +11,7 @@ This is change 2 of 3. Change 3 adds the globe layer.
 ## What Changes
 
 - Add the folder `docker/reticulum/` with a Dockerfile, the program `listener.py` and a default config.
-- Add the compose file `compose.reticulum.yaml` and the Makefile targets `up-reticulum` and `up-codex-reticulum`.
+- Add the compose file `compose.reticulum.yaml` and the Makefile targets `up-reticulum`, `up-codex-reticulum` and `down-reticulum`.
 - Add the capability `reticulum-listener` with fourteen scenarios, `reticulum-listener-001` to `reticulum-listener-014`.
 - Add the test file `src/data/reticulumListener.test.mjs` and the document `docs/fork/reticulum-docker.md`.
 - Add the new files to `openspec/ownership.json` and `scripts/format-scope.json`. Write one entry in `CHANGELOG.md`, and change the note in `.env.example` and the section in `DATA_SOURCES.md`.
@@ -37,7 +37,7 @@ The gates image has no Python. So the program `listener.py` has text tests and o
 ## Known limits and later changes
 
 - Known limit `egress`: The node connects out to public volunteer Reticulum nodes. Their operators can see your IP address.
-- Known limit `hosts`: The default config names five bootstrap hosts from a public community directory of 2026-10-13. A host can go away, and you can change the list in the volume.
+- Known limit `hosts`: The default config names three bootstrap hosts from a public community directory of 2026-10-13. A host can go away, and you can change the list in the volume.
 - Known limit `convergence`: A new listener has a partial list for its first hours. Operators announce every 6 hours by default.
 - Known limit `python`: No test runs the program `listener.py`. The text tests pin its structure, and the real run in `evidence/` shows that it works on one machine.
 - Known limit `image`: The base image has a tag and no digest. The package version is fixed.
