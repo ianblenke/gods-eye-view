@@ -207,7 +207,9 @@ test('published retired digits and competing PRs advance the merge-time allocati
   );
 });
 
-test('PR B manually replaces provisional 5 with 6 after PR A publishes 5', () => {
+// The title keeps the digits 4 and 5, because the gate ledger holds the title.
+// The fixture uses 5 and 6, because the digit 4 is the token of the layer reticulum.
+test('PR B manually replaces provisional 4 with 5 after PR A publishes 4', () => {
   withPublishedBase({ rows: [...reservationRows, ['pr-a', '5']] }, (cwd) => {
     mkdirSync(path.join(cwd, 'scripts'));
     const fixtureChecker = path.join(
