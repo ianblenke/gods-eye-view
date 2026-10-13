@@ -2,7 +2,7 @@
 
 Change 1 added the route `/api/reticulum`. It reads a listener that you run, and without a listener it says `unavailable`. This change adds that listener as a separate container.
 
-The owner chose to run our own listener. The listener runs the Reticulum software, hears the announces of the interfaces that operators make discoverable, and serves the list over HTTP. A test node on this machine heard 415 interfaces in about 5 hours. It heard 420 at the end, so the count had nearly stopped growing (see `evidence/size.txt`).
+The owner chose to run our own listener. The listener runs the Reticulum software, hears the announces of the interfaces that operators make discoverable, and serves the list over HTTP. A test node on this machine heard 415 interfaces in about 5 hours. It heard 420 after 30 more minutes (see `evidence/size.txt`).
 
 The Reticulum licence forbids harmful use and the use of its data to train AI. So this repository does not hold Reticulum code. The Dockerfile installs the packages `rns` and `lxmf` with pip. Interface discovery needs the module `lxmf`.
 
@@ -40,7 +40,7 @@ The gates image has no Python. So the program `listener.py` has text tests and o
 - Known limit `hosts`: The default config names bootstrap hosts from a public community directory of 2026-10-13. A host can go away, and you can change the list in the volume.
 - Known limit `convergence`: A new listener has a partial list for its first hours. Operators announce every 6 hours by default.
 - Known limit `python`: No test runs the program `listener.py`. The text tests pin its structure, and the real run in `evidence/` shows that it works on one machine.
-- Known limit `image`: The base image has a tag and no digest. The package versions are fixed.
+- Known limit `image`: The base image has a tag and no digest. The versions of `rns` and `lxmf` are fixed. See the limit `dependencies`.
 - Known limit `platform`: The author checked the compose files on Linux with Docker Compose 5.5.1. The host network mode has other rules on Docker Desktop.
 - Known limit `second-container`: The listener is a second long-running container next to the app container. The rule 12 of `AGENTS.md` says: run one container at a time.
 - Known limit `dependencies`: The versions of `rns` and `lxmf` are fixed. Their own dependencies, such as `cryptography`, are not fixed.

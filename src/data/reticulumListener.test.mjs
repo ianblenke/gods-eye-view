@@ -64,7 +64,7 @@ test('[reticulum-listener-001] installs Reticulum and LXMF with pip at fixed ver
   );
 });
 
-test('[reticulum-listener-002] runs as user 10001 with a port, a health check and an entrypoint', () => {
+test('[reticulum-listener-002] runs as user 10001 with a port, a health check, an entrypoint and a data folder that the user owns', () => {
   const docker = code(read('docker/reticulum/Dockerfile'));
   assert.deepEqual(
     docker.filter((line) => line.startsWith('USER')),
@@ -131,6 +131,8 @@ test('[reticulum-listener-004] sends the twelve fields of the provider and none 
     '        for name in FIELDS:',
     '            value = record.get(name)',
     '            item[name] = value',
+    '        result.append(item)',
+    '    return result',
     '        body = json.dumps(public_list()).encode("utf-8")',
   ])
     assert.ok(program.includes(line), line);

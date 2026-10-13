@@ -32,7 +32,9 @@ Origin: spec-first
 - **WHEN** a test reads the program
 - **THEN** the list `FIELDS` holds exactly `discovery_hash`, `type`, `name`, `last_heard`, `hops`, `latitude`, `longitude`, `height`, `frequency`, `bandwidth`, `sf` and `cr`
 - **AND** no line of code outside a comment holds the name of a dropped field in quotation marks
-- **AND** the function `public_list` builds each item with `for name in FIELDS`, `record.get(name)` and `item[name] = value`
+- **AND** the function `public_list` reads each record with `for record in RNS.Reticulum.discovered_interfaces()` and starts each item with `item = {}`
+- **AND** it builds each item with `for name in FIELDS`, `record.get(name)` and `item[name] = value`
+- **AND** it adds each item with `result.append(item)` and returns `result`
 - **AND** the route sends "json.dumps(public_list())"
 - **AND** the dropped names are `config_entry`, `reachable_on`, `port`, `ifac_netname`, `ifac_netkey`, `operator_lxmf_address`, `transport_id`, `network_id`, `stamp`, `value`, `impl_name` and `version`
 
@@ -92,7 +94,7 @@ Origin: spec-first
 - **THEN** the service `gods-eye-view` has `RETICULUM_LISTENER` with the value "${GEV_RETICULUM_LISTENER:-reticulum.local:8081}"
 - **AND** the service `gods-eye-view` has no `networks` and no `network_mode`
 - **AND** the shared address rule accepts "reticulum.local:8081" and "10.213.77.10:8081"
-- **AND** the URL that `tapUrl` builds for each of the two addresses has the same host as the address
+- **AND** a URL parser reads the same host from the URL that `tapUrl` builds for each of the two addresses
 - **AND** the shared address rule refuses "reticulum:8081"
 
 ### Requirement: Makefile targets
