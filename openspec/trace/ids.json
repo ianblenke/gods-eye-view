@@ -2470,7 +2470,7 @@
     "change": "osh-fusion"
   },
   "osh-033": {
-    "hash": "f64b34c358a789ac9c33fdd7ef3d9acd94615f5bb17f11f8c3ba382526fd5941",
+    "hash": "c691657f3454b5772e5fc9ea2a562b600e599a0ea3dded614b1e1660edc5d0d0",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -3790,12 +3790,12 @@
     "change": "fix-recent-imagery-defects"
   },
   "reticulum-layer-001": {
-    "hash": "bf51bb34636185f1aa3a5ee9635a1300600dbf2ae96cf133830bd386193d2cd7",
+    "hash": "052b4a9bc24af4356e245574885f6e95f8219841fbf5ecb64634d4c16dbdc983",
     "since": "2026-10-13",
     "change": "reticulum-layer"
   },
   "reticulum-layer-002": {
-    "hash": "bb66244fe76d9c5219bd8afbdb0fe1d24a947f0058ac696a626a9aecf927090b",
+    "hash": "dc65e49a2e1588250906836e8c815543900bd5e1fcf181c477d04f868b422b04",
     "since": "2026-10-13",
     "change": "reticulum-layer"
   },
@@ -3810,22 +3810,22 @@
     "change": "reticulum-layer"
   },
   "reticulum-layer-005": {
-    "hash": "126bf570c63a0e22bd0a8b7595d808ba55fe4c8b759e0dc88360398be0439812",
+    "hash": "2e0a7c99d3615d540631fa7e0e56e52ab1d0934a7071f50a92956d5c78cb7ab2",
     "since": "2026-10-13",
     "change": "reticulum-layer"
   },
   "reticulum-layer-006": {
-    "hash": "fc3e7f485d6e7c666df32993ff86c0058a620ac13786dd44b44a022f3204cce0",
+    "hash": "9c36d3d3d4b82821d4f4ccad8be2eeb9171c7e575174d5774422f5d0efbf0d7a",
     "since": "2026-10-13",
     "change": "reticulum-layer"
   },
   "reticulum-layer-007": {
-    "hash": "bffe7c2ed8b875c53d778b03b5a05287ee3378de2041a038adbb5d9aa0e4c6e8",
+    "hash": "a6e9de608a0f64dacbd543da9bdc9c875c95a7e019433e57a698304b6c31de2b",
     "since": "2026-10-13",
     "change": "reticulum-layer"
   },
   "reticulum-layer-008": {
-    "hash": "85bfed3fb57db7f4b3c600396a801075e09331a5428280b8e7e08672ae9f052e",
+    "hash": "665e3aba5f475accb93617f3565d323381cb82c0d15cd7f3b6712a0950374b04",
     "since": "2026-10-13",
     "change": "reticulum-layer"
   },
@@ -3835,7 +3835,7 @@
     "change": "reticulum-layer"
   },
   "reticulum-layer-010": {
-    "hash": "b46c2628a0c9c5ef87ed8f87dcea3885efe52ccf86eb4f1e49ec67f5157a36b2",
+    "hash": "4862000b8e6f48d89baf200e9efd92196d892348a4e078dcc03d7f9c2904bc51",
     "since": "2026-10-13",
     "change": "reticulum-layer"
   },
@@ -3860,7 +3860,7 @@
     "change": "reticulum-layer"
   },
   "reticulum-layer-015": {
-    "hash": "fe43d0ea80293e6f1211ba45a65ea50b9c3dadacec0ebc6aaedc45e7aa4d0846",
+    "hash": "31f74a2404f3a410f0dac5347842f78bcc32d32b811598cd057f509dcc24d9ba",
     "since": "2026-10-13",
     "change": "reticulum-layer"
   },

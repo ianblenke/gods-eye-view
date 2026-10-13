@@ -5096,7 +5096,7 @@
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-056] the invalid coordinates give unknown coverage"
   ],
   "reticulum-layer-001": [
-    "src/layers/reticulum/layer.test.mjs › [reticulum-layer-001] describes the layer and refuses a missing source or overlay host"
+    "src/layers/reticulum/layer.test.mjs › [reticulum-layer-001] describes the layer and refuses to create a layer with no source or no overlay host"
   ],
   "reticulum-layer-002": [
     "src/layers/reticulum/layer.test.mjs › [reticulum-layer-002] makes no request on init and enable, and refuses a second init"
@@ -5108,7 +5108,7 @@
     "src/layers/reticulum/source.test.mjs › [reticulum-layer-004] refuses a bad answer"
   ],
   "reticulum-layer-005": [
-    "src/layers/reticulum/records.test.mjs › [reticulum-layer-005] keeps the fields of a valid interface and sets missing numbers to null"
+    "src/layers/reticulum/records.test.mjs › [reticulum-layer-005] keeps exactly the fields of a valid interface and sets a bad number or a bad radio to null"
   ],
   "reticulum-layer-006": [
     "src/layers/reticulum/records.test.mjs › [reticulum-layer-006] drops the interfaces that are not valid, repeated ids and all after 5000"
