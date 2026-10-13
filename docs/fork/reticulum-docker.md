@@ -18,7 +18,7 @@ The volume has the name of the project as a prefix, for example `gods-eye-view_g
 ## What the listener does
 
 - The node listens and publishes nothing. It does not forward traffic for other nodes, and it has no server interface.
-- The node connects out to three public nodes of the community. The operators of the public nodes see your IP address.
+- The node connects out to five public nodes of the community. The operators of the public nodes see your IP address.
 - The listener sends only 12 fields of each interface, and it publishes no port. The raw record also holds interface keys, host addresses and contact addresses. Those stay in the container.
 - The app reaches the listener by the name `reticulum.local` on the default network. With the host network, the app reaches the fixed address 10.213.77.10.
 

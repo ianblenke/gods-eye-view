@@ -42,7 +42,7 @@ The service publishes no port. The app value of `RETICULUM_LISTENER` comes from 
 
 The image holds a default config at `/opt/reticulum/config`. On the first start the program copies it to `/data/rns/config` in the volume `gev-reticulum`, and it never overwrites that file. The volume also keeps the node identity and the discovery files, so a restart keeps the list.
 
-The default config makes a node that only listens. It has no transport, no shared instance and no `discoverable` line. It has three client interfaces to public nodes that a community directory listed on 2026-10-13. The owner can change them in the volume.
+The default config makes a node that only listens. It has no transport, no shared instance and no `discoverable` line. It has five client interfaces to public nodes that a community directory listed on 2026-10-13. The owner can change them in the volume.
 
 ### D5: Tests and evidence
 

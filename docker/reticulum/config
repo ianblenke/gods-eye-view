@@ -17,20 +17,32 @@
 # The operators of these nodes see the IP address of your node.
 # Replace them with nodes that you choose.
 [interfaces]
-  [[AT-Vienna-Backbone]]
-    type = BackboneInterface
-    enabled = yes
-    remote = rns.radical.computer
-    target_port = 4242
-
   [[Birdsnet BR]]
     type = TCPClientInterface
     enabled = yes
     target_host = rns.birdsnet.com.br
     target_port = 4242
 
-  [[CRN - new]]
-    type = BackboneInterface
+  [[Swiss RNS]]
+    type = TCPClientInterface
     enabled = yes
-    remote = rns.reticulum.world
-    target_port = 6666
+    target_host = swiss-rns.cl0ud.ch
+    target_port = 4242
+
+  [[Sydney RNS]]
+    type = TCPClientInterface
+    enabled = yes
+    target_host = sydney.reticulum.au
+    target_port = 4242
+
+  [[Synalysis]]
+    type = TCPClientInterface
+    enabled = yes
+    target_host = reticulum.synalysis.com
+    target_port = 4242
+
+  [[RNS Wiegand]]
+    type = TCPClientInterface
+    enabled = yes
+    target_host = rns.wiegandtech.net
+    target_port = 4242

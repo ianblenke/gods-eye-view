@@ -37,7 +37,7 @@ The gates image has no Python. So the program `listener.py` has text tests and o
 ## Known limits and later changes
 
 - Known limit `egress`: The node connects out to public volunteer Reticulum nodes. Their operators can see your IP address.
-- Known limit `hosts`: The default config names three bootstrap hosts from a public community directory of 2026-10-13. A host can go away, and you can change the list in the volume.
+- Known limit `hosts`: The default config names five bootstrap hosts from a public community directory of 2026-10-13. A host can go away, and you can change the list in the volume.
 - Known limit `convergence`: A new listener has a partial list for its first hours. Operators announce every 6 hours by default.
 - Known limit `python`: No test runs the program `listener.py`. The text tests pin its structure, and the real run in `evidence/` shows that it works on one machine.
 - Known limit `image`: The base image has a tag and no digest. The package versions are fixed.
