@@ -11,7 +11,7 @@
 - [x] 2.1 Write the provider in `server/providers/reticulum.js`.
 - [x] 2.2 Register the provider in `server/providers/local.js`.
 - [x] 2.3 Add the two new files to `openspec/ownership.json` and `scripts/format-scope.json`.
-- [x] 2.4 Write the section in `DATA_SOURCES.md` and the line in `.env.example`.
+- [x] 2.4 Write the section in `DATA_SOURCES.md` and the note and the setting in `.env.example`.
 - [x] 2.5 Write one entry in `CHANGELOG.md`.
 
 ## 3. Check on the host

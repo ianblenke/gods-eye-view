@@ -23,7 +23,7 @@ Origin: spec-first
 - **THEN** the JSON text of the result holds none of these values
 
 ### Requirement: Record rules
-The provider MUST drop a record that is not an object. It MUST drop a record whose `discovery_hash` is not 64 lowercase hexadecimal characters. It MUST drop a record whose raw `type` is not 1 to 40 letters or digits, or is only the word "Interface". The raw `type` includes the word "Interface" in its count. It MUST drop a record whose `last_heard` is not a number or not a valid date.
+The provider MUST drop a record that is not an object. It MUST drop a record whose `discovery_hash` is not 64 lowercase hexadecimal characters. It MUST drop a record whose raw `type` is not 1 to 40 letters or digits, or is only the word "Interface". The 1 to 40 characters of the raw `type` include the word "Interface". It MUST drop a record whose `last_heard` is not a number or not a valid date.
 Origin: spec-first
 
 #### Scenario: Drop invalid records `reticulum-source-004`
@@ -56,7 +56,7 @@ The provider MUST clean the name of an interface. A control character is a chara
 Origin: spec-first
 
 #### Scenario: Clean the names and bound the list `reticulum-source-007`
-- **WHEN** a name holds control characters or angle brackets, is longer than 80 characters, is empty after the cleaning, or is not text
+- **WHEN** a name holds control characters or angle brackets, is longer than 80 characters, is empty after the provider cleans it, or is not text
 - **THEN** the cleaned name has no control character, no angle bracket and at most 80 characters
 - **AND** an empty name or a name that is not text becomes "Unnamed" and the type, for example "Unnamed rnode"
 - **AND** the result lists at most 5000 interfaces, the most recently heard first
@@ -66,12 +66,13 @@ The route `/api/reticulum` MUST answer a GET request with one JSON document. It 
 Origin: spec-first
 
 #### Scenario: Answer with the document `reticulum-source-008`
-- **WHEN** a GET request with no query comes to the route and the source answers with records
+- **WHEN** a GET request with no query comes to the route and the listener answers with records
 - **THEN** the status is 200 and the header `Cache-Control` is "no-store"
+- **AND** the header `Content-Type` is "application/json"
 - **AND** the body has `schemaVersion` 1, `source` "Reticulum interface discovery", `stale` false, `unavailable` false and `reason` null
 - **AND** the body also has `attribution`, `coverage`, `fetchedAt`, `counts` and `interfaces`
 - **AND** for one RNode record, `counts` is 1 in `total`, 1 in `positioned` and 1 in `byType.rnode`
-- **AND** `byType` holds a count of its own for each type, also for a type that is named like an inherited property, such as `constructor`
+- **AND** `byType` holds a count of its own for each type, also for a type with the name of an inherited property, such as `constructor`
 - **AND** the provider asks the listener for the path `/interfaces.json`, and the preview server serves the same route
 
 #### Scenario: Refuse other methods `reticulum-source-009`
@@ -85,21 +86,22 @@ Origin: spec-first
 - **AND** the provider sends no request to the listener
 
 ### Requirement: Source address
-The provider MUST read the listener only at a local address that the operator sets. A local address is a `host:port` of the loopback, a private network, `localhost` or a `.local` name.
+The provider MUST read the listener only at a local address that the operator sets. A local address is a `host:port` with an IPv4 loopback host, an IPv4 private host, `localhost` or a `.local` name. A loopback host is in 127.0.0.0/8. A private host is in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16.
 Origin: spec-first
 
-#### Scenario: Report a source that is not set or not local `reticulum-source-011`
+#### Scenario: Report a listener that is not set or not local `reticulum-source-011`
 - **WHEN** the variable `RETICULUM_LISTENER` is not set, is empty or only spaces, or is not a local address
 - **THEN** the document says `unavailable` true
 - **AND** the reason is "Reticulum listener not configured" for a variable that is not set, empty or only spaces
 - **AND** the reason is "Reticulum listener address not allowed" for any other value
+- **AND** the status is 200
 - **AND** the provider sends no request
 
 ### Requirement: Source failure
-The provider MUST serve the last good document for 2 hours when the listener fails. The listener fails when it cannot connect, or does not answer in 8 seconds. It also fails when it answers with an error status, sends more than 4 MiB, or sends text that is not a JSON list. The provider MUST NOT follow a redirect, and a redirect is a failure. A list of exactly 4 MiB is not a failure.
+The provider MUST serve the last good document for 2 hours when the listener fails. The listener fails when it cannot connect, or does not send the whole answer in 8 seconds. It also fails when it answers with an error status, sends more than 4 MiB, or sends text that is not a JSON list. The provider MUST NOT follow a redirect, and a redirect is a failure. A list of exactly 4 MiB is not a failure.
 Origin: spec-first
 
-#### Scenario: Serve the last good document when the source fails `reticulum-source-012`
+#### Scenario: Serve the last good document when the listener fails `reticulum-source-012`
 - **WHEN** the listener fails
 - **THEN** the provider answers with the last good document and `stale` true when that document is younger than 2 hours
 - **AND** otherwise the provider answers with `unavailable` true and the reason "Reticulum listener unavailable"

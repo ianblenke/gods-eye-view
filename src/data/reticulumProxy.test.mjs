@@ -426,6 +426,12 @@ test('[reticulum-source-011] reports a listener that is not set or not local and
     ['http://127.0.0.1:8081', 'Reticulum listener address not allowed'],
     ['127.0.0.1', 'Reticulum listener address not allowed'],
     ['169.254.169.254:80', 'Reticulum listener address not allowed'],
+    ['[::1]:8081', 'Reticulum listener address not allowed'],
+    ['100.64.0.1:8081', 'Reticulum listener address not allowed'],
+    ['11.0.0.1:8081', 'Reticulum listener address not allowed'],
+    ['172.15.0.1:8081', 'Reticulum listener address not allowed'],
+    ['172.32.0.1:8081', 'Reticulum listener address not allowed'],
+    ['192.169.0.1:8081', 'Reticulum listener address not allowed'],
   ];
   for (const [value, reason] of unusable) {
     const calls = [];
@@ -447,6 +453,10 @@ test('[reticulum-source-011] reports a listener that is not set or not local and
     ['127.0.0.1:8081', 'http://127.0.0.1:8081/interfaces.json'],
     ['localhost:9000', 'http://localhost:9000/interfaces.json'],
     ['192.168.1.5:8081', 'http://192.168.1.5:8081/interfaces.json'],
+    ['127.1.2.3:8081', 'http://127.1.2.3:8081/interfaces.json'],
+    ['10.1.2.3:8081', 'http://10.1.2.3:8081/interfaces.json'],
+    ['172.16.0.1:8081', 'http://172.16.0.1:8081/interfaces.json'],
+    ['172.31.255.254:8081', 'http://172.31.255.254:8081/interfaces.json'],
     ['listener.local:8081', 'http://listener.local:8081/interfaces.json'],
   ]) {
     const calls = [];
@@ -500,6 +510,19 @@ function failures() {
     ['not a list', async () => Response.json({ interfaces: [] }), {}],
     ['a JSON string', async () => Response.json('text'), {}],
     ['timeout', timeoutFetch, {}, true],
+    [
+      'body stalls after the headers',
+      async () =>
+        new Response(
+          new ReadableStream({
+            start(controller) {
+              controller.enqueue(new TextEncoder().encode('['));
+            },
+          }),
+        ),
+      {},
+      true,
+    ],
   ];
 }
 
@@ -520,6 +543,7 @@ test('[reticulum-source-012] serves the last good document for 2 hours when the 
       if (hangs) {
         await new Promise((resolve) => setImmediate(resolve));
         assert.equal(timers.at(-1).ms, 8000, label);
+        assert.equal(cleared.length, timers.length - 1, label);
         assert.equal(signals.at(-1).aborted, false, label);
         timers.at(-1).fn();
         assert.equal(signals.at(-1).aborted, true, label);
