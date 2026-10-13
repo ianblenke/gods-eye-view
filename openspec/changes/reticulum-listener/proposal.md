@@ -2,7 +2,7 @@
 
 Change 1 added the route `/api/reticulum`. It reads a listener that you run, and without a listener it says `unavailable`. This change adds that listener as a separate container.
 
-The owner chose to run our own listener. The listener runs the Reticulum software, hears the announces of the interfaces that operators make discoverable, and serves the list over HTTP. A test node on this machine heard 415 interfaces in about 5 hours, and the count was still rising.
+The owner chose to run our own listener. The listener runs the Reticulum software, hears the announces of the interfaces that operators make discoverable, and serves the list over HTTP. A test node on this machine heard 415 interfaces in about 5 hours. It heard 420 at the end, so the count had nearly stopped growing (see `evidence/size.txt`).
 
 The Reticulum licence forbids harmful use and the use of its data to train AI. So this repository does not hold Reticulum code. The Dockerfile installs the packages `rns` and `lxmf` with pip. Interface discovery needs the module `lxmf`.
 
@@ -30,16 +30,19 @@ None.
 
 The files `compose.yaml` and `compose.codex.yaml` do not change. The test of `app-container` pins them.
 
-The Makefile gets two new targets, and the targets `up` and `up-codex` stay as they are. The new files are files that the fork writes, so they go into `openspec/ownership.json`.
+The Makefile gets three new targets, and the targets `up` and `up-codex` stay as they are. The new files are files that the fork writes, so they go into `openspec/ownership.json`.
 
 The gates image has no Python. So the program `listener.py` has text tests and one real run, and no unit test. The extension `.py` is not in the coverage inventory.
 
 ## Known limits and later changes
 
 - Known limit `egress`: The node connects out to public volunteer Reticulum nodes. Their operators can see your IP address.
-- Known limit `hosts`: The default config names five bootstrap hosts from a public community directory of 2026-10-13. A host can go away, and you can change the list in the volume.
+- Known limit `hosts`: The default config names bootstrap hosts from a public community directory of 2026-10-13. A host can go away, and you can change the list in the volume.
 - Known limit `convergence`: A new listener has a partial list for its first hours. Operators announce every 6 hours by default.
 - Known limit `python`: No test runs the program `listener.py`. The text tests pin its structure, and the real run in `evidence/` shows that it works on one machine.
 - Known limit `image`: The base image has a tag and no digest. The package versions are fixed.
 - Known limit `platform`: The author checked the compose files on Linux with Docker Compose 5.5.1. The host network mode has other rules on Docker Desktop.
-- Known limit `second-container`: The listener is a second long-running container. The rule 12 of `AGENTS.md` names the app container and one gates container.
+- Known limit `second-container`: The listener is a second long-running container next to the app container. The rule 12 of `AGENTS.md` says: run one container at a time.
+- Known limit `dependencies`: The versions of `rns` and `lxmf` are fixed. Their own dependencies, such as `cryptography`, are not fixed.
+- Known limit `no-login`: The route of the listener has no login. A program on the host can reach it at the fixed address, and a container on the default network can reach it by the alias. It serves only the 12 public fields.
+- Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.

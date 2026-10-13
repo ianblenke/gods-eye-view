@@ -1,0 +1,19 @@
+Size of the list of a test node, measured on 2026-10-13. The test node was a Reticulum node on this machine with the same kind of config (listen only, discovery on).
+Input: the output of the command rnstatus -d --json of that node (saved as a file; sha256 6b55150ebc4bd529249cb48cfa5a63f849a7d014c1bebbe1c07cea38cfd3126e). The JSON starts at the first [{ because rnstatus can print a log line before it.
+
+## Command (Python 3 on the saved file)
+t = open('rns-now.txt').read(); raw = t[t.index('[{'):]
+d = json.loads(raw); n = len(d)
+keep = ['type','name','last_heard','discovery_hash','hops','latitude','longitude','height','frequency','bandwidth','sf','cr']
+slim = json.dumps([{k: e.get(k) for k in keep} for e in d])
+
+## Result
+entries: 415
+raw JSON: 371878 bytes, 896 bytes for each record
+12 fields: 129990 bytes, 313 bytes for each record
+records that reach 4 MiB (4194304 bytes): raw 4681, 12 fields 13400
+
+## Growth of the same node (lines of its sampler log; only counts and type counts)
+2026-10-13T08:21:40.470103 sample 8 (~4.0 h after the 30-minute mark) discovered=392 positioned=318 {'BackboneInterface': 171, 'RNodeInterface': 153, 'I2PInterface': 42, 'TCPServerInterface': 26}
+2026-10-13T08:51:44.969361 sample 9 (~4.5 h after the 30-minute mark) discovered=415 positioned=338 {'BackboneInterface': 182, 'RNodeInterface': 163, 'I2PInterface': 44, 'TCPServerInterface': 26}
+2026-10-13T09:21:48.094562 sample 10 (~5.0 h after the 30-minute mark) discovered=420 positioned=343 {'BackboneInterface': 185, 'RNodeInterface': 164, 'I2PInterface': 45, 'TCPServerInterface': 26}

@@ -18,14 +18,24 @@ The volume has the name of the project as a prefix, for example `gods-eye-view_g
 ## What the listener does
 
 - The node listens and publishes nothing. It does not forward traffic for other nodes, and it has no server interface.
-- The node connects out to five public nodes of the community. The operators of the public nodes see your IP address.
+- The node connects out to the public nodes of the community that the default config names. The operators of the public nodes see your IP address.
 - The listener sends only 12 fields of each interface, and it publishes no port. The raw record also holds interface keys, host addresses and contact addresses. Those stay in the container.
 - The app reaches the listener by the name `reticulum.local` on the default network. With the host network, the app reaches the fixed address 10.213.77.10.
 
 ## Change the public nodes
 
 The listener copies a default config to `/data/rns/config` in the volume `gev-reticulum` on the first start. It never overwrites that file.
-Edit the copy to use other nodes, for example with `docker run --rm -it -v gods-eye-view_gev-reticulum:/data alpine vi /data/rns/config`. Then run `docker compose -f compose.yaml -f compose.reticulum.yaml restart reticulum`.
+Edit the copy to use other nodes, for example with this command:
+
+```
+docker run --rm -it -v gods-eye-view_gev-reticulum:/data alpine vi /data/rns/config
+```
+
+Then restart the listener with this command:
+
+```
+docker compose -f compose.yaml -f compose.reticulum.yaml restart reticulum
+```
 
 ## Variables
 

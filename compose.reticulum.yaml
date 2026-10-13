@@ -1,6 +1,6 @@
 # Override for the Reticulum listener. See docs/fork/reticulum-docker.md.
 # Start with: make up-reticulum (default network)
-# or with: make up-codex-reticulum (host network, together with make up-codex).
+# or with: make up-codex-reticulum (host network; use it where you use make up-codex).
 #
 # The listener serves the discovered interfaces on port 8081 and publishes no
 # port. The app reaches it by the alias reticulum.local on the default network,

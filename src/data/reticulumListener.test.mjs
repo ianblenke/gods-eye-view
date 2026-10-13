@@ -78,6 +78,11 @@ test('[reticulum-listener-002] runs as user 10001 with a port, a health check an
     docker.filter((line) => line.startsWith('ENTRYPOINT')),
     ['ENTRYPOINT ["python", "/opt/reticulum/listener.py"]'],
   );
+  const folder = docker.indexOf(
+    'RUN mkdir -p /data && chown 10001:10001 /data',
+  );
+  assert.notEqual(folder, -1);
+  assert.ok(folder < docker.indexOf('USER 10001'));
 });
 
 test('[reticulum-listener-003] serves GET for one route, answers other paths with 404 and sends no-store', () => {
@@ -120,6 +125,15 @@ test('[reticulum-listener-004] sends the twelve fields of the provider and none 
     assert.equal(joined.includes(`"${name}"`), false, name);
     assert.equal(joined.includes(`'${name}'`), false, name);
   }
+  for (const line of [
+    '    for record in RNS.Reticulum.discovered_interfaces():',
+    '        item = {}',
+    '        for name in FIELDS:',
+    '            value = record.get(name)',
+    '            item[name] = value',
+    '        body = json.dumps(public_list()).encode("utf-8")',
+  ])
+    assert.ok(program.includes(line), line);
 });
 
 test('[reticulum-listener-005] sends a byte value as lower case hexadecimal text', () => {
@@ -240,6 +254,10 @@ test('[reticulum-listener-010] limits the listener service and publishes no port
     service.some((line) => line.trim().startsWith('ports')),
     false,
   );
+  assert.equal(
+    service.some((line) => /^\s+(cap_add|privileged|user):/.test(line)),
+    false,
+  );
 });
 
 test('[reticulum-listener-011] gives the listener a fixed address inside its subnet and an alias on the default network', () => {
@@ -259,8 +277,14 @@ test('[reticulum-listener-011] gives the listener a fixed address inside its sub
     '      config:',
     '        - subnet: ${GEV_RETICULUM_SUBNET:-10.213.77.0/24}',
   ]);
-  assert.equal(inSubnet('10.213.77.10', '10.213.77.0/24'), true);
-  assert.equal(inSubnet('10.213.78.10', '10.213.77.0/24'), false);
+  const address = /ipv4_address: \$\{[A-Z_]+:-([0-9.]+)\}/.exec(
+    networks.join('\n'),
+  )[1];
+  const subnet = /subnet: \$\{[A-Z_]+:-([0-9./]+)\}/.exec(top.join('\n'))[1];
+  assert.equal(address, '10.213.77.10');
+  assert.equal(subnet, '10.213.77.0/24');
+  assert.equal(inSubnet(address, subnet), true);
+  assert.equal(inSubnet('10.213.78.10', subnet), false);
 });
 
 test('[reticulum-listener-012] tells the app where the listener is and leaves the network of the app alone', () => {

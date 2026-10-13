@@ -12,17 +12,17 @@ The app container runs in one of two modes. In the default mode it is on a bridg
 
 The program `listener.py` creates `RNS.Reticulum(configdir=CONFIG_DIR)` and then serves HTTP from the same process. The config sets `discover_interfaces = yes`, so Reticulum stores each discovered interface in a file.
 
-The lock of the discovery code is a class attribute (`discovery_lock` in `RNS/Discovery.py`). A read of the list and a write of an announce in one process cannot run at the same time. A second process, such as `rnstatus`, would not share that lock.
+The lock of the discovery code is a class attribute (`discovery_lock` in `RNS/Discovery.py`). A read of the list and a write of an announce in one process cannot run at the same time. A second process, such as `rnstatus`, does not share that lock.
 
 The public function `RNS.Reticulum.discovered_interfaces()` reads the list. It also deletes the files of entries that are older than 7 days, which is what Reticulum does itself.
 
 ### D2: Twelve fields
 
-The program sends the twelve fields that the provider reads: `discovery_hash`, `type`, `name`, `last_heard`, `hops`, `latitude`, `longitude`, `height`, `frequency`, `bandwidth`, `sf` and `cr`. It drops the other twelve fields of the record.
+The program sends the twelve fields that the provider reads: `discovery_hash`, `type`, `name`, `last_heard`, `hops`, `latitude`, `longitude`, `height`, `frequency`, `bandwidth`, `sf` and `cr`. It drops every other field of the record.
 
 The route of the listener has no login. The dropped fields hold interface keys, host addresses and contact addresses, so they must not leave the container.
 
-The size is a second reason. A test node held 415 interfaces. The raw JSON had 371,878 bytes (896 bytes for each record), and the twelve fields had 129,990 bytes (313 bytes for each record). The raw list would reach the 4 MiB cap of the provider at about 4,700 records.
+The size is a second reason. A test node held 415 interfaces (see `evidence/size.txt`). The raw JSON had 371,878 bytes (896 bytes for each record), and the twelve fields had 129,990 bytes (313 bytes for each record). The raw list would reach the 4 MiB cap of the provider at about 4,700 records.
 
 The provider stays the tested filter. The list in the program is a second layer, and a text test pins it.
 
@@ -42,7 +42,7 @@ The service publishes no port. The app value of `RETICULUM_LISTENER` comes from 
 
 The image holds a default config at `/opt/reticulum/config`. On the first start the program copies it to `/data/rns/config` in the volume `gev-reticulum`, and it never overwrites that file. The volume also keeps the node identity and the discovery files, so a restart keeps the list.
 
-The default config makes a node that only listens. It has no transport, no shared instance and no `discoverable` line. It has five client interfaces to public nodes that a community directory listed on 2026-10-13. The owner can change them in the volume.
+The default config makes a node that only listens. It has no transport, no shared instance and no `discoverable` line. It has client interfaces to public nodes that a community directory listed on 2026-10-13. The owner can change them in the volume.
 
 ### D5: Tests and evidence
 
@@ -56,7 +56,7 @@ It also runs the provider of change 1 against the listener. One run starts on th
 
 ### D6: Containers
 
-The rule 12 of `AGENTS.md` allows the app container and one gates container. The listener is a second long-running container. The lead starts it only for the real run, never during a gates run, and stops it before the ratchet.
+The rule 12 of `AGENTS.md` says: run one container at a time. The listener is a second long-running container next to the app container. The lead starts it only for the real run, never during a gates run, and stops it before the ratchet.
 
 ## Files and measures
 
