@@ -15,7 +15,8 @@ The raw list never goes into a volume that the app container shares. The provide
 
 ### D2: The fields of a record
 
-The `type` is the class name of the interface without the word `Interface`, in lower case, for example `rnode`. The provider keeps `id`, `type`, `name`, `latitude`, `longitude`, `heightM`, `hops`, `lastHeard`, `status` and, for an RNode, `radio`. The `id` is the first 16 characters of the field `discovery_hash`, and a record with no valid hash is dropped.
+The `type` is the class name of the interface without the word `Interface`, in lower case, for example `rnode`. The provider keeps `id`, `type`, `name`, `latitude`, `longitude`, `heightM`, `hops`, `lastHeard`, `status` and, for an RNode, `radio`. The `id` is the first 16 characters of the field `discovery_hash`. A valid hash has exactly 64 lowercase hexadecimal characters, and the provider drops a record with any other hash.
+
 The provider drops the fields `config_entry`, `reachable_on`, `port`, `ifac_netname`, `ifac_netkey`, `operator_lxmf_address`, `transport_id`, `network_id`, `stamp`, `value`, `impl_name` and `version`. The first six hold addresses, keys or contacts. The others identify a node or the software and are not needed.
 
 The provider rounds each position to three decimals. An operator can run a gateway at home, and 110 m is enough for a globe.
