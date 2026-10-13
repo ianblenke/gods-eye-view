@@ -45,7 +45,15 @@ const nameOf = (name, type = 'rnode') =>
   normalizeReticulumSnapshot(doc([iface({ name, type })])).interfaces[0].name;
 
 test('[reticulum-layer-005] keeps the fields of a valid interface and sets the numbers that the input lacks to null', () => {
-  const [record] = normalizeReticulumSnapshot(doc([iface()])).interfaces;
+  const [record] = normalizeReticulumSnapshot(
+    doc([
+      iface({
+        host: '10.0.0.1',
+        key: 'not-public',
+        radio: { ...RADIO, key: 'not-public' },
+      }),
+    ]),
+  ).interfaces;
   assert.deepEqual(Object.keys(record).sort(), [
     'heightM',
     'hops',

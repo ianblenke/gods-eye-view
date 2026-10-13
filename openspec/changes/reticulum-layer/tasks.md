@@ -8,6 +8,8 @@
 - [x] 1.6 Write the tests for `reticulum-layer-011`, `reticulum-layer-012` and `reticulum-layer-013` in the same file.
 - [x] 1.7 Write the tests for `reticulum-layer-014`, `reticulum-layer-015` and `reticulum-layer-016` in the same file.
 - [x] 1.8 Write the tests for `reticulum-layer-017`, `reticulum-layer-018`, `reticulum-layer-019` and `reticulum-layer-020` in `src/layers/reticulum/registration.test.mjs`.
+- [x] 1.9 Change the count in the test `[osh-033]` in `src/data/layerState.test.mjs` to 31.
+- [x] 1.10 Carry the scenarios `osh-028`, `osh-029`, `osh-030`, `osh-031`, `osh-032`, `osh-046`, `osh-049` and `osh-057` unchanged in the delta of `osh`.
 
 ## 2. Write the files
 

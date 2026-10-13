@@ -38,6 +38,11 @@ The pure modules have tests on the host. The layer has a test with a fake viewer
 All named faults run in one long-lived container with the clone mounted. The lead stops that container before a ratchet or a gates run (rule 12).
 The visual check runs without a container. The lead starts the listener program on the host, with a stored list and no outbound link. The lead starts a Vite server from a copy of the commit and drives a headless Chrome. The app container of the owner is not touched.
 
+### D6: The count in the OSH scenario
+
+The scenario `osh-033` says that the registry has 30 entries, and its test counts them. The new layer makes the count 31.
+The delta of the capability `osh` changes that number. It carries the whole requirement "Systems layer" and the other eight scenarios unchanged, so their hashes stay the same.
+
 ## Files and measures
 
 The trace gate checks that the tests carry the IDs `reticulum-layer-001` to `reticulum-layer-020`. The coverage gate needs 100% of lines, branches and functions in each new code file, and in each changed line of an upstream code file.

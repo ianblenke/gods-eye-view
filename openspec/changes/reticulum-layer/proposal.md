@@ -11,6 +11,7 @@ The names come from anonymous operators. The layer treats each name as untrusted
 - Add the folder `src/layers/reticulum/` with the files `records.js`, `source.js`, `model.js` and `index.js`, and add the file `src/app/layers/reticulum.js`.
 - Add the capability `reticulum-layer` with twenty scenarios, `reticulum-layer-001` to `reticulum-layer-020`.
 - Register the layer in the catalog, the source composition, the reference sources, the share link, the layer panel, the credits and the voice-off list.
+- Change the count in the scenario `osh-033` of the capability `osh` from 30 to 31.
 - Add the test files `src/layers/reticulum/records.test.mjs`, `source.test.mjs`, `model.test.mjs` and `layer.test.mjs`, and the tests for the registrations.
 - Update the tests that count layers or pin the share token, as the upstream pull requests do. Write one entry in `CHANGELOG.md` and one paragraph in `DATA_SOURCES.md`.
 
@@ -22,7 +23,7 @@ The names come from anonymous operators. The layer treats each name as untrusted
 
 ### Modified Capabilities
 
-None.
+- `osh`: The scenario `osh-033` says that the registry has 31 entries now. The delta carries the whole requirement "Systems layer", and the other eight scenarios stay as they are.
 
 ## Impact
 
@@ -42,5 +43,6 @@ The new files are files that the fork writes, so they go into `openspec/ownershi
 - Known limit `stale`: The layer keeps the points of a stale list, and the panel shows no sign of it.
 - Known limit `position`: The operator sets the position of an interface and nobody checks it. The provider rounds it to three decimals.
 - Known limit `refresh`: The layer asks the route every 5 minutes, and the provider caches its answer for 60 seconds. An interface that an operator turns off stays on the globe until it is older than 7 days.
+- Known limit `osh-count`: The scenario `osh-033` names the count of the registry, so each new layer needs a new delta of the capability `osh`.
 - Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.
 - Known limit `visual`: The author looked at the layer on one machine in one headless Chrome with a software renderer and a stored list. No test draws the points.

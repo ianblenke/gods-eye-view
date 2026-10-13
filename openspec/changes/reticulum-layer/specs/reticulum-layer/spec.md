@@ -68,7 +68,9 @@ Origin: spec-first
 - **THEN** `meta.unavailable` and `meta.stale` are true only when the document says true
 - **AND** `meta.reason` is the text of the document, cleaned like a name, with at most 120 code points, or null
 - **AND** `meta.reason` is "Reticulum listener unavailable" when `meta.unavailable` is true and the document has no text for it, or the text is empty
-- **AND** `meta.fetchedAt` is a date or null, and `meta.total` is a whole number that is not negative
+- **AND** `meta.fetchedAt` is a date or null
+- **AND** `meta.total` is the `counts.total` of the document when that is a whole number that is not negative
+- **AND** `meta.total` is the length of the list `interfaces` of the document when `counts.total` is not such a number
 - **AND** the normalizer returns null for a value that is not a document of the schema version 1 with a list `interfaces`
 
 ### Requirement: Display model
@@ -88,7 +90,7 @@ Origin: spec-first
 - **AND** it keeps the first 48 interfaces of that order
 - **AND** each label title is the name cut to 24 code points, and the accent is the color of the type
 - **AND** the priority of the first label is 100000, and each next label has a priority that is 1 less
-- **AND** each entry has the `variant` "label", the `collisionGroup` and the `paintLane` "ambient-label", and `interactive` false
+- **AND** each entry has the `variant` "label", the `collisionGroup` "ambient-label", the `paintLane` "ambient-label" and `interactive` false
 - **AND** each entry has `edgeFade` "keyhole", `horizonCull` true, `terrainOcclusion` false, `gapPx` 15, `verticalOnly` true and `placement` "above"
 
 ### Requirement: Layer display
@@ -123,6 +125,7 @@ Origin: spec-first
 - **WHEN** `update` runs while the layer is not enabled
 - **THEN** it returns false and the source gets no call
 - **AND** `disable` aborts the request in flight, and an answer that arrives afterwards changes nothing
+- **AND** `disable` hides the data source, clears the entries of the overlay source and hides that source
 - **AND** a new `update` aborts the request of the update before it
 
 #### Scenario: Release everything on destroy `reticulum-layer-016`
