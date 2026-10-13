@@ -76,7 +76,7 @@ The optional Local ADS-B layer and the broadcast-FM receiver use radio you recei
 
 Reticulum carries no location in its core. An operator who marks an interface `discoverable = yes` publishes its name, type and position on purpose, and a listener node hears the announce.
 
-The route `/api/reticulum` reads the list from your listener at `RETICULUM_LISTENER`, an IPv4 loopback or private `host:port`. It keeps only `id`, `type`, `name`, `latitude`, `longitude`, `heightM`, `hops`, `lastHeard`, `status` and, for an RNode, the radio numbers. It drops addresses, interface keys, contact addresses and node identities. Positions are rounded to three decimals, which is about 110 m.
+The route `/api/reticulum` reads the list from your listener at `RETICULUM_LISTENER`, an IPv4 loopback or private `host:port`, `localhost` or a `.local` name. It keeps only `id`, `type`, `name`, `latitude`, `longitude`, `heightM`, `hops`, `lastHeard`, `status` and, for an RNode, the radio numbers. It drops addresses, interface keys, contact addresses and node identities. Positions are rounded to three decimals, which is about 110 m.
 
 The data is infrastructure that the operator chose to publish. The operator sets the position and nobody checks it. A name is free text, so it can hold an address that the operator typed. The `id` is a hash of the node identity and the name, so it is a stable pseudonym of the node.
 

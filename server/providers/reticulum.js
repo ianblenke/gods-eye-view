@@ -216,7 +216,10 @@ export function reticulumProxy({
     const setting = String(env.RETICULUM_LISTENER ?? '').trim();
     if (!setting) return unavailable('Reticulum listener not configured');
     const address = parseTapAddress(setting);
-    if (!address) return unavailable('Reticulum listener address not allowed');
+    // `010.0.0.1` passes the tap rule as 10.0.0.1, but a URL parser reads the
+    // leading zero as octal and connects to 8.0.0.1. Refuse such a host.
+    if (!address || new URL(address.origin).hostname !== address.host)
+      return unavailable('Reticulum listener address not allowed');
     const time = now();
     if (cache && time - cache.fetchedAt < CACHE_MS) return cache.document;
     return coalesceProxyRequest(inFlight, 'interfaces', () =>
