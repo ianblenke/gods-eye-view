@@ -7,8 +7,8 @@ import { createBundledCableSource } from '../layers/submarineCables/bundledSourc
 export function createReferenceSources() {
   return {
     earthquakes: createUsgsEarthquakeSource(),
-    reticulum: createReticulumSource(),
     'fire-perimeters': createWfigsPerimeterSource(),
     cables: createBundledCableSource(),
+    reticulum: createReticulumSource(),
   };
 }
