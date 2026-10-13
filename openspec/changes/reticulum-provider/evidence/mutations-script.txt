@@ -2,6 +2,12 @@ import subprocess, re, os, signal
 R = '/home/ianblenke/docker/gev-work/reticulum-provider/'
 F = 'server/providers/reticulum.js'
 orig = open(R + F).read()
+TAP = 'src/data/tapAddress.js'
+orig_tap = open(R + TAP).read()
+
+def rept(old, new):
+    assert orig_tap.count(old) == 1, (old[:60], orig_tap.count(old))
+    return orig_tap.replace(old, new)
 
 def rep(old, new, count=1):
     assert orig.count(old) == count, (old[:60], orig.count(old))
@@ -98,7 +104,7 @@ faults = [
  ('reticulum-source-011', 'Treat a blank setting as not allowed', lambda: rep("String(env.RETICULUM_LISTENER ?? '').trim()", "String(env.RETICULUM_LISTENER ?? '')")),
  ('reticulum-source-011', 'Read a missing setting as the text undefined', lambda: rep("String(env.RETICULUM_LISTENER ?? '').trim()", "String(env.RETICULUM_LISTENER).trim()")),
  ('reticulum-source-011', 'Use another variable name', lambda: rep("env.RETICULUM_LISTENER ?? ''", "env.RETICULUM_HOST ?? ''")),
- ('reticulum-source-011', 'Skip the address check', lambda: rep("    if (!address) return unavailable('Reticulum listener address not allowed');\n", "")),
+ ('reticulum-source-011', 'Skip the address check', lambda: rep("    if (!address || new URL(address.origin).hostname !== address.host)\n      return unavailable('Reticulum listener address not allowed');\n", "")),
  ('reticulum-source-008', 'Use another path on the listener', lambda: rep("'/interfaces.json'", "'/status'")),
  ('reticulum-source-011', 'Say the same reason for both cases', lambda: rep("unavailable('Reticulum listener address not allowed')", "unavailable('Reticulum listener not configured')")),
  # 010 failures
@@ -146,14 +152,29 @@ faults = [
  # added in review round 1
  ('reticulum-source-012', 'Clear the timer when the headers arrive', lambda: rep("      if (!response.ok) throw new Error('listener_status');\n", "      clearTimer(timer);\n      if (!response.ok) throw new Error('listener_status');\n")),
  ('reticulum-source-011', 'Answer 503 when the listener is unavailable', lambda: rep("    return json(200, await load());", "    const document = await load();\n    return json(document.unavailable ? 503 : 200, document);")),
+
+ # added after pre-review 4
+ ('reticulum-source-011', 'Accept a host that the URL parser reads as another address', lambda: rep("    if (!address || new URL(address.origin).hostname !== address.host)\n", "    if (!address)\n")),
+ ('reticulum-source-011', 'Allow the host 172.32 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(a === 172 && b >= 16 && b <= 32)"), TAP),
+ ('reticulum-source-011', 'Allow the host 172.15 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(a === 172 && b >= 15 && b <= 31)"), TAP),
+ ('reticulum-source-011', 'Refuse the host 172.31 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(a === 172 && b >= 16 && b <= 30)"), TAP),
+ ('reticulum-source-011', 'Refuse the host 172.16 (rule of the tap address)', lambda: rept("(a === 172 && b >= 16 && b <= 31)", "(a === 172 && b >= 17 && b <= 31)"), TAP),
+ ('reticulum-source-011', 'Allow the host 100.64 (rule of the tap address)', lambda: rept("    (a === 192 && b === 168) // 192.168/16\n", "    (a === 192 && b === 168) || // 192.168/16\n    (a === 100 && b >= 64 && b <= 127)\n"), TAP),
+ ('reticulum-source-011', 'Allow the host 11.0.0.1 (rule of the tap address)', lambda: rept("    a === 10 || // 10/8\n", "    (a >= 10 && a <= 11) || // 10/8\n"), TAP),
+ ('reticulum-source-011', 'Refuse the host 10.1.2.3 (rule of the tap address)', lambda: rept("    a === 10 || // 10/8\n", ""), TAP),
+ ('reticulum-source-011', 'Allow the host 192.169 (rule of the tap address)', lambda: rept("(a === 192 && b === 168)", "(a === 192 && b >= 168)"), TAP),
+ ('reticulum-source-011', 'Refuse the loopback range except 127.0.0.1 (rule of the tap address)', lambda: rept("    a === 127 || // loopback\n", "    host === '127.0.0.1' || // loopback\n"), TAP),
+ ('reticulum-source-011', 'Allow an IPv6 host (rule of the tap address)', lambda: rept("host === 'localhost' || MDNS_RE.test(host) || isLocalIpv4(host);", "host === 'localhost' || host === '[::1]' || MDNS_RE.test(host) || isLocalIpv4(host);"), TAP),
 ]
 cmd = 'node --test --test-reporter=spec src/data/reticulumProxy.test.mjs'
 out, log = [], []
 try:
-    for sid, desc, fn in faults:
+    for sid, desc, fn, *rest in faults:
+        target = rest[0] if rest else F
+        original = orig_tap if target == TAP else orig
         text = fn()
-        assert text != orig, desc
-        open(R + F, 'w').write(text)
+        assert text != original, desc
+        open(R + target, 'w').write(text)
         proc = subprocess.Popen(cmd, shell=True, cwd=R, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, start_new_session=True)
         hung = False
         try:
@@ -177,9 +198,11 @@ try:
         out.append(f'{sid} | {desc} | failing: {", ".join(uniq) if uniq else "NONE"}')
         log.append(f'{desc} | exit {p.returncode} | failing tests: {", ".join(uniq) if uniq else "NONE"}')
         print(log[-1], flush=True)
-        open(R + F, 'w').write(orig)
+        open(R + target, 'w').write(original)
 finally:
     open(R + F, 'w').write(orig)
+    open(R + TAP, 'w').write(orig_tap)
 assert open(R + F).read() == orig
+assert open(R + TAP).read() == orig_tap
 open('/home/ianblenke/docker/gev-tools/reticulum-provider/faults.txt', 'w').write('\n'.join(out) + '\n')
 open('/home/ianblenke/docker/gev-tools/reticulum-provider/faults-run.txt', 'w').write('\n'.join(log) + '\n')

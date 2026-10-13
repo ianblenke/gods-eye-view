@@ -1,4 +1,4 @@
-Run of the 123 named faults, 2026-10-13, host Node v26.8.2. The faults changed server/providers/reticulum.js of the commit 7b0f22ffbb9331d746aec9989051f1cab85724d3; the script restores the file and checks that it equals the original.
+Run of the 134 named faults, 2026-10-13, host Node v26.8.2. Each fault changed server/providers/reticulum.js or, for the faults with the words "rule of the tap address", src/data/tapAddress.js of the commit 3c8e83352a2376684b826f9c57e457177f9e348c; the script restores the file and checks that it equals the original.
 Command for each fault: node --test --test-reporter=spec src/data/reticulumProxy.test.mjs (limit 90 seconds; a run that hangs is killed and recorded as TIMEOUT). Baseline without a fault: 14 tests, 14 pass, 0 fail.
 Lines: fault | exit status | failing tests
 Pass every field of the record through | exit 1 | failing tests: [reticulum-source-001], [reticulum-source-002], [reticulum-source-003]
@@ -124,8 +124,20 @@ Ask the listener before the method is refused | exit 1 | failing tests: [reticul
 Ask the listener before the path is refused | exit 1 | failing tests: [reticulum-source-010]
 Clear the timer when the headers arrive | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-012]
 Answer 503 when the listener is unavailable | exit 1 | failing tests: [reticulum-source-011]
+Accept a host that the URL parser reads as another address | exit 1 | failing tests: [reticulum-source-011]
+Allow the host 172.32 (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+Allow the host 172.15 (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+Refuse the host 172.31 (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+Refuse the host 172.16 (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+Allow the host 100.64 (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+Allow the host 11.0.0.1 (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+Refuse the host 10.1.2.3 (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+Allow the host 192.169 (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+Refuse the loopback range except 127.0.0.1 (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
+Allow an IPv6 host (rule of the tap address) | exit 1 | failing tests: [reticulum-source-011]
 
-Two runs of the 123 faults gave the same lines. The first version of the tests let 8 of 102 faults survive: a fractional hop count, a hash of the wrong length, a time that is a number in text, an error status with a valid list, an answer that is a JSON string, a request timeout that never aborts (the tests hung), a timer that is never cleared and a cache that is never refreshed. Each one has a test case now.
+Two runs of the 134 faults gave the same lines. The first version of the tests let 8 of 102 faults survive: a fractional hop count, a hash of the wrong length, a time that is a number in text, an error status with a valid list, an answer that is a JSON string, a request timeout that never aborts (the tests hung), a timer that is never cleared and a cache that is never refreshed. Each one has a test case now.
 Pre-review 1 found 11 more cases, and the list holds a fault for each: 4 faults of the range of the control characters of a name, a height that is not a number, 2 faults of the redirect option, 2 faults of the limit of 4 MiB, a request for each caller, and a type that is named like an inherited property.
 Pre-review 2 found 8 more cases, and the list holds a fault for each: the length of the raw type, a hop count of zero, the value of the hops, the value of the name, 2 swaps of the radio numbers, and 2 faults that ask the listener before the method or the path is refused.
 Review round 1 found 2 more cases, and the list holds a fault for each: a timer that the provider clears when the headers arrive, and the status 503 for an unavailable document. The faults "Refuse the empty path" and "Refuse the slash path" name the test of reticulum-source-008.
+Pre-review 4 found 11 more cases, and the list holds a fault for each: a host that a URL parser reads as another address, and 10 faults of the shared rule of the tap address (the hosts 172.32, 172.15, 172.31, 172.16, 100.64, 11.0.0.1, 10.1.2.3, 192.169, the loopback range and an IPv6 host). The test of reticulum-source-011 fails for each of them.
