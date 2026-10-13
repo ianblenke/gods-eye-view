@@ -1,4 +1,4 @@
-Host checks of reticulum-layer, 2026-10-13, host Node v26.8.2. The checks ran on the files of the commit 4f05075acca2fd3fe5289f43dcdd7e32abdb26d9; later commits change the evidence files and the documents only.
+Host checks of reticulum-layer, 2026-10-13, host Node v26.8.2. The checks ran on the files of the commit a38fbdbb53e2a52bb15acc9d9ef597e1523e765c; later commits change the evidence files and the documents only.
 
 ## node scripts/check-import-directions.mjs
 {"modules":980,"portableEntries":79}
@@ -24,10 +24,10 @@ exit: 0
 ℹ fail 0
 ℹ skipped 0
 
-## node scripts/spec/gates.mjs lint --change reticulum-layer (on the documents of the commit 4f05075acca2fd3fe5289f43dcdd7e32abdb26d9)
+## node scripts/spec/gates.mjs lint --change reticulum-layer (on the documents of the commit a38fbdbb53e2a52bb15acc9d9ef597e1523e765c)
 STE: 0 errors, 742 warnings.
 
-## openspec validate reticulum-layer (on the documents of the commit 4f05075acca2fd3fe5289f43dcdd7e32abdb26d9)
+## openspec validate reticulum-layer (on the documents of the commit a38fbdbb53e2a52bb15acc9d9ef597e1523e765c)
 Change 'reticulum-layer' is valid
 
 ## Non-ASCII characters in the new files of the layer (grep -nP '[^\x00-\x7f]')
@@ -35,7 +35,7 @@ lines: 1
 src/layers/reticulum/index.js:77:    icon: '📡',
 
 ## The tests of the layer folder, in the image, with coverage
-Command: docker exec <container> sh -c "env -u NODE_ENV node --test --experimental-test-coverage --test-coverage-include='src/layers/reticulum/*.js' --test-reporter=spec src/layers/reticulum/*.test.mjs" (the clone mounted in a container of gods-eye-view:local).
+Command: docker run --rm -v <clone>:/app -v /app/node_modules -w /app gods-eye-view:local, then node --test --experimental-test-coverage --test-coverage-include='src/layers/reticulum/*.js' --test-reporter=spec src/layers/reticulum/*.test.mjs. The run was on the same commit as the host checks above.
 Result:
 ℹ tests 21
 ℹ pass 21
@@ -47,7 +47,7 @@ Result:
 ℹ    source.js  | 100.00 |   100.00 |  100.00 |
 
 ## The tests that read the changed documents or pin the layer count and the share token, in the image
-Command: node --test on src/firstRunExperience.test.mjs, src/locations.test.mjs, src/annotations/drawTool.test.mjs, src/data/transitFeeds.test.mjs, src/tooling/transitQa.test.mjs, src/tooling/panelStorageDocs.test.mjs, src/data/reticulumListener.test.mjs, src/app/constructCatalog.test.mjs, src/app/sourceComposition.test.mjs, src/data/layerState.test.mjs, src/data/layerStateTokenLedger.test.mjs and src/sources/reference.test.mjs (12 files).
+Command: node --test on src/firstRunExperience.test.mjs, src/locations.test.mjs, src/annotations/drawTool.test.mjs, src/data/transitFeeds.test.mjs, src/tooling/transitQa.test.mjs, src/tooling/panelStorageDocs.test.mjs, src/data/reticulumListener.test.mjs, src/app/constructCatalog.test.mjs, src/app/sourceComposition.test.mjs, src/data/layerState.test.mjs, src/data/layerStateTokenLedger.test.mjs and src/sources/reference.test.mjs (12 files), in the same container run.
 Result:
 ℹ tests 199
 ℹ pass 199
@@ -56,6 +56,6 @@ Result:
 
 ## npm test in the image gods-eye-view:local (the whole unit suite)
 Command: docker run --rm -v <clone>:/app -v /app/node_modules -w /app gods-eye-view:local npm test
-Run on the code files of the commit 7d2a17ae. Later commits changed the test file layer.test.mjs (stronger assertions), the order of two rows in layerStateTokenReservations.json, and documents. The whole unit suite runs again in the final gates run.
+Run on the code files of the commit 7d2a17ae. Later commits changed the test file layer.test.mjs (stronger assertions), the order of two rows in layerStateTokenReservations.json, a comment in layerStateTokenLedger.test.mjs, and documents. The whole unit suite runs again in the final gates run.
 Result: tests 9666, pass 9665, fail 0, cancelled 0, skipped 1, exit 0. The skipped test is "Windows production hardener applies its exact DACL with native tools" (a Windows test that skips itself on Linux).
 
