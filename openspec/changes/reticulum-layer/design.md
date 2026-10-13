@@ -28,7 +28,7 @@ A document with `stale` true keeps its points. A request that fails keeps the la
 
 A skeleton layer in a throwaway copy showed what the suite needs. It needs the catalog entry, the source contract in `sourceComposition.js` and the key in the reference sources. It needs the entry in the share link registry and in the token ledger, and the entry in `VOICE_OFF_LAYERS`. The tests that count layers need new counts.
 
-The tests of the token ledger use the digits 4 and 5 for fixtures, and they move up by one. One test keeps its old title, because the gate ledger holds the title.
+The tests of the token ledger use the digits 4 and 5 for fixtures, and they move up by one. One test of the token ledger builds its fixture from the rows without the layer, so that its title stays true.
 The suite does not need the group in the layer panel, the credit, the package exports and the package boundaries. This change adds them. A user needs the group and the credit, and `make precheck` needs the package files.
 
 ### D5: Tests and checks

@@ -2,7 +2,7 @@
 
 Changes 1 and 2 added the route `/api/reticulum` and the listener container. The route gives the interfaces that Reticulum operators publish on purpose. Nothing shows them on the globe yet.
 
-This is change 3 of 3. It adds the layer "Reticulum Network". A point marks each interface that has a position. The color shows the type, and the size and the alpha show the status. A label shows the name for the 48 most important interfaces.
+This is change 3 of 3. It adds the layer "Reticulum Network". A point marks each interface that has a position. The color shows the type, and the size and the alpha show the status. A label shows the name of up to 48 interfaces: the best status first, then the newest.
 
 The names come from anonymous operators. The layer treats each name as untrusted text and cleans it again in the browser.
 
@@ -42,6 +42,5 @@ The new files are files that the fork writes, so they go into `openspec/ownershi
 - Known limit `stale`: The layer keeps the points of a stale list, and the panel shows no sign of it.
 - Known limit `position`: The operator sets the position of an interface and nobody checks it. The provider rounds it to three decimals.
 - Known limit `refresh`: The layer asks the route every 5 minutes, and the provider caches its answer for 60 seconds. An interface that an operator turns off stays on the globe until it is older than 7 days.
-- Known limit `test-title`: One upstream test in `layerStateTokenLedger.test.mjs` keeps its old title, because the gate ledger holds the title. The title names the digits 4 and 5, and the fixture uses 5 and 6.
 - Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.
 - Known limit `visual`: The author looked at the layer on one machine in one headless Chrome with a software renderer and a stored list. No test draws the points.

@@ -8,14 +8,14 @@ Origin: spec-first
 - **WHEN** a test creates the layer with a fake source and a fake overlay host
 - **THEN** the `id` is "reticulum", the `name` is "Reticulum Network" and the `icon` is "📡"
 - **AND** the `source` is "Reticulum discovery" and the `updateInterval` is 300000
-- **AND** the creation throws a `TypeError` when the source has no function `getSnapshot`, or when the overlay host is missing
+- **AND** the creation throws a `TypeError` when the source has no function `getSnapshot`, or when there is no overlay host
 - **AND** the layer has no function `getAnalystRecords`
 
 #### Scenario: Make no request before the first update `reticulum-layer-002`
 - **WHEN** a test calls `init` and then `enable` on the layer
 - **THEN** the source gets no call
-- **AND** the data source is hidden after `init` and shown after `enable`
-- **AND** the overlay source "reticulum" is hidden after `init` and visible after `enable`
+- **AND** the data source has `show` false after `init` and `show` true after `enable`
+- **AND** the overlay host gets `setVisible` with false for the source "reticulum" after `init`, and with true after `enable`
 - **AND** a second `init` without `destroy` throws "Reticulum layer is already initialized"
 
 ### Requirement: Browser source
@@ -37,14 +37,14 @@ Origin: spec-first
 ### Requirement: Interface records
 The normalizer MUST keep only the interfaces that meet the rules, MUST clean the names, and MUST keep at most 5000 interfaces. A character is one code point. The normalizer MUST remove `<`, `>`, U+0000 to U+001F, U+007F to U+009F and U+061C from a name. It MUST also remove U+200B to U+200F, U+2028 to U+202E, U+2060 to U+2064, U+2066 to U+2069 and U+FEFF.
 
-A position is not valid when the latitude or the longitude is not a finite number, or when both are 0. A position is not valid when the latitude is outside -90 to 90, or when the longitude is outside -180 to 180. A value is a date when it is a text and `Date.parse` gives a finite number for it. A value is not a date if it does not meet both rules.
+A position is not valid when the latitude or the longitude is not a finite number, or when both are 0. A position is not valid when the latitude is outside -90 to 90, or when the longitude is outside -180 to 180. A value is a date when it is a text and `Date.parse` gives a finite number for it. A value that is not a text, or that `Date.parse` does not turn into a finite number, is not a date.
 Origin: spec-first
 
 #### Scenario: Keep the fields of a valid interface `reticulum-layer-005`
 - **WHEN** the normalizer reads a document with one valid RNode interface
 - **THEN** the record has exactly the fields `id`, `type`, `name`, `latitude`, `longitude`, `heightM`, `hops`, `lastHeard`, `status` and `radio`
 - **AND** the values are the values of the input, with the position and the radio numbers unchanged
-- **AND** `radio` is null when the input has no radio object, or when one of its four numbers is missing
+- **AND** `radio` is null when the input has no radio object, or when one of its four numbers is not a finite number
 - **AND** `heightM` and `hops` are null when the input has no number
 
 #### Scenario: Drop the interfaces that are not valid `reticulum-layer-006`
@@ -52,7 +52,7 @@ Origin: spec-first
 - **AND** the list also holds interfaces whose `status` is not "available", "unknown" or "stale"
 - **AND** the list also holds interfaces whose position is not valid, or whose `lastHeard` is not a date
 - **THEN** the result lists none of these interfaces
-- **AND** a second interface with the same `id` is dropped
+- **AND** the result keeps only the first interface with the same `id`
 - **AND** the result holds at most 5000 interfaces, in the order of the input
 
 #### Scenario: Clean the names `reticulum-layer-007`
@@ -67,7 +67,7 @@ Origin: spec-first
 - **WHEN** the normalizer reads a document
 - **THEN** `meta.unavailable` and `meta.stale` are true only when the document says true
 - **AND** `meta.reason` is the text of the document, cleaned like a name, with at most 120 code points, or null
-- **AND** `meta.reason` is "Reticulum listener unavailable" when `meta.unavailable` is true and the text of the document is empty or missing
+- **AND** `meta.reason` is "Reticulum listener unavailable" when `meta.unavailable` is true and the document has no text for it, or the text is empty
 - **AND** `meta.fetchedAt` is a date or null, and `meta.total` is a whole number that is not negative
 - **AND** the normalizer returns null for a value that is not a document of the schema version 1 with a list `interfaces`
 

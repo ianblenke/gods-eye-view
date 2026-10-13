@@ -44,7 +44,7 @@ const ids = (snapshot) => snapshot.interfaces.map((item) => item.id);
 const nameOf = (name, type = 'rnode') =>
   normalizeReticulumSnapshot(doc([iface({ name, type })])).interfaces[0].name;
 
-test('[reticulum-layer-005] keeps the fields of a valid interface and sets missing numbers to null', () => {
+test('[reticulum-layer-005] keeps the fields of a valid interface and sets the numbers that the input lacks to null', () => {
   const [record] = normalizeReticulumSnapshot(doc([iface()])).interfaces;
   assert.deepEqual(Object.keys(record).sort(), [
     'heightM',

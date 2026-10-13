@@ -44,6 +44,9 @@ const reservationRows = JSON.parse(
   ),
 );
 
+// One test builds its fixture from the rows without the layer, so that its title stays true.
+const rowsNoReticulum = reservationRows.filter(([id]) => id !== 'reticulum');
+
 test('pre-ledger published ownership is independent of the candidate mapping', () => {
   assert.notStrictEqual(
     PRE_LEDGER_LAYER_STATE_TOKENS,
@@ -104,7 +107,14 @@ function writeCodecFixture(cwd, rows, entries) {
     providerCodec,
     readFileSync(new URL('./idSwitches.js', import.meta.url)),
   );
-  const source = readFileSync(CODEC_SOURCE_PATH, 'utf8');
+  // Rows that do not reserve the layer reticulum give a registry without its entry.
+  const omittedEntry = rows.some(([id]) => id === 'reticulum')
+    ? ''
+    : "  Object.freeze({\n    id: 'reticulum',\n    token: '4',\n    disposition: 'enabled-only',\n  }),\n";
+  const source = readFileSync(CODEC_SOURCE_PATH, 'utf8').replace(
+    omittedEntry,
+    '',
+  );
   const registryEnd = ']);\n\nexport const REGISTERED_LAYER_IDS';
   assert.equal(source.split(registryEnd).length, 2);
   const additions = entries
@@ -207,10 +217,8 @@ test('published retired digits and competing PRs advance the merge-time allocati
   );
 });
 
-// The title keeps the digits 4 and 5, because the gate ledger holds the title.
-// The fixture uses 5 and 6, because the digit 4 is the token of the layer reticulum.
 test('PR B manually replaces provisional 4 with 5 after PR A publishes 4', () => {
-  withPublishedBase({ rows: [...reservationRows, ['pr-a', '5']] }, (cwd) => {
+  withPublishedBase({ rows: [...rowsNoReticulum, ['pr-a', '4']] }, (cwd) => {
     mkdirSync(path.join(cwd, 'scripts'));
     const fixtureChecker = path.join(
       cwd,
@@ -231,8 +239,8 @@ test('PR B manually replaces provisional 4 with 5 after PR A publishes 4', () =>
 
     writeCodecFixture(
       cwd,
-      [...reservationRows, ['pr-b', '5']],
-      [{ id: 'pr-b', token: '5' }],
+      [...rowsNoReticulum, ['pr-b', '4']],
+      [{ id: 'pr-b', token: '4' }],
     );
     const beforeRebase = runCheck();
     assert.equal(beforeRebase.status, 1);
@@ -240,10 +248,10 @@ test('PR B manually replaces provisional 4 with 5 after PR A publishes 4', () =>
 
     writeCodecFixture(
       cwd,
-      [...reservationRows, ['pr-a', '5'], ['pr-b', '5']],
+      [...rowsNoReticulum, ['pr-a', '4'], ['pr-b', '4']],
       [
-        { id: 'pr-a', token: '5' },
-        { id: 'pr-b', token: '5' },
+        { id: 'pr-a', token: '4' },
+        { id: 'pr-b', token: '4' },
       ],
     );
     const staleRebase = runCheck();
@@ -251,16 +259,16 @@ test('PR B manually replaces provisional 4 with 5 after PR A publishes 4', () =>
     assert.match(staleRebase.stderr, /Duplicate layer-state token reservation/);
 
     const published = readPublishedLayerStateReservations('HEAD', cwd);
-    assert.equal(nextLayerStateToken(published), '6');
-    const validBaselineRows = [...reservationRows, ['pr-a', '5']];
-    writeCodecFixture(cwd, validBaselineRows, [{ id: 'pr-a', token: '5' }]);
+    assert.equal(nextLayerStateToken(published), '5');
+    const validBaselineRows = [...rowsNoReticulum, ['pr-a', '4']];
+    writeCodecFixture(cwd, validBaselineRows, [{ id: 'pr-a', token: '4' }]);
     const helper = spawnSync(
       process.execPath,
       [realpathSync(fixtureNext), 'pr-b'],
       { cwd, encoding: 'utf8' },
     );
     assert.equal(helper.status, 0, helper.stderr);
-    assert.match(helper.stdout, /pr-b: 6/);
+    assert.match(helper.stdout, /pr-b: 5/);
     assert.deepEqual(
       JSON.parse(readFileSync(path.join(cwd, LEDGER_PATH), 'utf8')),
       validBaselineRows,
@@ -268,15 +276,15 @@ test('PR B manually replaces provisional 4 with 5 after PR A publishes 4', () =>
     );
     writeCodecFixture(
       cwd,
-      [...reservationRows, ['pr-a', '5'], ['pr-b', '6']],
+      [...rowsNoReticulum, ['pr-a', '4'], ['pr-b', '5']],
       [
-        { id: 'pr-a', token: '5' },
-        { id: 'pr-b', token: '6' },
+        { id: 'pr-a', token: '4' },
+        { id: 'pr-b', token: '5' },
       ],
     );
     const corrected = runCheck();
     assert.equal(corrected.status, 0, corrected.stderr);
-    assert.match(corrected.stdout, /32 published, 1 new/);
+    assert.match(corrected.stdout, /31 published, 1 new/);
   });
 });
 
