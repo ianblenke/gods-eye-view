@@ -1,13 +1,13 @@
 ## ADDED Requirements
 
 ### Requirement: Listener image
-The folder `docker/reticulum/` MUST hold a Dockerfile that builds the listener from the image "python:3.13-slim". The Dockerfile MUST install the package `rns` with pip at the version 1.5.7. The image MUST run as a user that is not root.
+The folder `docker/reticulum/` MUST hold a Dockerfile that builds the listener from the image "python:3.13-slim". The Dockerfile MUST install the packages `rns` and `lxmf` with pip at the versions 1.5.7 and 1.2.0. The image MUST run as a user that is not root.
 Origin: spec-first
 
-#### Scenario: Install Reticulum with pip at a fixed version `reticulum-listener-001`
+#### Scenario: Install Reticulum and LXMF with pip at fixed versions `reticulum-listener-001`
 - **WHEN** a test reads `docker/reticulum/Dockerfile`
 - **THEN** the base image is "python:3.13-slim"
-- **AND** one `pip install` line names "rns==1.5.7"
+- **AND** one `pip install` line names "rns==1.5.7" and "lxmf==1.2.0"
 - **AND** the Dockerfile copies only the files `listener.py` and `config`
 
 #### Scenario: Run as a user without privileges `reticulum-listener-002`

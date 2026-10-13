@@ -4,7 +4,7 @@ Change 1 added the route `/api/reticulum`. It reads a listener that you run, and
 
 The owner chose to run our own listener. The listener runs the Reticulum software, hears the announces of the interfaces that operators make discoverable, and serves the list over HTTP. A test node on this machine heard 415 interfaces in about 5 hours, and the count was still rising.
 
-The Reticulum licence forbids harmful use and the use of its data to train AI. So this repository does not hold Reticulum code. The Dockerfile installs the package with pip.
+The Reticulum licence forbids harmful use and the use of its data to train AI. So this repository does not hold Reticulum code. The Dockerfile installs the packages `rns` and `lxmf` with pip. Interface discovery needs the module `lxmf`.
 
 This is change 2 of 3. Change 3 adds the globe layer.
 
@@ -40,6 +40,6 @@ The gates image has no Python. So the program `listener.py` has text tests and o
 - Known limit `hosts`: The default config names three bootstrap hosts from a public community directory of 2026-10-13. A host can go away, and you can change the list in the volume.
 - Known limit `convergence`: A new listener has a partial list for its first hours. Operators announce every 6 hours by default.
 - Known limit `python`: No test runs the program `listener.py`. The text tests pin its structure, and the real run in `evidence/` shows that it works on one machine.
-- Known limit `image`: The base image has a tag and no digest. The package version is fixed.
+- Known limit `image`: The base image has a tag and no digest. The package versions are fixed.
 - Known limit `platform`: The author checked the compose files on Linux with Docker Compose 5.5.1. The host network mode has other rules on Docker Desktop.
 - Known limit `second-container`: The listener is a second long-running container. The rule 12 of `AGENTS.md` names the app container and one gates container.

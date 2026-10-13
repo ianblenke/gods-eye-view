@@ -6,7 +6,7 @@ The route `/api/reticulum` of the app reads that list and keeps only the public 
 ## Start
 
 1. Start the app and the listener with `make up-reticulum`. When you start the app with `make up-codex`, use `make up-codex-reticulum` instead.
-2. The first start builds the image. The build installs the package `rns` 1.5.7 from PyPI.
+2. The first start builds the image. The build installs the packages `rns` 1.5.7 and `lxmf` 1.2.0 from PyPI.
 3. Wait. Operators announce every 6 hours by default, so the list grows for many hours. A test node heard 415 interfaces in 5 hours.
 4. Look at the answer with `curl http://localhost:4173/api/reticulum`. Use your port when you set `GEV_PORT`.
 

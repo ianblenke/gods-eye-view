@@ -5,9 +5,10 @@ FROM python:3.13-slim
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
-# The package comes from PyPI at a fixed version. This repository holds no
-# Reticulum code, because the licence of Reticulum limits some uses.
-RUN pip install --no-cache-dir rns==1.5.7
+# The packages come from PyPI at fixed versions. Interface discovery needs
+# lxmf. This repository holds no Reticulum code, because the licence of
+# Reticulum limits some uses.
+RUN pip install --no-cache-dir rns==1.5.7 lxmf==1.2.0
 
 # The volume mount point belongs to the user of the container, so that a new
 # named volume gets the same owner.

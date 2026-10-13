@@ -48,12 +48,13 @@ const DROPPED = [
   'version',
 ];
 
-test('[reticulum-listener-001] installs Reticulum with pip at a fixed version and copies two files', () => {
+test('[reticulum-listener-001] installs Reticulum and LXMF with pip at fixed versions and copies two files', () => {
   const docker = code(read('docker/reticulum/Dockerfile'));
   assert.equal(docker[0], 'FROM python:3.13-slim');
   const installs = docker.filter((line) => line.includes('pip install'));
   assert.equal(installs.length, 1);
-  assert.match(installs[0], /^RUN pip install .*\brns==1\.5\.7$/);
+  assert.match(installs[0], /^RUN pip install .*\brns==1\.5\.7\b/);
+  assert.match(installs[0], /\blxmf==1\.2\.0\b/);
   assert.deepEqual(
     docker.filter((line) => line.startsWith('COPY')),
     [
