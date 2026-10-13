@@ -1,5 +1,5 @@
-Run of the 113 named faults, 2026-10-13, host Node v26.8.2. Each fault changes server/providers/reticulum.js; the script restores the file and checks that it equals the original.
-Command for each fault: node --test --test-reporter=spec src/data/reticulumProxy.test.mjs (limit 90 seconds; a run that hangs is killed and recorded as TIMEOUT). Baseline without a fault: 13 tests, 13 pass, 0 fail.
+Run of the 121 named faults, 2026-10-13, host Node v26.8.2. The faults changed server/providers/reticulum.js of the commit dc75201378bba647d975c22f61230b07bb4ad1a1; the script restores the file and checks that it equals the original.
+Command for each fault: node --test --test-reporter=spec src/data/reticulumProxy.test.mjs (limit 90 seconds; a run that hangs is killed and recorded as TIMEOUT). Baseline without a fault: 14 tests, 14 pass, 0 fail.
 Lines: fault | exit status | failing tests
 Pass every field of the record through | exit 1 | failing tests: [reticulum-source-001], [reticulum-source-002], [reticulum-source-003]
 Cut the id to 15 characters | exit 1 | failing tests: [reticulum-source-001], [reticulum-source-004]
@@ -44,7 +44,7 @@ Refuse a latitude of zero alone | exit 1 | failing tests: [reticulum-source-005]
 Accept a latitude that is not a number | exit 1 | failing tests: [reticulum-source-005]
 Accept a longitude that is not a number | exit 1 | failing tests: [reticulum-source-005]
 Accept a text number as a position | exit 1 | failing tests: [reticulum-source-004], [reticulum-source-005]
-Count only the listed records in the total | exit 1 | failing tests: [reticulum-source-004], [reticulum-source-005], [reticulum-source-006], [reticulum-source-007], [reticulum-source-012]
+Count only the listed records in the total | exit 1 | failing tests: [reticulum-source-004], [reticulum-source-005], [reticulum-source-006], [reticulum-source-007], [reticulum-source-014]
 Mark unknown after 25 hours | exit 1 | failing tests: [reticulum-source-006]
 Mark unknown from exactly 24 hours | exit 1 | failing tests: [reticulum-source-006]
 Mark stale after 2 days | exit 1 | failing tests: [reticulum-source-006]
@@ -73,17 +73,17 @@ Send a different schema version | exit 1 | failing tests: [reticulum-source-008]
 Send a different source name | exit 1 | failing tests: [reticulum-source-008]
 Allow the browser to cache the answer | exit 1 | failing tests: [reticulum-source-008]
 Send the answer as text | exit 1 | failing tests: [reticulum-source-008]
-Mark the answer stale | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-011], [reticulum-source-012]
-Mark the answer unavailable | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-011], [reticulum-source-012]
-Use another route path | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-009], [reticulum-source-010], [reticulum-source-011], [reticulum-source-012], [reticulum-source-013]
+Mark the answer stale | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-011], [reticulum-source-012], [reticulum-source-014]
+Mark the answer unavailable | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-011], [reticulum-source-012], [reticulum-source-014]
+Use another route path | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-009], [reticulum-source-010], [reticulum-source-011], [reticulum-source-012], [reticulum-source-013], [reticulum-source-014]
 Use another route path in the preview server | exit 1 | failing tests: [reticulum-source-008]
 Allow any method | exit 1 | failing tests: [reticulum-source-009]
 Allow a query | exit 1 | failing tests: [reticulum-source-010]
 Refuse the empty path | exit 1 | failing tests: [reticulum-source-008]
-Refuse the slash path | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-011], [reticulum-source-012], [reticulum-source-013]
+Refuse the slash path | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-011], [reticulum-source-012], [reticulum-source-013], [reticulum-source-014]
 Treat a blank setting as not allowed | exit 1 | failing tests: [reticulum-source-011]
 Read a missing setting as the text undefined | exit 1 | failing tests: [reticulum-source-011]
-Use another variable name | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-011], [reticulum-source-012], [reticulum-source-013]
+Use another variable name | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-011], [reticulum-source-012], [reticulum-source-013], [reticulum-source-014]
 Skip the address check | exit 1 | failing tests: [reticulum-source-011]
 Use another path on the listener | exit 1 | failing tests: [reticulum-source-008], [reticulum-source-011]
 Say the same reason for both cases | exit 1 | failing tests: [reticulum-source-011]
@@ -111,9 +111,18 @@ End the C1 range at the no-break space | exit 1 | failing tests: [reticulum-sour
 Keep a height that is not a number | exit 1 | failing tests: [reticulum-source-001]
 Follow a redirect | exit 1 | failing tests: [reticulum-source-012]
 Follow a redirect by the option follow | exit 1 | failing tests: [reticulum-source-012]
-Refuse a list of exactly 4 MiB | exit 1 | failing tests: [reticulum-source-012]
+Refuse a list of exactly 4 MiB | exit 1 | failing tests: [reticulum-source-014]
 Accept a list of 4 MiB and one byte | exit 1 | failing tests: [reticulum-source-012]
 Send one request for each caller | exit 1 | failing tests: [reticulum-source-013]
+Count the type without the word Interface | exit 1 | failing tests: [reticulum-source-004]
+Refuse zero hops | exit 1 | failing tests: [reticulum-source-001]
+Change the value of the hops | exit 1 | failing tests: [reticulum-source-001]
+Use the type as the name | exit 1 | failing tests: [reticulum-source-001], [reticulum-source-004], [reticulum-source-007], [reticulum-source-008]
+Swap the spreading factor and the coding rate | exit 1 | failing tests: [reticulum-source-001]
+Swap the frequency and the bandwidth | exit 1 | failing tests: [reticulum-source-001]
+Ask the listener before the method is refused | exit 1 | failing tests: [reticulum-source-009]
+Ask the listener before the path is refused | exit 1 | failing tests: [reticulum-source-010]
 
-Two runs of the 113 faults gave the same lines. The first version of the tests let 8 of 102 faults survive: a fractional hop count, a hash of the wrong length, a time that is a number in text, an error status with a valid list, an answer that is a JSON string, a request timeout that never aborts (the tests hung), a timer that is never cleared and a cache that is never refreshed. Each one has a test case now.
+Two runs of the 121 faults gave the same lines. The first version of the tests let 8 of 102 faults survive: a fractional hop count, a hash of the wrong length, a time that is a number in text, an error status with a valid list, an answer that is a JSON string, a request timeout that never aborts (the tests hung), a timer that is never cleared and a cache that is never refreshed. Each one has a test case now.
 Pre-review 1 found 11 more cases, and the list holds a fault for each: 4 faults of the range of the control characters of a name, a height that is not a number, 2 faults of the redirect option, 2 faults of the limit of 4 MiB, a request for each caller, and a type that is named like an inherited property.
+Pre-review 2 found 8 more cases, and the list holds a fault for each: the length of the raw type, a hop count of zero, the value of the hops, the value of the name, 2 swaps of the radio numbers, and 2 faults that ask the listener before the method or the path is refused.

@@ -129,9 +129,19 @@ faults = [
  ('reticulum-source-001', 'Keep a height that is not a number', lambda: rep("finite(record.height) ? Math.round(record.height) : null", "Math.round(record.height)")),
  ('reticulum-source-012', 'Follow a redirect', lambda: rep("        redirect: 'error',\n", "")),
  ('reticulum-source-012', 'Follow a redirect by the option follow', lambda: rep("redirect: 'error'", "redirect: 'follow'")),
- ('reticulum-source-012', 'Refuse a list of exactly 4 MiB', lambda: rep("const MAX_BYTES = 4 * 1024 * 1024;", "const MAX_BYTES = 4 * 1024 * 1024 - 1;")),
+ ('reticulum-source-014', 'Refuse a list of exactly 4 MiB', lambda: rep("const MAX_BYTES = 4 * 1024 * 1024;", "const MAX_BYTES = 4 * 1024 * 1024 - 1;")),
  ('reticulum-source-012', 'Accept a list of 4 MiB and one byte', lambda: rep("const MAX_BYTES = 4 * 1024 * 1024;", "const MAX_BYTES = 4 * 1024 * 1024 + 1;")),
  ('reticulum-source-013', 'Send one request for each caller', lambda: rep("    return coalesceProxyRequest(inFlight, 'interfaces', () =>\n      refresh(address, time),\n    ).promise;\n", "    return refresh(address, time);\n")),
+
+ # added after pre-review 2
+ ('reticulum-source-004', 'Count the type without the word Interface', lambda: rep("  if (typeof value !== 'string' || !/^[A-Za-z0-9]{1,40}$/.test(value))\n    return null;\n  return value.replace(/Interface$/, '').toLowerCase() || null;", "  if (typeof value !== 'string') return null;\n  const bare = value.replace(/Interface$/, '');\n  if (!/^[A-Za-z0-9]{1,40}$/.test(bare)) return null;\n  return bare.toLowerCase();")),
+ ('reticulum-source-001', 'Refuse zero hops', lambda: rep("record.hops >= 0 &&", "record.hops > 0 &&")),
+ ('reticulum-source-001', 'Change the value of the hops', lambda: rep("          ? record.hops\n", "          ? record.hops + 1\n")),
+ ('reticulum-source-001', 'Use the type as the name', lambda: rep("      name: cleanName(record.name, type),", "      name: type,")),
+ ('reticulum-source-001', 'Swap the spreading factor and the coding rate', lambda: rep("spreadingFactor: sf, codingRate: cr", "spreadingFactor: cr, codingRate: sf")),
+ ('reticulum-source-001', 'Swap the frequency and the bandwidth', lambda: rep("{ frequency, bandwidth, spreadingFactor: sf, codingRate: cr }", "{ frequency: bandwidth, bandwidth: frequency, spreadingFactor: sf, codingRate: cr }")),
+ ('reticulum-source-009', 'Ask the listener before the method is refused', lambda: rep("    if (req.method !== 'GET') return json(405, { error: 'method_not_allowed' });\n", "    if (req.method !== 'GET') {\n      await load();\n      return json(405, { error: 'method_not_allowed' });\n    }\n")),
+ ('reticulum-source-010', 'Ask the listener before the path is refused', lambda: rep("    if (req.url !== '/' && req.url !== '')\n      return json(400, { error: 'invalid_reticulum_query' });\n", "    if (req.url !== '/' && req.url !== '') {\n      await load();\n      return json(400, { error: 'invalid_reticulum_query' });\n    }\n")),
 ]
 cmd = 'node --test --test-reporter=spec src/data/reticulumProxy.test.mjs'
 out, log = [], []
