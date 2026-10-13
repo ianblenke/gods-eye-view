@@ -94,7 +94,7 @@ Origin: spec-first
 - **THEN** the service `gods-eye-view` has `RETICULUM_LISTENER` with the value "${GEV_RETICULUM_LISTENER:-reticulum.local:8081}"
 - **AND** the service `gods-eye-view` has no `networks` and no `network_mode`
 - **AND** the shared address rule accepts "reticulum.local:8081" and "10.213.77.10:8081"
-- **AND** a URL parser reads the same host from the URL that `tapUrl` builds for each of the two addresses
+- **AND** for each of the two addresses, a URL parser reads the host of that address from the URL that `tapUrl` builds
 - **AND** the shared address rule refuses "reticulum:8081"
 
 ### Requirement: Makefile targets
