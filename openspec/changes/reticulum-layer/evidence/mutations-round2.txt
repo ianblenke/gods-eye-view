@@ -7,3 +7,5 @@ reticulum-layer-017 | Name another layer in the source contract | failing: [reti
 reticulum-layer-017 | Name another method in the source contract | failing: [reticulum-layer-017]
 reticulum-layer-017 | Change the text of the error for a missing source | failing: [reticulum-layer-017]
 reticulum-layer-014 | Clear the labels on an error | failing: [reticulum-layer-014]
+reticulum-layer-005 | Copy every field of the record | failing: [reticulum-layer-005]
+reticulum-layer-005 | Copy every field of the radio | failing: [reticulum-layer-005]
