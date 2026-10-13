@@ -1,0 +1,139 @@
+## ADDED Requirements
+
+### Requirement: Layer record
+The layer `reticulum` MUST have the name "Reticulum Network", the icon "📡", the source name "Reticulum discovery" and the update interval 300000 ms. The layer MUST make no request until the first update.
+Origin: spec-first
+
+#### Scenario: Describe the layer `reticulum-layer-001`
+- **WHEN** a test creates the layer with a fake source and a fake overlay host
+- **THEN** the `id` is "reticulum", the `name` is "Reticulum Network" and the `icon` is "📡"
+- **AND** the `source` is "Reticulum discovery" and the `updateInterval` is 300000
+
+#### Scenario: Make no request before the first update `reticulum-layer-002`
+- **WHEN** a test calls `init` and then `enable` on the layer
+- **THEN** the source gets no call
+- **AND** the data source is hidden after `init` and shown after `enable`
+- **AND** the overlay source "reticulum" is hidden after `init` and visible after `enable`
+
+### Requirement: Browser source
+The source MUST read the route `/api/reticulum` of the same origin with the abort signal of the caller. It MUST refuse an answer that is not a Reticulum document of the schema version 1.
+Origin: spec-first
+
+#### Scenario: Read the route `reticulum-layer-003`
+- **WHEN** `getSnapshot` runs with a signal and the fetch answers a valid document
+- **THEN** the fetch gets the path "/api/reticulum" and the same signal
+- **AND** the result has the lists `interfaces` and the object `meta`
+
+#### Scenario: Refuse a bad answer `reticulum-layer-004`
+- **WHEN** the fetch answers with the status 503, or with text that is not JSON, or with a document that has no `schemaVersion` 1
+- **THEN** `getSnapshot` throws, and the message for the status 503 is "Reticulum HTTP 503"
+- **AND** it throws "Invalid Reticulum snapshot" for a document whose `interfaces` is not a list
+- **AND** it throws for a body of more than 8 MiB
+- **AND** it throws when the signal is already aborted, and then it sends no request
+
+### Requirement: Interface records
+The normalizer MUST keep only the interfaces that meet the rules, MUST clean the names, and MUST keep at most 5000 interfaces.
+Origin: spec-first
+
+#### Scenario: Keep the fields of a valid interface `reticulum-layer-005`
+- **WHEN** the normalizer reads a document with one valid RNode interface
+- **THEN** the record has exactly the fields `id`, `type`, `name`, `latitude`, `longitude`, `heightM`, `hops`, `lastHeard`, `status` and `radio`
+- **AND** the values are the values of the input, with the position and the radio numbers unchanged
+- **AND** `radio` is null when the input has no radio object, and `heightM` and `hops` are null when the input has no number
+
+#### Scenario: Drop the interfaces that are not valid `reticulum-layer-006`
+- **WHEN** the normalizer reads interfaces whose `id` is not 16 lowercase hexadecimal characters, or whose `type` is not 1 to 40 lowercase letters or digits
+- **AND** the list also holds interfaces whose `status` is not "available", "unknown" or "stale"
+- **AND** the list also holds interfaces whose position is not valid, or whose `lastHeard` is not a date
+- **THEN** the result lists none of these interfaces
+- **AND** a second interface with the same `id` is dropped
+- **AND** the result holds at most 5000 interfaces, in the order of the input
+
+#### Scenario: Clean the names `reticulum-layer-007`
+- **WHEN** a name holds control characters, characters that change the text direction, zero width characters, or the characters `<` and `>`
+- **THEN** the cleaned name has none of these characters, one space between words, and at most 40 characters
+- **AND** a name that is empty after the cleaning, or is not text, becomes "Unnamed" and the type, for example "Unnamed rnode"
+- **AND** the characters `&`, quotation marks and letters of any script stay
+
+#### Scenario: Read the meta of the document `reticulum-layer-008`
+- **WHEN** the normalizer reads a document
+- **THEN** `meta.unavailable` and `meta.stale` are true only when the document says true
+- **AND** `meta.reason` is the text of the document with at most 120 characters, or null
+- **AND** `meta.fetchedAt` is a valid date text or null, and `meta.total` is a whole number that is not negative
+
+### Requirement: Display model
+The model MUST give each interface a color, a size and an alpha from its type and status. It MUST choose at most 48 labels.
+Origin: spec-first
+
+#### Scenario: Style the points by type and status `reticulum-layer-009`
+- **WHEN** a test asks the model for the style of each type and each status
+- **THEN** the colors are "#2dd4bf" for rnode, "#fb923c" for backbone, "#facc15" for tcpserver and "#fde047" for tcpclient
+- **AND** the colors are "#a78bfa" for i2p, "#60a5fa" for kiss and "#f472b6" for weave
+- **AND** any other type has the color "#9ca3af"
+- **AND** the status "available" has the alpha 1 and the size 9, "unknown" has 0.6 and 7, and "stale" has 0.35 and 5
+
+#### Scenario: Choose the labels `reticulum-layer-010`
+- **WHEN** the model chooses the labels of a list of interfaces
+- **THEN** it keeps at most 48 interfaces, ordered by status ("available", then "unknown", then "stale"), then by the newest `lastHeard`, then by `id`
+- **AND** each label title is the name cut to 24 characters, and the accent is the color of the type
+- **AND** the priority of the first label is 100000, and each next label has a priority that is 1 less
+
+### Requirement: Layer display
+The layer MUST show the points and the labels of the last good list. It MUST poll only while it is enabled.
+Origin: spec-first
+
+#### Scenario: Show the points and the labels `reticulum-layer-011`
+- **WHEN** the layer is enabled and `update` reads a list of 3 positioned interfaces
+- **THEN** the data source has 3 entities with the ids "reticulum:" and the `id` of the interface
+- **AND** each entity has a point on the ground at the position of the interface
+- **AND** the point has the color, the alpha and the size of the model
+- **AND** the overlay host gets the entries of the labels for the source "reticulum"
+- **AND** that call has the cohort limit 48, the collision capacity 24 and `moving` false
+- **AND** the stats have `count` 3, a `lastUpdate` and `error` null
+
+#### Scenario: Report an unavailable listener `reticulum-layer-012`
+- **WHEN** `update` reads a document with `meta.unavailable` true and the reason "Reticulum listener not configured"
+- **THEN** the data source has no entity and the overlay source has no entry
+- **AND** the stats have `count` 0, `status` "idle", `statusMessage` "Reticulum listener not configured" and `error` null
+
+#### Scenario: Keep the points of a stale list `reticulum-layer-013`
+- **WHEN** `update` reads a document with `meta.stale` true and 2 positioned interfaces
+- **THEN** the data source has 2 entities and the stats have `count` 2 and `error` null
+
+#### Scenario: Keep the last points when a request fails `reticulum-layer-014`
+- **WHEN** `update` runs after a good update and the source rejects with the message "Reticulum HTTP 503"
+- **THEN** the data source keeps its entities and `update` returns false
+- **AND** the stats have `error` "Reticulum HTTP 503", and the text "Reticulum source unavailable" when the error has no message
+
+#### Scenario: Poll only while enabled `reticulum-layer-015`
+- **WHEN** `update` runs while the layer is not enabled
+- **THEN** it returns false and the source gets no call
+- **AND** `disable` aborts the request in flight, and an answer that arrives afterwards changes nothing
+- **AND** a new `update` aborts the request of the update before it
+
+#### Scenario: Release everything on destroy `reticulum-layer-016`
+- **WHEN** a test calls `destroy` on a layer that shows points
+- **THEN** the viewer has no data source of the layer and the overlay source has no entry
+- **AND** the stats have `count` 0 and `lastUpdate` null
+
+### Requirement: Registration
+The application MUST register the layer in the catalog, the share link, the layer panel and the credits, and MUST keep it out of voice.
+Origin: spec-first
+
+#### Scenario: Register the layer and its share token `reticulum-layer-017`
+- **WHEN** a test builds the catalog from the reference sources
+- **THEN** the catalog has the layer "reticulum" and the reference sources have the key "reticulum" with a function `getSnapshot`
+- **AND** the share link registry has the entry "reticulum" with the token "4" and the disposition "enabled-only"
+- **AND** the share link "v=2&l=4" decodes to the enabled layer "reticulum"
+
+#### Scenario: Put the layer in the Infrastructure group `reticulum-layer-018`
+- **WHEN** a test reads the groups of the layer panel
+- **THEN** the group "Infrastructure" ends with the layer "reticulum", after "local-dams"
+
+#### Scenario: Keep the layer out of voice `reticulum-layer-019`
+- **WHEN** a test reads the list `VOICE_OFF_LAYERS`
+- **THEN** the entry "reticulum" has the text "The Reticulum layer has no voice tools."
+
+#### Scenario: Credit the data `reticulum-layer-020`
+- **WHEN** a test reads the list `DATA_CREDITS`
+- **THEN** the entry with the key "reticulum" names the Reticulum network and links to "https://reticulum.network/"
