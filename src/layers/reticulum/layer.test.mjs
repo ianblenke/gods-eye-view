@@ -217,6 +217,42 @@ test('[reticulum-layer-011] shows the points on the ground and the labels, and f
   assert.equal(stats.error, null);
   assert.equal(stats.status, undefined);
   assert.equal(stats.statusMessage, undefined);
+
+  const crowded = [];
+  for (let n = 1; n <= 60; n += 1)
+    crowded.push(
+      item(n, {
+        status: ['unknown', 'stale', 'available'][n % 3],
+        latitude: n,
+        longitude: n,
+      }),
+    );
+  const many = enabled(async () => snapshot(crowded.slice().reverse()));
+  assert.equal(await many.layer.update(many.viewer), true);
+  assert.equal(entitiesOf(many).length, 60);
+  const labels = many.overlay.entries.get(ID);
+  assert.equal(labels.length, 48);
+  assert.equal(labels[0].id, hex(2));
+  assert.equal(labels[0].priority, 100000);
+  assert.equal(labels[1].priority, 99999);
+  assert.equal(labels[47].priority, 99953);
+  assert.deepEqual(
+    labels.slice(0, 20).map((entry) => entry.id),
+    [
+      2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44, 47, 50, 53, 56,
+      59,
+    ].map(hex),
+  );
+  for (const entry of labels) {
+    const n = Number.parseInt(entry.id, 16);
+    assert.ok(
+      Cesium.Cartesian3.equals(
+        entry.position,
+        Cesium.Cartesian3.fromDegrees(n, n),
+      ),
+      entry.id,
+    );
+  }
 });
 
 test('[reticulum-layer-012] shows no point for an unavailable listener and gives the reason as guidance', async () => {
@@ -290,8 +326,12 @@ test('[reticulum-layer-015] polls only while enabled, aborts on disable and on a
 
   const done = enabled();
   assert.equal(await done.layer.update(done.viewer), true);
+  assert.equal(done.overlay.entries.has(ID), true);
   done.layer.disable(done.viewer);
   assert.equal(done.calls[0].signal.aborted, false);
+  assert.equal(done.overlay.entries.has(ID), false);
+  assert.equal(done.overlay.visible.get(ID), false);
+  assert.equal(done.added[0].show, false);
 
   const waits = [];
   const h = enabled(() => {
@@ -365,6 +405,8 @@ test('[reticulum-layer-016] releases everything on destroy, aborts the request i
     lastUpdate: null,
     error: null,
   });
+  assert.equal(await k.layer.update(k.viewer), false);
+  assert.equal(k.calls.length, 2);
 
   const waits = [];
   const g = enabled(() => {

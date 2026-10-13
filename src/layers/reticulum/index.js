@@ -112,7 +112,7 @@ export function createReticulumLayer({ source, overlayHost } = {}) {
         const { interfaces, meta } = await source.getSnapshot({
           signal: request.signal,
         });
-        if (!request.signal.aborted && _request === request) {
+        if (_request === request) {
           if (meta.unavailable) {
             clearInterfaces();
             _count = 0;
@@ -127,7 +127,7 @@ export function createReticulumLayer({ source, overlayHost } = {}) {
           updated = true;
         }
       } catch (error) {
-        if (!request.signal.aborted && _request === request)
+        if (_request === request)
           _lastError = error?.message || 'Reticulum source unavailable';
       } finally {
         if (_request === request) _request = null;

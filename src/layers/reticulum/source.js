@@ -17,7 +17,6 @@ export function createReticulumSource({
         MAX_RESPONSE_BYTES,
         signal,
       );
-      signal?.throwIfAborted();
       const snapshot = normalizeReticulumSnapshot(payload);
       if (!snapshot) throw new Error('Invalid Reticulum snapshot');
       return snapshot;

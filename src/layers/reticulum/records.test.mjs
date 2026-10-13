@@ -100,6 +100,8 @@ test('[reticulum-layer-006] drops the interfaces that are not valid, repeated id
     ['id in capitals', { id: 'AB12CD34EF56AB12' }],
     ['id too short', { id: 'ab12' }],
     ['id too long', { id: 'ab12cd34ef56ab123' }],
+    ['id one character short', { id: 'ab12cd34ef56ab1' }],
+    ['id as a number', { id: 1234567890123456 }],
     ['id not text', { id: 12345678 }],
     ['id missing', { id: undefined }],
     ['type in capitals', { type: 'RNode' }],
@@ -117,6 +119,7 @@ test('[reticulum-layer-006] drops the interfaces that are not valid, repeated id
     ['latitude not a number', { latitude: Number.NaN }],
     ['latitude as text', { latitude: '12.3' }],
     ['longitude missing', { longitude: undefined }],
+    ['longitude as text', { longitude: '1.2' }],
     ['position zero and zero', { latitude: 0, longitude: 0 }],
     ['lastHeard not a date', { lastHeard: 'soon' }],
     ['lastHeard empty', { lastHeard: '' }],
@@ -138,9 +141,15 @@ test('[reticulum-layer-006] drops the interfaces that are not valid, repeated id
       iface({ id: hex(4), latitude: 5, longitude: 0 }),
       iface({ id: hex(5), type: 'x'.repeat(40) }),
       iface({ id: hex(6), type: 'i2p2' }),
+      iface({ id: hex(7), status: 'unknown' }),
+      iface({ id: hex(8), status: 'stale' }),
     ]),
   );
-  assert.equal(edges.interfaces.length, 6);
+  assert.equal(edges.interfaces.length, 8);
+  assert.deepEqual(
+    edges.interfaces.slice(-2).map((entry) => entry.status),
+    ['unknown', 'stale'],
+  );
   const repeated = normalizeReticulumSnapshot(
     doc([
       iface({ id: hex(1), name: 'First' }),
@@ -186,8 +195,8 @@ test('[reticulum-layer-007] cleans the names', () => {
   ])
     assert.equal(nameOf(`a${cp(code)}b`), 'ab', `0x${code.toString(16)}`);
   for (const code of [
-    0x21, 0x3d, 0x3f, 0x7e, 0xa1, 0x61b, 0x61d, 0x2010, 0x2027, 0x2065, 0x206a,
-    0xfefe, 0xff21,
+    0x21, 0x3b, 0x3d, 0x3f, 0x40, 0x7e, 0xa1, 0x61b, 0x61d, 0x2010, 0x2027,
+    0x2065, 0x206a, 0xfefe, 0xff21,
   ])
     assert.equal(
       nameOf(`a${cp(code)}b`),
@@ -201,6 +210,7 @@ test('[reticulum-layer-007] cleans the names', () => {
   assert.equal(nameOf('x'.repeat(50)), 'x'.repeat(40));
   assert.equal(nameOf('x'.repeat(40)), 'x'.repeat(40));
   assert.equal(nameOf('x'.repeat(39) + ' yyy'), 'x'.repeat(39));
+  assert.equal(nameOf('   ' + 'x'.repeat(45)), 'x'.repeat(40));
   assert.equal(nameOf(cp(0x1f600).repeat(45)), cp(0x1f600).repeat(40));
   const mixed = `A&B "q" ${cp(0x65e5, 0x672c, 0x8a9e)} ${cp(0x3a9)}mega`;
   assert.equal(nameOf(mixed), mixed);
