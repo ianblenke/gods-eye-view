@@ -77,10 +77,8 @@ test('[reticulum-source-001] keeps the allowed fields of a discovered RNode and 
   assert.equal(backbone.hops, null);
   assert.equal(backbone.heightM, null);
   for (const missing of ['frequency', 'bandwidth', 'sf', 'cr']) {
-    const record = normalizeInterfaces(
-      [raw({ [missing]: undefined })],
-      NOW,
-    ).interfaces[0];
+    const record = normalizeInterfaces([raw({ [missing]: undefined })], NOW)
+      .interfaces[0];
     assert.equal(record.radio, null, missing);
   }
   assert.equal(
@@ -112,7 +110,18 @@ test('[reticulum-source-001] keeps the allowed fields of a discovered RNode and 
     normalizeInterfaces([raw({ last_heard: 'soon' })], NOW).interfaces.length,
     0,
   );
-  assert.equal(normalizeInterfaces(['text', null, 7], NOW).interfaces.length, 0);
+  assert.equal(
+    normalizeInterfaces([raw({ last_heard: 1e20 })], NOW).interfaces.length,
+    0,
+  );
+  assert.equal(
+    normalizeInterfaces([raw({ type: 'Interface' })], NOW).interfaces.length,
+    0,
+  );
+  assert.equal(
+    normalizeInterfaces(['text', null, 7], NOW).interfaces.length,
+    0,
+  );
 });
 
 test('[reticulum-source-002] drops the address, key and contact fields', () => {
@@ -429,9 +438,7 @@ test('[reticulum-source-010] serves the last good document for 2 hours when the 
     const calls = [];
     const fetchImpl = (url, options) => {
       calls.push(url);
-      return mode === 'good'
-        ? Response.json(GOOD)
-        : failing(url, options);
+      return mode === 'good' ? Response.json(GOOD) : failing(url, options);
     };
     const { request, clock } = install({ fetchImpl, ...extra });
     const first = await request('/');
@@ -473,7 +480,9 @@ test('[reticulum-source-010] serves the last good document for 2 hours when the 
   const { request } = install({
     fetchImpl: async () => {
       calls += 1;
-      return healthy ? Response.json(GOOD) : new Response('no', { status: 500 });
+      return healthy
+        ? Response.json(GOOD)
+        : new Response('no', { status: 500 });
     },
   });
   assert.equal((await request('/')).body.unavailable, true);
