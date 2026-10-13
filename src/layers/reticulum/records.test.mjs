@@ -161,21 +161,50 @@ test('[reticulum-layer-006] drops the interfaces that are not valid, repeated id
   assert.equal(exact.interfaces.length, 5000);
 });
 
+const cp = (...codes) => String.fromCodePoint(...codes);
+
 test('[reticulum-layer-007] cleans the names', () => {
-  assert.equal(nameOf('A\u0000B\u001fC\u007fD\u0085E\u009fF'), 'ABCDEF');
-  assert.equal(nameOf('a‮b‪c⁦d⁩e‎f‏g'), 'abcdefg');
-  assert.equal(nameOf('a​b‍c⁠d﻿e؜f g h'), 'abcdefgh');
+  assert.equal(
+    nameOf(`A${cp(0x00)}B${cp(0x1f)}C${cp(0x7f)}D${cp(0x85)}E${cp(0x9f)}F`),
+    'ABCDEF',
+  );
+  assert.equal(
+    nameOf(
+      `a${cp(0x202e)}b${cp(0x202a)}c${cp(0x2066)}d${cp(0x2069)}e${cp(0x200e)}f${cp(0x200f)}g`,
+    ),
+    'abcdefg',
+  );
+  assert.equal(
+    nameOf(
+      `a${cp(0x200b)}b${cp(0x200d)}c${cp(0x2060)}d${cp(0xfeff)}e${cp(0x61c)}f${cp(0x2028)}g${cp(0x2029)}h`,
+    ),
+    'abcdefgh',
+  );
+  for (const code of [
+    0x00, 0x1f, 0x3c, 0x3e, 0x7f, 0x85, 0x9f, 0x61c, 0x200b, 0x200d, 0x200f,
+    0x2028, 0x202a, 0x202c, 0x202e, 0x2060, 0x2064, 0x2066, 0x2069, 0xfeff,
+  ])
+    assert.equal(nameOf(`a${cp(code)}b`), 'ab', `0x${code.toString(16)}`);
+  for (const code of [
+    0x21, 0x3d, 0x3f, 0x7e, 0xa1, 0x61b, 0x61d, 0x2010, 0x2027, 0x2065, 0x206a,
+    0xfefe, 0xff21,
+  ])
+    assert.equal(
+      nameOf(`a${cp(code)}b`),
+      `a${cp(code)}b`,
+      `0x${code.toString(16)}`,
+    );
+  assert.equal(nameOf(`a${cp(0x20)}b`), 'a b');
+  assert.equal(nameOf(`a${cp(0xa0, 0xa0, 0x3000)}b`), 'a b');
   assert.equal(nameOf('<b>x</b>'), 'bx/b');
-  assert.equal(nameOf('  a   b\t c  '), 'a b c');
+  assert.equal(nameOf('  a   b c  '), 'a b c');
   assert.equal(nameOf('x'.repeat(50)), 'x'.repeat(40));
   assert.equal(nameOf('x'.repeat(40)), 'x'.repeat(40));
   assert.equal(nameOf('x'.repeat(39) + ' yyy'), 'x'.repeat(39));
-  assert.equal(nameOf('\u{1f600}'.repeat(45)), '\u{1f600}'.repeat(40));
-  assert.equal(
-    nameOf('A&B "q" 日本語 Ωmega'),
-    'A&B "q" 日本語 Ωmega',
-  );
-  assert.equal(nameOf('​<>'), 'Unnamed rnode');
+  assert.equal(nameOf(cp(0x1f600).repeat(45)), cp(0x1f600).repeat(40));
+  const mixed = `A&B "q" ${cp(0x65e5, 0x672c, 0x8a9e)} ${cp(0x3a9)}mega`;
+  assert.equal(nameOf(mixed), mixed);
+  assert.equal(nameOf(`${cp(0x200b)}<>`), 'Unnamed rnode');
   assert.equal(nameOf(''), 'Unnamed rnode');
   assert.equal(nameOf('   '), 'Unnamed rnode');
   assert.equal(nameOf(42), 'Unnamed rnode');
@@ -199,11 +228,14 @@ test('[reticulum-layer-008] reads the meta of the document', () => {
   assert.equal(meta({ unavailable: 1 }).unavailable, false);
   assert.equal(meta({ stale: true }).stale, true);
   assert.equal(meta({ stale: 'true' }).stale, false);
-  assert.equal(meta({ reason: '  Not   ready‮ ' }).reason, 'Not ready');
+  assert.equal(
+    meta({ reason: `  Not   ready${cp(0x202e)} ` }).reason,
+    'Not ready',
+  );
   assert.equal(meta({ reason: 'r'.repeat(130) }).reason, 'r'.repeat(120));
   assert.equal(meta({ reason: 'r'.repeat(120) }).reason, 'r'.repeat(120));
   assert.equal(meta({ reason: '' }).reason, null);
-  assert.equal(meta({ reason: '​' }).reason, null);
+  assert.equal(meta({ reason: cp(0x200b) }).reason, null);
   assert.equal(meta({ reason: 5 }).reason, null);
   assert.equal(
     meta({ unavailable: true, reason: null }).reason,

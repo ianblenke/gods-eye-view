@@ -50,6 +50,23 @@ test('[reticulum-layer-003] reads the route with the signal of the caller and gi
   assert.equal(result.meta.total, 1);
   const noSignal = await source(() => Response.json(GOOD)).getSnapshot();
   assert.equal(noSignal.interfaces.length, 1);
+  const original = globalThis.fetch;
+  const global = [];
+  globalThis.fetch = async (url, options) => {
+    global.push({ url, options });
+    return Response.json(GOOD);
+  };
+  try {
+    const fromGlobal = await createReticulumSource().getSnapshot({
+      signal: controller.signal,
+    });
+    assert.equal(fromGlobal.interfaces.length, 1);
+  } finally {
+    globalThis.fetch = original;
+  }
+  assert.equal(global.length, 1);
+  assert.equal(global[0].url, '/api/reticulum');
+  assert.equal(global[0].options.signal, controller.signal);
 });
 
 test('[reticulum-layer-004] refuses a bad answer', async () => {
