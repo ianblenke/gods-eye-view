@@ -92,8 +92,8 @@ faults = [
  ('reticulum-source-008', 'Use another route path in the preview server', lambda: rep("middlewares.use('/api/reticulum', handler);\n    },\n  };", "middlewares.use('/api/reticulum2', handler);\n    },\n  };")),
  ('reticulum-source-009', 'Allow any method', lambda: rep("    if (req.method !== 'GET') return json(405, { error: 'method_not_allowed' });\n", "")),
  ('reticulum-source-010', 'Allow a query', lambda: rep("    if (req.url !== '/' && req.url !== '')\n      return json(400, { error: 'invalid_reticulum_query' });\n", "")),
- ('reticulum-source-010', 'Refuse the empty path', lambda: rep("req.url !== '/' && req.url !== ''", "req.url !== '/'")),
- ('reticulum-source-010', 'Refuse the slash path', lambda: rep("req.url !== '/' && req.url !== ''", "req.url !== ''")),
+ ('reticulum-source-008', 'Refuse the empty path', lambda: rep("req.url !== '/' && req.url !== ''", "req.url !== '/'")),
+ ('reticulum-source-008', 'Refuse the slash path', lambda: rep("req.url !== '/' && req.url !== ''", "req.url !== ''")),
  # 009 source rules
  ('reticulum-source-011', 'Treat a blank setting as not allowed', lambda: rep("String(env.RETICULUM_LISTENER ?? '').trim()", "String(env.RETICULUM_LISTENER ?? '')")),
  ('reticulum-source-011', 'Read a missing setting as the text undefined', lambda: rep("String(env.RETICULUM_LISTENER ?? '').trim()", "String(env.RETICULUM_LISTENER).trim()")),
@@ -142,6 +142,10 @@ faults = [
  ('reticulum-source-001', 'Swap the frequency and the bandwidth', lambda: rep("{ frequency, bandwidth, spreadingFactor: sf, codingRate: cr }", "{ frequency: bandwidth, bandwidth: frequency, spreadingFactor: sf, codingRate: cr }")),
  ('reticulum-source-009', 'Ask the listener before the method is refused', lambda: rep("    if (req.method !== 'GET') return json(405, { error: 'method_not_allowed' });\n", "    if (req.method !== 'GET') {\n      await load();\n      return json(405, { error: 'method_not_allowed' });\n    }\n")),
  ('reticulum-source-010', 'Ask the listener before the path is refused', lambda: rep("    if (req.url !== '/' && req.url !== '')\n      return json(400, { error: 'invalid_reticulum_query' });\n", "    if (req.url !== '/' && req.url !== '') {\n      await load();\n      return json(400, { error: 'invalid_reticulum_query' });\n    }\n")),
+
+ # added in review round 1
+ ('reticulum-source-012', 'Clear the timer when the headers arrive', lambda: rep("      if (!response.ok) throw new Error('listener_status');\n", "      clearTimer(timer);\n      if (!response.ok) throw new Error('listener_status');\n")),
+ ('reticulum-source-011', 'Answer 503 when the listener is unavailable', lambda: rep("    return json(200, await load());", "    const document = await load();\n    return json(document.unavailable ? 503 : 200, document);")),
 ]
 cmd = 'node --test --test-reporter=spec src/data/reticulumProxy.test.mjs'
 out, log = [], []

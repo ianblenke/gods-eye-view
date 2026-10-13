@@ -77,8 +77,8 @@ reticulum-source-008 | Use another route path | failing: [reticulum-source-008],
 reticulum-source-008 | Use another route path in the preview server | failing: [reticulum-source-008]
 reticulum-source-009 | Allow any method | failing: [reticulum-source-009]
 reticulum-source-010 | Allow a query | failing: [reticulum-source-010]
-reticulum-source-010 | Refuse the empty path | failing: [reticulum-source-008]
-reticulum-source-010 | Refuse the slash path | failing: [reticulum-source-008], [reticulum-source-011], [reticulum-source-012], [reticulum-source-013], [reticulum-source-014]
+reticulum-source-008 | Refuse the empty path | failing: [reticulum-source-008]
+reticulum-source-008 | Refuse the slash path | failing: [reticulum-source-008], [reticulum-source-011], [reticulum-source-012], [reticulum-source-013], [reticulum-source-014]
 reticulum-source-011 | Treat a blank setting as not allowed | failing: [reticulum-source-011]
 reticulum-source-011 | Read a missing setting as the text undefined | failing: [reticulum-source-011]
 reticulum-source-011 | Use another variable name | failing: [reticulum-source-008], [reticulum-source-011], [reticulum-source-012], [reticulum-source-013], [reticulum-source-014]
@@ -120,4 +120,6 @@ reticulum-source-001 | Swap the spreading factor and the coding rate | failing: 
 reticulum-source-001 | Swap the frequency and the bandwidth | failing: [reticulum-source-001]
 reticulum-source-009 | Ask the listener before the method is refused | failing: [reticulum-source-009]
 reticulum-source-010 | Ask the listener before the path is refused | failing: [reticulum-source-010]
+reticulum-source-012 | Clear the timer when the headers arrive | failing: [reticulum-source-008], [reticulum-source-012]
+reticulum-source-011 | Answer 503 when the listener is unavailable | failing: [reticulum-source-011]
 Note: A fault that removes the check of the time limit of the request ("Never stop the request") made the first version of the tests hang. The test of reticulum-source-012 now fires the injected timer and checks the abort signal before it waits, so that fault fails the test and does not hang it.
