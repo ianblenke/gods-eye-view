@@ -1,0 +1,43 @@
+#!/bin/bash
+# Evidence of the real run of the listener (change reticulum-listener).
+# usage: capture.sh <output file>   (the listener of the project gevrns must run)
+CLONE=/home/ianblenke/docker/gev-work/reticulum-listener
+TOOLS=/home/ianblenke/docker/gev-tools/reticulum-listener
+C="docker compose -p gevrns -f compose.yaml -f compose.reticulum.yaml"
+cd $CLONE || exit 9
+section() { echo; echo "## $*"; }
+count() { docker exec gevrns-reticulum-1 python -c "import urllib.request, json; print(len(json.loads(urllib.request.urlopen('http://127.0.0.1:8081/interfaces.json').read())))" 2>&1 | tail -1; }
+{
+echo "Real run of the listener, $(date -u +%F\ %H:%M) UTC, commit $(git rev-parse HEAD)."
+echo "Project name gevrns (not the project of the app). The app container was not touched."
+section "docker compose version"; docker compose version
+section "node version on the host, and in the image of the app"; node -v; docker run --rm --entrypoint node gods-eye-view:local -v
+section "image of the listener"; docker images gods-eye-view-reticulum:local --format '{{.Repository}}:{{.Tag}} {{.Size}}'
+section "packages in the container"; docker exec gevrns-reticulum-1 python -c "import importlib.metadata as m; print('rns', m.version('rns'), 'lxmf', m.version('lxmf')); import sys; print('python', sys.version.split()[0])"
+section "containers of the project"; docker ps --filter label=com.docker.compose.project=gevrns --format '{{.Names}} | {{.Status}} | ports: {{.Ports}}'
+section "settings of the listener container"
+docker inspect gevrns-reticulum-1 --format 'ReadonlyRootfs={{.HostConfig.ReadonlyRootfs}} CapDrop={{.HostConfig.CapDrop}} SecurityOpt={{.HostConfig.SecurityOpt}} Init={{.HostConfig.Init}} Memory={{.HostConfig.Memory}} PidsLimit={{.HostConfig.PidsLimit}} User={{.Config.User}} PortBindings={{.HostConfig.PortBindings}} Restart={{.HostConfig.RestartPolicy.Name}}'
+docker inspect gevrns-reticulum-1 --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}} {{$v.IPAddress}} aliases={{$v.Aliases}}{{"\n"}}{{end}}'
+docker inspect gevrns-reticulum-1 --format 'Mounts: {{range .Mounts}}{{.Type}} {{.Name}} -> {{.Destination}} rw={{.RW}}; {{end}}'
+section "log lines by level since the start"; docker logs gevrns-reticulum-1 2>&1 | sed -E 's/^\[[^]]*\] \[([A-Za-z]+) *\].*/\1/' | sort | uniq -c
+section "log lines with Error, Traceback or Critical (count)"; docker logs gevrns-reticulum-1 2>&1 | grep -acE "Error|Traceback|Critical"
+section "config of the volume equals the default config"; docker exec gevrns-reticulum-1 sh -c 'cmp /data/rns/config /opt/reticulum/config && echo "equal"'
+section "probe from the host (the real provider of change 1 against the fixed address)"
+node $TOOLS/probe.mjs $CLONE 10.213.77.10:8081
+section "probe from a container on the default network (the real provider against the alias)"
+docker run --rm --network gevrns_default --entrypoint node -v $CLONE:/work:ro -v $TOOLS:/tools:ro gods-eye-view:local /tools/probe.mjs /work reticulum.local:8081
+section "port 8081 from the host loopback (nothing is published)"
+curl -s -o /dev/null -w "curl http://127.0.0.1:8081/ -> %{http_code} (000 means no connection)\n" --max-time 3 http://127.0.0.1:8081/interfaces.json
+section "restart test: edit the config in the volume, restart, look again"
+before=$(count); echo "records before the restart: $before"
+docker exec gevrns-reticulum-1 sh -c 'echo "# edited in the volume" >> /data/rns/config'
+$C restart reticulum 2>&1 | tail -2
+for i in $(seq 1 20); do sleep 3; a=$(count); case "$a" in ''|*[!0-9]*) ;; *) break;; esac; done
+echo "records after the restart: $a"
+docker exec gevrns-reticulum-1 sh -c 'tail -1 /data/rns/config; cmp -s /data/rns/config /opt/reticulum/config && echo "config was overwritten with the default" || echo "config was kept (it differs from the default)"'
+section "stop with the project command, keep the volume"
+$C down 2>&1 | tail -5
+docker volume ls --format '{{.Name}}' | grep gevrns
+echo "(the volume is still there)"
+} > "$1" 2>&1
+echo CAPTURE_DONE
