@@ -1,6 +1,6 @@
 Run of the 221 named faults, 2026-10-13, Node v24.21.0 in the image gods-eye-view:local.
 The run was on the code and test files of the commit 078b9ff8. Each fault changed one or two files of that commit. The script restores the files and checks that each one equals the original.
-The commit d58140d7 adds three assertions to the tests 006 and 008. The 221 faults did not run again on it. Other later commits change evidence files, documents and trace files only.
+The commit d58140d7 adds one case to the test 006 and two assertions to the test 008. The 221 faults did not run again on it. Other later commits change evidence files, documents and trace files only.
 Command for each fault: docker exec <container> sh -c "env -u NODE_ENV timeout 60 node --test --test-reporter=spec src/layers/reticulum/*.test.mjs" (one long-lived container with the clone mounted; a run that hangs is recorded as TIMEOUT). Baseline without a fault: 21 tests, 21 pass, 0 fail.
 Lines: fault | exit status | failing tests
 Keep a height that is not a number | exit 1 | failing tests: [reticulum-layer-005]
