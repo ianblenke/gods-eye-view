@@ -17,25 +17,19 @@ export function isLoopbackCommand(req) {
   const headers = req.headers;
   if (headers['content-type'] !== 'application/json') return false;
   if (hasProxySignals(headers)) return false;
-  if (!LOOPBACK_ADDRESSES.has(String(req.socket?.remoteAddress || '')))
-    return false;
+  if (!LOOPBACK_ADDRESSES.has(req.socket?.remoteAddress)) return false;
   const host = headers.host;
-  const origin = headers.origin;
-  if (typeof host !== 'string' || typeof origin !== 'string') return false;
+  if (typeof host !== 'string') return false;
   let parsed;
   try {
     parsed = new URL(`http://${host}`);
   } catch {
     return false;
   }
-  if (
-    parsed.host !== host.toLowerCase() ||
-    parsed.pathname !== '/' ||
-    parsed.username ||
-    parsed.password
-  )
-    return false;
-  const name = parsed.hostname.replace(/^\[|\]$/g, '').toLowerCase();
+  if (parsed.host !== host.toLowerCase()) return false;
+  const name = parsed.hostname.replace(/^\[|\]$/g, '');
   if (!LOOPBACK_HOSTS.has(name)) return false;
-  return origin === `${req.socket?.encrypted ? 'https' : 'http'}://${host}`;
+  return (
+    headers.origin === `${req.socket?.encrypted ? 'https' : 'http'}://${host}`
+  );
 }

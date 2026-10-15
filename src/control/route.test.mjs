@@ -297,7 +297,7 @@ const LOOPBACK_SOCKET = { remoteAddress: '127.0.0.1' };
 const post = (headers = {}, socket = LOOPBACK_SOCKET) => ({ headers: { host: 'localhost:5173', origin: 'http://localhost:5173', 'content-type': 'application/json', ...headers }, socket });
 
 test('[osh-control-028] Accept loopback hosts when the origin equals the host', () => {
-  for (const host of ['localhost:5173', '127.0.0.1:5173', '[::1]:5173', 'localhost']) assert.equal(isSameOriginCommand(post({ host, origin: `http://${host}` })), true, host);
+  for (const host of ['localhost:5173', '127.0.0.1:5173', '[::1]:5173', 'localhost', 'LOCALHOST:5173']) assert.equal(isSameOriginCommand(post({ host, origin: `http://${host}` })), true, host);
   assert.equal(isSameOriginCommand(post({ origin: 'https://localhost:5173' }, { encrypted: true, remoteAddress: '127.0.0.1' })), true);
 });
 
