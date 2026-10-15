@@ -37,8 +37,12 @@ The tests use fake sources and fake viewers. No test and no run sends a request 
 - Known limit `box-size`: The box is fixed at about 4 km², snapped to a grid of 0.005 degrees. The person cannot choose another size or pick another place than the view centre.
 - Known limit `no-date-filter`: The request has no date. The frames can be old, and the point style shows their age.
 - Known limit `points-in-memory`: The points live in memory only. They are gone when someone disables the layer or reloads the page, and a new press can cost money. The server memory of change 1 answers an identical box for free for 10 minutes.
-- Known limit `press-message-first`: While the info line shows the message of a press, a status with no key does not replace it. The chip is still disabled. The message goes when someone disables and enables the layer.
+- Known limit `press-message-first`: While the info line shows the message of a press, a status with no key does not replace it. The chip is still disabled. The layer removes the message when someone disables and enables it.
 - Known limit `status-once`: The layer reads the status when it is enabled or updated. Someone who adds a key must restart the app.
 - Known limit `no-card`: A point has no card and no label. A person cannot read the time of one frame yet.
 - Known limit `local-only`: The route answers only the machine that runs the server, so the button works with `make up-codex` and fails with `make up`. The layer names this in its message.
 - Known limit `real-service`: No run used the real service. The shapes come from the public API description, as in change 1.
+- Known limit `stats-send-no-request-unpinned`: No test reads `getRowControls` or `getStats` and asserts that the read sends no request. The faults that press in these two methods fail tests through side effects.
+- Known limit `setparams-press-unpinned`: The test of `setLayerParams` for this layer never enables the layer, so it cannot show a press from a method `setParams`. The test [beemaps-frames-001] pins that the layer has no such method.
+- Known limit `info-text-with-answer`: A good press can come before a status with no key. The info text then starts with the text for no key and shows the answer after it. Scenario 006 says that the info text is the text for no key.
+- Known limit `abort-class-unpinned`: Two of the three cases of an abort in the source test do not assert the name of the error. These are the abort before the call and the abort while the body is read.

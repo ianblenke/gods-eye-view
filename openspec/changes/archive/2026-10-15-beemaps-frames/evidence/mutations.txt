@@ -1,7 +1,7 @@
 Named faults of beemaps-frames (AGENTS.md rule 13). One fault changes one part of one layer file or one registration file. The tests then run. The list below names the tests that failed.
 
-Code commit: 6dd67760e4a142a211459e21555296a4021cf121. Both runs below ran on the files of this commit.
-The files of the layer, other than test files, are the same as in the browser run. The command git diff --stat 6c6fb1bd 6dd67760 -- src server build ':(exclude)*.test.mjs' prints nothing.
+Code commit: 12691c10d472006e3c1d15bb6b883351ca35baf6. Both runs below ran on the files of this commit.
+The files of the layer, other than test files, are the same as in the browser run. The command git diff --stat 6c6fb1bd 12691c10 -- src server build ':(exclude)*.test.mjs' prints nothing.
 Runner: 3 scratch copies of the clone run in parallel. Each copy uses the same long-lived container of the image gods-eye-view:local, with the node_modules of the image. Each fault runs first against the tests of its own file. The command is: timeout 100 node --test --test-concurrency=4 --test-timeout=6000 --test-reporter=spec <test file of the faulted file>
 A fault in a file of the layer that leaves that test file green then runs against all seven test files. These files are src/layers/beemaps/*.test.mjs. A fault in a registration file runs against six test files. These are src/layers/beemaps/registration.test.mjs, src/data/layerState.test.mjs, src/data/layerStateTokenLedger.test.mjs, src/app/constructCatalog.test.mjs, src/app/sourceComposition.test.mjs and src/sources/reference.test.mjs.
 The second step can only add failing tests. So a fault that fails no test in both steps is a real survivor. A failure with no scenario tag is a test of the existing project, or a test file that fails when it loads. A test file fails when it loads if the registry or the catalog is wrong. The lines below name each one.
@@ -14,7 +14,7 @@ The two runs give identical lines.
 Earlier runs on earlier commits:
 - Run A: 78 of 316 faults ran, and the run stopped because a review of the plan changed the code. It found 3 faults with no failing test: "Use the radius 6371000", "Refuse a box that reaches 180" and "Refuse a box that reaches -180".
   - The two faults at the meridian led to a new test and two new rows. The test is [beemaps-frames-009] "gives a box that ends exactly at longitude 180 or -180". The rows are (25.93, 179.99) and (25.93, -179.99) in scenario 009.
-  - The fault with the radius was an equivalent fault then. No row of that time could show a difference at 6 decimals. Round 1 of the formal review found a row, see below.
+  - The fault with the radius was marked as an equivalent fault then. No row of that time showed a difference at 6 decimals. Round 1 of the formal review found a row, see below.
 - Run B: 51 of 326 faults ran, and the run stopped because a review of the plan changed the code and the tests. Faults with no failing test: Use the radius 6371000 (see run A).
 - Run C: two full runs on the commit 7e759cc6, 340 faults each, with the same result: 11 faults left every test green. Actions:
   - "Never remove the listener of the caller". A test was added: "removes its listener from the signal of the call when the call ends". Scenario 013 has a new sentence.
@@ -44,8 +44,9 @@ Earlier runs on earlier commits:
     - "Keep the enabled state on disable": scenario 003
     - "Give the stats no error": scenario 020
   - One fault name had a banned word and named a text that no longer exists. It is now "Show the text for no key when the key is set".
-- The lines of the first run on the commit 6dd67760 follow below. The second run has the same lines.
-  The tests of those runs are the tests of the commit 6dd67760: the command git diff --stat 6dd67760 HEAD -- src server build prints nothing.
+- Round 2 of the formal review changed one thing: the faults "Press in getRowControls" and "Press in getStats" got the scenarios 003 and 007. No test of scenario 002 fails for them. Both runs were repeated for that.
+- The lines of the first run on the commit 12691c10 follow below. The second run has the same lines.
+  The tests of those runs are the tests of the commit 12691c10: the command git diff --stat 12691c10 HEAD -- src server build prints nothing.
 
 Lines of the first run on the final commit (scenario | fault | failing tests):
 beemaps-frames-008 | Use a half side of 1001 metres | failing: [beemaps-frames-008], [beemaps-frames-009]
@@ -369,8 +370,8 @@ beemaps-frames-013 | Send a second request after a stall in the body | failing: 
 beemaps-frames-005 | Retry once after a failure | failing: [beemaps-frames-005]
 beemaps-frames-005 | Retry after a failure through a timer in the layer | failing: TIMEOUT (the tests hung), [beemaps-frames-005], untagged: src/layers/beemaps/layer.test.mjs
 beemaps-frames-001 | Add a method setParams that presses | failing: [beemaps-frames-001]
-beemaps-frames-002 | Press in getRowControls | failing: [beemaps-frames-003], [beemaps-frames-004], [beemaps-frames-005], [beemaps-frames-006], [beemaps-frames-007], [beemaps-frames-020], [beemaps-frames-021], [beemaps-frames-023]
-beemaps-frames-002 | Press in getStats | failing: [beemaps-frames-007], [beemaps-frames-020], [beemaps-frames-021]
+beemaps-frames-003 | Press in getRowControls | failing: [beemaps-frames-003], [beemaps-frames-004], [beemaps-frames-005], [beemaps-frames-006], [beemaps-frames-007], [beemaps-frames-020], [beemaps-frames-021], [beemaps-frames-023]
+beemaps-frames-007 | Press in getStats | failing: [beemaps-frames-007], [beemaps-frames-020], [beemaps-frames-021]
 beemaps-frames-013 | Send a second request after an upstream failure | failing: [beemaps-frames-013]
 beemaps-frames-013 | Send a second request after a rejection | failing: [beemaps-frames-013]
 beemaps-frames-013 | Send a second request later through a timer | failing: [beemaps-frames-013]
