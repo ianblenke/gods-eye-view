@@ -31,7 +31,7 @@ The function checks the content type, the proxy headers, the socket address, the
 The socket addresses are `127.0.0.1`, `::1` and `::ffff:127.0.0.1`. The host names are `localhost`, `127.0.0.1` and `[::1]`. These are the lists of the key panel.
 The function `hasProxySignals` of `src/localRequestGate.mjs` names the proxy headers, so that list has one owner.
 
-The host is compared as the client sent it, so a Host with a capital letter is refused. A browser sends the host in lower case. The key panel lower-cases the host before it compares it, and this gate does not.
+The host is compared as the client sent it, so a Host with a capital letter is refused. A browser sends the host in lower case. The key panel changes the host to lower case before it compares it, and this gate does not.
 
 ### D3: The answer does not change
 
