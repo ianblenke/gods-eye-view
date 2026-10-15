@@ -1,12 +1,12 @@
 Named faults of beemaps-source (AGENTS.md rule 13). One fault changes one part of one provider file; the tests then run, and the list below names the tests that failed.
 
-Code commit: 82d7987c73862b997e5c46c4744777e716cdd1a2. Both runs below ran on the files of this commit. Later commits change documents and evidence files only.
+Code commit: e466de1fe4bbda83115dfb526417e8a1f4f5cbef. Both runs below ran on the files of this commit. Later commits change documents and evidence files only.
 Command of each fault (3 scratch copies of the clone run in parallel on the host, Node v26.8.2): timeout 100 node --test --test-timeout=6000 --test-reporter=spec --test-skip-pattern='browser config of the build' src/data/beemaps*.test.mjs
-The test [beemaps-source-013] "keeps the key out of the browser config of the build" needs the packages of the image, so these runs skip it. It ran in the image (see local-run.txt and host-checks.txt), together with one fault of build/vite.js that these runs cannot reach.
+The test [beemaps-source-013] "keeps the key out of the browser config of the build" needs the packages of the image, so these runs skip it. It ran in the image (see host-checks.txt), together with one fault of build/vite.js that these runs cannot reach.
 
-Result: 306 faults in each of two runs. 0 faults survived. 2 faults are equivalent faults that no test can tell from the code (marked below). 0 hangs. 0 failures without a scenario tag.
-305 of 306 lines are identical in the two runs. 1 line differs in the list of failing tests:
-- "Do not wait for the write": run 1 failed 9 tests ([beemaps-source-004], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-023], [beemaps-source-024], [beemaps-source-028]); run 2 failed 9 tests ([beemaps-source-004], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]). This fault does not wait for the file write, so the tests race with it and the list changes between runs. Both runs fail tests, including [beemaps-source-016].
+Result: 324 faults in each of two runs. 2 faults left every test green in both runs, and all 2 are equivalent faults that no test can tell from the code (marked below). Each of the other faults failed at least one test. 0 hangs. 0 failures without a scenario tag.
+323 of 324 lines are identical in the two runs. 1 line differs in the list of failing tests:
+- "Do not wait for the write": run 1 failed 9 tests ([beemaps-source-004], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]); run 2 failed 7 tests ([beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-023], [beemaps-source-024]). This fault does not wait for the file write, so the tests race with it and the list changes between runs. Both runs fail tests, including [beemaps-source-016].
 
 Equivalent faults (no scenario can tell them from the code):
 - Accept an empty daily limit: Number("") is 0, the next check (>= 1) refuses it, and the default 20 results in both versions
@@ -29,6 +29,11 @@ First run, on the earlier commit 2991a8f7: 306 faults, 16 survived. The survivor
 - Hold no credit for 599.999 seconds: test changed: the hold is tested at 599.999 and 600 seconds
 - Round the seconds that remain to the nearest: test changed: the seconds that remain are 19.4 and not 19.5
 - Ignore the 5000 item cut in truncated: test added: more than 5000 items that give 1 frame
+
+After the review of the whole change, 18 faults were added because the reviewers found tests without a fault: Write the key to the console in the plugin; Write the key to the console in the upstream call; Put the key in a header of an error answer; Put the key in a header of a good answer; Put the text of a thrown error in the answer; Add a second URL to a provider file; Repeat the host in a comment; Repeat the path in a comment; Write the word Burst in a comment of the checks; Write the word burst in lower case in the plugin; Write the word BURST in upper case in the budget; Add a sixth provider file next to the five; Leave the plugin out of the list of local plugins; Put the plugin twice in the list of local plugins; Keep an error answer in memory; Give a failed call back to the count; Send a second request after the shared request fails; Read the body before the check of the local request.
+The fault "Check the budget before the hold" was rewritten: the first version failed only [beemaps-source-024], because it still gave the answer of the hold. The new version moves the check of the budget before the check of the hold, in two edits of beemaps.js.
+5 faults got the scenario of the tests that fail, because the part of the code that they change is described there: Accept a position that is not a list; Accept a position of any length; Pass on a ring that is null; Drop the extra headers of an answer; Say cached false for each answer.
+Two changes of the tests follow from the review: a new test "counts each failed call against the daily limit" for the fault "Give a failed call back to the count", and an assertion in the test of the order of the steps (an oversize body gets 429 when the rate limit is used) for the fault "Read the body before the rate limit". Before that assertion only [beemaps-source-021] failed that fault.
 
 Fault in an upstream file, run in the image: add 'import.meta.env.BEEMAPS_API_KEY' with the value of process.env.BEEMAPS_API_KEY to the define of build/vite.js. Failing test: [beemaps-source-013] (command: docker run with the clone, node --test --test-name-pattern='browser config of the build' src/data/beemapsProxy.test.mjs; exit 1). The file was restored.
 
@@ -58,8 +63,8 @@ beemaps-source-006 | Accept south equal to north | failing: [beemaps-source-006]
 beemaps-source-006 | Skip the west and east order | failing: [beemaps-source-006]
 beemaps-source-006 | Skip the south and north order | failing: [beemaps-source-006]
 beemaps-source-006 | Leave the ring of a box open | failing: [beemaps-source-006], [beemaps-source-019]
-beemaps-source-006 | Accept a position that is not a list | failing: [beemaps-source-007]
-beemaps-source-006 | Accept a position of any length | failing: [beemaps-source-007]
+beemaps-source-007 | Accept a position that is not a list | failing: [beemaps-source-007]
+beemaps-source-007 | Accept a position of any length | failing: [beemaps-source-007]
 beemaps-source-006 | Accept a longitude as text | failing: [beemaps-source-006], [beemaps-source-007]
 beemaps-source-006 | Accept a latitude as text | failing: [beemaps-source-006], [beemaps-source-007]
 beemaps-source-006 | Skip the longitude range | failing: [beemaps-source-006], [beemaps-source-007]
@@ -86,7 +91,7 @@ beemaps-source-007 | Compare only the longitude of the ends | failing: [beemaps-
 beemaps-source-007 | Compare only the latitude of the ends | failing: [beemaps-source-007]
 beemaps-source-008 | Accept a box and a polygon together | failing: [beemaps-source-008]
 beemaps-source-008 | Use the polygon when both are there | failing: [beemaps-source-001], [beemaps-source-004], [beemaps-source-005], [beemaps-source-006], [beemaps-source-007], [beemaps-source-008], [beemaps-source-009], [beemaps-source-010], [beemaps-source-011], [beemaps-source-012], [beemaps-source-013], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-021], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024], [beemaps-source-028]
-beemaps-source-008 | Pass on a ring that is null | failing: [beemaps-source-006], [beemaps-source-007]
+beemaps-source-006 | Pass on a ring that is null | failing: [beemaps-source-006], [beemaps-source-007]
 beemaps-source-009 | Raise the area limit to 6 km2 | failing: [beemaps-source-009], [beemaps-source-022]
 beemaps-source-009 | Lower the area limit to 4 km2 | failing: [beemaps-source-006], [beemaps-source-009], [beemaps-source-022]
 beemaps-source-009 | Name the wrong limit in the refusal | failing: [beemaps-source-009], [beemaps-source-022]
@@ -173,12 +178,12 @@ beemaps-source-016 | Refuse a daily limit of 1 | failing: [beemaps-source-016]
 beemaps-source-016 | Accept a sign in the daily limit | failing: [beemaps-source-016]
 beemaps-source-016 | Accept spaces in the daily limit | failing: [beemaps-source-016]
 beemaps-source-016 | Accept a decimal daily limit | failing: [beemaps-source-016]
-beemaps-source-016 | Refuse only above the daily limit | failing: [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-022]
+beemaps-source-016 | Refuse only above the daily limit | failing: [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-022], [beemaps-source-023]
 beemaps-source-016 | Refuse only at the daily limit | failing: [beemaps-source-016]
-beemaps-source-016 | Name the wrong count in a refusal | failing: [beemaps-source-016], [beemaps-source-018], [beemaps-source-022]
+beemaps-source-016 | Name the wrong count in a refusal | failing: [beemaps-source-016], [beemaps-source-018], [beemaps-source-022], [beemaps-source-023]
 beemaps-source-018 | Wait between the check and the addition | failing: [beemaps-source-018]
 beemaps-source-016 | Do not write the file | failing: [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-023], [beemaps-source-024]
-beemaps-source-016 | Do not wait for the write | failing: [beemaps-source-004], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-023], [beemaps-source-024], [beemaps-source-028]
+beemaps-source-016 | Do not wait for the write | failing: [beemaps-source-004], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]
 beemaps-source-018 | Write without waiting for the earlier write | failing: [beemaps-source-018]
 beemaps-source-017 | Stop all writes after a failed write | failing: [beemaps-source-017]
 beemaps-source-017 | Say ok after a failed write | failing: [beemaps-source-017]
@@ -266,7 +271,7 @@ beemaps-source-024 | Hold no credit for 600.001 seconds | failing: [beemaps-sour
 beemaps-source-024 | Hold until the end second as well | failing: [beemaps-source-024]
 beemaps-source-024 | Hold nothing after a refused key | failing: [beemaps-source-022], [beemaps-source-024]
 beemaps-source-024 | Hold nothing after no credit | failing: [beemaps-source-024]
-beemaps-source-024 | Hold after a failure of the upstream | failing: [beemaps-source-019], [beemaps-source-020], [beemaps-source-024]
+beemaps-source-024 | Hold after a failure of the upstream | failing: [beemaps-source-019], [beemaps-source-020], [beemaps-source-023], [beemaps-source-024]
 beemaps-source-024 | Hold after 429 for 60 seconds | failing: [beemaps-source-024]
 beemaps-source-024 | Round the seconds that remain down | failing: [beemaps-source-024]
 beemaps-source-024 | Round the seconds that remain to the nearest | failing: [beemaps-source-024]
@@ -286,7 +291,7 @@ beemaps-source-023 | Answer a body of the wrong shape as a failure | failing: [b
 beemaps-source-028 | Send Content-Type text/plain | failing: [beemaps-source-028]
 beemaps-source-028 | Send Content-Type without a charset | failing: [beemaps-source-028]
 beemaps-source-028 | Send a Cache-Control that stores | failing: [beemaps-source-028]
-beemaps-source-028 | Drop the extra headers of an answer | failing: [beemaps-source-021], [beemaps-source-023], [beemaps-source-024]
+beemaps-source-023 | Drop the extra headers of an answer | failing: [beemaps-source-021], [beemaps-source-023], [beemaps-source-024]
 beemaps-source-001 | Answer each path below the route | failing: [beemaps-source-001]
 beemaps-source-001 | Take the query for part of the path | failing: [beemaps-source-001]
 beemaps-source-001 | Skip the preview server | failing: [beemaps-source-001]
@@ -311,19 +316,19 @@ beemaps-source-012 | Read the key from another variable | failing: [beemaps-sour
 beemaps-source-022 | Check the local request before the method | failing: [beemaps-source-003], [beemaps-source-022]
 beemaps-source-022 | Check the rate limit before the local request | failing: [beemaps-source-004], [beemaps-source-021], [beemaps-source-022]
 beemaps-source-022 | Check the rate limit before the method | failing: [beemaps-source-004], [beemaps-source-019], [beemaps-source-021], [beemaps-source-022], [beemaps-source-024], [beemaps-source-028]
-beemaps-source-022 | Read the body before the rate limit | failing: [beemaps-source-021]
+beemaps-source-022 | Read the body before the rate limit | failing: [beemaps-source-021], [beemaps-source-022]
 beemaps-source-022 | Check the key before the body | failing: [beemaps-source-022], [beemaps-source-028]
 beemaps-source-022 | Check the key before the input | failing: [beemaps-source-022], [beemaps-source-028]
 beemaps-source-022 | Skip the key check when an answer is in memory | failing: [beemaps-source-022]
 beemaps-source-022 | Check the hold before the memory | failing: [beemaps-source-022]
-beemaps-source-022 | Check the budget before the hold | failing: [beemaps-source-024]
+beemaps-source-022 | Check the budget before the hold | failing: [beemaps-source-022], [beemaps-source-024]
 beemaps-source-016 | Skip the budget | failing: [beemaps-source-001], [beemaps-source-004], [beemaps-source-005], [beemaps-source-012], [beemaps-source-013], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-021], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024], [beemaps-source-028]
-beemaps-source-016 | Answer a used budget with 503 | failing: [beemaps-source-016], [beemaps-source-018], [beemaps-source-022]
-beemaps-source-016 | Name the budget error another way | failing: [beemaps-source-016], [beemaps-source-022]
-beemaps-source-016 | Leave the count out of the budget refusal | failing: [beemaps-source-016], [beemaps-source-022]
+beemaps-source-016 | Answer a used budget with 503 | failing: [beemaps-source-016], [beemaps-source-018], [beemaps-source-022], [beemaps-source-023]
+beemaps-source-016 | Name the budget error another way | failing: [beemaps-source-016], [beemaps-source-022], [beemaps-source-023]
+beemaps-source-016 | Leave the count out of the budget refusal | failing: [beemaps-source-016], [beemaps-source-022], [beemaps-source-023]
 beemaps-source-017 | Answer an unavailable budget with 500 | failing: [beemaps-source-017]
 beemaps-source-017 | Name the unavailable budget another way | failing: [beemaps-source-017]
-beemaps-source-017 | Swap the budget refusals | failing: [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-022]
+beemaps-source-017 | Swap the budget refusals | failing: [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-022], [beemaps-source-023]
 beemaps-source-020 | Do not share a request that is in flight | failing: [beemaps-source-020]
 beemaps-source-020 | Give a request that waits cached false | failing: [beemaps-source-020]
 beemaps-source-020 | Keep the request in flight after it ends | failing: [beemaps-source-019], [beemaps-source-020], [beemaps-source-024]
@@ -334,8 +339,26 @@ beemaps-source-028 | Ignore the 5000 item cut in truncated | failing: [beemaps-s
 beemaps-source-028 | Set truncated at a total equal to the limit | failing: [beemaps-source-028]
 beemaps-source-028 | Set truncated only for the 5000 item cut | failing: [beemaps-source-028]
 beemaps-source-028 | Name the source another way | failing: [beemaps-source-028]
-beemaps-source-028 | Say cached false for each answer | failing: [beemaps-source-019], [beemaps-source-020], [beemaps-source-021], [beemaps-source-022]
+beemaps-source-019 | Say cached false for each answer | failing: [beemaps-source-019], [beemaps-source-020], [beemaps-source-021], [beemaps-source-022]
 beemaps-source-028 | Say since null for each answer | failing: [beemaps-source-028]
 beemaps-source-028 | Leave the credits out of the answer | failing: [beemaps-source-028]
 beemaps-source-028 | Pass the default limit to the answer | failing: [beemaps-source-019], [beemaps-source-020], [beemaps-source-028]
 beemaps-source-028 | Count the day as one more in the budget | failing: [beemaps-source-019], [beemaps-source-022], [beemaps-source-028]
+beemaps-source-013 | Write the key to the console in the plugin | failing: [beemaps-source-013]
+beemaps-source-013 | Write the key to the console in the upstream call | failing: [beemaps-source-013]
+beemaps-source-013 | Put the key in a header of an error answer | failing: [beemaps-source-013]
+beemaps-source-013 | Put the key in a header of a good answer | failing: [beemaps-source-013]
+beemaps-source-023 | Put the text of a thrown error in the answer | failing: [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]
+beemaps-source-015 | Add a second URL to a provider file | failing: [beemaps-source-015]
+beemaps-source-015 | Repeat the host in a comment | failing: [beemaps-source-015]
+beemaps-source-015 | Repeat the path in a comment | failing: [beemaps-source-015]
+beemaps-source-015 | Write the word Burst in a comment of the checks | failing: [beemaps-source-015]
+beemaps-source-015 | Write the word burst in lower case in the plugin | failing: [beemaps-source-015]
+beemaps-source-015 | Write the word BURST in upper case in the budget | failing: [beemaps-source-015]
+beemaps-source-015 | Add a sixth provider file next to the five | failing: [beemaps-source-015]
+beemaps-source-001 | Leave the plugin out of the list of local plugins | failing: [beemaps-source-001]
+beemaps-source-001 | Put the plugin twice in the list of local plugins | failing: [beemaps-source-001]
+beemaps-source-019 | Keep an error answer in memory | failing: [beemaps-source-019], [beemaps-source-020]
+beemaps-source-023 | Give a failed call back to the count | failing: [beemaps-source-023], [beemaps-source-024]
+beemaps-source-020 | Send a second request after the shared request fails | failing: [beemaps-source-020]
+beemaps-source-004 | Read the body before the check of the local request | failing: [beemaps-source-001], [beemaps-source-004], [beemaps-source-005], [beemaps-source-012], [beemaps-source-013], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-021], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024], [beemaps-source-028]
