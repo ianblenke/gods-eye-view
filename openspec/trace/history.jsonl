@@ -2728,3 +2728,4 @@
 {"date":"2026-10-15","change":"beemaps-frames","commit":"8a25fde77ef5160ad3adc301386fc7530dd74707","kind":"measurement","measurement":"29779edd7f779bd7a28fcf62d9d19e2935ce2109005766059e04e290c48e58dc"}
 {"date":"2026-10-15","change":"beemaps-burst-control","commit":"eb12d5793accf5b3157454941e42cc629a78ead8","kind":"measurement","measurement":"af0a99799e7a6844207678a41654adc19ea9ef2e2cdbd8c31b51ac4dceb6e9d9"}
 {"date":"2026-10-15","change":"beemaps-burst-control","commit":"fa79cacf57f3909b9c1b41e29e4c11148652142d","kind":"measurement","measurement":"aa34f1f5057dfc252445d12abc8fc1512c549a7cc5d6b01e4c84ecb70a5c2e04"}
+{"date":"2026-10-15","change":"beemaps-burst-control","commit":"48ec1208fd95c62c188271a1f96df3fa62a4470c","kind":"measurement","measurement":"9f9522d71482db55a9b5f845cf80871b7ba44d485ec149b4a6ed8152f0986c0c"}

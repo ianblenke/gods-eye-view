@@ -85,7 +85,7 @@
   "beemaps-burst-control-013": [
     "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-013] ends a quote 120 seconds after it was made, and uses it up at the quote step for every outcome",
     "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-013] gives quote_expired at once for the same quote with a new key, after every outcome that is not a hold",
-    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-013] gives quote_expired for the same quote with a new key after a refusal and after an unknown outcome",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-013] gives quote_expired for the same quote with a new key after the hold of a refusal or of an unknown outcome has ended",
     "src/data/beemapsBurstQuotes.test.mjs › [beemaps-burst-control-013] counts only quotes that have not ended toward the limit of 8",
     "src/data/beemapsBurstQuotes.test.mjs › [beemaps-burst-control-013] gives a copy of the request that the caller cannot change in the store",
     "src/data/beemapsBurstQuotes.test.mjs › [beemaps-burst-control-013] gives each quote an id of 32 lowercase hexadecimal characters and a life of 120 seconds",
@@ -203,7 +203,7 @@
   "beemaps-burst-control-029": [
     "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-029] answers a confirm held by a 402 with no retryAfter and no Retry-After header",
     "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-029] gives retryAfter and the header Retry-After to a confirm held by a 429",
-    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-029] refuses every confirm for 300 seconds after 401 or 403, 600 seconds after 402, and the seconds of Retry-After after 429",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-029] refuses every confirm with a new idempotency key during a hold of 300 seconds, 600 seconds or the seconds of Retry-After",
     "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-029] starts no hold after a 400, and a new plugin has no hold of a refusal"
   ],
   "beemaps-burst-control-030": [
@@ -289,7 +289,7 @@
     "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] gives a failure for a file that is not valid JSON, not an object, or has a record that is not valid",
     "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] gives a failure when the write fails and keeps no record of the attempt in memory",
     "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] gives a failure when the write of a finish fails and keeps the new state in memory",
-    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] reads a missing file as an empty ledger and any other read error as a failure, and reads again after a failure",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] reads a file that does not exist as an empty ledger and any other read error as a failure, and reads again after a failure",
     "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] reads a record with a time of 0, a key of 16 or 64 characters, and the states pending and unknown",
     "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] reads a refused record with a status from 400 to 599 and a retryAfter from 1 to 600 and refuses the others",
     "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] reads the file once for calls that start together",
