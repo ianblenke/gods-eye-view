@@ -94,7 +94,7 @@ The route answers only the machine that runs the server, because a request can c
 
 The daily limit is 20 upstream requests. `BEEMAPS_DAILY_QUERIES` changes it, and a file in `.gev-cache/beemaps` keeps the count across a restart. An answer stays in memory for 10 minutes. The terms of Bee Maps allow use in an app that you build, and they forbid resale. They do not say whether other people can see the data, so use it for yourself only.
 
-This version reads frames only. It has no image and no request to map an area again. The shapes of the request and the answer come from the public API description, version 1.3.0. No test sends a request to Bee Maps, so the first real request can show a difference.
+The layer "Bee Maps Frames" in the group Cameras shows the frames as points. A press on its button "Fetch frames here" sends one request for about 4 km² at the view centre, and nothing else sends one. The newest points are brighter. This version has no image and no request to map an area again. The shapes of the request and the answer come from the public API description, version 1.3.0. No test sends a request to Bee Maps, so the first real request can show a difference.
 
 ### Notes on the live sources
 

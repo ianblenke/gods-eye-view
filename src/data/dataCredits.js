@@ -166,6 +166,12 @@ export const DATA_CREDITS = [
       'Reticulum network: interface announces that operators publish on purpose, heard by a listener that you run · ' +
       '<a href="https://reticulum.network/" target="_blank" rel="noopener">reticulum.network</a>',
   },
+  {
+    key: 'beemaps',
+    html:
+      'Street-level frames: contributor dashcams, through the Bee Maps API · ' +
+      '<a href="https://beemaps.com/" target="_blank" rel="noopener">beemaps.com</a>',
+  },
   OSM_CREDIT,
   OPENMAPTILES_CREDIT,
   {

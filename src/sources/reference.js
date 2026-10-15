@@ -1,5 +1,6 @@
 import { createUsgsEarthquakeSource } from '../layers/earthquakes/source.js';
 import { createReticulumSource } from '../layers/reticulum/source.js';
+import { createBeemapsSource } from '../layers/beemaps/source.js';
 import { createWfigsPerimeterSource } from '../layers/perimeters/source.js';
 import { createBundledCableSource } from '../layers/submarineCables/bundledSource.js';
 
@@ -10,5 +11,6 @@ export function createReferenceSources() {
     'fire-perimeters': createWfigsPerimeterSource(),
     cables: createBundledCableSource(),
     reticulum: createReticulumSource(),
+    beemaps: createBeemapsSource(),
   };
 }
