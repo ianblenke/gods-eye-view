@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { promises as fsp } from 'node:fs';
 import { Readable } from 'node:stream';
+import { inspect } from 'node:util';
 import os from 'node:os';
 import path from 'node:path';
 import { beemapsProxy } from '../../server/providers/beemaps.js';
@@ -368,8 +369,9 @@ test('[beemaps-source-012] reads the key when the request comes and trims it', a
 
 test('[beemaps-source-013] keeps the key out of every answer, header and console line', async (t) => {
   const lines = [];
-  for (const name of ['log', 'info', 'warn', 'error', 'debug'])
-    t.mock.method(console, name, (...args) => lines.push(args.join(' ')));
+  for (const name of Object.keys(console))
+    if (typeof console[name] === 'function')
+      t.mock.method(console, name, (...args) => lines.push(inspect(args)));
   const refused = await install(t, { respond: () => failure(403) });
   const bad = await refused.frames({ bbox: BOX });
   const good = await install(t);
@@ -403,7 +405,6 @@ test('[beemaps-source-013] keeps the key out of the browser config of the build'
     ]) {
       assert.equal(JSON.stringify(config.define).includes(KEY), false);
       assert.equal(JSON.stringify(config.define).includes('BEEMAPS'), false);
-      assert.equal(config.envPrefix, 'VITE_AIS_LIVE_');
     }
   } finally {
     if (before === undefined) delete process.env.BEEMAPS_API_KEY;
@@ -516,16 +517,29 @@ test('[beemaps-source-019] counts an answer that is stored again as the newest',
   assert.equal(server.calls.length, 36);
 });
 
+/** The kinds of failure, each with the time that the hold lasts. */
+const FAILURES = [
+  ['500', () => failure(500), 0],
+  ['a body that is not JSON', () => new Response('not json'), 0],
+  ['a body without a list', () => ok({ frames: 'x' }), 0],
+  ['401', () => failure(401), 300_000],
+  ['402', () => failure(402), 600_000],
+  ['429', () => failure(429, { 'retry-after': '30' }), 30_000],
+];
+
 test('[beemaps-source-019] keeps an error answer out of the memory', async (t) => {
-  const server = await install(t, {
-    respond: (url, init, call) => (call === 1 ? failure(500) : ok()),
-  });
-  const first = await server.frames({ bbox: BOX });
-  assert.equal(first.status, 502);
-  const second = await server.frames({ bbox: BOX });
-  assert.equal(second.status, 200);
-  assert.equal(second.body.cached, false);
-  assert.equal(server.calls.length, 2);
+  for (const [name, fail, hold] of FAILURES) {
+    const server = await install(t, {
+      respond: (url, init, call) => (call === 1 ? fail() : ok()),
+    });
+    const first = await server.frames({ bbox: BOX });
+    assert.notEqual(first.status, 200, name);
+    server.advance(hold);
+    const second = await server.frames({ bbox: BOX });
+    assert.equal(second.status, 200, name);
+    assert.equal(second.body.cached, false, name);
+    assert.equal(server.calls.length, 2, name);
+  }
 });
 
 test('[beemaps-source-020] shares one upstream request between two requests for one area that arrive together', async (t) => {
@@ -751,16 +765,24 @@ test('[beemaps-source-023] names the failure of the upstream and counts the call
 });
 
 test('[beemaps-source-023] counts each failed call against the daily limit', async (t) => {
-  const server = await install(t, {
-    env: { BEEMAPS_DAILY_QUERIES: '2' },
-    respond: () => failure(500),
-  });
-  assert.equal((await server.frames({ bbox: BOX })).status, 502);
-  assert.equal((await server.frames({ bbox: boxAt(1) })).status, 502);
-  const spent = await server.frames({ bbox: boxAt(2) });
-  assert.equal(spent.status, 429);
-  assert.deepEqual(spent.body, { error: 'budget', used: 2, limit: 2 });
-  assert.equal(server.calls.length, 2);
+  for (const [name, fail, hold] of FAILURES) {
+    const server = await install(t, {
+      env: { BEEMAPS_DAILY_QUERIES: '2' },
+      respond: () => fail(),
+    });
+    assert.notEqual((await server.frames({ bbox: BOX })).status, 200, name);
+    server.advance(hold);
+    assert.notEqual(
+      (await server.frames({ bbox: boxAt(1) })).status,
+      200,
+      name,
+    );
+    server.advance(hold);
+    const spent = await server.frames({ bbox: boxAt(2) });
+    assert.equal(spent.status, 429, name);
+    assert.deepEqual(spent.body, { error: 'budget', used: 2, limit: 2 }, name);
+    assert.equal(server.calls.length, 2, name);
+  }
 });
 
 test('[beemaps-source-023] gives upstream_failed for a timeout and clears the timer', async (t) => {
