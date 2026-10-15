@@ -42,25 +42,29 @@ The budget counts credits in a file, before the send. A refusal, an unknown outc
 
 ### D6: An unknown outcome is not a failure
 
-Only 2xx with `success` true and exactly one burst with an id means "created". Only the statuses 400, 401, 402, 403 and 429 mean "refused". All other answers mean "unknown", for example a 500, a timeout and a body that nobody can read. Bee Maps can have created the burst. An unknown outcome stays counted and blocks any resend under the same key. The answer tells the person to check the list.
+Only the status 200 with `success` true and exactly one burst with an id means "created". Only the statuses 400, 401, 402, 403 and 429 mean "refused", whatever the body is. All other answers mean "unknown", for example a 201, a 500, a timeout and a body that nobody can read. Bee Maps can have created the burst. An unknown outcome stays counted and blocks any resend under the same key. The answer tells the person to check the list.
 
 ### D7: Records before the send
 
 The audit line "accepted" and the record "pending" are written and awaited before the send. A "pending" record that a restart finds reads as unknown. The record of a key holds the id of its quote, so the same key with another quote is refused.
 
-### D8: Answers hold only listed fields
+### D8: A hold after an unknown outcome
+
+An unknown outcome blocks only its own key, so a new quote and a new key could send again at once. The plugin holds every confirm for 600 seconds after a record with the state "unknown" or "pending". The hold comes from the time in the ledger file, so a restart does not end it. A quote is gone after the quote step for every outcome, so the same quote with a new key cannot send.
+
+### D9: Answers hold only listed fields
 
 The answer of a created burst has `id`, `status`, `validUntil` and `credits`, and `creditsRemaining`. The list has seven fields for each burst. No text of an answer of Bee Maps goes to the browser, because an error text could hold a signed value.
 
-### D9: A key of its own, no same-account rule
+### D10: A key of its own, no same-account rule
 
 The plugin reads `BEEMAPS_BURST_API_KEY`, and never `BEEMAPS_API_KEY`. The OSH rule that two accounts must differ is not copied. Bee Maps appears to give one key for each account, so that rule could make the feature unusable.
 
-### D10: No redirect
+### D11: No redirect
 
 Every upstream call uses `redirect: 'error'`. A redirect of a create call would send the body again, which is a second spend. A redirect gives an unknown outcome for a create call and a failure for a list call.
 
-### D11: The list is part of this change
+### D12: The list is part of this change
 
 The list reveals where the owner asked for mapping, so the route has the same local gate. It is a POST, because the gate needs the content type JSON. Change 4 can then stay a browser-only change, as change 2 was.
 

@@ -1,13 +1,13 @@
 ## 1. Write the tests
 
-- [ ] 1.1 Write the tests for `beemaps-burst-control-002`, `-003` and `-004` in `src/data/beemapsBurstConfig.test.mjs`.
-- [ ] 1.2 Write the tests for `beemaps-burst-control-001` and `-005` to `-011` in `src/data/beemapsBurstInput.test.mjs`.
-- [ ] 1.3 Write the tests for `beemaps-burst-control-012`, `-013` and `-014` in `src/data/beemapsBurstQuote.test.mjs`.
-- [ ] 1.4 Write the tests for `beemaps-burst-control-015` to `-020` and `-029` in `src/data/beemapsBurstConfirm.test.mjs`.
-- [ ] 1.5 Write the tests for `beemaps-burst-control-021`, `-022` and `-023` in `src/data/beemapsBurstBudget.test.mjs`.
-- [ ] 1.6 Write the tests for `beemaps-burst-control-024` to `-028` in `src/data/beemapsBurstLedger.test.mjs`.
-- [ ] 1.7 Write the tests for `beemaps-burst-control-030`, `-031` and `-032` in `src/data/beemapsBurstAudit.test.mjs`.
-- [ ] 1.8 Write the tests for `beemaps-burst-control-033` to `-037` in `src/data/beemapsBurstList.test.mjs`.
+- [ ] 1.1 Write the tests for `beemaps-burst-control-002`, `beemaps-burst-control-003`, `beemaps-burst-control-004`, `beemaps-burst-control-008`, `beemaps-burst-control-009`, `beemaps-burst-control-010`, `beemaps-burst-control-011`, `beemaps-burst-control-015` and `beemaps-burst-control-033` in `src/data/beemapsBurstValidate.test.mjs`.
+- [ ] 1.2 Write the tests for `beemaps-burst-control-013` in `src/data/beemapsBurstQuotes.test.mjs`.
+- [ ] 1.3 Write the tests for `beemaps-burst-control-021`, `beemaps-burst-control-022` and `beemaps-burst-control-023` in `src/data/beemapsBurstCredits.test.mjs`.
+- [ ] 1.4 Write the tests for `beemaps-burst-control-028`, `beemaps-burst-control-039` and `beemaps-burst-control-040` in `src/data/beemapsBurstLedger.test.mjs`.
+- [ ] 1.5 Write the tests for `beemaps-burst-control-030` and `beemaps-burst-control-031` in `src/data/beemapsBurstAudit.test.mjs`.
+- [ ] 1.6 Write the tests for `beemaps-burst-control-016`, `beemaps-burst-control-017`, `beemaps-burst-control-018`, `beemaps-burst-control-019`, `beemaps-burst-control-034` and `beemaps-burst-control-035` in `src/data/beemapsBurstUpstream.test.mjs`.
+- [ ] 1.7 Write the tests for `beemaps-burst-control-001`, `beemaps-burst-control-005`, `beemaps-burst-control-006`, `beemaps-burst-control-007`, `beemaps-burst-control-012`, `beemaps-burst-control-014`, `beemaps-burst-control-036` and `beemaps-burst-control-037` in `src/data/beemapsBurstProxy.test.mjs`.
+- [ ] 1.8 Write the tests for `beemaps-burst-control-020`, `beemaps-burst-control-024`, `beemaps-burst-control-025`, `beemaps-burst-control-026`, `beemaps-burst-control-027`, `beemaps-burst-control-029` and `beemaps-burst-control-032` in the same file.
 - [ ] 1.9 Write the test for `beemaps-burst-control-038` in `src/data/beemapsBurstScan.test.mjs`.
 
 ## 2. Write the files

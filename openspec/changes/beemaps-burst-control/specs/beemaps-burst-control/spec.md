@@ -84,8 +84,10 @@ Origin: spec-first
 - **THEN** a smaller area gives 400 with `{error:'bad_area'}`, and a larger area gives 400 with `{error:'area_too_large', maxKm2:5}`
 - **AND** the area in square metres is `R*R*W*(sin(N) - sin(S))`, with R equal to 6371008.8 metres
 - **AND** the box [9.982014, 59.991007, 10.017986, 60.008993] passes this step
-- **AND** the box [10, 60, 10.02, 60.02] with an area of about 2.2 km² passes
-- **AND** the box [10, 60, 10.05, 60.02] with an area of about 5.6 km² gives `area_too_large`
+- **AND** the box [10, 60, 10.02, 60.02] with an area of about 2.5 km² passes
+- **AND** the box [10, 60, 10.05, 60.02] with an area of about 6.2 km² gives `area_too_large`
+- **AND** the box [10, 60, 10.01, 60.0016] with an area of about 0.099 km² gives `bad_area`
+- **AND** the box [10, 60, 10.01, 60.0017] with an area of about 0.105 km² passes
 
 #### Scenario: Check the credits `beemaps-burst-control-011`
 - **WHEN** the body has `credits`
@@ -112,6 +114,8 @@ Origin: spec-first
 - **THEN** a `quoteId` is 32 lowercase hexadecimal characters, and two quotes for the same request have different ids
 - **AND** a confirm 119.999 seconds after the quote uses the quote, and a confirm at 120 seconds gets 410 with `{error:'quote_expired'}`
 - **AND** a quote that a confirm has used gives `quote_expired` at the next confirm, and an id that was never given gives the same answer
+- **AND** a confirm uses up its quote at the quote step, for every outcome after that step
+- **AND** the same quote with a new idempotency key gets `quote_expired`, also after an unknown outcome
 - **AND** the plugin keeps at most 8 quotes, so the ninth quote ends the oldest one
 
 #### Scenario: Refuse a quote that the budget cannot pay `beemaps-burst-control-014`
@@ -140,7 +144,7 @@ Origin: spec-first
 - **AND** the option `redirect` is "error", and the call has a signal that the plugin aborts after 30 seconds
 
 #### Scenario: Report a burst that Bee Maps created `beemaps-burst-control-017`
-- **WHEN** the answer is 200 with `success` true, a list `bursts` of exactly one burst with a text `_id`, and `creditsRemaining` 500
+- **WHEN** the answer has the status 200, `success` true, a list `bursts` of exactly one burst with a text `_id`, and `creditsRemaining` 500
 - **THEN** the route answers 200 with `ok` true, `outcome` "created", `replayed` false, `burst` and `creditsRemaining` 500
 - **AND** `burst` has the fields `id`, `status`, `validUntil` and `credits`
 - **AND** `id` is the `_id`, `status` is "active", "expired" or "refunded" and else null, and `validUntil` is a text and else null
@@ -152,13 +156,16 @@ Origin: spec-first
 - **THEN** 400 gives 400 with `{ok:false, outcome:'refused', error:'bad_request'}`
 - **AND** 401 and 403 give 403 with the error `key_rejected`, and 402 gives 402 with `no_credit`
 - **AND** 429 gives 429 with the error `upstream_rate_limit`, `retryAfter` and the header `Retry-After`
-- **AND** the value is the digits of the header of Bee Maps from 1 to 600, and else 60
+- **AND** the value is the digits of the header of Bee Maps, 600 at most
+- **AND** the value is 60 when the header is not digits or is 0
+- **AND** a status of 400, 401, 402, 403 or 429 decides the outcome, whatever the body is
 - **AND** each refusal keeps the credits counted in the budget and the state "refused" in the record of the attempt
 
 #### Scenario: Treat every other answer as unknown `beemaps-burst-control-019`
 - **WHEN** the answer of Bee Maps is 200, and `success` is not true
 - **AND** or `bursts` holds no burst, or two bursts, or a burst with no text `_id`
-- **AND** or the body is not JSON or is larger than 1 MiB, or the status is 500, 502, 503, 404, 409, 418 or 301
+- **AND** or the status is 200 and the body is not JSON or is larger than 1 MiB
+- **AND** or the status is any other status, for example 201, 204, 301, 404, 409, 418, 500, 502 or 503
 - **AND** or the fetch function rejects, or the call does not end in 30 seconds
 - **THEN** the route answers 502 with `{ok:false, outcome:'unknown', error:'outcome_unknown'}`, and the answer gives no text of Bee Maps
 - **AND** the credits stay counted in the budget, and the record of the attempt has the state "unknown"
@@ -169,7 +176,7 @@ Origin: spec-first
 - **THEN** the fake fetch function gets exactly one request, also after the test moves the fake clock by 10 minutes and runs every timer
 - **AND** a confirm that arrives while another confirm runs gets 409 with `{error:'busy'}` and sends no upstream request
 - **AND** the first confirm ends with its own answer, and a confirm after it does not get `busy`
-- **AND** five confirms at the same time give one upstream request and four answers `busy`
+- **AND** three confirms at the same time give one upstream request and two answers `busy`, because the rate limit allows 3 for each minute
 
 ### Requirement: Budget in credits
 The plugin MUST count the credits of a confirm in a daily budget before it sends. It MUST NOT give credits back, and the count MUST survive a restart.
@@ -187,6 +194,7 @@ Origin: spec-first
 - **THEN** the route answers 403 with `{error:'budget_used', used, limit}` and sends no upstream request
 - **AND** the daily limit is 625 by default, and it is the value of `BEEMAPS_BURST_DAILY_CREDITS` when that is digits only and 1 or more
 - **AND** the values "0", "", "-5", "1e3", "5.5" and " 5" give the default
+- **AND** a test moves the clock by 61 seconds after each confirm, because the rate limit allows 3 for each minute
 - **AND** five confirms of 125 credits pass and the sixth gives `budget_used`, and the file then holds 625 credits
 
 #### Scenario: Refuse when the budget file fails `beemaps-burst-control-023`
@@ -223,23 +231,40 @@ Origin: spec-first
 
 #### Scenario: Keep the record on disk `beemaps-burst-control-028`
 - **WHEN** a test confirms a quote and reads the file `ledger.json` in the folder `beemaps-burst`
-- **THEN** the file holds a record with the key, the `quoteId`, the state and the time
+- **THEN** the file holds a record with the key, the `quoteId`, the state, the time, and the status and the body of the answer
+- **AND** a replay of a key uses the status and the body of its record
 - **AND** the state is "pending" before the fake upstream gets its request
 - **AND** the state changes to "created", "refused" or "unknown" when the confirm ends
 - **AND** a new plugin that reads a file with a "pending" record gives the answer of an unknown outcome for that key
 - **AND** the file keeps at most 500 records of "created" and "refused", and it drops the oldest of those first
 - **AND** it never drops a record of "pending" or "unknown"
 
-### Requirement: Holds after a refusal
-After a refusal of the key, the credit or the rate, the plugin MUST refuse each confirm until the hold ends. It MUST send no upstream request.
+#### Scenario: Refuse when the ledger fails `beemaps-burst-control-039`
+- **WHEN** the file `ledger.json` cannot be read, is not valid JSON, or holds a record that is not valid
+- **THEN** the route answers 500 with `{error:'ledger_unavailable'}` and sends no upstream request
+- **AND** the same answer follows when the write of the "pending" record fails
+- **AND** a missing file is an empty ledger, and any other read error is not
+- **AND** the plugin writes a temporary file first and then renames it to `ledger.json`
+- **AND** the route reads the file again at the next request
+
+### Requirement: Holds
+The plugin MUST refuse each confirm until a hold ends. A hold follows a refusal of the key, the credit or the rate, and an unknown outcome. The route MUST send no upstream request during a hold.
 Origin: spec-first
 
-#### Scenario: Hold after a refusal `beemaps-burst-control-029`
+#### Scenario: Hold after a refusal of Bee Maps `beemaps-burst-control-029`
 - **WHEN** Bee Maps refuses with 401 or 403, with 402 or with 429
-- **THEN** the hold lasts 300 seconds, 600 seconds, and the seconds of `Retry-After` from 1 to 600 and else 60
+- **THEN** the hold lasts 300 seconds, 600 seconds, and the seconds of `Retry-After` as in scenario 018
 - **AND** a confirm during the hold gets the error of the refusal with `held` true, and no upstream request, and no credits counted
 - **AND** a confirm at the end of the hold goes on to the next steps
-- **AND** the hold lives in memory, so a new plugin has no hold
+- **AND** the holds after a refusal live in memory, so a new plugin has none of them
+
+#### Scenario: Hold after an unknown outcome `beemaps-burst-control-040`
+- **WHEN** the ledger holds a record with the state "unknown" or "pending" that is less than 600 seconds old
+- **THEN** a confirm with a new idempotency key gets 409 with `{error:'outcome_unknown', held:true, retryAfter}` and no upstream request
+- **AND** `retryAfter` is the whole seconds that remain, rounded up
+- **AND** a record that is 600 seconds old or older holds nothing
+- **AND** the hold comes from the file, so a new plugin still has it
+- **AND** a confirm that repeats the key of that record gets the answer of scenario 026
 
 ### Requirement: Audit log
 The route `confirm` MUST write an audit line for every attempt before it sends, and it MUST NOT send when that write fails.
@@ -254,8 +279,10 @@ Origin: spec-first
 #### Scenario: Fill the line `beemaps-burst-control-031`
 - **WHEN** a test reads the lines of the file `beemaps-bursts.jsonl` in the log folder
 - **THEN** each line is JSON with the fields `time`, `requestId`, `outcome`, `reason`, `client`, `bbox`, `areaKm2`, `credits`, `quoteId`, `idempotencyKey`, `upstreamStatus`, `burstId` and `durationMs`
-- **AND** a refusal of the route after the gate gets a line with the outcome "refused" and the reason
-- **AND** a `reason` that is not in the list of the reasons of the plugin is written as null
+- **AND** the outcome is "accepted" before the send, and "created", "refused", "unknown" or "failed" after it, where "refused" means a refusal of Bee Maps
+- **AND** a refusal of the route after the gate gets a line with the outcome "blocked" and the reason
+- **AND** the reasons are cross_origin, rate_limited, burst_off, no_key, bad_body, busy, key_reused, outcome_unknown, key_rejected, no_credit, upstream_rate_limit, bad_request, budget_used, budget_unavailable, quote_expired, ledger_unavailable and log_failed
+- **AND** a `reason` that is not in that list is written as null
 - **AND** no line holds the key or a field of the answer of Bee Maps other than the ones above
 - **AND** the file is renamed to a file with the suffix `.1` when a line would make it larger than 4 MiB
 
@@ -267,6 +294,7 @@ Origin: spec-first
 - **WHEN** a test runs the four routes with a key that holds a rare text, with every method of `console` replaced
 - **THEN** the rare text is in the header `Authorization` of the fake requests and nowhere else
 - **AND** the text of an error answer of Bee Maps does not appear in an answer, a line or a record
+- **AND** a fetch function that rejects with a message that holds the key leaves the key out of every output
 - **AND** this holds for a created burst, for each refusal and for each unknown outcome
 
 ### Requirement: List of the bursts
@@ -277,14 +305,15 @@ Origin: spec-first
 - **WHEN** the body is larger than 1024 bytes, or is not a JSON object, or has a field other than `limit`
 - **THEN** the route answers 400 with `{error:'bad_body'}`
 - **AND** `limit` is a whole number from 1 to 100, and an empty body object uses 20
+- **AND** `limit` only cuts the answer, and the upstream request always asks for 100
 - **AND** any other value of `limit` gives 400 with `{error:'bad_body'}`
 - **AND** the steps run in this order: method, local request, rate limit, flag, key, body, memory, upstream request
 
 #### Scenario: Send the request for the list `beemaps-burst-control-034`
 - **WHEN** a test sends the body `{"limit":5}`
-- **THEN** the fake gets one `GET` for "https://beemaps.com/api/developer/bursts?limit=5"
+- **THEN** the fake gets one `GET` for "https://beemaps.com/api/developer/bursts?limit=100"
 - **AND** the headers are only `Authorization` and `Accept` "application/json", the option `redirect` is "error", and the call ends in 20 seconds at most
-- **AND** the answer is 200 with `{bursts, total, cached:false}`
+- **AND** the answer is 200 with `bursts`, `total` and `cached` false, and `bursts` has at most 5 items
 - **AND** each burst has `id`, `status`, `isHit`, `latestHitAt`, `validUntil`, `credits` and `bbox`, and no other field
 
 #### Scenario: Clean the list `beemaps-burst-control-035`
@@ -299,9 +328,9 @@ Origin: spec-first
 - **AND** at most 100 items are kept
 
 #### Scenario: Keep the list for 60 seconds `beemaps-burst-control-036`
-- **WHEN** a test asks for the same `limit` twice
+- **WHEN** a test asks twice, with the same `limit` or with another `limit`
 - **THEN** the second answer has `cached` true, and the fake gets one request
-- **AND** an answer 60 seconds old is not used, and another `limit` has its own entry
+- **AND** an answer 60 seconds old is not used, and the plugin keeps one entry
 - **AND** a failed answer is not kept, and the route sends no second request after a failure
 - **AND** a 401 or 403 gives 403 with `{error:'key_rejected'}`, and every other failure gives 502 with `{error:'upstream_failed'}`
 
