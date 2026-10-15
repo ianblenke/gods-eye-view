@@ -46,7 +46,7 @@ The layer MUST read the status of the route when it is updated. It MUST disable 
 Origin: spec-first
 
 #### Scenario: Read the status `beemaps-frames-006`
-- **WHEN** `update` reads `getStatus` with `configured` false
+- **WHEN** `update` reads `getStatus` with `configured` false, and no earlier press has failed
 - **THEN** the chip has `disabled` true, and the info text is "No Bee Maps key. Set BEEMAPS_API_KEY in .env and restart the app."
 - **AND** a call of `onClick` while the chip is disabled sends no request
 - **AND** when `configured` is true, the chip has `disabled` false
@@ -60,8 +60,8 @@ Origin: spec-first
 - **AND** they have `error` "The server did not give the status of the key." when the rejection has no message
 - **AND** they have `error` "The server did not give the status of the key." when the result is `ok` false and has no `error`
 - **AND** the chip has `disabled` false
-- **AND** a later `update` with a good status removes that text and sets `error` to null
-- **AND** a good answer of `getFrames` after a failed status also removes that text and sets `error` to null
+- **AND** a later `update` with a good status removes that text and the `error` of the failed status
+- **AND** a good answer of `getFrames` after a failed status also removes that text and the `error` of the failed status
 - **AND** a press that fails after a failed status shows the message and the `error` of the press
 
 ### Requirement: View box

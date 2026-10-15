@@ -37,6 +37,7 @@ The tests use fake sources and fake viewers. No test and no run sends a request 
 - Known limit `box-size`: The box is fixed at about 4 km², snapped to a grid of 0.005 degrees. The person cannot choose another size or pick another place than the view centre.
 - Known limit `no-date-filter`: The request has no date. The frames can be old, and the point style shows their age.
 - Known limit `points-in-memory`: The points live in memory only. They are gone when someone disables the layer or reloads the page, and a new press can cost money. The server memory of change 1 answers an identical box for free for 10 minutes.
+- Known limit `press-message-first`: After a press has failed, a status with no key does not replace the message of that press in the info line. The chip is still disabled. A disable and an enable removes the message.
 - Known limit `status-once`: The layer reads the status when it is enabled or updated. Someone who adds a key must restart the app.
 - Known limit `no-card`: A point has no card and no label. A person cannot read the time of one frame yet.
 - Known limit `local-only`: The route answers only the machine that runs the server, so the button works with `make up-codex` and fails with `make up`. The layer names this in its message.
