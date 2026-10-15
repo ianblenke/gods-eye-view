@@ -1,11 +1,11 @@
 Run of the burst routes in a real Vite server, with a fake upstream.
-The run used the files of the commit d097f0b0. The command git diff --stat d097f0b0 HEAD -- src server build prints nothing.
+The run used the files of the commit c31f33d2. The command git diff --stat c31f33d2 HEAD -- src server build prints nothing.
 The script is not in the repository. It lives in the tools folder of the lead, because a script in a change folder is a coverage gap.
 The script starts a fake upstream on 127.0.0.1 and a real Vite dev server with the real plugin. The plugin gets a fetch function that sends the two Bee Maps addresses to the fake. No request leaves the container.
 The key is a made-up text. The clock of the plugin is a fake clock that the script moves. So the rate limit of 3 confirms for each minute does not stop the steps.
 The budget file, the ledger and the audit file are real files in a temporary folder. The script prints them at the end.
 The raw output follows.
-Node v24.21.0; fake upstream on 127.0.0.1:39489; Vite dev server on 0.0.0.0:5199; container address 172.17.0.2
+Node v24.21.0; fake upstream on 127.0.0.1:41457; Vite dev server on 0.0.0.0:5199; container address 172.17.0.2
 
 ## 1. status route
 {
@@ -26,7 +26,7 @@ upstream requests so far: 0
  "status": 200,
  "cache-control": "no-store",
  "body": {
-  "quoteId": "663ebea057ba125904c74680cc3ef7e8",
+  "quoteId": "36653e82f3a2409d7d68afb0831b444e",
   "expiresInSeconds": 120,
   "request": {
    "bbox": [
@@ -261,9 +261,9 @@ upstream requests so far: 3
  "records": [
   {
    "key": "local-run-key-00000001",
-   "quoteId": "663ebea057ba125904c74680cc3ef7e8",
+   "quoteId": "36653e82f3a2409d7d68afb0831b444e",
    "state": "created",
-   "time": 1792095463286,
+   "time": 1792100354858,
    "burst": {
     "id": "6501aa11bb22cc33dd44ee55",
     "status": "active",
@@ -274,21 +274,21 @@ upstream requests so far: 3
   },
   {
    "key": "local-run-key-00000003",
-   "quoteId": "8e8941268ca4fd0c49be86251bb9d540",
+   "quoteId": "308c4bdf0e2c2c6eceec5f4100834f6e",
    "state": "unknown",
-   "time": 1792095585286
+   "time": 1792100476858
   }
  ]
 }
 
 ## audit file (one line for each step)
-{"time":"2026-10-15T20:17:43.286Z","requestId":"7cad2326-4db5-4ec7-8e45-83b15e69fa9d","outcome":"accepted","reason":null,"client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"663ebea057ba125904c74680cc3ef7e8","idempotencyKey":"local-run-key-00000001","upstreamStatus":null,"burstId":null,"durationMs":null}
-{"time":"2026-10-15T20:17:43.286Z","requestId":"7cad2326-4db5-4ec7-8e45-83b15e69fa9d","outcome":"created","reason":null,"client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"663ebea057ba125904c74680cc3ef7e8","idempotencyKey":"local-run-key-00000001","upstreamStatus":200,"burstId":"6501aa11bb22cc33dd44ee55","durationMs":0}
-{"time":"2026-10-15T20:17:43.286Z","requestId":"dbe150c5-120a-4f46-86ef-358d9ff8768c","outcome":"blocked","reason":"quote_expired","client":"127.0.0.1","bbox":null,"areaKm2":null,"credits":null,"quoteId":"663ebea057ba125904c74680cc3ef7e8","idempotencyKey":"local-run-key-00000002","upstreamStatus":null,"burstId":null,"durationMs":null}
-{"time":"2026-10-15T20:18:44.286Z","requestId":"bdcb4499-8732-4f04-9fbf-2460232163f1","outcome":"blocked","reason":"burst_off","client":"127.0.0.1","bbox":null,"areaKm2":null,"credits":null,"quoteId":null,"idempotencyKey":null,"upstreamStatus":null,"burstId":null,"durationMs":null}
-{"time":"2026-10-15T20:19:45.286Z","requestId":"5dfbd816-5288-4b7b-8619-c83f9dfc6905","outcome":"accepted","reason":null,"client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"8e8941268ca4fd0c49be86251bb9d540","idempotencyKey":"local-run-key-00000003","upstreamStatus":null,"burstId":null,"durationMs":null}
-{"time":"2026-10-15T20:19:45.286Z","requestId":"5dfbd816-5288-4b7b-8619-c83f9dfc6905","outcome":"unknown","reason":"outcome_unknown","client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"8e8941268ca4fd0c49be86251bb9d540","idempotencyKey":"local-run-key-00000003","upstreamStatus":500,"burstId":null,"durationMs":0}
-{"time":"2026-10-15T20:20:46.286Z","requestId":"e00d123e-cb84-4656-9b38-507114ce0c84","outcome":"blocked","reason":"outcome_unknown","client":"127.0.0.1","bbox":null,"areaKm2":null,"credits":null,"quoteId":"50a8f773337b9ff92cf0ae8e530c55aa","idempotencyKey":"local-run-key-00000004","upstreamStatus":null,"burstId":null,"durationMs":null}
+{"time":"2026-10-15T21:39:14.858Z","requestId":"e0bc5a59-efec-4c95-9b63-a6fe6c92702d","outcome":"accepted","reason":null,"client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"36653e82f3a2409d7d68afb0831b444e","idempotencyKey":"local-run-key-00000001","upstreamStatus":null,"burstId":null,"durationMs":null}
+{"time":"2026-10-15T21:39:14.858Z","requestId":"e0bc5a59-efec-4c95-9b63-a6fe6c92702d","outcome":"created","reason":null,"client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"36653e82f3a2409d7d68afb0831b444e","idempotencyKey":"local-run-key-00000001","upstreamStatus":200,"burstId":"6501aa11bb22cc33dd44ee55","durationMs":0}
+{"time":"2026-10-15T21:39:14.858Z","requestId":"9b2e73f2-959b-4ef9-a63d-57f56345d346","outcome":"blocked","reason":"quote_expired","client":"127.0.0.1","bbox":null,"areaKm2":null,"credits":null,"quoteId":"36653e82f3a2409d7d68afb0831b444e","idempotencyKey":"local-run-key-00000002","upstreamStatus":null,"burstId":null,"durationMs":null}
+{"time":"2026-10-15T21:40:15.858Z","requestId":"478c65d8-a36e-4b09-9c5c-97992f449fb9","outcome":"blocked","reason":"burst_off","client":"127.0.0.1","bbox":null,"areaKm2":null,"credits":null,"quoteId":null,"idempotencyKey":null,"upstreamStatus":null,"burstId":null,"durationMs":null}
+{"time":"2026-10-15T21:41:16.858Z","requestId":"c8617b08-b085-43c6-b726-6cc862270214","outcome":"accepted","reason":null,"client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"308c4bdf0e2c2c6eceec5f4100834f6e","idempotencyKey":"local-run-key-00000003","upstreamStatus":null,"burstId":null,"durationMs":null}
+{"time":"2026-10-15T21:41:16.858Z","requestId":"c8617b08-b085-43c6-b726-6cc862270214","outcome":"unknown","reason":"outcome_unknown","client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"308c4bdf0e2c2c6eceec5f4100834f6e","idempotencyKey":"local-run-key-00000003","upstreamStatus":500,"burstId":null,"durationMs":0}
+{"time":"2026-10-15T21:42:17.858Z","requestId":"39e6e1b7-4fcd-4819-8575-0041f056de9b","outcome":"blocked","reason":"outcome_unknown","client":"127.0.0.1","bbox":null,"areaKm2":null,"credits":null,"quoteId":"fc24707890e66bf56a1d8230bf6ef36b","idempotencyKey":"local-run-key-00000004","upstreamStatus":null,"burstId":null,"durationMs":null}
 
 key text found in the answers, the two files and the audit file: false
 audit lines: 7; fields in each line: 13

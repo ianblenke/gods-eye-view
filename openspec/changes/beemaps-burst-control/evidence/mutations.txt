@@ -1,19 +1,18 @@
 Named faults of beemaps-burst-control (AGENTS.md rule 13). One fault changes one part of one plugin file, or one line of a file that the scan test reads. The tests then run. The list below names the tests that failed.
 
-Code commit: d097f0b04fee71a7eaaa10068288d9b9e8155b84. Both runs below ran on the files of this commit. The command git diff --stat d097f0b0 HEAD -- src server build prints nothing.
+Code commit: c31f33d2e1941584ce4dec202c76d1502c7381fc. Both runs below ran on the files of this commit. The command git diff --stat c31f33d2 HEAD -- src server build prints nothing.
 Runner: 6 scratch copies of the clone run in parallel. Each copy uses the same long-lived container of the image gods-eye-view:local, with the node_modules of the image.
 Each fault runs first against the test file of its own file. The command is: timeout 100 node --test --test-concurrency=4 --test-timeout=6000 --test-reporter=spec <test file>
 A fault that leaves that test file green then runs against all eight test files src/data/beemapsBurst*.test.mjs. The second step can only add failing tests. So a fault that fails no test in both steps is a real survivor.
-The scenario in the first column is the scenario of a test that failed. The list further below names the exceptions.
+The scenario in the first column is the scenario of a test that failed. The exceptions are the equivalent faults, which fail no test, and the faults in the list further below.
 The container ran next to the two containers of the owner and stopped when the run ended. No other container ran at the same time.
 
-Result: 1197 faults in each of two runs. 1182 faults failed at least one test in both runs. 15 faults are equivalent faults. Each one names its reason in its line.
+Result: 1201 faults in each of two runs. 1186 faults failed at least one test in both runs. 15 faults are equivalent faults. Each one names its reason in its line.
 Faults with a hang: 2. Faults where a test file stops: 3.
 For 2 of these faults, no test fails by name. The scenario in the first column is then the scenario of the test that covers the behavior:
 - "Fail when the body cannot be cancelled"
 - "Give the box without a check"
-1196 of 1197 lines are identical in the two runs. The list of failing tests differs in 1 line:
-- "Do not wait for the finish of a created record": run 1 failed [beemaps-burst-control-001], [beemaps-burst-control-028], [beemaps-burst-control-030], [beemaps-burst-control-031]; run 2 failed [beemaps-burst-control-001], [beemaps-burst-control-028], [beemaps-burst-control-030].
+The two runs give identical lines.
 
 Earlier runs, on earlier commits. Each run used the fault script of its time, so the sets grow:
 - Run A: 163 faults on the validator, and 28 survived.
@@ -37,6 +36,10 @@ Round 1 of the formal review found gaps in the tests and the faults. Each gap go
 - Faults for the leak paths of scenario 032: the key in an answer, a header, a record, a line and the console. Others copy the text of a failed call, the body of a refusal and fields of Bee Maps.
 - A test for the hold after an unknown outcome before the check of the quote, and faults for the order of three steps.
 - Text corrections: the hold rule applies to a new key, the refusal sources apply to the create call, and two Known limits were added. The wording of the STE review was corrected.
+Round 2 of the formal review found errors in the spec text and gaps in the faults:
+- The spec now says that a hold answers before the quote, and that a repeat of a key has the quoteId of its record. The design now says that the record keeps its state after an error that nobody expects.
+- Four faults were added. Three read the body before the check of the local request, one for each route. One moves the hold after a refusal before the replay of a record.
+- Three test titles changed, and no test changed otherwise. The runs of this file ran after the change of the titles.
 
 Lines of the first run on the final commit (scenario | fault | failing tests):
 beemaps-burst-control-004 | Use a minimum of 124 credits | failing: [beemaps-burst-control-004], [beemaps-burst-control-008], [beemaps-burst-control-010], [beemaps-burst-control-011]
@@ -1037,7 +1040,7 @@ beemaps-burst-control-028 | Finish a created record with another state | failing
 beemaps-burst-control-028 | Finish a created record of the quote id | failing: [beemaps-burst-control-001], [beemaps-burst-control-007], [beemaps-burst-control-013], [beemaps-burst-control-014], [beemaps-burst-control-020], [beemaps-burst-control-022], [beemaps-burst-control-024], [beemaps-burst-control-028], [beemaps-burst-control-030], [beemaps-burst-control-031]
 beemaps-burst-control-028 | Leave the burst out of a created record | failing: [beemaps-burst-control-024], [beemaps-burst-control-028]
 beemaps-burst-control-028 | Leave creditsRemaining out of a created record | failing: [beemaps-burst-control-024], [beemaps-burst-control-028]
-beemaps-burst-control-028 | Do not wait for the finish of a created record | failing: [beemaps-burst-control-001], [beemaps-burst-control-028], [beemaps-burst-control-030], [beemaps-burst-control-031]
+beemaps-burst-control-028 | Do not wait for the finish of a created record | failing: [beemaps-burst-control-001], [beemaps-burst-control-028], [beemaps-burst-control-030]
 beemaps-burst-control-030 | Skip the audit line created | failing: [beemaps-burst-control-001], [beemaps-burst-control-030], [beemaps-burst-control-031]
 beemaps-burst-control-030 | Write the audit line created with another outcome | failing: [beemaps-burst-control-001], [beemaps-burst-control-030], [beemaps-burst-control-031]
 beemaps-burst-control-031 | Write the audit line created without the burst id | failing: [beemaps-burst-control-031]
@@ -1236,3 +1239,7 @@ beemaps-burst-control-018 | Read the body of a refusal before the answer | faili
 beemaps-burst-control-007 | Move the local request check before the method check | failing: [beemaps-burst-control-007]
 beemaps-burst-control-007 | Reserve the credits before the check of the quote | failing: [beemaps-burst-control-007], [beemaps-burst-control-012], [beemaps-burst-control-013], [beemaps-burst-control-014], [beemaps-burst-control-016], [beemaps-burst-control-021], [beemaps-burst-control-022], [beemaps-burst-control-024], [beemaps-burst-control-025], [beemaps-burst-control-027], [beemaps-burst-control-029], [beemaps-burst-control-040]
 beemaps-burst-control-007 | Move the quote step before the hold after an unknown outcome | failing: [beemaps-burst-control-007]
+beemaps-burst-control-006 | Read the body of a quote before the check of the local request | failing: [beemaps-burst-control-001], [beemaps-burst-control-003], [beemaps-burst-control-006], [beemaps-burst-control-007], [beemaps-burst-control-008], [beemaps-burst-control-010], [beemaps-burst-control-012], [beemaps-burst-control-013], [beemaps-burst-control-014], [beemaps-burst-control-015], [beemaps-burst-control-016], [beemaps-burst-control-020], [beemaps-burst-control-021], [beemaps-burst-control-022], [beemaps-burst-control-023], [beemaps-burst-control-024], [beemaps-burst-control-025], [beemaps-burst-control-026], [beemaps-burst-control-027], [beemaps-burst-control-028], [beemaps-burst-control-029], [beemaps-burst-control-030], [beemaps-burst-control-031], [beemaps-burst-control-032], [beemaps-burst-control-037], [beemaps-burst-control-039], [beemaps-burst-control-040]
+beemaps-burst-control-006 | Read the body of a confirm before the check of the local request | failing: [beemaps-burst-control-001], [beemaps-burst-control-003], [beemaps-burst-control-006], [beemaps-burst-control-007], [beemaps-burst-control-012], [beemaps-burst-control-013], [beemaps-burst-control-014], [beemaps-burst-control-015], [beemaps-burst-control-016], [beemaps-burst-control-020], [beemaps-burst-control-021], [beemaps-burst-control-022], [beemaps-burst-control-023], [beemaps-burst-control-024], [beemaps-burst-control-025], [beemaps-burst-control-026], [beemaps-burst-control-027], [beemaps-burst-control-028], [beemaps-burst-control-029], [beemaps-burst-control-030], [beemaps-burst-control-031], [beemaps-burst-control-032], [beemaps-burst-control-039], [beemaps-burst-control-040]
+beemaps-burst-control-006 | Read the body of a list before the check of the local request | failing: [beemaps-burst-control-003], [beemaps-burst-control-006], [beemaps-burst-control-020], [beemaps-burst-control-033], [beemaps-burst-control-034], [beemaps-burst-control-036], [beemaps-burst-control-037]
+beemaps-burst-control-007 | Move the hold after a refusal before the replay | failing: [beemaps-burst-control-007], [beemaps-burst-control-025]
