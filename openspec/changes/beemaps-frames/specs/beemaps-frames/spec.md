@@ -59,22 +59,25 @@ Origin: spec-first
 
 #### Scenario: Build the box from the middle of the view `beemaps-frames-008`
 - **WHEN** a test gives the function `viewBox` the middle of the view at the latitude and longitude of a row
-- **THEN** the centre is each value rounded to the nearest multiple of 0.005, written with 3 decimals
+- **THEN** the centre is each value rounded to the nearest multiple of 0.005, and a value exactly between two multiples goes to the higher one
 - **AND** the half height is 1000 metres on a sphere of radius 6371008.8 metres, written as degrees of latitude
 - **AND** the half width is the half height divided by the cosine of the centre latitude
 - **AND** the box is [west, south, east, north] with each value rounded to 6 decimals
 - **AND** the row (60.0, 10.0) gives the box [9.982014, 59.991007, 10.017986, 60.008993]
 - **AND** the row (0.0, 0.0) gives [-0.008993, -0.008993, 0.008993, 0.008993]
 - **AND** the row (-33.9, 151.2) gives [151.189165, -33.908993, 151.210835, -33.891007]
+- **AND** the row (0.0025, 0.0025) gives the centre (0.005, 0.005) and the box [-0.003993, -0.003993, 0.013993, 0.013993]
+- **AND** the row (-0.0025, -0.0025) gives the centre (0.0, 0.0) and the same box as the row (0.0, 0.0)
 - **AND** the row (59.9976, 10.0031) gives the centre (60.0, 10.005) and the box [9.987014, 59.991007, 10.022986, 60.008993]
 - **AND** the row (30.2672, -97.7431) gives the centre (30.265, -97.745) and the box [-97.755412, 30.256007, -97.734588, 30.273993]
 
 #### Scenario: Refuse a view that has no box `beemaps-frames-009`
 - **WHEN** a person presses the chip in a view that cannot give a box
 - **THEN** no request is sent, and the info text names the reason
-- **AND** a view cannot give a box when its middle shows the sky
+- **AND** a view cannot give a box when its middle shows the sky, and then the centre given to `viewBox` is null
 - **AND** it cannot give a box when the centre has a latitude above 80 or below -80
 - **AND** it cannot give a box when the box goes past longitude 180 or -180
+- **AND** when two reasons apply, the reason is the first of the sky, the latitude and the longitude
 - **AND** for the sky the text is "Point the view at the ground and press again."
 - **AND** for the latitude the text is "Move the view to a latitude below 80 degrees and press again."
 - **AND** for the longitude the text is "Move the view away from the 180th meridian and press again."
@@ -126,7 +129,8 @@ Origin: spec-first
 - **AND** a frame is dropped when its `timestamp` is not a text of the form `YYYY-MM-DDTHH:MM:SS`, then an optional fraction, then `Z`
 - **AND** a frame is dropped when an earlier frame has the same `id`
 - **AND** at most the first 200 valid frames are kept
-- **AND** the result has `used` and `limit` from `budget` and `remaining` from `credits`, each as a whole number of 0 or more or null
+- **AND** the result has the kept frames as `frames`, and the fields `used`, `limit` and `remaining`
+- **AND** `used` and `limit` come from `budget`, `remaining` comes from `credits`, and each is a whole number of 0 or more or null
 
 #### Scenario: Refuse a bad answer `beemaps-frames-015`
 - **WHEN** the answer is not an object, or its `frames` is not a list
