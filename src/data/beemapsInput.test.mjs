@@ -317,6 +317,21 @@ test('[beemaps-source-009] measures the box on a sphere and refuses more than 5 
   });
 });
 
+test('[beemaps-source-009] gives the area of a box to six decimals with the radius 6371008.8 metres', () => {
+  const corners = (west, south, east, north) => [
+    [west, south],
+    [east, south],
+    [east, north],
+    [west, north],
+    [west, south],
+  ];
+  assert.equal(boxAreaKm2(corners(0, 0, 0.02, 0.02)).toFixed(6), '4.945738');
+  assert.equal(
+    boxAreaKm2(corners(10, 60, 10.04, 60.02)).toFixed(6),
+    '4.944243',
+  );
+});
+
 test('[beemaps-source-009] uses the width of the box at its latitude', () => {
   assert.equal(send({ bbox: [10, 60, 10.04, 60.02] }).ok, true);
   assert.equal(

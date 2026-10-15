@@ -5,6 +5,7 @@ import { Readable } from 'node:stream';
 import os from 'node:os';
 import path from 'node:path';
 import { beemapsProxy } from '../../server/providers/beemaps.js';
+import { localProviderPlugins } from '../../server/providers/local.js';
 
 const NOW = Date.UTC(2026, 9, 15, 12, 0, 0);
 const KEY = 'fixture-key-Z9y8';
@@ -155,7 +156,8 @@ async function install(
     if (route === undefined) {
       nexted = true;
     } else {
-      req.url = url.slice(route.length) || '/';
+      const rest = url.slice(route.length);
+      req.url = rest.startsWith('/') ? rest : `/${rest}`;
       await routes.get(route)(req, res, () => {
         nexted = true;
       });
@@ -193,6 +195,11 @@ test('[beemaps-source-001] mounts the routes status and frames, and the plugin n
   assert.deepEqual(preview.uses.sort(), [FRAMES, STATUS]);
   assert.equal((await preview.request(STATUS, { method: 'GET' })).status, 200);
   assert.equal((await preview.frames({ bbox: BOX })).status, 200);
+});
+
+test('[beemaps-source-001] puts the plugin once in the list of local provider plugins', () => {
+  const names = localProviderPlugins().map((plugin) => plugin.name);
+  assert.equal(names.filter((name) => name === 'beemaps-proxy').length, 1);
 });
 
 test('[beemaps-source-001] passes every other path to next and ignores a query on its own paths', async (t) => {
@@ -482,6 +489,24 @@ test('[beemaps-source-019] holds at most 32 answers and drops the one that it st
   assert.equal(server.calls.length, 33);
   assert.equal((await send(0)).body.cached, false);
   assert.equal(server.calls.length, 34);
+});
+
+test('[beemaps-source-019] counts an answer that is stored again as the newest', async (t) => {
+  const server = await install(t, { env: { BEEMAPS_DAILY_QUERIES: '100' } });
+  let sent = 0;
+  const send = async (n) => {
+    if (sent++ % 5 === 0) server.advance(61_000);
+    return server.frames({ bbox: boxAt(n) });
+  };
+  assert.equal((await send(0)).body.cached, false);
+  server.advance(590_000);
+  for (let n = 1; n < 32; n++) assert.equal((await send(n)).body.cached, false);
+  assert.equal((await send(0)).body.cached, false);
+  assert.equal(server.calls.length, 33);
+  assert.equal((await send(32)).body.cached, false);
+  assert.equal((await send(0)).body.cached, true);
+  assert.equal((await send(1)).body.cached, false);
+  assert.equal(server.calls.length, 35);
 });
 
 test('[beemaps-source-019] keeps an error answer out of the memory', async (t) => {
