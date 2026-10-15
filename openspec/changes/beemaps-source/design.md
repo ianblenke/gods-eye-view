@@ -92,3 +92,8 @@ The tests give the plugin a fake fetch function and a fake clock. The fake fetch
 - [The real answer has another shape] → The filter drops an item of another shape, and the Known limit `contract` says so. The owner can run one call by hand.
 - [The daily limit is too low or too high] → `BEEMAPS_DAILY_QUERIES` sets it. The default is 20.
 - [A browser on another origin calls the route] → The gate refuses it with `403`.
+
+## Purpose at archive time
+
+The lead sets this Purpose at archive time:
+"Give the app the newest street-level frames of a small area from Bee Maps, and limit every request, because a request can cost money. Keep only the id, the position and the time of each frame, and keep the key and the signed image URLs in the server."
