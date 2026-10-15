@@ -20,7 +20,7 @@
     "change": "codex-voice-container"
   },
   "beemaps-burst-control-001": {
-    "hash": "96c1557b839d7045dbff21f23f5c265e09d542564ccd367c8a2ecc9559699cbc",
+    "hash": "777bd14b4c8439ae9127b21079101d12678fa4e02c003bc47b5ae39f0f7efee4",
     "since": "2026-10-15",
     "change": "beemaps-burst-control"
   },
@@ -50,7 +50,7 @@
     "change": "beemaps-burst-control"
   },
   "beemaps-burst-control-007": {
-    "hash": "6734a72cebe2ea7026c1c7a76963e535f89751e83bc9d218ffa9b541ca16d2e1",
+    "hash": "d6c6e10cff6605cbb9aa4201f853fcfad04de1ffe94bff7543127eba7cb4afc1",
     "since": "2026-10-15",
     "change": "beemaps-burst-control"
   },
@@ -150,17 +150,17 @@
     "change": "beemaps-burst-control"
   },
   "beemaps-burst-control-027": {
-    "hash": "7a4f3fe82b93ecfd1a4ab160db83b785a02783b14e440beea3faa40aff2debdc",
+    "hash": "bc08a2c2a91823a6ad4eaf0173334d23bdb8e4058811d0d2ed116bdec5a0571c",
     "since": "2026-10-15",
     "change": "beemaps-burst-control"
   },
   "beemaps-burst-control-028": {
-    "hash": "9b2b77cd4c031f58b166dbf5446939666c0bee5297f3c88df565c8c1c765b5db",
+    "hash": "e003e50c1729ee1d652290550e096f1f5bc6506860febba6b2fadfbe7a3c5bf9",
     "since": "2026-10-15",
     "change": "beemaps-burst-control"
   },
   "beemaps-burst-control-029": {
-    "hash": "7f30862dafb41d4ed86b3a7de2c7ecbb99d91e445e8b2000ed63f06ccc594457",
+    "hash": "3608299b73d7d64dbd4f0f423c180b7b1ab3f7c6ddb65fa7cf0d982b046f069e",
     "since": "2026-10-15",
     "change": "beemaps-burst-control"
   },
@@ -210,12 +210,12 @@
     "change": "beemaps-burst-control"
   },
   "beemaps-burst-control-039": {
-    "hash": "56ada9dac8f337dbb972015a10d74c274f6bcc11e5c8674d88f21ffe7bcf86fb",
+    "hash": "2579e0e898f0ef09980060867140ca5df9c0c4ddc8c4363162814e99c80af1c6",
     "since": "2026-10-15",
     "change": "beemaps-burst-control"
   },
   "beemaps-burst-control-040": {
-    "hash": "f6bf075c46231e5a81b56b3c473ea1478e1855c229cf26ef2e7969076f65ba04",
+    "hash": "1a4e9bd93d9df86a6b79bbd8ae02fa1b05f786a40bc0203788761b85797dbc28",
     "since": "2026-10-15",
     "change": "beemaps-burst-control"
   },
