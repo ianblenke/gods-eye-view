@@ -1,4 +1,4 @@
-Host checks of osh-control-loopback, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit 5f4aacd517a0655825a37097af4937da9bece9e3; later commits change evidence files, documents and trace files only.
+Host checks of osh-control-loopback, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit 49dc91868be69df801ae6ae494a73d4e9d4c3ec3; later commits change evidence files, documents and trace files only.
 
 ## node scripts/check-import-directions.mjs
 {"modules":981,"portableEntries":79}
@@ -26,10 +26,10 @@ exit: 0
 ℹ    loopback-command.js | 100.00 |   100.00 |  100.00 | 
 ℹ   osh-control.js       | 100.00 |   100.00 |  100.00 | 
 
-## node scripts/spec/gates.mjs lint --change osh-control-loopback (on the documents of the commit 5f4aacd517a0655825a37097af4937da9bece9e3)
+## node scripts/spec/gates.mjs lint --change osh-control-loopback (on the documents of the commit 49dc91868be69df801ae6ae494a73d4e9d4c3ec3)
 STE: 0 errors, 748 warnings.
 
-## openspec validate osh-control-loopback (on the documents of the commit 5f4aacd517a0655825a37097af4937da9bece9e3)
+## openspec validate osh-control-loopback (on the documents of the commit 49dc91868be69df801ae6ae494a73d4e9d4c3ec3)
 Change 'osh-control-loopback' is valid
 
 ## The tests of the control folder in the image gods-eye-view:local

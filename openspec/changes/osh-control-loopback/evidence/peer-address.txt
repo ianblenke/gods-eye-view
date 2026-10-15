@@ -32,6 +32,6 @@ The project network of the app. The file compose.yaml sets no network, so make u
 What this shows:
 - With the host network, a browser on this machine that opens the app as localhost has the loopback address as the socket address. The gate passes it.
 - With the host network, a browser that opens the app by the LAN address of this machine has the LAN address as the socket address. The gate refuses it.
-- With a bridge network and a published port, a request from this machine has the gateway address of that network, never the loopback address. The gate refuses every request. This is the Known limit bridge.
+- In the two measurements with a bridge network, a request to localhost from this machine has the gateway address of that network, not the loopback address. The gate refuses it. This is the Known limit bridge.
 
-The probe containers and the probe network were stopped and removed after each measurement. The command docker ps shows only the app container and the listener container of the owner.
+After each measurement, the command docker ps shows only the app container and the listener container of the owner.
