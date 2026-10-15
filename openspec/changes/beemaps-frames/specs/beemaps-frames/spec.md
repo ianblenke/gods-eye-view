@@ -59,7 +59,7 @@ Origin: spec-first
 - **AND** the stats have `error` equal to the message of a rejection
 - **AND** they have `error` "The server did not give the status of the key." when the rejection has no message
 - **AND** they have `error` "The server did not give the status of the key." when the result is `ok` false and has no `error`
-- **AND** the chip has `disabled` false
+- **AND** the chip has `disabled` false, also after an earlier status with no key
 - **AND** a later `update` with a good status removes that text and the `error` of the failed status
 - **AND** a good answer of `getFrames` after a failed status also removes that text and the `error` of the failed status
 - **AND** a press that fails after a failed status shows the message and the `error` of the press
@@ -119,7 +119,7 @@ Origin: spec-first
 
 #### Scenario: Post the box `beemaps-frames-012`
 - **WHEN** a test calls `getFrames` with the box [9.982014, 59.991007, 10.017986, 60.008993]
-- **THEN** the fake gets one `POST` request for "/api/beemaps/frames" with the signal of the call
+- **THEN** the fake gets one `POST` request for "/api/beemaps/frames" with a signal of its own
 - **AND** the only header is `Content-Type` "application/json"
 - **AND** the body is the text `{"bbox":[9.982014,59.991007,10.017986,60.008993],"limit":200}`
 - **AND** a good answer gives `{ok:true, answer}`, where `answer` is the result of the answer records
@@ -134,6 +134,8 @@ Origin: spec-first
 - **AND** a rejection gives the status 0 and the error "unreachable"
 - **AND** a call that does not end in 30 seconds is aborted and gives the status 0 and the error "unreachable"
 - **AND** the timer of that call is cleared when the call ends
+- **AND** the signal of its own is aborted when the signal of the call is aborted, and when the 30 seconds end
+- **AND** the call removes its listener from the signal of the call when the call ends
 - **AND** each case above that gives `ok` false sends exactly one request to the fake fetch function, also after the test runs every timer
 - **AND** a call whose own signal is aborted rejects with the abort error
 
@@ -175,6 +177,8 @@ Origin: spec-first
 - **AND** "rate_limited" gives "Too many presses. Wait 60 seconds."
 - **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait 30 seconds." for `retryAfter` 30, and "Bee Maps asks you to wait 600 seconds." for `retryAfter` 600
 - **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait 1 second." for `retryAfter` 1
+- **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait 0 seconds." for `retryAfter` 0
+- **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait 2 seconds." for `retryAfter` 2
 - **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait." when `retryAfter` is not a whole number
 - **AND** "no_credit" gives "The Bee Maps account has no credit."
 - **AND** "upstream_failed" and "bad_upstream" give "Bee Maps did not answer correctly."
@@ -220,6 +224,7 @@ Origin: spec-first
 - **AND** the point has the color, the alpha and the size of the model
 - **AND** the stats have `count` 3, a `lastUpdate` and `error` null
 - **AND** a second good answer replaces the points of the first
+- **AND** the age of a point is the time of the clock that the layer was given, minus the time of the frame
 
 #### Scenario: Keep the points when a press fails `beemaps-frames-020`
 - **WHEN** a press fails after a good answer
@@ -233,12 +238,15 @@ Origin: spec-first
 - **THEN** the request is aborted, an answer that arrives afterwards changes nothing, and the data source is hidden and has no entity
 - **AND** the stats have `count` 0, and the next enable shows the hint and no message
 - **AND** a status answer that arrives after `disable` changes nothing, and a new `update` aborts the status request of the one before
+- **AND** the next enable forgets a status with no key and a failed status, and the chip has `disabled` false
+- **AND** an `update` or a `disable` does not abort a status request that has ended
 
 #### Scenario: Release everything on destroy `beemaps-frames-022`
 - **WHEN** a test calls `destroy` on a layer that shows points
 - **THEN** the viewer has no data source of the layer, and the stats have `count` 0 and `lastUpdate` null
 - **AND** `destroy` aborts the request in flight, and a second `destroy` does nothing
 - **AND** `destroy` on a layer that was never initialized does nothing
+- **AND** the layer can be initialized again after `destroy`
 
 #### Scenario: Tell the panel about each change `beemaps-frames-023`
 - **WHEN** a test sets a row controls listener, and then presses the chip

@@ -323,6 +323,20 @@ test('[beemaps-frames-006] keeps the text for no key when a good answer arrives 
   );
 });
 
+test('[beemaps-frames-007] enables the chip when a status fails after a status with no key', async () => {
+  let fail = false;
+  const h = harness({
+    status: async () =>
+      fail ? { ok: false } : { ok: true, configured: false },
+  });
+  await h.ready();
+  assert.equal(h.chip().disabled, true);
+  fail = true;
+  await h.layer.update();
+  assert.equal(h.chip().disabled, false);
+  assert.equal(h.info(), STATUS_FAILED);
+});
+
 test('[beemaps-frames-007] removes the text and the error of a failed status after a good status', async () => {
   let fail = true;
   const h = harness({
@@ -471,6 +485,22 @@ test('[beemaps-frames-019] shows one point on the ground for each frame, with th
     lastUpdate: NOW,
     error: null,
   });
+});
+
+test('[beemaps-frames-019] styles each point with the age at the time of the clock that the layer was given', async () => {
+  const later = NOW + 400 * 24 * HOUR;
+  const h = harness();
+  await h.ready();
+  h.clock.t = later;
+  await h.chip().onClick();
+  const julian = Cesium.JulianDate.now();
+  const entities = h.dataSource().entities.values;
+  assert.equal(entities.length, 3);
+  for (const entity of entities) {
+    assert.equal(entity.point.pixelSize.getValue(julian), 6);
+    assert.equal(entity.point.color.getValue(julian).alpha, 0.4);
+  }
+  assert.equal(h.layer.getStats().lastUpdate, later);
 });
 
 test('[beemaps-frames-019] puts each point at the position of its frame', async () => {
@@ -626,6 +656,38 @@ test('[beemaps-frames-021] shows no point after disable and no message after the
   });
 });
 
+test('[beemaps-frames-021] forgets a status with no key and a failed status when the layer is enabled again', async () => {
+  for (const [status, text, error] of [
+    [
+      async () => ({ ok: true, configured: false }),
+      'No Bee Maps key. Set BEEMAPS_API_KEY in .env and restart the app.',
+      null,
+    ],
+    [async () => ({ ok: false }), STATUS_FAILED, STATUS_FAILED],
+  ]) {
+    const h = harness({ status });
+    await h.ready();
+    assert.equal(h.info(), text);
+    assert.equal(h.layer.getStats().error, error);
+    h.layer.disable(h.viewer);
+    h.layer.enable(h.viewer);
+    assert.equal(h.info(), HINT);
+    assert.equal(h.layer.getStats().error, null);
+    assert.equal(h.chip().disabled, false);
+  }
+});
+
+test('[beemaps-frames-021] does not abort a status request that has ended', async () => {
+  const h = harness();
+  await h.ready();
+  await h.layer.update();
+  h.layer.disable(h.viewer);
+  assert.deepEqual(
+    h.calls.getStatus.map((call) => call.signal.aborted),
+    [false, false],
+  );
+});
+
 test('[beemaps-frames-021] ignores a status answer that arrives after disable', async () => {
   const wait = deferred();
   const h = harness({ status: () => wait.promise });
@@ -696,6 +758,14 @@ test('[beemaps-frames-022] clears the points of a layer that shows them on destr
     error: null,
   });
   assert.deepEqual(h.layer.getRowControls().chips, []);
+});
+
+test('[beemaps-frames-022] can be initialized again after destroy', () => {
+  const h = harness();
+  h.layer.init(h.viewer);
+  h.layer.destroy(h.viewer);
+  h.layer.init(h.viewer);
+  assert.equal(h.added.length, 1);
 });
 
 test('[beemaps-frames-022] destroys a layer that was never initialized', () => {

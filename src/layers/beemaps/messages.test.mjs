@@ -74,6 +74,18 @@ test('[beemaps-frames-016] writes the daily limit and the wait of the upstream w
     }),
     'Bee Maps asks you to wait 1 second.',
   );
+  for (const [retryAfter, text] of [
+    [0, 'Bee Maps asks you to wait 0 seconds.'],
+    [2, 'Bee Maps asks you to wait 2 seconds.'],
+  ])
+    assert.equal(
+      describeFailure({
+        status: 429,
+        error: 'upstream_rate_limit',
+        retryAfter,
+      }),
+      text,
+    );
   for (const value of [undefined, null, '30', 1.5, -1, NaN]) {
     assert.equal(
       describeFailure({ status: 429, error: 'budget', limit: value }),

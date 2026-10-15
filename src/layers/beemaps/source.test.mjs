@@ -254,6 +254,8 @@ test('[beemaps-frames-013] sends one request for each call that fails, also afte
     () => json({ error: 'upstream_failed' }, 502),
     () => json({}, 500),
     () => new Response('x'.repeat(1024 * 1024 + 1), { status: 200 }),
+    () =>
+      new Response(new ReadableStream({ pull: () => new Promise(() => {}) })),
     () => json({ error: 'key_rejected' }, 401),
     () => json({ error: 'no_credit' }, 402),
     () => json({ error: 'budget', used: 20, limit: 20 }, 429),
@@ -301,6 +303,59 @@ test('[beemaps-frames-013] aborts a call that does not end in 30 seconds and cle
     error: 'unreachable',
   });
   assert.deepEqual(cleared, [1]);
+});
+
+test('[beemaps-frames-013] gives the fetch function a signal of its own that follows the call and the 30 seconds', async () => {
+  const stalled = (url, init) =>
+    new Promise((resolve, reject) =>
+      init.signal.addEventListener('abort', () =>
+        reject(new DOMException('aborted', 'AbortError')),
+      ),
+    );
+  const caller = new AbortController();
+  const withCaller = make(stalled);
+  const first = withCaller.source.getFrames({
+    bbox: BBOX,
+    signal: caller.signal,
+  });
+  await new Promise((resolve) => setImmediate(resolve));
+  const own = withCaller.calls[0].init.signal;
+  assert.notEqual(own, caller.signal);
+  assert.equal(own.aborted, false);
+  caller.abort();
+  assert.equal(own.aborted, true);
+  await assert.rejects(first, { name: 'AbortError' });
+  const alone = make(stalled);
+  const second = alone.source.getFrames({ bbox: BBOX });
+  await new Promise((resolve) => setImmediate(resolve));
+  const ownAlone = alone.calls[0].init.signal;
+  assert.equal(ownAlone instanceof AbortSignal, true);
+  assert.equal(ownAlone.aborted, false);
+  alone.timers[0].fn();
+  assert.equal(ownAlone.aborted, true);
+  assert.equal((await second).ok, false);
+});
+
+test('[beemaps-frames-013] removes its listener from the signal of the call when the call ends', async () => {
+  for (const respond of [() => json(GOOD), () => json({ error: 'x' }, 500)]) {
+    const events = [];
+    const signal = {
+      aborted: false,
+      throwIfAborted() {},
+      addEventListener: (type, handler) => events.push(['add', type, handler]),
+      removeEventListener: (type, handler) =>
+        events.push(['remove', type, handler]),
+    };
+    await make(respond).source.getFrames({ bbox: BBOX, signal });
+    assert.deepEqual(
+      events.map(([action, type]) => [action, type]),
+      [
+        ['add', 'abort'],
+        ['remove', 'abort'],
+      ],
+    );
+    assert.equal(events[0][2], events[1][2]);
+  }
 });
 
 test('[beemaps-frames-013] gives unreachable when the 30 seconds end while it reads the body', async () => {
