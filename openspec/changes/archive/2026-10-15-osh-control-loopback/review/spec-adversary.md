@@ -1,0 +1,12 @@
+Verdict: PASS
+Tree commit 34fc542076f1ad6f0b8611a0d56572e8bd45a6f0, scope full. I ran nothing.
+- [ ] FINDING minor openspec/changes/archive/2026-10-15-osh-control-loopback/design.md:51 (34fc5420) "The route gives the same `403` as before" has two meanings. A user who opened the app by a LAN address got no `403` before this change, so the sentence is false for that user. D3 means the body of the refusal. Write: "The route gives `403` with the same body as for any other refusal." (13 words).
+- [ ] FINDING minor openspec/changes/archive/2026-10-15-osh-control-loopback/proposal.md:36 (34fc5420) The Goal "passes only when it comes from the machine that runs the server" (design.md:13) holds where the server sees the real client address. The evidence measured three modes: the default bridge, a user-defined bridge and the host network (peer-address.txt:13-28). No Known limit names other modes. Add: "Known limit `modes`: The gate trusts the socket address. The evidence measured the default bridge, a user-defined bridge and the host network. In another mode, a LAN device could appear with the loopback address, and the gate would pass it."
+Checked, no finding:
+- Safety: only the three socket addresses pass; `parsed.host !== host` refuses each Host that the parser changes (capitals, user name, path, short IPv4 forms, mapped IPv6); the Origin must equal the scheme and the Host exactly; a request with no Host is refused; the gate runs before the flag, the account and the body (osh-control.js:98), writes one audit line (:93-97) and no upstream request follows.
+- The carried scenario osh-control-029 and the requirement text equal the base; ids.json changes only the hash of 028 and adds 039 and 040.
+- The 49 faults agree with the script and the lines; 49dc9186 is the last code and test commit (reflog), so the commit statements in the evidence are true.
+- The gate output has one error, REVIEW-MISSING (r1-gate-output.txt:2290), 976 of 976 scenarios verified, and 2 owned gaps that are in the ledger of main.
+- Rules 17 to 23: tasks 4.2 to 4.4 are open, the new file is in ownership.json and format-scope.json, and the evidence folder holds text files only.
+- CHANGELOG, .env.example and the roadmap line agree with the code and with peer-address.txt.
+Could not check: a real LAN client; the network that `make up` creates; rootless Docker; client.js against the refusal; the ASD-STE100 of the new prose (the STE reviewer).
