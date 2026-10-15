@@ -38,9 +38,7 @@ export function describeFailure({ status, error, limit, retryAfter }) {
       ? `Bee Maps asks you to wait ${retryAfter} seconds.`
       : 'Bee Maps asks you to wait.';
   }
-  if (typeof error === 'string' && Object.hasOwn(FIXED, error)) {
-    return FIXED[error];
-  }
+  if (Object.hasOwn(FIXED, error)) return FIXED[error];
   return `The server answered with an unknown error (${status}).`;
 }
 
