@@ -19,7 +19,6 @@ export function isLoopbackCommand(req) {
   if (hasProxySignals(headers)) return false;
   if (!LOOPBACK_ADDRESSES.has(req.socket?.remoteAddress)) return false;
   const host = headers.host;
-  if (typeof host !== 'string') return false;
   let parsed;
   try {
     parsed = new URL(`http://${host}`);
