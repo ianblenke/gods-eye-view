@@ -192,7 +192,6 @@ export function beemapsBurstProxy({
     if (!config.enabled) return send(res, 403, { error: 'burst_off' });
     if (!config.configured) return send(res, 403, { error: 'no_key' });
     const text = await readBodyText(req, QUOTE_BODY_MAX);
-    if (text === null) return send(res, 400, { error: 'bad_body' });
     const checked = validateQuote(text, config);
     if (!checked.ok) return send(res, checked.status, checked.payload);
     const peeked = await credits.peek();
@@ -240,12 +239,17 @@ export function beemapsBurstProxy({
       );
     }
     if (found.holdSeconds > 0) {
-      return block(409, 'outcome_unknown', {
-        ok: false,
-        outcome: 'unknown',
-        held: true,
-        retryAfter: found.holdSeconds,
-      });
+      return block(
+        409,
+        'outcome_unknown',
+        {
+          ok: false,
+          outcome: 'unknown',
+          held: true,
+          retryAfter: found.holdSeconds,
+        },
+        { 'Retry-After': String(found.holdSeconds) },
+      );
     }
     const request = quotes.take(quoteId);
     if (request === null) return block(410, 'quote_expired');
@@ -350,13 +354,12 @@ export function beemapsBurstProxy({
       return send(res, status, { error, ...extra }, headers);
     };
     if (!allow.confirm()) {
-      return block(429, 'rate_limited', {}, { 'Retry-After': '60' });
+      return send(res, 429, { error: 'rate_limited' }, { 'Retry-After': '60' });
     }
     const config = readConfig(env);
     if (!config.enabled) return block(403, 'burst_off');
     if (!config.configured) return block(403, 'no_key');
     const text = await readBodyText(req, CONFIRM_BODY_MAX);
-    if (text === null) return block(400, 'bad_body');
     const checked = validateConfirm(text);
     if (!checked.ok) return block(checked.status, 'bad_body');
     context.quoteId = checked.quoteId;
@@ -404,7 +407,6 @@ export function beemapsBurstProxy({
     if (!config.enabled) return send(res, 403, { error: 'burst_off' });
     if (!config.configured) return send(res, 403, { error: 'no_key' });
     const text = await readBodyText(req, LIST_BODY_MAX);
-    if (text === null) return send(res, 400, { error: 'bad_body' });
     const checked = validateList(text);
     if (!checked.ok) return send(res, checked.status, checked.payload);
     const { result, cached } = await lookupList(config.key);

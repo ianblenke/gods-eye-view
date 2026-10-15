@@ -68,7 +68,6 @@ test('[beemaps-burst-control-031] writes the reasons of the list as they are and
   const { log, parsed } = capture();
   const reasons = [
     'cross_origin',
-    'rate_limited',
     'burst_off',
     'no_key',
     'bad_body',
@@ -88,6 +87,7 @@ test('[beemaps-burst-control-031] writes the reasons of the list as they are and
   for (const reason of [
     ...reasons,
     'other',
+    'rate_limited',
     '',
     null,
     undefined,
@@ -97,7 +97,7 @@ test('[beemaps-burst-control-031] writes the reasons of the list as they are and
     await log({ ...EVENT, outcome: 'blocked', reason });
   assert.deepEqual(
     parsed().map((line) => line.reason),
-    [...reasons, null, null, null, null, null, null],
+    [...reasons, null, null, null, null, null, null, null],
   );
 });
 

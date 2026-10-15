@@ -124,7 +124,8 @@ Origin: spec-first
 - **WHEN** a test gives the plugin a clock and asks for quotes
 - **THEN** a `quoteId` is 32 lowercase hexadecimal characters, and two quotes for the same request have different ids
 - **AND** a confirm 119.999 seconds after the quote uses the quote, and a confirm at 120 seconds gets 410 with `{error:'quote_expired'}`
-- **AND** a quote that a confirm has used gives `quote_expired` at the next confirm, and an id that was never given gives the same answer
+- **AND** a used quote gives `quote_expired` at the next confirm with another idempotency key
+- **AND** an id that was never given gives the same answer
 - **AND** a confirm uses up its quote at the quote step, for every outcome after that step
 - **AND** the same quote with a new idempotency key gets `quote_expired`, also after an unknown outcome
 - **AND** the plugin keeps at most 8 quotes, so the ninth quote ends the oldest one
@@ -257,6 +258,10 @@ Origin: spec-first
 - **AND** a new plugin that reads a file with a "pending" record gives the answer of an unknown outcome for that key
 - **AND** the file keeps at most 500 records of "created" and "refused", and it drops the oldest of those first
 - **AND** it never drops a record of "pending" or "unknown"
+- **AND** when the write of the record after the send fails, the answer is still the outcome of the send
+- **AND** the file then keeps the state "pending"
+- **AND** a new plugin treats that key as an unknown outcome
+- **AND** a repeat of that key gets scenario 026, and a new key gets the hold of scenario 040
 
 #### Scenario: Refuse when the ledger fails `beemaps-burst-control-039`
 - **WHEN** the file `ledger.json` cannot be read, is not valid JSON, or contains a record that is not valid
@@ -281,7 +286,8 @@ Origin: spec-first
 #### Scenario: Hold after an unknown outcome `beemaps-burst-control-040`
 - **WHEN** the ledger contains a record with the state "unknown" or "pending" that is less than 600 seconds old
 - **THEN** a confirm with a new idempotency key gets 409 with `ok` false, `outcome` "unknown", `error` "outcome_unknown", `held` true and `retryAfter`, and no upstream request
-- **AND** `retryAfter` is the whole seconds that remain, rounded up
+- **AND** `retryAfter` is the whole seconds that remain, rounded up, and the answer has the header `Retry-After` with the same number
+- **AND** the age of a record is the time since its last change, which is the write of "pending" or the change to "unknown"
 - **AND** a record that is 600 seconds old or older causes no hold
 - **AND** the hold comes from the file, so a new plugin still has it
 - **AND** a confirm that repeats the key of that record gets the answer of scenario 026
@@ -295,15 +301,17 @@ Origin: spec-first
 - **THEN** the line with the outcome "accepted" is written, and the write has ended, before the fake upstream gets its request
 - **AND** a second line with the outcome "created", "refused" or "unknown" follows when the confirm ends
 - **AND** when the write of the first line fails, the route answers 500 with `{error:'log_failed'}`, and it sends no upstream request
+- **AND** when the write of the second line fails, the answer is still the outcome of the send
 
 #### Scenario: Fill the line `beemaps-burst-control-031`
 - **WHEN** a test reads the lines of the file `beemaps-bursts.jsonl` in the log folder
 - **THEN** each line is JSON with the fields `time`, `requestId`, `outcome`, `reason`, `client`, `bbox`, `areaKm2`, `credits`, `quoteId`, `idempotencyKey`, `upstreamStatus`, `burstId` and `durationMs`
 - **AND** the outcome is "accepted" before the send, and "created", "refused" or "unknown" after it, where "refused" means a refusal of Bee Maps
-- **AND** a refusal of `confirm` at a step after the local request gets a line with the outcome "blocked" and the reason
+- **AND** a refusal of `confirm` at a step after the rate limit gets a line with the outcome "blocked" and the reason
 - **AND** a request from another machine, a method that is not POST and a repeat of a key get no line
-- **AND** the reasons are cross_origin, rate_limited, burst_off, no_key, bad_body, busy, key_reused, outcome_unknown, key_rejected, no_credit, upstream_rate_limit, bad_request, budget_used, budget_unavailable, quote_expired, ledger_unavailable and log_failed
-- **AND** a `reason` that is not in that list is written as null
+- **AND** a request over the rate limit gets no line
+- **AND** the reasons are cross_origin, burst_off, no_key, bad_body, busy, key_reused, outcome_unknown, key_rejected, no_credit, upstream_rate_limit, bad_request, budget_used, budget_unavailable, quote_expired, ledger_unavailable and log_failed
+- **AND** a `reason` that is not in that list, for example `rate_limited`, is written as null
 - **AND** no line contains the key or a field of the answer of Bee Maps other than the ones above
 - **AND** the file is renamed to a file with the suffix `.1` when a line would make it larger than 4 MiB
 
@@ -343,6 +351,7 @@ Origin: spec-first
 - **THEN** an item without a text `_id` is dropped, and an item that is not an object is dropped
 - **AND** `bbox` is [west, south, east, north] of the ring of `geojson`
 - **AND** the numbers are rounded to 6 decimals, and `bbox` is null when the ring is not valid
+- **AND** an answer larger than 1 MiB gives `upstream_failed`, and an answer of exactly 1 MiB is read
 - **AND** a ring of 150000 positions gives its `bbox`
 - **AND** `isHit` is a boolean and else false
 - **AND** `status` is one of the three texts and else null
@@ -365,8 +374,7 @@ Origin: spec-first
 #### Scenario: Limit the requests `beemaps-burst-control-037`
 - **WHEN** a client sends more requests than the limit in 60 seconds
 - **THEN** `quote` allows 10, `confirm` allows 3 and `list` allows 6, and the next request gets 429 with `{error:'rate_limited'}` and the header `Retry-After` 60
-- **AND** a refused request sends no upstream request, and a refused `quote` or `list` writes no file
-- **AND** a refused `confirm` writes one audit line with the outcome "blocked" and the reason `rate_limited`
+- **AND** a refused request sends no upstream request and writes no file, so a flood of requests cannot fill the audit file
 - **AND** the window is 60 seconds on the clock of the plugin, and the status route has no limit
 
 ### Requirement: One address and no other way in

@@ -1333,15 +1333,20 @@ test('[beemaps-burst-control-040] holds every confirm with a new key for 600 sec
       },
     ],
   );
+  assert.equal(held.headers['retry-after'], '600');
   assert.equal(server.calls.length, 1);
   assert.deepEqual(await server.credits(), {
     date: '2026-10-15',
     credits: 125,
   });
   server.clock.t += 100_000;
-  assert.equal((await server.flow(3)).body.retryAfter, 500);
+  const later = await server.flow(3);
+  assert.equal(later.body.retryAfter, 500);
+  assert.equal(later.headers['retry-after'], '500');
   server.clock.t += 499_500;
-  assert.equal((await server.flow(4)).body.retryAfter, 1);
+  const last = await server.flow(4);
+  assert.equal(last.body.retryAfter, 1);
+  assert.equal(last.headers['retry-after'], '1');
 });
 
 test('[beemaps-burst-control-040] ends the hold after 600 seconds, keeps it after a restart, and answers a repeat of the key as in scenario 026', async (t) => {
@@ -1828,13 +1833,14 @@ test('[beemaps-burst-control-037] allows 10 quotes, 3 confirms and 6 lists in 60
   );
   for (let n = 0; n < 3; n += 1)
     assert.equal((await server.request(CONFIRM, { body: {} })).status, 400);
+  const linesBefore = server.lines.length;
   const confirmed = await server.request(CONFIRM, { body: {} });
   assert.deepEqual(
     [confirmed.status, confirmed.body, confirmed.headers['retry-after']],
     [429, { error: 'rate_limited' }, '60'],
   );
-  assert.deepEqual(server.lines.at(-1).reason, 'rate_limited');
-  assert.equal(server.lines.at(-1).outcome, 'blocked');
+  assert.equal(server.lines.length, linesBefore);
+  assert.equal(linesBefore, 3);
   assert.equal(server.calls.length, 1);
   assert.deepEqual(await server.files(), []);
 });
@@ -1906,4 +1912,167 @@ test('[beemaps-burst-control-030] answers as usual when the write of a line afte
     [blocked.status, blocked.body],
     [400, { error: 'bad_body' }],
   );
+});
+
+test('[beemaps-burst-control-028] answers with the outcome of the send when the write of the record after the send fails, and keeps the state pending in the file', async (t) => {
+  const hooks = {
+    writeFile: async (file, text) => {
+      if (file.includes('ledger') && !text.includes('"pending"'))
+        throw new Error('disk full');
+    },
+  };
+  const server = await install(t, { hooks });
+  const quoted = await server.quote();
+  const result = await server.confirm(quoted.body.quoteId, idem(1));
+  assert.deepEqual([result.status, result.body.outcome], [200, 'created']);
+  assert.equal(server.calls.length, 1);
+  assert.equal((await server.ledger()).records[0].state, 'pending');
+  const restarted = await install(t, { cacheDir: server.dir });
+  const replay = await restarted.confirm(quoted.body.quoteId, idem(1));
+  assert.deepEqual(
+    [replay.status, replay.body.outcome, replay.body.replayed],
+    [409, 'unknown', true],
+  );
+  const other = await restarted.flow(2);
+  assert.deepEqual(
+    [other.status, other.body.held, other.body.error],
+    [409, true, 'outcome_unknown'],
+  );
+  assert.equal(restarted.calls.length, 0);
+});
+
+test('[beemaps-burst-control-001] answers every route with the content type JSON and the cache control no-store', async (t) => {
+  const server = await install(t, { respond: () => failure(403) });
+  const quoted = await server.quote();
+  const results = [
+    await server.request(STATUS, { method: 'GET' }),
+    await server.request(STATUS, { method: 'POST' }),
+    quoted,
+    await server.quote([1, 2, 3]),
+    await server.confirm(quoted.body.quoteId, idem(1)),
+    await server.flow(2),
+    await server.request(LIST, { body: {} }),
+    await server.request(LIST, { body: 'x' }),
+    await server.request(CONFIRM, { body: {}, remote: '192.168.1.20' }),
+  ];
+  for (const result of results) {
+    assert.equal(
+      result.headers['content-type'],
+      'application/json; charset=utf-8',
+      result.text,
+    );
+    assert.equal(result.headers['cache-control'], 'no-store', result.text);
+  }
+});
+
+test('[beemaps-burst-control-020] does not count a refused request and frees all the requests of the window together', async (t) => {
+  const server = await install(t);
+  const status = async () =>
+    (await server.request(CONFIRM, { body: {} })).status;
+  for (let n = 0; n < 3; n += 1) assert.equal(await status(), 400);
+  server.clock.t += 30_000;
+  for (let n = 0; n < 3; n += 1) assert.equal(await status(), 429);
+  server.clock.t += 31_000;
+  for (let n = 0; n < 3; n += 1) assert.equal(await status(), 400);
+  assert.equal(await status(), 429);
+});
+
+test('[beemaps-burst-control-025] answers a repeat of a 402 and a held confirm with no retryAfter and no Retry-After header', async (t) => {
+  const server = await install(t, { respond: () => failure(402) });
+  const quoted = await server.quote();
+  const first = await server.confirm(quoted.body.quoteId, idem(1));
+  assert.equal(first.status, 402);
+  const replay = await server.confirm(quoted.body.quoteId, idem(1));
+  assert.deepEqual(
+    [replay.status, replay.body, replay.headers['retry-after']],
+    [
+      402,
+      { ok: false, outcome: 'refused', error: 'no_credit', replayed: true },
+      undefined,
+    ],
+  );
+  const held = await server.flow(2);
+  assert.deepEqual(
+    [held.status, held.body, held.headers['retry-after']],
+    [
+      402,
+      { error: 'no_credit', ok: false, outcome: 'refused', held: true },
+      undefined,
+    ],
+  );
+});
+
+test('[beemaps-burst-control-014] refuses a quote one credit over the credits that remain, and checks the credits against the maximum of the settings', async (t) => {
+  const server = await install(t, {
+    env: {
+      BEEMAPS_BURST_DAILY_CREDITS: '200',
+      BEEMAPS_BURST_MAX_CREDITS: '500',
+    },
+  });
+  const over = await server.quote(BOX, { credits: 201 });
+  assert.deepEqual(
+    [over.status, over.body],
+    [403, { error: 'budget_used', used: 0, limit: 200 }],
+  );
+  const exact = await server.quote(BOX, { credits: 200 });
+  assert.equal(exact.status, 200);
+  assert.equal(exact.body.request.credits, 200);
+});
+
+test('[beemaps-burst-control-014] keeps no quote for a request that the budget cannot pay', async (t) => {
+  const server = await install(t, {
+    env: {
+      BEEMAPS_BURST_DAILY_CREDITS: '250',
+      BEEMAPS_BURST_MAX_CREDITS: '200',
+    },
+  });
+  const first = await server.quote();
+  const second = await server.quote();
+  assert.equal(
+    (await server.confirm(second.body.quoteId, idem(1))).status,
+    200,
+  );
+  for (let n = 0; n < 8; n += 1)
+    assert.equal((await server.quote(BOX, { credits: 200 })).status, 403);
+  assert.equal((await server.confirm(first.body.quoteId, idem(2))).status, 200);
+});
+
+test('[beemaps-burst-control-030] writes the blocked line, and waits for the write to end, before it answers', async (t) => {
+  const server = await install(t, {
+    env: { BEEMAPS_BURST_ENABLED: undefined },
+    hooks: { audit: async () => sleep(20) },
+  });
+  const result = await server.request(CONFIRM, { body: {} });
+  assert.equal(result.status, 403);
+  assert.equal(server.lines.length, 1);
+  assert.equal(server.lines[0].reason, 'burst_off');
+});
+
+test('[beemaps-burst-control-031] writes a blocked line for a confirm body that is too large', async (t) => {
+  const server = await install(t);
+  const result = await server.request(CONFIRM, { body: 'y'.repeat(1025) });
+  assert.deepEqual([result.status, result.body], [400, { error: 'bad_body' }]);
+  assert.deepEqual(
+    server.lines.map((line) => [line.outcome, line.reason]),
+    [['blocked', 'bad_body']],
+  );
+});
+
+test('[beemaps-burst-control-023] lets a confirm run while a list request is in flight', async (t) => {
+  const open = gate();
+  const server = await install(t, {
+    respond: async (url) => {
+      if (String(url) === LIST_URL) {
+        await open.opened;
+        return listing();
+      }
+      return created();
+    },
+  });
+  const pending = server.request(LIST, { body: {} });
+  await waitFor(() => server.calls.length === 1);
+  const result = await server.flow(1);
+  assert.equal(result.status, 200);
+  open.open();
+  assert.equal((await pending).status, 200);
 });

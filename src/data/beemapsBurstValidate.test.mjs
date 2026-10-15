@@ -437,3 +437,10 @@ test('[beemaps-burst-control-033] answers bad_body for a body that is not an obj
   ])
     assert.deepEqual(validateList(text), bad, text);
 });
+
+test('[beemaps-burst-control-008] answers bad_body for a null text, which stands for a body that was too large or failed', () => {
+  const bad = refused(400, { error: 'bad_body' });
+  assert.deepEqual(quote(null), bad);
+  assert.deepEqual(validateConfirm(null), bad);
+  assert.deepEqual(validateList(null), bad);
+});

@@ -846,3 +846,15 @@ test('[beemaps-burst-control-036] gives upstream_failed for a list answer with a
     );
   }
 });
+
+test('[beemaps-burst-control-017] keeps credits that are not whole as they are', async () => {
+  assert.equal(
+    (await create(() => created({}, { credits: 125.5 })).promise).burst.credits,
+    125.5,
+  );
+  assert.equal(
+    (await list(() => json({ bursts: [LISTED(1, { credits: 0.5 })] })).promise)
+      .bursts[0].credits,
+    0.5,
+  );
+});

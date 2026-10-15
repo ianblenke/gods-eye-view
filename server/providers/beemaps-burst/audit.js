@@ -18,7 +18,6 @@ const OUTCOMES = new Set([
 ]);
 const REASONS = new Set([
   'cross_origin',
-  'rate_limited',
   'burst_off',
   'no_key',
   'bad_body',

@@ -122,7 +122,7 @@ function checkBox(bbox) {
 /**
  * Check the body of a quote request.
  *
- * @param {string} text
+ * @param {string|null} text - null when the body was too large or failed while it was read
  * @param {{maxCredits:number}} config
  * @returns {{ok:true, request:{bbox:number[], areaKm2:number, credits:number}}|{ok:false, status:number, payload:object}}
  */
@@ -151,7 +151,7 @@ export function validateQuote(text, config) {
 /**
  * Check the body of a confirm request.
  *
- * @param {string} text
+ * @param {string|null} text - null when the body was too large or failed while it was read
  * @returns {{ok:true, quoteId:string, idempotencyKey:string}|{ok:false, status:number, payload:object}}
  */
 export function validateConfirm(text) {
@@ -176,7 +176,7 @@ export function validateConfirm(text) {
 /**
  * Check the body of a list request.
  *
- * @param {string} text
+ * @param {string|null} text - null when the body was too large or failed while it was read
  * @returns {{ok:true, limit:number}|{ok:false, status:number, payload:object}}
  */
 export function validateList(text) {

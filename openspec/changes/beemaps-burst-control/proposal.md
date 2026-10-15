@@ -42,6 +42,8 @@ No browser code changes. The other providers do not change. The tests use fake f
 - Known limit `no-real-service`: No run used the real service. The shapes come from the public API description, version 1.3.0, so an unknown outcome can hide a real success.
 - Known limit `no-screen`: Only a tool such as curl on this machine can use the routes until change 4 adds the panel.
 - Known limit `refusal-sources`: The text file `llms-full.txt` gives the statuses 400, 402, 403 and 429. The version 1.0.0 of the description gives 402 and 429. The version 1.3.0 lists only 200 and 500. No source gives 401, and the plugin treats 401 as a refusal.
-- Known limit `audit-rotation`: The audit file moves to a file with the suffix `.1` at 4 MiB. The move replaces an older file with that suffix.
+- Known limit `audit-rotation`: The audit file moves to a file with the suffix `.1` at 4 MiB. The move replaces an older file with that suffix. A request over the rate limit writes no line.
+- Known limit `hold-ends`: The hold after an unknown outcome ends after 600 seconds. A new quote and a new key can then send again. The list is the only way to see whether the first attempt made a burst.
+- Known limit `list-first-100`: The list asks for the first 100 bursts and sends no `skip`. The description gives no order, so a new burst can be missing when the key has more than 100 bursts.
 - Known limit `status-on-network`: The status route uses the same-site gate, so a device on the network can read `enabled` and `configured`. It shows no key.
 - Known limit `fixed-options`: A request has no expiration, no tracked location and no device type. Bee Maps gives its own defaults.
