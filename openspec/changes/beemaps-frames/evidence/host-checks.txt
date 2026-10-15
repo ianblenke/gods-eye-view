@@ -1,4 +1,4 @@
-Host checks of beemaps-frames, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit d9903ab3aff40dc18040877d3e8cc81f62f5e527; later commits change evidence files, documents and trace files only.
+Host checks of beemaps-frames, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit 6dd67760e4a142a211459e21555296a4021cf121; later commits change evidence files, documents and trace files only.
 
 ## node scripts/check-import-directions.mjs
 {"modules":993,"portableEntries":80}
@@ -30,13 +30,13 @@ exit: 0
 ℹ    source.js   | 100.00 |   100.00 |  100.00 | 
 ℹ all files      | 100.00 |   100.00 |  100.00 | 
 
-## node scripts/spec/gates.mjs lint --change beemaps-frames (on the documents of the commit d9903ab3aff40dc18040877d3e8cc81f62f5e527)
+## node scripts/spec/gates.mjs lint --change beemaps-frames (on the documents of the commit 6dd67760e4a142a211459e21555296a4021cf121)
 STE: 0 errors, 818 warnings.
 
-## openspec validate beemaps-frames (on the documents of the commit d9903ab3aff40dc18040877d3e8cc81f62f5e527)
+## openspec validate beemaps-frames (on the documents of the commit 6dd67760e4a142a211459e21555296a4021cf121)
 Change 'beemaps-frames' is valid
 
-## image gods-eye-view:local, v24.21.0, the clone mounted with the node_modules of the image, commit d9903ab3aff40dc18040877d3e8cc81f62f5e527
+## image gods-eye-view:local, v24.21.0, the clone mounted with the node_modules of the image, commit 6dd67760e4a142a211459e21555296a4021cf121
 ## node --test --experimental-test-coverage (include src/layers/beemaps/*.js and src/app/layers/beemaps.js) the 7 test files of the layer and the 5 count tests
 exit: 0
 ℹ tests 179

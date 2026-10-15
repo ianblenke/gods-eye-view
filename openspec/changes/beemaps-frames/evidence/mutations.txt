@@ -1,36 +1,51 @@
-Named faults of beemaps-frames (AGENTS.md rule 13). One fault changes one part of one layer file or one registration file; the tests then run, and the list below names the tests that failed.
+Named faults of beemaps-frames (AGENTS.md rule 13). One fault changes one part of one layer file or one registration file. The tests then run. The list below names the tests that failed.
 
-Code commit: d9903ab3aff40dc18040877d3e8cc81f62f5e527. Both runs below ran on the files of this commit. The files of the layer, other than test files, are the same as in the browser run: the command git diff --stat 6c6fb1bd d9903ab3 -- src server build ':(exclude)*.test.mjs' prints nothing.
-Runner: 3 scratch copies of the clone run in parallel, each in the same long-lived container of the image gods-eye-view:local, with the node_modules of the image. Each fault runs first against the tests of its own file, with this command: timeout 100 node --test --test-concurrency=4 --test-timeout=6000 --test-reporter=spec <test file of the faulted file>
-A fault in a file of the layer that leaves that test file green then runs against all seven test files: src/layers/beemaps/*.test.mjs. A fault in a registration file runs against src/layers/beemaps/registration.test.mjs, src/data/layerState.test.mjs, src/data/layerStateTokenLedger.test.mjs, src/app/constructCatalog.test.mjs, src/app/sourceComposition.test.mjs and src/sources/reference.test.mjs.
-The second step can only add failing tests, so a fault that fails no test in both steps is a real survivor. A failure with no scenario tag is a test of the existing project or a test file that fails when it loads (the registry or the catalog is wrong), and the lines below name it.
+Code commit: 6dd67760e4a142a211459e21555296a4021cf121. Both runs below ran on the files of this commit.
+The files of the layer, other than test files, are the same as in the browser run. The command git diff --stat 6c6fb1bd 6dd67760 -- src server build ':(exclude)*.test.mjs' prints nothing.
+Runner: 3 scratch copies of the clone run in parallel. Each copy uses the same long-lived container of the image gods-eye-view:local, with the node_modules of the image. Each fault runs first against the tests of its own file. The command is: timeout 100 node --test --test-concurrency=4 --test-timeout=6000 --test-reporter=spec <test file of the faulted file>
+A fault in a file of the layer that leaves that test file green then runs against all seven test files. These files are src/layers/beemaps/*.test.mjs. A fault in a registration file runs against six test files. These are src/layers/beemaps/registration.test.mjs, src/data/layerState.test.mjs, src/data/layerStateTokenLedger.test.mjs, src/app/constructCatalog.test.mjs, src/app/sourceComposition.test.mjs and src/sources/reference.test.mjs.
+The second step can only add failing tests. So a fault that fails no test in both steps is a real survivor. A failure with no scenario tag is a test of the existing project, or a test file that fails when it loads. A test file fails when it loads if the registry or the catalog is wrong. The lines below name each one.
 The container ran next to the two containers of the owner and stopped when the run ended. No other container ran at the same time.
 
-Result: 342 faults in each of two runs. 1 fault left every test green in both runs, and it is an equivalent fault that no test can tell from the code (marked below). Each of the other faults failed at least one test. Faults with a hang: 1. Faults with a failure that has no scenario tag: 13.
-The one hang is the fault "Retry after a failure". The layer then retries without end, the process never ends, and the time limit of 100 seconds stops it. The failing test is then the file layer.test.mjs.
+Result: 347 faults in each of two runs. Each fault failed at least one test in both runs. Faults with a hang: 2. Faults with a failure that has no scenario tag: 14.
+Two faults hang: "Retry after a failure" and "Retry after a failure through a timer in the layer". The process does not end, and the time limit of 100 seconds stops it. The failing test is then the file layer.test.mjs. For the second fault the test [beemaps-frames-005] also fails.
 The two runs give identical lines.
 
-Equivalent faults (no scenario can tell them from the code):
-- Use the radius 6371000: the radius changes the half height by 1.2e-8 degrees, which is below the 6 decimals of the box
-
 Earlier runs on earlier commits:
-- Run A: 78 of 316 faults ran, and the run stopped because a review of the plan changed the code. It found 2 faults with no failing test: the equivalent fault above and the two faults that let a box end at longitude 180 or -180 ("Refuse a box that reaches 180", "Refuse a box that reaches -180"). Action: the test [beemaps-frames-009] "gives a box that ends exactly at longitude 180 or -180" and the rows (25.93, 179.99) and (25.93, -179.99) in scenario 009.
-- Run B: 51 of 326 faults ran, and the run stopped because a review of the plan changed the code and the tests. Faults with no failing test: Use the radius 6371000 (the equivalent fault above).
+- Run A: 78 of 316 faults ran, and the run stopped because a review of the plan changed the code. It found 3 faults with no failing test: "Use the radius 6371000", "Refuse a box that reaches 180" and "Refuse a box that reaches -180".
+  - The two faults at the meridian led to a new test and two new rows. The test is [beemaps-frames-009] "gives a box that ends exactly at longitude 180 or -180". The rows are (25.93, 179.99) and (25.93, -179.99) in scenario 009.
+  - The fault with the radius was an equivalent fault then. No row of that time could show a difference at 6 decimals. Round 1 of the formal review found a row, see below.
+- Run B: 51 of 326 faults ran, and the run stopped because a review of the plan changed the code and the tests. Faults with no failing test: Use the radius 6371000 (see run A).
 - Run C: two full runs on the commit 7e759cc6, 340 faults each, with the same result: 11 faults left every test green. Actions:
-  - Never remove the listener of the caller: test added: "removes its listener from the signal of the call when the call ends"; scenario 013 has a new sentence
-  - Send the signal of the caller: test added: "gives the fetch function a signal of its own that follows the call and the 30 seconds"; scenario 012 and 013 say so (the old text said "the signal of the call", which the code does not do)
-  - Keep the key state when the status fails: test added: "enables the chip when a status fails after a status with no key"; scenario 007 has a new sentence
-  - Take the time of the style from the clock of the page: test added: "styles each point with the age at the time of the clock that the layer was given". The old tests passed only because the day of the run was the day of their clock. Scenario 019 has a new sentence
-  - Keep the state of the key on reset: test added: "forgets a status with no key and a failed status when the layer is enabled again"; scenario 021 has a new sentence
-  - Keep the status request after it ends: test added: "does not abort a status request that has ended"; scenario 021 has a new sentence
-  - Write second for a wait of 0 or 1: rows added to the messages test for retryAfter 0 and 2; scenario 016 has two new sentences
-  - Keep the viewer on destroy: test added: "can be initialized again after destroy"; scenario 022 has a new sentence
-  - Keep the status message on reset: the same test as for "Keep the state of the key on reset"
-  - Write second for a wait of 1 or 2: the same rows as for "Write second for a wait of 0 or 1"
-  - Keep the error of the status on reset: the same test as for "Keep the state of the key on reset"
+  - "Never remove the listener of the caller". A test was added: "removes its listener from the signal of the call when the call ends". Scenario 013 has a new sentence.
+  - "Send the signal of the caller". A test was added: "gives the fetch function a signal of its own that follows the call and the 30 seconds". The old text of scenarios 012 and 013 said "the signal of the call". The code does not do that.
+  - "Keep the key state when the status fails". A test was added: "enables the chip when a status fails after a status with no key". Scenario 007 has a new sentence.
+  - "Take the time of the style from the clock of the page". A test was added: "styles each point with the age at the time of the clock that the layer was given". The old tests passed only because the day of the run was the day of their clock. Scenario 019 has a new sentence.
+  - "Keep the state of the key on reset". A test was added: "forgets a status with no key and a failed status when the layer is enabled again". Scenario 021 has a new sentence.
+  - "Keep the status request after it ends". A test was added: "does not abort a status request that has ended". Scenario 021 has a new sentence.
+  - "Write second for a wait of 0 or 1". Rows were added to the messages test for retryAfter 0 and 2. Scenario 016 has two new sentences.
+  - "Keep the viewer on destroy". A test was added: "can be initialized again after destroy". Scenario 022 has a new sentence.
+  - "Keep the status message on reset". The same test as for "Keep the state of the key on reset" closes it.
+  - "Write second for a wait of 1 or 2". The same rows as for "Write second for a wait of 0 or 1" close it.
+  - "Keep the error of the status on reset". The same test as for "Keep the state of the key on reset" closes it.
   - Review finding of the plan (not a survivor): the retry rows of the source test had no row for a body that stalls. A row was added, with the fault "Send a second request after a stall in the body".
-  - The fault "Give the layer and the ledger the token 6 together" was added after the run, because the other token faults fail when the module loads and do not show that the scenario test itself fails.
-- The two runs on the commit d9903ab3 follow in the lines below. They have 342 faults each. The tests of those runs are the tests of the commit d9903ab3: the command git diff --stat d9903ab3 HEAD -- src server build prints nothing.
+  - The fault "Give the layer and the ledger the token 6 together" was added after the run. The other token faults fail when the module loads, so they do not show that the scenario test itself fails.
+- Round 1 of the formal review changed these things:
+  - A row was added to scenario 008: the row (39.975, 0.0) gives the box [-0.011735, 39.966007, 0.011735, 39.983993]. With the radius 6371000 the west and east values are -0.011736 and 0.011736. So the fault "Use the radius 6371000" now fails [beemaps-frames-008].
+  - The test [beemaps-frames-012] now asserts that the signal of the fetch function is not the signal of the caller. So the fault "Send the signal of the caller" now fails [beemaps-frames-012].
+  - Five faults were added for the spend paths of the layer:
+    - "Retry once after a failure"
+    - "Retry after a failure through a timer in the layer"
+    - "Add a method setParams that presses"
+    - "Press in getRowControls"
+    - "Press in getStats"
+  - Three faults got the scenario of the test that fails:
+    - "Show the status message before the message of a press": scenario 007
+    - "Keep the enabled state on disable": scenario 003
+    - "Give the stats no error": scenario 020
+  - One fault name had a banned word and named a text that no longer exists. It is now "Show the text for no key when the key is set".
+- The lines of the first run on the commit 6dd67760 follow below. The second run has the same lines.
+  The tests of those runs are the tests of the commit 6dd67760: the command git diff --stat 6dd67760 HEAD -- src server build prints nothing.
 
 Lines of the first run on the final commit (scenario | fault | failing tests):
 beemaps-frames-008 | Use a half side of 1001 metres | failing: [beemaps-frames-008], [beemaps-frames-009]
@@ -40,7 +55,7 @@ beemaps-frames-008 | Use the grid 0.004 degrees | failing: [beemaps-frames-008],
 beemaps-frames-009 | Allow a latitude up to 81 | failing: [beemaps-frames-009]
 beemaps-frames-009 | Allow a latitude up to 79 only | failing: [beemaps-frames-008], [beemaps-frames-009], [beemaps-frames-010]
 beemaps-frames-008 | Use the radius 6400000 | failing: [beemaps-frames-008], [beemaps-frames-009], [beemaps-frames-010]
-beemaps-frames-008 | Use the radius 6371000 | failing: NONE (equivalent fault: the radius changes the half height by 1.2e-8 degrees, which is below the 6 decimals of the box)
+beemaps-frames-008 | Use the radius 6371000 | failing: [beemaps-frames-008]
 beemaps-frames-008 | Round the west edge to 5 decimals | failing: [beemaps-frames-008]
 beemaps-frames-008 | Round the south edge to 5 decimals | failing: [beemaps-frames-008], [beemaps-frames-009]
 beemaps-frames-008 | Round the east edge to 5 decimals | failing: [beemaps-frames-008]
@@ -157,7 +172,7 @@ beemaps-frames-012 | Send a GET for the frames | failing: [beemaps-frames-012]
 beemaps-frames-012 | Send no Content-Type header | failing: [beemaps-frames-012]
 beemaps-frames-012 | Send a second header | failing: [beemaps-frames-012]
 beemaps-frames-012 | Send no signal to the fetch function | failing: [beemaps-frames-012], [beemaps-frames-013]
-beemaps-frames-012 | Send the signal of the caller | failing: [beemaps-frames-013]
+beemaps-frames-012 | Send the signal of the caller | failing: [beemaps-frames-012], [beemaps-frames-013]
 beemaps-frames-012 | Call another function for the default fetch | failing: [beemaps-frames-012]
 beemaps-frames-013 | Time out after 30001 ms | failing: [beemaps-frames-013]
 beemaps-frames-013 | Time out after 29999 ms | failing: [beemaps-frames-013]
@@ -254,7 +269,7 @@ beemaps-frames-007 | Disable the chip when the key state is not known | failing:
 beemaps-frames-004 | Never end the request in flight | failing: [beemaps-frames-004], [beemaps-frames-019], [beemaps-frames-020], [beemaps-frames-023]
 beemaps-frames-005 | Retry after a failure | failing: TIMEOUT (the tests hung), untagged: src/layers/beemaps/layer.test.mjs
 beemaps-frames-005 | Let a rejection of the source escape | failing: [beemaps-frames-005]
-beemaps-frames-006 | Show KEY REQUIRED when the key is set | failing: [beemaps-frames-006], [beemaps-frames-007], [beemaps-frames-020], [beemaps-frames-021]
+beemaps-frames-006 | Show the text for no key when the key is set | failing: [beemaps-frames-006], [beemaps-frames-007], [beemaps-frames-020], [beemaps-frames-021]
 beemaps-frames-006 | Skip the state of the key | failing: [beemaps-frames-006], [beemaps-frames-007]
 beemaps-frames-006 | Skip the message of the missing key | failing: [beemaps-frames-006], [beemaps-frames-007], [beemaps-frames-021]
 beemaps-frames-007 | Return false when the status fails | failing: [beemaps-frames-007]
@@ -302,10 +317,10 @@ beemaps-frames-020 | Keep the error after a good answer | failing: [beemaps-fram
 beemaps-frames-020 | Write another message for a failed press | failing: [beemaps-frames-007], [beemaps-frames-020]
 beemaps-frames-020 | Skip the error of the stats for a failed press | failing: [beemaps-frames-007], [beemaps-frames-020]
 beemaps-frames-020 | Remove the points when a press fails | failing: [beemaps-frames-020]
-beemaps-frames-020 | Show the status message before the message of a press | failing: [beemaps-frames-007]
+beemaps-frames-007 | Show the status message before the message of a press | failing: [beemaps-frames-007]
 beemaps-frames-020 | Show the answer to a press as null | failing: [beemaps-frames-006], [beemaps-frames-007], [beemaps-frames-020]
 beemaps-frames-021 | Skip the reset on disable | failing: [beemaps-frames-021]
-beemaps-frames-021 | Keep the enabled state on disable | failing: [beemaps-frames-003]
+beemaps-frames-003 | Keep the enabled state on disable | failing: [beemaps-frames-003]
 beemaps-frames-021 | Keep the data source visible on disable | failing: [beemaps-frames-021]
 beemaps-frames-021 | Keep the points on disable | failing: [beemaps-frames-021]
 beemaps-frames-021 | Skip the display on enable | failing: [beemaps-frames-021]
@@ -330,7 +345,7 @@ beemaps-frames-022 | Skip the check of a missing data source on destroy | failin
 beemaps-frames-001 | Give the stats a wrong count | failing: [beemaps-frames-001], [beemaps-frames-020], [beemaps-frames-021], [beemaps-frames-022]
 beemaps-frames-001 | Let the stats fail without an answer | failing: [beemaps-frames-001], [beemaps-frames-007], [beemaps-frames-009], [beemaps-frames-020], [beemaps-frames-021], [beemaps-frames-022]
 beemaps-frames-019 | Give the stats no time of the last update | failing: [beemaps-frames-019], [beemaps-frames-020]
-beemaps-frames-019 | Give the stats no error | failing: [beemaps-frames-007], [beemaps-frames-009], [beemaps-frames-020], [beemaps-frames-021]
+beemaps-frames-020 | Give the stats no error | failing: [beemaps-frames-007], [beemaps-frames-009], [beemaps-frames-020], [beemaps-frames-021]
 beemaps-frames-007 | Change the text of the status failure | failing: [beemaps-frames-007]
 beemaps-frames-006 | Show the text of a rejected key when there is no key | failing: [beemaps-frames-006], [beemaps-frames-021]
 beemaps-frames-004 | Clear the request in flight on update | failing: [beemaps-frames-004], [beemaps-frames-006]
@@ -351,6 +366,11 @@ beemaps-frames-007 | Show the error of the status before the error of a press | 
 beemaps-frames-021 | Keep the error of the status on reset | failing: [beemaps-frames-021]
 beemaps-frames-007 | Show the error of the press only | failing: [beemaps-frames-007], [beemaps-frames-021]
 beemaps-frames-013 | Send a second request after a stall in the body | failing: [beemaps-frames-013]
+beemaps-frames-005 | Retry once after a failure | failing: [beemaps-frames-005]
+beemaps-frames-005 | Retry after a failure through a timer in the layer | failing: TIMEOUT (the tests hung), [beemaps-frames-005], untagged: src/layers/beemaps/layer.test.mjs
+beemaps-frames-001 | Add a method setParams that presses | failing: [beemaps-frames-001]
+beemaps-frames-002 | Press in getRowControls | failing: [beemaps-frames-003], [beemaps-frames-004], [beemaps-frames-005], [beemaps-frames-006], [beemaps-frames-007], [beemaps-frames-020], [beemaps-frames-021], [beemaps-frames-023]
+beemaps-frames-002 | Press in getStats | failing: [beemaps-frames-007], [beemaps-frames-020], [beemaps-frames-021]
 beemaps-frames-013 | Send a second request after an upstream failure | failing: [beemaps-frames-013]
 beemaps-frames-013 | Send a second request after a rejection | failing: [beemaps-frames-013]
 beemaps-frames-013 | Send a second request later through a timer | failing: [beemaps-frames-013]
