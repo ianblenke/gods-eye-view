@@ -144,7 +144,7 @@ Origin: spec-first
 - **THEN** the route answers 400 with `{error:'bad_body'}`
 - **AND** it gives the same answer when `quoteId` is not 32 lowercase hexadecimal characters
 - **AND** it gives the same answer when `idempotencyKey` does not match `^[A-Za-z0-9_-]{16,64}$`
-- **AND** it gives the same answer when a field is missing or is not a text, for example a list with one valid text
+- **AND** it gives the same answer when a field is absent or is not a text, for example a list with one valid text
 - **AND** a key of exactly 16 characters and a key of exactly 64 characters pass this step
 - **AND** a valid body of exactly 1024 bytes passes this step
 
