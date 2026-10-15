@@ -20,7 +20,7 @@
 - [ ] 2.6 Write `server/providers/beemaps-burst/upstream.js`.
 - [ ] 2.7 Write `server/providers/beemaps-burst.js`.
 - [ ] 2.8 Add the plugin to the list in `server/providers/local.js`.
-- [ ] 2.9 Add the package and the files to `scripts/package-boundaries.json`.
+- [ ] 2.9 Run `node scripts/check-package-boundaries.mjs`, which needs no entry for this change.
 - [ ] 2.10 Add the new files to `openspec/ownership.json` and `scripts/format-scope.json`.
 - [ ] 2.11 Add the four variables to `.env.example`.
 - [ ] 2.12 Write the entry in `CHANGELOG.md` and the paragraph in `DATA_SOURCES.md`.
