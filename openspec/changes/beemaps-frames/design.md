@@ -21,7 +21,7 @@ The layer panel supports controls for a layer through two module methods: `getRo
 
 ### D1: One chip with `onClick` is the only trigger
 
-The chip has an `onClick` function and no `params`. The layer has no `setParams`, so saved state and share links can only enable it, and an enable reads only the status. The layer registers no listener on the camera.
+The chip has an `onClick` function and no `params`. The layer has no `setParams`, so saved state and share links can only switch it on, and then it reads only the status. The layer registers no listener on the camera.
 
 ### D2: The update reads the status only
 
@@ -49,7 +49,7 @@ The error name of the answer picks the message. The table is in `messages.js`. T
 
 ### D7: No retry and one request at a time
 
-A request in flight disables the chip. A failure enables it again and starts nothing. The one timer that the layer sets is the abort after 30 seconds.
+A request in flight disables the chip. A failure enables it again and starts nothing. The source sets one timer, which stops the call after 30 seconds.
 
 ### D8: The style shows the age of a frame
 

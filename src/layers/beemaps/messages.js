@@ -34,12 +34,12 @@ const whole = (value) => Number.isInteger(value) && value >= 0;
 export function describeFailure({ status, error, limit, retryAfter }) {
   if (error === 'budget') {
     return whole(limit)
-      ? `The daily limit of ${limit} requests is used.`
+      ? `The daily limit of ${limit} ${limit === 1 ? 'request' : 'requests'} is used.`
       : 'The daily limit is used.';
   }
   if (error === 'upstream_rate_limit') {
     return whole(retryAfter)
-      ? `Bee Maps asks you to wait ${retryAfter} seconds.`
+      ? `Bee Maps asks you to wait ${retryAfter} ${retryAfter === 1 ? 'second' : 'seconds'}.`
       : 'Bee Maps asks you to wait.';
   }
   if (Object.hasOwn(FIXED, error)) return FIXED[error];

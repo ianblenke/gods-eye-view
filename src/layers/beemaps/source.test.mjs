@@ -242,7 +242,7 @@ test('[beemaps-frames-013] gives the status 0 and the error unreachable for a re
   assert.deepEqual(cleared, [1]);
 });
 
-test('[beemaps-frames-013] sends one request for each failing call, also after the timers of the call run', async () => {
+test('[beemaps-frames-013] sends one request for each call that fails, also after the timers of the call run', async () => {
   const stalled = (url, init) =>
     new Promise((resolve, reject) =>
       init.signal.addEventListener('abort', () =>
@@ -252,6 +252,8 @@ test('[beemaps-frames-013] sends one request for each failing call, also after t
   const rows = [
     () => json({ error: 'upstream_rate_limit', retryAfter: 30 }, 429),
     () => json({ error: 'upstream_failed' }, 502),
+    () => json({}, 500),
+    () => new Response('x'.repeat(1024 * 1024 + 1), { status: 200 }),
     () => json({ error: 'key_rejected' }, 401),
     () => json({ error: 'no_credit' }, 402),
     () => json({ error: 'budget', used: 20, limit: 20 }, 429),

@@ -36,7 +36,7 @@ Origin: spec-first
 - **AND** an `update` during the request keeps the label "Fetching…" and `disabled` true, and sends no `getFrames` call
 - **AND** when the request ends, the chip has the label "Fetch frames here" and `disabled` false
 
-#### Scenario: Never send a request again after an error `beemaps-frames-005`
+#### Scenario: Send no request after an error until the next press `beemaps-frames-005`
 - **WHEN** `getFrames` rejects, or gives `ok` false with the error "upstream_rate_limit", or gives `ok` false with the error "upstream_failed"
 - **THEN** the source has 1 `getFrames` call after the fake clock moves 10 minutes, after 3 `update` calls and after `disable` and `enable`
 - **AND** the chip is enabled again, and the next press sends one request
@@ -57,7 +57,7 @@ Origin: spec-first
 - **THEN** `update` returns true, and the info text is "The server did not give the status of the key."
 - **AND** the stats have `error` equal to the message of a rejection
 - **AND** they have `error` "The server did not give the status of the key." when the rejection has no message
-- **AND** they have the same `error` when the result is `ok` false
+- **AND** they have `error` "The server did not give the status of the key." when the result is `ok` false and has no `error`
 - **AND** the chip has `disabled` false
 
 ### Requirement: View box
@@ -94,7 +94,8 @@ Origin: spec-first
 - **AND** for the longitude the text is "Move the view away from the 180th meridian and press again."
 - **AND** the row (80.002, 0.0) gives a box, and the row (80.003, 0.0) is refused for the latitude
 - **AND** the row (0.0, 179.99) gives a box, and the rows (0.0, 179.995) and (0.0, -179.995) are refused for the longitude
-- **AND** the rows (25.93, 179.99) and (25.93, -179.99) give a box that ends at longitude 180 and at longitude -180
+- **AND** the row (25.93, 179.99) gives a box with the east value 180
+- **AND** the row (25.93, -179.99) gives a box with the west value -180
 
 #### Scenario: Build only boxes that the server accepts `beemaps-frames-010`
 - **WHEN** a test builds the box for each latitude from -80 to 80 in steps of 5
@@ -129,7 +130,7 @@ Origin: spec-first
 - **AND** a rejection gives the status 0 and the error "unreachable"
 - **AND** a call that does not end in 30 seconds is aborted and gives the status 0 and the error "unreachable"
 - **AND** the timer of that call is cleared when the call ends
-- **AND** for each failure above the fake fetch function gets exactly one request, also after the test runs every timer of the call
+- **AND** each case above that gives `ok` false sends exactly one request to the fake fetch function, also after the test runs every timer
 - **AND** a call whose own signal is aborted rejects with the abort error
 
 ### Requirement: Answer records
@@ -165,9 +166,11 @@ Origin: spec-first
 - **AND** "key_rejected" gives "Bee Maps refused the key. Check BEEMAPS_API_KEY in .env."
 - **AND** "no_key" gives "No Bee Maps key. Set BEEMAPS_API_KEY in .env and restart the app."
 - **AND** "budget" gives "The daily limit of 20 requests is used." for `limit` 20, and "The daily limit of 5 requests is used." for `limit` 5
+- **AND** "budget" gives "The daily limit of 1 request is used." for `limit` 1
 - **AND** "budget" gives "The daily limit is used." when `limit` is not a whole number
 - **AND** "rate_limited" gives "Too many presses. Wait 60 seconds."
 - **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait 30 seconds." for `retryAfter` 30, and "Bee Maps asks you to wait 600 seconds." for `retryAfter` 600
+- **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait 1 second." for `retryAfter` 1
 - **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait." when `retryAfter` is not a whole number
 - **AND** "no_credit" gives "The Bee Maps account has no credit."
 - **AND** "upstream_failed" and "bad_upstream" give "Bee Maps did not answer correctly."

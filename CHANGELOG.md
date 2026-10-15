@@ -1,6 +1,6 @@
 # Changelog
 
-- Add the layer "Bee Maps Frames" (2026-10-15). The button "Fetch frames here" in its row asks the route `/api/beemaps/frames` for the newest frames in about 4 km² at the view centre, and shows them as points. The layer sends a request only when you press the button, and never sends one again after an error. It shows one message for each failure and shows no image. It works with `make up-codex` and a key in `.env`.
+- Add the layer "Bee Maps Frames" (2026-10-15). The button "Fetch frames here" in its row asks the route `/api/beemaps/frames` for the newest frames in about 4 km² at the view centre. The layer shows them as points. It sends a request only when you press the button. After an error, it sends no request until you press the button again. It shows one message for each failure and shows no image. It works with `make up-codex` and a key in `.env`.
 
 - Add the route `/api/beemaps/frames` for the newest Bee Maps street-level frames (2026-10-15). It answers only the machine that runs the server. It takes one box or one polygon. The smallest box that holds it is at most 5 km². It sends one request to Bee Maps with your key, and it returns the id, the position and the time of each frame. It returns no image, no signed URL and no device id. A daily limit of 20 requests, a memory of 10 minutes and a rate limit keep the cost small. The key is `BEEMAPS_API_KEY` in `.env`. No test sends a request to Bee Maps.
 
