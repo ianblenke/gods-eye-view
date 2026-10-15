@@ -44,7 +44,7 @@ The tests use a fake fetch function. No test sends a request to Bee Maps, and th
 - Known limit `box-area`: The provider measures the smallest box that holds the ring. A long, thin polygon with a small area can be refused, and a ring across the 180th meridian is refused as too large.
 - Known limit `ring-order`: The provider sends the ring as it got it. It does not turn a clockwise ring into a counter-clockwise ring, and it does not test a ring that crosses itself.
 - Known limit `no-failure-hold`: An upstream answer of 500 or of the wrong shape starts no hold. A failing upstream lets 6 requests in 60 seconds use the daily limit of 20 in about 3 minutes.
-- Known limit `local-programs`: Any program on the machine that runs the server passes the check, because the check cannot tell programs apart. Such a program can use the daily limit of 20 requests, and it cannot use more.
+- Known limit `local-programs`: Any program on the machine that runs the server passes the check, because the check cannot tell programs apart. Through the route, such a program can use the daily limit and no more. The default limit is 20 requests.
 - Known limit `status-gate`: The status route uses the same-site gate. A device on the LAN can read `configured` when the owner opens the LAN address.
 - Known limit `no-settings-panel`: The key goes in `.env` only. The Provider Settings panel has no entry for it.
 - Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.

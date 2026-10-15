@@ -4,7 +4,7 @@ Code commit: e466de1fe4bbda83115dfb526417e8a1f4f5cbef. Both runs below ran on th
 Command of each fault (3 scratch copies of the clone run in parallel on the host, Node v26.8.2): timeout 100 node --test --test-timeout=6000 --test-reporter=spec --test-skip-pattern='browser config of the build' src/data/beemaps*.test.mjs
 The test [beemaps-source-013] "keeps the key out of the browser config of the build" needs the packages of the image, so these runs skip it. It ran in the image (see host-checks.txt), together with one fault of build/vite.js that these runs cannot reach.
 
-Result: 324 faults in each of two runs. 2 faults left every test green in both runs, and all 2 are equivalent faults that no test can tell from the code (marked below). Each of the other faults failed at least one test. 0 hangs. 0 failures without a scenario tag.
+Result: 324 faults in each of two runs. 2 faults left every test green in both runs, and both are equivalent faults that no test can tell from the code (marked below). Each of the other faults failed at least one test. 0 hangs. 0 failures without a scenario tag.
 323 of 324 lines are identical in the two runs. 1 line differs in the list of failing tests:
 - "Do not wait for the write": run 1 failed 9 tests ([beemaps-source-004], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]); run 2 failed 7 tests ([beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-023], [beemaps-source-024]). This fault does not wait for the file write, so the tests race with it and the list changes between runs. Both runs fail tests, including [beemaps-source-016].
 
@@ -30,10 +30,37 @@ First run, on the earlier commit 2991a8f7: 306 faults, 16 survived. The survivor
 - Round the seconds that remain to the nearest: test changed: the seconds that remain are 19.4 and not 19.5
 - Ignore the 5000 item cut in truncated: test added: more than 5000 items that give 1 frame
 
-After the review of the whole change, 18 faults were added because the reviewers found tests without a fault: Write the key to the console in the plugin; Write the key to the console in the upstream call; Put the key in a header of an error answer; Put the key in a header of a good answer; Put the text of a thrown error in the answer; Add a second URL to a provider file; Repeat the host in a comment; Repeat the path in a comment; Write the word Burst in a comment of the checks; Write the word burst in lower case in the plugin; Write the word BURST in upper case in the budget; Add a sixth provider file next to the five; Leave the plugin out of the list of local plugins; Put the plugin twice in the list of local plugins; Keep an error answer in memory; Give a failed call back to the count; Send a second request after the shared request fails; Read the body before the check of the local request.
-The fault "Check the budget before the hold" was rewritten: the first version failed only [beemaps-source-024], because it still gave the answer of the hold. The new version moves the check of the budget before the check of the hold, in two edits of beemaps.js.
-5 faults got the scenario of the tests that fail, because the part of the code that they change is described there: Accept a position that is not a list; Accept a position of any length; Pass on a ring that is null; Drop the extra headers of an answer; Say cached false for each answer.
-Two changes of the tests follow from the review: a new test "counts each failed call against the daily limit" for the fault "Give a failed call back to the count", and an assertion in the test of the order of the steps (an oversize body gets 429 when the rate limit is used) for the fault "Read the body before the rate limit". Before that assertion only [beemaps-source-021] failed that fault.
+After the review of the whole change, 18 faults were added because the reviewers found tests without a fault:
+- Write the key to the console in the plugin
+- Write the key to the console in the upstream call
+- Put the key in a header of an error answer
+- Put the key in a header of a good answer
+- Put the text of a thrown error in the answer
+- Add a second URL to a provider file
+- Repeat the host in a comment
+- Repeat the path in a comment
+- Write the word Burst in a comment of the checks
+- Write the word burst in lower case in the plugin
+- Write the word BURST in upper case in the budget
+- Add a sixth provider file next to the five
+- Leave the plugin out of the list of local plugins
+- Put the plugin twice in the list of local plugins
+- Keep an error answer in memory
+- Give a failed call back to the count
+- Send a second request after the shared request fails
+- Read the body before the check of the local request
+The fault "Check the budget before the hold" was rewritten.
+The first version failed only [beemaps-source-024], because it still gave the answer of the hold.
+The new version moves the check of the budget before the check of the hold, in two edits of beemaps.js.
+5 faults got the scenario of the tests that fail, because the scenario describes the part of the code that they change:
+- Accept a position that is not a list
+- Accept a position of any length
+- Pass on a ring that is null
+- Drop the extra headers of an answer
+- Say cached false for each answer
+Two changes of the tests follow from the review.
+- A new test "counts each failed call against the daily limit" for the fault "Give a failed call back to the count".
+- An assertion in the test of the order of the steps: an oversize body gets 429 when the rate limit is used. It is for the fault "Read the body before the rate limit", which only [beemaps-source-021] failed before.
 
 Fault in an upstream file, run in the image: add 'import.meta.env.BEEMAPS_API_KEY' with the value of process.env.BEEMAPS_API_KEY to the define of build/vite.js. Failing test: [beemaps-source-013] (command: docker run with the clone, node --test --test-name-pattern='browser config of the build' src/data/beemapsProxy.test.mjs; exit 1). The file was restored.
 

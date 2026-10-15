@@ -215,7 +215,7 @@ Origin: spec-first
 - **AND** `id` is the first 16 lowercase hexadecimal characters of a SHA-256 hash
 - **AND** the hash is of the answer values `timestamp`, `lat` and `lon`, each written with `String()` and joined by "|"
 - **AND** the item with the `timestamp` "2026-10-01T12:00:00Z", `position.lat` 10.5 and `position.lon` 20.25 gives the `timestamp` "2026-10-01T12:00:00.000Z" and the `id` "e79cd5d7c1102b08"
-- **AND** an item is dropped when its `timestamp` is not a text of the form `YYYY-MM-DDTHH:MM:SS` with an optional fraction and `Z` or `±HH:MM`
+- **AND** an item is dropped when its `timestamp` is not a text of the form `YYYY-MM-DDTHH:MM:SS`, then an optional fraction, then `Z` or `±HH:MM`
 - **AND** an item is dropped when `Date.parse` does not read its `timestamp` as a date
 - **AND** an item is dropped when `position.lat` is not a finite number from -90 to 90
 - **AND** an item is dropped when `position.lon` is not a finite number from -180 to 180
