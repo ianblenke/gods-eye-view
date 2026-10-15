@@ -124,9 +124,7 @@ export async function createBurst({
       document?.success !== true ||
       !Array.isArray(document.bursts) ||
       document.bursts.length !== 1 ||
-      burst === null ||
-      typeof burst !== 'object' ||
-      typeof burst._id !== 'string' ||
+      typeof burst?._id !== 'string' ||
       burst._id === ''
     ) {
       return { kind: 'unknown', upstreamStatus: 200 };
@@ -150,6 +148,8 @@ export async function createBurst({
 }
 
 const round6 = (value) => Number(value.toFixed(6));
+const least = (values) => values.reduce((a, b) => Math.min(a, b));
+const most = (values) => values.reduce((a, b) => Math.max(a, b));
 
 /** West, south, east and north of the outer ring of a polygon, or null. */
 function bboxOf(geojson) {
@@ -160,7 +160,6 @@ function bboxOf(geojson) {
     !ring.every(
       (position) =>
         Array.isArray(position) &&
-        position.length >= 2 &&
         number(position[0]) !== null &&
         number(position[1]) !== null,
     )
@@ -170,23 +169,16 @@ function bboxOf(geojson) {
   const lons = ring.map((position) => position[0]);
   const lats = ring.map((position) => position[1]);
   return [
-    round6(Math.min(...lons)),
-    round6(Math.min(...lats)),
-    round6(Math.max(...lons)),
-    round6(Math.max(...lats)),
+    round6(least(lons)),
+    round6(least(lats)),
+    round6(most(lons)),
+    round6(most(lats)),
   ];
 }
 
 /** The fields of one listed burst, or null when the item has no text _id. */
 function listedBurst(item) {
-  if (
-    item === null ||
-    typeof item !== 'object' ||
-    typeof item._id !== 'string' ||
-    item._id === ''
-  ) {
-    return null;
-  }
+  if (typeof item?._id !== 'string' || item._id === '') return null;
   return {
     id: item._id,
     status: BURST_STATUSES.has(item.status) ? item.status : null,

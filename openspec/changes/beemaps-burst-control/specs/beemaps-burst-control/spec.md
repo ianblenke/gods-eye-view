@@ -343,6 +343,7 @@ Origin: spec-first
 - **THEN** an item without a text `_id` is dropped, and an item that is not an object is dropped
 - **AND** `bbox` is [west, south, east, north] of the ring of `geojson`
 - **AND** the numbers are rounded to 6 decimals, and `bbox` is null when the ring is not valid
+- **AND** a ring of 150000 positions gives its `bbox`
 - **AND** `isHit` is a boolean and else false
 - **AND** `status` is one of the three texts and else null
 - **AND** `latestHitAt` and `validUntil` are texts and else null

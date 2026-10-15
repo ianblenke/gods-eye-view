@@ -560,9 +560,26 @@ test('[beemaps-burst-control-035] gives bbox from the ring of geojson rounded to
     },
     { type: 'Polygon', coordinates: [[[1, 2], [3, 4], [5, 6], [7]]] },
     { type: 'Polygon', coordinates: [[[1, 2], [3, 4], [5, 6], null]] },
+    {
+      type: 'Polygon',
+      coordinates: [[[1, 2], [3, 4], [5, 6], { 0: 7, 1: 8 }]],
+    },
     { type: 'Polygon', coordinates: 'x' },
   ])
     assert.equal(await at(geojson), null, JSON.stringify(geojson));
+});
+
+test('[beemaps-burst-control-035] gives bbox for a ring of 150000 positions', async () => {
+  const ring = Array.from({ length: 150000 }, (_, index) => [
+    index % 10,
+    index % 7,
+  ]);
+  const body = JSON.stringify({
+    bursts: [LISTED(1, { geojson: { type: 'Polygon', coordinates: [ring] } })],
+  });
+  assert.equal(body.length < 1024 * 1024, true);
+  const result = await list(() => new Response(body)).promise;
+  assert.deepEqual(result.bursts[0].bbox, [0, 0, 9, 6]);
 });
 
 test('[beemaps-burst-control-035] gives total from the answer when it is a whole number of 0 or more, and else the number of items kept', async () => {
