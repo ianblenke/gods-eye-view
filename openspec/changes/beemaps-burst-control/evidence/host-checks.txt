@@ -1,4 +1,4 @@
-Host checks of beemaps-burst-control, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit 1cb60dc9e44493d0c2c87d0c65e4de2e0a8d51d8; later commits change evidence files, documents and trace files only.
+Host checks of beemaps-burst-control, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit d097f0b04fee71a7eaaa10068288d9b9e8155b84; later commits change evidence files, documents and trace files only.
 
 ## node scripts/check-import-directions.mjs
 {"modules":1000,"portableEntries":80}
@@ -19,8 +19,8 @@ exit: 0
 
 ## node --test --experimental-test-coverage (include the 7 plugin files) the 8 test files of the change (on the host)
 exit: 0
-ℹ tests 208
-ℹ pass 208
+ℹ tests 212
+ℹ pass 212
 ℹ fail 0
 ℹ skipped 0
 ℹ   beemaps-burst.js  | 100.00 |   100.00 |  100.00 | 
@@ -32,17 +32,17 @@ exit: 0
 ℹ    validate.js      | 100.00 |   100.00 |  100.00 | 
 ℹ all files           | 100.00 |   100.00 |  100.00 | 
 
-## node scripts/spec/gates.mjs lint --change beemaps-burst-control (on the documents of the commit 1cb60dc9e44493d0c2c87d0c65e4de2e0a8d51d8)
-STE: 0 errors, 880 warnings.
+## node scripts/spec/gates.mjs lint --change beemaps-burst-control (on the documents of the commit d097f0b04fee71a7eaaa10068288d9b9e8155b84)
+STE: 0 errors, 878 warnings.
 
-## openspec validate beemaps-burst-control (on the documents of the commit 1cb60dc9e44493d0c2c87d0c65e4de2e0a8d51d8)
+## openspec validate beemaps-burst-control (on the documents of the commit d097f0b04fee71a7eaaa10068288d9b9e8155b84)
 Change 'beemaps-burst-control' is valid
 
-## image gods-eye-view:local, v24.21.0, the clone mounted with the node_modules of the image, commit 1cb60dc9e44493d0c2c87d0c65e4de2e0a8d51d8
+## image gods-eye-view:local, v24.21.0, the clone mounted with the node_modules of the image, commit d097f0b04fee71a7eaaa10068288d9b9e8155b84
 ## node --test --experimental-test-coverage (include the 7 plugin files) the 8 test files of the change
 exit: 0
-ℹ tests 208
-ℹ pass 208
+ℹ tests 212
+ℹ pass 212
 ℹ fail 0
 ℹ skipped 0
 ℹ   beemaps-burst.js  | 100.00 |   100.00 |  100.00 | 
