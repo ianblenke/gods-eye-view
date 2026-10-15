@@ -986,5 +986,15 @@
   "src/app/embed.test.mjs",
   "src/tools/globePanel.test.mjs",
   "src/costEndpointThrottle.test.mjs",
-  "server/providers/common/loopback-command.js"
+  "server/providers/common/loopback-command.js",
+  "server/providers/beemaps.js",
+  "server/providers/beemaps/validate.js",
+  "server/providers/beemaps/normalize.js",
+  "server/providers/beemaps/budget.js",
+  "server/providers/beemaps/upstream.js",
+  "src/data/beemapsBudget.test.mjs",
+  "src/data/beemapsFrames.test.mjs",
+  "src/data/beemapsInput.test.mjs",
+  "src/data/beemapsProxy.test.mjs",
+  "src/data/beemapsUpstream.test.mjs"
 ]
