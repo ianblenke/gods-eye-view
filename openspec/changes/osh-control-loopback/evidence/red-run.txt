@@ -1,9 +1,9 @@
 Red run of the tests, 2026-10-15.
-The tests were committed before the code (commit e3f7ad40, "tests for 028, 039 and 040 (red ...)"). This run checks that commit out in a temporary folder, where the gate is still the old function, and runs: node --test --test-reporter=spec src/control/route.test.mjs
+The tests were committed before the code (commit e3f7ad40, "tests for 028, 039 and 040 (red ...)"). This run checks that commit out in a temporary folder, where the gate is still the old function. The command is: node --test --test-reporter=spec src/control/route.test.mjs
 Result: tests 38, pass 34, fail 4.
 Failing tests:
 - [osh-control-028] Refuse a cross-origin or untrusted-host POST
 - [osh-control-028] Refuse a host that is not a loopback host
 - [osh-control-039] Refuse a POST from another machine and write the audit line
 - [osh-control-040] Refuse a POST that carries a proxy header
-So the old gate passed a host that is an IP address or a .local name, and it did not check the socket address and the proxy headers. The temporary folder was removed after the run.
+So the old gate passed a host that is an IP address or a .local name. It did not check the socket address or the proxy headers. The temporary folder was removed after the run.

@@ -34,6 +34,7 @@ osh-control-028 | Accept a host that starts with localhost | failing: [osh-contr
 osh-control-028 | Accept a host that ends with localhost | failing: [osh-control-028]
 osh-control-028 | Accept the whole 127 range | failing: [osh-control-028]
 osh-control-028 | Keep the brackets of an IPv6 host | failing: [osh-control-028]
+osh-control-028 | Compare the host in lower case | failing: [osh-control-028]
 osh-control-028 | Accept a host that the parser changes | failing: [osh-control-028]
 osh-control-028 | Accept a host that does not parse | failing: [osh-control-028]
 osh-control-028 | Accept any origin | failing: [osh-control-028]

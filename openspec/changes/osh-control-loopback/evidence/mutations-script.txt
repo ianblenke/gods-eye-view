@@ -46,6 +46,7 @@ f('028', 'Accept a host that starts with localhost', 'lc', "!LOOPBACK_HOSTS.has(
 f('028', 'Accept a host that ends with localhost', 'lc', "!LOOPBACK_HOSTS.has(name)", "!(LOOPBACK_HOSTS.has(name) || name.endsWith('localhost'))")
 f('028', 'Accept the whole 127 range', 'lc', "!LOOPBACK_HOSTS.has(name)", "!(LOOPBACK_HOSTS.has(name) || name.startsWith('127.'))")
 f('028', 'Keep the brackets of an IPv6 host', 'lc', ".replace(/^\\[|\\]$/g, '')", "")
+f('028', 'Compare the host in lower case', 'lc', "parsed.host !== host)", "parsed.host !== host.toLowerCase())")
 f('028', 'Accept a host that the parser changes', 'lc', "  if (parsed.host !== host) return false;\n", "")
 f('028', 'Accept a host that does not parse', 'lc', "  } catch {\n    return false;\n  }", "  } catch {\n    return true;\n  }")
 # origin (028)
