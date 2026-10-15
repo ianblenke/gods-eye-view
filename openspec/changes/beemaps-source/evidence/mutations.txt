@@ -1,12 +1,11 @@
 Named faults of beemaps-source (AGENTS.md rule 13). One fault changes one part of one provider file; the tests then run, and the list below names the tests that failed.
 
-Code commit: e466de1fe4bbda83115dfb526417e8a1f4f5cbef. Both runs below ran on the files of this commit. Later commits change documents and evidence files only.
+Code commit: 7ca52ba96453fac98733aa5bebc6cac3bcd39af5. Both runs below ran on the files of this commit. Later commits change documents and evidence files only.
 Command of each fault (3 scratch copies of the clone run in parallel on the host, Node v26.8.2): timeout 100 node --test --test-timeout=6000 --test-reporter=spec --test-skip-pattern='browser config of the build' src/data/beemaps*.test.mjs
 The test [beemaps-source-013] "keeps the key out of the browser config of the build" needs the packages of the image, so these runs skip it. It ran in the image (see host-checks.txt), together with one fault of build/vite.js that these runs cannot reach.
 
-Result: 324 faults in each of two runs. 2 faults left every test green in both runs, and both are equivalent faults that no test can tell from the code (marked below). Each of the other faults failed at least one test. 0 hangs. 0 failures without a scenario tag.
-323 of 324 lines are identical in the two runs. 1 line differs in the list of failing tests:
-- "Do not wait for the write": run 1 failed 9 tests ([beemaps-source-004], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]); run 2 failed 7 tests ([beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-023], [beemaps-source-024]). This fault does not wait for the file write, so the tests race with it and the list changes between runs. Both runs fail tests, including [beemaps-source-016].
+Result: 340 faults in each of two runs. 2 faults left every test green in both runs, and both are equivalent faults that no test can tell from the code (marked below). Each of the other faults failed at least one test. 0 hangs. 0 failures without a scenario tag.
+The two runs give identical lines.
 
 Equivalent faults (no scenario can tell them from the code):
 - Accept an empty daily limit: Number("") is 0, the next check (>= 1) refuses it, and the default 20 results in both versions
@@ -58,9 +57,31 @@ The new version moves the check of the budget before the check of the hold, in t
 - Pass on a ring that is null
 - Drop the extra headers of an answer
 - Say cached false for each answer
-Two changes of the tests follow from the review.
+After a second review of the whole change, 16 more faults were added:
+- Check the unknown fields after the area
+- Check the date before the area
+- Check the limit before the date
+- Check the budget before the memory
+- Make the seconds of the time optional
+- Accept a space for the letter T of the time
+- Accept an offset of the time without a colon
+- Read the key once when the plugin starts
+- Count the characters of the body and not the bytes
+- Add 1 to the count of a refused call
+- Write the key with console.dir
+- Keep an answer of the wrong shape in memory
+- Give a call back to the count when the answer has the wrong shape
+- Give a call back to the count after no credit or a limit of the upstream
+- Add the device to a frame
+- Add the sensor values to a frame
+Changes of the tests that follow from the two reviews:
 - A new test "counts each failed call against the daily limit" for the fault "Give a failed call back to the count".
 - An assertion in the test of the order of the steps: an oversize body gets 429 when the rate limit is used. It is for the fault "Read the body before the rate limit", which only [beemaps-source-021] failed before.
+- The tests "keeps an error answer out of the memory" and "counts each failed call against the daily limit" now run for six kinds of failure: 500, a body that is not JSON, a body without a list, 401, 402 and 429.
+- The test "keeps the key out of every answer, header and console line" mocks every method of console and not five. It no longer checks the value of envPrefix, which no scenario states.
+- A new input of the time test: a time with minutes and Z, and no seconds.
+- The test of the budget refuses twice at the limit and checks that the count is still 20, for the fault "Add 1 to the count of a refused call". The test "keeps an error answer out of the memory" asks the same area again before the hold ends, for the faults that store the answer of a hold kind.
+- The test of the browser config no longer checks the text BEEMAPS in define, which no scenario states. It checks that define does not hold the key.
 
 Fault in an upstream file, run in the image: add 'import.meta.env.BEEMAPS_API_KEY' with the value of process.env.BEEMAPS_API_KEY to the define of build/vite.js. Failing test: [beemaps-source-013] (command: docker run with the clone, node --test --test-name-pattern='browser config of the build' src/data/beemapsProxy.test.mjs; exit 1). The file was restored.
 
@@ -191,7 +212,7 @@ beemaps-source-027 | Read 5001 items | failing: [beemaps-source-027], [beemaps-s
 beemaps-source-027 | Read 4999 items | failing: [beemaps-source-027], [beemaps-source-028]
 beemaps-source-027 | Report more items at exactly 5000 | failing: [beemaps-source-027], [beemaps-source-028]
 beemaps-source-027 | Never report more items | failing: [beemaps-source-027], [beemaps-source-028]
-beemaps-source-027 | Accept frames that is not a list | failing: [beemaps-source-023], [beemaps-source-027]
+beemaps-source-027 | Accept frames that is not a list | failing: [beemaps-source-019], [beemaps-source-023], [beemaps-source-027]
 beemaps-source-028 | Accept a negative credit | failing: [beemaps-source-028]
 beemaps-source-028 | Refuse a credit of 0 | failing: [beemaps-source-028]
 beemaps-source-028 | Accept a credit as text | failing: [beemaps-source-028]
@@ -210,7 +231,7 @@ beemaps-source-016 | Refuse only at the daily limit | failing: [beemaps-source-0
 beemaps-source-016 | Name the wrong count in a refusal | failing: [beemaps-source-016], [beemaps-source-018], [beemaps-source-022], [beemaps-source-023]
 beemaps-source-018 | Wait between the check and the addition | failing: [beemaps-source-018]
 beemaps-source-016 | Do not write the file | failing: [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-023], [beemaps-source-024]
-beemaps-source-016 | Do not wait for the write | failing: [beemaps-source-004], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]
+beemaps-source-016 | Do not wait for the write | failing: [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-023], [beemaps-source-024], [beemaps-source-028]
 beemaps-source-018 | Write without waiting for the earlier write | failing: [beemaps-source-018]
 beemaps-source-017 | Stop all writes after a failed write | failing: [beemaps-source-017]
 beemaps-source-017 | Say ok after a failed write | failing: [beemaps-source-017]
@@ -251,15 +272,15 @@ beemaps-source-014 | Time out after 19.999 seconds | failing: [beemaps-source-01
 beemaps-source-014 | Never clear the timer | failing: [beemaps-source-014], [beemaps-source-023]
 beemaps-source-014 | Do not abort at the time out | failing: [beemaps-source-014], [beemaps-source-023]
 beemaps-source-023 | Read the body without the signal | failing: [beemaps-source-023]
-beemaps-source-023 | Do not take 401 as a refused key | failing: [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]
+beemaps-source-023 | Do not take 401 as a refused key | failing: [beemaps-source-019], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]
 beemaps-source-023 | Do not take 403 as a refused key | failing: [beemaps-source-023], [beemaps-source-024]
 beemaps-source-023 | Take 402 as a refused key | failing: [beemaps-source-023], [beemaps-source-024]
-beemaps-source-023 | Take 429 as a failure | failing: [beemaps-source-023], [beemaps-source-024]
-beemaps-source-023 | Read the wait from another header | failing: [beemaps-source-023], [beemaps-source-024]
+beemaps-source-023 | Take 429 as a failure | failing: [beemaps-source-019], [beemaps-source-023], [beemaps-source-024]
+beemaps-source-023 | Read the wait from another header | failing: [beemaps-source-019], [beemaps-source-023], [beemaps-source-024]
 beemaps-source-023 | Accept an empty Retry-After | failing: NONE (equivalent fault: Number("") is 0, the next check (< 1) refuses it, and the default 60 results in both versions)
 beemaps-source-023 | Accept a Retry-After of 0 | failing: [beemaps-source-023]
 beemaps-source-023 | Allow a Retry-After of 601 | failing: [beemaps-source-023]
-beemaps-source-023 | Use the larger of the wait and 600 | failing: [beemaps-source-023], [beemaps-source-024]
+beemaps-source-023 | Use the larger of the wait and 600 | failing: [beemaps-source-019], [beemaps-source-023], [beemaps-source-024]
 beemaps-source-023 | Use the default wait 59 | failing: [beemaps-source-023]
 beemaps-source-023 | Accept a sign in Retry-After | failing: [beemaps-source-023]
 beemaps-source-023 | Take a status of 3xx as good | failing: [beemaps-source-023]
@@ -292,22 +313,22 @@ beemaps-source-021 | Send Retry-After 10 | failing: [beemaps-source-021]
 beemaps-source-021 | Name the rate error another way | failing: [beemaps-source-021]
 beemaps-source-021 | Skip the rate limit | failing: [beemaps-source-021], [beemaps-source-022]
 beemaps-source-024 | Hold a refused key for 299.999 seconds | failing: [beemaps-source-024]
-beemaps-source-024 | Hold a refused key for 300.001 seconds | failing: [beemaps-source-024]
+beemaps-source-024 | Hold a refused key for 300.001 seconds | failing: [beemaps-source-019], [beemaps-source-023], [beemaps-source-024]
 beemaps-source-024 | Hold no credit for 599.999 seconds | failing: [beemaps-source-024]
-beemaps-source-024 | Hold no credit for 600.001 seconds | failing: [beemaps-source-024]
-beemaps-source-024 | Hold until the end second as well | failing: [beemaps-source-024]
-beemaps-source-024 | Hold nothing after a refused key | failing: [beemaps-source-022], [beemaps-source-024]
-beemaps-source-024 | Hold nothing after no credit | failing: [beemaps-source-024]
+beemaps-source-024 | Hold no credit for 600.001 seconds | failing: [beemaps-source-019], [beemaps-source-023], [beemaps-source-024]
+beemaps-source-024 | Hold until the end second as well | failing: [beemaps-source-019], [beemaps-source-023], [beemaps-source-024]
+beemaps-source-024 | Hold nothing after a refused key | failing: [beemaps-source-019], [beemaps-source-022], [beemaps-source-024]
+beemaps-source-024 | Hold nothing after no credit | failing: [beemaps-source-019], [beemaps-source-024]
 beemaps-source-024 | Hold after a failure of the upstream | failing: [beemaps-source-019], [beemaps-source-020], [beemaps-source-023], [beemaps-source-024]
-beemaps-source-024 | Hold after 429 for 60 seconds | failing: [beemaps-source-024]
+beemaps-source-024 | Hold after 429 for 60 seconds | failing: [beemaps-source-019], [beemaps-source-023], [beemaps-source-024]
 beemaps-source-024 | Round the seconds that remain down | failing: [beemaps-source-024]
 beemaps-source-024 | Round the seconds that remain to the nearest | failing: [beemaps-source-024]
-beemaps-source-024 | Start no hold after a failure | failing: [beemaps-source-022], [beemaps-source-024]
+beemaps-source-024 | Start no hold after a failure | failing: [beemaps-source-019], [beemaps-source-022], [beemaps-source-024]
 beemaps-source-023 | Answer a refused key with 401 | failing: [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]
 beemaps-source-023 | Leave keyRejected out of the answer | failing: [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]
 beemaps-source-023 | Answer no credit with 403 | failing: [beemaps-source-023], [beemaps-source-024]
 beemaps-source-023 | Name no credit another way | failing: [beemaps-source-023], [beemaps-source-024]
-beemaps-source-023 | Answer a failure of the upstream with 500 | failing: [beemaps-source-019], [beemaps-source-020], [beemaps-source-023]
+beemaps-source-023 | Answer a failure of the upstream with 500 | failing: [beemaps-source-020], [beemaps-source-023]
 beemaps-source-023 | Answer a body of the wrong shape with 500 | failing: [beemaps-source-023]
 beemaps-source-023 | Name a failure of the upstream another way | failing: [beemaps-source-020], [beemaps-source-023]
 beemaps-source-023 | Name a body of the wrong shape another way | failing: [beemaps-source-023]
@@ -375,7 +396,7 @@ beemaps-source-013 | Write the key to the console in the plugin | failing: [beem
 beemaps-source-013 | Write the key to the console in the upstream call | failing: [beemaps-source-013]
 beemaps-source-013 | Put the key in a header of an error answer | failing: [beemaps-source-013]
 beemaps-source-013 | Put the key in a header of a good answer | failing: [beemaps-source-013]
-beemaps-source-023 | Put the text of a thrown error in the answer | failing: [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]
+beemaps-source-023 | Put the text of a thrown error in the answer | failing: [beemaps-source-019], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024]
 beemaps-source-015 | Add a second URL to a provider file | failing: [beemaps-source-015]
 beemaps-source-015 | Repeat the host in a comment | failing: [beemaps-source-015]
 beemaps-source-015 | Repeat the path in a comment | failing: [beemaps-source-015]
@@ -389,3 +410,19 @@ beemaps-source-019 | Keep an error answer in memory | failing: [beemaps-source-0
 beemaps-source-023 | Give a failed call back to the count | failing: [beemaps-source-023], [beemaps-source-024]
 beemaps-source-020 | Send a second request after the shared request fails | failing: [beemaps-source-020]
 beemaps-source-004 | Read the body before the check of the local request | failing: [beemaps-source-001], [beemaps-source-004], [beemaps-source-005], [beemaps-source-012], [beemaps-source-013], [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-021], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024], [beemaps-source-028]
+beemaps-source-022 | Check the unknown fields after the area | failing: [beemaps-source-022]
+beemaps-source-022 | Check the date before the area | failing: [beemaps-source-022]
+beemaps-source-022 | Check the limit before the date | failing: [beemaps-source-022]
+beemaps-source-022 | Check the budget before the memory | failing: [beemaps-source-016], [beemaps-source-018], [beemaps-source-019], [beemaps-source-020], [beemaps-source-022], [beemaps-source-023], [beemaps-source-024], [beemaps-source-028]
+beemaps-source-025 | Make the seconds of the time optional | failing: [beemaps-source-025]
+beemaps-source-025 | Accept a space for the letter T of the time | failing: [beemaps-source-025]
+beemaps-source-025 | Accept an offset of the time without a colon | failing: [beemaps-source-025]
+beemaps-source-012 | Read the key once when the plugin starts | failing: [beemaps-source-012], [beemaps-source-022], [beemaps-source-028]
+beemaps-source-005 | Count the characters of the body and not the bytes | failing: [beemaps-source-005]
+beemaps-source-016 | Add 1 to the count of a refused call | failing: [beemaps-source-016], [beemaps-source-017], [beemaps-source-018], [beemaps-source-022]
+beemaps-source-013 | Write the key with console.dir | failing: [beemaps-source-013]
+beemaps-source-019 | Keep an answer of the wrong shape in memory | failing: [beemaps-source-019]
+beemaps-source-023 | Give a call back to the count when the answer has the wrong shape | failing: [beemaps-source-023]
+beemaps-source-023 | Give a call back to the count after no credit or a limit of the upstream | failing: [beemaps-source-023]
+beemaps-source-025 | Add the device to a frame | failing: [beemaps-source-013], [beemaps-source-025], [beemaps-source-026], [beemaps-source-027]
+beemaps-source-025 | Add the sensor values to a frame | failing: [beemaps-source-025], [beemaps-source-026], [beemaps-source-027]

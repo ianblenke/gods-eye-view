@@ -1,4 +1,4 @@
-Host checks of beemaps-source, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit e466de1fe4bbda83115dfb526417e8a1f4f5cbef; later commits change evidence files, documents and trace files only.
+Host checks of beemaps-source, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit 7ca52ba96453fac98733aa5bebc6cac3bcd39af5; later commits change evidence files, documents and trace files only.
 
 ## node scripts/check-import-directions.mjs
 {"modules":986,"portableEntries":79}
@@ -30,15 +30,15 @@ exit: 0
 ℹ    validate.js  | 100.00 |   100.00 |  100.00 | 
 ℹ all files       | 100.00 |   100.00 |  100.00 | 
 
-## node scripts/spec/gates.mjs lint --change beemaps-source (on the documents of the commit e466de1fe4bbda83115dfb526417e8a1f4f5cbef)
-STE: 0 errors, 773 warnings.
+## node scripts/spec/gates.mjs lint --change beemaps-source (on the documents of the commit 7ca52ba96453fac98733aa5bebc6cac3bcd39af5)
+STE: 0 errors, 772 warnings.
 
-## openspec validate beemaps-source (on the documents of the commit e466de1fe4bbda83115dfb526417e8a1f4f5cbef)
+## openspec validate beemaps-source (on the documents of the commit 7ca52ba96453fac98733aa5bebc6cac3bcd39af5)
 Change 'beemaps-source' is valid
 
-## node --test --test-reporter=spec src/data/beemaps*.test.mjs (in the image gods-eye-view:local, Node v24.21.0, the clone mounted with the node_modules of the image, commit e466de1f)
+## node --test --test-reporter=spec src/data/beemaps*.test.mjs (in the image gods-eye-view:local, Node v24.21.0, the clone mounted with the node_modules of the image, commit 7ca52ba9)
 exit: 0
-✔ [beemaps-source-013] keeps the key out of the browser config of the build (979.082083ms)
+✔ [beemaps-source-013] keeps the key out of the browser config of the build (974.346455ms)
 ℹ tests 118
 ℹ pass 118
 ℹ fail 0
@@ -46,7 +46,7 @@ exit: 0
 
 ## the same image, one fault in build/vite.js (the key added to define), test pattern 'browser config of the build'
 exit: 1
-✖ [beemaps-source-013] keeps the key out of the browser config of the build (1032.381718ms)
+✖ [beemaps-source-013] keeps the key out of the browser config of the build (1048.584158ms)
 ℹ tests 1
 ℹ pass 0
 ℹ fail 1
