@@ -572,6 +572,9 @@ test('[beemaps-burst-control-039] reads a refused record with a status from 400 
     { retryAfter: 1.5 },
     { retryAfter: '5' },
     { retryAfter: null },
+    { error: 5 },
+    { error: null },
+    { error: ['x'] },
   ]) {
     const fs = fakeFs({
       [FILE]: JSON.stringify({ records: [refused(extra)] }),
