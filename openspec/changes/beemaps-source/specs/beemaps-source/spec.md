@@ -9,6 +9,7 @@ Origin: spec-first
 - **THEN** the first two paths get an answer, and the third path goes to `next` with no answer
 - **AND** the plugin name is "beemaps-proxy"
 - **AND** `configureServer` and `configurePreviewServer` install the same routes
+- **AND** the list that `localProviderPlugins` returns holds this plugin once
 
 #### Scenario: Report the status `beemaps-source-002`
 - **WHEN** a `GET` goes to `/api/beemaps/status`
