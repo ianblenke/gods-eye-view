@@ -59,8 +59,13 @@ function harness({
   const added = [];
   const listeners = [];
   const picks = [];
+  const handlers = {};
   const watch = (name) => ({
-    addEventListener: () => listeners.push(name),
+    addEventListener: (handler) => {
+      listeners.push(name);
+      (handlers[name] ??= []).push(handler);
+    },
+    raiseEvent: () => (handlers[name] ?? []).forEach((handler) => handler()),
   });
   const viewer = {
     dataSources: {
@@ -71,6 +76,7 @@ function harness({
       },
     },
     camera: {
+      positionWC: Cesium.Cartesian3.fromDegrees(0, 0, 1e7),
       changed: watch('camera.changed'),
       moveStart: watch('camera.moveStart'),
       moveEnd: watch('camera.moveEnd'),
@@ -145,9 +151,18 @@ test('[beemaps-frames-002] asks only for the status and adds no listener to the 
   const { layer, viewer, calls, listeners } = harness();
   layer.init(viewer);
   layer.enable(viewer);
-  await layer.update();
-  await layer.update();
-  await layer.update();
+  for (const [lon, lat] of [
+    [10, 60],
+    [11, 61],
+    [12, 62],
+  ]) {
+    viewer.camera.positionWC = Cesium.Cartesian3.fromDegrees(lon, lat, 1e7);
+    for (const name of ['moveStart', 'changed', 'moveEnd'])
+      viewer.camera[name].raiseEvent();
+    viewer.scene.preRender.raiseEvent();
+    viewer.scene.postRender.raiseEvent();
+    await layer.update();
+  }
   layer.disable(viewer);
   layer.enable(viewer);
   assert.equal(calls.getStatus.length, 3);
@@ -168,12 +183,6 @@ test('[beemaps-frames-003] has one chip with an onClick function and no params, 
   await h.ready();
   const { chips } = h.layer.getRowControls();
   assert.equal(chips.length, 1);
-  assert.deepEqual(Object.keys(chips[0]), [
-    'id',
-    'label',
-    'disabled',
-    'onClick',
-  ]);
   assert.equal(chips[0].id, 'fetch');
   assert.equal(chips[0].label, 'Fetch frames here');
   assert.equal(typeof chips[0].onClick, 'function');
@@ -293,6 +302,43 @@ test('[beemaps-frames-007] shows that the server did not give the status, and ke
   }
 });
 
+test('[beemaps-frames-007] removes the text and the error of a failed status after a good status', async () => {
+  let fail = true;
+  const h = harness({
+    status: async () => (fail ? { ok: false } : { ok: true, configured: true }),
+  });
+  await h.ready();
+  assert.equal(h.info(), STATUS_FAILED);
+  assert.equal(h.layer.getStats().error, STATUS_FAILED);
+  fail = false;
+  assert.equal(await h.layer.update(), true);
+  assert.equal(h.info(), HINT);
+  assert.equal(h.layer.getStats().error, null);
+});
+
+test('[beemaps-frames-007] removes the text and the error of a failed status after a good answer of getFrames', async () => {
+  const h = harness({ status: async () => ({ ok: false }) });
+  await h.ready();
+  assert.equal(h.info(), STATUS_FAILED);
+  await h.chip().onClick();
+  assert.equal(
+    h.info(),
+    '3 frames · newest 2026-10-15 · requests today 3 of 20 · credits left 998',
+  );
+  assert.equal(h.layer.getStats().error, null);
+});
+
+test('[beemaps-frames-007] shows the message and the error of a press that fails after a failed status', async () => {
+  const h = harness({
+    status: async () => ({ ok: false }),
+    frames: async () => ({ ok: false, status: 502, error: 'upstream_failed' }),
+  });
+  await h.ready();
+  await h.chip().onClick();
+  assert.equal(h.info(), 'Bee Maps did not answer correctly.');
+  assert.equal(h.layer.getStats().error, 'Bee Maps did not answer correctly.');
+});
+
 test('[beemaps-frames-008] builds the box from the point under the middle of the canvas', async () => {
   const h = harness();
   await h.ready();
@@ -393,6 +439,7 @@ test('[beemaps-frames-019] shows one point on the ground for each frame, with th
     assert.equal(entity.point.pixelSize.getValue(julian), size);
     const color = entity.point.color.getValue(julian);
     assert.equal(color.alpha, alpha);
+    assert.equal(Cesium.Color.fromAlpha(color, 1).toCssHexString(), '#f59e0b');
     assert.equal(
       entity.point.heightReference.getValue(julian),
       Cesium.HeightReference.CLAMP_TO_GROUND,

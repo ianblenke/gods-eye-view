@@ -52,6 +52,7 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
   let _answer = null;
   let _lastUpdate = null;
   let _lastError = null;
+  let _statusError = null;
   let _listener = null;
 
   const notify = () => _listener?.();
@@ -88,6 +89,7 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
     _answer = null;
     _lastUpdate = null;
     _lastError = null;
+    _statusError = null;
   }
 
   async function press() {
@@ -117,6 +119,10 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
       _answer = result.answer;
       _pressMessage = null;
       _lastError = null;
+      if (_statusError !== null) {
+        _statusError = null;
+        _statusMessage = null;
+      }
       _lastUpdate = now();
       showFrames(_answer.frames);
     } else {
@@ -169,10 +175,11 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
       if (status.ok) {
         _configured = status.configured;
         _statusMessage = status.configured ? null : NO_KEY;
+        _statusError = null;
       } else {
         _configured = null;
         _statusMessage = STATUS_FAILED;
-        _lastError = status.error || STATUS_FAILED;
+        _statusError = status.error || STATUS_FAILED;
       }
       notify();
       return true;
@@ -215,7 +222,7 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
       return {
         count: _answer?.frames.length ?? 0,
         lastUpdate: _lastUpdate,
-        error: _lastError,
+        error: _lastError ?? _statusError,
       };
     },
   };

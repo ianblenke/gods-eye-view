@@ -59,6 +59,9 @@ Origin: spec-first
 - **AND** they have `error` "The server did not give the status of the key." when the rejection has no message
 - **AND** they have `error` "The server did not give the status of the key." when the result is `ok` false and has no `error`
 - **AND** the chip has `disabled` false
+- **AND** a later `update` with a good status removes that text and sets `error` to null
+- **AND** a good answer of `getFrames` after a failed status also removes that text and sets `error` to null
+- **AND** a press that fails after a failed status shows the message and the `error` of the press
 
 ### Requirement: View box
 The layer MUST build the box of a request from the point in the middle of the view. The box MUST have a size of about 4 km², and the server MUST accept it.
