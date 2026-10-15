@@ -93,6 +93,7 @@ Origin: spec-first
 - **AND** for the longitude the text is "Move the view away from the 180th meridian and press again."
 - **AND** the row (80.002, 0.0) gives a box, and the row (80.003, 0.0) is refused for the latitude
 - **AND** the row (0.0, 179.99) gives a box, and the rows (0.0, 179.995) and (0.0, -179.995) are refused for the longitude
+- **AND** the rows (25.93, 179.99) and (25.93, -179.99) give a box that ends at longitude 180 and at longitude -180
 
 #### Scenario: Build only boxes that the server accepts `beemaps-frames-010`
 - **WHEN** a test builds the box for each latitude from -80 to 80 in steps of 5

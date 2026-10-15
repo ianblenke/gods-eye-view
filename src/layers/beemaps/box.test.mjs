@@ -105,6 +105,19 @@ test('[beemaps-frames-009] refuses a box that goes past longitude 180 or -180', 
   assert.deepEqual(at(70, -179.98), { ok: false, reason: 'meridian' });
 });
 
+test('[beemaps-frames-009] gives a box that ends exactly at longitude 180 or -180', () => {
+  assert.deepEqual(at(25.93, 179.99), {
+    ok: true,
+    centre: { lat: 25.93, lon: 179.99 },
+    bbox: [179.98, 25.921007, 180, 25.938993],
+  });
+  assert.deepEqual(at(25.93, -179.99), {
+    ok: true,
+    centre: { lat: 25.93, lon: -179.99 },
+    bbox: [-180, 25.921007, -179.98, 25.938993],
+  });
+});
+
 test('[beemaps-frames-009] gives the first reason when two apply', () => {
   assert.deepEqual(at(85, 179.995), { ok: false, reason: 'latitude' });
   assert.deepEqual(at(-85, -179.995), { ok: false, reason: 'latitude' });
