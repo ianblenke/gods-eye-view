@@ -2333,3 +2333,65 @@ test('[beemaps-burst-control-022] reads the daily limit again at each request', 
   server.env.BEEMAPS_BURST_DAILY_CREDITS = '300';
   assert.equal((await server.quote()).body.budget.limit, 300);
 });
+
+test('[beemaps-burst-control-030] gives the clock of the plugin to the audit it makes', async (t) => {
+  const cwd = await tempDir(t);
+  const root = await tempDir(t);
+  const plugin = beemapsBurstProxy({
+    env: { BEEMAPS_BURST_ENABLED: undefined },
+    now: () => NOW + 5000,
+    cacheDir: cwd,
+    sourceRoot: root,
+  });
+  const routes = new Map();
+  plugin.configureServer({
+    middlewares: { use: (route, handler) => routes.set(route, handler) },
+  });
+  const req = Object.assign(Readable.from([Buffer.from('{}')]), {
+    method: 'POST',
+    headers: GOOD_HEADERS,
+    socket: { remoteAddress: '127.0.0.1' },
+    url: '/',
+  });
+  const res = {
+    writeHead() {},
+    end() {},
+  };
+  await routes.get(CONFIRM)(req, res, () => {});
+  const text = await fsp.readFile(
+    path.join(root, '.gev-logs', 'beemaps-bursts.jsonl'),
+    'utf8',
+  );
+  assert.equal(JSON.parse(text).time, '2026-10-15T12:00:05.000Z');
+});
+
+test('[beemaps-burst-control-037] gives a failure of the new request to a request that shares it, and not the stored list that has ended', async (t) => {
+  const open = gate();
+  let round = 0;
+  const server = await install(t, {
+    respond: async () => {
+      round += 1;
+      if (round === 2) {
+        await open.opened;
+        return failure(500);
+      }
+      return listing([{ ...BURST, _id: 'round1' }]);
+    },
+  });
+  assert.equal((await server.request(LIST, { body: {} })).status, 200);
+  server.clock.t += 61_000;
+  const first = server.request(LIST, { body: {} });
+  await waitFor(() => server.calls.length === 2);
+  const second = server.request(LIST, { body: {} });
+  await sleep(20);
+  open.open();
+  const answers = await Promise.all([first, second]);
+  assert.deepEqual(
+    answers.map((answer) => [answer.status, answer.body.error]),
+    [
+      [502, 'upstream_failed'],
+      [502, 'upstream_failed'],
+    ],
+  );
+  assert.equal(server.calls.length, 2);
+});
