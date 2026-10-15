@@ -115,6 +115,7 @@ function answerOfRecord(record, replayed) {
  * @param {Function} [options.setTimer] Timer for the request timeouts.
  * @param {Function} [options.clearTimer] Clears that timer.
  * @param {string} [options.cacheDir] Folder of `credits.json` and `ledger.json`.
+ * @param {string} [options.sourceRoot] Folder that holds `.gev-logs`, for the default audit.
  * @param {(event: object) => Promise<void>} [options.audit] Writes an audit line.
  * @param {() => string} [options.randomId] Gives the id of a request.
  * @param {object} [options.fs] File functions for the two durable files.
@@ -126,7 +127,8 @@ export function beemapsBurstProxy({
   setTimer = setTimeout,
   clearTimer = clearTimeout,
   cacheDir = path.join(process.cwd(), '.gev-cache', 'beemaps-burst'),
-  audit = createAudit({ now }),
+  sourceRoot,
+  audit = createAudit({ now, sourceRoot }),
   randomId = randomUUID,
   fs,
 } = {}) {
@@ -270,7 +272,7 @@ export function beemapsBurstProxy({
     try {
       await audit({ ...context, outcome: 'accepted' });
     } catch {
-      return send(res, 500, { error: 'log_failed' });
+      return block(500, 'log_failed');
     }
     const begun = await ledger.begin(idempotencyKey, quoteId);
     if (!begun.ok) return block(500, 'ledger_unavailable');
@@ -313,9 +315,7 @@ export function beemapsBurstProxy({
       await ledger.finish(idempotencyKey, 'refused', {
         status: result.status,
         error: result.error,
-        ...(result.retryAfter === undefined
-          ? {}
-          : { retryAfter: result.retryAfter }),
+        retryAfter: result.retryAfter,
       });
       await audit({
         ...finished,
@@ -380,7 +380,7 @@ export function beemapsBurstProxy({
     }
     if (listing !== null) {
       const shared = await listing;
-      return { result: shared, cached: shared.ok };
+      return { result: shared, cached: true };
     }
     listing = listBursts({ fetchImpl, key, setTimer, clearTimer });
     try {
@@ -422,11 +422,20 @@ export function beemapsBurstProxy({
     });
   }
 
+  /** An error that nobody expects gives an answer and never an unhandled rejection. */
+  const guarded = (handler) => async (req, res, next) => {
+    try {
+      return await handler(req, res, next);
+    } catch {
+      if (!res.headersSent) send(res, 500, { error: 'internal_error' });
+    }
+  };
+
   const install = ({ middlewares }) => {
     middlewares.use('/api/beemaps/burst/status', sameSiteGated(handleStatus));
-    middlewares.use('/api/beemaps/burst/quote', handleQuote);
-    middlewares.use('/api/beemaps/burst/confirm', handleConfirm);
-    middlewares.use('/api/beemaps/burst/list', handleList);
+    middlewares.use('/api/beemaps/burst/quote', guarded(handleQuote));
+    middlewares.use('/api/beemaps/burst/confirm', guarded(handleConfirm));
+    middlewares.use('/api/beemaps/burst/list', guarded(handleList));
   };
   return {
     name: 'beemaps-burst-proxy',

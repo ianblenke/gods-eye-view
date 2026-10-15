@@ -181,6 +181,7 @@ async function install(
       headers = {},
       remote = '127.0.0.1',
       failing = false,
+      endFails = false,
     } = options;
     const text = typeof body === 'string' ? body : JSON.stringify(body);
     const source = failing
@@ -206,8 +207,12 @@ async function install(
       setHeader(name, value) {
         this.headers[name.toLowerCase()] = value;
       },
+      get headersSent() {
+        return this.statusCode !== undefined;
+      },
       end(chunk) {
         this.text = chunk;
+        if (endFails) throw new Error('socket closed');
       },
     };
     let nexted = false;
@@ -2075,4 +2080,256 @@ test('[beemaps-burst-control-023] lets a confirm run while a list request is in 
   assert.equal(result.status, 200);
   open.open();
   assert.equal((await pending).status, 200);
+});
+
+test('[beemaps-burst-control-001] answers 500 internal_error when a route fails with an error that nobody expects, and does not answer twice', async (t) => {
+  const server = await install(t);
+  Object.defineProperty(server.env, 'BEEMAPS_BURST_ENABLED', {
+    get() {
+      throw new Error('boom');
+    },
+  });
+  for (const [url, body] of [
+    [QUOTE, { bbox: BOX }],
+    [CONFIRM, {}],
+    [LIST, {}],
+  ]) {
+    const result = await server.request(url, { body });
+    assert.deepEqual(
+      [result.status, result.body],
+      [500, { error: 'internal_error' }],
+      url,
+    );
+  }
+  Object.defineProperty(server.env, 'BEEMAPS_BURST_ENABLED', {
+    value: 'true',
+    writable: true,
+  });
+  const sent = await server.request(QUOTE, {
+    body: { bbox: BOX },
+    endFails: true,
+  });
+  assert.deepEqual([sent.status, typeof sent.text], [200, 'string']);
+  assert.equal(server.consoleLines.length, 0);
+});
+
+test('[beemaps-burst-control-020] ends the lock of a confirm that fails with an error that nobody expects', async (t) => {
+  const server = await install(t);
+  const first = await server.quote();
+  const second = await server.quote();
+  let reads = 0;
+  Object.defineProperty(server.env, 'BEEMAPS_BURST_DAILY_CREDITS', {
+    configurable: true,
+    get() {
+      reads += 1;
+      if (reads === 2) throw new Error('boom');
+      return undefined;
+    },
+  });
+  const failed = await server.confirm(first.body.quoteId, idem(1));
+  assert.deepEqual(
+    [failed.status, failed.body],
+    [500, { error: 'internal_error' }],
+  );
+  assert.equal(server.calls.length, 0);
+  const next = await server.confirm(second.body.quoteId, idem(2));
+  assert.equal(next.status, 200);
+  assert.equal(server.calls.length, 1);
+});
+
+test('[beemaps-burst-control-030] tries a blocked line with the reason log_failed when the first line fails', async (t) => {
+  let writes = 0;
+  const server = await install(t, {
+    hooks: {
+      audit: async () => {
+        writes += 1;
+        if (writes === 1) throw new Error('disk full');
+      },
+    },
+  });
+  const result = await server.flow(1);
+  assert.deepEqual(
+    [result.status, result.body],
+    [500, { error: 'log_failed' }],
+  );
+  assert.equal(server.calls.length, 0);
+  assert.deepEqual(
+    server.lines.map((line) => [line.outcome, line.reason]),
+    [['blocked', 'log_failed']],
+  );
+});
+
+test('[beemaps-burst-control-016] reserves, writes and sends the credits and the box of the quote', async (t) => {
+  const server = await install(t, {
+    env: { BEEMAPS_BURST_MAX_CREDITS: '200' },
+  });
+  const quoted = await server.quote(BOX, { credits: 200 });
+  const result = await server.confirm(quoted.body.quoteId, idem(1));
+  assert.equal(result.status, 200);
+  assert.deepEqual(await server.credits(), {
+    date: '2026-10-15',
+    credits: 200,
+  });
+  const sent = JSON.parse(server.calls[0].init.body);
+  assert.equal(sent[0].credits, 200);
+  assert.deepEqual(sent[0].geojson.coordinates[0], [
+    [9.982014, 59.991007],
+    [10.017986, 59.991007],
+    [10.017986, 60.008993],
+    [9.982014, 60.008993],
+    [9.982014, 59.991007],
+  ]);
+});
+
+test('[beemaps-burst-control-031] gives the duration of the send in the closing line', async (t) => {
+  let server;
+  server = await install(t, {
+    respond: () => {
+      server.clock.t += 250;
+      return created();
+    },
+  });
+  await server.flow(1);
+  assert.equal(server.lines.at(-1).outcome, 'created');
+  assert.equal(server.lines.at(-1).durationMs, 250);
+});
+
+test('[beemaps-burst-control-030] waits for the closing line of each outcome, and writes it after the record', async (t) => {
+  for (const [respond, outcome] of [
+    [() => created(), 'created'],
+    [() => failure(403), 'refused'],
+    [() => failure(500), 'unknown'],
+  ]) {
+    const server = await install(t, {
+      respond,
+      hooks: {
+        audit: async (line) => {
+          if (line.outcome !== 'accepted') await sleep(20);
+        },
+      },
+    });
+    await server.flow(1);
+    assert.equal(server.lines.at(-1).outcome, outcome);
+    const names = server.events;
+    assert.equal(
+      names.lastIndexOf(`audit ${outcome}`) >
+        names.lastIndexOf('rename ledger.json'),
+      true,
+      outcome,
+    );
+  }
+});
+
+test('[beemaps-burst-control-037] gives the answer of the new request to a request that shares it after the stored list has ended', async (t) => {
+  const open = gate();
+  let round = 0;
+  const server = await install(t, {
+    respond: async () => {
+      round += 1;
+      if (round === 2) await open.opened;
+      return listing([{ ...BURST, _id: `round${round}` }]);
+    },
+  });
+  assert.equal(
+    (await server.request(LIST, { body: {} })).body.bursts[0].id,
+    'round1',
+  );
+  server.clock.t += 61_000;
+  const first = server.request(LIST, { body: {} });
+  await waitFor(() => server.calls.length === 2);
+  const second = server.request(LIST, { body: {} });
+  await sleep(20);
+  open.open();
+  const answers = await Promise.all([first, second]);
+  assert.deepEqual(
+    answers.map((answer) => answer.body.bursts[0].id),
+    ['round2', 'round2'],
+  );
+  assert.equal(server.calls.length, 2);
+});
+
+test('[beemaps-burst-control-001] uses the environment, the clock, the fetch function and the folders of the process when it gets no options', async (t) => {
+  const cwd = await tempDir(t);
+  const root = await tempDir(t);
+  t.mock.method(process, 'cwd', () => cwd);
+  t.mock.timers.enable({ apis: ['Date'], now: NOW });
+  for (const [name, value] of Object.entries({
+    BEEMAPS_BURST_ENABLED: 'true',
+    BEEMAPS_BURST_API_KEY: KEY,
+  })) {
+    const before = process.env[name];
+    process.env[name] = value;
+    t.after(() => {
+      if (before === undefined) delete process.env[name];
+      else process.env[name] = before;
+    });
+  }
+  const urls = [];
+  t.mock.method(globalThis, 'fetch', async (url) => {
+    urls.push(String(url));
+    return created();
+  });
+  const plugin = beemapsBurstProxy({ sourceRoot: root });
+  const routes = new Map();
+  plugin.configureServer({
+    middlewares: { use: (route, handler) => routes.set(route, handler) },
+  });
+  const call = async (route, body) => {
+    const req = Object.assign(
+      Readable.from([Buffer.from(JSON.stringify(body))]),
+      {
+        method: 'POST',
+        headers: GOOD_HEADERS,
+        socket: { remoteAddress: '127.0.0.1' },
+        url: '/',
+      },
+    );
+    const res = {
+      headers: {},
+      writeHead(code) {
+        this.statusCode = code;
+      },
+      end(chunk) {
+        this.text = chunk;
+      },
+    };
+    await routes.get(route)(req, res, () => {});
+    return JSON.parse(res.text);
+  };
+  const quoted = await call(QUOTE, { bbox: BOX });
+  const confirmed = await call(CONFIRM, {
+    quoteId: quoted.quoteId,
+    idempotencyKey: idem(1),
+  });
+  assert.equal(confirmed.outcome, 'created');
+  assert.deepEqual(urls, [CREATE_URL]);
+  const folder = path.join(cwd, '.gev-cache', 'beemaps-burst');
+  assert.deepEqual((await fsp.readdir(folder)).sort(), [
+    'credits.json',
+    'ledger.json',
+  ]);
+  const lines = (
+    await fsp.readFile(
+      path.join(root, '.gev-logs', 'beemaps-bursts.jsonl'),
+      'utf8',
+    )
+  )
+    .trim()
+    .split('\n')
+    .map((line) => JSON.parse(line));
+  assert.deepEqual(
+    lines.map((line) => [line.time, line.outcome]),
+    [
+      ['2026-10-15T12:00:00.000Z', 'accepted'],
+      ['2026-10-15T12:00:00.000Z', 'created'],
+    ],
+  );
+  assert.match(lines[0].requestId, /^[0-9a-f-]{36}$/);
+});
+
+test('[beemaps-burst-control-022] reads the daily limit again at each request', async (t) => {
+  const server = await install(t);
+  assert.equal((await server.quote()).body.budget.limit, 625);
+  server.env.BEEMAPS_BURST_DAILY_CREDITS = '300';
+  assert.equal((await server.quote()).body.budget.limit, 300);
 });

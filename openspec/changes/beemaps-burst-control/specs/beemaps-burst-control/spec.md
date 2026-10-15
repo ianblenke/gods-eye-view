@@ -10,6 +10,7 @@ Origin: spec-first
 - **AND** the plugin name is "beemaps-burst-proxy"
 - **AND** `configureServer` and `configurePreviewServer` install the same routes
 - **AND** the list that `localProviderPlugins` returns has this plugin once, after the plugin "beemaps-proxy"
+- **AND** an error that nobody expects in `quote`, `confirm` or `list` gives 500 with `{error:'internal_error'}`, and it gives no unhandled rejection
 
 ### Requirement: Off by default
 The routes MUST send no request to Bee Maps and MUST spend nothing unless `BEEMAPS_BURST_ENABLED` is exactly "true" and `BEEMAPS_BURST_API_KEY` has a key. The key of the frames provider MUST NOT count.
@@ -195,6 +196,7 @@ Origin: spec-first
 - **AND** the first confirm ends with its own answer, and a confirm after it does not get `busy`
 - **AND** a test sends three confirms at the same time, because the rate limit allows 3 for each minute
 - **AND** the three confirms give one upstream request and two answers `busy`
+- **AND** when a step of a confirm fails with an error that nobody expects, the lock ends
 
 ### Requirement: Budget in credits
 The plugin MUST count the credits of a confirm in a daily budget before it sends. It MUST NOT give credits back, and the count MUST survive a restart.
@@ -302,6 +304,7 @@ Origin: spec-first
 - **AND** a second line with the outcome "created", "refused" or "unknown" follows when the confirm ends
 - **AND** when the write of the first line fails, the route answers 500 with `{error:'log_failed'}`, and it sends no upstream request
 - **AND** when the write of the second line fails, the answer is still the outcome of the send
+- **AND** after a failure of the first line the route tries a line with the outcome "blocked" and the reason `log_failed`
 
 #### Scenario: Fill the line `beemaps-burst-control-031`
 - **WHEN** a test reads the lines of the file `beemaps-bursts.jsonl` in the log folder
