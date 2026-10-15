@@ -1,0 +1,51 @@
+## Context
+
+Base commit: `915cc8e8` (main, after the merge of `reticulum-layer`).
+The function `isSameOriginCommand` in `server/providers/osh-control.js` checks the content type, the host and the origin of a POST. It does not look at the socket address or at the proxy headers.
+The route calls it first, before the flag and the account checks. It writes one audit line for each refusal.
+
+The route for the key panel (`admitKeySetupRequest` in `src/keySetupCore.mjs`) has stricter rules. It needs a loopback socket, a local host name, an exact origin and no proxy header.
+`compose.codex.yaml` runs the app on the host network. `compose.yaml` publishes the port through a bridge network. Both set `HOST` to `0.0.0.0`, so the server listens on every interface.
+
+## Goals / Non-Goals
+
+**Goals:**
+- A POST to `/api/control/osh/commands` passes only when it comes from the machine that runs the server.
+- One shared function that a later route can use. It has the same rules as the key panel.
+
+**Non-Goals:**
+- The GET route `/api/control/osh/targets`. It sends no command.
+- The routes that spend money for OpenAI or Google. They have their own gate in `src/localRequestGate.mjs`.
+- A setting that lets a LAN address pass on purpose.
+
+## Decisions
+
+### D1: A new shared file
+
+The function lives in `server/providers/common/loopback-command.js`, and `isSameOriginCommand` calls it. The name `isSameOriginCommand` stays, so the tests and the route keep their imports.
+Alternative: change the function in place. The Bee Maps route of a later change needs the same rules, and a second copy would drift from the first.
+
+### D2: The rules and their order
+
+The function checks the content type, the proxy headers, the socket address, the host and the origin, in that order. Each check returns false at once.
+The socket addresses are `127.0.0.1`, `::1` and `::ffff:127.0.0.1`. The host names are `localhost`, `127.0.0.1` and `[::1]`. These are the lists of the key panel.
+The function `hasProxySignals` of `src/localRequestGate.mjs` names the proxy headers, so that list has one owner.
+
+### D3: The answer does not change
+
+Each refusal gives `403` with `{error:'cross_origin'}`, as before. The browser code and the audit log see no new error name. The client key of the audit line is the socket address, so a LAN device shows up in the log.
+
+### D4: Tests
+
+The tests build a request object with a fake socket. They open no port. The route test already gives the socket address `127.0.0.1`, so it needs only a parameter to change it.
+
+### D5: The bridge mode
+
+With `make up` the server sees the Docker gateway address `172.17.0.1` for a request from this machine. `evidence/peer-address.txt` has the measurement. The function refuses that address.
+Alternative: accept the gateway address. The address is a setting of Docker, and it changes between hosts. The check could not tell a program on this machine from another container on the bridge.
+
+## Risks / Trade-offs
+
+- [A user who opens the app by a LAN address loses the commands] → `CHANGELOG.md` says so. The route gives the same `403` as before.
+- [A user of `make up` loses the commands] → The Known limit `bridge` says so. `make up-codex` works.
+- [The list of proxy headers misses a proxy] → It is the list of the key panel, which a test pins.
