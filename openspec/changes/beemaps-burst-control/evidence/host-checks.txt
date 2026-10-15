@@ -1,0 +1,55 @@
+Host checks of beemaps-burst-control, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit 1cb60dc9e44493d0c2c87d0c65e4de2e0a8d51d8; later commits change evidence files, documents and trace files only.
+
+## node scripts/check-import-directions.mjs
+{"modules":1000,"portableEntries":80}
+exit: 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 16 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit: 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 32 published, 0 new.
+exit: 0
+
+## node scripts/format.mjs --check
+Checked 1394 source files.
+exit: 0
+
+## node --test --experimental-test-coverage (include the 7 plugin files) the 8 test files of the change (on the host)
+exit: 0
+ℹ tests 208
+ℹ pass 208
+ℹ fail 0
+ℹ skipped 0
+ℹ   beemaps-burst.js  | 100.00 |   100.00 |  100.00 | 
+ℹ    audit.js         | 100.00 |   100.00 |  100.00 | 
+ℹ    credits.js       | 100.00 |   100.00 |  100.00 | 
+ℹ    ledger.js        | 100.00 |   100.00 |  100.00 | 
+ℹ    quotes.js        | 100.00 |   100.00 |  100.00 | 
+ℹ    upstream.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    validate.js      | 100.00 |   100.00 |  100.00 | 
+ℹ all files           | 100.00 |   100.00 |  100.00 | 
+
+## node scripts/spec/gates.mjs lint --change beemaps-burst-control (on the documents of the commit 1cb60dc9e44493d0c2c87d0c65e4de2e0a8d51d8)
+STE: 0 errors, 880 warnings.
+
+## openspec validate beemaps-burst-control (on the documents of the commit 1cb60dc9e44493d0c2c87d0c65e4de2e0a8d51d8)
+Change 'beemaps-burst-control' is valid
+
+## image gods-eye-view:local, v24.21.0, the clone mounted with the node_modules of the image, commit 1cb60dc9e44493d0c2c87d0c65e4de2e0a8d51d8
+## node --test --experimental-test-coverage (include the 7 plugin files) the 8 test files of the change
+exit: 0
+ℹ tests 208
+ℹ pass 208
+ℹ fail 0
+ℹ skipped 0
+ℹ   beemaps-burst.js  | 100.00 |   100.00 |  100.00 | 
+ℹ    audit.js         | 100.00 |   100.00 |  100.00 | 
+ℹ    credits.js       | 100.00 |   100.00 |  100.00 | 
+ℹ    ledger.js        | 100.00 |   100.00 |  100.00 | 
+ℹ    quotes.js        | 100.00 |   100.00 |  100.00 | 
+ℹ    upstream.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    validate.js      | 100.00 |   100.00 |  100.00 | 
+ℹ all files           | 100.00 |   100.00 |  100.00 | 

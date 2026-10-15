@@ -1,0 +1,294 @@
+Run of the burst routes in a real Vite server, with a fake upstream.
+The run used the files of the commit 74fe7431. The command git diff --stat 74fe7431 HEAD -- src server build prints nothing.
+The script is not in the repository. It lives in the tools folder of the lead, because a script in a change folder is a coverage gap.
+The script starts a fake upstream on 127.0.0.1 and a real Vite dev server with the real plugin. The plugin gets a fetch function that sends the two Bee Maps addresses to the fake. No request leaves the container.
+The key is a made-up text. The clock of the plugin is a fake clock that the script moves. So the rate limit of 3 confirms for each minute does not stop the steps.
+The budget file, the ledger and the audit file are real files in a temporary folder. The script prints them at the end.
+The raw output follows.
+Node v24.21.0; fake upstream on 127.0.0.1:41661; Vite dev server on 0.0.0.0:5199; container address 172.17.0.2
+
+## 1. status route
+{
+ "status": 200,
+ "cache-control": "no-store",
+ "body": {
+  "enabled": true,
+  "configured": true,
+  "minCredits": 125,
+  "maxCredits": 125,
+  "dailyCredits": 625
+ }
+}
+upstream requests so far: 0
+
+## 2. quote (no upstream request, budget file not changed)
+{
+ "status": 200,
+ "cache-control": "no-store",
+ "body": {
+  "quoteId": "b4725372466808edb50be373583e5ca6",
+  "expiresInSeconds": 120,
+  "request": {
+   "bbox": [
+    9.982014,
+    59.991007,
+    10.017986,
+    60.008993
+   ],
+   "areaKm2": 4,
+   "credits": 125
+  },
+  "budget": {
+   "used": 0,
+   "limit": 625,
+   "remaining": 625
+  }
+ }
+}
+upstream requests so far: 0
+
+## 3. confirm of the quote with key 1 (one upstream create request)
+{
+ "status": 200,
+ "cache-control": "no-store",
+ "body": {
+  "ok": true,
+  "outcome": "created",
+  "replayed": false,
+  "burst": {
+   "id": "6501aa11bb22cc33dd44ee55",
+   "status": "active",
+   "validUntil": "2026-10-22T12:00:00.000Z",
+   "credits": 125
+  },
+  "creditsRemaining": 875
+ }
+}
+upstream requests so far: 1
+
+## 4. the same confirm again (answer from the ledger, no new upstream request)
+{
+ "status": 200,
+ "cache-control": "no-store",
+ "body": {
+  "ok": true,
+  "outcome": "created",
+  "replayed": true,
+  "burst": {
+   "id": "6501aa11bb22cc33dd44ee55",
+   "status": "active",
+   "validUntil": "2026-10-22T12:00:00.000Z",
+   "credits": 125
+  },
+  "creditsRemaining": 875
+ }
+}
+upstream requests so far: 1
+
+## 5. the same quote with a new key (quote already used)
+{
+ "status": 410,
+ "cache-control": "no-store",
+ "body": {
+  "error": "quote_expired"
+ }
+}
+upstream requests so far: 1
+
+## 6. confirm from the address of the container (not loopback)
+{
+ "status": 403,
+ "cache-control": "no-store",
+ "body": {
+  "error": "cross_origin"
+ }
+}
+upstream requests so far: 1
+
+## 7. confirm with a foreign Origin on a loopback socket
+{
+ "status": 403,
+ "cache-control": "no-store",
+ "body": {
+  "error": "cross_origin"
+ }
+}
+upstream requests so far: 1
+
+## 8. GET on the confirm route
+{
+ "status": 405,
+ "cache-control": "no-store",
+ "body": {
+  "error": "Method not allowed"
+ }
+}
+upstream requests so far: 1
+
+## 9. confirm with the flag off (no upstream request)
+{
+ "status": 403,
+ "cache-control": "no-store",
+ "body": {
+  "error": "burst_off"
+ }
+}
+upstream requests so far: 1
+
+## 10. quote with the flag off
+{
+ "status": 403,
+ "cache-control": "no-store",
+ "body": {
+  "error": "burst_off"
+ }
+}
+upstream requests so far: 1
+
+## 11. confirm while the upstream answers 500 (outcome unknown, still counted)
+{
+ "status": 502,
+ "cache-control": "no-store",
+ "body": {
+  "ok": false,
+  "outcome": "unknown",
+  "error": "outcome_unknown"
+ }
+}
+upstream requests so far: 2
+
+## 12. a new confirm after the unknown outcome (held, no upstream request)
+{
+ "status": 409,
+ "cache-control": "no-store",
+ "retry-after": "539",
+ "body": {
+  "error": "outcome_unknown",
+  "ok": false,
+  "outcome": "unknown",
+  "held": true,
+  "retryAfter": 539
+ }
+}
+upstream requests so far: 2
+
+## 13. list of the bursts (one upstream list request)
+{
+ "status": 200,
+ "cache-control": "no-store",
+ "body": {
+  "bursts": [
+   {
+    "id": "6501aa11bb22cc33dd44ee55",
+    "status": "active",
+    "isHit": true,
+    "latestHitAt": "2026-10-16T01:00:00.000Z",
+    "validUntil": "2026-10-22T12:00:00.000Z",
+    "credits": 125,
+    "bbox": [
+     9.982014,
+     59.991007,
+     10.017986,
+     60.008993
+    ]
+   }
+  ],
+  "total": 1,
+  "cached": false
+ }
+}
+upstream requests so far: 3
+
+## 14. the list again (stored answer, no new upstream request)
+{
+ "status": 200,
+ "cache-control": "no-store",
+ "body": {
+  "bursts": [
+   {
+    "id": "6501aa11bb22cc33dd44ee55",
+    "status": "active",
+    "isHit": true,
+    "latestHitAt": "2026-10-16T01:00:00.000Z",
+    "validUntil": "2026-10-22T12:00:00.000Z",
+    "credits": 125,
+    "bbox": [
+     9.982014,
+     59.991007,
+     10.017986,
+     60.008993
+    ]
+   }
+  ],
+  "total": 1,
+  "cached": true
+ }
+}
+upstream requests so far: 3
+
+## upstream requests the fake received (method, path, headers, body)
+[
+ {
+  "method": "POST",
+  "url": "/api/developer/burst/create",
+  "authorization": "Basic fixture-burst-key-for-local-run",
+  "contentType": "application/json",
+  "credits": 125,
+  "polygonPoints": 5
+ },
+ {
+  "method": "POST",
+  "url": "/api/developer/burst/create",
+  "authorization": "Basic fixture-burst-key-for-local-run",
+  "contentType": "application/json",
+  "credits": 125,
+  "polygonPoints": 5
+ },
+ {
+  "method": "GET",
+  "url": "/api/developer/bursts?limit=100",
+  "authorization": "Basic fixture-burst-key-for-local-run",
+  "credits": null,
+  "polygonPoints": null
+ }
+]
+
+## credits file
+{"date":"2026-10-15","credits":250}
+
+## ledger file
+{
+ "records": [
+  {
+   "key": "local-run-key-00000001",
+   "quoteId": "b4725372466808edb50be373583e5ca6",
+   "state": "created",
+   "time": 1792084968010,
+   "burst": {
+    "id": "6501aa11bb22cc33dd44ee55",
+    "status": "active",
+    "validUntil": "2026-10-22T12:00:00.000Z",
+    "credits": 125
+   },
+   "creditsRemaining": 875
+  },
+  {
+   "key": "local-run-key-00000003",
+   "quoteId": "61b0051891481e9e0236fe7accf55956",
+   "state": "unknown",
+   "time": 1792085090010
+  }
+ ]
+}
+
+## audit file (one line for each step)
+{"time":"2026-10-15T17:22:48.010Z","requestId":"74a5bc09-463b-4355-95ac-0b0c7e65bcb9","outcome":"accepted","reason":null,"client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"b4725372466808edb50be373583e5ca6","idempotencyKey":"local-run-key-00000001","upstreamStatus":null,"burstId":null,"durationMs":null}
+{"time":"2026-10-15T17:22:48.010Z","requestId":"74a5bc09-463b-4355-95ac-0b0c7e65bcb9","outcome":"created","reason":null,"client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"b4725372466808edb50be373583e5ca6","idempotencyKey":"local-run-key-00000001","upstreamStatus":200,"burstId":"6501aa11bb22cc33dd44ee55","durationMs":0}
+{"time":"2026-10-15T17:22:48.010Z","requestId":"5ada5a2c-02b9-459b-bcb1-ce08f8746a1e","outcome":"blocked","reason":"quote_expired","client":"127.0.0.1","bbox":null,"areaKm2":null,"credits":null,"quoteId":"b4725372466808edb50be373583e5ca6","idempotencyKey":"local-run-key-00000002","upstreamStatus":null,"burstId":null,"durationMs":null}
+{"time":"2026-10-15T17:23:49.010Z","requestId":"91dd5c5e-51e4-4b99-af68-e3ee78361ef6","outcome":"blocked","reason":"burst_off","client":"127.0.0.1","bbox":null,"areaKm2":null,"credits":null,"quoteId":null,"idempotencyKey":null,"upstreamStatus":null,"burstId":null,"durationMs":null}
+{"time":"2026-10-15T17:24:50.010Z","requestId":"20548224-637e-462c-9208-aeef89f13c1f","outcome":"accepted","reason":null,"client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"61b0051891481e9e0236fe7accf55956","idempotencyKey":"local-run-key-00000003","upstreamStatus":null,"burstId":null,"durationMs":null}
+{"time":"2026-10-15T17:24:50.010Z","requestId":"20548224-637e-462c-9208-aeef89f13c1f","outcome":"unknown","reason":"outcome_unknown","client":"127.0.0.1","bbox":[9.982014,59.991007,10.017986,60.008993],"areaKm2":4,"credits":125,"quoteId":"61b0051891481e9e0236fe7accf55956","idempotencyKey":"local-run-key-00000003","upstreamStatus":500,"burstId":null,"durationMs":0}
+{"time":"2026-10-15T17:25:51.010Z","requestId":"3df7a4f1-3b5a-4da0-ba7e-4aa924488ba3","outcome":"blocked","reason":"outcome_unknown","client":"127.0.0.1","bbox":null,"areaKm2":null,"credits":null,"quoteId":"ef20c15c9532f2b13424ef66d5797e83","idempotencyKey":"local-run-key-00000004","upstreamStatus":null,"burstId":null,"durationMs":null}
+
+key text found in the answers, the two files and the audit file: false
+audit lines: 7; fields in each line: 13
