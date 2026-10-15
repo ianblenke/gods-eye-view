@@ -1,12 +1,13 @@
 ## 1. Write the tests
 
 - [ ] 1.1 Write the tests for `beemaps-source-001`, `beemaps-source-002`, `beemaps-source-003` and `beemaps-source-004` in `src/data/beemapsProxy.test.mjs`.
-- [ ] 1.2 Write the tests for `beemaps-source-012` and `beemaps-source-013` in the same file.
-- [ ] 1.3 Write the tests for `beemaps-source-005`, `beemaps-source-006`, `beemaps-source-007`, `beemaps-source-008`, `beemaps-source-009`, `beemaps-source-010` and `beemaps-source-011` in `src/data/beemapsInput.test.mjs`.
-- [ ] 1.4 Write the tests for `beemaps-source-014` and `beemaps-source-015` in `src/data/beemapsUpstream.test.mjs`.
-- [ ] 1.5 Write the tests for `beemaps-source-023` and `beemaps-source-024` in the same file.
-- [ ] 1.6 Write the tests for `beemaps-source-016`, `beemaps-source-017`, `beemaps-source-018`, `beemaps-source-019`, `beemaps-source-020`, `beemaps-source-021` and `beemaps-source-022` in `src/data/beemapsSpend.test.mjs`.
-- [ ] 1.7 Write the tests for `beemaps-source-025`, `beemaps-source-026`, `beemaps-source-027` and `beemaps-source-028` in `src/data/beemapsFrames.test.mjs`.
+- [ ] 1.2 Write the tests for `beemaps-source-005`, `beemaps-source-012` and `beemaps-source-013` in the same file.
+- [ ] 1.3 Write the tests for `beemaps-source-016`, `beemaps-source-017`, `beemaps-source-018`, `beemaps-source-019` and `beemaps-source-020` in the same file.
+- [ ] 1.4 Write the tests for `beemaps-source-021`, `beemaps-source-022`, `beemaps-source-023`, `beemaps-source-024` and `beemaps-source-028` in the same file.
+- [ ] 1.5 Write the tests for `beemaps-source-005`, `beemaps-source-006`, `beemaps-source-007`, `beemaps-source-008`, `beemaps-source-009`, `beemaps-source-010` and `beemaps-source-011` in `src/data/beemapsInput.test.mjs`.
+- [ ] 1.6 Write the tests for `beemaps-source-014`, `beemaps-source-015` and `beemaps-source-023` in `src/data/beemapsUpstream.test.mjs`.
+- [ ] 1.7 Write the tests for `beemaps-source-016`, `beemaps-source-017` and `beemaps-source-018` in `src/data/beemapsBudget.test.mjs`.
+- [ ] 1.8 Write the tests for `beemaps-source-025`, `beemaps-source-026`, `beemaps-source-027` and `beemaps-source-028` in `src/data/beemapsFrames.test.mjs`.
 
 ## 2. Write the files
 

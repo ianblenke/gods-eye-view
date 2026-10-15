@@ -34,13 +34,14 @@ Origin: spec-first
 - **AND** a POST that keeps all five rules passes this step
 
 ### Requirement: Checked input
-The route MUST accept only a box or one polygon, and the box that holds it MUST NOT be larger than 5 km². It MUST check every input before it spends anything.
+The route MUST accept only a box or one polygon, and the smallest box that holds it MUST NOT be larger than 5 km². It MUST check every input before it spends anything.
 Origin: spec-first
 
 #### Scenario: Read the body `beemaps-source-005`
 - **WHEN** the body is larger than 8192 bytes, or is not a JSON object, or has a field other than `bbox`, `polygon`, `since` and `limit`
 - **THEN** the route answers `400` with `{error:'bad_body'}`
 - **AND** a valid request of exactly 8192 bytes passes this step
+- **AND** a request body that fails while the route reads it also gives `bad_body`
 
 #### Scenario: Build the polygon from a box `beemaps-source-006`
 - **WHEN** the body has `bbox` as a list of the four numbers west, south, east and north
@@ -67,8 +68,9 @@ Origin: spec-first
 #### Scenario: Refuse an area of more than 5 km² `beemaps-source-009`
 - **WHEN** the area of the smallest box that holds the ring is more than 5 km²
 - **THEN** the route answers `400` with `{error:'area_too_large', maxKm2:5}`
-- **AND** the area is the radius squared, times the width of the box in radians
-- **AND** that product is times the sine of the north edge minus the sine of the south edge, and the radius is 6371008.8 metres
+- **AND** the area in square metres is `R*R*W*(sin(N) - sin(S))`
+- **AND** `R` is 6371008.8 metres, and `W` is the width of the box in radians
+- **AND** `N` and `S` are the north and south edges in radians, and 5 km² is 5000000 square metres
 - **AND** the box [0, 0, 0.0201, 0.02] has the area 4.9705 km² and passes
 - **AND** the box [0, 0, 0.0204, 0.02] has the area 5.0447 km² and is refused
 - **AND** a ring that runs clockwise passes or fails by the same rule as a ring that runs counter-clockwise
@@ -135,8 +137,10 @@ Origin: spec-first
 - **WHEN** a new plugin starts and the file has the date of today (UTC) and a count
 - **THEN** the plugin continues from that count
 - **AND** a file with another date, or a file that is not there, gives the count 0
+- **AND** the count starts again at 0 when the date (UTC) changes while the plugin runs
 - **AND** the route answers `503` with `{error:'budget_unavailable'}` and sends no request when the file is not valid JSON
-- **AND** it gives the same answer when the count in the file is not a whole number of 0 or more
+- **AND** it gives the same answer when the file has no `date` text of the form `YYYY-MM-DD`
+- **AND** it gives the same answer when its `count` is not a whole number of 0 or more
 - **AND** it gives the same answer when the file cannot be read for another reason, or cannot be written
 
 #### Scenario: Count requests that overlap `beemaps-source-018`
@@ -156,13 +160,13 @@ Origin: spec-first
 #### Scenario: Share an upstream request that is in flight `beemaps-source-020`
 - **WHEN** a request arrives while an upstream request for the same polygon and the same `since` has not ended
 - **THEN** the route waits for that request, sends no other request and adds nothing to the count
-- **AND** each waiting request gets the frames cut to its own `limit`, with `cached` true
-- **AND** an error answer of the upstream request goes to each waiting request
+- **AND** each request that waits gets the frames cut to its own `limit`, with `cached` true
+- **AND** an error answer of the upstream request goes to each request that waits
 
 #### Scenario: Limit the requests `beemaps-source-021`
 - **WHEN** more than 6 requests reach the rate-limit step in 60 seconds
 - **THEN** the route answers `429` with `{error:'rate_limited'}` and the header `Retry-After` 60
-- **AND** all requests come from this machine, so the route keeps one count and not one count for each address
+- **AND** each request that reaches the rate-limit step comes from this machine, so the route keeps one count and not one count for each address
 - **AND** a request that gets its answer from memory counts for this limit
 - **AND** after 6 requests at the second 0, the 7th request at the second 59 is refused
 - **AND** the 7th request at the second 60 passes
@@ -192,7 +196,9 @@ Origin: spec-first
 - **WHEN** the upstream answered `401`, `403`, `402` or `429`
 - **THEN** a request that reaches the hold step gets the same answer for 300 seconds after `401` or `403`, and for 600 seconds after `402`
 - **AND** it gets the same answer for the `retryAfter` seconds after `429`
-- **AND** that answer holds the seconds that remain, rounded up, as `retryAfter` and as the header `Retry-After`
+- **AND** after `429`, that answer holds `retryAfter` and the header `Retry-After`
+- **AND** both are the smallest whole number that is not less than the seconds that remain
+- **AND** the answers after `401`, `403` and `402` stay as they are
 - **AND** during the hold the route sends no request and does not change the count
 - **AND** after 299 seconds of a 300 second hold the route still holds, and after 300 seconds the next request goes to the upstream
 
@@ -206,9 +212,10 @@ Origin: spec-first
 - **AND** `lat` and `lon` are `position.lat` and `position.lon`, each as `Number(value.toFixed(6))`
 - **AND** `timestamp` is `toISOString()` of the date that the upstream `timestamp` text gives
 - **AND** `id` is the first 16 lowercase hexadecimal characters of a SHA-256 hash
-- **AND** the hash is of the answer values `timestamp`, `lat` and `lon`, each written as text and joined by "|"
+- **AND** the hash is of the answer values `timestamp`, `lat` and `lon`, each written with `String()` and joined by "|"
 - **AND** the item with the `timestamp` "2026-10-01T12:00:00Z", `position.lat` 10.5 and `position.lon` 20.25 gives the `timestamp` "2026-10-01T12:00:00.000Z" and the `id` "e79cd5d7c1102b08"
-- **AND** an item is dropped when its `timestamp` is not a text that gives a valid date
+- **AND** an item is dropped when its `timestamp` is not a text in ISO form with `Z` or an offset
+- **AND** an item is dropped when `Date.parse` does not read its `timestamp` as a date
 - **AND** an item is dropped when `position.lat` is not a finite number from -90 to 90
 - **AND** an item is dropped when `position.lon` is not a finite number from -180 to 180
 - **AND** the text of the answer has no "http"

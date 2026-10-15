@@ -36,7 +36,7 @@ The provider checks the count against the daily limit and adds 1 in one step, wi
 
 Two requests that arrive together cannot both pass the check at the last unit. The writes run one after the other, so the last write holds the last count.
 
-A failed call still counts. When the file cannot be read or written, the provider refuses the call.
+A failed call still counts. When the file is there and cannot be read, or cannot be written, the provider refuses the call. A file that is not there gives the count 0.
 
 A file that is not valid JSON also gives a refusal. A count of 0 in its place would hide the spend.
 
@@ -76,11 +76,11 @@ A step that costs nothing comes before a step that reads a file. The memory step
 
 ### D8: One rate-limit count
 
-Every request that reaches the route comes from this machine. The rate limit therefore keeps one count, not one count for each address. The route allows 6 requests in 60 seconds.
+Every request that reaches the rate-limit step comes from this machine. The rate limit therefore keeps one count, not one count for each address. The route allows 6 requests in 60 seconds.
 
 ### D9: The area is the area of the box
 
-The provider measures the smallest box that holds the ring, on a sphere. A clockwise ring and a ring that crosses itself both have a box with a clear area. The area of the ring itself can be negative or near 0 for such a ring.
+The provider measures the smallest box that holds the ring, on a sphere. A clockwise ring and a ring that crosses itself both have a box with a defined area. The area of the ring itself can be negative or near 0 for such a ring.
 The cost is that a long, thin polygon can be refused although its own area is small.
 
 ### D10: Tests send no request
