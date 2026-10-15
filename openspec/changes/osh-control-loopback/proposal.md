@@ -9,6 +9,7 @@ The server listens on all interfaces. A device on the same network that opens th
 - Add the file `server/providers/common/loopback-command.js` with the function `isLoopbackCommand`. It accepts a POST only when five conditions hold. The socket address is loopback, and the request has no proxy header. The host is `localhost`, `127.0.0.1` or `[::1]`. The origin equals the host, and the content type is `application/json`.
 - Make `isSameOriginCommand` in `server/providers/osh-control.js` call that function. Each refusal still gives `403` with `{error:'cross_origin'}` and one audit line.
 - Change the scenario `osh-control-028`. Add the requirement "Local connection only" with the scenarios `osh-control-039` and `osh-control-040`.
+- Add the new file and `src/localRequestGate.mjs` to the package `osh-control-provider` in `scripts/package-boundaries.json`.
 - Update the tests in `src/control/route.test.mjs`. Add one entry to `CHANGELOG.md`, one note to `.env.example` and one line to `docs/roadmap/mcp-agent-backends.md`.
 - **BREAKING**: a browser that opens the app by a LAN address or by a `.local` name can no longer send a control command.
 
@@ -26,7 +27,7 @@ None.
 
 The new file is shared code. The Bee Maps submission route of a later change reuses `isLoopbackCommand`, so one gate serves each route that sends a request to an outside system.
 With `make up-codex` the commands from a browser on the machine that runs the server keep working. The plain `make up` publishes the port through a bridge network. The server then sees the Docker gateway address and refuses every command.
-The new file is a file that the fork writes, so it goes into `openspec/ownership.json` and `scripts/format-scope.json`.
+The new file is a file that the fork writes, so it goes into `openspec/ownership.json` and `scripts/format-scope.json`. The check of the package boundaries needs the new file and the file `src/localRequestGate.mjs` in the package `osh-control-provider`.
 
 ## Known limits and later changes
 

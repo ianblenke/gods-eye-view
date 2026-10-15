@@ -10,7 +10,8 @@
 - [ ] 2.1 Write `server/providers/common/loopback-command.js`.
 - [ ] 2.2 Make `isSameOriginCommand` call the new function.
 - [ ] 2.3 Add the new file to `openspec/ownership.json` and `scripts/format-scope.json`.
-- [ ] 2.4 Write the entry in `CHANGELOG.md`, the note in `.env.example` and the line in the roadmap document.
+- [ ] 2.4 Add the new file and `src/localRequestGate.mjs` to the package `osh-control-provider`.
+- [ ] 2.5 Write the entry in `CHANGELOG.md`, the note in `.env.example` and the line in the roadmap document.
 
 ## 3. Check on the host
 
@@ -18,7 +19,7 @@
 - [ ] 3.2 Run the tests of the route on the host.
 - [ ] 3.3 Run the named faults of the gate.
 - [ ] 3.4 Write `evidence/mutations.txt` with the result of each fault.
-- [ ] 3.5 Run the four checks of `make precheck` on the host.
+- [ ] 3.5 Run the four checks of `make precheck` on the host and read each exit status.
 - [ ] 3.6 Run the STE lint and `openspec validate osh-control-loopback`.
 
 ## 4. Lead work in the image
