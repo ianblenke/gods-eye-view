@@ -48,6 +48,6 @@ Alternative: accept the gateway address. Docker sets the address, and it changes
 
 ## Risks / Trade-offs
 
-- [A user who opens the app by a LAN address loses the commands] → `CHANGELOG.md` says so. The route gives the same `403` as before.
+- [A user who opens the app by a LAN address loses the commands] → `CHANGELOG.md` says so. The route gives `403` with the same body as for any other refusal.
 - [A user of `make up` loses the commands] → The Known limit `bridge` says so. `make up-codex` works.
 - [The list of proxy headers misses a proxy] → It is the list of the key panel, which a test pins.

@@ -25,12 +25,12 @@ not see the raw MAVLink controls.
 - No spec covers voice. All files in `src/voice/*` and
   `server/providers/openai/*` are open gaps in `openspec/trace/gaps.json`. A
   change must not make a gap larger. New work goes into new files.
-- The OSH control route `/api/control/osh` has these gates in this order: local
-  connection and same origin, `OSH_CONTROL_ENABLED`, separate control account, 4 KB body limit,
-  the fixed command table, the rate limit and the one-in-flight gate, the live
-  control stream check, and the audit log. The log line is written before the
-  send. The command table has 8 commands. It has no shell command and no
-  mission upload.
+- The OSH control route `/api/control/osh` has these gates in this order. They
+  are the local connection and the same origin, `OSH_CONTROL_ENABLED`, the
+  separate control account, the 4 KB body limit, and the fixed command table.
+  Then come the rate limit and the one-in-flight gate, the live control stream
+  check, and the audit log. The log line is written before the send. The
+  command table has 8 commands. It has no shell command and no mission upload.
 - The old system allowlist is gone. The only scope is a system that has a
   matching control stream.
 

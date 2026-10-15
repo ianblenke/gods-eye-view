@@ -36,4 +36,5 @@ The new file is a file that the fork writes, so it goes into `openspec/ownership
 - Known limit `bridge`: With `make up` a request to `localhost` from this machine reaches the server with the gateway address of the project network. The route refuses it. Use `make up-codex`, or run the server on the host. `evidence/peer-address.txt` has the measurement.
 - Known limit `local-programs`: Any program on the machine that runs the server passes the check, because the check cannot tell programs apart.
 - Known limit `proxy`: A proxy that removes its own headers and connects from the loopback address passes the check.
+- Known limit `modes`: The gate trusts the socket address. The evidence measured the default bridge, a user-defined bridge and the host network. In another mode, a LAN device could appear with the loopback address, and the gate would pass it.
 - Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.
