@@ -19,6 +19,146 @@
     "since": "2026-10-10",
     "change": "codex-voice-container"
   },
+  "beemaps-source-001": {
+    "hash": "b304024c70b22255161e9d69f189af98a461492d27f8b8f5162b48d4a55ce610",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-002": {
+    "hash": "f41bfcecfed61faabbf5601a5212297e66cd7eef95d331563b48a6f1ef664659",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-003": {
+    "hash": "7ae45a70137b6f11ebf79f2725b8e731e20907fa7f999f53c929a759877b3b7d",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-004": {
+    "hash": "802012e9c4924cb78d52b2c7d469dad850a9aefd859c40e862caefad8539af2f",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-005": {
+    "hash": "1c11a7fe2aca6a2cb7f257d02f7d35b0d75137d2d0d8392ab19ba136351154a5",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-006": {
+    "hash": "0d8ee0cf09e36743678382a3e8d36ab350f89edba0cf09f4fcabde016c7fcdb5",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-007": {
+    "hash": "0cdb729ca7c78ba365f05c84badada4c7380f482d7f369d0dc03b222cc997ee5",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-008": {
+    "hash": "0609f4c957a0ffeb6c4fcd30ce9bfcd01e241ccc0a1ccb37c7a195b16783f1a1",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-009": {
+    "hash": "6f96ac538dd97af2f2c75e97915a41b839b15829dee5da1c4f2b55661cad29cc",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-010": {
+    "hash": "34a0322b85eb6c099b3f0636be5d3f69b8465aa06df4d8f590c614f564a97a0f",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-011": {
+    "hash": "423fb0340bb7e1cf67d5cf04a62b8b0b97bd6f125cda2f50938dd9e6fc821630",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-012": {
+    "hash": "1c5361bf77634a3da4283adeff4b4db119468cc02399cadf72805ca1076142b7",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-013": {
+    "hash": "f5c3f7c11be8bbee80134502b8ea63bee47b543e586fd5749d0b3baaf073ff3f",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-014": {
+    "hash": "b066fdc0da0540c32461a9bcf99a137d5487b8d933929a9b661144d62f6597b0",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-015": {
+    "hash": "a07109c46ec3bdc65de49b25521f78b322129f0e7592ee0af50a271847c56a8f",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-016": {
+    "hash": "1638b4611f302c520d7523199470ef34c45e24a98c33b0ca5e721879db81253e",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-017": {
+    "hash": "ed8c86a946912fd35ff93380fb423759b56c1ca17066426f4a41961f3a2285e0",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-018": {
+    "hash": "0623c856fdb96946a6663a14045669a0de0160d35dacfde8c11903e04b3f9f53",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-019": {
+    "hash": "4b9cbafc73baad4c0613c10efb066d8d43db820d27ead47b16d164b4b9a92e6e",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-020": {
+    "hash": "04a26bc142f8d806e27374d2dc24afadb514b217f7f5ffb7cd6beff2eba49d22",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-021": {
+    "hash": "ceb2d6853565c5945bb61a2f9b643232cd69948065e4d76bb9ce9a15381bccb3",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-022": {
+    "hash": "e18e21b8a5b69d5768b088431029c4b7054baeb4b4ae44cce2f6ee535cc4af18",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-023": {
+    "hash": "b02b24fc74b52df8e8e61e693519beba8e84d98f39fe6e5c4e294b1b7dec7af3",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-024": {
+    "hash": "e0dc45cefc90fd964b123d5dbf9976b702371b6bdf8b7c1c7d3c0dfaf68fe6f9",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-025": {
+    "hash": "bd3100f6efc6e82d3532bd7dd8e669cedeb4877df58c64cd5bc6a742a4c4403c",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-026": {
+    "hash": "43261c6a70ce0215eb1d403d0642f33b26b40f33bc668cf3f6e93470a276cbd6",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-027": {
+    "hash": "b25df66dac6fab85d600ba41017d3872667d87f46ca9a7a2347dadbc9a8b04c6",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
+  "beemaps-source-028": {
+    "hash": "a1fced26c416c76308599e9ff50d7585633d5a1e28a63101d4d25be8d3dc7291",
+    "since": "2026-10-15",
+    "change": "beemaps-source"
+  },
   "change-review-001": {
     "hash": "21c5b8e200f5c036a2697637ba12b6943b5e0217d7fe5c8a0e2ab9e31d62e28e",
     "since": "2026-09-14",
