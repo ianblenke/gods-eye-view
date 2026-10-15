@@ -4,7 +4,7 @@ Base commit: `b3f5d61e` (main, after the merge of `osh-control-loopback`).
 The Mapillary provider (`server/providers/mapillary/routes.js`) is the model for a route with a key that stays in the server. The TomTom provider (`server/providers/traffic.js`) is the model for a daily budget that survives a restart.
 The OSH control route is the model for a route that sends a request to an outside system. It uses `isLoopbackCommand`.
 
-The Bee Maps API has one read call for new frames: `POST /latest/poly` with a GeoJSON polygon whose area is at most 5 km². The key goes in the header `Authorization`. The answer holds `frames`, `creditsUsed`, `creditsRemaining` and `cost`. Each frame has a signed image URL, and each unique view of such a URL costs $0.005.
+The Bee Maps API has one call that reads new frames: `POST /latest/poly` with a GeoJSON polygon whose area is at most 5 km². The key goes in the header `Authorization`. The answer holds `frames`, `creditsUsed`, `creditsRemaining` and `cost`. Each frame has a signed image URL, and each unique view of such a URL costs $0.005.
 
 ## Goals / Non-Goals
 
@@ -36,7 +36,7 @@ The provider checks the count against the daily limit and adds 1 in one step, wi
 
 Two requests that arrive together cannot both pass the check at the last unit. The writes run one after the other, so the last write holds the last count.
 
-A failed call still counts. When the file is there and cannot be read, or cannot be written, the provider refuses the call. A file that is not there gives the count 0.
+A failed call still counts. When the file is there and the provider cannot read it, or cannot write it, the provider refuses the call. A file that is not there gives the count 0.
 
 A file that is not valid JSON also gives a refusal. A count of 0 in its place would hide the spend.
 
@@ -60,11 +60,11 @@ The status route spends nothing and shows only whether a key is set. It uses the
 
 ### D6: The filter keeps four fields
 
-Each frame in the answer has `id`, `lat`, `lon` and `timestamp`. The `timestamp` is the ISO text of the upstream time. The `lat` and `lon` are rounded to 6 decimals.
+Each frame in the answer has `id`, `lat`, `lon` and `timestamp`. The `timestamp` is the ISO text of the upstream time. The provider rounds `lat` and `lon` to 6 decimals.
 
 The `id` is the first 16 hex characters of the SHA-256 of the three values joined by "|". The provider drops all other fields. A change of the upstream shape cannot add a field to the answer.
 
-The documented shape is a `frames` list of items with a `timestamp` text and a `position` with `lat` and `lon`. An item of another shape is dropped.
+The documented shape is a `frames` list of items with a `timestamp` text and a `position` with `lat` and `lon`. The provider drops an item of another shape.
 
 ### D7: The order of the steps
 
@@ -81,7 +81,7 @@ Every request that reaches the rate-limit step comes from this machine. The rate
 ### D9: The area is the area of the box
 
 The provider measures the smallest box that holds the ring, on a sphere. A clockwise ring and a ring that crosses itself both have a box with a defined area. The area of the ring itself can be negative or near 0 for such a ring.
-The cost is that a long, thin polygon can be refused although its own area is small.
+The cost is that the provider can refuse a long, thin polygon although its own area is small.
 
 ### D10: Tests send no request
 

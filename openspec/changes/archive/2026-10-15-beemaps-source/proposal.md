@@ -1,6 +1,6 @@
 ## Why
 
-The app shows no fresh street-level imagery that contributors upload. Bee Maps (formerly Hivemapper) sells an API for it. The owner wants fresh frames on the map and, later, a way to ask for an area to be mapped again.
+The app shows no fresh street-level imagery that contributors upload. Bee Maps (formerly Hivemapper) sells an API for it. The owner wants fresh frames on the map and, later, a way to ask Bee Maps to map an area again.
 
 This is change 1 of 4. It adds the read-only server provider. It holds no code that creates a Burst. A query can cost money: the API description gives `creditsUsed` and `cost` in an answer, and an image view costs $0.005. The description does not say what a query with `catalog=true` uses. The provider therefore limits every call.
 
@@ -41,10 +41,12 @@ The tests use a fake fetch function. No test sends a request to Bee Maps, and th
 - Known limit `images`: This change returns no image and no signed URL. Change 2 adds the image route.
 - Known limit `licence`: The terms allow use in an app that you build, and they ban resale. They do not say whether other viewers can see the data. Use it for yourself only, and keep no copy on disk.
 - Known limit `week`: The upstream time filter works by week. The provider also cuts the frames by their exact time.
-- Known limit `box-area`: The provider measures the smallest box that holds the ring. A long, thin polygon with a small area can be refused, and a ring across the 180th meridian is refused as too large.
+- Known limit `box-area`: The provider measures the smallest box that holds the ring. The provider can refuse a long, thin polygon with a small area, and it refuses a ring across the 180th meridian as too large.
 - Known limit `ring-order`: The provider sends the ring as it got it. It does not turn a clockwise ring into a counter-clockwise ring, and it does not test a ring that crosses itself.
-- Known limit `no-failure-hold`: An upstream answer of 500 or of the wrong shape starts no hold. Such an answer lets 6 requests in 60 seconds use the default daily limit of 20 in about 3 minutes.
+- Known limit `no-failure-hold`: An upstream failure other than 401, 402, 403 and 429 starts no hold. Such a failure is another status, a timeout, a thrown error or a body of the wrong shape. Each one lets 6 requests in 60 seconds use the default daily limit of 20 in about 3 minutes.
 - Known limit `local-programs`: Any program on the machine that runs the server passes the check, because the check cannot tell programs apart. Through the route, such a program can use the daily limit and no more. The default limit is 20 requests.
+- Known limit `container-network`: With `make up`, the server sees the gateway address of the Docker network for a request from the host. The route refuses that request. `make up-codex` uses the host network, and the route works.
+- Known limit `file-list-pin`: The test of the scan names the five provider files. A new provider file fails that test until the list changes.
 - Known limit `status-gate`: The status route uses the same-site gate. A device on the LAN can read `configured` when the owner opens the LAN address.
 - Known limit `no-settings-panel`: The key goes in `.env` only. The Provider Settings panel has no entry for it.
 - Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.
