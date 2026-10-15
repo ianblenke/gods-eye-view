@@ -790,7 +790,7 @@ test('[beemaps-burst-control-013] ends a quote 120 seconds after it was made, an
   );
 });
 
-test('[beemaps-burst-control-013] gives quote_expired for the same quote with a new key after a refusal and after an unknown outcome', async (t) => {
+test('[beemaps-burst-control-013] gives quote_expired for the same quote with a new key after the hold of a refusal or of an unknown outcome has ended', async (t) => {
   for (const respond of [() => failure(403), () => failure(500)]) {
     const server = await install(t, { respond });
     const quoted = await server.quote();
@@ -1256,7 +1256,7 @@ test('[beemaps-burst-control-039] answers 500 ledger_unavailable when the file i
   assert.equal((await bad.confirm(q2.body.quoteId, idem(2))).status, 200);
 });
 
-test('[beemaps-burst-control-029] refuses every confirm for 300 seconds after 401 or 403, 600 seconds after 402, and the seconds of Retry-After after 429', async (t) => {
+test('[beemaps-burst-control-029] refuses every confirm with a new idempotency key for 300 seconds after 401 or 403, 600 seconds after 402, and the seconds of Retry-After after 429', async (t) => {
   for (const [respond, seconds, status, error] of [
     [() => failure(401), 300, 403, 'key_rejected'],
     [() => failure(403), 300, 403, 'key_rejected'],

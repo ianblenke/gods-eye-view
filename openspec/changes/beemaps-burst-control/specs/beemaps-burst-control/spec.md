@@ -1,8 +1,5 @@
-# beemaps-burst-control Specification
+## ADDED Requirements
 
-## Purpose
-Create a Bee Maps burst only after a person confirms a quote. Count the credits before the send, send once, and write each attempt to a log that survives a restart.
-## Requirements
 ### Requirement: Provider routes
 The plugin MUST answer only `/api/beemaps/burst/status`, `/api/beemaps/burst/quote`, `/api/beemaps/burst/confirm` and `/api/beemaps/burst/list`. It MUST pass every other path to the next middleware.
 Origin: spec-first
@@ -15,7 +12,7 @@ Origin: spec-first
 - **AND** the list that `localProviderPlugins` returns has this plugin once, after the plugin "beemaps-proxy"
 - **AND** an error that nobody expects in `quote`, `confirm` or `list` gives 500 with `{error:'internal_error'}`, and it gives no unhandled rejection
 - **AND** every answer has the content type JSON and the cache control no-store
-- **AND** when that error comes after the send, the record keeps the state that it had when the error came
+- **AND** when an error that nobody expects comes after the send, the record keeps the state that it had when the error came
 
 ### Requirement: Off by default
 The routes MUST send no request to Bee Maps and MUST spend nothing unless `BEEMAPS_BURST_ENABLED` is exactly "true" and `BEEMAPS_BURST_API_KEY` has a key. The key of the frames provider MUST NOT count.
@@ -131,10 +128,11 @@ Origin: spec-first
 - **WHEN** a test gives the plugin a clock and asks for quotes
 - **THEN** a `quoteId` is 32 lowercase hexadecimal characters, and two quotes for the same request have different ids
 - **AND** a confirm 119.999 seconds after the quote uses the quote, and a confirm at 120 seconds gets 410 with `{error:'quote_expired'}`
-- **AND** a used quote gives `quote_expired` at the next confirm with another idempotency key
-- **AND** an id that was never given gives the same answer
+- **AND** a used quote gives `quote_expired` at the next confirm with another idempotency key, when no hold answers first
+- **AND** an id that was never given gives the same answer, when no hold answers first
 - **AND** a confirm uses up its quote at the quote step, for every outcome after that step
-- **AND** the same quote with a new idempotency key gets `quote_expired`, also after an unknown outcome
+- **AND** the same quote with a new idempotency key gets `quote_expired` after a created burst, a refusal 400, budget_used, log_failed, ledger_unavailable and budget_unavailable
+- **AND** after a refusal 401, 402, 403 or 429, or an unknown outcome, that confirm gets the hold of scenario 029 or 040
 - **AND** the plugin keeps at most 8 quotes, so the ninth quote ends the oldest one
 
 #### Scenario: Refuse a quote that the budget cannot pay `beemaps-burst-control-014`
@@ -231,7 +229,7 @@ Origin: spec-first
 - **AND** the route reads the file again at the next request
 
 ### Requirement: Idempotency
-Each confirm MUST carry an idempotency key, and the plugin MUST keep one durable record for each key. A repeat of a key MUST NOT send an upstream request.
+Each confirm MUST carry an idempotency key, and the plugin MUST keep one durable record for each key. A confirm with a key that has a record MUST NOT send an upstream request.
 Origin: spec-first
 
 #### Scenario: Answer a repeat of a created burst `beemaps-burst-control-024`
@@ -243,7 +241,7 @@ Origin: spec-first
 - **WHEN** a test sends the same `quoteId` and `idempotencyKey` again after a refusal of Bee Maps
 - **THEN** the answer has the same status and the same error as the first answer, and `replayed` true
 - **AND** the fake upstream gets no second request, and the budget does not change
-- **AND** a new attempt needs a new quote and a new key
+- **AND** a new attempt needs a new quote and a new idempotency key
 
 #### Scenario: Answer a repeat of an unknown outcome `beemaps-burst-control-026`
 - **WHEN** a test sends the same `quoteId` and `idempotencyKey` again after an unknown outcome, or when the record of the attempt is still pending
@@ -270,7 +268,7 @@ Origin: spec-first
 - **AND** when the write of the record after the send fails, the answer is still the outcome of the send
 - **AND** the file then keeps the state "pending"
 - **AND** a new plugin treats that key as an unknown outcome
-- **AND** in that new plugin, a repeat of that key gets scenario 026, and a new key gets the hold of scenario 040
+- **AND** in that new plugin, a repeat of that key gets scenario 026, and a new idempotency key gets the hold of scenario 040
 
 #### Scenario: Refuse when the ledger fails `beemaps-burst-control-039`
 - **WHEN** the file `ledger.json` cannot be read, is not valid JSON, or contains a record that is not valid
@@ -283,13 +281,13 @@ Origin: spec-first
 - **AND** the route reads the file again at the next request
 
 ### Requirement: Holds
-The plugin MUST refuse each confirm with a new idempotency key until a hold ends. A hold follows a refusal of the key, the credit or the rate, and an unknown outcome. The route MUST send no upstream request during a hold. A repeat of a key that has a record still gets the answer of its record.
+The plugin MUST refuse each confirm with a new idempotency key until a hold ends. A hold follows a refusal of the API key, the credit or the rate, and an unknown outcome. The route MUST send no upstream request during a hold. A repeat of a key with the quoteId of its record still gets the answer of its record.
 Origin: spec-first
 
 #### Scenario: Hold after a refusal of Bee Maps `beemaps-burst-control-029`
 - **WHEN** Bee Maps refuses with 401 or 403, with 402 or with 429
 - **THEN** the hold lasts 300 seconds, 600 seconds, and the seconds of `Retry-After` as in scenario 018
-- **AND** a confirm with a new key during the hold gets the status and the error of the first refusal
+- **AND** a confirm with a new idempotency key during the hold gets the status and the error of the first refusal
 - **AND** that answer has `ok` false, `outcome` "refused" and `held` true
 - **AND** for 429 the answer also has `retryAfter` equal to the seconds that remain, and the confirm sends no upstream request and counts no credits
 - **AND** a confirm at the end of the hold goes on to the next steps
@@ -302,7 +300,7 @@ Origin: spec-first
 - **AND** the age of a record is the time since its last change, which is the write of "pending" or the change to "unknown"
 - **AND** a record that is 600 seconds old or older causes no hold
 - **AND** the hold comes from the file, so a new plugin still has it
-- **AND** a confirm that repeats the key of that record gets the answer of scenario 026
+- **AND** a confirm with the key and the quoteId of that record gets the answer of scenario 026
 
 ### Requirement: Audit log
 The route `confirm` MUST write an audit line for every attempt before it sends, and it MUST NOT send when that write fails.
@@ -321,7 +319,8 @@ Origin: spec-first
 - **THEN** each line is JSON with the fields `time`, `requestId`, `outcome`, `reason`, `client`, `bbox`, `areaKm2`, `credits`, `quoteId`, `idempotencyKey`, `upstreamStatus`, `burstId` and `durationMs`
 - **AND** the outcome is "accepted" before the send, and "created", "refused" or "unknown" after it, where "refused" means a refusal of Bee Maps
 - **AND** a refusal of `confirm` at a step after the rate limit gets a line with the outcome "blocked" and the reason
-- **AND** a request from another machine, a method that is not POST and a repeat of a key get no line
+- **AND** a request from another machine and a method that is not POST get no line
+- **AND** a repeat of a key with the quoteId of its record gets no line
 - **AND** a request over the rate limit gets no line
 - **AND** the reasons are burst_off, no_key, bad_body, busy, key_reused, outcome_unknown, key_rejected, no_credit, upstream_rate_limit, bad_request, budget_used, budget_unavailable, quote_expired, ledger_unavailable and log_failed
 - **AND** a `reason` that is not in that list, for example `rate_limited` or `cross_origin`, is written as null
@@ -401,4 +400,3 @@ Origin: spec-first
 - **AND** no file contains the text "latest/poly", "/api/beemaps/frames" or "BEEMAPS_API_KEY"
 - **AND** no file in `src/voice`, `src/tools` or `server/mcp` contains the text "beemaps/burst"
 - **AND** no file of the plugin is a file of the frames provider, which are `server/providers/beemaps.js` and the files in `server/providers/beemaps/`
-

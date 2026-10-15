@@ -100,7 +100,7 @@ The routes `/api/beemaps/burst/*` ask Bee Maps to map an area again. A burst cos
 
 A quote checks a box of 0.1 to 5 km² and spends nothing. A confirm of the quote sends one create request, of 125 credits by default, and never retries. The daily limit is 625 credits, and `BEEMAPS_BURST_DAILY_CREDITS` changes it.
 
-An answer that does not clearly say that Bee Maps created the burst counts as unknown. It blocks a resend of its key, and it refuses every confirm with a new key for 600 seconds. The file `.gev-logs/beemaps-bursts.jsonl` has a line for each attempt. The public description gives no value of a credit in dollars, so the routes show credits only.
+An answer that does not clearly say that Bee Maps created the burst counts as unknown. It blocks a resend of its key, and it refuses every confirm with a new idempotency key for 600 seconds. The file `.gev-logs/beemaps-bursts.jsonl` has a line for each attempt. The public description gives no value of a credit in dollars, so the routes show credits only.
 
 ### Notes on the live sources
 

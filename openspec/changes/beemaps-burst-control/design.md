@@ -50,7 +50,7 @@ The audit line "accepted" and the record "pending" are written, and the writes e
 
 ### D8: A hold after an unknown outcome
 
-An unknown outcome blocks only its own key, so a new quote and a new key could send again at once. The plugin refuses every confirm with a new idempotency key for 600 seconds after a record with the state "unknown" or "pending". The hold comes from the time in the ledger file, so a restart does not end it. A quote is gone after the quote step for every outcome, so the same quote with a new key cannot send.
+An unknown outcome blocks only its own key, so a new quote and a new idempotency key could send again at once. The plugin refuses every confirm with a new idempotency key for 600 seconds after a record with the state "unknown" or "pending". The hold comes from the time in the ledger file, so a restart does not end it. A quote is gone after the quote step for every outcome, so the same quote with a new key cannot send.
 
 ### D9: Answers have only listed fields
 
@@ -74,7 +74,7 @@ The plugin rounds the box to 6 decimals, and then it rounds the area to 3 decima
 
 ### D14: An error that nobody expects
 
-Each route that can wait has a guard. An error that nobody expects gives 500 with `internal_error`, and the lock of a confirm ends. Without the guard, a rejected promise could stop the dev server. After the send the record is still "pending", so the hold and the replay rules apply. Change 4 must read this answer as "can have spent".
+Each route that can wait has a guard. An error that nobody expects gives 500 with `internal_error`, and the lock of a confirm ends. Without the guard, a rejected promise could stop the dev server. After the send the record keeps the state that it has when the error comes. The hold and the replay rules then apply to that state. Change 4 must read this answer as "can have spent".
 
 ## Risks / Trade-offs
 

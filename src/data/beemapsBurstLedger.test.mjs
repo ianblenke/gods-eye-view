@@ -161,7 +161,7 @@ test('[beemaps-burst-control-028] keeps at most 500 records of created and refus
   assert.equal(after.at(-1).key, KEY);
 });
 
-test('[beemaps-burst-control-039] reads a missing file as an empty ledger and any other read error as a failure, and reads again after a failure', async () => {
+test('[beemaps-burst-control-039] reads a file that does not exist as an empty ledger and any other read error as a failure, and reads again after a failure', async () => {
   let fail = true;
   const fs = fakeFs(
     {},
