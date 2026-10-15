@@ -96,4 +96,4 @@ The tests give the plugin a fake fetch function and a fake clock. The fake fetch
 ## Purpose at archive time
 
 The lead sets this Purpose at archive time:
-"Give the app the newest street-level frames of a small area from Bee Maps, and limit every request, because a request can cost money. Keep only the id, the position and the time of each frame, and keep the key and the signed image URLs in the server."
+"Give the app the newest street-level frames of a small area from Bee Maps. Limit every request, because a request can cost money. Keep only the id, the position and the time of each frame, and keep the key and the signed image URLs in the server."
