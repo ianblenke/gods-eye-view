@@ -262,6 +262,7 @@ test('[beemaps-frames-006] disables the chip and shows KEY REQUIRED when the sta
     'KEY REQUIRED: set BEEMAPS_API_KEY in .env and restart the app.',
   );
   await h.chip().onClick();
+  assert.equal(h.calls.getFrames.length, 0);
   const enabled = harness();
   await enabled.ready();
   assert.equal(enabled.chip().disabled, false);
