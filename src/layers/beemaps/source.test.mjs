@@ -98,6 +98,7 @@ test('[beemaps-frames-012] sends one POST with one header and the box and the li
     '{"bbox":[9.982014,59.991007,10.017986,60.008993],"limit":200}',
   );
   assert.equal(calls[0].init.signal instanceof AbortSignal, true);
+  assert.notEqual(calls[0].init.signal, signal);
   assert.equal(calls[0].init.signal.aborted, false);
 });
 

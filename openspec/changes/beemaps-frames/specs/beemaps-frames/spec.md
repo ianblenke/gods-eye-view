@@ -46,7 +46,7 @@ The layer MUST read the status of the route when it is updated. It MUST disable 
 Origin: spec-first
 
 #### Scenario: Read the status `beemaps-frames-006`
-- **WHEN** `update` reads `getStatus` with `configured` false, and no earlier press has failed
+- **WHEN** `update` reads `getStatus` with `configured` false, and the info text shows no message of a press
 - **THEN** the chip has `disabled` true, and the info text is "No Bee Maps key. Set BEEMAPS_API_KEY in .env and restart the app."
 - **AND** a call of `onClick` while the chip is disabled sends no request
 - **AND** when `configured` is true, the chip has `disabled` false
@@ -80,6 +80,7 @@ Origin: spec-first
 - **AND** the row (-33.9, 151.2) gives [151.189165, -33.908993, 151.210835, -33.891007]
 - **AND** the row (0.0025, 0.0025) gives the centre (0.005, 0.005) and the box [-0.003993, -0.003993, 0.013993, 0.013993]
 - **AND** the row (-0.0025, -0.0025) gives the centre (0.0, 0.0) and the same box as the row (0.0, 0.0)
+- **AND** the row (39.975, 0.0) gives the box [-0.011735, 39.966007, 0.011735, 39.983993]
 - **AND** the row (59.9976, 10.0031) gives the centre (60.0, 10.005) and the box [9.987014, 59.991007, 10.022986, 60.008993]
 - **AND** the row (30.2672, -97.7431) gives the centre (30.265, -97.745) and the box [-97.755412, 30.256007, -97.734588, 30.273993]
 
@@ -119,7 +120,7 @@ Origin: spec-first
 
 #### Scenario: Post the box `beemaps-frames-012`
 - **WHEN** a test calls `getFrames` with the box [9.982014, 59.991007, 10.017986, 60.008993]
-- **THEN** the fake gets one `POST` request for "/api/beemaps/frames" with a signal of its own
+- **THEN** the fake gets one `POST` request for "/api/beemaps/frames" with a signal that the source makes
 - **AND** the only header is `Content-Type` "application/json"
 - **AND** the body is the text `{"bbox":[9.982014,59.991007,10.017986,60.008993],"limit":200}`
 - **AND** a good answer gives `{ok:true, answer}`, where `answer` is the result of the answer records
@@ -134,10 +135,10 @@ Origin: spec-first
 - **AND** a rejection gives the status 0 and the error "unreachable"
 - **AND** a call that does not end in 30 seconds is aborted and gives the status 0 and the error "unreachable"
 - **AND** the timer of that call is cleared when the call ends
-- **AND** the signal of its own is aborted when the signal of the call is aborted, and when the 30 seconds end
+- **AND** the signal that the source makes is aborted when the signal of the call is aborted, and when the 30 seconds end
 - **AND** the call removes its listener from the signal of the call when the call ends
 - **AND** each case above that gives `ok` false sends exactly one request to the fake fetch function, also after the test runs every timer
-- **AND** a call whose own signal is aborted rejects with the abort error
+- **AND** a call rejects with the abort error when the signal of the call is aborted
 
 ### Requirement: Answer records
 The layer MUST keep only the frames that have a valid id, position and time, and MUST keep at most 200 frames.

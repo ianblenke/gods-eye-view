@@ -35,6 +35,7 @@ test('[beemaps-frames-008] builds the box from the rows of the spec', () => {
     ],
     [0.0025, 0.0025, 0.005, 0.005, [-0.003993, -0.003993, 0.013993, 0.013993]],
     [-0.0025, -0.0025, 0, 0, [-0.008993, -0.008993, 0.008993, 0.008993]],
+    [39.975, 0.0, 39.975, 0, [-0.011735, 39.966007, 0.011735, 39.983993]],
   ];
   for (const [lat, lon, centreLat, centreLon, bbox] of rows) {
     assert.deepEqual(
