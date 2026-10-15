@@ -29,7 +29,16 @@ function isValid(record) {
     return typeof record.burst?.id === 'string';
   }
   if (record.state === 'refused') {
-    return Number.isInteger(record.status) && typeof record.error === 'string';
+    return (
+      Number.isInteger(record.status) &&
+      record.status >= 400 &&
+      record.status <= 599 &&
+      typeof record.error === 'string' &&
+      (record.retryAfter === undefined ||
+        (Number.isInteger(record.retryAfter) &&
+          record.retryAfter >= 1 &&
+          record.retryAfter <= 600))
+    );
   }
   return true;
 }

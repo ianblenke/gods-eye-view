@@ -1970,7 +1970,7 @@ test('[beemaps-burst-control-001] answers every route with the content type JSON
   }
 });
 
-test('[beemaps-burst-control-020] does not count a refused request and frees all the requests of the window together', async (t) => {
+test('[beemaps-burst-control-037] does not count a refused request and frees all the requests of the window together', async (t) => {
   const server = await install(t);
   const status = async () =>
     (await server.request(CONFIRM, { body: {} })).status;
@@ -1982,7 +1982,7 @@ test('[beemaps-burst-control-020] does not count a refused request and frees all
   assert.equal(await status(), 429);
 });
 
-test('[beemaps-burst-control-025] answers a repeat of a 402 and a held confirm with no retryAfter and no Retry-After header', async (t) => {
+test('[beemaps-burst-control-025] answers a repeat of a 402 with no retryAfter and no Retry-After header', async (t) => {
   const server = await install(t, { respond: () => failure(402) });
   const quoted = await server.quote();
   const first = await server.confirm(quoted.body.quoteId, idem(1));
@@ -1996,6 +1996,11 @@ test('[beemaps-burst-control-025] answers a repeat of a 402 and a held confirm w
       undefined,
     ],
   );
+});
+
+test('[beemaps-burst-control-029] answers a confirm held by a 402 with no retryAfter and no Retry-After header', async (t) => {
+  const server = await install(t, { respond: () => failure(402) });
+  assert.equal((await server.flow(1)).status, 402);
   const held = await server.flow(2);
   assert.deepEqual(
     [held.status, held.body, held.headers['retry-after']],
@@ -2063,7 +2068,7 @@ test('[beemaps-burst-control-031] writes a blocked line for a confirm body that 
   );
 });
 
-test('[beemaps-burst-control-023] lets a confirm run while a list request is in flight', async (t) => {
+test('[beemaps-burst-control-020] lets a confirm run while a list request is in flight', async (t) => {
   const open = gate();
   const server = await install(t, {
     respond: async (url) => {
@@ -2220,7 +2225,7 @@ test('[beemaps-burst-control-030] waits for the closing line of each outcome, an
   }
 });
 
-test('[beemaps-burst-control-037] gives the answer of the new request to a request that shares it after the stored list has ended', async (t) => {
+test('[beemaps-burst-control-036] gives the answer of the new request to a request that shares it after the stored list has ended', async (t) => {
   const open = gate();
   let round = 0;
   const server = await install(t, {
@@ -2365,7 +2370,7 @@ test('[beemaps-burst-control-030] gives the clock of the plugin to the audit it 
   assert.equal(JSON.parse(text).time, '2026-10-15T12:00:05.000Z');
 });
 
-test('[beemaps-burst-control-037] gives a failure of the new request to a request that shares it, and not the stored list that has ended', async (t) => {
+test('[beemaps-burst-control-036] gives a failure of the new request to a request that shares it, and not the stored list that has ended', async (t) => {
   const open = gate();
   let round = 0;
   const server = await install(t, {

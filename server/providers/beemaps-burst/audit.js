@@ -17,7 +17,6 @@ const OUTCOMES = new Set([
   'blocked',
 ]);
 const REASONS = new Set([
-  'cross_origin',
   'burst_off',
   'no_key',
   'bad_body',

@@ -11,6 +11,7 @@ Origin: spec-first
 - **AND** `configureServer` and `configurePreviewServer` install the same routes
 - **AND** the list that `localProviderPlugins` returns has this plugin once, after the plugin "beemaps-proxy"
 - **AND** an error that nobody expects in `quote`, `confirm` or `list` gives 500 with `{error:'internal_error'}`, and it gives no unhandled rejection
+- **AND** every answer has the content type JSON and the cache control no-store
 
 ### Requirement: Off by default
 The routes MUST send no request to Bee Maps and MUST spend nothing unless `BEEMAPS_BURST_ENABLED` is exactly "true" and `BEEMAPS_BURST_API_KEY` has a key. The key of the frames provider MUST NOT count.
@@ -197,6 +198,7 @@ Origin: spec-first
 - **AND** a test sends three confirms at the same time, because the rate limit allows 3 for each minute
 - **AND** the three confirms give one upstream request and two answers `busy`
 - **AND** when a step of a confirm fails with an error that nobody expects, the lock ends
+- **AND** a list request that is in flight does not make a confirm `busy`
 
 ### Requirement: Budget in credits
 The plugin MUST count the credits of a confirm in a daily budget before it sends. It MUST NOT give credits back, and the count MUST survive a restart.
@@ -271,6 +273,8 @@ Origin: spec-first
 - **AND** the same answer follows when the write of the "pending" record fails
 - **AND** a missing file is an empty ledger, and any other read error is not
 - **AND** the plugin writes a temporary file first and then renames it to `ledger.json`
+- **AND** a record is not valid when `retryAfter` is present and is not a whole number from 1 to 600
+- **AND** a record "refused" is not valid when its status is not a whole number from 400 to 599
 - **AND** the route reads the file again at the next request
 
 ### Requirement: Holds
@@ -313,8 +317,8 @@ Origin: spec-first
 - **AND** a refusal of `confirm` at a step after the rate limit gets a line with the outcome "blocked" and the reason
 - **AND** a request from another machine, a method that is not POST and a repeat of a key get no line
 - **AND** a request over the rate limit gets no line
-- **AND** the reasons are cross_origin, burst_off, no_key, bad_body, busy, key_reused, outcome_unknown, key_rejected, no_credit, upstream_rate_limit, bad_request, budget_used, budget_unavailable, quote_expired, ledger_unavailable and log_failed
-- **AND** a `reason` that is not in that list, for example `rate_limited`, is written as null
+- **AND** the reasons are burst_off, no_key, bad_body, busy, key_reused, outcome_unknown, key_rejected, no_credit, upstream_rate_limit, bad_request, budget_used, budget_unavailable, quote_expired, ledger_unavailable and log_failed
+- **AND** a `reason` that is not in that list, for example `rate_limited` or `cross_origin`, is written as null
 - **AND** no line contains the key or a field of the answer of Bee Maps other than the ones above
 - **AND** the file is renamed to a file with the suffix `.1` when a line would make it larger than 4 MiB
 

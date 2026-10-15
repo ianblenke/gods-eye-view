@@ -67,7 +67,6 @@ test('[beemaps-burst-control-031] writes one JSON line with exactly the 13 field
 test('[beemaps-burst-control-031] writes the reasons of the list as they are and any other reason as null', async () => {
   const { log, parsed } = capture();
   const reasons = [
-    'cross_origin',
     'burst_off',
     'no_key',
     'bad_body',
@@ -88,6 +87,7 @@ test('[beemaps-burst-control-031] writes the reasons of the list as they are and
     ...reasons,
     'other',
     'rate_limited',
+    'cross_origin',
     '',
     null,
     undefined,
@@ -97,7 +97,7 @@ test('[beemaps-burst-control-031] writes the reasons of the list as they are and
     await log({ ...EVENT, outcome: 'blocked', reason });
   assert.deepEqual(
     parsed().map((line) => line.reason),
-    [...reasons, null, null, null, null, null, null, null],
+    [...reasons, null, null, null, null, null, null, null, null],
   );
 });
 

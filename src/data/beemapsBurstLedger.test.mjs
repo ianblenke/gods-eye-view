@@ -544,3 +544,42 @@ test('[beemaps-burst-control-028] drops the fields of the old state when a recor
     'creditsRemaining',
   ]);
 });
+
+test('[beemaps-burst-control-039] reads a refused record with a status from 400 to 599 and a retryAfter from 1 to 600 and refuses the others', async () => {
+  const refused = (extra) =>
+    record(2, 'refused', T0, { status: 429, error: 'x', ...extra });
+  for (const extra of [
+    { status: 400 },
+    { status: 599 },
+    { retryAfter: 1 },
+    { retryAfter: 600 },
+    {},
+  ]) {
+    const entry = refused(extra);
+    const fs = fakeFs({ [FILE]: JSON.stringify({ records: [entry] }) });
+    const found = await make(fs).ledger.find(entry.key);
+    assert.equal(found.ok, true, JSON.stringify(extra));
+    assert.deepEqual(found.record, entry);
+  }
+  for (const extra of [
+    { status: 399 },
+    { status: 600 },
+    { status: 0 },
+    { status: 200 },
+    { retryAfter: 0 },
+    { retryAfter: 601 },
+    { retryAfter: -1 },
+    { retryAfter: 1.5 },
+    { retryAfter: '5' },
+    { retryAfter: null },
+  ]) {
+    const fs = fakeFs({
+      [FILE]: JSON.stringify({ records: [refused(extra)] }),
+    });
+    assert.deepEqual(
+      await make(fs).ledger.find(KEY),
+      { ok: false },
+      JSON.stringify(extra),
+    );
+  }
+});
