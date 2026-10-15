@@ -22,7 +22,7 @@ The create call of Bee Maps is `POST https://beemaps.com/api/developer/burst/cre
 
 ### D1: New files outside the scanned folder
 
-The scan test of change 1 reads `server/providers/beemaps.js` and every file in `server/providers/beemaps/`. It says that no file holds the text burst. The new plugin lives in `server/providers/beemaps-burst.js` and the folder `server/providers/beemaps-burst/`, so the merged scenario stays true. A new scenario scans the new files.
+The scan test of change 1 reads `server/providers/beemaps.js` and every file in `server/providers/beemaps/`. It says that no file contains the text burst. The new plugin lives in `server/providers/beemaps-burst.js` and the folder `server/providers/beemaps-burst/`, so the merged scenario stays true. A new scenario scans the new files.
 
 ### D2: A quote, then a confirm
 
@@ -30,7 +30,7 @@ A quote checks a box and a credit amount, keeps a single-use id for 120 seconds 
 
 ### D3: The order of the steps of a confirm
 
-The steps run in this order, and the first step that refuses ends the confirm. The steps are: method, local request, rate limit, flag, key, body, busy, idempotency key, hold, quote, budget, audit line, record of the attempt, upstream request. A test checks each pair of neighbours.
+The steps run in this order, and the first step that refuses ends the confirm. The steps are: method, local request, rate limit, flag, key, body, busy, idempotency key, hold, quote, budget, audit line, record of the attempt, upstream request. A test checks each pair of neighbours in the first 11 steps.
 
 ### D4: One confirm at a time
 
@@ -38,7 +38,7 @@ A lock starts after the body step and ends in a `finally`. A second confirm gets
 
 ### D5: Credits, before the send, never back
 
-The budget counts credits in a file, before the send. A refusal, an unknown outcome and a failed log write stay counted. The default daily limit is 625 credits, which is five bursts of 125 credits. The count is in credits because the dollar rate is not known.
+The budget counts credits in a file, before the send. A refusal, an unknown outcome, a failed log write and a failed ledger write stay counted. The default daily limit is 625 credits, which is five bursts of 125 credits. The count is in credits because the dollar rate is not known.
 
 ### D6: An unknown outcome is not a failure
 
@@ -46,13 +46,13 @@ Only the status 200 with `success` true and exactly one burst with an id means "
 
 ### D7: Records before the send
 
-The audit line "accepted" and the record "pending" are written and awaited before the send. A "pending" record that a restart finds reads as unknown. The record of a key holds the id of its quote, so the same key with another quote is refused.
+The audit line "accepted" and the record "pending" are written, and the writes end, before the send. A "pending" record that a restart finds reads as unknown. The record of a key contains the id of its quote, so the same key with another quote is refused.
 
 ### D8: A hold after an unknown outcome
 
-An unknown outcome blocks only its own key, so a new quote and a new key could send again at once. The plugin holds every confirm for 600 seconds after a record with the state "unknown" or "pending". The hold comes from the time in the ledger file, so a restart does not end it. A quote is gone after the quote step for every outcome, so the same quote with a new key cannot send.
+An unknown outcome blocks only its own key, so a new quote and a new key could send again at once. The plugin refuses every confirm for 600 seconds after a record with the state "unknown" or "pending". The hold comes from the time in the ledger file, so a restart does not end it. A quote is gone after the quote step for every outcome, so the same quote with a new key cannot send.
 
-### D9: Answers hold only listed fields
+### D9: Answers have only listed fields
 
 The answer of a created burst has `id`, `status`, `validUntil` and `credits`, and `creditsRemaining`. The list has seven fields for each burst. No text of an answer of Bee Maps goes to the browser, because an error text could hold a signed value.
 
@@ -66,7 +66,7 @@ Every upstream call uses `redirect: 'error'`. A redirect of a create call would 
 
 ### D12: The list is part of this change
 
-The list reveals where the owner asked for mapping, so the route has the same local gate. It is a POST, because the gate needs the content type JSON. Change 4 can then stay a browser-only change, as change 2 was.
+The list shows where the owner asked drivers to map, so the route has the same local gate. It is a POST, because the gate needs the content type JSON. Change 4 can then stay a browser-only change, as change 2 was.
 
 ## Risks / Trade-offs
 
