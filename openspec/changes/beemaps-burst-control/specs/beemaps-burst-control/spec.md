@@ -290,7 +290,7 @@ Origin: spec-first
 - **THEN** each line is JSON with the fields `time`, `requestId`, `outcome`, `reason`, `client`, `bbox`, `areaKm2`, `credits`, `quoteId`, `idempotencyKey`, `upstreamStatus`, `burstId` and `durationMs`
 - **AND** the outcome is "accepted" before the send, and "created", "refused" or "unknown" after it, where "refused" means a refusal of Bee Maps
 - **AND** a refusal of `confirm` at a step after the local request gets a line with the outcome "blocked" and the reason
-- **AND** a request from another machine and a method that is not POST get no line
+- **AND** a request from another machine, a method that is not POST and a repeat of a key get no line
 - **AND** the reasons are cross_origin, rate_limited, burst_off, no_key, bad_body, busy, key_reused, outcome_unknown, key_rejected, no_credit, upstream_rate_limit, bad_request, budget_used, budget_unavailable, quote_expired, ledger_unavailable and log_failed
 - **AND** a `reason` that is not in that list is written as null
 - **AND** no line contains the key or a field of the answer of Bee Maps other than the ones above
@@ -341,6 +341,7 @@ Origin: spec-first
 - **WHEN** a test asks twice, with the same `limit` or with another `limit`
 - **THEN** the second answer has `cached` true, and the fake gets one request
 - **AND** an answer 60 seconds old is not used, and the plugin keeps one entry
+- **AND** two requests at the same time give one upstream request
 - **AND** a failed answer is not kept, and the route sends no second request after a failure
 - **AND** a 401 or 403 gives 403 with `{error:'key_rejected'}`, and every other failure gives 502 with `{error:'upstream_failed'}`
 
@@ -363,6 +364,6 @@ Origin: spec-first
 - **WHEN** a test reads the files of the plugin
 - **THEN** the files are `server/providers/beemaps-burst.js` and every file in `server/providers/beemaps-burst/`, and the test lists them
 - **AND** the addresses in them are "https://beemaps.com/api/developer/burst/create" and "https://beemaps.com/api/developer/bursts" once each
-- **AND** no file contains the text "latest/poly" or "/api/beemaps/frames"
+- **AND** no file contains the text "latest/poly", "/api/beemaps/frames" or "BEEMAPS_API_KEY"
 - **AND** no file in `src/voice`, `src/tools` or `server/mcp` contains the text "beemaps/burst"
-- **AND** the files of the frames provider are the same as before this change
+- **AND** no file of the plugin is a file of the frames provider, which are `server/providers/beemaps.js` and the files in `server/providers/beemaps/`

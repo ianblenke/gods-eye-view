@@ -1002,3 +1002,241 @@ test('[beemaps-burst-control-030] answers 500 log_failed and sends no request wh
   assert.equal(server.calls.length, 0);
   assert.equal(await server.ledger(), null);
 });
+
+const LINE_BASE = {
+  time: '2026-10-15T12:00:00.000Z',
+  requestId: 'request-1',
+  reason: null,
+  client: '127.0.0.1',
+  bbox: BOX,
+  areaKm2: 4,
+  credits: 125,
+  upstreamStatus: null,
+  burstId: null,
+  durationMs: null,
+};
+
+test('[beemaps-burst-control-031] writes the lines accepted and created with the 13 fields and the values of the attempt', async (t) => {
+  const server = await install(t);
+  const quoted = await server.quote();
+  await server.confirm(quoted.body.quoteId, idem(1));
+  const ids = { quoteId: quoted.body.quoteId, idempotencyKey: idem(1) };
+  assert.deepEqual(server.lines, [
+    { ...LINE_BASE, ...ids, outcome: 'accepted' },
+    { ...LINE_BASE, ...ids, outcome: 'created', upstreamStatus: 200, burstId: BURST._id, durationMs: 0 },
+  ]);
+});
+
+test('[beemaps-burst-control-031] writes the outcome refused with the reason and the status of Bee Maps, and unknown with the reason outcome_unknown', async (t) => {
+  const refused = await install(t, { respond: () => failure(403) });
+  await refused.flow(1);
+  assert.deepEqual(
+    refused.lines.map((line) => [line.outcome, line.reason, line.upstreamStatus, line.burstId]),
+    [['accepted', null, null, null], ['refused', 'key_rejected', 403, null]],
+  );
+  const unknown = await install(t, { respond: () => failure(500) });
+  await unknown.flow(1);
+  assert.deepEqual(
+    unknown.lines.map((line) => [line.outcome, line.reason, line.upstreamStatus]),
+    [['accepted', null, null], ['unknown', 'outcome_unknown', 500]],
+  );
+});
+
+test('[beemaps-burst-control-031] writes a line with the outcome blocked and the reason for each refusal of confirm after the local request', async (t) => {
+  const reasons = async (server) => server.lines.filter((l) => l.outcome === 'blocked').map((l) => l.reason);
+  let server = await install(t, { env: { BEEMAPS_BURST_ENABLED: undefined } });
+  await server.request(CONFIRM, { body: {} });
+  assert.deepEqual(await reasons(server), ['burst_off']);
+  server = await install(t, { env: { BEEMAPS_BURST_API_KEY: undefined } });
+  await server.request(CONFIRM, { body: {} });
+  assert.deepEqual(await reasons(server), ['no_key']);
+  server = await install(t);
+  await server.request(CONFIRM, { body: 'x' });
+  await server.confirm('a'.repeat(32), idem(1));
+  assert.deepEqual(await reasons(server), ['bad_body', 'quote_expired']);
+  const bad = server.lines[0];
+  assert.deepEqual([bad.quoteId, bad.idempotencyKey, bad.bbox, bad.credits, bad.client, bad.requestId], [null, null, null, null, '127.0.0.1', 'request-1']);
+  const expired = server.lines[1];
+  assert.deepEqual([expired.quoteId, expired.idempotencyKey, expired.bbox], ['a'.repeat(32), idem(1), null]);
+  server = await install(t, { env: { BEEMAPS_BURST_DAILY_CREDITS: '125' } });
+  const a = await server.quote();
+  const b = await server.quote();
+  await server.confirm(a.body.quoteId, idem(1));
+  await server.confirm(b.body.quoteId, idem(2));
+  const budget = server.lines.at(-1);
+  assert.deepEqual([budget.outcome, budget.reason, budget.bbox, budget.credits, budget.areaKm2], ['blocked', 'budget_used', BOX, 125, 4]);
+  server = await install(t, { respond: () => failure(403) });
+  await server.flow(1);
+  await server.flow(2);
+  assert.equal(server.lines.at(-1).reason, 'key_rejected');
+  assert.equal(server.lines.at(-1).outcome, 'blocked');
+});
+
+test('[beemaps-burst-control-031] writes no line for a request from another machine, for a method that is not POST and for a repeat of a key', async (t) => {
+  const server = await install(t);
+  await server.request(CONFIRM, { body: {}, remote: '192.168.1.20' });
+  await server.request(CONFIRM, { method: 'GET', body: undefined });
+  const quoted = await server.quote();
+  await server.confirm(quoted.body.quoteId, idem(1));
+  const count = server.lines.length;
+  await server.confirm(quoted.body.quoteId, idem(1));
+  assert.equal(server.lines.length, count);
+  assert.equal(count, 2);
+});
+
+test('[beemaps-burst-control-032] keeps the key out of every answer, header, line, file and console line, and in the header Authorization only', async (t) => {
+  const outputs = [];
+  const everything = [];
+  for (const respond of [
+    () => created(),
+    () => failure(400),
+    () => failure(401),
+    () => failure(402),
+    () => failure(403),
+    () => failure(429, { 'retry-after': '30', 'x-echo': KEY }),
+    () => failure(500),
+    () => new Response(`{"success":false,"detail":"${KEY}"}`, { status: 200 }),
+    () => {
+      throw new TypeError(`fetch failed for key ${KEY}`);
+    },
+    () => Promise.reject(Object.assign(new Error(`redirect to https://x.example/?apiKey=${KEY}`), { cause: KEY })),
+  ]) {
+    const server = await install(t, { respond });
+    const first = await server.flow(1);
+    const replay = await server.confirm((await server.ledger()).records[0].quoteId, idem(1));
+    server.clock.t += 700_000;
+    const held = await server.flow(2);
+    everything.push(first, replay, held, await server.request(STATUS, { method: 'GET' }), await server.request(LIST, { body: {} }));
+    outputs.push(server.lines, server.consoleLines, await server.ledger(), await server.credits());
+    for (const call of server.calls) {
+      assert.equal(call.init.headers.Authorization, `Basic ${KEY}`);
+      assert.equal(JSON.stringify([call.url, call.init.body]).includes(KEY), false);
+    }
+  }
+  const text = JSON.stringify([everything, outputs]);
+  assert.equal(text.includes(KEY), false);
+  assert.equal(text.includes('CANARY'), false);
+});
+
+test('[beemaps-burst-control-033] answers 400 bad_body to a list body that is too large, is not an object, has another field or has a bad limit', async (t) => {
+  const server = await install(t);
+  for (const body of ['z'.repeat(1025), 'x', 'null', '[]', '{"skip":1}', '{"limit":0}', '{"limit":101}', '{"limit":1.5}', '{"limit":"5"}']) {
+    assert.deepEqual((await server.request(LIST, { body })).body, { error: 'bad_body' }, body);
+    server.clock.t += 61_000;
+  }
+  assert.equal(server.calls.length, 0);
+});
+
+test('[beemaps-burst-control-033] names the first broken step for each pair of neighbouring steps of a list request', async (t) => {
+  const answer = (result) => [result.status, result.body.error];
+  let server = await install(t, { env: { BEEMAPS_BURST_ENABLED: undefined } });
+  for (let n = 0; n < 6; n += 1) await server.request(LIST, { body: {} });
+  assert.deepEqual(answer(await server.request(LIST, { body: {} })), [429, 'rate_limited']);
+  server = await install(t, { env: { BEEMAPS_BURST_ENABLED: undefined, BEEMAPS_BURST_API_KEY: undefined } });
+  assert.deepEqual(answer(await server.request(LIST, { body: {} })), [403, 'burst_off']);
+  server = await install(t, { env: { BEEMAPS_BURST_API_KEY: undefined } });
+  assert.deepEqual(answer(await server.request(LIST, { body: 'x' })), [403, 'no_key']);
+  server = await install(t);
+  assert.equal((await server.request(LIST, { body: {} })).status, 200);
+  assert.deepEqual(answer(await server.request(LIST, { body: 'x' })), [400, 'bad_body']);
+  assert.equal(server.calls.length, 1);
+});
+
+const MANY = (count) =>
+  Array.from({ length: count }, (_, n) => ({ ...BURST, _id: `b${String(n).padStart(3, '0')}` }));
+
+test('[beemaps-burst-control-034] asks Bee Maps for 100 whatever the limit is, and cuts the answer to the limit, with 20 for an empty object', async (t) => {
+  const server = await install(t, { respond: () => listing(MANY(30), 30) });
+  const five = await server.request(LIST, { body: { limit: 5 } });
+  assert.equal(five.status, 200);
+  assert.deepEqual(five.body.bursts.map((b) => b.id), ['b000', 'b001', 'b002', 'b003', 'b004']);
+  assert.deepEqual([five.body.total, five.body.cached], [30, false]);
+  assert.deepEqual(Object.keys(five.body.bursts[0]), ['id', 'status', 'isHit', 'latestHitAt', 'validUntil', 'credits', 'bbox']);
+  assert.deepEqual(server.calls.map((call) => call.url), [LIST_URL]);
+  assert.equal(five.headers['cache-control'], 'no-store');
+  const dflt = await server.request(LIST, { body: {} });
+  assert.equal(dflt.body.bursts.length, 20);
+  const all = await server.request(LIST, { body: { limit: 100 } });
+  assert.equal(all.body.bursts.length, 30);
+  assert.equal(server.calls.length, 1);
+});
+
+test('[beemaps-burst-control-036] keeps one answer for 60 seconds for every limit and sends a new request after 60 seconds', async (t) => {
+  const server = await install(t);
+  assert.equal((await server.request(LIST, { body: { limit: 1 } })).body.cached, false);
+  assert.equal((await server.request(LIST, { body: { limit: 1 } })).body.cached, true);
+  assert.equal((await server.request(LIST, { body: { limit: 50 } })).body.cached, true);
+  server.clock.t += 59_999;
+  assert.equal((await server.request(LIST, { body: {} })).body.cached, true);
+  assert.equal(server.calls.length, 1);
+  server.clock.t += 1;
+  assert.equal((await server.request(LIST, { body: {} })).body.cached, false);
+  assert.equal(server.calls.length, 2);
+});
+
+test('[beemaps-burst-control-036] does not keep a failed answer, sends no second request after a failure, and names key_rejected and upstream_failed', async (t) => {
+  for (const [respond, status, error] of [
+    [() => failure(401), 403, 'key_rejected'],
+    [() => failure(403), 403, 'key_rejected'],
+    [() => failure(500), 502, 'upstream_failed'],
+    [() => failure(429), 502, 'upstream_failed'],
+    [() => { throw new TypeError('fetch failed'); }, 502, 'upstream_failed'],
+  ]) {
+    const server = await install(t, { respond });
+    const first = await server.request(LIST, { body: {} });
+    assert.deepEqual([first.status, first.body], [status, { error }]);
+    assert.equal(server.calls.length, 1);
+    await server.request(LIST, { body: {} });
+    assert.equal(server.calls.length, 2);
+  }
+});
+
+test('[beemaps-burst-control-036] gives one upstream request for two list requests at the same time', async (t) => {
+  const open = gate();
+  const server = await install(t, { respond: () => open.opened.then(() => listing()) });
+  const a = server.request(LIST, { body: {} });
+  const b = server.request(LIST, { body: {} });
+  await waitFor(() => server.calls.length === 1);
+  await sleep(20);
+  open.open();
+  const [x, y] = await Promise.all([a, b]);
+  assert.deepEqual([x.status, y.status], [200, 200]);
+  assert.deepEqual([x.body.cached, y.body.cached].sort(), [false, true]);
+  assert.equal(server.calls.length, 1);
+  const failing = await install(t, { respond: () => open.opened.then(() => failure(500)) });
+  const c = failing.request(LIST, { body: {} });
+  const d = failing.request(LIST, { body: {} });
+  await waitFor(() => failing.calls.length === 1);
+  await sleep(20);
+  const [p, q] = await Promise.all([c, d]);
+  assert.deepEqual([p.status, q.status], [502, 502]);
+  assert.equal(failing.calls.length, 1);
+});
+
+test('[beemaps-burst-control-037] allows 10 quotes, 3 confirms and 6 lists in 60 seconds and answers 429 rate_limited with Retry-After 60 to the next one', async (t) => {
+  const server = await install(t);
+  for (let n = 0; n < 10; n += 1) assert.equal((await server.quote()).status, 200);
+  const quoted = await server.quote();
+  assert.deepEqual([quoted.status, quoted.body, quoted.headers['retry-after']], [429, { error: 'rate_limited' }, '60']);
+  for (let n = 0; n < 6; n += 1) assert.equal((await server.request(LIST, { body: {} })).status, 200);
+  const listed = await server.request(LIST, { body: {} });
+  assert.deepEqual([listed.status, listed.body, listed.headers['retry-after']], [429, { error: 'rate_limited' }, '60']);
+  for (let n = 0; n < 3; n += 1) assert.equal((await server.request(CONFIRM, { body: {} })).status, 400);
+  const confirmed = await server.request(CONFIRM, { body: {} });
+  assert.deepEqual([confirmed.status, confirmed.body, confirmed.headers['retry-after']], [429, { error: 'rate_limited' }, '60']);
+  assert.deepEqual(server.lines.at(-1).reason, 'rate_limited');
+  assert.equal(server.lines.at(-1).outcome, 'blocked');
+  assert.equal(server.calls.length, 1);
+  assert.deepEqual(await server.files(), []);
+});
+
+test('[beemaps-burst-control-037] frees the window 60 seconds after the first request and sets no limit on the status route', async (t) => {
+  const server = await install(t);
+  for (let n = 0; n < 10; n += 1) await server.quote();
+  server.clock.t += 59_999;
+  assert.equal((await server.quote()).status, 429);
+  server.clock.t += 1;
+  assert.equal((await server.quote()).status, 200);
+  for (let n = 0; n < 30; n += 1)
+    assert.equal((await server.request(STATUS, { method: 'GET' })).status, 200);
+});
