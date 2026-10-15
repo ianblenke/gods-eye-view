@@ -80,7 +80,7 @@
     "change": "beemaps-burst-control"
   },
   "beemaps-burst-control-013": {
-    "hash": "b54a368f3894550af6dade0976aa269d3a37e9fff6c41a9d218193d18e728634",
+    "hash": "97ec81eaa3625334f9e387308adfadc977d4e48718ef7bbf3bc486fcc5c73e12",
     "since": "2026-10-15",
     "change": "beemaps-burst-control"
   },
@@ -150,12 +150,12 @@
     "change": "beemaps-burst-control"
   },
   "beemaps-burst-control-027": {
-    "hash": "a8288ce708fb63528705f123995cf3dc546f4cb653903a88228393709749e80c",
+    "hash": "97585908adf2d258f9723403ce8f7e389c384314d47e50e63b048af14dd885fd",
     "since": "2026-10-15",
     "change": "beemaps-burst-control"
   },
   "beemaps-burst-control-028": {
-    "hash": "3a7de0b922807994ce707e05e95df6e69977ad502d7c3a206ea999b9998f3540",
+    "hash": "f64b2ba528fb3101fddd3b44b8a2892ac9164a395805de66dcf0cdd6b2265f77",
     "since": "2026-10-15",
     "change": "beemaps-burst-control"
   },
