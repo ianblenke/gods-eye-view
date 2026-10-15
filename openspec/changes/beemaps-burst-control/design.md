@@ -42,7 +42,7 @@ The budget counts credits in a file, before the send. A refusal, an unknown outc
 
 ### D6: An unknown outcome is not a failure
 
-Only the status 200 with `success` true and exactly one burst with an id means "created". Only the statuses 400, 401, 402, 403 and 429 mean "refused", whatever the body is. All other answers mean "unknown", for example a 201, a 500, a timeout and a body that nobody can read. Bee Maps can have created the burst. An unknown outcome stays counted and blocks any resend under the same key. The answer tells the person to check the list.
+Only the status 200 with `success` true and exactly one burst with an id means "created". Only the statuses 400, 401, 402, 403 and 429 mean "refused", whatever the body is. All other answers mean "unknown", for example a 201, a 500, a timeout and a body that nobody can read. Bee Maps can have created the burst. An unknown outcome stays counted and blocks any resend under the same key. The error `outcome_unknown` tells change 4 to tell the person to check the list.
 
 ### D7: Records before the send
 
@@ -70,7 +70,7 @@ The list reveals where the owner asked for mapping, so the route has the same lo
 
 ## Risks / Trade-offs
 
-- [An unknown outcome hides a real success] → The answer names the list route, and the record blocks a resend.
+- [An unknown outcome hides a real success] → The error `outcome_unknown` tells change 4 to point to the list, and the record blocks a resend.
 - [A refusal uses up a daily credit] → The limit is five bursts, and the owner can raise it.
 - [The shapes come from the description] → No run used the real service. The classification treats every other shape as unknown.
 - [The routes need `make up-codex`] → The gate answers only this machine.

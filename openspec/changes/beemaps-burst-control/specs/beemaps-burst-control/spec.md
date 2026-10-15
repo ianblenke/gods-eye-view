@@ -83,6 +83,7 @@ Origin: spec-first
 - **WHEN** the area of the box is less than 0.1 km² or more than 5 km²
 - **THEN** a smaller area gives 400 with `{error:'bad_area'}`, and a larger area gives 400 with `{error:'area_too_large', maxKm2:5}`
 - **AND** the area in square metres is `R*R*W*(sin(N) - sin(S))`, with R equal to 6371008.8 metres
+- **AND** W is east minus west in radians, and N and S are the north and south latitudes in radians
 - **AND** the box [9.982014, 59.991007, 10.017986, 60.008993] passes this step
 - **AND** the box [10, 60, 10.02, 60.02] with an area of about 2.5 km² passes
 - **AND** the box [10, 60, 10.05, 60.02] with an area of about 6.2 km² gives `area_too_large`
@@ -162,14 +163,15 @@ Origin: spec-first
 - **AND** each refusal keeps the credits counted in the budget and the state "refused" in the record of the attempt
 
 #### Scenario: Treat every other answer as unknown `beemaps-burst-control-019`
-- **WHEN** the answer of Bee Maps is 200, and `success` is not true
-- **AND** or `bursts` holds no burst, or two bursts, or a burst with no text `_id`
-- **AND** or the status is 200 and the body is not JSON or is larger than 1 MiB
-- **AND** or the status is any other status, for example 201, 204, 301, 404, 409, 418, 500, 502 or 503
-- **AND** or the fetch function rejects, or the call does not end in 30 seconds
+- **WHEN** the result of the call is not a created burst as in scenario 017, and is not a refusal as in scenario 018
 - **THEN** the route answers 502 with `{ok:false, outcome:'unknown', error:'outcome_unknown'}`, and the answer gives no text of Bee Maps
 - **AND** the credits stay counted in the budget, and the record of the attempt has the state "unknown"
 - **AND** the plugin sends no other request for that confirm
+- **AND** the test covers the status 200 with `success` not true, with no burst and with two bursts
+- **AND** the test covers the status 200 with a burst that has no text `_id`, and with a body that is not JSON
+- **AND** the test covers the status 200 with a body larger than 1 MiB
+- **AND** the test covers the statuses 201, 204, 301, 404, 409, 418, 500, 502 and 503
+- **AND** the test covers a fetch function that rejects, and a call that does not end in 30 seconds
 
 #### Scenario: Send one request and never retry `beemaps-burst-control-020`
 - **WHEN** a test confirms one quote for each kind of outcome of the two scenarios before
@@ -231,8 +233,10 @@ Origin: spec-first
 
 #### Scenario: Keep the record on disk `beemaps-burst-control-028`
 - **WHEN** a test confirms a quote and reads the file `ledger.json` in the folder `beemaps-burst`
-- **THEN** the file holds a record with the key, the `quoteId`, the state, the time, and the status and the body of the answer
-- **AND** a replay of a key uses the status and the body of its record
+- **THEN** the file holds a record with the key, the `quoteId`, the state and the time
+- **AND** a record with the state "created" also holds `burst` and `creditsRemaining`
+- **AND** a record with the state "refused" also holds the status, the `error` and `retryAfter`
+- **AND** a replay of a key uses only its record, so it works after a restart
 - **AND** the state is "pending" before the fake upstream gets its request
 - **AND** the state changes to "created", "refused" or "unknown" when the confirm ends
 - **AND** a new plugin that reads a file with a "pending" record gives the answer of an unknown outcome for that key
@@ -254,7 +258,8 @@ Origin: spec-first
 #### Scenario: Hold after a refusal of Bee Maps `beemaps-burst-control-029`
 - **WHEN** Bee Maps refuses with 401 or 403, with 402 or with 429
 - **THEN** the hold lasts 300 seconds, 600 seconds, and the seconds of `Retry-After` as in scenario 018
-- **AND** a confirm during the hold gets the error of the refusal with `held` true, and no upstream request, and no credits counted
+- **AND** a confirm during the hold gets the status and the error of the first refusal, with `ok` false, `outcome` "refused" and `held` true
+- **AND** for 429 the answer also has `retryAfter` equal to the seconds that remain, and the confirm sends no upstream request and counts no credits
 - **AND** a confirm at the end of the hold goes on to the next steps
 - **AND** the holds after a refusal live in memory, so a new plugin has none of them
 
@@ -273,14 +278,15 @@ Origin: spec-first
 #### Scenario: Write the line before the send `beemaps-burst-control-030`
 - **WHEN** a test confirms a quote with a log that records the order of its calls and of the fetch calls
 - **THEN** the line with the outcome "accepted" is written, and the write has ended, before the fake upstream gets its request
-- **AND** a second line with the outcome "created", "failed" or "unknown" follows when the confirm ends
+- **AND** a second line with the outcome "created", "refused" or "unknown" follows when the confirm ends
 - **AND** when the write of the first line fails, the route answers 500 with `{error:'log_failed'}`, and it sends no upstream request
 
 #### Scenario: Fill the line `beemaps-burst-control-031`
 - **WHEN** a test reads the lines of the file `beemaps-bursts.jsonl` in the log folder
 - **THEN** each line is JSON with the fields `time`, `requestId`, `outcome`, `reason`, `client`, `bbox`, `areaKm2`, `credits`, `quoteId`, `idempotencyKey`, `upstreamStatus`, `burstId` and `durationMs`
-- **AND** the outcome is "accepted" before the send, and "created", "refused", "unknown" or "failed" after it, where "refused" means a refusal of Bee Maps
-- **AND** a refusal of the route after the gate gets a line with the outcome "blocked" and the reason
+- **AND** the outcome is "accepted" before the send, and "created", "refused" or "unknown" after it, where "refused" means a refusal of Bee Maps
+- **AND** a refusal of `confirm` at a step after the local request gets a line with the outcome "blocked" and the reason
+- **AND** a request from another machine and a method that is not POST get no line
 - **AND** the reasons are cross_origin, rate_limited, burst_off, no_key, bad_body, busy, key_reused, outcome_unknown, key_rejected, no_credit, upstream_rate_limit, bad_request, budget_used, budget_unavailable, quote_expired, ledger_unavailable and log_failed
 - **AND** a `reason` that is not in that list is written as null
 - **AND** no line holds the key or a field of the answer of Bee Maps other than the ones above
@@ -341,7 +347,8 @@ Origin: spec-first
 #### Scenario: Limit the requests `beemaps-burst-control-037`
 - **WHEN** a client sends more requests than the limit in 60 seconds
 - **THEN** `quote` allows 10, `confirm` allows 3 and `list` allows 6, and the next request gets 429 with `{error:'rate_limited'}` and the header `Retry-After` 60
-- **AND** a refused request sends no upstream request and changes no file
+- **AND** a refused request sends no upstream request and writes no file
+- **AND** a refused `confirm` writes one audit line with the outcome "blocked" and the reason `rate_limited`
 - **AND** the window is 60 seconds on the clock of the plugin, and the status route has no limit
 
 ### Requirement: One address and no other way in
