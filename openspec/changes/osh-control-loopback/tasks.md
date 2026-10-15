@@ -14,7 +14,7 @@
 
 ## 3. Check on the host
 
-- [ ] 3.1 Measure the client address of a container behind a bridge port.
+- [x] 3.1 Measure the client address of a container behind a bridge port.
 - [ ] 3.2 Run the tests of the route on the host.
 - [ ] 3.3 Run the named faults of the gate.
 - [ ] 3.4 Write `evidence/mutations.txt` with the result of each fault.
