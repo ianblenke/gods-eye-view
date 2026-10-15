@@ -41,10 +41,7 @@ test('[beemaps-burst-control-002] reads the flag as true only for the exact text
 });
 
 test('[beemaps-burst-control-003] reads the key of its own, trimmed, and not the key of the frames provider', () => {
-  assert.equal(
-    readConfig({ BEEMAPS_API_KEY: 'frames-key' }).configured,
-    false,
-  );
+  assert.equal(readConfig({ BEEMAPS_API_KEY: 'frames-key' }).configured, false);
   assert.equal(readConfig({ BEEMAPS_BURST_API_KEY: '   ' }).configured, false);
   assert.equal(readConfig({ BEEMAPS_BURST_API_KEY: '' }).configured, false);
   const config = readConfig({
@@ -138,7 +135,10 @@ test('[beemaps-burst-control-008] reads a body of exactly the limit and gives nu
   assert.equal(await readBodyText(body([Buffer.from('€€€')]), 8), null);
   assert.equal(await readBodyText(body([Buffer.from('€€')]), 8), '€€');
   assert.equal(await readBodyText(body([]), 4096), '');
-  assert.equal(await readBodyText(Readable.from(['{"a":', '1}']), 4096), '{"a":1}');
+  assert.equal(
+    await readBodyText(Readable.from(['{"a":', '1}']), 4096),
+    '{"a":1}',
+  );
   assert.equal(await readBodyText(Readable.from(['€€€']), 8), null);
 });
 
@@ -216,7 +216,10 @@ test('[beemaps-burst-control-010] gives the area of the box in km² with at most
     request: { bbox: BOX, areaKm2: 4, credits: 125 },
   });
   assert.equal(quote({ bbox: [10, 60, 10.02, 60.02] }).request.areaKm2, 2.472);
-  assert.equal(quote({ bbox: [10, 60, 10.01, 60.0017] }).request.areaKm2, 0.105);
+  assert.equal(
+    quote({ bbox: [10, 60, 10.01, 60.0017] }).request.areaKm2,
+    0.105,
+  );
 });
 
 test('[beemaps-burst-control-010] answers bad_area below 0.1 km² and area_too_large above 5 km²', () => {
@@ -237,7 +240,9 @@ test('[beemaps-burst-control-010] answers bad_area below 0.1 km² and area_too_l
 });
 
 test('[beemaps-burst-control-012] rounds the numbers to 6 decimals before it checks the box and the area', () => {
-  const rounded = quote({ bbox: [9.9820144, 59.9910074, 10.0179856, 60.0089926] });
+  const rounded = quote({
+    bbox: [9.9820144, 59.9910074, 10.0179856, 60.0089926],
+  });
   assert.deepEqual(rounded.request.bbox, BOX);
   assert.deepEqual(
     quote({ bbox: [10.0000001, 60, 10.0000002, 60.01] }),
@@ -268,7 +273,11 @@ test('[beemaps-burst-control-011] accepts whole credits from 125 to maxCredits a
 test('[beemaps-burst-control-011] answers bad_credits for a number that is not whole, below 125, or not a number', () => {
   const bad = refused(400, { error: 'bad_credits' });
   for (const credits of [124, 0, -125, 125.5, '125', null, true, [], {}, NaN])
-    assert.deepEqual(quote({ bbox: BOX, credits }), bad, JSON.stringify(credits));
+    assert.deepEqual(
+      quote({ bbox: BOX, credits }),
+      bad,
+      JSON.stringify(credits),
+    );
 });
 
 test('[beemaps-burst-control-011] answers bad_area before bad_credits when both are wrong', () => {
@@ -280,7 +289,8 @@ test('[beemaps-burst-control-011] answers bad_area before bad_credits when both 
 
 test('[beemaps-burst-control-015] accepts a quoteId of 32 lowercase hexadecimal characters and a key of 16 to 64 allowed characters', () => {
   const id = 'a'.repeat(32);
-  const ok = (key) => validateConfirm(JSON.stringify({ quoteId: id, idempotencyKey: key }));
+  const ok = (key) =>
+    validateConfirm(JSON.stringify({ quoteId: id, idempotencyKey: key }));
   assert.deepEqual(ok('k'.repeat(16)), {
     ok: true,
     quoteId: id,
@@ -288,15 +298,35 @@ test('[beemaps-burst-control-015] accepts a quoteId of 32 lowercase hexadecimal 
   });
   assert.equal(ok('k'.repeat(64)).ok, true);
   assert.equal(ok('Az09_-Az09_-Az09_-').ok, true);
-  for (const key of ['k'.repeat(15), 'k'.repeat(65), 'a b'.repeat(8), 'é'.repeat(16), 'k'.repeat(15) + '!', 5, null, undefined])
+  for (const key of [
+    'k'.repeat(15),
+    'k'.repeat(65),
+    'a b'.repeat(8),
+    'é'.repeat(16),
+    'k'.repeat(15) + '!',
+    5,
+    null,
+    undefined,
+  ])
     assert.deepEqual(ok(key), refused(400, { error: 'bad_body' }), String(key));
 });
 
 test('[beemaps-burst-control-015] answers bad_body for a quoteId that is not 32 lowercase hexadecimal characters', () => {
   const bad = refused(400, { error: 'bad_body' });
-  for (const quoteId of ['a'.repeat(31), 'a'.repeat(33), 'A'.repeat(32), 'g'.repeat(32), '', 5, null, undefined])
+  for (const quoteId of [
+    'a'.repeat(31),
+    'a'.repeat(33),
+    'A'.repeat(32),
+    'g'.repeat(32),
+    '',
+    5,
+    null,
+    undefined,
+  ])
     assert.deepEqual(
-      validateConfirm(JSON.stringify({ quoteId, idempotencyKey: 'k'.repeat(16) })),
+      validateConfirm(
+        JSON.stringify({ quoteId, idempotencyKey: 'k'.repeat(16) }),
+      ),
       bad,
       String(quoteId),
     );

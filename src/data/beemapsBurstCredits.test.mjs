@@ -49,7 +49,10 @@ test('[beemaps-burst-control-021] writes {date, credits} before it answers, and 
   });
   await new Promise((resolve) => setTimeout(resolve, 20));
   assert.equal(answered, false);
-  assert.deepEqual(fs.events.filter((e) => e.startsWith('write')), ['write credits.json']);
+  assert.deepEqual(
+    fs.events.filter((e) => e.startsWith('write')),
+    ['write credits.json'],
+  );
   release();
   assert.deepEqual(await pending, { ok: true, used: 125, limit: 625 });
   assert.deepEqual(saved(fs), { date: '2026-10-15', credits: 125 });
@@ -68,7 +71,11 @@ test('[beemaps-burst-control-021] starts again at 0 credits on a new UTC day and
     limit: 625,
   });
   second.clock.t = Date.UTC(2026, 9, 16, 0, 0, 0);
-  assert.deepEqual(await second.credits.peek(), { ok: true, used: 0, limit: 625 });
+  assert.deepEqual(await second.credits.peek(), {
+    ok: true,
+    used: 0,
+    limit: 625,
+  });
   assert.deepEqual(await second.credits.reserve(125), {
     ok: true,
     used: 125,
@@ -76,7 +83,16 @@ test('[beemaps-burst-control-021] starts again at 0 credits on a new UTC day and
   });
   assert.deepEqual(saved(fs), { date: '2026-10-16', credits: 125 });
   second.clock.t = Date.UTC(2026, 9, 15, 23, 59, 59);
-  assert.equal((await make(fakeFs({ [FILE]: JSON.stringify({ date: '2026-10-15', credits: 5 }) }), 625, { t: second.clock.t }).credits.peek()).used, 5);
+  assert.equal(
+    (
+      await make(
+        fakeFs({ [FILE]: JSON.stringify({ date: '2026-10-15', credits: 5 }) }),
+        625,
+        { t: second.clock.t },
+      ).credits.peek()
+    ).used,
+    5,
+  );
 });
 
 test('[beemaps-burst-control-021] gives the credits used and the limit with peek, and does not write', async () => {
@@ -110,7 +126,9 @@ test('[beemaps-burst-control-022] passes five reserves of 125 credits with a lim
 });
 
 test('[beemaps-burst-control-022] refuses a reserve that is larger than the credits that remain and does not add to the file', async () => {
-  const fs = fakeFs({ [FILE]: JSON.stringify({ date: '2026-10-15', credits: 500 }) });
+  const fs = fakeFs({
+    [FILE]: JSON.stringify({ date: '2026-10-15', credits: 500 }),
+  });
   const { credits } = make(fs, 625);
   assert.deepEqual(await credits.reserve(126), {
     ok: false,
@@ -118,8 +136,15 @@ test('[beemaps-burst-control-022] refuses a reserve that is larger than the cred
     used: 500,
     limit: 625,
   });
-  assert.deepEqual(await credits.reserve(125), { ok: true, used: 625, limit: 625 });
-  const over = make(fakeFs({ [FILE]: JSON.stringify({ date: '2026-10-15', credits: 700 }) }), 625);
+  assert.deepEqual(await credits.reserve(125), {
+    ok: true,
+    used: 625,
+    limit: 625,
+  });
+  const over = make(
+    fakeFs({ [FILE]: JSON.stringify({ date: '2026-10-15', credits: 700 }) }),
+    625,
+  );
   assert.deepEqual(await over.credits.reserve(1), {
     ok: false,
     reason: 'limit',
@@ -129,12 +154,15 @@ test('[beemaps-burst-control-022] refuses a reserve that is larger than the cred
 });
 
 test('[beemaps-burst-control-022] serializes the writes of reserves that start together and reads the file once', async () => {
-  const fs = fakeFs({}, {
-    readFile: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 10));
-      throw Object.assign(new Error('missing'), { code: 'ENOENT' });
+  const fs = fakeFs(
+    {},
+    {
+      readFile: async () => {
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        throw Object.assign(new Error('missing'), { code: 'ENOENT' });
+      },
     },
-  });
+  );
   const { credits } = make(fs, 625);
   const results = await Promise.all(
     Array.from({ length: 6 }, () => credits.reserve(125)),
@@ -149,18 +177,31 @@ test('[beemaps-burst-control-022] serializes the writes of reserves that start t
 
 test('[beemaps-burst-control-023] gives unavailable when the file cannot be read, and reads it again at the next call', async () => {
   let fail = true;
-  const fs = fakeFs({}, {
-    readFile: async () => {
-      if (fail) throw Object.assign(new Error('denied'), { code: 'EACCES' });
-      throw Object.assign(new Error('missing'), { code: 'ENOENT' });
+  const fs = fakeFs(
+    {},
+    {
+      readFile: async () => {
+        if (fail) throw Object.assign(new Error('denied'), { code: 'EACCES' });
+        throw Object.assign(new Error('missing'), { code: 'ENOENT' });
+      },
     },
-  });
+  );
   const { credits } = make(fs);
-  assert.deepEqual(await credits.reserve(125), { ok: false, reason: 'unavailable' });
+  assert.deepEqual(await credits.reserve(125), {
+    ok: false,
+    reason: 'unavailable',
+  });
   assert.deepEqual(await credits.peek(), { ok: false, reason: 'unavailable' });
-  assert.deepEqual(fs.events.filter((e) => e.startsWith('write')), []);
+  assert.deepEqual(
+    fs.events.filter((e) => e.startsWith('write')),
+    [],
+  );
   fail = false;
-  assert.deepEqual(await credits.reserve(125), { ok: true, used: 125, limit: 625 });
+  assert.deepEqual(await credits.reserve(125), {
+    ok: true,
+    used: 125,
+    limit: 625,
+  });
 });
 
 test('[beemaps-burst-control-023] gives unavailable for a file without a valid date and credits', async () => {
@@ -185,22 +226,36 @@ test('[beemaps-burst-control-023] gives unavailable for a file without a valid d
   ]) {
     const fs = fakeFs({ [FILE]: text });
     const { credits } = make(fs);
-    assert.deepEqual(await credits.reserve(125), { ok: false, reason: 'unavailable' }, text);
+    assert.deepEqual(
+      await credits.reserve(125),
+      { ok: false, reason: 'unavailable' },
+      text,
+    );
     assert.equal(fs.files[FILE], text);
   }
 });
 
 test('[beemaps-burst-control-023] gives unavailable when the write fails, writes nothing to the count, and reads the file again later', async () => {
   let fail = true;
-  const fs = fakeFs({}, {
-    writeFile: async () => {
-      if (fail) throw new Error('disk full');
+  const fs = fakeFs(
+    {},
+    {
+      writeFile: async () => {
+        if (fail) throw new Error('disk full');
+      },
     },
-  });
+  );
   const { credits } = make(fs);
-  assert.deepEqual(await credits.reserve(125), { ok: false, reason: 'unavailable' });
+  assert.deepEqual(await credits.reserve(125), {
+    ok: false,
+    reason: 'unavailable',
+  });
   fail = false;
-  assert.deepEqual(await credits.reserve(125), { ok: true, used: 125, limit: 625 });
+  assert.deepEqual(await credits.reserve(125), {
+    ok: true,
+    used: 125,
+    limit: 625,
+  });
   assert.deepEqual(saved(fs), { date: '2026-10-15', credits: 125 });
 });
 
@@ -214,12 +269,34 @@ test('[beemaps-burst-control-022] reads the limit again at each call when it is 
   const fs = fakeFs();
   const clock = { t: T0 };
   let limit = 250;
-  const credits = createCredits({ dir: DIR, limit: () => limit, now: () => clock.t, fs });
+  const credits = createCredits({
+    dir: DIR,
+    limit: () => limit,
+    now: () => clock.t,
+    fs,
+  });
   assert.deepEqual(await credits.peek(), { ok: true, used: 0, limit: 250 });
-  assert.deepEqual(await credits.reserve(125), { ok: true, used: 125, limit: 250 });
-  assert.deepEqual(await credits.reserve(125), { ok: true, used: 250, limit: 250 });
-  assert.deepEqual(await credits.reserve(125), { ok: false, reason: 'limit', used: 250, limit: 250 });
+  assert.deepEqual(await credits.reserve(125), {
+    ok: true,
+    used: 125,
+    limit: 250,
+  });
+  assert.deepEqual(await credits.reserve(125), {
+    ok: true,
+    used: 250,
+    limit: 250,
+  });
+  assert.deepEqual(await credits.reserve(125), {
+    ok: false,
+    reason: 'limit',
+    used: 250,
+    limit: 250,
+  });
   limit = 500;
   assert.deepEqual(await credits.peek(), { ok: true, used: 250, limit: 500 });
-  assert.deepEqual(await credits.reserve(125), { ok: true, used: 375, limit: 500 });
+  assert.deepEqual(await credits.reserve(125), {
+    ok: true,
+    used: 375,
+    limit: 500,
+  });
 });

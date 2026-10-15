@@ -85,7 +85,15 @@ test('[beemaps-burst-control-031] writes the reasons of the list as they are and
     'ledger_unavailable',
     'log_failed',
   ];
-  for (const reason of [...reasons, 'other', '', null, undefined, 5, 'CROSS_ORIGIN'])
+  for (const reason of [
+    ...reasons,
+    'other',
+    '',
+    null,
+    undefined,
+    5,
+    'CROSS_ORIGIN',
+  ])
     await log({ ...EVENT, outcome: 'blocked', reason });
   assert.deepEqual(
     parsed().map((line) => line.reason),
@@ -95,7 +103,16 @@ test('[beemaps-burst-control-031] writes the reasons of the list as they are and
 
 test('[beemaps-burst-control-031] writes the outcomes accepted, created, refused, unknown and blocked and any other outcome as null', async () => {
   const { log, parsed } = capture();
-  for (const outcome of ['accepted', 'created', 'refused', 'unknown', 'blocked', 'failed', 'sent', undefined])
+  for (const outcome of [
+    'accepted',
+    'created',
+    'refused',
+    'unknown',
+    'blocked',
+    'failed',
+    'sent',
+    undefined,
+  ])
     await log({ ...EVENT, outcome });
   assert.deepEqual(
     parsed().map((line) => line.outcome),
@@ -124,11 +141,27 @@ test('[beemaps-burst-control-031] writes a field that has the wrong shape as nul
   const [line] = parsed();
   assert.deepEqual(Object.keys(line), FIELDS);
   assert.deepEqual(Object.values(line).slice(2), [
-    'accepted', null, null, null, null, null, null, null, null, null, null,
+    'accepted',
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
   ]);
   assert.equal(JSON.stringify(line).includes('CANARY'), false);
   const { log: again, parsed: more } = capture();
-  await again({ ...EVENT, bbox: [1, 2, 3, NaN], burstId: 'x'.repeat(65), client: 'x'.repeat(64), idempotencyKey: 'k'.repeat(64) });
+  await again({
+    ...EVENT,
+    bbox: [1, 2, 3, NaN],
+    burstId: 'x'.repeat(65),
+    client: 'x'.repeat(64),
+    idempotencyKey: 'k'.repeat(64),
+  });
   assert.equal(more()[0].bbox, null);
   assert.equal(more()[0].burstId, null);
   assert.equal(more()[0].client, 'x'.repeat(64));
@@ -144,7 +177,9 @@ test('[beemaps-burst-control-030] writes the lines one after the other in the or
     append: async (line) => {
       running += 1;
       overlap = Math.max(overlap, running);
-      await new Promise((resolve) => setTimeout(resolve, JSON.parse(line).credits === 1 ? 20 : 1));
+      await new Promise((resolve) =>
+        setTimeout(resolve, JSON.parse(line).credits === 1 ? 20 : 1),
+      );
       order.push(JSON.parse(line).credits);
       running -= 1;
     },
@@ -179,9 +214,15 @@ test('[beemaps-burst-control-031] writes to beemaps-bursts.jsonl in the folder .
   const log = createAudit({ sourceRoot: root, now: () => T0 });
   await log(EVENT);
   await log({ ...EVENT, outcome: 'accepted' });
-  const text = await fsp.readFile(path.join(root, '.gev-logs', 'beemaps-bursts.jsonl'), 'utf8');
+  const text = await fsp.readFile(
+    path.join(root, '.gev-logs', 'beemaps-bursts.jsonl'),
+    'utf8',
+  );
   assert.deepEqual(
-    text.trim().split('\n').map((line) => JSON.parse(line).outcome),
+    text
+      .trim()
+      .split('\n')
+      .map((line) => JSON.parse(line).outcome),
     ['created', 'accepted'],
   );
 });

@@ -39,12 +39,19 @@ test('[beemaps-burst-control-038] has the plugin file and the files of its own f
     'beemaps-burst/validate.js',
   ]);
   const framesFolder = readdirSync(new URL('server/providers/beemaps/', ROOT));
-  assert.deepEqual(framesFolder.sort(), ['budget.js', 'normalize.js', 'upstream.js', 'validate.js']);
+  assert.deepEqual(framesFolder.sort(), [
+    'budget.js',
+    'normalize.js',
+    'upstream.js',
+    'validate.js',
+  ]);
 });
 
 test('[beemaps-burst-control-038] holds the two upstream addresses once each and no other address in the plugin files', () => {
   const files = Object.values(pluginFiles());
-  const urls = files.flatMap((text) => text.match(/https?:\/\/[^\s'"`)]+/g) ?? []);
+  const urls = files.flatMap(
+    (text) => text.match(/https?:\/\/[^\s'"`)]+/g) ?? [],
+  );
   assert.deepEqual(urls.sort(), [
     'https://beemaps.com/api/developer/burst/create',
     'https://beemaps.com/api/developer/bursts',
@@ -52,7 +59,9 @@ test('[beemaps-burst-control-038] holds the two upstream addresses once each and
   const hosts = files.flatMap((text) => text.match(/beemaps\.com/g) ?? []);
   assert.deepEqual(hosts, ['beemaps.com', 'beemaps.com']);
   assert.equal(
-    pluginFiles()['beemaps-burst/upstream.js'].includes("'https://beemaps.com/api/developer/burst/create'"),
+    pluginFiles()['beemaps-burst/upstream.js'].includes(
+      "'https://beemaps.com/api/developer/burst/create'",
+    ),
     true,
   );
 });

@@ -103,7 +103,7 @@ export function createLedger({ dir, now, fs = fsp }) {
 
   function prune() {
     let finished = records.filter(isFinished).length;
-    for (let index = 0; index < records.length && finished > MAX_FINISHED; ) {
+    for (let index = 0; index < records.length && finished > MAX_FINISHED;) {
       if (isFinished(records[index])) {
         records.splice(index, 1);
         finished -= 1;
@@ -132,7 +132,8 @@ export function createLedger({ dir, now, fs = fsp }) {
     for (const record of records) {
       if (record.state !== 'unknown' && record.state !== 'pending') continue;
       const remaining = record.time + HOLD_MS - now();
-      if (remaining > 0) seconds = Math.max(seconds, Math.ceil(remaining / 1000));
+      if (remaining > 0)
+        seconds = Math.max(seconds, Math.ceil(remaining / 1000));
     }
     return seconds;
   }

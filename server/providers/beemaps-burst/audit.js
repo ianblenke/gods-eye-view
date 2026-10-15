@@ -9,7 +9,13 @@ import { defaultSourceRoot } from '../common/source-root.js';
  */
 
 const LOG_LIMIT = 4 * 1024 * 1024;
-const OUTCOMES = new Set(['accepted', 'created', 'refused', 'unknown', 'blocked']);
+const OUTCOMES = new Set([
+  'accepted',
+  'created',
+  'refused',
+  'unknown',
+  'blocked',
+]);
 const REASONS = new Set([
   'cross_origin',
   'rate_limited',
