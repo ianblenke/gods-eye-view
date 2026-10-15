@@ -1,0 +1,37 @@
+Client address that a server sees, measured on 2026-10-15 on the machine that runs the app.
+The machine has the LAN address 192.168.51.192. The probe is a small Python program that stores the address of each client.
+It listens on port 8099 in a container of the image gods-eye-view-reticulum:local. It answers two requests, and it writes each client address to /out/peers.txt.
+
+Probe program (stored as text):
+import socket, sys
+s = socket.socket(); s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+s.bind(("0.0.0.0", 8099)); s.listen(5)
+for _ in range(2):
+    c, a = s.accept(); c.recv(100); c.sendall(b"HTTP/1.0 200 OK\r\nContent-Length: 0\r\n\r\n"); c.close()
+    open("/out/peers.txt","a").write("peer %s\n" % a[0])
+
+Measurement 1: the default bridge, with a published port. The gateway of the default bridge is 172.17.0.1.
+  docker run -d --rm -p 18099:8099 -v <probe>:/p.py:ro -v <out>:/out --entrypoint python gods-eye-view-reticulum:local /p.py
+  curl http://127.0.0.1:18099/ gave the client address 172.17.0.1.
+  curl http://192.168.51.192:18099/ gave the client address 192.168.51.192.
+
+Measurement 2: a user-defined bridge network, with a published port. Docker Compose creates such a network for a project.
+  docker network create gevprobenet gave the subnet 172.20.0.0/16 and the gateway 172.20.0.1.
+  docker run -d --rm --network gevprobenet -p 18099:8099 -v <probe>:/p.py:ro -v <out>:/out --entrypoint python gods-eye-view-reticulum:local /p.py
+  curl http://127.0.0.1:18099/ gave the client address 172.20.0.1, the gateway of that network.
+  curl http://192.168.51.192:18099/ gave the client address 192.168.51.192.
+  The network was removed after the measurement.
+
+Measurement 3: the host network, as in compose.codex.yaml.
+  docker run -d --rm --network host -v <probe>:/p.py:ro -v <out>:/out --entrypoint python gods-eye-view-reticulum:local /p.py
+  curl http://127.0.0.1:8099/ gave the client address 127.0.0.1.
+  curl http://192.168.51.192:8099/ gave the client address 192.168.51.192.
+
+The project network of the app. The file compose.yaml sets no network, so make up uses the network of its project. The command docker network inspect gods-eye-view_default gave the subnet 172.18.0.0/16 and the gateway 172.18.0.1. The app was not started in this mode for the measurement.
+
+What this shows:
+- With the host network, a browser on this machine that opens the app as localhost has the loopback address as the socket address. The gate passes it.
+- With the host network, a browser that opens the app by the LAN address of this machine has the LAN address as the socket address. The gate refuses it.
+- In the two bridge measurements, a request to localhost from this machine has the gateway address of that network, not the loopback address. The gate refuses it. This is the Known limit bridge.
+
+After each measurement, the command docker ps showed only the app container and the listener container of the owner.

@@ -1,0 +1,107 @@
+import subprocess, re, os, signal
+R0 = '/home/ianblenke/docker/gev-work/osh-control-loopback/'
+D0 = '/home/ianblenke/docker/gev-tools/osh-control-loopback/'
+CMD = 'timeout 90 node --test --test-timeout=4000 --test-reporter=spec src/control/*.test.mjs; echo EXIT=$?'
+F = {
+    'lc': 'server/providers/common/loopback-command.js',
+    'osh': 'server/providers/osh-control.js',
+    'gate': 'src/localRequestGate.mjs',
+}
+orig = {k: open(R0 + v).read() for k, v in F.items()}
+faults = []
+def f(sid, desc, key, old, new):
+    n = orig[key].count(old)
+    assert n == 1, (desc, old[:70], n)
+    faults.append((sid, desc, key, old, new))
+
+# content type (029)
+f('029', 'Accept a content type with a charset', 'lc', "headers['content-type'] !== 'application/json'", "!String(headers['content-type']).startsWith('application/json')")
+f('029', 'Drop the content type check', 'lc', "  if (headers['content-type'] !== 'application/json') return false;\n", "")
+f('029', 'Accept the text application/json inside another type', 'lc', "headers['content-type'] !== 'application/json'", "!String(headers['content-type']).includes('application/json')")
+# proxy headers (040)
+f('040', 'Drop the proxy check', 'lc', "  if (hasProxySignals(headers)) return false;\n", "")
+f('040', 'Ignore the proxy headers', 'lc', "if (hasProxySignals(headers)) return false;", "if (false) return false;")
+for name in ['forwarded', 'via', 'x-forwarded-for', 'x-forwarded-host', 'x-forwarded-port', 'x-forwarded-proto', 'x-real-ip', 'cf-connecting-ip', 'cf-ray']:
+    f('040', f'Leave the header {name} out of the proxy list', 'gate', f"  '{name}',\n", "")
+f('040', 'Treat an empty header as a proxy header', 'gate', "String(headers[name] || '').trim() !== ''", "headers[name] !== undefined")
+f('040', 'Treat a header with spaces as a proxy header', 'gate', "String(headers[name] || '').trim() !== ''", "String(headers[name] || '') !== ''")
+# socket (039)
+f('039', 'Drop the socket check', 'lc', "  if (!LOOPBACK_ADDRESSES.has(req.socket?.remoteAddress)) return false;\n", "")
+f('039', 'Leave 127.0.0.1 out of the socket addresses', 'lc', "new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1'])", "new Set(['::1', '::ffff:127.0.0.1'])")
+f('039', 'Leave ::1 out of the socket addresses', 'lc', "new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1'])", "new Set(['127.0.0.1', '::ffff:127.0.0.1'])")
+f('039', 'Leave ::ffff:127.0.0.1 out of the socket addresses', 'lc', "new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1'])", "new Set(['127.0.0.1', '::1'])")
+f('039', 'Accept every address that starts with 127', 'lc', "!LOOPBACK_ADDRESSES.has(req.socket?.remoteAddress)", "!String(req.socket?.remoteAddress).startsWith('127.')")
+f('039', 'Accept a socket without an address', 'lc', "!LOOPBACK_ADDRESSES.has(req.socket?.remoteAddress)", "!LOOPBACK_ADDRESSES.has(req.socket?.remoteAddress ?? '127.0.0.1')")
+f('039', 'Fail on a request without a socket', 'lc', "req.socket?.remoteAddress)", "req.socket.remoteAddress)")
+f('039', 'Accept the address of a LAN host', 'lc', "new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1'])", "new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1', '192.168.51.192'])")
+f('039', 'Accept the Docker gateway address', 'lc', "new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1'])", "new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1', '172.17.0.1'])")
+# host (028)
+f('028', 'Accept any IP host', 'lc', "!LOOPBACK_HOSTS.has(name)", "!(LOOPBACK_HOSTS.has(name) || /^[0-9.]+$/.test(name))")
+f('028', 'Accept a .local host', 'lc', "!LOOPBACK_HOSTS.has(name)", "!(LOOPBACK_HOSTS.has(name) || name.endsWith('.local'))")
+f('028', 'Accept every host', 'lc', "  if (!LOOPBACK_HOSTS.has(name)) return false;\n", "")
+f('028', 'Leave localhost out of the host names', 'lc', "new Set(['localhost', '127.0.0.1', '::1'])", "new Set(['127.0.0.1', '::1'])")
+f('028', 'Leave 127.0.0.1 out of the host names', 'lc', "new Set(['localhost', '127.0.0.1', '::1'])", "new Set(['localhost', '::1'])")
+f('028', 'Leave ::1 out of the host names', 'lc', "new Set(['localhost', '127.0.0.1', '::1'])", "new Set(['localhost', '127.0.0.1'])")
+f('028', 'Accept a host that starts with localhost', 'lc', "!LOOPBACK_HOSTS.has(name)", "!name.startsWith('localhost')")
+f('028', 'Accept a host that ends with localhost', 'lc', "!LOOPBACK_HOSTS.has(name)", "!(LOOPBACK_HOSTS.has(name) || name.endsWith('localhost'))")
+f('028', 'Accept the whole 127 range', 'lc', "!LOOPBACK_HOSTS.has(name)", "!(LOOPBACK_HOSTS.has(name) || name.startsWith('127.'))")
+f('028', 'Keep the brackets of an IPv6 host', 'lc', ".replace(/^\\[|\\]$/g, '')", "")
+f('028', 'Compare the host in lower case', 'lc', "parsed.host !== host)", "parsed.host !== host.toLowerCase())")
+f('028', 'Accept a host that the parser changes', 'lc', "  if (parsed.host !== host) return false;\n", "")
+f('028', 'Accept a host that does not parse', 'lc', "  } catch {\n    return false;\n  }", "  } catch {\n    return true;\n  }")
+# origin (028)
+f('028', 'Accept any origin', 'lc', "    headers.origin === `${req.socket?.encrypted ? 'https' : 'http'}://${host}`\n", "    true\n")
+f('028', 'Check the origin with the scheme http only', 'lc', "req.socket?.encrypted ? 'https' : 'http'", "'http'")
+f('028', 'Check the origin with the scheme https only', 'lc', "req.socket?.encrypted ? 'https' : 'http'", "'https'")
+f('028', 'Accept an origin that starts like the host', 'lc', "headers.origin === `${req.socket?.encrypted ? 'https' : 'http'}://${host}`", "String(headers.origin).startsWith(`${req.socket?.encrypted ? 'https' : 'http'}://${host}`)")
+f('028', 'Accept an origin with another host', 'lc', "'http'}://${host}`", "'http'}://localhost:5173`")
+# the route (028, 039, 040)
+f('028', 'Pass every request in isSameOriginCommand', 'osh', "return isLoopbackCommand(req);", "return true;")
+f('028', 'Skip the gate in the route', 'osh', "if (!isSameOriginCommand(req)) {", "if (false) {")
+f('028', 'Refuse with another error name', 'osh', "await refuse(403, 'cross_origin');", "await refuse(403, 'forbidden');")
+f('028', 'Refuse with another status', 'osh', "await refuse(403, 'cross_origin');", "await refuse(400, 'cross_origin');")
+f('039', 'Write no audit line for a refusal', 'osh', "          await log({ requestId, client, outcome: 'refused', reason });\n", "")
+f('039', 'Name no client in the audit line', 'osh', "const client = clientKey(req);", "const client = 'local';")
+
+def main():
+    out, log = [], []
+    try:
+        for sid, desc, key, old, new in faults:
+            path = R0 + F[key]
+            text = orig[key].replace(old, new)
+            assert text != orig[key], desc
+            open(path, 'w').write(text)
+            proc = subprocess.Popen(CMD, shell=True, cwd=R0, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, start_new_session=True)
+            hung = False
+            try:
+                text_out, _ = proc.communicate(timeout=120)
+            except subprocess.TimeoutExpired:
+                hung = True
+                os.killpg(proc.pid, signal.SIGKILL)
+                text_out, _ = proc.communicate()
+            names = set()
+            m_exit = re.search(r'EXIT=(\d+)', text_out)
+            code = int(m_exit.group(1)) if m_exit else -9
+            if hung or code == 124:
+                names.add('TIMEOUT (the tests hung)')
+            for l in text_out.splitlines():
+                l = l.strip()
+                if l.startswith('✖ ') and 'failing tests' not in l:
+                    n = re.sub(r' \(\d+(\.\d+)?ms\)$', '', l[2:].strip())
+                    m = re.match(r'(\[[a-z0-9 -]+\])', n)
+                    names.add(m.group(1) if m else 'untagged: ' + n[:60])
+            uniq = sorted(names)
+            out.append(f'osh-control-{sid} | {desc} | failing: {", ".join(uniq) if uniq else "NONE"}')
+            log.append(f'{desc} | exit {code} | failing tests: {", ".join(uniq) if uniq else "NONE"}')
+            print(log[-1], flush=True)
+            open(path, 'w').write(orig[key])
+    finally:
+        for key, rel in F.items():
+            open(R0 + rel, 'w').write(orig[key])
+    for key, rel in F.items():
+        assert open(R0 + rel).read() == orig[key], rel
+    open(D0 + 'faults.txt', 'w').write('\n'.join(out) + '\n')
+    open(D0 + 'faults-run.txt', 'w').write('\n'.join(log) + '\n')
+
+if __name__ == '__main__':
+    main()

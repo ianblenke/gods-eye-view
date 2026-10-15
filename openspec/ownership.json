@@ -16,6 +16,7 @@
     "openspec/",
     "scripts/spec/",
     "server/providers/firePerimeters.test.mjs",
+    "server/providers/common/loopback-command.js",
     "server/providers/osh-control.js",
     "server/providers/osh-control/",
     "server/providers/osh.js",

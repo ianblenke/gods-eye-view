@@ -10,8 +10,8 @@ function route(env, fetchImpl = async () => { throw new Error('unexpected upstre
   oshControlProxy({ env, fetchImpl, warn: () => {}, log }).configureServer({
     middlewares: { use(path, handler) { assert.equal(path, '/api/control/osh'); middleware = handler; } },
   });
-  return async (method, path, body, headers = {}) => {
-    const req = { method, url: path, headers: { host: 'localhost:5173', origin: 'http://localhost:5173', 'content-type': 'application/json', ...headers }, socket: { remoteAddress: '127.0.0.1' } };
+  return async (method, path, body, headers = {}, socket = { remoteAddress: '127.0.0.1' }) => {
+    const req = { method, url: path, headers: { host: 'localhost:5173', origin: 'http://localhost:5173', 'content-type': 'application/json', ...headers }, socket };
     const chunks = body === undefined ? [] : [Buffer.from(JSON.stringify(body))];
     req[Symbol.asyncIterator] = async function* () { yield* chunks; };
     const result = { headers: {}, statusCode: 200 };
@@ -210,7 +210,7 @@ test('[osh-control-027] Fail a redirect or timeout without a second POST', async
 
 test('[osh-control-028] Refuse a cross-origin or untrusted-host POST', async () => {
   const body = { system: 'sys-fixture-one', command: 'mavRTLControl', parameters: { rtl: true } };
-  for (const headers of [{ host: 'other.invalid', origin: 'http://other.invalid' }, { host: 'device.local.evil', origin: 'http://device.local.evil' }, { origin: undefined }, { origin: 'https://localhost:5173' }, { origin: 'http://other.local:5173' }]) {
+  for (const headers of [{ host: 'other.invalid', origin: 'http://other.invalid' }, { host: 'device.local.evil', origin: 'http://device.local.evil' }, { origin: undefined }, { origin: 'https://localhost:5173' }, { origin: 'http://other.local:5173' }, { host: '192.168.51.192:5173', origin: 'http://192.168.51.192:5173' }, { host: '10.0.0.5:5173', origin: 'http://10.0.0.5:5173' }, { host: '127.0.0.2:5173', origin: 'http://127.0.0.2:5173' }, { host: '[fe80::1]:5173', origin: 'http://[fe80::1]:5173' }, { host: 'drone.local:5173', origin: 'http://drone.local:5173' }, { host: 'LOCALHOST:5173', origin: 'http://LOCALHOST:5173' }, { host: 'Localhost:5173', origin: 'http://Localhost:5173' }]) {
     const result = await route(enabled)('POST', '/commands', body, headers);
     assert.equal(result.status, 403);
     assert.deepEqual(result.body, { error: 'cross_origin' });
@@ -293,13 +293,56 @@ test('[osh-control-027] Refuse an absent API root or a failed control stream GET
   assert.deepEqual((await badList('POST', '/commands', commandBody)).body, { error: 'upstream_failed' });
 });
 
-test('[osh-control-028] Accept local hosts when the origin equals the host', () => {
-  for (const host of ['localhost:5173', '127.0.0.1:5173', '[::1]:5173', 'drone.local:5173']) assert.equal(isSameOriginCommand({ headers: { host, origin: `http://${host}`, 'content-type': 'application/json' }, socket: {} }), true);
-  assert.equal(isSameOriginCommand({ headers: { host: 'localhost:5173', origin: 'https://localhost:5173', 'content-type': 'application/json' }, socket: { encrypted: true } }), true);
+const LOOPBACK_SOCKET = { remoteAddress: '127.0.0.1' };
+const post = (headers = {}, socket = LOOPBACK_SOCKET) => ({ headers: { host: 'localhost:5173', origin: 'http://localhost:5173', 'content-type': 'application/json', ...headers }, socket });
+
+test('[osh-control-028] Accept loopback hosts when the origin equals the host', () => {
+  for (const host of ['localhost:5173', '127.0.0.1:5173', '[::1]:5173', 'localhost']) assert.equal(isSameOriginCommand(post({ host, origin: `http://${host}` })), true, host);
+  assert.equal(isSameOriginCommand(post({ origin: 'https://localhost:5173' }, { encrypted: true, remoteAddress: '127.0.0.1' })), true);
+});
+
+test('[osh-control-028] Refuse a host that is not a loopback host', () => {
+  for (const host of ['drone.local:5173', '192.168.51.192:5173', '10.0.0.5:5173', '127.0.0.2:5173', '127.0.0.1.evil.invalid:5173', '[fe80::1]:5173', '[::ffff:127.0.0.1]:5173', 'localhost.evil.invalid:5173', 'sub.localhost:5173', 'LOCALHOST:5173', 'Localhost:5173']) assert.equal(isSameOriginCommand(post({ host, origin: `http://${host}` })), false, host);
+});
+
+test('[osh-control-028] Refuse an origin that only starts like the host', () => {
+  for (const origin of ['http://localhost:5173/', 'http://localhost:5173.evil.invalid', 'http://localhost:51730', 'http://localhost:5173/path', 'http://localhost:5173?x=1', 'http://localhost:5173 ']) assert.equal(isSameOriginCommand(post({ origin })), false, origin);
 });
 
 test('[osh-control-028] Refuse malformed host values', () => {
-  for (const host of ['bad host', 'user@localhost', 'localhost/path']) assert.equal(isSameOriginCommand({ headers: { host, origin: `http://${host}`, 'content-type': 'application/json' }, socket: {} }), false);
+  for (const host of ['bad host', 'user@localhost', 'localhost/path']) assert.equal(isSameOriginCommand(post({ host, origin: `http://${host}` })), false);
+  assert.equal(isSameOriginCommand(post({ host: undefined })), false);
+  assert.equal(isSameOriginCommand(post({ origin: undefined })), false);
+  assert.equal(isSameOriginCommand(post({ 'content-type': 'application/json; charset=utf-8' })), false);
+});
+
+test('[osh-control-039] Refuse a POST from another machine and write the audit line', async () => {
+  const lines = [];
+  const call = route(enabled, undefined, async (line) => { lines.push(line); });
+  const sockets = [{ remoteAddress: '192.168.51.192' }, { remoteAddress: '::ffff:192.168.51.192' }, { remoteAddress: '172.17.0.1' }, { remoteAddress: '127.0.0.2' }, { remoteAddress: '' }, {}, null];
+  for (const socket of sockets) {
+    const result = await call('POST', '/commands', commandBody, {}, socket);
+    assert.equal(result.status, 403, String(socket?.remoteAddress));
+    assert.deepEqual(result.body, { error: 'cross_origin' });
+  }
+  assert.equal(lines.length, sockets.length);
+  assert.deepEqual(lines.map((line) => line.client), ['192.168.51.192', '::ffff:192.168.51.192', '172.17.0.1', '127.0.0.2', 'local', 'local', 'local']);
+  for (const line of lines) {
+    assert.deepEqual({ outcome: line.outcome, reason: line.reason }, { outcome: 'refused', reason: 'cross_origin' });
+    assert.match(line.requestId, /^[0-9a-f-]{36}$/);
+  }
+  for (const remoteAddress of ['127.0.0.1', '::1', '::ffff:127.0.0.1']) assert.equal(isSameOriginCommand(post({}, { remoteAddress })), true, remoteAddress);
+});
+
+test('[osh-control-040] Refuse a POST that carries a proxy header', async () => {
+  const names = ['forwarded', 'via', 'x-forwarded-for', 'x-forwarded-host', 'x-forwarded-port', 'x-forwarded-proto', 'x-real-ip', 'cf-connecting-ip', 'cf-ray'];
+  for (const name of names) {
+    const result = await route(enabled)('POST', '/commands', commandBody, { [name]: '198.51.100.7' });
+    assert.equal(result.status, 403, name);
+    assert.deepEqual(result.body, { error: 'cross_origin' });
+    assert.equal(isSameOriginCommand(post({ [name]: '198.51.100.7' })), false, name);
+    for (const empty of ['', '   ']) assert.equal(isSameOriginCommand(post({ [name]: empty })), true, `${name} empty`);
+  }
 });
 
 test('[osh-control-001] Pass unknown paths to the next middleware and refuse another method', async () => {

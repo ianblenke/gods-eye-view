@@ -2910,7 +2910,7 @@
     "change": "osh-mavlink-control"
   },
   "osh-control-028": {
-    "hash": "11db1a8a38f1039f066a7611e6b68f59d9a98c1615ba5225ed21c94388ee3446",
+    "hash": "15c45f0a9282debc1525b66e46728476f215729f1c6cbc361909b924ffb6e903",
     "since": "2026-09-27",
     "change": "osh-mavlink-control"
   },
@@ -2958,6 +2958,16 @@
     "hash": "ffb10124cf6b10771fea1d8aa92a92e09de3c1fa292687aaa218d04c7be05c88",
     "since": "2026-09-29",
     "change": "osh-control-panel-layout"
+  },
+  "osh-control-039": {
+    "hash": "b021ab3fd5ec9f9b53d5875ec67bc0b68aeb35954d86f7764a83eec2381cfdbb",
+    "since": "2026-10-15",
+    "change": "osh-control-loopback"
+  },
+  "osh-control-040": {
+    "hash": "b017ede7d995ad0260158b85e07ac07bdee5fdaf76c2e815563cf6707efe4200",
+    "since": "2026-10-15",
+    "change": "osh-control-loopback"
   },
   "ownership-001": {
     "hash": "b52ca32c809f2baeb7ccf82e9355d49f46b67fdf4d574be37ef4e26db8362972",
