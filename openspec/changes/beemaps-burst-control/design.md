@@ -68,6 +68,14 @@ Every upstream call uses `redirect: 'error'`. A redirect of a create call would 
 
 The list shows where the owner asked drivers to map, so the route has the same local gate. It is a POST, because the gate needs the content type JSON. Change 4 can then stay a browser-only change, as change 2 was.
 
+### D13: The area is the rounded area
+
+The plugin rounds the box to 6 decimals, and then it rounds the area to 3 decimals. The limits 0.1 and 5 km² apply to that area. The person sees the same number in the quote. An area of exactly 5.000 passes, and an area of 5.001 does not. No box sits exactly on a limit when the area is a float, so a test cannot reach that edge.
+
+### D14: An error that nobody expects
+
+Each route that can wait has a guard. An error that nobody expects gives 500 with `internal_error`, and the lock of a confirm ends. Without the guard, a rejected promise could stop the dev server. After the send the record is still "pending", so the hold and the replay rules apply. Change 4 must read this answer as "can have spent".
+
 ## Risks / Trade-offs
 
 - [An unknown outcome hides a real success] → The error `outcome_unknown` tells change 4 to point to the list, and the record blocks a resend.
