@@ -7,7 +7,7 @@ Origin: spec-first
 #### Scenario: Refuse a cross-origin POST `osh-control-028`
 - **WHEN** `Host` is not `localhost`, `127.0.0.1` or `[::1]`, with or without a port, or `Origin` is absent or differs from the host scheme and value
 - **THEN** the route answers `403` with `{error:'cross_origin'}`
-- **AND** a host in capital letters, such as `LOCALHOST:5173`, gets the same answer
+- **AND** a host with a capital letter, such as `LOCALHOST:5173` or `Localhost:5173`, gets the same answer
 
 #### Scenario: Refuse a POST without JSON content type `osh-control-029`
 - **WHEN** `Content-Type` is not `application/json`

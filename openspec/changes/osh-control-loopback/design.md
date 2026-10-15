@@ -11,7 +11,7 @@ The route for the key panel (`admitKeySetupRequest` in `src/keySetupCore.mjs`) h
 
 **Goals:**
 - A POST to `/api/control/osh/commands` passes only when it comes from the machine that runs the server.
-- One shared function that a later route can use. It has the same rules as the key panel.
+- One shared function that a later route can use. It has the same lists as the key panel: the socket addresses, the host names and the proxy headers.
 
 **Non-Goals:**
 - The GET route `/api/control/osh/targets`. It sends no command.
@@ -29,9 +29,9 @@ Alternative: change the function in place. The Bee Maps route of a later change 
 
 The function checks the content type, the proxy headers, the socket address, the host and the origin, in that order. Each check returns false at once.
 The socket addresses are `127.0.0.1`, `::1` and `::ffff:127.0.0.1`. The host names are `localhost`, `127.0.0.1` and `[::1]`. These are the lists of the key panel.
-
-The host is compared as the client sent it, so a Host in capital letters is refused. A browser sends the host in lower case.
 The function `hasProxySignals` of `src/localRequestGate.mjs` names the proxy headers, so that list has one owner.
+
+The host is compared as the client sent it, so a Host with a capital letter is refused. A browser sends the host in lower case. The key panel lower-cases the host before it compares it, and this gate does not.
 
 ### D3: The answer does not change
 
@@ -43,7 +43,7 @@ The tests build a request object with a fake socket. They open no port. The rout
 
 ### D5: The bridge mode
 
-With `make up` the server sees the gateway address of the project network for a request from this machine, not the loopback address. `evidence/peer-address.txt` has the measurements. The function refuses that address.
+With `make up` the server sees the gateway address of the project network for a request to `localhost` from this machine, not the loopback address. `evidence/peer-address.txt` has the measurements. The function refuses that address.
 Alternative: accept the gateway address. Docker sets the address, and it changes between hosts. The check cannot find the difference between a program on this machine and another container on the bridge.
 
 ## Risks / Trade-offs

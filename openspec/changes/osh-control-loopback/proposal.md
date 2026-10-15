@@ -33,7 +33,7 @@ The new file is a file that the fork writes, so it goes into `openspec/ownership
 ## Known limits and later changes
 
 - Known limit `reads`: The route `/api/control/osh/targets` (GET) has no origin check. It reads the command names of one system and sends no command. This change does not touch it.
-- Known limit `bridge`: With `make up` a request from this machine reaches the server with the gateway address of the project network. The route refuses it. Use `make up-codex`, or run the server on the host. `evidence/peer-address.txt` has the measurement.
+- Known limit `bridge`: With `make up` a request to `localhost` from this machine reaches the server with the gateway address of the project network. The route refuses it. Use `make up-codex`, or run the server on the host. `evidence/peer-address.txt` has the measurement.
 - Known limit `local-programs`: Any program on the machine that runs the server passes the check, because the check cannot tell programs apart.
 - Known limit `proxy`: A proxy that removes its own headers and connects from the loopback address passes the check.
 - Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.
