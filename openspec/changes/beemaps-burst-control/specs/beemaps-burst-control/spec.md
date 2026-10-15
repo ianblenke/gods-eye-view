@@ -15,7 +15,7 @@ Origin: spec-first
 - **AND** when an error that nobody expects comes after the send, the record keeps the state that it had when the error came
 
 ### Requirement: Off by default
-The routes MUST send no request to Bee Maps and MUST spend nothing unless `BEEMAPS_BURST_ENABLED` is exactly "true" and `BEEMAPS_BURST_API_KEY` has a key. The key of the frames provider MUST NOT count.
+The routes MUST send no request to Bee Maps and MUST spend nothing unless `BEEMAPS_BURST_ENABLED` is exactly "true" and `BEEMAPS_BURST_API_KEY` has a key. The API key of the frames provider MUST NOT count.
 Origin: spec-first
 
 #### Scenario: Read the flag exactly `beemaps-burst-control-002`
@@ -25,7 +25,7 @@ Origin: spec-first
 - **AND** a request to `quote`, `confirm` or `list` with `enabled` false gets 403 and `{error:'burst_off'}`
 - **AND** the fake upstream gets no request and the budget file does not change
 
-#### Scenario: Use a key of its own `beemaps-burst-control-003`
+#### Scenario: Use an API key of its own `beemaps-burst-control-003`
 - **WHEN** a test sets `BEEMAPS_BURST_ENABLED` to "true" and sets only `BEEMAPS_API_KEY` to a key
 - **THEN** the status gives `configured` false, and `quote`, `confirm` and `list` get 403 and `{error:'no_key'}`
 - **AND** a `BEEMAPS_BURST_API_KEY` of only spaces gives `configured` false
@@ -39,7 +39,7 @@ Origin: spec-first
 - **AND** `maxCredits` and `dailyCredits` take the value of `BEEMAPS_BURST_MAX_CREDITS` and `BEEMAPS_BURST_DAILY_CREDITS` when each is digits only
 - **AND** `BEEMAPS_BURST_MAX_CREDITS` below 125 and `BEEMAPS_BURST_DAILY_CREDITS` of 0 give the default
 - **AND** the route uses the same-site gate, so a request with a foreign `Origin` gets 403
-- **AND** another method gets 405 with `{error:'Method not allowed'}`, and the answer has no key and sends no upstream request
+- **AND** another method gets 405 with `{error:'Method not allowed'}`, and the answer has no API key and sends no upstream request
 
 ### Requirement: Local requests only
 The routes `quote`, `confirm` and `list` MUST answer a POST only. They MUST refuse a request that does not pass `isLoopbackCommand` before they read the body, read the flag or send anything.
@@ -59,7 +59,7 @@ Origin: spec-first
 #### Scenario: Keep the order of the steps of confirm `beemaps-burst-control-007`
 - **WHEN** a test sends a confirm that breaks two steps
 - **THEN** the answer names the first broken step of this list
-- **AND** the list is: method, local request, rate limit, flag, key, body, busy, idempotency key, hold, quote, budget
+- **AND** the list is: method, local request, rate limit, flag, API key, body, busy, idempotency key, hold, quote, budget
 - **AND** the test checks each pair of neighbours in the list, with a confirm that breaks only those two steps
 - **AND** the pair hold and quote is checked for the hold after a refusal and for the hold after an unknown outcome
 - **AND** a confirm that passes every step sends one upstream request
@@ -151,13 +151,13 @@ Origin: spec-first
 - **AND** it gives the same answer when `quoteId` is not 32 lowercase hexadecimal characters
 - **AND** it gives the same answer when `idempotencyKey` does not match `^[A-Za-z0-9_-]{16,64}$`
 - **AND** it gives the same answer when a field is absent or is not a text, for example a list with one valid text
-- **AND** a key of exactly 16 characters and a key of exactly 64 characters pass this step
+- **AND** an idempotency key of exactly 16 characters and one of exactly 64 characters pass this step
 - **AND** a valid body of exactly 1024 bytes passes this step
 
 #### Scenario: Send the create request `beemaps-burst-control-016`
 - **WHEN** a test confirms a quote for the box [9.982014, 59.991007, 10.017986, 60.008993] and 125 credits
 - **THEN** the fake gets one `POST` for "https://beemaps.com/api/developer/burst/create"
-- **AND** the headers are only `Authorization` with "Basic " and the key, `Content-Type` "application/json" and `Accept` "application/json"
+- **AND** the headers are only `Authorization` with "Basic " and the API key, `Content-Type` "application/json" and `Accept` "application/json"
 - **AND** the body is the text `[{"geojson":{"type":"Polygon","coordinates":[[[9.982014,59.991007],[10.017986,59.991007],[10.017986,60.008993],[9.982014,60.008993],[9.982014,59.991007]]]},"credits":125}]`
 - **AND** the body is a list of exactly one element, and the element has no field `expiration`, `trackedLocation` or `deviceType`
 - **AND** the option `redirect` is "error", and the call has a signal that the plugin aborts after 30 seconds
@@ -248,8 +248,8 @@ Origin: spec-first
 - **THEN** the answer is 409 with `{ok:false, outcome:'unknown', error:'outcome_unknown', replayed:true}`
 - **AND** the fake upstream gets no request, and the budget does not change
 
-#### Scenario: Refuse a key for another quote `beemaps-burst-control-027`
-- **WHEN** a test sends a key that has a record, with a `quoteId` other than the one of the record
+#### Scenario: Refuse an idempotency key for another quote `beemaps-burst-control-027`
+- **WHEN** a test sends an idempotency key that has a record, with a `quoteId` other than the one of the record
 - **THEN** the answer is 409 with `{error:'key_reused'}`
 - **AND** the fake upstream gets no request, and the budget does not change
 - **AND** the check of the idempotency key comes before the check of the quote, so a repeat works after the quote has expired
@@ -324,18 +324,18 @@ Origin: spec-first
 - **AND** a request over the rate limit gets no line
 - **AND** the reasons are burst_off, no_key, bad_body, busy, key_reused, outcome_unknown, key_rejected, no_credit, upstream_rate_limit, bad_request, budget_used, budget_unavailable, quote_expired, ledger_unavailable and log_failed
 - **AND** a `reason` that is not in that list, for example `rate_limited` or `cross_origin`, is written as null
-- **AND** no line contains the key or a field of the answer of Bee Maps other than the ones above
+- **AND** no line contains the API key or a field of the answer of Bee Maps other than the ones above
 - **AND** the file is renamed to a file with the suffix `.1` when a line would make it larger than 4 MiB
 
-### Requirement: The key stays secret
-The key MUST appear only in the header `Authorization` of the upstream requests. It MUST NOT appear in an answer, a header of an answer, a log line, a record, a file or a console line.
+### Requirement: The API key stays secret
+The API key MUST appear only in the header `Authorization` of the upstream requests. It MUST NOT appear in an answer, a header of an answer, a log line, a record, a file or a console line.
 Origin: spec-first
 
-#### Scenario: Keep the key out of every output `beemaps-burst-control-032`
-- **WHEN** a test runs the four routes with a key of a rare text, with every method of `console` replaced
+#### Scenario: Keep the API key out of every output `beemaps-burst-control-032`
+- **WHEN** a test runs the four routes with an API key of a rare text, with every method of `console` replaced
 - **THEN** the rare text is in the header `Authorization` of the fake requests and nowhere else
 - **AND** the text of an error answer of Bee Maps does not appear in an answer, a line or a record
-- **AND** a fetch function that rejects with a message that contains the key leaves the key out of every output
+- **AND** a fetch function that rejects with a message that contains the API key leaves it out of every output
 - **AND** this is true for a created burst, for each refusal and for each unknown outcome
 
 ### Requirement: List of the bursts
@@ -349,7 +349,7 @@ Origin: spec-first
 - **AND** `limit` only cuts the answer, and the upstream request always asks for 100
 - **AND** a valid body of exactly 1024 bytes passes this step
 - **AND** any other value of `limit` gives 400 with `{error:'bad_body'}`
-- **AND** the steps run in this order: method, local request, rate limit, flag, key, body, memory, upstream request
+- **AND** the steps run in this order: method, local request, rate limit, flag, API key, body, memory, upstream request
 
 #### Scenario: Send the request for the list `beemaps-burst-control-034`
 - **WHEN** a test sends the body `{"limit":5}`

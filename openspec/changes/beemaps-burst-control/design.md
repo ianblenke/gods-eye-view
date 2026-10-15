@@ -30,7 +30,7 @@ A quote checks a box and a credit amount, keeps a single-use id for 120 seconds 
 
 ### D3: The order of the steps of a confirm
 
-The steps run in this order, and the first step that refuses ends the confirm. The steps are: method, local request, rate limit, flag, key, body, busy, idempotency key, hold, quote, budget, audit line, record of the attempt, upstream request. A test checks each pair of neighbours in the first 11 steps.
+The steps run in this order, and the first step that refuses ends the confirm. The steps are: method, local request, rate limit, flag, API key, body, busy, idempotency key, hold, quote, budget, audit line, record of the attempt, upstream request. A test checks each pair of neighbours in the first 11 steps.
 
 ### D4: One confirm at a time
 
