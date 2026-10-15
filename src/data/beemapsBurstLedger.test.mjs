@@ -433,6 +433,8 @@ test('[beemaps-burst-control-040] gives the seconds that remain of 600 for the n
   assert.equal(await hold(ledger), 500);
   clock.t = T0 + 599_500;
   assert.equal(await hold(ledger), 1);
+  clock.t = T0 + 599_999;
+  assert.equal(await hold(ledger), 1);
   clock.t = T0 + 599_600;
   assert.equal(await hold(ledger), 1);
   clock.t = T0 + 598_600;
@@ -498,4 +500,47 @@ test('[beemaps-burst-control-028] reads a created record that has no creditsRema
   );
   assert.equal(found.record.creditsRemaining, null);
   assert.equal(found.record.burst.id, 'b1');
+});
+
+test('[beemaps-burst-control-039] drops the fields of a record that its state does not have when it reads the file', async () => {
+  const stray = {
+    ...record(1, 'pending'),
+    burst: BURST,
+    status: 402,
+    extra: 'x',
+  };
+  const fs = fakeFs({ [FILE]: JSON.stringify({ records: [stray] }) });
+  const { ledger } = make(fs);
+  assert.deepEqual(await ledger.begin(KEY, QUOTE), { ok: true });
+  assert.deepEqual(saved(fs).records[0], record(1, 'pending'));
+  assert.deepEqual(
+    (await ledger.find(record(1, 'pending').key)).record,
+    record(1, 'pending'),
+  );
+});
+
+test('[beemaps-burst-control-028] drops the fields of the old state when a record changes its state again', async () => {
+  const fs = fakeFs();
+  const { clock, ledger } = make(fs);
+  await ledger.begin(KEY, QUOTE);
+  await ledger.finish(KEY, 'created', { burst: BURST, creditsRemaining: 5 });
+  clock.t = T0 + 1000;
+  await ledger.finish(KEY, 'unknown', {});
+  assert.deepEqual(saved(fs).records, [
+    { key: KEY, quoteId: QUOTE, state: 'unknown', time: T0 + 1000 },
+  ]);
+  await ledger.finish(KEY, 'refused', {
+    status: 429,
+    error: 'x',
+    retryAfter: 9,
+  });
+  await ledger.finish(KEY, 'created', { burst: BURST, creditsRemaining: 1 });
+  assert.deepEqual(Object.keys(saved(fs).records[0]), [
+    'key',
+    'quoteId',
+    'state',
+    'time',
+    'burst',
+    'creditsRemaining',
+  ]);
 });
