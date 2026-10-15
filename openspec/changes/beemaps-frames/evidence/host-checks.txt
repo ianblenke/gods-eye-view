@@ -1,0 +1,53 @@
+Host checks of beemaps-frames, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit d9903ab3aff40dc18040877d3e8cc81f62f5e527; later commits change evidence files, documents and trace files only.
+
+## node scripts/check-import-directions.mjs
+{"modules":993,"portableEntries":80}
+exit: 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 16 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit: 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 31 published, 1 new.
+exit: 0
+
+## node scripts/format.mjs --check
+Checked 1379 source files.
+exit: 0
+
+## node --test --experimental-test-coverage (include src/layers/beemaps/*.js, 5 files that need no Cesium) box, records, messages, source and model tests (on the host)
+exit: 0
+ℹ tests 51
+ℹ pass 51
+ℹ fail 0
+ℹ skipped 0
+ℹ    box.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    messages.js | 100.00 |   100.00 |  100.00 | 
+ℹ    model.js    | 100.00 |   100.00 |  100.00 | 
+ℹ    records.js  | 100.00 |   100.00 |  100.00 | 
+ℹ    source.js   | 100.00 |   100.00 |  100.00 | 
+ℹ all files      | 100.00 |   100.00 |  100.00 | 
+
+## node scripts/spec/gates.mjs lint --change beemaps-frames (on the documents of the commit d9903ab3aff40dc18040877d3e8cc81f62f5e527)
+STE: 0 errors, 818 warnings.
+
+## openspec validate beemaps-frames (on the documents of the commit d9903ab3aff40dc18040877d3e8cc81f62f5e527)
+Change 'beemaps-frames' is valid
+
+## image gods-eye-view:local, v24.21.0, the clone mounted with the node_modules of the image, commit d9903ab3aff40dc18040877d3e8cc81f62f5e527
+## node --test --experimental-test-coverage (include src/layers/beemaps/*.js and src/app/layers/beemaps.js) the 7 test files of the layer and the 5 count tests
+exit: 0
+ℹ tests 179
+ℹ pass 179
+ℹ fail 0
+ℹ skipped 0
+ℹ    beemaps.js  | 100.00 |   100.00 |  100.00 | 
+ℹ    box.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    index.js    | 100.00 |   100.00 |  100.00 | 
+ℹ    messages.js | 100.00 |   100.00 |  100.00 | 
+ℹ    model.js    | 100.00 |   100.00 |  100.00 | 
+ℹ    records.js  | 100.00 |   100.00 |  100.00 | 
+ℹ    source.js   | 100.00 |   100.00 |  100.00 | 
+ℹ all files      | 100.00 |   100.00 |  100.00 | 

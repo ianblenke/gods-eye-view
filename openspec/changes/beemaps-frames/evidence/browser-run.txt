@@ -1,0 +1,63 @@
+Run of the layer in a real browser, with a fake upstream behind the real route of change 1.
+The run used the files of the commit 6c6fb1bd. The layer files of the commit d9903ab3 are the same: the command git diff --stat 6c6fb1bd d9903ab3 -- src server build ':(exclude)*.test.mjs' prints nothing.
+Browser: Google Chrome 147.0.7727.101, headless, software rendering. Server: the Vite dev server of the repository on 127.0.0.1:5199 (host Node, Vite as in the repository), with only three plugins: a counter of requests to the two routes, the real plugin beemapsProxy of change 1, and the not-found plugin of the API.
+The plugin beemapsProxy got a fake fetch function. It answers every request for the one fixed address of Bee Maps with 6 made-up frames, and it throws no other address. No request left the machine. The key is a made-up fixture text. The budget file lives in a temporary folder.
+The scripts (the driver and the Vite config) are not in the repository. They live in the tools folder of the lead, because a script in a change folder is a coverage gap. The page loads the share link as the hash #v=2&lat=60&lon=10&alt=3000&heading=0&pitch=-90&roll=0&l=5, with the first-run chooser suppressed through localStorage before the page loads.
+The driver clicks with real mouse events of the DevTools protocol at the position of each control. The data panel is opened with its own button. The retry of a toggle click is counted in the lines below.
+The fake upstream takes 20 seconds in the steps with the word slow, so that the state of a request in flight can be read.
+This is the run that passed. Earlier runs of the same driver stopped at a check or at a wait. Each cause was in the driver: the share link needs lat and lon in the hash, the data panel starts closed, a click used a position that had moved, and a check ran before the page had loaded again. No earlier run stopped because of the layer.
+Vite is up on 127.0.0.1:5199
+--- step 1: load the page with the share link #v=2&lat=60&lon=10&alt=3000&heading=0&pitch=-90&roll=0&l=5 (the layer is enabled by the link)
+row: {"enabled":true,"chip":"Fetch frames here","disabled":false,"info":"A press asks for the newest frames in 4 km² at the view centre. It can cost money."}
+status 1, frames 0, upstream 0, answers []
+PASS 1 the layer is enabled by the share link
+PASS 1 the chip shows "Fetch frames here" and is enabled
+PASS 1 the info line is the hint | A press asks for the newest frames in 4 km² at the view centre. It can cost money.
+PASS 1 the status route was read | status calls 1
+PASS 1 no request for frames reached the server | frames calls 0
+PASS 1 no request reached the fake upstream | upstream calls 0
+--- step 2: reload the page
+status 2, frames 0, upstream 0, answers []
+PASS 2 the reload read the status again | status calls 2
+PASS 2 no request for frames after the reload | frames 0, upstream 0
+--- step 3: switch the layer off and on with its toggle
+the layer went off after 1 click(s) of the toggle
+PASS 3 the chip is gone when the layer is off
+the layer went on after 1 click(s) of the toggle
+status 3, frames 0, upstream 0, answers []
+PASS 3 no request for frames after the switch | frames 0, upstream 0
+PASS 3 the info line is the hint again | A press asks for the newest frames in 4 km² at the view centre. It can cost money.
+--- step 4: press the button once
+status 3, frames 1, upstream 1, answers [{"method":"POST","status":200}]
+row after the press: {"chip":"Fetch frames here","info":"6 frames · newest 2026-10-15 · requests today 1 of 50 · credits left 998"}
+PASS 4 one request for frames reached the server | frames 1
+PASS 4 the click passed the gate of this machine (answer 200) | [{"method":"POST","status":200}]
+PASS 4 one request reached the fake upstream | upstream 1
+PASS 4 the upstream request is the fixed one with a closed ring of 5 positions | {"method":"POST","url":"https://beemaps.com/api/developer/latest/poly?catalog=true","authorization":"Basic fixture-key-browser-run","ring":5,"firstCorner":[9.982014,59.991007],"bbox":[9.982014,59.991007,10.017986,60.008993]}
+PASS 4 the key is only in the header Authorization
+PASS 4 the box of the request is the box of the spec row (60.0, 10.0) | [9.982014,59.991007,10.017986,60.008993]
+PASS 4 the row shows 6 frames, the newest day, the requests and the credits | 6 frames · newest 2026-10-15 · requests today 1 of 50 · credits left 998
+PASS 4 the chip is enabled again
+--- step 5: three clicks while a slow request runs (a new view, so the memory of the route has no answer)
+before the clicks: status 4, frames 1, upstream 1, answers [{"method":"POST","status":200}]
+the chip showed its state after 1602 ms
+row during the request: {"chip":"Fetching…","disabled":true}
+PASS 5 the chip shows Fetching… and is disabled while the request runs
+status 4, frames 2, upstream 2, answers [{"method":"POST","status":200},{"method":"POST","status":200}]
+PASS 5 the three clicks gave one request for frames | frames 1 -> 2
+PASS 5 the three clicks gave one request to the upstream | upstream 1 -> 2
+PASS 5 the chip is enabled again
+--- step 6: a failure of the upstream after a good press, and no retry
+row after the good press: 6 frames · newest 2026-10-15 · requests today 3 of 50 · credits left 998
+PASS 6 the good press shows 6 frames | 6 frames · newest 2026-10-15 · requests today 3 of 50 · credits left 998
+row after the failure: {"chip":"Fetch frames here","info":"Bee Maps did not answer correctly. · 6 frames · newest 2026-10-15 · requests today 3 of 50 · credits left 998"}
+status 5, frames 4, upstream 4, answers [{"method":"POST","status":200},{"method":"POST","status":200},{"method":"POST","status":200},{"method":"POST","status":502}]
+PASS 6 the row shows the message of the failure first, and keeps the 6 frames | Bee Maps did not answer correctly. · 6 frames · newest 2026-10-15 · requests today 3 of 50 · credits left 998
+PASS 6 the second box is not the first box (the view moved) | [11.980844,61.991007,12.019156,62.008993] vs [11.980847,61.986007,12.019153,62.003993]
+PASS 6 the failing press gave one request to the upstream | upstream 3 -> 4
+status 5, frames 4, upstream 4, answers [{"method":"POST","status":200},{"method":"POST","status":200},{"method":"POST","status":200},{"method":"POST","status":502}]
+PASS 6 no retry after 12 seconds | frames 4 -> 4, upstream 4 -> 4
+PASS 6 the chip is enabled again
+console lines about the layer: 0
+last console lines: log: [Detection] Initialized || log: [TrackedReadout] Initialized || log: [Detection] Mode: DENSE || log: [Detection] Mode: OFF || warning: [MapStack] Needs GOOGLE_MAPS_API_KEY — add it in Provider Settings — or a Cesium ion token for the ion-hosted route
+RESULT: all checks passed
