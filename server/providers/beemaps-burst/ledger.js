@@ -75,7 +75,7 @@ export function createLedger({ dir, now, fs = fsp }) {
       throw error;
     }
     const saved = JSON.parse(text);
-    if (!Array.isArray(saved?.records) || !saved.records.every(isValid)) {
+    if (!saved.records.every(isValid)) {
       throw new Error('The ledger file has no valid records');
     }
     return saved.records.map(clean);
@@ -122,8 +122,7 @@ export function createLedger({ dir, now, fs = fsp }) {
     for (const record of records) {
       if (record.state !== 'unknown' && record.state !== 'pending') continue;
       const remaining = record.time + HOLD_MS - now();
-      if (remaining > 0)
-        seconds = Math.max(seconds, Math.ceil(remaining / 1000));
+      seconds = Math.max(seconds, Math.ceil(remaining / 1000));
     }
     return seconds;
   }
@@ -136,7 +135,6 @@ export function createLedger({ dir, now, fs = fsp }) {
     try {
       await ready();
     } catch {
-      records = null;
       return { ok: false };
     }
     const record = records.find((entry) => entry.key === key);
@@ -152,7 +150,6 @@ export function createLedger({ dir, now, fs = fsp }) {
     try {
       await ready();
     } catch {
-      records = null;
       return { ok: false };
     }
     records.push({ key, quoteId, state: 'pending', time: now() });
@@ -171,10 +168,10 @@ export function createLedger({ dir, now, fs = fsp }) {
    * new state also when the write fails.
    */
   async function finish(key, state, details) {
-    const record = records?.find((entry) => entry.key === key);
-    if (record === undefined) return { ok: false };
-    Object.assign(record, details, { state, time: now() });
-    Object.assign(record, clean(record));
+    const index = records?.findIndex((entry) => entry.key === key) ?? -1;
+    if (index < 0) return { ok: false };
+    const changed = { ...records[index], ...details, state, time: now() };
+    records[index] = clean(changed);
     prune();
     try {
       await persist();

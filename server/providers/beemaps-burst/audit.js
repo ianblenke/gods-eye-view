@@ -46,8 +46,7 @@ const text = (value, max) =>
 const matching = (value, pattern) =>
   typeof value === 'string' && pattern.test(value) ? value : null;
 const whole = (value) => (Number.isInteger(value) ? value : null);
-const finite = (value) =>
-  typeof value === 'number' && Number.isFinite(value) ? value : null;
+const finite = (value) => (Number.isFinite(value) ? value : null);
 
 /**
  * @param {object} [options]

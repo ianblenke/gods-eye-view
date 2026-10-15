@@ -248,3 +248,135 @@ test('[beemaps-burst-control-031] renames the file to a file with the suffix .1 
   assert.equal((await fsp.stat(`${file}.1`)).size, limit - 1);
   assert.equal((await fsp.stat(file)).size, size);
 });
+
+test('[beemaps-burst-control-031] rotates when the line would make the file one byte larger than 4 MiB', async (t) => {
+  const root = await tempRoot(t);
+  const dir = path.join(root, '.gev-logs');
+  const file = path.join(dir, 'beemaps-bursts.jsonl');
+  await fsp.mkdir(dir, { recursive: true });
+  const line = `${JSON.stringify({ time: '2026-10-15T12:00:00.000Z', ...EVENT })}\n`;
+  const size = Buffer.byteLength(line);
+  const limit = 4 * 1024 * 1024;
+  await fsp.writeFile(file, 'x'.repeat(limit - size + 1));
+  await createAudit({ sourceRoot: root, now: () => T0 })(EVENT);
+  assert.equal((await fsp.stat(`${file}.1`)).size, limit - size + 1);
+  assert.equal((await fsp.stat(file)).size, size);
+});
+
+test('[beemaps-burst-control-031] counts the bytes of a line and not its characters for the limit of 4 MiB', async (t) => {
+  const root = await tempRoot(t);
+  const dir = path.join(root, '.gev-logs');
+  const file = path.join(dir, 'beemaps-bursts.jsonl');
+  await fsp.mkdir(dir, { recursive: true });
+  const event = { ...EVENT, client: '\u00e9'.repeat(64) };
+  const line = `${JSON.stringify({ time: '2026-10-15T12:00:00.000Z', ...event })}\n`;
+  const bytes = Buffer.byteLength(line);
+  assert.equal(bytes - line.length >= 64, true);
+  const limit = 4 * 1024 * 1024;
+  await fsp.writeFile(file, 'x'.repeat(limit - bytes + 1));
+  await createAudit({ sourceRoot: root, now: () => T0 })(event);
+  assert.equal((await fsp.stat(`${file}.1`)).size, limit - bytes + 1);
+  assert.equal((await fsp.stat(file)).size, bytes);
+});
+
+test('[beemaps-burst-control-031] keeps a value of the right shape at its limits and writes null just beyond them', async () => {
+  const written = async (name, value) => {
+    const { log, parsed } = capture();
+    await log({ outcome: 'accepted', [name]: value });
+    return parsed()[0][name];
+  };
+  const hex = (n) => 'a'.repeat(n);
+  const rows = {
+    requestId: [
+      ['r', 'r'],
+      ['r'.repeat(64), 'r'.repeat(64)],
+      ['', null],
+      ['r'.repeat(65), null],
+      [5, null],
+      [['rr'], null],
+    ],
+    client: [
+      ['c', 'c'],
+      ['c'.repeat(64), 'c'.repeat(64)],
+      ['', null],
+      ['c'.repeat(65), null],
+      [5, null],
+      [['cc'], null],
+    ],
+    bbox: [
+      [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+      ],
+      [[1, 2, 3, 4, 5], null],
+      [[1, 2, 3], null],
+      [[1, 2, 3, '4'], null],
+      [[1, 2, 3, null], null],
+      [[1, 2, 3, Infinity], null],
+      [[1, 2, 3, undefined], null],
+      ['1234', null],
+    ],
+    areaKm2: [
+      [0.105, 0.105],
+      [0, 0],
+      ['5', null],
+      [Infinity, null],
+      [NaN, null],
+    ],
+    credits: [
+      [125, 125],
+      [125.5, null],
+      ['125', null],
+    ],
+    quoteId: [
+      [hex(32), hex(32)],
+      [hex(31), null],
+      [hex(33), null],
+      [`Z${hex(32)}`, null],
+      [`${hex(32)}Z`, null],
+      ['A'.repeat(32), null],
+      [[hex(32)], null],
+    ],
+    idempotencyKey: [
+      ['k'.repeat(16), 'k'.repeat(16)],
+      ['k'.repeat(64), 'k'.repeat(64)],
+      [`${'k'.repeat(14)}_-`, `${'k'.repeat(14)}_-`],
+      ['k'.repeat(15), null],
+      ['k'.repeat(65), null],
+      [`${'k'.repeat(15)} `, null],
+      [`!${'k'.repeat(16)}`, null],
+      [`${'k'.repeat(16)}!`, null],
+      [['k'.repeat(16)], null],
+    ],
+    upstreamStatus: [
+      [200, 200],
+      [200.5, null],
+      ['200', null],
+    ],
+    burstId: [
+      ['b', 'b'],
+      ['b'.repeat(64), 'b'.repeat(64)],
+      ['b_-', 'b_-'],
+      ['', null],
+      ['b'.repeat(65), null],
+      ['b b', null],
+      ['!b', null],
+      ['b!', null],
+      [['b'], null],
+    ],
+    durationMs: [
+      [0, 0],
+      [12.5, 12.5],
+      [NaN, null],
+      [Infinity, null],
+      ['12', null],
+    ],
+  };
+  for (const [name, list] of Object.entries(rows))
+    for (const [value, expected] of list)
+      assert.deepEqual(
+        await written(name, value),
+        expected,
+        `${name} ${String(value)}`,
+      );
+});

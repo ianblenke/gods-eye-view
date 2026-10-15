@@ -32,8 +32,7 @@ export function retryAfterOf(value) {
   return Math.min(Number(value), MAX_RETRY_AFTER_S);
 }
 
-const number = (value) =>
-  typeof value === 'number' && Number.isFinite(value) ? value : null;
+const number = (value) => (Number.isFinite(value) ? value : null);
 const text = (value) => (typeof value === 'string' ? value : null);
 const dropBody = (response) => {
   void response.body?.cancel().catch(() => {});
@@ -123,7 +122,7 @@ export async function createBurst({
     if (
       document?.success !== true ||
       !Array.isArray(document.bursts) ||
-      document.bursts.length !== 1 ||
+      document.bursts.length > 1 ||
       typeof burst?._id !== 'string' ||
       burst._id === ''
     ) {

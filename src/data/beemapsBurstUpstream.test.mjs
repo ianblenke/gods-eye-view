@@ -653,3 +653,196 @@ test('[beemaps-burst-control-018] gives the result of a refusal also when the bo
   assert.equal((await create(() => stuck(500)).promise).kind, 'unknown');
   assert.equal((await list(() => stuck(401)).promise).ok, false);
 });
+
+const MIB = 1024 * 1024;
+const padded = (value, size) => {
+  const text = JSON.stringify(value);
+  return text + ' '.repeat(size - Buffer.byteLength(text));
+};
+
+test('[beemaps-burst-control-019] reads an answer of exactly 1 MiB and gives unknown for an answer of 1 MiB and 1 byte', async () => {
+  const body = { success: true, bursts: [BURST], creditsRemaining: 5 };
+  assert.equal(Buffer.byteLength(padded(body, MIB)), MIB);
+  assert.equal(
+    (
+      await create(() => new Response(padded(body, MIB), { status: 200 }))
+        .promise
+    ).kind,
+    'created',
+  );
+  assert.deepEqual(
+    await create(() => new Response(padded(body, MIB + 1), { status: 200 }))
+      .promise,
+    { kind: 'unknown', upstreamStatus: 200 },
+  );
+});
+
+test('[beemaps-burst-control-035] reads a list of exactly 1 MiB and gives upstream_failed for a list of 1 MiB and 1 byte', async () => {
+  const body = { bursts: [LISTED(1)] };
+  assert.equal(
+    (await list(() => new Response(padded(body, MIB))).promise).ok,
+    true,
+  );
+  assert.deepEqual(
+    await list(() => new Response(padded(body, MIB + 1))).promise,
+    { ok: false, error: 'upstream_failed' },
+  );
+});
+
+test('[beemaps-burst-control-017] gives status null for a text that is not one of the three statuses', async () => {
+  for (const status of ['pending', 'Active', 'ACTIVE', '', 5, null]) {
+    assert.equal(
+      (await create(() => created({}, { status })).promise).burst.status,
+      null,
+      String(status),
+    );
+    assert.equal(
+      (await list(() => json({ bursts: [LISTED(1, { status })] })).promise)
+        .bursts[0].status,
+      null,
+      String(status),
+    );
+  }
+});
+
+test('[beemaps-burst-control-017] gives credits null for a number that is not finite in the JSON text', async () => {
+  const text =
+    '{"success":true,"bursts":[{"_id":"b1","credits":1e999}],"creditsRemaining":5}';
+  assert.equal(
+    (await create(() => new Response(text, { status: 200 })).promise).burst
+      .credits,
+    null,
+  );
+  const listed = '{"bursts":[{"_id":"b1","credits":1e999}]}';
+  assert.equal(
+    (await list(() => new Response(listed)).promise).bursts[0].credits,
+    null,
+  );
+});
+
+test('[beemaps-burst-control-035] gives bbox null for a ring that has a number that is not finite in the JSON text', async () => {
+  const listed =
+    '{"bursts":[{"_id":"b1","geojson":{"type":"Polygon","coordinates":[[[1,2],[3,4],[5,6],[1e999,8],[1,2]]]}}]}';
+  assert.equal(
+    (await list(() => new Response(listed)).promise).bursts[0].bbox,
+    null,
+  );
+});
+
+test('[beemaps-burst-control-019] gives unknown for the other statuses of the 2xx, 3xx, 4xx and 5xx kinds', async () => {
+  for (const code of [
+    206, 226, 300, 304, 308, 410, 413, 415, 422, 423, 424, 451, 501, 505, 507,
+    511,
+  ]) {
+    assert.deepEqual(
+      await create(() => status(code)).promise,
+      { kind: 'unknown', upstreamStatus: code },
+      String(code),
+    );
+  }
+});
+
+test('[beemaps-burst-control-018] cancels the body of a refusal, of an unknown status and of a failed list call', async () => {
+  const spy = (code) => {
+    const state = { cancelled: false };
+    const response = new Response(
+      new ReadableStream({
+        cancel() {
+          state.cancelled = true;
+        },
+      }),
+      { status: code },
+    );
+    return { state, response };
+  };
+  for (const code of [400, 401, 402, 403, 429, 404, 500]) {
+    const one = spy(code);
+    await create(() => one.response).promise;
+    await tick();
+    assert.equal(one.state.cancelled, true, `create ${code}`);
+  }
+  for (const code of [401, 403, 404, 500]) {
+    const one = spy(code);
+    await list(() => one.response).promise;
+    await tick();
+    assert.equal(one.state.cancelled, true, `list ${code}`);
+  }
+});
+
+test('[beemaps-burst-control-035] gives the box of the outer ring from the extremes of its positions', async () => {
+  const at = (coordinates) =>
+    list(() =>
+      json({
+        bursts: [LISTED(1, { geojson: { type: 'Polygon', coordinates } })],
+      }),
+    ).promise.then((r) => r.bursts[0].bbox);
+  const outer = [
+    [5, 5],
+    [1, 2],
+    [9, 8],
+    [3, 7],
+    [5, 5],
+  ];
+  assert.deepEqual(await at([outer]), [1, 2, 9, 8]);
+  assert.deepEqual(
+    await at([
+      outer,
+      [
+        [4, 4],
+        [4, 5],
+        [5, 5],
+        [4, 4],
+      ],
+    ]),
+    [1, 2, 9, 8],
+  );
+  assert.deepEqual(
+    await at([
+      [
+        [2, 3],
+        [4, 3],
+        [4, 6],
+        [2, 6],
+      ],
+    ]),
+    [2, 3, 4, 6],
+  );
+});
+
+test('[beemaps-burst-control-035] gives validUntil as a text and else null for each listed burst', async () => {
+  const items = [
+    LISTED(1, { validUntil: '2026-10-22T12:00:00.000Z' }),
+    LISTED(2, { validUntil: 5 }),
+    LISTED(3, { validUntil: null }),
+  ];
+  const result = await list(() => json({ bursts: items })).promise;
+  assert.deepEqual(
+    result.bursts.map((burst) => burst.validUntil),
+    ['2026-10-22T12:00:00.000Z', null, null],
+  );
+});
+
+test('[beemaps-burst-control-035] counts the items that it keeps for total when the answer has none, and keeps 100 good items after bad ones', async () => {
+  const items = [LISTED(1), { nothing: true }, LISTED(2)];
+  const result = await list(() => json({ bursts: items })).promise;
+  assert.equal(result.bursts.length, 2);
+  assert.equal(result.total, 2);
+  const many = [
+    { nothing: true },
+    ...Array.from({ length: 101 }, (_, index) => LISTED(index + 1)),
+  ];
+  const cut = await list(() => json({ bursts: many })).promise;
+  assert.equal(cut.bursts.length, 100);
+  assert.equal(cut.bursts[0].id, 'b1');
+  assert.equal(cut.bursts.at(-1).id, 'b100');
+});
+
+test('[beemaps-burst-control-036] gives upstream_failed for a list answer with another status than 200 even when the body is a good list', async () => {
+  for (const code of [201, 202, 203, 206, 226, 300, 301, 302, 404, 429]) {
+    assert.deepEqual(
+      await list(() => json({ bursts: [LISTED(1)] }, code)).promise,
+      { ok: false, error: 'upstream_failed' },
+      String(code),
+    );
+  }
+});

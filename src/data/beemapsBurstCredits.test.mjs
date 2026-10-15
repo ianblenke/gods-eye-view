@@ -276,6 +276,7 @@ test('[beemaps-burst-control-023] gives unavailable for a file without a valid d
     '{"date":"2026-10-15"}',
     '{"credits":5}',
     '{"date":20261015,"credits":5}',
+    '{"date":["2026-10-15"],"credits":5}',
     '{"date":"2026-10-1","credits":5}',
     '{"date":"20261015","credits":5}',
     '{"date":"2026-10-15T00:00:00Z","credits":5}',
