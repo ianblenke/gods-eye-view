@@ -21,7 +21,7 @@ The layer panel supports controls for a layer through two module methods: `getRo
 
 ### D1: One chip with `onClick` is the only trigger
 
-The chip has an `onClick` function and no `params`. The layer has no `setParams`, so saved state and share links can only switch it on, and then it reads only the status. The layer registers no listener on the camera.
+The chip has an `onClick` function and no `params`. The layer has no `setParams`, so saved state and share links can only enable it, and then it reads only the status. The layer registers no listener on the camera.
 
 ### D2: The update reads the status only
 

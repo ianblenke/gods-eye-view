@@ -8,7 +8,7 @@ This is change 2 of 4. It adds the layer "Bee Maps Frames". The layer fetches fr
 
 - Add the folder `src/layers/beemaps/` with the files `box.js`, `records.js`, `messages.js`, `source.js`, `model.js` and `index.js`. Add the wrapper `src/app/layers/beemaps.js`.
 - Add a button "Fetch frames here" to the row of the layer. A press builds a box of about 4 km² at the view centre, posts it to `/api/beemaps/frames` and shows the frames as points.
-- Send no request for frames from any other path. These paths are the switch that turns the layer on, a saved state, a share link, a move of the camera, voice and a timer. The layer reads only the free status route.
+- Send no request for frames when the layer is enabled, and from any other path. These paths are a saved state, a share link, a move of the camera, voice and a timer. The layer reads only the free status route.
 - Show one message for each error answer of the route. After an error, send no request until a person presses the button again.
 - Register the layer with the share token "5", in the group Cameras, out of voice, with a data credit. Change the count in the scenario `osh-033` from 31 to 32.
 - Add the capability `beemaps-frames` with 27 scenarios. Add one entry to `CHANGELOG.md` and one paragraph to `DATA_SOURCES.md`.
@@ -27,7 +27,7 @@ This is change 2 of 4. It adds the layer "Bee Maps Frames". The layer fetches fr
 
 No server code changes. The browser code uses the two routes of change 1. The new files go into `openspec/ownership.json`, `scripts/format-scope.json` and `scripts/package-boundaries.json`.
 
-The tests use fake sources and fake viewers. No test and no run sends a request to Bee Maps. A run in a real browser has a fake upstream behind the real route. It shows that the browser sends nothing when the layer turns on, and one request for each press.
+The tests use fake sources and fake viewers. No test and no run sends a request to Bee Maps. A run in a real browser has a fake upstream behind the real route. It shows that the browser sends nothing when the layer is enabled, and one request for each press.
 
 ## Known limits and later changes
 
@@ -36,8 +36,8 @@ The tests use fake sources and fake viewers. No test and no run sends a request 
 - Known limit `osh-count`: The scenario `osh-033` names the count of the registry, so each new layer needs a new delta of the capability `osh`.
 - Known limit `box-size`: The box is fixed at about 4 km², snapped to a grid of 0.005 degrees. The person cannot choose another size or pick another place than the view centre.
 - Known limit `no-date-filter`: The request has no date. The frames can be old, and the point style shows their age.
-- Known limit `points-in-memory`: The points live in memory only. They are gone when someone switches the layer off or reloads the page, and a new press can cost money. The server memory of change 1 answers an identical box for free for 10 minutes.
-- Known limit `status-once`: The layer reads the status when it is enabled. Someone who adds a key later must switch the layer off and on.
+- Known limit `points-in-memory`: The points live in memory only. They are gone when someone disables the layer or reloads the page, and a new press can cost money. The server memory of change 1 answers an identical box for free for 10 minutes.
+- Known limit `status-once`: The layer reads the status when it is enabled or updated. Someone who adds a key must restart the app.
 - Known limit `no-card`: A point has no card and no label. A person cannot read the time of one frame yet.
 - Known limit `local-only`: The route answers only the machine that runs the server, so the button works with `make up-codex` and fails with `make up`. The layer names this in its message.
 - Known limit `real-service`: No run used the real service. The shapes come from the public API description, as in change 1.
