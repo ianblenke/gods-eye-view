@@ -19,6 +19,206 @@
     "since": "2026-10-10",
     "change": "codex-voice-container"
   },
+  "beemaps-burst-control-001": {
+    "hash": "96c1557b839d7045dbff21f23f5c265e09d542564ccd367c8a2ecc9559699cbc",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-002": {
+    "hash": "e0863e70fdc52f7e7cd9d92bed0637e117ee11e2ce134cd61fb767c18519bc8a",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-003": {
+    "hash": "602f611c4ab268256e00fc3c0644ea45f544359f7c0f45f06bea8a237a724d5b",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-004": {
+    "hash": "0b51a29342c9d87ff57e902afc41dfc62162a56195e1827dc17adbb3bd1e3103",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-005": {
+    "hash": "19cc3c6f9b0a82a930efdbb99c1a8acbf750a312bb6a942d27b9f733a8984ee3",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-006": {
+    "hash": "c77dcffaa326a5b866830dacd8ebc9937fd1dc1a25d2ab5de8e4eb8f43ec1861",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-007": {
+    "hash": "6734a72cebe2ea7026c1c7a76963e535f89751e83bc9d218ffa9b541ca16d2e1",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-008": {
+    "hash": "eb87b344f133e3db82306fd7c7c310de04f531e07268e37f5f6b0a3d08b7667e",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-009": {
+    "hash": "ebe8d099082e6d95ecdf13f7370af84c39bc72c237363c406747a0fefd3d08c6",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-010": {
+    "hash": "f35349d6db2bcca5b979e84054957c3f4034f24463c4c761b8bea0e4ab3f2866",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-011": {
+    "hash": "aa9d983b8c3386e0fbbc0c22b509e1e70ddf450cfad8b88cd48982687bccbb85",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-012": {
+    "hash": "1ed03d1fa31a48e797460d36ac9a1804d75d40bf7918b4d8d071359cbe21bf99",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-013": {
+    "hash": "66ebcc75052a3e0841a369ae10eecc54d6a91856b87adbdb83f4816424496cbc",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-014": {
+    "hash": "aab95daecb1e2113e18325c93d1132dce325197904457056d89c069f1c6de113",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-015": {
+    "hash": "6ef90098ae9d16d059b0559131333a1f8001f5ca62735b70b7540c1573a34516",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-016": {
+    "hash": "e15da5b0db063fd091b0685be8f442059a14b7f361318a4562df2c1d6b422222",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-017": {
+    "hash": "621e0639a5aa60c9349b10ca9d4d9c7e8077a910dfcd87015cd3723e2d657bbb",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-018": {
+    "hash": "49319b9b14f8eb69788f3e635443175ff84b886080ccb0bdfac9139781be72cb",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-019": {
+    "hash": "18a2c216c6df77d8cbb4f9edf43030a8be69a3faefaec3dd8010f02c606ab2e1",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-020": {
+    "hash": "99fba86dbd01f8d7be7bec6bca1f746e09619922e889cd01e01331b4d21b002f",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-021": {
+    "hash": "5e9ccf491e9d9d057609f1652c08999e0a5270dc6a666b29f731d370c0fdccad",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-022": {
+    "hash": "96fbf64d057705d0b69354b1f6c9902d77c89a4e0bd1f2eeb21ff2e33717aea7",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-023": {
+    "hash": "d16796fe1da5de0553b3ab9d2c898f476a260db5f7ff5ab50e6d3d04d17b00e6",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-024": {
+    "hash": "46c35e0dfe0fa8d6a98b0074568054657dcb8adec20d11c5f27cbb9de4530d1d",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-025": {
+    "hash": "5e1eb88b943beff5084fd00d3d8e8b20e4a308cfeff8783c08c6db8b9c2025c6",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-026": {
+    "hash": "7937ca5ee1a6fea2ac4fd865f738f91a4c866e261f1d53fb40d1cde91eb6bac8",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-027": {
+    "hash": "7a4f3fe82b93ecfd1a4ab160db83b785a02783b14e440beea3faa40aff2debdc",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-028": {
+    "hash": "9b2b77cd4c031f58b166dbf5446939666c0bee5297f3c88df565c8c1c765b5db",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-029": {
+    "hash": "7f30862dafb41d4ed86b3a7de2c7ecbb99d91e445e8b2000ed63f06ccc594457",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-030": {
+    "hash": "1e8668c57e12f5976d8aeada74bd6078606cab79743a93757b3afd545b3ec0b9",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-031": {
+    "hash": "5175f771fa25f1c207bf3102d56291860c7ca5e6a72e8e99b72f32b7cdcea0dd",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-032": {
+    "hash": "b7c9bc74cf36e9e6dc2b5e82f43b94cc4c398a2d14e50d6c6bf6232a98092b0e",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-033": {
+    "hash": "85f8bcf01cfde176f831d9990702372ed017a5f397c52d3944f6dbd2c853b923",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-034": {
+    "hash": "4cc13b75082a51ce3165e11db1044024531f19c7d230f45224920e04c777922f",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-035": {
+    "hash": "450917548802a869d259996b13c8032fc570af40b565777eb84f3615a28c6127",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-036": {
+    "hash": "5da10326cc7dda6481b86e47a8504703b30f76b1cf25e6d8e7635028365726e8",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-037": {
+    "hash": "f29cea53323f2e36366afa60522691386aa9133705296858bcab69748b2fdb65",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-038": {
+    "hash": "cc49b7bf8b6c50c9245f24c960c2aa3a9ca85cc1b0b766f67e3869bb53194610",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-039": {
+    "hash": "56ada9dac8f337dbb972015a10d74c274f6bcc11e5c8674d88f21ffe7bcf86fb",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
+  "beemaps-burst-control-040": {
+    "hash": "f6bf075c46231e5a81b56b3c473ea1478e1855c229cf26ef2e7969076f65ba04",
+    "since": "2026-10-15",
+    "change": "beemaps-burst-control"
+  },
   "beemaps-frames-001": {
     "hash": "ec4c1a0f30dd1dace7aaf76c679efdbb180f2c2481b382a1abadef451cd0ead9",
     "since": "2026-10-15",

@@ -11,6 +11,294 @@
   "app-container-004": [
     "src/tooling/appContainer.test.mjs › [app-container-004] the default compose file and the target up stay as they are"
   ],
+  "beemaps-burst-control-001": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-001] answers 500 internal_error when a route fails with an error that nobody expects, and does not answer twice",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-001] answers every route with the content type JSON and the cache control no-store",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-001] mounts the four routes and the plugin name is beemaps-burst-proxy",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-001] passes a path below each of the four routes to next with no answer",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-001] passes every other path to next with no answer",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-001] puts the plugin once in the list of local provider plugins, after beemaps-proxy",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-001] uses the environment, the clock, the fetch function and the folders of the process when it gets no options"
+  ],
+  "beemaps-burst-control-002": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-002] reads the flag as exactly true, and refuses quote, confirm and list with burst_off otherwise",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-002] reads the flag as true only for the exact text true"
+  ],
+  "beemaps-burst-control-003": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-003] needs the key BEEMAPS_BURST_API_KEY, trimmed, and not the key of the frames provider",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-003] sends the trimmed key of its own in the header Authorization",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-003] reads the key of its own, trimmed, and not the key of the frames provider"
+  ],
+  "beemaps-burst-control-004": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-004] answers the status with exactly five fields and the defaults 125, 125 and 625",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-004] takes maxCredits and dailyCredits from digits and uses the default for a value below the limit",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-004] uses the same-site gate and answers 405 to another method",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-004] gives minCredits 125, maxCredits 125 and dailyCredits 625 by default",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-004] takes maxCredits and dailyCredits from digits and gives the default for a value below the limit"
+  ],
+  "beemaps-burst-control-005": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-005] answers 405 to a GET, a PUT and a DELETE on quote, confirm and list and sends and writes nothing"
+  ],
+  "beemaps-burst-control-006": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-006] answers 403 cross_origin to a POST that breaks one of the five rules and does not read the body",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-006] counts a request from another machine against no rate limit",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-006] passes a POST that keeps the five rules from each loopback address"
+  ],
+  "beemaps-burst-control-007": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-007] names the first broken step among the budget, the audit line, the record of the attempt and the upstream request",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-007] names the first broken step for each pair of neighbouring steps of a confirm"
+  ],
+  "beemaps-burst-control-008": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-008] answers 400 bad_body to a body that is too large or fails while it is read, for quote, confirm and list",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-008] reads a valid quote body of exactly 4096 bytes and refuses one of 4097 bytes",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-008] answers bad_body for a body that is not a JSON object or has another field",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-008] answers bad_body for a null text, which stands for a body that was too large or failed",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-008] reads a body of exactly the limit and gives null for one byte more"
+  ],
+  "beemaps-burst-control-009": [
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-009] accepts a box with a latitude of exactly -80 or 80 and a longitude of exactly -180 or 180",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-009] answers bad_area for a box that is not four finite numbers",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-009] answers bad_area for a box with west greater than east and south greater than north",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-009] answers bad_area for a number that is not finite in the JSON text",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-009] answers bad_area when west is not less than east, south is not less than north, or a value is out of range"
+  ],
+  "beemaps-burst-control-010": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-010] answers the refusals of the box, of the area and of the credits at the route quote, and keeps no quote",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-010] answers bad_area below 0.1 km² and area_too_large above 5 km²",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-010] compares the area rounded to 3 decimals with 0.1 and with 5",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-010] gives the area of the box in km² with at most 3 decimals",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-010] uses the radius 6371008.8 metres for the area"
+  ],
+  "beemaps-burst-control-011": [
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-011] accepts whole credits from 125 to maxCredits and uses 125 without credits",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-011] answers bad_area before bad_credits when both are wrong",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-011] answers bad_credits for a number that is not whole, below 125, or not a number"
+  ],
+  "beemaps-burst-control-012": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-012] gives a quote with the id, 120 seconds, the request and the budget, and sends and writes nothing",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-012] rounds a box with more than 6 decimals and gives the budget after a confirm",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-012] checks the area of the rounded box and not the area of the box in the body",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-012] rounds the numbers to 6 decimals before it checks the box and the area"
+  ],
+  "beemaps-burst-control-013": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-013] ends a quote 120 seconds after it was made, and uses it up at the quote step for every outcome",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-013] gives quote_expired for the same quote with a new key after a refusal and after an unknown outcome",
+    "src/data/beemapsBurstQuotes.test.mjs › [beemaps-burst-control-013] counts only quotes that have not ended toward the limit of 8",
+    "src/data/beemapsBurstQuotes.test.mjs › [beemaps-burst-control-013] gives a copy of the request that the caller cannot change in the store",
+    "src/data/beemapsBurstQuotes.test.mjs › [beemaps-burst-control-013] gives each quote an id of 32 lowercase hexadecimal characters and a life of 120 seconds",
+    "src/data/beemapsBurstQuotes.test.mjs › [beemaps-burst-control-013] gives the stored request once, 119.999 seconds after the quote, and nothing at 120 seconds",
+    "src/data/beemapsBurstQuotes.test.mjs › [beemaps-burst-control-013] keeps at most 8 quotes, and the ninth quote ends the oldest",
+    "src/data/beemapsBurstQuotes.test.mjs › [beemaps-burst-control-013] uses up a quote at the first take and knows no id that it never gave"
+  ],
+  "beemaps-burst-control-014": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-014] answers 500 budget_unavailable to a quote when the budget file cannot be read",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-014] keeps no quote for a request that the budget cannot pay",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-014] refuses a quote one credit over the credits that remain, and checks the credits against the maximum of the settings",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-014] refuses a quote that the budget cannot pay with 403 budget_used, and gives a quote for exactly the credits that remain"
+  ],
+  "beemaps-burst-control-015": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-015] reads a valid confirm body of exactly 1024 bytes and refuses one of 1025 bytes",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-015] accepts a quoteId of 32 lowercase hexadecimal characters and a key of 16 to 64 allowed characters",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-015] answers bad_body for a body that is not a JSON object or has another field",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-015] answers bad_body for a quoteId that is not 32 lowercase hexadecimal characters"
+  ],
+  "beemaps-burst-control-016": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-016] reserves, writes and sends the credits and the box of the quote",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-016] aborts the call after 30 seconds and clears the timer when the call ends",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-016] sends a list of exactly one element that has only the fields geojson and credits",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-016] sends one POST to the create address with three headers, one polygon, the credits and a redirect option of error"
+  ],
+  "beemaps-burst-control-017": [
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-017] gives a created burst for the status 200, success true and exactly one burst with a text _id",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-017] gives credits null for a number that is not finite in the JSON text",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-017] gives status null for a text that is not one of the three statuses",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-017] gives status, validUntil, credits and creditsRemaining as null when they have the wrong shape",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-017] keeps credits that are not whole as they are"
+  ],
+  "beemaps-burst-control-018": [
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-018] cancels the body of a refusal, of an unknown status and of a failed list call",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-018] decides a refusal by the status and does not read the body",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-018] gives a refusal for the statuses 400, 401, 402, 403 and 429 with the status of the answer of the route",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-018] gives the result of a refusal also when the body cannot be cancelled",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-018] reads retryAfter from digits, 600 at most, and gives 60 for anything else"
+  ],
+  "beemaps-burst-control-019": [
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-019] gives unknown for a status 200 that does not say created exactly once",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-019] gives unknown for a status 200 with a body that is not JSON or is larger than 1 MiB",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-019] gives unknown for every other status and keeps the status for the audit line",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-019] gives unknown for the other statuses of the 2xx, 3xx, 4xx and 5xx kinds",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-019] gives unknown with no status when the fetch function rejects or the 30 seconds end while it reads the body",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-019] reads an answer of exactly 1 MiB and gives unknown for an answer of 1 MiB and 1 byte"
+  ],
+  "beemaps-burst-control-020": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-020] answers busy to a confirm while another runs, and not after it ends",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-020] ends the lock of a confirm that fails with an error that nobody expects",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-020] gives one upstream request and two answers busy for three confirms at the same time",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-020] lets a confirm run while a list request is in flight",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-020] sends exactly one upstream request for each kind of outcome, also after 10 minutes and every timer",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-020] sends one upstream request and ends in an unknown outcome when the 30 seconds end"
+  ],
+  "beemaps-burst-control-021": [
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-021] gives the credits used and the limit with peek, and does not write",
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-021] starts again at 0 credits on a new UTC day and continues from the file in a new instance",
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-021] starts at 0 credits for a file with another date",
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-021] writes {date, credits} before it answers, and answers with the credits used",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-021] continues from the credits in the file with a new plugin, and starts again on a new UTC day",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-021] keeps the credits counted after a refusal, an unknown outcome, a log failure and a ledger failure",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-021] writes credits.json with the date and 125 credits before the fake upstream gets its request"
+  ],
+  "beemaps-burst-control-022": [
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-022] passes five reserves of 125 credits with a limit of 625 and refuses the sixth",
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-022] reads the limit again at each call when it is a function",
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-022] refuses a reserve that is larger than the credits that remain and does not add to the file",
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-022] runs the writes one after the other and ends with the last count",
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-022] serializes the writes of reserves that start together and reads the file once",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-022] answers budget_used to a confirm when the daily limit is used and sends no request",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-022] passes five confirms of 125 credits with the clock moved 61 seconds after each, and refuses the sixth with budget_used",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-022] reads the daily limit again at each request",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-022] reads the daily limit from digits only that are 1 or more"
+  ],
+  "beemaps-burst-control-023": [
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-023] creates the folder before it writes",
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-023] gives unavailable for a file without a valid date and credits",
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-023] gives unavailable when the file cannot be read, and reads it again at the next call",
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-023] gives unavailable when the write fails, writes nothing to the count, and reads the file again later",
+    "src/data/beemapsBurstCredits.test.mjs › [beemaps-burst-control-023] reads a file of today with 0 credits",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-023] answers 500 budget_unavailable to a confirm when the file cannot be written, and sends no request"
+  ],
+  "beemaps-burst-control-024": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-024] answers a repeat of a created burst with the same burst, replayed true, and sends nothing"
+  ],
+  "beemaps-burst-control-025": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-025] answers a repeat of a 402 with no retryAfter and no Retry-After header",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-025] answers a repeat of a refusal with the same status and error and replayed true, and sends nothing",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-025] keeps retryAfter and the header Retry-After in the answer of a repeat of a 429"
+  ],
+  "beemaps-burst-control-026": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-026] answers a repeat of an unknown outcome and of a pending record with 409 outcome_unknown and replayed true"
+  ],
+  "beemaps-burst-control-027": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-027] answers 409 key_reused to a key that has a record, with another quote, before it checks the quote"
+  ],
+  "beemaps-burst-control-028": [
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] changes the state to created, refused or unknown with the fields of each state",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] drops all the finished records above 500 at once, oldest first",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] drops the fields of the old state when a record changes its state again",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] gives a copy of a record that the caller cannot change in the store",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] gives a failure for a finish of a key that has no record",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] gives the pending record to a new ledger that reads the file",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] keeps at most 500 records of created and refused, drops the oldest of those, and never drops pending or unknown",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] reads a created record that has no creditsRemaining with null",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] runs the writes one after the other and ends with the last records",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] writes a pending record with the key, the quoteId, the state and the time before it answers",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] writes a refused record without retryAfter when the answer had none",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-028] writes only the fields of the new state and takes the state and the time from the call",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-028] answers a repeat after a restart from the record in the file alone",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-028] answers with the outcome of the send when the write of the record after the send fails, and keeps the state pending in the file",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-028] writes the record pending before the fake upstream gets its request and changes it to created"
+  ],
+  "beemaps-burst-control-029": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-029] answers a confirm held by a 402 with no retryAfter and no Retry-After header",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-029] gives retryAfter and the header Retry-After to a confirm held by a 429",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-029] holds every confirm for 300 seconds after 401 or 403, 600 seconds after 402, and the seconds of Retry-After after 429",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-029] starts no hold after a 400, and a new plugin has no hold of a refusal"
+  ],
+  "beemaps-burst-control-030": [
+    "src/data/beemapsBurstAudit.test.mjs › [beemaps-burst-control-030] rejects when the write fails and still writes the next line",
+    "src/data/beemapsBurstAudit.test.mjs › [beemaps-burst-control-030] writes the lines one after the other in the order of the calls",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-030] answers 500 log_failed and sends no request when the write of the first line fails",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-030] answers as usual when the write of a line after the first line fails",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-030] gives the clock of the plugin to the audit it makes",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-030] tries a blocked line with the reason log_failed when the first line fails",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-030] waits for the closing line of each outcome, and writes it after the record",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-030] writes a second line created, refused or unknown when the confirm ends",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-030] writes the audit line accepted, and waits for the write to end, before the fake upstream gets its request",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-030] writes the blocked line, and waits for the write to end, before it answers"
+  ],
+  "beemaps-burst-control-031": [
+    "src/data/beemapsBurstAudit.test.mjs › [beemaps-burst-control-031] counts the bytes of a line and not its characters for the limit of 4 MiB",
+    "src/data/beemapsBurstAudit.test.mjs › [beemaps-burst-control-031] keeps a value of the right shape at its limits and writes null just beyond them",
+    "src/data/beemapsBurstAudit.test.mjs › [beemaps-burst-control-031] renames the file to a file with the suffix .1 when a line would make it larger than 4 MiB",
+    "src/data/beemapsBurstAudit.test.mjs › [beemaps-burst-control-031] rotates when the line would make the file one byte larger than 4 MiB",
+    "src/data/beemapsBurstAudit.test.mjs › [beemaps-burst-control-031] writes a field that has the wrong shape as null and writes no other field",
+    "src/data/beemapsBurstAudit.test.mjs › [beemaps-burst-control-031] writes one JSON line with exactly the 13 fields, the time as an ISO text and the values of the event",
+    "src/data/beemapsBurstAudit.test.mjs › [beemaps-burst-control-031] writes the outcomes accepted, created, refused, unknown and blocked and any other outcome as null",
+    "src/data/beemapsBurstAudit.test.mjs › [beemaps-burst-control-031] writes the reasons of the list as they are and any other reason as null",
+    "src/data/beemapsBurstAudit.test.mjs › [beemaps-burst-control-031] writes to beemaps-bursts.jsonl in the folder .gev-logs of the source root and creates the folder",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-031] gives the duration of the send in the closing line",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-031] writes a blocked line for a confirm body that is too large",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-031] writes a line with the outcome blocked and the reason for each refusal of confirm after the local request",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-031] writes no line for a request from another machine, for a method that is not POST and for a repeat of a key",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-031] writes the lines accepted and created with the 13 fields and the values of the attempt",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-031] writes the outcome refused with the reason and the status of Bee Maps, and unknown with the reason outcome_unknown"
+  ],
+  "beemaps-burst-control-032": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-032] keeps the key out of every answer, header, line, file and console line, and in the header Authorization only"
+  ],
+  "beemaps-burst-control-033": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-033] answers 400 bad_body to a list body that is too large, is not an object, has another field or has a bad limit",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-033] names the first broken step for each pair of neighbouring steps of a list request",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-033] reads a valid list body of exactly 1024 bytes and refuses one of 1025 bytes",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-033] answers bad_body for a body that is not an object, has another field or has a bad limit",
+    "src/data/beemapsBurstValidate.test.mjs › [beemaps-burst-control-033] gives a limit of 20 for an empty object and takes a whole limit from 1 to 100"
+  ],
+  "beemaps-burst-control-034": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-034] asks Bee Maps for 100 whatever the limit is, and cuts the answer to the limit, with 20 for an empty object",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-034] gives each burst with the seven fields and no other field",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-034] sends one GET to the list address with limit 100, two headers and a redirect option of error"
+  ],
+  "beemaps-burst-control-035": [
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-035] counts the items that it keeps for total when the answer has none, and keeps 100 good items after bad ones",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-035] drops an item that is not an object or has no text _id",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-035] gives bbox for a ring of 150000 positions",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-035] gives bbox from the ring of geojson rounded to 6 decimals and null when the ring is not valid",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-035] gives bbox null for a ring that has a number that is not finite in the JSON text",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-035] gives isHit, status, latestHitAt, validUntil and credits their default when they have the wrong shape",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-035] gives the box of the outer ring from the extremes of its positions",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-035] gives total from the answer when it is a whole number of 0 or more, and else the number of items kept",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-035] gives validUntil as a text and else null for each listed burst",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-035] keeps at most 100 items",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-035] reads a list of exactly 1 MiB and gives upstream_failed for a list of 1 MiB and 1 byte"
+  ],
+  "beemaps-burst-control-036": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-036] does not keep a failed answer, sends no second request after a failure, and names key_rejected and upstream_failed",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-036] gives a failure of the new request to a request that shares it, and not the stored list that has ended",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-036] gives one upstream request for two list requests at the same time",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-036] gives the answer of the new request to a request that shares it after the stored list has ended",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-036] keeps one answer for 60 seconds for every limit and sends a new request after 60 seconds",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-036] gives key_rejected for 401 and 403 and upstream_failed for every other failure of the list call",
+    "src/data/beemapsBurstUpstream.test.mjs › [beemaps-burst-control-036] gives upstream_failed for a list answer with another status than 200 even when the body is a good list"
+  ],
+  "beemaps-burst-control-037": [
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-037] allows 10 quotes, 3 confirms and 6 lists in 60 seconds and answers 429 rate_limited with Retry-After 60 to the next one",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-037] does not count a refused request and frees all the requests of the window together",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-037] frees the window 60 seconds after the first request and sets no limit on the status route"
+  ],
+  "beemaps-burst-control-038": [
+    "src/data/beemapsBurstScan.test.mjs › [beemaps-burst-control-038] has the plugin file and the files of its own folder, and no file of the frames provider",
+    "src/data/beemapsBurstScan.test.mjs › [beemaps-burst-control-038] holds no text of the burst routes in the voice, tools and MCP files",
+    "src/data/beemapsBurstScan.test.mjs › [beemaps-burst-control-038] holds no text of the frames address or of the frames route in the plugin files",
+    "src/data/beemapsBurstScan.test.mjs › [beemaps-burst-control-038] holds the two upstream addresses once each and no other address in the plugin files"
+  ],
+  "beemaps-burst-control-039": [
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] drops the fields of a record that its state does not have when it reads the file",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] gives a failure for a file that is not valid JSON, not an object, or has a record that is not valid",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] gives a failure when the write fails and keeps no record of the attempt in memory",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] gives a failure when the write of a finish fails and keeps the new state in memory",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] reads a missing file as an empty ledger and any other read error as a failure, and reads again after a failure",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] reads a record with a time of 0, a key of 16 or 64 characters, and the states pending and unknown",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] reads a refused record with a status from 400 to 599 and a retryAfter from 1 to 600 and refuses the others",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] reads the file once for calls that start together",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-039] writes a temporary file first and then renames it to ledger.json",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-039] answers 500 ledger_unavailable when the file is not valid, cannot be read or the write fails, and sends nothing"
+  ],
+  "beemaps-burst-control-040": [
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-040] gives a failure with the hold when the file fails",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-040] gives no hold for created and refused records and takes the largest hold of several records",
+    "src/data/beemapsBurstLedger.test.mjs › [beemaps-burst-control-040] gives the seconds that remain of 600 for the newest record that is unknown or pending, rounded up",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-040] ends the hold after 600 seconds, keeps it after a restart, and answers a repeat of the key as in scenario 026",
+    "src/data/beemapsBurstProxy.test.mjs › [beemaps-burst-control-040] holds every confirm with a new key for 600 seconds after an unknown outcome, from the ledger file"
+  ],
   "beemaps-frames-001": [
     "src/layers/beemaps/layer.test.mjs › [beemaps-frames-001] describes the layer and has no method setParams",
     "src/layers/beemaps/layer.test.mjs › [beemaps-frames-001] refuses a second init",
