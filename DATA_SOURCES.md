@@ -86,6 +86,16 @@ The data is infrastructure that the operator chose to publish. The operator sets
 
 The Reticulum software has its own licence. The licence forbids use in any system that can purposefully harm people. It also forbids use of the software in the creation of a training dataset for AI. The software runs as a separate service and is not part of this repository. The map feed `rmap.world` states no terms of use, so this project does not use it. See `openspec/specs/reticulum-source/spec.md`.
 
+### Bee Maps street-level frames (key in `.env`)
+
+Bee Maps (formerly Hivemapper) sells an API for street-level imagery that contributors upload with dashcams. The route `/api/beemaps/frames` asks it for the newest frames inside one box or one polygon. The smallest box that holds it is at most 5 km².
+
+The route answers only the machine that runs the server, because a request can cost money. It sends one kind of request, with `catalog=true`, to one fixed address. It keeps the key in the server. It returns only `id`, `lat`, `lon` and `timestamp` for each frame, and the answer shows the `credits` that Bee Maps reports.
+
+The daily limit is 20 upstream requests. `BEEMAPS_DAILY_QUERIES` changes it, and a file in `.gev-cache/beemaps` keeps the count across a restart. An answer stays in memory for 10 minutes. The terms of Bee Maps allow use in an app that you build, and they forbid resale. They do not say whether other people can see the data, so use it for yourself only.
+
+This version reads frames only. It has no image and no request to map an area again. The shapes of the request and the answer come from the public API description, version 1.3.0. No test sends a request to Bee Maps, so the first real request can show a difference.
+
 ### Notes on the live sources
 
 - **Google Maps Platform.** You supply your own API key and are bound by [Google's ToS](https://cloud.google.com/maps-platform/terms). Google Maps Content (tiles, geocodes, places) **may not be cached, stored, rehosted, or committed** — this app only ever uses it live, which is the compliant pattern. The "Google" attribution is displayed on the globe and must stay visible. Restrict your key (see [SECURITY.md](SECURITY.md)).

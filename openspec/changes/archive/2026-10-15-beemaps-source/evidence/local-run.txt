@@ -1,0 +1,203 @@
+Local run of the Bee Maps frames provider in the image gods-eye-view:local (Node v24.21.0, Vite as in the repository).
+It starts a fake upstream on 127.0.0.1 and a real Vite dev server on 0.0.0.0:5199 with the plugin. The plugin gets a fetch function that sends the URL of Bee Maps to the fake upstream and throws for any other URL.
+No request left the container. The key is a made-up fixture text. The container was started for this run only, with the clone mounted and the node_modules of the image. It stopped when the script ended, and docker ps afterwards listed only the two containers of the owner.
+The run used the files of the commit 82d7987c. The files under server/ are the same in the commit 7ca52ba9: the command git diff --stat 82d7987c HEAD -- server prints nothing. The script is not in the repository (a script in a change folder is a coverage gap); it lives in the tools folder of the lead and ran with: docker run --rm -i -v <clone>:/app -v /app/node_modules -w /app gods-eye-view:local node --input-type=module - < local-run.mjs
+
+The script prints the list `frames` of an answer as a count and the first frame. The answers hold the whole list.
+Requests to the route count against the rate limit (6 in 60 seconds). Steps 2, 3, 8, 9, 10 and 11 reach the rate-limit step, so the script stays under the limit. Steps 4 to 7 stop before it.
+Node v24.21.0; fake upstream on 127.0.0.1:46271; Vite dev server on 0.0.0.0:5199; container address 172.17.0.2
+
+## 1. status route
+{
+ "status": 200,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "configured": true
+ }
+}
+
+## 2. frames, first request (box 1)
+{
+ "status": 200,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "source": "Bee Maps",
+  "frames": "2 frames, first: {\"id\":\"ca3987660c663113\",\"lat\":60.0053,\"lon\":10.0103,\"timestamp\":\"2026-10-14T08:03:00.000Z\"}",
+  "count": 2,
+  "total": 4,
+  "truncated": true,
+  "cached": false,
+  "since": "2026-10-01",
+  "budget": {
+   "used": 1,
+   "limit": 3
+  },
+  "credits": {
+   "used": 2,
+   "remaining": 998,
+   "cost": 0.01
+  }
+ }
+}
+
+## 3. box of 6 km2 (refused before any spend)
+{
+ "status": 400,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "error": "area_too_large",
+  "maxKm2": 5
+ }
+}
+
+## 4. request from the address of the container (not loopback)
+{
+ "status": 403,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "error": "cross_origin"
+ }
+}
+
+## 5. loopback socket with a foreign Host header
+{
+ "status": 403,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "error": "cross_origin"
+ }
+}
+
+## 6. loopback socket with a foreign Origin
+{
+ "status": 403,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "error": "cross_origin"
+ }
+}
+
+## 7. GET on the frames route
+{
+ "status": 405,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "error": "Method not allowed"
+ }
+}
+
+## 8. second area (second upstream request)
+{
+ "status": 200,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "source": "Bee Maps",
+  "frames": "4 frames, first: {\"id\":\"ca3987660c663113\",\"lat\":60.0053,\"lon\":10.0103,\"timestamp\":\"2026-10-14T08:03:00.000Z\"}",
+  "count": 4,
+  "total": 4,
+  "truncated": false,
+  "cached": false,
+  "since": null,
+  "budget": {
+   "used": 2,
+   "limit": 3
+  },
+  "credits": {
+   "used": 2,
+   "remaining": 998,
+   "cost": 0.01
+  }
+ }
+}
+
+## 9. third area (third upstream request)
+{
+ "status": 200,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "source": "Bee Maps",
+  "frames": "4 frames, first: {\"id\":\"ca3987660c663113\",\"lat\":60.0053,\"lon\":10.0103,\"timestamp\":\"2026-10-14T08:03:00.000Z\"}",
+  "count": 4,
+  "total": 4,
+  "truncated": false,
+  "cached": false,
+  "since": null,
+  "budget": {
+   "used": 3,
+   "limit": 3
+  },
+  "credits": {
+   "used": 2,
+   "remaining": 998,
+   "cost": 0.01
+  }
+ }
+}
+
+## 10. fourth area (daily limit 3 is used)
+{
+ "status": 429,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "error": "budget",
+  "used": 3,
+  "limit": 3
+ }
+}
+
+## 11. first area again, with another limit (still in memory when the daily limit is used)
+{
+ "status": 200,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "source": "Bee Maps",
+  "frames": "3 frames, first: {\"id\":\"ca3987660c663113\",\"lat\":60.0053,\"lon\":10.0103,\"timestamp\":\"2026-10-14T08:03:00.000Z\"}",
+  "count": 3,
+  "total": 4,
+  "truncated": true,
+  "cached": true,
+  "since": "2026-10-01",
+  "budget": {
+   "used": 3,
+   "limit": 3
+  },
+  "credits": {
+   "used": 2,
+   "remaining": 998,
+   "cost": 0.01
+  }
+ }
+}
+
+## 12. status route from the address of the container
+{
+ "status": 200,
+ "content-type": "application/json; charset=utf-8",
+ "cache-control": "no-store",
+ "body": {
+  "configured": true
+ }
+}
+
+## budget file
+{"date":"2026-10-15","count":3}
+
+## what the fake upstream saw
+3 requests
+{"method":"POST","url":"/api/developer/latest/poly?catalog=true&min_week=2026-10-01","authorization":"Basic fixture-key-for-local-run","contentType":"application/json","body":{"type":"Polygon","positions":5,"firstPosition":[10,60]}}
+{"method":"POST","url":"/api/developer/latest/poly?catalog=true","authorization":"Basic fixture-key-for-local-run","contentType":"application/json","body":{"type":"Polygon","positions":5,"firstPosition":[10.1,60]}}
+{"method":"POST","url":"/api/developer/latest/poly?catalog=true","authorization":"Basic fixture-key-for-local-run","contentType":"application/json","body":{"type":"Polygon","positions":5,"firstPosition":[10.2,60]}}
+
+All URLs were /api/developer/latest/poly with catalog=true: true
+The key was only in the header Authorization: true

@@ -1,0 +1,53 @@
+Host checks of beemaps-source, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit 7ca52ba96453fac98733aa5bebc6cac3bcd39af5; later commits change evidence files, documents and trace files only.
+
+## node scripts/check-import-directions.mjs
+{"modules":986,"portableEntries":79}
+exit: 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 16 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit: 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 31 published, 0 new.
+exit: 0
+
+## node scripts/format.mjs --check
+Checked 1365 source files.
+exit: 0
+
+## node --test --experimental-test-coverage --test-skip-pattern='browser config of the build' (include server/providers/beemaps.js and server/providers/beemaps/*.js) src/data/beemaps*.test.mjs (on the host)
+exit: 0
+ℹ tests 117
+ℹ pass 117
+ℹ fail 0
+ℹ skipped 0
+ℹ   beemaps.js    | 100.00 |   100.00 |  100.00 | 
+ℹ    budget.js    | 100.00 |   100.00 |  100.00 | 
+ℹ    normalize.js | 100.00 |   100.00 |  100.00 | 
+ℹ    upstream.js  | 100.00 |   100.00 |  100.00 | 
+ℹ    validate.js  | 100.00 |   100.00 |  100.00 | 
+ℹ all files       | 100.00 |   100.00 |  100.00 | 
+
+## node scripts/spec/gates.mjs lint --change beemaps-source (on the documents of the commit 7ca52ba96453fac98733aa5bebc6cac3bcd39af5)
+STE: 0 errors, 772 warnings.
+
+## openspec validate beemaps-source (on the documents of the commit 7ca52ba96453fac98733aa5bebc6cac3bcd39af5)
+Change 'beemaps-source' is valid
+
+## node --test --test-reporter=spec src/data/beemaps*.test.mjs (in the image gods-eye-view:local, Node v24.21.0, the clone mounted with the node_modules of the image, commit 7ca52ba9)
+exit: 0
+✔ [beemaps-source-013] keeps the key out of the browser config of the build (974.346455ms)
+ℹ tests 118
+ℹ pass 118
+ℹ fail 0
+ℹ skipped 0
+
+## the same image, one fault in build/vite.js (the key added to define), test pattern 'browser config of the build'
+exit: 1
+✖ [beemaps-source-013] keeps the key out of the browser config of the build (1048.584158ms)
+ℹ tests 1
+ℹ pass 0
+ℹ fail 1
+The file build/vite.js of the scratch copy was restored, and docker ps afterwards listed only the two containers of the owner.

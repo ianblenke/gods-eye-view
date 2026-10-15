@@ -1,0 +1,13 @@
+Supplement to mutations.txt. It follows formal round 1, where the spec adversary named parts of the code without a named fault.
+
+Code commit: 26d6cffde7d77e479efa1fcf18dd0ca904d7e508. The files under server/ are the same as in the commit 7ca52ba9 of the main runs: the command git diff --stat 7ca52ba9 26d6cffd -- server prints nothing.
+Command of each fault: the same as in mutations.txt (3 scratch copies of the clone, host Node v26.8.2, the test of the browser config skipped).
+
+Result: 5 faults in each of two runs. 0 faults survived. The two runs give identical lines.
+
+Lines of the first run (scenario | fault | failing tests):
+beemaps-source-023 | Skip the end of the pattern of Retry-After | failing: [beemaps-source-023]
+beemaps-source-023 | Accept a decimal Retry-After | failing: [beemaps-source-023]
+beemaps-source-016 | Skip the end of the pattern of the daily limit | failing: [beemaps-source-016]
+beemaps-source-023 | Leave retryAfter out of the answer for 429 | failing: [beemaps-source-023], [beemaps-source-024]
+beemaps-source-023 | Add 1 to the value of the header Retry-After | failing: [beemaps-source-023], [beemaps-source-024]

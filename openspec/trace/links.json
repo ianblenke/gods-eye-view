@@ -11,6 +11,180 @@
   "app-container-004": [
     "src/tooling/appContainer.test.mjs › [app-container-004] the default compose file and the target up stay as they are"
   ],
+  "beemaps-source-001": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-001] mounts the routes status and frames, and the plugin name is beemaps-proxy",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-001] passes every other path to next and ignores a query on its own paths",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-001] puts the plugin once in the list of local provider plugins"
+  ],
+  "beemaps-source-002": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-002] says configured only for a key that is not empty after trim",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-002] uses the same-site gate and answers 405 to another method"
+  ],
+  "beemaps-source-003": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-003] answers 405 to a GET, a PUT and a DELETE and sends no request"
+  ],
+  "beemaps-source-004": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-004] passes a POST that keeps the five rules from each loopback address",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-004] refuses a POST that breaks one of the five rules and does not read the body"
+  ],
+  "beemaps-source-005": [
+    "src/data/beemapsInput.test.mjs › [beemaps-source-005] counts bytes and not characters, and counts all chunks",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-005] gives null when the request body fails while it is read",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-005] reads a body of exactly 8192 bytes and refuses a body of 8193 bytes",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-005] refuses a body that is not JSON, not an object or has an unknown field",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-005] answers 400 bad_body for a body of 8193 bytes and passes a body of 8192 bytes",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-005] answers 400 bad_body when the request body fails while the route reads it"
+  ],
+  "beemaps-source-006": [
+    "src/data/beemapsInput.test.mjs › [beemaps-source-006] builds the ring of a box with the longitude first",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-006] refuses a box that is not a list of four numbers",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-006] refuses a box with west not less than east or south not less than north",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-006] refuses a longitude outside -180 to 180 and a latitude outside -90 to 90"
+  ],
+  "beemaps-source-007": [
+    "src/data/beemapsInput.test.mjs › [beemaps-source-007] passes a closed ring of 4 to 101 positions on as it is",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-007] refuses a polygon that is not an object of type Polygon with one ring",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-007] refuses a position that is not two finite numbers in range",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-007] refuses a ring whose first and last positions differ",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-007] refuses a ring with fewer than 4 or more than 101 positions"
+  ],
+  "beemaps-source-008": [
+    "src/data/beemapsInput.test.mjs › [beemaps-source-008] needs exactly one of box and polygon"
+  ],
+  "beemaps-source-009": [
+    "src/data/beemapsInput.test.mjs › [beemaps-source-009] gives a ring the same verdict in both directions",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-009] gives the area of a box to six decimals with the radius 6371008.8 metres",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-009] measures the box on a sphere and refuses more than 5 km²",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-009] refuses a ring that crosses itself when its box is more than 5 km²",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-009] uses the width of the box at its latitude"
+  ],
+  "beemaps-source-010": [
+    "src/data/beemapsInput.test.mjs › [beemaps-source-010] accepts the dates from 2020-01-01 to today in UTC",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-010] reads a date and passes it on as the text",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-010] refuses a since that is not a text or not a real calendar date"
+  ],
+  "beemaps-source-011": [
+    "src/data/beemapsInput.test.mjs › [beemaps-source-011] reads a limit from 1 to 200 and defaults to 100",
+    "src/data/beemapsInput.test.mjs › [beemaps-source-011] refuses any other limit and a limit that is not a number"
+  ],
+  "beemaps-source-012": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-012] reads the key when the request comes and trims it",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-012] refuses a valid request without a key and sends no request"
+  ],
+  "beemaps-source-013": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-013] keeps the key out of every answer, header and console line",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-013] keeps the key out of the browser config of the build"
+  ],
+  "beemaps-source-014": [
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-014] adds min_week after the catalog option when it has a date",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-014] refuses a redirect and aborts the request after 20 seconds",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-014] sends one POST to the fixed URL with the catalog option and no date",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-014] sends the key only in the header Authorization and sets two more headers",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-014] sends the polygon as the JSON body with the longitude first"
+  ],
+  "beemaps-source-015": [
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-015] fails on a request to any other URL",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-015] holds no text burst in any letter case in the provider files",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-015] holds the one upstream URL once and no other URL in the provider files"
+  ],
+  "beemaps-source-016": [
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-016] adds 1 to the count of the day, writes the file and then answers",
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-016] refuses a count above the daily limit and does not add to it",
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-016] refuses the 21st call of a day with the default daily limit of 20",
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-016] takes the daily limit from digits only that are 1 or more",
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-016] waits for the write to end before it answers",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-016] keeps the budget file in .gev-cache/beemaps under the current folder by default",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-016] sends no request when the daily limit is used and answers 429 with the count",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-016] writes the budget file before it sends the request"
+  ],
+  "beemaps-source-017": [
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-017] continues from the count of today in the file",
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-017] refuses a file that is not valid JSON or has no date in the form YYYY-MM-DD and no count",
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-017] refuses when the file cannot be read for another reason and reads it again later",
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-017] refuses when the file cannot be written and writes again later",
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-017] starts again at 0 when the day changes while the plugin runs",
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-017] starts at 0 for a file with another date or for a file that is not there",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-017] answers 503 budget_unavailable and sends no request when the file is not valid or cannot be written"
+  ],
+  "beemaps-source-018": [
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-018] answers each request only after its own write ended",
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-018] lets 2 of 5 requests at the same time pass when the daily limit is 2",
+    "src/data/beemapsBudget.test.mjs › [beemaps-source-018] runs the writes one after the other and ends with the last count",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-018] sends 2 of 5 requests at the same time and answers 429 to the others when the daily limit is 2"
+  ],
+  "beemaps-source-019": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-019] answers a repeat from memory with the new limit and does not change the count",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-019] counts an answer that is stored again as the newest",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-019] holds at most 32 answers and drops the one that it stored first",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-019] keeps an error answer out of the memory",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-019] serves an answer that is 599.999 seconds old and not one that is 600 seconds old",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-019] shares an answer between a box and the same ring and keys it by the date"
+  ],
+  "beemaps-source-020": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-020] sends an error answer of the shared request to every request that waits",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-020] sends one request for each different area that is in flight",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-020] shares one upstream request between two requests for one area that arrive together"
+  ],
+  "beemaps-source-021": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-021] counts a request that gets its answer from memory",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-021] keeps one count for all loopback addresses and skips refused methods and origins",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-021] refuses the 7th request in 60 seconds and lets it pass at the 60th second"
+  ],
+  "beemaps-source-022": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-022] answers a memory hit during a hold and the hold before the budget",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-022] answers the input and the key before the memory and the memory before the hold and the budget",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-022] answers the method before the local request and the local request before the rate limit",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-022] answers the rate limit before the body and the body before the area"
+  ],
+  "beemaps-source-023": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-023] counts each failed call against the daily limit",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-023] gives 429 with retryAfter and the header Retry-After for an upstream 429",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-023] gives upstream_failed for a timeout and clears the timer",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-023] names the failure of the upstream and counts the call",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-023] gives bad_upstream for a body that is not JSON",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-023] gives upstream_failed for a thrown error and does not leak its text",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-023] gives upstream_failed for a timeout before the headers",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-023] gives upstream_failed for a timeout while it reads the body",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-023] gives upstream_failed for any other status that is not 2xx",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-023] names an upstream refusal of the key, the credit and the rate",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-023] reads a body of exactly 4194304 bytes and gives bad_upstream for one byte more",
+    "src/data/beemapsUpstream.test.mjs › [beemaps-source-023] reads retryAfter from digits only from 1 to 600 and gives 60 in all other cases"
+  ],
+  "beemaps-source-024": [
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-024] holds for 300 seconds after 401 and 403 and sends the next request at 300 seconds",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-024] holds for 600 seconds after 402",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-024] holds for the retryAfter seconds after 429 and gives the seconds that remain",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-024] sends the next request at once after a failure that has no hold"
+  ],
+  "beemaps-source-025": [
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-025] drops an item whose lat is not a finite number from -90 to 90",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-025] drops an item whose lon is not a finite number from -180 to 180",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-025] drops an item whose timestamp Date.parse does not read as a date",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-025] drops an item whose timestamp is not a text of the form YYYY-MM-DDTHH:MM:SS, then an optional fraction, then Z or +HH:MM or -HH:MM",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-025] drops an item with no position",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-025] drops the url, device, sensor and size fields from the answer",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-025] keeps the fields id, lat, lon and timestamp and gives the literal id of a frame",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-025] reads an offset and a fraction and writes the time with toISOString",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-025] rounds lat and lon to 6 decimals before it makes the id",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-025] writes the time with toISOString and reads other forms of a time text"
+  ],
+  "beemaps-source-026": [
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-026] drops a frame before 00:00:00 UTC of since and keeps one at that time",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-026] drops a frame with an id that an earlier frame already has",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-026] orders the newest first and the smaller id first for equal times"
+  ],
+  "beemaps-source-027": [
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-027] drops an item of the list that is not an object",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-027] reads the first 5000 items and reports more items",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-027] refuses a document that is not an object or whose frames is not a list"
+  ],
+  "beemaps-source-028": [
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-028] keeps the credits of the document in the result",
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-028] reads the credits as numbers of 0 or more and null in all other cases",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-028] gives the shape of the answer with the budget and the credits",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-028] sets the headers Content-Type and Cache-Control on each answer of the frames route",
+    "src/data/beemapsProxy.test.mjs › [beemaps-source-028] sets truncated when the total is above the limit or the list is above 5000 items"
+  ],
   "change-review-001": [
     "src/tooling/spec/review.test.mjs › [change-review-001] does not stop for a passed review with all the fields, the closed findings and the agent outputs"
   ],
