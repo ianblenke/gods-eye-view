@@ -54,7 +54,8 @@ Origin: spec-first
 - **WHEN** `getStatus` rejects, or gives `ok` false
 - **THEN** `update` returns false, and the info text is "The server did not answer."
 - **AND** the stats have `error` equal to the message of a rejection
-- **AND** they have `error` "The server did not answer." when the rejection has no message, or when the result is `ok` false
+- **AND** they have `error` "The server did not answer." when the rejection has no message
+- **AND** they have the same `error` when the result is `ok` false
 - **AND** the chip has `disabled` false
 
 ### Requirement: View box
@@ -80,7 +81,8 @@ Origin: spec-first
 - **WHEN** a person presses the chip in a view that cannot give a box
 - **THEN** no request is sent, and the info text names the reason
 - **AND** a view cannot give a box when its middle shows the sky, and then the centre given to `viewBox` is null
-- **AND** a centre with a value that is not a finite number, a canvas with no width or no height, and a pick that throws also give the reason sky
+- **AND** a centre with a value that is not a finite number also gives the reason sky
+- **AND** a canvas with no width or no height, and a pick that throws, also give the reason sky
 - **AND** it cannot give a box when the centre has a latitude above 80 or below -80
 - **AND** it cannot give a box when the box goes past longitude 180 or -180
 - **AND** when two reasons apply, the reason is the first of the sky, the latitude and the longitude
