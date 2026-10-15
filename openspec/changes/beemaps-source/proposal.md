@@ -2,15 +2,15 @@
 
 The app shows no fresh street-level imagery that contributors upload. Bee Maps (formerly Hivemapper) sells an API for it. The owner wants fresh frames on the map and, later, a way to ask for an area to be mapped again.
 
-This is change 1 of 4. It adds the read-only server provider. It holds no code that creates a Burst. A read costs money: each call uses credits, and an image view costs $0.005. The provider therefore limits every call.
+This is change 1 of 4. It adds the read-only server provider. It holds no code that creates a Burst. A query can cost money: the API description gives `creditsUsed` and `cost` in each answer, and an image view costs $0.005. The description does not say what a query with `catalog=true` uses. The provider therefore limits every call.
 
 ## What Changes
 
 - Add the plugin `beemapsProxy` in `server/providers/beemaps.js` and the folder `server/providers/beemaps/` with the files `validate.js`, `upstream.js`, `normalize.js` and `budget.js`. Add the plugin to `server/providers/local.js`.
-- Add the route `GET /api/beemaps/status`. It tells whether a key is set and how many upstream calls the day has used.
-- Add the route `POST /api/beemaps/frames`. It takes a box or a polygon of at most 5 km² and an optional date. It asks Bee Maps for the newest frames and returns only the id, the position and the time of each frame.
+- Add the route `GET /api/beemaps/status`. It tells whether a key is set.
+- Add the route `POST /api/beemaps/frames`. It takes a box or a polygon and an optional date. The box that holds the area is at most 5 km². The route asks Bee Maps for the newest frames and returns only the id, the position and the time of each frame.
 - Limit every call. The request must come from the machine that runs the server, and the key stays in the server. The daily limit is 20 upstream calls. An answer stays in memory for 10 minutes. A test pins one fixed upstream URL.
-- Keep signed image URLs out of every answer. Add the capability `beemaps-source` with 26 scenarios.
+- Keep signed image URLs out of every answer. Add the capability `beemaps-source` with 28 scenarios.
 - Add one entry to `CHANGELOG.md`, one paragraph to `DATA_SOURCES.md` and one block to `.env.example`.
 
 ## Capabilities
@@ -31,12 +31,16 @@ The tests use a fake fetch function. No test sends a request to Bee Maps, and th
 
 ## Known limits and later changes
 
-- Known limit `contract`: The request, the key header and the shape of the answer come from the public documents of Bee Maps. No call was made. The first real call can show a difference, and the owner can run that test by hand.
-- Known limit `catalog-cost`: The documents say that `catalog=true` returns no signed image URL. They do not say what a catalog call costs. The budget counts each call as one unit, not as dollars.
+- Known limit `contract`: The request, the key header and the shape of the answer come from the public API description, version 1.3.0. No call used a key. The first real call can show a difference, and the owner can run that test by hand.
+- Known limit `description-fetch`: The lead made one `GET` of the public API description, without a key, to read the field shapes. `evidence/api-description.txt` has its address, its date and its SHA-256.
+- Known limit `key-header`: The description names the header `Authorization` with the form "Basic" and the key, and the query parameter `apiKey`. The provider uses the header only, because a key in a URL can reach a log.
+- Known limit `catalog-cost`: The documents do not say what a query with `catalog=true` uses. The answer of the route shows the `credits` of the upstream answer, so the first real call can tell. The daily limit counts each call as one unit, not as dollars.
 - Known limit `key-scope`: No read-only key scope was found, so the key can also create Bursts. This change holds no Burst code, and a test pins the one upstream URL. A later change uses a separate key variable for Bursts.
 - Known limit `images`: This change returns no image and no signed URL. Change 2 adds the image route.
 - Known limit `licence`: The terms allow use in an app that you build, and they ban resale. They do not say whether other viewers can see the data. Use it for yourself only, and keep no copy on disk.
 - Known limit `week`: The upstream time filter works by week. The provider also cuts the frames by their exact time.
-- Known limit `spec-drift`: The live API description changed on 2026-10-13 without a new version. `evidence/openapi-hash.txt` has its hash and its date.
+- Known limit `box-area`: The provider measures the smallest box that holds the ring. A long, thin polygon with a small area can be refused, and a ring across the 180th meridian is refused as too large.
+- Known limit `ring-order`: The provider sends the ring as it got it. It does not turn a clockwise ring into a counter-clockwise ring, and it does not test a ring that crosses itself.
+- Known limit `status-gate`: The status route uses the same-site gate. A device on the LAN can read `configured` when the owner opens the LAN address.
 - Known limit `no-settings-panel`: The key goes in `.env` only. The Provider Settings panel has no entry for it.
 - Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.

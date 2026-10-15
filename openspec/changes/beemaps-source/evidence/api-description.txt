@@ -1,0 +1,22 @@
+Public API description of Bee Maps, read once for this change.
+
+Address: https://beemaps.com/api/developer/openapi.json
+Read at: 2026-10-15T04:48:40Z (UTC)
+Command: curl -sS -m 30 -o openapi-2026-10-15.json https://beemaps.com/api/developer/openapi.json
+Key used: none. The request was a GET of a public file, with no account and no key.
+HTTP status: 200
+Content type: application/json; charset=UTF-8
+Size: 87599 bytes
+Version in the file (info.version): 1.3.0
+SHA-256: 27896749f41457a2bf25cb3306d5357f523c4da8d0a20283d5a99d3e7d37eb6f
+
+Facts that the spec takes from this file:
+- The path /latest/poly takes a POST with a GeoJSON Polygon or MultiPolygon, and the query options min_week, headings, catalog and crossjoin.
+- The path says: "Max area: 5 sq km per request" and "Coordinates: [longitude, latitude] order".
+- The answer (APIResults) has frames, creditsUsed, creditsRemaining, cost and note.
+- An item of frames has url, timestamp (text, ISO form), sequence, idx, device, position (lat, lon and accuracy fields), width, height and imu.
+- The security scheme ApiKeyHeader is the header Authorization with the form "Basic" and the key. The scheme ApiKeyQuery is the query parameter apiKey.
+- The code sample of the path sends the header "authorization" with "Basic" and the key, and reads data.frames.
+- The file lists the responses 200, 400 and 403 for this path. It lists no 402 and no 429 for it.
+
+The file is not stored in the repository. The hash tells a later reader which version of the description this change used.

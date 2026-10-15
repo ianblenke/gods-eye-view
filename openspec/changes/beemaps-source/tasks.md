@@ -1,13 +1,12 @@
 ## 1. Write the tests
 
-- [ ] 1.1 Write the tests for `beemaps-source-001` and `beemaps-source-002` in `src/data/beemapsProxy.test.mjs`.
-- [ ] 1.2 Write the tests for `beemaps-source-003` and `beemaps-source-004` in the same file.
-- [ ] 1.3 Write the tests for `beemaps-source-005`, `beemaps-source-006`, `beemaps-source-007`, `beemaps-source-008`, `beemaps-source-009`, `beemaps-source-010`, `beemaps-source-011` in `src/data/beemapsInput.test.mjs`.
-- [ ] 1.4 Write the tests for `beemaps-source-012` and `beemaps-source-013` in `src/data/beemapsProxy.test.mjs`.
-- [ ] 1.5 Write the tests for `beemaps-source-014` and `beemaps-source-015` in `src/data/beemapsUpstream.test.mjs`.
-- [ ] 1.6 Write the tests for `beemaps-source-016`, `beemaps-source-017`, `beemaps-source-018`, `beemaps-source-019`, `beemaps-source-020` in `src/data/beemapsSpend.test.mjs`.
-- [ ] 1.7 Write the tests for `beemaps-source-021` and `beemaps-source-022` in `src/data/beemapsUpstream.test.mjs`.
-- [ ] 1.8 Write the tests for `beemaps-source-023`, `beemaps-source-024`, `beemaps-source-025`, `beemaps-source-026` in `src/data/beemapsFrames.test.mjs`.
+- [ ] 1.1 Write the tests for `beemaps-source-001`, `beemaps-source-002`, `beemaps-source-003` and `beemaps-source-004` in `src/data/beemapsProxy.test.mjs`.
+- [ ] 1.2 Write the tests for `beemaps-source-012` and `beemaps-source-013` in the same file.
+- [ ] 1.3 Write the tests for `beemaps-source-005`, `beemaps-source-006`, `beemaps-source-007`, `beemaps-source-008`, `beemaps-source-009`, `beemaps-source-010` and `beemaps-source-011` in `src/data/beemapsInput.test.mjs`.
+- [ ] 1.4 Write the tests for `beemaps-source-014` and `beemaps-source-015` in `src/data/beemapsUpstream.test.mjs`.
+- [ ] 1.5 Write the tests for `beemaps-source-023` and `beemaps-source-024` in the same file.
+- [ ] 1.6 Write the tests for `beemaps-source-016`, `beemaps-source-017`, `beemaps-source-018`, `beemaps-source-019`, `beemaps-source-020`, `beemaps-source-021` and `beemaps-source-022` in `src/data/beemapsSpend.test.mjs`.
+- [ ] 1.7 Write the tests for `beemaps-source-025`, `beemaps-source-026`, `beemaps-source-027` and `beemaps-source-028` in `src/data/beemapsFrames.test.mjs`.
 
 ## 2. Write the files
 
@@ -23,11 +22,11 @@
 ## 3. Check on the host
 
 - [ ] 3.1 Run the tests of the provider on the host.
-- [ ] 3.2 Write `evidence/openapi-hash.txt` with the hash and the date of the live API description.
+- [ ] 3.2 Write `evidence/api-description.txt` with the address, the date, the version and the SHA-256 of the public API description.
 - [ ] 3.3 Run the named faults of the provider.
 - [ ] 3.4 Write `evidence/mutations.txt` with the result of each fault.
-- [ ] 3.5 Run the real run of the provider against a local fake upstream.
-- [ ] 3.6 Write `evidence/real-run.txt` with the output of the real run.
+- [ ] 3.5 Run the provider against a local fake upstream.
+- [ ] 3.6 Write `evidence/local-run.txt` with the output of that run.
 - [ ] 3.7 Run the four checks of `make precheck` on the host.
 - [ ] 3.8 Read the exit status of each check.
 - [ ] 3.9 Run the STE lint on the host.
