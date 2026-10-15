@@ -32,7 +32,7 @@ The first attempt of run B was stopped and left no log. The survivors of the run
 - Run F was two runs of 1167 faults on the commit 74fe7431, before the formal review. Every fault that left the tests green was an equivalent fault.
 Round 1 of the formal review found gaps in the tests and the faults. Each gap got a test and a fault, and the runs of this file ran after the corrections:
 - Tests for the blocked line of busy, key_reused, the hold after an unknown outcome, budget_unavailable and ledger_unavailable. Nine faults answer at one site without a line.
-- Tests that use up the quote after created, 400, budget_used, log_failed, ledger_unavailable and budget_unavailable. Five faults give the quote back.
+- Tests that use up the quote after created, 400, budget_used, log_failed, budget_unavailable and a failed write of the pending record. Five faults give the quote back.
 - Faults for the leak paths of scenario 032: the key in an answer, a header, a record, a line and the console. Others copy the text of a failed call, the body of a refusal and fields of Bee Maps.
 - A test for the hold after an unknown outcome before the check of the quote, and faults for the order of three steps.
 - Text corrections: the hold rule applies to a new key, the refusal sources apply to the create call, and two Known limits were added. The wording of the STE review was corrected.

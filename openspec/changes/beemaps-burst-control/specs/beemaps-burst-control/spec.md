@@ -1,8 +1,5 @@
-# beemaps-burst-control Specification
+## ADDED Requirements
 
-## Purpose
-Create a Bee Maps burst only after a person confirms a quote. Count the credits before the send, send once, and write each attempt to a log that survives a restart.
-## Requirements
 ### Requirement: Provider routes
 The plugin MUST answer only `/api/beemaps/burst/status`, `/api/beemaps/burst/quote`, `/api/beemaps/burst/confirm` and `/api/beemaps/burst/list`. It MUST pass every other path to the next middleware.
 Origin: spec-first
@@ -134,8 +131,10 @@ Origin: spec-first
 - **AND** a used quote gives `quote_expired` at the next confirm with another idempotency key, when no hold answers first
 - **AND** an id that was never given gives the same answer, when no hold answers first
 - **AND** a confirm uses up its quote at the quote step, for every outcome after that step
-- **AND** the same quote with a new idempotency key gets `quote_expired` after a created burst, a refusal 400, budget_used, log_failed, ledger_unavailable and budget_unavailable
-- **AND** after a refusal 401, 402, 403 or 429, or an unknown outcome, that confirm gets the hold of scenario 029 or 040
+- **AND** the same quote with a new idempotency key gets `quote_expired` after a created burst, a refusal 400, budget_used or log_failed
+- **AND** it also gets `quote_expired` after budget_unavailable and after a failed write of the "pending" record
+- **AND** a hold can start after a refusal 401, 402, 403 or 429, or after an unknown outcome
+- **AND** while that hold lasts, a confirm of the same quote with a new idempotency key gets the hold of scenario 029 or 040
 - **AND** the plugin keeps at most 8 quotes, so the ninth quote ends the oldest one
 
 #### Scenario: Refuse a quote that the budget cannot pay `beemaps-burst-control-014`
@@ -255,7 +254,8 @@ Origin: spec-first
 - **WHEN** a test sends an idempotency key that has a record, with a `quoteId` other than the one of the record
 - **THEN** the answer is 409 with `{error:'key_reused'}`
 - **AND** the fake upstream gets no request, and the budget does not change
-- **AND** the check of the idempotency key comes before the check of the quote, so a repeat works after the quote has expired
+- **AND** the check of the idempotency key comes before the check of the quote
+- **AND** so a confirm with the key and the quoteId of the record works after the quote has expired
 
 #### Scenario: Keep the record on disk `beemaps-burst-control-028`
 - **WHEN** a test confirms a quote and reads the file `ledger.json` in the folder `beemaps-burst`
@@ -271,7 +271,8 @@ Origin: spec-first
 - **AND** when the write of the record after the send fails, the answer is still the outcome of the send
 - **AND** the file then keeps the state "pending"
 - **AND** a new plugin treats that key as an unknown outcome
-- **AND** in that new plugin, a repeat of that key gets scenario 026, and a new idempotency key gets the hold of scenario 040
+- **AND** in that new plugin, a confirm with that key and its quoteId gets scenario 026
+- **AND** in that new plugin, a new idempotency key gets the hold of scenario 040
 
 #### Scenario: Refuse when the ledger fails `beemaps-burst-control-039`
 - **WHEN** the file `ledger.json` cannot be read, is not valid JSON, or contains a record that is not valid
@@ -403,4 +404,3 @@ Origin: spec-first
 - **AND** no file contains the text "latest/poly", "/api/beemaps/frames" or "BEEMAPS_API_KEY"
 - **AND** no file in `src/voice`, `src/tools` or `server/mcp` contains the text "beemaps/burst"
 - **AND** no file of the plugin is a file of the frames provider, which are `server/providers/beemaps.js` and the files in `server/providers/beemaps/`
-

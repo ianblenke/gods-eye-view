@@ -10,7 +10,7 @@ The create call of Bee Maps is `POST https://beemaps.com/api/developer/burst/cre
 **Goals:**
 - Spend money only when four things are true. The flag is exactly "true". A key of its own is set. The request comes from this machine. A person confirmed a quote.
 - Exactly one create request for one confirmed quote. No retry. No second request while one runs.
-- A durable budget, a durable record for each key, and an audit line before each send.
+- A durable budget, a durable record for each idempotency key, and an audit line before each send.
 - A clear answer when the outcome is not known.
 
 **Non-goals:**
@@ -26,11 +26,11 @@ The scan test of change 1 reads `server/providers/beemaps.js` and every file in 
 
 ### D2: A quote, then a confirm
 
-A quote checks a box and a credit amount, keeps a single-use id for 120 seconds and spends nothing. A confirm names the quote and an idempotency key. The confirm checks the flag, the key, the hold and the budget again, because a quote says nothing about the state at confirm time.
+A quote checks a box and a credit amount, keeps a single-use id for 120 seconds and spends nothing. A confirm names the quote and an idempotency key. The confirm checks the flag, the API key, the hold and the budget again, because a quote says nothing about the state at confirm time.
 
 ### D3: The order of the steps of a confirm
 
-The steps run in this order, and the first step that refuses ends the confirm. The steps are: method, local request, rate limit, flag, API key, body, busy and idempotency key. Then come hold, quote, budget, audit line, record of the attempt and upstream request. A test checks each pair of neighbours in the first 11 steps.
+The steps run in this order, and the first step that refuses ends the confirm. The steps are: method, local request, rate limit, flag, API key, body, busy and idempotency key. The next steps are hold, quote, budget, audit line, record of the attempt and upstream request. A test checks each pair of neighbours in the first 11 steps.
 
 ### D4: One confirm at a time
 
@@ -50,7 +50,7 @@ The audit line "accepted" and the record "pending" are written, and the writes e
 
 ### D8: A hold after an unknown outcome
 
-An unknown outcome blocks only its own key, so a new quote and a new idempotency key could send again at once. The plugin refuses every confirm with a new idempotency key for 600 seconds after a record with the state "unknown" or "pending". The hold comes from the time in the ledger file, so a restart does not end it. A quote is gone after the quote step for every outcome, so the same quote with a new key cannot send.
+An unknown outcome blocks only its own idempotency key, so a new quote and a new idempotency key could send again at once. The plugin refuses every confirm with a new idempotency key for 600 seconds after a record with the state "unknown" or "pending". The hold comes from the time in the ledger file, so a restart does not end it. A confirm uses up its quote at the quote step, so the same quote with a new idempotency key cannot send.
 
 ### D9: Answers have only listed fields
 
