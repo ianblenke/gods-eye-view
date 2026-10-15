@@ -1,5 +1,7 @@
 # Changelog
 
+- The OSH control route `/api/control/osh/commands` now answers only the machine that runs the server (2026-10-14). Before this change, a device on the same network that opened the app by its LAN address passed the origin check and could send a drone command when `OSH_CONTROL_ENABLED` was on. The route now refuses a POST unless the socket address is loopback, the host is `localhost`, `127.0.0.1` or `[::1]`, and no proxy header is present. A browser that opens the app by a LAN address or a `.local` name gets `403`. With `make up` (a bridge network) the server sees the Docker gateway address, so use `make up-codex` for control commands.
+
 - Add the layer "Reticulum Network" (2026-10-13). It shows, as points on the globe, the interfaces that Reticulum operators publish on purpose. The color shows the type, and the size and the alpha show the status. A label shows the name of up to 48 interfaces. The layer reads the route `/api/reticulum`, so it needs the listener of `make up-reticulum`. It is in the group Infrastructure, its share token is `4`, and it is not in voice.
 
 - Add the Reticulum listener container (2026-10-13). `make up-reticulum` runs a node that only listens, hears the discoverable interfaces and serves 12 fields of each one to the app. It publishes no port. `make up-codex-reticulum` does the same for the app with the host network. The node connects out to public nodes, and their operators see your IP address. See `docs/fork/reticulum-docker.md`.

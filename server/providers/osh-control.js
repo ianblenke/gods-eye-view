@@ -10,33 +10,13 @@ import { oshPostCommand } from './osh-control/post.js';
 import { oshCommandUrl, assertCommandUrl } from './osh-control/url.js';
 import { validateCommand } from './osh-control/commands.js';
 import { createOshBase } from './osh/base.js';
+import { isLoopbackCommand } from './common/loopback-command.js';
 import { runLoggedCommand } from './osh-control/log.js';
 import { randomUUID } from 'node:crypto';
-import { isIP } from 'node:net';
 import { OSH_ID_PATTERN } from './osh/ids.js';
 
 export function isSameOriginCommand(req) {
-  if (req.headers['content-type'] !== 'application/json') return false;
-  const host = req.headers.host;
-  const origin = req.headers.origin;
-  if (typeof host !== 'string' || typeof origin !== 'string') return false;
-  let parsed;
-  try {
-    parsed = new URL(`http://${host}`);
-  } catch {
-    return false;
-  }
-  if (
-    parsed.host !== host.toLowerCase() ||
-    parsed.pathname !== '/' ||
-    parsed.username ||
-    parsed.password
-  )
-    return false;
-  const name = parsed.hostname.replace(/^\[|\]$/g, '').toLowerCase();
-  if (name !== 'localhost' && !name.endsWith('.local') && !isIP(name))
-    return false;
-  return origin === `${req.socket?.encrypted ? 'https' : 'http'}://${host}`;
+  return isLoopbackCommand(req);
 }
 
 export function createCommandGate() {
