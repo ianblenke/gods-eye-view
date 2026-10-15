@@ -19,8 +19,10 @@
 - [x] 3.2 Run the tests of the route on the host.
 - [x] 3.3 Run the named faults of the gate.
 - [x] 3.4 Write `evidence/mutations.txt` with the result of each fault.
-- [x] 3.5 Run the four checks of `make precheck` on the host and read each exit status.
-- [x] 3.6 Run the STE lint and `openspec validate osh-control-loopback`.
+- [x] 3.5 Run the four checks of `make precheck` on the host.
+- [x] 3.6 Read the exit status of each check.
+- [x] 3.7 Run the STE lint on the host.
+- [x] 3.8 Run `openspec validate osh-control-loopback` on the host.
 
 ## 4. Lead work in the image
 

@@ -5,7 +5,7 @@ The function `isSameOriginCommand` in `server/providers/osh-control.js` checks t
 The route calls it first, before the flag and the account checks. It writes one audit line for each refusal.
 
 The route for the key panel (`admitKeySetupRequest` in `src/keySetupCore.mjs`) has stricter rules. It needs a loopback socket, a local host name, an exact origin and no proxy header.
-`compose.codex.yaml` runs the app on the host network. `compose.yaml` publishes the port through a bridge network. Both set `HOST` to `0.0.0.0`, so the server listens on every interface.
+`compose.codex.yaml` runs the app on the host network. `compose.yaml` publishes the port through the bridge network of its project. `compose.yaml` sets `HOST` to `0.0.0.0`, and the override keeps it, so the server listens on every interface.
 
 ## Goals / Non-Goals
 
@@ -16,7 +16,7 @@ The route for the key panel (`admitKeySetupRequest` in `src/keySetupCore.mjs`) h
 **Non-Goals:**
 - The GET route `/api/control/osh/targets`. It sends no command.
 - The routes that spend money for OpenAI or Google. They have their own gate in `src/localRequestGate.mjs`.
-- A setting that lets a LAN address pass on purpose.
+- An option that lets a LAN address pass.
 
 ## Decisions
 
@@ -29,11 +29,13 @@ Alternative: change the function in place. The Bee Maps route of a later change 
 
 The function checks the content type, the proxy headers, the socket address, the host and the origin, in that order. Each check returns false at once.
 The socket addresses are `127.0.0.1`, `::1` and `::ffff:127.0.0.1`. The host names are `localhost`, `127.0.0.1` and `[::1]`. These are the lists of the key panel.
+
+The host is compared as the client sent it, so a Host in capital letters is refused. A browser sends the host in lower case.
 The function `hasProxySignals` of `src/localRequestGate.mjs` names the proxy headers, so that list has one owner.
 
 ### D3: The answer does not change
 
-Each refusal gives `403` with `{error:'cross_origin'}`, as before. The browser code and the audit log see no new error name. The client key of the audit line is the socket address, so a LAN device shows up in the log.
+Each refusal gives `403` with `{error:'cross_origin'}`, as before. The browser code and the audit log see no new error name. The audit line names the socket address as the client, or `local` when the socket has none. So a LAN device appears in the log.
 
 ### D4: Tests
 
@@ -41,8 +43,8 @@ The tests build a request object with a fake socket. They open no port. The rout
 
 ### D5: The bridge mode
 
-With `make up` the server sees the Docker gateway address `172.17.0.1` for a request from this machine. `evidence/peer-address.txt` has the measurement. The function refuses that address.
-Alternative: accept the gateway address. The address is a setting of Docker, and it changes between hosts. The check could not tell a program on this machine from another container on the bridge.
+With `make up` the server sees the gateway address of the project network for a request from this machine, not the loopback address. `evidence/peer-address.txt` has the measurements. The function refuses that address.
+Alternative: accept the gateway address. Docker sets the address, and it changes between hosts. The check cannot find the difference between a program on this machine and another container on the bridge.
 
 ## Risks / Trade-offs
 

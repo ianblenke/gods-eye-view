@@ -2,7 +2,7 @@
 
 The route `/api/control/osh` sends commands to drones through the server. Its origin check accepts a request when the host is `localhost`, any IP address or a `.local` name, and the origin equals the host.
 
-The server listens on all interfaces. A device on the same network that opens the app by its LAN address passes the check. That device can then send a command when `OSH_CONTROL_ENABLED` is on. The route for the key panel already refuses such a request, because it needs a loopback socket and a local host name.
+The server listens on all interfaces. A device on the same network that opens the app by its LAN address passes the check. That device can then send a command when `OSH_CONTROL_ENABLED` is on and a control account is set. The route for the key panel already refuses such a request, because it needs a loopback socket and a local host name.
 
 ## What Changes
 
@@ -25,15 +25,15 @@ None.
 
 ## Impact
 
-The new file is shared code. The Bee Maps submission route of a later change reuses `isLoopbackCommand`, so one gate serves each route that sends a request to an outside system.
-With `make up-codex` the commands from a browser on the machine that runs the server keep working. The plain `make up` publishes the port through a bridge network. The server then sees the Docker gateway address and refuses every command.
+The new file is shared code. The Bee Maps submission route of a later change reuses `isLoopbackCommand`, so the OSH control route and the Bee Maps route share one function.
+With `make up-codex` a browser on the machine that runs the server can still send commands. The plain `make up` publishes the port through a bridge network. The server then sees the gateway address of that network and refuses every command.
 
 The new file is a file that the fork writes, so it goes into `openspec/ownership.json` and `scripts/format-scope.json`. The check of the package boundaries needs the new file and the file `src/localRequestGate.mjs` in the package `osh-control-provider`.
 
 ## Known limits and later changes
 
 - Known limit `reads`: The route `/api/control/osh/targets` (GET) has no origin check. It reads the command names of one system and sends no command. This change does not touch it.
-- Known limit `bridge`: With `make up` a request from this machine reaches the server with the Docker gateway address. The route refuses it. Use `make up-codex`, or run the server on the host. `evidence/peer-address.txt` has the measurement.
+- Known limit `bridge`: With `make up` a request from this machine reaches the server with the gateway address of the project network. The route refuses it. Use `make up-codex`, or run the server on the host. `evidence/peer-address.txt` has the measurement.
 - Known limit `local-programs`: Any program on the machine that runs the server passes the check, because the check cannot tell programs apart.
 - Known limit `proxy`: A proxy that removes its own headers and connects from the loopback address passes the check.
 - Known limit `scripts-as-text`: The files in `evidence/` that hold scripts hold them as text. No gate measures them.

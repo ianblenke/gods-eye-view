@@ -302,7 +302,7 @@ test('[osh-control-028] Accept loopback hosts when the origin equals the host', 
 });
 
 test('[osh-control-028] Refuse a host that is not a loopback host', () => {
-  for (const host of ['drone.local:5173', '192.168.51.192:5173', '10.0.0.5:5173', '127.0.0.2:5173', '127.0.0.1.evil.invalid:5173', '[fe80::1]:5173', '[::ffff:127.0.0.1]:5173', 'localhost.evil.invalid:5173', 'sub.localhost:5173']) assert.equal(isSameOriginCommand(post({ host, origin: `http://${host}` })), false, host);
+  for (const host of ['drone.local:5173', '192.168.51.192:5173', '10.0.0.5:5173', '127.0.0.2:5173', '127.0.0.1.evil.invalid:5173', '[fe80::1]:5173', '[::ffff:127.0.0.1]:5173', 'localhost.evil.invalid:5173', 'sub.localhost:5173', 'LOCALHOST:5173']) assert.equal(isSameOriginCommand(post({ host, origin: `http://${host}` })), false, host);
 });
 
 test('[osh-control-028] Refuse an origin that only starts like the host', () => {
