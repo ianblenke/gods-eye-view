@@ -169,6 +169,7 @@ test('[beemaps-source-023] reads retryAfter from digits only from 1 to 600 and g
     ['0', 60],
     ['00', 60],
     ['-5', 60],
+    ['+30', 60],
     ['5.5', 60],
     ['5x', 60],
     ['', 60],

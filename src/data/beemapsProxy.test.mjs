@@ -459,16 +459,16 @@ test('[beemaps-source-019] shares an answer between a box and the same ring and 
   );
 });
 
-test('[beemaps-source-019] serves an answer that is 599 seconds old and not one that is 600 seconds old', async (t) => {
+test('[beemaps-source-019] serves an answer that is 599.999 seconds old and not one that is 600 seconds old', async (t) => {
   const server = await install(t);
   await server.frames({ bbox: BOX });
-  server.advance(599_000);
+  server.advance(599_999);
   assert.equal((await server.frames({ bbox: BOX })).body.cached, true);
-  server.advance(1_000);
+  server.advance(1);
   const late = await server.frames({ bbox: BOX });
   assert.equal(late.body.cached, false);
   assert.equal(server.calls.length, 2);
-  server.advance(599_000);
+  server.advance(599_999);
   assert.equal((await server.frames({ bbox: BOX })).body.cached, true);
 });
 
@@ -498,15 +498,22 @@ test('[beemaps-source-019] counts an answer that is stored again as the newest',
     if (sent++ % 5 === 0) server.advance(61_000);
     return server.frames({ bbox: boxAt(n) });
   };
-  assert.equal((await send(0)).body.cached, false);
+  const oldest = 0;
+  const second = 1;
+  const middle = 2;
+  assert.equal((await send(oldest)).body.cached, false);
+  assert.equal((await send(second)).body.cached, false);
   server.advance(590_000);
-  for (let n = 1; n < 32; n++) assert.equal((await send(n)).body.cached, false);
-  assert.equal((await send(0)).body.cached, false);
-  assert.equal(server.calls.length, 33);
+  assert.equal((await send(middle)).body.cached, false);
+  server.advance(15_000);
+  assert.equal((await send(second)).body.cached, false);
+  for (let n = 3; n < 32; n++) assert.equal((await send(n)).body.cached, false);
   assert.equal((await send(32)).body.cached, false);
-  assert.equal((await send(0)).body.cached, true);
-  assert.equal((await send(1)).body.cached, false);
+  assert.equal((await send(33)).body.cached, false);
   assert.equal(server.calls.length, 35);
+  assert.equal((await send(second)).body.cached, true);
+  assert.equal((await send(middle)).body.cached, false);
+  assert.equal(server.calls.length, 36);
 });
 
 test('[beemaps-source-019] keeps an error answer out of the memory', async (t) => {
@@ -591,13 +598,13 @@ test('[beemaps-source-021] refuses the 7th request in 60 seconds and lets it pas
     const result = await server.frames('not json');
     assert.equal(result.status, 400);
   }
-  server.advance(59_000);
+  server.advance(59_999);
   const refused = await server.frames('not json');
   assert.equal(refused.status, 429);
   assert.deepEqual(refused.body, { error: 'rate_limited' });
   assert.equal(refused.headers['retry-after'], '60');
   assert.equal(refused.read, false);
-  server.advance(1_000);
+  server.advance(1);
   assert.equal((await server.frames('not json')).status, 400);
 });
 
@@ -786,13 +793,13 @@ test('[beemaps-source-024] holds for 300 seconds after 401 and 403 and sends the
       respond: (url, init, call) => (call === 1 ? failure(code) : ok()),
     });
     assert.equal((await server.frames({ bbox: BOX })).status, 403);
-    server.advance(299_000);
+    server.advance(299_999);
     const held = await server.frames({ bbox: boxAt(1) });
     assert.equal(held.status, 403, String(code));
     assert.deepEqual(held.body, { error: 'key_rejected', keyRejected: true });
     assert.equal(server.calls.length, 1);
     assert.deepEqual(await server.budget(), { date: '2026-10-15', count: 1 });
-    server.advance(1_000);
+    server.advance(1);
     const next = await server.frames({ bbox: boxAt(1) });
     assert.equal(next.status, 200);
     assert.equal(server.calls.length, 2);
@@ -805,12 +812,12 @@ test('[beemaps-source-024] holds for 600 seconds after 402', async (t) => {
     respond: (url, init, call) => (call === 1 ? failure(402) : ok()),
   });
   assert.equal((await server.frames({ bbox: BOX })).status, 402);
-  server.advance(599_000);
+  server.advance(599_999);
   const held = await server.frames({ bbox: boxAt(1) });
   assert.equal(held.status, 402);
   assert.deepEqual(held.body, { error: 'no_credit' });
   assert.equal(server.calls.length, 1);
-  server.advance(1_000);
+  server.advance(1);
   assert.equal((await server.frames({ bbox: boxAt(1) })).status, 200);
   assert.equal(server.calls.length, 2);
 });
@@ -830,7 +837,7 @@ test('[beemaps-source-024] holds for the retryAfter seconds after 429 and counts
   assert.equal(ten.status, 429);
   assert.deepEqual(ten.body, { error: 'upstream_rate_limit', retryAfter: 20 });
   assert.equal(ten.headers['retry-after'], '20');
-  server.advance(500);
+  server.advance(600);
   const rounded = await server.frames({ bbox: boxAt(1) });
   assert.equal(rounded.body.retryAfter, 20);
   assert.equal(rounded.headers['retry-after'], '20');
@@ -998,6 +1005,16 @@ test('[beemaps-source-028] sets truncated when the total is above the limit or t
     (await exact.frames({ bbox: BOX, limit: 200 })).body.truncated,
     false,
   );
+  const same = (count) =>
+    ok({ frames: Array.from({ length: count }, () => frame(0)) });
+  const repeated = await install(t, { respond: () => same(5001) });
+  const cut = await repeated.frames({ bbox: BOX, limit: 200 });
+  assert.equal(cut.body.total, 1);
+  assert.equal(cut.body.truncated, true);
+  const fewer = await install(t, { respond: () => same(5000) });
+  const whole = await fewer.frames({ bbox: BOX, limit: 200 });
+  assert.equal(whole.body.total, 1);
+  assert.equal(whole.body.truncated, false);
   const over = await install(t, { respond: () => ok(document(5001)) });
   const result = await over.frames({ bbox: BOX, limit: 200 });
   assert.equal(result.body.total, 5000);

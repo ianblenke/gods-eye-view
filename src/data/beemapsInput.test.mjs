@@ -174,6 +174,10 @@ test('[beemaps-source-007] refuses a ring with fewer than 4 or more than 101 pos
   refused(send({ polygon: polygon(ringOf(103)) }), 'bad_area');
   refused(send({ polygon: polygon(triangle.slice(0, 3)) }), 'bad_area');
   refused(
+    send({ polygon: polygon([triangle[0], triangle[1], triangle[0]]) }),
+    'bad_area',
+  );
+  refused(
     send({
       polygon: polygon([
         [10, 60],
@@ -197,6 +201,7 @@ test('[beemaps-source-007] refuses a polygon that is not an object of type Polyg
     refused(send({ polygon: value }), 'bad_area');
   const others = [
     { type: 'MultiPolygon', coordinates: [[triangle]] },
+    { type: 'MultiPolygon', coordinates: [triangle] },
     { type: 'polygon', coordinates: [triangle] },
     { coordinates: [triangle] },
     { type: 'Polygon' },

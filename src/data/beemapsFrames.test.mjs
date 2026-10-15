@@ -130,10 +130,11 @@ test('[beemaps-source-025] drops an item whose timestamp is not a text in ISO fo
     '2026-10-01T12:00:00+0200',
     'Oct 1 2026 12:00:00 GMT',
   ]) {
-    const result = normalize([item({ timestamp }), item()]);
+    const other = { lat: 3, lon: 4 };
+    const result = normalize([item({ timestamp, position: other }), item()]);
     assert.deepEqual(result.frames, [A], String(timestamp));
   }
-  const missing = item();
+  const missing = item({ position: { lat: 3, lon: 4 } });
   delete missing.timestamp;
   assert.deepEqual(normalize([missing, item()]).frames, [A]);
 });

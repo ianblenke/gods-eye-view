@@ -106,6 +106,7 @@ test('[beemaps-source-016] takes the daily limit from digits only that are 1 or 
     ['20abc', 20],
     ['1e3', 20],
     ['-5', 20],
+    ['+5', 20],
     [' 5', 20],
     ['5 ', 20],
     ['0', 20],
