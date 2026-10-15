@@ -88,7 +88,7 @@ The Reticulum software has its own licence. The licence forbids use in any syste
 
 ### Bee Maps street-level frames (key in `.env`)
 
-Bee Maps (formerly Hivemapper) sells an API for street-level imagery that contributors upload with dashcams. The route `/api/beemaps/frames` asks it for the newest frames inside one box or one polygon. The box that holds the area is at most 5 km².
+Bee Maps (formerly Hivemapper) sells an API for street-level imagery that contributors upload with dashcams. The route `/api/beemaps/frames` asks it for the newest frames inside one box or one polygon. The smallest box that holds it is at most 5 km².
 
 The route answers only the machine that runs the server, because a request can cost money. It sends one kind of request, with `catalog=true`, to one fixed address. It keeps the key in the server. It returns only `id`, `lat`, `lon` and `timestamp` for each frame, and the answer shows the `credits` that Bee Maps reports.
 
