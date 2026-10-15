@@ -51,6 +51,7 @@ Origin: spec-first
 - **AND** a call of `onClick` while the chip is disabled sends no request
 - **AND** when `configured` is true, the chip has `disabled` false
 - **AND** then the info text is the hint of the readout
+- **AND** a good answer of `getFrames` that arrives after a status with no key keeps the text for no key
 
 #### Scenario: Report a status that fails `beemaps-frames-007`
 - **WHEN** `getStatus` rejects, or gives `ok` false

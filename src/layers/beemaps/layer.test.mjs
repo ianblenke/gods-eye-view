@@ -302,6 +302,27 @@ test('[beemaps-frames-007] shows that the server did not give the status, and ke
   }
 });
 
+test('[beemaps-frames-006] keeps the text for no key when a good answer arrives after a status with no key', async () => {
+  const wait = deferred();
+  let configured = true;
+  const h = harness({
+    status: async () => ({ ok: true, configured }),
+    frames: () => wait.promise,
+  });
+  await h.ready();
+  const pressed = h.chip().onClick();
+  await tick();
+  configured = false;
+  await h.layer.update();
+  wait.resolve({ ok: true, answer: THREE });
+  await pressed;
+  assert.equal(h.chip().disabled, true);
+  assert.equal(
+    h.info(),
+    'No Bee Maps key. Set BEEMAPS_API_KEY in .env and restart the app. · 3 frames · newest 2026-10-15 · requests today 3 of 20 · credits left 998',
+  );
+});
+
 test('[beemaps-frames-007] removes the text and the error of a failed status after a good status', async () => {
   let fail = true;
   const h = harness({
