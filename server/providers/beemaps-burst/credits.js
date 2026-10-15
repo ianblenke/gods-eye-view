@@ -59,7 +59,6 @@ export function createCredits({ dir, limit, now, fs = fsp }) {
     try {
       await ready();
     } catch {
-      state = null;
       return { ok: false, reason: 'unavailable' };
     }
     return { ok: true, used: state.credits, limit: limitNow() };
@@ -70,7 +69,6 @@ export function createCredits({ dir, limit, now, fs = fsp }) {
     try {
       await ready();
     } catch {
-      state = null;
       return { ok: false, reason: 'unavailable' };
     }
     const daily = limitNow();

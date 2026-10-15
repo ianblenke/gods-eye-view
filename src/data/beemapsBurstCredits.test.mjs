@@ -153,6 +153,66 @@ test('[beemaps-burst-control-022] refuses a reserve that is larger than the cred
   });
 });
 
+test('[beemaps-burst-control-021] starts at 0 credits for a file with another date', async () => {
+  for (const date of ['2026-10-14', '2026-10-16', '2025-10-15']) {
+    const fs = fakeFs({ [FILE]: JSON.stringify({ date, credits: 500 }) });
+    const { credits } = make(fs);
+    assert.deepEqual(
+      await credits.peek(),
+      { ok: true, used: 0, limit: 625 },
+      date,
+    );
+    assert.deepEqual(await credits.reserve(125), {
+      ok: true,
+      used: 125,
+      limit: 625,
+    });
+    assert.deepEqual(saved(fs), { date: '2026-10-15', credits: 125 });
+  }
+});
+
+test('[beemaps-burst-control-023] reads a file of today with 0 credits', async () => {
+  const fs = fakeFs({
+    [FILE]: JSON.stringify({ date: '2026-10-15', credits: 0 }),
+  });
+  assert.deepEqual(await make(fs).credits.reserve(125), {
+    ok: true,
+    used: 125,
+    limit: 625,
+  });
+});
+
+test('[beemaps-burst-control-022] runs the writes one after the other and ends with the last count', async () => {
+  let running = 0;
+  let overlap = 0;
+  const delays = [30, 5, 15];
+  const fs = fakeFs(
+    {},
+    {
+      writeFile: async (file, text) => {
+        running += 1;
+        overlap = Math.max(overlap, running);
+        await new Promise((resolve) =>
+          setTimeout(resolve, delays[JSON.parse(text).credits / 125 - 1]),
+        );
+        running -= 1;
+      },
+    },
+  );
+  const { credits } = make(fs, 625);
+  const results = await Promise.all([
+    credits.reserve(125),
+    credits.reserve(125),
+    credits.reserve(125),
+  ]);
+  assert.deepEqual(
+    results.map((result) => result.used),
+    [125, 250, 375],
+  );
+  assert.equal(overlap, 1);
+  assert.deepEqual(saved(fs), { date: '2026-10-15', credits: 375 });
+});
+
 test('[beemaps-burst-control-022] serializes the writes of reserves that start together and reads the file once', async () => {
   const fs = fakeFs(
     {},
@@ -219,6 +279,8 @@ test('[beemaps-burst-control-023] gives unavailable for a file without a valid d
     '{"date":"2026-10-1","credits":5}',
     '{"date":"20261015","credits":5}',
     '{"date":"2026-10-15T00:00:00Z","credits":5}',
+    '{"date":"x2026-10-15","credits":5}',
+    '{"date":"2026-10-15x","credits":5}',
     '{"date":"2026-10-15","credits":-1}',
     '{"date":"2026-10-15","credits":1.5}',
     '{"date":"2026-10-15","credits":"5"}',

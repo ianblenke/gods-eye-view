@@ -21,7 +21,6 @@ export function createQuotes({ now, randomBytes = nodeRandomBytes }) {
 
   /** Keep a copy of the request and give the id of the quote. */
   function add(request) {
-    prune();
     while (store.size >= MAX_QUOTES) store.delete(store.keys().next().value);
     const quoteId = randomBytes(16).toString('hex');
     store.set(quoteId, {
