@@ -242,6 +242,44 @@ test('[beemaps-frames-013] gives the status 0 and the error unreachable for a re
   assert.deepEqual(cleared, [1]);
 });
 
+test('[beemaps-frames-013] sends one request for each failing call, also after the timers of the call run', async () => {
+  const stalled = (url, init) =>
+    new Promise((resolve, reject) =>
+      init.signal.addEventListener('abort', () =>
+        reject(new DOMException('aborted', 'AbortError')),
+      ),
+    );
+  const rows = [
+    () => json({ error: 'upstream_rate_limit', retryAfter: 30 }, 429),
+    () => json({ error: 'upstream_failed' }, 502),
+    () => json({ error: 'key_rejected' }, 401),
+    () => json({ error: 'no_credit' }, 402),
+    () => json({ error: 'budget', used: 20, limit: 20 }, 429),
+    () => new Response('not json', { status: 500 }),
+    () => json({ frames: 'x' }),
+    () => {
+      throw new TypeError('fetch failed');
+    },
+    stalled,
+  ];
+  for (const respond of rows) {
+    const { source, calls, timers } = make(respond);
+    const pending = source.getFrames({ bbox: BBOX });
+    await new Promise((resolve) => setImmediate(resolve));
+    let fired = 0;
+    while (fired < timers.length && fired < 5) {
+      timers[fired].fn();
+      fired += 1;
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    const result = await pending;
+    assert.equal(result.ok, false);
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(calls.length, 1);
+    assert.equal(timers.length, 1);
+  }
+});
+
 test('[beemaps-frames-013] aborts a call that does not end in 30 seconds and clears the timer', async () => {
   const stalled = (url, init) =>
     new Promise((resolve, reject) =>

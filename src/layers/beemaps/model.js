@@ -7,9 +7,7 @@ export const POINT_COLOR = '#f59e0b';
 const WEEK_MS = 604_800_000;
 const MONTH_MS = 2_592_000_000;
 export const HINT =
-  'Each press asks Bee Maps for the newest frames in 4 km² at the view centre and can cost money.';
-export const KEY_REQUIRED =
-  'KEY REQUIRED: set BEEMAPS_API_KEY in .env and restart the app.';
+  'A press asks for the newest frames in 4 km² at the view centre. It can cost money.';
 
 /** The color (CSS text), the alpha and the size in pixels of the point of a frame. */
 export function pointStyle(time, now) {

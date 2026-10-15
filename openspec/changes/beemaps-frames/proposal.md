@@ -9,7 +9,7 @@ This is change 2 of 4. It adds the layer "Bee Maps Frames". The layer fetches fr
 - Add the folder `src/layers/beemaps/` with the files `box.js`, `records.js`, `messages.js`, `source.js`, `model.js` and `index.js`. Add the wrapper `src/app/layers/beemaps.js`.
 - Add a button "Fetch frames here" to the row of the layer. A press builds a box of about 4 km² at the view centre, posts it to `/api/beemaps/frames` and shows the frames as points.
 - Send no request for frames from any other path. These paths are the enabling of the layer, a saved state, a share link, a move of the camera, voice and a timer. The layer reads only the free status route.
-- Show one message for each error answer of the route. Never send a request again after an error.
+- Show one message for each error answer of the route. Never send a request again after an error until a person presses the button again.
 - Register the layer with the share token "5", in the group Cameras, out of voice, with a data credit. Change the count in the scenario `osh-033` from 31 to 32.
 - Add the capability `beemaps-frames` with 27 scenarios. Add one entry to `CHANGELOG.md` and one paragraph to `DATA_SOURCES.md`.
 

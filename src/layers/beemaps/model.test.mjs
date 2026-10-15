@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { HINT, KEY_REQUIRED, pointStyle, readoutText } from './model.js';
+import { HINT, pointStyle, readoutText } from './model.js';
 
 const NOW = Date.UTC(2026, 9, 15, 12, 0, 0);
 const WEEK = 604800000;
@@ -42,14 +42,10 @@ const answer = (frames, extra = {}) => ({
 test('[beemaps-frames-018] shows the hint when there is no answer and no message', () => {
   assert.equal(
     HINT,
-    'Each press asks Bee Maps for the newest frames in 4 km² at the view centre and can cost money.',
+    'A press asks for the newest frames in 4 km² at the view centre. It can cost money.',
   );
   assert.equal(readoutText({ message: null, answer: null }), HINT);
   assert.equal(readoutText({ message: '', answer: null }), HINT);
-  assert.equal(
-    KEY_REQUIRED,
-    'KEY REQUIRED: set BEEMAPS_API_KEY in .env and restart the app.',
-  );
 });
 
 test('[beemaps-frames-018] writes the count, the newest day, the requests and the credits of an answer', () => {
@@ -65,6 +61,26 @@ test('[beemaps-frames-018] writes the count, the newest day, the requests and th
     }),
     '3 frames · newest 2026-10-14 · requests today 3 of 20 · credits left 998',
   );
+});
+
+test('[beemaps-frames-018] writes the newest day as the date in UTC in any time zone', () => {
+  const zone = process.env.TZ;
+  try {
+    for (const [tz, time, day] of [
+      ['Pacific/Honolulu', '2026-10-14T08:03:00.000Z', '2026-10-14'],
+      ['Asia/Tokyo', '2026-10-14T23:30:00.000Z', '2026-10-14'],
+    ]) {
+      process.env.TZ = tz;
+      assert.equal(
+        readoutText({ message: null, answer: answer([frame(time)]) }),
+        `1 frame · newest ${day}`,
+        tz,
+      );
+    }
+  } finally {
+    if (zone === undefined) delete process.env.TZ;
+    else process.env.TZ = zone;
+  }
 });
 
 test('[beemaps-frames-018] writes frame in the singular for one frame and leaves out the newest day for none', () => {

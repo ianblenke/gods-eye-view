@@ -10,19 +10,23 @@ const FIXED = Object.freeze({
   upstream_failed: 'Bee Maps did not answer correctly.',
   bad_upstream: 'Bee Maps did not answer correctly.',
   budget_unavailable: 'The server cannot use its budget file.',
-  bad_area: 'The server refused the area.',
-  area_too_large: 'The server refused the area.',
-  bad_body: 'The server refused the area.',
-  bad_since: 'The server refused the area.',
-  bad_limit: 'The server refused the area.',
+  bad_area: 'The server refused the request.',
+  area_too_large: 'The server refused the request.',
+  bad_body: 'The server refused the request.',
+  bad_since: 'The server refused the request.',
+  bad_limit: 'The server refused the request.',
   unreachable: 'The server did not answer.',
   bad_answer: 'The server sent an answer that the layer cannot read.',
 });
 const REASONS = Object.freeze({
   sky: 'Point the view at the ground and press again.',
-  latitude: 'Move the view to a latitude below 80 degrees and press again.',
+  latitude:
+    'Move the view to a latitude from -80 to 80 degrees and press again.',
   meridian: 'Move the view away from the 180th meridian and press again.',
 });
+
+/** The text for a status that the server did not give. */
+export const STATUS_FAILED = 'The server did not give the status of the key.';
 
 const whole = (value) => Number.isInteger(value) && value >= 0;
 

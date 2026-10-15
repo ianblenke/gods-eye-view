@@ -1,12 +1,12 @@
 import * as Cesium from 'cesium';
 import { viewBox } from './box.js';
-import { describeFailure, describeReason } from './messages.js';
-import { KEY_REQUIRED, pointStyle, readoutText } from './model.js';
+import { STATUS_FAILED, describeFailure, describeReason } from './messages.js';
+import { pointStyle, readoutText } from './model.js';
 export { createBeemapsSource } from './source.js';
 
 const FETCH_LABEL = 'Fetch frames here';
 const FETCHING_LABEL = 'Fetching…';
-const UNREACHABLE = describeFailure({ status: 0, error: 'unreachable' });
+const NO_KEY = describeFailure({ status: 0, error: 'no_key' });
 
 /** The point under the middle of the screen, or null when it shows the sky. */
 function viewCentre(viewer) {
@@ -168,14 +168,14 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
       _statusRequest = null;
       if (status.ok) {
         _configured = status.configured;
-        _statusMessage = status.configured ? null : KEY_REQUIRED;
+        _statusMessage = status.configured ? null : NO_KEY;
       } else {
         _configured = null;
-        _statusMessage = UNREACHABLE;
-        _lastError = status.error || UNREACHABLE;
+        _statusMessage = STATUS_FAILED;
+        _lastError = status.error || STATUS_FAILED;
       }
       notify();
-      return status.ok;
+      return true;
     },
 
     getRowControls() {

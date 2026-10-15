@@ -10,7 +10,7 @@ The layer panel supports controls for a layer through two module methods: `getRo
 **Goals:**
 - A request for frames only after a real press of one button.
 - At most one request for each press, no retry, and a message for each error.
-- A box that the server accepts at any latitude.
+- A box that the server accepts at any latitude from -80 to 80 degrees.
 
 **Non-goals:**
 - Images. See the Known limit `no-images`.
@@ -21,19 +21,19 @@ The layer panel supports controls for a layer through two module methods: `getRo
 
 ### D1: One chip with `onClick` is the only trigger
 
-The chip has an `onClick` function and no `params`. The layer has no `setParams`, so the manager ignores saved state, share links and voice for this layer. The layer registers no listener on the camera.
+The chip has an `onClick` function and no `params`. The layer has no `setParams`, so saved state and share links can only enable it, and an enable reads only the status. The layer registers no listener on the camera.
 
 ### D2: The update reads the status only
 
-The `updateInterval` is 0, so the manager runs no timer. `update` calls `getStatus` and nothing else. The status route is free.
+The `updateInterval` is 0, so the manager runs no periodic update. `update` calls `getStatus` and nothing else. The status route is free.
 
 ### D3: The box is about 4 km² around a snapped centre
 
 The centre is the point under the middle of the screen, rounded to the nearest multiple of 0.005 degrees. A repeated press at the same place then sends the same box, and the memory of the server answers it for free for 10 minutes.
 
-The box is 2000 metres high and 2000 metres wide on a sphere. The half height in degrees is the same at every latitude. The half width is that value divided by the cosine of the latitude, so the area is 3.9998 km² at each latitude.
+The box is 2000 metres high and 2000 metres wide on a sphere. The half height in degrees is the same at every latitude. The half width is that value divided by the cosine of the latitude, so the area is about 4 km² at each latitude.
 
-Three views get a message and no request. They are a view of the sky, a centre above 80 degrees and a box past the 180th meridian. The 5 km² limit of the server is then never near.
+Three views get a message and no request. They are a view of the sky, a centre outside -80 to 80 degrees and a box past the 180th meridian. The 5 km² limit of the server is then never near.
 
 ### D4: The browser does not import server code
 
@@ -49,7 +49,7 @@ The error name of the answer picks the message. The table is in `messages.js`. T
 
 ### D7: No retry and one request at a time
 
-A request in flight disables the chip. A failure enables it again and starts nothing. The only timer is the abort after 30 seconds.
+A request in flight disables the chip. A failure enables it again and starts nothing. The one timer that the layer sets is the abort after 30 seconds.
 
 ### D8: The style shows the age of a frame
 

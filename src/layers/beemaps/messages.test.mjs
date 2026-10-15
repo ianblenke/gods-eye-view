@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { describeFailure, describeReason } from './messages.js';
+import { STATUS_FAILED, describeFailure, describeReason } from './messages.js';
 
 test('[beemaps-frames-016] names the failures that have a fixed text', () => {
   const rows = [
@@ -21,11 +21,11 @@ test('[beemaps-frames-016] names the failures that have a fixed text', () => {
     ['upstream_failed', 'Bee Maps did not answer correctly.'],
     ['bad_upstream', 'Bee Maps did not answer correctly.'],
     ['budget_unavailable', 'The server cannot use its budget file.'],
-    ['bad_area', 'The server refused the area.'],
-    ['area_too_large', 'The server refused the area.'],
-    ['bad_body', 'The server refused the area.'],
-    ['bad_since', 'The server refused the area.'],
-    ['bad_limit', 'The server refused the area.'],
+    ['bad_area', 'The server refused the request.'],
+    ['area_too_large', 'The server refused the request.'],
+    ['bad_body', 'The server refused the request.'],
+    ['bad_since', 'The server refused the request.'],
+    ['bad_limit', 'The server refused the request.'],
     ['unreachable', 'The server did not answer.'],
     ['bad_answer', 'The server sent an answer that the layer cannot read.'],
   ];
@@ -43,12 +43,24 @@ test('[beemaps-frames-016] writes the daily limit and the wait of the upstream w
     'The daily limit of 0 requests is used.',
   );
   assert.equal(
+    describeFailure({ status: 429, error: 'budget', limit: 5 }),
+    'The daily limit of 5 requests is used.',
+  );
+  assert.equal(
     describeFailure({
       status: 429,
       error: 'upstream_rate_limit',
       retryAfter: 30,
     }),
     'Bee Maps asks you to wait 30 seconds.',
+  );
+  assert.equal(
+    describeFailure({
+      status: 429,
+      error: 'upstream_rate_limit',
+      retryAfter: 600,
+    }),
+    'Bee Maps asks you to wait 600 seconds.',
   );
   for (const value of [undefined, null, '30', 1.5, -1, NaN]) {
     assert.equal(
@@ -101,10 +113,14 @@ test('[beemaps-frames-009] writes the text of each reason that a view cannot giv
   );
   assert.equal(
     describeReason('latitude'),
-    'Move the view to a latitude below 80 degrees and press again.',
+    'Move the view to a latitude from -80 to 80 degrees and press again.',
   );
   assert.equal(
     describeReason('meridian'),
     'Move the view away from the 180th meridian and press again.',
   );
+});
+
+test('[beemaps-frames-007] writes the text of a status that the server did not give', () => {
+  assert.equal(STATUS_FAILED, 'The server did not give the status of the key.');
 });

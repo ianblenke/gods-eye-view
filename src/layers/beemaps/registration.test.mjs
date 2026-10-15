@@ -90,7 +90,7 @@ test('[beemaps-frames-024] gives the layer the status of its supplied source and
   const missing = catalogOf(bare).get('beemaps');
   missing.init(FAKE_VIEWER);
   missing.enable(FAKE_VIEWER);
-  assert.equal(await missing.update(FAKE_VIEWER), false);
+  assert.equal(await missing.update(FAKE_VIEWER), true);
   assert.equal(missing.getStats().error, 'Data source not configured: beemaps');
   missing.destroy(FAKE_VIEWER);
 });

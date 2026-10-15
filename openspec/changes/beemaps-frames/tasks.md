@@ -8,10 +8,10 @@
 - [ ] 1.6 Write the tests for `beemaps-frames-001`, `beemaps-frames-002`, `beemaps-frames-003`, `beemaps-frames-004`, `beemaps-frames-005`, `beemaps-frames-006` and `beemaps-frames-007` in `src/layers/beemaps/layer.test.mjs`.
 - [ ] 1.7 Write the tests for `beemaps-frames-019`, `beemaps-frames-020`, `beemaps-frames-021`, `beemaps-frames-022` and `beemaps-frames-023` in the same file.
 - [ ] 1.8 Write the tests for `beemaps-frames-024`, `beemaps-frames-025`, `beemaps-frames-026` and `beemaps-frames-027` in `src/layers/beemaps/registration.test.mjs`.
-- [ ] 1.9 Change the count in the test `[osh-033]` in `src/data/layerState.test.mjs` to 32.
-- [ ] 1.10 Carry the scenarios `osh-028`, `osh-029`, `osh-030`, `osh-031`, `osh-032`, `osh-046`, `osh-049`, `osh-057` and `osh-059` unchanged in the delta of `osh`.
-- [ ] 1.11 Change the counts in the tests `src/app/constructCatalog.test.mjs`, `src/app/sourceComposition.test.mjs` and `src/sources/reference.test.mjs`.
-- [ ] 1.12 Change the token ledger test `src/data/layerStateTokenLedger.test.mjs` for the token "5".
+- [ ] 1.9 Change both counts from 31 to 32 in `src/data/layerState.test.mjs`: the test `[osh-033]` and the test of the production registry.
+- [ ] 1.10 Carry the scenarios `osh-028`, `osh-029`, `osh-030`, `osh-031`, `osh-032`, `osh-046`, `osh-049` and `osh-057` unchanged in the delta of `osh`.
+- [ ] 1.11 Change the counts in `src/app/constructCatalog.test.mjs` and `src/app/sourceComposition.test.mjs`. Add the key "beemaps" to the key list in `src/sources/reference.test.mjs`.
+- [ ] 1.12 Change the next free token, the counts and the length of `l` in `src/data/layerStateTokenLedger.test.mjs`.
 
 ## 2. Write the files
 

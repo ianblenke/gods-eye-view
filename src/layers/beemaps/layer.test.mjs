@@ -36,7 +36,8 @@ const deferred = () => {
 };
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 const HINT =
-  'Each press asks Bee Maps for the newest frames in 4 km² at the view centre and can cost money.';
+  'A press asks for the newest frames in 4 km² at the view centre. It can cost money.';
+const STATUS_FAILED = 'The server did not give the status of the key.';
 
 function harness({
   status = async () => ({ ok: true, configured: true }),
@@ -198,7 +199,7 @@ test('[beemaps-frames-003] has no chip after disable, and an old onClick sends n
   assert.deepEqual(disabledOnly.layer.getRowControls().chips, []);
 });
 
-test('[beemaps-frames-004] sends one request for two presses, and shows the label Fetching… while it runs', async () => {
+test('[beemaps-frames-004] sends one request for two calls of onClick, and keeps the chip disabled with the label Fetching… while it runs, also after an update', async () => {
   const wait = deferred();
   const h = harness({ frames: () => wait.promise });
   await h.ready();
@@ -208,6 +209,10 @@ test('[beemaps-frames-004] sends one request for two presses, and shows the labe
   assert.equal(h.calls.getFrames.length, 1);
   assert.equal(h.chip().label, 'Fetching…');
   assert.equal(h.chip().disabled, true);
+  assert.equal(await h.layer.update(), true);
+  assert.equal(h.chip().label, 'Fetching…');
+  assert.equal(h.chip().disabled, true);
+  assert.equal(h.calls.getFrames.length, 1);
   wait.resolve({ ok: true, answer: THREE });
   await Promise.all([first, second]);
   assert.equal(h.chip().label, 'Fetch frames here');
@@ -253,13 +258,13 @@ test('[beemaps-frames-005] sends no request again after a rejection or an error 
   }
 });
 
-test('[beemaps-frames-006] disables the chip and shows KEY REQUIRED when the status says there is no key', async () => {
+test('[beemaps-frames-006] disables the chip and shows the text for no key when the status says there is no key', async () => {
   const h = harness({ status: async () => ({ ok: true, configured: false }) });
   await h.ready();
   assert.equal(h.chip().disabled, true);
   assert.equal(
     h.info(),
-    'KEY REQUIRED: set BEEMAPS_API_KEY in .env and restart the app.',
+    'No Bee Maps key. Set BEEMAPS_API_KEY in .env and restart the app.',
   );
   await h.chip().onClick();
   assert.equal(h.calls.getFrames.length, 0);
@@ -269,20 +274,20 @@ test('[beemaps-frames-006] disables the chip and shows KEY REQUIRED when the sta
   assert.equal(enabled.info(), HINT);
 });
 
-test('[beemaps-frames-007] shows that the server did not answer when the status fails', async () => {
+test('[beemaps-frames-007] shows that the server did not give the status, and keeps the layer enabled, when the status fails', async () => {
   const rows = [
-    [async () => ({ ok: false }), 'The server did not answer.'],
+    [async () => ({ ok: false }), STATUS_FAILED],
     [async () => Promise.reject(new Error('down')), 'down'],
-    [async () => Promise.reject(new Error('')), 'The server did not answer.'],
-    [async () => Promise.reject({}), 'The server did not answer.'],
-    [async () => Promise.reject(undefined), 'The server did not answer.'],
+    [async () => Promise.reject(new Error('')), STATUS_FAILED],
+    [async () => Promise.reject({}), STATUS_FAILED],
+    [async () => Promise.reject(undefined), STATUS_FAILED],
   ];
   for (const [status, error] of rows) {
     const h = harness({ status });
     h.layer.init(h.viewer);
     h.layer.enable(h.viewer);
-    assert.equal(await h.layer.update(), false);
-    assert.equal(h.info(), 'The server did not answer.');
+    assert.equal(await h.layer.update(), true);
+    assert.equal(h.info(), STATUS_FAILED);
     assert.equal(h.layer.getStats().error, error);
     assert.equal(h.chip().disabled, false);
   }
@@ -342,7 +347,7 @@ test('[beemaps-frames-009] sends no request and names the reason for a view that
   assert.equal(north.calls.getFrames.length, 0);
   assert.equal(
     north.info(),
-    'Move the view to a latitude below 80 degrees and press again.',
+    'Move the view to a latitude from -80 to 80 degrees and press again.',
   );
   const edge = harness({
     pick: () => Cesium.Cartesian3.fromDegrees(179.995, 0),
