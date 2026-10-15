@@ -11,6 +11,155 @@
   "app-container-004": [
     "src/tooling/appContainer.test.mjs › [app-container-004] the default compose file and the target up stay as they are"
   ],
+  "beemaps-frames-001": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-001] describes the layer and has no method setParams",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-001] refuses a second init",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-001] refuses a source without getStatus and getFrames"
+  ],
+  "beemaps-frames-002": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-002] asks only for the status and adds no listener to the camera or the scene",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-002] reads the status only while it is enabled"
+  ],
+  "beemaps-frames-003": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-003] has no chip after disable, and an old onClick sends no request",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-003] has one chip with an onClick function and no params, and one click gives one request"
+  ],
+  "beemaps-frames-004": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-004] sends one request for two calls of onClick, and keeps the chip disabled with the label Fetching… while it runs, also after an update"
+  ],
+  "beemaps-frames-005": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-005] sends no request again after a rejection or an error answer"
+  ],
+  "beemaps-frames-006": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-006] disables the chip and shows the text for no key when the status says there is no key",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-006] keeps the text for no key when a good answer arrives after a status with no key"
+  ],
+  "beemaps-frames-007": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-007] enables the chip when a status fails after a status with no key",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-007] removes the text and the error of a failed status after a good answer of getFrames",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-007] removes the text and the error of a failed status after a good status",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-007] shows that the server did not give the status, and keeps the layer enabled, when the status fails",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-007] shows the message and the error of a press that fails after a failed status",
+    "src/layers/beemaps/messages.test.mjs › [beemaps-frames-007] writes the text of a status that the server did not give"
+  ],
+  "beemaps-frames-008": [
+    "src/layers/beemaps/box.test.mjs › [beemaps-frames-008] builds the box from the rows of the spec",
+    "src/layers/beemaps/box.test.mjs › [beemaps-frames-008] keeps the same box height at every latitude and widens the box towards the poles",
+    "src/layers/beemaps/box.test.mjs › [beemaps-frames-008] rounds a centre to the nearest multiple of 0.005 and a tie to the higher one",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-008] builds the box from the point under the middle of the canvas"
+  ],
+  "beemaps-frames-009": [
+    "src/layers/beemaps/box.test.mjs › [beemaps-frames-009] gives a box that ends exactly at longitude 180 or -180",
+    "src/layers/beemaps/box.test.mjs › [beemaps-frames-009] gives the first reason when two apply",
+    "src/layers/beemaps/box.test.mjs › [beemaps-frames-009] gives the reason sky for a centre that is null or has a value that is not a finite number",
+    "src/layers/beemaps/box.test.mjs › [beemaps-frames-009] refuses a box that goes past longitude 180 or -180",
+    "src/layers/beemaps/box.test.mjs › [beemaps-frames-009] refuses a centre above 80 or below -80 degrees after the rounding",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-009] sends no request and names the reason for a view that has no box",
+    "src/layers/beemaps/messages.test.mjs › [beemaps-frames-009] writes the text of each reason that a view cannot give a box"
+  ],
+  "beemaps-frames-010": [
+    "src/layers/beemaps/box.test.mjs › [beemaps-frames-010] builds a box that the server accepts at 33 latitudes and 35 longitudes"
+  ],
+  "beemaps-frames-011": [
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-011] gives ok false for another body, for a status that is not 2xx and for a rejection",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-011] sends one GET for the status route with the signal and reads configured"
+  ],
+  "beemaps-frames-012": [
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-012] gives the result of the answer records for a good answer",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-012] sends one POST with one header and the box and the limit as the body",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-012] uses the fetch function and the timers of the page when none is given"
+  ],
+  "beemaps-frames-013": [
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-013] aborts a call that does not end in 30 seconds and clears the timer",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-013] gives the error bad_answer for a body that is not JSON",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-013] gives the error unknown for a JSON body without a text error",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-013] gives the fetch function a signal of its own that follows the call and the 30 seconds",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-013] gives the status 0 and the error unreachable for a rejection",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-013] gives the status, the error and the whole numbers of an error body",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-013] gives unreachable when the 30 seconds end while it reads the body",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-013] reads a body of 1048576 bytes and gives bad_answer for one byte more",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-013] rejects with the abort error when the signal of the caller is aborted",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-013] removes its listener from the signal of the call when the call ends",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-013] sends one request for each call that fails, also after the timers of the call run"
+  ],
+  "beemaps-frames-014": [
+    "src/layers/beemaps/records.test.mjs › [beemaps-frames-014] drops a frame whose id is not 16 lowercase hexadecimal characters",
+    "src/layers/beemaps/records.test.mjs › [beemaps-frames-014] drops a frame whose lat is not a finite number from -90 to 90",
+    "src/layers/beemaps/records.test.mjs › [beemaps-frames-014] drops a frame whose lon is not a finite number from -180 to 180",
+    "src/layers/beemaps/records.test.mjs › [beemaps-frames-014] drops a frame whose timestamp Date.parse does not read",
+    "src/layers/beemaps/records.test.mjs › [beemaps-frames-014] drops a frame whose timestamp does not have the form with seconds and Z",
+    "src/layers/beemaps/records.test.mjs › [beemaps-frames-014] drops an item that is not an object and a frame that repeats an id",
+    "src/layers/beemaps/records.test.mjs › [beemaps-frames-014] keeps at most the first 200 valid frames",
+    "src/layers/beemaps/records.test.mjs › [beemaps-frames-014] keeps exactly the fields id, lat, lon, timestamp and time of a valid frame",
+    "src/layers/beemaps/records.test.mjs › [beemaps-frames-014] reads used, limit and remaining as whole numbers of 0 or more and null in all other cases"
+  ],
+  "beemaps-frames-015": [
+    "src/layers/beemaps/records.test.mjs › [beemaps-frames-015] gives null for an answer that is not an object or whose frames is not a list",
+    "src/layers/beemaps/source.test.mjs › [beemaps-frames-015] gives bad_answer with the status 200 for an answer without a list of frames"
+  ],
+  "beemaps-frames-016": [
+    "src/layers/beemaps/messages.test.mjs › [beemaps-frames-016] gives the unknown text with the status for any other error",
+    "src/layers/beemaps/messages.test.mjs › [beemaps-frames-016] names the failures that have a fixed text",
+    "src/layers/beemaps/messages.test.mjs › [beemaps-frames-016] writes the daily limit and the wait of the upstream when they are whole numbers"
+  ],
+  "beemaps-frames-017": [
+    "src/layers/beemaps/model.test.mjs › [beemaps-frames-017] gives the first style to a frame that is under 7 days old",
+    "src/layers/beemaps/model.test.mjs › [beemaps-frames-017] gives the first style to a time after the current time",
+    "src/layers/beemaps/model.test.mjs › [beemaps-frames-017] gives the second style from 7 days up to 30 days",
+    "src/layers/beemaps/model.test.mjs › [beemaps-frames-017] gives the third style from 30 days on"
+  ],
+  "beemaps-frames-018": [
+    "src/layers/beemaps/model.test.mjs › [beemaps-frames-018] leaves out the part of a number that is null",
+    "src/layers/beemaps/model.test.mjs › [beemaps-frames-018] puts the message first and shows it alone when there is no answer",
+    "src/layers/beemaps/model.test.mjs › [beemaps-frames-018] shows the hint when there is no answer and no message",
+    "src/layers/beemaps/model.test.mjs › [beemaps-frames-018] writes frame in the singular for one frame and leaves out the newest day for none",
+    "src/layers/beemaps/model.test.mjs › [beemaps-frames-018] writes the count, the newest day, the requests and the credits of an answer",
+    "src/layers/beemaps/model.test.mjs › [beemaps-frames-018] writes the newest day as the date in UTC in any time zone"
+  ],
+  "beemaps-frames-019": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-019] puts each point at the position of its frame",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-019] replaces the points of the first answer with those of the second",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-019] shows one point on the ground for each frame, with the style of its age",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-019] styles each point with the age at the time of the clock that the layer was given"
+  ],
+  "beemaps-frames-020": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-020] clears the message after a good answer",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-020] keeps the points and shows the message when a later press fails",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-020] keeps the points when a press has no box",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-020] shows the message of a first press that fails and keeps no point"
+  ],
+  "beemaps-frames-021": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-021] aborts the request on disable and ignores the late answer",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-021] aborts the status request of an update before when a new update starts",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-021] does not abort a status request that has ended",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-021] forgets a status with no key and a failed status when the layer is enabled again",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-021] ignores a status answer that arrives after disable",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-021] shows no point after disable and no message after the next enable"
+  ],
+  "beemaps-frames-022": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-022] can be initialized again after destroy",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-022] clears the points of a layer that shows them on destroy",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-022] destroys a layer that was never initialized",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-022] releases the data source and aborts the request on destroy"
+  ],
+  "beemaps-frames-023": [
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-023] tells the panel when a press has no box",
+    "src/layers/beemaps/layer.test.mjs › [beemaps-frames-023] tells the panel when a request starts and ends and when an update ends"
+  ],
+  "beemaps-frames-024": [
+    "src/layers/beemaps/registration.test.mjs › [beemaps-frames-024] gives the layer the status of its supplied source and no frame request on enable",
+    "src/layers/beemaps/registration.test.mjs › [beemaps-frames-024] ignores the parameters of the manager for the layer and sends no request",
+    "src/layers/beemaps/registration.test.mjs › [beemaps-frames-024] registers the layer in the catalog, the source contract, the reference sources and the share link"
+  ],
+  "beemaps-frames-025": [
+    "src/layers/beemaps/registration.test.mjs › [beemaps-frames-025] puts the layer at the end of the Cameras group of the panel"
+  ],
+  "beemaps-frames-026": [
+    "src/layers/beemaps/registration.test.mjs › [beemaps-frames-026] keeps the layer out of voice"
+  ],
+  "beemaps-frames-027": [
+    "src/layers/beemaps/registration.test.mjs › [beemaps-frames-027] credits Bee Maps"
+  ],
   "beemaps-source-001": [
     "src/data/beemapsProxy.test.mjs › [beemaps-source-001] mounts the routes status and frames, and the plugin name is beemaps-proxy",
     "src/data/beemapsProxy.test.mjs › [beemaps-source-001] passes every other path to next and ignores a query on its own paths",
