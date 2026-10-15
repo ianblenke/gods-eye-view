@@ -44,6 +44,7 @@ test('[beemaps-burst-control-003] reads the key of its own, trimmed, and not the
   assert.equal(readConfig({ BEEMAPS_API_KEY: 'frames-key' }).configured, false);
   assert.equal(readConfig({ BEEMAPS_BURST_API_KEY: '   ' }).configured, false);
   assert.equal(readConfig({ BEEMAPS_BURST_API_KEY: '' }).configured, false);
+  assert.equal(readConfig({ BEEMAPS_BURST_API_KEY: 'x' }).configured, true);
   const config = readConfig({
     BEEMAPS_API_KEY: 'frames-key',
     BEEMAPS_BURST_API_KEY: '  burst-key  ',
@@ -251,6 +252,61 @@ test('[beemaps-burst-control-012] rounds the numbers to 6 decimals before it che
   assert.equal(quote({ bbox: [10, 79.99, 10.02, 80.0000004] }).ok, true);
 });
 
+test('[beemaps-burst-control-009] answers bad_area for a number that is not finite in the JSON text', () => {
+  const bad = refused(400, { error: 'bad_area' });
+  for (const text of [
+    '{"bbox":[1e999,60,10.02,60.01]}',
+    '{"bbox":[-1e999,60,10.02,60.01]}',
+    '{"bbox":[10,1e999,10.02,60.01]}',
+    '{"bbox":[10,-1e999,10.02,60.01]}',
+    '{"bbox":[10,60,1e999,60.01]}',
+    '{"bbox":[10,60,10.02,1e999]}',
+    '{"bbox":[10,60,10.02,-1e999]}',
+  ])
+    assert.deepEqual(quote(text), bad, text);
+});
+
+test('[beemaps-burst-control-009] answers bad_area for a box with west greater than east and south greater than north', () => {
+  assert.deepEqual(
+    quote({ bbox: [10.02, 60.01, 10, 60] }),
+    refused(400, { error: 'bad_area' }),
+  );
+});
+
+test('[beemaps-burst-control-010] compares the area rounded to 3 decimals with 0.1 and with 5', () => {
+  const low = quote({ bbox: [10, 60, 10.01, 60.001612] });
+  assert.equal(low.ok, true);
+  assert.equal(low.request.areaKm2, 0.1);
+  assert.deepEqual(
+    quote({ bbox: [10, 60, 10.01, 60.001607] }),
+    refused(400, { error: 'bad_area' }),
+  );
+  const high = quote({ bbox: [10, 60, 10.04, 60.020227] });
+  assert.equal(high.ok, true);
+  assert.equal(high.request.areaKm2, 5);
+  assert.deepEqual(
+    quote({ bbox: [10, 60, 10.04, 60.020229] }),
+    refused(400, { error: 'area_too_large', maxKm2: 5 }),
+  );
+});
+
+test('[beemaps-burst-control-010] uses the radius 6371008.8 metres for the area', () => {
+  assert.deepEqual(
+    quote({ bbox: [10, 60, 10.040029, 60.020213] }),
+    refused(400, { error: 'area_too_large', maxKm2: 5 }),
+  );
+  const small = quote({ bbox: [10, 60, 10.009213, 60.001747] });
+  assert.equal(small.ok, true);
+  assert.equal(small.request.areaKm2, 0.1);
+});
+
+test('[beemaps-burst-control-012] checks the area of the rounded box and not the area of the box in the body', () => {
+  const result = quote({ bbox: [10, 60, 10.010004, 60.0016086] });
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.request.bbox, [10, 60, 10.010004, 60.001609]);
+  assert.equal(result.request.areaKm2, 0.1);
+});
+
 test('[beemaps-burst-control-011] accepts whole credits from 125 to maxCredits and uses 125 without credits', () => {
   assert.equal(quote({ bbox: BOX }).request.credits, 125);
   assert.equal(quote({ bbox: BOX, credits: 125 }).request.credits, 125);
@@ -259,6 +315,7 @@ test('[beemaps-burst-control-011] accepts whole credits from 125 to maxCredits a
     BEEMAPS_BURST_API_KEY: 'k',
     BEEMAPS_BURST_MAX_CREDITS: '200',
   });
+  assert.equal(quote({ bbox: BOX }, wide).request.credits, 125);
   assert.equal(quote({ bbox: BOX, credits: 200 }, wide).request.credits, 200);
   assert.deepEqual(
     quote({ bbox: BOX, credits: 201 }, wide),
@@ -345,6 +402,10 @@ test('[beemaps-burst-control-015] answers bad_body for a body that is not a JSON
     JSON.stringify({ idempotencyKey: 'k'.repeat(16) }),
     JSON.stringify({ quoteId: id, idempotencyKey: 'k'.repeat(16), extra: 1 }),
     JSON.stringify([{ quoteId: id, idempotencyKey: 'k'.repeat(16) }]),
+    JSON.stringify({ quoteId: [id], idempotencyKey: 'k'.repeat(16) }),
+    JSON.stringify({ quoteId: id, idempotencyKey: ['k'.repeat(16)] }),
+    JSON.stringify({ quoteId: 5, idempotencyKey: 'k'.repeat(16) }),
+    JSON.stringify({ quoteId: id, idempotencyKey: null }),
   ])
     assert.deepEqual(validateConfirm(text), bad, text);
 });

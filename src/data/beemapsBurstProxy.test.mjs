@@ -1608,6 +1608,49 @@ test('[beemaps-burst-control-032] keeps the key out of every answer, header, lin
   assert.equal(text.includes('CANARY'), false);
 });
 
+const padTo = (text, size) => text + ' '.repeat(size - Buffer.byteLength(text));
+
+test('[beemaps-burst-control-008] reads a valid quote body of exactly 4096 bytes and refuses one of 4097 bytes', async (t) => {
+  const server = await install(t);
+  const text = JSON.stringify({ bbox: BOX });
+  assert.equal(
+    (await server.request(QUOTE, { body: padTo(text, 4096) })).status,
+    200,
+  );
+  const big = await server.request(QUOTE, { body: padTo(text, 4097) });
+  assert.equal(big.status, 400);
+  assert.deepEqual(big.body, { error: 'bad_body' });
+});
+
+test('[beemaps-burst-control-015] reads a valid confirm body of exactly 1024 bytes and refuses one of 1025 bytes', async (t) => {
+  const server = await install(t);
+  const quoted = await server.quote();
+  const text = JSON.stringify({
+    quoteId: quoted.body.quoteId,
+    idempotencyKey: idem(1),
+  });
+  const big = await server.request(CONFIRM, { body: padTo(text, 1025) });
+  assert.equal(big.status, 400);
+  assert.deepEqual(big.body, { error: 'bad_body' });
+  assert.equal(server.calls.length, 0);
+  const exact = await server.request(CONFIRM, { body: padTo(text, 1024) });
+  assert.equal(exact.status, 200);
+  assert.equal(exact.body.ok, true);
+  assert.equal(server.calls.length, 1);
+});
+
+test('[beemaps-burst-control-033] reads a valid list body of exactly 1024 bytes and refuses one of 1025 bytes', async (t) => {
+  const server = await install(t);
+  const text = JSON.stringify({ limit: 5 });
+  assert.equal(
+    (await server.request(LIST, { body: padTo(text, 1024) })).status,
+    200,
+  );
+  const big = await server.request(LIST, { body: padTo(text, 1025) });
+  assert.equal(big.status, 400);
+  assert.deepEqual(big.body, { error: 'bad_body' });
+});
+
 test('[beemaps-burst-control-033] answers 400 bad_body to a list body that is too large, is not an object, has another field or has a bad limit', async (t) => {
   const server = await install(t);
   for (const body of [

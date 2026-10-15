@@ -78,9 +78,11 @@ Origin: spec-first
 - **AND** it gives the same answer when a longitude is outside -180 to 180, or when a latitude is outside -80 to 80
 - **AND** a box with a latitude of exactly -80 or 80 passes this step
 - **AND** a body without `bbox` gives `bad_area`
+- **AND** the JSON text `1e999` is a number that is not finite, so a box with it gives `bad_area`
+- **AND** a box with west greater than east and south greater than north gives `bad_area`
 
 #### Scenario: Check the area `beemaps-burst-control-010`
-- **WHEN** the area of the box is less than 0.1 km² or more than 5 km²
+- **WHEN** the area of the box, rounded to 3 decimals, is less than 0.1 km² or more than 5 km²
 - **THEN** a smaller area gives 400 with `{error:'bad_area'}`, and a larger area gives 400 with `{error:'area_too_large', maxKm2:5}`
 - **AND** the area in square metres is `R*R*W*(sin(N) - sin(S))`, with R equal to 6371008.8 metres
 - **AND** W is east minus west in radians, and N and S are the north and south latitudes in radians
@@ -89,6 +91,12 @@ Origin: spec-first
 - **AND** the box [10, 60, 10.05, 60.02] with an area of about 6.2 km² gives `area_too_large`
 - **AND** the box [10, 60, 10.01, 60.0016] with an area of about 0.099 km² gives `bad_area`
 - **AND** the box [10, 60, 10.01, 60.0017] with an area of about 0.105 km² passes
+- **AND** the box [10, 60, 10.01, 60.001612] with an area of about 0.0997 km² rounds to 0.1 and passes
+- **AND** the box [10, 60, 10.01, 60.001607] with an area of about 0.0994 km² rounds to 0.099 and gives `bad_area`
+- **AND** the box [10, 60, 10.04, 60.020227] with an area of about 5.0003 km² rounds to 5 and passes
+- **AND** the box [10, 60, 10.04, 60.020229] with an area of about 5.0008 km² rounds to 5.001 and gives `area_too_large`
+- **AND** the box [10, 60, 10.040029, 60.020213] with an area of about 5.000506 km² gives `area_too_large`
+- **AND** the box [10, 60, 10.009213, 60.001747] with an area of about 0.0995001 km² passes
 
 #### Scenario: Check the credits `beemaps-burst-control-011`
 - **WHEN** the body has `credits`
@@ -110,6 +118,7 @@ Origin: spec-first
 - **AND** the route sends no upstream request and does not change the budget file
 - **AND** a box with more than 6 decimals is rounded to 6 decimals in `request.bbox`
 - **AND** the checks of the box and of the area run on the rounded box
+- **AND** the box [10, 60, 10.010004, 60.0016086] passes, because the rounded box has an area of about 0.0995085 km²
 
 #### Scenario: Keep a quote for 120 seconds, once `beemaps-burst-control-013`
 - **WHEN** a test gives the plugin a clock and asks for quotes
@@ -135,7 +144,9 @@ Origin: spec-first
 - **THEN** the route answers 400 with `{error:'bad_body'}`
 - **AND** it gives the same answer when `quoteId` is not 32 lowercase hexadecimal characters
 - **AND** it gives the same answer when `idempotencyKey` does not match `^[A-Za-z0-9_-]{16,64}$`
+- **AND** it gives the same answer when a field is missing or is not a text, for example a list with one valid text
 - **AND** a key of exactly 16 characters and a key of exactly 64 characters pass this step
+- **AND** a valid body of exactly 1024 bytes passes this step
 
 #### Scenario: Send the create request `beemaps-burst-control-016`
 - **WHEN** a test confirms a quote for the box [9.982014, 59.991007, 10.017986, 60.008993] and 125 credits
@@ -316,6 +327,7 @@ Origin: spec-first
 - **THEN** the route answers 400 with `{error:'bad_body'}`
 - **AND** `limit` is a whole number from 1 to 100, and an empty body object uses 20
 - **AND** `limit` only cuts the answer, and the upstream request always asks for 100
+- **AND** a valid body of exactly 1024 bytes passes this step
 - **AND** any other value of `limit` gives 400 with `{error:'bad_body'}`
 - **AND** the steps run in this order: method, local request, rate limit, flag, key, body, memory, upstream request
 

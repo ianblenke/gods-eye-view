@@ -19,19 +19,14 @@ const isFinished = (record) =>
   record.state === 'created' || record.state === 'refused';
 
 function isValid(record) {
-  if (record === null || typeof record !== 'object') return false;
-  if (typeof record.key !== 'string' || !KEY.test(record.key)) return false;
+  if (typeof record?.key !== 'string' || !KEY.test(record.key)) return false;
   if (typeof record.quoteId !== 'string' || !QUOTE_ID.test(record.quoteId)) {
     return false;
   }
   if (!STATES.has(record.state)) return false;
   if (!Number.isInteger(record.time) || record.time < 0) return false;
   if (record.state === 'created') {
-    return (
-      record.burst !== null &&
-      typeof record.burst === 'object' &&
-      typeof record.burst.id === 'string'
-    );
+    return typeof record.burst?.id === 'string';
   }
   if (record.state === 'refused') {
     return Number.isInteger(record.status) && typeof record.error === 'string';
@@ -80,12 +75,7 @@ export function createLedger({ dir, now, fs = fsp }) {
       throw error;
     }
     const saved = JSON.parse(text);
-    if (
-      saved === null ||
-      typeof saved !== 'object' ||
-      !Array.isArray(saved.records) ||
-      !saved.records.every(isValid)
-    ) {
+    if (!Array.isArray(saved?.records) || !saved.records.every(isValid)) {
       throw new Error('The ledger file has no valid records');
     }
     return saved.records.map(clean);
