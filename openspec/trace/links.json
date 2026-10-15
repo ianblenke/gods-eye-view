@@ -3977,8 +3977,10 @@
     "src/control/route.test.mjs › [osh-control-027] Stop a command response body at the 15 second limit"
   ],
   "osh-control-028": [
-    "src/control/route.test.mjs › [osh-control-028] Accept local hosts when the origin equals the host",
+    "src/control/route.test.mjs › [osh-control-028] Accept loopback hosts when the origin equals the host",
     "src/control/route.test.mjs › [osh-control-028] Refuse a cross-origin or untrusted-host POST",
+    "src/control/route.test.mjs › [osh-control-028] Refuse a host that is not a loopback host",
+    "src/control/route.test.mjs › [osh-control-028] Refuse an origin that only starts like the host",
     "src/control/route.test.mjs › [osh-control-028] Refuse malformed host values"
   ],
   "osh-control-029": [
@@ -4013,6 +4015,12 @@
   ],
   "osh-control-038": [
     "src/layers/oshControl/view.test.mjs › [osh-control-038] Put one field on its own line"
+  ],
+  "osh-control-039": [
+    "src/control/route.test.mjs › [osh-control-039] Refuse a POST from another machine and write the audit line"
+  ],
+  "osh-control-040": [
+    "src/control/route.test.mjs › [osh-control-040] Refuse a POST that carries a proxy header"
   ],
   "ownership-001": [
     "src/tooling/spec/ownership.test.mjs › [ownership-001] accepts the first and last characters of each allowed character range",
