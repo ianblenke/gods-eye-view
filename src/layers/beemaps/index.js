@@ -91,7 +91,7 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
   }
 
   async function press() {
-    if (!_enabled || _request) return;
+    if (!_enabled || _request || _configured === false) return;
     const box = viewBox(viewCentre(_viewer));
     if (!box.ok) {
       _pressMessage = describeReason(box.reason);

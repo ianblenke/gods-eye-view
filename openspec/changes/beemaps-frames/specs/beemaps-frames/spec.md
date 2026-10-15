@@ -47,6 +47,7 @@ Origin: spec-first
 #### Scenario: Read the status `beemaps-frames-006`
 - **WHEN** `update` reads `getStatus` with `configured` false
 - **THEN** the chip has `disabled` true, and the info text is "KEY REQUIRED: set BEEMAPS_API_KEY in .env and restart the app."
+- **AND** a call of `onClick` while the chip is disabled sends no request
 - **AND** when `configured` is true, the chip has `disabled` false
 - **AND** then the info text is the hint of the readout
 
