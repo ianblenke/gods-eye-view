@@ -96,6 +96,13 @@ test('[beemaps-source-016] refuses the 21st call of a day with the default daily
     limit: 20,
   });
   assert.deepEqual(await readFile(dir), { date: TODAY, count: 20 });
+  assert.deepEqual(await budget.reserve(), {
+    ok: false,
+    reason: 'limit',
+    used: 20,
+    limit: 20,
+  });
+  assert.deepEqual(budget.current(), { used: 20, limit: 20 });
 });
 
 test('[beemaps-source-016] takes the daily limit from digits only that are 1 or more', async (t) => {

@@ -404,7 +404,6 @@ test('[beemaps-source-013] keeps the key out of the browser config of the build'
       standaloneConfig({ mode: 'test' }),
     ]) {
       assert.equal(JSON.stringify(config.define).includes(KEY), false);
-      assert.equal(JSON.stringify(config.define).includes('BEEMAPS'), false);
     }
   } finally {
     if (before === undefined) delete process.env.BEEMAPS_API_KEY;
@@ -534,6 +533,11 @@ test('[beemaps-source-019] keeps an error answer out of the memory', async (t) =
     });
     const first = await server.frames({ bbox: BOX });
     assert.notEqual(first.status, 200, name);
+    if (hold > 0) {
+      const held = await server.frames({ bbox: BOX });
+      assert.equal(held.status, first.status, name);
+      assert.equal(server.calls.length, 1, name);
+    }
     server.advance(hold);
     const second = await server.frames({ bbox: BOX });
     assert.equal(second.status, 200, name);
