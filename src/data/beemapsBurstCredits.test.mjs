@@ -209,3 +209,17 @@ test('[beemaps-burst-control-023] creates the folder before it writes', async ()
   await make(fs).credits.reserve(125);
   assert.deepEqual(fs.events.slice(-2), ['mkdir', 'write credits.json']);
 });
+
+test('[beemaps-burst-control-022] reads the limit again at each call when it is a function', async () => {
+  const fs = fakeFs();
+  const clock = { t: T0 };
+  let limit = 250;
+  const credits = createCredits({ dir: DIR, limit: () => limit, now: () => clock.t, fs });
+  assert.deepEqual(await credits.peek(), { ok: true, used: 0, limit: 250 });
+  assert.deepEqual(await credits.reserve(125), { ok: true, used: 125, limit: 250 });
+  assert.deepEqual(await credits.reserve(125), { ok: true, used: 250, limit: 250 });
+  assert.deepEqual(await credits.reserve(125), { ok: false, reason: 'limit', used: 250, limit: 250 });
+  limit = 500;
+  assert.deepEqual(await credits.peek(), { ok: true, used: 250, limit: 500 });
+  assert.deepEqual(await credits.reserve(125), { ok: true, used: 375, limit: 500 });
+});

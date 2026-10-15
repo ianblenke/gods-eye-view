@@ -10,12 +10,13 @@ import { promises as fsp } from 'node:fs';
 /**
  * @param {object} options
  * @param {string} options.dir - Folder of the file `credits.json`.
- * @param {number} options.limit - Credits for each UTC day.
+ * @param {number|(() => number)} options.limit - Credits for each UTC day, or a function that gives them.
  * @param {() => number} options.now - Clock in milliseconds.
  * @param {object} [options.fs] - File functions: readFile, mkdir, writeFile.
  */
 export function createCredits({ dir, limit, now, fs = fsp }) {
   const file = path.join(dir, 'credits.json');
+  const limitNow = () => (typeof limit === 'function' ? limit() : limit);
   const today = () => new Date(now()).toISOString().slice(0, 10);
   let state = null;
   let loading = null;
@@ -61,7 +62,7 @@ export function createCredits({ dir, limit, now, fs = fsp }) {
       state = null;
       return { ok: false, reason: 'unavailable' };
     }
-    return { ok: true, used: state.credits, limit };
+    return { ok: true, used: state.credits, limit: limitNow() };
   }
 
   /** Count the credits, write the file, and answer. Nothing waits between the check and the count. */
@@ -72,8 +73,9 @@ export function createCredits({ dir, limit, now, fs = fsp }) {
       state = null;
       return { ok: false, reason: 'unavailable' };
     }
-    if (state.credits + credits > limit) {
-      return { ok: false, reason: 'limit', used: state.credits, limit };
+    const daily = limitNow();
+    if (state.credits + credits > daily) {
+      return { ok: false, reason: 'limit', used: state.credits, limit: daily };
     }
     state.credits += credits;
     const used = state.credits;
@@ -91,7 +93,7 @@ export function createCredits({ dir, limit, now, fs = fsp }) {
       state = null;
       return { ok: false, reason: 'unavailable' };
     }
-    return { ok: true, used, limit };
+    return { ok: true, used, limit: daily };
   }
 
   return { peek, reserve };
