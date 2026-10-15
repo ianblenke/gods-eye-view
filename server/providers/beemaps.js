@@ -45,7 +45,7 @@ function send(res, status, payload, headers = {}) {
 }
 
 /** True when the request is for the route itself and not for a path below it. */
-const onOwnPath = (req) => ['', '/'].includes(req.url.split('?')[0]);
+const onOwnPath = (req) => req.url.split('?')[0] === '/';
 
 const refusal = (status, payload, headers) => ({
   ok: false,
