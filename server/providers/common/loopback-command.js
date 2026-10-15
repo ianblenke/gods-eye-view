@@ -26,7 +26,7 @@ export function isLoopbackCommand(req) {
   } catch {
     return false;
   }
-  if (parsed.host !== host.toLowerCase()) return false;
+  if (parsed.host !== host) return false;
   const name = parsed.hostname.replace(/^\[|\]$/g, '');
   if (!LOOPBACK_HOSTS.has(name)) return false;
   return (

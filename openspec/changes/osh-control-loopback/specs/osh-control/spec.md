@@ -28,4 +28,4 @@ Origin: spec-first
 - **WHEN** a POST from a loopback socket, with a loopback host and the same origin, has a header that is not empty
 - **AND** the header is `forwarded`, `via`, `x-forwarded-for`, `x-forwarded-host`, `x-forwarded-port`, `x-forwarded-proto`, `x-real-ip`, `cf-connecting-ip` or `cf-ray`
 - **THEN** the route answers `403` with `{error:'cross_origin'}`
-- **AND** the same header with an empty text does not stop the POST
+- **AND** the same header with no text, or with only spaces, does not stop the POST
