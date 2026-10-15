@@ -39,7 +39,7 @@ Round 1 of the formal review found gaps in the tests and the faults. Each gap go
 Round 2 of the formal review found errors in the spec text and gaps in the faults:
 - The spec now says that a hold answers before the quote, and that a repeat of a key has the quoteId of its record. The design now says that the record keeps its state after an error that nobody expects.
 - Four faults were added. Three read the body before the check of the local request, one for each route. One moves the hold after a refusal before the replay of a record.
-- Three test titles changed, and no test changed otherwise. The runs of this file ran after the change of the titles.
+- Three test titles changed, and no test changed otherwise. The runs of this file ran after that change.
 
 Lines of the first run on the final commit (scenario | fault | failing tests):
 beemaps-burst-control-004 | Use a minimum of 124 credits | failing: [beemaps-burst-control-004], [beemaps-burst-control-008], [beemaps-burst-control-010], [beemaps-burst-control-011]

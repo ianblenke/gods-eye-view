@@ -1256,7 +1256,7 @@ test('[beemaps-burst-control-039] answers 500 ledger_unavailable when the file i
   assert.equal((await bad.confirm(q2.body.quoteId, idem(2))).status, 200);
 });
 
-test('[beemaps-burst-control-029] refuses every confirm with a new idempotency key for 300 seconds after 401 or 403, 600 seconds after 402, and the seconds of Retry-After after 429', async (t) => {
+test('[beemaps-burst-control-029] refuses every confirm with a new idempotency key during a hold of 300 seconds, 600 seconds or the seconds of Retry-After', async (t) => {
   for (const [respond, seconds, status, error] of [
     [() => failure(401), 300, 403, 'key_rejected'],
     [() => failure(403), 300, 403, 'key_rejected'],
