@@ -528,7 +528,7 @@ test('[beemaps-source-019] keeps an error answer out of the memory', async (t) =
   assert.equal(server.calls.length, 2);
 });
 
-test('[beemaps-source-020] shares one upstream request between two overlapping requests for one area', async (t) => {
+test('[beemaps-source-020] shares one upstream request between two requests for one area that arrive together', async (t) => {
   let release;
   const slow = new Promise((resolve) => {
     release = resolve;
@@ -552,7 +552,7 @@ test('[beemaps-source-020] shares one upstream request between two overlapping r
   assert.deepEqual(await server.budget(), { date: '2026-10-15', count: 1 });
 });
 
-test('[beemaps-source-020] sends an error answer of the shared request to every waiting request', async (t) => {
+test('[beemaps-source-020] sends an error answer of the shared request to every request that waits', async (t) => {
   let release;
   const slow = new Promise((resolve) => {
     release = resolve;
@@ -677,6 +677,9 @@ test('[beemaps-source-022] answers the rate limit before the body and the body b
   assert.equal((await server.frames('x')).status, 429);
   const early = await server.frames({ bbox: BOX, extra: 1 });
   assert.equal(early.status, 429);
+  const oversize = await server.frames(' '.repeat(8193));
+  assert.equal(oversize.status, 429);
+  assert.equal(oversize.read, false);
 });
 
 test('[beemaps-source-022] answers the input and the key before the memory and the memory before the hold and the budget', async (t) => {
@@ -745,6 +748,19 @@ test('[beemaps-source-023] names the failure of the upstream and counts the call
     assert.equal(result.text.includes(KEY), false);
     assert.deepEqual(await server.budget(), { date: '2026-10-15', count: 1 });
   }
+});
+
+test('[beemaps-source-023] counts each failed call against the daily limit', async (t) => {
+  const server = await install(t, {
+    env: { BEEMAPS_DAILY_QUERIES: '2' },
+    respond: () => failure(500),
+  });
+  assert.equal((await server.frames({ bbox: BOX })).status, 502);
+  assert.equal((await server.frames({ bbox: boxAt(1) })).status, 502);
+  const spent = await server.frames({ bbox: boxAt(2) });
+  assert.equal(spent.status, 429);
+  assert.deepEqual(spent.body, { error: 'budget', used: 2, limit: 2 });
+  assert.equal(server.calls.length, 2);
 });
 
 test('[beemaps-source-023] gives upstream_failed for a timeout and clears the timer', async (t) => {
@@ -822,7 +838,7 @@ test('[beemaps-source-024] holds for 600 seconds after 402', async (t) => {
   assert.equal(server.calls.length, 2);
 });
 
-test('[beemaps-source-024] holds for the retryAfter seconds after 429 and counts down the seconds that remain', async (t) => {
+test('[beemaps-source-024] holds for the retryAfter seconds after 429 and gives the seconds that remain', async (t) => {
   const server = await install(t, {
     respond: (url, init, call) =>
       call === 1 ? failure(429, { 'retry-after': '30' }) : ok(),
@@ -889,7 +905,7 @@ test('[beemaps-source-016] writes the budget file before it sends the request', 
   assert.deepEqual(seen, [{ date: '2026-10-15', count: 1 }]);
 });
 
-test('[beemaps-source-016] keeps the budget file in .gev-cache/beemaps under the working folder by default', async (t) => {
+test('[beemaps-source-016] keeps the budget file in .gev-cache/beemaps under the current folder by default', async (t) => {
   const home = await tempDir(t);
   const before = process.cwd();
   process.chdir(home);

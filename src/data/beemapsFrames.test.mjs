@@ -108,7 +108,7 @@ test('[beemaps-source-025] writes the time with toISOString and reads other form
   );
 });
 
-test('[beemaps-source-025] drops an item whose timestamp is not a text in ISO form with Z or an offset', () => {
+test('[beemaps-source-025] drops an item whose timestamp is not a text of the form YYYY-MM-DDTHH:MM:SS with Z or an offset', () => {
   for (const timestamp of [
     2026,
     1788264000000,
