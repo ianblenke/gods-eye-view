@@ -1240,3 +1240,51 @@ test('[beemaps-burst-control-037] frees the window 60 seconds after the first re
   for (let n = 0; n < 30; n += 1)
     assert.equal((await server.request(STATUS, { method: 'GET' })).status, 200);
 });
+
+test('[beemaps-burst-control-001] passes a path below each of the four routes to next with no answer', async (t) => {
+  const server = await install(t);
+  for (const route of [STATUS, QUOTE, CONFIRM, LIST]) {
+    const result = await server.request(`${route}/extra`, { method: route === STATUS ? 'GET' : 'POST', body: {} });
+    assert.equal(result.next, true, route);
+    assert.equal(result.status, undefined, route);
+  }
+  assert.equal(server.calls.length, 0);
+});
+
+test('[beemaps-burst-control-010] answers the refusals of the box, of the area and of the credits at the route quote, and keeps no quote', async (t) => {
+  const server = await install(t);
+  const refusals = [
+    [{ bbox: [1, 2, 3] }, { error: 'bad_area' }],
+    [{ bbox: [10, 60, 10.05, 60.02] }, { error: 'area_too_large', maxKm2: 5 }],
+    [{ bbox: BOX, credits: 124 }, { error: 'bad_credits' }],
+    [{ bbox: BOX, other: 1 }, { error: 'bad_body' }],
+  ];
+  for (const [body, expected] of refusals) {
+    const result = await server.request(QUOTE, { body });
+    assert.deepEqual([result.status, result.body], [400, expected], JSON.stringify(body));
+  }
+  assert.deepEqual(await server.files(), []);
+  assert.equal(server.calls.length, 0);
+});
+
+test('[beemaps-burst-control-030] answers as usual when the write of a line after the first line fails', async (t) => {
+  const hooks = {
+    audit: async (line) => {
+      if (line.outcome !== 'accepted') throw new Error('disk full');
+    },
+  };
+  const rows = [
+    [() => created(), 200, undefined],
+    [() => failure(403), 403, 'key_rejected'],
+    [() => failure(500), 502, 'outcome_unknown'],
+  ];
+  for (const [respond, status, error] of rows) {
+    const server = await install(t, { respond, hooks });
+    const result = await server.flow(1);
+    assert.deepEqual([result.status, result.body.error], [status, error]);
+    assert.equal((await server.ledger()).records[0].state === 'pending', false);
+  }
+  const server = await install(t, { hooks });
+  const blocked = await server.request(CONFIRM, { body: 'x' });
+  assert.deepEqual([blocked.status, blocked.body], [400, { error: 'bad_body' }]);
+});

@@ -390,3 +390,11 @@ test('[beemaps-burst-control-036] gives key_rejected for 401 and 403 and upstrea
   timers[0].fn();
   assert.deepEqual(await promise, { ok: false, error: 'upstream_failed' });
 });
+
+test('[beemaps-burst-control-018] gives the result of a refusal also when the body cannot be cancelled', async () => {
+  const stuck = (code) =>
+    new Response(new ReadableStream({ cancel: () => Promise.reject(new Error('stuck')) }), { status: code });
+  assert.equal((await create(() => stuck(403)).promise).kind, 'refused');
+  assert.equal((await create(() => stuck(500)).promise).kind, 'unknown');
+  assert.equal((await list(() => stuck(401)).promise).ok, false);
+});

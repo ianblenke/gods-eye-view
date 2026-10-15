@@ -239,14 +239,12 @@ export function beemapsBurstProxy({
         isRate ? { 'Retry-After': String(wait) } : {},
       );
     }
-    const unknownHold = await ledger.unknownHold();
-    if (!unknownHold.ok) return block(500, 'ledger_unavailable');
-    if (unknownHold.seconds > 0) {
+    if (found.holdSeconds > 0) {
       return block(409, 'outcome_unknown', {
         ok: false,
         outcome: 'unknown',
         held: true,
-        retryAfter: unknownHold.seconds,
+        retryAfter: found.holdSeconds,
       });
     }
     const request = quotes.take(quoteId);

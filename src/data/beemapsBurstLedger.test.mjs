@@ -42,6 +42,7 @@ const make = (fs, clock = { t: T0 }) => ({
   ledger: createLedger({ dir: DIR, now: () => clock.t, fs }),
 });
 const saved = (fs) => JSON.parse(fs.files[FILE]);
+const hold = async (ledger) => (await ledger.find('z'.repeat(16))).holdSeconds;
 const record = (n, state, time = T0, extra = {}) => ({
   key: `key-${String(n).padStart(12, '0')}`,
   quoteId: n.toString(16).padStart(32, '0'),
@@ -54,7 +55,7 @@ const BURST = { id: 'b1', status: 'active', validUntil: 'x', credits: 125 };
 test('[beemaps-burst-control-028] writes a pending record with the key, the quoteId, the state and the time before it answers', async () => {
   const fs = fakeFs();
   const { ledger } = make(fs);
-  assert.deepEqual(await ledger.find(KEY), { ok: true, record: null });
+  assert.deepEqual(await ledger.find(KEY), { ok: true, record: null, holdSeconds: 0 });
   assert.deepEqual(await ledger.begin(KEY, QUOTE), { ok: true });
   assert.deepEqual(saved(fs), {
     records: [{ key: KEY, quoteId: QUOTE, state: 'pending', time: T0 }],
@@ -62,6 +63,7 @@ test('[beemaps-burst-control-028] writes a pending record with the key, the quot
   assert.deepEqual(await ledger.find(KEY), {
     ok: true,
     record: { key: KEY, quoteId: QUOTE, state: 'pending', time: T0 },
+    holdSeconds: 600,
   });
 });
 
@@ -129,7 +131,7 @@ test('[beemaps-burst-control-039] reads a missing file as an empty ledger and an
   assert.deepEqual(await ledger.begin(KEY, QUOTE), { ok: false });
   assert.deepEqual(fs.events.filter((e) => e.startsWith('write')), []);
   fail = false;
-  assert.deepEqual(await ledger.find(KEY), { ok: true, record: null });
+  assert.deepEqual(await ledger.find(KEY), { ok: true, record: null, holdSeconds: 0 });
   const reads = fs.events.filter((e) => e === 'read').length;
   await ledger.find(KEY);
   assert.equal(fs.events.filter((e) => e === 'read').length, reads);
@@ -178,7 +180,7 @@ test('[beemaps-burst-control-039] gives a failure when the write fails and keeps
   const { ledger } = make(fs);
   assert.deepEqual(await ledger.begin(KEY, QUOTE), { ok: false });
   fail = false;
-  assert.deepEqual(await ledger.find(KEY), { ok: true, record: null });
+  assert.deepEqual(await ledger.find(KEY), { ok: true, record: null, holdSeconds: 0 });
   assert.deepEqual(await ledger.begin(KEY, QUOTE), { ok: true });
 });
 
@@ -197,17 +199,17 @@ test('[beemaps-burst-control-039] writes a temporary file first and then renames
 test('[beemaps-burst-control-040] gives the seconds that remain of 600 for the newest record that is unknown or pending, rounded up', async () => {
   const fs = fakeFs();
   const { clock, ledger } = make(fs);
-  assert.deepEqual(await ledger.unknownHold(), { ok: true, seconds: 0 });
+  assert.equal(await hold(ledger), 0);
   await ledger.begin(KEY, QUOTE);
-  assert.deepEqual(await ledger.unknownHold(), { ok: true, seconds: 600 });
+  assert.equal(await hold(ledger), 600);
   clock.t = T0 + 100_000;
-  assert.deepEqual(await ledger.unknownHold(), { ok: true, seconds: 500 });
+  assert.equal(await hold(ledger), 500);
   clock.t = T0 + 599_500;
-  assert.deepEqual(await ledger.unknownHold(), { ok: true, seconds: 1 });
+  assert.equal(await hold(ledger), 1);
   clock.t = T0 + 600_000;
-  assert.deepEqual(await ledger.unknownHold(), { ok: true, seconds: 0 });
+  assert.equal(await hold(ledger), 0);
   clock.t = T0 + 700_000;
-  assert.deepEqual(await ledger.unknownHold(), { ok: true, seconds: 0 });
+  assert.equal(await hold(ledger), 0);
 });
 
 test('[beemaps-burst-control-040] gives no hold for created and refused records and takes the largest hold of several records', async () => {
@@ -219,12 +221,41 @@ test('[beemaps-burst-control-040] gives no hold for created and refused records 
   ];
   const fs = fakeFs({ [FILE]: JSON.stringify({ records }) });
   const { ledger } = make(fs);
-  assert.deepEqual(await ledger.unknownHold(), { ok: true, seconds: 500 });
+  assert.equal(await hold(ledger), 500);
   const quiet = make(fakeFs({ [FILE]: JSON.stringify({ records: records.slice(0, 2) }) }));
-  assert.deepEqual(await quiet.ledger.unknownHold(), { ok: true, seconds: 0 });
+  assert.equal(await hold(quiet.ledger), 0);
 });
 
-test('[beemaps-burst-control-040] gives a failure for the hold when the file fails', async () => {
+test('[beemaps-burst-control-040] gives a failure with the hold when the file fails', async () => {
   const fs = fakeFs({ [FILE]: 'not json' });
-  assert.deepEqual(await make(fs).ledger.unknownHold(), { ok: false });
+  assert.deepEqual(await make(fs).ledger.find(KEY), { ok: false });
+});
+
+test('[beemaps-burst-control-028] gives a failure for a finish of a key that has no record', async () => {
+  const { ledger } = make(fakeFs());
+  assert.deepEqual(await ledger.finish(KEY, 'unknown', {}), { ok: false });
+  await ledger.find(KEY);
+  assert.deepEqual(await ledger.finish(KEY, 'unknown', {}), { ok: false });
+});
+
+test('[beemaps-burst-control-039] gives a failure when the write of a finish fails and keeps the new state in memory', async () => {
+  let fail = false;
+  const fs = fakeFs({}, {
+    writeFile: async () => {
+      if (fail) throw new Error('disk full');
+    },
+  });
+  const { ledger } = make(fs);
+  await ledger.begin(KEY, QUOTE);
+  fail = true;
+  assert.deepEqual(await ledger.finish(KEY, 'unknown', {}), { ok: false });
+  assert.equal((await ledger.find(KEY)).record.state, 'unknown');
+  assert.equal(saved(fs).records[0].state, 'pending');
+});
+
+test('[beemaps-burst-control-028] reads a created record that has no creditsRemaining with null', async () => {
+  const text = JSON.stringify({ records: [record(1, 'created', T0, { burst: BURST })] });
+  const found = await make(fakeFs({ [FILE]: text })).ledger.find(record(1, 'x').key);
+  assert.equal(found.record.creditsRemaining, null);
+  assert.equal(found.record.burst.id, 'b1');
 });

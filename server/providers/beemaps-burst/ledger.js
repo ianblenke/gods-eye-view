@@ -126,7 +126,21 @@ export function createLedger({ dir, now, fs = fsp }) {
     return write;
   }
 
-  /** The record of a key, or null. `ok` is false when the file fails. */
+  /** The whole seconds that remain of the hold after an unknown outcome. */
+  function holdSeconds() {
+    let seconds = 0;
+    for (const record of records) {
+      if (record.state !== 'unknown' && record.state !== 'pending') continue;
+      const remaining = record.time + HOLD_MS - now();
+      if (remaining > 0) seconds = Math.max(seconds, Math.ceil(remaining / 1000));
+    }
+    return seconds;
+  }
+
+  /**
+   * The record of a key, or null, and the seconds of the hold after an unknown
+   * outcome. `ok` is false when the file fails.
+   */
   async function find(key) {
     try {
       await ready();
@@ -135,7 +149,11 @@ export function createLedger({ dir, now, fs = fsp }) {
       return { ok: false };
     }
     const record = records.find((entry) => entry.key === key);
-    return { ok: true, record: record === undefined ? null : clean(record) };
+    return {
+      ok: true,
+      record: record === undefined ? null : clean(record),
+      holdSeconds: holdSeconds(),
+    };
   }
 
   /** Write the record "pending" of a key and its quote. */
@@ -175,22 +193,5 @@ export function createLedger({ dir, now, fs = fsp }) {
     return { ok: true };
   }
 
-  /** The whole seconds that remain of the hold after an unknown outcome. */
-  async function unknownHold() {
-    try {
-      await ready();
-    } catch {
-      records = null;
-      return { ok: false };
-    }
-    let seconds = 0;
-    for (const record of records) {
-      if (record.state !== 'unknown' && record.state !== 'pending') continue;
-      const remaining = record.time + HOLD_MS - now();
-      if (remaining > 0) seconds = Math.max(seconds, Math.ceil(remaining / 1000));
-    }
-    return { ok: true, seconds };
-  }
-
-  return { find, begin, finish, unknownHold };
+  return { find, begin, finish };
 }

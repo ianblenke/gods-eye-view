@@ -138,6 +138,8 @@ test('[beemaps-burst-control-008] reads a body of exactly the limit and gives nu
   assert.equal(await readBodyText(body([Buffer.from('€€€')]), 8), null);
   assert.equal(await readBodyText(body([Buffer.from('€€')]), 8), '€€');
   assert.equal(await readBodyText(body([]), 4096), '');
+  assert.equal(await readBodyText(Readable.from(['{"a":', '1}']), 4096), '{"a":1}');
+  assert.equal(await readBodyText(Readable.from(['€€€']), 8), null);
 });
 
 test('[beemaps-burst-control-008] answers bad_body for a body that is not a JSON object or has another field', () => {
