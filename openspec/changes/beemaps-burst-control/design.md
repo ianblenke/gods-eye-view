@@ -50,7 +50,7 @@ The audit line "accepted" and the record "pending" are written, and the writes e
 
 ### D8: A hold after an unknown outcome
 
-An unknown outcome blocks only its own key, so a new quote and a new key could send again at once. The plugin refuses every confirm for 600 seconds after a record with the state "unknown" or "pending". The hold comes from the time in the ledger file, so a restart does not end it. A quote is gone after the quote step for every outcome, so the same quote with a new key cannot send.
+An unknown outcome blocks only its own key, so a new quote and a new key could send again at once. The plugin refuses every confirm with a new idempotency key for 600 seconds after a record with the state "unknown" or "pending". The hold comes from the time in the ledger file, so a restart does not end it. A quote is gone after the quote step for every outcome, so the same quote with a new key cannot send.
 
 ### D9: Answers have only listed fields
 

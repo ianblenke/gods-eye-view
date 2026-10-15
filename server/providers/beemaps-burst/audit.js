@@ -48,7 +48,7 @@ const finite = (value) => (Number.isFinite(value) ? value : null);
 
 /**
  * @param {object} [options]
- * @param {string} [options.sourceRoot] - Folder that holds `.gev-logs`.
+ * @param {string} [options.sourceRoot] - Folder that contains `.gev-logs`.
  * @param {() => number} [options.now] - Clock in milliseconds.
  * @param {(line: string) => Promise<void>} [options.append] - Replaces the file write.
  * @returns {(event: object) => Promise<void>}

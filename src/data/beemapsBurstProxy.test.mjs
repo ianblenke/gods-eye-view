@@ -88,7 +88,7 @@ const readJson = async (dir, name) => {
  */
 async function install(
   t,
-  { env = {}, respond, hooks = {}, cacheDir, preview = false } = {},
+  { env = {}, respond, hooks = {}, cacheDir, preview = false, audit } = {},
 ) {
   const dir = cacheDir ?? (await tempDir(t));
   const clock = { t: NOW };
@@ -138,14 +138,16 @@ async function install(
     },
     clearTimer: (id) => cleared.push(id),
     cacheDir: dir,
-    audit: createAudit({
-      now: () => clock.t,
-      append: async (line) => {
-        if (hooks.audit) await hooks.audit(JSON.parse(line));
-        lines.push(JSON.parse(line));
-        events.push(`audit ${JSON.parse(line).outcome}`);
-      },
-    }),
+    audit:
+      audit ??
+      createAudit({
+        now: () => clock.t,
+        append: async (line) => {
+          if (hooks.audit) await hooks.audit(JSON.parse(line));
+          lines.push(JSON.parse(line));
+          events.push(`audit ${JSON.parse(line).outcome}`);
+        },
+      }),
     randomId: () => `request-${++counter}`,
     fs: fsLayer,
   });
@@ -536,7 +538,7 @@ const exhaustRate = async (server, url = CONFIRM, count = 3) => {
   for (let n = 0; n < count; n += 1) await server.request(url, { body: {} });
 };
 
-test('[beemaps-burst-control-007] names the first broken step for each pair of neighbouring steps of a confirm', async (t) => {
+test('[beemaps-burst-control-007] names the first broken step for each pair of neighbours in the list of steps of a confirm', async (t) => {
   const answer = (result) => [result.status, result.body.error];
   // method and local request
   let server = await install(t);
@@ -1254,7 +1256,7 @@ test('[beemaps-burst-control-039] answers 500 ledger_unavailable when the file i
   assert.equal((await bad.confirm(q2.body.quoteId, idem(2))).status, 200);
 });
 
-test('[beemaps-burst-control-029] holds every confirm for 300 seconds after 401 or 403, 600 seconds after 402, and the seconds of Retry-After after 429', async (t) => {
+test('[beemaps-burst-control-029] refuses every confirm for 300 seconds after 401 or 403, 600 seconds after 402, and the seconds of Retry-After after 429', async (t) => {
   for (const [respond, seconds, status, error] of [
     [() => failure(401), 300, 403, 'key_rejected'],
     [() => failure(403), 300, 403, 'key_rejected'],
@@ -1320,7 +1322,7 @@ test('[beemaps-burst-control-029] starts no hold after a 400, and a new plugin h
   assert.equal((await restarted.flow(2)).status, 200);
 });
 
-test('[beemaps-burst-control-040] holds every confirm with a new key for 600 seconds after an unknown outcome, from the ledger file', async (t) => {
+test('[beemaps-burst-control-040] refuses every confirm with a new key for 600 seconds after an unknown outcome, from the ledger file', async (t) => {
   const server = await install(t, { respond: () => failure(500) });
   const first = await server.flow(1);
   assert.equal(first.status, 502);
@@ -1684,7 +1686,7 @@ test('[beemaps-burst-control-033] answers 400 bad_body to a list body that is to
   assert.equal(server.calls.length, 0);
 });
 
-test('[beemaps-burst-control-033] names the first broken step for each pair of neighbouring steps of a list request', async (t) => {
+test('[beemaps-burst-control-033] names the first broken step for each pair of neighbours in the list of steps of a list request', async (t) => {
   const answer = (result) => [result.status, result.body.error];
   let server = await install(t, { env: { BEEMAPS_BURST_ENABLED: undefined } });
   for (let n = 0; n < 6; n += 1) await server.request(LIST, { body: {} });
@@ -2186,7 +2188,7 @@ test('[beemaps-burst-control-016] reserves, writes and sends the credits and the
   ]);
 });
 
-test('[beemaps-burst-control-031] gives the duration of the send in the closing line', async (t) => {
+test('[beemaps-burst-control-031] gives the duration of the send in the second line', async (t) => {
   let server;
   server = await install(t, {
     respond: () => {
@@ -2199,7 +2201,7 @@ test('[beemaps-burst-control-031] gives the duration of the send in the closing 
   assert.equal(server.lines.at(-1).durationMs, 250);
 });
 
-test('[beemaps-burst-control-030] waits for the closing line of each outcome, and writes it after the record', async (t) => {
+test('[beemaps-burst-control-030] waits for the second line of each outcome, and writes it after the record', async (t) => {
   for (const [respond, outcome] of [
     [() => created(), 'created'],
     [() => failure(403), 'refused'],
@@ -2399,4 +2401,196 @@ test('[beemaps-burst-control-036] gives a failure of the new request to a reques
     ],
   );
   assert.equal(server.calls.length, 2);
+});
+
+test('[beemaps-burst-control-031] writes a blocked line for busy, key_reused, the hold after an unknown outcome, budget_unavailable and ledger_unavailable', async (t) => {
+  const lastLine = (server) => {
+    const line = server.lines.at(-1);
+    return [line.outcome, line.reason];
+  };
+  const slow = holdable();
+  let server = await install(t, { respond: slow.respond });
+  const opened = slow.hold();
+  const quoted = await server.quote();
+  const first = server.confirm(quoted.body.quoteId, idem(1));
+  await waitFor(() => server.calls.length === 1);
+  assert.equal(
+    (await server.confirm('b'.repeat(32), idem(2))).body.error,
+    'busy',
+  );
+  assert.deepEqual(lastLine(server), ['blocked', 'busy']);
+  opened.open();
+  await first;
+
+  server = await install(t);
+  const one = await server.quote();
+  const two = await server.quote();
+  assert.equal((await server.confirm(one.body.quoteId, idem(1))).status, 200);
+  const reused = await server.confirm(two.body.quoteId, idem(1));
+  assert.equal(reused.body.error, 'key_reused');
+  assert.deepEqual(lastLine(server), ['blocked', 'key_reused']);
+  assert.deepEqual(
+    [server.lines.at(-1).quoteId, server.lines.at(-1).idempotencyKey],
+    [two.body.quoteId, idem(1)],
+  );
+
+  server = await install(t, { respond: () => failure(500) });
+  assert.equal((await server.flow(1)).status, 502);
+  assert.equal((await server.flow(2)).body.error, 'outcome_unknown');
+  assert.deepEqual(lastLine(server), ['blocked', 'outcome_unknown']);
+
+  server = await install(t, {
+    hooks: {
+      writeFile: async (file) => {
+        if (file.includes('credits')) throw new Error('disk full');
+      },
+    },
+  });
+  assert.equal((await server.flow(1)).body.error, 'budget_unavailable');
+  assert.deepEqual(lastLine(server), ['blocked', 'budget_unavailable']);
+
+  const dir = await tempDir(t);
+  await fsp.writeFile(path.join(dir, 'ledger.json'), 'not json');
+  server = await install(t, { cacheDir: dir });
+  assert.equal((await server.flow(1)).body.error, 'ledger_unavailable');
+  assert.deepEqual(lastLine(server), ['blocked', 'ledger_unavailable']);
+
+  server = await install(t, {
+    hooks: {
+      writeFile: async (file) => {
+        if (file.includes('ledger')) throw new Error('disk full');
+      },
+    },
+  });
+  assert.equal((await server.flow(1)).body.error, 'ledger_unavailable');
+  assert.deepEqual(lastLine(server), ['blocked', 'ledger_unavailable']);
+});
+
+test('[beemaps-burst-control-013] gives quote_expired at once for the same quote with a new key, after every outcome that is not a hold', async (t) => {
+  const again = async (server, quoteId, n) => {
+    const calls = server.calls.length;
+    const result = await server.confirm(quoteId, idem(n));
+    assert.deepEqual(
+      [result.status, result.body],
+      [410, { error: 'quote_expired' }],
+    );
+    assert.equal(server.calls.length, calls);
+  };
+  let server = await install(t);
+  let quoted = await server.quote();
+  assert.equal(
+    (await server.confirm(quoted.body.quoteId, idem(1))).status,
+    200,
+  );
+  await again(server, quoted.body.quoteId, 2);
+
+  server = await install(t, { respond: () => failure(400) });
+  quoted = await server.quote();
+  assert.equal(
+    (await server.confirm(quoted.body.quoteId, idem(1))).status,
+    400,
+  );
+  await again(server, quoted.body.quoteId, 2);
+
+  server = await install(t, { env: { BEEMAPS_BURST_DAILY_CREDITS: '125' } });
+  const used = await server.quote();
+  quoted = await server.quote();
+  assert.equal((await server.confirm(used.body.quoteId, idem(1))).status, 200);
+  assert.equal(
+    (await server.confirm(quoted.body.quoteId, idem(2))).body.error,
+    'budget_used',
+  );
+  await again(server, quoted.body.quoteId, 3);
+
+  let failing = true;
+  server = await install(t, {
+    hooks: {
+      audit: async () => {
+        if (failing) {
+          failing = false;
+          throw new Error('disk full');
+        }
+      },
+    },
+  });
+  quoted = await server.quote();
+  assert.equal(
+    (await server.confirm(quoted.body.quoteId, idem(1))).body.error,
+    'log_failed',
+  );
+  await again(server, quoted.body.quoteId, 2);
+
+  failing = true;
+  server = await install(t, {
+    hooks: {
+      writeFile: async (file) => {
+        if (file.includes('ledger') && failing) {
+          failing = false;
+          throw new Error('disk full');
+        }
+      },
+    },
+  });
+  quoted = await server.quote();
+  assert.equal(
+    (await server.confirm(quoted.body.quoteId, idem(1))).body.error,
+    'ledger_unavailable',
+  );
+  await again(server, quoted.body.quoteId, 2);
+
+  failing = true;
+  server = await install(t, {
+    hooks: {
+      writeFile: async (file) => {
+        if (file.includes('credits') && failing) {
+          failing = false;
+          throw new Error('disk full');
+        }
+      },
+    },
+  });
+  quoted = await server.quote();
+  assert.equal(
+    (await server.confirm(quoted.body.quoteId, idem(1))).body.error,
+    'budget_unavailable',
+  );
+  await again(server, quoted.body.quoteId, 2);
+});
+
+test('[beemaps-burst-control-007] gives the hold after an unknown outcome before the check of the quote, and writes no credits for a quote that does not exist', async (t) => {
+  const server = await install(t, { respond: () => failure(500) });
+  assert.equal((await server.flow(1)).status, 502);
+  const held = await server.confirm('e'.repeat(32), idem(2));
+  assert.deepEqual(
+    [held.status, held.body.error, held.body.held],
+    [409, 'outcome_unknown', true],
+  );
+  const fresh = await install(t);
+  const expired = await fresh.confirm('f'.repeat(32), idem(1));
+  assert.deepEqual(
+    [expired.status, expired.body],
+    [410, { error: 'quote_expired' }],
+  );
+  assert.equal(await fresh.credits(), null);
+  assert.equal(await fresh.ledger(), null);
+});
+
+test('[beemaps-burst-control-001] answers 500 internal_error for an error after the send, and the record keeps the state of that time', async (t) => {
+  const server = await install(t, {
+    audit: (event) => {
+      if (event.outcome === 'accepted') return Promise.resolve();
+      throw new Error('boom');
+    },
+  });
+  const quoted = await server.quote();
+  const result = await server.confirm(quoted.body.quoteId, idem(1));
+  assert.deepEqual(
+    [result.status, result.body],
+    [500, { error: 'internal_error' }],
+  );
+  assert.equal(server.calls.length, 1);
+  assert.equal((await server.ledger()).records[0].state, 'created');
+  const replay = await server.confirm(quoted.body.quoteId, idem(1));
+  assert.deepEqual([replay.status, replay.body.replayed], [200, true]);
+  assert.equal(server.calls.length, 1);
 });

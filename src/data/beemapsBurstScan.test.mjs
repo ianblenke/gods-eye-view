@@ -47,7 +47,7 @@ test('[beemaps-burst-control-038] has the plugin file and the files of its own f
   ]);
 });
 
-test('[beemaps-burst-control-038] holds the two upstream addresses once each and no other address in the plugin files', () => {
+test('[beemaps-burst-control-038] contains the two upstream addresses once each and no other address in the plugin files', () => {
   const files = Object.values(pluginFiles());
   const urls = files.flatMap(
     (text) => text.match(/https?:\/\/[^\s'"`)]+/g) ?? [],
@@ -66,7 +66,7 @@ test('[beemaps-burst-control-038] holds the two upstream addresses once each and
   );
 });
 
-test('[beemaps-burst-control-038] holds no text of the frames address or of the frames route in the plugin files', () => {
+test('[beemaps-burst-control-038] contains no text of the frames address or of the frames route in the plugin files', () => {
   for (const [name, text] of Object.entries(pluginFiles())) {
     assert.equal(text.includes('latest/poly'), false, name);
     assert.equal(text.includes('/api/beemaps/frames'), false, name);
@@ -74,7 +74,7 @@ test('[beemaps-burst-control-038] holds no text of the frames address or of the 
   }
 });
 
-test('[beemaps-burst-control-038] holds no text of the burst routes in the voice, tools and MCP files', () => {
+test('[beemaps-burst-control-038] contains no text of the burst routes in the voice, tools and MCP files', () => {
   for (const folder of ['src/voice/', 'src/tools/', 'server/mcp/']) {
     const texts = textsUnder(folder);
     assert.equal(Object.keys(texts).length > 3, true, folder);

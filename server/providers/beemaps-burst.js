@@ -29,9 +29,10 @@ import {
  * POST /api/beemaps/burst/confirm -> one create request for one quote (this machine only)
  * POST /api/beemaps/burst/list    -> the bursts of the key (this machine only)
  *
- * The steps of a confirm, in order: method, local request, rate limit, flag,
- * key, body, busy, idempotency key, hold, quote, budget, audit line, record of
- * the attempt, upstream request. The first step that answers ends the confirm.
+ * The steps of a confirm run in this order. They are: method, local request,
+ * rate limit, flag, key, body, busy, idempotency key, hold, quote, budget,
+ * audit line, record of the attempt, upstream request. The first step that
+ * answers ends the confirm.
  */
 
 const RATE_WINDOW_MS = 60_000;
@@ -115,7 +116,7 @@ function answerOfRecord(record, replayed) {
  * @param {Function} [options.setTimer] Timer for the request timeouts.
  * @param {Function} [options.clearTimer] Clears that timer.
  * @param {string} [options.cacheDir] Folder of `credits.json` and `ledger.json`.
- * @param {string} [options.sourceRoot] Folder that holds `.gev-logs`, for the default audit.
+ * @param {string} [options.sourceRoot] Folder that contains `.gev-logs`, for the default audit.
  * @param {(event: object) => Promise<void>} [options.audit] Writes an audit line.
  * @param {() => string} [options.randomId] Gives the id of a request.
  * @param {object} [options.fs] File functions for the two durable files.

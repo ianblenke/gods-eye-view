@@ -104,7 +104,7 @@ test('[beemaps-burst-control-021] gives the credits used and the limit with peek
   assert.equal(fs.events.filter((e) => e.startsWith('write')).length, 1);
 });
 
-test('[beemaps-burst-control-022] passes five reserves of 125 credits with a limit of 625 and refuses the sixth', async () => {
+test('[beemaps-burst-control-022] passes five calls of reserve for 125 credits with a limit of 625 and refuses the sixth', async () => {
   const fs = fakeFs();
   const { credits } = make(fs, 625);
   for (let n = 1; n <= 5; n += 1) {
@@ -125,7 +125,7 @@ test('[beemaps-burst-control-022] passes five reserves of 125 credits with a lim
   assert.deepEqual(saved(fs), { date: '2026-10-15', credits: 625 });
 });
 
-test('[beemaps-burst-control-022] refuses a reserve that is larger than the credits that remain and does not add to the file', async () => {
+test('[beemaps-burst-control-022] refuses a call of reserve that is larger than the credits that remain and does not add to the file', async () => {
   const fs = fakeFs({
     [FILE]: JSON.stringify({ date: '2026-10-15', credits: 500 }),
   });
@@ -213,7 +213,7 @@ test('[beemaps-burst-control-022] runs the writes one after the other and ends w
   assert.deepEqual(saved(fs), { date: '2026-10-15', credits: 375 });
 });
 
-test('[beemaps-burst-control-022] serializes the writes of reserves that start together and reads the file once', async () => {
+test('[beemaps-burst-control-022] serializes the writes of calls of reserve that start together and reads the file once', async () => {
   const fs = fakeFs(
     {},
     {

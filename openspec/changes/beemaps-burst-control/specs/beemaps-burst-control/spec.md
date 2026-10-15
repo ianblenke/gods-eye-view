@@ -12,6 +12,7 @@ Origin: spec-first
 - **AND** the list that `localProviderPlugins` returns has this plugin once, after the plugin "beemaps-proxy"
 - **AND** an error that nobody expects in `quote`, `confirm` or `list` gives 500 with `{error:'internal_error'}`, and it gives no unhandled rejection
 - **AND** every answer has the content type JSON and the cache control no-store
+- **AND** when that error comes after the send, the record keeps the state that it had when the error came
 
 ### Requirement: Off by default
 The routes MUST send no request to Bee Maps and MUST spend nothing unless `BEEMAPS_BURST_ENABLED` is exactly "true" and `BEEMAPS_BURST_API_KEY` has a key. The key of the frames provider MUST NOT count.
@@ -60,6 +61,7 @@ Origin: spec-first
 - **THEN** the answer names the first broken step of this list
 - **AND** the list is: method, local request, rate limit, flag, key, body, busy, idempotency key, hold, quote, budget
 - **AND** the test checks each pair of neighbours in the list, with a confirm that breaks only those two steps
+- **AND** the pair hold and quote is checked for the hold after a refusal and for the hold after an unknown outcome
 - **AND** a confirm that passes every step sends one upstream request
 - **AND** the steps after the quote are the budget, the audit line, the record of the attempt and the upstream request, in this order
 
@@ -249,7 +251,7 @@ Origin: spec-first
 - **WHEN** a test sends a key that has a record, with a `quoteId` other than the one of the record
 - **THEN** the answer is 409 with `{error:'key_reused'}`
 - **AND** the fake upstream gets no request, and the budget does not change
-- **AND** the check of the key comes before the check of the quote, so a repeat works after the quote has expired
+- **AND** the check of the idempotency key comes before the check of the quote, so a repeat works after the quote has expired
 
 #### Scenario: Keep the record on disk `beemaps-burst-control-028`
 - **WHEN** a test confirms a quote and reads the file `ledger.json` in the folder `beemaps-burst`
@@ -265,26 +267,27 @@ Origin: spec-first
 - **AND** when the write of the record after the send fails, the answer is still the outcome of the send
 - **AND** the file then keeps the state "pending"
 - **AND** a new plugin treats that key as an unknown outcome
-- **AND** a repeat of that key gets scenario 026, and a new key gets the hold of scenario 040
+- **AND** in that new plugin, a repeat of that key gets scenario 026, and a new key gets the hold of scenario 040
 
 #### Scenario: Refuse when the ledger fails `beemaps-burst-control-039`
 - **WHEN** the file `ledger.json` cannot be read, is not valid JSON, or contains a record that is not valid
 - **THEN** the route answers 500 with `{error:'ledger_unavailable'}` and sends no upstream request
 - **AND** the same answer follows when the write of the "pending" record fails
-- **AND** a missing file is an empty ledger, and any other read error is not
+- **AND** a file that does not exist is an empty ledger, and any other read error is not
 - **AND** the plugin writes a temporary file first and then renames it to `ledger.json`
 - **AND** a record is not valid when `retryAfter` is present and is not a whole number from 1 to 600
 - **AND** a record "refused" is not valid when its status is not a whole number from 400 to 599
 - **AND** the route reads the file again at the next request
 
 ### Requirement: Holds
-The plugin MUST refuse each confirm until a hold ends. A hold follows a refusal of the key, the credit or the rate, and an unknown outcome. The route MUST send no upstream request during a hold.
+The plugin MUST refuse each confirm with a new idempotency key until a hold ends. A hold follows a refusal of the key, the credit or the rate, and an unknown outcome. The route MUST send no upstream request during a hold. A repeat of a key that has a record still gets the answer of its record.
 Origin: spec-first
 
 #### Scenario: Hold after a refusal of Bee Maps `beemaps-burst-control-029`
 - **WHEN** Bee Maps refuses with 401 or 403, with 402 or with 429
 - **THEN** the hold lasts 300 seconds, 600 seconds, and the seconds of `Retry-After` as in scenario 018
-- **AND** a confirm during the hold gets the status and the error of the first refusal, with `ok` false, `outcome` "refused" and `held` true
+- **AND** a confirm with a new key during the hold gets the status and the error of the first refusal
+- **AND** that answer has `ok` false, `outcome` "refused" and `held` true
 - **AND** for 429 the answer also has `retryAfter` equal to the seconds that remain, and the confirm sends no upstream request and counts no credits
 - **AND** a confirm at the end of the hold goes on to the next steps
 - **AND** the holds after a refusal live in memory, so a new plugin has none of them
