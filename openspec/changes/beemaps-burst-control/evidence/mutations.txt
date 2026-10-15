@@ -1,6 +1,6 @@
 Named faults of beemaps-burst-control (AGENTS.md rule 13). One fault changes one part of one plugin file, or one line of a file that the scan test reads. The tests then run. The list below names the tests that failed.
 
-Code commit: c31f33d2e1941584ce4dec202c76d1502c7381fc. Both runs below ran on the files of this commit. The command git diff --stat c31f33d2 HEAD -- src server build prints nothing.
+Code commit: c31f33d2e1941584ce4dec202c76d1502c7381fc. Both runs below ran on the files of this commit. After the runs, 1 test title changed and nothing else in src, server and build changed. The command git diff -U0 c31f33d2 HEAD -- src server build shows the line.
 Runner: 6 scratch copies of the clone run in parallel. Each copy uses the same long-lived container of the image gods-eye-view:local, with the node_modules of the image.
 Each fault runs first against the test file of its own file. The command is: timeout 100 node --test --test-concurrency=4 --test-timeout=6000 --test-reporter=spec <test file>
 A fault that leaves that test file green then runs against all eight test files src/data/beemapsBurst*.test.mjs. The second step can only add failing tests. So a fault that fails no test in both steps is a real survivor.

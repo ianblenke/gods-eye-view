@@ -1,4 +1,4 @@
-Host checks of beemaps-burst-control, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit c31f33d2e1941584ce4dec202c76d1502c7381fc; later commits change evidence files, documents and trace files only.
+Host checks of beemaps-burst-control, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit c31f33d2e1941584ce4dec202c76d1502c7381fc; After the runs, 1 test title changed and nothing else in src, server and build changed. The command git diff -U0 c31f33d2 HEAD -- src server build shows the line. Later commits change evidence files, documents and trace files.
 
 ## node scripts/check-import-directions.mjs
 {"modules":1000,"portableEntries":80}

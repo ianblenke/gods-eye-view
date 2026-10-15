@@ -1,5 +1,5 @@
 Run of the burst routes in a real Vite server, with a fake upstream.
-The run used the files of the commit c31f33d2. The command git diff --stat c31f33d2 HEAD -- src server build prints nothing.
+The run used the files of the commit c31f33d2. After the runs, 1 test title changed and nothing else in src, server and build changed. The command git diff -U0 c31f33d2 HEAD -- src server build shows the line.
 The script is not in the repository. It lives in the tools folder of the lead, because a script in a change folder is a coverage gap.
 The script starts a fake upstream on 127.0.0.1 and a real Vite dev server with the real plugin. The plugin gets a fetch function that sends the two Bee Maps addresses to the fake. No request leaves the container.
 The key is a made-up text. The clock of the plugin is a fake clock that the script moves. So the rate limit of 3 confirms for each minute does not stop the steps.
