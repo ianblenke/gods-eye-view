@@ -6,7 +6,7 @@ Date: 2026-10-16
 Gates: make gates CHANGE=beemaps-burst-control passed
 Rounds: 4
 Scope: diff 98094929f7a303506c2b66fd3f2ef5660fe7c967
-Reviewed-Tree: 139f9408865d59d60b0c767ab2293735ec45dba2b05550c49265db22c53f7635
+Reviewed-Tree: 42570abb37d782a331e304f6a5cfeb8ac53e8a314081b0be8570f064fb5740b5
 
 ## Findings
 
