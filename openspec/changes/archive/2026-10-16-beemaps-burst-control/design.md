@@ -1,0 +1,89 @@
+## Context
+
+Base commit: `90698216` (main, after the merge of `beemaps-frames`).
+The OSH control route (`server/providers/osh-control.js` and its folder) is the model for the gate, the audit line and the order of the steps. The frames provider of change 1 is the model for the holds, the daily count and the injected fetch function, clock and timers.
+
+The create call of Bee Maps is `POST https://beemaps.com/api/developer/burst/create`. The body is a list of requests, and each request has a `geojson` shape and a `credits` number of 125 or more. The answer has `success`, `bursts` and `creditsRemaining`. The description lists only the answers 200 and 500 for this call. It has no dry run, no cancel call and no dollar rate. The call `GET /bursts` lists the bursts that the key created.
+
+## Goals / Non-goals
+
+**Goals:**
+- Spend money only when four things are true. The flag is exactly "true". A key of its own is set. The request comes from this machine. A person confirmed a quote.
+- Exactly one create request for one confirmed quote. No retry. No second request while one runs.
+- A durable budget, a durable record for each idempotency key, and an audit line before each send.
+- A clear answer when the outcome is not known.
+
+**Non-goals:**
+- A screen. Change 4 adds it.
+- Dollars, a cancel call, an expiration, a tracked location or a device type.
+- A refund of credits in the local budget.
+
+## Decisions
+
+### D1: New files outside the scanned folder
+
+The scan test of change 1 reads `server/providers/beemaps.js` and every file in `server/providers/beemaps/`. It says that no file contains the text burst. The new plugin lives in `server/providers/beemaps-burst.js` and the folder `server/providers/beemaps-burst/`, so the merged scenario stays true. A new scenario scans the new files.
+
+### D2: A quote, then a confirm
+
+A quote checks a box and a credit amount, keeps a single-use id for 120 seconds and spends nothing. A confirm names the quote and an idempotency key. The confirm checks the flag, the API key, the hold and the budget again, because a quote says nothing about the state at confirm time.
+
+### D3: The order of the steps of a confirm
+
+The steps run in this order, and the first step that refuses ends the confirm. The steps are: method, local request, rate limit, flag, API key, body, busy and idempotency key. The next steps are hold, quote, budget, audit line, record of the attempt and upstream request. A test checks each pair of neighbours in the first 11 steps.
+
+### D4: One confirm at a time
+
+A lock starts after the body step and ends in a `finally`. A second confirm gets `busy`. The lock makes the steps after it run one after the other, so the budget and the records need no other protection.
+
+### D5: Credits, before the send, never back
+
+The budget counts credits in a file, before the send. A refusal, an unknown outcome, a failed log write and a failed ledger write stay counted. The default daily limit is 625 credits, which is five bursts of 125 credits. The count is in credits because the dollar rate is not known.
+
+### D6: An unknown outcome is not a failure
+
+Only the status 200 with `success` true and exactly one burst with an id means "created". Only the statuses 400, 401, 402, 403 and 429 mean "refused", whatever the body is. All other answers mean "unknown", for example a 201, a 500, a timeout and a body that nobody can read. Bee Maps can have created the burst. An unknown outcome stays counted and blocks any resend under the same key. The error `outcome_unknown` tells change 4 to tell the person to check the list.
+
+### D7: Records before the send
+
+The audit line "accepted" and the record "pending" are written, and the writes end, before the send. A "pending" record that a restart finds reads as unknown. The record of a key contains the id of its quote, so the same key with another quote is refused.
+
+### D8: A hold after an unknown outcome
+
+An unknown outcome blocks only its own idempotency key, so a new quote and a new idempotency key could send again at once. The plugin refuses every confirm with a new idempotency key for 600 seconds after a record with the state "unknown" or "pending". The hold comes from the time in the ledger file, so a restart does not end it. A confirm uses up its quote at the quote step, so the same quote with a new idempotency key cannot send.
+
+### D9: Answers have only listed fields
+
+The answer of a created burst has `id`, `status`, `validUntil` and `credits`, and `creditsRemaining`. The list has seven fields for each burst. No text of an answer of Bee Maps goes to the browser, because an error text could hold a signed value.
+
+### D10: A key of its own, no same-account rule
+
+The plugin reads `BEEMAPS_BURST_API_KEY`, and never `BEEMAPS_API_KEY`. The OSH rule that two accounts must differ is not copied. Bee Maps appears to give one key for each account, so that rule could make the feature unusable.
+
+### D11: No redirect
+
+Every upstream call uses `redirect: 'error'`. A redirect of a create call would send the body again, which is a second spend. A redirect gives an unknown outcome for a create call and a failure for a list call.
+
+### D12: The list is part of this change
+
+The list shows where the owner asked drivers to map, so the route has the same local gate. It is a POST, because the gate needs the content type JSON. Change 4 can then stay a browser-only change, as change 2 was.
+
+### D13: The area is the rounded area
+
+The plugin rounds the box to 6 decimals, and then it rounds the area to 3 decimals. The limits 0.1 and 5 km² apply to that area. The person sees the same number in the quote. An area of exactly 5.000 passes, and an area of 5.001 does not. No box sits exactly on a limit when the area is a float, so a test cannot reach that edge.
+
+### D14: An error that nobody expects
+
+Each route that can wait has a guard. An error that nobody expects gives 500 with `internal_error`, and the lock of a confirm ends. Without the guard, a rejected promise could stop the dev server. After the send the record keeps the state that it has when the error comes. The hold and the replay rules then apply to that state. Change 4 must read this answer as "can have spent".
+
+## Risks / Trade-offs
+
+- [An unknown outcome hides a real success] → The error `outcome_unknown` tells change 4 to point to the list, and the record blocks a resend.
+- [A refusal uses up a daily credit] → The limit is five bursts, and the owner can raise it.
+- [The shapes come from the description] → No run used the real service. The classification treats every other shape as unknown.
+- [The routes need `make up-codex`] → The gate answers only this machine.
+
+## Purpose at archive time
+
+The lead sets this Purpose at archive time:
+"Create a Bee Maps burst only after a person confirms a quote. Count the credits before the send, send once, and write each attempt to a log that survives a restart."

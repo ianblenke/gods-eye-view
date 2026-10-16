@@ -1010,5 +1010,20 @@
   "src/data/beemapsFrames.test.mjs",
   "src/data/beemapsInput.test.mjs",
   "src/data/beemapsProxy.test.mjs",
-  "src/data/beemapsUpstream.test.mjs"
+  "src/data/beemapsUpstream.test.mjs",
+  "server/providers/beemaps-burst.js",
+  "server/providers/beemaps-burst/audit.js",
+  "server/providers/beemaps-burst/credits.js",
+  "server/providers/beemaps-burst/ledger.js",
+  "server/providers/beemaps-burst/quotes.js",
+  "server/providers/beemaps-burst/upstream.js",
+  "server/providers/beemaps-burst/validate.js",
+  "src/data/beemapsBurstAudit.test.mjs",
+  "src/data/beemapsBurstCredits.test.mjs",
+  "src/data/beemapsBurstLedger.test.mjs",
+  "src/data/beemapsBurstProxy.test.mjs",
+  "src/data/beemapsBurstQuotes.test.mjs",
+  "src/data/beemapsBurstScan.test.mjs",
+  "src/data/beemapsBurstUpstream.test.mjs",
+  "src/data/beemapsBurstValidate.test.mjs"
 ]

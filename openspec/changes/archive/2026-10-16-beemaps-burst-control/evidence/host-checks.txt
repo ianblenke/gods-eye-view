@@ -1,0 +1,55 @@
+Host checks of beemaps-burst-control, 2026-10-15, host Node v26.8.2. The checks ran on the files of the commit c31f33d2e1941584ce4dec202c76d1502c7381fc; After the runs, 1 test title changed and nothing else in src, server and build changed. The command git diff -U0 c31f33d2 HEAD -- src server build shows the line. Later commits change evidence files, documents and trace files.
+
+## node scripts/check-import-directions.mjs
+{"modules":1000,"portableEntries":80}
+exit: 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 16 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit: 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 32 published, 0 new.
+exit: 0
+
+## node scripts/format.mjs --check
+Checked 1394 source files.
+exit: 0
+
+## node --test --experimental-test-coverage (include the 7 plugin files) the 8 test files of the change (on the host)
+exit: 0
+ℹ tests 212
+ℹ pass 212
+ℹ fail 0
+ℹ skipped 0
+ℹ   beemaps-burst.js  | 100.00 |   100.00 |  100.00 | 
+ℹ    audit.js         | 100.00 |   100.00 |  100.00 | 
+ℹ    credits.js       | 100.00 |   100.00 |  100.00 | 
+ℹ    ledger.js        | 100.00 |   100.00 |  100.00 | 
+ℹ    quotes.js        | 100.00 |   100.00 |  100.00 | 
+ℹ    upstream.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    validate.js      | 100.00 |   100.00 |  100.00 | 
+ℹ all files           | 100.00 |   100.00 |  100.00 | 
+
+## node scripts/spec/gates.mjs lint --change beemaps-burst-control (on the documents of the commit c31f33d2e1941584ce4dec202c76d1502c7381fc)
+STE: 0 errors, 877 warnings.
+
+## openspec validate beemaps-burst-control (on the documents of the commit c31f33d2e1941584ce4dec202c76d1502c7381fc)
+Change 'beemaps-burst-control' is valid
+
+## image gods-eye-view:local, v24.21.0, the clone mounted with the node_modules of the image, commit c31f33d2e1941584ce4dec202c76d1502c7381fc
+## node --test --experimental-test-coverage (include the 7 plugin files) the 8 test files of the change
+exit: 0
+ℹ tests 212
+ℹ pass 212
+ℹ fail 0
+ℹ skipped 0
+ℹ   beemaps-burst.js  | 100.00 |   100.00 |  100.00 | 
+ℹ    audit.js         | 100.00 |   100.00 |  100.00 | 
+ℹ    credits.js       | 100.00 |   100.00 |  100.00 | 
+ℹ    ledger.js        | 100.00 |   100.00 |  100.00 | 
+ℹ    quotes.js        | 100.00 |   100.00 |  100.00 | 
+ℹ    upstream.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    validate.js      | 100.00 |   100.00 |  100.00 | 
+ℹ all files           | 100.00 |   100.00 |  100.00 | 
