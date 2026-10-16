@@ -98,6 +98,7 @@ function harness({
       remove(dataSource, destroy) {
         added.splice(added.indexOf(dataSource), 1);
         viewer.removed = [dataSource, destroy];
+        viewer.removals = (viewer.removals ?? 0) + 1;
       },
     },
     camera: {
@@ -867,7 +868,10 @@ test('[beemaps-bursts-013] makes a key of 32 characters from 0123456789abcdef wh
     layer.destroy(viewer);
   }
   assert.equal(sent.length, 24);
-  for (const value of sent) assert.match(value, /^[0-9a-f]{32}$/);
+  for (const value of sent) {
+    assert.match(value, /^[0-9a-f]{32}$/);
+    assert.doesNotMatch(value, /^(..)\1{15}$/);
+  }
   assert.equal(new Set(sent).size, 24);
 });
 
@@ -2129,4 +2133,47 @@ test('[beemaps-bursts-014] draws two created bursts in the order of their creati
   ]);
   assert.equal(h.layer.getStats().count, 2);
   assert.match(h.info(), /· 2 bursts · 0 hits$/);
+});
+
+test('[beemaps-bursts-002] removes the data source once and does nothing on a second destroy', async () => {
+  const h = harness();
+  await h.ready();
+  h.layer.destroy(h.viewer);
+  h.layer.destroy(h.viewer);
+  assert.equal(h.viewer.removals, 1);
+  const never = harness();
+  never.layer.destroy(never.viewer);
+  assert.equal(never.viewer.removals, undefined);
+});
+
+test('[beemaps-bursts-029] clears each timer of a quote once, also when the quote is cancelled before the layer is disabled', async () => {
+  const h = harness();
+  await h.quoted({ unlocked: false });
+  await h.chip('cancel').onClick();
+  h.layer.disable(h.viewer);
+  h.layer.enable(h.viewer);
+  h.layer.disable(h.viewer);
+  assert.deepEqual(h.cleared, [1, 2]);
+});
+
+test('[beemaps-bursts-014] draws a created burst in blue when Bee Maps gives the status active', async () => {
+  const h = harness();
+  await h.quoted();
+  await h.confirmChip().onClick();
+  const blue = Cesium.Color.fromCssColorString('#38bdf8').withAlpha(0.25);
+  const colour = h
+    .dataSource()
+    .entities.getById(`beemaps-bursts:${BURST_ID}`)
+    .rectangle.material.getValue(Cesium.JulianDate.now()).color;
+  assert.equal(Cesium.Color.equals(colour, blue), true);
+});
+
+test('[beemaps-bursts-011] keeps the message of a failed list after a cancel', async () => {
+  const h = harness({
+    list: async () => ({ ok: false, status: 500, error: 'unknown' }),
+  });
+  await h.quoted();
+  await h.chip('list').onClick();
+  await h.chip('cancel').onClick();
+  assert.equal(h.info(), 'The server answered with an unknown error (500).');
 });

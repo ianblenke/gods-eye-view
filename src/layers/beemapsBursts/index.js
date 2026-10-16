@@ -256,7 +256,6 @@ export function createBeemapsBurstsLayer({
   function pressCancel() {
     if (!_enabled || !_quote || _confirming) return;
     clearQuote();
-    _message = null;
     draw();
     notify();
   }
