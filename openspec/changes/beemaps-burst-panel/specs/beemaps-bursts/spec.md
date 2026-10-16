@@ -26,6 +26,7 @@ Origin: spec-first
 #### Scenario: Send nothing after a restored state `beemaps-bursts-003`
 - **WHEN** a test decodes the share link `v=2&l=6` and enables the layers of it in the production catalog with a source that counts its calls
 - **THEN** the source gets `getStatus` calls and no `quote`, `confirm` or `list` call
+- **AND** the manager `setLayerParams` for "beemaps-bursts" returns false, and the source gets no `quote`, `confirm` or `list` call
 
 #### Scenario: Offer the chips only when the layer is enabled `beemaps-bursts-004`
 - **WHEN** a test reads `getRowControls` before `enable`, after `enable`, and after `disable`
@@ -67,6 +68,7 @@ Origin: spec-first
 - **AND** the info text is "Quote: 125 credits for 4 km² · credits used today 0 of 625 · valid for 120 seconds"
 - **AND** the source gets no `confirm` call
 - **AND** the data source has one entity with the id "beemaps-bursts:quote" and a rectangle of the box in the answer
+- **AND** an area of 3.998 km² in the answer gives the label "Confirm: 125 credits, 3.998 km²"
 - **AND** the layer asks the random source for one idempotency key when this answer arrives, and not when the person presses "quote"
 
 #### Scenario: Refuse a view that gives no box `beemaps-bursts-008`
@@ -181,6 +183,7 @@ Origin: spec-first
 - **AND** the text of the bursts is "3 bursts · 1 hit"
 - **AND** with 1 burst and 0 hits the text is "1 burst · 0 hits"
 - **AND** with 100 bursts and `total` 130 the text is "100 bursts (130 in all) · 0 hits"
+- **AND** with 100 bursts and `total` 100 the text is "100 bursts · 0 hits"
 - **AND** an answer with `cached` true adds " · stored answer" to the text
 - **AND** a burst with no box counts in the text and gets no entity
 - **AND** a burst whose id repeats an earlier id, or is "quote", gets no second entity

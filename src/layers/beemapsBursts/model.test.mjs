@@ -79,8 +79,8 @@ test('[beemaps-bursts-007] names the credits and the area on the Confirm chip', 
     'Confirm: 125 credits, 4 km²',
   );
   assert.equal(
-    confirmLabel({ credits: 250, areaKm2: 3.998 }),
-    'Confirm: 250 credits, 3.998 km²',
+    confirmLabel({ credits: 125, areaKm2: 3.998 }),
+    'Confirm: 125 credits, 3.998 km²',
   );
 });
 
