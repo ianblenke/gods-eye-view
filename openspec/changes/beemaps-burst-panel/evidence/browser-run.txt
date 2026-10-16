@@ -12,12 +12,12 @@ The panel and the page are slow with software rendering. Row texts can come 3 to
 The step 9 shows that the chip "Quote burst here" stays disabled after an unknown answer, also after a stored list answer. A fresh list answer enables it again.
 The step 9 prints the title of the disabled chip and the state of the chip after the stored list answer.
 A fresh list answer needs the memory of the list route to end after 60 seconds. The driver waits for that.
-The check of the stored list answer runs only when the first list answer is less than 58 seconds old. Run 1 ran it, and run 2 skipped it. The transcript of each run says so.
+The check of the stored list answer runs only when the first list answer is less than 58 seconds old. Run 1 skipped it, and run 2 ran it. The transcript of each run says so.
 The step 4 presses "Quote burst here" twice in a row. A script in the page watches the Confirm chip with a MutationObserver. It records when the chip first shows disabled and when it becomes enabled.
 The lower bound is the wall clock time of the answer of the quote route plus 1000 milliseconds. The layer starts its lock after it reads the answer, so the chip cannot be enabled earlier.
 The tint checks take a screenshot and compute the mean color of the middle of the globe. A box of the quote shifts it toward amber, and a box of a created burst shifts it toward blue.
 The app renders on demand. An earlier run of this driver found a quote box that stayed invisible, because the layer did not call requestRender.
-The layer now calls requestRender after each redraw of the boxes.
+The layer now calls requestRender each time the layer draws the boxes.
 The first attempts of the driver stopped before the end. Each cause was in the driver or in the fake:
 - The fake upstream read the create body as an object, and the plugin sends an array. The layer then showed the warning for an unknown answer, as it must.
 - The server limits confirm requests to 3 for each minute, and the driver sent 4 too fast. The driver now waits for the window.

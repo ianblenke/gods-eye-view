@@ -1,6 +1,6 @@
 Named faults of beemaps-bursts (AGENTS.md rule 13). One fault changes one part of one layer file or one registration file. The tests then run. The list below names the tests that failed.
 
-Code commit: 3e9d7a121006bc27ce3e00abba64b2728b85f67f. Both runs below ran on the files of this commit. The command git diff --stat 3e9d7a12 HEAD -- src server build prints nothing.
+Code commit: 3e9d7a121006bc27ce3e00abba64b2728b85f67f. Both runs below ran on the files of this commit. After the runs, 1 test title and 1 comment of a test changed and nothing else in src, server and build changed. The command git diff -U0 3e9d7a12 HEAD -- src server build shows the lines.
 The files of the layer, other than test files, are the same as in the browser run. The command git diff --stat 3e9d7a12 HEAD -- src server build ':(exclude)*.test.mjs' prints nothing.
 Runner: 6 scratch copies of the clone run in parallel. Each copy uses the same long-lived container of the image gods-eye-view:local, with the node_modules of the image.
 Each fault runs first against the test file of its own file. The command is: timeout 100 node --test --test-concurrency=4 --test-timeout=6000 --test-reporter=spec <test file>
@@ -31,7 +31,7 @@ Earlier runs, on earlier commits. Each run used the fault script of its time, so
 - The survivors of run B were six more gaps. They led to tests for a second destroy and the double clear of the timers.
 - The same survivors led to tests for the color of a created burst, a key made from equal bytes and the message after a cancel.
 - A third full run, on the commit c53f05d9, had one survivor. It led to a test that a destroy without a data source calls requestRender zero times.
-- A real-browser run of the commit 6aa02e09 showed that a quote box could stay invisible, because the application renders on demand. The layer now calls requestRender once after each redraw of the boxes.
+- A real-browser run of the commit 6aa02e09 showed that a quote box could stay invisible, because the application renders on demand. The layer now calls requestRender once each time the layer draws the boxes.
 - That change added faults for the calls of requestRender and the tests of scenario 020.
 Round 1 of the formal review found gaps in the faults and the tests:
 - A false equivalent fault. A status answer for off that comes while a quote request is open separates the two versions. A test and a fault now cover it.
@@ -46,7 +46,10 @@ Round 2 of the formal review found more gaps in the faults and the tests:
 - No test showed that a failed list calls requestRender zero times, or that a refused confirm request calls it once. A test and two faults now cover it.
 - A fault that confirms after a list answer is new. The equivalent fault that confirms at the start of a list press now names its place.
 - The wording changed: the word lock names the delay of the Confirm chip, and the title of the disabled chip says what is possible.
-The script had 834 faults after round 2. Both runs of this file ran on the final commit.
+Round 3 of the formal review found one false sentence about the browser runs and more faults in the wording:
+- The evidence said which browser run took the check of the stored list answer, and the sentence was wrong. The text now comes from the two transcripts.
+- Ten faults got a new name after the runs. The word wait became lock, and the word redraw became draw. One name said created for a fault that classifies an empty body. No fault changed.
+The script has 834 faults. Both runs of this file ran on the code commit above.
 Survivors of run A that are equivalent faults now. Each reason is in its line below:
 - "Allow a cancel when the layer is not enabled"
 - "Give a total of zero without a list"
@@ -61,7 +64,7 @@ Survivors of run A that are equivalent faults now. Each reason is in its line be
 - "Confirm twice from one press"
 - "Confirm as soon as the quote shows"
 - "Confirm after the list press"
-- "Give a created answer when the body is not readable"
+- "Classify an empty body when the body is not readable"
 Survivors of run A with a fault that the final script no longer has, because the code changed:
 - "Keep the press text on cancel"
 - "Draw nothing on enable"
@@ -501,13 +504,13 @@ beemaps-bursts-014 | Count a created burst as a hit | failing: [beemaps-bursts-0
 beemaps-bursts-014 | Draw the created burst in the box of nothing | failing: [beemaps-bursts-014]
 beemaps-bursts-014 | Draw the created burst with no box | failing: [beemaps-bursts-014], [beemaps-bursts-017], [beemaps-bursts-019]
 beemaps-bursts-014 | Give the created burst the status ended | failing: [beemaps-bursts-014]
-beemaps-bursts-020 | Skip requestRender after a redraw of the boxes | failing: [beemaps-bursts-020]
+beemaps-bursts-020 | Skip requestRender when the layer draws the boxes | failing: [beemaps-bursts-020]
 beemaps-bursts-020 | Call requestRender with another reason | failing: [beemaps-bursts-020]
 beemaps-bursts-020 | Call requestRender with no reason | failing: [beemaps-bursts-020]
-beemaps-bursts-020 | Call requestRender twice after a redraw of the boxes | failing: [beemaps-bursts-020]
-beemaps-bursts-020 | Call requestRender before the redraw of the boxes | failing: [beemaps-bursts-020]
+beemaps-bursts-020 | Call requestRender twice when the layer draws the boxes | failing: [beemaps-bursts-020]
+beemaps-bursts-020 | Call requestRender before the layer draws the boxes | failing: [beemaps-bursts-020]
 beemaps-bursts-002 | Call requestRender even without a data source | failing: [beemaps-bursts-002]
-beemaps-bursts-020 | Call requestRender in a press that redraws no box | failing: [beemaps-bursts-020]
+beemaps-bursts-020 | Call requestRender in a press that draws no box | failing: [beemaps-bursts-020]
 beemaps-bursts-020 | Give the layer no default function for requestRender | failing: [beemaps-bursts-002], [beemaps-bursts-004], [beemaps-bursts-005], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-008], [beemaps-bursts-009], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-020 | Give the layer of the application no governor | failing: [beemaps-bursts-020]
 beemaps-bursts-020 | Let the governor replace the function of the caller | failing: [beemaps-bursts-020]
@@ -561,16 +564,16 @@ beemaps-bursts-017 | Disable the quote chip only while the layer is enabled | fa
 beemaps-bursts-016 | Enable the quote chip on a good status | failing: [beemaps-bursts-016]
 beemaps-bursts-016 | Enable the quote chip on a failed status | failing: [beemaps-bursts-016]
 beemaps-bursts-020 | Call requestRender after a failed list | failing: [beemaps-bursts-020]
-beemaps-bursts-020 | Skip the redraw after a confirm answer | failing: [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-020]
+beemaps-bursts-020 | Skip the draw after a confirm answer | failing: [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-020]
 beemaps-bursts-012 | Confirm after the list answer | failing: [beemaps-bursts-012], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-020]
 beemaps-bursts-010 | End the quote at the start of the answer | failing: [beemaps-bursts-010], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-010 | End the quote one second late | failing: [beemaps-bursts-010]
 beemaps-bursts-010 | End the quote one second early | failing: [beemaps-bursts-010]
 beemaps-bursts-010 | End the quote after the seconds in milliseconds | failing: [beemaps-bursts-010], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-029], [beemaps-bursts-030]
-beemaps-bursts-029 | Wait 999 milliseconds before the Confirm chip | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
-beemaps-bursts-029 | Wait 1001 milliseconds before the Confirm chip | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
-beemaps-bursts-029 | Wait 0 milliseconds before the Confirm chip | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
-beemaps-bursts-029 | Wait 2000 milliseconds before the Confirm chip | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
+beemaps-bursts-029 | Lock the Confirm chip for 999 milliseconds | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
+beemaps-bursts-029 | Lock the Confirm chip for 1001 milliseconds | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
+beemaps-bursts-029 | Lock the Confirm chip for 0 milliseconds | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
+beemaps-bursts-029 | Lock the Confirm chip for 2000 milliseconds | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-029 | Start the lock of the Confirm chip at the epoch | failing: [beemaps-bursts-029]
 beemaps-bursts-029 | Start no lock of the Confirm chip | failing: [beemaps-bursts-029]
 beemaps-bursts-029 | Start the lock of the Confirm chip at the end of the quote | failing: [beemaps-bursts-002], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
@@ -850,7 +853,7 @@ beemaps-bursts-023 | Give a created answer for an unreadable burst | failing: [b
 beemaps-bursts-024 | Give refused when the fetch throws | failing: [beemaps-bursts-024]
 beemaps-bursts-024 | Let the fetch of a confirm throw | failing: [beemaps-bursts-024]
 beemaps-bursts-024 | Give the status 0 when the body is not readable | failing: [beemaps-bursts-023], [beemaps-bursts-024]
-beemaps-bursts-024 | Give a created answer when the body is not readable | failing: NONE (equivalent fault: The function classifyConfirm gives the unknown answer with the same status for an empty body.)
+beemaps-bursts-024 | Classify an empty body when the body is not readable | failing: NONE (equivalent fault: The function classifyConfirm gives the unknown answer with the same status for an empty body.)
 beemaps-bursts-024 | Let the body of a confirm throw | failing: [beemaps-bursts-023], [beemaps-bursts-024]
 beemaps-bursts-024 | Skip the cleaning of the confirm timer | failing: [beemaps-bursts-024]
 beemaps-bursts-024 | Skip the confirm timer | failing: [beemaps-bursts-024]

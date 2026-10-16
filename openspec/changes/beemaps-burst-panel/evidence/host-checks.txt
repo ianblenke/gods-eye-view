@@ -1,4 +1,4 @@
-Host checks of beemaps-burst-panel, 2026-10-16, host Node v26.8.2. The checks ran on the files of the commit 3e9d7a121006bc27ce3e00abba64b2728b85f67f; The command git diff --stat 3e9d7a12 HEAD -- src server build prints nothing. Later commits change evidence files, documents and trace files.
+Host checks of beemaps-burst-panel, 2026-10-16, host Node v26.8.2. The checks ran on the files of the commit 3e9d7a121006bc27ce3e00abba64b2728b85f67f; After the runs, 1 test title and 1 comment of a test changed and nothing else in src, server and build changed. The command git diff -U0 3e9d7a12 HEAD -- src server build shows the lines. Later commits change evidence files, documents and trace files.
 
 ## node scripts/check-import-directions.mjs
 {"modules":1007,"portableEntries":81}
