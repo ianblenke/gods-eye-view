@@ -148,7 +148,7 @@ test('[beemaps-bursts-003] sends no quote, confirm or list request when the shar
   assert.deepEqual([calls.quote, calls.confirm, calls.list], [0, 0, 0]);
 });
 
-test('[beemaps-bursts-020] gives the layer of the application the render governor, so a press asks the scene for a frame', async (t) => {
+test('[beemaps-bursts-020] gives the layer of the application the render governor, so a press calls requestRender of the scene', async (t) => {
   const frames = [];
   installRenderGovernor({
     scene: { requestRender: () => frames.push('frame') },

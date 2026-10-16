@@ -66,7 +66,7 @@ export function describeReason(reason) {
   return REASONS[reason];
 }
 
-/** The text for a confirm that can have taken credits: `{retryAfter?}`. */
+/** The text for a confirm when it is possible that Bee Maps took credits: `{retryAfter?}`. */
 export function describeUnknown({ retryAfter } = {}) {
   return positive(retryAfter)
     ? `${UNKNOWN_OUTCOME} The server refuses new confirm requests for ${seconds(retryAfter)}.`

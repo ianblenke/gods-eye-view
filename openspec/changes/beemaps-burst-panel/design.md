@@ -10,7 +10,7 @@ The layer panel supports controls for a layer through two module methods: `getRo
 **Goals:**
 - A confirm request only after two real presses: one for the quote and one for the Confirm chip of that quote.
 - The person sees the box and the price before the second press.
-- After an unknown answer, the layer says that a burst can exist, and it blocks a new quote until the person has checked the bursts.
+- After an unknown answer, the layer says that a burst can exist, and it disables the chip "quote" until a fresh list answer comes.
 
 **Non-goals:**
 - A way to draw an area. See the Known limit `view-box-only`.
@@ -71,14 +71,14 @@ The layer draws a filled rectangle for the quote and for each burst. A filled re
 
 All texts are fixed strings in `messages.js` and `model.js`. A test can then check each text with a literal string.
 
-### D13: The Confirm chip waits 1000 milliseconds
+### D13: The Confirm chip is disabled for 1000 milliseconds
 
-A fast double press of "Quote burst here" gives the quote answer in a few milliseconds. The Confirm chip then takes the place of the quote chip, and the second press of the double press lands on it. The panel checks only that the chip is not disabled.
-The layer therefore disables the Confirm chip for 1000 milliseconds after it shows the quote. A timer tells the panel when the wait ends, and `onClick` also compares the clock. The wait guards against a double press and nothing else.
+A fast double press of "Quote burst here" gives the quote answer in a few milliseconds. The Confirm chip then appears at the position of the quote chip, and the second press of the double press lands on it. The panel checks only that the chip is not disabled.
+The layer therefore disables the Confirm chip for 1000 milliseconds after it shows the quote. A timer tells the panel when the lock ends, and `onClick` also compares the clock. The lock guards against a double press and nothing else.
 
 ### D14: Bursts that a confirm created stay in the list
 
-The list route keeps an answer for 60 seconds and no confirm request clears it. A press of "Check my bursts" just after a confirm request can then miss the new burst. The layer keeps the bursts that confirm requests created in a list of its own. It draws them with the bursts of the last list answer. The list answer takes its place when it lists the burst. The text adds "stored answer" when the route says that the answer came from memory.
+The list route keeps an answer for 60 seconds and no confirm request clears it. A press of "Check my bursts" just after a confirm request can then miss the new burst. The layer keeps the bursts that confirm requests created in a list of its own. It draws them with the bursts of the last list answer. When the list answer lists the same burst, the layer uses the burst of the list answer. The text adds "stored answer" when the route says that the answer came from memory.
 
 ### D15: Null fields of the list route
 
@@ -87,20 +87,20 @@ The list route sets the status, the credits or the box of a burst to null when B
 ### D16: The layer calls `requestRender` after each redraw of the boxes
 
 The application renders on demand: the render governor sets `requestRenderMode` when nothing animates. A change of entities from a chip press does not draw a new image by itself. A real browser run showed a quote box that stayed invisible until something else drew a new image.
-The layer therefore calls `requestRender` after each change of the boxes. The wrapper `src/app/layers/beemapsBursts.js` gives it `governorRequestRender`.
+The layer therefore calls `requestRender` after each redraw of the boxes. The wrapper `src/app/layers/beemapsBursts.js` gives it `governorRequestRender`.
 
-### D17: A new quote waits for a fresh list after an unknown answer
+### D17: The chip "quote" stays disabled after an unknown answer until a fresh list answer
 
-The server holds new confirm requests only after an unknown or pending record of its own. Suppose the server created a burst and the browser lost the answer (status 0). The record is then "created", the server holds nothing, and a new quote could lead to a second burst.
-The layer therefore disables the chip "quote" after an unknown answer. A list answer that is not a stored answer enables it again.
+The server holds new confirm requests only after an unknown or pending record of its own. Think of a burst that the server created while the browser lost the answer (status 0). The record is then "created", the server holds nothing, and a new quote could lead to a second burst.
+The layer therefore disables the chip "quote" after an unknown answer. A fresh list answer (`cached` false) enables it again.
 
-A stored answer can hide the new burst, because the list route answers from memory for 60 seconds. A failed list, `disable` and `enable` keep the block. `destroy` clears it, as does a reload.
+A stored list answer (`cached` true) can hide the new burst, because the list route answers from memory for 60 seconds. A failed list, `disable`, `enable` and `update` leave the chip disabled. `destroy` and a reload enable it again.
 
 ## Risks / Trade-offs
 
 - [A hidden tab runs the timer late] → The press compares the clock with the end time.
 - [A reload drops the warning after an unknown answer] → The server keeps its refusal of new confirm requests after an unknown record of its own. See the Known limit `warning-in-memory`.
-- [A quote can be pressed twice in a row] → The wait of 1000 milliseconds of D13 guards against it.
+- [A quote can be pressed twice in a row] → The lock of 1000 milliseconds of D13 guards against it.
 - [The list route answers from memory] → The text says "stored answer", and D14 keeps the new burst.
 - [The token "6" collides with the pull request 1069 of the upstream project] → The Known limit `token-collision` says that a sync renumbers one layer.
 - [The shapes come from the tests of change 3] → No run used the real service. The classification treats every other shape as unknown.

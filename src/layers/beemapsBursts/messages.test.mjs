@@ -72,7 +72,7 @@ test('[beemaps-bursts-027] gives one text for the four codes of a refused reques
   }
 });
 
-test('[beemaps-bursts-027] names the wait of Bee Maps in seconds, and leaves it out without a number', () => {
+test('[beemaps-bursts-027] names the time that Bee Maps asks for in seconds, and leaves it out without a number', () => {
   assert.equal(
     text('upstream_rate_limit', { retryAfter: 30 }),
     'Bee Maps asks you to wait 30 seconds.',
