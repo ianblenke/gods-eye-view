@@ -7,8 +7,8 @@ import { coalesceProxyRequest, readResponseTextCapped } from './common/http.js';
  * GDACS is a cooperation framework of the United Nations and the European
  * Commission. Its event list answers a GeoJSON feature collection with a point
  * for each event. This provider reads the pages, checks each record, keeps a
- * short list of fields and sends one small document. It is the only filter: the
- * layer never sees a link, an icon or HTML text of the feed.
+ * short list of fields and sends one small document. It drops each link and
+ * icon of the feed. A text field can hold any text, so show it as plain text.
  *
  * @module server/providers/gdacs
  */
@@ -17,7 +17,7 @@ const SOURCE = 'GDACS (Global Disaster Alert and Coordination System)';
 const ATTRIBUTION =
   'GDACS, a cooperation framework of the United Nations and the European Commission';
 const LICENSE =
-  'The legal notice of the European Commission licenses content that the European Union owns under CC BY 4.0. GDACS gives no separate license for the feed. Data of NOAA, JTWC, GloFAS, GDO and other sources keep their own terms. The provider shortens the data and rounds the positions.';
+  'The legal notice of the European Commission licenses content that the Union owns on its website under CC BY 4.0. GDACS gives no separate license for the feed. Data of NOAA, JTWC, GloFAS, GDO and other sources keep their own terms. The provider shortens the data and rounds the positions.';
 const DISCLAIMER =
   'The estimates of GDACS come from a machine, and an estimate can be wrong. Check each estimate before you use it to make a decision.';
 const COVERAGE =

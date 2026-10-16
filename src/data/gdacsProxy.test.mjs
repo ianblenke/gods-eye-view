@@ -271,6 +271,7 @@ const VALID_TIMES = [
   ['2026-10-12T01:00:00.5', '2026-10-12T01:00:00.500Z'],
   ['2026-10-12T01:00:00.123Z', '2026-10-12T01:00:00.123Z'],
   ['2026-10-12T23:59:59', '2026-10-12T23:59:59.000Z'],
+  ['0100-01-01T00:00:00', '0100-01-01T00:00:00.000Z'],
   ['1970-01-01T00:00:00', '1970-01-01T00:00:00.000Z'],
   ['2026-12-31T23:59:59', '2026-12-31T23:59:59.000Z'],
 ];
@@ -393,15 +394,16 @@ const SIMON = {
   severitytext: 'Tropical Storm (maximum wind speed of 250 km/h)',
   severityunit: 'km/h',
 };
+const storm = (properties) => rec({ eventtype: 'TC', ...properties });
 
 test('[gdacs-source-010] keeps a severity with a unit and rounds its value to a whole number', () => {
-  assert.deepEqual(only([rec({ severitydata: SIMON })]).severity, {
+  assert.deepEqual(only([storm({ severitydata: SIMON })]).severity, {
     value: 250,
     unit: 'km/h',
     text: 'Tropical Storm (maximum wind speed of 250 km/h)',
   });
   const one = only([
-    rec({ severitydata: { ...SIMON, severity: 120.3696 } }),
+    storm({ severitydata: { ...SIMON, severity: 120.3696 } }),
   ]).severity;
   assert.equal(one.value, 120);
   const drought = only([
@@ -417,12 +419,12 @@ test('[gdacs-source-010] keeps a severity with a unit and rounds its value to a 
   assert.equal(drought.value, 537380);
   assert.equal(drought.unit, 'km2');
   const half = only([
-    rec({ severitydata: { ...SIMON, severity: 0.5 } }),
+    storm({ severitydata: { ...SIMON, severity: 0.5 } }),
   ]).severity;
   assert.equal(half.value, 1);
   for (const text of ['', null, 12345, undefined]) {
     const severity = only([
-      rec({ severitydata: { ...SIMON, severity: 100, severitytext: text } }),
+      storm({ severitydata: { ...SIMON, severity: 100, severitytext: text } }),
     ]).severity;
     assert.deepEqual(severity, { value: 100, unit: 'km/h', text: null });
   }
@@ -447,7 +449,11 @@ test('[gdacs-source-011] sets the severity to null when the unit, the value or t
   ];
   const result = normalizeEvents(
     cases.map((severitydata, index) =>
-      rec({ severitydata, eventid: 100 + index }),
+      rec({
+        eventtype: index < 2 ? 'VO' : 'TC',
+        severitydata,
+        eventid: 100 + index,
+      }),
     ),
   );
   assert.equal(result.events.length, cases.length);
@@ -878,7 +884,7 @@ test('[gdacs-source-016] answers a GET request with the document', async () => {
     );
     assert.equal(
       res.body.license,
-      'The legal notice of the European Commission licenses content that the European Union owns under CC BY 4.0. GDACS gives no separate license for the feed. Data of NOAA, JTWC, GloFAS, GDO and other sources keep their own terms. The provider shortens the data and rounds the positions.',
+      'The legal notice of the European Commission licenses content that the Union owns on its website under CC BY 4.0. GDACS gives no separate license for the feed. Data of NOAA, JTWC, GloFAS, GDO and other sources keep their own terms. The provider shortens the data and rounds the positions.',
     );
     assert.equal(
       res.body.disclaimer,
@@ -979,7 +985,7 @@ test('[gdacs-source-019] sends the page request to the fixed address with UTC da
 const fullPage = (start, count = 100) =>
   Array.from({ length: count }, (_, i) => rec({ eventid: start + i }));
 
-test('[gdacs-source-020] fetches pages in order and stops at the right page', async () => {
+test('[gdacs-source-020] fetches pages in order and stops at a 204 answer, at a short page or after page 5', async () => {
   const calls = [];
   const { request, clock } = install({
     fetchImpl: pagesFetch([fullPage(1), fullPage(1000, 99)], calls, (n) => {
@@ -1117,7 +1123,7 @@ const sizedPage = (bytes) => {
   return { text: padded };
 };
 
-test('[gdacs-source-022] accepts a page of exactly 2 MiB and refuses a page with one byte more', async () => {
+test('[gdacs-source-022] accepts an answer of exactly 2 MiB and refuses an answer with one byte more', async () => {
   const limit = 2 * 1024 * 1024;
   const exact = install({ fetchImpl: pagesFetch([sizedPage(limit)]) });
   const good = (await exact.request('/')).body;
@@ -1192,7 +1198,7 @@ test('[gdacs-source-023] stops a refresh after 30 seconds with one timer and one
   assert.equal((await real.request('/')).body.unavailable, false);
 });
 
-test('[gdacs-source-024] serves the last good document for less than 1 hour when a refresh fails', async () => {
+test('[gdacs-source-024] serves the last good document while it is younger than 1 hour when a refresh fails', async () => {
   for (const [age, stale] of [
     [HOUR - 1, true],
     [HOUR, false],
@@ -1230,6 +1236,17 @@ test('[gdacs-source-024] serves the last good document for less than 1 hour when
       assert.deepEqual(next.events, []);
     }
   }
+  const slow = [];
+  const late = install({
+    fetchImpl: pagesFetch([[rec()], { status: 500 }], slow, (n) => {
+      if (n === 2) late.clock.t += 30_000;
+    }),
+  });
+  const first = (await late.request('/')).body;
+  late.clock.t += HOUR - 1;
+  const second = (await late.request('/')).body;
+  assert.equal(slow.length, 2);
+  assert.deepEqual(second, { ...first, stale: true });
   const calls = [];
   const { request } = install({
     fetchImpl: pagesFetch([{ status: 500 }, [rec()]], calls),
@@ -1335,7 +1352,7 @@ test('[gdacs-source-009 gdacs-source-011] turns a number that is too large for a
   assert.equal(event.severity, null);
 });
 
-test('[gdacs-source-016 gdacs-source-025] uses the global fetch and the real clock when it gets no options', async () => {
+test('[gdacs-source-016] uses the global fetch and the real clock when it gets no options', async () => {
   const saved = globalThis.fetch;
   const calls = [];
   globalThis.fetch = async (url) => {
@@ -1522,7 +1539,7 @@ test('[gdacs-source-023] starts the timer before the first page and takes the ti
   assert.deepEqual(clears, [mine[0].handle]);
 });
 
-test('[gdacs-source-024 gdacs-source-025] answers with the status 200 and tries GDACS again after a stale document', async () => {
+test('[gdacs-source-024] answers with the status 200 and tries GDACS again after a stale document', async () => {
   const calls = [];
   const { request, clock } = install({
     fetchImpl: pagesFetch([[rec()], { status: 500 }, { status: 500 }], calls),

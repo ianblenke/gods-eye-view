@@ -73,11 +73,11 @@ GDACS gives a severity for earthquakes, storms, droughts and wildfires. For a fl
 
 ### D7: The cache and the stale document have their own times
 
-The provider keeps the document for 10 minutes (Reticulum: 60 seconds). The provider serves the last good document while it is younger than 1 hour (Reticulum: 2 hours). The time limit is 30 seconds for all pages (Reticulum: 8 seconds for one answer). A page has a limit of 2 MiB (Reticulum: 4 MiB).
+The provider keeps the document for 10 minutes (Reticulum: 60 seconds). The provider serves the last good document while it is younger than 1 hour at the start of the failed refresh (Reticulum: 2 hours). The time limit is 30 seconds for all pages (Reticulum: 8 seconds for one answer). A page has a limit of 2 MiB (Reticulum: 4 MiB).
 
 In the scout, droughts changed in one daily batch and storms changed every few hours, so 10 minutes is short enough. A page of 100 records is about 140 KB, so the limit of 2 MiB is far above a real page.
 
-Browser requests that come while a refresh waits share that refresh. The provider does not cache a failed refresh. The provider takes the options `setTimer` and `clearTimer`, as the Reticulum provider does. A cached document has the old date window for at most 10 minutes. When GDACS fails, the last good document can have the old window for up to 1 hour, and `stale` is true.
+Browser requests that come while a refresh waits share that refresh. The provider does not cache a failed refresh. The provider takes the options `setTimer` and `clearTimer`, as the Reticulum provider does. A cached document has the old date window for at most 10 minutes. When GDACS fails, the last good document can have the old window for about 1 hour, and `stale` is true.
 
 ### D8: No polygons in this change
 
@@ -115,7 +115,7 @@ The change adds `server/providers/gdacs.js` and `src/data/gdacsProxy.test.mjs`. 
 ## Risks / Trade-offs
 
 - [GDACS can change the shape of a record] → The provider checks each field and drops a bad record. The count `dropped` shows how many records it dropped.
-- [The API does not state the license of the feed] → The Known limit `license-inferred` names the facts. The document carries the attribution and the disclaimer, and the owner accepts the interpretation before the merge.
+- [The API does not state the license of the feed] → The Known limits `license-inferred` and `license-owner-step` name the facts. The document carries the attribution and the disclaimer, and the owner accepts the interpretation before the merge.
 - [The route can look empty on a day with few events] → The Known limit `thin-live-content` shows the numbers. The layer of change 2 says how many events it shows.
 - [A bad page can fill the memory] → The provider reads at most 2 MiB of a page. A page with more bytes is a failure.
 - [The date window moves at midnight UTC] → See decision D7 for how old a window can be.

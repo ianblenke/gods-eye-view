@@ -3,7 +3,7 @@
 ### Requirement: Event fields
 The GDACS provider MUST keep only the allowed fields of an event and MUST drop every other field of the record. It MUST build the report link itself from the type and the ids.
 
-A page is the answer of GDACS to one page request. A record is an entry of the `features` list of a page. An event is an entry of the `events` list of the document. The document is the JSON body that the route sends.
+A page is one numbered part of the GDACS event list. A page request asks GDACS for one page, and the answer holds that page. A record is an entry of the `features` list of a page. An event is an entry of the `events` list of the document. The document is the JSON body that the route sends.
 
 A browser request comes to the route, and a page request goes to GDACS. A refresh is the work that the provider does to get all pages and to build the document.
 Origin: spec-first
@@ -83,7 +83,7 @@ Origin: spec-first
 ### Requirement: Time rules
 The provider MUST take a valid time as UTC, also when the process has another time zone. It MUST set a time that is not valid to null. It MUST drop a record whose `fromdate` is not a valid time. It MUST keep a record whose `todate` or `datemodified` is not a valid time.
 
-A valid time is a text of the form YYYY-MM-DDTHH:MM:SS with a real date and a real clock time. The form can end with a fraction of one to three digits and with the letter Z.
+A valid time is a text of the form YYYY-MM-DDTHH:MM:SS. The date is real, with a year from 0100 to 9999, and the clock time is real. The form can end with a fraction of one to three digits and with the letter Z.
 Origin: spec-first
 
 #### Scenario: Read the valid times as UTC `gdacs-source-007`
@@ -92,7 +92,7 @@ Origin: spec-first
 - **AND** it normalizes a record whose `fromdate` is "2026-10-12T01:00:00"
 - **THEN** `to` is "2026-10-12T01:00:00.000Z" for the first two values, "2026-10-12T01:00:00.500Z" for the third and "2026-10-12T01:00:00.123Z" for the fourth
 - **AND** `to` is "2026-10-12T23:59:59.000Z" for the fifth value
-- **AND** the values "1970-01-01T00:00:00" and "2026-12-31T23:59:59" are valid, and they give the same texts with ".000Z"
+- **AND** the values "0100-01-01T00:00:00", "1970-01-01T00:00:00" and "2026-12-31T23:59:59" are valid, and they give the same texts with ".000Z"
 - **AND** `from` is "2026-10-12T01:00:00.000Z"
 - **AND** `modified` follows the same rules as `to`
 
@@ -101,7 +101,7 @@ Origin: spec-first
 - **AND** the provider normalizes records whose `todate` has the values "2026-10-12T01:00:00+02:00", "2026-02-30T00:00:00", "2026-13-40T00:00:00" and "2026-10-12"
 - **AND** it normalizes records whose `todate` has the values "2026-10-12T01:00", "2026-10-12T25:00:00", "2026-10-12T01:60:00" and "2026-10-12T01:00:61"
 - **AND** it normalizes records whose `todate` has the values "2026-10-12T01:00:00.1234", "2026-10-12T01:00:00." and "2026-10-12T01:00:60"
-- **AND** it normalizes records whose `todate` has the values "2026-13-12T01:00:00" and "0099-10-12T01:00:00"
+- **AND** it normalizes records whose `todate` has the values "2026-13-12T01:00:00" and "0099-10-12T01:00:00", where the year is below 0100
 - **AND** it normalizes texts with a part of the wrong number of digits, such as "26-10-12T01:00:00" and "2026-10-12T1:00:00"
 - **AND** the part can be the year, the month, the day, the hour, the minute or the second
 - **AND** it normalizes the texts "x2026-10-12T01:00:00" and "2026-10-12T01:00:00x", a list that holds a valid text, an empty text and a value that is not text
@@ -122,7 +122,7 @@ Origin: spec-first
 - **AND** `counts.current` counts the events with `current` true
 - **AND** the alert levels "Green", "ORANGE" and "red" give "green", "orange" and "red"
 - **AND** the `alertScore` 2 stays 2, and the scores 0, -1 and 1.5 stay as they are
-- **AND** the alert scores "2", null and 1e999 give null, where the page body holds 1e999 as raw JSON text
+- **AND** the alert scores "2", null and 1e999 give null, where the answer body holds 1e999 as raw JSON text
 
 ### Requirement: Severity rules
 The provider MUST round the severity value to a whole number. It MUST set `severity` to an object with `value`, `unit` and `text` only in one case. The unit is not empty, the value is a finite number, and the rounded value is above 0. In all other cases it MUST set `severity` to null.
@@ -155,7 +155,7 @@ The provider MUST clean the fields `name`, `country`, `origin`, the severity `un
 
 A control character is a character from U+0000 to U+001F or from U+007F to U+009F. The limits are 120 characters for the name and 80 for the country. They are 40 for the origin, 12 for the severity unit and 160 for the severity text.
 
-A name that is empty after the clean-up, or not text, becomes the type label. A country or an origin that is empty after the clean-up, or not text, becomes null. The `iso3` is not cleaned, and it MUST be three capital letters or null.
+A name that is empty after the clean-up, or not text, becomes the type label. A country or an origin that is empty after the clean-up, or not text, becomes null. The provider does not clean the `iso3`, and the `iso3` MUST be three capital letters or null.
 Origin: spec-first
 
 #### Scenario: Clean the names and the texts `gdacs-source-012`
@@ -210,8 +210,8 @@ The provider MUST list the events with the latest `modified` first. An event wit
 Origin: spec-first
 
 #### Scenario: Order the events and bound the list `gdacs-source-015`
-- **WHEN** a fake page 1 holds 520 valid records, all current, with different `modified` times, listed with the oldest `modified` first
-- **AND** the pages 2 to 5 answer 204
+- **WHEN** a fake page 1 holds 520 valid records, all current, with different `modified` times, and the record with the oldest `modified` first
+- **AND** the answers to the pages 2 to 5 are 204
 - **THEN** the result lists 500 events, and the first has the latest `modified`
 - **AND** the last listed event has the 500th latest `modified`
 - **AND** `counts.total` is 500, `counts.current` is 500 and `counts.dropped` is 0, and `counts.byType` counts only the listed events
@@ -220,7 +220,7 @@ Origin: spec-first
 - **AND** a page holds 3 records, and the first of the three has `modified` null
 - **AND** that event is the last of the three in the result
 - **AND** two events have the same `modified` time and the ids FL-9 and FL-10, and the input lists FL-9 first
-- **AND** the result lists FL-10 first, because the ids are compared as text
+- **AND** the result lists FL-10 first, because the provider compares the ids as text
 
 ### Requirement: Route document
 The route `/api/gdacs` MUST answer a GET request with one JSON document. It MUST refuse a method other than GET, a query and a sub-path. The document MUST have the fields `schemaVersion`, `source`, `attribution`, `license`, `disclaimer`, `coverage`, `fetchedAt`, `stale`, `unavailable`, `reason`, `counts` and `events`.
@@ -233,7 +233,7 @@ Origin: spec-first
 - **AND** the body has `schemaVersion` 1, `stale` false, `unavailable` false and `reason` null
 - **AND** the `source` is "GDACS (Global Disaster Alert and Coordination System)"
 - **AND** the `attribution` is "GDACS, a cooperation framework of the United Nations and the European Commission"
-- **AND** the `license` is "The legal notice of the European Commission licenses content that the European Union owns under CC BY 4.0. GDACS gives no separate license for the feed. Data of NOAA, JTWC, GloFAS, GDO and other sources keep their own terms. The provider shortens the data and rounds the positions."
+- **AND** the `license` is "The legal notice of the European Commission licenses content that the Union owns on its website under CC BY 4.0. GDACS gives no separate license for the feed. Data of NOAA, JTWC, GloFAS, GDO and other sources keep their own terms. The provider shortens the data and rounds the positions."
 - **AND** the `disclaimer` is "The estimates of GDACS come from a machine, and an estimate can be wrong. Check each estimate before you use it to make a decision."
 - **AND** the `coverage` is "Flood, drought, volcano and tropical cyclone events active on any day from the UTC date 14 days before fetchedAt. The provider does not list earthquakes and wildfires."
 - **AND** `fetchedAt` is "2026-03-05T10:00:00.000Z"
@@ -272,7 +272,7 @@ Origin: spec-first
 - **AND** the clocks 2026-03-05T00:00:00.000Z and 2026-03-05T23:59:59.999Z give `fromdate` 2026-02-19 and `todate` 2026-03-05
 
 ### Requirement: Read the pages
-The provider MUST fetch the pages in order from page 1. It MUST stop at a page that answers 204. It MUST stop at a page whose `features` list holds fewer than 100 records, also when it drops some of them. It MUST stop after page 5.
+The provider MUST fetch the pages in order from page 1. It MUST stop when the answer to a page request is 204. It MUST stop at a page whose `features` list holds fewer than 100 records, also when it drops some of them. It MUST stop after page 5.
 Origin: spec-first
 
 #### Scenario: Stop at the last page `gdacs-source-020`
@@ -281,9 +281,9 @@ Origin: spec-first
 - **AND** the second page request has `pagenumber=2`
 - **AND** the second page request has the same `fromdate` and `todate` as the first
 - **AND** this holds also when the clock passes midnight UTC between the two page requests
-- **AND** `fetchedAt` is the time at which the refresh starts, also when the clock moves 5 seconds between the two page requests
-- **AND** when page 2 answers 204 with no body, the provider sends two page requests and the result holds the 100 events of page 1
-- **AND** when page 1 answers 204, the result holds no event, and `unavailable` and `stale` are false
+- **AND** `fetchedAt` is the time at which the refresh starts, also when the clock moves 7 seconds between the two page requests
+- **AND** when the answer to page 2 is 204 with no body, the provider sends two page requests. The result then holds the 100 events of page 1
+- **AND** when the answer to page 1 is 204, the result holds no event, and `unavailable` and `stale` are false
 - **AND** in that case `fetchedAt` is the time at which the refresh starts
 - **AND** in that case `counts` has `total` 0, `current` 0 and `dropped` 0
 - **AND** its `byType` has FL 0, DR 0, VO 0 and TC 0
@@ -294,7 +294,7 @@ Origin: spec-first
 - **AND** these five requests have the `pagenumber` values 1 to 5
 
 ### Requirement: Source failure
-The provider MUST treat a refresh as failed in each case that this requirement names. A page request fails when it cannot connect, or when its status is not 200 or 204. It also fails when the body of a 200 answer is not valid JSON, or is not a feature collection. It fails when a page has more than 2 MiB. The refresh fails when GDACS does not send all pages in 30 seconds.
+The provider MUST treat a refresh as failed in each case that this requirement names. A page request fails when it cannot connect, or when its status is not 200 or 204. It also fails when the body of a 200 answer is not valid JSON, or is not a feature collection. It fails when the body of an answer has more than 2 MiB. The refresh fails when GDACS does not send all pages in 30 seconds.
 
 A feature collection is an object with `type` "FeatureCollection" and a `features` value that is a list. An empty body of a 200 answer is not valid JSON. A 204 answer has no body, and it is not a failure. A redirect is a failure.
 Origin: spec-first
@@ -308,28 +308,28 @@ Origin: spec-first
 - **AND** the test makes a status 200 with the body `{"type":"FeatureCollection","features":"abc"}`
 - **AND** the test makes the status 301, 404 and 500 with the body `{"type":"FeatureCollection","features":[]}`, in turn
 - **THEN** each of these cases is a failure, and the document says `unavailable` true when no good document exists
-- **AND** page 2 fails after a good page 1, with the status 500 or with the body `{}`, and no good document exists
+- **AND** page request 2 fails after a good page 1, with the status 500 or the body `{}`, and no good document exists
 - **AND** the document then says `unavailable` true with the reason "GDACS unavailable"
 - **AND** the document holds no event, and none of the events of page 1
 
-#### Scenario: Accept a page of exactly 2 MiB `gdacs-source-022`
-- **WHEN** a new provider gets a page that is a feature collection of exactly 2 MiB
-- **AND** a second new provider gets a page with one byte more
+#### Scenario: Accept an answer of exactly 2 MiB `gdacs-source-022`
+- **WHEN** a new provider gets an answer whose body is a feature collection of exactly 2 MiB
+- **AND** a second new provider gets an answer whose body has one byte more
 - **THEN** the first provider gives a document with `unavailable` false and `stale` false
 - **AND** the second provider fails, and its document says `unavailable` true and the reason "GDACS unavailable"
 
 #### Scenario: Stop a refresh after 30 seconds `gdacs-source-023`
-- **WHEN** a test gives the provider a fake timer, page 1 holds 100 records and page 2 does not answer
+- **WHEN** a test gives the provider a fake timer, page 1 holds 100 records and the request for page 2 gets no answer
 - **THEN** `setTimer` runs once with 30000 milliseconds
 - **AND** the two page requests have the same `signal`
 - **AND** when the timer callback runs, that signal aborts and the document says `unavailable` true
 - **AND** `clearTimer` runs once with the timer of a refresh after that refresh succeeds, and once after that refresh fails
-- **AND** a page body that stops after some bytes, and the timer callback, give a document with `unavailable` true
-- **AND** the timer is set before page 1, so a page 1 that does not answer also ends with `unavailable` true
+- **AND** an answer body that stops after some bytes, and the timer callback, give a document with `unavailable` true
+- **AND** the provider sets the timer before page 1, so a request for page 1 that gets no answer also ends with `unavailable` true
 - **AND** a provider that gets no timer options uses the global `setTimeout` with 30000 and the global `clearTimeout`
 
 ### Requirement: Stale document
-When a refresh fails, the provider MUST serve the last good document with `stale` true. It MUST do this only while that document is younger than 1 hour. In all other cases of a failure it MUST answer with `unavailable` true. It MUST NOT keep a failed refresh as a document.
+When a refresh fails, the provider MUST serve the last good document with `stale` true. It MUST do this only while that document is younger than 1 hour at the start of the failed refresh. In all other cases of a failure it MUST answer with `unavailable` true. It MUST NOT cache the stale document or the `unavailable` document.
 Origin: spec-first
 
 #### Scenario: Serve the last good document when a refresh fails `gdacs-source-024`
@@ -342,6 +342,7 @@ Origin: spec-first
 - **AND** its `counts` has `total` 0, `current` 0 and `dropped` 0
 - **AND** its `byType` has FL 0, DR 0, VO 0 and TC 0, and it holds no event
 - **AND** the stale document and the `unavailable` document have the status 200
+- **AND** the age counts at the start of the failed refresh. The stale answer holds for a document that is 1 millisecond younger than 1 hour at that start. It holds when the clock moves 30 seconds during the failed page request
 - **AND** the next browser request after a failure tries GDACS again, also after a stale document
 
 ### Requirement: Cache and shared refresh
@@ -353,7 +354,7 @@ Origin: spec-first
 - **THEN** the provider asks GDACS once for all three
 - **AND** a fourth browser request that comes 10 minutes after the first gets a new refresh
 - **AND** a fifth browser request that comes 5 minutes after the fourth uses the new document and sends no page request
-- **AND** a document with no event is cached in the same way
+- **AND** the provider caches a document with no event in the same way
 - **AND** a browser request that comes later, while the refresh waits, shares that refresh
 
 ### Requirement: Registration
