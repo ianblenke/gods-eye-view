@@ -62,6 +62,7 @@ export function createBeemapsBurstsLayer({
   makeKey = randomKey,
   setTimer = setTimeout,
   clearTimer = clearTimeout,
+  requestRender = () => {},
 } = {}) {
   if (SOURCE_METHODS.some((name) => typeof source?.[name] !== 'function'))
     throw new TypeError(
@@ -121,6 +122,7 @@ export function createBeemapsBurstsLayer({
         addBox(`beemaps-bursts:${burst.id}`, burst.bbox, burstStyle(burst));
       }
     }
+    requestRender('beemaps-bursts');
   }
 
   function clearQuoteTimers() {

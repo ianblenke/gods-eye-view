@@ -84,6 +84,11 @@ The list route keeps an answer for 60 seconds and no confirm request clears it. 
 
 The list route sets the status, the credits or the box of a burst to null when Bee Maps gives no valid value. The same holds for the burst of a created answer. The source keeps such a burst. A burst with no box counts in the text and gets no entity. A created burst with no credits shows the credits of the quote.
 
+### D16: The layer asks for a frame after each change of the boxes
+
+The application renders on demand: the render governor sets `requestRenderMode` when nothing animates. A change of entities from a button press does not draw a frame by itself. A real browser run showed a quote box that stayed invisible until something else drew a frame.
+The layer therefore calls `requestRender` after each change of the boxes. The wrapper `src/app/layers/beemapsBursts.js` gives it `governorRequestRender`.
+
 ## Risks / Trade-offs
 
 - [A hidden tab runs the timer late] → The press compares the clock with the end time.

@@ -14,6 +14,8 @@ import {
 import { createStandaloneLayerSources } from '../../standalone/layerSources.js';
 import { createReferenceSources } from '../../sources/reference.js';
 import { VOICE_OFF_LAYERS } from '../../voice/layerManifest.js';
+import { installRenderGovernor } from '../../renderGovernor.js';
+import { createApplicationBeemapsBursts } from '../../app/layers/beemapsBursts.js';
 
 const FAKE_VIEWER = { dataSources: { add() {}, remove() {} } };
 
@@ -144,4 +146,34 @@ test('[beemaps-bursts-003] sends no quote, confirm or list request when the shar
     false,
   );
   assert.deepEqual([calls.quote, calls.confirm, calls.list], [0, 0, 0]);
+});
+
+test('[beemaps-bursts-020] gives the layer of the application the render governor, so a press asks the scene for a frame', async (t) => {
+  const frames = [];
+  installRenderGovernor({
+    scene: { requestRender: () => frames.push('frame') },
+  });
+  const source = {
+    getStatus: async () => ({ ok: true, enabled: true, configured: true }),
+    quote: async () => ({ ok: false, status: 429, error: 'rate_limited' }),
+    confirm: async () => ({ outcome: 'unknown', status: 0 }),
+    list: async () => ({ ok: true, bursts: [], total: 0, cached: false }),
+  };
+  const layer = createApplicationBeemapsBursts({ source });
+  layer.init({ dataSources: { add() {}, remove() {} } });
+  layer.enable();
+  t.after(() => layer.destroy({ dataSources: { add() {}, remove() {} } }));
+  const before = frames.length;
+  await layer.getRowControls().chips[1].onClick();
+  assert.equal(frames.length, before + 1);
+  const own = [];
+  const custom = createApplicationBeemapsBursts({
+    source,
+    requestRender: (reason) => own.push(reason),
+  });
+  custom.init({ dataSources: { add() {}, remove() {} } });
+  custom.enable();
+  await custom.getRowControls().chips[1].onClick();
+  assert.deepEqual(own, ['beemaps-bursts']);
+  custom.destroy({ dataSources: { add() {}, remove() {} } });
 });

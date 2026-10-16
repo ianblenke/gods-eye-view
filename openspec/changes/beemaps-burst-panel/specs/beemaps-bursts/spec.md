@@ -217,6 +217,8 @@ Origin: spec-first
 - **AND** any other burst, also one with status null, is grey "#9ca3af" with alpha 0.2
 - **AND** the box of a quote is amber "#f59e0b" with alpha 0.3
 - **AND** each rectangle has the west, south, east and north of the box in degrees
+- **AND** each change of the boxes asks for one frame through the function `requestRender` with the reason "beemaps-bursts"
+- **AND** a press that changes no box asks for no frame
 
 ### Requirement: Panel notice
 The layer MUST tell the panel through its listener when the controls or the info text change. It MUST NOT tell the panel when a press changes nothing.
@@ -349,3 +351,4 @@ Origin: spec-first
 - **AND** the layer panel lists the layer in the group "Cameras" directly after "beemaps"
 - **AND** the data credits contain an entry with the key "beemaps-bursts" and a link to "https://beemaps.com/"
 - **AND** the list of layers without voice tools gives the reason "The Bee Maps bursts layer has no voice tools." for "beemaps-bursts"
+- **AND** the layer of the application gets the render governor as its function `requestRender`, and a caller can give another function

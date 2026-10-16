@@ -58,4 +58,5 @@ The tests use fake sources and fake viewers. No test and no run sends a request 
 - Known limit `chip-lock-only`: The wait of 1000 milliseconds guards against a double press only. The layer cannot know if the person read the price.
 - Known limit `null-fields`: The list route can set the status, the credits or the box of a burst to null. The layer counts such a burst and draws it grey, or draws no box when the box is null.
 - Known limit `view-moves`: The Confirm chip names the credits and the area, and no place. The camera can leave the box after the quote. The server confirms the box that it stored, and the layer keeps the box of the quote drawn on the globe.
+- Known limit `frames-render`: The frames layer of change 2 has the same exposure. It adds points after a press and does not ask for a frame. A later change can add the request there.
 - Known limit `real-service`: No run used the real service. The shapes come from the tests of change 3.

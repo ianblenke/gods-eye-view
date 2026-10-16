@@ -122,6 +122,7 @@ function harness({
   const timers = [];
   const cleared = [];
   const keys = [];
+  const renders = [];
   let notices = 0;
   const layer = createBeemapsBurstsLayer({
     source,
@@ -130,6 +131,7 @@ function harness({
       keys.push(key(keys.length + 1));
       return keys[keys.length - 1];
     },
+    requestRender: (reason) => renders.push(reason),
     setTimer: (fn, ms) => {
       timers.push({ fn, ms, done: false });
       return timers.length;
@@ -154,6 +156,7 @@ function harness({
     timers,
     cleared,
     keys,
+    renders,
     notices: () => notices,
     chips,
     chip,
@@ -2176,4 +2179,47 @@ test('[beemaps-bursts-011] keeps the message of a failed list after a cancel', a
   await h.chip('list').onClick();
   await h.chip('cancel').onClick();
   assert.equal(h.info(), 'The server answered with an unknown error (500).');
+});
+
+test('[beemaps-bursts-020] asks for one frame after each change of the boxes, with the reason beemaps-bursts', async () => {
+  const h = harness({
+    list: async () => ({
+      ok: true,
+      bursts: [listed('a')],
+      total: 1,
+      cached: false,
+    }),
+  });
+  await h.ready();
+  assert.deepEqual(h.renders, []);
+  await h.chip('quote').onClick();
+  assert.deepEqual(h.renders, ['beemaps-bursts']);
+  h.unlock();
+  await h.chip('list').onClick();
+  assert.equal(h.renders.length, 2);
+  await h.chip('cancel').onClick();
+  assert.equal(h.renders.length, 3);
+  await h.chip('quote').onClick();
+  h.timers.at(-2).fn();
+  assert.equal(h.renders.length, 5);
+  await h.chip('quote').onClick();
+  h.unlock();
+  await h.confirmChip().onClick();
+  assert.equal(h.renders.length, 7);
+  h.layer.disable(h.viewer);
+  assert.equal(h.renders.length, 8);
+  assert.deepEqual([...new Set(h.renders)], ['beemaps-bursts']);
+});
+
+test('[beemaps-bursts-020] asks for no frame when a press changes no box', async () => {
+  const sky = harness({ pick: () => undefined });
+  await sky.ready();
+  await sky.chip('quote').onClick();
+  assert.deepEqual(sky.renders, []);
+  const failing = harness({
+    quote: async () => ({ ok: false, status: 429, error: 'rate_limited' }),
+  });
+  await failing.ready();
+  await failing.chip('quote').onClick();
+  assert.deepEqual(failing.renders, []);
 });
