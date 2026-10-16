@@ -871,6 +871,8 @@
   "server/providers/reticulum.js",
   "src/data/reticulumListener.test.mjs",
   "src/data/reticulumProxy.test.mjs",
+  "server/providers/gdacs.js",
+  "src/data/gdacsProxy.test.mjs",
   "src/layers/cyclones/index.js",
   "src/layers/cyclones/rendering.js",
   "src/layers/cyclones/labels.js",

@@ -1,0 +1,41 @@
+One run of the provider against the real GDACS feed (task 3.5 of the change). The request is a keyless GET request.
+The script live-run.mjs lives outside the repository, because a script in a change folder is a coverage gap. It calls the provider through a fake server and keeps a copy of each page.
+So the counts of the raw feed and the counts of the document come from the same pages.
+The first line of the output gives the time of the run. The second line names the code commit. The lines that follow come from the script and not from a person.
+
+Run at 2026-10-16T19:58:53.188Z
+Code commit: ed38719b3ac35cfeb3f83445dcc3acc24fa06b82. Uncommitted changes in server and src: none.
+Page requests: 1. Statuses: 200. Bytes of the pages: 93093.
+First page request: https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist=FL;DR;VO;TC&fromdate=2026-10-02&todate=2026-10-16&alertlevel=green;orange;red&pagenumber=1
+Headers of the first page request: {"Accept":"application/json","User-Agent":"gods-eye-view-gdacs-proxy/1.0"}. Redirect option: error. Method: GET.
+Raw records on all pages: 65. By type: {"TC":10,"FL":41,"DR":12,"VO":2}.
+Raw records with the severity 0: 43. By type: {"FL":41,"VO":2}.
+Raw records with iscurrent "true": 18.
+Raw records by alert level: {"Orange":10,"Green":55}.
+Raw distinct pairs of type and event id: 65.
+Route answer: status 200, unavailable false, stale false, reason null, fetchedAt 2026-10-16T19:58:53.189Z.
+Document counts: {"total":65,"current":18,"dropped":0,"byType":{"FL":41,"DR":12,"VO":2,"TC":10}}.
+Events in the document: 65. Size of the document: 32272 bytes. Time of the run: 2414 ms.
+Events by alert level: {"orange":10,"green":55}. Current events by type: {"TC":6,"FL":11,"DR":1}.
+Events with a severity: 22. Events with no country: 2.
+Newest modified: 2026-10-16T19:53:30.000Z. Oldest modified: 2026-09-18T06:16:34.000Z.
+Hosts of the report links: www.gdacs.org.
+Current events (id | name | country | alert | severity):
+  TC-1001339 | Tropical Cyclone ONE-26 | Cook Islands, French Polynesia | green | 120 km/h
+  TC-1001337 | Tropical Cyclone TRUDY-26 | México | green | 222 km/h
+  TC-1001335 | Tropical Cyclone SIMON-26 | México | orange | 250 km/h
+  TC-1001338 | Tropical Cyclone CHAMPI-26 | Guam | orange | 250 km/h
+  FL-1104218 | Flood in Argentina | Argentina | green | none
+  FL-1103888 | Flood in United States | United States | green | none
+  TC-1001336 | Tropical Cyclone TWENTYEIGHT-26 | null | green | 56 km/h
+  FL-1104230 | Flood in Türkiye | Türkiye | green | none
+  DR-1018332 | Drought in Austria, Bosnia and Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, Fran | Austria, Bosnia & Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Ge | orange | 1759971 km2
+  FL-1104200 | Flood in Colombia | Colombia | green | none
+  FL-1104217 | Flood in Chile | Chile | green | none
+  FL-1104216 | Flood in Brazil | Brazil | green | none
+  FL-1104233 | Flood in Syria | Syria | green | none
+  FL-1104224 | Flood in Indonesia | Indonesia | green | none
+  FL-1104231 | Flood in Libya | Libya | green | none
+  FL-1104167 | Flood in Ecuador | Ecuador | green | none
+  TC-1001333 | Tropical Cyclone KOGUMA-26 | null | green | 222 km/h
+  FL-1104225 | Flood in Nepal | Nepal | green | none

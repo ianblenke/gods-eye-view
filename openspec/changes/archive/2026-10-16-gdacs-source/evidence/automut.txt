@@ -1,0 +1,28 @@
+Automatic mutation run of server/providers/gdacs.js. The tool is the AST mutation tool of the lead (gev-tools/automut). It changes one place of the file at a time, for example a comparison, a number, a regular expression or a statement.
+The tests of src/data/gdacsProxy.test.mjs then run on each mutant, and the first failing test ends that mutant.
+The named faults of mutations.txt were written by hand and by agents. This run tests the tests with a different method, and it found gaps that the named faults did not name.
+
+Code commit: ed38719b3ac35cfeb3f83445dcc3acc24fa06b82. The command is: node automut.mjs run --root <clone> --mutants mutants.json --tests src/data/gdacsProxy.test.mjs --phase 1 --jobs 4 --slow-ms 1000
+Result of the final run: 1771 mutants. 1690 were killed by a failing test. 81 survived. 0 timed out.
+Earlier run 1: 1821 mutants and 175 survivors.
+Earlier run 2: 1771 mutants and 84 survivors.
+Earlier run 3: 1771 mutants and 81 survivors.
+Earlier run 4: 1771 mutants and 81 survivors.
+After runs 1 and 2, the lead added samples to the tests for the survivors that were not equivalent. After run 3, the review of round 1 led to more changes of the tests. After run 4, the review of round 2 led to more changes of the tests.
+Every survivor of the final run is equivalent: the mutant gives the same results as the file. The survivors are in groups below, with the lines of the file and the reason.
+
+- Mutants: 7. Place: line 199. The ids are unique, so the comparison never meets two equal ids. A mutant that keeps the sign of the result is the same comparator. A mutant that gives 0 in place of 1 gives an order that depends on the engine. So the check below sorts shuffled lists in V8.
+- Mutants: 1. Place: line 74. The group of the fraction is undefined or a non-empty text of digits, so ?? and || give the same text.
+- Mutants: 3. Place: line 274. A body that is null throws a TypeError at the next test. The catch clause of refresh handles that as a failure. Any other value that is not an object has no type "FeatureCollection".
+- Mutants: 4. Place: line 247. The call reads four fields of its argument. Another default value of the argument has the same four fields undefined.
+- Mutants: 3. Place: lines 88 to 231. The call slice(undefined, n) starts at 0 as slice(0, n) does.
+- Mutants: 2. Place: line 308. The map has one key, so another key shares the refresh in the same way.
+- Mutants: 12. Place: lines 84 to 132. Each caller tests the result with !, || or a check for a missing value, so undefined acts as null.
+- Mutants: 41. Place: lines 47 to 321. The two parts have no side effect that depends on the order. They are tests that never throw, declarations of functions or constants, or early returns that all give null. Where an exception can come, both orders end in a failed refresh.
+- Mutants: 6. Place: lines 269 to 278. The catch clause of refresh handles every error as a failure of GDACS and does not read the type or the message of the error.
+- Mutants: 2. Place: line 89. A star also matches the empty text, and the replace of an empty match by an empty text changes nothing.
+
+Check of the comparator of the sort. The script sort-check.mjs sorts shuffled lists of 2 to 300 events. The lists have equal modified times and times of -Infinity, as the real rule has.
+Each list is sorted with the real comparator and with four changed comparators, which give 0, 2 or -2 in place of 1 and -1. The first word of a line is true when all sorts give the same order:
+- host Node v26.8.2: true v26.8.2 cases 3588 {"zero":3588,"two":3588,"minus2":3588,"zeroDifference":3588}
+- image Node: true v24.21.0 cases 3588 {"zero":3588,"two":3588,"minus2":3588,"zeroDifference":3588}
