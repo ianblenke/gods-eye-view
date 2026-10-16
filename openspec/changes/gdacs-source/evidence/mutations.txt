@@ -1,42 +1,31 @@
 Named faults of gdacs-source (AGENTS.md rule 13). One fault changes one part of the provider or of its registration. The tests then run. The list below names the tests that failed.
 
-Code commit: 638e59a55623f3489d390117adfc3c903e057a52. Both runs below ran on the files of this commit, tests included. The command git diff --stat 638e59a5 HEAD -- src server build prints nothing.
+Code commit: dacd6309642b3bd96b5ce37987ae001d772985b5. Both runs below ran on the files of this commit, tests included. The command git diff --stat dacd6309 HEAD -- src server build prints nothing.
 Runner: 6 scratch copies of the clone run in parallel. Each copy uses the same long-lived container of the image gods-eye-view:local, with the node_modules of the image.
 Each fault runs against the test file src/data/gdacsProxy.test.mjs. The command is: timeout 100 node --test --test-concurrency=4 --test-timeout=6000 --test-reporter=spec <test file>
-The scenario in the first column is the scenario of a test that failed. The exceptions are the equivalent faults, which fail no test, and the faults in the list further below.
-The container ran next to the containers of the owner and stopped when the run ended. No other container ran at the same time.
+For each fault that is not an equivalent fault, the scenario in the first column is the scenario of a test that failed. The script that wrote this file checks that.
+The runner used one long-lived container, named gevfaults.
 
-Result: 799 faults in each of two runs. 762 faults failed at least one test in both runs. 37 faults are equivalent faults. Each one names its reason in its line.
+Result: 803 faults in each of two runs. 766 faults failed at least one test in both runs. 37 faults are equivalent faults. Each one names its reason in its line.
 Faults where the tests hang or a test file stops: 0. Faults where a failing test has no scenario tag: 0.
-For 11 faults, no test of the scenario in the first column fails. The scenario in the first column is then the scenario of the test that covers the behavior:
-- "Set the severity field of the event to null always"
-- "Replace the default clock with a clock that returns zero"
-- "Replace the default clock with a clock that runs a minute early"
-- "Replace the default clock with a clock that runs a minute late"
-- "Remove the global fetch as the default page fetch function"
-- "Add an empty Cookie header to the page requests after the first"
-- "Add a contact address to the User-Agent of the page requests after the first"
-- "Move the cache time to the failed refresh after a stale answer"
-- "Cache the stale document as a new good document"
-- "Answer with the status 503 when the document is unavailable"
-- "Answer with the status 203 when the document is stale"
 The two runs give identical lines.
 
-How the faults were written. Seven agents wrote the faults, one part each, and judged them with the test file on the host. Each agent had read the spec, the code and the tests.
-A fault that survived was either an equivalent fault with a reason, or a gap in the tests. The lead added an assertion to the tests for each gap, and then ran both full runs above.
-- Part a, Event fields and record rules: 108 faults. The first judge run killed 95, 6 were equivalent and 7 showed a gap in the tests.
-- Part b, Position and time rules: 117 faults. The first judge run killed 86, 6 were equivalent and 24 showed a gap in the tests.
-- Part c, Alert, score, current flag and severity: 114 faults. The first judge run killed 103, 5 were equivalent and 6 showed a gap in the tests.
-- Part d, Text rules: 117 faults. The first judge run killed 93, 6 were equivalent and 8 showed a gap in the tests.
-- Part e, Join, order, size and pages: 99 faults. The first judge run killed 89, 7 were equivalent and 3 showed a gap in the tests.
-- Part f, Route, page request and privacy: 149 faults. The first judge run killed 127, 2 were equivalent and 5 showed a gap in the tests.
-- Part g, Failure, stale document, cache and registration: 95 faults. The first judge run killed 76, 5 were equivalent and 14 showed a gap in the tests.
-In all, 799 faults, 669 killed at the first judge run, 37 equivalent and 67 gaps. The gaps were closed by assertions in the test file, so none of these faults survives in the runs above.
+How the faults were written. Seven agents wrote the faults, one part each, and judged them with the test file on the host. Each agent read the spec, the code and the tests.
+A fault that survived the judge run of an agent was either an equivalent fault with a reason, or a gap in the tests. Each agent reported its gaps. The lead then added assertions to the tests.
+The numbers of faults and of equivalent faults come from the part files. The number of gaps is the number in the report of the agent.
+- Part a, Event fields and record rules: 108 faults, 6 equivalent faults, 7 gaps reported.
+- Part b, Position and time rules: 119 faults, 6 equivalent faults, 24 gaps reported.
+- Part c, Alert, score, current flag and severity: 114 faults, 5 equivalent faults, 6 gaps reported.
+- Part d, Text rules: 117 faults, 6 equivalent faults, 8 gaps reported.
+- Part e, Join, order, size and pages: 99 faults, 7 equivalent faults, 3 gaps reported.
+- Part f, Route, page request and privacy: 150 faults, 2 equivalent faults, 5 gaps reported.
+- Part g, Failure, stale document, cache and registration: 96 faults, 5 equivalent faults, 14 gaps reported.
+In all, 803 faults, 37 equivalent faults and 67 gaps reported. In both full runs above, each fault that is not an equivalent fault fails at least one test.
 
 Equivalent faults. The description is first and the reason follows:
 - "Read the type of the report link from the field eventtype". The constant `type` is a copy of `p.eventtype`. The template text is the same.
 - "Encode the type of the report link for a query". The type is FL, DR, VO or TC. Encoding changes no character of these texts.
-- "Let the object test accept text and numbers". A text, a number or a boolean has none of the fields that the code reads. Each read gives undefined, and the next rule drops the value.
+- "Let the object test accept text and numbers". A text, a number or a boolean has none of the fields that the code reads. The code gets undefined from each field, and the next rule drops the value.
 - "Set the alert level to an empty text when it is not text". The list of alert levels holds neither null nor the empty text. Both values drop the record.
 - "Move the border of the event id from below 1 to at most 0". The test runs after `Number.isInteger`. A whole number is below 1 exactly when it is at most 0.
 - "Move the border of the episode id from below 0 to at most -1". The test runs after `Number.isInteger`. A whole number is below 0 exactly when it is at most -1.
@@ -59,7 +48,7 @@ Equivalent faults. The description is first and the reason follows:
 - "Write the iso3 in upper case after the pattern test". The pattern test passes only three letters from A to Z. `toUpperCase` does not change such a text.
 - "Test for an equal or higher episode id before the modified times". The first operand already takes every higher episode id. The second operand only sees equal or lower ids, so `>=` and `===` give the same result.
 - "Compare the ids with less than or equal in the id test". The ids are the keys of the join map, so each id is unique. The sort never compares an event with itself.
-- "Compare the ids with localeCompare in the id test". An id is two capital letters, a hyphen and digits. For such texts `localeCompare` and `<` give the same order. The agent that wrote the fault compared 2.7 million pairs in three locales and found no difference.
+- "Compare the ids with localeCompare in the id test". An id is two capital letters, a hyphen and the text of a whole number, such as FL-1e+21. For such texts `localeCompare` and `<` give the same order. The agent that wrote the fault compared 2.7 million pairs in three locales and found no difference.
 - "Place the events with no modified time at the smallest safe integer". The smallest valid time is about -6e13 milliseconds, which is above -9e15. Each comparison keeps its sign. Two null times give 0 in place of NaN, and both are false in the sort test.
 - "Return the records at a page that answers 204". After the loop the code only returns the records. The `finally` block runs in both cases, so `return` gives the same result as `break`.
 - "Stop at a short page or at the page limit in the same test". After page 5 the `for` loop ends at once. A `break` at page 5 gives the same records as the end of the loop.
@@ -69,8 +58,8 @@ Equivalent faults. The description is first and the reason follows:
 - "Change the text of the status error". The catch clause of refresh binds no error, so the text of the error is never read.
 - "Drop the object test of the page body". A null body throws a TypeError at `body.type`, and the refresh fails. Any other value that is not an object has no type "FeatureCollection".
 - "Test the features value with typeof in place of the list test". JSON gives only arrays as iterable objects. The spread of null or of a plain object throws a TypeError, and the refresh fails as before.
-- "Pass a reason to the abort call of the timer". The abort reason only changes the error that the read throws. The catch clause of refresh ignores that error.
-- "Set stale on the cached document and serve that object". A refresh runs only when the cache is at least 10 minutes old, and the age never falls. The changed object then serves only through the stale path. That path sets stale true anyway, until a good refresh replaces it.
+- "Pass a reason to the abort call of the timer". The abort reason only changes the error that `readResponseTextCapped` throws. The catch clause of refresh ignores that error.
+- "Set stale on the cached document and serve that object". A refresh runs only when the cache is at least 10 minutes old. The changed object then serves only through the stale path. That path sets stale true anyway, until a good refresh replaces it. This holds while the clock does not go back.
 
 An automatic mutation run of the provider file is in the file automut.txt of this folder.
 
@@ -137,7 +126,7 @@ gdacs-source-004 | Drop the check that the properties value is an object | faili
 gdacs-source-004 | Check the properties value before the record in the object rule | failing: [gdacs-source-004], [gdacs-source-020]
 gdacs-source-004 | Accept the properties value that is not an object | failing: [gdacs-source-004]
 gdacs-source-004 | Let the object test accept null | failing: [gdacs-source-004], [gdacs-source-006], [gdacs-source-011], [gdacs-source-020]
-gdacs-source-004 | Let the object test accept text and numbers | failing: NONE (equivalent fault: A text, a number or a boolean has none of the fields that the code reads. Each read gives undefined, and the next rule drops the value.)
+gdacs-source-004 | Let the object test accept text and numbers | failing: NONE (equivalent fault: A text, a number or a boolean has none of the fields that the code reads. The code gets undefined from each field, and the next rule drops the value.)
 gdacs-source-004 | Remove the count of the dropped records | failing: [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-008], [gdacs-source-014], [gdacs-source-020]
 gdacs-source-004 | Add two in place of one to the count of dropped records | failing: [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-008], [gdacs-source-014], [gdacs-source-020]
 gdacs-source-004 | Skip the continue after a dropped record | failing: [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-008], [gdacs-source-014], [gdacs-source-020]
@@ -147,10 +136,10 @@ gdacs-source-005 | Accept every text as the type of a record | failing: [gdacs-s
 gdacs-source-005 | Compare the type with loose equality | failing: [gdacs-source-005]
 gdacs-source-005 | Read the type in capital letters | failing: [gdacs-source-005]
 gdacs-source-005 | Take the type list from the label texts | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
-gdacs-source-001 | Remove the type FL from the type labels | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
+gdacs-source-001 | Remove the type FL from the type labels | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
 gdacs-source-005 | Remove the type DR from the type labels | failing: [gdacs-source-005], [gdacs-source-010], [gdacs-source-012], [gdacs-source-014], [gdacs-source-015]
-gdacs-source-012 | Remove the type VO from the type labels | failing: [gdacs-source-005], [gdacs-source-012], [gdacs-source-015]
-gdacs-source-012 | Remove the type TC from the type labels | failing: [gdacs-source-005], [gdacs-source-012], [gdacs-source-015]
+gdacs-source-012 | Remove the type VO from the type labels | failing: [gdacs-source-005], [gdacs-source-011], [gdacs-source-012], [gdacs-source-015]
+gdacs-source-012 | Remove the type TC from the type labels | failing: [gdacs-source-005], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-015]
 gdacs-source-005 | Add the type EQ to the type labels | failing: [gdacs-source-005]
 gdacs-source-005 | Add the type WF to the type labels | failing: [gdacs-source-005]
 gdacs-source-005 | Skip the check of the event id for a whole number | failing: [gdacs-source-005]
@@ -287,7 +276,7 @@ gdacs-source-007 | Pad the fraction to two digits in place of three | failing: [
 gdacs-source-007 | Pad the fraction to four digits in place of three | failing: [gdacs-source-007]
 gdacs-source-007 | Pad the fraction at its start in place of its end | failing: [gdacs-source-007]
 gdacs-source-007 | Pad the fraction with the digit 9 in place of 0 | failing: [gdacs-source-001], [gdacs-source-007], [gdacs-source-008], [gdacs-source-014], [gdacs-source-015]
-gdacs-source-007 | Read the fraction without the empty default, so a missing fraction throws | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025]
+gdacs-source-007 | Read the fraction without the empty default, so a missing fraction throws | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025]
 gdacs-source-007 | Use the text 0 in place of the empty text as the default fraction | failing: NONE (equivalent fault: Both default texts pad to "000". Number gives 0 in both versions, so the time value is the same.)
 gdacs-source-007 | Leave the fraction out of the time value | failing: [gdacs-source-007]
 gdacs-source-007 | Subtract the fraction from the time value in place of adding it | failing: [gdacs-source-007]
@@ -300,6 +289,8 @@ gdacs-source-008 | Drop a record whose todate is not a valid time | failing: [gd
 gdacs-source-008 | Drop a record whose datemodified is not a valid time | failing: [gdacs-source-008], [gdacs-source-014], [gdacs-source-015]
 gdacs-source-008 | Use the fromdate in place of null for a todate that is not valid | failing: [gdacs-source-008]
 gdacs-source-008 | Use the epoch in place of null for a datemodified that is not valid | failing: [gdacs-source-008], [gdacs-source-014], [gdacs-source-015]
+gdacs-source-008 | Compare only the last two digits of the year in the real date test | failing: [gdacs-source-008]
+gdacs-source-007 | Drop a year below 1000 in the real date test | failing: [gdacs-source-007]
 gdacs-source-009 | Change toLowerCase of the alert level to toUpperCase | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
 gdacs-source-009 | Use the alert level of the feed with no lower case | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
 gdacs-source-009 | Test the alert list against the raw alert level of the feed | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
@@ -404,7 +395,7 @@ gdacs-source-013 | Raise the severity text limit to 161 characters | failing: [g
 gdacs-source-013 | Lower the severity text limit to 159 characters | failing: [gdacs-source-013]
 gdacs-source-010 | Read the severity of the event from the properties object | failing: [gdacs-source-010], [gdacs-source-013]
 gdacs-source-010 | Store the raw severity data of the feed in the event | failing: [gdacs-source-001], [gdacs-source-009 gdacs-source-011], [gdacs-source-010], [gdacs-source-011], [gdacs-source-013]
-gdacs-source-001 | Set the severity field of the event to null always | failing: [gdacs-source-010], [gdacs-source-013]
+gdacs-source-010 | Set the severity field of the event to null always | failing: [gdacs-source-010], [gdacs-source-013]
 gdacs-source-001 | Remove the severity field from the event | failing: [gdacs-source-001], [gdacs-source-009 gdacs-source-011], [gdacs-source-010], [gdacs-source-011], [gdacs-source-013]
 gdacs-source-010 | Keep the severity for a tropical cyclone only | failing: [gdacs-source-010], [gdacs-source-013]
 gdacs-source-011 | Drop the record when the severity is null | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
@@ -540,7 +531,7 @@ gdacs-source-014 | Test for an equal or higher episode id before the modified ti
 gdacs-source-014 | Replace the held record when the modified time is equal or later | failing: [gdacs-source-014]
 gdacs-source-014 | Replace the held record when the modified times differ | failing: [gdacs-source-014]
 gdacs-source-014 | Replace the held record when the modified time is earlier | failing: [gdacs-source-014]
-gdacs-source-014 | Skip the missing held record test and read the held record | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025]
+gdacs-source-014 | Skip the missing held record test and read the held record | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025]
 gdacs-source-014 | Replace the held record for every new record | failing: [gdacs-source-014]
 gdacs-source-014 | Join the records by the event id without the type | failing: [gdacs-source-014]
 gdacs-source-014 | Join the records by the type only | failing: [gdacs-source-009], [gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-020]
@@ -579,7 +570,7 @@ gdacs-source-015 | Compare the ids with greater than in the id test | failing: [
 gdacs-source-015 | Compare the ids with less than or equal in the id test | failing: NONE (equivalent fault: The ids are the keys of the join map, so each id is unique. The sort never compares an event with itself.)
 gdacs-source-015 | Compare the event ids as numbers in the id test | failing: [gdacs-source-015]
 gdacs-source-015 | Compare the ids with numeric collation in the id test | failing: [gdacs-source-015]
-gdacs-source-015 | Compare the ids with localeCompare in the id test | failing: NONE (equivalent fault: An id is two capital letters, a hyphen and digits. For such texts `localeCompare` and `<` give the same order. The agent that wrote the fault compared 2.7 million pairs in three locales and found no difference.)
+gdacs-source-015 | Compare the ids with localeCompare in the id test | failing: NONE (equivalent fault: An id is two capital letters, a hyphen and the text of a whole number, such as FL-1e+21. For such texts `localeCompare` and `<` give the same order. The agent that wrote the fault compared 2.7 million pairs in three locales and found no difference.)
 gdacs-source-015 | Place the events with no modified time at the time zero | failing: [gdacs-source-014], [gdacs-source-015]
 gdacs-source-015 | Place the events with no modified time first | failing: [gdacs-source-014], [gdacs-source-015]
 gdacs-source-015 | Place the events with no modified time at minus one millisecond | failing: [gdacs-source-014], [gdacs-source-015]
@@ -597,7 +588,7 @@ gdacs-source-020 | Stop at a page of exactly 100 records | failing: [gdacs-sourc
 gdacs-source-020 | Stop when the records of all pages are fewer than the page size | failing: [gdacs-source-014], [gdacs-source-019], [gdacs-source-020]
 gdacs-source-020 | Stop at a page with fewer valid events than the page size | failing: [gdacs-source-014], [gdacs-source-020]
 gdacs-source-020 | Stop at a page with fewer object records than the page size | failing: [gdacs-source-020]
-gdacs-source-020 | Stop only at a page with no record | failing: [gdacs-source-014], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
+gdacs-source-020 | Stop only at a page with no record | failing: [gdacs-source-014], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
 gdacs-source-020 | Add the records of a page after the test for the last page | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
 gdacs-source-020 | Keep the records of the last page only | failing: [gdacs-source-014], [gdacs-source-020]
 gdacs-source-020 | Add the features list of a page as one record | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
@@ -612,21 +603,21 @@ gdacs-source-020 | Send the page number plus one in the page request | failing: 
 gdacs-source-020 | Rename the query key of the page number | failing: [gdacs-source-019], [gdacs-source-020]
 gdacs-source-020 | Stop at a page that answers 205 | failing: [gdacs-source-015], [gdacs-source-020], [gdacs-source-025]
 gdacs-source-021 | Stop at a page that answers 204 or 404 | failing: [gdacs-source-021]
-gdacs-source-021 | Stop at a page that answers 204 or more | failing: [gdacs-source-021], [gdacs-source-024 gdacs-source-025], [gdacs-source-024]
+gdacs-source-021 | Stop at a page that answers 204 or more | failing: [gdacs-source-021], [gdacs-source-024]
 gdacs-source-020 | Fail at a page that answers 204 | failing: [gdacs-source-015], [gdacs-source-020], [gdacs-source-025]
 gdacs-source-020 | Test the status 200 before the status 204 | failing: [gdacs-source-015], [gdacs-source-020], [gdacs-source-025]
-gdacs-source-021 | Stop the page loop at a page with a status other than 200 | failing: [gdacs-source-021], [gdacs-source-024 gdacs-source-025], [gdacs-source-024]
+gdacs-source-021 | Stop the page loop at a page with a status other than 200 | failing: [gdacs-source-021], [gdacs-source-024]
 gdacs-source-020 | Compute the dates of the query again for each page request | failing: [gdacs-source-020]
 gdacs-source-020 | Return the records at a page that answers 204 | failing: NONE (equivalent fault: After the loop the code only returns the records. The `finally` block runs in both cases, so `return` gives the same result as `break`.)
 gdacs-source-020 | Read the clock again for fetchedAt after the page requests | failing: [gdacs-source-020]
 gdacs-source-020 | Read the real clock for fetchedAt | failing: [gdacs-source-016], [gdacs-source-020], [gdacs-source-024], [gdacs-source-025]
-gdacs-source-020 | Add one second to fetchedAt | failing: [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-020], [gdacs-source-024], [gdacs-source-025]
+gdacs-source-020 | Add one second to fetchedAt | failing: [gdacs-source-016], [gdacs-source-020], [gdacs-source-024], [gdacs-source-025]
 gdacs-source-020 | Set fetchedAt to null when no event is listed | failing: [gdacs-source-020]
 gdacs-source-020 | Treat a refresh with no event as a failure | failing: [gdacs-source-020], [gdacs-source-025]
 gdacs-source-020 | Discard the records when a later page answers 204 | failing: [gdacs-source-015], [gdacs-source-020]
 gdacs-source-020 | Stop at a page that answers 204 after page 1 only | failing: [gdacs-source-020], [gdacs-source-025]
 gdacs-source-020 | Stop at a page that answers 204 on page 1 only | failing: [gdacs-source-015], [gdacs-source-020]
-gdacs-source-016 | Stop at a short page after page 1 only | failing: [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
+gdacs-source-016 | Stop at a short page after page 1 only | failing: [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
 gdacs-source-020 | Stop at a short page or at the page limit in the same test | failing: NONE (equivalent fault: After page 5 the `for` loop ends at once. A `break` at page 5 gives the same records as the end of the loop.)
 gdacs-source-015 | Reverse the joined events before the sort | failing: NONE (equivalent fault: The comparator is a total order: the modified time, then the unique id. It never returns 0, so the input order does not change the sorted list.)
 gdacs-source-014 | Keep going after a dropped record without the continue | failing: [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-008], [gdacs-source-014], [gdacs-source-020]
@@ -644,44 +635,44 @@ gdacs-source-016 | Remove the disclaimer field from the document | failing: [gda
 gdacs-source-016 | Remove the coverage field from the document | failing: [gdacs-source-016]
 gdacs-source-016 | Remove the reason field from the default document | failing: [gdacs-source-016]
 gdacs-source-016 | Set the stale flag of the default document to true | failing: [gdacs-source-016], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
-gdacs-source-016 | Set the unavailable flag of the default document to true | failing: [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-020], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024]
+gdacs-source-016 | Set the unavailable flag of the default document to true | failing: [gdacs-source-016], [gdacs-source-020], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024]
 gdacs-source-016 | Add a thirteenth field named debug to the document | failing: [gdacs-source-016]
-gdacs-source-016 | Put the spread of the given fields before the default fields of the document | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025]
+gdacs-source-016 | Put the spread of the given fields before the default fields of the document | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025]
 gdacs-source-020 | Read the clock again for the fetchedAt field of the document | failing: [gdacs-source-020]
-gdacs-source-016 | Cut the Z and the fraction from the fetchedAt time | failing: [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-020], [gdacs-source-024], [gdacs-source-025]
-gdacs-source-016 | Write the fetchedAt time as the number of milliseconds | failing: [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-020], [gdacs-source-024], [gdacs-source-025]
+gdacs-source-016 | Cut the Z and the fraction from the fetchedAt time | failing: [gdacs-source-016], [gdacs-source-020], [gdacs-source-024], [gdacs-source-025]
+gdacs-source-016 | Write the fetchedAt time as the number of milliseconds | failing: [gdacs-source-016], [gdacs-source-020], [gdacs-source-024], [gdacs-source-025]
 gdacs-source-016 | Change the content type of the answer to text/plain | failing: [gdacs-source-016]
 gdacs-source-016 | Add a charset to the content type of the answer | failing: [gdacs-source-016]
 gdacs-source-016 | Remove the content type header from the answer | failing: [gdacs-source-016]
 gdacs-source-016 | Change the cache control of the answer to no-cache | failing: [gdacs-source-016]
 gdacs-source-016 | Remove the cache control header from the answer | failing: [gdacs-source-016]
 gdacs-source-017 | Ignore the given status and send the status 200 in every answer | failing: [gdacs-source-017], [gdacs-source-018]
-gdacs-source-016 | Change the status of the document answer to 201 | failing: [gdacs-source-016], [gdacs-source-018], [gdacs-source-024 gdacs-source-025]
-gdacs-source-016 | Pass the promise of the load to the answer, not its result | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025]
-gdacs-source-016 | Send the end of the answer before the header call | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
-gdacs-source-016 | Call the header call of the answer twice | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
-gdacs-source-016 | Call the end of the answer twice | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
-gdacs-source-016 | Remove the end call from the answer | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
-gdacs-source-016 | Replace the default clock with a clock that returns zero | failing: [gdacs-source-016 gdacs-source-025]
-gdacs-source-016 | Replace the default clock with a clock that runs a minute early | failing: [gdacs-source-016 gdacs-source-025]
-gdacs-source-016 | Replace the default clock with a clock that runs a minute late | failing: [gdacs-source-016 gdacs-source-025]
-gdacs-source-016 | Remove the global fetch as the default page fetch function | failing: [gdacs-source-016 gdacs-source-025]
-gdacs-source-016 | Remove the default empty options object of the provider | failing: [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-026]
+gdacs-source-016 | Change the status of the document answer to 201 | failing: [gdacs-source-016], [gdacs-source-018], [gdacs-source-024]
+gdacs-source-016 | Pass the promise of the load to the answer, not its result | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025]
+gdacs-source-016 | Send the end of the answer before the header call | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
+gdacs-source-016 | Call the header call of the answer twice | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
+gdacs-source-016 | Call the end of the answer twice | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
+gdacs-source-016 | Remove the end call from the answer | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
+gdacs-source-016 | Replace the default clock with a clock that returns zero | failing: [gdacs-source-016]
+gdacs-source-016 | Replace the default clock with a clock that runs a minute early | failing: [gdacs-source-016]
+gdacs-source-016 | Replace the default clock with a clock that runs a minute late | failing: [gdacs-source-016]
+gdacs-source-016 | Remove the global fetch as the default page fetch function | failing: [gdacs-source-016]
+gdacs-source-016 | Remove the default empty options object of the provider | failing: [gdacs-source-016], [gdacs-source-026]
 gdacs-source-017 | Let the handler accept the method HEAD as a document request | failing: [gdacs-source-017]
 gdacs-source-017 | Let the handler accept the method POST as a document request | failing: [gdacs-source-017]
 gdacs-source-017 | Let the handler accept the method PUT as a document request | failing: [gdacs-source-017]
 gdacs-source-017 | Let the handler accept the method DELETE as a document request | failing: [gdacs-source-017]
 gdacs-source-017 | Refuse no method at all | failing: [gdacs-source-017]
-gdacs-source-016 | Compare the method with the lower case text get | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
+gdacs-source-016 | Compare the method with the lower case text get | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
 gdacs-source-017 | Answer a wrong method with the status 400 | failing: [gdacs-source-017]
 gdacs-source-017 | Answer a wrong method with the status 404 | failing: [gdacs-source-017]
 gdacs-source-017 | Change one letter of the error text for a wrong method | failing: [gdacs-source-017]
 gdacs-source-017 | Rename the error field of the method answer to message | failing: [gdacs-source-017]
 gdacs-source-017 | Drop the return before the answer for a wrong method | failing: [gdacs-source-017]
 gdacs-source-017 | Test the query before the method | failing: [gdacs-source-017]
-gdacs-source-016 | Remove the slash path from the test of the path | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
+gdacs-source-016 | Remove the slash path from the test of the path | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
 gdacs-source-018 | Remove the empty path from the test of the path | failing: [gdacs-source-016], [gdacs-source-018]
-gdacs-source-018 | Join the two tests of the path with or in place of and | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
+gdacs-source-018 | Join the two tests of the path with or in place of and | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
 gdacs-source-018 | Refuse no query and no path | failing: [gdacs-source-018]
 gdacs-source-018 | Refuse only a path with a question mark | failing: [gdacs-source-018]
 gdacs-source-018 | Accept a query and refuse only a sub-path | failing: [gdacs-source-018]
@@ -762,12 +753,12 @@ gdacs-source-027 | Echo the User-Agent of the browser request in the document | 
 gdacs-source-027 | Echo the Cookie of the browser request in the document | failing: [gdacs-source-027]
 gdacs-source-027 | Echo the User-Agent of the browser request, written as Node writes it | failing: [gdacs-source-027]
 gdacs-source-019 | Start the loop of pages at page zero | failing: [gdacs-source-019], [gdacs-source-020]
-gdacs-source-019 | Send a probe request to the endpoint before the first page request | failing: [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
+gdacs-source-019 | Send a probe request to the endpoint before the first page request | failing: [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
 gdacs-source-019 | Send the method POST in the page requests after the first | failing: [gdacs-source-019]
 gdacs-source-019 | Follow a redirect in the page requests after the first | failing: [gdacs-source-019]
 gdacs-source-019 | Send no fixed headers in the page requests after the first | failing: [gdacs-source-019]
-gdacs-source-027 | Add an empty Cookie header to the page requests after the first | failing: [gdacs-source-019]
-gdacs-source-027 | Add a contact address to the User-Agent of the page requests after the first | failing: [gdacs-source-019]
+gdacs-source-019 | Add an empty Cookie header to the page requests after the first | failing: [gdacs-source-019]
+gdacs-source-019 | Add a contact address to the User-Agent of the page requests after the first | failing: [gdacs-source-019]
 gdacs-source-019 | Send the page requests after the first to another host | failing: [gdacs-source-019]
 gdacs-source-019 | Send the page requests after the first with the plain http scheme | failing: [gdacs-source-019]
 gdacs-source-019 | Ask for only the type FL in the page requests after the first | failing: [gdacs-source-019]
@@ -777,8 +768,9 @@ gdacs-source-020 | Add the parameter format to the page requests after the first
 gdacs-source-019 | Add the parameter format to the first page request | failing: [gdacs-source-019], [gdacs-source-020]
 gdacs-source-019 | Add a body to the page requests after the first | failing: [gdacs-source-019]
 gdacs-source-016 | Change the name of the plugin to gdacs-source | failing: [gdacs-source-016], [gdacs-source-026]
-gdacs-source-016 | Read the real clock in place of the given clock when a request comes | failing: [gdacs-source-016], [gdacs-source-019], [gdacs-source-020], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025]
+gdacs-source-016 | Read the real clock in place of the given clock when a request comes | failing: [gdacs-source-016], [gdacs-source-019], [gdacs-source-020], [gdacs-source-024], [gdacs-source-025]
 gdacs-source-019 | Keep the dates of the first refresh for each later refresh | failing: [gdacs-source-019]
+gdacs-source-016 | Remove the words on its website from the license text | failing: [gdacs-source-016]
 gdacs-source-021 | Remove the status check of the page request | failing: [gdacs-source-021]
 gdacs-source-021 | Accept every status of the 200 range with the ok flag | failing: [gdacs-source-021]
 gdacs-source-021 | Accept the status 301 as a good page | failing: [gdacs-source-021]
@@ -789,7 +781,7 @@ gdacs-source-021 | Turn a throw of the fetch into an empty page | failing: [gdac
 gdacs-source-021 | Turn text that is not JSON into an empty feature collection | failing: [gdacs-source-021]
 gdacs-source-021 | Drop the type test of the feature collection | failing: [gdacs-source-021]
 gdacs-source-021 | Drop the list test of the features value | failing: [gdacs-source-021]
-gdacs-source-021 | Change the feature collection type text by one character | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025]
+gdacs-source-021 | Change the feature collection type text by one character | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025]
 gdacs-source-021 | Drop the object test of the page body | failing: NONE (equivalent fault: A null body throws a TypeError at `body.type`, and the refresh fails. Any other value that is not an object has no type "FeatureCollection".)
 gdacs-source-021 | Test the features value with typeof in place of the list test | failing: NONE (equivalent fault: JSON gives only arrays as iterable objects. The spread of null or of a plain object throws a TypeError, and the refresh fails as before.)
 gdacs-source-021 | Keep the records of page 1 when a later page has a bad status | failing: [gdacs-source-021]
@@ -809,7 +801,7 @@ gdacs-source-023 | Start the timer with the global setTimeout | failing: [gdacs-
 gdacs-source-023 | Start the refresh timer after the first page response | failing: [gdacs-source-023]
 gdacs-source-023 | Give each page request a new abort signal | failing: [gdacs-source-023]
 gdacs-source-023 | Remove the signal option of the page request | failing: [gdacs-source-019], [gdacs-source-023], [gdacs-source-027]
-gdacs-source-023 | Pass a reason to the abort call of the timer | failing: NONE (equivalent fault: The abort reason only changes the error that the read throws. The catch clause of refresh ignores that error.)
+gdacs-source-023 | Pass a reason to the abort call of the timer | failing: NONE (equivalent fault: The abort reason only changes the error that `readResponseTextCapped` throws. The catch clause of refresh ignores that error.)
 gdacs-source-023 | Remove the clearTimer call | failing: [gdacs-source-023]
 gdacs-source-023 | Call clearTimer twice in the refresh | failing: [gdacs-source-023]
 gdacs-source-023 | Call clearTimer only after a successful refresh | failing: [gdacs-source-023]
@@ -819,19 +811,19 @@ gdacs-source-023 | Clear the timer with the global clearTimeout | failing: [gdac
 gdacs-source-023 | Replace the default setTimer with a function that starts nothing | failing: [gdacs-source-023]
 gdacs-source-023 | Replace the default clearTimer with a function that clears nothing | failing: [gdacs-source-023]
 gdacs-source-024 | Serve the stale document at exactly 1 hour of age | failing: [gdacs-source-024]
-gdacs-source-024 | Serve the stale document only below 1 hour minus 1 millisecond | failing: [gdacs-source-024 gdacs-source-025], [gdacs-source-024]
+gdacs-source-024 | Serve the stale document only below 1 hour minus 1 millisecond | failing: [gdacs-source-024]
 gdacs-source-024 | Set the stale limit to 2 hours | failing: [gdacs-source-024]
 gdacs-source-024 | Subtract the times in the other order in the stale test | failing: [gdacs-source-024]
-gdacs-source-024 | Drop the cache operand of the stale test | failing: [gdacs-source-019], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024]
-gdacs-source-024 | Disable the stale answer with a false operand | failing: [gdacs-source-024 gdacs-source-025], [gdacs-source-024]
-gdacs-source-024 | Set stale to false in the stale document | failing: [gdacs-source-024 gdacs-source-025], [gdacs-source-024]
+gdacs-source-024 | Drop the cache operand of the stale test | failing: [gdacs-source-019], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024]
+gdacs-source-024 | Disable the stale answer with a false operand | failing: [gdacs-source-024]
+gdacs-source-024 | Set stale to false in the stale document | failing: [gdacs-source-024]
 gdacs-source-024 | Serve a stale document that holds only the stale field | failing: [gdacs-source-024]
 gdacs-source-024 | Give the stale document the time of the failed refresh | failing: [gdacs-source-024]
-gdacs-source-024 | Set stale on the cached document and serve that object | failing: NONE (equivalent fault: A refresh runs only when the cache is at least 10 minutes old, and the age never falls. The changed object then serves only through the stale path. That path sets stale true anyway, until a good refresh replaces it.)
-gdacs-source-024 | Move the cache time to the failed refresh after a stale answer | failing: [gdacs-source-024 gdacs-source-025]
-gdacs-source-024 | Cache the stale document as a new good document | failing: [gdacs-source-024 gdacs-source-025]
+gdacs-source-024 | Set stale on the cached document and serve that object | failing: NONE (equivalent fault: A refresh runs only when the cache is at least 10 minutes old. The changed object then serves only through the stale path. That path sets stale true anyway, until a good refresh replaces it. This holds while the clock does not go back.)
+gdacs-source-024 | Move the cache time to the failed refresh after a stale answer | failing: [gdacs-source-024]
+gdacs-source-024 | Cache the stale document as a new good document | failing: [gdacs-source-024]
 gdacs-source-024 | Cache the unavailable document after a failed refresh | failing: [gdacs-source-024]
-gdacs-source-024 | Set unavailable to false in the unavailable document | failing: [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024]
+gdacs-source-024 | Set unavailable to false in the unavailable document | failing: [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024]
 gdacs-source-024 | Change one letter of the reason of the unavailable document | failing: [gdacs-source-021], [gdacs-source-022], [gdacs-source-024]
 gdacs-source-024 | Remove the reason of the unavailable document | failing: [gdacs-source-021], [gdacs-source-022], [gdacs-source-024]
 gdacs-source-024 | Give the unavailable document another schemaVersion | failing: [gdacs-source-024]
@@ -850,27 +842,28 @@ gdacs-source-024 | Give the unavailable document counts with another byType FL |
 gdacs-source-024 | Give the unavailable document counts with another byType DR | failing: [gdacs-source-024]
 gdacs-source-024 | Give the unavailable document counts with another byType VO | failing: [gdacs-source-024]
 gdacs-source-024 | Give the unavailable document counts with another byType TC | failing: [gdacs-source-024]
-gdacs-source-024 | Answer with the status 503 when the document is unavailable | failing: [gdacs-source-024 gdacs-source-025]
-gdacs-source-024 | Answer with the status 203 when the document is stale | failing: [gdacs-source-024 gdacs-source-025]
+gdacs-source-024 | Answer with the status 503 when the document is unavailable | failing: [gdacs-source-024]
+gdacs-source-024 | Answer with the status 203 when the document is stale | failing: [gdacs-source-024]
 gdacs-source-025 | Serve the cache at exactly 10 minutes of age | failing: [gdacs-source-025]
 gdacs-source-025 | Serve the cache only below 10 minutes minus 1 millisecond | failing: [gdacs-source-025]
 gdacs-source-025 | Set the cache time to 5 minutes | failing: [gdacs-source-025]
 gdacs-source-025 | Set the cache time to 15 minutes | failing: [gdacs-source-025]
 gdacs-source-025 | Remove the cache test of the load function | failing: [gdacs-source-025]
-gdacs-source-025 | Drop the cache operand of the cache test | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
+gdacs-source-025 | Drop the cache operand of the cache test | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
 gdacs-source-025 | Store the cache time one millisecond late | failing: [gdacs-source-024], [gdacs-source-025]
-gdacs-source-025 | Store the cache time one millisecond early | failing: [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025]
+gdacs-source-025 | Store the cache time one millisecond early | failing: [gdacs-source-024], [gdacs-source-025]
 gdacs-source-025 | Skip the cache store for a document with no event | failing: [gdacs-source-025]
 gdacs-source-025 | Start a new refresh for each browser request | failing: [gdacs-source-025]
 gdacs-source-025 | Use the request time in the key of the shared refresh | failing: [gdacs-source-025]
 gdacs-source-025 | Use a new map for each shared refresh | failing: [gdacs-source-025]
-gdacs-source-025 | Return the coalesce result in place of its promise | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025]
+gdacs-source-025 | Return the coalesce result in place of its promise | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025]
 gdacs-source-026 | Remove the GDACS plugin from the local provider list | failing: [gdacs-source-026]
 gdacs-source-026 | List the GDACS plugin twice in the local provider list | failing: [gdacs-source-026]
 gdacs-source-026 | Rename the plugin to gdacs-proxy | failing: [gdacs-source-016], [gdacs-source-026]
-gdacs-source-026 | Mount no handler in configureServer | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-026], [gdacs-source-027]
+gdacs-source-026 | Mount no handler in configureServer | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-026], [gdacs-source-027]
 gdacs-source-026 | Mount no handler in configurePreviewServer | failing: [gdacs-source-016], [gdacs-source-026]
-gdacs-source-026 | Mount the handler at a slash path in configureServer | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-026], [gdacs-source-027]
+gdacs-source-026 | Mount the handler at a slash path in configureServer | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-026], [gdacs-source-027]
 gdacs-source-026 | Mount the handler at a slash path in configurePreviewServer | failing: [gdacs-source-016], [gdacs-source-026]
-gdacs-source-026 | Mount the handler at a shorter path in configureServer | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016 gdacs-source-025], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024 gdacs-source-025], [gdacs-source-024], [gdacs-source-025], [gdacs-source-026], [gdacs-source-027]
+gdacs-source-026 | Mount the handler at a shorter path in configureServer | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-017], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-026], [gdacs-source-027]
 gdacs-source-026 | Rename configurePreviewServer to configurePreview | failing: [gdacs-source-016], [gdacs-source-026]
+gdacs-source-024 | Read the clock again after the failed refresh for the stale test | failing: [gdacs-source-024]
