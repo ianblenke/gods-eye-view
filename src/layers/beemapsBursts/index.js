@@ -19,6 +19,7 @@ import {
 export { createBeemapsBurstSource } from './source.js';
 
 const QUOTE_ENTITY_ID = 'beemaps-bursts:quote';
+const CONFIRM_LOCK_MS = 1000;
 const SOURCE_METHODS = ['getStatus', 'quote', 'confirm', 'list'];
 
 /** The point under the middle of the screen, or null when it shows the sky. */
@@ -77,9 +78,11 @@ export function createBeemapsBurstsLayer({
   let _message = null;
   let _quote = null;
   let _quoteTimer = null;
+  let _unlockTimer = null;
   let _confirming = null;
   let _confirmText = null;
   let _list = null;
+  let _created = [];
   let _lastUpdate = null;
   let _lastError = null;
   let _statusError = null;
@@ -102,19 +105,39 @@ export function createBeemapsBurstsLayer({
     );
   }
 
+  /** The bursts of the last list, then the bursts that a confirm created and the list lacks. */
+  function knownBursts() {
+    const listed = _list?.bursts ?? [];
+    const ids = new Set(listed.map((burst) => burst.id));
+    return [...listed, ..._created.filter((burst) => !ids.has(burst.id))];
+  }
+
   function draw() {
     if (!_dataSource) return;
     _dataSource.entities.removeAll();
     if (_quote) addBox(QUOTE_ENTITY_ID, _quote.bbox, QUOTE_STYLE);
-    for (const burst of _list?.bursts ?? []) {
-      addBox(`beemaps-bursts:${burst.id}`, burst.bbox, burstStyle(burst));
+    for (const burst of knownBursts()) {
+      if (burst.bbox) {
+        addBox(`beemaps-bursts:${burst.id}`, burst.bbox, burstStyle(burst));
+      }
     }
   }
 
-  function clearQuote() {
+  function clearQuoteTimers() {
     if (_quoteTimer !== null) clearTimer(_quoteTimer);
     _quoteTimer = null;
+    if (_unlockTimer !== null) clearTimer(_unlockTimer);
+    _unlockTimer = null;
+  }
+
+  function clearQuote() {
+    clearQuoteTimers();
     _quote = null;
+  }
+
+  function unlock() {
+    _unlockTimer = null;
+    notify();
   }
 
   function expire() {
@@ -135,6 +158,7 @@ export function createBeemapsBurstsLayer({
     _statusMessage = null;
     _message = null;
     _list = null;
+    _created = [];
     _lastUpdate = null;
     _lastError = null;
     _statusError = null;
@@ -175,12 +199,15 @@ export function createBeemapsBurstsLayer({
     _requestKind = null;
     if (result.ok) {
       const seconds = result.quote.expiresInSeconds;
+      const shown = now();
       _quote = {
         ...result.quote,
         key: makeKey(),
-        endsAt: now() + seconds * 1000,
+        endsAt: shown + seconds * 1000,
+        unlocksAt: shown + CONFIRM_LOCK_MS,
       };
       _quoteTimer = setTimer(expire, seconds * 1000);
+      _unlockTimer = setTimer(unlock, CONFIRM_LOCK_MS);
       _confirmText = null;
       _message = null;
       _lastError = null;
@@ -209,7 +236,11 @@ export function createBeemapsBurstsLayer({
     _request = null;
     _requestKind = null;
     if (result.ok) {
-      _list = { bursts: result.bursts, total: result.total };
+      _list = {
+        bursts: result.bursts,
+        total: result.total,
+        cached: result.cached,
+      };
       _lastUpdate = now();
       _message = null;
       _lastError = null;
@@ -233,20 +264,23 @@ export function createBeemapsBurstsLayer({
   /** Show what the answer of a confirm says. A created burst joins the list. */
   function showConfirm(quote, result) {
     if (result?.outcome === 'created') {
-      _confirmText = describeCreated(result);
+      const credits = result.burst.credits ?? quote.credits;
+      _confirmText = describeCreated({
+        credits,
+        creditsRemaining: result.creditsRemaining,
+      });
       _lastError = null;
       _lastUpdate = now();
-      const burst = {
-        id: result.burst.id,
-        status: result.burst.status,
-        isHit: false,
-        credits: result.burst.credits,
-        bbox: quote.bbox,
-      };
-      _list = {
-        bursts: [...(_list?.bursts ?? []), burst],
-        total: _list?.total ?? null,
-      };
+      _created = [
+        ..._created,
+        {
+          id: result.burst.id,
+          status: result.burst.status,
+          isHit: false,
+          credits,
+          bbox: quote.bbox,
+        },
+      ];
     } else {
       _confirmText =
         result?.outcome === 'refused'
@@ -259,13 +293,13 @@ export function createBeemapsBurstsLayer({
   /** The one place that sends a confirm request. The chip is already disabled. */
   async function pressConfirm(quote) {
     if (!_enabled || _quote !== quote || _confirming || _request) return;
+    if (now() < quote.unlocksAt) return;
     if (now() >= quote.endsAt) {
       expire();
       return;
     }
     _confirming = quote;
-    if (_quoteTimer !== null) clearTimer(_quoteTimer);
-    _quoteTimer = null;
+    clearQuoteTimers();
     notify();
     let result;
     try {
@@ -352,7 +386,7 @@ export function createBeemapsBurstsLayer({
             id: `confirm:${quote.quoteId}`,
             label: _confirming ? LABELS.sending : confirmLabel(quote),
             title: TITLES.confirm,
-            disabled: busy,
+            disabled: busy || now() < quote.unlocksAt,
             busy: Boolean(_confirming),
             onClick: () => pressConfirm(quote),
           });
@@ -390,7 +424,14 @@ export function createBeemapsBurstsLayer({
         info: readoutText({
           message: [_confirmText, press].filter(Boolean).join(' · '),
           quote: _confirming ? null : _quote,
-          list: _list,
+          list:
+            _list !== null || _created.length > 0
+              ? {
+                  bursts: knownBursts(),
+                  total: _list?.total ?? null,
+                  cached: _list?.cached ?? false,
+                }
+              : null,
         }),
       };
     },
@@ -413,7 +454,7 @@ export function createBeemapsBurstsLayer({
 
     getStats() {
       return {
-        count: _list?.bursts.length ?? 0,
+        count: knownBursts().length,
         lastUpdate: _lastUpdate,
         error: _lastError ?? _statusError,
       };

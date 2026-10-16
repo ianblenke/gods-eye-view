@@ -36,11 +36,11 @@ const listed = (id, extra = {}) => ({
   ...extra,
 });
 const HINT =
-  'A quote shows the price of a burst in 4 km² at the view centre. A quote costs nothing. A confirm takes credits and cannot be undone.';
+  'A quote shows the price of a burst in 4 km² at the view centre. A quote costs nothing. A confirm request takes credits and cannot be undone.';
 const QUOTE_TEXT =
   'Quote: 125 credits for 4 km² · credits used today 0 of 625 · valid for 120 seconds';
 const UNKNOWN_TEXT =
-  'Bee Maps can have made a burst and taken credits. Do not press Confirm again. Press Check my bursts.';
+  'It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts.';
 const ENDED_TEXT = 'The quote ended. Press Quote burst here again.';
 const key = (n) => n.toString(16).padStart(32, '0');
 const deferred = () => {
@@ -126,7 +126,7 @@ function harness({
       return keys[keys.length - 1];
     },
     setTimer: (fn, ms) => {
-      timers.push({ fn, ms });
+      timers.push({ fn, ms, done: false });
       return timers.length;
     },
     clearTimer: (id) => cleared.push(id),
@@ -160,9 +160,19 @@ function harness({
       layer.enable(viewer);
       await layer.update();
     },
-    async quoted() {
+    /** Move the clock past the wait of the Confirm chip and run its timer. */
+    unlock() {
+      clock.t += 1000;
+      const timer = [...timers]
+        .reverse()
+        .find((entry) => entry.ms === 1000 && !entry.done);
+      timer.done = true;
+      timer.fn();
+    },
+    async quoted({ unlocked = true } = {}) {
       await this.ready();
       await chip('quote').onClick();
+      if (unlocked) this.unlock();
     },
   };
 }
@@ -457,7 +467,7 @@ test('[beemaps-bursts-007] shows the quote, the chips, the text and the box of t
     h.chips().map((entry) => entry.title),
     [
       'Create the burst. This takes credits and cannot be undone.',
-      'Drop the quote. Nothing is sent.',
+      'Cancel the quote. Nothing is sent.',
       'Ask Bee Maps for your bursts. This can cost money.',
     ],
   );
@@ -480,15 +490,15 @@ test('[beemaps-bursts-008] shows a message and sends no quote request when the v
     [() => undefined, 'Point the view at the ground and press again.'],
     [
       () => Cesium.Cartesian3.fromDegrees(0, 80.5),
-      'Move the view to a latitude from -80 to 80 degrees and press again.',
+      'Move the view to a latitude from -79.99 to 79.99 degrees and press again.',
     ],
     [
       () => Cesium.Cartesian3.fromDegrees(0, -79.999),
-      'Move the view to a latitude from -80 to 80 degrees and press again.',
+      'Move the view to a latitude from -79.99 to 79.99 degrees and press again.',
     ],
     [
       () => Cesium.Cartesian3.fromDegrees(0, 79.996),
-      'Move the view to a latitude from -80 to 80 degrees and press again.',
+      'Move the view to a latitude from -79.99 to 79.99 degrees and press again.',
     ],
     [
       () => Cesium.Cartesian3.fromDegrees(179.999, 0),
@@ -613,8 +623,9 @@ test('[beemaps-bursts-009] ignores the answer of a quote that the layer was disa
 test('[beemaps-bursts-010] ends the quote when the timer of its seconds runs', async () => {
   const h = harness();
   await h.quoted();
-  assert.equal(h.timers.length, 1);
+  assert.equal(h.timers.length, 2);
   assert.equal(h.timers[0].ms, 120000);
+  assert.equal(h.timers[1].ms, 1000);
   h.clock.t += 120000;
   h.timers[0].fn();
   assert.deepEqual(
@@ -651,7 +662,7 @@ test('[beemaps-bursts-010] sends no confirm request at or after the end of the q
     const h = harness();
     await h.quoted();
     const press = h.confirmChip().onClick;
-    h.clock.t += 120000 + late;
+    h.clock.t = NOW + 120000 + late;
     await press();
     assert.equal(h.calls.confirm.length, 0);
     assert.equal(h.info(), ENDED_TEXT);
@@ -665,7 +676,7 @@ test('[beemaps-bursts-010] sends no confirm request at or after the end of the q
   const edge = harness();
   await edge.quoted();
   const press = edge.confirmChip().onClick;
-  edge.clock.t += 119999;
+  edge.clock.t = NOW + 119999;
   await press();
   assert.equal(edge.calls.confirm.length, 1);
 });
@@ -805,13 +816,14 @@ test('[beemaps-bursts-013] asks the random source once for each quote and sends 
   assert.deepEqual(h.keys, [key(1)]);
   await h.chip('quote').onClick();
   assert.deepEqual(h.keys, [key(1), key(2)]);
+  h.unlock();
   await h.confirmChip().onClick();
   assert.deepEqual(h.calls.confirm, [
     { quoteId: SECOND_ID, idempotencyKey: key(2) },
   ]);
 });
 
-test('[beemaps-bursts-013] asks for no key when nobody confirms, and shows no key in a label, title, id or text', async () => {
+test('[beemaps-bursts-013] asks for one key when the answer arrives, and shows no key in a label, title, id or text', async () => {
   const h = harness();
   await h.quoted();
   assert.deepEqual(h.keys, [key(1)]);
@@ -826,7 +838,8 @@ test('[beemaps-bursts-013] asks for no key when nobody confirms, and shows no ke
   assert.equal(h.calls.confirm.length, 0);
 });
 
-test('[beemaps-bursts-013] makes a key of 32 characters from 0123456789abcdef when no random source is given', async () => {
+test('[beemaps-bursts-013] makes a key of 32 characters from 0123456789abcdef when no random source is given', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'], now: NOW });
   const sent = [];
   const source = {
     getStatus: async () => ({ ok: true, enabled: true, configured: true }),
@@ -844,6 +857,7 @@ test('[beemaps-bursts-013] makes a key of 32 characters from 0123456789abcdef wh
     layer.enable(viewer);
     await layer.update();
     await layer.getRowControls().chips[0].onClick();
+    t.mock.timers.tick(1000);
     await layer.getRowControls().chips[0].onClick();
     layer.destroy(viewer);
   }
@@ -876,6 +890,7 @@ test('[beemaps-bursts-010] uses the clock and the timers of the page when none a
   );
   assert.equal(layer.getRowControls().info, ENDED_TEXT);
   await layer.getRowControls().chips[0].onClick();
+  t.mock.timers.tick(1000);
   await layer.getRowControls().chips[0].onClick();
   const text = layer.getRowControls().info;
   assert.match(text, /^Burst created: /);
@@ -900,7 +915,7 @@ test('[beemaps-bursts-014] shows a created burst, its box and the stats', async 
   assert.deepEqual(h.entityIds(), [`beemaps-bursts:${BURST_ID}`]);
   assert.deepEqual(h.layer.getStats(), {
     count: 1,
-    lastUpdate: NOW,
+    lastUpdate: NOW + 1000,
     error: null,
   });
 });
@@ -929,6 +944,7 @@ test('[beemaps-bursts-014] adds the created burst to the bursts of an earlier li
   await h.ready();
   await h.chip('list').onClick();
   await h.chip('quote').onClick();
+  h.unlock();
   await h.confirmChip().onClick();
   assert.equal(h.layer.getStats().count, 3);
   assert.deepEqual(h.entityIds(), [
@@ -974,7 +990,7 @@ test('[beemaps-bursts-015] shows the text of a refusal that took no credits, kee
     ],
     [
       { outcome: 'refused', status: 409, error: 'busy' },
-      'The server is busy with another confirm. Wait, then press Check my bursts.',
+      'The server is busy with another confirm request. Wait, then press Check my bursts.',
     ],
   ];
   for (const [answer, message] of rows) {
@@ -1188,7 +1204,7 @@ test('[beemaps-bursts-018] shows the counts for one burst and for a list that is
   });
   await one.ready();
   await one.chip('list').onClick();
-  assert.equal(one.info(), '1 burst · 0 hits');
+  assert.equal(one.info(), '1 burst · 0 hits · stored answer');
   const many = harness({
     list: async () => ({
       ok: true,
@@ -1275,7 +1291,56 @@ test('[beemaps-bursts-019] shows unreachable when the source throws, and replace
   assert.equal(h.info(), '2 bursts · 0 hits');
 });
 
-test('[beemaps-bursts-019] keeps the created burst until a list answer replaces it', async () => {
+test('[beemaps-bursts-019] keeps the created burst after a list answer that does not list it', async () => {
+  const h = harness({
+    list: async () => ({
+      ok: true,
+      bursts: [listed('a')],
+      total: 1,
+      cached: true,
+    }),
+  });
+  await h.quoted();
+  await h.confirmChip().onClick();
+  assert.deepEqual(h.entityIds(), [`beemaps-bursts:${BURST_ID}`]);
+  await h.chip('list').onClick();
+  assert.deepEqual(h.entityIds(), [
+    'beemaps-bursts:a',
+    `beemaps-bursts:${BURST_ID}`,
+  ]);
+  assert.equal(h.layer.getStats().count, 2);
+  assert.equal(
+    h.info(),
+    'Burst created: 125 credits taken, 875 left at Bee Maps. · 2 bursts · 0 hits · stored answer',
+  );
+});
+
+test('[beemaps-bursts-019] takes the burst of the list answer in place of the burst that a confirm created', async () => {
+  const h = harness({
+    list: async () => ({
+      ok: true,
+      bursts: [listed(BURST_ID, { isHit: true, bbox: [5, 6, 7, 8] })],
+      total: 1,
+      cached: false,
+    }),
+  });
+  await h.quoted();
+  await h.confirmChip().onClick();
+  await h.chip('list').onClick();
+  assert.deepEqual(h.entityIds(), [`beemaps-bursts:${BURST_ID}`]);
+  assert.equal(h.layer.getStats().count, 1);
+  assert.equal(
+    h.info(),
+    'Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 1 hit',
+  );
+  const rectangle = h
+    .dataSource()
+    .entities.getById(`beemaps-bursts:${BURST_ID}`)
+    .rectangle.coordinates.getValue(Cesium.JulianDate.now());
+  assert.equal(Math.round(Cesium.Math.toDegrees(rectangle.west)), 5);
+});
+
+test('[beemaps-bursts-019] forgets the bursts of the list and the created bursts on disable', async () => {
   const h = harness({
     list: async () => ({
       ok: true,
@@ -1286,9 +1351,63 @@ test('[beemaps-bursts-019] keeps the created burst until a list answer replaces 
   });
   await h.quoted();
   await h.confirmChip().onClick();
-  assert.deepEqual(h.entityIds(), [`beemaps-bursts:${BURST_ID}`]);
   await h.chip('list').onClick();
-  assert.deepEqual(h.entityIds(), ['beemaps-bursts:a']);
+  h.layer.disable(h.viewer);
+  h.layer.enable(h.viewer);
+  assert.deepEqual(h.entityIds(), []);
+  assert.equal(h.layer.getStats().count, 0);
+});
+
+test('[beemaps-bursts-018] counts a burst with null fields and draws no box for a burst with no box', async () => {
+  const h = harness({
+    list: async () => ({
+      ok: true,
+      bursts: [
+        listed('open'),
+        listed('nobox', { bbox: null }),
+        listed('nostatus', { status: null, credits: null }),
+      ],
+      total: 3,
+      cached: false,
+    }),
+  });
+  await h.ready();
+  await h.chip('list').onClick();
+  assert.equal(h.info(), '3 bursts · 0 hits');
+  assert.equal(h.layer.getStats().count, 3);
+  assert.deepEqual(h.entityIds(), [
+    'beemaps-bursts:open',
+    'beemaps-bursts:nostatus',
+  ]);
+  const at = Cesium.JulianDate.now();
+  const grey = Cesium.Color.fromCssColorString('#9ca3af').withAlpha(0.2);
+  const colour = h
+    .dataSource()
+    .entities.getById('beemaps-bursts:nostatus')
+    .rectangle.material.getValue(at).color;
+  assert.equal(Cesium.Color.equals(colour, grey), true);
+});
+
+test('[beemaps-bursts-014] shows the credits of the quote for a created burst with null credits and a null status', async () => {
+  const h = harness({
+    confirm: async () => ({
+      ...CREATED,
+      burst: { ...CREATED.burst, credits: null, status: null },
+    }),
+  });
+  await h.quoted();
+  await h.confirmChip().onClick();
+  assert.equal(
+    h.info(),
+    'Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 0 hits',
+  );
+  const at = Cesium.JulianDate.now();
+  const grey = Cesium.Color.fromCssColorString('#9ca3af').withAlpha(0.2);
+  const colour = h
+    .dataSource()
+    .entities.getById(`beemaps-bursts:${BURST_ID}`)
+    .rectangle.material.getValue(at).color;
+  assert.equal(Cesium.Color.equals(colour, grey), true);
 });
 
 test('[beemaps-bursts-019] clears the text of a failed status after a good list or a good quote', async () => {
@@ -1371,4 +1490,130 @@ test('[beemaps-bursts-020] hides the boxes with the data source and removes the 
   const idle = harness();
   idle.layer.destroy(idle.viewer);
   assert.equal(idle.viewer.removed, undefined);
+});
+
+test('[beemaps-bursts-029] keeps the Confirm chip disabled for 1000 milliseconds after the quote shows', async () => {
+  const h = harness();
+  await h.quoted({ unlocked: false });
+  assert.deepEqual(
+    h.timers.map((timer) => timer.ms),
+    [120000, 1000],
+  );
+  const locked = h.confirmChip();
+  assert.equal(locked.disabled, true);
+  assert.equal(locked.label, 'Confirm: 125 credits, 4 km²');
+  const before = h.notices();
+  h.clock.t = NOW + 999;
+  assert.equal(h.confirmChip().disabled, true);
+  await locked.onClick();
+  assert.equal(h.calls.confirm.length, 0);
+  assert.equal(h.info(), QUOTE_TEXT);
+  assert.equal(h.notices(), before);
+  h.clock.t = NOW + 1000;
+  h.timers[1].done = true;
+  h.timers[1].fn();
+  assert.equal(h.notices(), before + 1);
+  assert.equal(h.confirmChip().disabled, false);
+  await h.confirmChip().onClick();
+  assert.equal(h.calls.confirm.length, 1);
+});
+
+test('[beemaps-bursts-029] lets a press through when the clock passed the wait before the timer ran', async () => {
+  const h = harness();
+  await h.quoted({ unlocked: false });
+  h.clock.t = NOW + 1000;
+  assert.equal(h.confirmChip().disabled, false);
+  await h.confirmChip().onClick();
+  assert.equal(h.calls.confirm.length, 1);
+  assert.deepEqual(h.cleared, [1, 2]);
+});
+
+test('[beemaps-bursts-029] clears the timer of the wait when the quote is cancelled, ended or cleared by disable', async () => {
+  const cancelled = harness();
+  await cancelled.quoted({ unlocked: false });
+  await cancelled.chip('cancel').onClick();
+  assert.deepEqual(cancelled.cleared, [1, 2]);
+  const ended = harness();
+  await ended.quoted({ unlocked: false });
+  ended.timers[0].fn();
+  assert.deepEqual(ended.cleared, [1, 2]);
+  const disabled = harness();
+  await disabled.quoted({ unlocked: false });
+  disabled.layer.disable(disabled.viewer);
+  assert.deepEqual(disabled.cleared, [1, 2]);
+  const done = harness();
+  await done.quoted();
+  done.layer.disable(done.viewer);
+  assert.deepEqual(done.cleared, [1]);
+});
+
+test('[beemaps-bursts-029] gives the next quote its own period of 1000 milliseconds', async () => {
+  const h = harness();
+  await h.quoted();
+  await h.chip('cancel').onClick();
+  await h.chip('quote').onClick();
+  assert.equal(h.timers.length, 4);
+  assert.equal(h.timers[3].ms, 1000);
+  assert.equal(h.confirmChip().disabled, true);
+  await h.confirmChip().onClick();
+  assert.equal(h.calls.confirm.length, 0);
+  h.clock.t += 1000;
+  assert.equal(h.confirmChip().disabled, false);
+});
+
+test('[beemaps-bursts-012] has disabled the Confirm chip and told the panel before the source gets the confirm call', async () => {
+  const seen = [];
+  let h;
+  h = harness({
+    confirm: async () => {
+      seen.push({
+        notices: h.notices(),
+        chip: h.confirmChip(),
+        cancel: h.chip('cancel'),
+        info: h.info(),
+      });
+      return CREATED;
+    },
+  });
+  await h.quoted();
+  const before = h.notices();
+  await h.confirmChip().onClick();
+  assert.equal(seen.length, 1);
+  assert.equal(seen[0].notices, before + 1);
+  assert.equal(seen[0].chip.label, 'Sending…');
+  assert.equal(seen[0].chip.disabled, true);
+  assert.equal(seen[0].chip.busy, true);
+  assert.equal(seen[0].cancel, undefined);
+  assert.equal(seen[0].info, HINT);
+});
+
+test('[beemaps-bursts-012] sends no quote, list or cancel from old chips while a confirm request is open after disable and enable', async () => {
+  const wait = deferred();
+  const h = harness({ confirm: () => wait.promise });
+  await h.quoted();
+  const cancel = h.chip('cancel').onClick;
+  const pressed = h.confirmChip().onClick();
+  await cancel();
+  assert.equal(h.confirmChip().label, 'Sending…');
+  h.layer.disable(h.viewer);
+  h.layer.enable(h.viewer);
+  await h.chip('quote').onClick();
+  await h.chip('list').onClick();
+  assert.equal(h.calls.quote.length, 1);
+  assert.equal(h.calls.list.length, 0);
+  wait.resolve(CREATED);
+  await pressed;
+});
+
+test('[beemaps-bursts-006] sends no second quote request from an old quote chip while a quote is shown', async () => {
+  const h = harness();
+  await h.ready();
+  const old = h.chip('quote').onClick;
+  await old();
+  h.unlock();
+  await old();
+  assert.equal(h.calls.quote.length, 1);
+  await h.chip('cancel').onClick();
+  await old();
+  assert.equal(h.calls.quote.length, 2);
 });

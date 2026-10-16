@@ -23,7 +23,7 @@ const burst = (isHit, status = 'active') => ({ isHit, status });
 test('[beemaps-bursts-026] gives the hint of three sentences when nothing else is known', () => {
   assert.equal(
     HINT,
-    'A quote shows the price of a burst in 4 km² at the view centre. A quote costs nothing. A confirm takes credits and cannot be undone.',
+    'A quote shows the price of a burst in 4 km² at the view centre. A quote costs nothing. A confirm request takes credits and cannot be undone.',
   );
   assert.equal(readoutText({ message: null, quote: null, list: null }), HINT);
   assert.equal(readoutText({ message: '', quote: null, list: null }), HINT);
@@ -41,7 +41,7 @@ test('[beemaps-bursts-026] gives the labels and the titles of the chips', () => 
   assert.deepEqual(TITLES, {
     quote: 'Ask for the price of a burst. A quote costs nothing.',
     confirm: 'Create the burst. This takes credits and cannot be undone.',
-    cancel: 'Drop the quote. Nothing is sent.',
+    cancel: 'Cancel the quote. Nothing is sent.',
     list: 'Ask Bee Maps for your bursts. This can cost money.',
   });
 });
@@ -155,4 +155,27 @@ test('[beemaps-bursts-020] gives green for a hit, blue for an active burst and g
     alpha: 0.2,
   });
   assert.deepEqual(QUOTE_STYLE, { color: '#f59e0b', alpha: 0.3 });
+});
+
+test('[beemaps-bursts-018] adds stored answer to the text of a list that came from memory', () => {
+  assert.equal(
+    burstsText({ bursts: [burst(true)], total: 1, cached: true }),
+    '1 burst · 1 hit · stored answer',
+  );
+  assert.equal(
+    burstsText({ bursts: [burst(true)], total: 1, cached: false }),
+    '1 burst · 1 hit',
+  );
+  assert.equal(
+    burstsText({ bursts: [burst(true)], total: 3, cached: true }),
+    '1 burst (3 in all) · 1 hit · stored answer',
+  );
+  assert.equal(
+    readoutText({
+      message: null,
+      quote: null,
+      list: { bursts: [burst(false)], total: null, cached: true },
+    }),
+    '1 burst · 0 hits · stored answer',
+  );
 });

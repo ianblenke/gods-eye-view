@@ -16,8 +16,8 @@ const FIXED = Object.freeze({
     'The server cannot use its record of bursts. Nothing was sent.',
   log_failed: 'The server cannot write its log. Nothing was sent.',
   quote_expired: 'The quote ended. Press Quote burst here again.',
-  busy: 'The server is busy with another confirm. Wait, then press Check my bursts.',
-  key_reused: 'The server refused this confirm.',
+  busy: 'The server is busy with another confirm request. Wait, then press Check my bursts.',
+  key_reused: 'The server refused this confirm request.',
   bad_request: 'Bee Maps refused the request.',
   upstream_failed: 'Bee Maps did not answer correctly.',
   bad_body: 'The server refused the request.',
@@ -30,11 +30,11 @@ const FIXED = Object.freeze({
 const REASONS = Object.freeze({
   sky: 'Point the view at the ground and press again.',
   latitude:
-    'Move the view to a latitude from -80 to 80 degrees and press again.',
+    'Move the view to a latitude from -79.99 to 79.99 degrees and press again.',
   meridian: 'Move the view away from the 180th meridian and press again.',
 });
 const UNKNOWN_OUTCOME =
-  'Bee Maps can have made a burst and taken credits. Do not press Confirm again. Press Check my bursts.';
+  'It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts.';
 
 /** The text for a status that the server did not give. */
 export const STATUS_FAILED =
@@ -73,9 +73,9 @@ export function describeUnknown({ retryAfter } = {}) {
     : UNKNOWN_OUTCOME;
 }
 
-/** The text for a created burst: `{burst:{credits}, creditsRemaining}`. */
-export function describeCreated({ burst, creditsRemaining }) {
-  const taken = `Burst created: ${burst.credits} credits taken`;
+/** The text for a created burst: `{credits, creditsRemaining}`. */
+export function describeCreated({ credits, creditsRemaining }) {
+  const taken = `Burst created: ${credits} credits taken`;
   return creditsRemaining === null
     ? `${taken}.`
     : `${taken}, ${creditsRemaining} left at Bee Maps.`;

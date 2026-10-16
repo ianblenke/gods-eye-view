@@ -357,6 +357,16 @@ test('[beemaps-bursts-023] reads a created answer and keeps the replay flag', as
   );
 });
 
+test('[beemaps-bursts-023] reads a created answer whose burst has a null status, a null validUntil and null credits', async () => {
+  const burst = { id: 'x1', status: null, validUntil: null, credits: null };
+  assert.deepEqual(await confirmWith(() => json({ ...CREATED, burst })), {
+    outcome: 'created',
+    replayed: false,
+    burst,
+    creditsRemaining: 875,
+  });
+});
+
 test('[beemaps-bursts-023] gives refused for each known error and keeps retryAfter', async () => {
   const known = [
     ['cross_origin', 403],
@@ -581,6 +591,19 @@ test('[beemaps-bursts-025] sends one POST with the limit 100 and reads a good li
     'Content-Type': 'application/json',
   });
   assert.notEqual(calls[0].init.signal, signal);
+});
+
+test('[beemaps-bursts-025] keeps a listed burst with a null status, null credits and a null box', async () => {
+  const answer = await make(() =>
+    json({
+      bursts: [{ ...LISTED('a'), status: null, credits: null, bbox: null }],
+      total: 1,
+      cached: false,
+    }),
+  ).source.list();
+  assert.deepEqual(answer.bursts, [
+    { id: 'a', status: null, isHit: false, credits: null, bbox: null },
+  ]);
 });
 
 test('[beemaps-bursts-025] drops a burst that fails the rules and gives bad_answer for a bad list', async () => {

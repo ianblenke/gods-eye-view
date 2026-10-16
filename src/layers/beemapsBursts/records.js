@@ -5,6 +5,8 @@ const MAX_EXPIRY_SECONDS = 600;
 
 const whole = (value) => Number.isInteger(value) && value >= 0;
 const text = (value) => typeof value === 'string' && value !== '';
+const textOrNull = (value) => value === null || typeof value === 'string';
+const numberOrNull = (value) => value === null || Number.isFinite(value);
 const box = (value) =>
   Array.isArray(value) &&
   value.length === 4 &&
@@ -49,7 +51,7 @@ export function normalizeQuote(payload) {
 
 /**
  * @param {unknown} payload - Parsed answer of the route /api/beemaps/burst/confirm with the status 200.
- * @returns {{replayed:boolean, burst:{id:string, status:string, validUntil:string|null, credits:number}, creditsRemaining:number|null}|null}
+ * @returns {{replayed:boolean, burst:{id:string, status:string|null, validUntil:string|null, credits:number|null}, creditsRemaining:number|null}|null}
  */
 export function normalizeCreated(payload) {
   const burst = payload?.burst;
@@ -57,9 +59,9 @@ export function normalizeCreated(payload) {
     payload?.ok !== true ||
     payload.outcome !== 'created' ||
     !text(burst?.id) ||
-    typeof burst.status !== 'string' ||
-    (typeof burst.validUntil !== 'string' && burst.validUntil !== null) ||
-    !whole(burst.credits)
+    !textOrNull(burst.status) ||
+    !textOrNull(burst.validUntil) ||
+    !numberOrNull(burst.credits)
   ) {
     return null;
   }
@@ -80,10 +82,10 @@ export function normalizeCreated(payload) {
 function readBurst(item) {
   if (
     !text(item?.id) ||
-    typeof item.status !== 'string' ||
     typeof item.isHit !== 'boolean' ||
-    !whole(item.credits) ||
-    !box(item.bbox)
+    !textOrNull(item.status) ||
+    !numberOrNull(item.credits) ||
+    (item.bbox !== null && !box(item.bbox))
   ) {
     return null;
   }
@@ -92,7 +94,7 @@ function readBurst(item) {
     status: item.status,
     isHit: item.isHit,
     credits: item.credits,
-    bbox: [...item.bbox],
+    bbox: item.bbox === null ? null : [...item.bbox],
   };
 }
 

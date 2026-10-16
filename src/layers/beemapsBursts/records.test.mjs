@@ -163,6 +163,24 @@ test('[beemaps-bursts-023] gives null for creditsRemaining when the body has no 
   );
 });
 
+test('[beemaps-bursts-023] keeps a burst with a null status, a null validUntil or null credits', () => {
+  const burst = normalizeCreated({
+    ...CREATED,
+    burst: { id: 'x', status: null, validUntil: null, credits: null },
+  }).burst;
+  assert.deepEqual(burst, {
+    id: 'x',
+    status: null,
+    validUntil: null,
+    credits: null,
+  });
+  assert.equal(
+    normalizeCreated({ ...CREATED, burst: { ...BURST, credits: 125.5 } }).burst
+      .credits,
+    125.5,
+  );
+});
+
 test('[beemaps-bursts-023] rejects an answer that is not ok, not created or has an unreadable burst', () => {
   assert.equal(normalizeCreated({ ...CREATED, ok: false }), null);
   assert.equal(normalizeCreated({ ...CREATED, ok: 'true' }), null);
@@ -179,8 +197,9 @@ test('[beemaps-bursts-023] rejects an answer that is not ok, not created or has 
     { ...BURST, validUntil: 5 },
     { ...BURST, validUntil: undefined },
     { ...BURST, credits: '125' },
-    { ...BURST, credits: -1 },
-    { ...BURST, credits: 1.5 },
+    { ...BURST, credits: NaN },
+    { ...BURST, credits: Infinity },
+    { ...BURST, credits: undefined },
   ]) {
     assert.equal(normalizeCreated({ ...CREATED, burst }), null);
   }
@@ -222,6 +241,33 @@ test('[beemaps-bursts-025] reads a good list answer and keeps the order of the b
   });
 });
 
+test('[beemaps-bursts-025] keeps a burst with a null status, null credits or a null box', () => {
+  const answer = normalizeList({
+    bursts: [
+      LISTED('a', { status: null }),
+      LISTED('b', { credits: null }),
+      LISTED('c', { bbox: null }),
+      LISTED('d', { credits: 12.5 }),
+    ],
+    total: 4,
+    cached: false,
+  });
+  assert.deepEqual(
+    answer.bursts.map((burst) => [
+      burst.id,
+      burst.status,
+      burst.credits,
+      burst.bbox,
+    ]),
+    [
+      ['a', null, 125, BOX],
+      ['b', 'active', null, BOX],
+      ['c', 'active', 125, null],
+      ['d', 'active', 12.5, BOX],
+    ],
+  );
+});
+
 test('[beemaps-bursts-025] drops a burst that fails the rules and keeps the others', () => {
   const answer = normalizeList({
     bursts: [
@@ -229,24 +275,27 @@ test('[beemaps-bursts-025] drops a burst that fails the rules and keeps the othe
       LISTED(''),
       LISTED(7),
       LISTED('c', { status: 5 }),
+      LISTED('c2', { status: undefined }),
       LISTED('d', { isHit: 'yes' }),
       LISTED('e', { isHit: undefined }),
       LISTED('f', { credits: '125' }),
-      LISTED('g', { credits: -1 }),
+      LISTED('f2', { credits: undefined }),
+      LISTED('f3', { credits: NaN }),
       LISTED('h', { bbox: [1, 2, 3] }),
       LISTED('i', { bbox: [1, 2, 3, NaN] }),
+      LISTED('i2', { bbox: undefined }),
       null,
       'burst',
       LISTED('j'),
     ],
-    total: 13,
+    total: 16,
     cached: false,
   });
   assert.deepEqual(
     answer.bursts.map((burst) => burst.id),
     ['a', 'j'],
   );
-  assert.equal(answer.total, 13);
+  assert.equal(answer.total, 16);
 });
 
 test('[beemaps-bursts-025] rejects an answer with no array, a bad total or a bad cached flag', () => {

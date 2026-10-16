@@ -5,7 +5,7 @@
  */
 
 export const HINT =
-  'A quote shows the price of a burst in 4 km² at the view centre. A quote costs nothing. A confirm takes credits and cannot be undone.';
+  'A quote shows the price of a burst in 4 km² at the view centre. A quote costs nothing. A confirm request takes credits and cannot be undone.';
 
 export const LABELS = Object.freeze({
   quote: 'Quote burst here',
@@ -18,7 +18,7 @@ export const LABELS = Object.freeze({
 export const TITLES = Object.freeze({
   quote: 'Ask for the price of a burst. A quote costs nothing.',
   confirm: 'Create the burst. This takes credits and cannot be undone.',
-  cancel: 'Drop the quote. Nothing is sent.',
+  cancel: 'Cancel the quote. Nothing is sent.',
   list: 'Ask Bee Maps for your bursts. This can cost money.',
 });
 
@@ -42,19 +42,20 @@ export function quoteText({ credits, areaKm2, expiresInSeconds, budget }) {
   return `Quote: ${credits} credits for ${areaKm2} km² · credits used today ${budget.used} of ${budget.limit} · valid for ${expiresInSeconds} ${seconds}`;
 }
 
-/** The text of the list of bursts that the layer knows: `{bursts, total}`. */
-export function burstsText({ bursts, total }) {
+/** The text of the bursts that the layer knows: `{bursts, total, cached}`. */
+export function burstsText({ bursts, total, cached }) {
   const count = bursts.length;
   const hits = bursts.filter((burst) => burst.isHit).length;
   const parts = [`${count} ${count === 1 ? 'burst' : 'bursts'}`];
   if (total !== null && total > count) parts[0] += ` (${total} in all)`;
   parts.push(`${hits} ${hits === 1 ? 'hit' : 'hits'}`);
+  if (cached) parts.push('stored answer');
   return parts.join(' · ');
 }
 
 /**
  * The one line of the row: the message, the quote and the bursts, or the hint.
- * @param {{message:string|null, quote:object|null, list:{bursts:object[], total:number|null}|null}} state
+ * @param {{message:string|null, quote:object|null, list:{bursts:object[], total:number|null, cached:boolean}|null}} state
  */
 export function readoutText({ message, quote, list }) {
   const parts = [];

@@ -49,9 +49,9 @@ test('[beemaps-bursts-027] gives the fixed text of each known error code', () =>
   );
   assert.equal(
     text('busy'),
-    'The server is busy with another confirm. Wait, then press Check my bursts.',
+    'The server is busy with another confirm request. Wait, then press Check my bursts.',
   );
-  assert.equal(text('key_reused'), 'The server refused this confirm.');
+  assert.equal(text('key_reused'), 'The server refused this confirm request.');
   assert.equal(text('bad_request'), 'Bee Maps refused the request.');
   assert.equal(text('upstream_failed'), 'Bee Maps did not answer correctly.');
   assert.equal(text('unreachable'), 'The server did not answer.');
@@ -125,7 +125,7 @@ test('[beemaps-bursts-008] gives the text of each reason that the view gives no 
   );
   assert.equal(
     describeReason('latitude'),
-    'Move the view to a latitude from -80 to 80 degrees and press again.',
+    'Move the view to a latitude from -79.99 to 79.99 degrees and press again.',
   );
   assert.equal(
     describeReason('meridian'),
@@ -135,7 +135,7 @@ test('[beemaps-bursts-008] gives the text of each reason that the view gives no 
 
 test('[beemaps-bursts-016] warns that a burst can exist, and adds the refusal time when it is known', () => {
   const base =
-    'Bee Maps can have made a burst and taken credits. Do not press Confirm again. Press Check my bursts.';
+    'It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts.';
   assert.equal(describeUnknown({}), base);
   assert.equal(describeUnknown(), base);
   for (const retryAfter of [undefined, 0, -1, 1.5, '539', NaN]) {
@@ -152,18 +152,17 @@ test('[beemaps-bursts-016] warns that a burst can exist, and adds the refusal ti
 });
 
 test('[beemaps-bursts-014] names the credits taken and the credits left', () => {
-  const burst = { credits: 125 };
   assert.equal(
-    describeCreated({ burst, creditsRemaining: 875 }),
+    describeCreated({ credits: 125, creditsRemaining: 875 }),
     'Burst created: 125 credits taken, 875 left at Bee Maps.',
   );
   assert.equal(
-    describeCreated({ burst, creditsRemaining: 0 }),
+    describeCreated({ credits: 125, creditsRemaining: 0 }),
     'Burst created: 125 credits taken, 0 left at Bee Maps.',
   );
   assert.equal(
-    describeCreated({ burst, creditsRemaining: null }),
-    'Burst created: 125 credits taken.',
+    describeCreated({ credits: 250, creditsRemaining: null }),
+    'Burst created: 250 credits taken.',
   );
 });
 

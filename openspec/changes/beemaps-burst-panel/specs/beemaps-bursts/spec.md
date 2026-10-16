@@ -13,7 +13,7 @@ Origin: spec-first
 - **AND** the layer throws an error for a source without `getStatus`, `quote`, `confirm` and `list`, and for a second `init`
 
 ### Requirement: No request without a press
-The layer MUST send a quote request, a confirm request or a list request only when a person presses the chip for it. It MUST send at most one request for each press. It MUST send a confirm request only for the quote that the Confirm chip shows. It MUST send no request again after an error.
+The layer MUST send a quote request, a confirm request or a list request only when a person presses the chip for it. It MUST send at most one request for each press. It MUST send a confirm request only for the quote that the Confirm chip shows. After an error, it MUST send no quote, confirm or list request until a person presses a chip again.
 Origin: spec-first
 
 #### Scenario: Ask only for the status `beemaps-bursts-002`
@@ -36,36 +36,37 @@ Origin: spec-first
 - **AND** a call of an `onClick` function taken before `disable` sends no call after `disable`
 
 ### Requirement: Status of the routes
-The layer MUST read the status of the burst routes when it is enabled or updated. It MUST disable the chips "quote" and "list" when the server says that bursts are off or that the key is missing.
+The layer MUST read the status of the burst routes when it is updated. It MUST disable the chips "quote" and "list" when the server says that bursts are off or that the key is missing.
 Origin: spec-first
 
 #### Scenario: Show the status `beemaps-bursts-005`
 - **WHEN** the layer updates and the status says `enabled:false`, or `configured:false`, or fails, or is good
-- **THEN** with `enabled:false` the info text is "Bursts are off on this server. Set BEEMAPS_BURST_ENABLED=true in .env and restart the app." and both chips are disabled
-- **AND** with `enabled:true` and `configured:false` the info text is "No Bee Maps key for bursts. Set BEEMAPS_BURST_API_KEY in .env and restart the app." and both chips are disabled
-- **AND** a failed status gives the info text "The server did not give the status of the bursts."
+- **THEN** with `enabled:false` the message is "Bursts are off on this server. Set BEEMAPS_BURST_ENABLED=true in .env and restart the app." and both chips are disabled
+- **AND** with `enabled:true` and `configured:false` the message is "No Bee Maps key for bursts. Set BEEMAPS_BURST_API_KEY in .env and restart the app." and both chips are disabled
+- **AND** a failed status gives the message "The server did not give the status of the bursts."
 - **AND** a failed status leaves both chips enabled, and `update` resolves to true
-- **AND** a good status shows the hint of scenario 026 and leaves both chips enabled
+- **AND** a good status leaves no message, so the info text is the hint of scenario 026, and it leaves both chips enabled
+- **AND** a good quote or a good list clears the message of an earlier failed status
 - **AND** a second `update` while the first is open aborts the first and returns false for it
 - **AND** `disable` aborts an open status request
 
 ### Requirement: Quote
-A press of the chip "quote" MUST ask the server for the price of a burst in the box around the centre of the view. The box MUST be the box of the frames layer, and it MUST also stay within the latitudes -80 and 80 degrees. The quote request MUST contain the box and nothing else. A quote MUST cost nothing and MUST NOT start a burst.
+A press of the chip "quote" MUST ask the server for the price of a burst in the box around the centre of the view. The box MUST be the box of the frames layer, and each corner of it MUST stay within the latitudes -80 and 80 degrees. The quote request MUST contain the box and nothing else. A quote MUST cost nothing and MUST NOT start a burst.
 Origin: spec-first
 
 #### Scenario: Ask for the quote of the view box `beemaps-bursts-006`
 - **WHEN** a test enables the layer and presses "quote" with the view centre at 59.9976 degrees north and 10.0031 degrees east
-- **THEN** the source gets one `quote` call with the box of that view and no other field
-- **AND** the chip "quote" has the label "Quoting…", is disabled and has `busy` true until the answer comes
+- **THEN** the source gets one `quote` call with the box [9.987014, 59.991007, 10.022986, 60.008993] and no other field
+- **AND** until the answer comes, the chip "quote" has the label "Quoting…", is disabled and has `busy` true
 - **AND** a second press of the chip in that time sends no call
-- **AND** the chip "list" is disabled in that time
-- **AND** the data source has one entity with the id "beemaps-bursts:quote" and a rectangle of the box
+- **AND** in that time the chip "list" is disabled
 
 #### Scenario: Show the quote `beemaps-bursts-007`
 - **WHEN** the source answers a quote with the quoteId `a1b2c3d4e5f60718293a4b5c6d7e8f90`, 125 credits, 4 km² and 120 seconds, with 0 credits used of 625
 - **THEN** the chips are "confirm:a1b2c3d4e5f60718293a4b5c6d7e8f90" with the label "Confirm: 125 credits, 4 km²", "cancel" with the label "Cancel quote" and "list", in that order
 - **AND** the info text is "Quote: 125 credits for 4 km² · credits used today 0 of 625 · valid for 120 seconds"
 - **AND** the source gets no `confirm` call
+- **AND** the data source has one entity with the id "beemaps-bursts:quote" and a rectangle of the box in the answer
 - **AND** the layer asks the random source for one idempotency key when this answer arrives, and not when the person presses "quote"
 
 #### Scenario: Refuse a view that gives no box `beemaps-bursts-008`
@@ -73,21 +74,23 @@ Origin: spec-first
 - **AND** the test presses "quote" with the view at the latitude -79.999 or 79.996, where the box crosses -80 or 80
 - **THEN** each press shows a message and sends no `quote` call
 - **AND** the sky gives "Point the view at the ground and press again."
-- **AND** both latitudes give "Move the view to a latitude from -80 to 80 degrees and press again."
+- **AND** each latitude gives "Move the view to a latitude from -79.99 to 79.99 degrees and press again."
+- **AND** a canvas with no size, and a pick that fails, also give the text for the sky
 - **AND** the longitude gives "Move the view away from the 180th meridian and press again."
 - **AND** the view at the latitude 79.9 gives a quote request
 
 #### Scenario: Show each error of a quote `beemaps-bursts-009`
 - **WHEN** the source answers a quote with an error, or with an answer that the layer cannot read
-- **THEN** the info text is the text of scenario 027 for the error and the layer keeps no quote
+- **THEN** the message is the text of scenario 027 for the error and the layer keeps no quote
 - **AND** the chip "quote" is enabled again and no confirm chip is shown
 - **AND** the layer sends no call again by itself
 - **AND** a source that throws gives the text for "unreachable"
+- **AND** `disable` aborts a quote request that is open, and the late answer of that request changes nothing
 
 #### Scenario: End the quote when its time is over `beemaps-bursts-010`
 - **WHEN** a quote with 120 seconds is shown and the clock moves by 120 seconds
 - **THEN** the layer keeps no quote, the box entity is gone and the chips are "quote" and "list"
-- **AND** the info text is "The quote ended. Press Quote burst here again."
+- **AND** the message is "The quote ended. Press Quote burst here again."
 - **AND** the layer starts the timer at the time of the answer and clears it when the quote is cancelled, confirmed or cleared by `disable`
 - **AND** a press of the Confirm chip at or after the end, before the timer ran, sends no `confirm` call
 - **AND** that press gives the same text and the same state
@@ -99,52 +102,71 @@ Origin: spec-first
 - **AND** a new quote gets a new quoteId and a new Confirm chip id, so a press on the old chip finds no chip
 
 ### Requirement: Confirm
-A press of the Confirm chip MUST send one confirm request with the quoteId and the idempotency key of the quote. The layer MUST disable the chip before it sends the request. The layer MUST send no second confirm request for the quote. After the answer the layer MUST NOT keep the quote.
+A press of the Confirm chip MUST send one confirm request with the quoteId and the idempotency key of the quote. The layer MUST disable the chip before it sends the request. The layer MUST send no second confirm request for the quote. After the answer the layer MUST NOT keep the quote. The layer MUST keep the Confirm chip disabled for 1000 milliseconds after it shows the quote.
 Origin: spec-first
 
 #### Scenario: Send one confirm request `beemaps-bursts-012`
 - **WHEN** a quote is shown and a person presses the Confirm chip
 - **THEN** the source gets one `confirm` call with exactly the fields `quoteId` and `idempotencyKey`
-- **AND** in the same call of `onClick`, before the request settles, the Confirm chip has the label "Sending…", is disabled and has `busy` true
+- **AND** the source reads the controls during its `confirm` call, and the panel has been told once by then
+- **AND** the controls then show the Confirm chip with the label "Sending…", disabled, with `busy` true
+- **AND** in that time the info text shows no text of the quote
 - **AND** in that time the chip "cancel" is not offered and the chip "list" is disabled
 - **AND** a second call of the same `onClick` function in that time sends no call
-- **AND** a press after the answer sends no call, whatever the answer was
+- **AND** after the answer, a call of the same `onClick` function sends no call, whatever the answer was
 
 #### Scenario: Make one idempotency key for each quote `beemaps-bursts-013`
 - **WHEN** a test gives the layer a random source and shows two quotes one after the other
 - **THEN** the layer asks the random source once for each quote, and the `confirm` call of a quote carries the key of that quote
-- **AND** the layer asks for no key for a quote that nobody confirms
+- **AND** the layer asks for no key before the answer of a quote arrives
 - **AND** the default random source gives 32 characters from "0123456789abcdef", and two calls give two different keys
 - **AND** no label, title, id or info text of the layer contains an idempotency key
 
 #### Scenario: Show a created burst `beemaps-bursts-014`
 - **WHEN** the source answers a confirm with `outcome:'created'`, the burst `6501aa11bb22cc33dd44ee55` with status "active", 125 credits and `creditsRemaining` 875
-- **THEN** the info text starts with "Burst created: 125 credits taken, 875 left at Bee Maps."
+- **THEN** the text of the last confirm is "Burst created: 125 credits taken, 875 left at Bee Maps."
 - **AND** the layer keeps no quote and the quote box entity is gone
 - **AND** the data source has the entity "beemaps-bursts:6501aa11bb22cc33dd44ee55" with the rectangle of the quote
 - **AND** `getStats` gives `count` 1 and `lastUpdate` equal to the clock
 - **AND** a `creditsRemaining` of null gives "Burst created: 125 credits taken."
+- **AND** a burst with credits null gives the credits of the quote, and a burst with status null is drawn grey
 
-#### Scenario: Show a refusal that took no credits `beemaps-bursts-015`
+#### Scenario: Show a refusal that took no credits at Bee Maps `beemaps-bursts-015`
 - **WHEN** the source answers a confirm with `outcome:'refused'` and an error code of the server
-- **THEN** the info text is the text of scenario 027 for that error, the layer keeps no quote and no Confirm chip is shown
+- **THEN** the text of the last confirm is the text of scenario 027 for that error
+- **AND** the layer keeps no quote and no Confirm chip is shown
+- **AND** `getStats` gives that text as `error`
 - **AND** the layer sends no call again by itself
 - **AND** the layer creates no burst entity
 
 #### Scenario: Warn after an unclear answer `beemaps-bursts-016`
 - **WHEN** the source answers a confirm with `outcome:'unknown'`, or throws, or the answer has an unknown shape
-- **THEN** the info text starts with "Bee Maps can have made a burst and taken credits. Do not press Confirm again. Press Check my bursts."
-- **AND** an answer with `retryAfter` 539 adds "The server refuses new confirms for 539 seconds." and an answer with no number adds nothing
+- **THEN** the text of the last confirm is "It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts."
+- **AND** `getStats` gives that text as `error`
+- **AND** an answer with `retryAfter` 539 adds "The server refuses new confirms for 539 seconds."
+- **AND** `retryAfter` 1 adds "The server refuses new confirms for 1 second."
+- **AND** an answer with no whole number from 1 for `retryAfter` adds nothing
 - **AND** the layer keeps no quote and no Confirm chip is shown
 - **AND** the layer offers no chip that sends the confirm request again
+- **AND** a new quote offers a Confirm chip again, and the server then refuses the confirm request for the time of its hold
 
 #### Scenario: Keep the text of a confirm when the layer is disabled `beemaps-bursts-017`
 - **WHEN** a confirm request is open, a test disables the layer, the request answers, and the test enables the layer again
 - **THEN** the layer gives the `confirm` call no signal, so `disable` and `destroy` cannot abort the request
-- **AND** the answer sets the state, so the info text after `enable` is the text for that answer
+- **AND** the answer sets the state, so the text of the last confirm after `enable` is the text for that answer
 - **AND** `disable` clears a quote that is shown, and the next `enable` shows no Confirm chip
-- **AND** the text of a confirm stays until the layer shows a new quote
+- **AND** the text of the last confirm stays through `disable` and `enable` until the layer shows a new quote
+- **AND** a later message of a press or of the status comes after that text, and does not replace it
 - **AND** an answer after `destroy` changes nothing and throws no error
+
+#### Scenario: Keep the Confirm chip disabled for a short time `beemaps-bursts-029`
+- **WHEN** the layer shows a quote at the time T
+- **THEN** until T plus 1000 milliseconds the Confirm chip keeps its label and is disabled
+- **AND** a call of its `onClick` function in that time sends no `confirm` call, and changes nothing
+- **AND** the layer starts a timer of 1000 milliseconds when it shows the quote, and tells the panel when the timer runs
+- **AND** at T plus 1000 milliseconds the Confirm chip is enabled, and one call of its `onClick` function sends the confirm request
+- **AND** the layer clears the timer when the quote is cancelled, ended, confirmed or cleared by `disable`
+- **AND** the next quote has its own period of 1000 milliseconds
 
 ### Requirement: List of bursts
 A press of the chip "list" MUST ask the server for the bursts of the account and MUST draw their boxes. It MUST send one request for each press.
@@ -155,24 +177,30 @@ Origin: spec-first
 - **THEN** the source gets one `list` call
 - **AND** until the answer comes, the chip "list" has the label "Checking…", is disabled and has `busy` true
 - **AND** in that time the chip "quote" is disabled
-- **AND** the data source has one entity "beemaps-bursts:<id>" for each burst, with a rectangle of its box
-- **AND** the info text is "3 bursts · 1 hit"
+- **AND** the data source has one entity "beemaps-bursts:<id>" for each burst that has a box, with a rectangle of its box
+- **AND** the text of the bursts is "3 bursts · 1 hit"
 - **AND** with 1 burst and 0 hits the text is "1 burst · 0 hits"
 - **AND** with 100 bursts and `total` 130 the text is "100 bursts (130 in all) · 0 hits"
+- **AND** an answer with `cached` true adds " · stored answer" to the text
+- **AND** a burst with no box counts in the text and gets no entity
+- **AND** a burst whose id repeats an earlier id, or is "quote", gets no second entity
 - **AND** `getStats` gives the `count` of the bursts and `lastUpdate` equal to the clock
+- **AND** a list answer keeps the box entity of a quote that is shown
 
 #### Scenario: Keep the bursts when the list fails `beemaps-bursts-019`
 - **WHEN** a list shows bursts and a second press fails
-- **THEN** the info text is the text of scenario 027 for the error, and the entities of the first list stay
+- **THEN** the message is the text of scenario 027 for the error, and the entities of the first list stay
 - **AND** the chip "list" is enabled again
-- **AND** a list answer replaces the entities of the earlier list, and removes the entity of a burst that the list no longer contains
-- **AND** the entity of a burst that a confirm created stays until a list answer replaces it
+- **AND** a list answer replaces the bursts of the earlier list, and removes the entity of a burst that the list no longer contains
+- **AND** a burst that a confirm created stays after a list answer that does not list it
+- **AND** the burst of the list answer takes its place when the answer lists it
+- **AND** `disable` aborts a list request that is open, and the late answer of that request changes nothing
 
 #### Scenario: Style a burst by its state `beemaps-bursts-020`
 - **WHEN** the layer draws a burst
 - **THEN** a burst with `isHit` true is green "#22c55e" with alpha 0.35
 - **AND** an active burst that has no hit is blue "#38bdf8" with alpha 0.25
-- **AND** any other burst is grey "#9ca3af" with alpha 0.2
+- **AND** any other burst, also one with status null, is grey "#9ca3af" with alpha 0.2
 - **AND** the box of a quote is amber "#f59e0b" with alpha 0.3
 - **AND** each rectangle has the west, south, east and north of the box in degrees
 
@@ -206,21 +234,25 @@ Origin: spec-first
 - **WHEN** a test calls `confirm` with a quoteId and an idempotency key
 - **THEN** the source sends a POST request to "/api/beemaps/burst/confirm" with the body `{"quoteId":...,"idempotencyKey":...}` and no signal of the caller
 - **AND** the status 200 with `ok:true` and `outcome:'created'` and a readable burst gives `{outcome:'created', replayed, burst, creditsRemaining}`
-- **AND** a readable burst has a non-empty string `id`, a string `status`, a string or null `validUntil` and a whole number `credits`
+- **AND** a readable burst has a non-empty string `id`
+- **AND** its `status` and `validUntil` are a string or null, and its `credits` is a finite number or null
 - **AND** `creditsRemaining` is null when the body has no whole number for it
 - **AND** a status of 400 or more with `ok` not true and a known error gives `{outcome:'refused', status, error}`
 - **AND** that answer has `retryAfter` when the body has a whole number for it
 - **AND** the first group of known errors is cross_origin, rate_limited, burst_off, no_key, bad_body, busy, key_reused and quote_expired
 - **AND** the second group of known errors is budget_used, budget_unavailable, ledger_unavailable, log_failed, bad_request, key_rejected, no_credit and upstream_rate_limit
 - **AND** `budget_used` also keeps `used` and `limit` when they are whole numbers
-- **AND** every other answer gives `{outcome:'unknown', status}`
+- **AND** every other answer gives `{outcome:'unknown', status}`, with `retryAfter` when the body has a whole number for it
 - **AND** these are outcome_unknown with 502 or 409, internal_error, and an error code that is not known
 - **AND** a created answer with an unreadable burst gives the same
 - **AND** a status below 400 without a created burst, and a body that is not valid JSON, give the same
 
 #### Scenario: Never resend and bound the wait of a confirm `beemaps-bursts-024`
-- **WHEN** a test makes the fetch of a confirm throw, never answer, or answer with a body that stops in the middle
-- **THEN** the source resolves to `{outcome:'unknown', status:0}` and never rejects
+- **WHEN** a test makes the fetch of a confirm throw or never answer
+- **AND** the test makes the body of the answer stop in the middle, or makes it invalid JSON
+- **THEN** the source never rejects
+- **AND** a fetch that throws or never answers gives `{outcome:'unknown', status:0}`
+- **AND** a body that stops or is not valid JSON gives `{outcome:'unknown', status}` with the status of the response
 - **AND** the source sends exactly one request in each case, and aborts it after 60 seconds on the injected timer
 - **AND** the source clears its timer in each case
 
@@ -228,24 +260,29 @@ Origin: spec-first
 - **WHEN** a test calls `list`
 - **THEN** the source sends a POST request to "/api/beemaps/burst/list" with the body `{"limit":100}`
 - **AND** a good answer gives `{ok:true, bursts, total, cached}`
-- **AND** each burst has a non-empty string `id`, a string `status`, a boolean `isHit`, a whole number `credits` and a `bbox` of 4 finite numbers
+- **AND** each burst has a non-empty string `id` and a boolean `isHit`
+- **AND** its `status` is a string or null, its `credits` is a finite number or null, and its `bbox` is 4 finite numbers or null
 - **AND** the source drops a burst that fails these rules, and keeps the others in order
 - **AND** an answer without an array `bursts` gives `{ok:false, status, error:'bad_answer'}`
 - **AND** a `total` that is not a whole number from 0, or a `cached` that is not a boolean, gives the same
 - **AND** an error answer, a thrown fetch and an abort behave as in scenario 022
 
 ### Requirement: Texts
-The texts of the layer MUST come from one table. They MUST say that a quote costs nothing and that a confirm takes credits and cannot be undone.
+The texts of the layer MUST be fixed strings in `messages.js` and `model.js`. They MUST say that a quote costs nothing and that a confirm request takes credits and cannot be undone.
+
+The info text MUST join four parts with " · ", in this order, and leave out each part that is absent. The first two parts are the text of the last confirm and the message of the last press or of the status. The last two parts are the text of the quote and the text of the bursts.
+With no part, the info text MUST be the hint. A message of a press wins over a message of the status.
 Origin: spec-first
 
 #### Scenario: Give the hint and the readout `beemaps-bursts-026`
 - **WHEN** the layer has no message, no quote and no burst
-- **THEN** the info text is "A quote shows the price of a burst in 4 km² at the view centre. A quote costs nothing. A confirm takes credits and cannot be undone."
-- **AND** otherwise the info text joins the message, the text of the quote and the text of the bursts with " · "
+- **THEN** the info text is "A quote shows the price of a burst in 4 km² at the view centre. A quote costs nothing. A confirm request takes credits and cannot be undone."
+- **AND** otherwise the info text joins the four parts of the requirement with " · ", in that order
+- **AND** a message of a press wins over a message of the status
 - **AND** the info text leaves out each part that is absent
 - **AND** the chip "quote" has the title "Ask for the price of a burst. A quote costs nothing."
 - **AND** the Confirm chip has the title "Create the burst. This takes credits and cannot be undone."
-- **AND** the chip "cancel" has the title "Drop the quote. Nothing is sent."
+- **AND** the chip "cancel" has the title "Cancel the quote. Nothing is sent."
 - **AND** the chip "list" has the title "Ask Bee Maps for your bursts. This can cost money."
 
 #### Scenario: Give the text of each error `beemaps-bursts-027`
@@ -256,14 +293,14 @@ Origin: spec-first
 - **AND** "rate_limited" gives "Too many presses. Wait 60 seconds."
 - **AND** "key_rejected" gives "Bee Maps refused the key. Check BEEMAPS_BURST_API_KEY in .env."
 - **AND** "no_credit" gives "The Bee Maps account has no credit."
-- **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait 30 seconds." for `retryAfter` 30, "Bee Maps asks you to wait 1 second." for 1, and "Bee Maps asks you to wait." without a whole number
-- **AND** "budget_used" gives "The daily limit of 625 credits is used." for `limit` 625, and "The daily limit is used." without a whole number
+- **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait 30 seconds." for `retryAfter` 30, "Bee Maps asks you to wait 1 second." for 1, and "Bee Maps asks you to wait." without a whole number from 1
+- **AND** "budget_used" gives "The daily limit of 625 credits is used." for `limit` 625, "The daily limit of 1 credit is used." for 1, and "The daily limit is used." without a whole number from 1
 - **AND** "budget_unavailable" gives "The server cannot use its budget file."
 - **AND** "ledger_unavailable" gives "The server cannot use its record of bursts. Nothing was sent."
 - **AND** "log_failed" gives "The server cannot write its log. Nothing was sent."
 - **AND** "quote_expired" gives "The quote ended. Press Quote burst here again."
-- **AND** "busy" gives "The server is busy with another confirm. Wait, then press Check my bursts."
-- **AND** "key_reused" gives "The server refused this confirm."
+- **AND** "busy" gives "The server is busy with another confirm request. Wait, then press Check my bursts."
+- **AND** "key_reused" gives "The server refused this confirm request."
 - **AND** "bad_request" gives "Bee Maps refused the request."
 - **AND** "upstream_failed" gives "Bee Maps did not answer correctly."
 - **AND** "bad_body", "bad_area", "area_too_large" and "bad_credits" give "The server refused the request."
