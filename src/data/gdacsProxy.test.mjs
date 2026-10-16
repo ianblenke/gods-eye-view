@@ -886,8 +886,8 @@ test('[gdacs-source-019] sends the page request to the fixed address with UTC da
     assert.equal(calls.length, 2);
     assert.match(calls[1].url, /&fromdate=2025-12-27&todate=2026-01-10&/);
     for (const edge of [
-      Date.UTC(2026, 2, 5, 0, 0, 0, 100),
-      Date.UTC(2026, 2, 5, 23, 59, 59, 900),
+      Date.UTC(2026, 2, 5, 0, 0, 0, 0),
+      Date.UTC(2026, 2, 5, 23, 59, 59, 999),
     ]) {
       const probe = install({ fetchImpl: pagesFetch([[rec()]], calls) });
       probe.clock.t = edge;

@@ -253,7 +253,7 @@ Origin: spec-first
 - **AND** the page request has a signal
 - **AND** the provider sends no other request than the page requests
 - **AND** a clock of 2026-01-10T23:59:59Z gives `fromdate` 2025-12-27 and `todate` 2026-01-10
-- **AND** the clocks 2026-03-05T00:00:00.100Z and 2026-03-05T23:59:59.900Z give `fromdate` 2026-02-19 and `todate` 2026-03-05
+- **AND** the clocks 2026-03-05T00:00:00.000Z and 2026-03-05T23:59:59.999Z give `fromdate` 2026-02-19 and `todate` 2026-03-05
 
 ### Requirement: Read the pages
 The provider MUST fetch the pages in order from page 1. It MUST stop at a page that answers 204. It MUST stop at a page whose `features` list holds fewer than 100 records, also when it drops some of them. It MUST stop after page 5.
