@@ -62,6 +62,8 @@ test('[beemaps-bursts-022] rejects a quoteId that is not 32 characters of lower 
     `${QUOTE_ID}0`,
     QUOTE_ID.toUpperCase(),
     `${QUOTE_ID.slice(1)}g`,
+    [QUOTE_ID],
+    { toString: () => QUOTE_ID },
   ]) {
     assert.equal(normalizeQuote({ ...GOOD_QUOTE, quoteId }), null);
   }
@@ -288,14 +290,14 @@ test('[beemaps-bursts-025] drops a burst that fails the rules and keeps the othe
       'burst',
       LISTED('j'),
     ],
-    total: 16,
+    total: 99,
     cached: false,
   });
   assert.deepEqual(
     answer.bursts.map((burst) => burst.id),
     ['a', 'j'],
   );
-  assert.equal(answer.total, 16);
+  assert.equal(answer.total, 99);
 });
 
 test('[beemaps-bursts-025] rejects an answer with no array, a bad total or a bad cached flag', () => {

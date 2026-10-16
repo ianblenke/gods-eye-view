@@ -282,7 +282,8 @@ test('[beemaps-bursts-022] throws the abort error of the caller, sends one reque
   const signal = {
     aborted: false,
     throwIfAborted() {},
-    addEventListener: (type, handler) => events.push(['add', type, handler]),
+    addEventListener: (type, handler, options) =>
+      events.push(['add', type, handler, options]),
     removeEventListener: (type, handler) =>
       events.push(['remove', type, handler]),
   };
@@ -295,6 +296,7 @@ test('[beemaps-bursts-022] throws the abort error of the caller, sends one reque
     ],
   );
   assert.equal(events[0][2], events[1][2]);
+  assert.deepEqual(events[0][3], { once: true });
 });
 
 test('[beemaps-bursts-022] sends one request for each call that fails, also after the timer runs', async () => {
@@ -446,6 +448,10 @@ test('[beemaps-bursts-023] gives unknown for every other answer', async () => {
     ],
     [json({ error: 'internal_error' }, 500), 500],
     [json({ error: 'something_new' }, 403), 403],
+    [json({ error: 'upstream_failed' }, 502), 502],
+    [json({ error: 'bad_answer' }, 400), 400],
+    [new Response('null', { status: 400 }), 400],
+    [new Response('null', { status: 200 }), 200],
     [json({ error: 'toString' }, 400), 400],
     [json({ error: 5 }, 400), 400],
     [json({}, 400), 400],
@@ -692,4 +698,51 @@ test('[beemaps-bursts-021] uses the fetch function and the timers of the page wh
     '/api/beemaps/burst/confirm',
     '/api/beemaps/burst/list',
   ]);
+});
+
+test('[beemaps-bursts-022] gives bad_answer with the real status for a good status and a quote that fails the rules', async () => {
+  for (const status of [200, 201]) {
+    assert.deepEqual(
+      await make(() => json({ quoteId: 'x' }, status)).source.quote({
+        bbox: BBOX,
+      }),
+      { ok: false, status, error: 'bad_answer' },
+    );
+  }
+});
+
+test('[beemaps-bursts-022] reads a body of 1048576 bytes and gives bad_answer for one byte more', async () => {
+  const pad = (size) => {
+    const head = JSON.stringify({ ...GOOD_QUOTE, pad: '' }).slice(0, -2);
+    return head + 'a'.repeat(size - head.length - 2) + '"}';
+  };
+  const exact = pad(1048576);
+  assert.equal(Buffer.byteLength(exact), 1048576);
+  assert.equal(
+    (await make(() => new Response(exact)).source.quote({ bbox: BBOX })).ok,
+    true,
+  );
+  assert.deepEqual(
+    await make(() => new Response(pad(1048577))).source.quote({ bbox: BBOX }),
+    { ok: false, status: 200, error: 'bad_answer' },
+  );
+  assert.equal(
+    (
+      await make(() => new Response(exact)).source.confirm({
+        quoteId: QUOTE_ID,
+        idempotencyKey: KEY,
+      })
+    ).outcome,
+    'unknown',
+  );
+});
+
+test('[beemaps-bursts-021] stops a status read when its signal is aborted while the body stalls', async () => {
+  const controller = new AbortController();
+  const pending = make(stalledBody).source.getStatus({
+    signal: controller.signal,
+  });
+  await new Promise((resolve) => setTimeout(resolve, 20));
+  controller.abort();
+  assert.deepEqual(await pending, { ok: false });
 });

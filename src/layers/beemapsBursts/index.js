@@ -277,7 +277,6 @@ export function createBeemapsBurstsLayer({
           id: result.burst.id,
           status: result.burst.status,
           isHit: false,
-          credits,
           bbox: quote.bbox,
         },
       ];
@@ -336,7 +335,6 @@ export function createBeemapsBurstsLayer({
     enable() {
       _enabled = true;
       _dataSource.show = true;
-      draw();
     },
 
     disable() {

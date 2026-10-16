@@ -82,6 +82,7 @@ function harness({
     },
   };
   const added = [];
+  const picks = [];
   const listeners = [];
   const handlers = {};
   const watch = (name) => ({
@@ -104,7 +105,10 @@ function harness({
       changed: watch('camera.changed'),
       moveStart: watch('camera.moveStart'),
       moveEnd: watch('camera.moveEnd'),
-      pickEllipsoid: (...args) => pick(...args),
+      pickEllipsoid: (...args) => {
+        picks.push(args);
+        return pick(...args);
+      },
     },
     scene: {
       canvas,
@@ -143,6 +147,7 @@ function harness({
     viewer,
     calls,
     added,
+    picks,
     listeners,
     clock,
     timers,
@@ -1616,4 +1621,512 @@ test('[beemaps-bursts-006] sends no second quote request from an old quote chip 
   await h.chip('cancel').onClick();
   await old();
   assert.equal(h.calls.quote.length, 2);
+});
+
+test('[beemaps-bursts-030] tells the panel once for a status answer, and not for a status that was aborted', async () => {
+  const h = harness();
+  h.layer.init(h.viewer);
+  h.layer.enable(h.viewer);
+  const before = h.notices();
+  await h.layer.update();
+  assert.equal(h.notices(), before + 1);
+  const wait = deferred();
+  const h2 = harness({ status: () => wait.promise });
+  h2.layer.init(h2.viewer);
+  h2.layer.enable(h2.viewer);
+  const pending = h2.layer.update();
+  h2.layer.disable(h2.viewer);
+  const count = h2.notices();
+  wait.resolve({ ok: true, enabled: true, configured: true });
+  await pending;
+  assert.equal(h2.notices(), count);
+});
+
+test('[beemaps-bursts-030] tells the panel at the start and at the answer of a quote, and once for a view with no box', async () => {
+  const wait = deferred();
+  const h = harness({ quote: () => wait.promise });
+  await h.ready();
+  let n = h.notices();
+  const pressed = h.chip('quote').onClick();
+  assert.equal(h.notices(), n + 1);
+  wait.resolve({ ok: true, quote: QUOTE });
+  await pressed;
+  assert.equal(h.notices(), n + 2);
+  const failing = harness({
+    quote: async () => ({ ok: false, status: 429, error: 'rate_limited' }),
+  });
+  await failing.ready();
+  n = failing.notices();
+  await failing.chip('quote').onClick();
+  assert.equal(failing.notices(), n + 2);
+  const sky = harness({ pick: () => undefined });
+  await sky.ready();
+  n = sky.notices();
+  await sky.chip('quote').onClick();
+  assert.equal(sky.notices(), n + 1);
+});
+
+test('[beemaps-bursts-030] tells the panel at the start and at the answer of a list, for a good and a failed answer', async () => {
+  for (const answer of [
+    { ok: true, bursts: [], total: 0, cached: false },
+    { ok: false, status: 500, error: 'unknown' },
+  ]) {
+    const wait = deferred();
+    const h = harness({ list: () => wait.promise });
+    await h.ready();
+    const n = h.notices();
+    const pressed = h.chip('list').onClick();
+    assert.equal(h.notices(), n + 1);
+    wait.resolve(answer);
+    await pressed;
+    assert.equal(h.notices(), n + 2);
+  }
+});
+
+test('[beemaps-bursts-030] tells the panel once for a cancel, for the end of a quote and for the end of the wait', async () => {
+  const cancelled = harness();
+  await cancelled.quoted();
+  let n = cancelled.notices();
+  await cancelled.chip('cancel').onClick();
+  assert.equal(cancelled.notices(), n + 1);
+  const ended = harness();
+  await ended.quoted();
+  n = ended.notices();
+  ended.timers[0].fn();
+  assert.equal(ended.notices(), n + 1);
+  const waiting = harness();
+  await waiting.quoted({ unlocked: false });
+  n = waiting.notices();
+  waiting.timers[1].fn();
+  assert.equal(waiting.notices(), n + 1);
+});
+
+test('[beemaps-bursts-030] tells the panel at the start and at the answer of a confirm, whatever the answer was', async () => {
+  for (const answer of [
+    CREATED,
+    { outcome: 'refused', status: 403, error: 'no_key' },
+    { outcome: 'unknown', status: 502 },
+  ]) {
+    const h = harness({ confirm: async () => answer });
+    await h.quoted();
+    const n = h.notices();
+    await h.confirmChip().onClick();
+    assert.equal(h.notices(), n + 2);
+  }
+});
+
+test('[beemaps-bursts-030] tells the panel zero times for a cancel press without a quote', async () => {
+  const h = harness();
+  await h.quoted();
+  const old = h.chip('cancel').onClick;
+  await old();
+  const n = h.notices();
+  await old();
+  assert.equal(h.notices(), n);
+});
+
+test('[beemaps-bursts-030] tells the panel zero times for presses while another request is open', async () => {
+  const wait = deferred();
+  const h = harness({ list: () => wait.promise });
+  await h.quoted();
+  const pressed = h.chip('list').onClick();
+  const n = h.notices();
+  await h.chip('list').onClick();
+  await h.confirmChip().onClick();
+  assert.equal(h.notices(), n);
+  wait.resolve({ ok: true, bursts: [], total: 0, cached: false });
+  await pressed;
+});
+
+test('[beemaps-bursts-030] tells the panel zero times for presses after disable', async () => {
+  const h = harness();
+  await h.quoted();
+  const press = h.confirmChip().onClick;
+  const cancel = h.chip('cancel').onClick;
+  const quote = h.chip('list').onClick;
+  h.layer.disable(h.viewer);
+  const n = h.notices();
+  await press();
+  await cancel();
+  await quote();
+  assert.equal(h.notices(), n);
+});
+
+test('[beemaps-bursts-030] calls no listener after setRowControlsListener(null)', async () => {
+  const h = harness();
+  await h.ready();
+  const n = h.notices();
+  h.layer.setRowControlsListener(null);
+  await h.chip('quote').onClick();
+  h.unlock();
+  await h.confirmChip().onClick();
+  await h.chip('list').onClick();
+  await h.layer.update();
+  assert.equal(h.notices(), n);
+});
+
+test('[beemaps-bursts-002] sends no confirm request when enable is called again while a quote is shown', async () => {
+  const h = harness();
+  await h.quoted();
+  h.layer.enable(h.viewer);
+  await tick();
+  assert.equal(h.calls.confirm.length, 0);
+  assert.equal(h.confirmChip().disabled, false);
+});
+
+test('[beemaps-bursts-002] removes the data source on destroy and gives a layer as new after init and enable', async () => {
+  const h = harness({
+    confirm: async () => ({ outcome: 'unknown', status: 0 }),
+  });
+  await h.quoted();
+  await h.confirmChip().onClick();
+  assert.equal(h.dataSource().name, 'beemaps-bursts');
+  h.layer.destroy(h.viewer);
+  assert.deepEqual(h.chips(), []);
+  assert.equal(h.info(), HINT);
+  assert.equal(await h.layer.update(), false);
+  assert.deepEqual(h.added, []);
+  h.layer.init(h.viewer);
+  assert.equal(h.added.length, 1);
+  h.layer.enable(h.viewer);
+  await h.layer.update();
+  assert.equal(h.info(), HINT);
+  assert.deepEqual(
+    h.chips().map((entry) => entry.id),
+    ['quote', 'list'],
+  );
+  assert.deepEqual(h.entityIds(), []);
+  assert.deepEqual(h.layer.getStats(), {
+    count: 0,
+    lastUpdate: null,
+    error: null,
+  });
+});
+
+test('[beemaps-bursts-017] gives the controls, the info text and the stats of a new layer after disable and enable, except the text of the last confirm', async () => {
+  const h = harness({
+    status: async () => ({ ok: true, enabled: false, configured: true }),
+    list: async () => ({
+      ok: true,
+      bursts: [listed('a')],
+      total: 1,
+      cached: false,
+    }),
+  });
+  await h.ready();
+  assert.equal(h.chip('quote').disabled, true);
+  const wait = deferred();
+  const busy = harness({
+    quote: () => wait.promise,
+    list: async () => ({ ok: false, status: 500, error: 'unknown' }),
+  });
+  await busy.ready();
+  await busy.chip('list').onClick();
+  const pending = busy.chip('quote').onClick();
+  busy.layer.disable(busy.viewer);
+  assert.equal(busy.info(), HINT);
+  assert.deepEqual(busy.layer.getStats(), {
+    count: 0,
+    lastUpdate: null,
+    error: null,
+  });
+  busy.layer.enable(busy.viewer);
+  assert.equal(busy.chip('quote').label, 'Quote burst here');
+  assert.equal(busy.chip('quote').busy, false);
+  wait.resolve({ ok: true, quote: QUOTE });
+  await pending;
+  assert.deepEqual(
+    busy.chips().map((entry) => entry.id),
+    ['quote', 'list'],
+  );
+  h.layer.disable(h.viewer);
+  h.layer.enable(h.viewer);
+  assert.equal(h.info(), HINT);
+  assert.equal(h.chip('quote').disabled, false);
+  assert.equal(h.chip('list').disabled, false);
+});
+
+test('[beemaps-bursts-017] removes the boxes and the stats of a list and a quote on disable', async () => {
+  const h = harness({
+    list: async () => ({
+      ok: true,
+      bursts: [listed('a')],
+      total: 1,
+      cached: false,
+    }),
+  });
+  await h.quoted();
+  await h.chip('list').onClick();
+  assert.deepEqual(h.entityIds(), ['beemaps-bursts:quote', 'beemaps-bursts:a']);
+  h.layer.disable(h.viewer);
+  assert.deepEqual(h.entityIds(), []);
+  assert.deepEqual(h.layer.getStats(), {
+    count: 0,
+    lastUpdate: null,
+    error: null,
+  });
+});
+
+test('[beemaps-bursts-017] forgets a press message, a status message and a failed status on disable', async () => {
+  const h = harness({
+    status: async () => ({ ok: true, enabled: true, configured: false }),
+    pick: () => undefined,
+  });
+  await h.ready();
+  assert.equal(h.chip('quote').disabled, true);
+  h.layer.disable(h.viewer);
+  assert.equal(h.info(), HINT);
+  const failed = harness({
+    status: async () => ({ ok: false }),
+    pick: () => undefined,
+  });
+  await failed.ready();
+  h.layer.enable(h.viewer);
+  await failed.chip('quote').onClick();
+  assert.notEqual(failed.layer.getStats().error, null);
+  failed.layer.disable(failed.viewer);
+  failed.layer.enable(failed.viewer);
+  assert.equal(failed.info(), HINT);
+  assert.equal(failed.layer.getStats().error, null);
+});
+
+test('[beemaps-bursts-005] shows the text for off first when the status is off and has no key', async () => {
+  const h = harness({
+    status: async () => ({ ok: true, enabled: false, configured: false }),
+  });
+  await h.ready();
+  assert.equal(
+    h.info(),
+    'Bursts are off on this server. Set BEEMAPS_BURST_ENABLED=true in .env and restart the app.',
+  );
+});
+
+test('[beemaps-bursts-005] does not abort a status request that has ended, and gives the press error before the status error', async () => {
+  const h = harness();
+  h.layer.init(h.viewer);
+  h.layer.enable(h.viewer);
+  await h.layer.update();
+  await h.layer.update();
+  assert.equal(h.calls.getStatus[0].signal.aborted, false);
+  assert.equal(h.calls.getStatus[1].signal.aborted, false);
+  const failing = harness({
+    status: async () => ({ ok: false }),
+    pick: () => undefined,
+  });
+  await failing.ready();
+  await failing.chip('quote').onClick();
+  assert.equal(
+    failing.layer.getStats().error,
+    'Point the view at the ground and press again.',
+  );
+  assert.equal(failing.info(), 'Point the view at the ground and press again.');
+});
+
+test('[beemaps-bursts-008] picks the point at the middle of the canvas on the ellipsoid of the globe', async () => {
+  const h = harness();
+  await h.ready();
+  await h.chip('quote').onClick();
+  assert.equal(h.picks.length, 1);
+  assert.equal(h.picks[0][0].x, 400);
+  assert.equal(h.picks[0][0].y, 300);
+  assert.equal(h.picks[0][1], Cesium.Ellipsoid.WGS84);
+  const small = harness({ canvas: { clientWidth: 1000, clientHeight: 200 } });
+  await small.ready();
+  await small.chip('quote').onClick();
+  assert.equal(small.picks[0][0].x, 500);
+  assert.equal(small.picks[0][0].y, 100);
+});
+
+test('[beemaps-bursts-008] gives the sky text for a viewer with no scene, and picks on the default ellipsoid for a viewer with no globe', async () => {
+  const noScene = harness();
+  noScene.layer.init(noScene.viewer);
+  noScene.layer.enable(noScene.viewer);
+  delete noScene.viewer.scene;
+  await noScene.chip('quote').onClick();
+  assert.equal(noScene.info(), 'Point the view at the ground and press again.');
+  assert.equal(noScene.calls.quote.length, 0);
+  const noGlobe = harness();
+  await noGlobe.ready();
+  delete noGlobe.viewer.scene.globe;
+  await noGlobe.chip('quote').onClick();
+  assert.equal(noGlobe.picks[0][1], undefined);
+  assert.equal(noGlobe.calls.quote.length, 1);
+});
+
+test('[beemaps-bursts-001] names the missing methods in the error for a source that is missing', () => {
+  assert.throws(
+    () => createBeemapsBurstsLayer({ source: undefined }),
+    /requires a source with getStatus, quote, confirm and list/,
+  );
+  assert.throws(
+    () => createBeemapsBurstsLayer({ source: null }),
+    /requires a source with getStatus, quote, confirm and list/,
+  );
+});
+
+test('[beemaps-bursts-004] gives each chip its title and no busy flag when the layer is idle', async () => {
+  const h = harness();
+  await h.ready();
+  assert.deepEqual(
+    h
+      .chips()
+      .map((entry) => [entry.id, entry.title, entry.busy, entry.disabled]),
+    [
+      [
+        'quote',
+        'Ask for the price of a burst. A quote costs nothing.',
+        false,
+        false,
+      ],
+      [
+        'list',
+        'Ask Bee Maps for your bursts. This can cost money.',
+        false,
+        false,
+      ],
+    ],
+  );
+});
+
+test('[beemaps-bursts-007] shows a Confirm chip that is not busy and a cancel chip that is enabled', async () => {
+  const h = harness();
+  await h.quoted();
+  assert.equal(h.confirmChip().busy, false);
+  assert.equal(h.chip('cancel').disabled, false);
+  assert.equal(h.chip('list').busy, false);
+});
+
+test('[beemaps-bursts-006] marks only the chip of the open request as busy', async () => {
+  const wait = deferred();
+  const quoting = harness({ quote: () => wait.promise });
+  await quoting.ready();
+  const pressed = quoting.chip('quote').onClick();
+  assert.equal(quoting.chip('quote').busy, true);
+  assert.equal(quoting.chip('list').busy, false);
+  wait.resolve({ ok: true, quote: QUOTE });
+  await pressed;
+  const listing = deferred();
+  const h = harness({ list: () => listing.promise });
+  await h.ready();
+  const press = h.chip('list').onClick();
+  assert.equal(h.chip('list').busy, true);
+  assert.equal(h.chip('quote').busy, false);
+  listing.resolve({ ok: true, bursts: [], total: 0, cached: false });
+  await press;
+  assert.equal(h.chip('list').busy, false);
+});
+
+test('[beemaps-bursts-018] sends the list call with the signal and no other field', async () => {
+  const h = harness();
+  await h.ready();
+  await h.chip('list').onClick();
+  assert.deepEqual(Object.keys(h.calls.list[0]), ['signal']);
+});
+
+test('[beemaps-bursts-007] shows the quote with no message of an earlier press and no error of an earlier press', async () => {
+  let n = 0;
+  const h = harness({
+    pick: () =>
+      n++ === 0 ? undefined : Cesium.Cartesian3.fromDegrees(10.0031, 59.9976),
+  });
+  await h.ready();
+  await h.chip('quote').onClick();
+  assert.equal(h.info(), 'Point the view at the ground and press again.');
+  await h.chip('quote').onClick();
+  assert.equal(h.info(), QUOTE_TEXT);
+  assert.equal(h.layer.getStats().error, null);
+});
+
+test('[beemaps-bursts-011] shows the quote button again with its normal label after a cancel, and keeps no message', async () => {
+  const h = harness();
+  await h.quoted();
+  await h.chip('cancel').onClick();
+  assert.equal(h.chip('quote').label, 'Quote burst here');
+  assert.equal(h.chip('quote').busy, false);
+});
+
+test('[beemaps-bursts-011] keeps the message of a press when a stale cancel press comes without a quote', async () => {
+  const h = harness({
+    quote: async () => ({ ok: false, status: 429, error: 'rate_limited' }),
+  });
+  await h.ready();
+  const stale = h.chip('list').onClick;
+  await h.chip('quote').onClick();
+  const cancelHandlers = [];
+  const q = harness();
+  await q.quoted();
+  cancelHandlers.push(q.chip('cancel').onClick);
+  await q.chip('cancel').onClick();
+  await q.chip('quote').onClick();
+  q.layer.disable(q.viewer);
+  q.layer.enable(q.viewer);
+  const text = h.info();
+  await cancelHandlers[0]();
+  assert.equal(h.info(), text);
+  assert.equal(typeof stale, 'function');
+});
+
+test('[beemaps-bursts-019] shows no message and no error after a good list that follows a failed list', async () => {
+  let n = 0;
+  const h = harness({
+    list: async () =>
+      n++ === 0
+        ? { ok: false, status: 500, error: 'unknown' }
+        : { ok: true, bursts: [listed('a')], total: 1, cached: false },
+  });
+  await h.ready();
+  await h.chip('list').onClick();
+  assert.notEqual(h.layer.getStats().error, null);
+  await h.chip('list').onClick();
+  assert.equal(h.layer.getStats().error, null);
+  assert.equal(h.info(), '1 burst · 0 hits');
+});
+
+test('[beemaps-bursts-014] shows the credits of the answer when they differ from the quote, and the box of the quote for the burst', async () => {
+  const h = harness({
+    confirm: async () => ({
+      ...CREATED,
+      burst: { ...CREATED.burst, credits: 250 },
+    }),
+  });
+  await h.quoted();
+  await h.confirmChip().onClick();
+  assert.match(h.info(), /^Burst created: 250 credits taken, 875 left/);
+  const west = h
+    .dataSource()
+    .entities.getById(`beemaps-bursts:${BURST_ID}`)
+    .rectangle.coordinates.getValue(Cesium.JulianDate.now()).west;
+  assert.equal(Number(Cesium.Math.toDegrees(west).toFixed(6)), 9.987014);
+});
+
+test('[beemaps-bursts-014] clears the error of an earlier list failure when a burst is created', async () => {
+  const h = harness({
+    list: async () => ({ ok: false, status: 500, error: 'unknown' }),
+  });
+  await h.quoted();
+  await h.chip('list').onClick();
+  assert.notEqual(h.layer.getStats().error, null);
+  await h.confirmChip().onClick();
+  assert.equal(h.layer.getStats().error, null);
+});
+
+test('[beemaps-bursts-014] draws two created bursts in the order of their creation', async () => {
+  let n = 0;
+  const h = harness({
+    confirm: async () => ({
+      ...CREATED,
+      burst: { ...CREATED.burst, id: `burst-${++n}` },
+    }),
+  });
+  await h.quoted();
+  await h.confirmChip().onClick();
+  await h.chip('quote').onClick();
+  h.unlock();
+  await h.confirmChip().onClick();
+  assert.deepEqual(h.entityIds(), [
+    'beemaps-bursts:burst-1',
+    'beemaps-bursts:burst-2',
+  ]);
+  assert.equal(h.layer.getStats().count, 2);
+  assert.match(h.info(), /· 2 bursts · 0 hits$/);
 });

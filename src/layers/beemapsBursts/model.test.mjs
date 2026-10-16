@@ -98,6 +98,16 @@ test('[beemaps-bursts-007] names the credits, the area, the budget and the secon
     }),
     'Quote: 125 credits for 3.998 km² · credits used today 500 of 625 · valid for 1 second',
   );
+  for (const [seconds, word] of [
+    [0, 'seconds'],
+    [2, 'seconds'],
+    [600, 'seconds'],
+  ]) {
+    assert.match(
+      quoteText({ ...QUOTE, expiresInSeconds: seconds }),
+      new RegExp(`valid for ${seconds} ${word}$`),
+    );
+  }
 });
 
 test('[beemaps-bursts-018] counts the bursts and the hits, and says how many exist in all', () => {

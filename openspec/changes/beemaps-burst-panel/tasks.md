@@ -6,7 +6,7 @@
 - [ ] 1.4 Write the tests for `beemaps-bursts-021`, `beemaps-bursts-022`, `beemaps-bursts-023`, `beemaps-bursts-024` and `beemaps-bursts-025` in `src/layers/beemapsBursts/source.test.mjs`.
 - [ ] 1.5 Write the tests for `beemaps-bursts-007`, `beemaps-bursts-018` (the text), `beemaps-bursts-020` and `beemaps-bursts-026` in `src/layers/beemapsBursts/model.test.mjs`.
 - [ ] 1.6 Write the tests for `beemaps-bursts-001`, `beemaps-bursts-002`, `beemaps-bursts-004`, `beemaps-bursts-005`, `beemaps-bursts-006`, `beemaps-bursts-007`, `beemaps-bursts-008`, `beemaps-bursts-009` and `beemaps-bursts-010` in `src/layers/beemapsBursts/layer.test.mjs`.
-- [ ] 1.7 Write the tests for `beemaps-bursts-011`, `beemaps-bursts-012`, `beemaps-bursts-013`, `beemaps-bursts-014`, `beemaps-bursts-015`, `beemaps-bursts-016`, `beemaps-bursts-017` and `beemaps-bursts-029` in the same file.
+- [ ] 1.7 Write the tests for `beemaps-bursts-011`, `beemaps-bursts-012`, `beemaps-bursts-013`, `beemaps-bursts-014`, `beemaps-bursts-015`, `beemaps-bursts-016`, `beemaps-bursts-017`, `beemaps-bursts-029` and `beemaps-bursts-030` in the same file.
 - [ ] 1.8 Write the tests for `beemaps-bursts-018`, `beemaps-bursts-019` and `beemaps-bursts-020` in the same file.
 - [ ] 1.9 Write the tests for `beemaps-bursts-003` and `beemaps-bursts-028` in `src/layers/beemapsBursts/registration.test.mjs`.
 - [ ] 1.10 Change the registry counts from 32 to 33 in `src/data/layerState.test.mjs`: the test `[osh-033]` and the test of the production registry.

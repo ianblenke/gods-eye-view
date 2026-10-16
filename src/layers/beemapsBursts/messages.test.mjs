@@ -81,6 +81,10 @@ test('[beemaps-bursts-027] names the wait of Bee Maps in seconds, and leaves it 
     text('upstream_rate_limit', { retryAfter: 1 }),
     'Bee Maps asks you to wait 1 second.',
   );
+  assert.equal(
+    text('upstream_rate_limit', { retryAfter: 2 }),
+    'Bee Maps asks you to wait 2 seconds.',
+  );
   for (const retryAfter of [undefined, 0, -3, 1.5, '30', NaN]) {
     assert.equal(
       text('upstream_rate_limit', { retryAfter }),
@@ -97,6 +101,10 @@ test('[beemaps-bursts-027] names the daily limit in credits, and leaves it out w
   assert.equal(
     text('budget_used', { limit: 1 }),
     'The daily limit of 1 credit is used.',
+  );
+  assert.equal(
+    text('budget_used', { limit: 2 }),
+    'The daily limit of 2 credits is used.',
   );
   for (const limit of [undefined, 0, -1, 2.5, '625']) {
     assert.equal(text('budget_used', { limit }), 'The daily limit is used.');
@@ -131,6 +139,8 @@ test('[beemaps-bursts-008] gives the text of each reason that the view gives no 
     describeReason('meridian'),
     'Move the view away from the 180th meridian and press again.',
   );
+  assert.equal(describeReason('other'), undefined);
+  assert.equal(describeReason(undefined), undefined);
 });
 
 test('[beemaps-bursts-016] warns that a burst can exist, and adds the refusal time when it is known', () => {
@@ -148,6 +158,10 @@ test('[beemaps-bursts-016] warns that a burst can exist, and adds the refusal ti
   assert.equal(
     describeUnknown({ retryAfter: 1 }),
     `${base} The server refuses new confirms for 1 second.`,
+  );
+  assert.equal(
+    describeUnknown({ retryAfter: 2 }),
+    `${base} The server refuses new confirms for 2 seconds.`,
   );
 });
 

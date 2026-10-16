@@ -21,6 +21,9 @@ Origin: spec-first
 - **AND** the test then disables the layer, enables it again and destroys it
 - **THEN** the source gets one `getStatus` call for each `update` and no `quote`, `confirm` or `list` call
 - **AND** the layer adds no listener to the camera or to the scene of the viewer
+- **AND** a second `enable` while a quote is shown sends no `confirm` call
+- **AND** `destroy` removes the data source and clears the layer
+- **AND** a later `init` and `enable` give a layer as new, with the data source name "beemaps-bursts"
 - **AND** `update` on a layer that is not enabled returns false and sends no call
 
 #### Scenario: Send nothing after a restored state `beemaps-bursts-003`
@@ -48,6 +51,9 @@ Origin: spec-first
 - **AND** a failed status leaves both chips enabled, and `update` resolves to true
 - **AND** a good status leaves no message, so the info text is the hint of scenario 026, and it leaves both chips enabled
 - **AND** a good quote or a good list clears the message of an earlier failed status
+- **AND** with `enabled:false` and `configured:false` the message is the text for `enabled:false`
+- **AND** a status request that has ended is not aborted by a later `update`
+- **AND** `getStats` gives the error of the last press first, and the error of a failed status when there is none
 - **AND** a second `update` while the first is open aborts the first and returns false for it
 - **AND** `disable` aborts an open status request
 
@@ -60,13 +66,14 @@ Origin: spec-first
 - **THEN** the source gets one `quote` call with the box [9.987014, 59.991007, 10.022986, 60.008993] and no other field
 - **AND** until the answer comes, the chip "quote" has the label "Quoting…", is disabled and has `busy` true
 - **AND** a second press of the chip in that time sends no call
-- **AND** in that time the chip "list" is disabled
+- **AND** in that time the chip "list" is disabled, and not busy
 
 #### Scenario: Show the quote `beemaps-bursts-007`
 - **WHEN** the source answers a quote with the quoteId `a1b2c3d4e5f60718293a4b5c6d7e8f90`, 125 credits, 4 km² and 120 seconds, with 0 credits used of 625
 - **THEN** the chips are "confirm:a1b2c3d4e5f60718293a4b5c6d7e8f90" with the label "Confirm: 125 credits, 4 km²", "cancel" with the label "Cancel quote" and "list", in that order
 - **AND** the info text is "Quote: 125 credits for 4 km² · credits used today 0 of 625 · valid for 120 seconds"
 - **AND** the source gets no `confirm` call
+- **AND** the Confirm chip is not busy, and the chip "cancel" is enabled
 - **AND** the data source has one entity with the id "beemaps-bursts:quote" and a rectangle of the box in the answer
 - **AND** an area of 3.998 km² in the answer gives the label "Confirm: 125 credits, 3.998 km²"
 - **AND** the layer asks the random source for one idempotency key when this answer arrives, and not when the person presses "quote"
@@ -78,6 +85,8 @@ Origin: spec-first
 - **AND** the sky gives "Point the view at the ground and press again."
 - **AND** each latitude gives "Move the view to a latitude from -79.99 to 79.99 degrees and press again."
 - **AND** a canvas with no size, and a pick that fails, also give the text for the sky
+- **AND** the layer picks the point at the middle of the canvas on the ellipsoid of the globe
+- **AND** a viewer with no scene gives the sky text, and a viewer with no globe picks on the default ellipsoid
 - **AND** the longitude gives "Move the view away from the 180th meridian and press again."
 - **AND** the view at the latitude 79.9 gives a quote request
 
@@ -157,6 +166,7 @@ Origin: spec-first
 - **THEN** the layer gives the `confirm` call no signal, so `disable` and `destroy` cannot abort the request
 - **AND** the answer sets the state, so the text of the last confirm after `enable` is the text for that answer
 - **AND** `disable` clears a quote that is shown, and the next `enable` shows no Confirm chip
+- **AND** after `disable` and `enable`, the controls, the info text and `getStats` are those of a new layer, except the text of the last confirm
 - **AND** the text of the last confirm stays through `disable` and `enable` until the layer shows a new quote
 - **AND** a later message of a press or of the status comes after that text, and does not replace it
 - **AND** an answer after `destroy` changes nothing and throws no error
@@ -178,7 +188,8 @@ Origin: spec-first
 - **WHEN** a person presses "list" and the source answers 3 bursts, one with `isHit` true, `total` 3
 - **THEN** the source gets one `list` call
 - **AND** until the answer comes, the chip "list" has the label "Checking…", is disabled and has `busy` true
-- **AND** in that time the chip "quote" is disabled
+- **AND** in that time the chip "quote" is disabled, and not busy
+- **AND** the `list` call has the field `signal` and no other field
 - **AND** the data source has one entity "beemaps-bursts:<id>" for each burst that has a box, with a rectangle of its box
 - **AND** the text of the bursts is "3 bursts · 1 hit"
 - **AND** with 1 burst and 0 hits the text is "1 burst · 0 hits"
@@ -206,6 +217,20 @@ Origin: spec-first
 - **AND** any other burst, also one with status null, is grey "#9ca3af" with alpha 0.2
 - **AND** the box of a quote is amber "#f59e0b" with alpha 0.3
 - **AND** each rectangle has the west, south, east and north of the box in degrees
+
+### Requirement: Panel notice
+The layer MUST tell the panel through its listener when the controls or the info text change. It MUST NOT tell the panel when a press changes nothing.
+Origin: spec-first
+
+#### Scenario: Tell the panel about each change `beemaps-bursts-030`
+- **WHEN** a test sets a row controls listener and then makes each change of the list below
+- **THEN** a status answer calls the listener once
+- **AND** a press of "quote" calls it when the request starts and when the answer arrives, and a press with no box calls it once
+- **AND** a press of "list" calls it when the request starts and when the answer arrives
+- **AND** a press of "cancel", the end of a quote and the end of the wait of the Confirm chip call it once
+- **AND** a press of the Confirm chip calls it when the request starts and when the answer arrives
+- **AND** a press of "cancel" without a quote, a press while another request is open and a press after `disable` call it zero times
+- **AND** after `setRowControlsListener(null)` no change calls a listener
 
 ### Requirement: Browser source
 The browser source MUST send the requests of the layer to the four burst routes. It MUST NOT retry a request. It MUST classify the answer of a confirm request.

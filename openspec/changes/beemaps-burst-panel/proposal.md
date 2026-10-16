@@ -16,7 +16,7 @@ This is change 4 of 4. It adds the layer "Bee Maps Bursts". A burst takes credit
 - A press of "Check my bursts" asks for the list of bursts and draws the box of each one.
 - Send no quote, confirm or list request when the layer is enabled, and from any other path. These paths are a saved state, a share link, a move of the camera, voice and a timer.
 - Register the layer with the share token "6", in the group Cameras, out of voice, with a data credit. Change the count in the scenario `osh-033` from 32 to 33.
-- Add the capability `beemaps-bursts` with 29 scenarios. Add one entry to `CHANGELOG.md` and one paragraph to `DATA_SOURCES.md`.
+- Add the capability `beemaps-bursts` with 30 scenarios. Add one entry to `CHANGELOG.md` and one paragraph to `DATA_SOURCES.md`.
 
 ## Capabilities
 
