@@ -2142,11 +2142,14 @@ test('[beemaps-bursts-002] removes the data source once and does nothing on a se
   const h = harness();
   await h.ready();
   h.layer.destroy(h.viewer);
+  const frames = h.renders.length;
   h.layer.destroy(h.viewer);
   assert.equal(h.viewer.removals, 1);
+  assert.equal(h.renders.length, frames);
   const never = harness();
   never.layer.destroy(never.viewer);
   assert.equal(never.viewer.removals, undefined);
+  assert.deepEqual(never.renders, []);
 });
 
 test('[beemaps-bursts-029] clears each timer of a quote once, also when the quote is cancelled before the layer is disabled', async () => {
