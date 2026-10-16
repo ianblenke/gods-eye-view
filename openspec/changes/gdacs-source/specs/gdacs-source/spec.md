@@ -157,11 +157,11 @@ Origin: spec-first
 - **WHEN** the provider normalizes a country of 200 letters, an empty country and a country that is not text
 - **AND** it normalizes an origin of 50 letters and an empty origin
 - **AND** it normalizes a severity unit of 20 letters and a severity text of 200 letters
-- **AND** it normalizes the `iso3` values "TUR", "tur", "TURK", "TU" and "T1R"
+- **AND** it normalizes the `iso3` values "TUR", "tur", "TURK", "TU" and "T1R", and an `iso3` that is not text
 - **THEN** the country of 200 letters gives 80 letters, and the empty country and the country that is not text give null
 - **AND** the origin of 50 letters gives 40 letters, and the empty origin gives null
 - **AND** the severity unit gives 12 letters and the severity text gives 160 letters
-- **AND** the `iso3` "TUR" stays "TUR", and the other four values give null
+- **AND** the `iso3` "TUR" stays "TUR", and each other value gives null
 
 ### Requirement: One event for each type and event id
 The provider MUST check the rules of each record before it joins records. It MUST list one event for each pair of the type and the event id. It MUST keep the record with the highest episode id.
@@ -212,7 +212,7 @@ Origin: spec-first
 - **AND** the `attribution` is "GDACS, a cooperation framework of the United Nations and the European Commission"
 - **AND** the `license` is "The legal notice of the European Commission licenses content that the European Union owns under CC BY 4.0. GDACS gives no separate license for the feed. Data of NOAA, JTWC, GloFAS, GDO and other sources keep their own terms. The provider shortens the data and rounds the positions."
 - **AND** the `disclaimer` is "The estimates of GDACS come from a machine, and an estimate can be wrong. Check each estimate before you use it to make a decision."
-- **AND** the `coverage` is "Flood, drought, volcano and tropical cyclone events active on any day from the UTC date 14 days before `fetchedAt`. The provider does not list earthquakes and wildfires."
+- **AND** the `coverage` is "Flood, drought, volcano and tropical cyclone events active on any day from the UTC date 14 days before fetchedAt. The provider does not list earthquakes and wildfires."
 - **AND** `fetchedAt` is "2026-03-05T10:00:00.000Z"
 - **AND** `counts` has `total` 1, `current` 1, `dropped` 0, and `byType` with FL 1, DR 0, VO 0 and TC 0
 - **AND** `events` holds the flood
@@ -262,7 +262,7 @@ Origin: spec-first
 - **AND** its `byType` has FL 0, DR 0, VO 0 and TC 0
 - **AND** when page 1 has 101 records, the provider asks for page 2
 - **AND** when page 1 has 100 records and 2 of them are not valid, the provider asks for page 2
-- **AND** each of five pages has 100 records, and 10 of them are not valid
+- **AND** each of five pages has 100 records, and 2 records on each page are not valid
 - **AND** the provider then sends five page requests and no sixth request
 - **AND** these five requests have the `pagenumber` values 1 to 5
 

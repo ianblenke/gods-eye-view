@@ -29,6 +29,7 @@ import { weatherProxy } from './weather.js';
 import { firePerimetersProxy } from './firePerimeters.js';
 import { cycloneProxy } from './cyclones.js';
 import { reticulumProxy } from './reticulum.js';
+import { gdacsProxy } from './gdacs.js';
 import { beemapsProxy } from './beemaps.js';
 import { beemapsBurstProxy } from './beemaps-burst.js';
 import { windProxy } from './wind.js';
@@ -56,6 +57,7 @@ function localProviderPlugins({ realtime } = {}) {
     gbfsProxy(),
     localReceiversProxy(),
     reticulumProxy(),
+    gdacsProxy(),
     beemapsProxy(),
     beemapsBurstProxy(),
     transitProxy(),
