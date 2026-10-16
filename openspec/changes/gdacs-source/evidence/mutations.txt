@@ -1,12 +1,12 @@
 Named faults of gdacs-source (AGENTS.md rule 13). One fault changes one part of the provider or of its registration. The tests then run. The list below names the tests that failed.
 
-Code commit: dacd6309642b3bd96b5ce37987ae001d772985b5. Both runs below ran on the files of this commit, tests included. The command git diff --stat dacd6309 HEAD -- src server build prints nothing.
+Code commit: ed38719b3ac35cfeb3f83445dcc3acc24fa06b82. Both runs below ran on the files of this commit, tests included. The command git diff --stat ed38719b HEAD -- src server build prints nothing.
 Runner: 6 scratch copies of the clone run in parallel. Each copy uses the same long-lived container of the image gods-eye-view:local, with the node_modules of the image.
 Each fault runs against the test file src/data/gdacsProxy.test.mjs. The command is: timeout 100 node --test --test-concurrency=4 --test-timeout=6000 --test-reporter=spec <test file>
 For each fault that is not an equivalent fault, the scenario in the first column is the scenario of a test that failed. The script that wrote this file checks that.
 The runner used one long-lived container, named gevfaults.
 
-Result: 803 faults in each of two runs. 766 faults failed at least one test in both runs. 37 faults are equivalent faults. Each one names its reason in its line.
+Result: 804 faults in each of two runs. 767 faults failed at least one test in both runs. 37 faults are equivalent faults. Each one names its reason in its line.
 Faults where the tests hang or a test file stops: 0. Faults where a failing test has no scenario tag: 0.
 The two runs give identical lines.
 
@@ -14,13 +14,13 @@ How the faults were written. Seven agents wrote the faults, one part each, and j
 A fault that survived the judge run of an agent was either an equivalent fault with a reason, or a gap in the tests. Each agent reported its gaps. The lead then added assertions to the tests.
 The numbers of faults and of equivalent faults come from the part files. The number of gaps is the number in the report of the agent.
 - Part a, Event fields and record rules: 108 faults, 6 equivalent faults, 7 gaps reported.
-- Part b, Position and time rules: 119 faults, 6 equivalent faults, 24 gaps reported.
+- Part b, Position and time rules: 120 faults, 6 equivalent faults, 24 gaps reported.
 - Part c, Alert, score, current flag and severity: 114 faults, 5 equivalent faults, 6 gaps reported.
 - Part d, Text rules: 117 faults, 6 equivalent faults, 8 gaps reported.
 - Part e, Join, order, size and pages: 99 faults, 7 equivalent faults, 3 gaps reported.
 - Part f, Route, page request and privacy: 150 faults, 2 equivalent faults, 5 gaps reported.
 - Part g, Failure, stale document, cache and registration: 96 faults, 5 equivalent faults, 14 gaps reported.
-In all, 803 faults, 37 equivalent faults and 67 gaps reported. In both full runs above, each fault that is not an equivalent fault fails at least one test.
+In all, 804 faults, 37 equivalent faults and 67 gaps reported. In both full runs above, each fault that is not an equivalent fault fails at least one test.
 
 Equivalent faults. The description is first and the reason follows:
 - "Read the type of the report link from the field eventtype". The constant `type` is a copy of `p.eventtype`. The template text is the same.
@@ -50,13 +50,13 @@ Equivalent faults. The description is first and the reason follows:
 - "Compare the ids with less than or equal in the id test". The ids are the keys of the join map, so each id is unique. The sort never compares an event with itself.
 - "Compare the ids with localeCompare in the id test". An id is two capital letters, a hyphen and the text of a whole number, such as FL-1e+21. For such texts `localeCompare` and `<` give the same order. The agent that wrote the fault compared 2.7 million pairs in three locales and found no difference.
 - "Place the events with no modified time at the smallest safe integer". The smallest valid time is about -6e13 milliseconds, which is above -9e15. Each comparison keeps its sign. Two null times give 0 in place of NaN, and both are false in the sort test.
-- "Return the records at a page that answers 204". After the loop the code only returns the records. The `finally` block runs in both cases, so `return` gives the same result as `break`.
+- "Return the records at the answer 204 to a page request". After the loop the code only returns the records. The `finally` block runs in both cases, so `return` gives the same result as `break`.
 - "Stop at a short page or at the page limit in the same test". After page 5 the `for` loop ends at once. A `break` at page 5 gives the same records as the end of the loop.
 - "Reverse the joined events before the sort". The comparator is a total order: the modified time, then the unique id. It never returns 0, so the input order does not change the sorted list.
 - "Pass undefined as the start of the cut of the date text". The call `slice(undefined, 10)` starts at 0 as `slice(0, 10)` does.
 - "Cut the date text at the letter T in place of the tenth character". For a year from 0000 to 9999, `toISOString` gives YYYY-MM-DDTHH:MM:SS.sssZ. The text before T has ten characters. It differs only for a clock beyond the year 9999.
 - "Change the text of the status error". The catch clause of refresh binds no error, so the text of the error is never read.
-- "Drop the object test of the page body". A null body throws a TypeError at `body.type`, and the refresh fails. Any other value that is not an object has no type "FeatureCollection".
+- "Drop the object test of the answer body". A null body throws a TypeError at `body.type`, and the refresh fails. Any other value that is not an object has no type "FeatureCollection".
 - "Test the features value with typeof in place of the list test". JSON gives only arrays as iterable objects. The spread of null or of a plain object throws a TypeError, and the refresh fails as before.
 - "Pass a reason to the abort call of the timer". The abort reason only changes the error that `readResponseTextCapped` throws. The catch clause of refresh ignores that error.
 - "Set stale on the cached document and serve that object". A refresh runs only when the cache is at least 10 minutes old. The changed object then serves only through the stale path. That path sets stale true anyway, until a good refresh replaces it. This holds while the clock does not go back.
@@ -136,7 +136,7 @@ gdacs-source-005 | Accept every text as the type of a record | failing: [gdacs-s
 gdacs-source-005 | Compare the type with loose equality | failing: [gdacs-source-005]
 gdacs-source-005 | Read the type in capital letters | failing: [gdacs-source-005]
 gdacs-source-005 | Take the type list from the label texts | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
-gdacs-source-001 | Remove the type FL from the type labels | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
+gdacs-source-001 | Remove the type FL from the type labels | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
 gdacs-source-005 | Remove the type DR from the type labels | failing: [gdacs-source-005], [gdacs-source-010], [gdacs-source-012], [gdacs-source-014], [gdacs-source-015]
 gdacs-source-012 | Remove the type VO from the type labels | failing: [gdacs-source-005], [gdacs-source-011], [gdacs-source-012], [gdacs-source-015]
 gdacs-source-012 | Remove the type TC from the type labels | failing: [gdacs-source-005], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-015]
@@ -291,6 +291,7 @@ gdacs-source-008 | Use the fromdate in place of null for a todate that is not va
 gdacs-source-008 | Use the epoch in place of null for a datemodified that is not valid | failing: [gdacs-source-008], [gdacs-source-014], [gdacs-source-015]
 gdacs-source-008 | Compare only the last two digits of the year in the real date test | failing: [gdacs-source-008]
 gdacs-source-007 | Drop a year below 1000 in the real date test | failing: [gdacs-source-007]
+gdacs-source-007 | Drop a year above 9998 in the real date test | failing: [gdacs-source-007]
 gdacs-source-009 | Change toLowerCase of the alert level to toUpperCase | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
 gdacs-source-009 | Use the alert level of the feed with no lower case | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
 gdacs-source-009 | Test the alert list against the raw alert level of the feed | failing: [gdacs-source-001], [gdacs-source-002], [gdacs-source-003], [gdacs-source-004], [gdacs-source-005], [gdacs-source-006], [gdacs-source-007], [gdacs-source-008], [gdacs-source-009 gdacs-source-011], [gdacs-source-009], [gdacs-source-010], [gdacs-source-011], [gdacs-source-012], [gdacs-source-013], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-020], [gdacs-source-022], [gdacs-source-024]
@@ -601,22 +602,22 @@ gdacs-source-020 | Start the page loop at page 2 | failing: [gdacs-source-019], 
 gdacs-source-020 | Step the page number by two | failing: [gdacs-source-019], [gdacs-source-020]
 gdacs-source-020 | Send the page number plus one in the page request | failing: [gdacs-source-019], [gdacs-source-020]
 gdacs-source-020 | Rename the query key of the page number | failing: [gdacs-source-019], [gdacs-source-020]
-gdacs-source-020 | Stop at a page that answers 205 | failing: [gdacs-source-015], [gdacs-source-020], [gdacs-source-025]
-gdacs-source-021 | Stop at a page that answers 204 or 404 | failing: [gdacs-source-021]
-gdacs-source-021 | Stop at a page that answers 204 or more | failing: [gdacs-source-021], [gdacs-source-024]
-gdacs-source-020 | Fail at a page that answers 204 | failing: [gdacs-source-015], [gdacs-source-020], [gdacs-source-025]
+gdacs-source-020 | Stop at the answer 205 to a page request | failing: [gdacs-source-015], [gdacs-source-020], [gdacs-source-025]
+gdacs-source-021 | Stop at the answer 204 or 404 to a page request | failing: [gdacs-source-021]
+gdacs-source-021 | Stop at an answer of 204 or more to a page request | failing: [gdacs-source-021], [gdacs-source-024]
+gdacs-source-020 | Fail at the answer 204 to a page request | failing: [gdacs-source-015], [gdacs-source-020], [gdacs-source-025]
 gdacs-source-020 | Test the status 200 before the status 204 | failing: [gdacs-source-015], [gdacs-source-020], [gdacs-source-025]
 gdacs-source-021 | Stop the page loop at a page with a status other than 200 | failing: [gdacs-source-021], [gdacs-source-024]
 gdacs-source-020 | Compute the dates of the query again for each page request | failing: [gdacs-source-020]
-gdacs-source-020 | Return the records at a page that answers 204 | failing: NONE (equivalent fault: After the loop the code only returns the records. The `finally` block runs in both cases, so `return` gives the same result as `break`.)
+gdacs-source-020 | Return the records at the answer 204 to a page request | failing: NONE (equivalent fault: After the loop the code only returns the records. The `finally` block runs in both cases, so `return` gives the same result as `break`.)
 gdacs-source-020 | Read the clock again for fetchedAt after the page requests | failing: [gdacs-source-020]
 gdacs-source-020 | Read the real clock for fetchedAt | failing: [gdacs-source-016], [gdacs-source-020], [gdacs-source-024], [gdacs-source-025]
 gdacs-source-020 | Add one second to fetchedAt | failing: [gdacs-source-016], [gdacs-source-020], [gdacs-source-024], [gdacs-source-025]
 gdacs-source-020 | Set fetchedAt to null when no event is listed | failing: [gdacs-source-020]
 gdacs-source-020 | Treat a refresh with no event as a failure | failing: [gdacs-source-020], [gdacs-source-025]
-gdacs-source-020 | Discard the records when a later page answers 204 | failing: [gdacs-source-015], [gdacs-source-020]
-gdacs-source-020 | Stop at a page that answers 204 after page 1 only | failing: [gdacs-source-020], [gdacs-source-025]
-gdacs-source-020 | Stop at a page that answers 204 on page 1 only | failing: [gdacs-source-015], [gdacs-source-020]
+gdacs-source-020 | Discard the records when the answer to a later page request is 204 | failing: [gdacs-source-015], [gdacs-source-020]
+gdacs-source-020 | Stop at the answer 204 to a page request after page 1 only | failing: [gdacs-source-020], [gdacs-source-025]
+gdacs-source-020 | Stop at the answer 204 to the request for page 1 only | failing: [gdacs-source-015], [gdacs-source-020]
 gdacs-source-016 | Stop at a short page after page 1 only | failing: [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025], [gdacs-source-027]
 gdacs-source-020 | Stop at a short page or at the page limit in the same test | failing: NONE (equivalent fault: After page 5 the `for` loop ends at once. A `break` at page 5 gives the same records as the end of the loop.)
 gdacs-source-015 | Reverse the joined events before the sort | failing: NONE (equivalent fault: The comparator is a total order: the modified time, then the unique id. It never returns 0, so the input order does not change the sorted list.)
@@ -770,7 +771,7 @@ gdacs-source-019 | Add a body to the page requests after the first | failing: [g
 gdacs-source-016 | Change the name of the plugin to gdacs-source | failing: [gdacs-source-016], [gdacs-source-026]
 gdacs-source-016 | Read the real clock in place of the given clock when a request comes | failing: [gdacs-source-016], [gdacs-source-019], [gdacs-source-020], [gdacs-source-024], [gdacs-source-025]
 gdacs-source-019 | Keep the dates of the first refresh for each later refresh | failing: [gdacs-source-019]
-gdacs-source-016 | Remove the words on its website from the license text | failing: [gdacs-source-016]
+gdacs-source-016 | Remove the words on the Commission website from the license text | failing: [gdacs-source-016]
 gdacs-source-021 | Remove the status check of the page request | failing: [gdacs-source-021]
 gdacs-source-021 | Accept every status of the 200 range with the ok flag | failing: [gdacs-source-021]
 gdacs-source-021 | Accept the status 301 as a good page | failing: [gdacs-source-021]
@@ -782,7 +783,7 @@ gdacs-source-021 | Turn text that is not JSON into an empty feature collection |
 gdacs-source-021 | Drop the type test of the feature collection | failing: [gdacs-source-021]
 gdacs-source-021 | Drop the list test of the features value | failing: [gdacs-source-021]
 gdacs-source-021 | Change the feature collection type text by one character | failing: [gdacs-source-009 gdacs-source-011], [gdacs-source-014], [gdacs-source-015], [gdacs-source-016], [gdacs-source-018], [gdacs-source-019], [gdacs-source-020], [gdacs-source-021], [gdacs-source-022], [gdacs-source-023], [gdacs-source-024], [gdacs-source-025]
-gdacs-source-021 | Drop the object test of the page body | failing: NONE (equivalent fault: A null body throws a TypeError at `body.type`, and the refresh fails. Any other value that is not an object has no type "FeatureCollection".)
+gdacs-source-021 | Drop the object test of the answer body | failing: NONE (equivalent fault: A null body throws a TypeError at `body.type`, and the refresh fails. Any other value that is not an object has no type "FeatureCollection".)
 gdacs-source-021 | Test the features value with typeof in place of the list test | failing: NONE (equivalent fault: JSON gives only arrays as iterable objects. The spread of null or of a plain object throws a TypeError, and the refresh fails as before.)
 gdacs-source-021 | Keep the records of page 1 when a later page has a bad status | failing: [gdacs-source-021]
 gdacs-source-021 | Keep the records of page 1 when a later page has a bad format | failing: [gdacs-source-021]

@@ -2,12 +2,13 @@ Automatic mutation run of server/providers/gdacs.js. The tool is the AST mutatio
 The tests of src/data/gdacsProxy.test.mjs then run on each mutant, and the first failing test ends that mutant.
 The named faults of mutations.txt were written by hand and by agents. This run tests the tests with a different method, and it found gaps that the named faults did not name.
 
-Code commit: dacd6309642b3bd96b5ce37987ae001d772985b5. The command is: node automut.mjs run --root <clone> --mutants mutants.json --tests src/data/gdacsProxy.test.mjs --phase 1 --jobs 4 --slow-ms 1000
+Code commit: ed38719b3ac35cfeb3f83445dcc3acc24fa06b82. The command is: node automut.mjs run --root <clone> --mutants mutants.json --tests src/data/gdacsProxy.test.mjs --phase 1 --jobs 4 --slow-ms 1000
 Result of the final run: 1771 mutants. 1690 were killed by a failing test. 81 survived. 0 timed out.
 Earlier run 1: 1821 mutants and 175 survivors.
 Earlier run 2: 1771 mutants and 84 survivors.
 Earlier run 3: 1771 mutants and 81 survivors.
-After runs 1 and 2, the lead added samples to the tests for the survivors that were not equivalent. After run 3, the review of round 1 led to more changes of the tests.
+Earlier run 4: 1771 mutants and 81 survivors.
+After runs 1 and 2, the lead added samples to the tests for the survivors that were not equivalent. After run 3, the review of round 1 led to more changes of the tests. After run 4, the review of round 2 led to more changes of the tests.
 Every survivor of the final run is equivalent: the mutant gives the same results as the file. The survivors are in groups below, with the lines of the file and the reason.
 
 - Mutants: 7. Place: line 199. The ids are unique, so the comparison never meets two equal ids. A mutant that keeps the sign of the result is the same comparator. A mutant that gives 0 in place of 1 gives an order that depends on the engine. So the check below sorts shuffled lists in V8.

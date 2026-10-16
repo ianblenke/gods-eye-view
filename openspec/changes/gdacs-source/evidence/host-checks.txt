@@ -1,4 +1,4 @@
-Host checks of gdacs-source, 2026-10-16, host Node v26.8.2. The checks ran on the files of the commit dacd6309642b3bd96b5ce37987ae001d772985b5. Later commits change evidence files, task ticks, the trace files and the archive folder.
+Host checks of gdacs-source, 2026-10-16, host Node v26.8.2. The checks ran on the files of the commit ed38719b3ac35cfeb3f83445dcc3acc24fa06b82. Later commits change evidence files, task ticks, the trace files and the archive folder.
 
 ## node scripts/check-import-directions.mjs
 {"modules":1008,"portableEntries":81}
@@ -32,13 +32,13 @@ exit: 0
 ℹ pass 45
 ℹ fail 0
 
-## node scripts/spec/gates.mjs lint (on the documents of the commit dacd6309642b3bd96b5ce37987ae001d772985b5)
-STE: 0 errors, 982 warnings.
+## node scripts/spec/gates.mjs lint (on the documents of the commit ed38719b3ac35cfeb3f83445dcc3acc24fa06b82)
+STE: 0 errors, 983 warnings.
 
-## openspec validate gdacs-source --strict (on the documents of the commit dacd6309642b3bd96b5ce37987ae001d772985b5)
+## openspec validate gdacs-source --strict (on the documents of the commit ed38719b3ac35cfeb3f83445dcc3acc24fa06b82)
 Change 'gdacs-source' is valid
 
-## image gods-eye-view:local, v24.21.0, the clone mounted with the node_modules of the image, commit dacd6309642b3bd96b5ce37987ae001d772985b5
+## image gods-eye-view:local, v24.21.0, the clone mounted with the node_modules of the image, commit ed38719b3ac35cfeb3f83445dcc3acc24fa06b82
 ## node --test --experimental-test-coverage (include server/providers/gdacs.js) the test file of the provider and the test files that list the providers
 ℹ tests 85
 ℹ pass 85
