@@ -233,6 +233,8 @@ test('[gdacs-source-006] lists only records with a valid position and rounds it 
     { geometry: { coordinates: [10, 20] } },
     { geometry: { type: 'Point', coordinates: [5] } },
     { geometry: { type: 'Point' } },
+    { geometry: { type: 'Point', coordinates: {} } },
+    { geometry: { type: 'Point', coordinates: 5 } },
     at('a', 'b'),
     at(null, 5),
     at(NaN, 5),
