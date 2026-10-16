@@ -2,7 +2,7 @@
 
 Change 3 added the routes that quote, confirm and list Bee Maps bursts. Nothing in the app uses them yet. The owner wants to ask for a fresh map of an area and to see the bursts that Bee Maps made.
 
-This is change 4 of 4. It adds the layer "Bee Maps Bursts". A burst takes credits from the Bee Maps account and nobody can cancel it. The layer therefore sends a confirm request only after two real presses of a person, with a lock of one second after the quote shows.
+This is change 4 of 4. It adds the layer "Bee Maps Bursts". A burst takes credits from the Bee Maps account and nobody can cancel it. The layer therefore sends a confirm request only after two real presses of a person. A lock of one second disables the Confirm chip after the quote shows.
 
 ## What Changes
 
@@ -56,7 +56,7 @@ The tests use fake sources and fake viewers. No test and no run sends a request 
 - Known limit `terrain-fill`: The box is a filled rectangle on the ground with no outline. The globe can hide it on steep terrain.
 - Known limit `list-memory`: The list route answers from memory for 60 seconds, and no confirm request clears that memory. A press just after a confirm request can miss the new burst. The text then says "stored answer". The layer keeps the burst that the confirm request created.
 - Known limit `lost-answer`: After an unknown or pending record of its own, the server holds new confirm requests for 600 seconds. When the server created a burst and the browser lost the answer, the record is "created" and gives no hold. The disabled chip "Quote burst here" is then the guard of the layer, and it ends with a fresh list answer, a reload or `destroy`.
-- Known limit `empty-id`: The layer treats a created answer with a burst that has an empty string `id` as created. The source never gives such a burst, and the tests of the source pin that. No test of the layer has such a row.
+- Known limit `empty-id`: The layer treats a created answer with a burst that has an empty string `id` as created. The source never gives such a burst, and the tests of the source pin that. No test of the layer gives the layer such an answer.
 - Known limit `chip-lock-only`: The lock of 1000 milliseconds guards against a double press only. The layer cannot know if the person read the price.
 - Known limit `null-fields`: The list route can set the status, the credits or the box of a burst to null. The layer counts such a burst and draws it grey, or draws no box when the box is null.
 - Known limit `view-moves`: The Confirm chip names the credits and the area, and no place. The camera can leave the box after the quote. The server confirms the box that it stored, and the layer keeps the box of the quote drawn on the globe.

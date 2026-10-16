@@ -86,7 +86,7 @@ The list route sets the status, the credits or the box of a burst to null when B
 
 ### D16: The layer calls `requestRender` each time it draws the boxes
 
-The application renders on demand: the render governor sets `requestRenderMode` when nothing animates. A change of entities from a chip press does not draw a new image by itself. A real browser run showed a quote box that stayed invisible until something else drew a new image.
+The application renders on demand: the render governor sets `requestRenderMode` when nothing animates. A change of entities from a chip press does not render a new image by itself. A real browser run showed a quote box that stayed invisible until something else rendered a new image.
 The layer therefore calls `requestRender` each time it draws the boxes. The wrapper `src/app/layers/beemapsBursts.js` gives it `governorRequestRender`.
 
 ### D17: The chip "quote" stays disabled after an unknown answer until a fresh list answer
@@ -99,7 +99,7 @@ A stored list answer (`cached` true) can hide the new burst, because the list ro
 ## Risks / Trade-offs
 
 - [A hidden tab runs the timer late] → The press compares the clock with the end time.
-- [A reload drops the warning after an unknown answer] → After an unknown or pending record of its own, the server keeps refusing new confirm requests. See the Known limit `warning-in-memory`.
+- [A reload drops the warning after an unknown answer] → The server refuses new confirm requests for 600 seconds after an unknown or pending record. See the Known limit `warning-in-memory`.
 - [A quote can be pressed twice in a row] → The lock of 1000 milliseconds of D13 guards against it.
 - [The list route answers from memory] → The text says "stored answer", and D14 keeps the new burst.
 - [The token "6" collides with the pull request 1069 of the upstream project] → The Known limit `token-collision` says that a sync renumbers one layer.
