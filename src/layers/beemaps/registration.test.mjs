@@ -135,7 +135,7 @@ test('[beemaps-frames-024] ignores the parameters of the manager for the layer a
   assert.deepEqual(calls, { getStatus: 0, getFrames: 0 });
 });
 
-test('[beemaps-frames-025] puts the layer at the end of the Cameras group of the panel', () => {
+test('[beemaps-frames-025] puts the layer in the Cameras group of the panel, before the bursts layer', () => {
   const text = readFileSync(
     fileURLToPath(new URL('../../ui/layerPanel.js', import.meta.url)),
     'utf8',
@@ -143,7 +143,11 @@ test('[beemaps-frames-025] puts the layer at the end of the Cameras group of the
   const group = /label: 'Cameras',\s*ids: \[([^\]]*)\]/.exec(text);
   assert.ok(group);
   const ids = [...group[1].matchAll(/'([^']+)'/g)].map((match) => match[1]);
-  assert.deepEqual(ids.slice(-2), ['street-level', 'beemaps']);
+  assert.deepEqual(ids.slice(-3), [
+    'street-level',
+    'beemaps',
+    'beemaps-bursts',
+  ]);
 });
 
 test('[beemaps-frames-026] keeps the layer out of voice', () => {

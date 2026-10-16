@@ -18,17 +18,23 @@ test('reference factories retain compatibility without starting acquisition or s
     'cables',
     'reticulum',
     'beemaps',
+    'beemaps-bursts',
   ]);
   assert.notEqual(first.earthquakes, second.earthquakes);
   assert.notEqual(first['fire-perimeters'], second['fire-perimeters']);
   assert.notEqual(first.cables, second.cables);
   assert.notEqual(first.reticulum, second.reticulum);
   assert.notEqual(first.beemaps, second.beemaps);
+  assert.notEqual(first['beemaps-bursts'], second['beemaps-bursts']);
   assert.equal(typeof first.earthquakes.getSnapshot, 'function');
   assert.equal(typeof first['fire-perimeters'].getSnapshot, 'function');
   assert.equal(typeof first.cables.fetch, 'function');
   assert.equal(typeof first.reticulum.getSnapshot, 'function');
   assert.equal(typeof first.beemaps.getStatus, 'function');
   assert.equal(typeof first.beemaps.getFrames, 'function');
+  assert.equal(typeof first['beemaps-bursts'].getStatus, 'function');
+  assert.equal(typeof first['beemaps-bursts'].quote, 'function');
+  assert.equal(typeof first['beemaps-bursts'].confirm, 'function');
+  assert.equal(typeof first['beemaps-bursts'].list, 'function');
   assert.equal(requests, 0);
 });

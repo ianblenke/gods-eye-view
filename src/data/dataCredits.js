@@ -172,6 +172,12 @@ export const DATA_CREDITS = [
       'Street-level frames: contributor dashcams, through the Bee Maps API · ' +
       '<a href="https://beemaps.com/" target="_blank" rel="noopener">beemaps.com</a>',
   },
+  {
+    key: 'beemaps-bursts',
+    html:
+      'Burst requests: contributor dashcams, through the Bee Maps API · ' +
+      '<a href="https://beemaps.com/" target="_blank" rel="noopener">beemaps.com</a>',
+  },
   OSM_CREDIT,
   OPENMAPTILES_CREDIT,
   {

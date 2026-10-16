@@ -1,0 +1,1314 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import * as Cesium from 'cesium';
+import { createBeemapsBurstsLayer } from './index.js';
+
+const NOW = Date.UTC(2026, 9, 16, 12, 0, 0);
+const QUOTE_ID = 'a1b2c3d4e5f60718293a4b5c6d7e8f90';
+const SECOND_ID = 'b2c3d4e5f60718293a4b5c6d7e8f90a1';
+const VIEW_BOX = [9.987014, 59.991007, 10.022986, 60.008993];
+const QUOTE = {
+  quoteId: QUOTE_ID,
+  expiresInSeconds: 120,
+  bbox: VIEW_BOX,
+  areaKm2: 4,
+  credits: 125,
+  budget: { used: 0, limit: 625, remaining: 625 },
+};
+const BURST_ID = '6501aa11bb22cc33dd44ee55';
+const CREATED = {
+  outcome: 'created',
+  replayed: false,
+  burst: {
+    id: BURST_ID,
+    status: 'active',
+    validUntil: '2026-10-22T12:00:00.000Z',
+    credits: 125,
+  },
+  creditsRemaining: 875,
+};
+const listed = (id, extra = {}) => ({
+  id,
+  status: 'active',
+  isHit: false,
+  credits: 125,
+  bbox: [1, 2, 3, 4],
+  ...extra,
+});
+const HINT =
+  'A quote shows the price of a burst in 4 km² at the view centre. A quote costs nothing. A confirm takes credits and cannot be undone.';
+const QUOTE_TEXT =
+  'Quote: 125 credits for 4 km² · credits used today 0 of 625 · valid for 120 seconds';
+const UNKNOWN_TEXT =
+  'Bee Maps can have made a burst and taken credits. Do not press Confirm again. Press Check my bursts.';
+const ENDED_TEXT = 'The quote ended. Press Quote burst here again.';
+const key = (n) => n.toString(16).padStart(32, '0');
+const deferred = () => {
+  let resolve;
+  let reject;
+  const promise = new Promise((ok, no) => {
+    resolve = ok;
+    reject = no;
+  });
+  return { promise, resolve, reject };
+};
+const tick = () => new Promise((resolve) => setImmediate(resolve));
+
+function harness({
+  status = async () => ({ ok: true, enabled: true, configured: true }),
+  quote = async () => ({ ok: true, quote: QUOTE }),
+  confirm = async () => CREATED,
+  list = async () => ({ ok: true, bursts: [], total: 0, cached: false }),
+  pick = () => Cesium.Cartesian3.fromDegrees(10.0031, 59.9976),
+  canvas = { clientWidth: 800, clientHeight: 600 },
+} = {}) {
+  const calls = { getStatus: [], quote: [], confirm: [], list: [] };
+  const source = {
+    getStatus: (options) => {
+      calls.getStatus.push(options);
+      return status(options);
+    },
+    quote: (options) => {
+      calls.quote.push(options);
+      return quote(options);
+    },
+    confirm: (options) => {
+      calls.confirm.push(options);
+      return confirm(options);
+    },
+    list: (options) => {
+      calls.list.push(options);
+      return list(options);
+    },
+  };
+  const added = [];
+  const listeners = [];
+  const handlers = {};
+  const watch = (name) => ({
+    addEventListener: (handler) => {
+      listeners.push(name);
+      (handlers[name] ??= []).push(handler);
+    },
+    raiseEvent: () => (handlers[name] ?? []).forEach((handler) => handler()),
+  });
+  const viewer = {
+    dataSources: {
+      add: (dataSource) => added.push(dataSource),
+      remove(dataSource, destroy) {
+        added.splice(added.indexOf(dataSource), 1);
+        viewer.removed = [dataSource, destroy];
+      },
+    },
+    camera: {
+      positionWC: Cesium.Cartesian3.fromDegrees(0, 0, 1e7),
+      changed: watch('camera.changed'),
+      moveStart: watch('camera.moveStart'),
+      moveEnd: watch('camera.moveEnd'),
+      pickEllipsoid: (...args) => pick(...args),
+    },
+    scene: {
+      canvas,
+      globe: { ellipsoid: Cesium.Ellipsoid.WGS84 },
+      preRender: watch('scene.preRender'),
+      postRender: watch('scene.postRender'),
+    },
+  };
+  const clock = { t: NOW };
+  const timers = [];
+  const cleared = [];
+  const keys = [];
+  let notices = 0;
+  const layer = createBeemapsBurstsLayer({
+    source,
+    now: () => clock.t,
+    makeKey: () => {
+      keys.push(key(keys.length + 1));
+      return keys[keys.length - 1];
+    },
+    setTimer: (fn, ms) => {
+      timers.push({ fn, ms });
+      return timers.length;
+    },
+    clearTimer: (id) => cleared.push(id),
+  });
+  layer.setRowControlsListener(() => {
+    notices += 1;
+  });
+  const chips = () => layer.getRowControls().chips;
+  const chip = (id) => chips().find((entry) => entry.id === id);
+  const confirmChip = () =>
+    chips().find((entry) => entry.id.startsWith('confirm:'));
+  return {
+    layer,
+    viewer,
+    calls,
+    added,
+    listeners,
+    clock,
+    timers,
+    cleared,
+    keys,
+    notices: () => notices,
+    chips,
+    chip,
+    confirmChip,
+    info: () => layer.getRowControls().info,
+    dataSource: () => added[0],
+    entityIds: () => added[0].entities.values.map((entity) => entity.id),
+    async ready() {
+      layer.init(viewer);
+      layer.enable(viewer);
+      await layer.update();
+    },
+    async quoted() {
+      await this.ready();
+      await chip('quote').onClick();
+    },
+  };
+}
+
+test('[beemaps-bursts-001] describes the layer and has no method setParams', () => {
+  const { layer } = harness();
+  assert.equal(layer.id, 'beemaps-bursts');
+  assert.equal(layer.name, 'Bee Maps Bursts');
+  assert.equal(layer.icon, '🐝');
+  assert.equal(layer.source, 'Bee Maps');
+  assert.equal(layer.updateInterval, 0);
+  assert.equal('setParams' in layer, false);
+  assert.deepEqual(layer.getStats(), {
+    count: 0,
+    lastUpdate: null,
+    error: null,
+  });
+});
+
+test('[beemaps-bursts-001] refuses a source without getStatus, quote, confirm and list, and a second init', () => {
+  const full = {
+    getStatus() {},
+    quote() {},
+    confirm() {},
+    list() {},
+  };
+  assert.throws(() => createBeemapsBurstsLayer(), TypeError);
+  for (const source of [undefined, null, {}]) {
+    assert.throws(() => createBeemapsBurstsLayer({ source }), TypeError);
+  }
+  for (const name of Object.keys(full)) {
+    assert.throws(
+      () => createBeemapsBurstsLayer({ source: { ...full, [name]: 'x' } }),
+      TypeError,
+      name,
+    );
+  }
+  const layer = createBeemapsBurstsLayer({ source: full });
+  const { viewer } = harness();
+  layer.init(viewer);
+  assert.throws(() => layer.init(viewer), /already initialized/);
+});
+
+test('[beemaps-bursts-002] asks only for the status and adds no listener to the camera or the scene', async () => {
+  const { layer, viewer, calls, listeners } = harness();
+  layer.init(viewer);
+  layer.enable(viewer);
+  for (const [lon, lat] of [
+    [10, 60],
+    [11, 61],
+    [12, 62],
+  ]) {
+    viewer.camera.positionWC = Cesium.Cartesian3.fromDegrees(lon, lat, 1e7);
+    for (const name of ['moveStart', 'changed', 'moveEnd'])
+      viewer.camera[name].raiseEvent();
+    viewer.scene.preRender.raiseEvent();
+    viewer.scene.postRender.raiseEvent();
+    await layer.update();
+  }
+  layer.disable(viewer);
+  layer.enable(viewer);
+  layer.destroy(viewer);
+  assert.equal(calls.getStatus.length, 3);
+  assert.deepEqual([calls.quote, calls.confirm, calls.list], [[], [], []]);
+  assert.deepEqual(listeners, []);
+});
+
+test('[beemaps-bursts-002] reads the status only while it is enabled', async () => {
+  const { layer, viewer, calls } = harness();
+  layer.init(viewer);
+  assert.equal(await layer.update(), false);
+  assert.equal(calls.getStatus.length, 0);
+});
+
+test('[beemaps-bursts-004] has two chips with onClick functions and no params after enable, and none before and after', async () => {
+  const h = harness();
+  h.layer.init(h.viewer);
+  assert.deepEqual(h.chips(), []);
+  h.layer.enable(h.viewer);
+  const chips = h.chips();
+  assert.deepEqual(
+    chips.map((entry) => [entry.id, entry.label]),
+    [
+      ['quote', 'Quote burst here'],
+      ['list', 'Check my bursts'],
+    ],
+  );
+  for (const entry of chips) {
+    assert.equal(typeof entry.onClick, 'function');
+    assert.equal('params' in entry, false);
+  }
+  h.layer.disable(h.viewer);
+  assert.deepEqual(h.chips(), []);
+});
+
+test('[beemaps-bursts-004] sends no call from an onClick function taken before disable', async () => {
+  const h = harness();
+  await h.ready();
+  const oldQuote = h.chip('quote').onClick;
+  const oldList = h.chip('list').onClick;
+  h.layer.disable(h.viewer);
+  await oldQuote();
+  await oldList();
+  assert.deepEqual([h.calls.quote, h.calls.list], [[], []]);
+});
+
+test('[beemaps-bursts-005] shows that bursts are off and disables both chips', async () => {
+  const h = harness({
+    status: async () => ({ ok: true, enabled: false, configured: true }),
+  });
+  await h.ready();
+  assert.equal(
+    h.info(),
+    'Bursts are off on this server. Set BEEMAPS_BURST_ENABLED=true in .env and restart the app.',
+  );
+  assert.deepEqual(
+    h.chips().map((entry) => [entry.id, entry.disabled]),
+    [
+      ['quote', true],
+      ['list', true],
+    ],
+  );
+  assert.equal(h.layer.getStats().error, null);
+  await h.chip('quote').onClick();
+  await h.chip('list').onClick();
+  assert.deepEqual([h.calls.quote, h.calls.list], [[], []]);
+});
+
+test('[beemaps-bursts-005] shows that the key is missing and disables both chips', async () => {
+  for (const enabled of [true]) {
+    const h = harness({
+      status: async () => ({ ok: true, enabled, configured: false }),
+    });
+    await h.ready();
+    assert.equal(
+      h.info(),
+      'No Bee Maps key for bursts. Set BEEMAPS_BURST_API_KEY in .env and restart the app.',
+    );
+    assert.deepEqual(
+      h.chips().map((entry) => entry.disabled),
+      [true, true],
+    );
+  }
+});
+
+test('[beemaps-bursts-005] shows a failed status, leaves both chips enabled and resolves to true', async () => {
+  for (const status of [
+    async () => ({ ok: false }),
+    async () => {
+      throw new Error('boom');
+    },
+  ]) {
+    const h = harness({ status });
+    h.layer.init(h.viewer);
+    h.layer.enable(h.viewer);
+    assert.equal(await h.layer.update(), true);
+    assert.equal(h.info(), 'The server did not give the status of the bursts.');
+    assert.deepEqual(
+      h.chips().map((entry) => entry.disabled),
+      [false, false],
+    );
+    assert.equal(
+      h.layer.getStats().error,
+      'The server did not give the status of the bursts.',
+    );
+  }
+});
+
+test('[beemaps-bursts-005] shows the hint for a good status and clears an older failure', async () => {
+  let answer = { ok: false };
+  const h = harness({ status: async () => answer });
+  h.layer.init(h.viewer);
+  h.layer.enable(h.viewer);
+  await h.layer.update();
+  assert.notEqual(h.info(), HINT);
+  answer = { ok: true, enabled: true, configured: true };
+  await h.layer.update();
+  assert.equal(h.info(), HINT);
+  assert.deepEqual(h.layer.getStats(), {
+    count: 0,
+    lastUpdate: null,
+    error: null,
+  });
+});
+
+test('[beemaps-bursts-005] aborts the first status request when a second update starts, and when the layer is disabled', async () => {
+  const waits = [deferred(), deferred(), deferred()];
+  let n = 0;
+  const h = harness({ status: () => waits[n++].promise });
+  h.layer.init(h.viewer);
+  h.layer.enable(h.viewer);
+  const first = h.layer.update();
+  const second = h.layer.update();
+  assert.equal(h.calls.getStatus[0].signal.aborted, true);
+  assert.equal(h.calls.getStatus[1].signal.aborted, false);
+  waits[0].resolve({ ok: true, enabled: false, configured: true });
+  waits[1].resolve({ ok: true, enabled: true, configured: true });
+  assert.equal(await first, false);
+  assert.equal(await second, true);
+  assert.equal(h.info(), HINT);
+  const third = h.layer.update();
+  h.layer.disable(h.viewer);
+  assert.equal(h.calls.getStatus[2].signal.aborted, true);
+  waits[2].resolve({ ok: true, enabled: false, configured: true });
+  assert.equal(await third, false);
+});
+
+test('[beemaps-bursts-006] sends one quote request with the box of the view and nothing else', async () => {
+  const wait = deferred();
+  const h = harness({ quote: () => wait.promise });
+  await h.ready();
+  const first = h.chip('quote').onClick();
+  const second = h.chip('quote').onClick();
+  await tick();
+  assert.equal(h.calls.quote.length, 1);
+  assert.deepEqual(Object.keys(h.calls.quote[0]).sort(), ['bbox', 'signal']);
+  assert.deepEqual(h.calls.quote[0].bbox, VIEW_BOX);
+  assert.equal(h.calls.confirm.length, 0);
+  wait.resolve({ ok: true, quote: QUOTE });
+  await Promise.all([first, second]);
+  assert.equal(h.calls.quote.length, 1);
+});
+
+test('[beemaps-bursts-006] shows the label Quoting… on a disabled busy chip and disables the chip list while the quote is open', async () => {
+  const wait = deferred();
+  const h = harness({ quote: () => wait.promise });
+  await h.ready();
+  const before = h.notices();
+  const pressed = h.chip('quote').onClick();
+  assert.equal(h.notices(), before + 1);
+  const quote = h.chip('quote');
+  assert.equal(quote.label, 'Quoting…');
+  assert.equal(quote.disabled, true);
+  assert.equal(quote.busy, true);
+  assert.equal(h.chip('list').disabled, true);
+  assert.equal(h.chip('list').label, 'Check my bursts');
+  wait.resolve({ ok: true, quote: QUOTE });
+  await pressed;
+  assert.equal(h.chip('quote'), undefined);
+});
+
+test('[beemaps-bursts-007] shows the quote, the chips, the text and the box of the answer', async () => {
+  const h = harness();
+  await h.quoted();
+  assert.deepEqual(
+    h.chips().map((entry) => [entry.id, entry.label]),
+    [
+      [`confirm:${QUOTE_ID}`, 'Confirm: 125 credits, 4 km²'],
+      ['cancel', 'Cancel quote'],
+      ['list', 'Check my bursts'],
+    ],
+  );
+  assert.equal(h.info(), QUOTE_TEXT);
+  assert.equal(h.calls.confirm.length, 0);
+  assert.deepEqual(h.entityIds(), ['beemaps-bursts:quote']);
+  const rectangle = h
+    .dataSource()
+    .entities.getById('beemaps-bursts:quote').rectangle;
+  const west = Cesium.Math.toDegrees(
+    rectangle.coordinates.getValue(Cesium.JulianDate.now()).west,
+  );
+  assert.equal(Number(west.toFixed(6)), 9.987014);
+  assert.deepEqual(
+    h.chips().map((entry) => entry.title),
+    [
+      'Create the burst. This takes credits and cannot be undone.',
+      'Drop the quote. Nothing is sent.',
+      'Ask Bee Maps for your bursts. This can cost money.',
+    ],
+  );
+});
+
+test('[beemaps-bursts-007] asks for the idempotency key when the answer arrives and not when the person presses', async () => {
+  const wait = deferred();
+  const h = harness({ quote: () => wait.promise });
+  await h.ready();
+  const pressed = h.chip('quote').onClick();
+  await tick();
+  assert.deepEqual(h.keys, []);
+  wait.resolve({ ok: true, quote: QUOTE });
+  await pressed;
+  assert.deepEqual(h.keys, [key(1)]);
+});
+
+test('[beemaps-bursts-008] shows a message and sends no quote request when the view gives no box', async () => {
+  const rows = [
+    [() => undefined, 'Point the view at the ground and press again.'],
+    [
+      () => Cesium.Cartesian3.fromDegrees(0, 80.5),
+      'Move the view to a latitude from -80 to 80 degrees and press again.',
+    ],
+    [
+      () => Cesium.Cartesian3.fromDegrees(0, -79.999),
+      'Move the view to a latitude from -80 to 80 degrees and press again.',
+    ],
+    [
+      () => Cesium.Cartesian3.fromDegrees(0, 79.996),
+      'Move the view to a latitude from -80 to 80 degrees and press again.',
+    ],
+    [
+      () => Cesium.Cartesian3.fromDegrees(179.999, 0),
+      'Move the view away from the 180th meridian and press again.',
+    ],
+    [
+      () => {
+        throw new Error('pick failed');
+      },
+      'Point the view at the ground and press again.',
+    ],
+  ];
+  for (const [pick, message] of rows) {
+    const h = harness({ pick });
+    await h.ready();
+    await h.chip('quote').onClick();
+    assert.equal(h.info(), message);
+    assert.equal(h.calls.quote.length, 0);
+    assert.equal(h.chip('quote').disabled, false);
+    assert.equal(h.layer.getStats().error, message);
+  }
+});
+
+test('[beemaps-bursts-008] shows the sky for a canvas with no size, and quotes the view at the latitude 79.9', async () => {
+  for (const canvas of [
+    null,
+    { clientWidth: 0, clientHeight: 600 },
+    { clientWidth: 800, clientHeight: 0 },
+  ]) {
+    const h = harness({ canvas });
+    await h.ready();
+    await h.chip('quote').onClick();
+    assert.equal(h.info(), 'Point the view at the ground and press again.');
+    assert.equal(h.calls.quote.length, 0);
+  }
+  const north = harness({
+    pick: () => Cesium.Cartesian3.fromDegrees(0, 79.9),
+  });
+  await north.ready();
+  await north.chip('quote').onClick();
+  assert.equal(north.calls.quote.length, 1);
+  assert.deepEqual(
+    north.calls.quote[0].bbox,
+    [-0.051282, 79.891007, 0.051282, 79.908993],
+  );
+});
+
+test('[beemaps-bursts-009] shows the text of each error of a quote and keeps no quote', async () => {
+  const rows = [
+    [
+      { ok: false, status: 403, error: 'burst_off' },
+      'Bursts are off on this server. Set BEEMAPS_BURST_ENABLED=true in .env and restart the app.',
+    ],
+    [
+      { ok: false, status: 429, error: 'rate_limited', retryAfter: 60 },
+      'Too many presses. Wait 60 seconds.',
+    ],
+    [
+      { ok: false, status: 403, error: 'budget_used', used: 625, limit: 625 },
+      'The daily limit of 625 credits is used.',
+    ],
+    [
+      { ok: false, status: 200, error: 'bad_answer' },
+      'The server sent an answer that the layer cannot read.',
+    ],
+    [
+      { ok: false, status: 418, error: 'unknown' },
+      'The server answered with an unknown error (418).',
+    ],
+  ];
+  for (const [answer, message] of rows) {
+    const h = harness({ quote: async () => answer });
+    await h.ready();
+    await h.chip('quote').onClick();
+    assert.equal(h.info(), message);
+    assert.equal(h.layer.getStats().error, message);
+    assert.deepEqual(
+      h.chips().map((entry) => entry.id),
+      ['quote', 'list'],
+    );
+    assert.equal(h.chip('quote').disabled, false);
+    assert.deepEqual(h.entityIds(), []);
+    assert.deepEqual(h.keys, []);
+    await h.layer.update();
+    h.layer.disable(h.viewer);
+    h.layer.enable(h.viewer);
+    await tick();
+    assert.equal(h.calls.quote.length, 1);
+  }
+});
+
+test('[beemaps-bursts-009] shows the text for unreachable when the source throws', async () => {
+  const h = harness({
+    quote: async () => {
+      throw new Error('boom');
+    },
+  });
+  await h.ready();
+  await h.chip('quote').onClick();
+  assert.equal(h.info(), 'The server did not answer.');
+});
+
+test('[beemaps-bursts-009] ignores the answer of a quote that the layer was disabled for', async () => {
+  const wait = deferred();
+  const h = harness({ quote: () => wait.promise });
+  await h.ready();
+  const pressed = h.chip('quote').onClick();
+  await tick();
+  h.layer.disable(h.viewer);
+  assert.equal(h.calls.quote[0].signal.aborted, true);
+  h.layer.enable(h.viewer);
+  wait.resolve({ ok: true, quote: QUOTE });
+  await pressed;
+  assert.deepEqual(
+    h.chips().map((entry) => entry.id),
+    ['quote', 'list'],
+  );
+  assert.deepEqual(h.keys, []);
+  assert.equal(h.timers.length, 0);
+});
+
+test('[beemaps-bursts-010] ends the quote when the timer of its seconds runs', async () => {
+  const h = harness();
+  await h.quoted();
+  assert.equal(h.timers.length, 1);
+  assert.equal(h.timers[0].ms, 120000);
+  h.clock.t += 120000;
+  h.timers[0].fn();
+  assert.deepEqual(
+    h.chips().map((entry) => entry.id),
+    ['quote', 'list'],
+  );
+  assert.deepEqual(h.entityIds(), []);
+  assert.equal(h.info(), ENDED_TEXT);
+  assert.equal(h.calls.confirm.length, 0);
+  assert.equal(h.layer.getStats().error, null);
+});
+
+test('[beemaps-bursts-010] starts the timer at the answer and clears it when the quote is cancelled, confirmed or disabled', async () => {
+  const cancelled = harness();
+  await cancelled.quoted();
+  await cancelled.chip('cancel').onClick();
+  assert.deepEqual(cancelled.cleared, [1]);
+  const confirmed = harness();
+  await confirmed.quoted();
+  await confirmed.confirmChip().onClick();
+  assert.deepEqual(confirmed.cleared, [1]);
+  const disabled = harness();
+  await disabled.quoted();
+  disabled.layer.disable(disabled.viewer);
+  assert.deepEqual(disabled.cleared, [1]);
+  const none = harness();
+  await none.ready();
+  none.layer.disable(none.viewer);
+  assert.deepEqual(none.cleared, []);
+});
+
+test('[beemaps-bursts-010] sends no confirm request at or after the end of the quote when the timer has not run', async () => {
+  for (const late of [0, 1, 60000]) {
+    const h = harness();
+    await h.quoted();
+    const press = h.confirmChip().onClick;
+    h.clock.t += 120000 + late;
+    await press();
+    assert.equal(h.calls.confirm.length, 0);
+    assert.equal(h.info(), ENDED_TEXT);
+    assert.deepEqual(
+      h.chips().map((entry) => entry.id),
+      ['quote', 'list'],
+    );
+    assert.deepEqual(h.entityIds(), []);
+    assert.deepEqual(h.cleared, [1]);
+  }
+  const edge = harness();
+  await edge.quoted();
+  const press = edge.confirmChip().onClick;
+  edge.clock.t += 119999;
+  await press();
+  assert.equal(edge.calls.confirm.length, 1);
+});
+
+test('[beemaps-bursts-011] drops the quote when a person presses cancel', async () => {
+  const h = harness();
+  await h.quoted();
+  const old = h.confirmChip();
+  await h.chip('cancel').onClick();
+  assert.deepEqual(
+    h.chips().map((entry) => entry.id),
+    ['quote', 'list'],
+  );
+  assert.deepEqual(h.entityIds(), []);
+  assert.equal(h.info(), HINT);
+  assert.deepEqual(h.cleared, [1]);
+  await old.onClick();
+  assert.equal(h.calls.confirm.length, 0);
+  await h.chip('quote').onClick();
+  assert.equal(h.chip('confirm:' + QUOTE_ID) !== undefined, true);
+});
+
+test('[beemaps-bursts-011] gives a new quote a new Confirm chip id, so a press on the old chip finds no chip', async () => {
+  let n = 0;
+  const h = harness({
+    quote: async () => ({
+      ok: true,
+      quote: { ...QUOTE, quoteId: [QUOTE_ID, SECOND_ID][n++] },
+    }),
+  });
+  await h.quoted();
+  const first = h.confirmChip();
+  await h.chip('cancel').onClick();
+  await h.chip('quote').onClick();
+  assert.equal(h.confirmChip().id, `confirm:${SECOND_ID}`);
+  assert.equal(h.chip(first.id), undefined);
+  await first.onClick();
+  assert.equal(h.calls.confirm.length, 0);
+});
+
+test('[beemaps-bursts-011] does nothing for a cancel press without a quote or while the layer is disabled', async () => {
+  const h = harness();
+  await h.quoted();
+  const cancel = h.chip('cancel').onClick;
+  h.layer.disable(h.viewer);
+  await cancel();
+  assert.equal(h.info(), HINT);
+  h.layer.enable(h.viewer);
+  await cancel();
+  assert.deepEqual(
+    h.chips().map((entry) => entry.id),
+    ['quote', 'list'],
+  );
+});
+
+test('[beemaps-bursts-012] sends one confirm request with the quoteId and the key, and disables the chip in the same call', async () => {
+  const wait = deferred();
+  const h = harness({ confirm: () => wait.promise });
+  await h.quoted();
+  const pressed = h.confirmChip().onClick();
+  assert.equal(h.calls.confirm.length, 1);
+  assert.deepEqual(h.calls.confirm[0], {
+    quoteId: QUOTE_ID,
+    idempotencyKey: key(1),
+  });
+  const sending = h.confirmChip();
+  assert.equal(sending.label, 'Sending…');
+  assert.equal(sending.disabled, true);
+  assert.equal(sending.busy, true);
+  assert.equal(h.chip('cancel'), undefined);
+  assert.equal(h.chip('list').disabled, true);
+  assert.equal(h.info(), HINT);
+  wait.resolve(CREATED);
+  await pressed;
+});
+
+test('[beemaps-bursts-012] sends no second request for a second call of the same onClick function', async () => {
+  const wait = deferred();
+  const h = harness({ confirm: () => wait.promise });
+  await h.quoted();
+  const press = h.confirmChip().onClick;
+  const first = press();
+  const second = press();
+  await tick();
+  assert.equal(h.calls.confirm.length, 1);
+  wait.resolve(CREATED);
+  await Promise.all([first, second]);
+  await press();
+  assert.equal(h.calls.confirm.length, 1);
+});
+
+test('[beemaps-bursts-012] sends no confirm request after an answer, whatever the answer was', async () => {
+  const answers = [
+    CREATED,
+    { outcome: 'refused', status: 403, error: 'no_key' },
+    { outcome: 'unknown', status: 502 },
+  ];
+  for (const answer of answers) {
+    const h = harness({ confirm: async () => answer });
+    await h.quoted();
+    const press = h.confirmChip().onClick;
+    await press();
+    await press();
+    await h.layer.update();
+    assert.equal(h.calls.confirm.length, 1);
+    assert.equal(h.confirmChip(), undefined);
+  }
+});
+
+test('[beemaps-bursts-012] sends no confirm request while a list request is open or while the layer is not enabled', async () => {
+  const wait = deferred();
+  const h = harness({ list: () => wait.promise });
+  await h.quoted();
+  const press = h.confirmChip().onClick;
+  const listing = h.chip('list').onClick();
+  assert.equal(h.confirmChip().disabled, true);
+  await press();
+  assert.equal(h.calls.confirm.length, 0);
+  wait.resolve({ ok: true, bursts: [], total: 0, cached: false });
+  await listing;
+  assert.equal(h.confirmChip().disabled, false);
+  h.layer.disable(h.viewer);
+  await press();
+  assert.equal(h.calls.confirm.length, 0);
+});
+
+test('[beemaps-bursts-013] asks the random source once for each quote and sends the key of that quote', async () => {
+  let n = 0;
+  const h = harness({
+    quote: async () => ({
+      ok: true,
+      quote: { ...QUOTE, quoteId: [QUOTE_ID, SECOND_ID][n++] },
+    }),
+  });
+  await h.quoted();
+  await h.chip('cancel').onClick();
+  assert.deepEqual(h.keys, [key(1)]);
+  await h.chip('quote').onClick();
+  assert.deepEqual(h.keys, [key(1), key(2)]);
+  await h.confirmChip().onClick();
+  assert.deepEqual(h.calls.confirm, [
+    { quoteId: SECOND_ID, idempotencyKey: key(2) },
+  ]);
+});
+
+test('[beemaps-bursts-013] asks for no key when nobody confirms, and shows no key in a label, title, id or text', async () => {
+  const h = harness();
+  await h.quoted();
+  assert.deepEqual(h.keys, [key(1)]);
+  const everything = JSON.stringify([
+    h.chips().map(({ id, label, title }) => [id, label, title]),
+    h.info(),
+  ]);
+  assert.equal(everything.includes(key(1)), false);
+  await h.chip('cancel').onClick();
+  await h.layer.update();
+  assert.deepEqual(h.keys, [key(1)]);
+  assert.equal(h.calls.confirm.length, 0);
+});
+
+test('[beemaps-bursts-013] makes a key of 32 characters from 0123456789abcdef when no random source is given', async () => {
+  const calls = { confirm: [] };
+  const source = {
+    getStatus: async () => ({ ok: true, enabled: true, configured: true }),
+    quote: async () => ({ ok: true, quote: QUOTE }),
+    confirm: async (options) => {
+      calls.confirm.push(options);
+      return CREATED;
+    },
+    list: async () => ({ ok: true, bursts: [], total: 0, cached: false }),
+  };
+  const { viewer } = harness();
+  const keys = [];
+  for (let n = 0; n < 2; n += 1) {
+    const layer = createBeemapsBurstsLayer({ source });
+    layer.init(viewer);
+    layer.enable(viewer);
+    await layer.update();
+    await layer.getRowControls().chips[0].onClick();
+    await layer.getRowControls().chips[0].onClick();
+    keys.push(calls.confirm[n].idempotencyKey);
+    layer.destroy(viewer);
+  }
+  for (const value of keys) assert.match(value, /^[0-9a-f]{32}$/);
+  assert.notEqual(keys[0], keys[1]);
+});
+
+test('[beemaps-bursts-014] shows a created burst, its box and the stats', async () => {
+  const h = harness();
+  await h.quoted();
+  await h.confirmChip().onClick();
+  assert.equal(
+    h.info(),
+    'Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 0 hits',
+  );
+  assert.deepEqual(
+    h.chips().map((entry) => entry.id),
+    ['quote', 'list'],
+  );
+  assert.deepEqual(h.entityIds(), [`beemaps-bursts:${BURST_ID}`]);
+  assert.deepEqual(h.layer.getStats(), {
+    count: 1,
+    lastUpdate: NOW,
+    error: null,
+  });
+});
+
+test('[beemaps-bursts-014] gives the text without the credits left when the answer has none', async () => {
+  const h = harness({
+    confirm: async () => ({ ...CREATED, creditsRemaining: null }),
+  });
+  await h.quoted();
+  await h.confirmChip().onClick();
+  assert.equal(
+    h.info(),
+    'Burst created: 125 credits taken. · 1 burst · 0 hits',
+  );
+});
+
+test('[beemaps-bursts-014] adds the created burst to the bursts of an earlier list', async () => {
+  const h = harness({
+    list: async () => ({
+      ok: true,
+      bursts: [listed('a'), listed('b', { isHit: true })],
+      total: 2,
+      cached: false,
+    }),
+  });
+  await h.ready();
+  await h.chip('list').onClick();
+  await h.chip('quote').onClick();
+  await h.confirmChip().onClick();
+  assert.equal(h.layer.getStats().count, 3);
+  assert.deepEqual(h.entityIds(), [
+    'beemaps-bursts:a',
+    'beemaps-bursts:b',
+    `beemaps-bursts:${BURST_ID}`,
+  ]);
+  assert.equal(
+    h.info(),
+    'Burst created: 125 credits taken, 875 left at Bee Maps. · 3 bursts · 1 hit',
+  );
+});
+
+test('[beemaps-bursts-015] shows the text of a refusal that took no credits, keeps no quote and creates no entity', async () => {
+  const rows = [
+    [
+      { outcome: 'refused', status: 402, error: 'no_credit' },
+      'The Bee Maps account has no credit.',
+    ],
+    [
+      { outcome: 'refused', status: 403, error: 'key_rejected' },
+      'Bee Maps refused the key. Check BEEMAPS_BURST_API_KEY in .env.',
+    ],
+    [
+      {
+        outcome: 'refused',
+        status: 429,
+        error: 'upstream_rate_limit',
+        retryAfter: 30,
+      },
+      'Bee Maps asks you to wait 30 seconds.',
+    ],
+    [{ outcome: 'refused', status: 410, error: 'quote_expired' }, ENDED_TEXT],
+    [
+      {
+        outcome: 'refused',
+        status: 403,
+        error: 'budget_used',
+        used: 625,
+        limit: 625,
+      },
+      'The daily limit of 625 credits is used.',
+    ],
+    [
+      { outcome: 'refused', status: 409, error: 'busy' },
+      'The server is busy with another confirm. Wait, then press Check my bursts.',
+    ],
+  ];
+  for (const [answer, message] of rows) {
+    const h = harness({ confirm: async () => answer });
+    await h.quoted();
+    await h.confirmChip().onClick();
+    assert.equal(h.info(), message);
+    assert.equal(h.layer.getStats().error, message);
+    assert.equal(h.layer.getStats().count, 0);
+    assert.deepEqual(h.entityIds(), []);
+    assert.deepEqual(
+      h.chips().map((entry) => entry.id),
+      ['quote', 'list'],
+    );
+    await h.layer.update();
+    assert.equal(h.calls.confirm.length, 1);
+  }
+});
+
+test('[beemaps-bursts-016] warns that a burst can exist after an unclear answer and offers no second confirm', async () => {
+  const rows = [
+    [{ outcome: 'unknown', status: 502 }, UNKNOWN_TEXT],
+    [
+      { outcome: 'unknown', status: 409, retryAfter: 539 },
+      `${UNKNOWN_TEXT} The server refuses new confirms for 539 seconds.`,
+    ],
+    [
+      { outcome: 'unknown', status: 0, retryAfter: 1 },
+      `${UNKNOWN_TEXT} The server refuses new confirms for 1 second.`,
+    ],
+    [{ outcome: 'mystery' }, UNKNOWN_TEXT],
+    [undefined, UNKNOWN_TEXT],
+    [null, UNKNOWN_TEXT],
+    ['garbage', UNKNOWN_TEXT],
+  ];
+  for (const [answer, message] of rows) {
+    const h = harness({ confirm: async () => answer });
+    await h.quoted();
+    await h.confirmChip().onClick();
+    assert.equal(h.info(), message);
+    assert.equal(h.layer.getStats().error, message);
+    assert.deepEqual(
+      h.chips().map((entry) => entry.id),
+      ['quote', 'list'],
+    );
+    assert.deepEqual(h.entityIds(), []);
+    await h.layer.update();
+    assert.equal(h.calls.confirm.length, 1);
+  }
+});
+
+test('[beemaps-bursts-016] warns that a burst can exist when the source throws', async () => {
+  const h = harness({
+    confirm: async () => {
+      throw new Error('boom');
+    },
+  });
+  await h.quoted();
+  await h.confirmChip().onClick();
+  assert.equal(h.info(), UNKNOWN_TEXT);
+  assert.equal(h.calls.confirm.length, 1);
+});
+
+test('[beemaps-bursts-017] gives the confirm call no signal, so disable cannot abort it, and keeps the text of the answer', async () => {
+  const wait = deferred();
+  const h = harness({ confirm: () => wait.promise });
+  await h.quoted();
+  const pressed = h.confirmChip().onClick();
+  assert.deepEqual(Object.keys(h.calls.confirm[0]).sort(), [
+    'idempotencyKey',
+    'quoteId',
+  ]);
+  h.layer.disable(h.viewer);
+  wait.resolve({ outcome: 'unknown', status: 502 });
+  await pressed;
+  h.layer.enable(h.viewer);
+  assert.equal(h.info(), UNKNOWN_TEXT);
+  assert.deepEqual(
+    h.chips().map((entry) => entry.id),
+    ['quote', 'list'],
+  );
+});
+
+test('[beemaps-bursts-017] shows a created burst that came while the layer was disabled, after the next enable', async () => {
+  const wait = deferred();
+  const h = harness({ confirm: () => wait.promise });
+  await h.quoted();
+  const pressed = h.confirmChip().onClick();
+  h.layer.disable(h.viewer);
+  h.layer.enable(h.viewer);
+  assert.equal(h.chip('quote').disabled, true);
+  assert.equal(h.chip('list').disabled, true);
+  wait.resolve(CREATED);
+  await pressed;
+  assert.equal(
+    h.info(),
+    'Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 0 hits',
+  );
+  assert.deepEqual(h.entityIds(), [`beemaps-bursts:${BURST_ID}`]);
+  assert.equal(h.chip('quote').disabled, false);
+});
+
+test('[beemaps-bursts-017] keeps the text of a confirm through disable and enable until a new quote', async () => {
+  const h = harness({
+    confirm: async () => ({ outcome: 'unknown', status: 0 }),
+  });
+  await h.quoted();
+  await h.confirmChip().onClick();
+  h.layer.disable(h.viewer);
+  h.layer.enable(h.viewer);
+  await h.layer.update();
+  assert.equal(h.info(), UNKNOWN_TEXT);
+  await h.chip('quote').onClick();
+  assert.equal(h.info(), QUOTE_TEXT);
+});
+
+test('[beemaps-bursts-017] joins the text of a confirm and the message of a later press', async () => {
+  let n = 0;
+  const h = harness({
+    confirm: async () => ({ outcome: 'unknown', status: 0 }),
+    pick: () =>
+      n++ === 0 ? Cesium.Cartesian3.fromDegrees(10.0031, 59.9976) : undefined,
+  });
+  await h.quoted();
+  await h.confirmChip().onClick();
+  await h.chip('quote').onClick();
+  assert.equal(
+    h.info(),
+    `${UNKNOWN_TEXT} · Point the view at the ground and press again.`,
+  );
+});
+
+test('[beemaps-bursts-017] clears a quote that is shown when the layer is disabled, and shows no Confirm chip after the next enable', async () => {
+  const h = harness();
+  await h.quoted();
+  h.layer.disable(h.viewer);
+  h.layer.enable(h.viewer);
+  assert.deepEqual(
+    h.chips().map((entry) => entry.id),
+    ['quote', 'list'],
+  );
+  assert.deepEqual(h.entityIds(), []);
+});
+
+test('[beemaps-bursts-017] shows nothing and throws no error for an answer after destroy', async () => {
+  const wait = deferred();
+  const h = harness({ confirm: () => wait.promise });
+  await h.quoted();
+  const pressed = h.confirmChip().onClick();
+  const before = h.notices();
+  h.layer.destroy(h.viewer);
+  wait.resolve(CREATED);
+  await pressed;
+  assert.equal(h.notices(), before);
+  assert.deepEqual(h.layer.getStats(), {
+    count: 0,
+    lastUpdate: null,
+    error: null,
+  });
+  assert.equal(h.layer.getRowControls().info, HINT);
+  assert.deepEqual(h.added, []);
+  assert.equal(h.viewer.removed[1], true);
+});
+
+test('[beemaps-bursts-018] sends one list request, draws the box of each burst and shows the counts', async () => {
+  const wait = deferred();
+  const h = harness({ list: () => wait.promise });
+  await h.ready();
+  const pressed = h.chip('list').onClick();
+  const second = h.chip('list').onClick();
+  await tick();
+  assert.equal(h.calls.list.length, 1);
+  assert.equal(h.calls.list[0].signal.aborted, false);
+  const listing = h.chip('list');
+  assert.equal(listing.label, 'Checking…');
+  assert.equal(listing.disabled, true);
+  assert.equal(listing.busy, true);
+  assert.equal(h.chip('quote').disabled, true);
+  assert.equal(h.chip('quote').label, 'Quote burst here');
+  wait.resolve({
+    ok: true,
+    bursts: [listed('a'), listed('b', { isHit: true }), listed('c')],
+    total: 3,
+    cached: false,
+  });
+  await Promise.all([pressed, second]);
+  assert.equal(h.calls.list.length, 1);
+  assert.equal(h.info(), '3 bursts · 1 hit');
+  assert.deepEqual(h.entityIds(), [
+    'beemaps-bursts:a',
+    'beemaps-bursts:b',
+    'beemaps-bursts:c',
+  ]);
+  assert.deepEqual(h.layer.getStats(), {
+    count: 3,
+    lastUpdate: NOW,
+    error: null,
+  });
+  assert.equal(h.chip('list').label, 'Check my bursts');
+  assert.equal(h.chip('list').disabled, false);
+});
+
+test('[beemaps-bursts-018] shows the counts for one burst and for a list that is cut at 100', async () => {
+  const one = harness({
+    list: async () => ({
+      ok: true,
+      bursts: [listed('a')],
+      total: 1,
+      cached: true,
+    }),
+  });
+  await one.ready();
+  await one.chip('list').onClick();
+  assert.equal(one.info(), '1 burst · 0 hits');
+  const many = harness({
+    list: async () => ({
+      ok: true,
+      bursts: Array.from({ length: 100 }, (_, n) => listed(`id${n}`)),
+      total: 130,
+      cached: false,
+    }),
+  });
+  await many.ready();
+  await many.chip('list').onClick();
+  assert.equal(many.info(), '100 bursts (130 in all) · 0 hits');
+  assert.equal(many.layer.getStats().count, 100);
+});
+
+test('[beemaps-bursts-018] gives one entity for a burst id that repeats or equals quote', async () => {
+  const h = harness({
+    list: async () => ({
+      ok: true,
+      bursts: [listed('a'), listed('a'), listed('quote')],
+      total: 3,
+      cached: false,
+    }),
+  });
+  await h.quoted();
+  await h.chip('list').onClick();
+  assert.deepEqual(h.entityIds(), ['beemaps-bursts:quote', 'beemaps-bursts:a']);
+});
+
+test('[beemaps-bursts-019] keeps the entities of the first list when a second list fails', async () => {
+  let n = 0;
+  const h = harness({
+    list: async () =>
+      n++ === 0
+        ? {
+            ok: true,
+            bursts: [listed('a'), listed('b')],
+            total: 2,
+            cached: false,
+          }
+        : { ok: false, status: 403, error: 'key_rejected' },
+  });
+  await h.ready();
+  await h.chip('list').onClick();
+  await h.chip('list').onClick();
+  assert.equal(
+    h.info(),
+    'Bee Maps refused the key. Check BEEMAPS_BURST_API_KEY in .env. · 2 bursts · 0 hits',
+  );
+  assert.deepEqual(h.entityIds(), ['beemaps-bursts:a', 'beemaps-bursts:b']);
+  assert.equal(h.chip('list').disabled, false);
+  assert.equal(
+    h.layer.getStats().error,
+    'Bee Maps refused the key. Check BEEMAPS_BURST_API_KEY in .env.',
+  );
+});
+
+test('[beemaps-bursts-019] shows unreachable when the source throws, and replaces the earlier list with a new one', async () => {
+  let n = 0;
+  const h = harness({
+    list: async () => {
+      n += 1;
+      if (n === 1) throw new Error('boom');
+      return n === 2
+        ? {
+            ok: true,
+            bursts: [listed('a'), listed('b')],
+            total: 2,
+            cached: false,
+          }
+        : {
+            ok: true,
+            bursts: [listed('b'), listed('c')],
+            total: 2,
+            cached: false,
+          };
+    },
+  });
+  await h.ready();
+  await h.chip('list').onClick();
+  assert.equal(h.info(), 'The server did not answer.');
+  await h.chip('list').onClick();
+  await h.chip('list').onClick();
+  assert.deepEqual(h.entityIds(), ['beemaps-bursts:b', 'beemaps-bursts:c']);
+  assert.equal(h.info(), '2 bursts · 0 hits');
+});
+
+test('[beemaps-bursts-019] keeps the created burst until a list answer replaces it', async () => {
+  const h = harness({
+    list: async () => ({
+      ok: true,
+      bursts: [listed('a')],
+      total: 1,
+      cached: false,
+    }),
+  });
+  await h.quoted();
+  await h.confirmChip().onClick();
+  assert.deepEqual(h.entityIds(), [`beemaps-bursts:${BURST_ID}`]);
+  await h.chip('list').onClick();
+  assert.deepEqual(h.entityIds(), ['beemaps-bursts:a']);
+});
+
+test('[beemaps-bursts-019] clears the text of a failed status after a good list or a good quote', async () => {
+  const h = harness({ status: async () => ({ ok: false }) });
+  await h.ready();
+  assert.equal(
+    h.layer.getStats().error,
+    'The server did not give the status of the bursts.',
+  );
+  await h.chip('list').onClick();
+  assert.equal(h.info(), '0 bursts · 0 hits');
+  assert.equal(h.layer.getStats().error, null);
+  const q = harness({ status: async () => ({ ok: false }) });
+  await q.quoted();
+  assert.equal(q.info(), QUOTE_TEXT);
+  assert.equal(q.layer.getStats().error, null);
+});
+
+test('[beemaps-bursts-019] ignores the answer of a list that the layer was disabled for', async () => {
+  const wait = deferred();
+  const h = harness({ list: () => wait.promise });
+  await h.ready();
+  const pressed = h.chip('list').onClick();
+  await tick();
+  h.layer.disable(h.viewer);
+  assert.equal(h.calls.list[0].signal.aborted, true);
+  h.layer.enable(h.viewer);
+  wait.resolve({ ok: true, bursts: [listed('a')], total: 1, cached: false });
+  await pressed;
+  assert.deepEqual(h.entityIds(), []);
+  assert.equal(h.layer.getStats().count, 0);
+});
+
+test('[beemaps-bursts-020] draws a rectangle of the box of each burst with the color of its state', async () => {
+  const h = harness({
+    list: async () => ({
+      ok: true,
+      bursts: [
+        listed('hit', { isHit: true, bbox: [1, 2, 3, 4] }),
+        listed('open', { bbox: [5, 6, 7, 8] }),
+        listed('done', { status: 'ended', bbox: [9, 10, 11, 12] }),
+      ],
+      total: 3,
+      cached: false,
+    }),
+  });
+  await h.quoted();
+  await h.chip('list').onClick();
+  const at = Cesium.JulianDate.now();
+  const entity = (id) => h.dataSource().entities.getById(id);
+  const color = (id) => entity(id).rectangle.material.getValue(at).color;
+  const near = (a, b) => Math.abs(a - b) < 1e-9;
+  const check = (id, css, alpha) => {
+    const expected = Cesium.Color.fromCssColorString(css).withAlpha(alpha);
+    assert.equal(Cesium.Color.equals(color(id), expected), true, id);
+  };
+  check('beemaps-bursts:hit', '#22c55e', 0.35);
+  check('beemaps-bursts:open', '#38bdf8', 0.25);
+  check('beemaps-bursts:done', '#9ca3af', 0.2);
+  check('beemaps-bursts:quote', '#f59e0b', 0.3);
+  const open = entity('beemaps-bursts:open').rectangle.coordinates.getValue(at);
+  assert.equal(near(Cesium.Math.toDegrees(open.west), 5), true);
+  assert.equal(near(Cesium.Math.toDegrees(open.south), 6), true);
+  assert.equal(near(Cesium.Math.toDegrees(open.east), 7), true);
+  assert.equal(near(Cesium.Math.toDegrees(open.north), 8), true);
+});
+
+test('[beemaps-bursts-020] hides the boxes with the data source and removes the data source on destroy', async () => {
+  const h = harness();
+  h.layer.init(h.viewer);
+  assert.equal(h.dataSource().show, false);
+  h.layer.enable(h.viewer);
+  assert.equal(h.dataSource().show, true);
+  h.layer.disable(h.viewer);
+  assert.equal(h.dataSource().show, false);
+  const source = h.dataSource();
+  h.layer.destroy(h.viewer);
+  assert.deepEqual(h.viewer.removed, [source, true]);
+  assert.deepEqual(h.added, []);
+  const idle = harness();
+  idle.layer.destroy(idle.viewer);
+  assert.equal(idle.viewer.removed, undefined);
+});

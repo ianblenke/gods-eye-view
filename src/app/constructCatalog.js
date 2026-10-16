@@ -26,6 +26,7 @@ import { createApplicationFirms } from './layers/firms.js';
 import { createApplicationEarthquakes } from './layers/earthquakes.js';
 import { createApplicationReticulum } from './layers/reticulum.js';
 import { createApplicationBeemaps } from './layers/beemaps.js';
+import { createApplicationBeemapsBursts } from './layers/beemapsBursts.js';
 import { createApplicationFirePerimeters } from './layers/perimeters.js';
 import { createApplicationCables } from './layers/submarineCables.js';
 import { createApplicationStreetLevel } from './layers/streetLevel.js';
@@ -122,6 +123,7 @@ export function createApplicationCatalog({
         createApplicationEarthquakes({ source: sources.earthquakes }),
         createApplicationReticulum({ source: sources.reticulum }),
         createApplicationBeemaps({ source: sources.beemaps }),
+        createApplicationBeemapsBursts({ source: sources['beemaps-bursts'] }),
         createApplicationFirePerimeters({
           source: sources['fire-perimeters'],
         }),
