@@ -274,7 +274,7 @@ Origin: spec-first
 
 #### Scenario: Put the layer in the Cameras group `beemaps-frames-025`
 - **WHEN** a test reads the groups of the layer panel
-- **THEN** the group "Cameras" ends with the layer "beemaps", after "street-level"
+- **THEN** the group "Cameras" ends with the layers "beemaps" and "beemaps-bursts", in that order, after "street-level"
 
 #### Scenario: Keep the layer out of voice `beemaps-frames-026`
 - **WHEN** a test reads the list `VOICE_OFF_LAYERS`
