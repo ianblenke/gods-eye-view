@@ -84,14 +84,14 @@ The list route keeps an answer for 60 seconds and no confirm request clears it. 
 
 The list route sets the status, the credits or the box of a burst to null when Bee Maps gives no valid value. The same holds for the burst of a created answer. The source keeps such a burst. A burst with no box counts in the text and gets no entity. A created burst with no credits shows the credits of the quote.
 
-### D16: The layer calls `requestRender` after each redraw of the boxes
+### D16: The layer calls `requestRender` each time it draws the boxes
 
 The application renders on demand: the render governor sets `requestRenderMode` when nothing animates. A change of entities from a chip press does not draw a new image by itself. A real browser run showed a quote box that stayed invisible until something else drew a new image.
-The layer therefore calls `requestRender` after each redraw of the boxes. The wrapper `src/app/layers/beemapsBursts.js` gives it `governorRequestRender`.
+The layer therefore calls `requestRender` each time it draws the boxes. The wrapper `src/app/layers/beemapsBursts.js` gives it `governorRequestRender`.
 
 ### D17: The chip "quote" stays disabled after an unknown answer until a fresh list answer
 
-The server holds new confirm requests only after an unknown or pending record of its own. Think of a burst that the server created while the browser lost the answer (status 0). The record is then "created", the server holds nothing, and a new quote could lead to a second burst.
+After an unknown or pending record of its own, the server holds new confirm requests for 600 seconds. When the server created a burst and the browser lost the answer (status 0), the record is "created" and this hold does not start. A second burst is then possible after a new quote.
 The layer therefore disables the chip "quote" after an unknown answer. A fresh list answer (`cached` false) enables it again.
 
 A stored list answer (`cached` true) can hide the new burst, because the list route answers from memory for 60 seconds. A failed list, `disable`, `enable` and `update` leave the chip disabled. `destroy` and a reload enable it again.
@@ -99,7 +99,7 @@ A stored list answer (`cached` true) can hide the new burst, because the list ro
 ## Risks / Trade-offs
 
 - [A hidden tab runs the timer late] → The press compares the clock with the end time.
-- [A reload drops the warning after an unknown answer] → The server keeps its refusal of new confirm requests after an unknown record of its own. See the Known limit `warning-in-memory`.
+- [A reload drops the warning after an unknown answer] → After an unknown or pending record of its own, the server keeps refusing new confirm requests. See the Known limit `warning-in-memory`.
 - [A quote can be pressed twice in a row] → The lock of 1000 milliseconds of D13 guards against it.
 - [The list route answers from memory] → The text says "stored answer", and D14 keeps the new burst.
 - [The token "6" collides with the pull request 1069 of the upstream project] → The Known limit `token-collision` says that a sync renumbers one layer.

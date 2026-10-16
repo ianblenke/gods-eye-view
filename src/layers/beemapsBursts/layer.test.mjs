@@ -169,7 +169,7 @@ function harness({
       layer.enable(viewer);
       await layer.update();
     },
-    /** Move the clock past the wait of the Confirm chip and run its timer. */
+    /** Move the clock past the lock of the Confirm chip and run its timer. */
     unlock() {
       clock.t += 1000;
       const timer = [...timers]
@@ -2175,7 +2175,7 @@ test('[beemaps-bursts-011] keeps the message of a failed list after a cancel', a
   assert.equal(h.info(), 'The server answered with an unknown error (500).');
 });
 
-test('[beemaps-bursts-020] calls requestRender once after each redraw of the boxes, with the reason beemaps-bursts', async () => {
+test('[beemaps-bursts-020] calls requestRender once each time the layer draws the boxes, with the reason beemaps-bursts', async () => {
   const h = harness({
     list: async () => ({
       ok: true,

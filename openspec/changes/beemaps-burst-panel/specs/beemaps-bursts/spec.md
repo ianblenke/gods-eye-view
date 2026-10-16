@@ -1,8 +1,5 @@
-# beemaps-bursts Specification
+## ADDED Requirements
 
-## Purpose
-Show the Bee Maps bursts of the account. Let a person quote and confirm a new burst for the view centre. A confirm request needs two presses, and the layer shows its answer.
-## Requirements
 ### Requirement: Layer record
 The layer `beemaps-bursts` MUST have the name "Bee Maps Bursts", the icon "🐝", the source name "Bee Maps" and the update interval 0. It MUST NOT accept parameters.
 Origin: spec-first
@@ -156,7 +153,7 @@ Origin: spec-first
 
 #### Scenario: Warn after an unknown answer `beemaps-bursts-016`
 - **WHEN** the source answers a confirm with `outcome:'unknown'`, or throws, or the answer has an unknown shape
-- **AND** an answer with `outcome:'created'` and no burst with a text `id` has an unknown shape
+- **AND** an answer with `outcome:'created'` and no burst with a string `id` has an unknown shape
 - **THEN** the text of the last confirm is "It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts."
 - **AND** `getStats` gives that text as `error`
 - **AND** an answer with `retryAfter` 539 adds "The server refuses new confirm requests for 539 seconds."
@@ -186,7 +183,7 @@ Origin: spec-first
 
 #### Scenario: Keep the Confirm chip disabled for a short time `beemaps-bursts-029`
 - **WHEN** the layer shows a quote at the time T
-- **THEN** until T plus 1000 milliseconds the Confirm chip keeps its label and is disabled
+- **THEN** until T plus 1000 milliseconds, the lock of the Confirm chip, the Confirm chip keeps its label and is disabled
 - **AND** a call of its `onClick` function in that time sends no `confirm` call, and changes nothing
 - **AND** the layer starts a timer of 1000 milliseconds when it shows the quote, and tells the panel when the lock ends
 - **AND** the timer of the lock sends no `confirm` call
@@ -232,9 +229,9 @@ Origin: spec-first
 - **AND** any other burst, also one with status null, is grey "#9ca3af" with alpha 0.2
 - **AND** the box of a quote is amber "#f59e0b" with alpha 0.3
 - **AND** each rectangle has the west, south, east and north of the box in degrees
-- **AND** each redraw of the boxes calls the function `requestRender` once with the reason "beemaps-bursts"
+- **AND** each time the layer draws the boxes, it calls the function `requestRender` once with the reason "beemaps-bursts"
 - **AND** a press of "quote" or "list" that ends with an error, and a press of "quote" with no view box, call `requestRender` zero times
-- **AND** a refusal or an unknown answer of a confirm request calls `requestRender` once, because the layer removes the box of the quote
+- **AND** a refusal of a confirm request calls `requestRender` once, because the layer removes the box of the quote
 
 ### Requirement: Panel notice
 The layer MUST tell the panel through its listener when an event changes the controls or the info text.
@@ -254,7 +251,7 @@ Origin: spec-first
 
 ### Requirement: Browser source
 The browser source MUST send the requests of the layer to the four burst routes. It MUST NOT retry a request. It MUST classify the answer of a confirm request.
-The source MUST treat an answer as unknown unless it matches the rules of scenario 023 for a created burst or for a refusal.
+The source MUST treat an answer as unknown unless the answer matches the rules of scenario 023 for a created burst or for a refusal.
 Origin: spec-first
 
 #### Scenario: Read the status `beemaps-bursts-021`
@@ -295,7 +292,7 @@ Origin: spec-first
 - **AND** a created answer with an unreadable burst gives the same
 - **AND** a status below 400 without a created burst, and a body that is not valid JSON, give the same
 
-#### Scenario: Never resend a confirm request and end it after 60 seconds `beemaps-bursts-024`
+#### Scenario: Send a confirm request once and abort it after 60 seconds `beemaps-bursts-024`
 - **WHEN** a test makes the fetch of a confirm throw or never answer
 - **AND** the test makes the body of the answer stop in the middle, or makes it invalid JSON
 - **THEN** the source never rejects
@@ -371,4 +368,3 @@ Origin: spec-first
 - **AND** the data credits contain an entry with the key "beemaps-bursts" and a link to "https://beemaps.com/"
 - **AND** the list of layers without voice tools gives the reason "The Bee Maps bursts layer has no voice tools." for "beemaps-bursts"
 - **AND** the layer of the application gets the render governor as its function `requestRender`, and a caller can give another function
-
