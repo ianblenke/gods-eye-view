@@ -227,6 +227,10 @@ test('[gdacs-source-006] lists only records with a valid position and rounds it 
     { geometry: undefined },
     { geometry: { type: 'Polygon', coordinates: [[1, 2]] } },
     { geometry: { type: 'MultiPoint', coordinates: [[1, 2]] } },
+    { geometry: { type: 'Polygon', coordinates: [10, 20] } },
+    { geometry: { type: 'MultiPoint', coordinates: [10, 20] } },
+    { geometry: { type: 'LineString', coordinates: [10, 20] } },
+    { geometry: { coordinates: [10, 20] } },
     { geometry: { type: 'Point', coordinates: [5] } },
     { geometry: { type: 'Point' } },
     at('a', 'b'),
@@ -264,6 +268,7 @@ const VALID_TIMES = [
   ['2026-10-12T01:00:00Z', '2026-10-12T01:00:00.000Z'],
   ['2026-10-12T01:00:00.5', '2026-10-12T01:00:00.500Z'],
   ['2026-10-12T01:00:00.123Z', '2026-10-12T01:00:00.123Z'],
+  ['2026-10-12T23:59:59', '2026-10-12T23:59:59.000Z'],
 ];
 const INVALID_TIMES = [
   '2026-10-12T01:00:00+02:00',
@@ -276,6 +281,25 @@ const INVALID_TIMES = [
   '2026-10-12T01:60:00',
   '2026-10-12T01:00:61',
   '2026-10-12T01:00:00.1234',
+  '2026-10-12T01:00:00.',
+  '2026-10-12T01:00:60',
+  '2026-13-12T01:00:00',
+  '0099-10-12T01:00:00',
+  '26-10-12T01:00:00',
+  '12026-10-12T01:00:00',
+  '2026-1-12T01:00:00',
+  '2026-010-12T01:00:00',
+  '2026-10-1T01:00:00',
+  '2026-10-012T01:00:00',
+  '2026-10-12T1:00:00',
+  '2026-10-12T001:00:00',
+  '2026-10-12T01:0:00',
+  '2026-10-12T01:000:00',
+  '2026-10-12T01:00:0',
+  '2026-10-12T01:00:000',
+  'x2026-10-12T01:00:00',
+  '2026-10-12T01:00:00x',
+  ['2026-10-12T01:00:00'],
   '',
   12345,
   null,
@@ -467,6 +491,9 @@ test('[gdacs-source-013] cleans the country, the origin and the severity texts a
   assert.equal(severity({ severitytext: letters(160) }).text, letters(160));
   assert.equal(severity({ severitytext: ' x  y ' }).text, 'x y');
   assert.equal(event({ iso3: 'TUR' }).iso3, 'TUR');
+  for (const letter of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+    assert.equal(event({ iso3: letter.repeat(3) }).iso3, letter.repeat(3));
+  }
   for (const value of [
     'tur',
     'TURK',
@@ -629,6 +656,35 @@ test('[gdacs-source-015] orders the events by modified time and id and lists at 
     reverse.events.map((event) => event.id),
     ['FL-10', 'FL-9'],
   );
+  for (const old of ['1969-12-31T23:59:59', '1970-01-01T00:00:00']) {
+    const early = normalizeEvents([
+      rec({ eventid: 1, datemodified: null }),
+      rec({ eventid: 2, datemodified: old }),
+    ]);
+    assert.deepEqual(
+      early.events.map((event) => event.eventId),
+      [2, 1],
+      old,
+    );
+  }
+  const permutations = [
+    [1, 2, 3],
+    [1, 3, 2],
+    [2, 1, 3],
+    [2, 3, 1],
+    [3, 1, 2],
+    [3, 2, 1],
+  ];
+  for (const order of permutations) {
+    const sorted = normalizeEvents(
+      order.map((eventid) => rec({ eventid, datemodified: stamp(5) })),
+    );
+    assert.deepEqual(
+      sorted.events.map((event) => event.id),
+      ['FL-1', 'FL-2', 'FL-3'],
+      order.join(),
+    );
+  }
   const nulls = normalizeEvents([
     rec({ eventid: 9, datemodified: null }),
     rec({ eventid: 10, datemodified: null }),
@@ -640,7 +696,6 @@ test('[gdacs-source-015] orders the events by modified time and id and lists at 
 });
 
 function install(options = {}, preview = false) {
-  let handler;
   const clock = { t: NOW };
   const timers = [];
   const cleared = [];
@@ -658,6 +713,12 @@ function install(options = {}, preview = false) {
         }),
     ...rest,
   });
+  const request = mount(plugin, preview);
+  return { request, clock, plugin, timers, cleared };
+}
+/** Mount the plugin on a fake server. The header call must come before the end call. */
+function mount(plugin, preview = false) {
+  let handler;
   plugin[preview ? 'configurePreviewServer' : 'configureServer']({
     middlewares: {
       use(path, callback) {
@@ -666,19 +727,20 @@ function install(options = {}, preview = false) {
       },
     },
   });
-  const request = async (url = '/', method = 'GET', headers = {}) => {
+  return async (url = '/', method = 'GET', headers = {}) => {
     const res = {};
     res.writeHead = (code, head) => {
+      assert.equal(res.body, undefined);
       res.statusCode = code;
       res.headers = head;
     };
     res.end = (body) => {
+      assert.notEqual(res.statusCode, undefined);
       res.body = JSON.parse(body);
     };
     await handler({ url, method, headers }, res);
     return res;
   };
-  return { request, clock, plugin, timers, cleared };
 }
 
 /** A response for an answer of the test: a list of records, a status or a text. */
@@ -823,6 +885,19 @@ test('[gdacs-source-019] sends the page request to the fixed address with UTC da
     await late.request('/');
     assert.equal(calls.length, 2);
     assert.match(calls[1].url, /&fromdate=2025-12-27&todate=2026-01-10&/);
+    for (const edge of [
+      Date.UTC(2026, 2, 5, 0, 0, 0, 100),
+      Date.UTC(2026, 2, 5, 23, 59, 59, 900),
+    ]) {
+      const probe = install({ fetchImpl: pagesFetch([[rec()]], calls) });
+      probe.clock.t = edge;
+      await probe.request('/');
+      assert.match(
+        calls.at(-1).url,
+        /&fromdate=2026-02-19&todate=2026-03-05&/,
+        String(edge),
+      );
+    }
   });
 });
 
@@ -931,6 +1006,10 @@ const FAILURES = [
     'a wrong type',
     () => answerOf({ text: '{"type":"Feature","features":[]}' }),
   ],
+  [
+    'text features',
+    () => answerOf({ text: '{"type":"FeatureCollection","features":"abc"}' }),
+  ],
 ];
 
 test('[gdacs-source-021] fails on each kind of bad answer', async () => {
@@ -1003,6 +1082,24 @@ test('[gdacs-source-023] stops a refresh after 30 seconds with one timer and one
   assert.equal(document.unavailable, true);
   assert.deepEqual(cleared, [1]);
 
+  const stall = install({
+    fetchImpl: async () =>
+      new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.enqueue(new TextEncoder().encode('{"type":"Feat'));
+          },
+        }),
+        { status: 200 },
+      ),
+  });
+  const stalled = stall.request('/');
+  for (let turn = 0; turn < 20; turn += 1) {
+    await new Promise((resolve) => setImmediate(resolve));
+  }
+  stall.timers[0].fn();
+  assert.equal((await stalled).body.unavailable, true);
+
   const ok = install({ fetchImpl: pagesFetch([[rec()]]) });
   await ok.request('/');
   assert.equal(ok.timers.length, 1);
@@ -1016,7 +1113,7 @@ test('[gdacs-source-023] stops a refresh after 30 seconds with one timer and one
 
 test('[gdacs-source-024] serves the last good document for less than 1 hour when a refresh fails', async () => {
   for (const [age, stale] of [
-    [HOUR - 1000, true],
+    [HOUR - 1, true],
     [HOUR, false],
   ]) {
     const { request, clock } = install({
@@ -1082,7 +1179,7 @@ test('[gdacs-source-025] caches the document for 10 minutes and shares one refre
   const [a, b] = await Promise.all([first, second]);
   assert.equal(calls.length, 1);
   assert.deepEqual(a.body, b.body);
-  clock.t = NOW + 10 * MINUTE - 1000;
+  clock.t = NOW + 10 * MINUTE - 1;
   const third = await request('/');
   assert.equal(calls.length, 1);
   assert.equal(third.body.fetchedAt, '2026-03-05T10:00:00.000Z');
@@ -1155,4 +1252,25 @@ test('[gdacs-source-009 gdacs-source-011] turns a number that is too large for a
   const event = (await request('/')).body.events[0];
   assert.equal(event.alertScore, null);
   assert.equal(event.severity, null);
+});
+
+test('[gdacs-source-016 gdacs-source-025] uses the global fetch and the real clock when it gets no options', async () => {
+  const saved = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (url) => {
+    calls.push(String(url));
+    return answerOf([rec()]);
+  };
+  try {
+    const request = mount(gdacsProxy());
+    const before = Date.now();
+    const res = await request('/');
+    const after = Date.now();
+    assert.equal(calls.length, 1);
+    const fetchedAt = Date.parse(res.body.fetchedAt);
+    assert.equal(fetchedAt >= before && fetchedAt <= after, true);
+    assert.equal(res.body.unavailable, false);
+  } finally {
+    globalThis.fetch = saved;
+  }
 });

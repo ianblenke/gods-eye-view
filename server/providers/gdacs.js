@@ -44,9 +44,8 @@ const REFRESH_TIMEOUT_MS = 30_000;
 const MAX_BYTES = 2 * 1024 * 1024;
 const LIMITS = { name: 120, country: 80, origin: 40, unit: 12, text: 160 };
 
-const isObject = (value) =>
-  value !== null && typeof value === 'object' && !Array.isArray(value);
-const finite = (value) => typeof value === 'number' && Number.isFinite(value);
+const isObject = (value) => value !== null && typeof value === 'object';
+const finite = Number.isFinite;
 /** Round to three decimals; adding zero turns negative zero into zero. */
 const round3 = (value) => Math.round(value * 1000) / 1000 + 0;
 
@@ -62,15 +61,13 @@ const TIME_FORM =
 function parseTime(value) {
   const match = typeof value === 'string' ? TIME_FORM.exec(value) : null;
   if (!match) return null;
-  const [year, month, day, hour, minute, second] = match
-    .slice(1, 7)
-    .map(Number);
+  const [year, month, day, hour, minute, second] = match.slice(1).map(Number);
   const time = Date.UTC(year, month - 1, day, hour, minute, second);
   const date = new Date(time);
-  // An hour of 24 or more rolls the date over, so the date check catches it.
+  // A month or an hour that is too large rolls the date over, and the year or
+  // the day then differs. Only a minute or a second can roll over silently.
   const real =
     date.getUTCFullYear() === year &&
-    date.getUTCMonth() === month - 1 &&
     date.getUTCDate() === day &&
     minute < 60 &&
     second < 60;

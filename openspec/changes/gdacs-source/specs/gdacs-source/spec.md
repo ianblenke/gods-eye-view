@@ -60,6 +60,7 @@ Origin: spec-first
 
 #### Scenario: List only records with a valid position `gdacs-source-006`
 - **WHEN** the provider normalizes records with no geometry, a geometry of type "Polygon", a geometry of type "MultiPoint", and a point with one number
+- **AND** it normalizes records with the geometry types "Polygon", "MultiPoint" and "LineString", or with no type, whose coordinates are two numbers
 - **AND** it normalizes records whose coordinates are not numbers, and records whose latitude is 91 or -91 or whose longitude is 181 or -181
 - **AND** it normalizes a record whose position is 0 and 0
 - **AND** each of these records is valid in all other fields
@@ -78,9 +79,10 @@ Origin: spec-first
 
 #### Scenario: Read the valid times as UTC `gdacs-source-007`
 - **WHEN** the test sets the time zone of the process to "Pacific/Kiritimati" and restores it after the test
-- **AND** the provider normalizes records whose `todate` has the values "2026-10-12T01:00:00", "2026-10-12T01:00:00Z", "2026-10-12T01:00:00.5" and "2026-10-12T01:00:00.123Z"
+- **AND** the provider normalizes records whose `todate` has the values "2026-10-12T01:00:00", "2026-10-12T01:00:00Z", "2026-10-12T01:00:00.5", "2026-10-12T01:00:00.123Z" and "2026-10-12T23:59:59"
 - **AND** it normalizes a record whose `fromdate` is "2026-10-12T01:00:00"
 - **THEN** `to` is "2026-10-12T01:00:00.000Z" for the first two values, "2026-10-12T01:00:00.500Z" for the third and "2026-10-12T01:00:00.123Z" for the fourth
+- **AND** `to` is "2026-10-12T23:59:59.000Z" for the fifth value
 - **AND** `from` is "2026-10-12T01:00:00.000Z"
 - **AND** `modified` follows the same rules as `to`
 
@@ -88,7 +90,11 @@ Origin: spec-first
 - **WHEN** the test sets the time zone of the process to "Pacific/Kiritimati" and restores it after the test
 - **AND** the provider normalizes records whose `todate` has the values "2026-10-12T01:00:00+02:00", "2026-02-30T00:00:00", "2026-13-40T00:00:00" and "2026-10-12"
 - **AND** it normalizes records whose `todate` has the values "2026-10-12T01:00", "2026-10-12T25:00:00", "2026-10-12T01:60:00" and "2026-10-12T01:00:61"
-- **AND** it normalizes records whose `todate` has the values "2026-10-12T01:00:00.1234", an empty text and a value that is not text
+- **AND** it normalizes records whose `todate` has the values "2026-10-12T01:00:00.1234", "2026-10-12T01:00:00." and "2026-10-12T01:00:60"
+- **AND** it normalizes records whose `todate` has the values "2026-13-12T01:00:00" and "0099-10-12T01:00:00"
+- **AND** it normalizes texts with a part of the wrong number of digits, such as "26-10-12T01:00:00" and "2026-10-12T1:00:00"
+- **AND** the part can be the year, the month, the day, the hour, the minute or the second
+- **AND** it normalizes the texts "x2026-10-12T01:00:00" and "2026-10-12T01:00:00x", a list that holds a valid text, an empty text and a value that is not text
 - **THEN** `to` is null for each of these values, and the provider lists these events
 - **AND** `modified` follows the same rules as `to`
 - **AND** the provider drops a record whose `fromdate` is one of these values, and `counts.dropped` counts it
@@ -162,6 +168,7 @@ Origin: spec-first
 - **AND** the origin of 50 letters gives 40 letters, and the empty origin gives null
 - **AND** the severity unit gives 12 letters and the severity text gives 160 letters
 - **AND** the `iso3` "TUR" stays "TUR", and each other value gives null
+- **AND** each capital letter from A to Z, written three times, stays as it is
 
 ### Requirement: One event for each type and event id
 The provider MUST check the rules of each record before it joins records. It MUST list one event for each pair of the type and the event id. It MUST keep the record with the highest episode id.
@@ -194,6 +201,8 @@ Origin: spec-first
 - **THEN** the result lists 500 events, and the first has the latest `modified`
 - **AND** the last listed event has the 500th latest `modified`
 - **AND** `counts.total` is 500, `counts.current` is 500 and `counts.dropped` is 0, and `counts.byType` counts only the listed events
+- **AND** an event with `modified` null comes after an event with `modified` "1969-12-31T23:59:59" and after an event with `modified` "1970-01-01T00:00:00"
+- **AND** three events with the same `modified` and the ids FL-1, FL-2 and FL-3 come in this order, whatever the input order
 - **AND** a page holds 3 records, and the first of the three has `modified` null
 - **AND** that event is the last of the three in the result
 - **AND** two events have the same `modified` time and the ids FL-9 and FL-10, and the input lists FL-9 first
@@ -216,6 +225,7 @@ Origin: spec-first
 - **AND** `fetchedAt` is "2026-03-05T10:00:00.000Z"
 - **AND** `counts` has `total` 1, `current` 1, `dropped` 0, and `byType` with FL 1, DR 0, VO 0 and TC 0
 - **AND** `events` holds the flood
+- **AND** a provider that gets no options uses the global fetch function and sets `fetchedAt` from the real clock
 
 #### Scenario: Refuse other methods `gdacs-source-017`
 - **WHEN** a browser request uses the method POST, PUT, DELETE or HEAD
@@ -243,6 +253,7 @@ Origin: spec-first
 - **AND** the page request has a signal
 - **AND** the provider sends no other request than the page requests
 - **AND** a clock of 2026-01-10T23:59:59Z gives `fromdate` 2025-12-27 and `todate` 2026-01-10
+- **AND** the clocks 2026-03-05T00:00:00.100Z and 2026-03-05T23:59:59.900Z give `fromdate` 2026-02-19 and `todate` 2026-03-05
 
 ### Requirement: Read the pages
 The provider MUST fetch the pages in order from page 1. It MUST stop at a page that answers 204. It MUST stop at a page whose `features` list holds fewer than 100 records, also when it drops some of them. It MUST stop after page 5.
@@ -278,6 +289,7 @@ Origin: spec-first
 - **AND** the test makes a status 200 with an empty body and with the text "not json", in turn
 - **AND** the test makes a status 200 with the bodies `{}`, `[]` and `null`, in turn
 - **AND** the test makes a status 200 with the bodies `{"type":"FeatureCollection"}`, `{"type":"FeatureCollection","features":null}`, `{"type":"FeatureCollection","features":{}}` and `{"type":"Feature","features":[]}`, in turn
+- **AND** the test makes a status 200 with the body `{"type":"FeatureCollection","features":"abc"}`
 - **THEN** each of these cases is a failure, and the document says `unavailable` true when no good document exists
 - **AND** page 2 fails after a good page 1, and no good document exists
 - **AND** the document then says `unavailable` true with the reason "GDACS unavailable"
@@ -295,6 +307,7 @@ Origin: spec-first
 - **AND** the two page requests have the same `signal`
 - **AND** when the timer callback runs, that signal aborts and the document says `unavailable` true
 - **AND** `clearTimer` runs once with the timer of a refresh after that refresh succeeds, and once after that refresh fails
+- **AND** a page body that stops after some bytes, and the timer callback, give a document with `unavailable` true
 
 ### Requirement: Stale document
 When a refresh fails, the provider MUST serve the last good document with `stale` true. It MUST do this only while that document is younger than 1 hour. In all other cases of a failure it MUST answer with `unavailable` true. It MUST NOT keep a failed refresh as a document.
@@ -302,9 +315,9 @@ Origin: spec-first
 
 #### Scenario: Serve the last good document when a refresh fails `gdacs-source-024`
 - **WHEN** a refresh fails after a good refresh
-- **THEN** the provider answers with the last good document and `stale` true when that document is 59 minutes and 59 seconds old
+- **THEN** the provider answers with the last good document and `stale` true when that document is 1 millisecond younger than 1 hour
 - **AND** the stale document is the last good document with only `stale` changed
-- **AND** the provider answers with `unavailable` true when that document is 1 hour old
+- **AND** the provider answers with `unavailable` true when that document is exactly 1 hour old
 - **AND** an `unavailable` document has the status 200, `stale` false, `fetchedAt` null and the reason "GDACS unavailable"
 - **AND** an `unavailable` document has the same `schemaVersion`, `source`, `attribution`, `license`, `disclaimer` and `coverage` as a good document
 - **AND** its `counts` has `total` 0, `current` 0 and `dropped` 0
@@ -316,7 +329,7 @@ The provider MUST cache the document for 10 minutes. Browser requests that come 
 Origin: spec-first
 
 #### Scenario: Cache the document and share one refresh `gdacs-source-025`
-- **WHEN** a second browser request comes while the first waits for GDACS, and a third comes 9 minutes and 59 seconds after the first
+- **WHEN** a second browser request comes while the first waits for GDACS, and a third comes 1 millisecond before the end of the 10 minutes
 - **THEN** the provider asks GDACS once for all three
 - **AND** a fourth browser request that comes 10 minutes after the first gets a new refresh
 - **AND** a fifth browser request that comes 5 minutes after the fourth uses the new document and sends no page request
