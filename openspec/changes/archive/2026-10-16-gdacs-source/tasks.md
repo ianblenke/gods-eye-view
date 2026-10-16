@@ -35,7 +35,7 @@
 
 - [x] 4.1 Run `make ratchet CHANGE=gdacs-source`.
 - [x] 4.2 Read the verdict of the ratchet.
-- [ ] 4.3 Ask the owner to accept the interpretation of the license in the Known limits `license-inferred` and `license-owner-step`.
+- [x] 4.3 Ask the owner to accept the interpretation of the license in the Known limits `license-inferred` and `license-owner-step`.
 - [x] 4.4 Run the two review agents.
-- [ ] 4.5 Write review.md.
-- [ ] 4.6 Run `make gates CHANGE=gdacs-source` on the final tree.
+- [x] 4.5 Write review.md.
+- [x] 4.6 Run `make gates CHANGE=gdacs-source` on the final tree.
