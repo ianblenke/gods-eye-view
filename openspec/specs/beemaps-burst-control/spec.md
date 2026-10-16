@@ -1,7 +1,7 @@
 # beemaps-burst-control Specification
 
 ## Purpose
-TBD - created by archiving change beemaps-burst-control. Update Purpose after archive.
+Create a Bee Maps burst only after a person confirms a quote. Count the credits before the send, send once, and write each attempt to a log that survives a restart.
 ## Requirements
 ### Requirement: Provider routes
 The plugin MUST answer only `/api/beemaps/burst/status`, `/api/beemaps/burst/quote`, `/api/beemaps/burst/confirm` and `/api/beemaps/burst/list`. It MUST pass every other path to the next middleware.
