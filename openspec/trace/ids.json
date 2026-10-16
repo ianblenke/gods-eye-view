@@ -219,6 +219,156 @@
     "since": "2026-10-15",
     "change": "beemaps-burst-control"
   },
+  "beemaps-bursts-001": {
+    "hash": "1da9b5e98197cea59b9a8dccf5b26cb9b6b3d8487582151223bdcec5518f6ec0",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-002": {
+    "hash": "38f596ff462e2bf24fb6598029fa17095636594ebe6c88cab7c8a1ce4e552208",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-003": {
+    "hash": "3b15e0e942b2b64ffa81aa0138dac857b610add75afc7586c4e048a17496473d",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-004": {
+    "hash": "c396b0e3b249dd0c97384e403d772bd04cea1ed706d3170cc4ee784d42f1c927",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-005": {
+    "hash": "6a852d8ee84f6105b3f52ce9ebc8bfdc41f0bd0c8820912dc2fb98f979de4cf2",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-006": {
+    "hash": "e4d3e30f3d76f75e7469117e944b429c2eba570d2ae95d780077308be39fc3cc",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-007": {
+    "hash": "f4a9f3ea6d3ea75525b97e59feb0b16af4ae3c3e0314e18f3f7f9dd09e2d760f",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-008": {
+    "hash": "0ecbbd14058f9ff795347f5c2327bbd66295e15fa766eb5b3b8e41d994438a8d",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-009": {
+    "hash": "6489419432ec592ca74d4ec01eeb5e558e039a1021fd07a6ae76b4a1456e9e40",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-010": {
+    "hash": "8bb65236272f299b50797c526c8579bd4838443a6494d2a5c0f8acaccfc7b057",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-011": {
+    "hash": "ec43f23140e63aeb34988c5315a5ab6e6dbfcdb5afb6459f08d46f62c8bf659e",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-012": {
+    "hash": "222a43d428b33b183d8158fffc72571773b31bdf31f676622d0a831fe2c3129c",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-013": {
+    "hash": "486cf05c072b25c19ab8ee26782960a9b987c4c10ef88c057c0ae9a4334ce868",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-014": {
+    "hash": "e75cfd481c5ddfb93bc1c156113c84f4cc647b08fcecab17d3cc25b69484298a",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-015": {
+    "hash": "8e6340cf0e2aee9fe7ffbb8f3ea04248edc7ae9f2aa8803d9eb167152dfd4d5a",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-016": {
+    "hash": "ed70b53cd69c26fa1f573f8134724cadda72830cc44f2a5320698b62045c5e53",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-017": {
+    "hash": "830c1dd10c267d0a2897d863b3d1dc107cdf4792fd60cf4312856c7789fe8534",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-018": {
+    "hash": "65660830b7bd185504b1eaaec70b6c1074c4c340120324a90e0dec2e2ad10c57",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-019": {
+    "hash": "c9e32ca41a2b014b7c183d3e253934f93f5169449effbdbfde49e9203186f684",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-020": {
+    "hash": "bcf1c91600f97c25541127c971ac3b2f4fbc1a90cd108cb2770b06a5c5e92556",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-021": {
+    "hash": "ac2d2cc747d3f8cfec8c76ca72096831afd0ab6dc784698f2b0c06512856483d",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-022": {
+    "hash": "9cf15596da430f3afbbfbbb68b056714d2749a0920ebecd2f1c32fbf7edab8a6",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-023": {
+    "hash": "80e9e7d73886455f24098ef02319bef8b90d0f07640cdc12a96cc7081fe79000",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-024": {
+    "hash": "e8fe4ff7a2a804495a668a94d340c66b4c6185f6f9cdfc7c91e4bb38548c3d72",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-025": {
+    "hash": "118a531a4b09741851abf72f9cd2a96784ab3ef7df55eb4d19c9a361de69f163",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-026": {
+    "hash": "f3e7c42481b649e197dfa7c600bc48e618fe9c7a6e056f784cb32053e057e10a",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-027": {
+    "hash": "1217fb283a1bab44a109d92a7059ffe45cc492797735e67c6dee2f5c4a3e2c8f",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-028": {
+    "hash": "e67f4f343c85a0a252eacf0883f0d039efbb4bd4eaba9a710c4b7168efd94ecb",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-029": {
+    "hash": "c1266e5733ae9a61f5bfc883bec63b0e05b1f362480f664a93190066ae71483a",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
+  "beemaps-bursts-030": {
+    "hash": "bea1f93d5548d6e01371a9a78a48edca5027e548aa509e748d6e8aba9f15c449",
+    "since": "2026-10-16",
+    "change": "beemaps-burst-panel"
+  },
   "beemaps-frames-001": {
     "hash": "ec4c1a0f30dd1dace7aaf76c679efdbb180f2c2481b382a1abadef451cd0ead9",
     "since": "2026-10-15",
@@ -340,7 +490,7 @@
     "change": "beemaps-frames"
   },
   "beemaps-frames-025": {
-    "hash": "73ca1fe1e98a1f0ce2bbb6d729a1ec15d57733186797bac2a2d40736d64e8ec1",
+    "hash": "6377376b36a2eb40eb22c56f051e41efd8e933c9b17aeab0208a2a54589a1607",
     "since": "2026-10-15",
     "change": "beemaps-frames"
   },
@@ -2945,7 +3095,7 @@
     "change": "osh-fusion"
   },
   "osh-033": {
-    "hash": "8f53fa3934f0af4a6999f59b102778a1b360e2f799359a8452306c7afb392f93",
+    "hash": "bd7647007206d88d6d3cbf6608cb31da6e48de2b5c53016e797173a8de11b0f9",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },

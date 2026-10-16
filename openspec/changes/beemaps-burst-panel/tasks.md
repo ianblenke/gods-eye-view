@@ -50,7 +50,7 @@
 
 ## 4. Gates and review
 
-- [ ] 4.1 Run `make ratchet CHANGE=beemaps-burst-panel` and read the verdict.
+- [x] 4.1 Run `make ratchet CHANGE=beemaps-burst-panel` and read the verdict.
 - [ ] 4.2 Run `/opsx:review beemaps-burst-panel` until both reviewers give PASS.
 - [ ] 4.3 Write `review.md`.
 - [ ] 4.4 Run `make gates CHANGE=beemaps-burst-panel` on the final tree.
