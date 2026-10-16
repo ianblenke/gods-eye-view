@@ -102,9 +102,9 @@ A quote checks a box of 0.1 to 5 km² and spends nothing. A confirm of the quote
 
 An answer that does not clearly say that Bee Maps created the burst counts as unknown. It blocks a resend of its key, and it refuses every confirm with a new idempotency key for 600 seconds. The file `.gev-logs/beemaps-bursts.jsonl` has a line for each attempt. The public description gives no value of a credit in dollars, so the routes show credits only.
 
-The layer "Bee Maps Bursts" in the group Cameras uses the burst routes. The button "Quote burst here" asks for the price of a burst in about 4 km² at the view centre, and it costs nothing. The layer draws the box of the quote. A press on the button "Confirm" of that quote sends one create request. Nothing else can send it, and the layer never sends it again.
+The layer "Bee Maps Bursts" in the group Cameras uses the burst routes. The chip "Quote burst here" asks for the price of a burst in about 4 km² at the view centre, and it costs nothing. The layer draws the box of the quote. A press on the chip "Confirm" of that quote sends one create request. Nothing else can send it, and the layer never sends that request again.
 
-After an answer that is not clear, the layer warns that a burst can exist and offers no second confirm. The button "Check my bursts" asks for the bursts of the account and draws their boxes. A burst has a hit when the list says so. This version cannot draw an area, cancel a burst or fetch the frames of a burst.
+After an unknown answer, the layer warns that a burst can exist and blocks a new quote until "Check my bursts" gets a fresh answer. The chip "Check my bursts" asks for the bursts of the account and draws their boxes. A burst has a hit when the list says so. This version cannot draw an area, cancel a burst or fetch the frames of a burst.
 
 ### Notes on the live sources
 

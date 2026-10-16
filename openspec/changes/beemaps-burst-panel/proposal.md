@@ -12,7 +12,8 @@ This is change 4 of 4. It adds the layer "Bee Maps Bursts". A burst takes credit
 - A quote costs nothing. The layer draws the box of the quote on the globe.
 - The Confirm chip stays disabled for 1000 milliseconds after the quote shows, so a double press of "Quote burst here" cannot press it.
 - A press of the Confirm chip sends one confirm request with the quoteId and an idempotency key. The layer then shows the result.
-- After an answer that is not clear, the layer says that a burst is possible and offers no chip that sends that confirm request again.
+- After an unknown answer, the layer says that a burst is possible.
+- The layer then disables the chip "Quote burst here" until "Check my bursts" gets an answer that is not a stored answer.
 - A press of "Check my bursts" asks for the list of bursts and draws the box of each one.
 - Send no quote, confirm or list request when the layer is enabled, and from any other path. These paths are a saved state, a share link, a move of the camera, voice and a timer.
 - Register the layer with the share token "6", in the group Cameras, out of voice, with a data credit. Change the count in the scenario `osh-033` from 32 to 33.
@@ -47,14 +48,14 @@ The tests use fake sources and fake viewers. No test and no run sends a request 
 - Known limit `hit-meaning-unverified`: The text counts a burst with `isHit` true as a hit. Nobody has checked the rule that Bee Maps uses for it.
 - Known limit `token-collision`: The token "6" is the next free token of this fork. The open upstream pull request 1069 claims "6" for another layer. The next sync must then renumber one of the two layers.
 - Known limit `osh-count`: The scenario `osh-033` names the count of the registry, so each new layer needs a new delta of the capability `osh`.
-- Known limit `status-once`: The layer reads the status when it is enabled or updated. Someone who changes `.env` must restart the app.
+- Known limit `status-once`: The layer reads the status when it is updated. Someone who changes `.env` must restart the app.
 - Known limit `local-only`: The routes answer only the machine that runs the server. The chips work with `make up-codex` and fail with `make up`. The layer names this in its message.
 - Known limit `quote-in-memory`: The quote lives in memory only. A reload drops it, and a new quote costs nothing.
-- Known limit `warning-in-memory`: The warning after an unclear answer lives in memory only. A reload drops it. The server keeps its own refusal of new confirm requests after an unclear answer, for 600 seconds.
+- Known limit `warning-in-memory`: The warning and the block of the chip "Quote burst here" after an unknown answer live in memory only. A reload drops them. The server keeps its own refusal of new confirm requests after an unknown record of its own, for 600 seconds.
 - Known limit `two-tabs`: A second browser tab can press Confirm for its own quote. The server allows one confirm at a time and counts the credits in a file, so the limits of change 3 still hold.
 - Known limit `terrain-fill`: The box is a filled rectangle on the ground with no outline. The globe can hide it on steep terrain.
 - Known limit `list-memory`: The list route answers from memory for 60 seconds, and no confirm request clears that memory. A press just after a confirm request can miss the new burst. The text then says "stored answer". The layer keeps the burst that the confirm request created.
-- Known limit `new-quote-after-unclear`: After an unclear answer, a new quote offers a Confirm chip again. The server then refuses the confirm request for the time of its hold, and the layer shows that answer as unclear.
+- Known limit `lost-answer`: The server holds new confirm requests only after an unknown record of its own. When the server created a burst and the browser lost the answer, the server holds nothing. The block of the chip "Quote burst here" is then the only guard, and it ends with a fresh list answer or a reload.
 - Known limit `chip-lock-only`: The wait of 1000 milliseconds guards against a double press only. The layer cannot know if the person read the price.
 - Known limit `null-fields`: The list route can set the status, the credits or the box of a burst to null. The layer counts such a burst and draws it grey, or draws no box when the box is null.
 - Known limit `view-moves`: The Confirm chip names the credits and the area, and no place. The camera can leave the box after the quote. The server confirms the box that it stored, and the layer keeps the box of the quote drawn on the globe.

@@ -66,10 +66,10 @@ export function describeReason(reason) {
   return REASONS[reason];
 }
 
-/** The text for a confirm that may have taken credits: `{retryAfter?}`. */
+/** The text for a confirm that can have taken credits: `{retryAfter?}`. */
 export function describeUnknown({ retryAfter } = {}) {
   return positive(retryAfter)
-    ? `${UNKNOWN_OUTCOME} The server refuses new confirms for ${seconds(retryAfter)}.`
+    ? `${UNKNOWN_OUTCOME} The server refuses new confirm requests for ${seconds(retryAfter)}.`
     : UNKNOWN_OUTCOME;
 }
 

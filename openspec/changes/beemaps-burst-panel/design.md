@@ -10,7 +10,7 @@ The layer panel supports controls for a layer through two module methods: `getRo
 **Goals:**
 - A confirm request only after two real presses: one for the quote and one for the Confirm chip of that quote.
 - The person sees the box and the price before the second press.
-- After an answer that is not clear, the layer says that a burst can exist, and offers no way to send the confirm request again.
+- After an unknown answer, the layer says that a burst can exist, and it blocks a new quote until the person has checked the bursts.
 
 **Non-goals:**
 - A way to draw an area. See the Known limit `view-box-only`.
@@ -84,15 +84,15 @@ The list route keeps an answer for 60 seconds and no confirm request clears it. 
 
 The list route sets the status, the credits or the box of a burst to null when Bee Maps gives no valid value. The same holds for the burst of a created answer. The source keeps such a burst. A burst with no box counts in the text and gets no entity. A created burst with no credits shows the credits of the quote.
 
-### D16: The layer asks for a frame after each change of the boxes
+### D16: The layer calls `requestRender` after each redraw of the boxes
 
-The application renders on demand: the render governor sets `requestRenderMode` when nothing animates. A change of entities from a button press does not draw a frame by itself. A real browser run showed a quote box that stayed invisible until something else drew a frame.
+The application renders on demand: the render governor sets `requestRenderMode` when nothing animates. A change of entities from a chip press does not draw a new image by itself. A real browser run showed a quote box that stayed invisible until something else drew a new image.
 The layer therefore calls `requestRender` after each change of the boxes. The wrapper `src/app/layers/beemapsBursts.js` gives it `governorRequestRender`.
 
 ## Risks / Trade-offs
 
 - [A hidden tab runs the timer late] → The press compares the clock with the end time.
-- [A reload drops the warning after an unclear answer] → The server keeps its refusal of new confirm requests. See the Known limit `warning-in-memory`.
+- [A reload drops the warning after an unknown answer] → The server keeps its refusal of new confirm requests after an unknown record of its own. See the Known limit `warning-in-memory`.
 - [A quote can be pressed twice in a row] → The wait of 1000 milliseconds of D13 guards against it.
 - [The list route answers from memory] → The text says "stored answer", and D14 keeps the new burst.
 - [The token "6" collides with the pull request 1069 of the upstream project] → The Known limit `token-collision` says that a sync renumbers one layer.
@@ -102,4 +102,4 @@ The layer therefore calls `requestRender` after each change of the boxes. The wr
 ## Purpose at archive time
 
 The lead sets this Purpose at archive time:
-"Show the Bee Maps bursts of the account. Let a person quote and confirm a new burst for the view centre. A confirm needs two presses and shows what it took."
+"Show the Bee Maps bursts of the account. Let a person quote and confirm a new burst for the view centre. A confirm request needs two presses, and the layer shows its answer."

@@ -153,15 +153,15 @@ test('[beemaps-bursts-016] warns that a burst can exist, and adds the refusal ti
   }
   assert.equal(
     describeUnknown({ retryAfter: 539 }),
-    `${base} The server refuses new confirms for 539 seconds.`,
+    `${base} The server refuses new confirm requests for 539 seconds.`,
   );
   assert.equal(
     describeUnknown({ retryAfter: 1 }),
-    `${base} The server refuses new confirms for 1 second.`,
+    `${base} The server refuses new confirm requests for 1 second.`,
   );
   assert.equal(
     describeUnknown({ retryAfter: 2 }),
-    `${base} The server refuses new confirms for 2 seconds.`,
+    `${base} The server refuses new confirm requests for 2 seconds.`,
   );
 });
 

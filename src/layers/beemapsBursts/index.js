@@ -53,8 +53,8 @@ function randomKey() {
 
 /**
  * The layer of Bee Maps bursts. A confirm request leaves only after a person
- * presses "quote" and then the Confirm chip of that quote. The layer never
- * sends a request again after an error.
+ * presses "quote" and then the Confirm chip of that quote. The layer sends no
+ * request by itself after an error.
  */
 export function createBeemapsBurstsLayer({
   source,
@@ -66,7 +66,7 @@ export function createBeemapsBurstsLayer({
 } = {}) {
   if (SOURCE_METHODS.some((name) => typeof source?.[name] !== 'function'))
     throw new TypeError(
-      'Bee Maps Bursts requires a source with getStatus, quote, confirm and list',
+      'Bee Maps Bursts needs a source with getStatus, quote, confirm and list',
     );
   let _viewer = null;
   let _dataSource = null;
@@ -82,6 +82,7 @@ export function createBeemapsBurstsLayer({
   let _unlockTimer = null;
   let _confirming = null;
   let _confirmText = null;
+  let _mustList = false;
   let _list = null;
   let _created = [];
   let _lastUpdate = null;
@@ -139,6 +140,12 @@ export function createBeemapsBurstsLayer({
 
   function unlock() {
     _unlockTimer = null;
+    if (!_quote) return;
+    const left = _quote.unlocksAt - now();
+    if (left > 0) {
+      _unlockTimer = setTimer(unlock, left);
+      return;
+    }
     notify();
   }
 
@@ -176,7 +183,14 @@ export function createBeemapsBurstsLayer({
   }
 
   async function pressQuote() {
-    if (!_enabled || _request || _confirming || _quote || _usable === false) {
+    if (
+      !_enabled ||
+      _request ||
+      _confirming ||
+      _quote ||
+      _mustList ||
+      _usable === false
+    ) {
       return;
     }
     const box = burstBox(viewCentre(_viewer));
@@ -243,6 +257,7 @@ export function createBeemapsBurstsLayer({
         total: result.total,
         cached: result.cached,
       };
+      if (result.cached === false) _mustList = false;
       _lastUpdate = now();
       _message = null;
       _lastError = null;
@@ -264,7 +279,7 @@ export function createBeemapsBurstsLayer({
 
   /** Show what the answer of a confirm says. A created burst joins the list. */
   function showConfirm(quote, result) {
-    if (result?.outcome === 'created') {
+    if (result?.outcome === 'created' && typeof result.burst?.id === 'string') {
       const credits = result.burst.credits ?? quote.credits;
       _confirmText = describeCreated({
         credits,
@@ -287,6 +302,7 @@ export function createBeemapsBurstsLayer({
           ? describeFailure(result)
           : describeUnknown(result ?? {});
       _lastError = _confirmText;
+      if (result?.outcome !== 'refused') _mustList = true;
     }
   }
 
@@ -402,8 +418,8 @@ export function createBeemapsBurstsLayer({
           chips.push({
             id: 'quote',
             label: _requestKind === 'quote' ? LABELS.quoting : LABELS.quote,
-            title: TITLES.quote,
-            disabled: busy || unusable,
+            title: _mustList ? TITLES.quoteBlocked : TITLES.quote,
+            disabled: busy || unusable || _mustList,
             busy: _requestKind === 'quote',
             onClick: pressQuote,
           });
@@ -444,6 +460,7 @@ export function createBeemapsBurstsLayer({
       _enabled = false;
       _confirming = null;
       _confirmText = null;
+      _mustList = false;
       _viewer = null;
       if (_dataSource) {
         viewer.dataSources.remove(_dataSource, true);

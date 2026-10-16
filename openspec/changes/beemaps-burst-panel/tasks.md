@@ -32,7 +32,8 @@
 - [x] 2.11 Add the packages to `scripts/package-boundaries.json`.
 - [x] 2.12 Add the two exports of the layer to `package.json`.
 - [x] 2.13 Add the new files to `openspec/ownership.json` and `scripts/format-scope.json`.
-- [x] 2.14 Write the entry in `CHANGELOG.md` and the paragraph in `DATA_SOURCES.md`.
+- [x] 2.14 Write the entry in `CHANGELOG.md`.
+- [x] 2.15 Write the paragraph in `DATA_SOURCES.md`.
 
 ## 3. Check on the host and in the image
 
@@ -50,7 +51,8 @@
 
 ## 4. Gates and review
 
-- [x] 4.1 Run `make ratchet CHANGE=beemaps-burst-panel` and read the verdict.
+- [x] 4.1 Run `make ratchet CHANGE=beemaps-burst-panel`.
+- [x] 4.5 Read the verdict of the ratchet.
 - [ ] 4.2 Run `/opsx:review beemaps-burst-panel` until both reviewers give PASS.
 - [ ] 4.3 Write `review.md`.
 - [ ] 4.4 Run `make gates CHANGE=beemaps-burst-panel` on the final tree.

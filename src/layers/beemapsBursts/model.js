@@ -17,6 +17,7 @@ export const LABELS = Object.freeze({
 });
 export const TITLES = Object.freeze({
   quote: 'Ask for the price of a burst. A quote costs nothing.',
+  quoteBlocked: 'A burst is possible. Press Check my bursts first.',
   confirm: 'Create the burst. This takes credits and cannot be undone.',
   cancel: 'Cancel the quote. Nothing is sent.',
   list: 'Ask Bee Maps for your bursts. This can cost money.',
