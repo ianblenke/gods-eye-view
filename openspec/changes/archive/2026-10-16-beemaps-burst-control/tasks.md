@@ -41,6 +41,6 @@
 ## 4. Lead work in the image
 
 - [x] 4.1 Run `make ratchet CHANGE=beemaps-burst-control`.
-- [ ] 4.2 Run the two review agents.
-- [ ] 4.3 Write review.md.
-- [ ] 4.4 Run `make gates CHANGE=beemaps-burst-control` on the final tree.
+- [x] 4.2 Run the two review agents.
+- [x] 4.3 Write review.md.
+- [x] 4.4 Run `make gates CHANGE=beemaps-burst-control` on the final tree.
