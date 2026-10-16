@@ -1,8 +1,5 @@
-# gdacs-source Specification
+## ADDED Requirements
 
-## Purpose
-Show recent flood, drought, volcano and storm alerts of the world. Read the GDACS event list, keep a short list of fields for each event, and serve one small document.
-## Requirements
 ### Requirement: Event fields
 The GDACS provider MUST keep only the allowed fields of an event and MUST drop every other field of the record. It MUST build the report link itself from the type and the ids.
 
@@ -95,7 +92,7 @@ Origin: spec-first
 - **AND** it normalizes a record whose `fromdate` is "2026-10-12T01:00:00"
 - **THEN** `to` is "2026-10-12T01:00:00.000Z" for the first two values, "2026-10-12T01:00:00.500Z" for the third and "2026-10-12T01:00:00.123Z" for the fourth
 - **AND** `to` is "2026-10-12T23:59:59.000Z" for the fifth value
-- **AND** the values "0100-01-01T00:00:00", "1970-01-01T00:00:00" and "2026-12-31T23:59:59" are valid, and they give the same texts with ".000Z"
+- **AND** the values "0100-01-01T00:00:00", "1970-01-01T00:00:00", "2026-12-31T23:59:59" and "9999-12-31T23:59:59" are valid, and they give the same texts with ".000Z"
 - **AND** `from` is "2026-10-12T01:00:00.000Z"
 - **AND** `modified` follows the same rules as `to`
 
@@ -104,7 +101,8 @@ Origin: spec-first
 - **AND** the provider normalizes records whose `todate` has the values "2026-10-12T01:00:00+02:00", "2026-02-30T00:00:00", "2026-13-40T00:00:00" and "2026-10-12"
 - **AND** it normalizes records whose `todate` has the values "2026-10-12T01:00", "2026-10-12T25:00:00", "2026-10-12T01:60:00" and "2026-10-12T01:00:61"
 - **AND** it normalizes records whose `todate` has the values "2026-10-12T01:00:00.1234", "2026-10-12T01:00:00." and "2026-10-12T01:00:60"
-- **AND** it normalizes records whose `todate` has the values "2026-13-12T01:00:00" and "0099-10-12T01:00:00", where the year is below 0100
+- **AND** it normalizes records whose `todate` has the value "2026-13-12T01:00:00"
+- **AND** it normalizes a record whose `todate` has the value "0099-10-12T01:00:00", which has a year below 0100
 - **AND** it normalizes texts with a part of the wrong number of digits, such as "26-10-12T01:00:00" and "2026-10-12T1:00:00"
 - **AND** the part can be the year, the month, the day, the hour, the minute or the second
 - **AND** it normalizes the texts "x2026-10-12T01:00:00" and "2026-10-12T01:00:00x", a list that holds a valid text, an empty text and a value that is not text
@@ -213,8 +211,8 @@ The provider MUST list the events with the latest `modified` first. An event wit
 Origin: spec-first
 
 #### Scenario: Order the events and bound the list `gdacs-source-015`
-- **WHEN** a fake page 1 holds 520 valid records, all current, with different `modified` times, and the record with the oldest `modified` first
-- **AND** the answers to the pages 2 to 5 are 204
+- **WHEN** a fake page 1 holds 520 valid records, all current, with different `modified` times, in ascending order
+- **AND** the answer to page 2 is 204
 - **THEN** the result lists 500 events, and the first has the latest `modified`
 - **AND** the last listed event has the 500th latest `modified`
 - **AND** `counts.total` is 500, `counts.current` is 500 and `counts.dropped` is 0, and `counts.byType` counts only the listed events
@@ -236,7 +234,7 @@ Origin: spec-first
 - **AND** the body has `schemaVersion` 1, `stale` false, `unavailable` false and `reason` null
 - **AND** the `source` is "GDACS (Global Disaster Alert and Coordination System)"
 - **AND** the `attribution` is "GDACS, a cooperation framework of the United Nations and the European Commission"
-- **AND** the `license` is "The legal notice of the European Commission licenses content that the Union owns on its website under CC BY 4.0. GDACS gives no separate license for the feed. Data of NOAA, JTWC, GloFAS, GDO and other sources keep their own terms. The provider shortens the data and rounds the positions."
+- **AND** the `license` is "The legal notice of the European Commission licenses content that the Union owns on the Commission website under CC BY 4.0. GDACS gives no separate license for the feed. Data of NOAA, JTWC, GloFAS, GDO and other sources keep their own terms. The provider shortens the data and rounds the positions."
 - **AND** the `disclaimer` is "The estimates of GDACS come from a machine, and an estimate can be wrong. Check each estimate before you use it to make a decision."
 - **AND** the `coverage` is "Flood, drought, volcano and tropical cyclone events active on any day from the UTC date 14 days before fetchedAt. The provider does not list earthquakes and wildfires."
 - **AND** `fetchedAt` is "2026-03-05T10:00:00.000Z"
@@ -332,20 +330,21 @@ Origin: spec-first
 - **AND** a provider that gets no timer options uses the global `setTimeout` with 30000 and the global `clearTimeout`
 
 ### Requirement: Stale document
-When a refresh fails, the provider MUST serve the last good document with `stale` true. It MUST do this only while that document is younger than 1 hour at the start of the failed refresh. In all other cases of a failure it MUST answer with `unavailable` true. It MUST NOT cache the stale document or the `unavailable` document.
+When a refresh fails, the provider MUST serve the last good document with `stale` true. It MUST do this only while that document is younger than 1 hour at the start of the failed refresh. In all other cases of a failure it MUST serve a document with `unavailable` true. It MUST NOT cache the stale document or the `unavailable` document.
 Origin: spec-first
 
 #### Scenario: Serve the last good document when a refresh fails `gdacs-source-024`
 - **WHEN** a refresh fails after a good refresh
-- **THEN** the provider answers with the last good document and `stale` true when that document is 1 millisecond younger than 1 hour
+- **THEN** the provider serves the last good document with `stale` true when that document is 1 millisecond younger than 1 hour
+- **AND** the age of a document is its age at the start of the failed refresh
 - **AND** the stale document is the last good document with only `stale` changed
-- **AND** the provider answers with `unavailable` true when that document is exactly 1 hour old
+- **AND** the provider serves a document with `unavailable` true when that document is exactly 1 hour old
 - **AND** an `unavailable` document has the status 200, `stale` false, `fetchedAt` null and the reason "GDACS unavailable"
 - **AND** an `unavailable` document has the same `schemaVersion`, `source`, `attribution`, `license`, `disclaimer` and `coverage` as a good document
 - **AND** its `counts` has `total` 0, `current` 0 and `dropped` 0
 - **AND** its `byType` has FL 0, DR 0, VO 0 and TC 0, and it holds no event
 - **AND** the stale document and the `unavailable` document have the status 200
-- **AND** the age counts at the start of the failed refresh. The stale answer holds for a document that is 1 millisecond younger than 1 hour at that start. It holds when the clock moves 30 seconds during the failed page request
+- **AND** the provider serves the stale document also when the clock moves 30 seconds during the failed page request. The document is 1 millisecond younger than 1 hour at the start of that refresh
 - **AND** the next browser request after a failure tries GDACS again, also after a stale document
 
 ### Requirement: Cache and shared refresh
@@ -380,4 +379,3 @@ Origin: spec-first
 - **AND** the page request has no body
 - **AND** the same holds when the browser sends the header names in lower case
 - **AND** the JSON text of the document holds none of the header values of the browser request
-

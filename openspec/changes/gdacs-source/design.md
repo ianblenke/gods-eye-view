@@ -8,7 +8,7 @@ GDACS is a cooperation framework of the United Nations and the European Commissi
 A page holds at most 100 records. A request for a page with no record gets the answer 204 with no body. A request for 14 days returned 65 records on one page.
 
 This design uses these terms.
-- A page is the answer of GDACS to one page request.
+- A page is one numbered part of the GDACS event list. A page request asks GDACS for one page, and the answer holds that page.
 - A record is an entry of the `features` list of a page.
 - An event is an entry of the `events` list of the document.
 - The document is the JSON body that the route sends.
@@ -77,7 +77,7 @@ The provider keeps the document for 10 minutes (Reticulum: 60 seconds). The prov
 
 In the scout, droughts changed in one daily batch and storms changed every few hours, so 10 minutes is short enough. A page of 100 records is about 140 KB, so the limit of 2 MiB is far above a real page.
 
-Browser requests that come while a refresh waits share that refresh. The provider does not cache a failed refresh. The provider takes the options `setTimer` and `clearTimer`, as the Reticulum provider does. A cached document has the old date window for at most 10 minutes. When GDACS fails, the last good document can have the old window for about 1 hour, and `stale` is true.
+Browser requests that come while a refresh waits share that refresh. The provider does not cache the stale document or the `unavailable` document. The provider takes the options `setTimer` and `clearTimer`, as the Reticulum provider does. A cached document has the old date window for at most 10 minutes. When GDACS fails, the last good document can have the old window for about 1 hour, and `stale` is true.
 
 ### D8: No polygons in this change
 

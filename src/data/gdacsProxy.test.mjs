@@ -274,6 +274,7 @@ const VALID_TIMES = [
   ['0100-01-01T00:00:00', '0100-01-01T00:00:00.000Z'],
   ['1970-01-01T00:00:00', '1970-01-01T00:00:00.000Z'],
   ['2026-12-31T23:59:59', '2026-12-31T23:59:59.000Z'],
+  ['9999-12-31T23:59:59', '9999-12-31T23:59:59.000Z'],
 ];
 const INVALID_TIMES = [
   '2026-10-12T01:00:00+02:00',
@@ -450,7 +451,7 @@ test('[gdacs-source-011] sets the severity to null when the unit, the value or t
   const result = normalizeEvents(
     cases.map((severitydata, index) =>
       rec({
-        eventtype: index < 2 ? 'VO' : 'TC',
+        eventtype: ['FL', 'VO'][index] ?? 'TC',
         severitydata,
         eventid: 100 + index,
       }),
@@ -884,7 +885,7 @@ test('[gdacs-source-016] answers a GET request with the document', async () => {
     );
     assert.equal(
       res.body.license,
-      'The legal notice of the European Commission licenses content that the Union owns on its website under CC BY 4.0. GDACS gives no separate license for the feed. Data of NOAA, JTWC, GloFAS, GDO and other sources keep their own terms. The provider shortens the data and rounds the positions.',
+      'The legal notice of the European Commission licenses content that the Union owns on the Commission website under CC BY 4.0. GDACS gives no separate license for the feed. Data of NOAA, JTWC, GloFAS, GDO and other sources keep their own terms. The provider shortens the data and rounds the positions.',
     );
     assert.equal(
       res.body.disclaimer,
@@ -1198,7 +1199,7 @@ test('[gdacs-source-023] stops a refresh after 30 seconds with one timer and one
   assert.equal((await real.request('/')).body.unavailable, false);
 });
 
-test('[gdacs-source-024] serves the last good document while it is younger than 1 hour when a refresh fails', async () => {
+test('[gdacs-source-024] serves the last good document when a refresh fails, if the document is younger than 1 hour at the start of that refresh', async () => {
   for (const [age, stale] of [
     [HOUR - 1, true],
     [HOUR, false],
@@ -1539,7 +1540,7 @@ test('[gdacs-source-023] starts the timer before the first page and takes the ti
   assert.deepEqual(clears, [mine[0].handle]);
 });
 
-test('[gdacs-source-024] answers with the status 200 and tries GDACS again after a stale document', async () => {
+test('[gdacs-source-024] sends the status 200 and tries GDACS again after a stale document', async () => {
   const calls = [];
   const { request, clock } = install({
     fetchImpl: pagesFetch([[rec()], { status: 500 }, { status: 500 }], calls),
