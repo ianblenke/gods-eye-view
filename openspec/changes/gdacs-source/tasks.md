@@ -1,13 +1,14 @@
 ## 1. Write the tests
 
 - [ ] 1.1 Write the tests for `gdacs-source-001`, `gdacs-source-002` and `gdacs-source-003` in `src/data/gdacsProxy.test.mjs`.
-- [ ] 1.2 Write the tests for `gdacs-source-004`, `gdacs-source-005`, `gdacs-source-006` and `gdacs-source-007` in the same file.
-- [ ] 1.3 Write the tests for `gdacs-source-008`, `gdacs-source-009` and `gdacs-source-010` in the same file.
-- [ ] 1.4 Write the tests for `gdacs-source-011`, `gdacs-source-012` and `gdacs-source-013` in the same file.
-- [ ] 1.5 Write the tests for `gdacs-source-014`, `gdacs-source-015` and `gdacs-source-016` in the same file.
-- [ ] 1.6 Write the tests for `gdacs-source-017` and `gdacs-source-018` in the same file.
-- [ ] 1.7 Write the tests for `gdacs-source-019`, `gdacs-source-020`, `gdacs-source-021` and `gdacs-source-022` in the same file.
-- [ ] 1.8 Write the tests for `gdacs-source-023`, `gdacs-source-024` and `gdacs-source-025` in the same file.
+- [ ] 1.2 Write the tests for `gdacs-source-004`, `gdacs-source-005` and `gdacs-source-006` in the same file.
+- [ ] 1.3 Write the tests for `gdacs-source-007`, `gdacs-source-008` and `gdacs-source-009` in the same file.
+- [ ] 1.4 Write the tests for `gdacs-source-010`, `gdacs-source-011`, `gdacs-source-012` and `gdacs-source-013` in the same file.
+- [ ] 1.5 Write the tests for `gdacs-source-014` and `gdacs-source-015` in the same file.
+- [ ] 1.6 Write the tests for `gdacs-source-016`, `gdacs-source-017` and `gdacs-source-018` in the same file.
+- [ ] 1.7 Write the tests for `gdacs-source-019` and `gdacs-source-020` in the same file.
+- [ ] 1.8 Write the tests for `gdacs-source-021`, `gdacs-source-022`, `gdacs-source-023` and `gdacs-source-024` in the same file.
+- [ ] 1.9 Write the tests for `gdacs-source-025`, `gdacs-source-026` and `gdacs-source-027` in the same file.
 
 ## 2. Write the code and the documents
 
@@ -22,10 +23,10 @@
 
 - [ ] 3.1 Run the test file `src/data/gdacsProxy.test.mjs` on the host.
 - [ ] 3.2 Run the test files that list the providers on the host.
-- [ ] 3.3 Run the named faults of the provider, with one fault for each rule and each limit of the spec.
+- [ ] 3.3 Run one named fault for each rule and each limit of the spec.
 - [ ] 3.4 Write `evidence/mutations.txt` with the result of each fault.
 - [ ] 3.5 Run the provider once against the real feed with a script outside the repository.
-- [ ] 3.6 Write `evidence/live-run.txt` with the counts of that run and the counts of the raw feed.
+- [ ] 3.6 Write `evidence/live-run.txt` with the counts of the run, the counts of the raw feed and the size of the document.
 - [ ] 3.7 Run the four checks of `make precheck` on the host.
 - [ ] 3.8 Run the STE lint on the host.
 - [ ] 3.9 Run `openspec validate gdacs-source --strict` on the host.

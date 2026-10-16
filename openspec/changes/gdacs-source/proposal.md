@@ -1,6 +1,6 @@
 ## Why
 
-The globe shows earthquakes, fires and storms. It shows no flood, no drought and no volcano alert. Its storm layer covers only the area of the National Hurricane Center.
+The globe shows earthquakes, fires and storms. It shows no flood, no drought and no volcano alert. Its storm layer covers only the Atlantic and the eastern and central North Pacific.
 
 The Global Disaster Alert and Coordination System (GDACS) publishes these events as a JSON feed. The feed needs no key and no account. A scout of the data sources of a Nature paper on subseasonal forecasts found GDACS on 2026-10-16. The paper uses GDACS flood events. GDACS was the one source of that paper that fits a live layer.
 
@@ -9,7 +9,7 @@ This is change 1 of 2. It adds the server provider. Change 2 adds the layer on t
 ## What Changes
 
 - Add the route `/api/gdacs`. A GET request gets one JSON document of recent disaster events.
-- The provider asks the GDACS event list for flood (FL), drought (DR), volcano (VO) and tropical cyclone (TC) events. It asks for all three alert levels. It asks for the events that were active from the date 14 days before the request.
+- The provider asks the GDACS event list for flood (FL), drought (DR), volcano (VO) and tropical cyclone (TC) events. It asks for all three alert levels. It asks for the events that were active on any day from the UTC date 14 days before the refresh.
 - A current event is an event that GDACS marks as still active. The document marks each event as current or not, so the layer can show only the current events.
 - The provider keeps a short list of fields for each event. It builds the link to the GDACS report itself, and it drops icons, HTML text and every link of the feed.
 - The provider keeps the document for 10 minutes. It serves the last good document while that document is younger than 1 hour and GDACS fails.
@@ -43,15 +43,17 @@ None.
 ## Known limits and later changes
 
 - Known limit `eq-wf-left-out`: GDACS also lists earthquakes (EQ) and wildfires (WF). The globe already has an earthquake layer and a fire layer, so the provider does not list them. A later change can add them, but it must change the type rules, the counts, the coverage text and the limit of 500 events.
-- Known limit `cyclone-overlap`: The cyclone layer shows storms of the National Hurricane Center. GDACS also lists these storms. A storm in that area can show in both layers.
+- Known limit `cyclone-overlap`: The cyclone layer shows storms of the National Hurricane Center and the Central Pacific Hurricane Center. GDACS also lists these storms. A storm in that area can show in both layers.
 - Known limit `thin-live-content`: On 2026-10-16, 18 of 65 events in the window were current. Of these, 11 were floods, 1 was a drought and 6 were storms. No volcano was current. The layer can look empty on a day with few events.
 - Known limit `utc-assumed`: GDACS sends times with no time zone. The provider takes them as UTC. The scout read the feed at 12:38:42 GMT on 2026-10-16, and the newest `datemodified` was 12:38:32. This fits UTC. GDACS does not state the zone.
 - Known limit `license-inferred`: The GDACS terms of use are a disclaimer and give no license. The legal notice of the European Commission, which the GDACS footer links, licenses "content owned by the EU on this website" under CC BY 4.0. It does not cover the part that the United Nations own. The RSS feed of GDACS says "public domain". The owner must accept this interpretation of the license.
-- Known limit `license-third-party`: The feed relays data of NOAA, JTWC, GloFAS, GDO and the volcanic ash centers, and their own terms apply. CC BY 4.0 asks for the indication of changes. The `license` text says that the provider shortens the data and rounds the positions.
+- Known limit `license-third-party`: The feed relays data of NOAA, JTWC, GloFAS, GDO and the volcanic ash centers, and their own terms apply. CC BY 4.0 asks you to say what you changed. The `license` text says that the provider shortens the data and rounds the positions.
 - Known limit `flood-severity-none`: On 2026-10-16, each of the 41 floods and 2 volcanoes in the window had a severity of 0. The provider sets `severity` to null for such an event, so the layer shows only the alert level.
-- Known limit `window-14-days`: The provider asks for the events that were active from the UTC date 14 days before the request. An event that ended on that date can be 15 days old.
+- Known limit `window-14-days`: The provider asks for the events that were active on any day from the UTC date 14 days before the refresh. An event that ended on that date can be 15 days old.
 - Known limit `page-overlap`: GDACS pages can overlap while the data changes. The provider keeps one event for each type and event id.
-- Known limit `outage-refetch`: The provider does not cache a failed refresh. While GDACS fails, each request asks GDACS again, with up to 5 pages. The document stays stale for at most 1 hour.
-- Known limit `text-cleaning`: The clean-up removes the characters "<" and ">". Three of the ten storm severity texts of 2026-10-16 hold "Hurricane/Typhoon > 74 mph". The provider loses the sign. The cut at 120 characters shortens the longest name of that day (311 characters). The cut at 80 characters shortens the longest country (296 characters).
+- Known limit `outage-refetch`: The provider does not cache a failed refresh. While GDACS fails, each browser request that comes when no refresh waits asks GDACS again, with up to 5 pages. The document stays stale for at most 1 hour.
+- Known limit `text-cleaning`: The provider removes the characters "<" and ">". Three of the ten storm severity texts of 2026-10-16 hold "Hurricane/Typhoon > 74 mph". The provider loses the sign. The provider cuts the longest name of that day (311 characters) to 120 characters. It cuts the longest country (296 characters) to 80.
+- Known limit `page-cap`: The provider fetches at most 5 pages and lists at most 500 events. A window with more records loses the rest, and the document shows no sign of it.
+- Known limit `silent-empty`: A change in the shape of the feed can make the provider drop every record. The document is then good, it has no event, and `unavailable` is false. Only `counts.dropped` shows it.
 - Known limit `empty-body-fails`: A page that answers 204 means no more events. A page that answers 200 with an empty body is a failure.
 - Known limit `real-service-once`: No test sends a request to GDACS. One run reads the real feed once, and `evidence/live-run.txt` shows it.
