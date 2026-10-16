@@ -448,7 +448,7 @@
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-019] takes the burst of the list answer in place of the burst that a confirm created"
   ],
   "beemaps-bursts-020": [
-    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-020] calls requestRender once after each redraw of the boxes, with the reason beemaps-bursts",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-020] calls requestRender once each time the layer draws the boxes, with the reason beemaps-bursts",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-020] calls requestRender once for a list answer with no burst",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-020] calls requestRender zero times for a failed list and once for a refused confirm request",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-020] calls requestRender zero times for a view with no box and for a failed quote",
