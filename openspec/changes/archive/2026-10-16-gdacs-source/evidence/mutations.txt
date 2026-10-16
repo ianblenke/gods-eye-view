@@ -54,7 +54,7 @@ Equivalent faults. The description is first and the reason follows:
 - "Stop at a short page or at the page limit in the same test". After page 5 the `for` loop ends at once. A `break` at page 5 gives the same records as the end of the loop.
 - "Reverse the joined events before the sort". The comparator is a total order: the modified time, then the unique id. It never returns 0, so the input order does not change the sorted list.
 - "Pass undefined as the start of the cut of the date text". The call `slice(undefined, 10)` starts at 0 as `slice(0, 10)` does.
-- "Cut the date text at the letter T in place of the tenth character". For a year from 0000 to 9999, `toISOString` gives YYYY-MM-DDTHH:MM:SS.sssZ. The text before T has ten characters. It differs only for a clock beyond the year 9999.
+- "Cut the date text at the letter T in place of the tenth character". For a year from 0000 to 9999, `toISOString` gives YYYY-MM-DDTHH:MM:SS.sssZ. The text before T has ten characters. It differs only for a clock before the year 0000 or after the year 9999.
 - "Change the text of the status error". The catch clause of refresh binds no error, so the text of the error is never read.
 - "Drop the object test of the answer body". A null body throws a TypeError at `body.type`, and the refresh fails. Any other value that is not an object has no type "FeatureCollection".
 - "Test the features value with typeof in place of the list test". JSON gives only arrays as iterable objects. The spread of null or of a plain object throws a TypeError, and the refresh fails as before.
@@ -716,7 +716,7 @@ gdacs-source-019 | Read the date of a time with the local date format of Canada 
 gdacs-source-019 | Cut the date of a time at nine characters | failing: [gdacs-source-019], [gdacs-source-020]
 gdacs-source-019 | Cut the date of a time at eleven characters | failing: [gdacs-source-019], [gdacs-source-020]
 gdacs-source-019 | Pass undefined as the start of the cut of the date text | failing: NONE (equivalent fault: The call `slice(undefined, 10)` starts at 0 as `slice(0, 10)` does.)
-gdacs-source-019 | Cut the date text at the letter T in place of the tenth character | failing: NONE (equivalent fault: For a year from 0000 to 9999, `toISOString` gives YYYY-MM-DDTHH:MM:SS.sssZ. The text before T has ten characters. It differs only for a clock beyond the year 9999.)
+gdacs-source-019 | Cut the date text at the letter T in place of the tenth character | failing: NONE (equivalent fault: For a year from 0000 to 9999, `toISOString` gives YYYY-MM-DDTHH:MM:SS.sssZ. The text before T has ten characters. It differs only for a clock before the year 0000 or after the year 9999.)
 gdacs-source-020 | Read the clock again for the to date of each page request | failing: [gdacs-source-020]
 gdacs-source-020 | Read the clock again for the from date of each page request | failing: [gdacs-source-020]
 gdacs-source-019 | Remove the method option from the page request | failing: [gdacs-source-019], [gdacs-source-027]

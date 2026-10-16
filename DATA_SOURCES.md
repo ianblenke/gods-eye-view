@@ -91,11 +91,11 @@ The Reticulum software has its own licence. The licence forbids use in any syste
 
 The Global Disaster Alert and Coordination System (GDACS) is a cooperation framework of the United Nations and the European Commission. It lists floods, droughts, volcano alerts and tropical cyclones with an alert level of green, orange or red.
 
-The route `/api/gdacs` answers one JSON document. The provider asks the GDACS event list for flood, drought, volcano and tropical cyclone events that were active on any day from the UTC date 14 days before the refresh. It reads at most 5 pages, checks every record, keeps 18 fields for each event and lists at most 500 events. It builds the link to the GDACS report itself.
+The route `/api/gdacs` answers one JSON document. The provider asks the GDACS event list for flood, drought, volcano and tropical cyclone events. It asks for the events that were active on any day from the UTC date 14 days before the refresh. It reads at most 5 pages, checks every record, keeps 18 fields for each event and lists at most 500 events. It builds the link to the GDACS report itself.
 
 The provider keeps the document for 10 minutes. When GDACS fails, it serves the last good document while that document is younger than 1 hour at the start of the failed refresh. The document carries the attribution, the license note and a disclaimer about the GDACS estimates. The route needs no key and no setting.
 
-The GDACS terms of use are a disclaimer and give no license. The legal notice of the European Commission licenses the content that the Union owns on the Commission website under CC BY 4.0, but it does not cover the part that the United Nations own. The feed also relays data of NOAA, JTWC, GloFAS, GDO and the volcanic ash centers, and their own terms apply. The provider shortens the data and rounds the positions.
+The GDACS terms of use are a disclaimer and give no license. The legal notice of the European Commission licenses the content that the Union owns on the Commission website under CC BY 4.0. It does not cover the part that belongs to the United Nations. The feed also relays data of NOAA, JTWC, GloFAS, GDO and the volcanic ash centers, and their own terms apply. The provider shortens the data and rounds the positions.
 
 GDACS makes its estimates by machine, and an estimate can be wrong. Check each estimate before you use it to make a decision. This version has no layer. The provider lists no earthquake and no wildfire, because the globe already has layers for both.
 
