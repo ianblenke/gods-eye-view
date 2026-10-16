@@ -132,9 +132,9 @@ Origin: spec-first
 - **AND** an id that was never given gives the same answer, when no hold answers first
 - **AND** a confirm uses up its quote at the quote step, for every outcome after that step
 - **AND** the same quote with a new idempotency key gets `quote_expired` after a created burst, a refusal 400, budget_used or log_failed
-- **AND** it also gets `quote_expired` after budget_unavailable and after a failed write of the "pending" record
-- **AND** a hold can start after a refusal 401, 402, 403 or 429, or after an unknown outcome
-- **AND** while that hold lasts, a confirm of the same quote with a new idempotency key gets the hold of scenario 029 or 040
+- **AND** the same quote with a new idempotency key also gets `quote_expired` after budget_unavailable and after a failed write of the "pending" record
+- **AND** a hold starts after a refusal 401, 402, 403 or 429, and after an unknown outcome
+- **AND** while that hold lasts, a confirm with a new idempotency key gets the hold of scenario 029 or 040, whatever its quote
 - **AND** the plugin keeps at most 8 quotes, so the ninth quote ends the oldest one
 
 #### Scenario: Refuse a quote that the budget cannot pay `beemaps-burst-control-014`
@@ -255,7 +255,7 @@ Origin: spec-first
 - **THEN** the answer is 409 with `{error:'key_reused'}`
 - **AND** the fake upstream gets no request, and the budget does not change
 - **AND** the check of the idempotency key comes before the check of the quote
-- **AND** so a confirm with the key and the quoteId of the record works after the quote has expired
+- **AND** so a confirm with the key and the quoteId of the record gets the answer of the record after the quote has expired
 
 #### Scenario: Keep the record on disk `beemaps-burst-control-028`
 - **WHEN** a test confirms a quote and reads the file `ledger.json` in the folder `beemaps-burst`
@@ -271,7 +271,7 @@ Origin: spec-first
 - **AND** when the write of the record after the send fails, the answer is still the outcome of the send
 - **AND** the file then keeps the state "pending"
 - **AND** a new plugin treats that key as an unknown outcome
-- **AND** in that new plugin, a confirm with that key and its quoteId gets scenario 026
+- **AND** in that new plugin, a confirm with that key and the quoteId of its record gets scenario 026
 - **AND** in that new plugin, a new idempotency key gets the hold of scenario 040
 
 #### Scenario: Refuse when the ledger fails `beemaps-burst-control-039`
