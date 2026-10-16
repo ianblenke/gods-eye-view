@@ -3786,8 +3786,8 @@
     "src/data/gdacsProxy.test.mjs › [gdacs-source-023] stops a refresh after 30 seconds with one timer and one signal"
   ],
   "gdacs-source-024": [
-    "src/data/gdacsProxy.test.mjs › [gdacs-source-024] answers with the status 200 and tries GDACS again after a stale document",
-    "src/data/gdacsProxy.test.mjs › [gdacs-source-024] serves the last good document while it is younger than 1 hour when a refresh fails"
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-024] sends the status 200 and tries GDACS again after a stale document",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-024] serves the last good document when a refresh fails, if the document is younger than 1 hour at the start of that refresh"
   ],
   "gdacs-source-025": [
     "src/data/gdacsProxy.test.mjs › [gdacs-source-025] caches a document with no event and shares a refresh whatever the time of the request",
