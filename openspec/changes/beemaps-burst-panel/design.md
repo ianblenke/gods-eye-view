@@ -89,6 +89,13 @@ The list route sets the status, the credits or the box of a burst to null when B
 The application renders on demand: the render governor sets `requestRenderMode` when nothing animates. A change of entities from a chip press does not draw a new image by itself. A real browser run showed a quote box that stayed invisible until something else drew a new image.
 The layer therefore calls `requestRender` after each change of the boxes. The wrapper `src/app/layers/beemapsBursts.js` gives it `governorRequestRender`.
 
+### D17: A new quote waits for a fresh list after an unknown answer
+
+The server holds new confirm requests only after an unknown or pending record of its own. Suppose the server created a burst and the browser lost the answer (status 0). The record is then "created", the server holds nothing, and a new quote could lead to a second burst.
+The layer therefore disables the chip "quote" after an unknown answer. A list answer that is not a stored answer enables it again.
+
+A stored answer can hide the new burst, because the list route answers from memory for 60 seconds. A failed list, `disable` and `enable` keep the block. `destroy` clears it, as does a reload.
+
 ## Risks / Trade-offs
 
 - [A hidden tab runs the timer late] → The press compares the clock with the end time.

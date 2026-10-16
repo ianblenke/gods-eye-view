@@ -1,7 +1,7 @@
 Named faults of beemaps-bursts (AGENTS.md rule 13). One fault changes one part of one layer file or one registration file. The tests then run. The list below names the tests that failed.
 
-Code commit: 68267375dca93cd7be2412d385d412d3bbceb19e. Both runs below ran on the files of this commit. The command git diff --stat 68267375 HEAD -- src server build prints nothing.
-The files of the layer, other than test files, are the same as in the browser run. The command git diff --stat c53f05d9 68267375 -- src server build ':(exclude)*.test.mjs' prints nothing.
+Code commit: f2e1dcd2cb30250985b7cb508dd681e991734e74. Both runs below ran on the files of this commit. The command git diff --stat f2e1dcd2 HEAD -- src server build prints nothing.
+The files of the layer, other than test files, are the same as in the browser run. The command git diff --stat f2e1dcd2 f2e1dcd2 -- src server build ':(exclude)*.test.mjs' prints nothing.
 Runner: 6 scratch copies of the clone run in parallel. Each copy uses the same long-lived container of the image gods-eye-view:local, with the node_modules of the image.
 Each fault runs first against the test file of its own file. The command is: timeout 100 node --test --test-concurrency=4 --test-timeout=6000 --test-reporter=spec <test file>
 A fault in a layer file that leaves that test file green then runs against all seven test files src/layers/beemapsBursts/*.test.mjs.
@@ -9,7 +9,7 @@ A fault in a registration file runs against the registration tests of the two la
 The scenario in the first column is the scenario of a test that failed. The exceptions are the equivalent faults, which fail no test, and the faults in the list further below.
 The container ran next to the containers of the owner and stopped when the run ended. No other container ran at the same time.
 
-Result: 801 faults in each of two runs. 784 faults failed at least one test in both runs. 17 faults are equivalent faults. Each one names its reason in its line.
+Result: 825 faults in each of two runs. 809 faults failed at least one test in both runs. 16 faults are equivalent faults. Each one names its reason in its line.
 Faults with a hang: 0. Faults where a test file stops: 20.
 For 5 of these faults, no test fails by name. The scenario in the first column is then the scenario of the test that covers the behavior:
 - "Give the layer the token 7"
@@ -20,8 +20,8 @@ For 5 of these faults, no test fails by name. The scenario in the first column i
 The two runs give identical lines.
 
 Earlier runs, on earlier commits. Each run used the fault script of its time, so the sets grow:
-- Run A: 794 faults on the commit c87df91b, and 88 survived. Of these, 68 now fail a test.
-  - 15 of these are now equivalent faults with a reason.
+- Run A: 794 faults on the commit c87df91b, and 88 survived. Of these, 69 now fail a test.
+  - 14 of these are now equivalent faults with a reason.
   - 5 of these were replaced, because the code they changed was removed or rewritten.
 - Run B: 791 faults on the commit b853fe54, and 6 survived. Of these, 5 now fail a test, 0 are now equivalent faults, and 1 was replaced.
 - The survivors of run A were mostly gaps in the tests of the layer. They did not read the controls at the time of the confirm call, and they did not call the functions of old chips. Nothing counted the notices to the panel.
@@ -32,13 +32,18 @@ Earlier runs, on earlier commits. Each run used the fault script of its time, so
 - The same survivors led to tests for the color of a created burst, a key made from equal bytes and the message after a cancel.
 - A third full run, on the commit c53f05d9, had one survivor. It led to a test that a destroy without a data source asks for no frame.
 - A real-browser run of the commit 6aa02e09 showed that a quote box could stay invisible, because the application renders on demand. The layer now asks for one frame after each change of the boxes.
-- That change added faults for the request of a frame and the tests of scenario 020. The runs of this file ran after it.
+- That change added faults for the calls of requestRender and the tests of scenario 020.
+Round 1 of the formal review found gaps in the faults and the tests:
+- A false equivalent fault. A status answer for off that comes while a quote request is open separates the two versions. A test and a fault now cover it.
+- No test destroyed the layer while a quote was shown. No fault confirmed from destroy or from the timer of the wait. A test could not fail.
+- The layer now blocks the chip "quote" after an unknown answer, until a list answer that is not a stored answer. The server holds nothing when it created a burst and the browser lost the answer.
+- A timer of the wait that runs early now starts a new timer, and an answer created with no burst counts as unknown.
+The script had 801 faults before round 1. It has 825 now. Both runs of this file ran on the final commit.
 Survivors of run A that are equivalent faults now. Each reason is in its line below:
 - "Allow a cancel when the layer is not enabled"
 - "Give a total of zero without a list"
 - "Send a confirm when the layer is not enabled"
 - "Count a failed status as usable"
-- "Clear the status text of a good status after a press"
 - "Write 0 seconds as a second"
 - "Write 0 credits as a credit"
 - "Show a total that is null"
@@ -70,11 +75,6 @@ beemaps-bursts-008 | Check the snapped centre only | failing: [beemaps-bursts-00
 beemaps-bursts-008 | Name the reason of a corner another way | failing: [beemaps-bursts-008]
 beemaps-bursts-008 | Drop the centre of a good box | failing: [beemaps-bursts-008]
 beemaps-bursts-008 | Refuse every box | failing: [beemaps-bursts-008]
-beemaps-bursts-004 | Allow a quote press when the layer is not enabled | failing: [beemaps-bursts-004]
-beemaps-bursts-006 | Allow a second quote request while one is open | failing: [beemaps-bursts-006]
-beemaps-bursts-012 | Allow a quote press during a confirm | failing: [beemaps-bursts-012]
-beemaps-bursts-006 | Allow a quote press while a quote is shown | failing: [beemaps-bursts-006]
-beemaps-bursts-005 | Allow a quote press when bursts are off | failing: [beemaps-bursts-005]
 beemaps-bursts-006 | Skip the box of the view for a quote | failing: [beemaps-bursts-005], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-008], [beemaps-bursts-017], [beemaps-bursts-020], [beemaps-bursts-030]
 beemaps-bursts-008 | Use the box of the frames layer for a quote | failing: [beemaps-bursts-008]
 beemaps-bursts-008 | Show no text for a view without a box | failing: [beemaps-bursts-005], [beemaps-bursts-007], [beemaps-bursts-008], [beemaps-bursts-017]
@@ -85,7 +85,7 @@ beemaps-bursts-006 | Skip the signal of the quote request | failing: [beemaps-bu
 beemaps-bursts-006 | Send no box with the quote request | failing: [beemaps-bursts-006], [beemaps-bursts-008]
 beemaps-bursts-006 | Send the centre with the quote request | failing: [beemaps-bursts-006]
 beemaps-bursts-006 | Send a credits field with the quote request | failing: [beemaps-bursts-006]
-beemaps-bursts-006 | Skip the request marker of the quote | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-009], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
+beemaps-bursts-006 | Skip the request marker of the quote | failing: [beemaps-bursts-002], [beemaps-bursts-005], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-009], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-006 | Skip the kind of the quote request | failing: [beemaps-bursts-006]
 beemaps-bursts-006 | Name the kind of the quote request as a list | failing: [beemaps-bursts-006]
 beemaps-bursts-006 | Tell no one when the quote request starts | failing: [beemaps-bursts-006], [beemaps-bursts-030]
@@ -99,19 +99,19 @@ beemaps-bursts-010 | Start the timer with the seconds | failing: [beemaps-bursts
 beemaps-bursts-010 | Start the timer with one second more | failing: [beemaps-bursts-010], [beemaps-bursts-029]
 beemaps-bursts-010 | Start no timer for the quote | failing: [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-010 | Start the timer with a function that does nothing | failing: [beemaps-bursts-010], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
-beemaps-bursts-007 | Keep the fields of the quote answer out of the quote | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-008], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
+beemaps-bursts-007 | Keep the fields of the quote answer out of the quote | failing: [beemaps-bursts-002], [beemaps-bursts-005], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-008], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-007 | Keep the press text when a quote shows | failing: [beemaps-bursts-007]
 beemaps-bursts-007 | Keep the error when a quote shows | failing: [beemaps-bursts-007]
 beemaps-bursts-019 | Keep the failed status text when a quote shows | failing: [beemaps-bursts-019]
 beemaps-bursts-007 | Draw nothing when a quote shows | failing: [beemaps-bursts-007], [beemaps-bursts-020]
-beemaps-bursts-009 | Show no text for a quote error | failing: [beemaps-bursts-009]
+beemaps-bursts-009 | Show no text for a quote error | failing: [beemaps-bursts-009], [beemaps-bursts-011]
 beemaps-bursts-009 | Show no error for a quote error | failing: [beemaps-bursts-009]
 beemaps-bursts-030 | Tell no one about a quote answer | failing: [beemaps-bursts-030]
 beemaps-bursts-030 | Allow a list press when the layer is not enabled | failing: [beemaps-bursts-004], [beemaps-bursts-030]
 beemaps-bursts-018 | Allow a second list request while one is open | failing: [beemaps-bursts-018], [beemaps-bursts-030]
 beemaps-bursts-012 | Allow a list press during a confirm | failing: [beemaps-bursts-012]
 beemaps-bursts-005 | Allow a list press when bursts are off | failing: [beemaps-bursts-005]
-beemaps-bursts-018 | Skip the request marker of the list | failing: [beemaps-bursts-006], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-014], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-030]
+beemaps-bursts-018 | Skip the request marker of the list | failing: [beemaps-bursts-006], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-014], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-030]
 beemaps-bursts-018 | Skip the kind of the list request | failing: [beemaps-bursts-006], [beemaps-bursts-018]
 beemaps-bursts-018 | Name the kind of the list request as a quote | failing: [beemaps-bursts-006], [beemaps-bursts-018]
 beemaps-bursts-030 | Tell no one when the list request starts | failing: [beemaps-bursts-030]
@@ -120,7 +120,7 @@ beemaps-bursts-018 | Send the box with the list request | failing: [beemaps-burs
 beemaps-bursts-019 | Let a thrown list request escape | failing: [beemaps-bursts-019]
 beemaps-bursts-019 | Name a thrown list request another way | failing: [beemaps-bursts-019]
 beemaps-bursts-019 | Use the answer of a list that was aborted | failing: [beemaps-bursts-019]
-beemaps-bursts-019 | Keep the open request after a list answer | failing: [beemaps-bursts-012], [beemaps-bursts-014], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020]
+beemaps-bursts-019 | Keep the open request after a list answer | failing: [beemaps-bursts-012], [beemaps-bursts-014], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020]
 beemaps-bursts-018 | Keep the kind after a list answer | failing: [beemaps-bursts-006], [beemaps-bursts-018]
 beemaps-bursts-019 | Keep the press text after a good list | failing: [beemaps-bursts-019]
 beemaps-bursts-019 | Keep the error after a good list | failing: [beemaps-bursts-019]
@@ -131,25 +131,22 @@ beemaps-bursts-019 | Show no error for a list error | failing: [beemaps-bursts-0
 beemaps-bursts-019 | Clear the list after a list error | failing: [beemaps-bursts-019]
 beemaps-bursts-030 | Tell no one about a list answer | failing: [beemaps-bursts-030]
 beemaps-bursts-011 | Allow a cancel when the layer is not enabled | failing: NONE (equivalent fault: The quote guard returns first. The method disable clears the quote, and a quote answer after disable is ignored.)
-beemaps-bursts-030 | Allow a cancel without a quote | failing: [beemaps-bursts-030]
+beemaps-bursts-030 | Allow a cancel without a quote | failing: [beemaps-bursts-011], [beemaps-bursts-030]
 beemaps-bursts-012 | Allow a cancel during a confirm | failing: [beemaps-bursts-012]
 beemaps-bursts-011 | Keep the quote on cancel | failing: [beemaps-bursts-006], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-013], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-011 | Draw nothing on cancel | failing: [beemaps-bursts-011], [beemaps-bursts-020]
 beemaps-bursts-030 | Tell no one on cancel | failing: [beemaps-bursts-030]
 beemaps-bursts-018 | Lose the total of the list | failing: [beemaps-bursts-018]
 beemaps-bursts-014 | Give a total of zero without a list | failing: NONE (equivalent fault: A total of 0 is never above the count of bursts, so the text has no part for the total in both versions.)
-beemaps-bursts-014 | Let a created burst without a list throw on the total | failing: [beemaps-bursts-010], [beemaps-bursts-012], [beemaps-bursts-014], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-030]
+beemaps-bursts-014 | Let a created burst without a list throw on the total | failing: [beemaps-bursts-010], [beemaps-bursts-012], [beemaps-bursts-014], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-030]
 beemaps-bursts-015 | Show the unknown text for a refusal | failing: [beemaps-bursts-015]
 beemaps-bursts-016 | Show the failure text for an unknown outcome | failing: [beemaps-bursts-016], [beemaps-bursts-017]
 beemaps-bursts-016 | Show the failure text for anything but created | failing: [beemaps-bursts-016], [beemaps-bursts-017]
 beemaps-bursts-016 | Show a refusal for an unknown outcome | failing: [beemaps-bursts-016]
 beemaps-bursts-016 | Let a result of null throw in the confirm text | failing: [beemaps-bursts-016]
-beemaps-bursts-016 | Let a result of null throw in the outcome | failing: [beemaps-bursts-016]
 beemaps-bursts-016 | Let a result of null throw in the refusal | failing: [beemaps-bursts-016]
-beemaps-bursts-016 | Treat a created outcome of any shape as created | failing: [beemaps-bursts-016]
-beemaps-bursts-015 | Keep no error for a refusal | failing: [beemaps-bursts-015], [beemaps-bursts-016]
 beemaps-bursts-012 | Show the quote text during a confirm | failing: [beemaps-bursts-012]
-beemaps-bursts-007 | Show no quote text | failing: [beemaps-bursts-007], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-029]
+beemaps-bursts-007 | Show no quote text | failing: [beemaps-bursts-005], [beemaps-bursts-007], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-029]
 beemaps-bursts-012 | Send a confirm when the layer is not enabled | failing: NONE (equivalent fault: The quote guard returns first. The method disable clears the quote, and a quote answer after disable is ignored.)
 beemaps-bursts-011 | Send a confirm for a quote that is not the current quote | failing: [beemaps-bursts-011], [beemaps-bursts-012]
 beemaps-bursts-012 | Send a second confirm while one is open | failing: [beemaps-bursts-012]
@@ -169,14 +166,14 @@ beemaps-bursts-012 | Send the confirm again after an unknown outcome | failing: 
 beemaps-bursts-016 | Treat a thrown confirm as refused | failing: [beemaps-bursts-016]
 beemaps-bursts-016 | Let a thrown confirm escape | failing: [beemaps-bursts-016]
 beemaps-bursts-017 | Use the answer of a confirm after destroy | failing: [beemaps-bursts-017]
-beemaps-bursts-017 | Keep the confirm marker after the answer | failing: [beemaps-bursts-014], [beemaps-bursts-017], [beemaps-bursts-019]
+beemaps-bursts-017 | Keep the confirm marker after the answer | failing: [beemaps-bursts-014], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019]
 beemaps-bursts-012 | Keep the quote after the answer of a confirm | failing: [beemaps-bursts-012], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019]
 beemaps-bursts-010 | Show nothing for the answer of a confirm | failing: [beemaps-bursts-010], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019]
 beemaps-bursts-014 | Draw nothing after a confirm | failing: [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-020]
 beemaps-bursts-030 | Tell no one after a confirm | failing: [beemaps-bursts-030]
-beemaps-bursts-014 | Keep the confirm marker in a different place | failing: [beemaps-bursts-014], [beemaps-bursts-017], [beemaps-bursts-019]
-beemaps-bursts-017 | Release the confirm marker for any answer only when created | failing: [beemaps-bursts-017]
-beemaps-bursts-012 | Keep the quote after a refused confirm | failing: [beemaps-bursts-012], [beemaps-bursts-015]
+beemaps-bursts-014 | Keep the confirm marker in a different place | failing: [beemaps-bursts-014], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019]
+beemaps-bursts-016 | Release the confirm marker for any answer only when created | failing: [beemaps-bursts-016], [beemaps-bursts-017]
+beemaps-bursts-012 | Keep the quote after a refused confirm | failing: [beemaps-bursts-012], [beemaps-bursts-015], [beemaps-bursts-016]
 beemaps-bursts-012 | Keep the quote after an unknown confirm | failing: [beemaps-bursts-012], [beemaps-bursts-016], [beemaps-bursts-017]
 beemaps-bursts-020 | Create the data source shown | failing: [beemaps-bursts-020]
 beemaps-bursts-002 | Create the data source with another name | failing: [beemaps-bursts-002]
@@ -190,8 +187,6 @@ beemaps-bursts-005 | Skip the reset on disable | failing: [beemaps-bursts-005], 
 beemaps-bursts-002 | Skip the reset on destroy | failing: [beemaps-bursts-002], [beemaps-bursts-017]
 beemaps-bursts-002 | Keep the layer enabled on destroy | failing: [beemaps-bursts-002]
 beemaps-bursts-017 | Keep the pending confirm on destroy | failing: [beemaps-bursts-017]
-beemaps-bursts-002 | Keep the text of a confirm on destroy | failing: [beemaps-bursts-002]
-beemaps-bursts-002 | Keep the viewer on destroy | failing: [beemaps-bursts-002]
 beemaps-bursts-002 | Skip the removal of the data source on destroy | failing: [beemaps-bursts-002], [beemaps-bursts-017], [beemaps-bursts-020]
 beemaps-bursts-017 | Remove the data source on destroy without destroying it | failing: [beemaps-bursts-017], [beemaps-bursts-020]
 beemaps-bursts-002 | Keep the data source on destroy | failing: [beemaps-bursts-002]
@@ -245,10 +240,6 @@ beemaps-bursts-004 | Give the quote chip another id | failing: [beemaps-bursts-0
 beemaps-bursts-018 | Show the quote label while the list is open | failing: [beemaps-bursts-018]
 beemaps-bursts-006 | Show the quote label always | failing: [beemaps-bursts-006]
 beemaps-bursts-004 | Show the quoting label always | failing: [beemaps-bursts-004], [beemaps-bursts-011], [beemaps-bursts-017], [beemaps-bursts-018]
-beemaps-bursts-004 | Give the quote chip the title of the list chip | failing: [beemaps-bursts-004]
-beemaps-bursts-006 | Leave the quote chip enabled while busy | failing: [beemaps-bursts-006], [beemaps-bursts-017], [beemaps-bursts-018]
-beemaps-bursts-005 | Leave the quote chip enabled when bursts are off | failing: [beemaps-bursts-005], [beemaps-bursts-017]
-beemaps-bursts-017 | Disable the quote chip only for a quote request | failing: [beemaps-bursts-017], [beemaps-bursts-018]
 beemaps-bursts-006 | Mark the quote chip busy for every request | failing: [beemaps-bursts-006]
 beemaps-bursts-006 | Never mark the quote chip busy | failing: [beemaps-bursts-006]
 beemaps-bursts-005 | Give the quote chip the click of the list | failing: [beemaps-bursts-002], [beemaps-bursts-005], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-008], [beemaps-bursts-009], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
@@ -262,12 +253,12 @@ beemaps-bursts-005 | Leave the list chip enabled when bursts are off | failing: 
 beemaps-bursts-017 | Disable the list chip only for a list request | failing: [beemaps-bursts-006], [beemaps-bursts-012], [beemaps-bursts-017]
 beemaps-bursts-006 | Mark the list chip busy for every request | failing: [beemaps-bursts-006]
 beemaps-bursts-018 | Never mark the list chip busy | failing: [beemaps-bursts-006], [beemaps-bursts-018]
-beemaps-bursts-018 | Give the list chip the click of the quote | failing: [beemaps-bursts-006], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-014], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-030]
+beemaps-bursts-018 | Give the list chip the click of the quote | failing: [beemaps-bursts-006], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-014], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-030]
 beemaps-bursts-012 | Count a request as not busy | failing: [beemaps-bursts-006], [beemaps-bursts-012], [beemaps-bursts-018]
 beemaps-bursts-012 | Count a confirm as not busy | failing: [beemaps-bursts-012], [beemaps-bursts-017]
 beemaps-bursts-005 | Count a status that is unknown as unusable | failing: [beemaps-bursts-005], [beemaps-bursts-017]
 beemaps-bursts-005 | Count a status that is off as usable in the chips | failing: [beemaps-bursts-005], [beemaps-bursts-017]
-beemaps-bursts-005 | Count every status as unusable | failing: [beemaps-bursts-004], [beemaps-bursts-005], [beemaps-bursts-008], [beemaps-bursts-009], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019]
+beemaps-bursts-005 | Count every status as unusable | failing: [beemaps-bursts-004], [beemaps-bursts-005], [beemaps-bursts-008], [beemaps-bursts-009], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019]
 beemaps-bursts-017 | Show the press text before the text of a confirm | failing: [beemaps-bursts-017]
 beemaps-bursts-017 | Show the text of a confirm only | failing: [beemaps-bursts-017]
 beemaps-bursts-019 | Show the press text only | failing: [beemaps-bursts-010], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019]
@@ -280,10 +271,10 @@ beemaps-bursts-006 | Give no listener to the panel | failing: [beemaps-bursts-00
 beemaps-bursts-010 | Call the listener with an argument that throws | failing: [beemaps-bursts-010], [beemaps-bursts-013], [beemaps-bursts-030]
 beemaps-bursts-006 | Never call the listener | failing: [beemaps-bursts-006], [beemaps-bursts-012], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-020 | Change the id of the quote entity | failing: [beemaps-bursts-007], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-020]
-beemaps-bursts-001 | Do not require the method getStatus of the source | failing: [beemaps-bursts-001]
-beemaps-bursts-001 | Do not require the method quote of the source | failing: [beemaps-bursts-001]
-beemaps-bursts-001 | Do not require the method confirm of the source | failing: [beemaps-bursts-001]
-beemaps-bursts-001 | Do not require the method list of the source | failing: [beemaps-bursts-001]
+beemaps-bursts-001 | Do not check for the method getStatus of the source | failing: [beemaps-bursts-001]
+beemaps-bursts-001 | Do not check for the method quote of the source | failing: [beemaps-bursts-001]
+beemaps-bursts-001 | Do not check for the method confirm of the source | failing: [beemaps-bursts-001]
+beemaps-bursts-001 | Do not check for the method list of the source | failing: [beemaps-bursts-001]
 beemaps-bursts-001 | Require one method of the source only | failing: [beemaps-bursts-001]
 beemaps-bursts-001 | Accept a source with a method that is not a function | failing: [beemaps-bursts-001]
 beemaps-bursts-001 | Let a missing source throw another error | failing: [beemaps-bursts-001]
@@ -357,7 +348,7 @@ beemaps-bursts-017 | Clear the text of a confirm on disable | failing: [beemaps-
 beemaps-bursts-017 | Clear the pending confirm on disable | failing: [beemaps-bursts-012], [beemaps-bursts-017]
 beemaps-bursts-019 | Clear the text of a failed status after a good press | failing: [beemaps-bursts-019]
 beemaps-bursts-019 | Keep the error of a failed status after a good press | failing: [beemaps-bursts-019]
-beemaps-bursts-019 | Clear the status text of a good status after a press | failing: NONE (equivalent fault: A status message exists only with a failed status, which sets the error, or with presses disabled. So the condition is always true when a press can answer.)
+beemaps-bursts-005 | Clear the status text of a good status after a press | failing: [beemaps-bursts-005]
 beemaps-bursts-027 | Cut the last character of the text of cross_origin | failing: [beemaps-bursts-027]
 beemaps-bursts-027 | Remove the text of cross_origin | failing: [beemaps-bursts-027]
 beemaps-bursts-027 | Cut the last character of the text of burst_off | failing: [beemaps-bursts-027]
@@ -425,8 +416,6 @@ beemaps-bursts-008 | Give nothing for a reason that is unknown | failing: [beema
 beemaps-bursts-008 | Give the text of the latitude for every reason | failing: [beemaps-bursts-008]
 beemaps-bursts-016 | Cut the last character of the unknown outcome text | failing: [beemaps-bursts-016]
 beemaps-bursts-016 | Allow a second confirm | failing: [beemaps-bursts-016]
-beemaps-bursts-016 | Leave out the refusal time | failing: [beemaps-bursts-016]
-beemaps-bursts-016 | Name the time of a hold in another word | failing: [beemaps-bursts-016]
 beemaps-bursts-016 | Show the refusal time without a number | failing: [beemaps-bursts-016]
 beemaps-bursts-016 | Let describeUnknown throw without an argument | failing: [beemaps-bursts-016]
 beemaps-bursts-016 | Give the refusal time for a text number | failing: [beemaps-bursts-016]
@@ -515,6 +504,48 @@ beemaps-bursts-020 | Give the layer no default function for the frame | failing:
 beemaps-bursts-020 | Give the layer of the application no governor | failing: [beemaps-bursts-020]
 beemaps-bursts-020 | Let the governor replace the function of the caller | failing: [beemaps-bursts-020]
 beemaps-bursts-020 | Give the layer of the application a function that does nothing | failing: [beemaps-bursts-020]
+beemaps-bursts-004 | Allow a quote press when the layer is not enabled | failing: [beemaps-bursts-004]
+beemaps-bursts-006 | Allow a second quote request while one is open | failing: [beemaps-bursts-006]
+beemaps-bursts-012 | Allow a quote press during a confirm | failing: [beemaps-bursts-012]
+beemaps-bursts-006 | Allow a quote press while a quote is shown | failing: [beemaps-bursts-006]
+beemaps-bursts-016 | Allow a quote press after an unknown answer | failing: [beemaps-bursts-016]
+beemaps-bursts-005 | Allow a quote press when bursts are off | failing: [beemaps-bursts-005]
+beemaps-bursts-016 | Let a result of null throw in the outcome | failing: [beemaps-bursts-016]
+beemaps-bursts-016 | Treat a created answer with no burst as created | failing: [beemaps-bursts-016]
+beemaps-bursts-016 | Accept a burst id of any type in a created answer | failing: [beemaps-bursts-016]
+beemaps-bursts-016 | Treat any answer that is not created as created | failing: [beemaps-bursts-016]
+beemaps-bursts-015 | Keep no error for a refusal | failing: [beemaps-bursts-015], [beemaps-bursts-016]
+beemaps-bursts-002 | Keep the text of a confirm on destroy | failing: [beemaps-bursts-002]
+beemaps-bursts-016 | Keep the block of the quote chip on destroy | failing: [beemaps-bursts-016]
+beemaps-bursts-002 | Keep the viewer on destroy | failing: [beemaps-bursts-002], [beemaps-bursts-016]
+beemaps-bursts-004 | Give the quote chip the title of the list chip | failing: [beemaps-bursts-004], [beemaps-bursts-016]
+beemaps-bursts-016 | Show the normal title after an unknown answer | failing: [beemaps-bursts-016]
+beemaps-bursts-016 | Show the blocked title always | failing: [beemaps-bursts-004], [beemaps-bursts-016]
+beemaps-bursts-006 | Leave the quote chip enabled while busy | failing: [beemaps-bursts-006], [beemaps-bursts-017], [beemaps-bursts-018]
+beemaps-bursts-005 | Leave the quote chip enabled when bursts are off | failing: [beemaps-bursts-005], [beemaps-bursts-017]
+beemaps-bursts-016 | Leave the quote chip enabled after an unknown answer | failing: [beemaps-bursts-016]
+beemaps-bursts-017 | Disable the quote chip only for a quote request | failing: [beemaps-bursts-017], [beemaps-bursts-018]
+beemaps-bursts-016 | Do not block the quote chip after an unknown answer | failing: [beemaps-bursts-016]
+beemaps-bursts-016 | Block the quote chip after a refusal too | failing: [beemaps-bursts-016]
+beemaps-bursts-016 | Block the quote chip after a created answer | failing: [beemaps-bursts-014], [beemaps-bursts-016], [beemaps-bursts-017]
+beemaps-bursts-016 | Clear the block after any list answer | failing: [beemaps-bursts-016]
+beemaps-bursts-016 | Never clear the block after a list answer | failing: [beemaps-bursts-016], [beemaps-bursts-017]
+beemaps-bursts-016 | Clear the block after a list answer with a cached flag that is not true | failing: [beemaps-bursts-016]
+beemaps-bursts-016 | Clear the block when a list fails | failing: [beemaps-bursts-016]
+beemaps-bursts-016 | Clear the block on disable | failing: [beemaps-bursts-016]
+beemaps-bursts-029 | Tell no one when the wait ends | failing: [beemaps-bursts-029], [beemaps-bursts-030]
+beemaps-bursts-029 | Keep the timer id when the wait ends | failing: [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-029]
+beemaps-bursts-029 | Tell the panel when the timer runs too early | failing: [beemaps-bursts-029]
+beemaps-bursts-029 | Start the new timer with the whole wait | failing: [beemaps-bursts-029]
+beemaps-bursts-029 | Start the new timer with the end of the quote | failing: [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-029], [beemaps-bursts-030]
+beemaps-bursts-029 | Start no new timer when the timer runs too early | failing: [beemaps-bursts-029]
+beemaps-bursts-029 | Let the timer of a cancelled quote throw | failing: [beemaps-bursts-029]
+beemaps-bursts-029 | Tell the panel when the timer of a cancelled quote runs | failing: [beemaps-bursts-029]
+beemaps-bursts-029 | Confirm when the timer of the wait runs | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
+beemaps-bursts-002 | Confirm on destroy | failing: [beemaps-bursts-002]
+beemaps-bursts-024 | Send a second confirm request after a throw in the source | failing: [beemaps-bursts-024]
+beemaps-bursts-024 | Send a second confirm request after an unknown answer in the source | failing: [beemaps-bursts-024]
+beemaps-bursts-024 | Send a second confirm request after a body that stops in the source | failing: [beemaps-bursts-024]
 beemaps-bursts-010 | End the quote at the start of the answer | failing: [beemaps-bursts-010], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-010 | End the quote one second late | failing: [beemaps-bursts-010]
 beemaps-bursts-010 | End the quote one second early | failing: [beemaps-bursts-010]
@@ -525,12 +556,10 @@ beemaps-bursts-029 | Wait 0 milliseconds before the Confirm chip | failing: [bee
 beemaps-bursts-029 | Wait 2000 milliseconds before the Confirm chip | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-029 | Start the wait of the Confirm chip at the epoch | failing: [beemaps-bursts-029]
 beemaps-bursts-029 | Start no wait of the Confirm chip | failing: [beemaps-bursts-029]
-beemaps-bursts-029 | Start the wait of the Confirm chip at the end of the quote | failing: [beemaps-bursts-002], [beemaps-bursts-010], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
+beemaps-bursts-029 | Start the wait of the Confirm chip at the end of the quote | failing: [beemaps-bursts-002], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-029 | Start no timer for the wait | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-029 | Start the timer of the wait with 0 milliseconds | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-029 | Start the timer of the wait with the seconds of the quote | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
-beemaps-bursts-029 | Tell no one when the wait ends | failing: [beemaps-bursts-029], [beemaps-bursts-030]
-beemaps-bursts-029 | Keep the timer id when the wait ends | failing: [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-029]
 beemaps-bursts-029 | Skip the clear of the timer of the wait | failing: [beemaps-bursts-029]
 beemaps-bursts-029 | Clear the timer of the wait with a null id | failing: [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-029]
 beemaps-bursts-029 | Keep the timer id of the wait when it is cleared | failing: [beemaps-bursts-029]
@@ -575,12 +604,12 @@ beemaps-bursts-019 | Keep the list after disable | failing: [beemaps-bursts-017]
 beemaps-bursts-017 | Keep the time of the list after disable | failing: [beemaps-bursts-017]
 beemaps-bursts-018 | Keep the total out of the list | failing: [beemaps-bursts-018]
 beemaps-bursts-018 | Keep the stored answer flag out of the list | failing: [beemaps-bursts-018], [beemaps-bursts-019]
-beemaps-bursts-018 | Mark every list as a stored answer | failing: [beemaps-bursts-014], [beemaps-bursts-018], [beemaps-bursts-019]
+beemaps-bursts-018 | Mark every list as a stored answer | failing: [beemaps-bursts-014], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019]
 beemaps-bursts-019 | Keep the bursts of the old list | failing: [beemaps-bursts-019]
 beemaps-bursts-018 | Keep no time for the list | failing: [beemaps-bursts-018]
 beemaps-bursts-018 | Show no list in the readout | failing: [beemaps-bursts-014], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019]
 beemaps-bursts-017 | Show the list only when a list answer came | failing: [beemaps-bursts-014], [beemaps-bursts-017]
-beemaps-bursts-018 | Show the list only when a burst was created | failing: [beemaps-bursts-018], [beemaps-bursts-019]
+beemaps-bursts-018 | Show the list only when a burst was created | failing: [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019]
 beemaps-bursts-017 | Show a list with no bursts in every state | failing: [beemaps-bursts-002], [beemaps-bursts-005], [beemaps-bursts-007], [beemaps-bursts-008], [beemaps-bursts-009], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-019], [beemaps-bursts-029]
 beemaps-bursts-017 | Show the bursts of the list only in the readout | failing: [beemaps-bursts-014], [beemaps-bursts-017], [beemaps-bursts-019]
 beemaps-bursts-018 | Show no total in the readout | failing: [beemaps-bursts-018]
@@ -730,7 +759,7 @@ beemaps-bursts-002 | List on update | failing: [beemaps-bursts-002], [beemaps-bu
 beemaps-bursts-002 | Confirm on update | failing: [beemaps-bursts-002]
 beemaps-bursts-002 | List when the controls are read | failing: [beemaps-bursts-002], [beemaps-bursts-004], [beemaps-bursts-005], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-008], [beemaps-bursts-009], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-015], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
 beemaps-bursts-002 | Confirm when the controls are read | failing: [beemaps-bursts-002], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-010], [beemaps-bursts-011], [beemaps-bursts-012], [beemaps-bursts-013], [beemaps-bursts-014], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-020], [beemaps-bursts-029], [beemaps-bursts-030]
-beemaps-bursts-004 | Quote when the controls are read | failing: [beemaps-bursts-004], [beemaps-bursts-005], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-009], [beemaps-bursts-011], [beemaps-bursts-014], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-030]
+beemaps-bursts-004 | Quote when the controls are read | failing: [beemaps-bursts-004], [beemaps-bursts-005], [beemaps-bursts-006], [beemaps-bursts-007], [beemaps-bursts-009], [beemaps-bursts-011], [beemaps-bursts-014], [beemaps-bursts-016], [beemaps-bursts-017], [beemaps-bursts-018], [beemaps-bursts-019], [beemaps-bursts-030]
 beemaps-bursts-002 | Confirm when the quote ends | failing: [beemaps-bursts-002], [beemaps-bursts-030]
 beemaps-bursts-007 | Confirm as soon as the quote shows | failing: NONE (equivalent fault: The wait of 1000 milliseconds makes the confirm method return at once.)
 beemaps-bursts-001 | Offer a method setParams that quotes | failing: [beemaps-bursts-001]

@@ -1,5 +1,5 @@
 Two runs of the layer in a real browser, with a fake upstream behind the real routes of change 3.
-The runs used the files of the commit c53f05d9. The layer files of the commit 68267375 are the same: the command git diff --stat c53f05d9 68267375 -- src server build ':(exclude)*.test.mjs' prints nothing.
+The runs used the files of the commit f2e1dcd2. The layer files of the commit f2e1dcd2 are the same: the command git diff --stat f2e1dcd2 f2e1dcd2 -- src server build ':(exclude)*.test.mjs' prints nothing.
 Browser: Google Chrome 147.0.7727.101, headless, software rendering. Server: the Vite dev server of the repository on 127.0.0.1:5199, run by host Node.
 The server has three plugins. These are a counter of requests to the four routes, the real plugin beemapsBurstProxy of change 3, and the not-found plugin of the API.
 The plugin got a fake fetch function. The fake answers the create request with one made-up burst, and the list request with the bursts that it made. A mode can make it slow or make it fail with the status 500.
@@ -9,13 +9,16 @@ The page loads the share link as the hash #v=2&lat=60&lon=10&alt=3000&heading=0&
 The driver clicks with real mouse events of the DevTools protocol at the position of each control. The data panel is opened with its own button.
 The driver loads the page once and waits 45 seconds before the checks, as a precaution against a cold cache of Vite. The warm-up load waits up to 300 seconds for the row.
 The panel and the page are slow with software rendering. Row texts can come 3 to 11 seconds after the answer of a route. So the driver waits for each expected text.
+The step 9 shows that the chip "Quote burst here" stays disabled after an unknown answer, also after a stored list answer. A fresh list answer enables it again.
+A fresh list answer needs the memory of the list route to end after 60 seconds. The driver waits for that.
+The check of the stored list answer runs only when the first list answer is less than 58 seconds old. Run 1 ran it, and run 2 skipped it. The transcript of each run says so.
 The step 4 presses "Quote burst here" twice in a row. A script in the page watches the Confirm chip with a MutationObserver. It records when the chip first shows disabled and when it becomes enabled.
 The lower bound is the wall clock time of the answer of the quote route plus 1000 milliseconds. The layer starts its wait after it reads the answer, so the chip cannot be enabled earlier.
 The tint checks take a screenshot and compute the mean color of the middle of the globe. A box of the quote shifts it toward amber, and a box of a created burst shifts it toward blue.
 The app renders on demand. An earlier run of this driver found a quote box that stayed invisible, because the layer did not ask for a frame.
-The layer now asks for one frame after each change of the boxes. The commit c53f05d9 is the first commit with this change.
+The layer now calls requestRender after each redraw of the boxes.
 The first attempts of the driver stopped at checks or waits. Each cause was in the driver or in the fake:
-- The fake upstream read the create body as an object, and the plugin sends an array. The layer then showed the warning for an unclear answer, as it must.
+- The fake upstream read the create body as an object, and the plugin sends an array. The layer then showed the warning for an unknown answer, as it must.
 - The server limits confirm requests to 3 for each minute, and the driver sent 4 too fast. The driver now waits for the window.
 - A fixed sleep came before the row had its new text. The driver now waits for the text.
 - The second of two runs in a row stopped at step 1, because the row did not show within 120 seconds. The warm-up load now waits up to 300 seconds, and the Vite log of the later runs has no line about a reload.
@@ -45,23 +48,23 @@ the layer went on after 1 click(s) of the toggle
 status 3, quote 0, confirm 0, list 0, upstream create 0, upstream list 0
 PASS 3 no quote, confirm or list request after the switch | status 3, quote 0, confirm 0, list 0, upstream create 0, upstream list 0
 PASS 3 the info line is the hint again
-mean colour of the middle of the globe, no box: {"r":61,"g":71,"b":41}
+mean colour of the middle of the globe, no box: {"r":66,"g":79,"b":58}
 --- step 4: press "Quote burst here" twice in a row (a double press)
 status 3, quote 1, confirm 0, list 0, upstream create 0, upstream list 0
-the Confirm chip watch in the page: {"seenAt":111245.5,"disabledAtFirstSight":true,"enabledAt":112770.79999995232,"enabledWall":1792124145799}
-row: {"chips":["confirm:83f46f304d294bc99cac72887cc3ee14|Confirm: 125 credits, 4 km²|false","cancel|Cancel quote|false","list|Check my bursts|false"],"info":"Quote: 125 credits for 4 km² · credits used today 0 of 625 · valid for 120 seconds"}
+the Confirm chip watch in the page: {"seenAt":97908.10000014305,"disabledAtFirstSight":true,"enabledAt":98740.5,"enabledWall":1792133329182}
+row: {"chips":["confirm:4807d8aab377911a2d9b0595eece15c7|Confirm: 125 credits, 4 km²|false","cancel|Cancel quote|false","list|Check my bursts|false"],"info":"Quote: 125 credits for 4 km² · credits used today 0 of 625 · valid for 120 seconds"}
 PASS 4 the double press gave one quote request | quote 0 -> 1
 PASS 4 the double press gave no confirm request and no create request | status 3, quote 1, confirm 0, list 0, upstream create 0, upstream list 0
 PASS 4 the quote answered 200
 PASS 4 the Confirm chip shows the credits and the area | Confirm: 125 credits, 4 km²
-PASS 4 the Confirm chip was disabled when it first showed | {"seenAt":111245.5,"disabledAtFirstSight":true,"enabledAt":112770.79999995232,"enabledWall":1792124145799}
-PASS 4 the Confirm chip became enabled 1000 milliseconds or more after the server answered the quote | 1927 ms
-the server answered the quote at 1792124143872, and the Confirm chip became enabled 1927 ms later (it showed disabled first: true)
+PASS 4 the Confirm chip was disabled when it first showed | {"seenAt":97908.10000014305,"disabledAtFirstSight":true,"enabledAt":98740.5,"enabledWall":1792133329182}
+PASS 4 the Confirm chip became enabled 1000 milliseconds or more after the server answered the quote | 6436 ms
+the server answered the quote at 1792133322746, and the Confirm chip became enabled 6436 ms later (it showed disabled first: true)
 PASS 4 the Confirm chip is enabled 2.5 seconds later
 PASS 4 the row shows the quote with the budget | Quote: 125 credits for 4 km² · credits used today 0 of 625 · valid for 120 seconds
-PASS 4 the row has the chips Confirm, Cancel quote and Check my bursts | ["confirm:83f46f304d294bc99cac72887cc3ee14","cancel","list"]
-mean colour with the box of the quote: {"r":119,"g":103,"b":44}
-PASS 4 the box of the quote tints the globe amber (red minus blue rises by 25 or more) | {"r":61,"g":71,"b":41} -> {"r":119,"g":103,"b":44}
+PASS 4 the row has the chips Confirm, Cancel quote and Check my bursts | ["confirm:4807d8aab377911a2d9b0595eece15c7","cancel","list"]
+mean colour with the box of the quote: {"r":118,"g":103,"b":43}
+PASS 4 the box of the quote tints the globe amber (red minus blue rises by 25 or more) | {"r":66,"g":79,"b":58} -> {"r":118,"g":103,"b":43}
 --- step 5: press "Cancel quote"
 status 3, quote 1, confirm 0, list 0, upstream create 0, upstream list 0
 PASS 5 the cancel sent no confirm request and no create request | status 3, quote 1, confirm 0, list 0, upstream create 0, upstream list 0
@@ -78,9 +81,9 @@ PASS 6 the key is only in the header Authorization | Basic fixture-burst-key-bro
 PASS 6 the box of the create request is the box of the view (60.0, 10.0) | [9.982014,59.991007,10.017986,60.008993]
 PASS 6 the row says that a burst was created and counts one burst | Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 0 hits
 PASS 6 the chips are "Quote burst here" and "Check my bursts" again
-mean colour with the box of the created burst: {"r":64,"g":107,"b":106}
-PASS 6 the box of the created burst tints the globe blue (blue minus red rises by 15 or more) | {"r":61,"g":71,"b":41} -> {"r":64,"g":107,"b":106}
-PASS 6 the amber of the quote box is gone | {"r":119,"g":103,"b":44} -> {"r":64,"g":107,"b":106}
+mean colour with the box of the created burst: {"r":62,"g":107,"b":104}
+PASS 6 the box of the created burst tints the globe blue (blue minus red rises by 15 or more) | {"r":66,"g":79,"b":58} -> {"r":62,"g":107,"b":104}
+PASS 6 the amber of the quote box is gone | {"r":118,"g":103,"b":43} -> {"r":62,"g":107,"b":104}
 --- step 7: press "Check my bursts" twice
 status 3, quote 2, confirm 1, list 1, upstream create 1, upstream list 1
 row: Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 1 hit
@@ -90,31 +93,38 @@ status 3, quote 2, confirm 1, list 2, upstream create 1, upstream list 1
 PASS 7 the second press was answered from memory (no new upstream list) | status 3, quote 2, confirm 1, list 2, upstream create 1, upstream list 1
 PASS 7 the row says stored answer | Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 1 hit · stored answer
 --- step 8: three presses of "Confirm" while a slow create request runs
-row during the request: ["confirm:09197b554e8934b68e58cbdd6e1a4835|Sending…|true","list|Check my bursts|true"]
+row during the request: ["confirm:26d0223e285494f16f80eb7f7736a664|Sending…|true","list|Check my bursts|true"]
 PASS 8 the Confirm chip shows Sending… and is disabled while the request runs
 PASS 8 the Cancel chip is gone and Check my bursts is disabled in that time
 status 3, quote 3, confirm 2, list 2, upstream create 2, upstream list 1
 PASS 8 the three presses gave one confirm request | confirm 1 -> 2
 PASS 8 the three presses gave one create request | create 1 -> 2
 PASS 8 the row says that a burst was created and counts 2 bursts | Burst created: 125 credits taken, 750 left at Bee Maps. · 2 bursts · 1 hit · stored answer
---- step 9: a failing create request gives an unclear answer, and a new quote is held
-the warning showed 10756 ms after the request reached the server
+--- step 9: a failing create request gives an unknown answer, the quote chip is blocked until a fresh list, and a new quote is held
+the warning showed 2281 ms after the request reached the server
 status 3, quote 4, confirm 3, list 2, upstream create 3, upstream list 1
 row: It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. · 2 bursts · 1 hit · stored answer
 PASS 9 the failing confirm gave one create request | create 2 -> 3
 PASS 9 the answer of the server was 502
 PASS 9 the row warns that a burst is possible and gives no Confirm chip | It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. · 2 bursts · 1 hit · stored answer
-status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
-row: It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. The server refuses new confirms for 536 seconds. · 2 bursts · 1 hit · stored answer
+PASS 9 the chip "Quote burst here" is disabled and has the title for the block | {"id":"quote","text":"Quote burst here","disabled":true,"x":161,"y":546,"w":112,"h":16}
+PASS 9 a click on the disabled chip sent no quote request | quote 4 -> 4
+the first list answer is 57 seconds old, so the route still answers from memory
+PASS 9 a stored list answer leaves the chip "Quote burst here" disabled | It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. · 2 bursts · 1 hit · stored answer
+wait 3 seconds so that the memory of the list route ends
+row: It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. · 2 bursts · 1 hit
+PASS 9 a fresh list answer enables the chip "Quote burst here" again | {"id":"quote","text":"Quote burst here","disabled":false,"x":161,"y":486,"w":112,"h":16}
+status 3, quote 5, confirm 4, list 4, upstream create 3, upstream list 2
+row: It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. The server refuses new confirm requests for 554 seconds. · 2 bursts · 1 hit
 PASS 9 the new confirm request reached the server
-PASS 9 the server refused it with the answer 409 and sent no create request | status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
-PASS 9 the row warns again and names the refusal time | It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. The server refuses new confirms for 536 seconds. · 2 bursts · 1 hit · stored answer
+PASS 9 the server refused it with the answer 409 and sent no create request | status 3, quote 5, confirm 4, list 4, upstream create 3, upstream list 2
+PASS 9 the row warns again and names the refusal time | It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. The server refuses new confirm requests for 554 seconds. · 2 bursts · 1 hit
 --- step 10: wait 15 seconds with the layer open
-status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
-PASS 10 no request of any kind came from a timer | status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
+status 3, quote 5, confirm 4, list 4, upstream create 3, upstream list 2
+PASS 10 no request of any kind came from a timer | status 3, quote 5, confirm 4, list 4, upstream create 3, upstream list 2
 --- step 11: totals
-status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
-PASS 11 four confirm requests reached the server, and three create requests reached the fake upstream | status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
+status 3, quote 5, confirm 4, list 4, upstream create 3, upstream list 2
+PASS 11 four confirm requests reached the server, and three create requests reached the fake upstream | status 3, quote 5, confirm 4, list 4, upstream create 3, upstream list 2
 PASS 11 the key of the server is nowhere in the page
 console lines about the layer: 0
 last console lines: log: [Detection] Initialized || log: [TrackedReadout] Initialized || log: [Detection] Mode: DENSE || log: [Detection] Mode: OFF || warning: [MapStack] Needs GOOGLE_MAPS_API_KEY — add it in Provider Settings — or a Cesium ion token for the ion-hosted route
@@ -146,23 +156,23 @@ the layer went on after 1 click(s) of the toggle
 status 3, quote 0, confirm 0, list 0, upstream create 0, upstream list 0
 PASS 3 no quote, confirm or list request after the switch | status 3, quote 0, confirm 0, list 0, upstream create 0, upstream list 0
 PASS 3 the info line is the hint again
-mean colour of the middle of the globe, no box: {"r":61,"g":71,"b":41}
+mean colour of the middle of the globe, no box: {"r":66,"g":79,"b":58}
 --- step 4: press "Quote burst here" twice in a row (a double press)
 status 3, quote 1, confirm 0, list 0, upstream create 0, upstream list 0
-the Confirm chip watch in the page: {"seenAt":113898.5,"disabledAtFirstSight":true,"enabledAt":116627.79999995232,"enabledWall":1792124722701}
-row: {"chips":["confirm:74b20a7f280d3d82f059780f33cbbf1c|Confirm: 125 credits, 4 km²|false","cancel|Cancel quote|false","list|Check my bursts|false"],"info":"Quote: 125 credits for 4 km² · credits used today 0 of 625 · valid for 120 seconds"}
+the Confirm chip watch in the page: {"seenAt":90037.09999990463,"disabledAtFirstSight":true,"enabledAt":91532.20000004768,"enabledWall":1792133692040}
+row: {"chips":["confirm:cba79afbe2f3db27f519caceaaf826a9|Confirm: 125 credits, 4 km²|false","cancel|Cancel quote|false","list|Check my bursts|false"],"info":"Quote: 125 credits for 4 km² · credits used today 0 of 625 · valid for 120 seconds"}
 PASS 4 the double press gave one quote request | quote 0 -> 1
 PASS 4 the double press gave no confirm request and no create request | status 3, quote 1, confirm 0, list 0, upstream create 0, upstream list 0
 PASS 4 the quote answered 200
 PASS 4 the Confirm chip shows the credits and the area | Confirm: 125 credits, 4 km²
-PASS 4 the Confirm chip was disabled when it first showed | {"seenAt":113898.5,"disabledAtFirstSight":true,"enabledAt":116627.79999995232,"enabledWall":1792124722701}
-PASS 4 the Confirm chip became enabled 1000 milliseconds or more after the server answered the quote | 3207 ms
-the server answered the quote at 1792124719494, and the Confirm chip became enabled 3207 ms later (it showed disabled first: true)
+PASS 4 the Confirm chip was disabled when it first showed | {"seenAt":90037.09999990463,"disabledAtFirstSight":true,"enabledAt":91532.20000004768,"enabledWall":1792133692040}
+PASS 4 the Confirm chip became enabled 1000 milliseconds or more after the server answered the quote | 6548 ms
+the server answered the quote at 1792133685492, and the Confirm chip became enabled 6548 ms later (it showed disabled first: true)
 PASS 4 the Confirm chip is enabled 2.5 seconds later
 PASS 4 the row shows the quote with the budget | Quote: 125 credits for 4 km² · credits used today 0 of 625 · valid for 120 seconds
-PASS 4 the row has the chips Confirm, Cancel quote and Check my bursts | ["confirm:74b20a7f280d3d82f059780f33cbbf1c","cancel","list"]
-mean colour with the box of the quote: {"r":119,"g":103,"b":44}
-PASS 4 the box of the quote tints the globe amber (red minus blue rises by 25 or more) | {"r":61,"g":71,"b":41} -> {"r":119,"g":103,"b":44}
+PASS 4 the row has the chips Confirm, Cancel quote and Check my bursts | ["confirm:cba79afbe2f3db27f519caceaaf826a9","cancel","list"]
+mean colour with the box of the quote: {"r":118,"g":103,"b":43}
+PASS 4 the box of the quote tints the globe amber (red minus blue rises by 25 or more) | {"r":66,"g":79,"b":58} -> {"r":118,"g":103,"b":43}
 --- step 5: press "Cancel quote"
 status 3, quote 1, confirm 0, list 0, upstream create 0, upstream list 0
 PASS 5 the cancel sent no confirm request and no create request | status 3, quote 1, confirm 0, list 0, upstream create 0, upstream list 0
@@ -179,9 +189,9 @@ PASS 6 the key is only in the header Authorization | Basic fixture-burst-key-bro
 PASS 6 the box of the create request is the box of the view (60.0, 10.0) | [9.982014,59.991007,10.017986,60.008993]
 PASS 6 the row says that a burst was created and counts one burst | Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 0 hits
 PASS 6 the chips are "Quote burst here" and "Check my bursts" again
-mean colour with the box of the created burst: {"r":64,"g":107,"b":106}
-PASS 6 the box of the created burst tints the globe blue (blue minus red rises by 15 or more) | {"r":61,"g":71,"b":41} -> {"r":64,"g":107,"b":106}
-PASS 6 the amber of the quote box is gone | {"r":119,"g":103,"b":44} -> {"r":64,"g":107,"b":106}
+mean colour with the box of the created burst: {"r":62,"g":107,"b":104}
+PASS 6 the box of the created burst tints the globe blue (blue minus red rises by 15 or more) | {"r":66,"g":79,"b":58} -> {"r":62,"g":107,"b":104}
+PASS 6 the amber of the quote box is gone | {"r":118,"g":103,"b":43} -> {"r":62,"g":107,"b":104}
 --- step 7: press "Check my bursts" twice
 status 3, quote 2, confirm 1, list 1, upstream create 1, upstream list 1
 row: Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 1 hit
@@ -191,31 +201,36 @@ status 3, quote 2, confirm 1, list 2, upstream create 1, upstream list 1
 PASS 7 the second press was answered from memory (no new upstream list) | status 3, quote 2, confirm 1, list 2, upstream create 1, upstream list 1
 PASS 7 the row says stored answer | Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 1 hit · stored answer
 --- step 8: three presses of "Confirm" while a slow create request runs
-row during the request: ["confirm:0f316c74b225b73392fa3ca1ef369d31|Sending…|true","list|Check my bursts|true"]
+row during the request: ["confirm:46942fe5fc57da8325c6e09036227a62|Sending…|true","list|Check my bursts|true"]
 PASS 8 the Confirm chip shows Sending… and is disabled while the request runs
 PASS 8 the Cancel chip is gone and Check my bursts is disabled in that time
 status 3, quote 3, confirm 2, list 2, upstream create 2, upstream list 1
 PASS 8 the three presses gave one confirm request | confirm 1 -> 2
 PASS 8 the three presses gave one create request | create 1 -> 2
 PASS 8 the row says that a burst was created and counts 2 bursts | Burst created: 125 credits taken, 750 left at Bee Maps. · 2 bursts · 1 hit · stored answer
---- step 9: a failing create request gives an unclear answer, and a new quote is held
-the warning showed 7126 ms after the request reached the server
+--- step 9: a failing create request gives an unknown answer, the quote chip is blocked until a fresh list, and a new quote is held
+the warning showed 2369 ms after the request reached the server
 status 3, quote 4, confirm 3, list 2, upstream create 3, upstream list 1
 row: It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. · 2 bursts · 1 hit · stored answer
 PASS 9 the failing confirm gave one create request | create 2 -> 3
 PASS 9 the answer of the server was 502
 PASS 9 the row warns that a burst is possible and gives no Confirm chip | It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. · 2 bursts · 1 hit · stored answer
-status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
-row: It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. The server refuses new confirms for 541 seconds. · 2 bursts · 1 hit · stored answer
+PASS 9 the chip "Quote burst here" is disabled and has the title for the block | {"id":"quote","text":"Quote burst here","disabled":true,"x":161,"y":546,"w":112,"h":16}
+PASS 9 a click on the disabled chip sent no quote request | quote 4 -> 4
+the first list answer is 66 seconds old, so the stored list answer is gone and this check is skipped
+row: It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. · 2 bursts · 1 hit
+PASS 9 a fresh list answer enables the chip "Quote burst here" again | {"id":"quote","text":"Quote burst here","disabled":false,"x":161,"y":454,"w":112,"h":16}
+status 3, quote 5, confirm 4, list 3, upstream create 3, upstream list 2
+row: It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. The server refuses new confirm requests for 559 seconds. · 2 bursts · 1 hit
 PASS 9 the new confirm request reached the server
-PASS 9 the server refused it with the answer 409 and sent no create request | status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
-PASS 9 the row warns again and names the refusal time | It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. The server refuses new confirms for 541 seconds. · 2 bursts · 1 hit · stored answer
+PASS 9 the server refused it with the answer 409 and sent no create request | status 3, quote 5, confirm 4, list 3, upstream create 3, upstream list 2
+PASS 9 the row warns again and names the refusal time | It is possible that Bee Maps made a burst and took credits. Do not press Confirm again. Press Check my bursts. The server refuses new confirm requests for 559 seconds. · 2 bursts · 1 hit
 --- step 10: wait 15 seconds with the layer open
-status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
-PASS 10 no request of any kind came from a timer | status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
+status 3, quote 5, confirm 4, list 3, upstream create 3, upstream list 2
+PASS 10 no request of any kind came from a timer | status 3, quote 5, confirm 4, list 3, upstream create 3, upstream list 2
 --- step 11: totals
-status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
-PASS 11 four confirm requests reached the server, and three create requests reached the fake upstream | status 3, quote 5, confirm 4, list 2, upstream create 3, upstream list 1
+status 3, quote 5, confirm 4, list 3, upstream create 3, upstream list 2
+PASS 11 four confirm requests reached the server, and three create requests reached the fake upstream | status 3, quote 5, confirm 4, list 3, upstream create 3, upstream list 2
 PASS 11 the key of the server is nowhere in the page
 console lines about the layer: 0
 last console lines: log: [Detection] Initialized || log: [TrackedReadout] Initialized || log: [Detection] Mode: DENSE || log: [Detection] Mode: OFF || warning: [MapStack] Needs GOOGLE_MAPS_API_KEY — add it in Provider Settings — or a Cesium ion token for the ion-hosted route
