@@ -3758,8 +3758,8 @@
     "src/data/gdacsProxy.test.mjs › [gdacs-source-015] orders the events by modified time and id and lists at most 500"
   ],
   "gdacs-source-016": [
-    "src/data/gdacsProxy.test.mjs › [gdacs-source-016 gdacs-source-025] uses the global fetch and the real clock when it gets no options",
-    "src/data/gdacsProxy.test.mjs › [gdacs-source-016] answers a GET request with the document"
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-016] answers a GET request with the document",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-016] uses the global fetch and the real clock when it gets no options"
   ],
   "gdacs-source-017": [
     "src/data/gdacsProxy.test.mjs › [gdacs-source-017] refuses the methods other than GET and sends no page request"
@@ -3772,26 +3772,24 @@
     "src/data/gdacsProxy.test.mjs › [gdacs-source-019] sends the same form of page request for each page and the dates of each refresh"
   ],
   "gdacs-source-020": [
-    "src/data/gdacsProxy.test.mjs › [gdacs-source-020] fetches pages in order and stops at the right page"
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-020] fetches pages in order and stops at a 204 answer, at a short page or after page 5"
   ],
   "gdacs-source-021": [
     "src/data/gdacsProxy.test.mjs › [gdacs-source-021] fails on a bad status with a valid body and on a bad second page",
     "src/data/gdacsProxy.test.mjs › [gdacs-source-021] fails on each kind of bad answer"
   ],
   "gdacs-source-022": [
-    "src/data/gdacsProxy.test.mjs › [gdacs-source-022] accepts a page of exactly 2 MiB and refuses a page with one byte more"
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-022] accepts an answer of exactly 2 MiB and refuses an answer with one byte more"
   ],
   "gdacs-source-023": [
     "src/data/gdacsProxy.test.mjs › [gdacs-source-023] starts the timer before the first page and takes the timers of the system by default",
     "src/data/gdacsProxy.test.mjs › [gdacs-source-023] stops a refresh after 30 seconds with one timer and one signal"
   ],
   "gdacs-source-024": [
-    "src/data/gdacsProxy.test.mjs › [gdacs-source-024 gdacs-source-025] answers with the status 200 and tries GDACS again after a stale document",
-    "src/data/gdacsProxy.test.mjs › [gdacs-source-024] serves the last good document for less than 1 hour when a refresh fails"
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-024] answers with the status 200 and tries GDACS again after a stale document",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-024] serves the last good document while it is younger than 1 hour when a refresh fails"
   ],
   "gdacs-source-025": [
-    "src/data/gdacsProxy.test.mjs › [gdacs-source-016 gdacs-source-025] uses the global fetch and the real clock when it gets no options",
-    "src/data/gdacsProxy.test.mjs › [gdacs-source-024 gdacs-source-025] answers with the status 200 and tries GDACS again after a stale document",
     "src/data/gdacsProxy.test.mjs › [gdacs-source-025] caches a document with no event and shares a refresh whatever the time of the request",
     "src/data/gdacsProxy.test.mjs › [gdacs-source-025] caches the document for 10 minutes and shares one refresh"
   ],
