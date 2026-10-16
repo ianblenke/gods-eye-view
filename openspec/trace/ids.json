@@ -2819,6 +2819,141 @@
     "since": "2026-10-09",
     "change": "vendored-coverage-tolerance"
   },
+  "gdacs-source-001": {
+    "hash": "7925d0c3042278ab57749dc1db580c9d455a4f6d6d41c566da4a5079fe6a95ff",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-002": {
+    "hash": "be9e69e5cff015294390a97a3d699b8d43460ba2e95394ab406a50198ca36a12",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-003": {
+    "hash": "a00cd45dcbe1f7c2e6803bf14f3e1a3880fae7e9d2cd72368be5ca4675dd0676",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-004": {
+    "hash": "84a3cdde2f0df4c4415e171920c178e6d8277001bf5c843461ce476e5e37a2a4",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-005": {
+    "hash": "d03c63bead34788330c8a4e6b56eb534490eee505665146c51c9a1627f98e105",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-006": {
+    "hash": "1bb573964ba88afd72881b9da9381ea86859c1dbc9bbc545ddad6cc4069e87ba",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-007": {
+    "hash": "ec780c5f9914adb6606bb227d4499efab8e96d86ea7c96e19b288a7da0d68f78",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-008": {
+    "hash": "1f1634c397f29f975c734916752f76d0dd766247200438aed18b8014b1fdcc7b",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-009": {
+    "hash": "707714a4a71e1ccb86fd5acc06d79d2c4e371aa548514dc44de749a1546f3f2a",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-010": {
+    "hash": "0df039a99df56bb43a76587b79778a1f6ea7ac6e3d78c91b4c82aab74f6c3258",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-011": {
+    "hash": "7db602dd353852a1d242f6a899600b02e565a754b01299289fe9a23ceaebd66a",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-012": {
+    "hash": "cce9d3237902cb45573ba70f7c5aeef6f4bb770a2ad1a0e3fec9821fd99d821a",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-013": {
+    "hash": "824bc840fb9cdbb00d5c7f018d5ba3687259b929f3f30e798192cdad12fd1172",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-014": {
+    "hash": "e43a195d15e802695153c6f6efe6037ae04cd8af79bf626a6f14267aa8952166",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-015": {
+    "hash": "0e88eed032961b604a99a334e814c60d129b03e87e0216636c4ab4d6190e0680",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-016": {
+    "hash": "5b59e9c382e5a4822eb678b46b411187c79068ec382601277e69c5a7f84ab823",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-017": {
+    "hash": "ac6d5d2899cd341678170caf5dc44708916c774f4b07d63a9839c05d50a5cd6c",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-018": {
+    "hash": "5a4e22eff3d51110ae65f1c02b91b63f785f8df32fe22d0086b070197c245731",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-019": {
+    "hash": "42798a4eed23a0e39c5a03778fc04fc49de3bcd8fd34af907c9ee1905566c6fa",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-020": {
+    "hash": "62835093c491fff6a845b762f27cd2bd41859b89d60a2ef0f18b9b1888ccaa60",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-021": {
+    "hash": "c37ae00c41e8a1a7f137dd061dff3b590f1ad1c8da0893e159fcab187214d624",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-022": {
+    "hash": "adc5d41d5b57d81e044ba20ad2ed78804e0b73412b632281c116a34120e78cf7",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-023": {
+    "hash": "59a32c3ffe2837e59eec1084c189c9ce0f9ba0f433ab89543ea7ddad0c6a439b",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-024": {
+    "hash": "069769af8d02a38403d5c270fe447617c218de0a9ab5b27a5a863b217804d9ae",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-025": {
+    "hash": "3aeeda9d96f5119cdd8d64b8838c498edd33f3f53cb90159451feb3f79ba94cd",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-026": {
+    "hash": "c64bd7ef5eec9b600d8bbf9d1328667ba72e2313ec7468197141ba4b766bd23b",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
+  "gdacs-source-027": {
+    "hash": "9f424ecb80381371922a655e12a96ed58d5a1795347982118111376999b40d69",
+    "since": "2026-10-16",
+    "change": "gdacs-source"
+  },
   "hud-markings-001": {
     "hash": "bf07f3ac338e3fd2d2154e6b57509df6157b73411cd9031a3d84856c0ef48c0a",
     "since": "2026-09-16",

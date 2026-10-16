@@ -2747,3 +2747,4 @@
 {"date":"2026-10-16","change":"beemaps-burst-panel","commit":"a30a5bb6a37e6da704777bb7fda5caf603b5cf2e","kind":"measurement","measurement":"19e41427283a323e1219a6511c97afac3b9402ed08040847cf207a90c16d8aca"}
 {"date":"2026-10-16","change":"beemaps-burst-panel","commit":"7518e0a15d05c8f2947cf171f0d06d0ff963f730","kind":"measurement","measurement":"7fef4320b3e62beab86c77b34c1a2c19e263bbf42a574896bdf6f886e08863ea"}
 {"date":"2026-10-16","change":"beemaps-burst-panel","commit":"7b7432cc2c183f573adb8f8da713d4a2ceec90f7","kind":"measurement","measurement":"deb150321d87cd05ae9aa8ad750e202003e38a3004a4ebd97f8db4870b845de2"}
+{"date":"2026-10-16","change":"gdacs-source","commit":"a8eb0145ad319e0ede4c3bbc898e86beefabaf4f","kind":"measurement","measurement":"98df559f8b66ba2ee8c26d0c423234a8791c7a0b46f16da9cce47df8a716cd7b"}

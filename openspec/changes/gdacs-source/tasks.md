@@ -33,8 +33,8 @@
 
 ## 4. Lead work in the image
 
-- [ ] 4.1 Run `make ratchet CHANGE=gdacs-source`.
-- [ ] 4.2 Read the verdict of the ratchet.
+- [x] 4.1 Run `make ratchet CHANGE=gdacs-source`.
+- [x] 4.2 Read the verdict of the ratchet.
 - [ ] 4.3 Ask the owner to accept the interpretation of the license in the Known limit `license-inferred`.
 - [ ] 4.4 Run the two review agents.
 - [ ] 4.5 Write review.md.

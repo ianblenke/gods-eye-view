@@ -3705,6 +3705,103 @@
   "gap-ledger-156": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-156] the ratchet command writes the ledger entry total count of zero for a file with no base content and a larger current not-covered count"
   ],
+  "gdacs-source-001": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-001] keeps the allowed fields of a flood and rounds the position"
+  ],
+  "gdacs-source-002": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-002] drops the fields that are not on the list and keeps the event"
+  ],
+  "gdacs-source-003": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-003] builds the report link from the ids and ignores the link of the feed"
+  ],
+  "gdacs-source-004": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-004] drops a record that is not an object or has no properties object"
+  ],
+  "gdacs-source-005": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-005] drops a record with a wrong type, event id, episode id or alert level",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-005] drops more wrong values of the type and the alert level and keeps the valid ones"
+  ],
+  "gdacs-source-006": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-006] drops a position at the rounded limit, a null geometry and a bad latitude",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-006] lists only records with a valid position and rounds it to three decimals"
+  ],
+  "gdacs-source-007": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-007] reads valid times as UTC in any time zone"
+  ],
+  "gdacs-source-008": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-008] sets invalid times to null and drops a record with an invalid start time"
+  ],
+  "gdacs-source-009": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-009 gdacs-source-011] turns a number that is too large for a score or a severity into null",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-009] keeps an alert score of 0, a negative score and a fraction",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-009] sets the alert level, the score and the current flag"
+  ],
+  "gdacs-source-010": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-010] keeps a severity value above 32 bits and a unit with capital letters",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-010] keeps a severity with a unit and rounds its value to a whole number"
+  ],
+  "gdacs-source-011": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-009 gdacs-source-011] turns a number that is too large for a score or a severity into null",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-011] sets the severity to null when the unit, the value or the data is not usable"
+  ],
+  "gdacs-source-012": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-012] cleans the names in the order of the rules and cuts them to 120 characters"
+  ],
+  "gdacs-source-013": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-013] cleans the country, the origin and the severity texts and checks the iso3"
+  ],
+  "gdacs-source-014": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-014] joins duplicates and keeps the record with the highest episode",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-014] joins the records of different pages and of a full first page"
+  ],
+  "gdacs-source-015": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-015] orders the events by modified time and id and lists at most 500"
+  ],
+  "gdacs-source-016": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-016 gdacs-source-025] uses the global fetch and the real clock when it gets no options",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-016] answers a GET request with the document"
+  ],
+  "gdacs-source-017": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-017] refuses the methods other than GET and sends no page request"
+  ],
+  "gdacs-source-018": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-018] refuses a query or a sub-path and answers the empty path"
+  ],
+  "gdacs-source-019": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-019] sends the page request to the fixed address with UTC dates and fixed options",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-019] sends the same form of page request for each page and the dates of each refresh"
+  ],
+  "gdacs-source-020": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-020] fetches pages in order and stops at the right page"
+  ],
+  "gdacs-source-021": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-021] fails on a bad status with a valid body and on a bad second page",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-021] fails on each kind of bad answer"
+  ],
+  "gdacs-source-022": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-022] accepts a page of exactly 2 MiB and refuses a page with one byte more"
+  ],
+  "gdacs-source-023": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-023] starts the timer before the first page and takes the timers of the system by default",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-023] stops a refresh after 30 seconds with one timer and one signal"
+  ],
+  "gdacs-source-024": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-024 gdacs-source-025] answers with the status 200 and tries GDACS again after a stale document",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-024] serves the last good document for less than 1 hour when a refresh fails"
+  ],
+  "gdacs-source-025": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-016 gdacs-source-025] uses the global fetch and the real clock when it gets no options",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-024 gdacs-source-025] answers with the status 200 and tries GDACS again after a stale document",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-025] caches a document with no event and shares a refresh whatever the time of the request",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-025] caches the document for 10 minutes and shares one refresh"
+  ],
+  "gdacs-source-026": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-026] registers the provider and mounts the route in both servers"
+  ],
+  "gdacs-source-027": [
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-027] sends only the fixed headers to GDACS",
+    "src/data/gdacsProxy.test.mjs › [gdacs-source-027] sends only the fixed headers when the browser sends lower case header names"
+  ],
   "hud-markings-001": [
     "src/hudMarkings.test.mjs › [hud-markings-001] shows no classification marking in a HUD file, in any letter case"
   ],
