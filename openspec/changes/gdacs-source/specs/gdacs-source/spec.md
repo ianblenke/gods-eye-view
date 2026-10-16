@@ -63,7 +63,8 @@ The provider MUST drop a record unless its geometry is a point. The point MUST h
 Origin: spec-first
 
 #### Scenario: List only records with a valid position `gdacs-source-006`
-- **WHEN** the provider normalizes records with no geometry, a geometry of type "Polygon", a geometry of type "MultiPoint", a point with one number, and a point whose coordinates are not a list
+- **WHEN** the provider normalizes records with no geometry, a geometry of type "Polygon", a geometry of type "MultiPoint", and a point with one number
+- **AND** it normalizes a point whose coordinates are not a list
 - **AND** it normalizes records with the geometry types "Polygon", "MultiPoint" and "LineString", or with no type, whose coordinates are two numbers
 - **AND** it normalizes records whose coordinates are not numbers, and records whose latitude is 91 or -91 or whose longitude is 181 or -181
 - **AND** it normalizes records whose longitude is 180.0004 or -180.0004 or whose latitude is 90.0004 or -90.0004
