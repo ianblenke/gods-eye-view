@@ -49,9 +49,13 @@ Origin: spec-first
 - **AND** it normalizes records with the event ids 0, -1, 1.5, "7", null and no event id
 - **AND** it normalizes records with the episode ids -1, 1.5, "2" and no episode id
 - **AND** it normalizes records with the alert levels "Purple", 2, null and no alert level
+- **AND** it normalizes records with the types "FLOOD", "FL " and " FL"
+- **AND** it normalizes records with the alert levels " green", "green ", "greenish" and "Redd", and an alert level that is an object with a field `toLowerCase`
 - **AND** each of these records is valid in all other fields
 - **THEN** the result lists none of these records
 - **AND** `counts.dropped` counts each of them
+- **AND** each of the types FL, DR, VO and TC is valid, and so are the alert levels "Green", "Orange" and "RED"
+- **AND** the event ids 1 and 9007199254740992 and the episode id 9007199254740992 are valid
 - **AND** a record with the episode id 0, the alert level "Orange" and the type "DR" is valid, and its `alert` is "orange"
 
 ### Requirement: Position rules
@@ -62,13 +66,17 @@ Origin: spec-first
 - **WHEN** the provider normalizes records with no geometry, a geometry of type "Polygon", a geometry of type "MultiPoint", and a point with one number
 - **AND** it normalizes records with the geometry types "Polygon", "MultiPoint" and "LineString", or with no type, whose coordinates are two numbers
 - **AND** it normalizes records whose coordinates are not numbers, and records whose latitude is 91 or -91 or whose longitude is 181 or -181
+- **AND** it normalizes records whose longitude is 180.0004 or -180.0004 or whose latitude is 90.0004 or -90.0004
+- **AND** it normalizes a record with a null geometry, and records whose latitude is null, a text or not a number
+- **AND** it normalizes a record whose position is -0 and -0
 - **AND** it normalizes a record whose position is 0 and 0
 - **AND** each of these records is valid in all other fields
 - **THEN** the result lists none of these records, and `counts.dropped` counts each of them
 - **AND** the latitudes -90 and 90 and the longitudes -180 and 180 are valid
 - **AND** the positions (0, 5) and (5, 0) are valid
 - **AND** the position (0.0004, 0.0004) is valid, and the event has the latitude 0 and the longitude 0
-- **AND** the latitude 5.5555 becomes 5.556 and the latitude -0.0004 becomes 0
+- **AND** the latitude 5.5555 becomes 5.556, the latitude 0.0045 becomes 0.005 and the latitude -0.0004 becomes 0
+- **AND** the longitude -0.0004 becomes 0
 - **AND** the coordinates `[28.9986, 41.1157]` give the longitude 28.999 and the latitude 41.116
 
 ### Requirement: Time rules
@@ -83,6 +91,7 @@ Origin: spec-first
 - **AND** it normalizes a record whose `fromdate` is "2026-10-12T01:00:00"
 - **THEN** `to` is "2026-10-12T01:00:00.000Z" for the first two values, "2026-10-12T01:00:00.500Z" for the third and "2026-10-12T01:00:00.123Z" for the fourth
 - **AND** `to` is "2026-10-12T23:59:59.000Z" for the fifth value
+- **AND** the values "1970-01-01T00:00:00" and "2026-12-31T23:59:59" are valid, and they give the same texts with ".000Z"
 - **AND** `from` is "2026-10-12T01:00:00.000Z"
 - **AND** `modified` follows the same rules as `to`
 
@@ -95,6 +104,9 @@ Origin: spec-first
 - **AND** it normalizes texts with a part of the wrong number of digits, such as "26-10-12T01:00:00" and "2026-10-12T1:00:00"
 - **AND** the part can be the year, the month, the day, the hour, the minute or the second
 - **AND** it normalizes the texts "x2026-10-12T01:00:00" and "2026-10-12T01:00:00x", a list that holds a valid text, an empty text and a value that is not text
+- **AND** it normalizes texts with a wrong separator, such as "2026/10-12T01:00:00" and "2026-10-12 01:00:00", and a comma in place of the dot
+- **AND** it normalizes texts with a sign or a space in a part, two final Z letters, or a lower case t or z
+- **AND** it normalizes a text with a final line feed, a year of three digits, the month 00 and the minute 61
 - **THEN** `to` is null for each of these values, and the provider lists these events
 - **AND** `modified` follows the same rules as `to`
 - **AND** the provider drops a record whose `fromdate` is one of these values, and `counts.dropped` counts it
@@ -108,7 +120,7 @@ Origin: spec-first
 - **THEN** `current` is true for the text "true" and for the value true, and false for the others
 - **AND** `counts.current` counts the events with `current` true
 - **AND** the alert levels "Green", "ORANGE" and "red" give "green", "orange" and "red"
-- **AND** the `alertScore` 2 stays 2
+- **AND** the `alertScore` 2 stays 2, and the scores 0, -1 and 1.5 stay as they are
 - **AND** the alert scores "2", null and 1e999 give null, where the page body holds 1e999 as raw JSON text
 
 ### Requirement: Severity rules
@@ -124,6 +136,7 @@ Origin: spec-first
 - **AND** the `text` of `severity` is "Tropical Storm (maximum wind speed of 250 km/h)"
 - **AND** the storm "Tropical Cyclone ONE-26" with the severity 120.3696 and the unit "km/h" gives `value` 120
 - **AND** the drought "Drought in Southern India" with the severity 537380 and the unit "km2" gives `value` 537380
+- **AND** the severity 3000000000 with the unit "MW" gives `value` 3000000000 and `unit` "MW"
 - **AND** a storm with the severity 100, the unit "km/h" and an empty severity text gives `severity` with `value` 100 and `text` null
 - **AND** a storm with the same values and a severity text that is not text gives `text` null
 
@@ -253,6 +266,8 @@ Origin: spec-first
 - **AND** the page request has a signal
 - **AND** the provider sends no other request than the page requests
 - **AND** a clock of 2026-01-10T23:59:59Z gives `fromdate` 2025-12-27 and `todate` 2026-01-10
+- **AND** each later page request has the same address form, options and headers, with its own `pagenumber`
+- **AND** a refresh that starts on a later UTC day sends the dates of that day
 - **AND** the clocks 2026-03-05T00:00:00.000Z and 2026-03-05T23:59:59.999Z give `fromdate` 2026-02-19 and `todate` 2026-03-05
 
 ### Requirement: Read the pages
@@ -290,8 +305,9 @@ Origin: spec-first
 - **AND** the test makes a status 200 with the bodies `{}`, `[]` and `null`, in turn
 - **AND** the test makes a status 200 with the bodies `{"type":"FeatureCollection"}`, `{"type":"FeatureCollection","features":null}`, `{"type":"FeatureCollection","features":{}}` and `{"type":"Feature","features":[]}`, in turn
 - **AND** the test makes a status 200 with the body `{"type":"FeatureCollection","features":"abc"}`
+- **AND** the test makes the status 301, 404 and 500 with the body `{"type":"FeatureCollection","features":[]}`, in turn
 - **THEN** each of these cases is a failure, and the document says `unavailable` true when no good document exists
-- **AND** page 2 fails after a good page 1, and no good document exists
+- **AND** page 2 fails after a good page 1, with the status 500 or with the body `{}`, and no good document exists
 - **AND** the document then says `unavailable` true with the reason "GDACS unavailable"
 - **AND** the document holds no event, and none of the events of page 1
 
@@ -308,6 +324,8 @@ Origin: spec-first
 - **AND** when the timer callback runs, that signal aborts and the document says `unavailable` true
 - **AND** `clearTimer` runs once with the timer of a refresh after that refresh succeeds, and once after that refresh fails
 - **AND** a page body that stops after some bytes, and the timer callback, give a document with `unavailable` true
+- **AND** the timer is set before page 1, so a page 1 that does not answer also ends with `unavailable` true
+- **AND** a provider that gets no timer options uses the global `setTimeout` with 30000 and the global `clearTimeout`
 
 ### Requirement: Stale document
 When a refresh fails, the provider MUST serve the last good document with `stale` true. It MUST do this only while that document is younger than 1 hour. In all other cases of a failure it MUST answer with `unavailable` true. It MUST NOT keep a failed refresh as a document.
@@ -322,7 +340,8 @@ Origin: spec-first
 - **AND** an `unavailable` document has the same `schemaVersion`, `source`, `attribution`, `license`, `disclaimer` and `coverage` as a good document
 - **AND** its `counts` has `total` 0, `current` 0 and `dropped` 0
 - **AND** its `byType` has FL 0, DR 0, VO 0 and TC 0, and it holds no event
-- **AND** the next browser request after a failure tries GDACS again
+- **AND** the stale document and the `unavailable` document have the status 200
+- **AND** the next browser request after a failure tries GDACS again, also after a stale document
 
 ### Requirement: Cache and shared refresh
 The provider MUST cache the document for 10 minutes. Browser requests that come while a refresh waits for GDACS MUST share that refresh.
@@ -333,6 +352,8 @@ Origin: spec-first
 - **THEN** the provider asks GDACS once for all three
 - **AND** a fourth browser request that comes 10 minutes after the first gets a new refresh
 - **AND** a fifth browser request that comes 5 minutes after the fourth uses the new document and sends no page request
+- **AND** a document with no event is cached in the same way
+- **AND** a browser request that comes later, while the refresh waits, shares that refresh
 
 ### Requirement: Registration
 The provider MUST be one of the local provider plugins, and it MUST mount the route in the development server and in the preview server.
@@ -352,4 +373,5 @@ Origin: spec-first
 - **THEN** the page request has exactly the headers `Accept` and `User-Agent`
 - **AND** the `User-Agent` of the page request is "gods-eye-view-gdacs-proxy/1.0" and has no "@"
 - **AND** the page request has no body
+- **AND** the same holds when the browser sends the header names in lower case
 - **AND** the JSON text of the document holds none of the header values of the browser request

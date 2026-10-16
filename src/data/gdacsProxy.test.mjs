@@ -269,6 +269,8 @@ const VALID_TIMES = [
   ['2026-10-12T01:00:00.5', '2026-10-12T01:00:00.500Z'],
   ['2026-10-12T01:00:00.123Z', '2026-10-12T01:00:00.123Z'],
   ['2026-10-12T23:59:59', '2026-10-12T23:59:59.000Z'],
+  ['1970-01-01T00:00:00', '1970-01-01T00:00:00.000Z'],
+  ['2026-12-31T23:59:59', '2026-12-31T23:59:59.000Z'],
 ];
 const INVALID_TIMES = [
   '2026-10-12T01:00:00+02:00',
@@ -283,6 +285,22 @@ const INVALID_TIMES = [
   '2026-10-12T01:00:00.1234',
   '2026-10-12T01:00:00.',
   '2026-10-12T01:00:60',
+  '2026-10-12T01:61:00',
+  '2026-00-12T01:00:00',
+  '999-10-12T01:00:00',
+  '2026-10-12T+1:00:00',
+  '2026-10-12T 1:00:00',
+  '2026-10-12T01:00:00,5',
+  '2026-10-12T01:00:00x5',
+  '2026-10-12T01:00:00ZZ',
+  '2026-10-12t01:00:00',
+  '2026-10-12T01:00:00z',
+  '2026-10-12T01:00:00\n',
+  '2026/10-12T01:00:00',
+  '2026-10/12T01:00:00',
+  '2026-10-12 01:00:00',
+  '2026-10-12T01.00:00',
+  '2026-10-12T01:00.00',
   '2026-13-12T01:00:00',
   '0099-10-12T01:00:00',
   '26-10-12T01:00:00',
@@ -443,6 +461,16 @@ test('[gdacs-source-012] cleans the names in the order of the rules and cuts the
   assert.equal(name('Flood<b> in\u0007 X'), 'Floodb in X');
   assert.equal(name('A <> B'), 'A B');
   assert.equal(name('A\u007fB\u009fC'), 'ABC');
+  assert.equal(name('A\u0000B'), 'AB');
+  assert.equal(name('A\u001fB'), 'AB');
+  assert.equal(name('A~B'), 'A~B');
+  assert.equal(name('A\tB\nC\rD'), 'ABCD');
+  assert.equal(name('A  B  C'), 'A B C');
+  assert.equal(name('A\u00a0\u00a0B'), 'A\u00a0\u00a0B');
+  assert.equal(name('\u00a0A\u00a0'), '\u00a0A\u00a0');
+  assert.equal(name(' A '), 'A');
+  assert.equal(name(' A'), 'A');
+  assert.equal(name('A '), 'A');
   assert.equal(name('A B'), 'A B');
   assert.equal(
     name(`${letters(118)}  ${letters(10, 'b')}`),
@@ -481,6 +509,11 @@ test('[gdacs-source-013] cleans the country, the origin and the severity texts a
     assert.equal(event({ source: value }).origin, null);
   }
   assert.equal(event({ country: 'A  <b> B' }).country, 'A b B');
+  assert.equal(event({ country: 'A\u0007B' }).country, 'AB');
+  assert.equal(event({ source: 'A\u0007B' }).origin, 'AB');
+  assert.equal(event({ source: 'A<b>B' }).origin, 'AbB');
+  assert.equal(event({ source: 'A  B' }).origin, 'A B');
+  assert.equal(event({ source: ' A ' }).origin, 'A');
   assert.equal(event({ source: letters(50) }).origin, letters(40));
   assert.equal(event({ source: letters(40) }).origin, letters(40));
   const severity = (extra) =>
@@ -490,11 +523,18 @@ test('[gdacs-source-013] cleans the country, the origin and the severity texts a
   assert.equal(severity({ severitytext: letters(200) }).text, letters(160));
   assert.equal(severity({ severitytext: letters(160) }).text, letters(160));
   assert.equal(severity({ severitytext: ' x  y ' }).text, 'x y');
+  assert.equal(severity({ severityunit: 'k\u0007m' }).unit, 'km');
+  assert.equal(severity({ severityunit: 'k  m' }).unit, 'k m');
+  assert.equal(severity({ severityunit: ' km ' }).unit, 'km');
+  assert.equal(severity({ severitytext: 'x\u0007y' }).text, 'xy');
+  assert.equal(severity({ severitytext: 'x<b>y' }).text, 'xby');
   assert.equal(event({ iso3: 'TUR' }).iso3, 'TUR');
   for (const letter of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
     assert.equal(event({ iso3: letter.repeat(3) }).iso3, letter.repeat(3));
   }
   for (const value of [
+    'ÀÀÀ',
+    'TUR\n',
     'tur',
     'TURK',
     'TU',
@@ -545,6 +585,29 @@ test('[gdacs-source-014] joins duplicates and keeps the record with the highest 
     ],
   ]) {
     assert.equal(one(order).name, 'First');
+  }
+  for (const order of [
+    [
+      flood(2, { datemodified: '1969-12-31T23:59:59', name: 'A' }),
+      flood(2, { datemodified: null, name: 'B' }),
+    ],
+    [
+      flood(2, { datemodified: null, name: 'B' }),
+      flood(2, { datemodified: '1969-12-31T23:59:59', name: 'A' }),
+    ],
+  ]) {
+    assert.equal(one(order).name, 'A');
+    assert.equal(one(order).modified, '1969-12-31T23:59:59.000Z');
+  }
+  for (const order of [
+    [flood(2), flood(1)],
+    [flood(1), flood(2)],
+    [flood(2, { name: 'A' }), flood(2, { name: 'B' })],
+  ]) {
+    const result = normalizeEvents(order);
+    assert.equal(result.events.length, 1);
+    assert.equal(result.counts.dropped, 0);
+    assert.equal(result.counts.total, 1);
   }
   const purple = normalizeEvents([
     flood(1),
@@ -631,6 +694,14 @@ test('[gdacs-source-015] orders the events by modified time and id and lists at 
   const cut = normalizeEvents([mixed, ...records]);
   assert.equal(cut.counts.byType.DR, 0);
   assert.equal(cut.counts.byType.FL, 500);
+  const kinds = normalizeEvents([
+    rec({ eventtype: 'DR', eventid: 1 }),
+    rec({ eventtype: 'VO', eventid: 2 }),
+    rec({ eventtype: 'TC', eventid: 3 }),
+    rec({ eventtype: 'TC', eventid: 4 }),
+    rec({ eventtype: 'FL', eventid: 5 }),
+  ]);
+  assert.deepEqual(kinds.counts.byType, { FL: 1, DR: 1, VO: 1, TC: 2 });
   const three = normalizeEvents([
     rec({ eventid: 1, datemodified: null }),
     rec({ eventid: 2, datemodified: stamp(5) }),
@@ -730,11 +801,13 @@ function mount(plugin, preview = false) {
   return async (url = '/', method = 'GET', headers = {}) => {
     const res = {};
     res.writeHead = (code, head) => {
+      assert.equal(res.statusCode, undefined);
       assert.equal(res.body, undefined);
       res.statusCode = code;
       res.headers = head;
     };
     res.end = (body) => {
+      assert.equal(res.body, undefined);
       assert.notEqual(res.statusCode, undefined);
       res.body = JSON.parse(body);
     };
@@ -1098,7 +1171,13 @@ test('[gdacs-source-023] stops a refresh after 30 seconds with one timer and one
     await new Promise((resolve) => setImmediate(resolve));
   }
   stall.timers[0].fn();
-  assert.equal((await stalled).body.unavailable, true);
+  const outcome = await Promise.race([
+    stalled.then((res) => res.body.unavailable),
+    new Promise((resolve) => {
+      setTimeout(() => resolve('hung'), 2000).unref();
+    }),
+  ]);
+  assert.equal(outcome, true);
 
   const ok = install({ fetchImpl: pagesFetch([[rec()]]) });
   await ok.request('/');
@@ -1273,4 +1352,241 @@ test('[gdacs-source-016 gdacs-source-025] uses the global fetch and the real clo
   } finally {
     globalThis.fetch = saved;
   }
+});
+
+test('[gdacs-source-005] drops more wrong values of the type and the alert level and keeps the valid ones', () => {
+  const wrong = [
+    ...['FLOOD', 'FL ', ' FL'].map((v) => ({ eventtype: v })),
+    ...[
+      ' green',
+      'green ',
+      'greenish',
+      'Redd',
+      { toLowerCase: 'green' },
+      { toLowerCase: 1 },
+    ].map((v) => ({ alertlevel: v })),
+  ];
+  const result = normalizeEvents(wrong.map((properties) => rec(properties)));
+  assert.deepEqual(result.events, []);
+  assert.equal(result.counts.dropped, wrong.length);
+  for (const type of ['FL', 'DR', 'VO', 'TC']) {
+    assert.equal(only([rec({ eventtype: type })]).type, type);
+  }
+  for (const [text, expected] of [
+    ['Green', 'green'],
+    ['Orange', 'orange'],
+    ['RED', 'red'],
+  ]) {
+    assert.equal(only([rec({ alertlevel: text })]).alert, expected);
+  }
+  assert.equal(only([rec({ eventid: 1 })]).eventId, 1);
+  assert.equal(
+    only([rec({ eventid: 9007199254740992 })]).eventId,
+    9007199254740992,
+  );
+  assert.equal(
+    only([rec({ episodeid: 9007199254740992 })]).episodeId,
+    9007199254740992,
+  );
+});
+
+test('[gdacs-source-006] drops a position at the rounded limit, a null geometry and a bad latitude', () => {
+  const wrong = [
+    at(180.0004, 10),
+    at(-180.0004, 10),
+    at(10, 90.0004),
+    at(10, -90.0004),
+    { geometry: null },
+    at(10, null),
+    at(10, '5'),
+    at(10, NaN),
+    at(-0, -0),
+  ];
+  const result = normalizeEvents(wrong.map((top) => rec({}, top)));
+  assert.deepEqual(result.events, []);
+  assert.equal(result.counts.dropped, wrong.length);
+  const listed = (longitude, latitude) =>
+    only([rec({}, at(longitude, latitude))]);
+  assert.equal(listed(10, 0.0045).latitude, 0.005);
+  assert.equal(Object.is(listed(-0.0004, 10).longitude, 0), true);
+});
+
+test('[gdacs-source-009] keeps an alert score of 0, a negative score and a fraction', () => {
+  for (const score of [0, -1, 1.5]) {
+    assert.equal(
+      Object.is(only([rec({ alertscore: score })]).alertScore, score),
+      true,
+    );
+  }
+});
+
+test('[gdacs-source-010] keeps a severity value above 32 bits and a unit with capital letters', () => {
+  const severity = only([
+    rec({ severitydata: { ...SIMON, severity: 3e9, severityunit: 'MW' } }),
+  ]).severity;
+  assert.equal(severity.value, 3000000000);
+  assert.equal(severity.unit, 'MW');
+});
+
+test('[gdacs-source-019] sends the same form of page request for each page and the dates of each refresh', async () => {
+  const calls = [];
+  const { request, clock } = install({
+    fetchImpl: pagesFetch([fullPage(1), fullPage(1000, 99), [rec()]], calls),
+  });
+  await request('/');
+  assert.equal(calls.length, 2);
+  calls.forEach((call, index) => {
+    assert.equal(
+      call.url,
+      `https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist=FL;DR;VO;TC&fromdate=2026-02-19&todate=2026-03-05&alertlevel=green;orange;red&pagenumber=${index + 1}`,
+    );
+    assert.equal(call.options.method, 'GET');
+    assert.equal(call.options.redirect, 'error');
+    assert.deepEqual(Object.keys(call.options).sort(), [
+      'headers',
+      'method',
+      'redirect',
+      'signal',
+    ]);
+    assert.deepEqual(call.options.headers, {
+      Accept: 'application/json',
+      'User-Agent': 'gods-eye-view-gdacs-proxy/1.0',
+    });
+  });
+  clock.t = Date.UTC(2026, 2, 6, 10, 11, 0);
+  await request('/');
+  assert.equal(calls.length, 3);
+  assert.match(calls[2].url, /&fromdate=2026-02-20&todate=2026-03-06&/);
+});
+
+test('[gdacs-source-021] fails on a bad status with a valid body and on a bad second page', async () => {
+  const valid = '{"type":"FeatureCollection","features":[]}';
+  for (const status of [301, 404, 500]) {
+    const { request } = install({
+      fetchImpl: async () => answerOf({ status, text: valid }),
+    });
+    const document = (await request('/')).body;
+    assert.equal(document.unavailable, true, String(status));
+    assert.equal(document.reason, 'GDACS unavailable');
+  }
+  const second = install({
+    fetchImpl: pagesFetch([fullPage(1), { text: '{}' }]),
+  });
+  const document = (await second.request('/')).body;
+  assert.equal(document.unavailable, true);
+  assert.deepEqual(document.events, []);
+});
+
+test('[gdacs-source-023] starts the timer before the first page and takes the timers of the system by default', async () => {
+  const hang = install({
+    fetchImpl: (url, options) =>
+      new Promise((resolve, reject) => {
+        options.signal.addEventListener('abort', () =>
+          reject(new DOMException('aborted', 'AbortError')),
+        );
+      }),
+  });
+  const pending = hang.request('/');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(hang.timers.length, 1);
+  hang.timers[0].fn();
+  assert.equal((await pending).body.unavailable, true);
+
+  const savedSet = globalThis.setTimeout;
+  const savedClear = globalThis.clearTimeout;
+  const sets = [];
+  const clears = [];
+  globalThis.setTimeout = (fn, ms) => {
+    const handle = savedSet(fn, ms);
+    sets.push({ ms, handle });
+    return handle;
+  };
+  globalThis.clearTimeout = (handle) => {
+    clears.push(handle);
+    return savedClear(handle);
+  };
+  let request;
+  try {
+    request = mount(
+      gdacsProxy({ fetchImpl: pagesFetch([[rec()]]), now: () => NOW }),
+    );
+  } finally {
+    globalThis.setTimeout = savedSet;
+    globalThis.clearTimeout = savedClear;
+  }
+  await request('/');
+  const mine = sets.filter((entry) => entry.ms === 30000);
+  assert.equal(mine.length, 1);
+  assert.deepEqual(clears, [mine[0].handle]);
+});
+
+test('[gdacs-source-024 gdacs-source-025] answers with the status 200 and tries GDACS again after a stale document', async () => {
+  const calls = [];
+  const { request, clock } = install({
+    fetchImpl: pagesFetch([[rec()], { status: 500 }, { status: 500 }], calls),
+  });
+  await request('/');
+  clock.t += HOUR - 1;
+  const stale = await request('/');
+  assert.equal(stale.statusCode, 200);
+  assert.equal(stale.body.stale, true);
+  assert.equal(calls.length, 2);
+  const next = await request('/');
+  assert.equal(calls.length, 3);
+  assert.equal(next.body.stale, true);
+  const gone = install({ fetchImpl: pagesFetch([{ status: 500 }]) });
+  const unavailable = await gone.request('/');
+  assert.equal(unavailable.statusCode, 200);
+  assert.equal(unavailable.body.unavailable, true);
+});
+
+test('[gdacs-source-025] caches a document with no event and shares a refresh whatever the time of the request', async () => {
+  const calls = [];
+  const empty = install({
+    fetchImpl: pagesFetch([{ status: 204 }, [rec()]], calls),
+  });
+  await empty.request('/');
+  await empty.request('/');
+  assert.equal(calls.length, 1);
+  const many = [];
+  let open;
+  const gate = new Promise((resolve) => {
+    open = resolve;
+  });
+  const { request, clock } = install({
+    fetchImpl: async (url, options) => {
+      many.push({ url, options });
+      await gate;
+      return answerOf([rec()]);
+    },
+  });
+  const first = request('/');
+  clock.t = NOW + 1;
+  const second = request('/');
+  await new Promise((resolve) => setImmediate(resolve));
+  open();
+  await Promise.all([first, second]);
+  assert.equal(many.length, 1);
+});
+
+test('[gdacs-source-027] sends only the fixed headers when the browser sends lower case header names', async () => {
+  const calls = [];
+  const { request } = install({ fetchImpl: pagesFetch([[rec()]], calls) });
+  const res = await request('/', 'GET', {
+    cookie: 'session=SECRET-cookie',
+    authorization: 'Bearer SECRET-token',
+    referer: 'http://SECRET-referrer.example/',
+    'user-agent': 'SECRET-browser',
+  });
+  assert.deepEqual(Object.keys(calls[0].options).sort(), [
+    'headers',
+    'method',
+    'redirect',
+    'signal',
+  ]);
+  assert.deepEqual(calls[0].options.headers, {
+    Accept: 'application/json',
+    'User-Agent': 'gods-eye-view-gdacs-proxy/1.0',
+  });
+  assert.equal(JSON.stringify(res.body).includes('SECRET'), false);
 });
