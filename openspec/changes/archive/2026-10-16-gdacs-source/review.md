@@ -10,7 +10,7 @@ Reviewed-Tree: 8ca28b26c3f658e58d0215730ff93193e03116094812f5cd1b70b0f00ba415d5
 
 ## Findings
 
-The reports of rounds 1 and 2 are in `review/round-1/` and `review/round-2/`. The reports of round 3 are in `review/round-3/`. Each file holds the report word for word.
+The reports of rounds 1 and 2 are in `review/round-1/` and `review/round-2/`. The reports of round 3 are `review/spec-adversary.md` and `review/ste-adversary.md`. Each file holds the report word for word.
 
 A plan review came before the code. It had two rounds, and both reviewers gave FAIL in both rounds. The reports are outside the repository, and the lead corrected all findings in the spec before the code was final.
 
