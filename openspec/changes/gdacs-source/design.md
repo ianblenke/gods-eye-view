@@ -5,7 +5,7 @@ A provider in this project is a Vite plugin that mounts one handler under `/api/
 
 GDACS is a cooperation framework of the United Nations and the European Commission. Its event list is a REST call that answers a GeoJSON feature collection. A scout read the feed on 2026-10-16. The call needs no key. A request with an `Origin` header got `Access-Control-Allow-Origin: *`.
 
-A page holds at most 100 records. A page that has no record answers 204 with no body. A request for 14 days returned 65 records on one page.
+A page holds at most 100 records. A request for a page with no record gets the answer 204 with no body. A request for 14 days returned 65 records on one page.
 
 This design uses these terms.
 - A page is the answer of GDACS to one page request.
@@ -49,7 +49,7 @@ The document has `schemaVersion`, `source`, `attribution`, `license`, `disclaime
 The provider calls `https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH` with these parameters: `eventlist=FL;DR;VO;TC`, `fromdate`, `todate`, `alertlevel=green;orange;red` and `pagenumber`.
 - The default of `alertlevel` is orange and red only. The scout ran a 30-day sweep of the six event types, with one query for each type. It got 15 events with the default and 1631 rows with all three levels. So the call names all three.
 - `fromdate` is the UTC date 14 days before now, and `todate` is the UTC date of now. GDACS returns every event that is active in that window, so a flood that began on 2026-05-19 and is still current is in the response.
-- The provider fetches page 1, then page 2, and so on. It stops at a page that answers 204, at a page whose `features` list has fewer than 100 entries, and after page 5. A record that the provider drops still counts as an entry.
+- The provider fetches page 1, then page 2, and so on. It stops when the answer to a page request is 204. It stops at a page whose `features` list has fewer than 100 entries, and after page 5. A record that the provider drops still counts as an entry.
 
 ### D4: The fields of an event
 
@@ -73,7 +73,7 @@ GDACS gives a severity for earthquakes, storms, droughts and wildfires. For a fl
 
 ### D7: The cache and the stale document have their own times
 
-The provider keeps the document for 10 minutes (Reticulum: 60 seconds). The provider serves the last good document while it is younger than 1 hour at the start of the failed refresh (Reticulum: 2 hours). The time limit is 30 seconds for all pages (Reticulum: 8 seconds for one answer). A page has a limit of 2 MiB (Reticulum: 4 MiB).
+The provider keeps the document for 10 minutes (Reticulum: 60 seconds). The provider serves the last good document while it is younger than 1 hour at the start of the failed refresh (Reticulum: 2 hours). The time limit is 30 seconds for all pages (Reticulum: 8 seconds for one answer). The body of an answer has a limit of 2 MiB (Reticulum: 4 MiB).
 
 In the scout, droughts changed in one daily batch and storms changed every few hours, so 10 minutes is short enough. A page of 100 records is about 140 KB, so the limit of 2 MiB is far above a real page.
 
@@ -117,7 +117,7 @@ The change adds `server/providers/gdacs.js` and `src/data/gdacsProxy.test.mjs`. 
 - [GDACS can change the shape of a record] → The provider checks each field and drops a bad record. The count `dropped` shows how many records it dropped.
 - [The API does not state the license of the feed] → The Known limits `license-inferred` and `license-owner-step` name the facts. The document carries the attribution and the disclaimer, and the owner accepts the interpretation before the merge.
 - [The route can look empty on a day with few events] → The Known limit `thin-live-content` shows the numbers. The layer of change 2 says how many events it shows.
-- [A bad page can fill the memory] → The provider reads at most 2 MiB of a page. A page with more bytes is a failure.
+- [A bad page can fill the memory] → The provider reads at most 2 MiB of an answer body. An answer body with more bytes is a failure.
 - [The date window moves at midnight UTC] → See decision D7 for how old a window can be.
 - [GDACS fails for a long time] → Each browser request that comes when no refresh waits then asks GDACS again. See the Known limit `outage-refetch`.
 

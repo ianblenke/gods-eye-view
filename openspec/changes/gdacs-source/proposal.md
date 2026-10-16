@@ -56,6 +56,6 @@ None.
 - Known limit `text-cleaning`: The provider removes the characters "<" and ">". Three of the ten storm severity texts of 2026-10-16 hold "Hurricane/Typhoon > 74 mph". The provider loses the sign. The provider cuts the longest name of that day (311 characters) to 120 characters. It cuts the longest country (296 characters) to 80.
 - Known limit `page-cap`: The provider fetches at most 5 pages and lists at most 500 events. A window with more records loses the rest, and the document shows no sign of it.
 - Known limit `silent-empty`: A change in the shape of the feed can make the provider drop every record. The document is then good, it has no event, and `unavailable` is false. Only `counts.dropped` shows it.
-- Known limit `empty-body-fails`: A page that answers 204 means no more events. A page that answers 200 with an empty body is a failure.
+- Known limit `empty-body-fails`: An answer 204 means no more events. An answer 200 with an empty body is a failure.
 - Known limit `real-service-once`: No test sends a request to GDACS. One run reads the real feed once, and `evidence/live-run.txt` shows it with the code commit. The run read one page of 65 records. The page size of 100, the answer 204 and the pages 2 to 5 never ran against the real feed.
 - Known limit `text-is-plain`: The text fields `name`, `country`, `origin` and `severity.text` can hold any text, a web address included. The provider removes only control characters and angle brackets. Change 2 must show these fields as plain text.
