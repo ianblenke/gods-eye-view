@@ -237,6 +237,34 @@ test('[beemaps-bursts-002] reads the status only while it is enabled', async () 
   assert.equal(calls.getStatus.length, 0);
 });
 
+test('[beemaps-bursts-002] sends no confirm and no second request while a quote is shown and the page reads, updates and moves', async () => {
+  const h = harness();
+  await h.quoted();
+  for (let n = 0; n < 3; n += 1) {
+    h.layer.getRowControls();
+    await h.layer.update();
+    for (const name of ['moveStart', 'changed', 'moveEnd'])
+      h.viewer.camera[name].raiseEvent();
+    h.viewer.scene.preRender.raiseEvent();
+    h.viewer.scene.postRender.raiseEvent();
+  }
+  await tick();
+  assert.deepEqual(
+    [h.calls.quote.length, h.calls.confirm.length, h.calls.list.length],
+    [1, 0, 0],
+  );
+  h.timers[0].fn();
+  h.layer.disable(h.viewer);
+  h.layer.enable(h.viewer);
+  await h.layer.update();
+  h.layer.destroy(h.viewer);
+  await tick();
+  assert.deepEqual(
+    [h.calls.quote.length, h.calls.confirm.length, h.calls.list.length],
+    [1, 0, 0],
+  );
+});
+
 test('[beemaps-bursts-004] has two chips with onClick functions and no params after enable, and none before and after', async () => {
   const h = harness();
   h.layer.init(h.viewer);
@@ -799,30 +827,62 @@ test('[beemaps-bursts-013] asks for no key when nobody confirms, and shows no ke
 });
 
 test('[beemaps-bursts-013] makes a key of 32 characters from 0123456789abcdef when no random source is given', async () => {
-  const calls = { confirm: [] };
+  const sent = [];
   const source = {
     getStatus: async () => ({ ok: true, enabled: true, configured: true }),
     quote: async () => ({ ok: true, quote: QUOTE }),
     confirm: async (options) => {
-      calls.confirm.push(options);
+      sent.push(options.idempotencyKey);
       return CREATED;
     },
     list: async () => ({ ok: true, bursts: [], total: 0, cached: false }),
   };
   const { viewer } = harness();
-  const keys = [];
-  for (let n = 0; n < 2; n += 1) {
+  for (let n = 0; n < 24; n += 1) {
     const layer = createBeemapsBurstsLayer({ source });
     layer.init(viewer);
     layer.enable(viewer);
     await layer.update();
     await layer.getRowControls().chips[0].onClick();
     await layer.getRowControls().chips[0].onClick();
-    keys.push(calls.confirm[n].idempotencyKey);
     layer.destroy(viewer);
   }
-  for (const value of keys) assert.match(value, /^[0-9a-f]{32}$/);
-  assert.notEqual(keys[0], keys[1]);
+  assert.equal(sent.length, 24);
+  for (const value of sent) assert.match(value, /^[0-9a-f]{32}$/);
+  assert.equal(new Set(sent).size, 24);
+});
+
+test('[beemaps-bursts-010] uses the clock and the timers of the page when none are given', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'], now: NOW });
+  const source = {
+    getStatus: async () => ({ ok: true, enabled: true, configured: true }),
+    quote: async () => ({ ok: true, quote: QUOTE }),
+    confirm: async () => CREATED,
+    list: async () => ({ ok: true, bursts: [], total: 0, cached: false }),
+  };
+  const { viewer } = harness();
+  const layer = createBeemapsBurstsLayer({ source });
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update();
+  await layer.getRowControls().chips[0].onClick();
+  assert.equal(layer.getRowControls().chips[0].id, `confirm:${QUOTE_ID}`);
+  t.mock.timers.tick(119999);
+  assert.equal(layer.getRowControls().chips[0].id, `confirm:${QUOTE_ID}`);
+  t.mock.timers.tick(1);
+  assert.deepEqual(
+    layer.getRowControls().chips.map((entry) => entry.id),
+    ['quote', 'list'],
+  );
+  assert.equal(layer.getRowControls().info, ENDED_TEXT);
+  await layer.getRowControls().chips[0].onClick();
+  await layer.getRowControls().chips[0].onClick();
+  const text = layer.getRowControls().info;
+  assert.match(text, /^Burst created: /);
+  assert.equal(layer.getStats().lastUpdate, Date.now());
+  t.mock.timers.tick(120000);
+  assert.equal(layer.getRowControls().info, text);
+  layer.destroy(viewer);
 });
 
 test('[beemaps-bursts-014] shows a created burst, its box and the stats', async () => {
