@@ -220,7 +220,7 @@
     "change": "beemaps-burst-control"
   },
   "beemaps-bursts-001": {
-    "hash": "1da9b5e98197cea59b9a8dccf5b26cb9b6b3d8487582151223bdcec5518f6ec0",
+    "hash": "9915a9b9e3140776747808537bf05a51940b6e0f2b26ac03463fc35d2de0e227",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
@@ -240,12 +240,12 @@
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-005": {
-    "hash": "6a852d8ee84f6105b3f52ce9ebc8bfdc41f0bd0c8820912dc2fb98f979de4cf2",
+    "hash": "5fa107af23d67d9818621de91a3d81907fabfed286deec4c7f79b89ddaa00b89",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-006": {
-    "hash": "e4d3e30f3d76f75e7469117e944b429c2eba570d2ae95d780077308be39fc3cc",
+    "hash": "7c07fb36b3d2819767c8d750466956fdaba9560a759cb4905374a6c59898735a",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
@@ -275,7 +275,7 @@
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-012": {
-    "hash": "222a43d428b33b183d8158fffc72571773b31bdf31f676622d0a831fe2c3129c",
+    "hash": "8864b8fccd851aaeb27981e9c5afda914573bfeab33e9237a6918029cc3daeb4",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
@@ -295,12 +295,12 @@
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-016": {
-    "hash": "ed70b53cd69c26fa1f573f8134724cadda72830cc44f2a5320698b62045c5e53",
+    "hash": "7414f7f971909c65a0baee05ff11c9ed482957ee512d348bc43773d54ac02173",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-017": {
-    "hash": "830c1dd10c267d0a2897d863b3d1dc107cdf4792fd60cf4312856c7789fe8534",
+    "hash": "f148b5f73700fac7f876d113bedc7cd23aebd8e0b0bfb2341c5703e587c13875",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
@@ -310,47 +310,47 @@
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-019": {
-    "hash": "c9e32ca41a2b014b7c183d3e253934f93f5169449effbdbfde49e9203186f684",
+    "hash": "d7a61a5ff9389a8403d5151f4d88f6cf87f6d188e11db0ca01f259d2e2dabe9b",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-020": {
-    "hash": "bcf1c91600f97c25541127c971ac3b2f4fbc1a90cd108cb2770b06a5c5e92556",
+    "hash": "1c2dab206fa3f576ee2cb1f88381ac2cf2d34b95941e7046e30d030227633eec",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-021": {
-    "hash": "ac2d2cc747d3f8cfec8c76ca72096831afd0ab6dc784698f2b0c06512856483d",
+    "hash": "1cf0646da0633a0465e7c3edbc018d4903c05cf11bc961d4714d4c6fbd70dbe3",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-022": {
-    "hash": "9cf15596da430f3afbbfbbb68b056714d2749a0920ebecd2f1c32fbf7edab8a6",
+    "hash": "ee6323887b94b0438647839d8ff4a4e860d9e182b5de6af1791107184ae35ed5",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-023": {
-    "hash": "80e9e7d73886455f24098ef02319bef8b90d0f07640cdc12a96cc7081fe79000",
+    "hash": "99c0aa469ff97e60db53fb42189f2c80e284f67034c5f1e255cb9483d17f6a77",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-024": {
-    "hash": "e8fe4ff7a2a804495a668a94d340c66b4c6185f6f9cdfc7c91e4bb38548c3d72",
+    "hash": "4f0ed6ff1f5c03823837b25b386b54d60c0cbd58a890e79fb567872bb24a1b2a",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-025": {
-    "hash": "118a531a4b09741851abf72f9cd2a96784ab3ef7df55eb4d19c9a361de69f163",
+    "hash": "605fce58abf3c26b7fb815b8e3ab620268782b35eca8e8da42c0c15dfd2439a7",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-026": {
-    "hash": "f3e7c42481b649e197dfa7c600bc48e618fe9c7a6e056f784cb32053e057e10a",
+    "hash": "9bc85c63a7abb3ad0e299d3ed64a3d8d8c4737313de1d29653d47910275f62bf",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-027": {
-    "hash": "1217fb283a1bab44a109d92a7059ffe45cc492797735e67c6dee2f5c4a3e2c8f",
+    "hash": "3f054e428add4bb37a3cdbba47463c2eb51231b591fc2bf715c78af9e3cb87a5",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
@@ -360,12 +360,12 @@
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-029": {
-    "hash": "c1266e5733ae9a61f5bfc883bec63b0e05b1f362480f664a93190066ae71483a",
+    "hash": "70992a133c7e02e9f915a0ca646142acfa96bffabb9f46af51c93a20e4b3f86d",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },
   "beemaps-bursts-030": {
-    "hash": "bea1f93d5548d6e01371a9a78a48edca5027e548aa509e748d6e8aba9f15c449",
+    "hash": "56f81eb9ce6bfdb6597cf91ac09005b384374b79de213d9dec57c3ba4d76b872",
     "since": "2026-10-16",
     "change": "beemaps-burst-panel"
   },

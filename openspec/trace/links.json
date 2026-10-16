@@ -306,7 +306,7 @@
   "beemaps-bursts-001": [
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-001] describes the layer and has no method setParams",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-001] names the missing methods in the error for a source that is missing",
-    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-001] refuses a source without getStatus, quote, confirm and list, and a second init"
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-001] refuses a source that lacks one of the four methods, and a second init"
   ],
   "beemaps-bursts-002": [
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-002] asks only for the status and adds no listener to the camera or the scene",
@@ -314,7 +314,8 @@
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-002] removes the data source on destroy and gives a layer as new after init and enable",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-002] removes the data source once and does nothing on a second destroy",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-002] sends no confirm and no second request while a quote is shown and the page reads, updates and moves",
-    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-002] sends no confirm request when enable is called again while a quote is shown"
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-002] sends no confirm request when enable is called again while a quote is shown",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-002] sends no confirm request when the layer is destroyed while a quote is shown"
   ],
   "beemaps-bursts-003": [
     "src/layers/beemapsBursts/registration.test.mjs › [beemaps-bursts-003] sends no quote, confirm or list request when the share link enables the layer"
@@ -327,6 +328,7 @@
   "beemaps-bursts-005": [
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-005] aborts the first status request when a second update starts, and when the layer is disabled",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-005] does not abort a status request that has ended, and gives the press error before the status error",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-005] keeps the message for off after the answer of a quote request that was open",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-005] shows a failed status, leaves both chips enabled and resolves to true",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-005] shows that bursts are off and disables both chips",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-005] shows that the key is missing and disables both chips",
@@ -337,7 +339,7 @@
   "beemaps-bursts-006": [
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-006] marks only the chip of the open request as busy",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-006] sends no second quote request from an old quote chip while a quote is shown",
-    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-006] sends one quote request with the box of the view and nothing else",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-006] sends one quote request with the box of the view and the signal, and nothing else",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-006] shows the label Quoting… on a disabled busy chip and disables the chip list while the quote is open"
   ],
   "beemaps-bursts-007": [
@@ -374,12 +376,12 @@
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-011] does nothing for a cancel press without a quote or while the layer is disabled",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-011] drops the quote when a person presses cancel",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-011] gives a new quote a new Confirm chip id, so a press on the old chip finds no chip",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-011] keeps the message and the notices when an old cancel press comes after a new quote failed",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-011] keeps the message of a failed list after a cancel",
-    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-011] keeps the message of a press when a stale cancel press comes without a quote",
-    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-011] shows the quote button again with its normal label after a cancel, and keeps no message"
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-011] shows the quote chip again with its normal label after a cancel, and keeps no message"
   ],
   "beemaps-bursts-012": [
-    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-012] has disabled the Confirm chip and told the panel before the source gets the confirm call",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-012] disables the Confirm chip and tells the panel before the source gets the confirm call",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-012] sends no confirm request after an answer, whatever the answer was",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-012] sends no confirm request while a list request is open or while the layer is not enabled",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-012] sends no quote, list or cancel from old chips while a confirm request is open after disable and enable",
@@ -406,7 +408,11 @@
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-015] shows the text of a refusal that took no credits, keeps no quote and creates no entity"
   ],
   "beemaps-bursts-016": [
-    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-016] warns that a burst can exist after an unclear answer and offers no second confirm",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-016] disables the quote chip after an unknown answer and enables it after a fresh list answer",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-016] does not disable the quote chip after a created answer or a refusal",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-016] gives an enabled quote chip after destroy, init and enable",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-016] keeps the quote chip disabled after a failed list, a list answer with no cached flag, disable and enable",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-016] warns that a burst can exist after an unknown answer and offers no second confirm",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-016] warns that a burst can exist when the source throws",
     "src/layers/beemapsBursts/messages.test.mjs › [beemaps-bursts-016] warns that a burst can exist, and adds the refusal time when it is known"
   ],
@@ -520,12 +526,16 @@
   "beemaps-bursts-029": [
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-029] clears each timer of a quote once, also when the quote is cancelled before the layer is disabled",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-029] clears the timer of the wait when the quote is cancelled, ended or cleared by disable",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-029] does nothing when the timer of the wait of a cancelled quote runs",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-029] gives the next quote its own period of 1000 milliseconds",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-029] keeps the Confirm chip disabled for 1000 milliseconds after the quote shows",
-    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-029] lets a press through when the clock passed the wait before the timer ran"
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-029] lets a press through when the clock passed the wait before the timer ran",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-029] sends no confirm request when the timer of the wait runs",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-029] starts a new timer for the rest of the wait when the timer runs too early"
   ],
   "beemaps-bursts-030": [
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-030] calls no listener after setRowControlsListener(null)",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-030] calls the listener zero times for enable, disable and destroy",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-030] tells the panel at the start and at the answer of a confirm, whatever the answer was",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-030] tells the panel at the start and at the answer of a list, for a good and a failed answer",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-030] tells the panel at the start and at the answer of a quote, and once for a view with no box",
