@@ -47,6 +47,10 @@ export const CATALOG_SOURCE_CONTRACTS = Object.freeze({
   earthquakes: contract(['earthquakes'], ['getSnapshot']),
   reticulum: contract(['reticulum'], ['getSnapshot']),
   beemaps: contract(['beemaps'], ['getStatus', 'getFrames']),
+  'beemaps-bursts': contract(
+    ['beemaps-bursts'],
+    ['getStatus', 'quote', 'confirm', 'list'],
+  ),
   'fire-perimeters': contract(['fire-perimeters'], ['getSnapshot']),
   cables: contract(['telegeography-submarine-cables'], ['fetch']),
   transit: contract(['transit'], ['requestSnapshot', 'getHistory']),

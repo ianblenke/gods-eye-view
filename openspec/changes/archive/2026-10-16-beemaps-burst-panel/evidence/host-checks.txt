@@ -1,0 +1,55 @@
+Host checks of beemaps-burst-panel, 2026-10-16, host Node v26.8.2. The checks ran on the files of the commit 3e9d7a121006bc27ce3e00abba64b2728b85f67f; After the runs, 1 test title and 1 comment of a test changed and nothing else in src, server and build changed. The command git diff -U0 3e9d7a12 HEAD -- src server build shows the lines. Later commits change evidence files, documents and trace files.
+
+## node scripts/check-import-directions.mjs
+{"modules":1007,"portableEntries":81}
+exit: 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-control-provider: 1 exports, 16 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit: 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 32 published, 1 new.
+exit: 0
+
+## node scripts/format.mjs --check
+Checked 1408 source files.
+exit: 0
+
+## node --test --experimental-test-coverage (include src/layers/beemapsBursts/*.js and src/app/layers/beemapsBursts.js) the 7 test files of the layer (on the host)
+exit: 0
+ℹ tests 185
+ℹ pass 185
+ℹ fail 0
+ℹ skipped 0
+ℹ    beemapsBursts.js | 100.00 |   100.00 |  100.00 | 
+ℹ    box.js           | 100.00 |   100.00 |  100.00 | 
+ℹ    index.js         | 100.00 |   100.00 |  100.00 | 
+ℹ    messages.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    model.js         | 100.00 |   100.00 |  100.00 | 
+ℹ    records.js       | 100.00 |   100.00 |  100.00 | 
+ℹ    source.js        | 100.00 |   100.00 |  100.00 | 
+ℹ all files           | 100.00 |   100.00 |  100.00 | 
+
+## node scripts/spec/gates.mjs lint --change beemaps-burst-panel (on the documents of the commit 3e9d7a121006bc27ce3e00abba64b2728b85f67f)
+STE: 0 errors, 946 warnings.
+
+## openspec validate beemaps-burst-panel --strict (on the documents of the commit 3e9d7a121006bc27ce3e00abba64b2728b85f67f)
+Change 'beemaps-burst-panel' is valid
+
+## image gods-eye-view:local, v24.21.0, the clone mounted with the node_modules of the image, commit 3e9d7a121006bc27ce3e00abba64b2728b85f67f
+## node --test --experimental-test-coverage (include src/layers/beemapsBursts/*.js and src/app/layers/beemapsBursts.js) the 7 test files of the layer and the 6 registration and count tests
+exit: 0
+ℹ tests 275
+ℹ pass 275
+ℹ fail 0
+ℹ skipped 0
+ℹ    beemapsBursts.js | 100.00 |   100.00 |  100.00 | 
+ℹ    box.js           | 100.00 |   100.00 |  100.00 | 
+ℹ    index.js         | 100.00 |   100.00 |  100.00 | 
+ℹ    messages.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    model.js         | 100.00 |   100.00 |  100.00 | 
+ℹ    records.js       | 100.00 |   100.00 |  100.00 | 
+ℹ    source.js        | 100.00 |   100.00 |  100.00 | 
+ℹ all files           | 100.00 |   100.00 |  100.00 | 

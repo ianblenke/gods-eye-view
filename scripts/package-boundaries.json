@@ -2039,6 +2039,13 @@
       "src/layers/beemaps/model.js",
       "src/layers/beemaps/box.js",
       "src/layers/beemaps/messages.js",
+      "src/app/layers/beemapsBursts.js",
+      "src/layers/beemapsBursts/index.js",
+      "src/layers/beemapsBursts/source.js",
+      "src/layers/beemapsBursts/records.js",
+      "src/layers/beemapsBursts/model.js",
+      "src/layers/beemapsBursts/box.js",
+      "src/layers/beemapsBursts/messages.js",
       "src/layers/cctv/sourcePolicy.js",
       "src/sources/reference.js",
       "src/search/nominatim.js",
@@ -2642,6 +2649,13 @@
       "src/layers/beemaps/model.js",
       "src/layers/beemaps/box.js",
       "src/layers/beemaps/messages.js",
+      "src/app/layers/beemapsBursts.js",
+      "src/layers/beemapsBursts/index.js",
+      "src/layers/beemapsBursts/source.js",
+      "src/layers/beemapsBursts/records.js",
+      "src/layers/beemapsBursts/model.js",
+      "src/layers/beemapsBursts/box.js",
+      "src/layers/beemapsBursts/messages.js",
       "src/layers/cctv/sourcePolicy.js",
       "src/search/nominatim.js",
       "src/nominatimGeocode.js",
@@ -3153,6 +3167,8 @@
       "src/layers/reticulum/records.js",
       "src/layers/beemaps/source.js",
       "src/layers/beemaps/records.js",
+      "src/layers/beemapsBursts/source.js",
+      "src/layers/beemapsBursts/records.js",
       "src/layers/submarineCables/bundledSource.js"
     ],
     "external": []
@@ -3412,6 +3428,29 @@
       "src/layers/beemaps/records.js",
       "src/sources/httpBody.js",
       "src/layers/beemaps/source.js"
+    ],
+    "external": []
+  },
+  "beemaps-bursts": {
+    "exports": ["./layers/beemapsBursts"],
+    "modules": [
+      "src/layers/beemapsBursts/index.js",
+      "src/sources/httpBody.js",
+      "src/layers/beemapsBursts/source.js",
+      "src/layers/beemapsBursts/records.js",
+      "src/layers/beemapsBursts/model.js",
+      "src/layers/beemapsBursts/box.js",
+      "src/layers/beemaps/box.js",
+      "src/layers/beemapsBursts/messages.js"
+    ],
+    "external": ["cesium"]
+  },
+  "beemaps-bursts-source": {
+    "exports": ["./layers/beemapsBursts/source"],
+    "modules": [
+      "src/layers/beemapsBursts/records.js",
+      "src/sources/httpBody.js",
+      "src/layers/beemapsBursts/source.js"
     ],
     "external": []
   },

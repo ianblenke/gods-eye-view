@@ -32,7 +32,13 @@ const PANEL_GROUPS = [
   },
   {
     label: 'Cameras',
-    ids: ['cctv', 'recent-imagery', 'street-level', 'beemaps'],
+    ids: [
+      'cctv',
+      'recent-imagery',
+      'street-level',
+      'beemaps',
+      'beemaps-bursts',
+    ],
   },
   {
     label: 'Infrastructure',

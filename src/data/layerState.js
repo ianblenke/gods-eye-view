@@ -583,6 +583,11 @@ export const LAYER_STATE_REGISTRY = Object.freeze([
     disposition: 'enabled-only',
   }),
   Object.freeze({
+    id: 'beemaps-bursts',
+    token: '6',
+    disposition: 'enabled-only',
+  }),
+  Object.freeze({
     id: 'bhote-koshi-2026',
     token: 'h',
     disposition: 'enabled-only',
