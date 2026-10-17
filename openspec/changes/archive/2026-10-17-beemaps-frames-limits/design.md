@@ -22,7 +22,7 @@ Facts from the checks of 2026-10-16. The first group comes from one real call. T
 - The status was 200 in 2.8 seconds. The body had 84620 bytes and 174 frames, which is about 486 bytes for a frame.
 - The top-level keys were `frames`, `cost`, `creditsUsed`, `creditsRemaining` and `notEnoughCredits`. The last key is not in the public API description.
 - `creditsUsed` was 99, `cost` was 0 and `creditsRemaining` was -0.25.
-- After the call, the dashboard of the owner showed a balance of 110 dollars, with a deposit of 100 dollars made before the call. It did not show -0.25. So `creditsRemaining` is not that balance, and the call did not visibly change it.
+- After the call, the dashboard of the owner showed a balance of 110 dollars, with a deposit of 100 dollars made before the call. It did not show -0.25. So `creditsRemaining` is not that balance.
 - The first frame in the list had the time 2026-04-06.
 
 Other checks, which used no key and no real call:
@@ -71,21 +71,21 @@ The fields of an "ok" line are `status`, `bytes`, `frames`, `ms`, `creditsUsed`,
 
 The time is the difference of the option `now` before the upstream call and after the outcome is known. The time to read the body is part of it. The size of the body is the length in bytes of its text in UTF-8, because the helper `readResponseTextCapped` returns text and not bytes. The size of a body that is too large is the text `over-limit`, because the reader stops at the limit.
 
-The status and the size come from an optional function `observe` that `callUpstream` calls when it knows them. The outcome that `callUpstream` returns keeps its shape, so the eight existing tests that compare the whole outcome stay as they are.
+The status and the size come from an optional function `observe` that `callUpstream` calls when it knows them. The outcome that `callUpstream` returns keeps its shape, so the eight tests that compare the whole outcome stay as they are.
 
 The line has no key, no URL, no host name, no frame and no text of the body. A request that the route does not send, because of memory, a hold or a limit, writes no line.
 
-The log shows `notEnoughCredits=true` and a negative `creditsRemaining` as they are, because they are the facts of the owner's balance.
+The log shows `notEnoughCredits=true` and a negative `creditsRemaining` as they are, because Bee Maps reports them.
 
 ### D3: The credit limit joins the hold step
 
 The spec of `beemaps-source` names eleven steps in a fixed order (scenario 022), and the last two are the hold and the budget. A twelfth step changes that scenario and the six scenarios next to it. The credit limit is a stored fact that refuses a request, as the hold is, and it comes after memory and before the request limit. So the check runs in the hold step, and the list of eleven steps stays true. Inside the step the stored hold comes before the credit limit. The route reads the credit file once, at the first request, before it checks the limit.
 
-The credit count is a number and not a whole number, because Bee Maps can send a fraction. The file `.gev-cache/beemaps/credits.json` has `{"date":"YYYY-MM-DD","used":N}`. It is separate from `budget.json`, so no existing scenario about that file changes. The route reads the credit file when the first request reaches the check, and then it keeps the count in the plugin. An addition of 0 writes no file.
+The credit count is a number and not a whole number, because Bee Maps can send a fraction. The file `.gev-cache/beemaps/credits.json` has `{"date":"YYYY-MM-DD","used":N}`. It is separate from `budget.json`, so no scenario about that file changes. The route reads the credit file when the first request reaches the check, and then it keeps the count in the plugin. An addition of 0 writes no file.
 
-The route adds the credits of an answer when the answer is a JSON body, before it checks the shape of the document. So a document of the wrong shape adds its credits. The date of an addition is the date (UTC) at the moment of the addition, after the plugin reads the body. The plugin writes the credit file for one addition at a time, and it fixes the text at the addition. It finishes the write before it sends its own answer.
+The route adds the credits of an answer when the answer is a JSON body, before it checks the shape of the document. So a document of the wrong shape adds its credits. The date of an addition is the date (UTC) at the moment of the addition, after the plugin reads the body. The plugin writes the credit file for one addition at a time, and it fixes the text at the addition. After the plugin writes the file, it sends the reply of the route.
 
-A failed write keeps the count in the plugin, writes one log line and does not stop the answer, because the frames are paid for. A file that is not valid, or that cannot be read, gives `503` with `{error:'budget_unavailable'}`. The file of the request limit does the same.
+When the plugin cannot write the credit file, it keeps the count and writes one log line. It does not stop the reply of the route, because Bee Maps reports credits for the answer. A file that is not valid, or that cannot be read, gives `503` with `{error:'budget_unavailable'}`. The file of the request limit does the same.
 
 The default limit is 500 credits. One call of 99 credits was for a box of 0.04 km², and the box of this change is 2.25 times larger. If the credits grow with the area, a press in a dense place uses about 220 credits. Then 500 credits allow two or three presses of a day. This is a guess, and the owner can set `BEEMAPS_DAILY_CREDITS`.
 
@@ -126,6 +126,6 @@ The spec comes first, then the tests, then the code. Each rule gets a named faul
 - [The cost of a credit is unknown] → The Known limit `cost-unknown` says it. The limit is a number that the owner can change, and the log shows the credits of each answer.
 - [The new grid gives more boxes, so the memory answers fewer repeats] → A press in a new grid cell is a new request. The request limit of 20 for a day still bounds the requests.
 - [A request in flight is not counted before its answer] → The Known limit `cap-after-answer` says it. The request limit and the limit of 6 requests in 60 seconds bound the overshoot.
-- [A failed write of the credit file] → The count stays in the plugin for this run. The next start can find an old count in the file.
-- [The log shows the balance of the owner] → The log is in the console of the machine of the owner. The line has no key.
+- [The plugin cannot write the credit file] → The count stays in the plugin for this run. The next start can find an old count in the file.
+- [The log shows the credit fields of Bee Maps] → The log is in the console of the machine of the owner. The line has no key.
 - [A new function and an old function build boxes] → One internal function builds both, and the tests of both layers pin the rows.

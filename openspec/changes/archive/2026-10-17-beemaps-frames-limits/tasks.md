@@ -17,6 +17,7 @@
 - [x] 1.15 Add the file `credits.js` to the list of files in the test for `beemaps-burst-control-038` in `src/data/beemapsBurstScan.test.mjs`.
 - [x] 1.16 Give the helper `install` in `src/data/beemapsProxy.test.mjs` a collector for the option `log`.
 - [x] 1.17 Give the credit file a readable path in the test for `beemaps-source-017` in `src/data/beemapsProxy.test.mjs`.
+- [x] 1.18 Add a test for `beemaps-bursts-006` that checks the function `viewBox` in `src/layers/beemaps/box.test.mjs`.
 
 ## 2. Write the code and the documents
 
