@@ -4,13 +4,13 @@ On 2026-10-16 the owner pressed "Fetch frames here" at the centre of Taipei. The
 
 One real call, which the owner allowed, asked Bee Maps for a box of 200 m by 200 m at that place. The answer had 174 frames, 84620 bytes and 99 credits used. It left the balance at -0.25 credits and had the new flag `notEnoughCredits`. The shape of the answer fits the code.
 
-The layer asks for a box of about 4 km², which is 100 times larger. At that density the answer would have about 8.5 MB, which is a guess from the density. The route refuses an answer of more than 4 MiB. This is the most likely cause, but no log proves it.
+The layer asks for a box of about 4 km², which is 100 times larger. At that density the answer has about 8.5 MB, which is a guess from the density. The route refuses an answer of more than 4 MiB. This is the most likely cause, but no log proves it.
 
-The route also pays for what it drops. The layer keeps at most 200 frames, and the upstream request has no limit. The route counts requests, and it does not count credits. So it cannot stop a spend in credits, and the screen does not show one.
+The route also pays for what it drops. The layer keeps at most 200 frames, and the upstream request has no limit. The route counts requests, and it does not count credits. So it cannot stop spending in credits, and the screen does not show it.
 
 ## What Changes
 
-- The layer "Bee Maps Frames" asks for a box of 300 m by 300 m (0.09 km²) in place of 4 km². The centre snaps to 0.001 degrees in place of 0.005 degrees, so the box always holds the view centre. The hint text names the new size.
+- The layer "Bee Maps Frames" asks for a box of 300 m by 300 m (0.09 km²) in place of 4 km². The centre snaps to 0.001 degrees in place of 0.005 degrees, so the box always has the view centre inside. The hint text names the new size.
 - The layer "Bee Maps Bursts" keeps its box of 4 km². It shares the old box function with the frames layer today, and the burst route refuses a box under 0.1 km². So the old function stays as it is, and the frames layer gets a new function.
 - The route writes one result line to its log for each upstream request that it sends. The line names the result, the status, the size of the body, the time and the credits of the answer. It has no key, no URL, no frame and no text of the body.
 - The route adds the credits of each upstream answer to a credit count of the day, which survives a restart. It refuses a new upstream request when the count is at least the credit limit. The default limit is 500 credits, and `BEEMAPS_DAILY_CREDITS` sets another limit.
