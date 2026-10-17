@@ -88,7 +88,7 @@ function fakeFs(hooks = {}) {
 }
 
 /** Install the plugin on a fake middleware list. Dates are mocked, requests are fake. */
-async function install(t, { env = {}, respond, dir: ownDir, fs } = {}) {
+async function install(t, { env = {}, respond, dir: ownDir, fs, now } = {}) {
   t.mock.timers.reset();
   t.mock.timers.enable({ apis: ['Date'], now: NOW });
   const dir = ownDir ?? (await tempDir(t));
@@ -105,6 +105,7 @@ async function install(t, { env = {}, respond, dir: ownDir, fs } = {}) {
     cacheDir: dir,
     log: (line) => lines.push(line),
     ...(fs ? { fs } : {}),
+    ...(now ? { now } : {}),
   });
   const routes = new Map();
   plugin.configureServer({
@@ -406,6 +407,15 @@ test('[beemaps-source-035] answers 503 and sends no request for a credit file th
     '{"date":"2026-10-15","used":null}',
     '{"date":"2026-10-15","used":1e999}',
     '{"date":20261015,"used":5}',
+    '{"date":["2026-10-15"],"used":5}',
+    '{"date":"x2026-10-15","used":5}',
+    '{"date":"2026-10-15x","used":5}',
+    '{"date":"12026-10-15","used":5}',
+    '{"date":"2026-10-155","used":5}',
+    '{"date":"2026/10/15","used":5}',
+    '{"date":"26-10-15","used":5}',
+    '{"date":"2026-10-5","used":5}',
+    '{"date":"abcd-ef-gh","used":5}',
   ];
   for (const text of bad) {
     const dir = await tempDir(t);
@@ -599,4 +609,154 @@ test('[beemaps-source-034] answers from the stored hold before the credit limit'
   assert.equal(third.status, 403);
   assert.equal(third.body.error, 'key_rejected');
   assert.equal(server.calls.length, 2);
+});
+
+test('[beemaps-source-035] answers 503 when the plugin cannot read the credit file for another reason than a missing file', async (t) => {
+  const dir = await tempDir(t);
+  const fs = {
+    readFile: async () => {
+      throw Object.assign(new Error('denied'), { code: 'EACCES' });
+    },
+    mkdir: (...args) => fsp.mkdir(...args),
+    writeFile: (...args) => fsp.writeFile(...args),
+  };
+  const server = await install(t, { dir, fs, respond: () => used(1) });
+  const answer = await server.request();
+  assert.equal(answer.status, 503);
+  assert.deepEqual(answer.body, { error: 'budget_unavailable' });
+  assert.equal(server.calls.length, 0);
+  assert.equal(await exists(budgetFile(dir)), false);
+  assert.deepEqual(server.lines, []);
+});
+
+test('[beemaps-source-035] accepts a saved count of 0 and of 0.5, a count of an earlier date and a count of a later date', async (t) => {
+  for (const [value, date, expected] of [
+    [0, TODAY, 2],
+    [0.5, TODAY, 2.5],
+    [400, '2026-10-16', 2],
+    [400, '2026-10-14', 2],
+  ]) {
+    const dir = await tempDir(t);
+    await seed(dir, { date, used: value });
+    const server = await install(t, { dir, respond: () => used(2) });
+    assert.equal((await server.request()).status, 200);
+    assert.deepEqual(
+      await readJson(creditFile(dir)),
+      { date: TODAY, used: expected },
+      `${value} ${date}`,
+    );
+  }
+});
+
+test('[beemaps-source-035] reads the credit file once for two requests that arrive together', async (t) => {
+  const dir = await tempDir(t);
+  let reads = 0;
+  const fs = {
+    readFile: (...args) => {
+      reads += 1;
+      return fsp.readFile(...args);
+    },
+    mkdir: (...args) => fsp.mkdir(...args),
+    writeFile: (...args) => fsp.writeFile(...args),
+  };
+  const server = await install(t, { dir, fs, respond: () => used(1) });
+  await Promise.all([server.request(boxAt(0)), server.request(boxAt(1))]);
+  assert.equal(reads, 1);
+  assert.deepEqual(await readJson(creditFile(dir)), { date: TODAY, used: 2 });
+});
+
+test('[beemaps-source-035] passes the next request after a person repairs an unusable credit file', async (t) => {
+  const dir = await tempDir(t);
+  await seed(dir, 'not json');
+  const server = await install(t, { dir, respond: () => used(1) });
+  assert.equal((await server.request(boxAt(0))).status, 503);
+  await seed(dir, { date: TODAY, used: 5 });
+  assert.equal((await server.request(boxAt(1))).status, 200);
+  assert.deepEqual(await readJson(creditFile(dir)), { date: TODAY, used: 6 });
+  const blocker = await tempDir(t);
+  await fsp.writeFile(path.join(blocker, 'file'), 'x');
+  const credits = createCredits({
+    dir: path.join(blocker, 'file', 'x'),
+    env: {},
+    now: () => NOW,
+  });
+  assert.deepEqual(await credits.check(), { ok: false, reason: 'unavailable' });
+});
+
+test('[beemaps-source-033] writes the credit file into a folder that is not there yet', async (t) => {
+  const dir = path.join(await tempDir(t), 'new', 'sub');
+  const credits = createCredits({ dir, env: {}, now: () => NOW });
+  assert.deepEqual(await credits.check(), { ok: true });
+  assert.equal(await credits.add(1), true);
+  assert.deepEqual(await readJson(creditFile(dir)), { date: TODAY, used: 1 });
+});
+
+test('[beemaps-source-033] books an answer on the date of the last second before midnight UTC', async (t) => {
+  const dir = await tempDir(t);
+  await seed(dir, { date: TODAY, used: 40 });
+  const server = await install(t, {
+    dir,
+    respond: () => {
+      t.mock.timers.tick(12 * 3600 * 1000 - 1000);
+      return used(7);
+    },
+  });
+  assert.equal((await server.request()).status, 200);
+  assert.deepEqual(await readJson(creditFile(dir)), { date: TODAY, used: 47 });
+});
+
+test('[beemaps-source-033] takes the date of an addition from the option now', async (t) => {
+  const dir = await tempDir(t);
+  const server = await install(t, {
+    dir,
+    now: () => NOW + DAY,
+    respond: () => used(3),
+  });
+  assert.equal((await server.request()).status, 200);
+  assert.deepEqual(await readJson(creditFile(dir)), {
+    date: '2026-10-16',
+    used: 3,
+  });
+});
+
+test('[beemaps-source-034] refuses each request for another area while the credit limit is used, with no hold', async (t) => {
+  const dir = await tempDir(t);
+  await seed(dir, { date: TODAY, used: 500 });
+  const server = await install(t, { dir, respond: () => used(1) });
+  for (const n of [0, 1, 2]) {
+    const answer = await server.request(boxAt(n));
+    assert.equal(answer.status, 429);
+    assert.deepEqual(answer.body, {
+      error: 'credit_budget',
+      used: 500,
+      limit: 500,
+    });
+  }
+  assert.equal(server.calls.length, 0);
+});
+
+test('[beemaps-source-034] writes a count that is not a whole number into the refusal and the limit that the environment gives', async (t) => {
+  const dir = await tempDir(t);
+  await seed(dir, { date: TODAY, used: 500.5 });
+  const server = await install(t, { dir, respond: () => used(1) });
+  assert.deepEqual((await server.request()).body, {
+    error: 'credit_budget',
+    used: 500.5,
+    limit: 500,
+  });
+  const other = await tempDir(t);
+  await seed(other, { date: TODAY, used: 75 });
+  const small = await install(t, {
+    dir: other,
+    env: { BEEMAPS_DAILY_CREDITS: '75' },
+    respond: () => used(1),
+  });
+  const answer = await small.request();
+  assert.equal(answer.status, 429);
+  assert.deepEqual(answer.body, {
+    error: 'credit_budget',
+    used: 75,
+    limit: 75,
+  });
+  assert.equal(small.calls.length, 0);
 });

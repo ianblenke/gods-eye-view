@@ -42,6 +42,10 @@ test('[beemaps-frames-016] writes the daily credit limit with the number of cred
     describeFailure({ status: 429, error: 'credit_budget', limit: 1 }),
     'The daily limit of 1 credit is used.',
   );
+  assert.equal(
+    describeFailure({ status: 429, error: 'credit_budget', limit: 0 }),
+    'The daily limit of 0 credits is used.',
+  );
   for (const limit of [undefined, null, 12.5, -3, '500', Infinity]) {
     assert.equal(
       describeFailure({ status: 429, error: 'credit_budget', limit }),

@@ -12,6 +12,9 @@ Origin: spec-first
 - **AND** the clock moves 2000 milliseconds before the headers arrive and 826 milliseconds while the plugin reads the body
 - **THEN** `log` gets exactly one line, and it is "[beemaps] ok status=200 bytes=412 frames=5 ms=2826 creditsUsed=99 creditsRemaining=-0.25 cost=0 notEnoughCredits=true"
 - **AND** `frames` is the length of the list `frames` in the body, with each item counted
+- **AND** a body with the list [null, 0, "", false, {}] gives "frames=5"
+- **AND** `ms` does not include the time to read or to write the credit file
+- **AND** each request has its own `status` and `bytes`, so a thrown error after a good answer gives "status=none bytes=none"
 - **AND** `bytes` is the length in bytes of the text of the body in UTF-8
 - **AND** a body of 411 characters with one character of two bytes gives "bytes=412"
 - **AND** a JSON body of exactly 4194304 bytes gives an "ok" line with "bytes=4194304"
@@ -46,6 +49,10 @@ Origin: spec-first
 - **AND** a thrown error with a message that has the key and the URL gives a line with neither
 - **AND** a request that the memory answers, and a request that waits for an upstream request in flight, write no line
 - **AND** a request that the hold refuses writes no line
+- **AND** a request that the plugin refuses before the memory step writes no line
+- **AND** one such request has a method other than POST, and another has an origin of another machine
+- **AND** one has a body of more than 8192 bytes, one has a `limit` of 0, and one meets the rate limit
+- **AND** a request that waits for an upstream request in flight and gets its failure writes no line
 - **AND** a request that the daily request limit refuses, and a request that the credit limit refuses, write no line
 - **AND** a request with no key, and a request that gets `503` with `{error:'budget_unavailable'}`, write no line
 - **AND** a plugin that gets no option `log` writes the same lines with `console.log`
@@ -97,7 +104,10 @@ Origin: spec-first
 #### Scenario: Keep the credit count across restarts `beemaps-source-035`
 - **WHEN** a new plugin starts and the credit file has the date of today and `used` 99.5
 - **THEN** the plugin continues from 99.5
-- **AND** a credit file with another date, or no credit file, gives the credit count 0
+- **AND** a credit file with an earlier date, a later date, or no credit file, gives the credit count 0
+- **AND** a credit file with `used` 0 or 0.5 is valid
+- **AND** two requests that arrive together read the credit file once
+- **AND** after a person repairs an unusable credit file, the next request passes
 - **AND** the credit count starts again at 0 when the date (UTC) changes while the plugin runs
 - **AND** the route answers `503` with `{error:'budget_unavailable'}` and sends no request when the credit file is not valid JSON
 - **AND** it gives the same answer when the credit file has no `date` text of the form `YYYY-MM-DD`

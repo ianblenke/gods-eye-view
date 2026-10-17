@@ -20,6 +20,7 @@ Origin: spec-first
 - **AND** the row (59.9996, 10.0013) gives the centre (60.0, 10.001) and the box [9.998302, 59.998651, 10.003698, 60.001349]
 - **AND** the row (30.2672, -97.7431) gives the centre (30.267, -97.743) and the box [-97.744562, 30.265651, -97.741438, 30.268349]
 - **AND** the row (79.5004, 10.0) gives the centre (79.5, 10.0) and the box [9.992598, 79.498651, 10.007402, 79.501349]
+- **AND** the row (60.165, 10.0) gives the box [9.997289, 60.163651, 10.002711, 60.166349]
 
 #### Scenario: Refuse a view that has no box `beemaps-frames-009`
 - **WHEN** a person presses the chip in a view that cannot give a box
@@ -84,6 +85,7 @@ Origin: spec-first
 - **AND** "budget" gives "The daily limit of 1 request is used." for `limit` 1
 - **AND** "budget" gives "The daily limit is used." when `limit` is not a whole number
 - **AND** "credit_budget" gives "The daily limit of 500 credits is used." for `limit` 500, and "The daily limit of 1 credit is used." for `limit` 1
+- **AND** "credit_budget" gives "The daily limit of 0 credits is used." for `limit` 0
 - **AND** "credit_budget" gives "The daily credit limit is used." when `limit` is not a whole number
 - **AND** "rate_limited" gives "Too many presses. Wait 60 seconds."
 - **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait 30 seconds." for `retryAfter` 30, and "Bee Maps asks you to wait 600 seconds." for `retryAfter` 600

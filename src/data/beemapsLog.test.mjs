@@ -62,7 +62,7 @@ async function tempDir(t) {
 /** Install the plugin on a fake middleware list. Dates are mocked, requests are fake. */
 async function install(
   t,
-  { env = {}, respond, log = true, cacheDir, dir: ownDir } = {},
+  { env = {}, respond, log = true, cacheDir, dir: ownDir, now, fs } = {},
 ) {
   t.mock.timers.reset();
   t.mock.timers.enable({ apis: ['Date'], now: NOW });
@@ -83,18 +83,20 @@ async function install(
     clearTimer: () => {},
     cacheDir: cacheDir ?? dir,
     ...(log ? { log: (line) => lines.push(line) } : {}),
+    ...(now ? { now } : {}),
+    ...(fs ? { fs } : {}),
   });
   const routes = new Map();
   plugin.configureServer({
     middlewares: { use: (route, handler) => routes.set(route, handler) },
   });
 
-  async function request(bbox = boxAt(0), extra = {}) {
-    const text = JSON.stringify({ bbox, ...extra });
+  async function request(bbox = boxAt(0), extra = {}, override = {}) {
+    const text = override.text ?? JSON.stringify({ bbox, ...extra });
     const req = Object.assign(Readable.from([Buffer.from(text)]), {
-      method: 'POST',
+      method: override.method ?? 'POST',
       url: '/',
-      headers: GOOD_HEADERS,
+      headers: override.headers ?? GOOD_HEADERS,
       socket: { remoteAddress: '127.0.0.1' },
     });
     const res = {
@@ -503,5 +505,163 @@ test('[beemaps-source-031] writes the same lines with console.log when the plugi
   await server.request(boxAt(0));
   assert.deepEqual(written, [
     '[beemaps] ok status=200 bytes=38 frames=0 ms=0 creditsUsed=2 creditsRemaining=none cost=0',
+  ]);
+});
+
+test('[beemaps-source-029] counts every item of the list, also an item that is not an object', async (t) => {
+  const { lines } = await once(t, () =>
+    ok('{"frames":[null,0,"",false,{}],"creditsUsed":1}'),
+  );
+  assert.equal(lines.length, 1);
+  assert.equal(
+    lines[0].startsWith('[beemaps] ok status=200 bytes=47 frames=5 '),
+    true,
+    lines[0],
+  );
+});
+
+/** A file layer that moves the clock, to show that the time of the credit file is not in `ms`. */
+function slowFs(t) {
+  return {
+    readFile: (...args) => {
+      t.mock.timers.tick(3);
+      return fsp.readFile(...args);
+    },
+    mkdir: (...args) => fsp.mkdir(...args),
+    writeFile: (...args) => {
+      t.mock.timers.tick(5);
+      return fsp.writeFile(...args);
+    },
+  };
+}
+
+test('[beemaps-source-029] leaves the time of the credit file out of ms for a good answer and for a document of the wrong shape', async (t) => {
+  for (const [text, line] of [
+    [
+      '{"frames":[],"creditsUsed":2}',
+      '[beemaps] ok status=200 bytes=29 frames=0 ms=7 creditsUsed=2 creditsRemaining=none cost=none',
+    ],
+    [
+      '{"frames":5,"creditsUsed":4}',
+      '[beemaps] failed kind=bad_upstream status=200 bytes=28 ms=7 creditsUsed=4',
+    ],
+  ]) {
+    const server = await install(t, {
+      fs: slowFs(t),
+      respond: () => {
+        t.mock.timers.tick(7);
+        return ok(text);
+      },
+    });
+    await server.request(boxAt(0));
+    assert.deepEqual(server.lines, [line], text);
+  }
+});
+
+test('[beemaps-source-029] measures ms with the option now', async (t) => {
+  const clock = { value: NOW + 3600000 };
+  const server = await install(t, {
+    now: () => clock.value,
+    respond: () => {
+      clock.value += 7;
+      return ok('{"frames":[]}');
+    },
+  });
+  await server.request(boxAt(0));
+  assert.deepEqual(server.lines, [
+    '[beemaps] ok status=200 bytes=13 frames=0 ms=7 creditsUsed=none creditsRemaining=none cost=none',
+  ]);
+});
+
+test('[beemaps-source-029] gives each request its own status and size', async (t) => {
+  const server = await install(t, {
+    respond: (url, init, n) => {
+      if (n === 2) throw new Error('down');
+      return ok('{"frames":[]}');
+    },
+  });
+  await server.request(boxAt(0));
+  await server.request(boxAt(1));
+  assert.deepEqual(server.lines, [
+    '[beemaps] ok status=200 bytes=13 frames=0 ms=0 creditsUsed=none creditsRemaining=none cost=none',
+    '[beemaps] failed kind=upstream_failed status=none bytes=none ms=0',
+  ]);
+});
+
+test('[beemaps-source-031] writes no line for a request that the plugin refuses before the memory step', async (t) => {
+  const GET = { method: 'GET' };
+  const rows = [
+    ['a method other than POST', {}, GET, 405],
+    [
+      'an origin of another machine',
+      {},
+      {
+        headers: {
+          host: HOST,
+          origin: 'http://evil.example',
+          'content-type': 'application/json',
+        },
+      },
+      403,
+    ],
+    ['a body of more than 8192 bytes', { since: 'x'.repeat(9000) }, {}, 400],
+    ['a limit of 0', { limit: 0 }, {}, 400],
+  ];
+  for (const [name, extra, override, status] of rows) {
+    const server = await install(t, { respond: () => ok('{"frames":[]}') });
+    const answer = await server.request(boxAt(0), extra, override);
+    assert.equal(answer.status, status, name);
+    assert.deepEqual(server.lines, [], name);
+    assert.equal(server.calls.length, 0, name);
+  }
+  const rate = await install(t, { respond: () => ok('{"frames":[]}') });
+  for (let i = 0; i < 6; i++) await rate.request(boxAt(0));
+  assert.equal(rate.lines.length, 1);
+  const seventh = await rate.request(boxAt(0));
+  assert.equal(seventh.status, 429);
+  assert.equal(seventh.body.error, 'rate_limited');
+  assert.equal(rate.lines.length, 1);
+  assert.equal(rate.calls.length, 1);
+});
+
+test('[beemaps-source-031] writes no line for a request that waits for an upstream request that fails', async (t) => {
+  const hold = (() => {
+    let open;
+    const opened = new Promise((resolve) => {
+      open = resolve;
+    });
+    return { opened, open };
+  })();
+  const server = await install(t, {
+    respond: async () => {
+      await hold.opened;
+      return new Response('x', { status: 401 });
+    },
+  });
+  const first = server.request(boxAt(0));
+  await waitFor(() => server.calls.length === 1);
+  const second = server.request(boxAt(0));
+  await sleep(20);
+  hold.open();
+  assert.equal((await first).status, 403);
+  assert.equal((await second).status, 403);
+  assert.deepEqual(server.lines, [
+    '[beemaps] failed kind=key_rejected status=401 bytes=none ms=0',
+  ]);
+  assert.equal(server.calls.length, 1);
+});
+
+test('[beemaps-source-031] gives console.log the line and nothing else', async (t) => {
+  const written = [];
+  t.mock.method(console, 'log', (...args) => written.push(args));
+  const server = await install(t, {
+    log: false,
+    respond: () => ok('{"frames":[],"creditsUsed":2,"cost":0}'),
+  });
+  await server.request(boxAt(0));
+  assert.deepEqual(written, [
+    [
+      '[beemaps] ok status=200 bytes=38 frames=0 ms=0 creditsUsed=2 creditsRemaining=none cost=0',
+    ],
   ]);
 });
