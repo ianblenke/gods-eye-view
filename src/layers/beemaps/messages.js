@@ -37,6 +37,11 @@ export function describeFailure({ status, error, limit, retryAfter }) {
       ? `The daily limit of ${limit} ${limit === 1 ? 'request' : 'requests'} is used.`
       : 'The daily limit is used.';
   }
+  if (error === 'credit_budget') {
+    return whole(limit)
+      ? `The daily limit of ${limit} ${limit === 1 ? 'credit' : 'credits'} is used.`
+      : 'The daily credit limit is used.';
+  }
   if (error === 'upstream_rate_limit') {
     return whole(retryAfter)
       ? `Bee Maps asks you to wait ${retryAfter} ${retryAfter === 1 ? 'second' : 'seconds'}.`

@@ -36,7 +36,7 @@ const deferred = () => {
 };
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 const HINT =
-  'A press asks for the newest frames in 4 km² at the view centre. It can cost money.';
+  'A press asks for the newest frames in a box of 300 m by 300 m at the view centre. It can cost money.';
 const STATUS_FAILED = 'The server did not give the status of the key.';
 
 function harness({
@@ -381,7 +381,7 @@ test('[beemaps-frames-008] builds the box from the point under the middle of the
   assert.equal(h.calls.getFrames.length, 1);
   assert.deepEqual(
     h.calls.getFrames[0].bbox,
-    [9.987014, 59.991007, 10.022986, 60.008993],
+    [10.000302, 59.996651, 10.005698, 59.999349],
   );
   assert.equal(h.calls.getFrames[0].signal instanceof AbortSignal, true);
   assert.equal(h.picks.length, 1);
@@ -431,7 +431,7 @@ test('[beemaps-frames-009] sends no request and names the reason for a view that
     'Move the view to a latitude from -80 to 80 degrees and press again.',
   );
   const edge = harness({
-    pick: () => Cesium.Cartesian3.fromDegrees(179.995, 0),
+    pick: () => Cesium.Cartesian3.fromDegrees(179.999, 0),
   });
   await edge.ready();
   await edge.chip().onClick();

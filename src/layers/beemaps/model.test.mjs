@@ -42,7 +42,7 @@ const answer = (frames, extra = {}) => ({
 test('[beemaps-frames-018] shows the hint when there is no answer and no message', () => {
   assert.equal(
     HINT,
-    'A press asks for the newest frames in 4 km² at the view centre. It can cost money.',
+    'A press asks for the newest frames in a box of 300 m by 300 m at the view centre. It can cost money.',
   );
   assert.equal(readoutText({ message: null, answer: null }), HINT);
   assert.equal(readoutText({ message: '', answer: null }), HINT);

@@ -33,6 +33,28 @@ test('[beemaps-frames-016] names the failures that have a fixed text', () => {
     assert.equal(describeFailure({ status: 400, error }), text, error);
 });
 
+test('[beemaps-frames-016] writes the daily credit limit with the number of credits when it is a whole number', () => {
+  assert.equal(
+    describeFailure({ status: 429, error: 'credit_budget', limit: 500 }),
+    'The daily limit of 500 credits is used.',
+  );
+  assert.equal(
+    describeFailure({ status: 429, error: 'credit_budget', limit: 1 }),
+    'The daily limit of 1 credit is used.',
+  );
+  assert.equal(
+    describeFailure({ status: 429, error: 'credit_budget', limit: 0 }),
+    'The daily limit of 0 credits is used.',
+  );
+  for (const limit of [undefined, null, 12.5, -3, '500', Infinity]) {
+    assert.equal(
+      describeFailure({ status: 429, error: 'credit_budget', limit }),
+      'The daily credit limit is used.',
+      String(limit),
+    );
+  }
+});
+
 test('[beemaps-frames-016] writes the daily limit and the wait of the upstream when they are whole numbers', () => {
   assert.equal(
     describeFailure({ status: 429, error: 'budget', limit: 20 }),

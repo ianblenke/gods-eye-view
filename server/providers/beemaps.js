@@ -3,6 +3,7 @@ import { isLoopbackCommand } from './common/loopback-command.js';
 import { makeRateLimiter } from './common/rate-limit.js';
 import { sameSiteGated } from './common/same-site.js';
 import { createBudget } from './beemaps/budget.js';
+import { createCredits, creditsOf } from './beemaps/credits.js';
 import { normalizeDocument } from './beemaps/normalize.js';
 import { callUpstream } from './beemaps/upstream.js';
 import { readBodyText, validateRequest } from './beemaps/validate.js';
@@ -17,7 +18,10 @@ import { readBodyText, validateRequest } from './beemaps/validate.js';
  *
  * The steps of a frames request, in order: method, local request, rate limit,
  * body, area, date, limit, key, memory, hold, budget. The first step that
- * answers ends the request.
+ * answers ends the request. The hold step also checks the credit limit, after
+ * the stored hold.
+ *
+ * Each upstream request writes one result line to the log.
  */
 
 const MEMORY_MS = 600_000;
@@ -34,6 +38,10 @@ const FAILURES = {
   upstream_failed: { status: 502, payload: { error: 'upstream_failed' } },
   bad_upstream: { status: 502, payload: { error: 'bad_upstream' } },
 };
+
+/** A credit field of the log: the text of a finite number, else "none". */
+const creditField = (value) =>
+  Number.isFinite(value) ? String(value) : 'none';
 
 function send(res, status, payload, headers = {}) {
   res.writeHead(status, {
@@ -70,12 +78,14 @@ function failureOf(kind, retryAfter) {
  *
  * @param {object} [options]
  * @param {Record<string, string|undefined>} [options.env] Environment with
- *   BEEMAPS_API_KEY and BEEMAPS_DAILY_QUERIES.
+ *   BEEMAPS_API_KEY, BEEMAPS_DAILY_QUERIES and BEEMAPS_DAILY_CREDITS.
  * @param {typeof fetch} [options.fetchImpl] Fetch used for the upstream request.
  * @param {() => number} [options.now] Clock in milliseconds.
  * @param {Function} [options.setTimer] Timer for the request timeout.
  * @param {Function} [options.clearTimer] Clears that timer.
- * @param {string} [options.cacheDir] Folder of the budget file.
+ * @param {string} [options.cacheDir] Folder of the budget file and the credit file.
+ * @param {object} [options.fs] File functions for the credit file.
+ * @param {(line: string) => void} [options.log] Writes one line of the log.
  */
 export function beemapsProxy({
   env = process.env,
@@ -84,8 +94,11 @@ export function beemapsProxy({
   setTimer = setTimeout,
   clearTimer = clearTimeout,
   cacheDir = path.join(process.cwd(), '.gev-cache', 'beemaps'),
+  fs,
+  log = (line) => console.log(line),
 } = {}) {
   const budget = createBudget({ dir: cacheDir, env, now });
+  const credits = createCredits({ dir: cacheDir, env, now, fs });
   const allow = makeRateLimiter({ windowMs: RATE_WINDOW_MS, max: RATE_MAX });
   const memory = new Map();
   const inFlight = new Map();
@@ -106,6 +119,16 @@ export function beemapsProxy({
 
   async function fetchFresh(id, { apiKey, ring, since }) {
     if (hold !== null && now() < hold.until) return holdAnswer();
+    const checked = await credits.check();
+    if (!checked.ok) {
+      return checked.reason === 'limit'
+        ? refusal(429, {
+            error: 'credit_budget',
+            used: checked.used,
+            limit: checked.limit,
+          })
+        : refusal(503, { error: 'budget_unavailable' });
+    }
     const reserved = await budget.reserve();
     if (!reserved.ok) {
       return reserved.reason === 'limit'
@@ -116,6 +139,8 @@ export function beemapsProxy({
           })
         : refusal(503, { error: 'budget_unavailable' });
     }
+    const seen = { status: 'none', bytes: 'none' };
+    const started = now();
     const called = await callUpstream({
       fetchImpl,
       key: apiKey,
@@ -123,13 +148,30 @@ export function beemapsProxy({
       since,
       setTimer,
       clearTimer,
+      observe: (facts) => Object.assign(seen, facts),
     });
+    const ms = now() - started;
+    const where = `status=${seen.status} bytes=${seen.bytes} ms=${ms}`;
     if (!called.ok) {
+      log(`[beemaps] failed kind=${called.kind} ${where}`);
       startHold(called.kind, called.retryAfter);
       return failureOf(called.kind, called.retryAfter);
     }
-    const normalized = normalizeDocument(called.document, since);
-    if (!normalized.ok) return failureOf('bad_upstream');
+    const document = called.document;
+    const added = creditsOf(document);
+    if (added > 0 && !(await credits.add(added))) {
+      log('[beemaps] credits file not written');
+    }
+    const normalized = normalizeDocument(document, since);
+    if (!normalized.ok) {
+      log(
+        `[beemaps] failed kind=bad_upstream ${where} creditsUsed=${creditField(document?.creditsUsed)}`,
+      );
+      return failureOf('bad_upstream');
+    }
+    log(
+      `[beemaps] ok status=${seen.status} bytes=${seen.bytes} frames=${document.frames.length} ms=${ms} creditsUsed=${creditField(document.creditsUsed)} creditsRemaining=${creditField(document.creditsRemaining)} cost=${creditField(document.cost)}${document.notEnoughCredits === true ? ' notEnoughCredits=true' : ''}`,
+    );
     const entry = {
       at: now(),
       frames: normalized.frames,

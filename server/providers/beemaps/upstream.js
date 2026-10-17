@@ -32,18 +32,22 @@ function failureOf(response) {
   }
 }
 
-async function readDocument(response, signal) {
+async function readDocument(response, signal, observe) {
+  let text;
   try {
-    const text = await readResponseTextCapped(
-      response,
-      MAX_UPSTREAM_BYTES,
-      signal,
-    );
-    return { ok: true, document: JSON.parse(text) };
+    text = await readResponseTextCapped(response, MAX_UPSTREAM_BYTES, signal);
   } catch (error) {
-    const bad =
-      error instanceof SyntaxError || error.code === 'RESPONSE_TOO_LARGE';
-    return { ok: false, kind: bad ? 'bad_upstream' : 'upstream_failed' };
+    if (error.code !== 'RESPONSE_TOO_LARGE') {
+      return { ok: false, kind: 'upstream_failed' };
+    }
+    observe({ bytes: 'over-limit' });
+    return { ok: false, kind: 'bad_upstream' };
+  }
+  observe({ bytes: Buffer.byteLength(text) });
+  try {
+    return { ok: true, document: JSON.parse(text) };
+  } catch {
+    return { ok: false, kind: 'bad_upstream' };
   }
 }
 
@@ -56,6 +60,9 @@ async function readDocument(response, signal) {
  * @param {string|null} options.since - Day text YYYY-MM-DD or null.
  * @param {(fn: () => void, ms: number) => unknown} options.setTimer
  * @param {(timer: unknown) => void} options.clearTimer
+ * @param {(facts: {status?: number, bytes?: number|string}) => void} [options.observe]
+ *   Called with the status when the headers arrive and with the size of the
+ *   body when the body is read ('over-limit' for a body that is too large).
  * @returns {Promise<{ok:true, document:unknown}|{ok:false, kind:string, retryAfter?:number}>}
  */
 export async function callUpstream({
@@ -65,6 +72,7 @@ export async function callUpstream({
   since,
   setTimer,
   clearTimer,
+  observe = () => {},
 }) {
   const url = new URL(UPSTREAM_URL);
   url.searchParams.set('catalog', 'true');
@@ -84,8 +92,9 @@ export async function callUpstream({
       redirect: 'error',
       signal: controller.signal,
     });
+    observe({ status: response.status });
     outcome = response.ok
-      ? await readDocument(response, controller.signal)
+      ? await readDocument(response, controller.signal, observe)
       : failureOf(response);
   } catch {
     outcome = { ok: false, kind: 'upstream_failed' };

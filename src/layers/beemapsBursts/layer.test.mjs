@@ -417,7 +417,7 @@ test('[beemaps-bursts-005] aborts the first status request when a second update 
   assert.equal(await third, false);
 });
 
-test('[beemaps-bursts-006] sends one quote request with the box of the view and the signal, and nothing else', async () => {
+test('[beemaps-bursts-006] sends one quote request with the box of 4 km² of the view and the signal, and nothing else', async () => {
   const wait = deferred();
   const h = harness({ quote: () => wait.promise });
   await h.ready();
@@ -583,6 +583,7 @@ test('[beemaps-bursts-009] shows the text of each error of a quote and keeps no 
     await h.ready();
     await h.chip('quote').onClick();
     assert.equal(h.info(), message);
+    assert.deepEqual(h.calls.quote[0].bbox, VIEW_BOX);
     assert.equal(h.layer.getStats().error, message);
     assert.deepEqual(
       h.chips().map((entry) => entry.id),
@@ -632,6 +633,7 @@ test('[beemaps-bursts-009] ignores the answer of a quote that the layer was disa
 test('[beemaps-bursts-010] ends the quote when the timer of its seconds runs', async () => {
   const h = harness();
   await h.quoted();
+  assert.deepEqual(h.calls.quote[0].bbox, VIEW_BOX);
   assert.equal(h.timers.length, 2);
   assert.equal(h.timers[0].ms, 120000);
   assert.equal(h.timers[1].ms, 1000);
@@ -693,6 +695,7 @@ test('[beemaps-bursts-010] sends no confirm request at or after the end of the q
 test('[beemaps-bursts-011] drops the quote when a person presses cancel', async () => {
   const h = harness();
   await h.quoted();
+  assert.deepEqual(h.calls.quote[0].bbox, VIEW_BOX);
   const old = h.confirmChip();
   await h.chip('cancel').onClick();
   assert.deepEqual(

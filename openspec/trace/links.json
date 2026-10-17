@@ -337,9 +337,10 @@
     "src/layers/beemapsBursts/messages.test.mjs › [beemaps-bursts-005] gives the text for a status that failed, and the text for a quote that ended"
   ],
   "beemaps-bursts-006": [
+    "src/layers/beemaps/box.test.mjs › [beemaps-bursts-006] builds the box of 4 km² for a quote with the function viewBox",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-006] marks only the chip of the open request as busy",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-006] sends no second quote request from an old quote chip while a quote is shown",
-    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-006] sends one quote request with the box of the view and the signal, and nothing else",
+    "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-006] sends one quote request with the box of 4 km² of the view and the signal, and nothing else",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-006] shows the label Quoting… on a disabled busy chip and disables the chip list while the quote is open"
   ],
   "beemaps-bursts-007": [
@@ -347,13 +348,13 @@
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-007] shows a Confirm chip that is not busy and a cancel chip that is enabled",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-007] shows the quote with no message of an earlier press and no error of an earlier press",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-007] shows the quote, the chips, the text and the box of the answer",
-    "src/layers/beemapsBursts/model.test.mjs › [beemaps-bursts-007] names the credits and the area on the Confirm chip",
+    "src/layers/beemapsBursts/model.test.mjs › [beemaps-bursts-007] names the credits and the area of 4 km² on the Confirm chip",
     "src/layers/beemapsBursts/model.test.mjs › [beemaps-bursts-007] names the credits, the area, the budget and the seconds of a quote"
   ],
   "beemaps-bursts-008": [
     "src/layers/beemapsBursts/box.test.mjs › [beemaps-bursts-008] accepts the last centres whose corners stay within 80 degrees",
-    "src/layers/beemapsBursts/box.test.mjs › [beemaps-bursts-008] gives the box of the frames layer for a view inside the latitudes",
-    "src/layers/beemapsBursts/box.test.mjs › [beemaps-bursts-008] keeps the reasons of the frames box for the sky, the latitude and the meridian",
+    "src/layers/beemapsBursts/box.test.mjs › [beemaps-bursts-008] gives the box of 4 km² for a view inside the latitudes",
+    "src/layers/beemapsBursts/box.test.mjs › [beemaps-bursts-008] keeps the reasons of the box of 4 km² for the sky, the latitude and the meridian",
     "src/layers/beemapsBursts/box.test.mjs › [beemaps-bursts-008] refuses a box whose corner crosses 80 or -80 degrees",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-008] gives the sky text for a viewer with no scene, and picks on the default ellipsoid for a viewer with no globe",
     "src/layers/beemapsBursts/layer.test.mjs › [beemaps-bursts-008] picks the point at the middle of the canvas on the ellipsoid of the globe",
@@ -582,7 +583,7 @@
   "beemaps-frames-008": [
     "src/layers/beemaps/box.test.mjs › [beemaps-frames-008] builds the box from the rows of the spec",
     "src/layers/beemaps/box.test.mjs › [beemaps-frames-008] keeps the same box height at every latitude and widens the box towards the poles",
-    "src/layers/beemaps/box.test.mjs › [beemaps-frames-008] rounds a centre to the nearest multiple of 0.005 and a tie to the higher one",
+    "src/layers/beemaps/box.test.mjs › [beemaps-frames-008] rounds a centre to the nearest multiple of 0.001 and a tie to the higher one",
     "src/layers/beemaps/layer.test.mjs › [beemaps-frames-008] builds the box from the point under the middle of the canvas"
   ],
   "beemaps-frames-009": [
@@ -637,6 +638,7 @@
   "beemaps-frames-016": [
     "src/layers/beemaps/messages.test.mjs › [beemaps-frames-016] gives the unknown text with the status for any other error",
     "src/layers/beemaps/messages.test.mjs › [beemaps-frames-016] names the failures that have a fixed text",
+    "src/layers/beemaps/messages.test.mjs › [beemaps-frames-016] writes the daily credit limit with the number of credits when it is a whole number",
     "src/layers/beemaps/messages.test.mjs › [beemaps-frames-016] writes the daily limit and the wait of the upstream when they are whole numbers"
   ],
   "beemaps-frames-017": [
@@ -857,7 +859,8 @@
   "beemaps-source-026": [
     "src/data/beemapsFrames.test.mjs › [beemaps-source-026] drops a frame before 00:00:00 UTC of since and keeps one at that time",
     "src/data/beemapsFrames.test.mjs › [beemaps-source-026] drops a frame with an id that an earlier frame already has",
-    "src/data/beemapsFrames.test.mjs › [beemaps-source-026] orders the newest first and the smaller id first for equal times"
+    "src/data/beemapsFrames.test.mjs › [beemaps-source-026] orders the newest first and the smaller id first for equal times",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-026] drops the frames before the day since at the route"
   ],
   "beemaps-source-027": [
     "src/data/beemapsFrames.test.mjs › [beemaps-source-027] drops an item of the list that is not an object",
@@ -870,6 +873,71 @@
     "src/data/beemapsProxy.test.mjs › [beemaps-source-028] gives the shape of the answer with the budget and the credits",
     "src/data/beemapsProxy.test.mjs › [beemaps-source-028] sets the headers Content-Type and Cache-Control on each answer of the frames route",
     "src/data/beemapsProxy.test.mjs › [beemaps-source-028] sets truncated when the total is above the limit or the list is above 5000 items"
+  ],
+  "beemaps-source-029": [
+    "src/data/beemapsLog.test.mjs › [beemaps-source-029] accepts a body of exactly 4194304 bytes and writes its size",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-029] counts every item of the list, also an item that is not an object",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-029] counts the bytes of the body in UTF-8 and the frames as the length of the list",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-029] gives each request its own status and size",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-029] leaves the time of the credit file out of ms for a good answer and for a document of the wrong shape",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-029] measures ms with the option now",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-029] writes one ok line with the status, the size, the frame count, the time and the credits",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-029] writes the flag only when it is exactly true",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-029] writes the status of any good answer as it is",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-029] writes the text of a finite credit number, also a negative one, and none for anything else"
+  ],
+  "beemaps-source-030": [
+    "src/data/beemapsLog.test.mjs › [beemaps-source-030] keeps the timer of the request until the plugin has read the body",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-030] writes one failed line for each way that the upstream request fails",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-030] writes the same line for a timeout before the headers as for a thrown error",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-030] writes the status 200 for a timeout while the plugin reads the body"
+  ],
+  "beemaps-source-031": [
+    "src/data/beemapsLog.test.mjs › [beemaps-source-031] gives console.log the line and nothing else",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-031] keeps the key, the address, the frames and the text of the body out of every line",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-031] writes no line for a request that the plugin does not send",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-031] writes no line for a request that the plugin refuses before the memory step",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-031] writes no line for a request that waits for an upstream request that fails",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-031] writes no line when a file of the budget is not usable",
+    "src/data/beemapsLog.test.mjs › [beemaps-source-031] writes the same lines with console.log when the plugin gets no option log"
+  ],
+  "beemaps-source-032": [
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-032] keeps the credit limit apart from the daily request limit",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-032] takes the credit limit from digits only that are 1 or more"
+  ],
+  "beemaps-source-033": [
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-033] adds 0 for a failure, and adds the credits of a document of the wrong shape",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-033] adds 0 for a number that is not 0 or more and writes no file",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-033] adds nothing for a request that the memory answers or that waits for one in flight",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-033] adds the amounts of two requests that end together and writes the sum, one write at a time",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-033] adds the credits of an answer, writes the credit file and sums two answers",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-033] books an answer on the date of the last second before midnight UTC",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-033] books an answer that the plugin adds after midnight UTC on the next date",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-033] reads the credits of an upstream document",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-033] takes the date of an addition from the option now",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-033] waits for the write of the credit file before it sends its answer",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-033] writes the credit file into a folder that is not there yet"
+  ],
+  "beemaps-source-034": [
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-034] answers from the stored hold before the credit limit",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-034] counts 499 plus 99 as 598 and refuses the next area, and starts again on the next date",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-034] gives credit_budget when both limits are used and budget when only the request limit is used",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-034] gives the shape of a refusal and of an unusable file when the plugin checks the limit",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-034] passes at 499.5 credits and refuses at 500 without a request and without a change of either count",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-034] refuses each request for another area while the credit limit is used, with no hold",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-034] writes a count that is not a whole number into the refusal and the limit that the environment gives"
+  ],
+  "beemaps-source-035": [
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-035] accepts a saved count of 0 and of 0.5, a count of an earlier date and a count of a later date",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-035] answers 503 and sends no request for a credit file that is not usable",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-035] answers 503 when the plugin cannot read the credit file for another reason than a missing file",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-035] continues from the used credits of today in the credit file",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-035] keeps the count in the plugin and answers when the credit file cannot be written",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-035] keeps the credits of the new date after the date changes while the plugin runs",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-035] passes the next request after a person repairs an unusable credit file",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-035] reads the credit file once for two requests that arrive together",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-035] starts at 0 for another date or no file and starts again when the date changes",
+    "src/data/beemapsCredits.test.mjs › [beemaps-source-035] writes the credit file for one addition at a time, and the last addition gives the final text"
   ],
   "change-review-001": [
     "src/tooling/spec/review.test.mjs › [change-review-001] does not stop for a passed review with all the fields, the closed findings and the agent outputs"

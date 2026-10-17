@@ -105,9 +105,17 @@ Bee Maps (formerly Hivemapper) sells an API for street-level imagery that contri
 
 The route answers only the machine that runs the server, because a request can cost money. It sends one kind of request, with `catalog=true`, to one fixed address. It keeps the key in the server. It returns only `id`, `lat`, `lon` and `timestamp` for each frame, and the answer shows the `credits` that Bee Maps reports.
 
-The daily limit is 20 upstream requests. `BEEMAPS_DAILY_QUERIES` changes it, and a file in `.gev-cache/beemaps` keeps the count across a restart. An answer stays in memory for 10 minutes. The terms of Bee Maps allow use in an app that you build, and they forbid resale. They do not say whether other people can see the data, so use it for yourself only.
+The daily limit is 20 upstream requests. `BEEMAPS_DAILY_QUERIES` changes it, and a file in `.gev-cache/beemaps` keeps the count across a restart. An answer stays in memory for 10 minutes.
 
-The layer "Bee Maps Frames" in the group Cameras shows the frames as points. A press on its button "Fetch frames here" sends one request for about 4 km² at the view centre, and nothing else sends one. The newest points are brighter. This version has no image and no request to map an area again. The shapes of the request and the answer come from the public API description, version 1.3.0. No test sends a request to Bee Maps, so the first real request can show a difference.
+The credit limit is 500 credits for each UTC day. `BEEMAPS_DAILY_CREDITS` changes it, and a second file in the same folder keeps the count. The route adds the credits of each answer. It refuses a new upstream request when the count is at least the limit. One request can take the count over the limit, because the price is known only in the answer.
+
+The route writes one result line to the log of the server for each upstream request. The line has the status, the size and the time. When the route reads a JSON body with a status from 200 to 299, the line also has its credits. The line has no key.
+
+The terms of Bee Maps allow use in an app that you build, and they forbid resale. They do not say whether other people can see the data, so use it for yourself only.
+
+The layer "Bee Maps Frames" in the group Cameras shows the frames as points. A press on its button "Fetch frames here" sends one request for a box of 300 m by 300 m at the view centre. No other action sends a request for frames. The newest points are brighter.
+
+This version has no image and no request to map an area again. The shapes of the request and the answer come from the public API description, version 1.3.0. No test sends a request to Bee Maps, so the first real request can show a difference.
 
 The routes `/api/beemaps/burst/*` ask Bee Maps to map an area again. A burst costs credits, and Bee Maps has no call to cancel it. The routes are off until `BEEMAPS_BURST_ENABLED` is exactly "true", and they use the key `BEEMAPS_BURST_API_KEY`. The routes `quote`, `confirm` and `list` answer only the machine that runs the server.
 

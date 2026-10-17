@@ -41,6 +41,7 @@ test('[beemaps-burst-control-038] has the plugin file and the files of its own f
   const framesFolder = readdirSync(new URL('server/providers/beemaps/', ROOT));
   assert.deepEqual(framesFolder.sort(), [
     'budget.js',
+    'credits.js',
     'normalize.js',
     'upstream.js',
     'validate.js',

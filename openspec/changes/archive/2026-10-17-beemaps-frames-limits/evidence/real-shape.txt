@@ -1,0 +1,61 @@
+A check of the route and the layer with fake answers of the shape of the one real call of 2026-10-16. No server was called.
+The script real-shape.mjs lives outside the repository, because a script in a change folder is a coverage gap.
+It gives the route a fake fetch function that answers a document with the top-level keys frames, cost, creditsUsed, creditsRemaining and notEnoughCredits.
+The values are creditsUsed 99, creditsRemaining -0.25, cost 0 and notEnoughCredits true. The frames have the fields of the real frames.
+The route writes its log lines through the option log, and the script prints them. Then the script gives the answer of the route to the function normalizeAnswer of the layer.
+The fake frames have about 263 bytes, and the real frames have about 486 bytes. So the largest fake document is smaller than a real one of the same count.
+
+Code commit: abf5d8c9a55eba1c8c7799ad6de1f4d4ffaa5a49. Uncommitted changes in server and src: none.
+  log line: [beemaps] ok status=200 bytes=45203 frames=174 ms=147 creditsUsed=99 creditsRemaining=-0.25 cost=0 notEnoughCredits=true
+upstream frames 174 (45203 bytes) -> route status 200 {
+  frames: 174,
+  overflow: undefined,
+  credits: { used: 99, remaining: null, cost: 0 },
+  keys: [
+    'source',    'frames',
+    'count',     'total',
+    'truncated', 'cached',
+    'since',     'budget',
+    'credits'
+  ]
+} {
+  layerOk: undefined,
+  layerFrames: 174,
+  layerKeys: [ 'frames', 'used', 'limit', 'remaining' ]
+}
+  log line: [beemaps] ok status=200 bytes=156112 frames=600 ms=7 creditsUsed=99 creditsRemaining=-0.25 cost=0 notEnoughCredits=true
+upstream frames 600 (156112 bytes) -> route status 200 {
+  frames: 200,
+  overflow: undefined,
+  credits: { used: 99, remaining: null, cost: 0 },
+  keys: [
+    'source',    'frames',
+    'count',     'total',
+    'truncated', 'cached',
+    'since',     'budget',
+    'credits'
+  ]
+} {
+  layerOk: undefined,
+  layerFrames: 200,
+  layerKeys: [ 'frames', 'used', 'limit', 'remaining' ]
+}
+  log line: [beemaps] ok status=200 bytes=2372525 frames=9000 ms=90 creditsUsed=99 creditsRemaining=-0.25 cost=0 notEnoughCredits=true
+upstream frames 9000 (2372525 bytes) -> route status 200 {
+  frames: 200,
+  overflow: undefined,
+  credits: { used: 99, remaining: null, cost: 0 },
+  keys: [
+    'source',    'frames',
+    'count',     'total',
+    'truncated', 'cached',
+    'since',     'budget',
+    'credits'
+  ]
+} {
+  layerOk: undefined,
+  layerFrames: 200,
+  layerKeys: [ 'frames', 'used', 'limit', 'remaining' ]
+}
+  log line: [beemaps] failed kind=bad_upstream status=200 bytes=over-limit ms=15
+upstream frames 17400 (4583938 bytes) -> route status 502 { error: 'bad_upstream' } 

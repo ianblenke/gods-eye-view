@@ -104,6 +104,7 @@ test('[beemaps-source-015] holds the one upstream URL once and no other URL in t
   assert.deepEqual(Object.keys(files).sort(), [
     'beemaps.js',
     'beemaps/budget.js',
+    'beemaps/credits.js',
     'beemaps/normalize.js',
     'beemaps/upstream.js',
     'beemaps/validate.js',

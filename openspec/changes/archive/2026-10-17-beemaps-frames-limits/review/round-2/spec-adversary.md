@@ -1,0 +1,19 @@
+Verdict: FAIL
+
+I read the tree of /home/ianblenke/docker/gev-work/beemaps-frames-limits at 698fa03f, the commit the brief names. I did not confirm it with git. C = openspec/changes/archive/2026-10-17-beemaps-frames-limits.
+
+- [ ] FINDING major C/proposal.md:67 (698fa03f) The new name and text of `frames-dropped-by-layer` are false. The layer sends `limit:200` (src/layers/beemaps/source.js:62). The route cuts with `entry.frames.slice(0, limit)` (server/providers/beemaps.js:208). The cut at records.js:43 never applies, because the route sends at most 200 frames. The text also contradicts proposal.md:9 ("The route ... drops") and design.md:5. Write the name `frames-dropped-by-route` and "the route drops the others".
+- [ ] FINDING major DATA_SOURCES.md:114 (698fa03f) "Nothing else sends a request." is false in its plain reading. The old text "nothing else sends one" pointed back to the box request. The layer `update()` sends a status request (index.js:169), and the Bursts routes send requests. Write "Nothing else in this layer sends a request to Bee Maps." `handleStatus` (beemaps.js:223-229) makes no upstream call.
+- [ ] FINDING major C/proposal.md:72 (698fa03f) In `comment-in-proxy-test`, "The test shows `503` in both cases" is false if "both" means read and write. The test reaches only the failed read. The credit fs fake passes the check, then budget.js:35-36 throws ENOTDIR. "First fails to read" also suggests a later write that never runs. The failed write of the budget file is shown only at unit level, in src/data/beemapsBudget.test.mjs:259 (tag 017). Write "The test reaches only the failed read. The test in beemapsBudget.test.mjs shows the failed write."
+- [ ] FINDING minor C/proposal.md:36 (698fa03f) "one test of each of those six scenarios changes" is wrong for 008. Two titles change in src/layers/beemapsBursts/box.test.mjs (lines 5 and 41, compared with main). Task 1.8 says "tests". Write "at least one test".
+- [ ] FINDING minor C/proposal.md:71 (698fa03f) `lines-without-test` leaves out the cross-origin step and the rate-limit step for 034. In beemapsCredits.test.mjs, no 034 test sends any request that steps 1 to 8 refuse. Write "no request that an earlier step refuses".
+- [ ] FINDING minor C/proposal.md:29 (698fa03f) In "It splits that sentence in two", the subject has no clear referent. The text does not split it, the delta does. Write "The delta splits the box sentence in two."
+- [ ] FINDING minor C/proposal.md:59 (698fa03f) `crash-before-write` still uses "the end of the write" as a noun. The lead fixed the same fault in design.md. Write "while the plugin writes the credit file".
+- [ ] FINDING minor DATA_SOURCES.md:112 (698fa03f) After the split, this paragraph holds two topics: the log and the terms of Bee Maps. "The line has ... the credits" is true only for an ok line. A failed line has `kind`, status, size and time.
+
+Checks of my round-1 findings:
+- F1 (major) is complete. A search for "balance" in the change documents finds only proposal.md:5, :47, :51 and design.md:25, :45. All are correct now.
+- F4 and F5 are complete. Task 1.18 is ticked, and its test exists at src/layers/beemaps/box.test.mjs:152 and asserts `viewBox`. The delta text of "Quote" matches what proposal.md:29 says.
+- F2, F3 and F6 are kept as minor. The reason is true: AGENTS.md says a test change needs a new ratchet. They stay minor. The 033 cases timeout and too-large cannot add credits, because there is no document. The memory assertion at beemapsCredits.test.mjs:546 kills the order faults for 034.
+- Check these before the final run: "eight tests" is right (beemapsUpstream.test.mjs lines 51, 144, 186, 202, 209, 223, 234, 241). The CHANGELOG entry has 6 sentences. The DATA_SOURCES paragraphs have 3, 5 and 4. New prose has no word from words.json.
+- The final run must be `make gates`, not `gates-docs`. DATA_SOURCES.md, CHANGELOG.md and .env.example are outside the three allowed paths.
