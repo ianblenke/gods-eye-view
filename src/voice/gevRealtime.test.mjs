@@ -3798,7 +3798,7 @@ test('a claimed Space hold barges in on the assistant; a short tap never does', 
   f.key('keyup', canvas);
 });
 
-const testPlaceSearch = () => createStandalonePlaceSearch();
+const testPlaceSearch = () => createStandalonePlaceSearch({ resolveApiKey: () => globalThis.window?.__GOOGLE_MAPS_API_KEY__ });
 function createGevActionRunner(options) { return createActionRunner({ placeSearch: testPlaceSearch(), ...options }); }
 function controlRadio(viewer, manager, args, options) { return runControlRadio(viewer, manager, args, { placeSearch: testPlaceSearch(), ...options }); }
 

@@ -184,6 +184,7 @@ function installGoogleMocks(t, handler) {
   const originalWindow = globalThis.window;
   const originalFetch = globalThis.fetch;
   globalThis.window = {
+    __GOOGLE_MAPS_API_KEY__: 'unit-test-key',
     setTimeout: globalThis.setTimeout,
     clearTimeout: globalThis.clearTimeout,
   };
@@ -619,5 +620,5 @@ test('a not-found is remembered only when every source consulted gave a verdict'
 });
 
 function resolveAnnotationTarget(options) {
-  return resolveTarget({ placeSearch: createStandalonePlaceSearch(), ...options });
+  return resolveTarget({ placeSearch: createStandalonePlaceSearch({ resolveApiKey: () => globalThis.window?.__GOOGLE_MAPS_API_KEY__ }), ...options });
 }

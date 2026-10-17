@@ -10,7 +10,6 @@ import fs from 'node:fs';
 import * as Cesium from 'cesium';
 import {
   CANCELLED_SEARCH,
-  CITY_POIS,
   placeFramingViewport,
   PLACE_VIEWPORT_MAX_SPAN_KM,
   PLACE_ANCHOR_OFFSET_RATIO,
@@ -22,6 +21,7 @@ import {
   GLOBE_VIEW,
   searchAndFlyTo,
 } from './locations.js';
+import { CITY_POIS } from './cityPois.js';
 
 function stubViewer() {
   const flights = [];

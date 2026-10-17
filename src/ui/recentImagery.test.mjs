@@ -927,7 +927,7 @@ test('[recent-imagery-046] an oversized box shows its size limit, the warn style
   f.layer.setBox({ west: 0, south: 0, east: 20, north: 20 });
   assert.equal(
     f.byId('ri-notice-text').textContent,
-    'Box is 2,226 km wide · limit 1,000 km',
+    'Box is 2,226\u00a0km wide · limit 1,000\u00a0km',
   );
   assert.equal(notice.classList.contains('warn'), true);
   assert.equal(notice.classList.contains('info'), false);
@@ -2122,7 +2122,7 @@ test('[recent-imagery-044] an A and B pin has its screen reader slot', async () 
   const p = auditPanel(s);
   assert.equal(
     auditCard(p).getAttribute('aria-label'),
-    'Sep 18 · Sentinel-2 · 30 m · 12% cloud · pinned A',
+    'Sep 18 · Sentinel-2 · 30\u00a0m · 12% cloud · pinned A',
   );
   p.readout.destroy();
 });
@@ -2135,7 +2135,7 @@ test('[recent-imagery-044] a preview day has its screen reader state', async () 
   const p = auditPanel(s);
   assert.equal(
     auditCard(p).getAttribute('aria-label'),
-    'Sep 18 · Sentinel-2 · 30 m · 12% cloud · preview',
+    'Sep 18 · Sentinel-2 · 30\u00a0m · 12% cloud · preview',
   );
   p.readout.destroy();
 });
@@ -2148,7 +2148,7 @@ test('[recent-imagery-044] a plain day has only its screen reader facts', async 
   const p = auditPanel(s);
   assert.equal(
     auditCard(p).getAttribute('aria-label'),
-    'Sep 18 · Sentinel-2 · 30 m · 12% cloud',
+    'Sep 18 · Sentinel-2 · 30\u00a0m · 12% cloud',
   );
   p.readout.destroy();
 });
@@ -2161,7 +2161,7 @@ test('[recent-imagery-044] a recommended day has its screen reader rank', async 
   const p = auditPanel(s);
   assert.equal(
     auditCard(p).getAttribute('aria-label'),
-    'Sep 18 · Sentinel-2 · 30 m · 12% cloud · start here',
+    'Sep 18 · Sentinel-2 · 30\u00a0m · 12% cloud · start here',
   );
   p.readout.destroy();
 });
@@ -2409,7 +2409,7 @@ test('[recent-imagery-049] a focused day has its compact readout', async () => {
   const p = auditPanel(s);
   assert.equal(
     auditNode(p, 'rail-card-compact').textContent,
-    'Sep 18, 2026 17:12Z · 3 days ago · Sentinel-2 via HLS · 30 m · 12% scene cloud',
+    'Sep 18, 2026 17:12Z · 3 days ago · Sentinel-\u20602 via HLS · 30\u00a0m · 12% scene cloud',
   );
   p.readout.destroy();
 });

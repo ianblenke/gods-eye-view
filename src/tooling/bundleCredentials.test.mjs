@@ -230,5 +230,5 @@ test('[credential-boundary-015] no direct call to Google geocoding remains in th
   }
   const serverFiles = await nonTestFilesUnder(path.join(root, 'server'));
   const matches = serverFiles.filter((file) => pattern.test(readFileSync(file, 'utf8')));
-  assert.deepEqual(matches, [path.join(root, 'server/providers/places/geocode.js')]);
+  assert.deepEqual(matches, [path.join(root, 'server/providers/places/google.js')]);
 });

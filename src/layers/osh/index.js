@@ -1,4 +1,5 @@
 import * as Cesium from 'cesium';
+import { msg } from '../../i18n/index.js';
 import { writeOshDetail } from './detail.js';
 import { placeOshEntities } from '../../data/oshSystems.js';
 import { isOshObservationFresh } from '../../data/oshObservations.js';
@@ -625,7 +626,7 @@ export function createOshLayer({
         if (systemsSettled.status === 'rejected') {
           release();
           _lastError =
-            systemsSettled.reason?.message || 'OSH source unavailable';
+            systemsSettled.reason?.message || msg('OSH source unavailable');
           return false;
         }
         const result = systemsSettled.value;
@@ -868,7 +869,7 @@ export function createOshLayer({
         // region re-enters the layer, and a stale update does not reach
         // this catch.
         release();
-        _lastError = error?.message || 'OSH source unavailable';
+        _lastError = error?.message || msg('OSH source unavailable');
         return false;
       }
     },

@@ -3817,6 +3817,7 @@
   "reticulum": {
     "exports": ["./layers/reticulum"],
     "modules": [
+      "src/i18n/marker.js",
       "src/layers/reticulum/index.js",
       "src/sources/httpBody.js",
       "src/layers/reticulum/source.js",
@@ -3828,6 +3829,7 @@
   "reticulum-source": {
     "exports": ["./layers/reticulum/source"],
     "modules": [
+      "src/i18n/marker.js",
       "src/layers/reticulum/records.js",
       "src/sources/httpBody.js",
       "src/layers/reticulum/source.js"
@@ -3837,6 +3839,7 @@
   "beemaps": {
     "exports": ["./layers/beemaps"],
     "modules": [
+      "src/i18n/marker.js",
       "src/layers/beemaps/index.js",
       "src/sources/httpBody.js",
       "src/layers/beemaps/source.js",
@@ -3850,6 +3853,7 @@
   "beemaps-source": {
     "exports": ["./layers/beemaps/source"],
     "modules": [
+      "src/i18n/marker.js",
       "src/layers/beemaps/records.js",
       "src/sources/httpBody.js",
       "src/layers/beemaps/source.js"
@@ -3859,6 +3863,7 @@
   "beemaps-bursts": {
     "exports": ["./layers/beemapsBursts"],
     "modules": [
+      "src/i18n/marker.js",
       "src/layers/beemapsBursts/index.js",
       "src/sources/httpBody.js",
       "src/layers/beemapsBursts/source.js",
@@ -3873,6 +3878,7 @@
   "beemaps-bursts-source": {
     "exports": ["./layers/beemapsBursts/source"],
     "modules": [
+      "src/i18n/marker.js",
       "src/layers/beemapsBursts/records.js",
       "src/sources/httpBody.js",
       "src/layers/beemapsBursts/source.js"
@@ -4039,6 +4045,7 @@
     "runtime": "node",
     "exports": ["./server/providers/osh"],
     "modules": [
+      "src/i18n/marker.js",
       "server/providers/common/http.js",
       "server/providers/osh.js",
       "server/providers/osh/base.js",
@@ -4059,6 +4066,7 @@
     "runtime": "node",
     "exports": ["./server/providers/osh-control"],
     "modules": [
+      "src/i18n/marker.js",
       "server/providers/osh-control.js",
       "server/providers/osh-control/targets.js",
       "server/providers/osh-control/commands.js",

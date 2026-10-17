@@ -297,12 +297,12 @@ test('PR B manually replaces provisional 9 with 00 after PR A publishes 9', () =
     );
     const corrected = runCheck();
     assert.equal(corrected.status, 0, corrected.stderr);
-    assert.match(corrected.stdout, /32 published, 1 new/);
+    assert.match(corrected.stdout, /36 published, 1 new/);
   });
 });
 
 test('allocation batches cross the last digit and base-36 pair boundaries in order', () => {
-  const digitRows = [...'56789'].map((digit) => [`retired-${digit}`, digit]);
+  const digitRows = [...'9'].map((digit) => [`retired-${digit}`, digit]);
   const allDigits = parseLayerStateTokenReservations([
     ...reservationRows,
     ...digitRows,
@@ -354,7 +354,7 @@ test('allocation batches cross the last digit and base-36 pair boundaries in ord
 test('an isolated valid two-character fixture round-trips an l field beyond the old 64-character cap', async () => {
   const cwd = mkdtempSync(path.join(tmpdir(), 'gev-layer-token-width-'));
   try {
-    const priorDigits = [...'56789'].map((digit) => [
+    const priorDigits = [...'9'].map((digit) => [
       `qa-prior-digit-${digit}`,
       digit,
     ]);
@@ -391,7 +391,7 @@ test('an isolated valid two-character fixture round-trips an l field beyond the 
     const params = new URLSearchParams([['v', '2']]);
     codec.encodeLayerStateParams(params, state);
     assert.ok(params.get('l').length > 64, 'fixture must cross the old cap');
-    assert.equal(params.get('l').length, 73);
+    assert.equal(params.get('l').length, 81);
     const restored = codec.decodeLayerStateParams(params);
     assert.deepEqual(restored?.enabledLayerIds, expectedLayerIds);
     assert.deepEqual(restored?.options, state.options);
@@ -409,7 +409,7 @@ test('checker reads a complete future base ledger and rejects retired-token reus
     },
     (cwd) => {
       const published = readPublishedLayerStateReservations('HEAD', cwd);
-      assert.equal(Object.keys(published).length, 32);
+      assert.equal(Object.keys(published).length, 36);
       assert.equal(published['retired-layer'], '00');
       assert.throws(
         () =>

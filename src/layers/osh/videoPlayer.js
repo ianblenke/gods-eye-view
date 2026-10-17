@@ -1,4 +1,5 @@
 /**
+import { t } from '../../i18n/index.js';
  * The browser side of the camera video (design decisions D76 and D77). The
  * player decodes the video messages of one stream with WebCodecs and draws
  * each frame on a canvas. The view is the block of DOM that holds the canvas.
@@ -187,7 +188,7 @@ export function createVideoView({ document, host, name }) {
   block.className = 'osh-video';
   const title = document.createElement('div');
   title.className = 'osh-video-title';
-  title.textContent = name || 'Video';
+  title.textContent = name || t('Video');
   const canvas = document.createElement('canvas');
   canvas.className = 'osh-video-canvas';
   const status = document.createElement('div');

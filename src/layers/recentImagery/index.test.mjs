@@ -2674,7 +2674,7 @@ test('[recent-imagery-029] the layer snapshot gives the focus readout', async ()
   await f.ready();
   assert.equal(
     f.snap().readout,
-    'Sep 18, 2026 17:12Z · 3 days ago · Sentinel-2 via HLS · 30 m · 12% scene cloud',
+    'Sep 18, 2026 17:12Z · 3 days ago · Sentinel-\u20602 via HLS · 30\u00a0m · 12% scene cloud',
   );
   f.layer.destroy();
 });

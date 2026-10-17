@@ -3,7 +3,6 @@
   "Initializing photorealistic world...": "Inicializando el mundo fotorrealista...",
   "Configuring viewer...": "Configurando el visor...",
   "Google 3D Tiles unavailable ({detail}). Loading the keyless globe...": "Google 3D Tiles no disponibles ({detail}). Cargando el globo sin clave...",
-  "Flying to Austin, TX...": "Volando a Austin, TX...",
   "Restoring shared view...": "Restaurando la vista compartida...",
   "LOADING LIVE DATA": "CARGANDO DATOS EN VIVO",
   "LOAD COMPLETE": "CARGA COMPLETA",
@@ -2889,5 +2888,16 @@
   "USB work abandoned after a stalled transfer": "Trabajo USB cancelado tras una transferencia bloqueada",
   "SDR decoder did not start; receiver stopped": "El decodificador SDR no arrancó; receptor detenido",
   "SDR decoder stopped responding; receiver stopped": "El decodificador SDR dejó de responder; receptor detenido",
-  "SDR decoder fell behind; receiver stopped": "El decodificador SDR se quedó atrás; receptor detenido"
+  "SDR decoder fell behind; receiver stopped": "El decodificador SDR se quedó atrás; receptor detenido",
+  "Flying to Taiwan...": "Volando a Taiwán...",
+  "OSH source unavailable": "Fuente OSH no disponible",
+  "Reticulum source unavailable": "Fuente Reticulum no disponible",
+  "Video": "Vídeo",
+  "OpenSensorHub selection": "Selección de OpenSensorHub",
+  "OSH SYSTEMS": "SISTEMAS OSH",
+  "Reticulum Network": "Red Reticulum",
+  "Bee Maps Frames": "Fotogramas de Bee Maps",
+  "Bee Maps Bursts": "Ráfagas de Bee Maps",
+  "Taiwan": "Taiwán",
+  "Tampa": "Tampa"
 }

@@ -1,4 +1,5 @@
 import * as Cesium from 'cesium';
+import { t } from './i18n/index.js';
 
 export const START_VIEW = {
   longitude: 120.6485,
@@ -136,9 +137,9 @@ export function startApplicationView({
   defer,
 }) {
   if (!hasShareState) {
-    loaderStatus.textContent = 'Flying to Taiwan...';
+    loaderStatus.textContent = t('Flying to Taiwan...');
     defer(flyToStartView(viewer));
   } else {
-    loaderStatus.textContent = 'Restoring shared view...';
+    loaderStatus.textContent = t('Restoring shared view...');
   }
 }

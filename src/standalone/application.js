@@ -46,6 +46,7 @@ export function createStandaloneApplication({
         // so it stays free of application state.
         presets: CITY_POIS,
         ...geospatial,
+        resolveApiKey: () => googleApiKey,
         signal: context.signal,
       });
       const scene = await createStandaloneScene({

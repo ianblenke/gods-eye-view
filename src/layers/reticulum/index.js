@@ -1,4 +1,5 @@
 import * as Cesium from 'cesium';
+import { msg } from '../../i18n/index.js';
 import {
   RETICULUM_COLLISION_CAPACITY,
   RETICULUM_LABEL_LIMIT,
@@ -128,7 +129,7 @@ export function createReticulumLayer({ source, overlayHost } = {}) {
         }
       } catch (error) {
         if (_request === request)
-          _lastError = error?.message || 'Reticulum source unavailable';
+          _lastError = error?.message || msg('Reticulum source unavailable');
       } finally {
         if (_request === request) _request = null;
       }

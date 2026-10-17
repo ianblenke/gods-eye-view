@@ -140,7 +140,7 @@ test('[beemaps-frames-025] puts the layer in the Cameras group of the panel, bef
     fileURLToPath(new URL('../../ui/layerPanel.js', import.meta.url)),
     'utf8',
   );
-  const group = /label: 'Cameras',\s*ids: \[([^\]]*)\]/.exec(text);
+  const group = /label: msg\('Cameras'\),\s*ids: \[([^\]]*)\]/.exec(text);
   assert.ok(group);
   const ids = [...group[1].matchAll(/'([^']+)'/g)].map((match) => match[1]);
   assert.deepEqual(ids.slice(-3), [

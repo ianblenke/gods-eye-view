@@ -3237,7 +3237,7 @@ test('voice Radio: the keyless path applies no country filter the keyed path wou
   assert.equal(result.requestedLocation, 'Kraków, Polska', 'the label still names the country honestly');
 });
 
-const testPlaceSearch = () => createStandalonePlaceSearch();
+const testPlaceSearch = () => createStandalonePlaceSearch({ resolveApiKey: () => globalThis.window?.__GOOGLE_MAPS_API_KEY__ });
 function createGevActionRunner(options) { return createActionRunner({ placeSearch: testPlaceSearch(), ...options }); }
 function controlRadio(viewer, manager, args, options) { return runControlRadio(viewer, manager, args, { placeSearch: testPlaceSearch(), ...options }); }
 

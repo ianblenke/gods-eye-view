@@ -205,7 +205,7 @@ test('[osh-033] registers the OSH systems layer with token 3, and localLayers.js
     LAYER_STATE_REGISTRY.find((entry) => entry.id === 'osh-systems'),
     { id: 'osh-systems', token: '3', disposition: 'enabled-only' },
   );
-  assert.equal(REGISTERED_LAYER_IDS.length, 33);
+  assert.equal(REGISTERED_LAYER_IDS.length, 35);
   assert.deepEqual(REGISTERED_LAYER_IDS, [...REGISTERED_LAYER_IDS].sort());
   const localLayers = (await import('./localLayers.js')).default;
   assert.ok(

@@ -126,7 +126,7 @@ export const KEY_SETUP_KEYS = Object.freeze([
   }),
   Object.freeze({
     id: 'osh-control',
-    title: 'OSH COMMAND ACCOUNT',
+    title: 'OSH COMMAND ACCOUNT', // i18n-ignore: provider account name; row is hidden
     unlocks: 'Send commands to selected systems',
     getUrl: 'https://www.opensensorhub.org/',
     envVars: Object.freeze(['OSH_CONTROL_PASSWORD']),

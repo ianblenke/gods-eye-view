@@ -1516,7 +1516,8 @@ See [component ownership and adoption](CODE-BOUNDARIES.md).
 
 ## Google browser and server keys
 
-Local Places nearby/text search, geocoding (`/api/google/geocode`) and the
+Local Places nearby/text search, geocoding (`/api/google/geocode` and
+`/api/google/reverse-geocode`) and the
 CCTV Street View fallback prefer `GOOGLE_MAPS_SERVER_API_KEY`, falling back to
 `GOOGLE_MAPS_API_KEY` when the server key is blank or absent. Only the browser
 key is injected into client code. POWER UP presents one Google Maps entry for
@@ -1529,13 +1530,11 @@ uses the same server-first selection after resolving environment overrides
 per variable; its explicit `--key` wins.
 
 The browser sends no address and no coordinate to Google directly. The place
-search (`src/search/defaults.js`) and the reverse lookup of the HTTP
-geospatial provider (`src/search/http.js`) both call the same-origin
-`/api/google/geocode` route, which answers `{configured:false, ...}` with no
-upstream call when no key is set. `src/data/placeProviderPayloads.js`'s
-`projectGeocodeResults()` keeps Google's own field names and sets a maximum
-length for each list. The provider remembers a `configured:false` answer for
-its own life, and it does not remember an HTTP error answer.
+search (`src/search/defaults.js`) calls the same-origin `/api/google/geocode`
+route, and the reverse lookup of the HTTP geospatial provider
+(`src/search/http.js`) calls `/api/google/reverse-geocode`. With no key set,
+both routes answer `{configured:false, status:'REQUEST_DENIED', results:[]}`
+with no upstream call.
 
 ## Infrastructure marker visibility
 

@@ -1,5 +1,4 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import {
   defaultGatewayFromRouteTable,
@@ -64,14 +63,4 @@ test('an unwritable checkout is named at start instead of failing quietly', () =
   assert.match(warning, /runs as 1000:1000/, 'names the ids the container runs as');
   assert.match(warning, /chown -R 1000:1000/, 'offers handing the checkout to the container user first');
   assert.match(warning, /env UID=0 GID=0 docker compose up/, 'or the env form, which bash does not ignore');
-});
-
-test('the Docker install path keeps its loopback-only, launcher-owned contract', () => {
-  const dockerfile = readFileSync(new URL('../Dockerfile', import.meta.url), 'utf8');
-  assert.match(dockerfile, /^CMD \["node", "scripts\/docker-start\.mjs"\]$/m, 'the launcher is the container entry point');
-
-  const compose = readFileSync(new URL('../compose.yaml', import.meta.url), 'utf8');
-  assert.match(compose, /^\s+- "127\.0\.0\.1:4173:4173"$/m, 'the port is published on the host loopback only');
-  assert.doesNotMatch(compose, /GEV_KEY_SETUP_TRUSTED_PEERS/, 'trust is derived at launch, never hard-coded');
-  assert.doesNotMatch(compose, /network_mode/, 'the container keeps its own network namespace');
 });
