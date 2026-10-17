@@ -88,7 +88,7 @@ A failed write keeps the count in the plugin, writes one log line and does not s
 
 The default limit is 500 credits. One call of 99 credits was for a box of 0.04 km², and the box of this change is 2.25 times larger. If the credits grow with the area, a press in a dense place uses about 220 credits. Then 500 credits allow two or three presses of a day. This is a guess, and the owner can set `BEEMAPS_DAILY_CREDITS`.
 
-The reader `readCredits` in `normalize.js` must not throw for the body `null`. The change makes it safe for a value that is not an object.
+The credits come from a small reader in `credits.js`. It does not throw for the bodies `null` and `[]`, and it takes only a finite number of 0 or more.
 
 ### D4: `notEnoughCredits` is a fact for the log, not a refusal
 
@@ -116,10 +116,9 @@ The spec comes first, then the tests, then the code. Each rule gets a named faul
 - `src/layers/beemaps/messages.js`: the message for `credit_budget`.
 - `src/layers/beemapsBursts/box.js`: one comment.
 - `server/providers/beemaps/upstream.js`: the function `observe`.
-- `server/providers/beemaps/normalize.js`: `readCredits` for a value that is not an object.
 - `server/providers/beemaps/credits.js` (new): the credit count.
 - `server/providers/beemaps.js`: the options `log` and `fs`, the log line and the check of the credit limit.
-- The tests `src/layers/beemaps/box.test.mjs`, `layer.test.mjs`, `model.test.mjs`, `messages.test.mjs`, the three Bursts test files `src/layers/beemapsBursts/box.test.mjs`, `layer.test.mjs` and `model.test.mjs`, `src/data/beemapsFrames.test.mjs`, `beemapsProxy.test.mjs`, `beemapsUpstream.test.mjs`, `beemapsBurstScan.test.mjs`, and the new `src/data/beemapsCredits.test.mjs` and `src/data/beemapsLog.test.mjs`.
+- The tests `src/layers/beemaps/box.test.mjs`, `layer.test.mjs`, `model.test.mjs`, `messages.test.mjs`, the three Bursts test files `src/layers/beemapsBursts/box.test.mjs`, `layer.test.mjs` and `model.test.mjs`, `beemapsProxy.test.mjs`, `beemapsUpstream.test.mjs`, `beemapsBurstScan.test.mjs`, and the new `src/data/beemapsCredits.test.mjs` and `src/data/beemapsLog.test.mjs`.
 
 ## Risks / Trade-offs
 

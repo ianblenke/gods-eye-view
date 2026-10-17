@@ -15,9 +15,8 @@
 - [ ] 1.13 Write the tests for `beemaps-source-032`, `beemaps-source-033`, `beemaps-source-034` and `beemaps-source-035` in `src/data/beemapsCredits.test.mjs`.
 - [ ] 1.14 Add the file `credits.js` to the lists of files in the tests for `beemaps-source-015` in `src/data/beemapsUpstream.test.mjs`.
 - [ ] 1.15 Add the file `credits.js` to the list of files in the test for `beemaps-burst-control-038` in `src/data/beemapsBurstScan.test.mjs`.
-- [ ] 1.16 Add a row for the body `null` to the tests for `readCredits` in `src/data/beemapsFrames.test.mjs`.
-- [ ] 1.17 Give the helper `install` in `src/data/beemapsProxy.test.mjs` a collector for the option `log`.
-- [ ] 1.18 Give the credit file a readable path in the test for `beemaps-source-017` in `src/data/beemapsProxy.test.mjs`.
+- [ ] 1.16 Give the helper `install` in `src/data/beemapsProxy.test.mjs` a collector for the option `log`.
+- [ ] 1.17 Give the credit file a readable path in the test for `beemaps-source-017` in `src/data/beemapsProxy.test.mjs`.
 
 ## 2. Write the code and the documents
 
@@ -27,17 +26,16 @@
 - [ ] 2.4 Add the text for "credit_budget" in `src/layers/beemaps/messages.js`.
 - [ ] 2.5 Change the comment in `src/layers/beemapsBursts/box.js`.
 - [ ] 2.6 Add the optional function `observe` to `callUpstream` in `server/providers/beemaps/upstream.js`.
-- [ ] 2.7 Make `readCredits` in `server/providers/beemaps/normalize.js` safe for a value that is not an object.
-- [ ] 2.8 Write `server/providers/beemaps/credits.js`.
-- [ ] 2.9 Write the log lines in `server/providers/beemaps.js`.
-- [ ] 2.10 Write the check of the credit limit in `server/providers/beemaps.js`.
-- [ ] 2.11 Write the addition of credits in `server/providers/beemaps.js`.
-- [ ] 2.12 Add the new files to `scripts/format-scope.json`.
-- [ ] 2.13 Add the new tests to `openspec/ownership.json`.
-- [ ] 2.14 Change the paragraph of the frames layer in `DATA_SOURCES.md`.
-- [ ] 2.15 Change the paragraph of the route in `DATA_SOURCES.md`.
-- [ ] 2.16 Add `BEEMAPS_DAILY_CREDITS` to `.env.example`.
-- [ ] 2.17 Write one entry in `CHANGELOG.md`.
+- [ ] 2.7 Write `server/providers/beemaps/credits.js`.
+- [ ] 2.8 Write the log lines in `server/providers/beemaps.js`.
+- [ ] 2.9 Write the check of the credit limit in `server/providers/beemaps.js`.
+- [ ] 2.10 Write the addition of credits in `server/providers/beemaps.js`.
+- [ ] 2.11 Add the new files to `scripts/format-scope.json`.
+- [ ] 2.12 Add the new tests to `openspec/ownership.json`.
+- [ ] 2.13 Change the paragraph of the frames layer in `DATA_SOURCES.md`.
+- [ ] 2.14 Change the paragraph of the route in `DATA_SOURCES.md`.
+- [ ] 2.15 Add `BEEMAPS_DAILY_CREDITS` to `.env.example`.
+- [ ] 2.16 Write one entry in `CHANGELOG.md`.
 
 ## 3. Check on the host
 

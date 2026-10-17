@@ -32,7 +32,7 @@ None.
 ## Impact
 
 - New files: `server/providers/beemaps/credits.js` and the tests `src/data/beemapsCredits.test.mjs` and `src/data/beemapsLog.test.mjs`.
-- Changed files: `server/providers/beemaps.js`, `server/providers/beemaps/upstream.js`, `server/providers/beemaps/normalize.js`, `src/layers/beemaps/box.js`, `src/layers/beemaps/index.js`, `src/layers/beemaps/model.js`, `src/layers/beemaps/messages.js`, one comment in `src/layers/beemapsBursts/box.js`, their tests, `.env.example`, `DATA_SOURCES.md` and `CHANGELOG.md`.
+- Changed files: `server/providers/beemaps.js`, `server/providers/beemaps/upstream.js`, `src/layers/beemaps/box.js`, `src/layers/beemaps/index.js`, `src/layers/beemaps/model.js`, `src/layers/beemaps/messages.js`, one comment in `src/layers/beemapsBursts/box.js`, their tests, `.env.example`, `DATA_SOURCES.md` and `CHANGELOG.md`.
 - The new text of the requirement "Quote" changes the hash of each of its six scenarios. So one test of each of those six scenarios changes by a title or by one assertion about the box. No behavior of the Bursts layer changes.
 - The manifests `openspec/ownership.json` and `scripts/format-scope.json` list the new files.
 - The change closes no gap and opens no gap in `openspec/trace`, because each changed owned file keeps full coverage.
