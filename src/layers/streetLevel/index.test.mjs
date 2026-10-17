@@ -8,6 +8,10 @@ import { createKartaViewProvider } from './providers/kartaview/index.js';
 import { fakeStreetLevelProvider as fakeProvider } from '../../testSupport/streetLevelFakes.mjs';
 import { setLocale } from '../../i18n/index.js';
 
+// Without idle callbacks, whenIdle() in view.js waits 16 ms on a timer. Let
+// each test's last wait run out, so no timer stays live when the process ends.
+test.afterEach(() => new Promise((resolve) => setTimeout(resolve, 20)));
+
 /**
  * A stand-in Cesium viewer the layer can be enabled on: a canvas for the
  * click handler, camera events, a primitive list and a credit display.

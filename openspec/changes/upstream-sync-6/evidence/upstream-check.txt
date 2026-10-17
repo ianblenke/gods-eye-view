@@ -1,0 +1,123 @@
+Command: git ls-remote upstream refs/heads/main (2026-10-17, before the adopt command)
+93ea088f4556a5a65b3292a2d15142d5a6c562bc	refs/heads/main
+
+Command: git rev-parse b4847901^1 b4847901^2 (the parents of the merge commit)
+b091f337205a618c4ea971e3b2a0cae688d868a9
+73aec2e6b2ecfa865ddb7cb8839fa2d40fd0eb66
+
+Command: git merge-base --is-ancestor 73aec2e6 upstream/main; echo $?
+0
+
+Command: git rev-list --count 73aec2e6..upstream/main
+37
+
+Command: git merge-base 1d6b70fc 73aec2e6
+591f299d11f38a612629a274463196d57ae3862e
+
+Command: git rev-list --count 1d6b70fc..73aec2e6; git rev-list --count --first-parent 591f299d..73aec2e6
+622
+90
+
+Command: git diff --shortstat 1d6b70fc b4847901 -- . ':!openspec/changes/upstream-sync-6'; git diff --name-status 1d6b70fc b4847901 -- . ':!openspec/changes/upstream-sync-6' | cut -f1 | sort | uniq -c
+ 782 files changed, 83164 insertions(+), 7882 deletions(-)
+    258 A
+      4 D
+    520 M
+
+Command: git diff --name-status 1d6b70fc b4847901 --diff-filter=D
+D	server/providers/places/coordinates.js
+D	server/providers/places/geocode.js
+D	src/googleGeocodeRateLimit.test.mjs
+D	src/search/reverseGeocodeRoute.test.mjs
+
+Command: git log --first-parent --format='%h %s' 591f299d..73aec2e6
+73aec2e6 Merge pull request #867 from djabhi31/test/earthquake-records-validation
+30976f91 Merge pull request #1186 from rudycelekli/contrib/gods-next-36-launch-null-coordinates-20261016
+1df2a272 Merge pull request #1111 from Rohilalala/fix/map-fallback-retry
+cc84ab11 Merge pull request #1071 from cj-vana/feature/geo-uri-search
+2fd1b432 fix(tools): identify historical camera fallback imagery (#1118)
+79176667 Merge pull request #973 from Sunil56224972/fix/tomtom-cross-site-gate
+3e5a18f6 Merge pull request #718 from daikaginza/fix/tracked-info-vertical-rate
+e15b169e Merge pull request #1135 from djabhi31/fix/director-scene-results-971
+9898058f Merge pull request #1142 from ariannamethod/codex/fix-antimeridian-polygon-containment
+2189e9c5 Merge pull request #1136 from djabhi31/test/rocket-launches-edge-cases
+a571142d fix(recent-imagery): scroll the DETAILS card into view when it opens (#970)
+5a79a4d2 Merge pull request #1173 from Rohilalala/fix/geo-distance-dateline
+bd4f5a6a Merge pull request #1172 from omerbberk/fix/cctv-missing-numbers
+fb108898 fix(street-level): release superseded and unmounted Google viewer work (#1117)
+3c3ea269 fix(setup): stop Node's DEP0190 warning when npm runs on Windows (#1057)
+ec7823da Merge pull request #1171 from Rohilalala/fix/director-goto-shot
+fa8e3e98 fix(tools): exclude unknown altitude from requested aircraft bands (#1115)
+e5ee6696 Merge pull request #1097 from Rohilalala/fix/overpass-failure-phrases-in-data
+bb00a13b Merge pull request #1096 from Rohilalala/fix/military-sticky-track
+20c4c4a9 Merge pull request #787 from daikaginza/feat/changelog-fragments
+e8b3a10a Merge pull request #602 from meirm/i18n-spanish
+ecaab6a9 Merge pull request #1183 from bilawalsidhu/codex/sdr-bounded-playback
+3a57a04c Merge pull request #1159 from asturksever/fix/street-level-gate-pill-race
+537e99df Merge pull request #1063 from YosolosoY/feat/bikeshare-bogota-santiago
+d4492d8f Merge pull request #1176 from ulihhhh/feat/bikeshare-barcelona
+ca68d7e1 Merge pull request #690 from daikaginza/fix/gbfs-rate-limit
+775872fd Merge pull request #1114 from rudycelekli/contrib/gods-next-31-gbfs-unknown-counts-20261013
+e2274bbf Merge pull request #634 from cliph/feat/transit-ontario
+978b8e9c Merge pull request #452 from ch-bas/feat/cctv-model-spec-enrichment
+ec844c2c Merge pull request #359 from MiguelGFerreira/feat/brazil-gbfs-cities
+f91dfc4b Merge pull request #636 from cliph/feat/webapp-icons
+a0400b52 Merge pull request #741 from bilawalsidhu/fix/cyclone-advisory-time
+dde2b9d1 Merge pull request #1110 from Rohilalala/fix/flights-unpositioned-rows-complete
+82022306 Merge pull request #644 from ch-bas/feat/wsdot-camera-pack
+ffc6e0f8 Merge pull request #595 from ulihhhh/feature/catalonia-cctv-cameras
+584a95fb Merge pull request #607 from Reloded/feat/lithuania-cctv
+28501dde Merge pull request #645 from ch-bas/feat/king-county-camera-pack
+4deafbb5 Merge pull request #640 from cliph/feat/cctv-toronto
+79b9de07 Merge pull request #208 from SM-26/docker-support
+a5a361f7 Merge pull request #568 from rileygramlich/feat/aqhi
+c6f92da9 Merge pull request #641 from cliph/feat/bikeshare-toronto-and-failure-fix
+1710c834 Merge pull request #581 from Mikejr314159/fix/cap-remaining-upstream-reads
+5b3e852a Merge pull request #1134 from asturksever/pr/panoramax
+fd8f5924 Merge pull request #946 from trygvehhh/feat/bikeshare-norway
+1c3dae39 Merge pull request #1084 from NotProniss/feat/satellite-cloud-filter-strength
+614b207c Merge pull request #937 from daikaginza/fix/overpass-cache-tracks-upstream
+37dfb79e Merge pull request #1082 from jeffblakely/feat/bikeshare-detroit-mogo
+ad328b9c Merge pull request #1102 from Rohilalala/fix/radio-mirror-null-body
+17684d29 Merge pull request #693 from 21sagge/fix/363-geocode-proxy
+80055391 Merge pull request #1042 from rudycelekli/contrib/gods-021-cmr-raw-page-budget-20261011-reviewed
+005197cf Merge pull request #1041 from rudycelekli/contrib/gods-020-thumbnail-presence-proof-20261011-reviewed
+97209ca5 Merge pull request #1033 from rudycelekli/contrib/gods-012-surface-tab-order-20261011-reviewed
+c8dfe16a Merge pull request #1038 from rudycelekli/contrib/gods-017-ambiguous-camera-direction-20261011-reviewed
+4d88dd29 Merge pull request #1051 from rudycelekli/contrib/gods-030-regional-calendar-evidence-20261011-reviewed
+5d05a0a0 Merge pull request #1043 from rudycelekli/contrib/gods-022-firms-calendar-validity-20261011-reviewed
+5d42e661 Merge pull request #1031 from rudycelekli/contrib/gods-010-catalog-cancellation-v2-20261011-reviewed
+453083b8 Merge pull request #1024 from rudycelekli/contrib/gods-003-boundary-probe-recovery-20261011-reviewed
+c802ce87 Merge pull request #1039 from rudycelekli/contrib/gods-018-terrain-request-coordinate-boundary-20261011-reviewed
+533d7c64 Merge pull request #1122 from bilawalsidhu/codex/hal-526-import-review
+d9ff7183 Merge pull request #1108 from bilawalsidhu/codex/hal-522-trial
+f0a1b22d Merge pull request #1047 from rudycelekli/contrib/gods-026-map-subscription-ownership-20261011-reviewed
+87152359 Merge pull request #1046 from rudycelekli/contrib/gods-025-asset-stream-cancellation-20261011-reviewed
+fd5a1ef8 fix(tools): keep results when a timestamp is outside Date's range (#1045)
+84bfba8d Merge pull request #1044 from rudycelekli/contrib/gods-023-firms-coordinate-evidence-20261011-reviewed
+7661cd34 Merge pull request #1040 from rudycelekli/contrib/gods-019-terrain-warm-batch-lru-20261011-reviewed
+fc798969 Merge pull request #1036 from rudycelekli/contrib/gods-015-imagery-box-missing-edge-20261011-reviewed
+197e5ee8 Merge pull request #1032 from rudycelekli/contrib/gods-011-street-level-unique-tiles-20261011-reviewed
+0265ad4c Merge pull request #1030 from rudycelekli/contrib/gods-009-route-cap-truthfulness-20261011-reviewed
+81cf437e Merge pull request #1027 from rudycelekli/contrib/gods-006-weather-missing-observations-20261011-reviewed
+58f4a71f Merge pull request #1026 from rudycelekli/contrib/gods-005-tool-schema-codepoints-20261011-reviewed
+1d9d7c71 Merge pull request #1023 from rudycelekli/contrib/gods-002-director-dateline-seek-20261011-reviewed
+e50bc456 fix(qa): run the macOS-only gates on Windows and Linux (#1061)
+504d56ba test: fix flaky timing and timeout guards (#969)
+4cacd4cc fix(qa): exit QA gates gracefully on Windows (#1064)
+6a1432d3 Merge pull request #917 from kvnloo/fix/recent-imagery-qa-relative-layout-20261003
+7725a8fa Merge pull request #1062 from quanticsoul4772/fix/qa-stale-mutation-anchors
+22241550 Merge pull request #789 from kvnloo/docs/pinokio-browser-performance
+a190b602 Merge pull request #772 from daikaginza/docs/voice-backend-contract
+91ac5c11 test(codex): match the installed-executable stub on Windows (#997)
+eae16e08 Merge pull request #792 from daikaginza/fix/unit-runner-discovers-server-tests
+750f3da6 fix(styles): keep Snow wind sway bounded over time (#782)
+95d376f1 Merge pull request #918 from kvnloo/fix/right-rail-css-hidden-panel-20261003
+52094219 Merge pull request #1022 from rudycelekli/contrib/gods-001-coordinate-empty-components-20261011-reviewed
+18f58e27 Merge pull request #950 from PoBruno/fix/cctv-hls-insecure-context
+6dd4d015 Merge pull request #1092 from hifiguy/fix/bing-ion-https
+3ec31e59 Merge pull request #1121 from asturksever/pr/kartaview
+e28df70f Merge pull request #1085 from mvanhorn/fix/nyc-cctv-pack
+132b9e96 Merge pull request #1120 from bilawalsidhu/codex/hal-529-gbfs-names
+9beadbda Merge pull request #966 from asturksever/pr/google-street-view
+8b8ccc9a Merge pull request #936 from xiehuanyi/fix/tle-resync-after-missing-line

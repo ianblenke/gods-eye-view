@@ -1,0 +1,39 @@
+Command: git diff --shortstat b4847901 HEAD -- . ':!openspec/changes/upstream-sync-6' (HEAD = 879b28cb)
+ 35 files changed, 131 insertions(+), 239 deletions(-)
+
+Command: git diff --name-status b4847901 HEAD -- . ':!openspec/changes/upstream-sync-6'
+M	.env.example
+M	SECURITY.md
+M	docs/CURRENT-STATE.md
+M	scripts/package-boundaries.json
+M	src/annotations/annotationEngine.test.mjs
+M	src/annotations/annotationResolver.test.mjs
+M	src/camera.js
+M	src/data/layerState.test.mjs
+M	src/data/layerStateTokenLedger.test.mjs
+M	src/dockerLauncher.test.mjs
+M	src/i18n/locales/es.json
+M	src/i18n/locales/ru.json
+M	src/i18n/same-as-english.json
+M	src/keySetupCore.mjs
+M	src/layers/beemaps/registration.test.mjs
+M	src/layers/beemapsBursts/registration.test.mjs
+M	src/layers/cyclones/index.test.mjs
+M	src/layers/osh/index.js
+M	src/layers/osh/videoPlayer.js
+M	src/layers/recentImagery/index.test.mjs
+M	src/layers/recentImagery/thumbnails.test.mjs
+M	src/layers/reticulum/index.js
+M	src/layers/reticulum/registration.test.mjs
+M	src/locations.test.mjs
+M	src/search/placeSearch.test.mjs
+M	src/standalone/application.js
+M	src/tooling/bundleCredentials.test.mjs
+M	src/tooling/previewServing.test.mjs
+M	src/tooling/spec/qaRegister.test.mjs
+M	src/ui/layerNames.js
+M	src/ui/placeNames.js
+M	src/ui/recentImagery.test.mjs
+M	src/ui/templates/context.html
+M	src/voice/gevActions.test.mjs
+M	src/voice/gevRealtime.test.mjs

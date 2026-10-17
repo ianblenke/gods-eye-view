@@ -1,0 +1,10 @@
+Command: timeout 2400 nice -n 19 node --test src/tooling/spec/gates.test.mjs (host, trial commit 6856b9ca; the code of that file and of scripts/spec is the same on the final branch)
+ℹ tests 241
+ℹ pass 241
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ duration_ms 873492.692879
+
+Command: git diff --stat 6856b9ca HEAD -- scripts/spec src/tooling/spec/gates.test.mjs
+Output: (no lines)

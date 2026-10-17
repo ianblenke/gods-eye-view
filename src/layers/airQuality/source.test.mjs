@@ -146,6 +146,9 @@ test('an oversized response is refused before it is parsed', async () => {
     }).getSnapshot(),
     (error) => error.code === 'RESPONSE_TOO_LARGE',
   );
+  // The cancelled Blob stream ends on an Immediate of its own; let it run, so
+  // no live Immediate stays when the process ends.
+  await new Promise((resolve) => setImmediate(resolve));
 });
 
 test('a caller abort cancels the request and detaches its listener', async () => {

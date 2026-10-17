@@ -1,0 +1,23 @@
+Preload: at process exit, it appends the live Timeout and Immediate resources (process.getActiveResourcesInfo()) to a file, as the gate's test guard reads them.
+Command for each file: node --import leak-preload.mjs --test --test-force-exit <file>
+
+Before the change (commit 879b28cb), the six files that the first adopt run named:
+src/layers/airQuality/source.test.mjs :: 1 Immediate
+src/layers/streetLevel/index.test.mjs :: 6 Timeout
+src/sdr/decoderDiagnostics.test.mjs :: 12 Timeout
+src/sdr/readPipeline.diag.test.mjs :: 16 Timeout
+src/sdr/workerAdmission.test.mjs :: 40 Timeout
+src/ui/geoFileImport.test.mjs :: 1 Timeout
+
+After the change, the same six files: no live timer (the preload wrote no line).
+
+After the change, every test file except src/tooling/spec/gates.test.mjs, 8 at a time:
+files: 779, files with a failed test or a non-zero status: 0, live timers: none
+
+----- leak-preload.mjs -----
+// At exit, append the live timer resources of this process to $LEAK_OUT (like the gate's test guard).
+import { appendFileSync } from 'node:fs';
+process.on('exit', () => {
+  const live = (process.getActiveResourcesInfo?.() || []).filter((r) => r === 'Timeout' || r === 'Immediate');
+  if (live.length && process.env.LEAK_OUT) appendFileSync(process.env.LEAK_OUT, `${process.argv.slice(1).join(' ').slice(-70)} :: ${live.length} ${[...new Set(live)].join(',')}\n`);
+});

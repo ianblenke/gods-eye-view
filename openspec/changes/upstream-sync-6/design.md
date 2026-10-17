@@ -132,6 +132,19 @@ The change adds `src/i18n/marker.js` to nine fork packages: `reticulum`, `reticu
 Decision D6 adds imports of `src/i18n/index.js` to the OSH layer and to the Reticulum layer.
 So the packages `osh-layer` and `reticulum` also own `src/i18n/index.js`, `src/i18n/locale.js` and the two catalogs.
 
+### D9: Live timers at the end of upstream tests
+
+The first adopt run stopped with the error `GATES-TEST-LEAK` for six upstream test files.
+The gates run the tests with `--test-force-exit`, and a test process must end with no live timer.
+The change makes each of these tests clean up the work that it starts:
+
+- `src/layers/airQuality/source.test.mjs`: the test of the large response waits for one Immediate. The cancelled Blob stream then ends first.
+- `src/ui/geoFileImport.test.mjs`: after each test, the change destroys each tool that `setup()` made. `destroy()` clears the timer of the ground refresh.
+- `src/layers/streetLevel/index.test.mjs`: after each test, the change waits 20 ms, past the 16 ms timer of `whenIdle()`.
+- `src/sdr/decoderDiagnostics.test.mjs`, `src/sdr/readPipeline.diag.test.mjs` and `src/sdr/workerAdmission.test.mjs`: the clean-up rejects the open reads of the fake device, as `stop()` stops a real transfer. The read deadline then clears its timer.
+
+The file `evidence/leaks.txt` gives the live timers of each file before and after the change.
+
 ## Files and measures
 
 The trace gate checks the scenario IDs and the links. The ledger gate checks the gaps of the upstream files against the adopt records.

@@ -15,6 +15,7 @@ They also add three more Street Level providers, two server routes for geocoding
 - Move the Taiwan and Tampa presets into the new upstream file `src/cityPois.js`.
 - Mark the fork texts that the upstream text check finds, and add their Spanish and Russian text.
 - Write again the fork tests that the merge breaks. `design.md` gives each test.
+- Make six upstream test files end with no live timer, because the gates refuse a live timer at the end of a test process.
 - Run the adopt command for each upstream file that the merge brings and that has a coverage gap.
 
 ## Capabilities
@@ -30,8 +31,8 @@ None.
 
 ## Impact
 
-The merge commit changes 782 files compared with the base commit. It adds 258 files and removes 4 files.
-The commits after the merge change 34 files.
+Outside the change folder, the merge commit changes 782 files compared with the base commit. It adds 258 files and removes 4 files.
+Outside the change folder, the commits after the merge change 35 files.
 
 Rule 23: the owner approved on 2026-10-17 the removal of five owned paths from `openspec/ownership.json`.
 The five paths are `server/providers/places/coordinates.js`, `server/providers/places/geocode.js`, `src/googleGeocodeProxy.test.mjs`, `src/googleGeocodeRateLimit.test.mjs` and `src/search/reverseGeocodeRoute.test.mjs`.

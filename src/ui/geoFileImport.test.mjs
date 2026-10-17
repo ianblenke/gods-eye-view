@@ -135,6 +135,13 @@ class FakeElement {
   }
 }
 
+// Each tool that a test makes; destroyed after the test, so no ground refresh
+// timer stays live when the process ends.
+const madeTools = [];
+test.afterEach(() => {
+  for (const made of madeTools.splice(0)) made?.destroy();
+});
+
 function setup({ load, navigation, flyToSource, subscribeMapSource } = {}) {
   focus.active = null;
   const els = {
@@ -194,6 +201,7 @@ function setup({ load, navigation, flyToSource, subscribeMapSource } = {}) {
     ...(subscribeMapSource ? { subscribeMapSource } : {}),
     flyToSource: flyToSource || ((_viewer, ds) => flights.push(ds)),
   });
+  madeTools.push(tool);
   return {
     tool,
     els,

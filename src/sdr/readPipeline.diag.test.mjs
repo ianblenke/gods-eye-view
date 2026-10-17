@@ -3,6 +3,18 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { SdrController } from './controller.js';
 
+// Each rig that a test makes. After the test, its open reads are aborted as
+// stop() would, so their read deadlines clear their timers.
+const rigs = [];
+test.afterEach(async () => {
+  for (const made of rigs.splice(0)) {
+    made.stop();
+    for (const list of [made.reads, ...made.sessions])
+      for (const read of list) read.reject(new Error('AbortError'));
+  }
+  await new Promise((resolve) => setImmediate(resolve));
+});
+
 function rig() {
   const log = [];
   const reads = [];
@@ -29,10 +41,11 @@ function rig() {
   void c._readLoop(c._readGeneration);
   const settle = () => new Promise((r) => setTimeout(r, 0));
   const finish = (id) => reads[id].resolve({ data: new ArrayBuffer(8 + id) });
-  return {
+  const made = {
     c,
     log,
     reads,
+    sessions: [],
     settle,
     finish,
     rejectFirst: () => reads[0].reject(new Error('transfer error')),
@@ -41,6 +54,8 @@ function rig() {
       c._device = null;
     },
   };
+  rigs.push(made);
+  return made;
 }
 
 test('reads stay queued at the host while a completed block is handled', async () => {
@@ -133,6 +148,7 @@ test('a retune posts its tagged reset only after every pre-retune block reached 
 
 function newSession(r, name) {
   const reads = [];
+  r.sessions.push(reads);
   r.c._device = {
     readSamples: () =>
       new Promise((resolve, reject) => {

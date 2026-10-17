@@ -1,0 +1,70 @@
+Command: git merge --no-ff upstream/main (trial branch s6-trial from 1d6b70fc, 2026-10-17); the CONFLICT lines of its output:
+CONFLICT (add/add): Merge conflict in .dockerignore
+CONFLICT (content): Merge conflict in .env.example
+CONFLICT (content): Merge conflict in CHANGELOG.md
+CONFLICT (add/add): Merge conflict in Dockerfile
+CONFLICT (content): Merge conflict in README.md
+CONFLICT (content): Merge conflict in SECURITY.md
+CONFLICT (add/add): Merge conflict in compose.yaml
+CONFLICT (content): Merge conflict in docs/CURRENT-STATE.md
+CONFLICT (content): Merge conflict in package.json
+CONFLICT (content): Merge conflict in scripts/format-scope.json
+CONFLICT (content): Merge conflict in scripts/package-boundaries.json
+CONFLICT (content): Merge conflict in server/providers/places/google-key.js
+CONFLICT (content): Merge conflict in server/providers/places/google.js
+CONFLICT (content): Merge conflict in server/providers/transitHistory.test.mjs
+CONFLICT (content): Merge conflict in src/annotations/annotationResolver.test.mjs
+CONFLICT (content): Merge conflict in src/annotations/regionRing.test.mjs
+CONFLICT (content): Merge conflict in src/app/constructCatalog.js
+CONFLICT (content): Merge conflict in src/app/constructCatalog.test.mjs
+CONFLICT (content): Merge conflict in src/app/controls.js
+CONFLICT (content): Merge conflict in src/app/sourceComposition.test.mjs
+CONFLICT (content): Merge conflict in src/data/layerState.test.mjs
+CONFLICT (content): Merge conflict in src/data/layerStateTokenLedger.test.mjs
+CONFLICT (content): Merge conflict in src/data/manager.test.mjs
+CONFLICT (content): Merge conflict in src/director/timeline.test.mjs
+CONFLICT (add/add): Merge conflict in src/googleGeocodeProxy.test.mjs
+CONFLICT (content): Merge conflict in src/googleServerKey.test.mjs
+CONFLICT (content): Merge conflict in src/keySetupCore.test.mjs
+CONFLICT (content): Merge conflict in src/layers/perimeters/cards.test.mjs
+CONFLICT (content): Merge conflict in src/layers/recentImagery/model.js
+CONFLICT (content): Merge conflict in src/layers/wind/presentation.test.mjs
+CONFLICT (content): Merge conflict in src/locations.js
+CONFLICT (content): Merge conflict in src/sdr/controller.test.mjs
+CONFLICT (content): Merge conflict in src/search/defaults.js
+CONFLICT (content): Merge conflict in src/search/http.js
+CONFLICT (content): Merge conflict in src/search/offlineGeocoders.test.mjs
+CONFLICT (content): Merge conflict in src/search/placeSearch.test.mjs
+CONFLICT (content): Merge conflict in src/sources/reference.js
+CONFLICT (content): Merge conflict in src/sources/reference.test.mjs
+CONFLICT (content): Merge conflict in src/ui/layerPanel.js
+CONFLICT (content): Merge conflict in src/ui/recentImagery.js
+CONFLICT (content): Merge conflict in src/ui/recentImagery.test.mjs
+CONFLICT (content): Merge conflict in src/voice/gevActions.test.mjs
+CONFLICT (content): Merge conflict in style.css
+
+Count: 43
+
+Rebuild: on the plan commit, git merge --no-ff --no-commit upstream/main with rerere replayed 39 of the 43 resolutions:
+39
+
+Files where the merge commit differs from the result of rerere (hand edits outside the replayed hunks).
+Command: git diff --name-only 8ad67c62 (during the rebuild, before the checkout of the trial tree)
+.dockerignore
+Dockerfile
+openspec/ownership.json
+server/providers/places.js
+server/providers/places/coordinates.js
+server/providers/places/geocode.js
+src/cityPois.js
+src/data/layerState.js
+src/data/layerState.test.mjs
+src/data/layerStateTokenLedger.test.mjs
+src/data/layerStateTokenReservations.json
+src/data/placeProviderPayloads.js
+src/googleGeocodeRateLimit.test.mjs
+src/search/reverseGeocodeRoute.test.mjs
+src/ui/locationControls.test.mjs
+
+Command: git diff --stat 8ad67c62 b4847901 -- . ':!openspec/changes/upstream-sync-6' (the merge commit against the trial merge)
+Output: (no lines)

@@ -15,6 +15,7 @@
 - [ ] 1.13 Remove the tests of `credential-boundary-007` and `credential-boundary-013`.
 - [ ] 1.14 Change the register test of `qa-scripts-023` to expect 99 files.
 - [ ] 1.15 Run the fault of decision D2.
+- [ ] 1.16 Make the six upstream test files of decision D9 end with no live timer.
 
 ## 2. Host evidence
 

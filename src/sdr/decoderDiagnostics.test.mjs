@@ -79,13 +79,15 @@ function streaming(t, { reads = Infinity, diagnostics = false } = {}) {
     port: { postMessage: (message) => audio.push(message) },
   };
   let served = 0;
+  // Reads that never end, until the clean-up aborts them as stop() would.
+  const stalled = new Set();
   const device = {
     readSamples: () =>
       served++ < reads
         ? new Promise((resolve) =>
             setTimeout(() => resolve({ data: new ArrayBuffer(64) }), 1),
           )
-        : new Promise(() => {}),
+        : new Promise((_, reject) => stalled.add(reject)),
     close: async () => {},
   };
   controller._device = device;
@@ -94,10 +96,13 @@ function streaming(t, { reads = Infinity, diagnostics = false } = {}) {
   controller._readGeneration += 1;
   controller._startWatchdog();
   void controller._readLoop(controller._readGeneration);
-  t.after(() => {
+  t.after(async () => {
     controller._stopWatchdog();
     controller._readGeneration += 1;
     controller._device = null;
+    // Abort the open reads, so their read deadlines clear their timers.
+    for (const reject of stalled) reject(new Error('AbortError'));
+    await new Promise((resolve) => setImmediate(resolve));
   });
   return { controller, audio };
 }
