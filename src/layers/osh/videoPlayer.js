@@ -1,11 +1,11 @@
 /**
-import { t } from '../../i18n/index.js';
  * The browser side of the camera video (design decisions D76 and D77). The
  * player decodes the video messages of one stream with WebCodecs and draws
  * each frame on a canvas. The view is the block of DOM that holds the canvas.
  * The decoder classes, the canvas and the document are options, so the tests
  * use fakes and the real decoder runs only in a browser.
  */
+import { t } from '../../i18n/index.js';
 import {
   buildAvcConfig,
   codecStringOf,
