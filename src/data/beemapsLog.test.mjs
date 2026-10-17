@@ -70,6 +70,7 @@ async function install(
   const calls = [];
   const lines = [];
   const timers = [];
+  const cleared = [];
   const plugin = beemapsProxy({
     env: { BEEMAPS_API_KEY: KEY, ...env },
     fetchImpl: async (url, init) => {
@@ -80,7 +81,7 @@ async function install(
       timers.push({ fn, ms });
       return timers.length;
     },
-    clearTimer: () => {},
+    clearTimer: (id) => cleared.push(id),
     cacheDir: cacheDir ?? dir,
     ...(log ? { log: (line) => lines.push(line) } : {}),
     ...(now ? { now } : {}),
@@ -116,7 +117,7 @@ async function install(
       body: JSON.parse(res.text),
     };
   }
-  return { request, calls, lines, timers, dir };
+  return { request, calls, lines, timers, cleared, dir };
 }
 
 /** One request to a fresh plugin: the lines that it wrote and its answer. */
@@ -664,4 +665,46 @@ test('[beemaps-source-031] gives console.log the line and nothing else', async (
       '[beemaps] ok status=200 bytes=38 frames=0 ms=0 creditsUsed=2 creditsRemaining=none cost=0',
     ],
   ]);
+});
+
+test('[beemaps-source-026] drops the frames before the day since at the route', async (t) => {
+  const early = { ...frame(1), timestamp: '2026-04-06T01:07:01.000Z' };
+  const late = { ...frame(2), timestamp: '2026-04-08T01:07:02.000Z' };
+  const server = await install(t, {
+    respond: () => ok(JSON.stringify({ frames: [early, late] })),
+  });
+  const answer = await server.request(boxAt(0), { since: '2026-04-07' });
+  assert.equal(answer.status, 200);
+  assert.equal(answer.body.total, 1);
+  assert.equal(answer.body.frames.length, 1);
+  assert.equal(answer.body.since, '2026-04-07');
+  assert.equal(server.calls[0].url.includes('min_week=2026-04-07'), true);
+});
+
+test('[beemaps-source-030] keeps the timer of the request until the plugin has read the body', async (t) => {
+  let release;
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  const stream = new ReadableStream(
+    {
+      async pull(controller) {
+        await gate;
+        controller.enqueue(new TextEncoder().encode('{"frames":[]}'));
+        controller.close();
+      },
+    },
+    { highWaterMark: 0 },
+  );
+  const server = await install(t, {
+    respond: () => new Response(stream, { status: 200, headers: JSON_HEADERS }),
+  });
+  const pending = server.request(boxAt(0));
+  await waitFor(() => server.calls.length === 1);
+  await sleep(30);
+  assert.equal(server.timers.length, 1);
+  assert.deepEqual(server.cleared, []);
+  release();
+  assert.equal((await pending).status, 200);
+  assert.deepEqual(server.cleared, [1]);
 });

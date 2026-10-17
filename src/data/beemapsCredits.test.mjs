@@ -358,6 +358,7 @@ test('[beemaps-source-033] reads the credits of an upstream document', () => {
     {},
     { creditsUsed: 0 },
     { creditsUsed: -1 },
+    { creditsUsed: -0.5 },
     { creditsUsed: '7' },
     { creditsUsed: null },
     { creditsUsed: Infinity },
@@ -416,6 +417,8 @@ test('[beemaps-source-035] answers 503 and sends no request for a credit file th
     '{"date":"26-10-15","used":5}',
     '{"date":"2026-10-5","used":5}',
     '{"date":"abcd-ef-gh","used":5}',
+    '{"date":"2026-1-15","used":5}',
+    '{"date":"2026-100-15","used":5}',
   ];
   for (const text of bad) {
     const dir = await tempDir(t);
@@ -759,4 +762,33 @@ test('[beemaps-source-034] writes a count that is not a whole number into the re
     limit: 75,
   });
   assert.equal(small.calls.length, 0);
+});
+
+test('[beemaps-source-034] gives the shape of a refusal and of an unusable file when the plugin checks the limit', async (t) => {
+  const dir = await tempDir(t);
+  await seed(dir, { date: TODAY, used: 500 });
+  const credits = createCredits({ dir, env: {}, now: () => NOW });
+  assert.deepEqual(await credits.check(), {
+    ok: false,
+    reason: 'limit',
+    used: 500,
+    limit: 500,
+  });
+});
+
+test('[beemaps-source-035] keeps the credits of the new date after the date changes while the plugin runs', async (t) => {
+  const dir = await tempDir(t);
+  await seed(dir, { date: '2026-10-14', used: 400 });
+  const server = await install(t, { dir, respond: () => used(300) });
+  assert.equal((await server.request(boxAt(0))).status, 200);
+  assert.deepEqual(await readJson(creditFile(dir)), { date: TODAY, used: 300 });
+  assert.equal((await server.request(boxAt(1))).status, 200);
+  assert.deepEqual(await readJson(creditFile(dir)), { date: TODAY, used: 600 });
+  const refused = await server.request(boxAt(2));
+  assert.equal(refused.status, 429);
+  assert.deepEqual(refused.body, {
+    error: 'credit_budget',
+    used: 600,
+    limit: 500,
+  });
 });
