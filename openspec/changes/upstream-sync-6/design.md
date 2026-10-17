@@ -81,6 +81,10 @@ The change uses the upstream files for the server and for the browser code of th
 It removes `server/providers/places/geocode.js`, `server/providers/places/coordinates.js`, `src/googleGeocodeRateLimit.test.mjs` and `src/search/reverseGeocodeRoute.test.mjs`.
 It puts back the upstream browser key lines in `src/standalone/application.js` and in four test files. The upstream browser code uses the key only to decide whether to ask Google, and the key does not go in the request.
 
+The delta removes the three fork requirements of the geocoding. Before the archive, the main spec still holds their scenarios, and the trace gate does not ask for their tests. So the IDs go into `openspec/trace/retired-ids.json` only after the archive.
+
+The new requirement "Browser geocoding routes" keeps the one rule that holds for the upstream code: no browser file calls the geocoding host of Google.
+
 The lead removed `resolveApiKey` from `src/standalone/application.js` as a fault. No test failed, because no test calls `createStandaloneApplication()`. The line equals the upstream file. See the Known limit `key-wiring`.
 
 ### D3: The Docker files

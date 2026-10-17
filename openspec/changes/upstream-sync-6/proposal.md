@@ -25,7 +25,7 @@ None.
 
 ### Modified Capabilities
 
-- `credential-boundary`: The fork route `/api/google/geocode` goes away, because upstream has its own routes. The change removes two requirements and changes the requirement for browser geocoding.
+- `credential-boundary`: The fork route `/api/google/geocode` goes away, because upstream has its own routes. The change removes three requirements and adds the requirement "Browser geocoding routes".
 - `qa-scripts`: The merge adds nine upstream QA scripts. The register test then checks 99 scripts.
 
 ## Impact
@@ -42,8 +42,9 @@ The change edits these owned files: `.dockerignore`, `src/layers/osh/index.js`, 
 It also edits the registration tests of the layers Bee Maps Frames, Bee Maps Bursts and Reticulum Network.
 
 Rule 25: the merge breaks fork tests with scenario IDs.
-For the scenarios `credential-boundary-007` to `credential-boundary-014`, `credential-boundary-017` and `credential-boundary-018`, the change retires the scenario. The upstream geocoding code replaces the code of these scenarios.
-The change edits the tests of 18 other scenarios and keeps the scenario text. The scenarios are `beemaps-bursts-028`, `beemaps-frames-025`, `credential-boundary-015`, `cyclones-021`, `cyclones-025`, `osh-033`, `perimeters-005`, `recent-imagery-023`, `recent-imagery-026`, `recent-imagery-027`, `recent-imagery-029`, `recent-imagery-044`, `recent-imagery-046`, `recent-imagery-047`, `recent-imagery-049`, `recent-imagery-053`, `reticulum-layer-018` and `wind-020`.
+For the scenarios `credential-boundary-007` to `credential-boundary-015`, `credential-boundary-017` and `credential-boundary-018`, the change retires the scenario. The upstream geocoding code replaces the code of these scenarios.
+The new scenario `credential-boundary-019` has the text of `credential-boundary-015`, and its test is the old test with a new ID and a new file name.
+The change edits the tests of 17 other scenarios and keeps the scenario text. The scenarios are `beemaps-bursts-028`, `beemaps-frames-025`, `cyclones-021`, `cyclones-025`, `osh-033`, `perimeters-005`, `recent-imagery-023`, `recent-imagery-026`, `recent-imagery-027`, `recent-imagery-029`, `recent-imagery-044`, `recent-imagery-046`, `recent-imagery-047`, `recent-imagery-049`, `recent-imagery-053`, `reticulum-layer-018` and `wind-020`.
 
 The upstream code adds no dependency. `package-lock.json` does not change.
 The upstream code adds routes. The fork keeps them as upstream code with the adopt records.
