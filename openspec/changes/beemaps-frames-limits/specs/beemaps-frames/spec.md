@@ -5,8 +5,8 @@ The layer MUST build the box of a request from the point in the middle of the vi
 Origin: spec-first
 
 #### Scenario: Build the box from the middle of the view `beemaps-frames-008`
-- **WHEN** a test gives the function `viewBox` the middle of the view at the latitude and longitude of a row
-- **THEN** the centre is each value rounded to the nearest multiple of 0.001, and a value exactly between two multiples goes to the higher one
+- **WHEN** a test gives the function `framesBox` the middle of the view at the latitude and longitude of a row
+- **THEN** the centre is each value divided by 0.001, rounded with `Math.round`, multiplied by 0.001 and written with 3 decimals
 - **AND** the half height is 150 metres on a sphere of radius 6371008.8 metres, written as degrees of latitude
 - **AND** the half width is the half height divided by the cosine of the centre latitude
 - **AND** the box is [west, south, east, north] with each value rounded to 6 decimals
@@ -23,7 +23,7 @@ Origin: spec-first
 #### Scenario: Refuse a view that has no box `beemaps-frames-009`
 - **WHEN** a person presses the chip in a view that cannot give a box
 - **THEN** no request is sent, and the info text names the reason
-- **AND** a view cannot give a box when its middle shows the sky, and then the middle of the view given to `viewBox` is null
+- **AND** a view cannot give a box when its middle shows the sky, and then the middle of the view given to `framesBox` is null
 - **AND** a middle of the view with a value that is not a finite number also gives the reason sky
 - **AND** a canvas with no `clientWidth` or no `clientHeight`, and a pick that throws, also give the reason sky
 - **AND** it cannot give a box when the centre has a latitude above 80 or below -80
