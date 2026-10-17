@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { LocationControls } from './locationControls.js';
 import * as Cesium from 'cesium';
-import { CITY_POIS, flyToPresetLocation } from '../locations.js';
+import { CITY_POIS } from '../cityPois.js';
+import { flyToPresetLocation } from '../locations.js';
 
 function node() {
   const classes = new Set();

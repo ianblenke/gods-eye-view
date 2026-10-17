@@ -235,7 +235,7 @@ test('[recent-imagery-029] a valid box searches and previews the START HERE day 
   assert.equal(snapshot.focus.key, 'S30:2026-09-18', 'focus starts on it');
   assert.equal(snapshot.preview.key, 'S30:2026-09-18');
   assert.equal(snapshot.preview.slot, 'a');
-  assert.equal(snapshot.preview.label, 'Sep 18 · Sentinel-2 · 30 m');
+  assert.equal(snapshot.preview.label, 'Sep 18 · Sentinel-2 · 30\u00a0m');
   assert.equal(snapshot.candidates[1].preview, true);
   const none = {
     key: null,

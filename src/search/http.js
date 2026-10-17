@@ -49,22 +49,18 @@ export function normalizeGoogleReverse(data) {
 /** Existing JSON protocols with application-selected endpoints and transport. */
 export function createHttpGeospatialProvider({
   fetchImpl = (...args) => fetch(...args),
+  resolveApiKey,
   endpoints = {},
 } = {}) {
   const urls = {
-    // The server route holds the key. The browser never sends one.
-    reverse: '/api/google/geocode',
+    // Same-origin like its siblings below: Google's Geocoding web service
+    // refuses referrer-restricted keys, so the key stays on the server (#363).
+    reverse: '/api/google/reverse-geocode',
     textSearch: '/api/google/text-search',
     nearby: '/api/google/nearby-places',
     route: '/api/route',
     ...endpoints,
   };
-  // A keyless server answers `configured:false`. The provider remembers that
-  // for its life, so a keyless server takes one request and not one per lookup.
-  let unconfigured = false;
-  // A definitive answer with no place, by rounded coordinate. An error answer is
-  // never remembered, so a later call fetches again.
-  const noPlace = new Set();
   async function json(endpoint, params, { signal } = {}) {
     if (!endpoint) return null;
     const separator = endpoint.includes('?') ? '&' : '?';
@@ -94,22 +90,12 @@ export function createHttpGeospatialProvider({
     },
     routeProfiles: ['foot', 'car', 'bike'],
     async reverseGeocode(latitude, longitude, options) {
-      if (unconfigured) return null;
-      const key = `${latitude.toFixed(4)},${longitude.toFixed(4)}`;
-      if (noPlace.has(key)) return null;
-      const data = await json(
-        urls.reverse,
-        { lat: latitude, lon: longitude },
-        options,
+      // The browser key gates the provider without travelling with the
+      // request: the proxy supplies the key Google actually sees.
+      if (resolveApiKey && !resolveApiKey()) return null;
+      return normalizeGoogleReverse(
+        await json(urls.reverse, { lat: latitude, lon: longitude }, options),
       );
-      if (data?.configured === false) {
-        unconfigured = true;
-        return null;
-      }
-      const place = normalizeGoogleReverse(data);
-      // An answer with no Google status is an error answer: do not remember it.
-      if (!place && data?.status != null) noPlace.add(key);
-      return place;
     },
     async textSearch(query, { latitude, longitude, radiusM = 6000 }, options) {
       return places(

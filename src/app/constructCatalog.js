@@ -27,7 +27,9 @@ import { createApplicationEarthquakes } from './layers/earthquakes.js';
 import { createApplicationReticulum } from './layers/reticulum.js';
 import { createApplicationBeemaps } from './layers/beemaps.js';
 import { createApplicationBeemapsBursts } from './layers/beemapsBursts.js';
+import { createApplicationAirQuality } from './layers/airQuality.js';
 import { createApplicationFirePerimeters } from './layers/perimeters.js';
+import { createApplicationGnssIntegrity } from './layers/gnss.js';
 import { createApplicationCables } from './layers/submarineCables.js';
 import { createApplicationStreetLevel } from './layers/streetLevel.js';
 import { createApplicationOsh } from './layers/osh.js';
@@ -124,8 +126,12 @@ export function createApplicationCatalog({
         createApplicationReticulum({ source: sources.reticulum }),
         createApplicationBeemaps({ source: sources.beemaps }),
         createApplicationBeemapsBursts({ source: sources['beemaps-bursts'] }),
+        createApplicationAirQuality({ source: sources['air-quality'] }),
         createApplicationFirePerimeters({
           source: sources['fire-perimeters'],
+        }),
+        createApplicationGnssIntegrity({
+          source: sources['gnss-integrity'],
         }),
         createApplicationAlpr({ surface, source: sources.alpr }),
         createApplicationStreetLevel({

@@ -19,8 +19,8 @@ test('malformed successful Photon responses remain retryable', async () => {
 test('standalone geocoding falls back after Google connection, JSON and refusal failures', async () => {
   for (const fail of [() => { throw new Error('offline'); }, () => new Response('invalid json'), () => Response.json({ configured: true, status: 'REQUEST_DENIED', results: [] })]) {
     const urls = [];
-    const service = createStandalonePlaceSearch({ fetchImpl: async (url) => {
-      urls.push(url); return String(url).startsWith('/api/google/geocode') ? fail() : hit();
+    const service = createStandalonePlaceSearch({ resolveApiKey: () => 'fixture', fetchImpl: async (url) => {
+      urls.push(url); return url.includes('/api/google/geocode') ? fail() : hit();
     } });
     const result = await service.geocode('Hanoi');
     assert.equal(result.place.name, 'Hà Nội');

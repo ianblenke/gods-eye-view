@@ -1,4 +1,5 @@
 [
+  ["air-quality", "8"],
   ["ais-live-vessels", "a"],
   ["alpr-cameras", "p"],
   ["beemaps", "5"],
@@ -11,6 +12,7 @@
   ["earthquakes", "e"],
   ["fire-perimeters", "2"],
   ["flights", "f"],
+  ["gnss-integrity", "7"],
   ["local-dams", "q"],
   ["local-datacenters", "d"],
   ["local-firms", "w"],

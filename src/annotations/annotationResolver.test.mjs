@@ -234,7 +234,7 @@ test('ask-side admin bypass: explicit "state of Texas" skips recovery and proxim
   const calls = [];
   installGoogleMocks(t, async (url) => {
     calls.push(String(url));
-    assert.match(String(url), /^\/api\/google\/geocode/);
+    assert.match(String(url), /^\/api\/google\/geocode\?/);
     return { json: async () => geocodePayload({
       lat: 31.0000,
       lon: -99.0000,
@@ -328,7 +328,7 @@ test('ask-side admin bypass: admin level 2/3 result types never grant a township
   installGoogleMocks(t, async (url) => {
     calls.push(String(url));
     if (String(url).startsWith('/api/google/geocode')) {
-      const query = new URL(String(url), 'http://localhost').searchParams.get('address');
+      const query = new URL(String(url)).searchParams.get('address');
       return { json: async () => geocodePayload({
         lat: 39.7817,
         lon: -89.6501,
@@ -494,7 +494,7 @@ test('keyless: a key that geocodes to nothing still anchors the annotation', asy
     high: { latitude: 30.28, longitude: -97.68 },
   });
   // Google is asked first and exactly once; one Photon call answers it.
-  assert.equal(requests.filter((url) => url.startsWith('/api/google/geocode')).length, 1);
+  assert.equal(requests.filter((url) => url.includes('/api/google/geocode')).length, 1);
   assert.equal(requests.filter((url) => url.includes('photon.komoot.io')).length, 1);
 });
 

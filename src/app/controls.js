@@ -2,6 +2,7 @@ import { catalogControlServices } from './catalog.js';
 import { StyleManager } from '../ui/composition.js';
 import { startApplicationView } from '../camera.js';
 import { initCockpitCloudEffects } from '../cockpitCloudEffects.js';
+import { t } from '../i18n/index.js';
 
 /** Construct the existing controls and camera presentation. */
 export function createApplicationControls({
