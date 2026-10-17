@@ -72,13 +72,14 @@ const readBudget = async (dir) => {
 /** Install the plugin on a fake middleware list. Dates are mocked, requests are fake. */
 async function install(
   t,
-  { env = {}, respond, cacheDir, preview = false } = {},
+  { env = {}, respond, cacheDir, preview = false, fs } = {},
 ) {
   t.mock.timers.reset();
   t.mock.timers.enable({ apis: ['Date'], now: NOW });
   const dir = cacheDir ?? (await tempDir(t));
   const calls = [];
   const strays = [];
+  const lines = [];
   const timers = [];
   const cleared = [];
   const environment = { BEEMAPS_API_KEY: KEY, ...env };
@@ -99,6 +100,8 @@ async function install(
     },
     clearTimer: (id) => cleared.push(id),
     cacheDir: dir,
+    log: (line) => lines.push(line),
+    ...(fs ? { fs } : {}),
   });
   const uses = [];
   const routes = new Map();
@@ -179,6 +182,7 @@ async function install(
     request,
     frames,
     calls,
+    lines,
     timers,
     cleared,
     dir,
@@ -978,7 +982,18 @@ test('[beemaps-source-017] answers 503 budget_unavailable and sends no request w
     path.join(blocked, 'x'),
     'a file where the folder should be',
   );
-  const unwritable = await install(t, { cacheDir: path.join(blocked, 'x') });
+  // The credit file is fine here, so only the write of the budget file fails.
+  const creditFs = {
+    readFile: async () => {
+      throw Object.assign(new Error('no file'), { code: 'ENOENT' });
+    },
+    mkdir: async () => {},
+    writeFile: async () => {},
+  };
+  const unwritable = await install(t, {
+    cacheDir: path.join(blocked, 'x'),
+    fs: creditFs,
+  });
   const second = await unwritable.frames({ bbox: BOX });
   assert.equal(second.status, 503);
   assert.deepEqual(second.body, { error: 'budget_unavailable' });
