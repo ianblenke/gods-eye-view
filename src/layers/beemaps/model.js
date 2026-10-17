@@ -7,7 +7,7 @@ export const POINT_COLOR = '#f59e0b';
 const WEEK_MS = 604_800_000;
 const MONTH_MS = 2_592_000_000;
 export const HINT =
-  'A press asks for the newest frames in 4 km² at the view centre. It can cost money.';
+  'A press asks for the newest frames in a box of 300 m by 300 m at the view centre. It can cost money.';
 
 /** The color (CSS text), the alpha and the size in pixels of the point of a frame. */
 export function pointStyle(time, now) {

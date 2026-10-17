@@ -75,7 +75,7 @@ test('[beemaps-bursts-026] joins the message, the quote and the bursts with a do
   );
 });
 
-test('[beemaps-bursts-007] names the credits and the area on the Confirm chip', () => {
+test('[beemaps-bursts-007] names the credits and the area of 4 km² on the Confirm chip', () => {
   assert.equal(
     confirmLabel({ credits: 125, areaKm2: 4 }),
     'Confirm: 125 credits, 4 km²',

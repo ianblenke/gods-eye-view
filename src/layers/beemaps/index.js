@@ -1,5 +1,5 @@
 import * as Cesium from 'cesium';
-import { viewBox } from './box.js';
+import { framesBox } from './box.js';
 import { STATUS_FAILED, describeFailure, describeReason } from './messages.js';
 import { pointStyle, readoutText } from './model.js';
 export { createBeemapsSource } from './source.js';
@@ -94,7 +94,7 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
 
   async function press() {
     if (!_enabled || _request || _configured === false) return;
-    const box = viewBox(viewCentre(_viewer));
+    const box = framesBox(viewCentre(_viewer));
     if (!box.ok) {
       _pressMessage = describeReason(box.reason);
       _lastError = _pressMessage;
