@@ -1,0 +1,68 @@
+Host checks of beemaps-frames-limits, 2026-10-17, host Node v26.8.2. The checks ran on the files of the commit abf5d8c9a55eba1c8c7799ad6de1f4d4ffaa5a49. Later commits change evidence files, task ticks, the trace files and the archive folder.
+
+## node scripts/check-import-directions.mjs
+{"modules":1009,"portableEntries":81}
+exit: 0
+
+## node scripts/check-package-boundaries.mjs
+Checked osh-provider: 1 exports, 13 owned modules.
+Checked osh-control-provider: 1 exports, 16 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+exit: 0
+
+## node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 33 published, 0 new.
+exit: 0
+
+## node scripts/format.mjs --check
+Checked 1413 source files.
+exit: 0
+
+## node --test --experimental-test-coverage (include the changed files) the tests of the layers and of the route (on the host)
+exit: 0
+ℹ tests 664
+ℹ pass 664
+ℹ fail 0
+ℹ skipped 0
+ℹ   beemaps.js     | 100.00 |   100.00 |  100.00 | 
+ℹ    budget.js     | 100.00 |   100.00 |  100.00 | 
+ℹ    credits.js    | 100.00 |   100.00 |  100.00 | 
+ℹ    normalize.js  | 100.00 |   100.00 |  100.00 | 
+ℹ    upstream.js   | 100.00 |   100.00 |  100.00 | 
+ℹ    validate.js   | 100.00 |   100.00 |  100.00 | 
+ℹ    box.js        | 100.00 |   100.00 |  100.00 | 
+ℹ    index.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    messages.js   | 100.00 |   100.00 |  100.00 | 
+ℹ    model.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    records.js    | 100.00 |   100.00 |  100.00 | 
+ℹ    source.js     | 100.00 |   100.00 |  100.00 | 
+ℹ    box.js        | 100.00 |   100.00 |  100.00 | 
+ℹ all files        | 100.00 |   100.00 |  100.00 | 
+
+## node scripts/spec/gates.mjs lint (on the documents of the commit abf5d8c9a55eba1c8c7799ad6de1f4d4ffaa5a49)
+STE: 0 errors, 1013 warnings.
+
+## openspec validate beemaps-frames-limits --strict (on the documents of the commit abf5d8c9a55eba1c8c7799ad6de1f4d4ffaa5a49)
+Change 'beemaps-frames-limits' is valid
+
+## image gods-eye-view:local, v24.21.0, the clone mounted with the node_modules of the image, commit abf5d8c9a55eba1c8c7799ad6de1f4d4ffaa5a49
+## node --test --experimental-test-coverage (include the changed files) the tests of the layers and of the route
+ℹ tests 664
+ℹ pass 664
+ℹ fail 0
+ℹ skipped 0
+ℹ   beemaps.js     | 100.00 |   100.00 |  100.00 | 
+ℹ    budget.js     | 100.00 |   100.00 |  100.00 | 
+ℹ    credits.js    | 100.00 |   100.00 |  100.00 | 
+ℹ    normalize.js  | 100.00 |   100.00 |  100.00 | 
+ℹ    upstream.js   | 100.00 |   100.00 |  100.00 | 
+ℹ    validate.js   | 100.00 |   100.00 |  100.00 | 
+ℹ    box.js        | 100.00 |   100.00 |  100.00 | 
+ℹ    index.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    messages.js   | 100.00 |   100.00 |  100.00 | 
+ℹ    model.js      | 100.00 |   100.00 |  100.00 | 
+ℹ    records.js    | 100.00 |   100.00 |  100.00 | 
+ℹ    source.js     | 100.00 |   100.00 |  100.00 | 
+ℹ    box.js        | 100.00 |   100.00 |  100.00 | 
+ℹ all files        | 100.00 |   100.00 |  100.00 | 
+exit: 0

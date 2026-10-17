@@ -1,0 +1,26 @@
+Automatic mutation runs of the changed files. The tool is the AST mutation tool of the lead (gev-tools/automut). It changes one place of a file at a time, for example a comparison, a number, a regular expression or a statement.
+The tests then run on each mutant, and the first failing test ends that mutant. The named faults of mutations.txt were written by agents and by hand. This method found gaps that they did not name.
+
+Server files: server/providers/beemaps.js, server/providers/beemaps/credits.js and server/providers/beemaps/upstream.js. Code commit: abf5d8c9a55eba1c8c7799ad6de1f4d4ffaa5a49. Tests: the 7 data tests src/data/beemapsLog, Credits, Proxy, Upstream, Budget, Input and Frames. Mutants: 2046.
+On the lines that this change edited: 704 killed, 43 survived and 3 timed out.
+On the other lines: 1199 killed, 94 survived and 3 timed out. These lines are code that earlier changes wrote, and this change did not edit them.
+A first run of this campaign, before the lead added the tests for its survivors, had 54 survivors and 3 timeouts on the edited lines.
+- Survivors on the edited lines: 2. Place: beemaps.js, lines 98 to 98. The plugin does not use the result of the default log function.
+- Survivors on the edited lines: 17. Place: beemaps.js, lines 101 to 172; credits.js, lines 34 to 95; upstream.js, lines 95 to 95. The two statements or branches do not affect each other. They declare constants or functions, write a log line, start a hold, or have conditions that exclude each other. So their order changes no result.
+- Survivors on the edited lines: 5. Place: credits.js, lines 15 to 51. The operands have no side effect. In the credit file, a test that throws gives the same unavailable result.
+- Survivors on the edited lines: 1. Place: credits.js, lines 15 to 15. An empty text gives the number 0, and the test for 1 or more refuses it.
+- Survivors on the edited lines: 1. Place: credits.js, lines 23 to 23. A credit value of 0 gives 0 in both versions.
+- Survivors on the edited lines: 1. Place: credits.js, lines 36 to 36. The call slice(undefined, 10) starts at 0, as slice(0, 10) does.
+- Survivors on the edited lines: 6. Place: credits.js, lines 44 to 100. A string is written as UTF-8 by default, and JSON.parse turns a Buffer into UTF-8 text.
+- Survivors on the edited lines: 6. Place: credits.js, lines 46 to 46. The check calls the roll function at once after the load. The roll function replaces another date by today and the count 0.
+- Survivors on the edited lines: 1. Place: credits.js, lines 51 to 51. A null value throws a TypeError, which the check handles like the Error of the next lines.
+- Survivors on the edited lines: 3. Place: credits.js, lines 56 to 56. The check ignores the message of the error.
+- Timeouts on the edited lines: 3. Place: upstream.js, lines 38 to 97. Without the signal the reader never stops, so the tests hang until the deadline of the tool.
+
+Layer files: src/layers/beemaps/box.js, messages.js and model.js. Code commit: 86b5a3752e8a291cd7756da9c181b812265bf082. Tests: the tests src/layers/beemaps/box, messages, model and layer, and src/layers/beemapsBursts/box. Mutants: 716.
+On the lines that this change edited: 149 killed, 6 survived and 0 timed out.
+On the other lines: 544 killed, 17 survived and 0 timed out. These lines are code that earlier changes wrote, and this change did not edit them.
+- Survivors on the edited lines: 2. Place: box.js, lines 16 to 16. The snapped value is a multiple of 0.001 or 0.005 plus a float error near 1e-14. So 3 or 4 decimals give the same number.
+- Survivors on the edited lines: 4. Place: box.js, lines 27 to 29; messages.js, lines 40 to 40. The two statements or branches do not affect each other. They declare constants or functions, write a log line, start a hold, or have conditions that exclude each other. So their order changes no result.
+
+Every survivor on the edited lines is an equivalent mutant: it gives the same results as the file.

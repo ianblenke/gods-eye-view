@@ -39,14 +39,14 @@
 
 ## 3. Check on the host
 
-- [ ] 3.1 Run the tests in `src/layers/beemaps` and `src/layers/beemapsBursts` on the host.
-- [ ] 3.2 Run the tests `src/data/beemaps*.test.mjs` on the host.
-- [ ] 3.3 Run one named fault for each rule and each limit of the spec.
-- [ ] 3.4 Write `evidence/mutations.txt` with the result of each fault.
-- [ ] 3.5 Write `evidence/real-shape.txt` with the output of the check of the route and the layer with a fake answer.
-- [ ] 3.6 Run the four checks of `make precheck` on the host.
-- [ ] 3.7 Run the STE lint on the host.
-- [ ] 3.8 Run `openspec validate beemaps-frames-limits --strict` on the host.
+- [x] 3.1 Run the tests in `src/layers/beemaps` and `src/layers/beemapsBursts` on the host.
+- [x] 3.2 Run the tests `src/data/beemaps*.test.mjs` on the host.
+- [x] 3.3 Run one named fault for each rule and each limit of the spec.
+- [x] 3.4 Write `evidence/mutations.txt` with the result of each fault.
+- [x] 3.5 Write `evidence/real-shape.txt` with the output of the check of the route and the layer with a fake answer.
+- [x] 3.6 Run the four checks of `make precheck` on the host.
+- [x] 3.7 Run the STE lint on the host.
+- [x] 3.8 Run `openspec validate beemaps-frames-limits --strict` on the host.
 
 ## 4. Lead work in the image
 
