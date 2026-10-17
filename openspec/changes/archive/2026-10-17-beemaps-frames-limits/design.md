@@ -83,7 +83,7 @@ The spec of `beemaps-source` names eleven steps in a fixed order (scenario 022),
 
 The credit count is a number and not a whole number, because Bee Maps can send a fraction. The file `.gev-cache/beemaps/credits.json` has `{"date":"YYYY-MM-DD","used":N}`. It is separate from `budget.json`, so no scenario about that file changes. The route reads the credit file when the first request reaches the check, and then it keeps the count in the plugin. An addition of 0 writes no file.
 
-The route adds the credits of an answer when the answer is a JSON body, before it checks the shape of the document. So a document of the wrong shape adds its credits. The date of an addition is the date (UTC) at the moment of the addition, after the plugin reads the body. The plugin writes the credit file for one addition at a time, and it fixes the text at the addition. After the plugin writes the file, it sends the reply of the route.
+The route adds the credits of an answer when the answer is a JSON body, before it checks the shape of the document. So a document of the wrong shape adds its credits. The date of an addition is the date (UTC) at the moment of the addition, after the plugin reads the body. The plugin writes the credit file for one addition at a time, and it sets the text at the time of the addition. After the plugin writes the file, it sends the reply of the route.
 
 When the plugin cannot write the credit file, it keeps the count and writes one log line. It does not stop the reply of the route, because Bee Maps reports credits for the answer. A file that is not valid, or that cannot be read, gives `503` with `{error:'budget_unavailable'}`. The file of the request limit does the same.
 

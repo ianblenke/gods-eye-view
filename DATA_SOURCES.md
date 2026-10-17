@@ -109,9 +109,11 @@ The daily limit is 20 upstream requests. `BEEMAPS_DAILY_QUERIES` changes it, and
 
 The credit limit is 500 credits for each UTC day. `BEEMAPS_DAILY_CREDITS` changes it, and a second file in the same folder keeps the count. The route adds the credits of each answer. It refuses a new upstream request when the count is at least the limit. One request can take the count over the limit, because the price is known only in the answer.
 
-The route writes one line to the log of the server for each upstream request. The line has the status, the size, the time and the credits, and it has no key. The terms of Bee Maps allow use in an app that you build, and they forbid resale. They do not say whether other people can see the data, so use it for yourself only.
+The route writes one line to the log of the server for each upstream request. The line has the status, the size and the time, and it has the credits when the answer reports them. The line has no key.
 
-The layer "Bee Maps Frames" in the group Cameras shows the frames as points. A press on its button "Fetch frames here" sends one request for a box of 300 m by 300 m at the view centre. Nothing else sends a request. The newest points are brighter.
+The terms of Bee Maps allow use in an app that you build, and they forbid resale. They do not say whether other people can see the data, so use it for yourself only.
+
+The layer "Bee Maps Frames" in the group Cameras shows the frames as points. A press on its button "Fetch frames here" sends one request for a box of 300 m by 300 m at the view centre. No other action sends a request for frames. The newest points are brighter.
 
 This version has no image and no request to map an area again. The shapes of the request and the answer come from the public API description, version 1.3.0. No test sends a request to Bee Maps, so the first real request can show a difference.
 
