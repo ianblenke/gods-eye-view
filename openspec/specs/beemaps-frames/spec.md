@@ -68,29 +68,31 @@ Origin: spec-first
 - **AND** a press that fails after a failed status shows the message and the `error` of the press
 
 ### Requirement: View box
-The layer MUST build the box of a request from the point in the middle of the view. The box MUST have a size of about 4 km², and the server MUST accept it.
+The layer MUST build the box of a request from the point in the middle of the view. The box MUST have a size of about 0.09 km², and the server MUST accept it.
 Origin: spec-first
 
 #### Scenario: Build the box from the middle of the view `beemaps-frames-008`
-- **WHEN** a test gives the function `viewBox` the middle of the view at the latitude and longitude of a row
-- **THEN** the centre is each value rounded to the nearest multiple of 0.005, and a value exactly between two multiples goes to the higher one
-- **AND** the half height is 1000 metres on a sphere of radius 6371008.8 metres, written as degrees of latitude
-- **AND** the half width is the half height divided by the cosine of the centre latitude
+- **WHEN** a test gives the function `framesBox` the middle of the view at the latitude and longitude of a row
+- **THEN** the centre is each value divided by 0.001, rounded with `Math.round`, multiplied by 0.001 and written with 3 decimals
+- **AND** the half height is 150 metres on a sphere of radius 6371008.8 metres, written as degrees of latitude
+- **AND** the half width is the half height divided by the cosine of the latitude of the centre, and not of the row
 - **AND** the box is [west, south, east, north] with each value rounded to 6 decimals
 - **AND** the layer calls `pickEllipsoid` at half of `clientWidth` and half of `clientHeight`, on the ellipsoid of the globe, for the middle of the view
-- **AND** the row (60.0, 10.0) gives the box [9.982014, 59.991007, 10.017986, 60.008993]
-- **AND** the row (0.0, 0.0) gives [-0.008993, -0.008993, 0.008993, 0.008993]
-- **AND** the row (-33.9, 151.2) gives [151.189165, -33.908993, 151.210835, -33.891007]
-- **AND** the row (0.0025, 0.0025) gives the centre (0.005, 0.005) and the box [-0.003993, -0.003993, 0.013993, 0.013993]
-- **AND** the row (-0.0025, -0.0025) gives the centre (0.0, 0.0) and the same box as the row (0.0, 0.0)
-- **AND** the row (39.975, 0.0) gives the box [-0.011735, 39.966007, 0.011735, 39.983993]
-- **AND** the row (59.9976, 10.0031) gives the centre (60.0, 10.005) and the box [9.987014, 59.991007, 10.022986, 60.008993]
-- **AND** the row (30.2672, -97.7431) gives the centre (30.265, -97.745) and the box [-97.755412, 30.256007, -97.734588, 30.273993]
+- **AND** the row (60.0, 10.0) gives the box [9.997302, 59.998651, 10.002698, 60.001349]
+- **AND** the row (0.0, 0.0) gives [-0.001349, -0.001349, 0.001349, 0.001349]
+- **AND** the row (-33.9, 151.2) gives [151.198375, -33.901349, 151.201625, -33.898651]
+- **AND** the row (0.0005, 0.0005) gives the centre (0.001, 0.001) and the box [-0.000349, -0.000349, 0.002349, 0.002349]
+- **AND** the row (-0.0005, -0.0005) gives the centre (0.0, 0.0) and the same box as the row (0.0, 0.0)
+- **AND** the row (39.975, 0.0) gives the box [-0.00176, 39.973651, 0.00176, 39.976349]
+- **AND** the row (59.9996, 10.0013) gives the centre (60.0, 10.001) and the box [9.998302, 59.998651, 10.003698, 60.001349]
+- **AND** the row (30.2672, -97.7431) gives the centre (30.267, -97.743) and the box [-97.744562, 30.265651, -97.741438, 30.268349]
+- **AND** the row (79.5004, 10.0) gives the centre (79.5, 10.0) and the box [9.992598, 79.498651, 10.007402, 79.501349]
+- **AND** the row (60.165, 10.0) gives the box [9.997289, 60.163651, 10.002711, 60.166349]
 
 #### Scenario: Refuse a view that has no box `beemaps-frames-009`
 - **WHEN** a person presses the chip in a view that cannot give a box
 - **THEN** no request is sent, and the info text names the reason
-- **AND** a view cannot give a box when its middle shows the sky, and then the middle of the view given to `viewBox` is null
+- **AND** a view cannot give a box when its middle shows the sky, and then the middle of the view given to `framesBox` is null
 - **AND** a middle of the view with a value that is not a finite number also gives the reason sky
 - **AND** a canvas with no `clientWidth` or no `clientHeight`, and a pick that throws, also give the reason sky
 - **AND** it cannot give a box when the centre has a latitude above 80 or below -80
@@ -100,16 +102,16 @@ Origin: spec-first
 - **AND** for the sky the text is "Point the view at the ground and press again."
 - **AND** for the latitude the text is "Move the view to a latitude from -80 to 80 degrees and press again."
 - **AND** for the longitude the text is "Move the view away from the 180th meridian and press again."
-- **AND** the row (80.002, 0.0) gives a box, and the row (80.003, 0.0) is refused for the latitude
-- **AND** the row (0.0, 179.99) gives a box, and the rows (0.0, 179.995) and (0.0, -179.995) are refused for the longitude
-- **AND** the row (25.93, 179.99) gives a box with the east value 180
-- **AND** the row (25.93, -179.99) gives a box with the west value -180
+- **AND** the row (80.0004, 0.0) gives a box, and the row (80.0006, 0.0) is refused for the latitude
+- **AND** the row (0.0, 179.998) gives a box, and the rows (0.0, 179.999) and (0.0, -179.999) are refused for the longitude
+- **AND** the row (47.59, 179.998) gives a box with the east value 180
+- **AND** the row (47.59, -179.998) gives a box with the west value -180
 
 #### Scenario: Build only boxes that the server accepts `beemaps-frames-010`
 - **WHEN** a test builds the box for each latitude from -80 to 80 in steps of 5
 - **AND** it does so for each longitude from -170 to 170 in steps of 10
 - **THEN** the function `validateRequest` of the server accepts the body `{bbox, limit:200}` for each box
-- **AND** the area of each box, from the function `boxAreaKm2` of the server, is from 3.99 to 4.01 km²
+- **AND** the area of each box, from the function `boxAreaKm2` of the server, is from 0.0899 to 0.0901 km²
 
 ### Requirement: Browser source
 The source MUST read the status and post the box through the same-origin routes of the provider. It MUST read at most 1 MiB of an answer.
@@ -178,6 +180,9 @@ Origin: spec-first
 - **AND** "budget" gives "The daily limit of 20 requests is used." for `limit` 20, and "The daily limit of 5 requests is used." for `limit` 5
 - **AND** "budget" gives "The daily limit of 1 request is used." for `limit` 1
 - **AND** "budget" gives "The daily limit is used." when `limit` is not a whole number
+- **AND** "credit_budget" gives "The daily limit of 500 credits is used." for `limit` 500, and "The daily limit of 1 credit is used." for `limit` 1
+- **AND** "credit_budget" gives "The daily limit of 0 credits is used." for `limit` 0
+- **AND** "credit_budget" gives "The daily credit limit is used." when `limit` is not a whole number
 - **AND** "rate_limited" gives "Too many presses. Wait 60 seconds."
 - **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait 30 seconds." for `retryAfter` 30, and "Bee Maps asks you to wait 600 seconds." for `retryAfter` 600
 - **AND** "upstream_rate_limit" gives "Bee Maps asks you to wait 1 second." for `retryAfter` 1
@@ -206,7 +211,7 @@ Origin: spec-first
 #### Scenario: Write the readout `beemaps-frames-018`
 - **WHEN** a test gives the function `readoutText` the state of the layer
 - **THEN** with no answer and no message, the text is the hint
-- **AND** the hint is "A press asks for the newest frames in 4 km² at the view centre. It can cost money."
+- **AND** the hint is "A press asks for the newest frames in a box of 300 m by 300 m at the view centre. It can cost money."
 - **AND** an answer of 3 frames has the newest at "2026-10-14T08:03:00.000Z", `used` 3, `limit` 20 and `remaining` 998
 - **AND** for that answer the text is "3 frames · newest 2026-10-14 · requests today 3 of 20 · credits left 998"
 - **AND** the date of the newest frame is the date in UTC, also when the time zone of the machine is not UTC

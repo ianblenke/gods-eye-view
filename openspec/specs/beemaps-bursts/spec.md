@@ -62,7 +62,7 @@ Origin: spec-first
 - **AND** `disable` aborts an open status request
 
 ### Requirement: Quote
-A press of the chip "quote" MUST ask the server for the price of a burst in the box around the centre of the view. The box MUST be the box of the frames layer, and each corner of it MUST stay within the latitudes -80 and 80 degrees. The quote request MUST contain the box and nothing else. A quote MUST cost nothing and MUST NOT start a burst.
+A press of the chip "quote" MUST ask the server for the price of a burst in the box around the centre of the view. The box MUST be the box of 4 km² that the function `viewBox` builds. Each corner of the box MUST stay within the latitudes -80 and 80 degrees. The quote request MUST contain the box and nothing else. A quote MUST cost nothing and MUST NOT start a burst.
 Origin: spec-first
 
 #### Scenario: Ask for the quote of the view box `beemaps-bursts-006`
