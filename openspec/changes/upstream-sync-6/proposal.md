@@ -2,7 +2,8 @@
 
 The owner wants a sync more often than once each week. On 2026-10-17 the owner told the lead to start the sixth sync.
 Upstream has 622 commits after the fifth sync. The first-parent history of upstream has 90 commits in that range.
-The commits add a Docker install path, interface text in Spanish and Russian, an Air quality layer, a GNSS integrity layer, three more Street Level providers, a server route for geocoding and many fixes.
+The commits add a Docker install path, interface text in Spanish and Russian, an Air quality layer and a GNSS integrity layer.
+They also add three more Street Level providers, two server routes for geocoding and many fixes.
 
 ## What Changes
 
@@ -37,7 +38,8 @@ The five paths are `server/providers/places/coordinates.js`, `server/providers/p
 The file `src/googleGeocodeProxy.test.mjs` stays in the tree as an upstream file, because upstream adds a file with that name.
 The upstream files that the merge adds are upstream code, because the fork does not write them. The manifest lists only paths that the fork writes.
 
-The change edits these owned files: `.dockerignore`, `src/layers/osh/index.js`, `src/layers/osh/videoPlayer.js`, `src/layers/reticulum/index.js`, `src/tooling/bundleCredentials.test.mjs` and the registration tests of the layers Bee Maps Frames, Bee Maps Bursts and Reticulum Network.
+The change edits these owned files: `.dockerignore`, `src/layers/osh/index.js`, `src/layers/osh/videoPlayer.js`, `src/layers/reticulum/index.js` and `src/tooling/bundleCredentials.test.mjs`.
+It also edits the registration tests of the layers Bee Maps Frames, Bee Maps Bursts and Reticulum Network.
 
 Rule 25: the merge breaks fork tests with scenario IDs.
 For the scenarios `credential-boundary-007` to `credential-boundary-014`, `credential-boundary-017` and `credential-boundary-018`, the change retires the scenario. The upstream geocoding code replaces the code of these scenarios.

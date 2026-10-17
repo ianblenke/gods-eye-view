@@ -65,6 +65,7 @@ A trial merge reported 43 files with conflicts. The table gives the resolution o
 
 Upstream gives the token `3` to `gnss-integrity` and the token `4` to `air-quality`.
 The fork published the token `3` for `osh-systems` on 2026-09-25 and the token `4` for `reticulum` on 2026-10-13.
+
 The function `validateLayerStateAllocations()` refuses a change to a published token. It also makes each new layer take the next free token.
 So in the fork, `gnss-integrity` gets the token `7`, and `air-quality` gets the token `8`.
 The change sets these tokens in `src/data/layerState.js` and in `src/data/layerStateTokenReservations.json`.
@@ -75,9 +76,11 @@ The upstream tests that use the free digits then use the digit `9` and the two-c
 Upstream adds the routes `/api/google/geocode` and `/api/google/reverse-geocode` in `server/providers/places/google.js`.
 The fork route `/api/google/geocode` is in `server/providers/places/geocode.js`. Both sides then add a route on the same path.
 The owner decided on 2026-10-17 to use the upstream routes.
+
 The change uses the upstream files for the server and for the browser code of the geocoding.
 It removes `server/providers/places/geocode.js`, `server/providers/places/coordinates.js`, `src/googleGeocodeRateLimit.test.mjs` and `src/search/reverseGeocodeRoute.test.mjs`.
 It puts back the upstream browser key lines in `src/standalone/application.js` and in four test files. The upstream browser code uses the key only to decide whether to ask Google, and the key does not go in the request.
+
 The lead removed `resolveApiKey` from `src/standalone/application.js` as a fault. No test failed, because no test calls `createStandaloneApplication()`. The line equals the upstream file. See the Known limit `key-wiring`.
 
 ### D3: The Docker files
@@ -85,6 +88,7 @@ The lead removed `resolveApiKey` from `src/standalone/application.js` as a fault
 Upstream adds a `Dockerfile` on Node 24.14.0, a `compose.yaml` with a bind mount and a port on the loopback address only, and a start script.
 The fork owns its `Dockerfile` and `compose.yaml`. The spec gates need Node 24.21.0.
 With the Codex override on the host network, the upstream start script would trust the LAN router as the gateway.
+
 The owner decided on 2026-10-17 to keep the fork files.
 The change removes the upstream test of the upstream Docker contract from `src/dockerLauncher.test.mjs`. The other tests in that file stay.
 
@@ -110,14 +114,19 @@ It removes the catalog entry `Flying to Austin, TX...`, because no code uses it 
 ### D7: Fork tests that the merge breaks
 
 Upstream now puts a no-break space before units and `UTC`, and a word joiner after a hyphen in a word. The change writes these characters into the expected text of the fork tests.
+
 Upstream now needs the header `Data-Present` with the value `true` before it decodes a thumbnail. The change adds this header to the fork test fixtures that expect a thumbnail.
+
 Upstream now writes the panel group labels as `msg('Cameras')` and `msg('Infrastructure')`. The change updates the patterns in the fork registration tests.
+
 The text of each of these scenarios stays as it is.
 
 ### D8: The package boundaries
 
 Upstream modules now import `src/i18n/marker.js`. The fork packages that use these modules must own that file too.
-The change adds the modules that the package boundary check names to the fork packages.
+The change adds `src/i18n/marker.js` to nine fork packages: `reticulum`, `reticulum-source`, `beemaps`, `beemaps-source`, `beemaps-bursts`, `beemaps-bursts-source`, `osh-provider`, `osh-control-provider` and `osh-layer`.
+Decision D6 adds imports of `src/i18n/index.js` to the OSH layer and to the Reticulum layer.
+So the packages `osh-layer` and `reticulum` also own `src/i18n/index.js`, `src/i18n/locale.js` and the two catalogs.
 
 ## Files and measures
 

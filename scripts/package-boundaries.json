@@ -3817,6 +3817,10 @@
   "reticulum": {
     "exports": ["./layers/reticulum"],
     "modules": [
+      "src/i18n/index.js",
+      "src/i18n/locales/ru.json",
+      "src/i18n/locales/es.json",
+      "src/i18n/locale.js",
       "src/i18n/marker.js",
       "src/layers/reticulum/index.js",
       "src/sources/httpBody.js",
@@ -4089,6 +4093,11 @@
   "osh-layer": {
     "exports": ["./layers/osh"],
     "modules": [
+      "src/i18n/marker.js",
+      "src/i18n/index.js",
+      "src/i18n/locales/ru.json",
+      "src/i18n/locales/es.json",
+      "src/i18n/locale.js",
       "src/data/iconOrientation.js",
       "src/data/oshObservations.js",
       "src/data/oshSystems.js",
