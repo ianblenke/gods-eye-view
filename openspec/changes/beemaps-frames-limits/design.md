@@ -15,16 +15,18 @@ This design uses these terms.
 - A press is one press of the chip "Fetch frames here".
 - A credit is the unit that Bee Maps reports in `creditsUsed` and `creditsRemaining`.
 - The credit count is the sum of the credits of the answers of one UTC day.
-- The request limit is the existing daily limit of upstream requests (`BEEMAPS_DAILY_QUERIES`). The credit limit is the new limit.
+- The daily request limit is the limit of upstream requests that the route has today (`BEEMAPS_DAILY_QUERIES`). The credit limit is the new limit.
 
-Facts from one real call on 2026-10-16. The owner allowed that call, and the call came from the app container.
+Facts from the checks of 2026-10-16. The first group comes from one real call. The owner allowed that call, and the call came from the app container.
 - The box was 200 m by 200 m (0.04 km²) at 25.048, 121.517 in Taipei.
 - The status was 200 in 2.8 seconds. The body had 84620 bytes and 174 frames, which is about 486 bytes for a frame.
 - The top-level keys were `frames`, `cost`, `creditsUsed`, `creditsRemaining` and `notEnoughCredits`. The last key is not in the public API description.
 - `creditsUsed` was 99, `cost` was 0 and `creditsRemaining` was -0.25.
 - The first frame in the list had the time 2026-04-06.
+
+Other checks, which used no key and no real call:
 - The public API description of 2026-10-16 differs from the saved copy of 2026-10-15 only in the path `/requestVideo`.
-- A call with no key gets `403` with the text "Forbidden".
+- A call with no key, from the app container, gets `403` with the text "Forbidden".
 - A test with fake documents of the real shape passes the route and the layer at 174 and 600 frames. The fake frames have about 263 bytes, and the real frames have about 486 bytes.
 
 ## Goals / Non-goals
@@ -32,7 +34,7 @@ Facts from one real call on 2026-10-16. The owner allowed that call, and the cal
 Goals:
 - A box that cannot give an answer larger than the limit of the route, and that costs less.
 - A log that names the cause of the next failure.
-- A limit in credits, so that spending has a bound for each day.
+- A limit in credits for each day, so that the owner knows the most that the route can use.
 - A message for that limit.
 - No change in the behavior of the Bursts layer.
 
@@ -80,7 +82,7 @@ The spec of `beemaps-source` names eleven steps in a fixed order (scenario 022),
 
 The credit count is a number and not a whole number, because Bee Maps can send a fraction. The file `.gev-cache/beemaps/credits.json` has `{"date":"YYYY-MM-DD","used":N}`. It is separate from `budget.json`, so no existing scenario about that file changes. The route reads the credit file when the first request reaches the check, and then it keeps the count in the plugin. An addition of 0 writes no file.
 
-The route adds the credits of an answer when the answer is a JSON body, before it checks the shape of the document. So a document of the wrong shape adds its credits. The date of an addition is the date (UTC) when the answer arrives. The writes run one after the other, and the text of a write is fixed when the addition happens. The write ends before the route sends its own answer.
+The route adds the credits of an answer when the answer is a JSON body, before it checks the shape of the document. So a document of the wrong shape adds its credits. The date of an addition is the date (UTC) at the moment of the addition, after the plugin reads the body. The plugin writes the credit file for one addition at a time, and it fixes the text at the addition. It finishes the write before it sends its own answer.
 
 A failed write keeps the count in the plugin, writes one log line and does not stop the answer, because the frames are paid for. A file that is not valid, or that cannot be read, gives `503` with `{error:'budget_unavailable'}`. The file of the request limit does the same.
 
@@ -90,7 +92,7 @@ The reader `readCredits` in `normalize.js` must not throw for the body `null`. T
 
 ### D4: `notEnoughCredits` is a fact for the log, not a refusal
 
-The answer with `notEnoughCredits` true held 174 frames that were paid for. A refusal drops them. The route keeps them and the log shows the flag. A later change can show a warning in the layer.
+The answer with `notEnoughCredits` true had 174 frames that Bee Maps charged for. A refusal drops them. The route keeps them and the log shows the flag. A later change can show a warning in the layer.
 
 ### D5: The message for the credit limit follows the message for the request limit
 
@@ -117,7 +119,7 @@ The spec comes first, then the tests, then the code. Each rule gets a named faul
 - `server/providers/beemaps/normalize.js`: `readCredits` for a value that is not an object.
 - `server/providers/beemaps/credits.js` (new): the credit count.
 - `server/providers/beemaps.js`: the options `log` and `fs`, the log line and the check of the credit limit.
-- The tests `src/layers/beemaps/box.test.mjs`, `layer.test.mjs`, `model.test.mjs`, `messages.test.mjs`, `src/data/beemapsFrames.test.mjs`, `beemapsProxy.test.mjs`, `beemapsUpstream.test.mjs`, `beemapsBurstScan.test.mjs`, and the new `src/data/beemapsCredits.test.mjs` and `src/data/beemapsLog.test.mjs`.
+- The tests `src/layers/beemaps/box.test.mjs`, `layer.test.mjs`, `model.test.mjs`, `messages.test.mjs`, the three Bursts test files `src/layers/beemapsBursts/box.test.mjs`, `layer.test.mjs` and `model.test.mjs`, `src/data/beemapsFrames.test.mjs`, `beemapsProxy.test.mjs`, `beemapsUpstream.test.mjs`, `beemapsBurstScan.test.mjs`, and the new `src/data/beemapsCredits.test.mjs` and `src/data/beemapsLog.test.mjs`.
 
 ## Risks / Trade-offs
 

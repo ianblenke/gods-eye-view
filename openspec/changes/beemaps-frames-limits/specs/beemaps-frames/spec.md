@@ -8,7 +8,7 @@ Origin: spec-first
 - **WHEN** a test gives the function `framesBox` the middle of the view at the latitude and longitude of a row
 - **THEN** the centre is each value divided by 0.001, rounded with `Math.round`, multiplied by 0.001 and written with 3 decimals
 - **AND** the half height is 150 metres on a sphere of radius 6371008.8 metres, written as degrees of latitude
-- **AND** the half width is the half height divided by the cosine of the centre latitude, which is the latitude after the rounding
+- **AND** the half width is the half height divided by the cosine of the centre latitude, and not the cosine of the latitude of the row
 - **AND** the box is [west, south, east, north] with each value rounded to 6 decimals
 - **AND** the layer calls `pickEllipsoid` at half of `clientWidth` and half of `clientHeight`, on the ellipsoid of the globe, for the middle of the view
 - **AND** the row (60.0, 10.0) gives the box [9.997302, 59.998651, 10.002698, 60.001349]

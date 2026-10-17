@@ -6,7 +6,7 @@ One real call, which the owner allowed, asked Bee Maps for a box of 200 m by 200
 
 The layer asks for a box of about 4 km², which is 100 times larger. At that density the answer has about 8.5 MB, which is a guess from the density. The route refuses an answer of more than 4 MiB. This is the most likely cause, but no log proves it.
 
-The route also pays for what it drops. The layer keeps at most 200 frames, and the upstream request has no limit. The route counts requests, and it does not count credits. So it cannot stop spending in credits, and the screen does not show it.
+The route also pays for what it drops. The layer keeps at most 200 frames, and the upstream request has no limit. The route counts requests, and it does not count credits. So it cannot limit the credits that Bee Maps charges, and the screen does not show them.
 
 ## What Changes
 
@@ -27,13 +27,13 @@ None.
 
 - `beemaps-frames`: the size of the box of a request, the snap grid and the name of the function. Also the hint text and the message for the new refusal.
 - `beemaps-bursts`: one sentence of the requirement "Quote" (the box is the box of 4 km² and no longer "the box of the frames layer"). The six scenarios (006 to 011) of that requirement stay as they are.
-- `beemaps-source`: the request log and the credit limit (two new requirements, no change to an existing one).
+- `beemaps-source`: the request log and the credit limit (two new requirements, and no change to a requirement that the spec has today).
 
 ## Impact
 
 - New files: `server/providers/beemaps/credits.js` and the tests `src/data/beemapsCredits.test.mjs` and `src/data/beemapsLog.test.mjs`.
 - Changed files: `server/providers/beemaps.js`, `server/providers/beemaps/upstream.js`, `server/providers/beemaps/normalize.js`, `src/layers/beemaps/box.js`, `src/layers/beemaps/index.js`, `src/layers/beemaps/model.js`, `src/layers/beemaps/messages.js`, one comment in `src/layers/beemapsBursts/box.js`, their tests, `.env.example`, `DATA_SOURCES.md` and `CHANGELOG.md`.
-- The new text of the requirement "Quote" changes the hash of each of its six scenarios. So one test of each scenario in the Bursts layer changes by a title or by one assertion about the box. No behavior of the Bursts layer changes.
+- The new text of the requirement "Quote" changes the hash of each of its six scenarios. So one test of each of those six scenarios changes by a title or by one assertion about the box. No behavior of the Bursts layer changes.
 - The manifests `openspec/ownership.json` and `scripts/format-scope.json` list the new files.
 - The change closes no gap and opens no gap in `openspec/trace`, because each changed owned file keeps full coverage.
 - The owner can set `BEEMAPS_DAILY_CREDITS` in `.env`. The app works without it.
@@ -57,6 +57,11 @@ None.
 - Known limit `cause-unproven`: No log shows yet that the answer of the owner's press was too large. The new log shows the cause at the next press.
 - Known limit `credits-used-reading`: The change reads `creditsUsed` as the credits of this answer, from one call. If it were a total of the account, the count would be too high, which is the safe direction.
 - Known limit `crash-before-write`: A crash between an answer and the end of the write of the credit file loses the credits of that answer.
+- Known limit `bad-answers-repeat`: An answer that is too large, or that is not valid, is charged, adds 0 credits and sets no hold. The same press can repeat up to 20 times in a day.
+- Known limit `two-servers`: Two servers that share one `.gev-cache` folder overwrite the credit file of each other.
+- Known limit `check-before-count`: The check of the credit limit runs before the plugin writes the request count. A request that passed the check can send after another answer takes the credit count over the limit.
+- Known limit `log-gaps`: The line `frames=` counts the items of a list of more than 5000 items. A failed read of the body with no timeout has no sample.
+- Known limit `gate-cost-tests`: The tests for `beemaps-bursts-006` to `beemaps-bursts-011` change by a title or by one assertion. The gate hashes the text of the requirement with each scenario. Their behavior does not change.
 - Known limit `server-area`: The server still accepts a box of up to 5 km². A request that does not come from the layer can ask for more than the layer does.
 - Known limit `fewer-frames`: A box of 0.09 km² shows fewer frames than a box of 4 km², in places where frames are few. A person who wants a larger view can press in several places.
 - Known limit `frames-paid-not-shown`: The layer keeps 200 frames. In the densest places a box of 0.09 km² can have more than 200 frames, and the others are paid for and dropped.

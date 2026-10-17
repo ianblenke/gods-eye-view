@@ -7,7 +7,7 @@
 - [ ] 1.5 Add "credit_budget" to the tests for `beemaps-frames-016` in `src/layers/beemaps/messages.test.mjs`.
 - [ ] 1.6 Carry the scenario `beemaps-frames-017` unchanged in the delta of `beemaps-frames`.
 - [ ] 1.7 Carry the scenarios `beemaps-bursts-006`, `beemaps-bursts-007`, `beemaps-bursts-008`, `beemaps-bursts-009`, `beemaps-bursts-010` and `beemaps-bursts-011` unchanged in the delta of `beemaps-bursts`.
-- [ ] 1.8 Change the titles of the tests for `beemaps-bursts-008` that name "the frames layer" in `src/layers/beemapsBursts/box.test.mjs`.
+- [ ] 1.8 Change the titles of the tests for `beemaps-bursts-008` that name "the frames layer" or "the frames box" in `src/layers/beemapsBursts/box.test.mjs`.
 - [ ] 1.9 Change the title of one test for `beemaps-bursts-006` in `src/layers/beemapsBursts/layer.test.mjs`.
 - [ ] 1.10 Change the title of one test for `beemaps-bursts-007` in `src/layers/beemapsBursts/model.test.mjs`.
 - [ ] 1.11 Add a check of the box of the quote request to one test each for `beemaps-bursts-009`, `beemaps-bursts-010` and `beemaps-bursts-011`.
