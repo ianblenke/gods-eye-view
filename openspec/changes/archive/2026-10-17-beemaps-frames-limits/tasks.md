@@ -53,6 +53,6 @@
 
 - [x] 4.1 Run `make ratchet CHANGE=beemaps-frames-limits`.
 - [x] 4.2 Read the verdict of the ratchet.
-- [ ] 4.3 Run the two review agents.
-- [ ] 4.4 Write review.md.
-- [ ] 4.5 Run `make gates CHANGE=beemaps-frames-limits` on the final tree.
+- [x] 4.3 Run the two review agents.
+- [x] 4.4 Write review.md.
+- [x] 4.5 Run `make gates CHANGE=beemaps-frames-limits` on the final tree.
