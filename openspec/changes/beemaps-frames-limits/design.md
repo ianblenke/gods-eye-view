@@ -22,6 +22,7 @@ Facts from the checks of 2026-10-16. The first group comes from one real call. T
 - The status was 200 in 2.8 seconds. The body had 84620 bytes and 174 frames, which is about 486 bytes for a frame.
 - The top-level keys were `frames`, `cost`, `creditsUsed`, `creditsRemaining` and `notEnoughCredits`. The last key is not in the public API description.
 - `creditsUsed` was 99, `cost` was 0 and `creditsRemaining` was -0.25.
+- After the call, the dashboard of the owner showed a balance of 110 dollars, with a deposit of 100 dollars made before the call. It did not show -0.25. So `creditsRemaining` is not that balance, and the call did not visibly change it.
 - The first frame in the list had the time 2026-04-06.
 
 Other checks, which used no key and no real call:
@@ -92,7 +93,7 @@ The credits come from a small reader in `credits.js`. It does not throw for the 
 
 ### D4: `notEnoughCredits` is a fact for the log, not a refusal
 
-The answer with `notEnoughCredits` true had 174 frames that Bee Maps charged for. A refusal drops them. The route keeps them and the log shows the flag. A later change can show a warning in the layer.
+The answer with `notEnoughCredits` true still had 174 frames. A refusal drops them. The route keeps them and the log shows the flag. A later change can show a warning in the layer.
 
 ### D5: The message for the credit limit follows the message for the request limit
 

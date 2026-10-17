@@ -2,11 +2,11 @@
 
 On 2026-10-16 the owner pressed "Fetch frames here" at the centre of Taipei. The layer showed "Bee Maps did not answer correctly." The server writes no log, so nothing named the cause.
 
-One real call, which the owner allowed, asked Bee Maps for a box of 200 m by 200 m at that place. The answer had 174 frames, 84620 bytes and 99 credits used. It left the balance at -0.25 credits and had the new flag `notEnoughCredits`. The shape of the answer fits the code.
+One real call, which the owner allowed, asked Bee Maps for a box of 200 m by 200 m at that place. The answer had 174 frames, 84620 bytes and 99 credits used. It also had `creditsRemaining` -0.25 and the new flag `notEnoughCredits`. The dashboard of the owner showed a balance of 110 dollars after that call, so these fields are not that balance. The shape of the answer fits the code.
 
 The layer asks for a box of about 4 km², which is 100 times larger. At that density the answer has about 8.5 MB, which is a guess from the density. The route refuses an answer of more than 4 MiB. This is the most likely cause, but no log proves it.
 
-The route also pays for what it drops. The layer keeps at most 200 frames, and the upstream request has no limit. The route counts requests, and it does not count credits. So it cannot limit the credits that Bee Maps charges, and the screen does not show them.
+The route also asks for frames that it drops. The layer keeps at most 200 frames, and the upstream request has no limit. The route counts requests, and it does not count the credits that the answers report. So it cannot limit them, and the screen does not show them.
 
 ## What Changes
 
@@ -48,16 +48,16 @@ None.
 
 ## Known limits and later changes
 
-- Known limit `cost-unknown`: Nobody knows what a credit is worth in dollars. Nobody knows how the credits of a query depend on the area and on the number of frames. One call used 99 credits for 174 frames in 0.04 km². The limit of 500 credits is a guess, and the owner can change it.
+- Known limit `cost-unknown`: Nobody knows what a credit is worth in dollars, or whether a credit costs dollars at all. The balance of the owner did not change after the one call. So the credits of an answer can be a quota apart from that balance. Nobody knows how the credits of a query depend on the area and on the number of frames. One call used 99 credits for 174 frames in 0.04 km². The limit of 500 credits is a guess, and the owner can change it.
 - Known limit `cap-after-answer`: The price of a query is known only in its answer. So the credit limit acts after an answer, and requests that are in flight at the same time are not counted before their answers. The limit of 6 requests in 60 seconds bounds how many can pass.
 - Known limit `credits-count-gaps`: A failure by status, an error and a timeout add 0 credits to the count. A body that is not JSON and a body that is too large add 0 too. An answer with no number in `creditsUsed` adds 0. An answer that is too large is paid for and dropped, and the count does not show these credits.
 - Known limit `not-enough-credits-goes-on`: After an answer with `notEnoughCredits` true, the route still sends the next request. Only the log shows the flag.
-- Known limit `bursts-outside-count`: A burst takes credits from the same account, and the count of 500 credits does not include them.
+- Known limit `bursts-outside-count`: A burst uses credits of the same account, and the count of 500 credits does not include them.
 - Known limit `write-fails-then-restart`: When the file of the credit count cannot be written, the count stays in the plugin. A restart then starts from the old count in the file.
 - Known limit `cause-unproven`: No log shows yet that the answer of the owner's press was too large. The new log shows the cause at the next press.
 - Known limit `credits-used-reading`: The change reads `creditsUsed` as the credits of this answer, from one call. If it were a total of the account, the count would be too high, which is the safe direction.
 - Known limit `crash-before-write`: A crash between an answer and the end of the write of the credit file loses the credits of that answer.
-- Known limit `bad-answers-repeat`: An answer that is too large, or that is not valid, is charged, adds 0 credits and sets no hold. The same press can repeat up to 20 times in a day.
+- Known limit `bad-answers-repeat`: An answer that is too large, or that is not valid, adds 0 credits and sets no hold. Bee Maps can count it. The same press can repeat up to 20 times in a day.
 - Known limit `two-servers`: Two servers that share one `.gev-cache` folder overwrite the credit file of each other.
 - Known limit `check-before-count`: The check of the credit limit runs before the plugin writes the request count. A request that passed the check can send after another answer takes the credit count over the limit.
 - Known limit `log-gaps`: The line `frames=` counts the items of a list of more than 5000 items. A failed read of the body with no timeout has no sample.
