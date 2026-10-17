@@ -50,8 +50,8 @@
 
 ## 4. Lead work in the image
 
-- [ ] 4.1 Run `make ratchet CHANGE=beemaps-frames-limits`.
-- [ ] 4.2 Read the verdict of the ratchet.
+- [x] 4.1 Run `make ratchet CHANGE=beemaps-frames-limits`.
+- [x] 4.2 Read the verdict of the ratchet.
 - [ ] 4.3 Run the two review agents.
 - [ ] 4.4 Write review.md.
 - [ ] 4.5 Run `make gates CHANGE=beemaps-frames-limits` on the final tree.
