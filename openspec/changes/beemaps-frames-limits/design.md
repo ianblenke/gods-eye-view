@@ -54,9 +54,9 @@ The density of the one call is 4350 frames for each km² in the middle of Taipei
 | 250 m | 500 m by 500 m, 0.25 km² | about 1090 | about 530 KB |
 | 1000 m (today) | 2 km by 2 km, 4 km² | about 17400 | about 8.5 MB |
 
-The limit of the route is 4194304 bytes, which is about 8630 frames at 486 bytes. The box of 0.09 km² is 22 times below that limit at this density. The layer keeps 200 frames. A half side of 100 m gives 174 frames, which is below 200. A half side of 150 m is large enough to hold a road that passes within 90 m of the view centre. The owner can choose another half side, and the change is one constant.
+The limit of the route is 4194304 bytes, which is about 8630 frames at 486 bytes. The box of 0.09 km² is 22 times below that limit at this density. The layer keeps 200 frames. A half side of 100 m gives 174 frames, which is below 200. A half side of 150 m is large enough to contain a road that passes within 90 m of the view centre. The owner can choose another half side, and the change is one constant.
 
-The grid of the centre goes from 0.005 to 0.001 degrees. The centre moves by at most 0.0005 degrees, which is about 56 m. The half side of 150 m is larger than 56 m, so the box always has the view centre inside. The road distance of 90 m is the half side minus that shift. The old grid moved the centre by about 280 m, which is more than the new half side.
+The grid of the centre goes from 0.005 to 0.001 degrees. The centre moves by at most 0.0005 degrees, which is about 56 m. The half side of 150 m is larger than 56 m, so the box always has the view centre inside. A road within 90 m of the view centre is inside the box. The half side minus that shift is 94 m, which is more than 90 m. The old grid moved the centre by about 280 m, which is more than the new half side.
 
 The Bursts layer needs the old box of 4 km². So `viewBox` stays as it is, and a new function `framesBox` builds the new box. Both call one internal function with the half side and the grid as arguments. The frames layer calls `framesBox`. The requirement "Quote" of the Bursts layer says "the box of the frames layer". That sentence becomes false, so the delta of `beemaps-bursts` names the function `viewBox` and the size of 4 km².
 
@@ -66,7 +66,7 @@ The route writes one result line through the option `log`. In production this op
 
 The fields of an "ok" line are `status`, `bytes`, `frames`, `ms`, `creditsUsed`, `creditsRemaining`, `cost` and, only when the value is exactly `true`, `notEnoughCredits=true`. The fields of a "failed" line are `kind`, `status`, `bytes` and `ms`. A failed line for a JSON body of the wrong shape also ends with `creditsUsed`, because the credit count adds those credits.
 
-The time is the difference of the option `now` before the upstream call and after the outcome is known. The read of the body is part of that time. The size of the body is the number of bytes. The size of a body that is too large is the text `over-limit`, because the reader stops at the limit.
+The time is the difference of the option `now` before the upstream call and after the outcome is known. The time to read the body is part of it. The size of the body is the length in bytes of its text in UTF-8, because the helper `readResponseTextCapped` returns text and not bytes. The size of a body that is too large is the text `over-limit`, because the reader stops at the limit.
 
 The status and the size come from an optional function `observe` that `callUpstream` calls when it knows them. The outcome that `callUpstream` returns keeps its shape, so the eight existing tests that compare the whole outcome stay as they are.
 
@@ -76,9 +76,9 @@ The log shows `notEnoughCredits=true` and a negative `creditsRemaining` as they 
 
 ### D3: The credit limit joins the hold step
 
-The spec of `beemaps-source` names eleven steps in a fixed order (scenario 022), and the last two are the hold and the budget. A twelfth step changes that scenario and the six scenarios next to it. The credit limit is a stored fact that refuses a request, as the hold is, and it comes after memory and before the request limit. So the check runs in the hold step, and the list of eleven steps stays true. Inside the step the order is: the stored hold, the credit file, the credit limit.
+The spec of `beemaps-source` names eleven steps in a fixed order (scenario 022), and the last two are the hold and the budget. A twelfth step changes that scenario and the six scenarios next to it. The credit limit is a stored fact that refuses a request, as the hold is, and it comes after memory and before the request limit. So the check runs in the hold step, and the list of eleven steps stays true. Inside the step the stored hold comes before the credit limit. The route reads the credit file once, at the first request, before it checks the limit.
 
-The credit count is a number and not a whole number, because Bee Maps can send a fraction. The file `.gev-cache/beemaps/credits.json` has `{"date":"YYYY-MM-DD","used":N}`. It is separate from `budget.json`, so no existing scenario about that file changes. The route reads the file when the first request reaches the check, and then it keeps the count in the plugin.
+The credit count is a number and not a whole number, because Bee Maps can send a fraction. The file `.gev-cache/beemaps/credits.json` has `{"date":"YYYY-MM-DD","used":N}`. It is separate from `budget.json`, so no existing scenario about that file changes. The route reads the credit file when the first request reaches the check, and then it keeps the count in the plugin. An addition of 0 writes no file.
 
 The route adds the credits of an answer when the answer is a JSON body, before it checks the shape of the document. So a document of the wrong shape adds its credits. The date of an addition is the date (UTC) when the answer arrives. The writes run one after the other, and the text of a write is fixed when the addition happens. The write ends before the route sends its own answer.
 
@@ -94,7 +94,7 @@ The answer with `notEnoughCredits` true held 174 frames that were paid for. A re
 
 ### D5: The message for the credit limit follows the message for the request limit
 
-`credit_budget` gives "The daily limit of 500 credits is used." for the limit 500, "The daily limit of 1 credit is used." for the limit 1, and "The daily credit limit is used." when the limit is not a whole number. The layer already copies `used` and `limit` from the error body, so no other file of the layer changes. The layer drops a `used` that is not a whole number, and the message does not use `used`.
+`credit_budget` gives "The daily limit of 500 credits is used." for the limit 500, "The daily limit of 1 credit is used." for the limit 1, and "The daily credit limit is used." when the limit is not a whole number. The layer already copies `used` and `limit` from the error body, so `source.js` does not change. The layer drops a `used` that is not a whole number, and the message does not use `used`.
 
 ### D6: What this change does not use
 

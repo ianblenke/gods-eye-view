@@ -26,13 +26,14 @@ None.
 ### Modified Capabilities
 
 - `beemaps-frames`: the size of the box of a request, the snap grid and the name of the function. Also the hint text and the message for the new refusal.
-- `beemaps-bursts`: one sentence of the requirement "Quote" (the box is the box of 4 km² and no longer "the box of the frames layer"). The three scenarios of that requirement stay as they are.
+- `beemaps-bursts`: one sentence of the requirement "Quote" (the box is the box of 4 km² and no longer "the box of the frames layer"). The six scenarios (006 to 011) of that requirement stay as they are.
 - `beemaps-source`: the request log and the credit limit (two new requirements, no change to an existing one).
 
 ## Impact
 
 - New files: `server/providers/beemaps/credits.js` and the tests `src/data/beemapsCredits.test.mjs` and `src/data/beemapsLog.test.mjs`.
 - Changed files: `server/providers/beemaps.js`, `server/providers/beemaps/upstream.js`, `server/providers/beemaps/normalize.js`, `src/layers/beemaps/box.js`, `src/layers/beemaps/index.js`, `src/layers/beemaps/model.js`, `src/layers/beemaps/messages.js`, one comment in `src/layers/beemapsBursts/box.js`, their tests, `.env.example`, `DATA_SOURCES.md` and `CHANGELOG.md`.
+- The new text of the requirement "Quote" changes the hash of each of its six scenarios. So one test of each scenario in the Bursts layer changes by a title or by one assertion about the box. No behavior of the Bursts layer changes.
 - The manifests `openspec/ownership.json` and `scripts/format-scope.json` list the new files.
 - The change closes no gap and opens no gap in `openspec/trace`, because each changed owned file keeps full coverage.
 - The owner can set `BEEMAPS_DAILY_CREDITS` in `.env`. The app works without it.
@@ -54,7 +55,9 @@ None.
 - Known limit `bursts-outside-count`: A burst takes credits from the same account, and the count of 500 credits does not include them.
 - Known limit `write-fails-then-restart`: When the file of the credit count cannot be written, the count stays in the plugin. A restart then starts from the old count in the file.
 - Known limit `cause-unproven`: No log shows yet that the answer of the owner's press was too large. The new log shows the cause at the next press.
+- Known limit `credits-used-reading`: The change reads `creditsUsed` as the credits of this answer, from one call. If it were a total of the account, the count would be too high, which is the safe direction.
+- Known limit `crash-before-write`: A crash between an answer and the end of the write of the credit file loses the credits of that answer.
 - Known limit `server-area`: The server still accepts a box of up to 5 km². A request that does not come from the layer can ask for more than the layer does.
 - Known limit `fewer-frames`: A box of 0.09 km² shows fewer frames than a box of 4 km², in places where frames are few. A person who wants a larger view can press in several places.
-- Known limit `frames-paid-not-shown`: The layer keeps 200 frames. In the densest places a box of 0.09 km² can hold more than 200 frames, and the others are paid for and dropped.
+- Known limit `frames-paid-not-shown`: The layer keeps 200 frames. In the densest places a box of 0.09 km² can have more than 200 frames, and the others are paid for and dropped.
 - Known limit `log-in-console`: The log goes to the console of the server only. It has no file and no rotation.

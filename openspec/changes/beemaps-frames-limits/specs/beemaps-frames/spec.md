@@ -8,7 +8,7 @@ Origin: spec-first
 - **WHEN** a test gives the function `framesBox` the middle of the view at the latitude and longitude of a row
 - **THEN** the centre is each value divided by 0.001, rounded with `Math.round`, multiplied by 0.001 and written with 3 decimals
 - **AND** the half height is 150 metres on a sphere of radius 6371008.8 metres, written as degrees of latitude
-- **AND** the half width is the half height divided by the cosine of the centre latitude
+- **AND** the half width is the half height divided by the cosine of the centre latitude, which is the latitude after the rounding
 - **AND** the box is [west, south, east, north] with each value rounded to 6 decimals
 - **AND** the layer calls `pickEllipsoid` at half of `clientWidth` and half of `clientHeight`, on the ellipsoid of the globe, for the middle of the view
 - **AND** the row (60.0, 10.0) gives the box [9.997302, 59.998651, 10.002698, 60.001349]
@@ -19,6 +19,7 @@ Origin: spec-first
 - **AND** the row (39.975, 0.0) gives the box [-0.00176, 39.973651, 0.00176, 39.976349]
 - **AND** the row (59.9996, 10.0013) gives the centre (60.0, 10.001) and the box [9.998302, 59.998651, 10.003698, 60.001349]
 - **AND** the row (30.2672, -97.7431) gives the centre (30.267, -97.743) and the box [-97.744562, 30.265651, -97.741438, 30.268349]
+- **AND** the row (79.5004, 10.0) gives the centre (79.5, 10.0) and the box [9.992598, 79.498651, 10.007402, 79.501349]
 
 #### Scenario: Refuse a view that has no box `beemaps-frames-009`
 - **WHEN** a person presses the chip in a view that cannot give a box

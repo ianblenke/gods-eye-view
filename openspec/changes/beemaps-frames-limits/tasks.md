@@ -1,4 +1,4 @@
-## 1. Write the tests
+## 1. Write the specs and the tests
 
 - [ ] 1.1 Change the tests for `beemaps-frames-008`, `beemaps-frames-009` and `beemaps-frames-010` in `src/layers/beemaps/box.test.mjs`.
 - [ ] 1.2 Change the tests for `beemaps-frames-008` and `beemaps-frames-009` in `src/layers/beemaps/layer.test.mjs`.
@@ -6,13 +6,18 @@
 - [ ] 1.4 Change the hint that the tests for `beemaps-frames-018` read in `src/layers/beemaps/layer.test.mjs`.
 - [ ] 1.5 Add "credit_budget" to the tests for `beemaps-frames-016` in `src/layers/beemaps/messages.test.mjs`.
 - [ ] 1.6 Carry the scenario `beemaps-frames-017` unchanged in the delta of `beemaps-frames`.
-- [ ] 1.7 Carry the scenarios `beemaps-bursts-006` to `beemaps-bursts-011` unchanged in the delta of `beemaps-bursts`.
-- [ ] 1.8 Write the tests for `beemaps-source-029`, `beemaps-source-030` and `beemaps-source-031` in `src/data/beemapsLog.test.mjs`.
-- [ ] 1.9 Write the tests for `beemaps-source-032`, `beemaps-source-033`, `beemaps-source-034` and `beemaps-source-035` in `src/data/beemapsCredits.test.mjs`.
-- [ ] 1.10 Add the file `credits.js` to the lists of files in the tests for `beemaps-source-015` in `src/data/beemapsUpstream.test.mjs`.
-- [ ] 1.11 Add the file `credits.js` to the list of files in the test for `beemaps-burst-control-038` in `src/data/beemapsBurstScan.test.mjs`.
-- [ ] 1.12 Add a row for the body `null` to the tests for `readCredits` in `src/data/beemapsFrames.test.mjs`.
-- [ ] 1.13 Give the helper `install` in `src/data/beemapsProxy.test.mjs` a collector for the option `log`.
+- [ ] 1.7 Carry the scenarios `beemaps-bursts-006`, `beemaps-bursts-007`, `beemaps-bursts-008`, `beemaps-bursts-009`, `beemaps-bursts-010` and `beemaps-bursts-011` unchanged in the delta of `beemaps-bursts`.
+- [ ] 1.8 Change the titles of the tests for `beemaps-bursts-008` that name "the frames layer" in `src/layers/beemapsBursts/box.test.mjs`.
+- [ ] 1.9 Change the title of one test for `beemaps-bursts-006` in `src/layers/beemapsBursts/layer.test.mjs`.
+- [ ] 1.10 Change the title of one test for `beemaps-bursts-007` in `src/layers/beemapsBursts/model.test.mjs`.
+- [ ] 1.11 Add a check of the box of the quote request to one test each for `beemaps-bursts-009`, `beemaps-bursts-010` and `beemaps-bursts-011`.
+- [ ] 1.12 Write the tests for `beemaps-source-029`, `beemaps-source-030` and `beemaps-source-031` in `src/data/beemapsLog.test.mjs`.
+- [ ] 1.13 Write the tests for `beemaps-source-032`, `beemaps-source-033`, `beemaps-source-034` and `beemaps-source-035` in `src/data/beemapsCredits.test.mjs`.
+- [ ] 1.14 Add the file `credits.js` to the lists of files in the tests for `beemaps-source-015` in `src/data/beemapsUpstream.test.mjs`.
+- [ ] 1.15 Add the file `credits.js` to the list of files in the test for `beemaps-burst-control-038` in `src/data/beemapsBurstScan.test.mjs`.
+- [ ] 1.16 Add a row for the body `null` to the tests for `readCredits` in `src/data/beemapsFrames.test.mjs`.
+- [ ] 1.17 Give the helper `install` in `src/data/beemapsProxy.test.mjs` a collector for the option `log`.
+- [ ] 1.18 Give the credit file a readable path in the test for `beemaps-source-017` in `src/data/beemapsProxy.test.mjs`.
 
 ## 2. Write the code and the documents
 
@@ -25,11 +30,14 @@
 - [ ] 2.7 Make `readCredits` in `server/providers/beemaps/normalize.js` safe for a value that is not an object.
 - [ ] 2.8 Write `server/providers/beemaps/credits.js`.
 - [ ] 2.9 Write the log lines in `server/providers/beemaps.js`.
-- [ ] 2.10 Write the check of the credit limit and the addition of credits in `server/providers/beemaps.js`.
-- [ ] 2.11 Add the new files to `scripts/format-scope.json` and the new tests to `openspec/ownership.json`.
-- [ ] 2.12 Change the paragraphs of the frames layer and of the route in `DATA_SOURCES.md`.
-- [ ] 2.13 Add `BEEMAPS_DAILY_CREDITS` to `.env.example`.
-- [ ] 2.14 Write one entry in `CHANGELOG.md`.
+- [ ] 2.10 Write the check of the credit limit in `server/providers/beemaps.js`.
+- [ ] 2.11 Write the addition of credits in `server/providers/beemaps.js`.
+- [ ] 2.12 Add the new files to `scripts/format-scope.json`.
+- [ ] 2.13 Add the new tests to `openspec/ownership.json`.
+- [ ] 2.14 Change the paragraph of the frames layer in `DATA_SOURCES.md`.
+- [ ] 2.15 Change the paragraph of the route in `DATA_SOURCES.md`.
+- [ ] 2.16 Add `BEEMAPS_DAILY_CREDITS` to `.env.example`.
+- [ ] 2.17 Write one entry in `CHANGELOG.md`.
 
 ## 3. Check on the host
 
