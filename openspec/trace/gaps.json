@@ -979,11 +979,11 @@
     "server/providers/cctv/media.js": {
       "loaded": true,
       "lines": 27,
-      "branches": 26,
+      "branches": 24,
       "functions": 2,
       "totals": {
         "lines": 560,
-        "branches": 145,
+        "branches": 150,
         "functions": 24
       },
       "sha": "18630b60b7baa34fc795f9d2d65483ec77f0940e6ba0c856caa104bff0964185",
@@ -1069,11 +1069,11 @@
     "server/providers/common/query.js": {
       "loaded": true,
       "lines": 1,
-      "branches": 2,
+      "branches": 1,
       "functions": 0,
       "totals": {
         "lines": 12,
-        "branches": 8,
+        "branches": 11,
         "functions": 2
       },
       "sha": "da5cbb8b4f7f3e67850dd4e7ae13cbe6aa96f7c7ea120a683f5cade06b1ddd98",
@@ -2377,11 +2377,11 @@
       "branches": 0,
       "functions": 2,
       "totals": {
-        "lines": 144,
+        "lines": 145,
         "branches": 12,
         "functions": 8
       },
-      "sha": "763e7d6df3fc5948b5fd8b2035cbcc83ed09e803e14e050b76ff06541c786139",
+      "sha": "9e6879d1f426c75b8b78c554aa5b4b1f005bfe34f324c9d9ce6ad8efebed6b3d",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2768,7 +2768,7 @@
       "functions": 6,
       "totals": {
         "lines": 1106,
-        "branches": 463,
+        "branches": 464,
         "functions": 63
       },
       "sha": "632a83649861e553bbafa370293c4563dddf50a8711dd80189a2c31bff5b99b8",
@@ -3091,21 +3091,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/data/directionText.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 49,
-        "branches": 33,
-        "functions": 1
-      },
-      "sha": "9bdc54abdbddf128bb4d52adc0b1bd80ececd837a68c60c421a6bdaf47644f9c",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/data/feedState.js": {
       "loaded": true,
       "lines": 0,
@@ -3113,7 +3098,7 @@
       "functions": 0,
       "totals": {
         "lines": 55,
-        "branches": 44,
+        "branches": 45,
         "functions": 1
       },
       "sha": "5bfe81076c446b9b4910bb3620f291ad03bb2eaf13199265afedd546acf9d0d6",
@@ -3383,7 +3368,7 @@
       "functions": 15,
       "totals": {
         "lines": 2350,
-        "branches": 619,
+        "branches": 624,
         "functions": 117
       },
       "sha": "1fa17ff88f4252ab4a4ea38c82518aadc6da68edb2e0afd84fdb0393232b2b40",
@@ -3622,11 +3607,11 @@
       "branches": 5,
       "functions": 0,
       "totals": {
-        "lines": 187,
-        "branches": 98,
-        "functions": 17
+        "lines": 135,
+        "branches": 67,
+        "functions": 12
       },
-      "sha": "4b7b3cd663d0a37d6305c8836c60e2ab306f10185a1fb0d3221c0d24bb0bdf53",
+      "sha": "13df9e89c18bf7c5fd0e4f5a19eade1546580d7d9db7081807ef57ffb0aceb73",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4133,7 +4118,7 @@
       "functions": 1,
       "totals": {
         "lines": 419,
-        "branches": 118,
+        "branches": 120,
         "functions": 16
       },
       "sha": "a82d7bf5bf70b43e8f4981ef75b8f62dd55275c7d20cb63fb34d9c297cd94845",
@@ -4546,21 +4531,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/layers/bikeshare/model.js": {
-      "loaded": true,
-      "lines": 12,
-      "branches": 0,
-      "functions": 2,
-      "totals": {
-        "lines": 51,
-        "branches": 2,
-        "functions": 3
-      },
-      "sha": "535d4301f59b8dba384df8f9135c13c001aa7e5a570917796f85b70ecc8d7219",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/layers/bikeshare/queries.js": {
       "loaded": true,
       "lines": 52,
@@ -4593,12 +4563,12 @@
     },
     "src/layers/bikeshare/rendering.js": {
       "loaded": true,
-      "lines": 170,
-      "branches": 0,
-      "functions": 8,
+      "lines": 22,
+      "branches": 18,
+      "functions": 0,
       "totals": {
         "lines": 282,
-        "branches": 2,
+        "branches": 35,
         "functions": 9
       },
       "sha": "47630cd96298b995b0d611d822a7efff4cff774460a5dd0046d8c873b8c23dce",
@@ -4748,7 +4718,7 @@
       "functions": 6,
       "totals": {
         "lines": 842,
-        "branches": 73,
+        "branches": 74,
         "functions": 34
       },
       "sha": "396a6d26a988e79feb1c290646ce2e57ed36a6a861ceab18aad2e664489d6d9d",
@@ -5100,21 +5070,6 @@
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/layers/earthquakes/records.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 6,
-      "functions": 0,
-      "totals": {
-        "lines": 49,
-        "branches": 38,
-        "functions": 1
-      },
-      "sha": "a35859b1cef9b6a5353aad1a62335444781ae7cb7191a1c975a05490e338aa56",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
     },
     "src/layers/firms/anchors.js": {
       "loaded": true,
@@ -5974,11 +5929,11 @@
     "src/layers/localAdsb/feedNames.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 2,
+      "branches": 1,
       "functions": 0,
       "totals": {
         "lines": 21,
-        "branches": 13,
+        "branches": 15,
         "functions": 2
       },
       "sha": "aadd8c4896f7b7a37ea16faf32ed2265d11002ccf452950e705ccc96e9440a66",
@@ -6210,21 +6165,6 @@
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/layers/osh/index.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 914,
-        "branches": 287,
-        "functions": 62
-      },
-      "sha": "b995edb9d833d5661d0484c31a741131b3ea1439a56fa5d03aa24141bb3a8407",
-      "untrue": false,
-      "origin": "gates-coverage-race",
-      "since": "2026-10-03"
     },
     "src/layers/perimeters/cards.js": {
       "loaded": true,
@@ -6799,7 +6739,7 @@
     "src/layers/streetLevel/cameraFollow.js": {
       "loaded": true,
       "lines": 2,
-      "branches": 8,
+      "branches": 7,
       "functions": 0,
       "totals": {
         "lines": 209,
@@ -6814,11 +6754,11 @@
     "src/layers/streetLevel/credits.js": {
       "loaded": true,
       "lines": 4,
-      "branches": 4,
+      "branches": 3,
       "functions": 0,
       "totals": {
         "lines": 38,
-        "branches": 10,
+        "branches": 12,
         "functions": 4
       },
       "sha": "6730859f614253b58dca7e7b814d1d9d1833b18326de7e2d7c3a4983104eb29d",
@@ -7103,7 +7043,7 @@
       "functions": 6,
       "totals": {
         "lines": 220,
-        "branches": 28,
+        "branches": 29,
         "functions": 21
       },
       "sha": "22443b726aa9b18512ae51f1acd2633377d554f7b6ea17b9b5ede7bae3994e1b",
@@ -7309,11 +7249,11 @@
     "src/layers/streetLevel/view.js": {
       "loaded": true,
       "lines": 12,
-      "branches": 24,
+      "branches": 18,
       "functions": 0,
       "totals": {
         "lines": 297,
-        "branches": 93,
+        "branches": 110,
         "functions": 16
       },
       "sha": "d257f06ca0ea5a9bb1b69748ac3f501bd52f7ee139c37ca115eba10ecc64ad45",
@@ -7819,11 +7759,11 @@
     "src/layers/transit/movement.js": {
       "loaded": true,
       "lines": 8,
-      "branches": 11,
+      "branches": 10,
       "functions": 2,
       "totals": {
         "lines": 316,
-        "branches": 70,
+        "branches": 69,
         "functions": 19
       },
       "sha": "c49f4e5dddb8f9328cdd4d76f3b8afecb432c92241fd2a5d9cafdacea262a837",
@@ -8303,7 +8243,7 @@
       "functions": 0,
       "totals": {
         "lines": 816,
-        "branches": 383,
+        "branches": 382,
         "functions": 45
       },
       "sha": "91b16d330c7e43e5a50ac64a931b198e2e3acb4049dd5e7c949e855c70503742",
@@ -8959,11 +8899,11 @@
     "src/sdr/adsbDecoder.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 30,
+      "branches": 28,
       "functions": 0,
       "totals": {
         "lines": 594,
-        "branches": 178,
+        "branches": 176,
         "functions": 27
       },
       "sha": "779202551828df94365e1fc6f0ae9001439599215c2d3b040fc5fb2ba44ae30a",
@@ -9094,7 +9034,7 @@
     "src/search/defaults.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 3,
+      "branches": 2,
       "functions": 1,
       "totals": {
         "lines": 112,
@@ -9289,11 +9229,11 @@
     "src/sources/adsbRecords.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 13,
+      "branches": 12,
       "functions": 0,
       "totals": {
         "lines": 400,
-        "branches": 121,
+        "branches": 120,
         "functions": 20
       },
       "sha": "87601f3904464efa6c0525b166b113baae28836682d53a61a4b5965ce0d31b38",
@@ -9678,13 +9618,13 @@
     },
     "src/splitFlap.js": {
       "loaded": true,
-      "lines": 226,
-      "branches": 3,
+      "lines": 191,
+      "branches": 15,
       "functions": 12,
       "totals": {
         "lines": 546,
-        "branches": 42,
-        "functions": 17
+        "branches": 55,
+        "functions": 18
       },
       "sha": "241feaf2a0cf54f0becfbd744dc3049c06301f31710387e2a9433b3a4a1f76fd",
       "untrue": false,
@@ -10174,11 +10114,11 @@
     "src/tools/queries/mobility.js": {
       "loaded": true,
       "lines": 6,
-      "branches": 27,
+      "branches": 25,
       "functions": 2,
       "totals": {
         "lines": 490,
-        "branches": 172,
+        "branches": 171,
         "functions": 57
       },
       "sha": "a71f8b5c3897c9bf23de5227b89dec07ce64b9715e7092ed9d8078e35b36e5a6",
@@ -11374,11 +11314,11 @@
     "src/ui/rowList.js": {
       "loaded": true,
       "lines": 3,
-      "branches": 11,
+      "branches": 10,
       "functions": 0,
       "totals": {
         "lines": 74,
-        "branches": 28,
+        "branches": 30,
         "functions": 3
       },
       "sha": "01a385a5eefb160109924ccd6d62d20c77c014e17e8c1e5fd28293aa790787ae",
@@ -12113,7 +12053,7 @@
       "functions": 1,
       "totals": {
         "lines": 184,
-        "branches": 77,
+        "branches": 78,
         "functions": 20
       },
       "sha": "ab3ba1657e9e75cc5670ffac1fa81ac544d239f3ebad83a6fd3662c405cf872c",

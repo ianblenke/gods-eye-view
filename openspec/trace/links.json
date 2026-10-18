@@ -1583,79 +1583,29 @@
   "credential-boundary-006": [
     "src/keySetupCore.test.mjs › [credential-boundary-006] the registry or .env.example documents each credential name that the server reads"
   ],
-  "credential-boundary-007": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-007] a keyless server answers configured:false with no upstream call",
-    "src/tooling/previewServing.test.mjs › [credential-boundary-007] the real dev and preview servers answer the geocode route with the keyless answer"
-  ],
-  "credential-boundary-008": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-008] the forward mode sends the address and bounds, and keeps the key out of the body",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-008] the route uses the server key first, and uses the browser key when the server key is blank"
-  ],
-  "credential-boundary-009": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-009] the reverse mode sends latlng and projects the answer"
-  ],
-  "credential-boundary-010": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] the route accepts an address of exactly 256 characters",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] the route reads a request with no URL as an empty query",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] the route refuses a non-GET method with a 405 and no upstream call",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] the route refuses bad input with a 400 and no upstream call"
-  ],
-  "credential-boundary-011": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] a non-ok upstream status gives the same status and its error, with no key",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] a non-ok upstream status with no error_message gets a default error",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] the route reads a body of exactly the maximum size with no error",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] the route removes the key from the upstream error message",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] the route stops the fetch after 5 s and answers 502",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] when the body does not arrive in 5 s, the route answers with a timeout error",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] when the body is larger than the maximum size, the route answers with an error and does not throw",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] when the body is not JSON, the route answers 200 with a fixed error and no key",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] when the fetch throws, the route answers 502",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] when the rate limiter refuses the request, the route answers 429 with Retry-After",
-    "src/googleGeocodeRateLimit.test.mjs › [credential-boundary-011] after one Places request, the shared rate limiter refuses a geocode request from the same client"
-  ],
-  "credential-boundary-012": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults gives a default value to each field of an empty address component",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults gives a default value to each field of an empty result",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults gives an empty answer for an incorrect input",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults keeps only the named fields inside each component, point and box",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults shortens each list to its maximum length and keeps only the allowed fields"
-  ],
-  "credential-boundary-013": [
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] a configured:false answer does not give answered:false",
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] a keyless server answers configured:false and the search then uses Photon",
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] after an HTTP error answer from the route, the search then uses the Photon place",
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] an HTTP error answer from the route and a Photon miss give answered:false",
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] the geocode request URL is same-origin, with address and bounds, and no key"
-  ],
-  "credential-boundary-014": [
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a ZERO_RESULTS answer with no results gives no place",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a configured answer gives the same place shape as before this change",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a coordinate that rounds to the same four decimals makes no fetch, and one that differs at the fourth decimal fetches",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a fetch failure makes the reverse lookup reject",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 200 answer with a null Google status",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 200 answer with no status field",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 429 answer with a null Google status",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 500 answer with a Google status",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 502 answer with a null Google status",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call makes no fetch after an HTTP 200 ZERO_RESULTS answer",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] an answer that is not JSON makes the reverse lookup reject",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] an empty result gets a default value for each field",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] reverseGeocode fetches the server route, with no key",
-    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] the reverse lookup remembers a configured:false answer for the life of the page"
-  ],
-  "credential-boundary-015": [
-    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-015] no direct call to Google geocoding remains in the browser source"
-  ],
+  "credential-boundary-007": [],
+  "credential-boundary-008": [],
+  "credential-boundary-009": [],
+  "credential-boundary-010": [],
+  "credential-boundary-011": [],
+  "credential-boundary-012": [],
+  "credential-boundary-013": [],
+  "credential-boundary-014": [],
+  "credential-boundary-015": [],
   "credential-boundary-016": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-016] the server key stays out of the bundle and out of main.js, and a failure names it"
   ],
-  "credential-boundary-017": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-017] configurePreviewServer refuses cross-site geocode before key access",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-017] configureServer refuses cross-site geocode before key access"
+  "credential-boundary-017": [],
+  "credential-boundary-018": [],
+  "credential-boundary-019": [
+    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-019] no direct call to Google geocoding remains in the browser source"
   ],
-  "credential-boundary-018": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-018] configurePreviewServer admits same-site geocode",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-018] configureServer admits same-site geocode"
+  "credential-boundary-020": [
+    "src/search/placeSearch.test.mjs › [credential-boundary-020] a configured:false answer does not give answered:false",
+    "src/search/placeSearch.test.mjs › [credential-boundary-020] a keyless server answers configured:false and the search then uses Photon",
+    "src/search/placeSearch.test.mjs › [credential-boundary-020] after an HTTP error answer from the route, the search then uses the Photon place",
+    "src/search/placeSearch.test.mjs › [credential-boundary-020] an HTTP error answer from the route and a Photon miss give answered:false",
+    "src/search/placeSearch.test.mjs › [credential-boundary-020] the geocode request URL is same-origin, with address and bounds, and no key"
   ],
   "cyclones-001": [
     "src/layers/cyclones/source.test.mjs › [cyclones-001] a track of one line and a cone of one polygon keep their types",
@@ -5316,7 +5266,7 @@
     "src/layers/perimeters/records.test.mjs › [perimeters-004] bad rings and polygon lists leave no rows"
   ],
   "perimeters-005": [
-    "src/layers/perimeters/cards.test.mjs › [perimeters-005] the card anchors at the centroid of the largest polygon"
+    "src/layers/perimeters/cards.test.mjs › [perimeters-005] the card anchors at the vertex mean of the largest polygon"
   ],
   "perimeters-006": [
     "src/layers/perimeters/cards.test.mjs › [perimeters-006] a card without a link is not interactive",
