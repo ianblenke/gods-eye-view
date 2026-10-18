@@ -1,0 +1,26 @@
+Command: for each file in src/tooling/spec/*.test.mjs: timeout 2400 nice -n 19 node --test <file> (host, Node v26.8.2, 6 files at a time, commit 2b0080c5)
+
+src/tooling/spec/ciFiles.test.mjs: rc=0 ℹ tests 4 ℹ pass 4 ℹ fail 0 
+src/tooling/spec/ci.test.mjs: rc=0 ℹ tests 6 ℹ pass 6 ℹ fail 0 
+src/tooling/spec/coverage.test.mjs: rc=0 ℹ tests 16 ℹ pass 16 ℹ fail 0 
+src/tooling/spec/gates.test.mjs: rc=0 ℹ tests 241 ℹ pass 241 ℹ fail 0 
+src/tooling/spec/git.test.mjs: rc=0 ℹ tests 4 ℹ pass 4 ℹ fail 0 
+src/tooling/spec/importReach.test.mjs: rc=0 ℹ tests 12 ℹ pass 12 ℹ fail 0 
+src/tooling/spec/inventory.test.mjs: rc=0 ℹ tests 8 ℹ pass 8 ℹ fail 0 
+src/tooling/spec/ledger.test.mjs: rc=0 ℹ tests 107 ℹ pass 107 ℹ fail 0 
+src/tooling/spec/openspec.test.mjs: rc=0 ℹ tests 4 ℹ pass 4 ℹ fail 0 
+src/tooling/spec/ownershipGate.test.mjs: rc=0 ℹ tests 40 ℹ pass 40 ℹ fail 0 
+src/tooling/spec/ownership.test.mjs: rc=0 ℹ tests 51 ℹ pass 51 ℹ fail 0 
+src/tooling/spec/qaRegister.test.mjs: rc=0 ℹ tests 49 ℹ pass 49 ℹ fail 0 
+src/tooling/spec/registry.test.mjs: rc=0 ℹ tests 15 ℹ pass 15 ℹ fail 0 
+src/tooling/spec/review.test.mjs: rc=0 ℹ tests 36 ℹ pass 36 ℹ fail 0 
+src/tooling/spec/runParallel.test.mjs: rc=0 ℹ tests 3 ℹ pass 3 ℹ fail 0 
+src/tooling/spec/specLint.test.mjs: rc=0 ℹ tests 17 ℹ pass 17 ℹ fail 0 
+src/tooling/spec/specs.test.mjs: rc=0 ℹ tests 20 ℹ pass 20 ℹ fail 0 
+src/tooling/spec/ste.test.mjs: rc=0 ℹ tests 45 ℹ pass 45 ℹ fail 0 
+src/tooling/spec/testGuard.test.mjs: rc=0 ℹ tests 31 ℹ pass 31 ℹ fail 0 
+src/tooling/spec/traceReporter.test.mjs: rc=0 ℹ tests 10 ℹ pass 10 ℹ fail 0 
+src/tooling/spec/trace.test.mjs: rc=0 ℹ tests 25 ℹ pass 25 ℹ fail 0 
+src/tooling/spec/v8Merge.test.mjs: rc=0 ℹ tests 11 ℹ pass 11 ℹ fail 0 
+
+Total: files 22 tests 755 pass 755 fail 0
