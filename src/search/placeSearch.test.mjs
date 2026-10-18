@@ -53,10 +53,13 @@ test('[credential-boundary-020] a configured:false answer gives answered:false, 
     if (String(url).startsWith('/api/geocode')) return Response.json({ status: 'ZERO_RESULTS', results: [] });
     return Response.json({ features: [] });
   } });
+  const routeRequests = () => urls.filter((url) => url.startsWith('/api/google/geocode')).length;
   assert.deepEqual(await service.geocode('nowhere at all'), { place: null, answered: false });
   assert.equal(urls.length, 3);
+  assert.equal(routeRequests(), 1);
+  // Photon keeps its own miss, but the search itself asks the route again.
   await service.geocode('nowhere at all');
-  assert.equal(urls.length, 6);
+  assert.equal(routeRequests(), 2);
 });
 
 test('[credential-boundary-020] without a browser key, the search sends no request to the route, and the Google step gives answered:true', async () => {
