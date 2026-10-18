@@ -1,4 +1,4 @@
-Command: one process for each test file, 8 at a time, on the host (Node v26.8.2); commit 879b28cb before the evidence commit.
+Command: one process for each test file except src/tooling/spec/gates.test.mjs, 8 at a time, on the host (Node v26.8.2); code of commit cd67a4f1 (after the merge of the fork main, before the evidence commit).
 Command for each file: timeout 600 nice -n 19 node --test <file>
 
 server/providers/firePerimeters.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 13 ℹ skipped 0 ℹ tests 13 
@@ -619,14 +619,14 @@ src/tooling/previewServing.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 2 
 src/tooling/spaceProviders.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 6 ℹ skipped 0 ℹ tests 6 
 src/tooling/spec/ciFiles.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 4 ℹ skipped 0 ℹ tests 4 
 src/tooling/spec/ci.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 6 ℹ skipped 0 ℹ tests 6 
-src/tooling/spec/coverage.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 15 ℹ skipped 0 ℹ tests 15 
+src/tooling/spec/coverage.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 16 ℹ skipped 0 ℹ tests 16 
 src/tooling/spec/git.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 4 ℹ skipped 0 ℹ tests 4 
 src/tooling/spec/importReach.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 12 ℹ skipped 0 ℹ tests 12 
 src/tooling/spec/inventory.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 8 ℹ skipped 0 ℹ tests 8 
 src/tooling/spec/ledger.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 107 ℹ skipped 0 ℹ tests 107 
 src/tooling/spec/openspec.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 4 ℹ skipped 0 ℹ tests 4 
 src/tooling/spec/ownershipGate.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 40 ℹ skipped 0 ℹ tests 40 
-src/tooling/spec/ownership.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 50 ℹ skipped 0 ℹ tests 50 
+src/tooling/spec/ownership.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 51 ℹ skipped 0 ℹ tests 51 
 src/tooling/spec/qaRegister.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 49 ℹ skipped 0 ℹ tests 49 
 src/tooling/spec/registry.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 15 ℹ skipped 0 ℹ tests 15 
 src/tooling/spec/review.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 36 ℹ skipped 0 ℹ tests 36 
@@ -781,4 +781,4 @@ src/voice/voiceCost.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 60 ℹ sk
 src/weatherEffectsMath.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 6 ℹ skipped 0 ℹ tests 6 
 src/worldFocus.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 10 ℹ skipped 0 ℹ tests 10 
 
-Total: files 779 tests 11575 pass 11559 fail 0 skipped 16
+Total: files 779 tests 11577 pass 11561 fail 0 skipped 16
