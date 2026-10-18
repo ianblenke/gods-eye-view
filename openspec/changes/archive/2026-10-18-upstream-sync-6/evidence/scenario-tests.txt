@@ -1,0 +1,68 @@
+Command: python3 -I scenario_tests.py 1d6b70fc (in the clone, HEAD = 879b28cb). The script text is at the end of this file.
+
+CHANGED (test edited, scenario kept): beemaps-bursts-028 beemaps-frames-025 cyclones-021 cyclones-025 osh-033 perimeters-005 qa-scripts-023 recent-imagery-023 recent-imagery-026 recent-imagery-027 recent-imagery-029 recent-imagery-044 recent-imagery-046 recent-imagery-047 recent-imagery-049 recent-imagery-053 reticulum-layer-018 wind-020
+GONE (no test with these IDs): credential-boundary-007 credential-boundary-008 credential-boundary-009 credential-boundary-010 credential-boundary-011 credential-boundary-012 credential-boundary-013 credential-boundary-014 credential-boundary-015 credential-boundary-017 credential-boundary-018
+  beemaps-bursts-028 src/layers/beemapsBursts/registration.test.mjs
+  beemaps-frames-025 src/layers/beemaps/registration.test.mjs
+  cyclones-021 src/layers/cyclones/index.test.mjs
+  cyclones-025 src/layers/cyclones/index.test.mjs
+  osh-033 src/data/layerState.test.mjs
+  perimeters-005 src/layers/perimeters/cards.test.mjs
+  qa-scripts-023 src/tooling/spec/qaRegister.test.mjs
+  recent-imagery-023 src/layers/recentImagery/thumbnails.test.mjs
+  recent-imagery-026 src/layers/recentImagery/thumbnails.test.mjs
+  recent-imagery-027 src/layers/recentImagery/thumbnails.test.mjs
+  recent-imagery-029 src/layers/recentImagery/index.test.mjs
+  recent-imagery-044 src/ui/recentImagery.test.mjs
+  recent-imagery-046 src/ui/recentImagery.test.mjs
+  recent-imagery-047 src/ui/recentImagery.test.mjs
+  recent-imagery-049 src/ui/recentImagery.test.mjs
+  recent-imagery-053 src/layers/recentImagery/thumbnails.test.mjs
+  reticulum-layer-018 src/layers/reticulum/registration.test.mjs
+  wind-020 src/layers/wind/presentation.test.mjs
+
+Later commit 716161bb (after the commit of the output above):
+Command: git diff 1d6b70fc 716161bb -- src/search/placeSearch.test.mjs | grep -c "^+test('\[credential-boundary-020\]"
+5
+Command: git grep -c 'credential-boundary-013\]' 716161bb -- '*.test.mjs'
+(no match)
+The change adds the five tests of credential-boundary-013 again, with the ID credential-boundary-020 (see proposal.md and design.md D2). The ID credential-boundary-013 stays retired.
+
+Later commits fea448ce and a6440349 (round-1 corrections):
+Command: git grep -c "test('\[credential-boundary-020\]" a6440349 -- src/search/placeSearch.test.mjs
+6
+The tests of credential-boundary-020 now check the upstream behavior: a configured:false answer gives answered:false, and one more test checks a search with no browser key. The test of perimeters-005 has a new name with the words of its scenario.
+
+Later commit 4c9a8801 (round-2 corrections):
+The status test of credential-boundary-020 gives a ZERO_RESULTS body for the status 429 and for the status 502. The tests use the error bodies of the upstream route. The test of a search with no browser key and the test of perimeters-005 have new names.
+
+----- scenario_tests.py -----
+"""Scenario IDs whose test blocks (top-level test(...) up to its first '\n});\n') exist at the base and differ or are gone at HEAD."""
+import re, subprocess, sys
+base = sys.argv[1]
+def git(*a): return subprocess.run(['git', *a], capture_output=True, text=True).stdout
+files = [f for f in git('diff', '--name-only', base, 'HEAD').split() if re.search(r'\.test\.(mjs|js)$', f)]
+rx = re.compile(r"^\s*test\((['\"`])(.*?)\1", re.M)
+IDRX = r'[a-z]+(?:-[a-z]+)*-\d{3}'
+def blocks(src):
+    out = {}
+    for m in rx.finditer(src):
+        end = src.find('\n});\n', m.start()); end = len(src) if end < 0 else end + 5
+        out[m.group(2)] = src[m.start():end]
+    return out
+changed, gone = {}, set()
+for f in files:
+    old, new = git('show', f'{base}:{f}'), git('show', f'HEAD:{f}')
+    if not old: continue
+    ob, nb = blocks(old), blocks(new)
+    for name, body in ob.items():
+        if not name.startswith('['): continue
+        ids = re.findall(IDRX, name.split(']')[0])
+        if name in nb and nb[name] == body: continue
+        if name in nb or any(n.startswith('[') and set(re.findall(IDRX, n.split(']')[0])) == set(ids) for n in nb):
+            for i in ids: changed.setdefault(i, set()).add(f)
+        else:
+            gone.update(ids)
+print('CHANGED (test edited, scenario kept):', ' '.join(sorted(changed)))
+print('GONE (no test with these IDs):', ' '.join(sorted(gone - set(changed))))
+for i in sorted(changed): print(' ', i, ' '.join(sorted(changed[i])))

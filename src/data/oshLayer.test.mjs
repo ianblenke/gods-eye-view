@@ -4061,7 +4061,7 @@ test('[osh-088] the detail that the layer writes shows Video for a video datastr
 // --- osh-control-031: the optional command view of the osh-control capability ---
 
 test('[osh-control-031] the layer calls the optional command view at selection, deselection, and destruction', async (t) => {
-  const source = fakeSource({ systems: [SYSTEM_A], datastreams: [] });
+  const source = fakeSource({ systems: [SYSTEM_A], fois: [FEATURE_NO_HOST], datastreams: [] });
   const calls = [];
   const commandView = {
     show: async (args) => calls.push(['show', args]),
@@ -4074,6 +4074,19 @@ test('[osh-control-031] the layer calls the optional command view at selection, 
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
     await layer.update(viewer);
+    viewer.scene.pick = () => ({ id: 'osh:sys-fixture-1' });
+    getClick()({ position: {} });
+    await flush();
+    assert.deepEqual(calls.at(-1), [
+      'show',
+      { systemId: 'sys-fixture-1', systemName: 'System A' },
+    ]);
+    // A feature with no host ends the system selection: the view clears.
+    viewer.scene.pick = () => ({ id: 'osh-foi:foi-fixture-3' });
+    getClick()({ position: {} });
+    await flush();
+    assert.deepEqual(calls.at(-1), ['clear']);
+    assert.equal(layer.getStats().selectedFeatureId, 'foi-fixture-3');
     viewer.scene.pick = () => ({ id: 'osh:sys-fixture-1' });
     getClick()({ position: {} });
     await flush();

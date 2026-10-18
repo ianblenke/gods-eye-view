@@ -32,7 +32,7 @@ const TESTS = [
 ];
 
 const FLIGHTS = 'src/layers/flights/motion.js';
-const FLOOR = 'src/data/groundFloor.js';
+const FLOOR = 'src/services/groundFloor.js';
 const ALT = 'src/data/renderAltitude.js';
 
 /** @type {Array<{defect: string, edits: Array<{file: string, from: string, to: string}>}>} */
@@ -139,8 +139,8 @@ const MUTATIONS = [
     edits: [
       {
         file: FLOOR,
-        from: '      if (lowest == null || h < lowest) lowest = h;',
-        to: '      if (lowest == null || h > lowest) lowest = h;',
+        from: '        if (lowest == null || h < lowest) lowest = h;',
+        to: '        if (lowest == null || h > lowest) lowest = h;',
       },
     ],
   },
@@ -149,8 +149,8 @@ const MUTATIONS = [
     edits: [
       {
         file: FLOOR,
-        from: '  return resolved >= NEIGHBOR_FLOOR_MIN_SAMPLES ? lowest : null;',
-        to: '  return resolved >= 1 ? lowest : null;',
+        from: '    return resolved >= NEIGHBOR_FLOOR_MIN_SAMPLES ? lowest : null;',
+        to: '    return resolved >= 1 ? lowest : null;',
       },
     ],
   },

@@ -1,0 +1,8 @@
+Command: timeout 2400 nice -n 19 node --test src/tooling/spec/gates.test.mjs (host, Node v26.8.2, commit 05bab3a4, the merge of the fork main; the next commit cd67a4f1 changes only files in the change folder)
+gates.test.mjs rc=0
+ℹ tests 241
+ℹ pass 241
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ duration_ms 836158.632083 

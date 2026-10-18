@@ -570,7 +570,9 @@ test('[cyclones-021 cyclones-025] advisory selection uses accessible row descrip
     1,
   );
   assert.equal(controls.summary.status, 'Track/cone awaiting advisory 10');
-  assert.match(controls.info, /09-16 03:00 UTC/);
+  // No line break inside the date: a word joiner holds the hyphen.
+  assert.match(controls.info, /issued 09-\u206016\u00a003:00\u00a0UTC/);
+  assert.match(controls.info, /: 25\u00a0kt · .*: 1006\u00a0hPa/);
   assert.match(controls.infoTitle, /not storm size/);
   assert.match(controls.infoTitle, /follows the surface/);
   assert.equal(controls.list.items[1].params.focus, true);
@@ -1242,7 +1244,7 @@ test('[cyclones-021] the row controls of a selected storm with a coherent track 
   h.layer.enable();
   await h.layer.update();
   const detail =
-    'Fifteen-E · Potential tropical cyclone · Advisory 10 · issued 09-16 03:00 UTC';
+    'Fifteen-E · Potential tropical cyclone · Advisory 10 · issued 09-\u206016\u00a003:00\u00a0UTC';
   assert.deepEqual(h.layer.getRowControls(), {
     readout: true,
     summary: {
@@ -1254,10 +1256,14 @@ test('[cyclones-021] the row controls of a selected storm with a coherent track 
       ],
       settings: [],
       lines: [
-        { id: 'position', text: 'Position as of 09-16 03:00 UTC', muted: true },
+        {
+          id: 'position',
+          text: 'Position as of 09-\u206016\u00a003:00\u00a0UTC',
+          muted: true,
+        },
         {
           id: 'intensity',
-          text: 'Maximum sustained wind: 25 kt · Pressure: 1006 hPa',
+          text: 'Maximum sustained wind: 25\u00a0kt · Pressure: 1006\u00a0hPa',
         },
         {
           id: 'geometry',
@@ -1276,18 +1282,19 @@ test('[cyclones-021] the row controls of a selected storm with a coherent track 
           id: 'ep152026',
           ordinal: 1,
           lead: 'EP',
-          text: 'Fifteen-E · Potential tropical cyclone · 25 kt',
+          text: 'Fifteen-E · Potential tropical cyclone · 25\u00a0kt',
           active: true,
           params: { stormId: 'ep152026', focus: true },
         },
       ],
     },
     chips: [],
+    legendCategorical: true,
     legend: [
       { label: 'Advisory center / forecast track', color: '#7fe6ed' },
       { label: 'Center-track uncertainty cone', color: '#7fe6ed44' },
     ],
-    info: `${detail}\nPosition as of 09-16 03:00 UTC\nMaximum sustained wind: 25 kt · Pressure: 1006 hPa\nTrack and cone match this advisory\nAtlantic and eastern/central North Pacific`,
+    info: `${detail}\nPosition as of 09-\u206016\u00a003:00\u00a0UTC\nMaximum sustained wind: 25\u00a0kt · Pressure: 1006\u00a0hPa\nTrack and cone match this advisory\nAtlantic and eastern/central North Pacific`,
     infoTitle: TITLE,
   });
   h.layer.destroy();
@@ -1307,9 +1314,12 @@ test('[cyclones-021] a code that names an inherited property of an object shows 
     const controls = h.layer.getRowControls();
     assert.equal(
       controls.summary.detail,
-      `Fifteen-E · ${code} · Advisory 10 · issued 09-16 03:00 UTC`,
+      `Fifteen-E · ${code} · Advisory 10 · issued 09-\u206016\u00a003:00\u00a0UTC`,
     );
-    assert.equal(controls.list.items[0].text, `Fifteen-E · ${code} · 25 kt`);
+    assert.equal(
+      controls.list.items[0].text,
+      `Fifteen-E · ${code} · 25\u00a0kt`,
+    );
     h.layer.destroy();
   }
 });
@@ -1470,7 +1480,7 @@ test('[cyclones-021] the detail counts the active storms when the layer has no s
   );
   assert.equal(
     controls.list.items[1].text,
-    'Another system · Potential tropical cyclone · 25 kt',
+    'Another system · Potential tropical cyclone · 25\u00a0kt',
   );
   next = snapshot([storm()]);
   await h.layer.update();

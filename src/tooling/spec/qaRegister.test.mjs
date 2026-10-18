@@ -77,10 +77,10 @@ test('[qa-scripts-022] asks the spec adversary to read each QA check', () => {
 });
 test('[qa-scripts-023] checks all tracked QA scripts in this repository', () => {
   const tracked = listTrackedFiles(PROJECT).filter((file) => /^scripts\/qa-.*\.mjs$/.test(file));
-  assert.equal(tracked.length, 90);
+  assert.equal(tracked.length, 99);
   const result = readQaRegister({ root: PROJECT, tracked, manifest: readOwnership(PROJECT).manifest, adopts: tracked.map((file) => ({ file })) });
-  assert.equal(result.scripts.length, 90);
-  assert.equal(result.validQaScripts.size, 90);
+  assert.equal(result.scripts.length, 99);
+  assert.equal(result.validQaScripts.size, 99);
   assert.deepEqual(result.errors, []);
   for (const file of ['scripts/qa-browserEvidence.mjs', 'scripts/qa-panel-resize.mjs', 'scripts/qa-panelDrag.mjs']) {
     assert.deepEqual(result.scripts.find((script) => script.file === file).covers, ['pending:application-shell']);

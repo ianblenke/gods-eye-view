@@ -323,6 +323,7 @@ test('[recent-imagery-023 recent-imagery-027] the default loader owns its URLs a
   const revoked = [];
   globalThis.fetch = async () => ({
     ok: true,
+    headers: { get: (name) => (name === 'Data-Present' ? 'true' : null) },
     blob: async () => ({ size: 2 }),
   });
   URL.createObjectURL = () => 'blob:default';
@@ -387,6 +388,7 @@ test('[recent-imagery-026] a stop after blob data does not make an image', async
   const loader = createThumbnailLoader({
     fetchImpl: async () => ({
       ok: true,
+      headers: { get: (name) => (name === 'Data-Present' ? 'true' : null) },
       blob: () =>
         new Promise((resolve) => {
           finish = resolve;
@@ -430,7 +432,7 @@ test('[recent-imagery-026] a callback that clears the loader revokes its late UR
   const revoked = [];
   let loader;
   loader = createThumbnailLoader({
-    fetchImpl: async () => response(),
+    fetchImpl: async () => response({ headers: { 'Data-Present': 'true' } }),
     createObjectUrl: () => {
       loader.clear();
       return 'blob:late';
@@ -563,10 +565,10 @@ test('[recent-imagery-026] a signal that stops the fetch does not send another d
   });
   f.loader.subscribe((key) => changes.push(key));
   f.loader.request(candidate('S30', '2026-09-10'), BOX);
-  calls[0].resolve(response());
+  calls[0].resolve(response({ headers: { 'Data-Present': 'true' } }));
   await settle();
   f.loader.request(candidate('S30', '2026-09-11'), BOX);
-  calls[1].resolve(response());
+  calls[1].resolve(response({ headers: { 'Data-Present': 'true' } }));
   await settle();
   f.loader.request(candidate('S30', '2026-09-10'), BOX);
   changes.length = 0;
@@ -618,7 +620,7 @@ test('[recent-imagery-053] the loader starts a new fetch after an external Abort
       signalsAborted.push(signal.aborted);
       if (calls === 1)
         throw Object.assign(new Error('fetch'), { name: 'AbortError' });
-      return response();
+      return response({ headers: { 'Data-Present': 'true' } });
     },
     createObjectUrl: () => 'blob:second',
     revokeObjectUrl: () => {},
@@ -649,7 +651,7 @@ test('[recent-imagery-053] an old fetch cannot remove a new entry', async () => 
   await settle();
   assert.equal(loader.stats().tracked, 1);
   assert.equal(loader.get('S30:2026-09-18').loading, true);
-  pending[1].resolve(response());
+  pending[1].resolve(response({ headers: { 'Data-Present': 'true' } }));
   await settle();
   assert.equal(loader.get('S30:2026-09-18').objectUrl, 'blob:new');
   loader.destroy();

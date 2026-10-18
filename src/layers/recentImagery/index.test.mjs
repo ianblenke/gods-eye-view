@@ -235,7 +235,7 @@ test('[recent-imagery-029] a valid box searches and previews the START HERE day 
   assert.equal(snapshot.focus.key, 'S30:2026-09-18', 'focus starts on it');
   assert.equal(snapshot.preview.key, 'S30:2026-09-18');
   assert.equal(snapshot.preview.slot, 'a');
-  assert.equal(snapshot.preview.label, 'Sep 18 · Sentinel-2 · 30 m');
+  assert.equal(snapshot.preview.label, 'Sep 18 · Sentinel-2 · 30\u00a0m');
   assert.equal(snapshot.candidates[1].preview, true);
   const none = {
     key: null,
@@ -2674,7 +2674,7 @@ test('[recent-imagery-029] the layer snapshot gives the focus readout', async ()
   await f.ready();
   assert.equal(
     f.snap().readout,
-    'Sep 18, 2026 17:12Z · 3 days ago · Sentinel-2 via HLS · 30 m · 12% scene cloud',
+    'Sep 18, 2026 17:12Z · 3 days ago · Sentinel-\u20602 via HLS · 30\u00a0m · 12% scene cloud',
   );
   f.layer.destroy();
 });

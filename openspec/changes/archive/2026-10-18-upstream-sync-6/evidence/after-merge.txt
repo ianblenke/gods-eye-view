@@ -1,0 +1,88 @@
+Command: git diff --shortstat b4847901 HEAD -- . ':!openspec/changes/upstream-sync-6' (HEAD = 879b28cb)
+ 35 files changed, 131 insertions(+), 239 deletions(-)
+
+Command: git diff --name-status b4847901 HEAD -- . ':!openspec/changes/upstream-sync-6'
+M	.env.example
+M	SECURITY.md
+M	docs/CURRENT-STATE.md
+M	scripts/package-boundaries.json
+M	src/annotations/annotationEngine.test.mjs
+M	src/annotations/annotationResolver.test.mjs
+M	src/camera.js
+M	src/data/layerState.test.mjs
+M	src/data/layerStateTokenLedger.test.mjs
+M	src/dockerLauncher.test.mjs
+M	src/i18n/locales/es.json
+M	src/i18n/locales/ru.json
+M	src/i18n/same-as-english.json
+M	src/keySetupCore.mjs
+M	src/layers/beemaps/registration.test.mjs
+M	src/layers/beemapsBursts/registration.test.mjs
+M	src/layers/cyclones/index.test.mjs
+M	src/layers/osh/index.js
+M	src/layers/osh/videoPlayer.js
+M	src/layers/recentImagery/index.test.mjs
+M	src/layers/recentImagery/thumbnails.test.mjs
+M	src/layers/reticulum/index.js
+M	src/layers/reticulum/registration.test.mjs
+M	src/locations.test.mjs
+M	src/search/placeSearch.test.mjs
+M	src/standalone/application.js
+M	src/tooling/bundleCredentials.test.mjs
+M	src/tooling/previewServing.test.mjs
+M	src/tooling/spec/qaRegister.test.mjs
+M	src/ui/layerNames.js
+M	src/ui/placeNames.js
+M	src/ui/recentImagery.test.mjs
+M	src/ui/templates/context.html
+M	src/voice/gevActions.test.mjs
+M	src/voice/gevRealtime.test.mjs
+
+Later commits (added after the commit 879b28cb):
+
+Command: git diff --shortstat b4847901 1bb128d8 -- . ':!openspec/changes/upstream-sync-6' (1bb128d8 = the last commit before the merge of the fork main)
+ 44 files changed, 5154 insertions(+), 1373 deletions(-)
+
+Command: git diff --name-status 879b28cb 1bb128d8 -- . ':!openspec/changes/upstream-sync-6'
+M	openspec/trace/gaps.json
+M	openspec/trace/history.jsonl
+M	src/data/oshLayer.test.mjs
+M	src/layers/airQuality/source.test.mjs
+M	src/layers/streetLevel/index.test.mjs
+M	src/sdr/decoderDiagnostics.test.mjs
+M	src/sdr/readPipeline.diag.test.mjs
+M	src/sdr/workerAdmission.test.mjs
+M	src/ui/geoFileImport.test.mjs
+
+Command: git diff --shortstat 1bb128d8 05bab3a4 (05bab3a4 = the merge of the fork main commit 41add05c)
+ 29 files changed, 692 insertions(+), 1 deletion(-)
+
+Command: git diff --shortstat 1d6b70fc 41add05c (the change html-code-lines on the fork main)
+ 29 files changed, 692 insertions(+), 1 deletion(-)
+
+Command: git diff --name-status 05bab3a4 716161bb -- . ':!openspec/changes/upstream-sync-6' (the commits after the merge of the fork main)
+M	src/search/placeSearch.test.mjs
+
+Command: git diff --name-status 716161bb c2802528 -- . ':!openspec/changes/upstream-sync-6' (the round-1 corrections)
+M	SECURITY.md
+M	docs/CURRENT-STATE.md
+M	openspec/trace/gaps.json
+M	openspec/trace/history.jsonl
+M	openspec/trace/ids.json
+M	openspec/trace/links.json
+M	src/app/controls.js
+M	src/data/layerStateTokenLedger.test.mjs
+M	src/layers/perimeters/cards.test.mjs
+M	src/search/google.js
+M	src/search/placeSearch.test.mjs
+
+Command: git diff --name-only 05bab3a4 c2802528 -- . ':!openspec/changes/upstream-sync-6' ':!openspec/trace' | wc -l (all files after the merge of the fork main, outside the change folder and the trace)
+7
+
+Command: git diff --name-status c2802528 4c9a8801 -- . ':!openspec/changes/upstream-sync-6' (the round-2 corrections)
+M	openspec/trace/gaps.json
+M	openspec/trace/history.jsonl
+M	openspec/trace/ids.json
+M	openspec/trace/links.json
+M	src/layers/perimeters/cards.test.mjs
+M	src/search/placeSearch.test.mjs

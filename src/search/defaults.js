@@ -18,6 +18,7 @@ import { createAlpsGeocoder } from './alpsGeocoder.js';
  * supplied there is simply no bundled-name provider.
  */
 export function createDefaultPlaceSearch({
+  resolveApiKey,
   fetchImpl = (...args) => fetch(...args),
   signal,
   endpoints = {},
@@ -41,9 +42,17 @@ export function createDefaultPlaceSearch({
       ...(selected
         ? [selected]
         : [
+            // Google answers through the local proxy, which holds the server
+            // key: its Geocoding web service refuses referrer-restricted keys,
+            // so calling it from here would force the bundled browser key to be
+            // left unrestricted (#363). That key still gates the provider,
+            // because a keyless session must not spend a request to learn it
+            // has no Google: the proxy's "not configured" reads as an
+            // unanswered provider, which stops the chain caching the negative
+            // Photon or Nominatim then produces.
             createGoogleGeocoder({
-              // The server route holds the key. The browser never sends one.
               request(query, { bias, signal }) {
+                if (!resolveApiKey?.()) return null;
                 const params = new URLSearchParams({ address: query });
                 if (bias) params.set('bounds', bias);
                 return fetchImpl(
@@ -71,7 +80,11 @@ export function createDefaultPlaceSearch({
           ]),
     ],
   });
-  const operations = createHttpGeospatialProvider({ fetchImpl, endpoints });
+  const operations = createHttpGeospatialProvider({
+    fetchImpl,
+    resolveApiKey,
+    endpoints,
+  });
   return {
     ...forward,
     ...createGeospatialServices({
@@ -94,4 +107,6 @@ export function createDefaultPlaceSearch({
 }
 
 // Compatibility for direct module callers. Application composition supplies its own instance.
-export const defaultGeospatial = createDefaultPlaceSearch();
+export const defaultGeospatial = createDefaultPlaceSearch({
+  resolveApiKey: () => globalThis.window?.__GOOGLE_MAPS_API_KEY__,
+});

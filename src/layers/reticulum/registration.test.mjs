@@ -90,7 +90,9 @@ test('[reticulum-layer-018] puts the layer at the end of the Infrastructure grou
     fileURLToPath(new URL('../../ui/layerPanel.js', import.meta.url)),
     'utf8',
   );
-  const group = /label: 'Infrastructure',\s*ids: \[([^\]]*)\]/.exec(text);
+  const group = /label: msg\('Infrastructure'\),\s*ids: \[([^\]]*)\]/.exec(
+    text,
+  );
   assert.ok(group);
   const ids = [...group[1].matchAll(/'([^']+)'/g)].map((match) => match[1]);
   assert.deepEqual(ids.slice(-2), ['local-dams', 'reticulum']);

@@ -5,6 +5,7 @@
  * The decoder classes, the canvas and the document are options, so the tests
  * use fakes and the real decoder runs only in a browser.
  */
+import { t } from '../../i18n/index.js';
 import {
   buildAvcConfig,
   codecStringOf,
@@ -187,7 +188,7 @@ export function createVideoView({ document, host, name }) {
   block.className = 'osh-video';
   const title = document.createElement('div');
   title.className = 'osh-video-title';
-  title.textContent = name || 'Video';
+  title.textContent = name || t('Video');
   const canvas = document.createElement('canvas');
   canvas.className = 'osh-video-canvas';
   const status = document.createElement('div');

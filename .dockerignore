@@ -16,3 +16,10 @@ coverage
 pinokio/ENVIRONMENT
 pinokio/.installed
 docs/media
+
+# Added from upstream (sync 6).
+**/ENVIRONMENT
+qa-artifacts
+.gstack
+.DS_Store
+._*

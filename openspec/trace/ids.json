@@ -1509,6 +1509,16 @@
     "since": "2026-10-08",
     "change": "upstream-sync-3"
   },
+  "credential-boundary-019": {
+    "hash": "41d9a848dafef624a560923bf63f24115acef63c29dfda11eab35f601c5caa34",
+    "since": "2026-10-18",
+    "change": "upstream-sync-6"
+  },
+  "credential-boundary-020": {
+    "hash": "881a2a3aac158c2a8e3fa35e188e445ab18f32ab64b105631954408bb95277be",
+    "since": "2026-10-18",
+    "change": "upstream-sync-6"
+  },
   "cyclones-001": {
     "hash": "66b1f031cbf46738d3d303d18e8cc31b6ddee0744e2237f07fe3bf48f45ba2c7",
     "since": "2026-09-26",
@@ -1610,7 +1620,7 @@
     "change": "backfill-cyclones"
   },
   "cyclones-021": {
-    "hash": "9cf87df8a9cb34e833acaecd12ec8fde0f9487bd16f9673a24701688a1a08472",
+    "hash": "e8871ffb9e66108e262ad8c53421b49c0a86e832b2a7cd30d25d9cb5dbbff8dd",
     "since": "2026-09-26",
     "change": "backfill-cyclones"
   },
@@ -4290,7 +4300,7 @@
     "change": "qa-script-register"
   },
   "qa-scripts-023": {
-    "hash": "21d7bc1ae2348b22df8352e870d6375790188d79c8874e0b25aa476bdfe83cf2",
+    "hash": "4cd0eff87a50bcdd9a497ca629b0b56180f0f8b2601adacbb0bf0b579cb97d42",
     "since": "2026-09-26",
     "change": "qa-script-register"
   },

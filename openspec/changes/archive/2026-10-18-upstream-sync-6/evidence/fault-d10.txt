@@ -1,0 +1,16 @@
+Fault D10 (commit 05bab3a4): remove the call 'else commandView?.clear();' at line 464 of src/layers/osh/index.js.
+Command: python3 replaces '    } else commandView?.clear();' with '    }' in src/layers/osh/index.js (one match).
+
+Command: node --test --test-name-pattern=osh-control-031 src/data/oshLayer.test.mjs
+ℹ tests 3
+ℹ pass 2
+ℹ fail 1
+    actual: [ 'show', { systemId: 'sys-fixture-1', systemName: 'System A' } ],
+    expected: [ 'clear' ],
+
+The file is back: git checkout -- src/layers/osh/index.js; the sha256 of the file equals the sha256 before the fault.
+
+Command (after the restore): node --test --test-name-pattern=osh-control-031 src/data/oshLayer.test.mjs
+ℹ tests 3
+ℹ pass 3
+ℹ fail 0

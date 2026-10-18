@@ -221,7 +221,7 @@ test('[credential-boundary-004] no key-shaped literal appears in browser source'
   }
 });
 
-test('[credential-boundary-015] no direct call to Google geocoding remains in the browser source', async () => {
+test('[credential-boundary-019] no direct call to Google geocoding remains in the browser source', async () => {
   const root = fileURLToPath(new URL('../../', import.meta.url));
   const pattern = /maps\.googleapis\.com\/maps\/api\/geocode/;
   const browserFiles = await nonTestFilesUnder(path.join(root, 'src'));
@@ -230,5 +230,5 @@ test('[credential-boundary-015] no direct call to Google geocoding remains in th
   }
   const serverFiles = await nonTestFilesUnder(path.join(root, 'server'));
   const matches = serverFiles.filter((file) => pattern.test(readFileSync(file, 'utf8')));
-  assert.deepEqual(matches, [path.join(root, 'server/providers/places/geocode.js')]);
+  assert.deepEqual(matches, [path.join(root, 'server/providers/places/google.js')]);
 });

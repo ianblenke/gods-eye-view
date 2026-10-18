@@ -1,0 +1,14 @@
+Fault D2 (commit 879b28cb): remove the line 'resolveApiKey: () => googleApiKey,' from src/standalone/application.js.
+Command: sed -i '/        resolveApiKey: () => googleApiKey,/d' src/standalone/application.js; grep -c resolveApiKey src/standalone/application.js
+0
+
+Command: node --test src/app/application.test.mjs src/search/placeSearch.test.mjs src/annotations/annotationResolver.test.mjs src/googleGeocodeProxy.test.mjs
+ℹ tests 56
+ℹ pass 56
+ℹ fail 0
+
+The file is back: git diff --stat -- src/standalone/application.js gives no lines:
+
+Command: grep -rn createStandaloneApplication src server scripts --include=*.mjs --include=*.js | grep -v '^src/standalone/application.js'
+src/main.js:1:import { createStandaloneApplication } from './standalone/application.js';
+src/main.js:5:const application = createStandaloneApplication({

@@ -335,7 +335,9 @@ test('retry: a plain HTTP 500 still exhausts the existing 8s/25s transient ladde
   t.mock.timers.enable({ apis: ['setTimeout', 'Date'], now: 100_000 });
   globalThis.window = { setTimeout: globalThis.setTimeout, clearTimeout: globalThis.clearTimeout };
   const requestTimes = [];
-  globalThis.fetch = async () => {
+  globalThis.fetch = async (url) => {
+    if (String(url).endsWith('/status'))
+      return Response.json({ configured: true });
     requestTimes.push(Date.now());
     return httpFailure(500);
   };
@@ -418,6 +420,7 @@ test('outline upgrade updates the rendered element in place without remove/add',
   globalThis.requestAnimationFrame = () => 1;
   globalThis.cancelAnimationFrame = () => {};
   globalThis.window = {
+    __GOOGLE_MAPS_API_KEY__: 'unit-test-key',
     setTimeout: globalThis.setTimeout,
     clearTimeout: globalThis.clearTimeout,
   };
@@ -425,7 +428,6 @@ test('outline upgrade updates the rendered element in place without remove/add',
   globalThis.fetch = async (url) => {
     if (String(url).startsWith('/api/google/geocode')) {
       return { json: async () => ({
-        configured: true,
         status: 'OK',
         results: [{
           formatted_address: 'FB-3 Engine Texas Fixture',
@@ -491,7 +493,7 @@ test('outline upgrade updates the rendered element in place without remove/add',
     sync() {},
   };
   const viewer = {};
-  const engine = createAnnotationEngine({ viewer, renderer, placeSearch: createStandalonePlaceSearch() });
+  const engine = createAnnotationEngine({ viewer, renderer, placeSearch: createStandalonePlaceSearch({ resolveApiKey: () => 'unit-test-key' }) });
   const upgraded = new Promise((resolve) => engine.onOutlineEvent(resolve));
 
   const result = await engine.annotate([{

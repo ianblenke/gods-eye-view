@@ -1,0 +1,34 @@
+Host checks (Node v26.8.2), tree of commit cd67a4f1 with the evidence files of this commit.
+
+Command: node scripts/format.mjs --check
+Checked 1528 source files.
+exit 0
+
+Command: node scripts/check-import-directions.mjs
+{"modules":1064,"portableEntries":83}
+exit 0
+
+Command: node scripts/check-package-boundaries.mjs
+Checked air-quality: 1 exports, 11 owned modules.
+Checked air-quality-source: 1 exports, 4 owned modules.
+exit 0
+
+Command: node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 33 published, 2 new.
+exit 0
+
+Command: node scripts/spec/gates.mjs lint --change upstream-sync-6
+STE: 0 errors, 1040 warnings.
+
+Command: openspec validate upstream-sync-6
+Change 'upstream-sync-6' is valid
+
+Command: make precheck (the same four checks in the image)
+PRECHECK_EXIT=0
+
+Round-1 corrections: host checks (Node v26.8.2), tree of commit 6ffffc83.
+Command: node scripts/format.mjs --check -> exit 0: Checked 1528 source files.
+Command: node scripts/check-import-directions.mjs -> exit 0: {"modules":1064,"portableEntries":83}
+Command: node scripts/check-package-boundaries.mjs -> exit 0: Checked air-quality-source: 1 exports, 4 owned modules.
+Command: node scripts/check-layer-state-tokens.mjs --base-ref origin/main -> exit 0: Layer tokens valid against origin/main: 33 published, 2 new.
+Command: make precheck (the same four checks in the image) -> PRECHECK_EXIT=0
