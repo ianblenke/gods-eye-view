@@ -1,4 +1,4 @@
-Command: python3 -I html-code-lines-faults.py (in the clone, on the code of commit 122cf0e9). For each fault: change one part of the code, run node --test --test-name-pattern=ownership-056 on src/tooling/spec/coverage.test.mjs and src/tooling/spec/ownership.test.mjs, restore the file.
+Command: python3 -I html-code-lines-faults.py (in the clone, on the code of commit 122cf0e9 and the tests of the commit that adds this file). For each fault: change one part of the code, run node --test --test-name-pattern=ownership-056 on src/tooling/spec/coverage.test.mjs and src/tooling/spec/ownership.test.mjs, restore the file.
 
 filter removed                                             -> ℹ fail 1 KILLED
 script code lines not added                                -> ℹ fail 2 KILLED
@@ -14,6 +14,7 @@ a src start tag with a URL not added                       -> ℹ fail 1 KILLED
 a URL value only in double quotes                          -> ℹ fail 1 KILLED
 no white space after the quote of a URL value              -> ℹ fail 1 KILLED
 no white space before the quote of a URL value             -> ℹ fail 1 KILLED
+the text of a src element with a handler counted           -> ℹ fail 1 KILLED
 blank script line counted                                  -> ℹ fail 1 KILLED
 only the first line of an attribute                        -> ℹ fail 1 KILLED
 no skip of white space before a value                      -> ℹ fail 1 KILLED
@@ -44,6 +45,7 @@ faults = [
  ('a URL value only in double quotes', C, "/=\\s*([\"'])\\s*$/", "/=\\s*([\"])\\s*$/"),
  ('no white space after the quote of a URL value', C, "/=\\s*([\"'])\\s*$/", "/=\\s*([\"'])$/"),
  ('no white space before the quote of a URL value', C, "/=\\s*([\"'])\\s*$/", "/=([\"'])\\s*$/"),
+ ('the text of a src element with a handler counted', C, "    if (inline) {\n      const first", "    if (inline || attributes.search(HANDLER_ATTRIBUTE) >= 0) {\n      const first"),
  ('blank script line counted', C, "        if (text.trim() !== '') lines.add(first + index);\n", "        lines.add(first + index);\n"),
  ('only the first line of an attribute', C, "    addSpan(match.index + 1, valueEnd(outside, match.index + match[0].length));\n", "    addSpan(match.index + 1, match.index + 1);\n"),
  ('no skip of white space before a value', C, "    while (index < text.length && /\\s/.test(text[index])) index += 1;\n", ""),

@@ -13,8 +13,8 @@ Origin: spec-first
 - **THEN** the changed lines of that file are only the added or edited lines that are code lines
 - **AND** each line of the start tag of a script element without a src attribute is a code line
 - **AND** each line of the text of that element is a code line when the line is not blank
-- **AND** a start tag with a src attribute and an event handler attribute gives each of its lines as a code line
-- **AND** a start tag with a src attribute and a `javascript:` URL gives each of its lines as a code line
+- **AND** a script start tag with a src attribute and an event handler attribute gives each line of that tag as a code line
+- **AND** a script start tag with a src attribute and a `javascript:` URL gives each line of that tag as a code line
 - **AND** outside the script elements, each line of an event handler attribute and its value is a code line
 - **AND** outside the script elements, each line of a `javascript:` URL is a code line, up to the end that the next lines give
 - **AND** a URL after `=` and one quote, with only white space around that quote, ends at the next quote of the same type

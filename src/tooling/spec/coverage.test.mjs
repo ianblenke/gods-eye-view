@@ -185,10 +185,10 @@ test('[ownership-056] gives the code lines of an HTML file: script code, event h
   assert.deepEqual([...htmlCodeLines(['<a href="javascript:no end', 'still in the value'].join('\n'))].sort((a, b) => a - b), [1, 2]);
   // A URL in single quotes ends at the next single quote, after the double quotes in it.
   assert.deepEqual([...htmlCodeLines(['<a href=\'javascript:f("a",', '"b")\'>x</a>', '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
-  // White space can come before and after the quote of such a value.
+  // White space can come before and after the quote of a URL value.
   assert.deepEqual([...htmlCodeLines(['<a href= " javascript:f(\'a\',', "'b')\">x</a>", '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
-  // The start tag of a script element with a src attribute is code when it has a handler or a URL.
-  assert.deepEqual([...htmlCodeLines(['<script src="api.js"', 'onload="init()"></script>', '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // The start tag of a script element with a src attribute is code when the tag has a handler attribute or a script URL.
+  assert.deepEqual([...htmlCodeLines(['<script src="api.js"', 'onload="init()">', 'x();', '</script>', '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
   assert.deepEqual([...htmlCodeLines(['<script src="b.js"', 'data-href="javascript:go()"></script>', '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
   // A URL in a value without quotes ends at the first quote or > after it.
   assert.deepEqual([...htmlCodeLines(['<a href=javascript:go(', ')>x</a>', '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
