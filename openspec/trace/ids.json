@@ -4040,7 +4040,7 @@
     "change": "ownership-scoped-gates"
   },
   "ownership-056": {
-    "hash": "8568cc8620fde2630892bc3028fe8fd1beed1ebc2f6eb97f3a12c8ab1dba0847",
+    "hash": "c772525152abe28d633d1a4087005574ee2acf6d6ac67906db4cabc755f2bdb5",
     "since": "2026-10-18",
     "change": "html-code-lines"
   },
