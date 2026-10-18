@@ -164,13 +164,25 @@ test('[ownership-056] gives the code lines of an HTML file: script code, event h
     "<a href='javascript:",
     "go()'>w</a>",
     '<i onclick=run()>q</i>',
+    '<script',
+    'type="module">',
+    'init();',
+    '</script>',
+    '<a href="javascript:f(\'a\',',
+    "'b')\">v</a>",
     '</body>',
   ].join('\n');
-  assert.deepEqual([...htmlCodeLines(html)].sort((a, b) => a - b), [2, 5, 6, 9, 11, 13, 15, 16, 17, 18, 19]);
+  assert.deepEqual(
+    [...htmlCodeLines(html)].sort((a, b) => a - b),
+    [2, 5, 6, 8, 9, 11, 13, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25],
+  );
   assert.deepEqual([...htmlCodeLines('<main>\n  <p>Only markup</p>\n</main>\n')], []);
-  // A value after white space, a value that has no closing quote, and a URL with no quote or > after it.
-  const edges = ["<b onclick = 'x();", "y()'>b</b>", '<p>', '<p onclick="javascript:go', 'still in the value'].join('\n');
-  assert.deepEqual([...htmlCodeLines(edges)].sort((a, b) => a - b), [1, 2, 4, 5]);
+  // A value after white space and in single quotes.
+  assert.deepEqual([...htmlCodeLines(["<b onclick = 'x();", "y()'>b</b>", '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // A value that has no end quote continues to the end of the file.
+  assert.deepEqual([...htmlCodeLines(['<p onclick="no end', 'still in the value'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // A URL outside a value, with no quote or > after it, is one line.
+  assert.deepEqual([...htmlCodeLines(['<p>see javascript:go', 'more text'].join('\n'))], [1]);
 });
 
 test('[coverage-gate-043] stops for a code file that imports a test file', () => {
