@@ -145,6 +145,13 @@ The change makes each of these tests clean up the work that it starts:
 
 The file `evidence/leaks.txt` gives the live timers of each file before and after the change.
 
+### D10: The old gap of the OSH layer
+
+The change edits the owned file `src/layers/osh/index.js` for decision D6. So rule 5 of `AGENTS.md` asks full coverage of that file.
+Since 2026-10-03, the ledger has a gap of one branch in that file. The branch is the call `commandView?.clear()` when a feature with no host ends the selection of a system, and a command view is present.
+The change adds this case to the test of `osh-control-031`. The scenario says that the layer calls `clear` at deselection, so its text stays as it is.
+The fault of this decision removes that call. The test then fails. The file `evidence/fault-d10.txt` gives the run.
+
 ## Files and measures
 
 The trace gate checks the scenario IDs and the links. The ledger gate checks the gaps of the upstream files against the adopt records.

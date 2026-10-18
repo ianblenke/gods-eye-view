@@ -16,7 +16,9 @@ They also add three more Street Level providers, two server routes for geocoding
 - Mark the fork texts that the upstream text check finds, and add their Spanish and Russian text.
 - Write again the fork tests that the merge breaks. `design.md` gives each test.
 - Make six upstream test files end with no live timer, because the gates refuse a live timer at the end of a test process.
+- Close the old gap of one branch in the owned file `src/layers/osh/index.js` with one more case in the test of `osh-control-031`. The change edits that file, so the file needs full coverage.
 - Run the adopt command for each upstream file that the merge brings and that has a coverage gap.
+- Merge the fork main commit `41add05cb89f1e5cec470e558cb4a03c8c871e6e` into the branch. That commit adds the change `html-code-lines`. Without it, the mark in `src/ui/templates/context.html` stops the ratchet with COVERAGE-DIFF.
 
 ## Capabilities
 
@@ -32,14 +34,15 @@ None.
 ## Impact
 
 Outside the change folder, the merge commit changes 782 files compared with the base commit. It adds 258 files and removes 4 files.
-Outside the change folder, the commits after the merge change 35 files.
+Outside the change folder, the commits after the merge commit and before the merge of the fork main change 44 files. Two of these files are in `openspec/trace/`.
+The merge of the fork main brings the 29 files of the change `html-code-lines`.
 
 Rule 23: the owner approved on 2026-10-17 the removal of five owned paths from `openspec/ownership.json`.
 The five paths are `server/providers/places/coordinates.js`, `server/providers/places/geocode.js`, `src/googleGeocodeProxy.test.mjs`, `src/googleGeocodeRateLimit.test.mjs` and `src/search/reverseGeocodeRoute.test.mjs`.
 The file `src/googleGeocodeProxy.test.mjs` stays in the tree as an upstream file, because upstream adds a file with that name.
 The upstream files that the merge adds are upstream code, because the fork does not write them. The manifest lists only paths that the fork writes.
 
-The change edits these owned files: `.dockerignore`, `src/layers/osh/index.js`, `src/layers/osh/videoPlayer.js`, `src/layers/reticulum/index.js` and `src/tooling/bundleCredentials.test.mjs`.
+The change edits these owned files: `.dockerignore`, `src/data/oshLayer.test.mjs`, `src/layers/osh/index.js`, `src/layers/osh/videoPlayer.js`, `src/layers/reticulum/index.js`, `src/tooling/bundleCredentials.test.mjs` and `src/tooling/spec/qaRegister.test.mjs`.
 It also edits the registration tests of the layers Bee Maps Frames, Bee Maps Bursts and Reticulum Network.
 
 Rule 25: the merge breaks fork tests with scenario IDs.

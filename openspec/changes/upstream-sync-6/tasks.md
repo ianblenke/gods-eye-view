@@ -16,6 +16,8 @@
 - [ ] 1.14 Change the register test of `qa-scripts-023` to expect 99 files.
 - [ ] 1.15 Run the fault of decision D2.
 - [ ] 1.16 Make the six upstream test files of decision D9 end with no live timer.
+- [ ] 1.17 Add the case of decision D10 to the test of `osh-control-031`.
+- [ ] 1.18 Run the fault of decision D10.
 
 ## 2. Host evidence
 
@@ -30,8 +32,9 @@
 
 - [ ] 3.1 Check the second parent of the merge commit against the upstream remote.
 - [ ] 3.2 Run `make adopt CHANGE=upstream-sync-6 FROM=73aec2e6b2ecfa865ddb7cb8839fa2d40fd0eb66`.
-- [ ] 3.3 Run `make ratchet CHANGE=upstream-sync-6`.
-- [ ] 3.4 Add the retired IDs to `openspec/trace/retired-ids.json` after the archive.
-- [ ] 3.5 Run the two review agents.
-- [ ] 3.6 Write review.md.
-- [ ] 3.7 Run `make gates CHANGE=upstream-sync-6` on the final tree.
+- [ ] 3.3 Merge the fork main commit `41add05c` into the branch.
+- [ ] 3.4 Run `make ratchet CHANGE=upstream-sync-6`.
+- [ ] 3.5 Add the retired IDs to `openspec/trace/retired-ids.json` after the archive.
+- [ ] 3.6 Run the two review agents.
+- [ ] 3.7 Write review.md.
+- [ ] 3.8 Run `make gates CHANGE=upstream-sync-6` on the final tree.
