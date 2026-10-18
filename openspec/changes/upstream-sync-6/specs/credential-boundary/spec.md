@@ -5,8 +5,9 @@
 **Migration**: The upstream routes `/api/google/geocode` and `/api/google/reverse-geocode` answer geocoding requests with the server-side Google key.
 
 ### Requirement: Browser geocoding
-**Reason**: The upstream browser code sends reverse lookups to `/api/google/reverse-geocode`, and it does not keep earlier answers. This change retires the scenarios `credential-boundary-013` to `credential-boundary-015`.
-**Migration**: The requirement "Browser geocoding routes" replaces it. Its scenario `credential-boundary-019` has the text of `credential-boundary-015`. Its scenario `credential-boundary-020` describes the forward lookup of the upstream code. It differs from `credential-boundary-013` in one point: a `configured:false` answer gives `answered:false`.
+**Reason**: The upstream browser code sends reverse lookups to `/api/google/reverse-geocode`, and the reverse lookup does not keep earlier answers. This change retires the scenarios `credential-boundary-013` to `credential-boundary-015`.
+
+**Migration**: The requirement "Browser geocoding routes" replaces it. Its scenario `credential-boundary-019` has the text of `credential-boundary-015`. Its scenario `credential-boundary-020` describes the forward lookup of the upstream code. It differs from `credential-boundary-013`. A `configured:false` answer gives `answered:false`, and the place search then does not keep the miss in its own cache. Without a browser key, the search sends no request to the Google route.
 
 ### Requirement: Same-site geocode admission
 **Reason**: The change removes the fork route. The upstream geocoding routes call `admitSameSite()` first. This change retires the scenarios `credential-boundary-017` and `credential-boundary-018`.
@@ -29,4 +30,5 @@ Origin: spec-first
 - **AND** without a browser key, it sends no request to that route, and the Google step gives `{place:null, answered:true}`
 - **AND** a `configured:false` answer gives `{place:null, answered:false}`, and the Photon fallback runs next
 - **AND** an HTTP error answer from the route gives `{place:null, answered:false}`, and the Photon fallback runs next
-- **AND** the place search keeps no miss in its cache after the Google step gives `answered:false`
+- **AND** after the Google step gives `answered:false`, the place search does not keep the miss in its own cache
+- **AND** the next search with the same query then asks the route again

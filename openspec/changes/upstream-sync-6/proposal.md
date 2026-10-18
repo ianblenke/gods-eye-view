@@ -38,7 +38,7 @@ Outside the change folder, the merge commit changes 782 files compared with the 
 Outside the change folder, the commits after the merge commit and before the merge of the fork main change 44 files. Two of these files are in `openspec/trace/`.
 The merge of the fork main brings the 29 files of the change `html-code-lines`.
 
-After that merge, the later commits change seven more files outside the change folder and `openspec/trace/`: `SECURITY.md`, `docs/CURRENT-STATE.md`, `src/app/controls.js`, `src/data/layerStateTokenLedger.test.mjs`, `src/layers/perimeters/cards.test.mjs`, `src/search/google.js` and `src/search/placeSearch.test.mjs`. These seven files are upstream files.
+After that merge, the later commits change seven more files outside `openspec/`: `SECURITY.md`, `docs/CURRENT-STATE.md`, `src/app/controls.js`, `src/data/layerStateTokenLedger.test.mjs`, `src/layers/perimeters/cards.test.mjs`, `src/search/google.js` and `src/search/placeSearch.test.mjs`. These seven files are upstream files.
 
 Rule 23: the owner approved on 2026-10-17 the removal of five owned paths from `openspec/ownership.json`.
 The five paths are `server/providers/places/coordinates.js`, `server/providers/places/geocode.js`, `src/googleGeocodeProxy.test.mjs`, `src/googleGeocodeRateLimit.test.mjs` and `src/search/reverseGeocodeRoute.test.mjs`.
@@ -52,7 +52,9 @@ Rule 25: the merge breaks fork tests with scenario IDs.
 For the scenarios `credential-boundary-007` to `credential-boundary-015`, `credential-boundary-017` and `credential-boundary-018`, the change retires the scenario. The upstream geocoding code replaces the code of these scenarios, except two parts that stay true.
 The new scenario `credential-boundary-019` has the text of `credential-boundary-015`. Its test is the old test with a new ID, and it expects the file `server/providers/places/google.js`.
 
-The new scenario `credential-boundary-020` describes the forward lookup of the upstream code. It differs from `credential-boundary-013` in one point: a `configured:false` answer gives `answered:false`, as in upstream. Its tests are the five old tests of `credential-boundary-013` with the new ID, a browser key and that one change. One more test checks a search with no browser key.
+The new scenario `credential-boundary-020` describes the forward lookup of the upstream code. It differs from `credential-boundary-013`. A `configured:false` answer gives `answered:false`, and the place search then does not keep the miss in its own cache. Without a browser key, the search sends no request to the Google route.
+
+The tests of `credential-boundary-020` are the five old tests of `credential-boundary-013` with the new ID and a browser key, with these changes. The test of the keyless server uses the answer of the upstream route. The test of the `configured:false` answer checks `answered:false` and the cache. The test of the HTTP status gives a body that reads as an answer for each status. The test of the Photon place uses the error bodies of the upstream route. One more test checks a search with no browser key.
 
 The merge breaks the tests of 17 other scenarios. The change edits these tests. It keeps the text of 16 of these scenarios, and it adds one line to `cyclones-021` (see `design.md` D7). For decision D10, the change also edits the test of `osh-control-031` and keeps its text. The 17 scenarios are `beemaps-bursts-028`, `beemaps-frames-025`, `cyclones-021`, `cyclones-025`, `osh-033`, `perimeters-005`, `recent-imagery-023`, `recent-imagery-026`, `recent-imagery-027`, `recent-imagery-029`, `recent-imagery-044`, `recent-imagery-046`, `recent-imagery-047`, `recent-imagery-049`, `recent-imagery-053`, `reticulum-layer-018` and `wind-020`.
 
