@@ -1583,9 +1583,20 @@
   "credential-boundary-006": [
     "src/keySetupCore.test.mjs › [credential-boundary-006] the registry or .env.example documents each credential name that the server reads"
   ],
+  "credential-boundary-007": [],
+  "credential-boundary-008": [],
+  "credential-boundary-009": [],
+  "credential-boundary-010": [],
+  "credential-boundary-011": [],
+  "credential-boundary-012": [],
+  "credential-boundary-013": [],
+  "credential-boundary-014": [],
+  "credential-boundary-015": [],
   "credential-boundary-016": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-016] the server key stays out of the bundle and out of main.js, and a failure names it"
   ],
+  "credential-boundary-017": [],
+  "credential-boundary-018": [],
   "credential-boundary-019": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-019] no direct call to Google geocoding remains in the browser source"
   ],

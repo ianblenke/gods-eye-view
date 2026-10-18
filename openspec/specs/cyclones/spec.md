@@ -268,7 +268,6 @@ Origin: backfill
 - **THEN** the detail of a selected storm lists the name and the classification name
 - **AND** the detail lists the word `Advisory` with its number, and the word `issued` with the issue time
 - **AND** the mark `·` separates the parts of the detail, and the issue time reads `MM-DD HH:mm UTC`
-- **AND** in the issue time, a word joiner (U+2060) comes after the hyphen, and a no-break space (U+00A0) comes before `HH` and before `UTC`
 - **AND** with no selected storm the detail is `<n> active storm` or `<n> active storms`
 - **AND** with no selected storm the detail is `No active NHC/CPHC systems` for an empty snapshot
 - **AND** with no selected storm the detail is `Loading advisories…` for a first request that runs, or `Advisories unavailable`
