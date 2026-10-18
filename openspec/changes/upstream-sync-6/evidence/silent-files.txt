@@ -1,0 +1,32 @@
+Upstream code files that the fork changed and that upstream did not change after the shared ancestor 591f299d (commit f553eea0; the QA scripts and the test files are left out).
+
+Command: git diff --name-only 73aec2e6 HEAD -- 'src/*.js' 'server/*.js' 'scripts/*.mjs' 'scripts/*.js' 'src/*.mjs' 'server/*.mjs' | grep -v test, then keep the files that classify() of scripts/spec/lib/ownership.mjs calls upstream and that are not in git diff --name-only 591f299d 73aec2e6, and that do not start with scripts/qa-
+server/providers/cctv/ontarioRequest.js
+server/standalone/vite.config.js
+src/camera.js
+src/data/localLayers.js
+
+Command: git diff --shortstat 73aec2e6 HEAD -- server/providers/cctv/ontarioRequest.js
+ 1 file changed, 41 insertions(+)
+Removed lines (git diff 73aec2e6 HEAD -- server/providers/cctv/ontarioRequest.js | grep '^-[^-]'):
+
+Command: git diff --shortstat 73aec2e6 HEAD -- server/standalone/vite.config.js
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+Removed lines (git diff 73aec2e6 HEAD -- server/standalone/vite.config.js | grep '^-[^-]'):
+-    plugins: [
+-      ...localProviderPlugins({ realtime: { tools: standaloneVoiceTools() } }),
+-      localMcpPlugin(),
+-      apiNotFoundPlugin(),
+-    ],
+
+Command: git diff --shortstat 73aec2e6 HEAD -- src/camera.js
+ 1 file changed, 64 insertions(+), 1 deletion(-)
+Removed lines (git diff 73aec2e6 HEAD -- src/camera.js | grep '^-[^-]'):
+- * Phase 1 default: fly to Austin, TX on load.
+
+Command: git diff --shortstat 73aec2e6 HEAD -- src/data/localLayers.js
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+Removed lines (git diff 73aec2e6 HEAD -- src/data/localLayers.js | grep '^-[^-]'):
+-export default [datacenters, dams, submarineCablesLayer, fires];
+
+src/search/google.js is not in this list: git diff 73aec2e6 HEAD -- src/search/google.js gives no lines.

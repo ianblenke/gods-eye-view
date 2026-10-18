@@ -37,7 +37,7 @@
 - [ ] 1.35 Run the body fault against each status of that test alone.
 - [ ] 1.36 Change the test name of `perimeters-005` again.
 - [ ] 1.37 Change the name of the `credential-boundary-020` test of a search with no browser key.
-- [ ] 1.38 Check the upstream code files that the fork changed and that upstream did not change after the shared ancestor.
+- [x] 1.38 Check the upstream code files that the fork changed and that upstream did not change after the shared ancestor.
 
 ## 2. Host evidence
 

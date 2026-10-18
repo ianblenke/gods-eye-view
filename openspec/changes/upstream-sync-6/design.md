@@ -93,7 +93,8 @@ The upstream route answers `configured:false` with the status 200 when the serve
 
 The first ratchet after the merge of the fork main stopped with `LEDGER-LOST-COVERAGE` for `src/search/google.js`. The cause was that the change removed the tests of `credential-boundary-013`. The change then added these five tests again with the ID `credential-boundary-020`. The first review round found the difference between the two versions of the file.
 
-After round 1, the lead checked the other upstream code files that the fork changed and that upstream did not change after the shared ancestor. Outside the QA scripts, four files are of that kind. In each of them, the upstream code uses only parts that the upstream version also has. The file `evidence/silent-files.txt` gives the commands and their output.
+After round 1, the lead checked the other upstream code files that the fork changed and that upstream did not change after the shared ancestor. Outside the QA scripts, four files are of that kind, and in each of them the fork adds code. In `server/standalone/vite.config.js`, the fork also moves the same three plugins into the function `standalonePlugins()`.
+The other removed lines are one comment line in `src/camera.js` and the layer list of `src/data/localLayers.js`, which the fork writes again with one more layer. The file `evidence/silent-files.txt` gives the commands and their output.
 
 The lead removed `resolveApiKey` from `src/standalone/application.js` as a fault. No test failed, because no test calls `createStandaloneApplication()`. The line equals the upstream file. See the Known limit `key-wiring`.
 
