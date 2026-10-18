@@ -5,6 +5,8 @@ import { createStandalonePlaceSearch } from '../standalone/placeSearch.js';
 import { photonExtentToBounds } from '../keylessGeocoder.js';
 const feature = { geometry: { type: 'Point', coordinates: [105.85, 21.03] }, properties: { name: 'Hà Nội', type: 'city' } };
 const hit = () => Response.json({ features: [feature] });
+// The answer of the upstream route /api/google/geocode when the server has no key.
+const keylessRouteAnswer = { configured: false, status: 'REQUEST_DENIED', results: [], error: null };
 
 test('malformed successful Photon responses remain retryable', async () => {
   for (const malformed of [{ error: 'temporary failure' }, { features: {} }, { features: [{ geometry: { coordinates: [null, 1] } }] }]) {
@@ -32,7 +34,7 @@ test('standalone geocoding falls back after Google connection, JSON and refusal 
 test('[credential-boundary-020] a keyless server answers configured:false and the search then uses Photon', async () => {
   const service = createStandalonePlaceSearch({ resolveApiKey: () => 'fixture', fetchImpl: async (url) => {
     if (String(url).startsWith('/api/google/geocode')) {
-      return Response.json({ configured: false, status: null, results: [] });
+      return Response.json(keylessRouteAnswer);
     }
     assert.equal(new URL(url, 'http://localhost').hostname, 'photon.komoot.io');
     return hit();
@@ -40,21 +42,33 @@ test('[credential-boundary-020] a keyless server answers configured:false and th
   assert.equal((await service.geocode('Hanoi')).place.lat, 21.03);
 });
 
-test('[credential-boundary-020] a configured:false answer does not give answered:false', async () => {
-  // configured:false gives {place:null, answered:true}, the same shape as a
-  // ZERO_RESULTS miss. Photon's empty feature list is also a miss, so the
-  // combined answer is {place:null, answered:true}, not answered:false.
+test('[credential-boundary-020] a configured:false answer gives answered:false, and the search keeps no miss in its cache', async () => {
+  // The keyless route gives no answer. So the misses of Photon and of the
+  // Nominatim route do not make a definitive miss, and the next search asks again.
+  const urls = [];
   const service = createStandalonePlaceSearch({ resolveApiKey: () => 'fixture', fetchImpl: async (url) => {
-    if (String(url).startsWith('/api/google/geocode')) {
-      return Response.json({ configured: false, status: null, results: [] });
-    }
+    urls.push(String(url));
+    if (String(url).startsWith('/api/google/geocode')) return Response.json(keylessRouteAnswer);
     // The last-resort Nominatim route answers a miss in the shape of Google.
     if (String(url).startsWith('/api/geocode')) return Response.json({ status: 'ZERO_RESULTS', results: [] });
     return Response.json({ features: [] });
   } });
-  const result = await service.geocode('nowhere at all');
-  assert.equal(result.place, null);
-  assert.equal(result.answered, true);
+  assert.deepEqual(await service.geocode('nowhere at all'), { place: null, answered: false });
+  assert.equal(urls.length, 3);
+  await service.geocode('nowhere at all');
+  assert.equal(urls.length, 6);
+});
+
+test('[credential-boundary-020] without a browser key, the search sends no request to the route, and the Google step gives answered:true', async () => {
+  const urls = [];
+  const service = createStandalonePlaceSearch({ resolveApiKey: () => '', fetchImpl: async (url) => {
+    urls.push(String(url));
+    if (String(url).startsWith('/api/geocode')) return Response.json({ status: 'ZERO_RESULTS', results: [] });
+    return Response.json({ features: [] });
+  } });
+  assert.deepEqual(await service.geocode('nowhere at all'), { place: null, answered: true });
+  assert.equal(urls.some((url) => url.startsWith('/api/google/geocode')), false);
+  assert.equal(urls.length, 2);
 });
 
 // The route answers 429 from its limiter and 502 when the upstream fetch fails.

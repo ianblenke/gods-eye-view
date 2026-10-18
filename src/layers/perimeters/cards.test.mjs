@@ -20,7 +20,7 @@ const tiny = [
   [-107.01, 34.0],
 ];
 
-test('[perimeters-005] the card anchors at the vertex mean of the largest polygon', () => {
+test('[perimeters-005] the card anchors at the mean of the outer vertices of the largest polygon', () => {
   const anchor = perimeterAnchorDegrees([[tiny], [square]]);
   assert.ok(Math.abs(anchor.lon - -108.1) < 1e-9);
   assert.ok(Math.abs(anchor.lat - 35.1) < 1e-9);
