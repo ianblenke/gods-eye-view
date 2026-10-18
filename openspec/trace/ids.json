@@ -4039,6 +4039,11 @@
     "since": "2026-10-09",
     "change": "ownership-scoped-gates"
   },
+  "ownership-056": {
+    "hash": "8f2bcdac176d36feae7f3849fa9f12af700718b4ad918c8f7a5ddd475aa5e6fb",
+    "since": "2026-10-18",
+    "change": "html-code-lines"
+  },
   "perimeters-001": {
     "hash": "c950b2d41849c79df6aa9123d35a0cf495b873a7c0356228c03968863777d80d",
     "since": "2026-09-27",
