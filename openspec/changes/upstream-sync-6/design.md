@@ -2,7 +2,7 @@
 
 Base commit: `1d6b70fc5cc761d0ef1b71be5688f47578610f0e`.
 Upstream commit: `73aec2e6b2ecfa865ddb7cb8839fa2d40fd0eb66`.
-The command `git ls-remote upstream main` returned the upstream commit on 2026-10-17.
+The lead took the upstream commit from the output of `git ls-remote upstream main` on 2026-10-17. The file `evidence/upstream-check.txt` has a later output of that command and shows that the upstream commit is an ancestor of upstream main.
 The shared ancestor is the commit `591f299d`, which sync 5 merged.
 
 The first parent of the merge commit is the plan commit. The plan commit has the base commit as its parent.
@@ -20,9 +20,9 @@ A trial merge reported 43 files with conflicts. The table gives the resolution o
 | `CHANGELOG.md` | Keep the fork entries first and the upstream entries after them. |
 | `Dockerfile` | Keep the fork file. See decision D3. |
 | `README.md` | Keep the upstream line and the fork words "first estimates". |
-| `SECURITY.md` | Keep the text of both sides. Name the two upstream geocoding routes. |
+| `SECURITY.md` | Keep the text of both sides. Name the two upstream geocoding routes. Remove the old CSP bullet, which upstream also keeps: it says "no other script origin", but the bullet before it adds the Maps script origin. |
 | `compose.yaml` | Keep the fork file. See decision D3. |
-| `docs/CURRENT-STATE.md` | Keep the upstream line and the fork note about `ONTARIO_511_API_KEY`. |
+| `docs/CURRENT-STATE.md` | Keep the upstream line and the fork note about `ONTARIO_511_API_KEY`. Write a fork note about the two geocoding routes. |
 | `package.json` | Keep the export lines of both sides. |
 | `scripts/format-scope.json` | Keep the entries of both sides. |
 | `scripts/package-boundaries.json` | Keep the entries of both sides. |
@@ -33,11 +33,11 @@ A trial merge reported 43 files with conflicts. The table gives the resolution o
 | `src/annotations/regionRing.test.mjs` | Use the upstream time limit. |
 | `src/app/constructCatalog.js` | Keep the imports and calls of both sides. |
 | `src/app/constructCatalog.test.mjs` | Use the layer count 36. See decision D5. |
-| `src/app/controls.js` | Keep the fork call `startApplicationView()`. |
+| `src/app/controls.js` | Keep the fork call `startApplicationView()`. Remove the import of `t`, because `src/camera.js` now holds the two texts. |
 | `src/app/sourceComposition.test.mjs` | Use the layer count 36. See decision D5. |
 | `src/data/layerState.test.mjs` | Use the merged registry: 35 layers, and the next free token `9`. See decision D1. |
-| `src/data/layerStateTokenLedger.test.mjs` | Use the upstream tests with the merged tokens. See decision D1. |
-| `src/data/manager.test.mjs` | Use the upstream form of the timer clean-up. |
+| `src/data/layerStateTokenLedger.test.mjs` | Use the upstream tests with the merged tokens. See decision D1. Remove the fork comment and the fork block `omittable`, because each call now gives all ledger rows. |
+| `src/data/manager.test.mjs` | Use the upstream form of the code that stops the timer. |
 | `src/director/timeline.test.mjs` | Keep the fork tests and add the upstream test after them. |
 | `src/googleGeocodeProxy.test.mjs` | Use the upstream file. See decision D2. |
 | `src/googleServerKey.test.mjs` | Use the upstream test. See decision D2. |
@@ -79,16 +79,19 @@ The owner decided on 2026-10-17 to use the upstream routes.
 
 The change uses the upstream files for the server and for the browser code of the geocoding.
 It removes `server/providers/places/geocode.js`, `server/providers/places/coordinates.js`, `src/googleGeocodeRateLimit.test.mjs` and `src/search/reverseGeocodeRoute.test.mjs`.
-It puts back the upstream browser key lines in `src/standalone/application.js` and in four test files. The upstream browser code uses the key only to decide whether to ask Google, and the key does not go in the request.
+It adds again the upstream browser key lines in `src/standalone/application.js` and in four test files. The upstream browser code uses the key only to decide whether to ask Google, and the key does not go in the request.
 
 The delta removes the three fork requirements of the geocoding. Before the archive, the main spec still holds their scenarios, and the trace gate does not ask for their tests. So the IDs go into `openspec/trace/retired-ids.json` only after the archive.
 The ratchet ran before the archive and wrote an empty link for each of the 11 IDs. After the archive, the lead removes these 11 lines from `openspec/trace/links.json`.
 
-At the archive, the lead adds the word "Google" to the Purpose of the spec `credential-boundary`. The Purpose now says "Send Google geocoding requests from the browser only to our server, with no API key." The old sentence was false at the base and after the merge, because the browser also asks Photon at `photon.komoot.io`.
+After the archive, the lead adds the word "Google" to the Purpose of the spec `credential-boundary`. The Purpose now says "Send Google geocoding requests from the browser only to our server, with no API key." The old sentence was false at the base and after the merge, because the browser also asks Photon at `photon.komoot.io`.
 
 The new requirement "Browser geocoding routes" keeps the two rules that hold for the upstream code. No browser file calls the geocoding host of Google (`credential-boundary-019`). A forward lookup asks the next geocoder when the route answers `configured:false` or an HTTP error (`credential-boundary-020`).
 
-The fork code for the second rule is in `src/search/google.js`, and the merge does not change that file. The upstream route answers `configured:false` with the status 200 when the server has no key. The first ratchet after the merge of the fork main stopped with `LEDGER-LOST-COVERAGE` for `src/search/google.js`, because the change had removed the tests of `credential-boundary-013`. The change then put back the five tests with the ID `credential-boundary-020`.
+The merge kept the fork version of `src/search/google.js`, because upstream did not change that file after the shared ancestor. That version has no upstream branch for a request that the browser does not send. It also reads a `configured:false` answer as an answered miss.
+The upstream route answers `configured:false` with the status 200 when the server has no key. Upstream reads that answer as no answer, so the place search keeps no miss in its cache. The change uses the upstream file, and the scenario `credential-boundary-020` describes the upstream behavior.
+
+The first ratchet after the merge of the fork main stopped with `LEDGER-LOST-COVERAGE` for `src/search/google.js`. The cause was that the change removed the tests of `credential-boundary-013`. The change then added these five tests again with the ID `credential-boundary-020`. The first review round found the difference between the two versions of the file.
 
 The lead removed `resolveApiKey` from `src/standalone/application.js` as a fault. No test failed, because no test calls `createStandaloneApplication()`. The line equals the upstream file. See the Known limit `key-wiring`.
 
@@ -96,7 +99,7 @@ The lead removed `resolveApiKey` from `src/standalone/application.js` as a fault
 
 Upstream adds a `Dockerfile` on Node 24.14.0, a `compose.yaml` with a bind mount and a port on the loopback address only, and a start script.
 The fork owns its `Dockerfile` and `compose.yaml`. The spec gates need Node 24.21.0.
-With the Codex override on the host network, the upstream start script would trust the LAN router as the gateway.
+With the Codex override on the host network, the upstream start script will trust the LAN router as the gateway.
 
 The owner decided on 2026-10-17 to keep the fork files.
 The change removes the upstream test of the upstream Docker contract from `src/dockerLauncher.test.mjs`. The other tests in that file stay.
@@ -109,8 +112,8 @@ The fork tests now import `CITY_POIS` from `src/cityPois.js`.
 
 ### D5: The layer counts
 
-The base catalog has 30 layers. The fork adds four layers, and upstream adds two layers. So the catalog tests count 36 layers.
-The share link registry has 35 layers: the 29 layers of the base registry, the four fork layers and the two upstream layers.
+The catalog of the base commit has 34 layers, and upstream adds two layers. So the catalog tests count 36 layers.
+The share link registry of the base commit has 33 layers, and upstream adds two layers. So the registry has 35 layers.
 
 ### D6: The texts in Spanish and Russian
 
@@ -128,7 +131,8 @@ Upstream now needs the header `Data-Present` with the value `true` before it dec
 
 Upstream now writes the panel group labels as `msg('Cameras')` and `msg('Infrastructure')`. The change updates the patterns in the fork registration tests.
 
-The text of each of these scenarios stays as it is.
+The change adds one line to the scenario `cyclones-021`. In the issue time, a word joiner comes after the hyphen, and a no-break space comes before `HH` and before `UTC`. The scenarios `cyclones-020` and `cyclones-022` of the same requirement stay as they are.
+The text of each other scenario stays as it is.
 
 ### D8: The package boundaries
 
@@ -141,12 +145,12 @@ So the packages `osh-layer` and `reticulum` also own `src/i18n/index.js`, `src/i
 
 The first adopt run stopped with the error `GATES-TEST-LEAK` for six upstream test files.
 The gates run the tests with `--test-force-exit`, and a test process must end with no live timer.
-The change makes each of these tests clean up the work that it starts:
+The change makes each of these tests stop the work that it starts:
 
 - `src/layers/airQuality/source.test.mjs`: the test of the large response waits for one Immediate. The cancelled Blob stream then ends first.
 - `src/ui/geoFileImport.test.mjs`: after each test, the change destroys each tool that `setup()` made. `destroy()` clears the timer of the ground refresh.
 - `src/layers/streetLevel/index.test.mjs`: after each test, the change waits 20 ms, past the 16 ms timer of `whenIdle()`.
-- `src/sdr/decoderDiagnostics.test.mjs`, `src/sdr/readPipeline.diag.test.mjs` and `src/sdr/workerAdmission.test.mjs`: the clean-up rejects the open reads of the fake device, as `stop()` stops a real transfer. The read deadline then clears its timer.
+- `src/sdr/decoderDiagnostics.test.mjs`, `src/sdr/readPipeline.diag.test.mjs` and `src/sdr/workerAdmission.test.mjs`: after each test, the change rejects the open reads of the fake device, as `stop()` stops a real transfer. The read deadline then clears its timer.
 
 The file `evidence/leaks.txt` gives the live timers of each file before and after the change.
 

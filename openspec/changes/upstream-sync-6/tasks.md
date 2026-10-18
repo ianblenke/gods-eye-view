@@ -9,18 +9,30 @@
 - [x] 1.7 Set the token `7` for `gnss-integrity` and the token `8` for `air-quality`.
 - [x] 1.8 Remove the fork geocoding route and its four files.
 - [x] 1.9 Remove the upstream test of the upstream Docker contract.
-- [x] 1.10 Mark the eight fork texts and add their Spanish and Russian text.
-- [x] 1.11 Write again the fork tests that the merge breaks.
-- [x] 1.12 Change the test of `credential-boundary-015` to the ID `credential-boundary-019` and the file `server/providers/places/google.js`.
-- [x] 1.13 Remove the tests of `credential-boundary-007` and `credential-boundary-013`.
-- [x] 1.14 Change the register test of `qa-scripts-023` to expect 99 files.
-- [x] 1.15 Run the fault of decision D2.
-- [x] 1.16 Make the six upstream test files of decision D9 end with no live timer.
-- [x] 1.17 Add the case of decision D10 to the test of `osh-control-031`.
-- [x] 1.18 Run the fault of decision D10.
-- [x] 1.19 Add the scenario `credential-boundary-020` to the delta spec for `credential-boundary`.
-- [x] 1.20 Write the tests of `credential-boundary-020` from the old tests of `credential-boundary-013`.
-- [x] 1.21 Run a fault for each branch of `src/search/google.js` that the tests of `credential-boundary-020` cover.
+- [x] 1.10 Mark the eight fork texts.
+- [x] 1.11 Add the Spanish and Russian text of the eight fork texts.
+- [x] 1.12 Write again the fork tests that the merge breaks.
+- [x] 1.13 Change the test of `credential-boundary-015` to the ID `credential-boundary-019` and the file `server/providers/places/google.js`.
+- [x] 1.14 Remove the tests of `credential-boundary-007` and `credential-boundary-013`.
+- [x] 1.15 Change the register test of `qa-scripts-023` to expect 99 files.
+- [x] 1.16 Run the fault of decision D2.
+- [x] 1.17 Make the six upstream test files of decision D9 end with no live timer.
+- [x] 1.18 Add the case of decision D10 to the test of `osh-control-031`.
+- [x] 1.19 Run the fault of decision D10.
+- [x] 1.20 Add the scenario `credential-boundary-020` to the delta spec for `credential-boundary`.
+- [x] 1.21 Write the tests of `credential-boundary-020` from the old tests of `credential-boundary-013`.
+- [x] 1.22 Write the scenario `credential-boundary-020` again for the upstream behavior.
+- [ ] 1.23 Write the tests of `credential-boundary-020` again for the upstream behavior.
+- [ ] 1.24 Use the upstream file `src/search/google.js`.
+- [ ] 1.25 Run the faults of `evidence/fault-020.txt`.
+- [x] 1.26 Add one line to the scenario `cyclones-021` in the delta spec for `cyclones`.
+- [x] 1.27 Keep the scenario `cyclones-020` in the delta spec for `cyclones`.
+- [x] 1.28 Keep the scenario `cyclones-022` in the delta spec for `cyclones`.
+- [ ] 1.29 Remove the old CSP bullet from `SECURITY.md`.
+- [ ] 1.30 Remove the unused import of `t` from `src/app/controls.js`.
+- [ ] 1.31 Remove the fork comment and the block `omittable` from `src/data/layerStateTokenLedger.test.mjs`.
+- [ ] 1.32 Write "do not call Google" in the fork note of `docs/CURRENT-STATE.md`.
+- [ ] 1.33 Change the test name of `perimeters-005` to the words of its scenario.
 
 ## 2. Host evidence
 

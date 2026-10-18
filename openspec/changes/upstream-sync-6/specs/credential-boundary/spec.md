@@ -6,10 +6,10 @@
 
 ### Requirement: Browser geocoding
 **Reason**: The upstream browser code sends reverse lookups to `/api/google/reverse-geocode`, and it does not keep earlier answers. This change retires the scenarios `credential-boundary-013` to `credential-boundary-015`.
-**Migration**: The requirement "Browser geocoding routes" replaces it. Its scenario `credential-boundary-019` has the text of `credential-boundary-015`. Its scenario `credential-boundary-020` has the text of `credential-boundary-013`, with the condition of a browser key.
+**Migration**: The requirement "Browser geocoding routes" replaces it. Its scenario `credential-boundary-019` has the text of `credential-boundary-015`. Its scenario `credential-boundary-020` describes the forward lookup of the upstream code. It differs from `credential-boundary-013` in one point: a `configured:false` answer gives `answered:false`.
 
 ### Requirement: Same-site geocode admission
-**Reason**: The fork route goes away. The upstream geocoding routes call `admitSameSite()` first. This change retires the scenarios `credential-boundary-017` and `credential-boundary-018`.
+**Reason**: The change removes the fork route. The upstream geocoding routes call `admitSameSite()` first. This change retires the scenarios `credential-boundary-017` and `credential-boundary-018`.
 **Migration**: None.
 
 ## ADDED Requirements
@@ -24,7 +24,9 @@ Origin: spec-first
 - **AND** exactly one file under `server/` matches it
 
 #### Scenario: Send a forward lookup to the server route, with a keyless fallback `credential-boundary-020`
-- **WHEN** the standalone place search geocodes a query, and the browser has a key
-- **THEN** its request URL is the same-origin `/api/google/geocode`, with `address` and `bounds`, and no `key`
-- **AND** a `configured:false` answer gives `{place:null, answered:true}`, and the Photon fallback runs next
+- **WHEN** the standalone place search geocodes a query
+- **THEN** with a browser key, its request URL is the same-origin `/api/google/geocode`, with `address` and `bounds`, and no `key`
+- **AND** without a browser key, it sends no request to that route, and the Google step gives `{place:null, answered:true}`
+- **AND** a `configured:false` answer gives `{place:null, answered:false}`, and the Photon fallback runs next
 - **AND** an HTTP error answer from the route gives `{place:null, answered:false}`, and the Photon fallback runs next
+- **AND** the place search keeps no miss in its cache after the Google step gives `answered:false`
