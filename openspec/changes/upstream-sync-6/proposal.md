@@ -46,8 +46,11 @@ The change edits these owned files: `.dockerignore`, `src/data/oshLayer.test.mjs
 It also edits the registration tests of the layers Bee Maps Frames, Bee Maps Bursts and Reticulum Network.
 
 Rule 25: the merge breaks fork tests with scenario IDs.
-For the scenarios `credential-boundary-007` to `credential-boundary-015`, `credential-boundary-017` and `credential-boundary-018`, the change retires the scenario. The upstream geocoding code replaces the code of these scenarios.
+For the scenarios `credential-boundary-007` to `credential-boundary-015`, `credential-boundary-017` and `credential-boundary-018`, the change retires the scenario. The upstream geocoding code replaces the code of these scenarios, except two parts that stay true.
 The new scenario `credential-boundary-019` has the text of `credential-boundary-015`, and its test is the old test with a new ID and a new file name.
+
+The new scenario `credential-boundary-020` has the text of `credential-boundary-013`, with the condition of a browser key. The upstream forward lookup still uses the fork code in `src/search/google.js` for this behavior. Its five tests are the old tests of `credential-boundary-013` with the new ID and a browser key.
+
 The change edits the tests of 17 other scenarios and keeps the scenario text. The scenarios are `beemaps-bursts-028`, `beemaps-frames-025`, `cyclones-021`, `cyclones-025`, `osh-033`, `perimeters-005`, `recent-imagery-023`, `recent-imagery-026`, `recent-imagery-027`, `recent-imagery-029`, `recent-imagery-044`, `recent-imagery-046`, `recent-imagery-047`, `recent-imagery-049`, `recent-imagery-053`, `reticulum-layer-018` and `wind-020`.
 
 The upstream code adds no dependency. `package-lock.json` does not change.

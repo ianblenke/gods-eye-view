@@ -18,6 +18,9 @@
 - [x] 1.16 Make the six upstream test files of decision D9 end with no live timer.
 - [x] 1.17 Add the case of decision D10 to the test of `osh-control-031`.
 - [x] 1.18 Run the fault of decision D10.
+- [ ] 1.19 Add the scenario `credential-boundary-020` to the delta spec for `credential-boundary`.
+- [ ] 1.20 Write the tests of `credential-boundary-020` from the old tests of `credential-boundary-013`.
+- [ ] 1.21 Run a fault for each branch of `src/search/google.js` that the tests of `credential-boundary-020` cover.
 
 ## 2. Host evidence
 

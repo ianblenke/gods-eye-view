@@ -83,7 +83,9 @@ It puts back the upstream browser key lines in `src/standalone/application.js` a
 
 The delta removes the three fork requirements of the geocoding. Before the archive, the main spec still holds their scenarios, and the trace gate does not ask for their tests. So the IDs go into `openspec/trace/retired-ids.json` only after the archive.
 
-The new requirement "Browser geocoding routes" keeps the one rule that holds for the upstream code: no browser file calls the geocoding host of Google.
+The new requirement "Browser geocoding routes" keeps the two rules that hold for the upstream code. No browser file calls the geocoding host of Google (`credential-boundary-019`). A forward lookup asks the next geocoder when the route answers `configured:false` or an HTTP error (`credential-boundary-020`).
+
+The fork code for the second rule is in `src/search/google.js`, and the merge does not change that file. The upstream route answers `configured:false` with the status 200 when the server has no key. The first ratchet after the merge of the fork main stopped with `LEDGER-LOST-COVERAGE` for `src/search/google.js`, because the change had removed the tests of `credential-boundary-013`. The change then put back the five tests with the ID `credential-boundary-020`.
 
 The lead removed `resolveApiKey` from `src/standalone/application.js` as a fault. No test failed, because no test calls `createStandaloneApplication()`. The line equals the upstream file. See the Known limit `key-wiring`.
 
