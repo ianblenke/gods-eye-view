@@ -12,6 +12,7 @@ Origin: spec-first
 - **WHEN** a change edits lines of an HTML file
 - **THEN** the changed lines of that file are only its code lines
 - **AND** a line of code in a script element is a code line when the start tag of that element has no src attribute
-- **AND** a line that has an event handler attribute or a `javascript:` URL is a code line
+- **AND** each line of an event handler attribute and its value is a code line
+- **AND** each line of a `javascript:` URL, up to the first quote or `>` after it, is a code line
 - **AND** the gate prints no COVERAGE-DIFF for an edited line of that file that is not a code line
 - **AND** the gate prints COVERAGE-DIFF for an edited code line of that file, because an HTML file has no covered line data

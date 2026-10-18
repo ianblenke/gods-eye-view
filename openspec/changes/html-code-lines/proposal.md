@@ -8,7 +8,7 @@ The owner decided on 2026-10-18 to correct the gate before the sync continues.
 
 ## What Changes
 
-- Add the function `htmlCodeLines()` to `scripts/spec/lib/coverage.mjs`. It gives the code lines of an HTML file. A line of code in a script element without a src attribute is a code line. A line with an event handler attribute or a `javascript:` URL is a code line too.
+- Add the function `htmlCodeLines()` to `scripts/spec/lib/coverage.mjs`. It gives the code lines of an HTML file. A line of code in a script element without a src attribute is a code line. Each line of an event handler attribute and its value is a code line too. So is each line of a `javascript:` URL, up to the first quote or `>` after it.
 - In `syncChangedLines()` of `scripts/spec/lib/ownership.mjs`, keep only the code lines of each HTML file before the gate counts the changed lines.
 - Add the scenario `ownership-056` to the requirement "Diff coverage". The requirement text and the scenario `ownership-007` stay as they are.
 

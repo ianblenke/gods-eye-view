@@ -159,10 +159,18 @@ test('[ownership-056] gives the code lines of an HTML file: script code, event h
     '</script>',
     '<script title="x src=1">one();</script>',
     '<script type="module" src="b.js"></script>',
+    '<div onmouseover="a();',
+    'b();">z</div>',
+    "<a href='javascript:",
+    "go()'>w</a>",
+    '<i onclick=run()>q</i>',
     '</body>',
   ].join('\n');
-  assert.deepEqual([...htmlCodeLines(html)].sort((a, b) => a - b), [2, 5, 6, 9, 11, 13]);
+  assert.deepEqual([...htmlCodeLines(html)].sort((a, b) => a - b), [2, 5, 6, 9, 11, 13, 15, 16, 17, 18, 19]);
   assert.deepEqual([...htmlCodeLines('<main>\n  <p>Only markup</p>\n</main>\n')], []);
+  // A value after white space, a value that has no closing quote, and a URL with no quote or > after it.
+  const edges = ["<b onclick = 'x();", "y()'>b</b>", '<p>', '<p onclick="javascript:go', 'still in the value'].join('\n');
+  assert.deepEqual([...htmlCodeLines(edges)].sort((a, b) => a - b), [1, 2, 4, 5]);
 });
 
 test('[coverage-gate-043] stops for a code file that imports a test file', () => {

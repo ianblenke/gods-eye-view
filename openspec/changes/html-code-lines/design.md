@@ -10,8 +10,12 @@ The diff coverage gate (`ownership-007`) asks covered line data for each changed
 
 `htmlCodeLines(html)` gives a set of line numbers, from 1.
 For each script element whose start tag has no src attribute, it adds each line of its code that is not blank. The test for the src attribute is the test of `inlineScriptLines()`: a quoted value does not count.
-For each event handler attribute and each `javascript:` URL outside the script elements, it adds the line where the attribute name or the URL starts.
-The pattern of an event handler attribute starts with a white space character. When that character is a line end, the attribute starts on the next line, and the function adds that next line.
+
+For each event handler attribute outside the script elements, it adds each line from the attribute name to the end of the value. The value ends at its closing quote, or at the first white space or `>` of a value without quotes. A value with no closing quote ends at the end of the file.
+For each `javascript:` URL outside the script elements, it adds each line from the URL to the first quote or `>` after it. With no such character, it adds only the line of the URL.
+
+The pattern of an event handler attribute starts with a white space character. When that character is a line end, the attribute starts on the next line, and the function starts at that next line.
+A value or a URL can continue on more lines. The measure counts each attribute and each URL as code, so each of their lines must stay a changed line.
 
 ### D2: The place of the filter
 
@@ -35,3 +39,6 @@ The tests must fail for each of these faults:
 - The function takes a src text in a quoted value as a src attribute.
 - The function takes the line before an attribute that starts after a line end.
 - The function counts a blank line in a script element.
+- The function adds only the first line of an event handler attribute.
+- The function adds only the first line of a `javascript:` URL.
+- The function does not skip the white space before an attribute value.

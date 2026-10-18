@@ -1,27 +1,36 @@
-Command: python3 -I html-code-lines-faults.py (in the clone, commit 97e2f91c plus the code of this commit). For each fault: change one line, run node --test --test-name-pattern=ownership-056 on src/tooling/spec/coverage.test.mjs and src/tooling/spec/ownership.test.mjs, restore the file.
+Command: python3 -I html-code-lines-faults.py (in the clone, on the code of the commit that adds this file). For each fault: change one part of the code, run node --test --test-name-pattern=ownership-056 on src/tooling/spec/coverage.test.mjs and src/tooling/spec/ownership.test.mjs, restore the file.
 
-filter removed                     -> ℹ fail 1 KILLED
-script code lines not added        -> ℹ fail 2 KILLED
-handler lines not added            -> ℹ fail 2 KILLED
-script URL lines not added         -> ℹ fail 1 KILLED
-src element counted                -> ℹ fail 1 KILLED
-quoted src taken as src            -> ℹ fail 1 KILLED
-line before a line-end attribute   -> ℹ fail 1 KILLED
-blank script line counted          -> ℹ fail 1 KILLED
+filter removed                         -> ℹ fail 1 KILLED
+script code lines not added            -> ℹ fail 2 KILLED
+handler lines not added                -> ℹ fail 2 KILLED
+script URL lines not added             -> ℹ fail 1 KILLED
+src element counted                    -> ℹ fail 1 KILLED
+quoted src taken as src                -> ℹ fail 1 KILLED
+line before a line-end attribute       -> ℹ fail 1 KILLED
+blank script line counted              -> ℹ fail 1 KILLED
+only the first line of an attribute    -> ℹ fail 1 KILLED
+only the first line of a URL           -> ℹ fail 1 KILLED
+no skip of white space before a value  -> ℹ fail 1 KILLED
 
 ----- html-code-lines-faults.py -----
 """Run each fault of design.md against the two ownership-056 tests; restore each file after."""
 import subprocess, shutil
-C='scripts/spec/lib/coverage.mjs'; O='scripts/spec/lib/ownership.mjs'
+C = 'scripts/spec/lib/coverage.mjs'; O = 'scripts/spec/lib/ownership.mjs'
+HANDLER_LOOP = "  for (const match of outside.matchAll(HANDLER_ATTRIBUTE)) {\n    addSpan(match.index + 1, valueEnd(outside, match.index + match[0].length));\n  }\n"
+URL_LOOP = "  for (const match of outside.matchAll(SCRIPT_URL)) {\n    const end = outside.slice(match.index).search(/[\"'>]/);\n    addSpan(match.index, end < 0 ? match.index : match.index + end);\n  }\n"
+SRC_TEST = "    if (!SRC_ATTRIBUTE.test(attributes.replace(QUOTED_VALUE, '\"\"'))) {\n      const first"
 faults = [
  ('filter removed', O, "    changed[file] = changed[file].filter((line) => code.has(line));\n", "    void code;\n"),
  ('script code lines not added', C, "        if (text.trim() !== '') lines.add(first + index);\n", "        void text;\n"),
- ('handler lines not added', C, "  for (const match of outside.matchAll(HANDLER_ATTRIBUTE)) lines.add(lineAt(match.index + 1));\n", ""),
- ('script URL lines not added', C, "  for (const match of outside.matchAll(SCRIPT_URL)) lines.add(lineAt(match.index));\n", ""),
- ('src element counted', C, "    if (!SRC_ATTRIBUTE.test(attributes.replace(QUOTED_VALUE, '\"\"'))) {\n      const first", "    if (true) {\n      const first"),
- ('quoted src taken as src', C, "    if (!SRC_ATTRIBUTE.test(attributes.replace(QUOTED_VALUE, '\"\"'))) {\n      const first", "    if (!SRC_ATTRIBUTE.test(attributes)) {\n      const first"),
- ('line before a line-end attribute', C, "lines.add(lineAt(match.index + 1));", "lines.add(lineAt(match.index));"),
+ ('handler lines not added', C, HANDLER_LOOP, ""),
+ ('script URL lines not added', C, URL_LOOP, ""),
+ ('src element counted', C, SRC_TEST, "    if (true) {\n      const first"),
+ ('quoted src taken as src', C, SRC_TEST, "    if (!SRC_ATTRIBUTE.test(attributes)) {\n      const first"),
+ ('line before a line-end attribute', C, "    addSpan(match.index + 1, valueEnd(", "    addSpan(match.index, valueEnd("),
  ('blank script line counted', C, "        if (text.trim() !== '') lines.add(first + index);\n", "        lines.add(first + index);\n"),
+ ('only the first line of an attribute', C, "    addSpan(match.index + 1, valueEnd(outside, match.index + match[0].length));\n", "    addSpan(match.index + 1, match.index + 1);\n"),
+ ('only the first line of a URL', C, "    addSpan(match.index, end < 0 ? match.index : match.index + end);\n", "    addSpan(match.index, match.index);\n"),
+ ('no skip of white space before a value', C, "    while (index < text.length && /\\s/.test(text[index])) index += 1;\n", ""),
 ]
 for name, f, old, new in faults:
     src = open(f).read(); assert src.count(old) == 1, (name, old)
@@ -29,4 +38,4 @@ for name, f, old, new in faults:
     r = subprocess.run(['node', '--test', '--test-name-pattern=ownership-056', 'src/tooling/spec/coverage.test.mjs', 'src/tooling/spec/ownership.test.mjs'], capture_output=True, text=True)
     shutil.move(f + '.orig', f)
     fail = [l for l in r.stdout.splitlines() if l.startswith('ℹ fail')]
-    print(f"{name:34s} -> {fail[0] if fail else '?'} {'KILLED' if fail and fail[0] != 'ℹ fail 0' else 'SURVIVED'}")
+    print(f"{name:38s} -> {fail[0] if fail else '?'} {'KILLED' if fail and fail[0] != 'ℹ fail 0' else 'SURVIVED'}")

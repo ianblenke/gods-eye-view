@@ -89,8 +89,9 @@ export function inlineScriptLines(html) {
 
 /**
  * The code lines of an HTML file, as line numbers from 1: each line of code that is not
- * blank in a script element without a src attribute, and each line where an event handler
- * attribute or a script URL starts. These are the parts that `inlineScriptLines` counts.
+ * blank in a script element without a src attribute, each line of an event handler
+ * attribute with its value, and each line of a script URL up to its closing quote. These
+ * are the parts that `inlineScriptLines` counts.
  *
  * @param {string} html - Text of the HTML file.
  * @returns {Set<number>}
@@ -98,6 +99,22 @@ export function inlineScriptLines(html) {
 export function htmlCodeLines(html) {
   const lines = new Set();
   const lineAt = (offset) => html.slice(0, offset).split('\n').length;
+  const addSpan = (start, end) => {
+    for (let line = lineAt(start); line <= lineAt(end); line += 1) lines.add(line);
+  };
+  // The end of an attribute value that starts after `from`: its closing quote, or the
+  // first white space or `>` of a value without quotes.
+  const valueEnd = (text, from) => {
+    let index = from;
+    while (index < text.length && /\s/.test(text[index])) index += 1;
+    const quote = text[index];
+    if (quote === '"' || quote === "'") {
+      const close = text.indexOf(quote, index + 1);
+      return close < 0 ? text.length : close;
+    }
+    while (index < text.length && !/[\s>]/.test(text[index])) index += 1;
+    return index;
+  };
   const outside = html.replace(SCRIPT_ELEMENT, (element, attributes, code, offset) => {
     if (!SRC_ATTRIBUTE.test(attributes.replace(QUOTED_VALUE, '""'))) {
       const first = lineAt(offset + element.indexOf('>') + 1);
@@ -109,8 +126,14 @@ export function htmlCodeLines(html) {
     return element.replace(/[^\n]/g, ' ');
   });
   // The handler pattern starts with one white space character; the attribute starts after it.
-  for (const match of outside.matchAll(HANDLER_ATTRIBUTE)) lines.add(lineAt(match.index + 1));
-  for (const match of outside.matchAll(SCRIPT_URL)) lines.add(lineAt(match.index));
+  for (const match of outside.matchAll(HANDLER_ATTRIBUTE)) {
+    addSpan(match.index + 1, valueEnd(outside, match.index + match[0].length));
+  }
+  // A script URL ends at the first quote or `>` after it.
+  for (const match of outside.matchAll(SCRIPT_URL)) {
+    const end = outside.slice(match.index).search(/["'>]/);
+    addSpan(match.index, end < 0 ? match.index : match.index + end);
+  }
   return lines;
 }
 
