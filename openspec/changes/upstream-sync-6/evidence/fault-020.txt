@@ -1,0 +1,37 @@
+Command: python3 -I faults-020.py <clone> (code of commit 716161bb). For each fault: change one part of the code, run node --test --test-reporter=tap --test-name-pattern=credential-boundary-020 src/search/placeSearch.test.mjs, restore the file and check its sha256.
+
+KILLED: an HTTP error answer reads the body (src/search/google.js) | # tests 5 # pass 4 # fail 1 | failed: ['an HTTP error answer from the route and a Photon miss give answered:false']
+KILLED: a configured:false answer gives answered:false (src/search/google.js) | # tests 5 # pass 4 # fail 1 | failed: ['a configured:false answer does not give answered:false']
+KILLED: the request URL has the key (src/search/defaults.js) | # tests 5 # pass 4 # fail 1 | failed: ['the geocode request URL is same-origin, with address and bounds, and no key']
+KILLED: the request URL has no bounds (src/search/defaults.js) | # tests 5 # pass 4 # fail 1 | failed: ['the geocode request URL is same-origin, with address and bounds, and no key']
+KILLED: the search stops after an answered miss (src/search/placeSearch.js) | # tests 5 # pass 1 # fail 4 | failed: ['a keyless server answers configured:false and the search then uses Photon', 'an HTTP error answer from the route and a Photon miss give answered:false', 'after an HTTP error answer from the route, the search then uses the Photon place', 'the geocode request URL is same-origin, with address and bounds, and no key']
+KILLED: the search stops after an HTTP error answer (src/search/placeSearch.js) | # tests 5 # pass 3 # fail 2 | failed: ['an HTTP error answer from the route and a Photon miss give answered:false', 'after an HTTP error answer from the route, the search then uses the Photon place']
+
+----- faults-020.py -----
+#!/usr/bin/env python3
+# Faults of credential-boundary-020: for each, change one part of the code, run the five tests of the scenario, restore the file.
+import subprocess, sys, hashlib
+clone = sys.argv[1]
+G = 'src/search/google.js'; D = 'src/search/defaults.js'; P = 'src/search/placeSearch.js'
+FAULTS = [
+  ('an HTTP error answer reads the body', G, "        if (response.ok === false) return { place: null, answered: false };\n", ""),
+  ('a configured:false answer gives answered:false', G, "        if (data?.configured === false) return { place: null, answered: true };\n", "        if (data?.configured === false) return { place: null, answered: false };\n"),
+  ('the request URL has the key', D, "                const params = new URLSearchParams({ address: query });\n", "                const params = new URLSearchParams({ address: query, key: resolveApiKey() });\n"),
+  ('the request URL has no bounds', D, "                const params = new URLSearchParams({ address: query });\n                if (bias) params.set('bounds', bias);\n", "                const params = new URLSearchParams({ address: query });\n"),
+  ('the search stops after an answered miss', P, "          if (result.place) {\n", "          if (!result.place && next.answered) break;\n          if (result.place) {\n"),
+  ('the search stops after an HTTP error answer', P, "          if (result.place) {\n", "          if (!result.place && !next.answered) break;\n          if (result.place) {\n"),
+]
+def sha(p): return hashlib.sha256(open(f'{clone}/{p}','rb').read()).hexdigest()
+for name, path, old, new in FAULTS:
+    full = f'{clone}/{path}'; text = open(full).read(); before = sha(path)
+    assert text.count(old) == 1, (name, 'pattern count', text.count(old))
+    open(full, 'w').write(text.replace(old, new))
+    try:
+        r = subprocess.run(['node', '--test', '--test-reporter=tap', '--test-name-pattern=credential-boundary-020', 'src/search/placeSearch.test.mjs'], cwd=clone, capture_output=True, text=True, timeout=300)
+        out = r.stdout + r.stderr
+        fails = [l.split('[credential-boundary-020] ')[1] for l in out.splitlines() if l.lstrip().startswith('not ok') and '[credential-boundary-020]' in l]
+        counts = ' '.join(l for l in out.splitlines() if l.startswith(('# tests', '# pass', '# fail')))
+        print(f"{'KILLED' if fails else 'SURVIVED'}: {name} ({path}) | {counts} | failed: {fails}")
+    finally:
+        open(full, 'w').write(text)
+        assert sha(path) == before, ('not restored', path)

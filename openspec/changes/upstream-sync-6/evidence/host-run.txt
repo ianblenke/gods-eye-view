@@ -782,3 +782,6 @@ src/weatherEffectsMath.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 6 ℹ 
 src/worldFocus.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 10 ℹ skipped 0 ℹ tests 10 
 
 Total: files 779 tests 11577 pass 11561 fail 0 skipped 16
+
+Later commit 716161bb changes one test file. Command: node --test src/search/placeSearch.test.mjs (host, Node v26.8.2)
+src/search/placeSearch.test.mjs: ℹ cancelled 0 ℹ fail 0 ℹ pass 14 ℹ skipped 0 ℹ tests 14 

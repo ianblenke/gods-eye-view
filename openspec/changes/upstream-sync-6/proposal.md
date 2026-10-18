@@ -35,7 +35,7 @@ None.
 
 Outside the change folder, the merge commit changes 782 files compared with the base commit. It adds 258 files and removes 4 files.
 Outside the change folder, the commits after the merge commit and before the merge of the fork main change 44 files. Two of these files are in `openspec/trace/`.
-The merge of the fork main brings the 29 files of the change `html-code-lines`.
+The merge of the fork main brings the 29 files of the change `html-code-lines`. After that merge, one more commit changes `src/search/placeSearch.test.mjs`.
 
 Rule 23: the owner approved on 2026-10-17 the removal of five owned paths from `openspec/ownership.json`.
 The five paths are `server/providers/places/coordinates.js`, `server/providers/places/geocode.js`, `src/googleGeocodeProxy.test.mjs`, `src/googleGeocodeRateLimit.test.mjs` and `src/search/reverseGeocodeRoute.test.mjs`.

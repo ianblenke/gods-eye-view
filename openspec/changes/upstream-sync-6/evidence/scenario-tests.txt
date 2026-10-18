@@ -21,6 +21,13 @@ GONE (no test with these IDs): credential-boundary-007 credential-boundary-008 c
   reticulum-layer-018 src/layers/reticulum/registration.test.mjs
   wind-020 src/layers/wind/presentation.test.mjs
 
+Later commit 716161bb (after the commit of the output above):
+Command: git diff 1d6b70fc 716161bb -- src/search/placeSearch.test.mjs | grep -c "^+test('\[credential-boundary-020\]"
+5
+Command: git grep -c 'credential-boundary-013\]' 716161bb -- '*.test.mjs'
+(no match)
+The five tests of credential-boundary-013 come back with the ID credential-boundary-020 (see proposal.md and design.md D2). The ID credential-boundary-013 stays retired.
+
 ----- scenario_tests.py -----
 """Scenario IDs whose test blocks (top-level test(...) up to its first '\n});\n') exist at the base and differ or are gone at HEAD."""
 import re, subprocess, sys
