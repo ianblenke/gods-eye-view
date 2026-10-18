@@ -88,6 +88,33 @@ export function inlineScriptLines(html) {
 }
 
 /**
+ * The code lines of an HTML file, as line numbers from 1: each line of code that is not
+ * blank in a script element without a src attribute, and each line where an event handler
+ * attribute or a script URL starts. These are the parts that `inlineScriptLines` counts.
+ *
+ * @param {string} html - Text of the HTML file.
+ * @returns {Set<number>}
+ */
+export function htmlCodeLines(html) {
+  const lines = new Set();
+  const lineAt = (offset) => html.slice(0, offset).split('\n').length;
+  const outside = html.replace(SCRIPT_ELEMENT, (element, attributes, code, offset) => {
+    if (!SRC_ATTRIBUTE.test(attributes.replace(QUOTED_VALUE, '""'))) {
+      const first = lineAt(offset + element.indexOf('>') + 1);
+      code.split('\n').forEach((text, index) => {
+        if (text.trim() !== '') lines.add(first + index);
+      });
+    }
+    // Keep the line ends, so that the offsets of the text outside stay the same.
+    return element.replace(/[^\n]/g, ' ');
+  });
+  // The handler pattern starts with one white space character; the attribute starts after it.
+  for (const match of outside.matchAll(HANDLER_ATTRIBUTE)) lines.add(lineAt(match.index + 1));
+  for (const match of outside.matchAll(SCRIPT_URL)) lines.add(lineAt(match.index));
+  return lines;
+}
+
+/**
  * Find code files that import or require a test file.
  *
  * @returns {object[]} One error for each line with such an import.

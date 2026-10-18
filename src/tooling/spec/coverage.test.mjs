@@ -157,7 +157,7 @@ test('[ownership-056] gives the code lines of an HTML file: script code, event h
     '',
     'go();',
     '</script>',
-    '<script class="src=1">one();</script>',
+    '<script title="x src=1">one();</script>',
     '<script type="module" src="b.js"></script>',
     '</body>',
   ].join('\n');

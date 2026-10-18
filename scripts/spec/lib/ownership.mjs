@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { readFileAt, mergeParents } from './git.mjs';
 import { adoptsOf } from './ledger.mjs';
+import { htmlCodeLines } from './coverage.mjs';
 
 const MANIFEST = 'openspec/ownership.json';
 const METRICS = ['lines', 'branches', 'functions'];
@@ -100,6 +101,11 @@ export function validAdoptSources({ root, base, history, baseHistory, change }) 
 export function syncChangedLines({ root, base, files, history, baseHistory, change }) {
   const adopts = validAdoptSources({ root, base, history, baseHistory, change });
   const changed = changedLines({ root, base, files });
+  // An HTML file has no line data: only its code lines can need coverage.
+  for (const file of Object.keys(changed).filter((name) => name.endsWith('.html'))) {
+    const code = htmlCodeLines(readFileSync(path.join(root, file), 'utf8'));
+    changed[file] = changed[file].filter((line) => code.has(line));
+  }
   const total = Object.values(changed).reduce((sum, lines) => sum + lines.length, 0);
   if (adopts.length > 0) {
     for (const file of Object.keys(changed)) {
