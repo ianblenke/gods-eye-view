@@ -252,6 +252,29 @@ test('[ownership-020 ownership-025] needs no coverage for lines that equal the f
   });
 }));
 
+test('[ownership-056] asks coverage only for the code lines of an HTML file', () => fixture(({ root, put }) => {
+  const git = (...args) => {
+    const result = spawnSync('git', args, { cwd: root, encoding: 'utf8' });
+    assert.equal(result.status, 0, result.stderr);
+    return result.stdout.trim();
+  };
+  git('init', '-qb', 'main');
+  put('page.html', ['<main>', '  <p>Old</p>', '  <button onclick="a()">A</button>', '  <script>', '    start();', '  </script>', '</main>', ''].join('\n'));
+  put('a.js', 'base\n');
+  git('add', '-A');
+  git('commit', '-qm', 'base');
+  const base = git('rev-parse', 'HEAD');
+  put('page.html', ['<main>', '  <p>New</p>', '  <button onclick="b()">A</button>', '  <script>', '    run();', '  </script>', '</main>', ''].join('\n'));
+  put('a.js', 'edit\n');
+  const result = syncChangedLines({ root, base, files: ['page.html', 'a.js'], history: '', baseHistory: '', change: 'edit' });
+  assert.deepEqual(result, {
+    changed: { 'page.html': [3, 5], 'a.js': [1] },
+    advice: 'COVERAGE-DIFF: 3 changed lines, 0 brought by the merged upstream commit, 3 need coverage.',
+  });
+  const page = { file: 'page.html', sha: 'hash', untrue: false, loaded: false, complete: true, lines: { total: 0, uncovered: 0 }, branches: null, functions: null };
+  assert.deepEqual(faults({ changed: result.changed, coverage: [page], lineCoverage: {} }).map(item => [item.code, item.file, item.lines]), [['COVERAGE-DIFF', 'page.html', [3, 5]], ['COVERAGE-DIFF', 'a.js', [1]]]);
+}));
+
 test('[ownership-021] needs coverage for a line that a person resolved by hand', () => syncFixture(({ root, put, git, commit, base, from, input }) => {
   git('checkout', '-qb', 'conflict', base); put('a.js', 'author\n'); commit();
   const merge = spawnSync('git', ['-c', 'user.name=Test', '-c', 'user.email=test@example.com', 'merge', '--no-ff', '--no-commit', from], { cwd: root, encoding: 'utf8' });

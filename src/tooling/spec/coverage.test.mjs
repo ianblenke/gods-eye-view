@@ -6,6 +6,7 @@ import {
   findIgnoreComments,
   findTestImports,
   inlineScriptLines,
+  htmlCodeLines,
   measureCoverage,
   parseLcov,
   untrueFiles,
@@ -140,6 +141,28 @@ test('[coverage-gate-042] gives 0% coverage to event handler attributes and java
   assert.equal(inlineScriptLines(html), 4);
   const [page] = measureCoverage({ inventory: ['index.html'], entries: new Map(), readFile: () => html });
   assert.deepEqual([page.loaded, page.complete, page.lines], [false, false, { total: 4, uncovered: 4 }]);
+});
+
+test('[ownership-056] gives the code lines of an HTML file: script code, event handler attributes and javascript URLs', () => {
+  const html = [
+    '<html>',
+    '<body onload="go()">',
+    '<p>Text</p>',
+    '<button',
+    'onclick="run()">x</button>',
+    '<a href="javascript:void(0)">y</a>',
+    '<script src="a.js">skip();</script>',
+    '<script data-src="x">',
+    'run();',
+    '',
+    'go();',
+    '</script>',
+    '<script class="src=1">one();</script>',
+    '<script type="module" src="b.js"></script>',
+    '</body>',
+  ].join('\n');
+  assert.deepEqual([...htmlCodeLines(html)].sort((a, b) => a - b), [2, 5, 6, 9, 11, 13]);
+  assert.deepEqual([...htmlCodeLines('<main>\n  <p>Only markup</p>\n</main>\n')], []);
 });
 
 test('[coverage-gate-043] stops for a code file that imports a test file', () => {
