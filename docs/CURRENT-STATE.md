@@ -1534,7 +1534,7 @@ search (`src/search/defaults.js`) calls the same-origin `/api/google/geocode`
 route, and the reverse lookup of the HTTP geospatial provider
 (`src/search/http.js`) calls `/api/google/reverse-geocode`. With no key set,
 both routes answer `{configured:false, status:'REQUEST_DENIED', results:[]}`
-with no upstream call.
+and do not call Google.
 
 ## Infrastructure marker visibility
 

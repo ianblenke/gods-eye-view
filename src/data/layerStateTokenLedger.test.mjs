@@ -44,7 +44,6 @@ const reservationRows = JSON.parse(
   ),
 );
 
-// Some tests build their fixture from the rows without the layers that took the digits 4 and 5, so that their titles stay true.
 test('pre-ledger published ownership is independent of the candidate mapping', () => {
   assert.notStrictEqual(
     PRE_LEDGER_LAYER_STATE_TOKENS,
@@ -105,20 +104,7 @@ function writeCodecFixture(cwd, rows, entries) {
     providerCodec,
     readFileSync(new URL('./idSwitches.js', import.meta.url)),
   );
-  // Rows that do not reserve a layer give a registry without its entry.
-  const omittable = {
-    reticulum: '4',
-    beemaps: '5',
-    'beemaps-bursts': '6',
-  };
-  let source = readFileSync(CODEC_SOURCE_PATH, 'utf8');
-  for (const [id, token] of Object.entries(omittable)) {
-    if (rows.some(([rowId]) => rowId === id)) continue;
-    source = source.replace(
-      `  Object.freeze({\n    id: '${id}',\n    token: '${token}',\n    disposition: 'enabled-only',\n  }),\n`,
-      '',
-    );
-  }
+  const source = readFileSync(CODEC_SOURCE_PATH, 'utf8');
   const registryEnd = ']);\n\nexport const REGISTERED_LAYER_IDS';
   assert.equal(source.split(registryEnd).length, 2);
   const additions = entries
