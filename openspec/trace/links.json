@@ -5284,6 +5284,10 @@
   "ownership-055": [
     "src/tooling/spec/gates.test.mjs › [ownership-055] the gate stops at LEDGER-ADOPT-FROM and prints no LEDGER-STALE error for an invalid from commit"
   ],
+  "ownership-056": [
+    "src/tooling/spec/coverage.test.mjs › [ownership-056] gives the code lines of an HTML file: script code, event handler attributes and javascript URLs",
+    "src/tooling/spec/ownership.test.mjs › [ownership-056] asks coverage only for the code lines of an HTML file"
+  ],
   "perimeters-001": [
     "src/layers/perimeters/source.test.mjs › [perimeters-001] a live signal accepts a complete source response",
     "src/layers/perimeters/source.test.mjs › [perimeters-001] a successful response yields normalized perimeter rows",
