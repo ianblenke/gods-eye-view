@@ -88,13 +88,15 @@ export function inlineScriptLines(html) {
 }
 
 /**
- * The code lines of an HTML file, as line numbers from 1: each line of the start tag of a
- * script element without a src attribute and each line of its text that is not blank,
- * each line of an event handler attribute with its value, and each line of a script URL.
- * A script URL at the start of a quoted attribute value ends at the end quote of that
- * value. Another script URL ends at the first quote or `>` after it; with no such
- * character, it is one line. These are the parts that `inlineScriptLines` counts, with
- * the start tags of their script elements.
+ * The code lines of an HTML file, as line numbers from 1. A script element without a src
+ * attribute gives the lines of its start tag and each line of its text that is not
+ * blank. A script element with a src attribute gives the lines of its start tag when that
+ * tag has an event handler attribute or a script URL. Outside the script elements, each
+ * line of an event handler attribute with its value is a code line, and so is each line
+ * of a script URL. A script URL after `=` and a quote, with only white space around that
+ * quote, ends at the next quote of the same type, or at the end of the file. Another
+ * script URL ends at the first quote or `>` after it; with no such character, it is one
+ * line. These are the parts that `inlineScriptLines` counts, with some start tags.
  *
  * @param {string} html - Text of the HTML file.
  * @returns {Set<number>}
@@ -119,9 +121,14 @@ export function htmlCodeLines(html) {
     return index;
   };
   const outside = html.replace(SCRIPT_ELEMENT, (element, attributes, code, offset) => {
-    if (!SRC_ATTRIBUTE.test(attributes.replace(QUOTED_VALUE, '""'))) {
-      const tagEnd = offset + element.indexOf('>');
+    const inline = !SRC_ATTRIBUTE.test(attributes.replace(QUOTED_VALUE, '""'));
+    const tagEnd = offset + element.indexOf('>');
+    // A start tag is code when its element has no src attribute, or when the tag has a
+    // handler attribute or a script URL.
+    if (inline || attributes.search(HANDLER_ATTRIBUTE) >= 0 || attributes.search(SCRIPT_URL) >= 0) {
       addSpan(offset, tagEnd);
+    }
+    if (inline) {
       const first = lineAt(tagEnd + 1);
       code.split('\n').forEach((text, index) => {
         if (text.trim() !== '') lines.add(first + index);
