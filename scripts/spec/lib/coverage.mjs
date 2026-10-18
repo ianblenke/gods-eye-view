@@ -88,10 +88,12 @@ export function inlineScriptLines(html) {
 }
 
 /**
- * The code lines of an HTML file, as line numbers from 1: each line of code that is not
- * blank in a script element without a src attribute, each line of an event handler
- * attribute with its value, and each line of a script URL up to its closing quote. These
- * are the parts that `inlineScriptLines` counts.
+ * The code lines of an HTML file, as line numbers from 1: each line of the start tag of a
+ * script element without a src attribute and each line of its text that is not blank,
+ * each line of an event handler attribute with its value, and each line of a script URL.
+ * A script URL in a quoted attribute value ends at the end quote of that value; another
+ * script URL ends at the first quote or `>` after it. These are the parts that
+ * `inlineScriptLines` counts, with the start tags of their script elements.
  *
  * @param {string} html - Text of the HTML file.
  * @returns {Set<number>}
@@ -102,8 +104,8 @@ export function htmlCodeLines(html) {
   const addSpan = (start, end) => {
     for (let line = lineAt(start); line <= lineAt(end); line += 1) lines.add(line);
   };
-  // The end of an attribute value that starts after `from`: its closing quote, or the
-  // first white space or `>` of a value without quotes.
+  // The end of an attribute value that starts after `from`: its end quote, or the first
+  // white space or `>` of a value without quotes.
   const valueEnd = (text, from) => {
     let index = from;
     while (index < text.length && /\s/.test(text[index])) index += 1;
@@ -117,7 +119,9 @@ export function htmlCodeLines(html) {
   };
   const outside = html.replace(SCRIPT_ELEMENT, (element, attributes, code, offset) => {
     if (!SRC_ATTRIBUTE.test(attributes.replace(QUOTED_VALUE, '""'))) {
-      const first = lineAt(offset + element.indexOf('>') + 1);
+      const tagEnd = offset + element.indexOf('>');
+      addSpan(offset, tagEnd);
+      const first = lineAt(tagEnd + 1);
       code.split('\n').forEach((text, index) => {
         if (text.trim() !== '') lines.add(first + index);
       });
@@ -129,10 +133,15 @@ export function htmlCodeLines(html) {
   for (const match of outside.matchAll(HANDLER_ATTRIBUTE)) {
     addSpan(match.index + 1, valueEnd(outside, match.index + match[0].length));
   }
-  // A script URL ends at the first quote or `>` after it.
   for (const match of outside.matchAll(SCRIPT_URL)) {
-    const end = outside.slice(match.index).search(/["'>]/);
-    addSpan(match.index, end < 0 ? match.index : match.index + end);
+    const opener = /=\s*(["'])\s*$/.exec(outside.slice(0, match.index));
+    if (opener) {
+      const close = outside.indexOf(opener[1], match.index);
+      addSpan(match.index, close < 0 ? outside.length : close);
+    } else {
+      const end = outside.slice(match.index).search(/["'>]/);
+      addSpan(match.index, end < 0 ? match.index : match.index + end);
+    }
   }
   return lines;
 }

@@ -181,6 +181,10 @@ test('[ownership-056] gives the code lines of an HTML file: script code, event h
   assert.deepEqual([...htmlCodeLines(["<b onclick = 'x();", "y()'>b</b>", '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
   // A value that has no end quote continues to the end of the file.
   assert.deepEqual([...htmlCodeLines(['<p onclick="no end', 'still in the value'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // A URL in a value that has no end quote continues to the end of the file.
+  assert.deepEqual([...htmlCodeLines(['<a href="javascript:no end', 'still in the value'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // A URL in a value without quotes ends at the first quote or > after it.
+  assert.deepEqual([...htmlCodeLines(['<a href=javascript:go(', ')>x</a>', '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
   // A URL outside a value, with no quote or > after it, is one line.
   assert.deepEqual([...htmlCodeLines(['<p>see javascript:go', 'more text'].join('\n'))], [1]);
 });
