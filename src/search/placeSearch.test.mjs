@@ -62,7 +62,7 @@ test('[credential-boundary-020] a configured:false answer gives answered:false, 
   assert.equal(routeRequests(), 2);
 });
 
-test('[credential-boundary-020] without a browser key, the search sends no request to the route, and the Google step gives answered:true', async () => {
+test('[credential-boundary-020] without a browser key, the search sends no request to the Google route, and the Google step gives answered:true', async () => {
   const urls = [];
   const service = createStandalonePlaceSearch({ resolveApiKey: () => '', fetchImpl: async (url) => {
     urls.push(String(url));
@@ -74,10 +74,15 @@ test('[credential-boundary-020] without a browser key, the search sends no reque
   assert.equal(urls.length, 2);
 });
 
-// The route answers 429 from its limiter and 502 when the upstream fetch fails.
-// The body defaults to the body of the route. A test can give another body, so
-// that only the HTTP status decides the answer.
-const routeError = (status, photon, body = { configured: true, status: null, results: [] }) => {
+// The route answers 429 from its limiter and 502 when the upstream fetch fails,
+// with these bodies (server/providers/places/google.js). Each of these bodies
+// gives answered:false when the search reads it, so the test of the status gives
+// a body that reads as an answer.
+const routeErrorBodies = {
+  429: { status: 'OVER_QUERY_LIMIT', results: [], error: 'Rate limit exceeded' },
+  502: { status: 'UNKNOWN_ERROR', results: [], error: 'Google Geocoding request failed' },
+};
+const routeError = (status, photon, body = routeErrorBodies[status]) => {
   const urls = [];
   const service = createStandalonePlaceSearch({ resolveApiKey: () => 'fixture', fetchImpl: async (url) => {
     urls.push(String(url));
@@ -93,16 +98,18 @@ const routeError = (status, photon, body = { configured: true, status: null, res
 
 test('[credential-boundary-020] an HTTP error answer from the route and a Photon miss give answered:false', async () => {
   // With no place, the result has no fallbackUsed field.
-  // Each body would give answered:true if the search read it, so only the status gives answered:false.
-  for (const [status, body] of [
-    [429, { status: 'ZERO_RESULTS', results: [] }],
-    [502, { configured: false, status: null, results: [] }],
-  ]) {
-    const { service, urls } = routeError(status, () => Response.json({ features: [] }), body);
-    assert.deepEqual(await service.geocode('nowhere at all'), { place: null, answered: false });
+  // A ZERO_RESULTS body gives answered:true when the search reads it, so only the status gives answered:false.
+  const answers = {};
+  for (const status of [429, 502]) {
+    const { service, urls } = routeError(status, () => Response.json({ features: [] }), { status: 'ZERO_RESULTS', results: [] });
+    answers[status] = await service.geocode('nowhere at all');
     assert.equal(new URL(urls[1], 'http://localhost').hostname, 'photon.komoot.io');
     assert.equal(urls.length, 3, 'the Nominatim route is the last resort after the Photon miss');
   }
+  assert.deepEqual(answers, {
+    429: { place: null, answered: false },
+    502: { place: null, answered: false },
+  });
 });
 
 test('[credential-boundary-020] after an HTTP error answer from the route, the search then uses the Photon place', async () => {
