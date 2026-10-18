@@ -57,4 +57,4 @@
 - [x] 3.5 Add the retired IDs to `openspec/trace/retired-ids.json` after the archive.
 - [x] 3.6 Run the two review agents.
 - [x] 3.7 Write review.md.
-- [ ] 3.8 Run `make gates CHANGE=upstream-sync-6` on the final tree.
+- [x] 3.8 Run `make gates CHANGE=upstream-sync-6` on the final tree.
