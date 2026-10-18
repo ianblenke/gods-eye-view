@@ -88,6 +88,73 @@ export function inlineScriptLines(html) {
 }
 
 /**
+ * The code lines of an HTML file, as line numbers from 1. A script element without a src
+ * attribute gives the lines of its start tag and each line of its text that is not
+ * blank. A script element with a src attribute gives the lines of its start tag when that
+ * tag has an event handler attribute or a script URL. Outside the script elements, each
+ * line of an event handler attribute with its value is a code line, and so is each line
+ * of a script URL. A script URL after `=` and a quote, with only white space around that
+ * quote, ends at the next quote of the same type, or at the end of the file. Another
+ * script URL ends at the first quote or `>` after it; with no such character, it is one
+ * line. These are the parts that `inlineScriptLines` counts, with some start tags.
+ *
+ * @param {string} html - Text of the HTML file.
+ * @returns {Set<number>}
+ */
+export function htmlCodeLines(html) {
+  const lines = new Set();
+  const lineAt = (offset) => html.slice(0, offset).split('\n').length;
+  const addSpan = (start, end) => {
+    for (let line = lineAt(start); line <= lineAt(end); line += 1) lines.add(line);
+  };
+  // The end of an attribute value that starts after `from`: its end quote, or the first
+  // white space or `>` of a value without quotes.
+  const valueEnd = (text, from) => {
+    let index = from;
+    while (index < text.length && /\s/.test(text[index])) index += 1;
+    const quote = text[index];
+    if (quote === '"' || quote === "'") {
+      const close = text.indexOf(quote, index + 1);
+      return close < 0 ? text.length : close;
+    }
+    while (index < text.length && !/[\s>]/.test(text[index])) index += 1;
+    return index;
+  };
+  const outside = html.replace(SCRIPT_ELEMENT, (element, attributes, code, offset) => {
+    const inline = !SRC_ATTRIBUTE.test(attributes.replace(QUOTED_VALUE, '""'));
+    const tagEnd = offset + element.indexOf('>');
+    // A start tag is code when its element has no src attribute, or when the tag has a
+    // handler attribute or a script URL.
+    if (inline || attributes.search(HANDLER_ATTRIBUTE) >= 0 || attributes.search(SCRIPT_URL) >= 0) {
+      addSpan(offset, tagEnd);
+    }
+    if (inline) {
+      const first = lineAt(tagEnd + 1);
+      code.split('\n').forEach((text, index) => {
+        if (text.trim() !== '') lines.add(first + index);
+      });
+    }
+    // Keep the line ends, so that the offsets of the text outside stay the same.
+    return element.replace(/[^\n]/g, ' ');
+  });
+  // The handler pattern starts with one white space character; the attribute starts after it.
+  for (const match of outside.matchAll(HANDLER_ATTRIBUTE)) {
+    addSpan(match.index + 1, valueEnd(outside, match.index + match[0].length));
+  }
+  for (const match of outside.matchAll(SCRIPT_URL)) {
+    const opener = /=\s*(["'])\s*$/.exec(outside.slice(0, match.index));
+    if (opener) {
+      const close = outside.indexOf(opener[1], match.index);
+      addSpan(match.index, close < 0 ? outside.length : close);
+    } else {
+      const end = outside.slice(match.index).search(/["'>]/);
+      addSpan(match.index, end < 0 ? match.index : match.index + end);
+    }
+  }
+  return lines;
+}
+
+/**
  * Find code files that import or require a test file.
  *
  * @returns {object[]} One error for each line with such an import.

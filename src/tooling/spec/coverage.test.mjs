@@ -6,6 +6,7 @@ import {
   findIgnoreComments,
   findTestImports,
   inlineScriptLines,
+  htmlCodeLines,
   measureCoverage,
   parseLcov,
   untrueFiles,
@@ -140,6 +141,59 @@ test('[coverage-gate-042] gives 0% coverage to event handler attributes and java
   assert.equal(inlineScriptLines(html), 4);
   const [page] = measureCoverage({ inventory: ['index.html'], entries: new Map(), readFile: () => html });
   assert.deepEqual([page.loaded, page.complete, page.lines], [false, false, { total: 4, uncovered: 4 }]);
+});
+
+test('[ownership-056] gives the code lines of an HTML file: script code, event handler attributes and javascript URLs', () => {
+  const html = [
+    '<html>',
+    '<body onload="go()">',
+    '<p>Text</p>',
+    '<button',
+    'onclick="run()">x</button>',
+    '<a href="javascript:void(0)">y</a>',
+    '<script src="a.js">skip();</script>',
+    '<script data-src="x">',
+    'run();',
+    '',
+    'go();',
+    '</script>',
+    '<script title="x src=1">one();</script>',
+    '<script type="module" src="b.js"></script>',
+    '<div onmouseover="a();',
+    'b();">z</div>',
+    "<a href='javascript:",
+    "go()'>w</a>",
+    '<i onclick=run()>q</i>',
+    '<script',
+    'type="module">',
+    'init();',
+    '</script>',
+    '<a href="javascript:f(\'a\',',
+    "'b')\">v</a>",
+    '</body>',
+  ].join('\n');
+  assert.deepEqual(
+    [...htmlCodeLines(html)].sort((a, b) => a - b),
+    [2, 5, 6, 8, 9, 11, 13, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25],
+  );
+  assert.deepEqual([...htmlCodeLines('<main>\n  <p>Only markup</p>\n</main>\n')], []);
+  // A value after white space and in single quotes.
+  assert.deepEqual([...htmlCodeLines(["<b onclick = 'x();", "y()'>b</b>", '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // A value that has no end quote continues to the end of the file.
+  assert.deepEqual([...htmlCodeLines(['<p onclick="no end', 'still in the value'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // A URL in a value that has no end quote continues to the end of the file.
+  assert.deepEqual([...htmlCodeLines(['<a href="javascript:no end', 'still in the value'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // A URL in single quotes ends at the next single quote, after the double quotes in it.
+  assert.deepEqual([...htmlCodeLines(['<a href=\'javascript:f("a",', '"b")\'>x</a>', '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // White space can come before and after the quote of a URL value.
+  assert.deepEqual([...htmlCodeLines(['<a href= " javascript:f(\'a\',', "'b')\">x</a>", '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // The start tag of a script element with a src attribute is code when the tag has a handler attribute or a script URL.
+  assert.deepEqual([...htmlCodeLines(['<script src="api.js"', 'onload="init()">', 'x();', '</script>', '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  assert.deepEqual([...htmlCodeLines(['<script src="b.js"', 'data-href="javascript:go()"></script>', '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // A URL in a value without quotes ends at the first quote or > after it.
+  assert.deepEqual([...htmlCodeLines(['<a href=javascript:go(', ')>x</a>', '<p>'].join('\n'))].sort((a, b) => a - b), [1, 2]);
+  // A URL outside a value, with no quote or > after it, is one line.
+  assert.deepEqual([...htmlCodeLines(['<p>see javascript:go', 'more text'].join('\n'))], [1]);
 });
 
 test('[coverage-gate-043] stops for a code file that imports a test file', () => {
