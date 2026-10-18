@@ -21,4 +21,4 @@
 - [x] 3.2 Run `make ratchet CHANGE=html-code-lines`.
 - [x] 3.3 Run the two review agents.
 - [x] 3.4 Write review.md.
-- [ ] 3.5 Run `make gates CHANGE=html-code-lines` on the final tree.
+- [x] 3.5 Run `make gates CHANGE=html-code-lines` on the final tree.
