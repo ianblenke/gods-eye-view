@@ -35,3 +35,52 @@ for name, path, old, new in FAULTS:
     finally:
         open(full, 'w').write(text)
         assert sha(path) == before, ('not restored', path)
+
+Round-1 corrections (code of commit c2802528): the tests of credential-boundary-020 check the upstream behavior, and src/search/google.js equals the upstream file. Command: python3 -I faults-020.py <clone> (the same steps; the script text below is the new script).
+
+KILLED: an HTTP error answer reads the body (src/search/google.js) | # tests 6 # pass 5 # fail 1 | failed: ['an HTTP error answer from the route and a Photon miss give answered:false']
+KILLED: a configured:false answer gives answered:true (the old fork line) (src/search/google.js) | # tests 6 # pass 5 # fail 1 | failed: ['a configured:false answer gives answered:false, and the search keeps no miss in its cache']
+KILLED: a search with no browser key reads a missing answer (src/search/google.js) | # tests 6 # pass 5 # fail 1 | failed: ['without a browser key, the search sends no request to the route, and the Google step gives answered:true']
+KILLED: a search with no browser key sends the request (src/search/defaults.js) | # tests 6 # pass 5 # fail 1 | failed: ['without a browser key, the search sends no request to the route, and the Google step gives answered:true']
+KILLED: the request URL has the key (src/search/defaults.js) | # tests 6 # pass 5 # fail 1 | failed: ['the geocode request URL is same-origin, with address and bounds, and no key']
+KILLED: the request URL has no bounds (src/search/defaults.js) | # tests 6 # pass 5 # fail 1 | failed: ['the geocode request URL is same-origin, with address and bounds, and no key']
+KILLED: the search stops after an answered miss (src/search/placeSearch.js) | # tests 6 # pass 0 # fail 6 | failed: ['a keyless server answers configured:false and the search then uses Photon', 'a configured:false answer gives answered:false, and the search keeps no miss in its cache', 'without a browser key, the search sends no request to the route, and the Google step gives answered:true', 'an HTTP error answer from the route and a Photon miss give answered:false', 'after an HTTP error answer from the route, the search then uses the Photon place', 'the geocode request URL is same-origin, with address and bounds, and no key']
+KILLED: the search stops after an HTTP error answer (src/search/placeSearch.js) | # tests 6 # pass 2 # fail 4 | failed: ['a keyless server answers configured:false and the search then uses Photon', 'a configured:false answer gives answered:false, and the search keeps no miss in its cache', 'an HTTP error answer from the route and a Photon miss give answered:false', 'after an HTTP error answer from the route, the search then uses the Photon place']
+KILLED: the search keeps a miss that has answered:false in its cache (src/search/placeSearch.js) | # tests 6 # pass 5 # fail 1 | failed: ['a configured:false answer gives answered:false, and the search keeps no miss in its cache']
+
+----- faults-020.py (round-1 corrections) -----
+#!/usr/bin/env python3
+# Faults of credential-boundary-020: for each, change one part of the code, run the five tests of the scenario, restore the file.
+import subprocess, sys, hashlib
+clone = sys.argv[1]
+G = 'src/search/google.js'; D = 'src/search/defaults.js'; P = 'src/search/placeSearch.js'
+FAULTS = [
+  ('an HTTP error answer reads the body', G, "        if (response.ok === false) return { place: null, answered: false };\n", ""),
+  ('a configured:false answer gives answered:true (the old fork line)', G, "        const data = await response.json();\n        signal?.throwIfAborted();\n", "        const data = await response.json();\n        signal?.throwIfAborted();\n        if (data?.configured === false) return { place: null, answered: true };\n"),
+  ('a search with no browser key reads a missing answer', G, "        if (!response) return { place: null, answered: true };\n", ""),
+  ('a search with no browser key sends the request', D, "                if (!resolveApiKey?.()) return null;\n", ""),
+  ('the request URL has the key', D, "                const params = new URLSearchParams({ address: query });\n", "                const params = new URLSearchParams({ address: query, key: resolveApiKey() });\n"),
+  ('the request URL has no bounds', D, "                const params = new URLSearchParams({ address: query });\n                if (bias) params.set('bounds', bias);\n", "                const params = new URLSearchParams({ address: query });\n"),
+  ('the search stops after an answered miss', P, "          if (result.place) {\n", "          if (!result.place && next.answered) break;\n          if (result.place) {\n"),
+  ('the search stops after an HTTP error answer', P, "          if (result.place) {\n", "          if (!result.place && !next.answered) break;\n          if (result.place) {\n"),
+  ('the search keeps a miss that has answered:false in its cache', P, "      if (result.answered) {\n        cache.set(key, {\n", "      if (true) {\n        cache.set(key, {\n"),
+]
+def sha(p): return hashlib.sha256(open(f'{clone}/{p}','rb').read()).hexdigest()
+for name, path, old, new in FAULTS:
+    full = f'{clone}/{path}'; text = open(full).read(); before = sha(path)
+    assert text.count(old) == 1, (name, 'pattern count', text.count(old))
+    open(full, 'w').write(text.replace(old, new))
+    try:
+        r = subprocess.run(['node', '--test', '--test-reporter=tap', '--test-name-pattern=credential-boundary-020', 'src/search/placeSearch.test.mjs'], cwd=clone, capture_output=True, text=True, timeout=300)
+        out = r.stdout + r.stderr
+        fails = [l.split('[credential-boundary-020] ')[1] for l in out.splitlines() if l.lstrip().startswith('not ok') and '[credential-boundary-020]' in l]
+        counts = ' '.join(l for l in out.splitlines() if l.startswith(('# tests', '# pass', '# fail')))
+        print(f"{'KILLED' if fails else 'SURVIVED'}: {name} ({path}) | {counts} | failed: {fails}")
+    finally:
+        open(full, 'w').write(text)
+        assert sha(path) == before, ('not restored', path)
+
+Fault of the Known limit reverse-route-test (code of commit c2802528): add key: 'fault-key' to the reverse request in src/search/http.js, run each test file except src/tooling/spec/gates.test.mjs (779 files, 8 at a time), restore the file and check its sha256.
+src/search/geospatial.test.mjs: rc=1 ℹ cancelled 0 ℹ fail 1 ℹ pass 7 ℹ skipped 0 ℹ tests 8 
+Total fail: 1
+The failed test: compatible HTTP endpoints retain units and never place a server credential in browser requests

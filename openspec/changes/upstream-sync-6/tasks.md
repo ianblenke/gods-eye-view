@@ -22,17 +22,17 @@
 - [x] 1.20 Add the scenario `credential-boundary-020` to the delta spec for `credential-boundary`.
 - [x] 1.21 Write the tests of `credential-boundary-020` from the old tests of `credential-boundary-013`.
 - [x] 1.22 Write the scenario `credential-boundary-020` again for the upstream behavior.
-- [ ] 1.23 Write the tests of `credential-boundary-020` again for the upstream behavior.
-- [ ] 1.24 Use the upstream file `src/search/google.js`.
-- [ ] 1.25 Run the faults of `evidence/fault-020.txt`.
+- [x] 1.23 Write the tests of `credential-boundary-020` again for the upstream behavior.
+- [x] 1.24 Use the upstream file `src/search/google.js`.
+- [x] 1.25 Run the faults of `evidence/fault-020.txt`.
 - [x] 1.26 Add one line to the scenario `cyclones-021` in the delta spec for `cyclones`.
 - [x] 1.27 Keep the scenario `cyclones-020` in the delta spec for `cyclones`.
 - [x] 1.28 Keep the scenario `cyclones-022` in the delta spec for `cyclones`.
-- [ ] 1.29 Remove the old CSP bullet from `SECURITY.md`.
-- [ ] 1.30 Remove the unused import of `t` from `src/app/controls.js`.
-- [ ] 1.31 Remove the fork comment and the block `omittable` from `src/data/layerStateTokenLedger.test.mjs`.
-- [ ] 1.32 Write "do not call Google" in the fork note of `docs/CURRENT-STATE.md`.
-- [ ] 1.33 Change the test name of `perimeters-005` to the words of its scenario.
+- [x] 1.29 Remove the old CSP bullet from `SECURITY.md`.
+- [x] 1.30 Remove the unused import of `t` from `src/app/controls.js`.
+- [x] 1.31 Remove the fork comment and the block `omittable` from `src/data/layerStateTokenLedger.test.mjs`.
+- [x] 1.32 Write "do not call Google" in the fork note of `docs/CURRENT-STATE.md`.
+- [x] 1.33 Change the test name of `perimeters-005` to the words of its scenario.
 
 ## 2. Host evidence
 

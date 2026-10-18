@@ -36,7 +36,9 @@ None.
 
 Outside the change folder, the merge commit changes 782 files compared with the base commit. It adds 258 files and removes 4 files.
 Outside the change folder, the commits after the merge commit and before the merge of the fork main change 44 files. Two of these files are in `openspec/trace/`.
-The merge of the fork main brings the 29 files of the change `html-code-lines`. After that merge, one more commit changes `src/search/placeSearch.test.mjs`.
+The merge of the fork main brings the 29 files of the change `html-code-lines`.
+
+After that merge, the later commits change seven more files outside the change folder and `openspec/trace/`: `SECURITY.md`, `docs/CURRENT-STATE.md`, `src/app/controls.js`, `src/data/layerStateTokenLedger.test.mjs`, `src/layers/perimeters/cards.test.mjs`, `src/search/google.js` and `src/search/placeSearch.test.mjs`. These seven files are upstream files.
 
 Rule 23: the owner approved on 2026-10-17 the removal of five owned paths from `openspec/ownership.json`.
 The five paths are `server/providers/places/coordinates.js`, `server/providers/places/geocode.js`, `src/googleGeocodeProxy.test.mjs`, `src/googleGeocodeRateLimit.test.mjs` and `src/search/reverseGeocodeRoute.test.mjs`.
@@ -66,5 +68,5 @@ The upstream code adds routes. The fork keeps them as upstream code with the ado
 - Known limit `docker-path`: The fork does not use the upstream Docker installation path. The file `scripts/docker-start.mjs` comes from upstream and has no use in the fork.
 - Known limit `fork-text`: The text check of upstream does not find all fork texts. Fork texts that the check does not find stay in English in the Spanish and Russian interface.
 - Known limit `changelog`: Upstream now puts each new changelog entry in a file under `changelog.d/`. The fork still edits `CHANGELOG.md`, so the next sync can have a conflict there again.
-- Known limit `reverse-route-test`: No scenario of `credential-boundary` checks the reverse route `/api/google/reverse-geocode`. When a person adds a key to the reverse request in `src/search/http.js`, no fork test fails.
+- Known limit `reverse-route-test`: No scenario of `credential-boundary` checks the reverse route `/api/google/reverse-geocode`. When a person adds a key to the reverse request in `src/search/http.js`, only one upstream test in `src/search/geospatial.test.mjs` fails. That test checks that no server credential goes into a browser request, and it has no scenario ID.
 - Known limit `osh-source`: The OSH layer is not in the catalog source contracts of upstream. This is older than this change.

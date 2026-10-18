@@ -62,3 +62,19 @@ Command: git diff --shortstat 1d6b70fc 41add05c (the change html-code-lines on t
 
 Command: git diff --name-status 05bab3a4 716161bb -- . ':!openspec/changes/upstream-sync-6' (the commits after the merge of the fork main)
 M	src/search/placeSearch.test.mjs
+
+Command: git diff --name-status 716161bb c2802528 -- . ':!openspec/changes/upstream-sync-6' (the round-1 corrections)
+M	SECURITY.md
+M	docs/CURRENT-STATE.md
+M	openspec/trace/gaps.json
+M	openspec/trace/history.jsonl
+M	openspec/trace/ids.json
+M	openspec/trace/links.json
+M	src/app/controls.js
+M	src/data/layerStateTokenLedger.test.mjs
+M	src/layers/perimeters/cards.test.mjs
+M	src/search/google.js
+M	src/search/placeSearch.test.mjs
+
+Command: git diff --name-only 05bab3a4 c2802528 -- . ':!openspec/changes/upstream-sync-6' ':!openspec/trace' | wc -l (all files after the merge of the fork main, outside the change folder and the trace)
+7

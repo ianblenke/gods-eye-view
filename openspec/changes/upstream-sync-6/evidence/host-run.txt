@@ -785,3 +785,6 @@ Total: files 779 tests 11577 pass 11561 fail 0 skipped 16
 
 Later commit 716161bb changes one test file. Command: node --test src/search/placeSearch.test.mjs (host, Node v26.8.2)
 src/search/placeSearch.test.mjs: ℹ cancelled 0 ℹ fail 0 ℹ pass 14 ℹ skipped 0 ℹ tests 14 
+
+Round-1 corrections (code of commit c2802528). Command: one process for each test file except src/tooling/spec/gates.test.mjs, 8 at a time, on the host (Node v26.8.2); timeout 600 nice -n 19 node --test <file>
+Total: files 779 tests 11583 pass 11567 fail 0 skipped 16

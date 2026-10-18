@@ -26,7 +26,12 @@ Command: git diff 1d6b70fc 716161bb -- src/search/placeSearch.test.mjs | grep -c
 5
 Command: git grep -c 'credential-boundary-013\]' 716161bb -- '*.test.mjs'
 (no match)
-The five tests of credential-boundary-013 come back with the ID credential-boundary-020 (see proposal.md and design.md D2). The ID credential-boundary-013 stays retired.
+The change adds the five tests of credential-boundary-013 again, with the ID credential-boundary-020 (see proposal.md and design.md D2). The ID credential-boundary-013 stays retired.
+
+Later commits fea448ce and a6440349 (round-1 corrections):
+Command: git grep -c "test('\[credential-boundary-020\]" a6440349 -- src/search/placeSearch.test.mjs
+6
+The tests of credential-boundary-020 now check the upstream behavior: a configured:false answer gives answered:false, and one more test checks a search with no browser key. The test of perimeters-005 has a new name with the words of its scenario.
 
 ----- scenario_tests.py -----
 """Scenario IDs whose test blocks (top-level test(...) up to its first '\n});\n') exist at the base and differ or are gone at HEAD."""
