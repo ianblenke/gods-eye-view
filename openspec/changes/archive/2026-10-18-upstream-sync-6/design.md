@@ -82,6 +82,9 @@ It removes `server/providers/places/geocode.js`, `server/providers/places/coordi
 It puts back the upstream browser key lines in `src/standalone/application.js` and in four test files. The upstream browser code uses the key only to decide whether to ask Google, and the key does not go in the request.
 
 The delta removes the three fork requirements of the geocoding. Before the archive, the main spec still holds their scenarios, and the trace gate does not ask for their tests. So the IDs go into `openspec/trace/retired-ids.json` only after the archive.
+The ratchet ran before the archive and wrote an empty link for each of the 11 IDs. After the archive, the lead removes these 11 lines from `openspec/trace/links.json`.
+
+At the archive, the lead adds the word "Google" to the Purpose of the spec `credential-boundary`. The Purpose now says "Send Google geocoding requests from the browser only to our server, with no API key." The old sentence was false at the base and after the merge, because the browser also asks Photon at `photon.komoot.io`.
 
 The new requirement "Browser geocoding routes" keeps the two rules that hold for the upstream code. No browser file calls the geocoding host of Google (`credential-boundary-019`). A forward lookup asks the next geocoder when the route answers `configured:false` or an HTTP error (`credential-boundary-020`).
 

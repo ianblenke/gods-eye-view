@@ -1,7 +1,7 @@
 # credential-boundary Specification
 
 ## Purpose
-Keep each secret credential on the server. Put only the three public credentials and the AIS live settings in the browser bundle. Send geocoding requests from the browser only to our server, with no API key.
+Keep each secret credential on the server. Put only the three public credentials and the AIS live settings in the browser bundle. Send Google geocoding requests from the browser only to our server, with no API key.
 ## Requirements
 ### Requirement: Browser bundle inputs
 The browser build MUST show the browser only the three public credentials and the AIS live settings.
