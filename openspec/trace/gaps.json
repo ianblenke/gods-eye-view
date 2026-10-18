@@ -2013,15 +2013,15 @@
     },
     "src/app/controls.js": {
       "loaded": false,
-      "lines": 51,
+      "lines": 50,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 51,
+        "lines": 50,
         "branches": null,
         "functions": null
       },
-      "sha": "f956369daad900ead66aa03fba9966c498523109d80470b256eaa23d7db5af89",
+      "sha": "8ef19f1cd03a8f69d7317efcdcd006c0f02a6fc8568a91dbde68f9e3605c7292",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -8243,7 +8243,7 @@
       "functions": 0,
       "totals": {
         "lines": 816,
-        "branches": 382,
+        "branches": 383,
         "functions": 45
       },
       "sha": "91b16d330c7e43e5a50ac64a931b198e2e3acb4049dd5e7c949e855c70503742",
@@ -9038,7 +9038,7 @@
       "functions": 1,
       "totals": {
         "lines": 112,
-        "branches": 21,
+        "branches": 24,
         "functions": 5
       },
       "sha": "fb0f61016cec536dcdae33593b49514a1d2aae9b3020c3b586eb0e31ccdc3123",
@@ -9067,11 +9067,11 @@
       "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 68,
-        "branches": 30,
+        "lines": 66,
+        "branches": 31,
         "functions": 6
       },
-      "sha": "5fe61bedad920cf2e00434731af0adb42e8552b6b893dc1ecddd65e9071192e6",
+      "sha": "d407e00b7fa8cebb66b02bd97ac8ddb9e3e6fc51d1e00271adee98d9f7b5812d",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"

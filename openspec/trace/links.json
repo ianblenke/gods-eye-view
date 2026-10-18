@@ -1601,11 +1601,12 @@
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-019] no direct call to Google geocoding remains in the browser source"
   ],
   "credential-boundary-020": [
-    "src/search/placeSearch.test.mjs › [credential-boundary-020] a configured:false answer does not give answered:false",
+    "src/search/placeSearch.test.mjs › [credential-boundary-020] a configured:false answer gives answered:false, and the search keeps no miss in its cache",
     "src/search/placeSearch.test.mjs › [credential-boundary-020] a keyless server answers configured:false and the search then uses Photon",
     "src/search/placeSearch.test.mjs › [credential-boundary-020] after an HTTP error answer from the route, the search then uses the Photon place",
     "src/search/placeSearch.test.mjs › [credential-boundary-020] an HTTP error answer from the route and a Photon miss give answered:false",
-    "src/search/placeSearch.test.mjs › [credential-boundary-020] the geocode request URL is same-origin, with address and bounds, and no key"
+    "src/search/placeSearch.test.mjs › [credential-boundary-020] the geocode request URL is same-origin, with address and bounds, and no key",
+    "src/search/placeSearch.test.mjs › [credential-boundary-020] without a browser key, the search sends no request to the route, and the Google step gives answered:true"
   ],
   "cyclones-001": [
     "src/layers/cyclones/source.test.mjs › [cyclones-001] a track of one line and a cone of one polygon keep their types",
@@ -5266,7 +5267,7 @@
     "src/layers/perimeters/records.test.mjs › [perimeters-004] bad rings and polygon lists leave no rows"
   ],
   "perimeters-005": [
-    "src/layers/perimeters/cards.test.mjs › [perimeters-005] the card anchors at the vertex mean of the largest polygon"
+    "src/layers/perimeters/cards.test.mjs › [perimeters-005] the card anchors at the mean of the outer vertices of the largest polygon"
   ],
   "perimeters-006": [
     "src/layers/perimeters/cards.test.mjs › [perimeters-006] a card without a link is not interactive",
