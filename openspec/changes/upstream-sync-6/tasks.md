@@ -48,7 +48,7 @@
 - [x] 3.1 Check the second parent of the merge commit against the upstream remote.
 - [x] 3.2 Run `make adopt CHANGE=upstream-sync-6 FROM=73aec2e6b2ecfa865ddb7cb8839fa2d40fd0eb66`.
 - [x] 3.3 Merge the fork main commit `41add05c` into the branch.
-- [ ] 3.4 Run `make ratchet CHANGE=upstream-sync-6`.
+- [x] 3.4 Run `make ratchet CHANGE=upstream-sync-6`.
 - [ ] 3.5 Add the retired IDs to `openspec/trace/retired-ids.json` after the archive.
 - [ ] 3.6 Run the two review agents.
 - [ ] 3.7 Write review.md.
