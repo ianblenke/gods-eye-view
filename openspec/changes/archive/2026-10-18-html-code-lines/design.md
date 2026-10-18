@@ -11,7 +11,7 @@ The diff coverage gate (`ownership-007`) asks covered line data for each changed
 `htmlCodeLines(html)` gives a set of line numbers, from 1.
 For each script element whose start tag has no src attribute, it adds each line of its code that is not blank. The test for the src attribute is the test of `inlineScriptLines()`: a quoted value does not count.
 
-For each event handler attribute outside the script elements, it adds each line from the attribute name to the end of the value. The value ends at its closing quote, or at the first white space or `>` of a value without quotes. A value with no closing quote ends at the end of the file.
+For each event handler attribute outside the script elements, it adds each line from the attribute name to the end of the value. The value ends at its second quote, or at the first white space or `>` of a value without quotes. A value with no second quote ends at the end of the file.
 For each `javascript:` URL outside the script elements, it adds each line from the URL to the first quote or `>` after it. With no such character, it adds only the line of the URL.
 
 The pattern of an event handler attribute starts with a white space character. When that character is a line end, the attribute starts on the next line, and the function starts at that next line.
