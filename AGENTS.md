@@ -10,7 +10,7 @@ These rules are for each person and each AI agent that changes this project.
 4. Write the code until the tests pass.
 5. Keep each owned code file that a change adds or edits at 100% line, branch and function coverage. Each owned code file without a ledger entry also needs full coverage. The command `node scripts/spec/gates.mjs report` lists all ledger gaps of both classes. The target is zero owned gaps.
 
-   Keep 100% line coverage for each line that a change adds or edits in a code file. In an HTML file, only the code lines need it: the script elements, the event handler attributes and the `javascript:` URLs. For a sync, a changed line needs no coverage when it equals the file in the commit that the adopt command names.
+   Keep 100% line coverage for each line that a change adds or edits in a code file. In an HTML file, only the code lines need it. The scenario `ownership-056` of the ownership spec names them. For a sync, a changed line needs no coverage when it equals the file in the commit that the adopt command names.
 6. Write all new prose in ASD-STE100 Simplified Technical English.
 7. Get a passed review from the two review agents before you merge the change.
 

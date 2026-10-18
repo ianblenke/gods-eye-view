@@ -1,4 +1,4 @@
-Command: python3 -I html-code-lines-faults.py (in the clone, on the code of commit 6c17a502). For each fault: change one part of the code, run node --test --test-name-pattern=ownership-056 on src/tooling/spec/coverage.test.mjs and src/tooling/spec/ownership.test.mjs, restore the file.
+Command: python3 -I html-code-lines-faults.py (in the clone, on the code of commit 122cf0e9). For each fault: change one part of the code, run node --test --test-name-pattern=ownership-056 on src/tooling/spec/coverage.test.mjs and src/tooling/spec/ownership.test.mjs, restore the file.
 
 filter removed                                             -> ℹ fail 1 KILLED
 script code lines not added                                -> ℹ fail 2 KILLED
@@ -9,6 +9,11 @@ script URL lines not added                                 -> ℹ fail 1 KILLED
 src element counted                                        -> ℹ fail 1 KILLED
 quoted src taken as src                                    -> ℹ fail 1 KILLED
 line before a line-end attribute                           -> ℹ fail 1 KILLED
+a src start tag with a handler not added                   -> ℹ fail 1 KILLED
+a src start tag with a URL not added                       -> ℹ fail 1 KILLED
+a URL value only in double quotes                          -> ℹ fail 1 KILLED
+no white space after the quote of a URL value              -> ℹ fail 1 KILLED
+no white space before the quote of a URL value             -> ℹ fail 1 KILLED
 blank script line counted                                  -> ℹ fail 1 KILLED
 only the first line of an attribute                        -> ℹ fail 1 KILLED
 no skip of white space before a value                      -> ℹ fail 1 KILLED
@@ -23,7 +28,7 @@ import subprocess, shutil
 C = 'scripts/spec/lib/coverage.mjs'; O = 'scripts/spec/lib/ownership.mjs'
 HANDLER_LOOP = "  for (const match of outside.matchAll(HANDLER_ATTRIBUTE)) {\n    addSpan(match.index + 1, valueEnd(outside, match.index + match[0].length));\n  }\n"
 URL_LOOP_START = "  for (const match of outside.matchAll(SCRIPT_URL)) {\n"
-SRC_TEST = "    if (!SRC_ATTRIBUTE.test(attributes.replace(QUOTED_VALUE, '\"\"'))) {\n      const tagEnd"
+SRC_TEST = "    const inline = !SRC_ATTRIBUTE.test(attributes.replace(QUOTED_VALUE, '\"\"'));\n"
 faults = [
  ('filter removed', O, "    changed[file] = changed[file].filter((line) => code.has(line));\n", "    void code;\n"),
  ('script code lines not added', C, "        if (text.trim() !== '') lines.add(first + index);\n", "        void text;\n"),
@@ -31,9 +36,14 @@ faults = [
  ('code lines counted from the tag start', C, "      const first = lineAt(tagEnd + 1);\n", "      const first = lineAt(offset);\n"),
  ('handler lines not added', C, HANDLER_LOOP, ""),
  ('script URL lines not added', C, URL_LOOP_START, "  for (const match of [].values()) {\n"),
- ('src element counted', C, SRC_TEST, "    if (true) {\n      const tagEnd"),
- ('quoted src taken as src', C, SRC_TEST, "    if (!SRC_ATTRIBUTE.test(attributes)) {\n      const tagEnd"),
+ ('src element counted', C, SRC_TEST, "    const inline = true;\n"),
+ ('quoted src taken as src', C, SRC_TEST, "    const inline = !SRC_ATTRIBUTE.test(attributes);\n"),
  ('line before a line-end attribute', C, "    addSpan(match.index + 1, valueEnd(", "    addSpan(match.index, valueEnd("),
+ ('a src start tag with a handler not added', C, " || attributes.search(HANDLER_ATTRIBUTE) >= 0", ""),
+ ('a src start tag with a URL not added', C, " || attributes.search(SCRIPT_URL) >= 0", ""),
+ ('a URL value only in double quotes', C, "/=\\s*([\"'])\\s*$/", "/=\\s*([\"])\\s*$/"),
+ ('no white space after the quote of a URL value', C, "/=\\s*([\"'])\\s*$/", "/=\\s*([\"'])$/"),
+ ('no white space before the quote of a URL value', C, "/=\\s*([\"'])\\s*$/", "/=([\"'])\\s*$/"),
  ('blank script line counted', C, "        if (text.trim() !== '') lines.add(first + index);\n", "        lines.add(first + index);\n"),
  ('only the first line of an attribute', C, "    addSpan(match.index + 1, valueEnd(outside, match.index + match[0].length));\n", "    addSpan(match.index + 1, match.index + 1);\n"),
  ('no skip of white space before a value', C, "    while (index < text.length && /\\s/.test(text[index])) index += 1;\n", ""),
