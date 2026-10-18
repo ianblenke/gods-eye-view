@@ -17,7 +17,7 @@
 
 ## 3. Checks and review
 
-- [ ] 3.1 Run the test files of `src/tooling/spec` on the host.
+- [x] 3.1 Run the test files of `src/tooling/spec` on the host.
 - [ ] 3.2 Run `make ratchet CHANGE=html-code-lines`.
 - [ ] 3.3 Run the two review agents.
 - [ ] 3.4 Write review.md.

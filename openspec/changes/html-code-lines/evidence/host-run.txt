@@ -1,4 +1,4 @@
-Command: for each file in src/tooling/spec/*.test.mjs: timeout 2400 nice -n 19 node --test <file> (host, Node v26.8.2, 6 files at a time, commit f4f558c8)
+Command: for each file in src/tooling/spec/*.test.mjs: timeout 2400 nice -n 19 node --test <file> (host, Node v26.8.2, 6 files at a time, commit ff77f6ca; the next commit changes only the JSDoc comment of htmlCodeLines)
 
 src/tooling/spec/ciFiles.test.mjs: rc=0 ℹ tests 4 ℹ pass 4 ℹ fail 0 
 src/tooling/spec/ci.test.mjs: rc=0 ℹ tests 6 ℹ pass 6 ℹ fail 0 

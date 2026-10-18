@@ -91,9 +91,10 @@ export function inlineScriptLines(html) {
  * The code lines of an HTML file, as line numbers from 1: each line of the start tag of a
  * script element without a src attribute and each line of its text that is not blank,
  * each line of an event handler attribute with its value, and each line of a script URL.
- * A script URL in a quoted attribute value ends at the end quote of that value; another
- * script URL ends at the first quote or `>` after it. These are the parts that
- * `inlineScriptLines` counts, with the start tags of their script elements.
+ * A script URL at the start of a quoted attribute value ends at the end quote of that
+ * value. Another script URL ends at the first quote or `>` after it; with no such
+ * character, it is one line. These are the parts that `inlineScriptLines` counts, with
+ * the start tags of their script elements.
  *
  * @param {string} html - Text of the HTML file.
  * @returns {Set<number>}
