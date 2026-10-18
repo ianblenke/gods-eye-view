@@ -20,6 +20,7 @@ context: |
      The command node scripts/spec/gates.mjs report lists all ledger gaps of both classes.
      The target is zero owned gaps.
      A changed line needs line coverage in every code file.
+     In an HTML file, only the code lines need it: the script elements, the event handler attributes and the `javascript:` URLs.
      For a sync, a changed line needs no coverage when it equals the file in the commit that the adopt command names.
 
      openspec/ownership.json defines owned paths.

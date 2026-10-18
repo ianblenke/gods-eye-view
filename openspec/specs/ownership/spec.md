@@ -5,6 +5,7 @@ With a base, a path is owned when the base manifest or the current manifest list
 Without a base, the gate uses only the current manifest.
 Each owned code file that a change adds or edits, and each owned code file without a ledger entry, needs full coverage.
 Each changed line needs coverage, except a line that equals the file in the adopt source in a sync.
+In an HTML file, only the code lines need it.
 The report command lists all ledger gaps of both classes.
 ## Requirements
 ### Requirement: Manifest contract

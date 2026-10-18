@@ -10,11 +10,14 @@
 - [x] 2.2 Write the test of `syncChangedLines()` for an HTML file with the ID `ownership-056`.
 - [x] 2.3 Add `htmlCodeLines()` to `scripts/spec/lib/coverage.mjs`.
 - [x] 2.4 Keep only the code lines of each HTML file in `syncChangedLines()`.
-- [x] 2.5 Run each fault of `design.md`.
+- [x] 2.5 Add the HTML sentence to the Purpose of the ownership spec.
+- [x] 2.6 Add the HTML sentence to rule 5 of `AGENTS.md`.
+- [x] 2.7 Add the HTML sentence to `openspec/config.yaml`.
+- [x] 2.8 Run each fault of `design.md`.
 
 ## 3. Checks and review
 
-- [x] 3.1 Run the test files of `src/tooling/spec` on the host.
+- [ ] 3.1 Run the test files of `src/tooling/spec` on the host.
 - [ ] 3.2 Run `make ratchet CHANGE=html-code-lines`.
 - [ ] 3.3 Run the two review agents.
 - [ ] 3.4 Write review.md.
