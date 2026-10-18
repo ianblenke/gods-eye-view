@@ -33,6 +33,9 @@ Command: git grep -c "test('\[credential-boundary-020\]" a6440349 -- src/search/
 6
 The tests of credential-boundary-020 now check the upstream behavior: a configured:false answer gives answered:false, and one more test checks a search with no browser key. The test of perimeters-005 has a new name with the words of its scenario.
 
+Later commit 4c9a8801 (round-2 corrections):
+The status test of credential-boundary-020 gives a ZERO_RESULTS body for the status 429 and for the status 502. The tests use the error bodies of the upstream route. The test of a search with no browser key and the test of perimeters-005 have new names.
+
 ----- scenario_tests.py -----
 """Scenario IDs whose test blocks (top-level test(...) up to its first '\n});\n') exist at the base and differ or are gone at HEAD."""
 import re, subprocess, sys

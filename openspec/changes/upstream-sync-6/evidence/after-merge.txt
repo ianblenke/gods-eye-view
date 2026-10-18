@@ -78,3 +78,11 @@ M	src/search/placeSearch.test.mjs
 
 Command: git diff --name-only 05bab3a4 c2802528 -- . ':!openspec/changes/upstream-sync-6' ':!openspec/trace' | wc -l (all files after the merge of the fork main, outside the change folder and the trace)
 7
+
+Command: git diff --name-status c2802528 4c9a8801 -- . ':!openspec/changes/upstream-sync-6' (the round-2 corrections)
+M	openspec/trace/gaps.json
+M	openspec/trace/history.jsonl
+M	openspec/trace/ids.json
+M	openspec/trace/links.json
+M	src/layers/perimeters/cards.test.mjs
+M	src/search/placeSearch.test.mjs

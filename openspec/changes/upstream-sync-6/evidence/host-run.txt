@@ -788,3 +788,6 @@ src/search/placeSearch.test.mjs: ℹ cancelled 0 ℹ fail 0 ℹ pass 14 ℹ skip
 
 Round-1 corrections (code of commit c2802528). Command: one process for each test file except src/tooling/spec/gates.test.mjs, 8 at a time, on the host (Node v26.8.2); timeout 600 nice -n 19 node --test <file>
 Total: files 779 tests 11583 pass 11567 fail 0 skipped 16
+
+Round-2 corrections (code of commit 4c9a8801). Command: one process for each test file except src/tooling/spec/gates.test.mjs, 8 at a time, on the host (Node v26.8.2); timeout 600 nice -n 19 node --test <file>
+Total: files 779 tests 11583 pass 11567 fail 0 skipped 16
