@@ -1,47 +1,66 @@
 ## 1. Plan and specs
 
-- [ ] 1.1 Write the change plan.
-- [ ] 1.2 Write the delta spec for `gdacs-layer`.
-- [ ] 1.3 Change the count of the scenario `osh-033` to 36 in the delta spec for `osh`.
-- [ ] 1.4 Keep the scenario `osh-028` in the delta spec for `osh`.
-- [ ] 1.5 Keep the scenario `osh-029` in the delta spec for `osh`.
-- [ ] 1.6 Keep the scenario `osh-030` in the delta spec for `osh`.
-- [ ] 1.7 Keep the scenario `osh-031` in the delta spec for `osh`.
-- [ ] 1.8 Keep the scenario `osh-032` in the delta spec for `osh`.
-- [ ] 1.9 Keep the scenario `osh-046` in the delta spec for `osh`.
-- [ ] 1.10 Keep the scenario `osh-049` in the delta spec for `osh`.
-- [ ] 1.11 Keep the scenario `osh-057` in the delta spec for `osh`.
+- [x] 1.1 Write the change plan.
+- [x] 1.2 Write the delta spec for `gdacs-layer`.
+- [x] 1.3 Change the count of the scenario `osh-033` to 36 in the delta spec for `osh`.
+- [x] 1.4 Keep the scenario `osh-028` in the delta spec for `osh`.
+- [x] 1.5 Keep the scenario `osh-029` in the delta spec for `osh`.
+- [x] 1.6 Keep the scenario `osh-030` in the delta spec for `osh`.
+- [x] 1.7 Keep the scenario `osh-031` in the delta spec for `osh`.
+- [x] 1.8 Keep the scenario `osh-032` in the delta spec for `osh`.
+- [x] 1.9 Keep the scenario `osh-046` in the delta spec for `osh`.
+- [x] 1.10 Keep the scenario `osh-049` in the delta spec for `osh`.
+- [x] 1.11 Keep the scenario `osh-057` in the delta spec for `osh`.
+- [x] 1.12 Correct the plan after the plan review.
 
 ## 2. Tests
 
-- [ ] 2.1 Write `src/layers/gdacs/records.test.mjs` for `gdacs-layer-005` to `gdacs-layer-009`.
-- [ ] 2.2 Write `src/layers/gdacs/source.test.mjs` for `gdacs-layer-003` and `gdacs-layer-004`.
-- [ ] 2.3 Write `src/layers/gdacs/model.test.mjs` for `gdacs-layer-010` and `gdacs-layer-011`.
-- [ ] 2.4 Write `src/layers/gdacs/layer.test.mjs` for `gdacs-layer-001`, `gdacs-layer-002` and `gdacs-layer-012` to `gdacs-layer-017`.
-- [ ] 2.5 Write `src/layers/gdacs/registration.test.mjs` for `gdacs-layer-018` to `gdacs-layer-022`.
-- [ ] 2.6 Change the test of `osh-033` to expect 36 entries.
-- [ ] 2.7 Change the layer counts of the upstream tests to 37 layers in the catalog and 36 entries in the registry.
-- [ ] 2.8 Change the free token of the five tests of the token ledger from "9" to "00".
+- [x] 2.1 Write `src/layers/gdacs/records.test.mjs` for `gdacs-layer-005` to `gdacs-layer-009`.
+- [x] 2.2 Write `src/layers/gdacs/source.test.mjs` for `gdacs-layer-003` and `gdacs-layer-004`.
+- [x] 2.3 Write `src/layers/gdacs/model.test.mjs` for `gdacs-layer-010` and `gdacs-layer-011`.
+- [x] 2.4 Write `src/layers/gdacs/layer.test.mjs` for `gdacs-layer-001`, `gdacs-layer-002` and `gdacs-layer-012` to `gdacs-layer-017`.
+- [x] 2.5 Write `src/layers/gdacs/registration.test.mjs` for `gdacs-layer-018` to `gdacs-layer-022`.
+- [x] 2.6 Change the test of `osh-033` to expect 36 entries.
+- [x] 2.7 Change the count of the registry to 36 in the test "production registry is exact, canonical, and rejects incomplete contracts".
+- [x] 2.8 Make that test expect the next free token "00" from the real ledger.
+- [x] 2.9 Make the samples of that test that need a free digit use the ledger without `gdacs`.
+- [x] 2.10 Change the layer count of `src/app/constructCatalog.test.mjs` to 37 in its two tests.
+- [x] 2.11 Change the layer count of `src/app/sourceComposition.test.mjs` to 37.
+- [x] 2.12 Add the name "gdacs" to the list of `src/sources/reference.test.mjs`.
+- [x] 2.13 Make the fixture rows of `src/data/layerStateTokenLedger.test.mjs` leave out the row of `gdacs`.
+- [x] 2.14 Make the helper `writeCodecFixture` remove the registry entry of `gdacs`.
+- [x] 2.15 Make the test of the complete ledger read all rows, count 36 rows and expect `gdacs` with "9".
+- [x] 2.16 Make the fixture of the two-character test compare its ledger with the published ledger without `gdacs`.
 
 ## 3. Code
 
-- [ ] 3.1 Write `src/layers/gdacs/records.js`.
-- [ ] 3.2 Write `src/layers/gdacs/source.js`.
-- [ ] 3.3 Write `src/layers/gdacs/model.js`.
-- [ ] 3.4 Write `src/layers/gdacs/index.js` and `src/app/layers/gdacs.js`.
-- [ ] 3.5 Register the layer in the catalog, the source composition and the reference sources.
-- [ ] 3.6 Register the share token "9" in the registry and in the ledger file.
-- [ ] 3.7 Add the layer to the group "Events", to the layer names, to the credits and to `VOICE_OFF_LAYERS`.
-- [ ] 3.8 Add the Spanish and Russian texts.
-- [ ] 3.9 Add the new files to `openspec/ownership.json`, `scripts/format-scope.json` and `scripts/package-boundaries.json`.
-- [ ] 3.10 Write the entry in `CHANGELOG.md` and the paragraph in `DATA_SOURCES.md`.
+- [x] 3.1 Write `src/layers/gdacs/records.js`.
+- [x] 3.2 Write `src/layers/gdacs/source.js`.
+- [x] 3.3 Write `src/layers/gdacs/model.js`.
+- [x] 3.4 Write `src/layers/gdacs/index.js`.
+- [x] 3.5 Write `src/app/layers/gdacs.js`.
+- [x] 3.6 Register the layer in the catalog.
+- [x] 3.7 Register the source contract and the reference source.
+- [x] 3.8 Register the share token "9" in the registry.
+- [x] 3.9 Add the row of the layer to the ledger file.
+- [x] 3.10 Add the layer to the group "Events".
+- [x] 3.11 Add the layer to the layer names.
+- [x] 3.12 Add the credit of the layer.
+- [x] 3.13 Add the layer to `VOICE_OFF_LAYERS`.
+- [x] 3.14 Add the Spanish and Russian texts.
+- [x] 3.15 Add the new paths to `openspec/ownership.json`.
+- [x] 3.16 Add the new paths to `scripts/format-scope.json`.
+- [x] 3.17 Add the new paths to `scripts/package-boundaries.json`.
+- [x] 3.18 Write the entry in `CHANGELOG.md`.
+- [x] 3.19 Write the paragraph in `DATA_SOURCES.md`.
 
 ## 4. Evidence
 
 - [ ] 4.1 Run the named faults on the host.
 - [ ] 4.2 Run each test file on the host.
-- [ ] 4.3 Run the four checks of `make precheck` and the lint on the host.
-- [ ] 4.4 Look at the layer in a headless Chrome with a stored document.
+- [ ] 4.3 Run the four checks of `make precheck` on the host.
+- [ ] 4.4 Run the STE lint on the host.
+- [ ] 4.5 Look at the layer in a headless Chrome with a stored document.
 
 ## 5. Lead work in the image
 
