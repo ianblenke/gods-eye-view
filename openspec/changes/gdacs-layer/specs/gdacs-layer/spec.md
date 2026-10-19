@@ -134,9 +134,9 @@ Origin: spec-first
 - **AND** each entry has `edgeFade` "keyhole", `horizonCull` true, `terrainOcclusion` false, `gapPx` 15, `verticalOnly` true and `placement` "above"
 
 ### Requirement: Layer display
-While it is enabled, the layer MUST show the points of the last result that it accepted. It MUST show the labels of that result until the next call of `disable`. It MUST NOT accept an answer to a request that it aborted.
+The layer MUST accept the answer to its newest call of `update`, and it MUST NOT accept an answer to a request that it aborted. When the layer accepts a result with `meta.unavailable` true, it MUST remove all the points and the labels. When the layer accepts another result, it MUST replace the points and the labels with those of that result.
 
-For a result with `meta.unavailable` true, it MUST remove all the points and the labels. When a request fails, it MUST keep the points and the labels that it shows. It MUST poll only while it is enabled.
+When a request fails, the layer MUST keep the points and the labels that it shows. `disable` MUST hide the points and remove the labels, and `destroy` MUST remove the points and the labels. The layer MUST poll only while it is enabled.
 Origin: spec-first
 
 #### Scenario: Show the points and the labels `gdacs-layer-012`

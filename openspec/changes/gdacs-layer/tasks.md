@@ -15,6 +15,7 @@
 - [x] 1.13 Correct the specs and the plan after round 1 of the review.
 - [x] 1.14 Correct the specs and the plan after round 2 of the review.
 - [x] 1.15 Correct the specs after round 3 of the review.
+- [x] 1.16 Correct the requirement "Layer display" after round 4 of the review.
 
 ## 2. Tests
 
@@ -71,7 +72,7 @@
 
 ## 5. Lead work in the image
 
-- [x] 5.1 Run `make ratchet CHANGE=gdacs-layer`.
+- [ ] 5.1 Run `make ratchet CHANGE=gdacs-layer`.
 - [ ] 5.2 Run the two review agents.
 - [ ] 5.3 Write review.md.
 - [ ] 5.4 Run `make gates CHANGE=gdacs-layer` on the final tree.
