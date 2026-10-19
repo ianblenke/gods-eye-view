@@ -37,12 +37,17 @@ const CHECKER_PATH = fileURLToPath(
 const NEXT_PATH = fileURLToPath(
   new URL('../../scripts/next-layer-state-token.mjs', import.meta.url),
 );
-const reservationRows = JSON.parse(
+const ledgerRows = JSON.parse(
   readFileSync(
     new URL('./layerStateTokenReservations.json', import.meta.url),
     'utf8',
   ),
 );
+// The layer gdacs took the last free digit "9". The fixtures of these tests
+// need a free digit, so they use the rows and the registry without gdacs.
+const GDACS_REGISTRY_ENTRY =
+  "  Object.freeze({ id: 'gdacs', token: '9', disposition: 'enabled-only' }),\n";
+const reservationRows = ledgerRows.filter(([id]) => id !== 'gdacs');
 
 test('pre-ledger published ownership is independent of the candidate mapping', () => {
   assert.notStrictEqual(
@@ -104,7 +109,9 @@ function writeCodecFixture(cwd, rows, entries) {
     providerCodec,
     readFileSync(new URL('./idSwitches.js', import.meta.url)),
   );
-  const source = readFileSync(CODEC_SOURCE_PATH, 'utf8');
+  const fullSource = readFileSync(CODEC_SOURCE_PATH, 'utf8');
+  assert.equal(fullSource.split(GDACS_REGISTRY_ENTRY).length, 2);
+  const source = fullSource.replace(GDACS_REGISTRY_ENTRY, '');
   const registryEnd = ']);\n\nexport const REGISTERED_LAYER_IDS';
   assert.equal(source.split(registryEnd).length, 2);
   const additions = entries
@@ -125,10 +132,10 @@ function writeCodecFixture(cwd, rows, entries) {
 
 test('reservation ledger is complete, pinned, and rejects duplicate or malformed rows', () => {
   assert.deepEqual(
-    { ...parseLayerStateTokenReservations(reservationRows) },
+    { ...parseLayerStateTokenReservations(ledgerRows) },
     { ...LAYER_STATE_TOKEN_RESERVATIONS },
   );
-  assert.equal(Object.keys(LAYER_STATE_TOKEN_RESERVATIONS).length, 35);
+  assert.equal(Object.keys(LAYER_STATE_TOKEN_RESERVATIONS).length, 36);
   assert.deepEqual(
     { ...LAYER_STATE_TOKEN_RESERVATIONS },
     {
@@ -140,6 +147,7 @@ test('reservation ledger is complete, pinned, and rejects duplicate or malformed
       'beemaps-bursts': '6',
       'gnss-integrity': '7',
       'air-quality': '8',
+      gdacs: '9',
     },
   );
   assert.throws(
@@ -364,7 +372,7 @@ test('an isolated valid two-character fixture round-trips an l field beyond the 
     );
     assert.equal(
       validateLayerStateAllocations(
-        LAYER_STATE_TOKEN_RESERVATIONS,
+        parseLayerStateTokenReservations(reservationRows),
         codec.LAYER_STATE_TOKEN_RESERVATIONS,
       ),
       true,

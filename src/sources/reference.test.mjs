@@ -21,6 +21,7 @@ test('reference factories retain compatibility without starting acquisition or s
     'beemaps',
     'beemaps-bursts',
     'gnss-integrity',
+    'gdacs',
   ]);
   assert.notEqual(first.earthquakes, second.earthquakes);
   assert.notEqual(first['air-quality'], second['air-quality']);
