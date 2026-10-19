@@ -136,6 +136,16 @@ test('[gdacs-layer-006] drops the events that are not valid, keeps the first of 
     pair.map((item) => [item.id, item.name]),
     [['FL-7', 'A']],
   );
+  const firstNotValid = normalizeGdacsDocument(
+    doc([
+      event({ id: 'FL-8', alert: 'purple', name: 'A' }),
+      event({ id: 'FL-8', name: 'B' }),
+    ]),
+  ).events;
+  assert.deepEqual(
+    firstNotValid.map((item) => [item.id, item.name]),
+    [['FL-8', 'B']],
+  );
 
   const many = normalizeGdacsDocument(doc(numbered(520))).events;
   assert.equal(many.length, 500);

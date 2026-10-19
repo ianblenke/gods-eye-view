@@ -25,7 +25,7 @@ function item(id, overrides = {}) {
 }
 const order = (list) => selectLabelCohort(list).map((entry) => entry.id);
 
-test('[gdacs-layer-010] gives each point the color of its alert level and the size and alpha of its current flag', () => {
+test('[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag', () => {
   for (const [alert, color] of Object.entries(COLORS)) {
     assert.deepEqual(pointStyle({ alert, current: true }), {
       color,

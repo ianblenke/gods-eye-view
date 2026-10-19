@@ -130,7 +130,7 @@ test('[gdacs-layer-001] describes the layer and refuses to create a layer with n
   );
 });
 
-test('[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts init after destroy', async () => {
+test('[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts a call of init after destroy', async () => {
   const h = harness();
   h.layer.init(h.viewer);
   assert.equal(h.added.length, 1);
@@ -281,7 +281,10 @@ test('[gdacs-layer-012] shows the points on the ground and the labels, and fills
 test('[gdacs-layer-013] removes the points when GDACS is unavailable and gives the reason as guidance', async () => {
   const results = [
     snapshot(THREE.slice(0, 2)),
-    snapshot([], { unavailable: true, reason: 'GDACS feed down' }),
+    snapshot(THREE.slice(0, 2), {
+      unavailable: true,
+      reason: 'GDACS feed down',
+    }),
     snapshot([], { unavailable: true, reason: null }),
     snapshot(THREE.slice(0, 2)),
   ];

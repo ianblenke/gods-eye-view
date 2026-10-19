@@ -52,5 +52,6 @@ The change adds no route, no dependency and no server file.
 - Known limit `stale`: The layer keeps the points of a stale document, and the panel does not show that the document is stale.
 - Known limit `position`: GDACS gives one point for each event. A drought or a flood covers an area, and the point shows only one place in it.
 - Known limit `refresh`: The layer asks the route every 10 minutes, and the provider caches its document for 10 minutes. So a point of a good document can show a state that is up to 20 minutes old. A point of a stale document can be up to 70 minutes old. After a failed request, the layer keeps the last points until a request succeeds.
+- Known limit `labels-after-enable`: `disable` removes the labels, and `enable` does not give them again. So after `disable` and `enable`, the layer shows its old points with no labels until a call of `update` succeeds. The layer manager calls `update` right after `enable`, and it disables the layer when that call fails.
 - Known limit `osh-count`: The scenario `osh-033` names the count of the registry, so each new layer needs a new delta of the capability `osh`.
 - Known limit `visual`: The lead looks at the layer on one machine in one headless Chrome with a stored document. No test draws the points.

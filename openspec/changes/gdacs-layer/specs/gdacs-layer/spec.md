@@ -1,8 +1,5 @@
-# gdacs-layer Specification
+## ADDED Requirements
 
-## Purpose
-Show, as points on the globe, the recent flood, drought, volcano and tropical cyclone events of GDACS. Treat every name as untrusted text, and keep the layer out of voice.
-## Requirements
 ### Requirement: Layer record
 The layer `gdacs` MUST have the name "Disaster Alerts", the icon "🚨", the source name "GDACS" and the update interval 600000 ms. The layer MUST send no request until the first call of `update`.
 Origin: spec-first
@@ -20,7 +17,7 @@ Origin: spec-first
 - **AND** the data source has `show` false after `init` and `show` true after `enable`
 - **AND** the layer calls `setVisible` of the overlay host with false for the overlay source "gdacs" after `init`, and with true after `enable`
 - **AND** a second `init` without `destroy` throws "GDACS layer is already initialized"
-- **AND** an `init` after `destroy` works, and the layer can show points again
+- **AND** after `destroy`, a call of `init`, `enable` and `update` adds one data source and shows 3 points
 
 ### Requirement: Browser source
 The source MUST read the route `/api/gdacs` of the same origin with the abort signal of the caller. It MUST refuse an answer that is not a GDACS document of the schema version 1, and a body of more than 2 MiB. The result of the source is the output of the normalizer: the list `events` and the object `meta`.
@@ -41,7 +38,7 @@ Origin: spec-first
 - **AND** it throws when the signal is already aborted, and then it sends no request
 
 ### Requirement: Event records
-The normalizer MUST keep only the events that meet the rules, MUST clean the names, and MUST keep at most 500 events. It MUST check the rules of an event before it counts the event toward the limit of 500. It MUST keep only the first event of each `id`, and it MUST NOT count a second event with that `id` toward the limit. A character is one code point.
+The normalizer MUST keep only the events that meet the rules, MUST clean the names, and MUST keep at most 500 events. It MUST check the rules of an event before it counts the event toward the limit of 500. Of the events that meet the rules, it MUST keep only the first event of each `id`. It MUST NOT count a later event with that `id` toward the limit. A character is one code point.
 
 An event meets the rules when each of these is true. The event is an object. Its `type` is "FL", "DR", "VO" or "TC". Its `id` is the type, a hyphen and a whole number of 1 to 16 digits whose first digit is not 0. Its `alert` is "green", "orange" or "red". Its `latitude` is a finite number from -90 to 90, and its `longitude` is a finite number from -180 to 180.
 
@@ -72,6 +69,7 @@ Origin: spec-first
 - **AND** each of these events is valid in all other fields
 - **THEN** the result lists none of these events
 - **AND** two events with the id "FL-7" and the names "A" and "B" give one event with the name "A"
+- **AND** an event "FL-8" with the alert "purple", then a valid event "FL-8" with the name "B", give one event with the name "B"
 - **AND** a list of 520 valid events gives the first 500 events, in the order of the input
 - **AND** a list of 10 events that are not valid, then 500 valid events, gives the 500 valid events
 - **AND** a list holds 499 valid events, then a second event with the id of one of them, then one more valid event
@@ -107,7 +105,7 @@ Origin: spec-first
 - **AND** the cleaned text of a value that is not a text is empty
 - **AND** `meta.reason` is null when the cleaned text is empty
 - **AND** `meta.fetchedAt` is the `fetchedAt` of the document when that value is a date, and null when it is not
-- **AND** `meta.total` is the `counts.total` of the document when that is a whole number from 0 to 9007199254740991
+- **AND** `meta.total` is the `counts.total` of the document when that value is a whole number from 0 to 9007199254740991
 - **AND** `meta.total` is the length of the list `events` of the document when `counts.total` is not such a number, for example 9007199254740992
 - **AND** the normalizer returns null for a value that is not a document of the schema version 1 with a list `events`
 
@@ -115,7 +113,7 @@ Origin: spec-first
 The model MUST give each event a color from its alert level, and a size and an alpha from its current flag. It MUST choose at most 48 labels.
 Origin: spec-first
 
-#### Scenario: Style the points by the alert level and the current flag `gdacs-layer-010`
+#### Scenario: Give the points the color of the alert level and the size and the alpha of the current flag `gdacs-layer-010`
 - **WHEN** a test asks the model for the style of each alert level and each value of the current flag
 - **THEN** the colors are "#22c55e" for green, "#f97316" for orange and "#ef4444" for red
 - **AND** an event with `current` true has the alpha 1 and the size 10
@@ -128,7 +126,7 @@ Origin: spec-first
 - **AND** so a red event comes before an orange event with the same current flag and a newer `modified`
 - **AND** then it sorts them by the newest `modified`, and an event with `modified` null comes after the events with a date
 - **AND** then it sorts them by `id`, compared as text, so "FL-10" comes before "FL-9"
-- **AND** it keeps the first 48 events of that order, also when the input is in the reverse order
+- **AND** it keeps the first 48 events of that order, also when the input is in the reverse order of that sort
 - **AND** each label title is the name cut to 32 code points, so a name of 40 copies of U+1F30A gives 32 copies
 - **AND** the accent of each label is the color of the alert level
 - **AND** the priority of the first label is 100000, and each next label has a priority that is 1 less
@@ -136,7 +134,7 @@ Origin: spec-first
 - **AND** each entry has `edgeFade` "keyhole", `horizonCull` true, `terrainOcclusion` false, `gapPx` 15, `verticalOnly` true and `placement` "above"
 
 ### Requirement: Layer display
-While it is enabled, the layer MUST show the points and the labels of the newest result of the source. When a later request fails, it MUST keep those points and labels. It MUST poll only while it is enabled.
+While it is enabled, the layer MUST show the points and the labels of the result of its newest call of `update`. It MUST ignore an answer to a request that it aborted. For a result with `meta.unavailable` true, it MUST remove all points and labels. When a later request fails, it MUST keep the points and labels that it shows. It MUST poll only while it is enabled.
 Origin: spec-first
 
 #### Scenario: Show the points and the labels `gdacs-layer-012`
@@ -150,7 +148,7 @@ Origin: spec-first
 - **AND** a second call of `update` replaces the points and the labels of the call before
 
 #### Scenario: Report that GDACS is unavailable `gdacs-layer-013`
-- **WHEN** `update` reads a result with 2 events, and then a result with `meta.unavailable` true and the reason "GDACS feed down"
+- **WHEN** `update` reads a result with 2 events, and then a result with 2 events, `meta.unavailable` true and the reason "GDACS feed down"
 - **THEN** the data source has no entity and the overlay source has no entry
 - **AND** the stats have `count` 0, `status` "idle", `statusMessage` "GDACS feed down" and `error` null
 - **AND** a result with `meta.unavailable` true and `meta.reason` null gives the `statusMessage` "GDACS unavailable"
@@ -173,6 +171,7 @@ Origin: spec-first
 - **AND** `disable` aborts the request in flight, and an answer that arrives afterwards changes nothing
 - **AND** `disable` hides the data source, clears the entries of the overlay source and hides that source
 - **AND** a new call of `update` aborts the request of the call before it
+- **AND** an answer to the request that the new call aborted changes nothing
 
 #### Scenario: Remove the data source and the labels when destroy runs `gdacs-layer-017`
 - **WHEN** a test calls `destroy` on a layer that shows points
@@ -214,4 +213,3 @@ Origin: spec-first
 - **AND** "GDACS source unavailable" has the Spanish text "Fuente de GDACS no disponible" and the Russian text "Источник GDACS недоступен"
 - **AND** "GDACS unavailable" has the Spanish text "GDACS no disponible" and the Russian text "GDACS недоступен"
 - **AND** after `setLocale("es")`, `layerNameForId("gdacs")` gives "Alertas de desastres"
-
