@@ -11,6 +11,10 @@ src/data/focusAllocations.test.mjs: skipped 1
 src/keySetupHardening.test.mjs: skipped 1
 src/overlays/worldOverlayAllocation.test.mjs: skipped 14
 src/data/focusAllocations.test.mjs and src/overlays/worldOverlayAllocation.test.mjs skip their tests on a Node version other than 24. src/keySetupHardening.test.mjs skips one test that runs only on Windows.
+$ grep -n -E 't\.skip\(|skip: process\.platform' src/data/focusAllocations.test.mjs src/overlays/worldOverlayAllocation.test.mjs src/keySetupHardening.test.mjs
+src/data/focusAllocations.test.mjs:16:    return t.skip(`allocation budgets are calibrated for Node 24; running ${process.versions.node}`);
+src/overlays/worldOverlayAllocation.test.mjs:336:      return t.skip(`allocation budgets are calibrated for Node 24; running ${process.versions.node}`);
+src/keySetupHardening.test.mjs:405:  skip: process.platform !== 'win32',
 
 src/tooling/spec/gates.test.mjs ran alone (timeout 2400 nice -n 19 node --test src/tooling/spec/gates.test.mjs) on the trial merge d1c50b0e, start (UTC) 00:52:47. The trial merge has the same files as the merge commit 91de1b68 outside the change folder. The later commit changes only src/control/route.test.mjs.
 ℹ tests 241
