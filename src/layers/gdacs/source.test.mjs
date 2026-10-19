@@ -43,7 +43,7 @@ function source(respond, calls = []) {
 }
 const MIB2 = 2 * 1024 * 1024;
 
-test('[gdacs-layer-003] reads the route with the signal of the caller and gives the normalized document', async () => {
+test('[gdacs-layer-003] reads the route with the signal of the caller and gives the result of the normalizer', async () => {
   const calls = [];
   const controller = new AbortController();
   const result = await source(() => Response.json(GOOD), calls).getSnapshot({

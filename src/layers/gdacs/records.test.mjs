@@ -157,7 +157,7 @@ test('[gdacs-layer-006] drops the events that are not valid, keeps the first of 
   assert.equal(withRepeat[499].id, 'FL-9999');
 });
 
-test('[gdacs-layer-007] sets current only for the value true and keeps only a modified value that is a date', () => {
+test('[gdacs-layer-007] makes current true only for the value true and keeps only a modified value that is a date', () => {
   assert.equal(only({ current: true })[0].current, true);
   for (const current of [false, 'true', 1, undefined])
     assert.equal(only({ current })[0].current, false, String(current));
@@ -249,7 +249,11 @@ test('[gdacs-layer-009] reads the meta of the document and returns null for a va
     assert.equal(meta({ fetchedAt }).fetchedAt, null, String(fetchedAt));
   assert.equal(meta({ counts: { total: 7 } }).total, 7);
   assert.equal(meta({ counts: { total: 0 } }).total, 0);
-  for (const total of [-1, 1.5, '7', null, undefined])
+  assert.equal(
+    meta({ counts: { total: 9007199254740991 } }).total,
+    9007199254740991,
+  );
+  for (const total of [-1, 1.5, '7', null, undefined, 9007199254740992])
     assert.equal(
       meta({ counts: { total } }, [event(), event({ id: 'FL-2' })]).total,
       2,

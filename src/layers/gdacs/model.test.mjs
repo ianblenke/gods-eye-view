@@ -25,7 +25,7 @@ function item(id, overrides = {}) {
 }
 const order = (list) => selectLabelCohort(list).map((entry) => entry.id);
 
-test('[gdacs-layer-010] styles the points by alert level and current flag', () => {
+test('[gdacs-layer-010] gives each point the color of its alert level and the size and alpha of its current flag', () => {
   for (const [alert, color] of Object.entries(COLORS)) {
     assert.deepEqual(pointStyle({ alert, current: true }), {
       color,
@@ -40,7 +40,7 @@ test('[gdacs-layer-010] styles the points by alert level and current flag', () =
   }
 });
 
-test('[gdacs-layer-011] chooses at most 48 labels in the order of current flag, alert, modified and id, and builds their entries', () => {
+test('[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries', () => {
   assert.equal(GDACS_OVERLAY_SOURCE_ID, 'gdacs');
   assert.equal(GDACS_LABEL_LIMIT, 48);
   assert.equal(GDACS_COLLISION_CAPACITY, 24);
@@ -97,6 +97,20 @@ test('[gdacs-layer-011] chooses at most 48 labels in the order of current flag, 
     item(`FL-${index + 100}`),
   );
   assert.equal(selectLabelCohort(many).length, 48);
+  // The newest modified date first: with the input in the reverse order of
+  // the sort, the cohort must still be the 48 newest events.
+  const dated = Array.from({ length: 60 }, (_, index) =>
+    item(`FL-${index + 100}`, {
+      modified: new Date(Date.UTC(2026, 9, 16, 0, index)).toISOString(),
+    }),
+  );
+  assert.deepEqual(
+    order(dated),
+    dated
+      .slice(12)
+      .reverse()
+      .map((entry) => entry.id),
+  );
   assert.equal(selectLabelCohort(many.slice(0, 48)).length, 48);
   assert.equal(selectLabelCohort(many.slice(0, 47)).length, 47);
   assert.deepEqual(selectLabelCohort([]), []);

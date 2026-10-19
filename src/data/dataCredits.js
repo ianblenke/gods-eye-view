@@ -176,7 +176,7 @@ export const DATA_CREDITS = [
   {
     key: 'gdacs',
     html:
-      'Disaster alerts: GDACS, a cooperation framework of the United Nations and the European Commission. The estimates of GDACS come from a machine, and an estimate can be wrong. · ' +
+      'Disaster alerts: GDACS, a cooperation framework of the United Nations and the European Commission. The estimates of GDACS come from a machine, and an estimate can be wrong. Check each estimate before you use it to make a decision. · ' +
       '<a href="https://www.gdacs.org/" target="_blank" rel="noopener">gdacs.org</a>',
   },
   {

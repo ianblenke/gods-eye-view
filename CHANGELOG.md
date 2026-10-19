@@ -1,6 +1,6 @@
 # Changelog
 
-- Add the layer "Disaster Alerts" (2026-10-19). It shows the events of the route `/api/gdacs` as points in the group "Events": floods, droughts, volcanoes and tropical cyclones. The color shows the alert level of GDACS, and an event with `current` true has a larger and brighter point. Up to 48 labels show the names. The layer asks the route every 10 minutes, and its share token is `9`.
+- Add the layer "Disaster Alerts" (2026-10-19). The layer is in the group "Events" and shows the events of the route `/api/gdacs` as points: floods, droughts, volcanoes and tropical cyclones. The color shows the alert level of GDACS, and an event with `current` true has a larger and brighter point. Up to 48 labels show the names. The layer asks the route every 10 minutes, and its share token is `9`.
 
 - Make the Bee Maps frames layer ask for a box of 300 m by 300 m in place of about 4 km² (2026-10-17). A press at the centre of Taipei showed "Bee Maps did not answer correctly." The most likely cause is an answer over the limit of 4 MiB of the route. The route now writes one result line to the log for each upstream request, with the status, the size, the time and any credits. The route adds the credits of each answer to a count of the day. It refuses a new upstream request when the count is at least 500 credits, and `BEEMAPS_DAILY_CREDITS` changes that limit.
 

@@ -17,7 +17,7 @@ The names come from GDACS. The layer treats each name as untrusted text and clea
 - Add a Spanish text and a Russian text for each of the three new English texts of the layer.
 - Change the count in the scenario `osh-033` of the capability `osh` from 33 to 36.
 - Add the test files `src/layers/gdacs/records.test.mjs`, `source.test.mjs`, `model.test.mjs`, `layer.test.mjs` and `registration.test.mjs`.
-- Update the tests that count layers, list the reference sources, or use the token "9" as a free token. `design.md` D6 names each test.
+- Update the tests that count layers, list the reference sources, or use the token "9" as a free token. Tasks 2.6 to 2.16 name each change of these tests.
 - Write one entry in `CHANGELOG.md`. Name the layer in the GDACS row and in the GDACS section of `DATA_SOURCES.md`.
 
 ## Capabilities
@@ -43,7 +43,7 @@ The change adds no route, no dependency and no server file.
 
 ## Known limits and later changes
 
-- Known limit `no-card`: The layer has no detail card. The viewer has no info box, and the earthquake layer and the Reticulum layer have none either. A label shows the name of an event, and a click does nothing. The layer does not show the fields `country`, `from`, `to`, `severity` or `reportUrl`.
+- Known limit `no-card`: The layer has no detail card. The viewer has no info box, and the earthquake layer and the Reticulum layer have none either. A label shows the first 32 code points of the name of an event, and a click does nothing. The layer does not show the fields `country`, `from`, `to`, `severity` or `reportUrl`.
 - Known limit `long-id`: The route accepts each positive whole number as an event id. An id of more than 16 digits does not meet the rules of the layer. An id that JavaScript writes with an exponent does not meet them either. The layer drops such an event. The 65 records of 2026-10-16 have ids of 7 digits.
 - Known limit `names`: The normalizer removes U+200C and U+200D from a name, so a name in a language that uses joiners loses them. Other invisible characters stay, for example U+00AD, U+180E, U+2800, U+3164 and U+E0000 to U+E007F.
 - Known limit `labels`: The layer shows at most 48 labels. The overlay host decides which of them fit on the screen.

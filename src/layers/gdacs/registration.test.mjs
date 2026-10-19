@@ -108,7 +108,7 @@ test('[gdacs-layer-020] keeps the layer out of voice', () => {
   assert.equal(VOICE_OFF_LAYERS.gdacs, 'The GDACS layer has no voice tools.');
 });
 
-test('[gdacs-layer-021] credits GDACS, its two partners and the disclaimer of the estimates', () => {
+test('[gdacs-layer-021] names GDACS and its two partners and gives the disclaimer of the estimates', () => {
   const credit = DATA_CREDITS.find(({ key }) => key === 'gdacs');
   assert.notEqual(credit, undefined);
   for (const text of [
@@ -116,6 +116,7 @@ test('[gdacs-layer-021] credits GDACS, its two partners and the disclaimer of th
     'United Nations',
     'European Commission',
     'The estimates of GDACS come from a machine, and an estimate can be wrong.',
+    'Check each estimate before you use it to make a decision.',
     'href="https://www.gdacs.org/"',
   ])
     assert.equal(credit.html.includes(text), true, text);

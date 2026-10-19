@@ -17,6 +17,7 @@ Origin: spec-first
 - **AND** the data source has `show` false after `init` and `show` true after `enable`
 - **AND** the layer calls `setVisible` of the overlay host with false for the overlay source "gdacs" after `init`, and with true after `enable`
 - **AND** a second `init` without `destroy` throws "GDACS layer is already initialized"
+- **AND** an `init` after `destroy` works, and the layer can show points again
 
 ### Requirement: Browser source
 The source MUST read the route `/api/gdacs` of the same origin with the abort signal of the caller. It MUST refuse an answer that is not a GDACS document of the schema version 1, and a body of more than 2 MiB. The result of the source is the output of the normalizer: the list `events` and the object `meta`.
@@ -37,11 +38,11 @@ Origin: spec-first
 - **AND** it throws when the signal is already aborted, and then it sends no request
 
 ### Requirement: Event records
-The normalizer MUST keep only the events that meet the rules, MUST clean the names, and MUST keep at most 500 events. It MUST check the rules of an event before it counts the event toward the limit of 500. It MUST NOT count a second event with the same `id`. A character is one code point.
+The normalizer MUST keep only the events that meet the rules, MUST clean the names, and MUST keep at most 500 events. It MUST check the rules of an event before it counts the event toward the limit of 500. It MUST keep only the first event of each `id`, and it MUST NOT count a second event with that `id` toward the limit. A character is one code point.
 
 An event meets the rules when each of these is true. The event is an object. Its `type` is "FL", "DR", "VO" or "TC". Its `id` is the type, a hyphen and a whole number of 1 to 16 digits whose first digit is not 0. Its `alert` is "green", "orange" or "red". Its `latitude` is a finite number from -90 to 90, and its `longitude` is a finite number from -180 to 180.
 
-The normalizer MUST remove `<`, `>`, U+0000 to U+001F, U+007F to U+009F and U+061C from a name. It MUST also remove U+200B to U+200F, U+2028 to U+202E, U+2060 to U+2064, U+2066 to U+2069 and U+FEFF. After the removal, it MUST replace each run of white space with one space. White space is each character that the JavaScript pattern `\s` finds. Then it MUST remove the white space at the start, keep the first 120 code points, and remove the white space at the end.
+The normalizer MUST remove `<`, `>`, U+0000 to U+001F, U+007F to U+009F and U+061C from a name. It MUST also remove U+200B to U+200F, U+2028 to U+202E, U+2060 to U+2064, U+2066 to U+2069 and U+FEFF. After the removal, it MUST replace each sequence of white space characters with one space. White space is each character that the JavaScript pattern `\s` finds. Then it MUST remove the white space at the start, keep the first 120 code points, and remove the white space at the end.
 
 A value is a date when it is a text and `Date.parse` gives a finite number for it.
 Origin: spec-first
@@ -87,7 +88,7 @@ Origin: spec-first
 - **AND** the name "a", U+00A0, U+3000, "b" gives "a b"
 - **AND** the name "  Flood   in  X  " gives "Flood in X"
 - **AND** a name of 130 letters gives its first 120 letters, and a name of 120 letters stays whole
-- **AND** a name of 125 emoji gives its first 120 emoji
+- **AND** a name of 125 copies of U+1F30A gives its first 120 copies
 - **AND** a name of 119 letters, a space and 10 letters gives the 119 letters
 - **AND** a name of 118 letters, 3 control characters and 10 letters gives 120 letters
 - **AND** a name of 118 letters, two spaces and 10 letters gives the 118 letters, one space and 1 letter
@@ -103,15 +104,15 @@ Origin: spec-first
 - **AND** the cleaned text of a value that is not a text is empty
 - **AND** `meta.reason` is null when the cleaned text is empty
 - **AND** `meta.fetchedAt` is the `fetchedAt` of the document when that value is a date, and null when it is not
-- **AND** `meta.total` is the `counts.total` of the document when that is a whole number that is not negative
-- **AND** `meta.total` is the length of the list `events` of the document when `counts.total` is not such a number
+- **AND** `meta.total` is the `counts.total` of the document when that is a whole number from 0 to 9007199254740991
+- **AND** `meta.total` is the length of the list `events` of the document when `counts.total` is not such a number, for example 9007199254740992
 - **AND** the normalizer returns null for a value that is not a document of the schema version 1 with a list `events`
 
 ### Requirement: Display model
 The model MUST give each event a color from its alert level, and a size and an alpha from its current flag. It MUST choose at most 48 labels.
 Origin: spec-first
 
-#### Scenario: Style the points by alert and current flag `gdacs-layer-010`
+#### Scenario: Style the points by the alert level and the current flag `gdacs-layer-010`
 - **WHEN** a test asks the model for the style of each alert level and each value of the current flag
 - **THEN** the colors are "#22c55e" for green, "#f97316" for orange and "#ef4444" for red
 - **AND** an event with `current` true has the alpha 1 and the size 10
@@ -124,15 +125,15 @@ Origin: spec-first
 - **AND** so a red event comes before an orange event with the same current flag and a newer `modified`
 - **AND** then it sorts them by the newest `modified`, and an event with `modified` null comes after the events with a date
 - **AND** then it sorts them by `id`, compared as text, so "FL-10" comes before "FL-9"
-- **AND** it keeps the first 48 events of that order
-- **AND** each label title is the name cut to 32 code points, so a name of 40 emoji gives 32 emoji
+- **AND** it keeps the first 48 events of that order, also when the input is in the reverse order
+- **AND** each label title is the name cut to 32 code points, so a name of 40 copies of U+1F30A gives 32 copies
 - **AND** the accent of each label is the color of the alert level
 - **AND** the priority of the first label is 100000, and each next label has a priority that is 1 less
 - **AND** each entry has the `variant` "label", the `collisionGroup` "ambient-label", the `paintLane` "ambient-label" and `interactive` false
 - **AND** each entry has `edgeFade` "keyhole", `horizonCull` true, `terrainOcclusion` false, `gapPx` 15, `verticalOnly` true and `placement` "above"
 
 ### Requirement: Layer display
-While it is enabled, the layer MUST show the points and the labels of the result of its newest request. It MUST keep them when that request fails. It MUST poll only while it is enabled.
+While it is enabled, the layer MUST show the points and the labels of the newest result of the source. When a later request fails, it MUST keep those points and labels. It MUST poll only while it is enabled.
 Origin: spec-first
 
 #### Scenario: Show the points and the labels `gdacs-layer-012`
@@ -141,7 +142,7 @@ Origin: spec-first
 - **AND** each entity has a point on the ground at the position of the event
 - **AND** the point has the color, the alpha and the size of the model
 - **AND** the overlay host gets the entries of the labels for the overlay source "gdacs"
-- **AND** that call has the cohort limit 48, the collision capacity 24 and `moving` false
+- **AND** the call of `setEntries` has the cohort limit 48, the collision capacity 24 and `moving` false
 - **AND** the stats have `count` 3, a `lastUpdate` and `error` null
 - **AND** a second call of `update` replaces the points and the labels of the call before
 
@@ -150,6 +151,7 @@ Origin: spec-first
 - **THEN** the data source has no entity and the overlay source has no entry
 - **AND** the stats have `count` 0, `status` "idle", `statusMessage` "GDACS feed down" and `error` null
 - **AND** a result with `meta.unavailable` true and `meta.reason` null gives the `statusMessage` "GDACS unavailable"
+- **AND** a result with `meta.unavailable` true after a failed request gives `error` null
 - **AND** a later result with 2 events gives stats with no `status` and no `statusMessage`
 
 #### Scenario: Keep the points when the document is stale `gdacs-layer-014`
@@ -200,6 +202,7 @@ Origin: spec-first
 - **WHEN** a test reads the list `DATA_CREDITS`
 - **THEN** the entry whose field `key` is "gdacs" names GDACS, the United Nations and the European Commission
 - **AND** the entry holds the text "The estimates of GDACS come from a machine, and an estimate can be wrong."
+- **AND** the entry holds the text "Check each estimate before you use it to make a decision."
 - **AND** the entry links to "https://www.gdacs.org/"
 
 #### Scenario: Give the texts in Spanish and Russian `gdacs-layer-022`

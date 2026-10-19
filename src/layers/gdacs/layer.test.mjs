@@ -130,7 +130,7 @@ test('[gdacs-layer-001] describes the layer and refuses to create a layer with n
   );
 });
 
-test('[gdacs-layer-002] sends no request when init and enable run, and refuses a second call of init', () => {
+test('[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts init after destroy', async () => {
   const h = harness();
   h.layer.init(h.viewer);
   assert.equal(h.added.length, 1);
@@ -148,6 +148,14 @@ test('[gdacs-layer-002] sends no request when init and enable run, and refuses a
   h.layer.disable(h.viewer);
   assert.equal(h.added[0].show, false);
   assert.equal(h.overlay.visible.get(ID), false);
+
+  h.layer.destroy(h.viewer);
+  assert.equal(h.added.length, 0);
+  h.layer.init(h.viewer);
+  h.layer.enable(h.viewer);
+  assert.equal(h.added.length, 1);
+  assert.equal(await h.layer.update(h.viewer), true);
+  assert.equal(entitiesOf(h).length, 3);
 });
 
 test('[gdacs-layer-012] shows the points on the ground and the labels, and fills the stats', async () => {
@@ -298,6 +306,19 @@ test('[gdacs-layer-013] removes the points when GDACS is unavailable and gives t
   assert.equal(h.layer.getStats().count, 2);
   assert.equal(Object.hasOwn(h.layer.getStats(), 'status'), false);
   assert.equal(Object.hasOwn(h.layer.getStats(), 'statusMessage'), false);
+
+  // An unavailable result after a failed request clears the error.
+  let call = 0;
+  const after = enabled(async () => {
+    call += 1;
+    if (call === 1) throw new Error('GDACS HTTP 503');
+    return snapshot([], { unavailable: true, reason: 'GDACS feed down' });
+  });
+  assert.equal(await after.layer.update(after.viewer), false);
+  assert.equal(after.layer.getStats().error, 'GDACS HTTP 503');
+  assert.equal(await after.layer.update(after.viewer), true);
+  assert.equal(after.layer.getStats().error, null);
+  assert.equal(after.layer.getStats().statusMessage, 'GDACS feed down');
 });
 
 test('[gdacs-layer-014] keeps the points when the document is stale', async () => {
@@ -333,7 +354,7 @@ test('[gdacs-layer-015] keeps the last points when a request fails and gives the
   assert.equal(h.layer.getStats().error, null);
 });
 
-test('[gdacs-layer-016] polls only while enabled, and disable and a new call of update abort the request in flight', async () => {
+test('[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight', async () => {
   const idle = harness();
   idle.layer.init(idle.viewer);
   assert.equal(await idle.layer.update(idle.viewer), false);
