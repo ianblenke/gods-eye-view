@@ -6,6 +6,7 @@ import { localProviderPlugins } from '../providers/local.js';
 import { localMcpPlugin } from '../mcp/plugin.js';
 import { apiNotFoundPlugin } from './api-not-found.js';
 import { standaloneVoiceTools } from './voiceTools.js';
+import { unwatchedRuntimeDirsPlugin } from './unwatched-cache.js';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 
@@ -15,6 +16,7 @@ export function standalonePlugins() {
     ...localProviderPlugins({ realtime: { tools: standaloneVoiceTools() } }),
     localMcpPlugin(),
     apiNotFoundPlugin(),
+    unwatchedRuntimeDirsPlugin(),
   ];
 }
 
