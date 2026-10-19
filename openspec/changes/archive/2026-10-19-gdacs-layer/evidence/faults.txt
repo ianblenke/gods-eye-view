@@ -1,0 +1,391 @@
+Named faults of gdacs-layer on commit 7e74c9bf. Host node: v26.8.2.
+Command: python3 -I faults.py <clone>. For each fault, the runner changes the named text of the code files and runs the test file of the scenario.
+A fault counts as killed when a test of its scenario fails, or when the test file does not load. Then the runner restores the files and checks their hash.
+
+Script (python3 -I):
+    #!/usr/bin/env python3
+    """Named faults of gdacs-layer (rule 13).
+    
+    For each fault: change the named text of the code files, run the test file of
+    the scenario, report the failed tests of that scenario, and restore the files.
+    usage: python3 -I faults.py <clone>
+    """
+    import hashlib
+    import subprocess
+    import sys
+    
+    clone = sys.argv[1]
+    R = 'src/layers/gdacs/records.js'
+    S = 'src/layers/gdacs/source.js'
+    M = 'src/layers/gdacs/model.js'
+    I = 'src/layers/gdacs/index.js'
+    TR = 'src/layers/gdacs/records.test.mjs'
+    TS = 'src/layers/gdacs/source.test.mjs'
+    TM = 'src/layers/gdacs/model.test.mjs'
+    TL = 'src/layers/gdacs/layer.test.mjs'
+    TG = 'src/layers/gdacs/registration.test.mjs'
+    
+    FAULTS = []
+    
+    
+    def fault(name, scenario, test_file, *edits):
+        FAULTS.append((name, scenario, test_file, list(edits)))
+    
+    
+    # Event records: the rules of an event (gdacs-layer-005, 006).
+    fault('no type rule', '006', TR, (R, "  if (!Object.hasOwn(TYPE_NAMES, type)) return null;\n", ""))
+    fault('no text check of the id', '006', TR, (R, "    typeof id !== 'string' ||\n", ""))
+    fault('no type prefix check of the id', '006', TR, (R, "    !id.startsWith(`${type}-`) ||\n", ""))
+    fault('id of 17 digits', '006', TR, (R, "/^[1-9][0-9]{0,15}$/", "/^[1-9][0-9]{0,16}$/"))
+    fault('id of at most 15 digits', '005', TR, (R, "/^[1-9][0-9]{0,15}$/", "/^[1-9][0-9]{0,14}$/"))
+    fault('first digit 0', '006', TR, (R, "/^[1-9][0-9]{0,15}$/", "/^[0-9][0-9]{0,15}$/"))
+    fault('no end anchor of the id', '006', TR, (R, "/^[1-9][0-9]{0,15}$/", "/^[1-9][0-9]{0,15}/"))
+    fault('no alert red', '005', TR, (R, "new Set(['green', 'orange', 'red'])", "new Set(['green', 'orange'])"))
+    fault('no alert orange', '005', TR, (R, "new Set(['green', 'orange', 'red'])", "new Set(['green', 'red'])"))
+    fault('no alert rule', '006', TR, (R, "  if (!ALERTS.has(alert)) return null;\n", ""))
+    fault('no finite check of the latitude', '006', TR, (R, "  if (!finite(latitude) || Math.abs(latitude) > 90) return null;", "  if (Math.abs(latitude) > 90) return null;"))
+    fault('latitude 90 dropped', '005', TR, (R, "Math.abs(latitude) > 90", "Math.abs(latitude) >= 90"))
+    fault('latitude 90.5 kept', '006', TR, (R, "Math.abs(latitude) > 90", "Math.abs(latitude) > 91"))
+    fault('no finite check of the longitude', '006', TR, (R, "  if (!finite(longitude) || Math.abs(longitude) > 180) return null;", "  if (Math.abs(longitude) > 180) return null;"))
+    fault('longitude 180 dropped', '005', TR, (R, "Math.abs(longitude) > 180", "Math.abs(longitude) >= 180"))
+    fault('longitude 180.5 kept', '006', TR, (R, "Math.abs(longitude) > 180", "Math.abs(longitude) > 181"))
+    fault('position (0, 0) dropped', '005', TR, (R, "  if (!ALERTS.has(alert)) return null;\n", "  if (!ALERTS.has(alert)) return null;\n  if (latitude === 0 && longitude === 0) return null;\n"))
+    fault('all fields copied', '005', TR, (R, "  return {\n    id,\n    type,\n", "  return {\n    ...record,\n    id,\n    type,\n"))
+    # Event records: the list (gdacs-layer-006).
+    fault('no check of a second id', '006', TR, (R, "    if (!item || seen.has(item.id)) continue;\n", "    if (!item) continue;\n"))
+    fault('the last of two equal ids', '006', TR, (R, "    if (!item || seen.has(item.id)) continue;\n    seen.add(item.id);\n    events.push(item);\n", "    if (!item) continue;\n    if (seen.has(item.id)) {\n      events.splice(events.findIndex((e) => e.id === item.id), 1, item);\n      continue;\n    }\n    seen.add(item.id);\n    events.push(item);\n"))
+    fault('limit 499', '006', TR, (R, "export const MAX_EVENTS = 500;", "export const MAX_EVENTS = 499;"))
+    fault('limit 501', '006', TR, (R, "export const MAX_EVENTS = 500;", "export const MAX_EVENTS = 501;"))
+    fault('limit counts the events that are not valid', '006', TR, (R, "  for (const record of payload.events) {\n    if (events.length >= MAX_EVENTS) break;\n", "  for (const [index, record] of payload.events.entries()) {\n    if (index >= MAX_EVENTS) break;\n"))
+    fault('limit counts a second event with the same id', '006', TR,
+          (R, "  for (const record of payload.events) {\n    if (events.length >= MAX_EVENTS) break;\n    const item = normalizeEvent(record);\n",
+           "  let counted = 0;\n  for (const record of payload.events) {\n    if (counted >= MAX_EVENTS) break;\n    const item = normalizeEvent(record);\n    if (item) counted += 1;\n"))
+    # Event records: current flag and modified date (gdacs-layer-007).
+    fault('current from loose equality', '007', TR, (R, "current: record.current === true,", "current: record.current == true,"))
+    fault('current from truthiness', '007', TR, (R, "current: record.current === true,", "current: Boolean(record.current),"))
+    fault('modified from any text', '007', TR, (R, "modified: validDate(record.modified) ? record.modified : null,", "modified: typeof record.modified === 'string' ? record.modified : null,"))
+    fault('modified always null', '007', TR, (R, "modified: validDate(record.modified) ? record.modified : null,", "modified: null,"))
+    # Event records: the names (gdacs-layer-008).
+    RANGES = [(0x00, 0x1f), (0x3c, 0x3c), (0x3e, 0x3e), (0x7f, 0x9f), (0x61c, 0x61c), (0x200b, 0x200f), (0x2028, 0x202e), (0x2060, 0x2064), (0x2066, 0x2069), (0xfeff, 0xfeff)]
+    
+    
+    def hexlit(n):
+        return f'0x{n:02x}' if n < 0x100 else f'0x{n:x}'
+    
+    
+    for first, last in RANGES:
+        old = f'[{hexlit(first)}, {hexlit(last)}],'
+        if first == last:
+            fault(f'range {hexlit(first)} not removed', '008', TR, (R, f'  {old}\n', ''))
+        else:
+            fault(f'range {hexlit(first)} starts one later', '008', TR, (R, old, f'[{hexlit(first + 1)}, {hexlit(last)}],'))
+            fault(f'range {hexlit(first)} ends one earlier', '008', TR, (R, old, f'[{hexlit(first)}, {hexlit(last - 1)}],'))
+        if first > 0:  # no code point lies below 0
+            fault(f'range {hexlit(first)} starts one earlier', '008', TR, (R, old, f'[{hexlit(first - 1)}, {hexlit(last)}],'))
+        fault(f'range {hexlit(first)} ends one later', '008', TR, (R, old, f'[{hexlit(first)}, {hexlit(last + 1)}],'))
+    fault('only spaces join', '008', TR, (R, ".replace(/\\s+/g, ' ')", ".replace(/ +/g, ' ')"))
+    fault('no trim at the start', '008', TR, (R, "    .trimStart();\n", ";\n"))
+    fault('no trim at the end', '008', TR, (R, ".join('').trimEnd();", ".join('');"))
+    fault('cut to 119', '008', TR, (R, "const NAME_MAX = 120;", "const NAME_MAX = 119;"))
+    fault('cut to 121', '008', TR, (R, "const NAME_MAX = 120;", "const NAME_MAX = 121;"))
+    fault('cut in UTF-16 units', '008', TR, (R, "Array.from(text).slice(0, NAME_MAX).join('')", "text.slice(0, NAME_MAX)"))
+    fault('cut before the join of white space', '008', TR, (R, "  const text = Array.from(value)\n    .filter((character) => !isStripped(character))\n    .join('')\n", "  const text = Array.from(value)\n    .slice(0, NAME_MAX)\n    .filter((character) => !isStripped(character))\n    .join('')\n"))
+    fault('type name of TC', '008', TR, (R, "TC: 'Tropical cyclone',", "TC: 'Tropical Cyclone',"))
+    fault('type name of VO', '008', TR, (R, "VO: 'Volcano',", "VO: 'Volcanoes',"))
+    fault('no name of the type', '008', TR, (R, "name: clean(record.name) || TYPE_NAMES[type],", "name: clean(record.name),"))
+    # Event records: the meta (gdacs-layer-009).
+    fault('unavailable from truthiness', '009', TR, (R, "unavailable: payload.unavailable === true,", "unavailable: Boolean(payload.unavailable),"))
+    fault('stale from truthiness', '009', TR, (R, "stale: payload.stale === true,", "stale: Boolean(payload.stale),"))
+    fault('reason not cleaned', '009', TR, (R, "reason: clean(payload.reason) || null,", "reason: payload.reason || null,"))
+    fault('reason empty text', '009', TR, (R, "reason: clean(payload.reason) || null,", "reason: clean(payload.reason),"))
+    fault('fetchedAt always null', '009', TR, (R, "fetchedAt: validDate(payload.fetchedAt) ? payload.fetchedAt : null,", "fetchedAt: null,"))
+    fault('fetchedAt not checked', '009', TR, (R, "fetchedAt: validDate(payload.fetchedAt) ? payload.fetchedAt : null,", "fetchedAt: payload.fetchedAt ?? null,"))
+    fault('total of a fraction', '009', TR, (R, "Number.isSafeInteger(total) && total >= 0", "Number.isFinite(total) && total >= 0"))
+    fault('total 0 not kept', '009', TR, (R, "Number.isSafeInteger(total) && total >= 0", "Number.isSafeInteger(total) && total > 0"))
+    fault('total negative kept', '009', TR, (R, "Number.isSafeInteger(total) && total >= 0", "Number.isSafeInteger(total)"))
+    fault('schema version text', '009', TR, (R, "payload.schemaVersion !== 1 ||", "payload.schemaVersion != 1 ||"))
+    fault('no list check', '009', TR, (R, "    !Array.isArray(payload.events)\n", "    !payload.events\n"))
+    # Browser source (gdacs-layer-003, 004).
+    fault('other path', '003', TS, (S, "fetchImpl('/api/gdacs', { signal })", "fetchImpl('/api/gdacs/', { signal })"))
+    fault('no signal to fetch', '003', TS, (S, "fetchImpl('/api/gdacs', { signal })", "fetchImpl('/api/gdacs', {})"))
+    fault('no normalizer', '003', TS, (S, "      const snapshot = normalizeGdacsDocument(payload);\n", "      const snapshot = payload?.schemaVersion === 1 && Array.isArray(payload.events) ? { events: payload.events, meta: {} } : null;\n"))
+    fault('no check of an aborted signal', '004', TS, (S, "      signal?.throwIfAborted();\n", ""))
+    fault('no status check', '004', TS, (S, "      if (!response.ok) throw new Error(`GDACS HTTP ${response.status}`);\n", ""))
+    fault('other status text', '004', TS, (S, "`GDACS HTTP ${response.status}`", "`GDACS ${response.status}`"))
+    fault('cap one byte less', '004', TS, (S, "const MAX_RESPONSE_BYTES = 2 * 1024 * 1024;", "const MAX_RESPONSE_BYTES = 2 * 1024 * 1024 - 1;"))
+    fault('cap one byte more', '004', TS, (S, "const MAX_RESPONSE_BYTES = 2 * 1024 * 1024;", "const MAX_RESPONSE_BYTES = 2 * 1024 * 1024 + 1;"))
+    fault('other invalid text', '004', TS, (S, "'Invalid GDACS document'", "'Invalid GDACS snapshot'"))
+    # Display model (gdacs-layer-010, 011).
+    fault('color green', '010', TM, (M, "green: '#22c55e',", "green: '#22c55f',"))
+    fault('color orange', '010', TM, (M, "orange: '#f97316',", "orange: '#f97317',"))
+    fault('color red', '010', TM, (M, "red: '#ef4444',", "red: '#ef4445',"))
+    fault('current alpha', '010', TM, (M, "CURRENT_STYLE = Object.freeze({ alpha: 1, size: 10 })", "CURRENT_STYLE = Object.freeze({ alpha: 0.9, size: 10 })"))
+    fault('current size', '010', TM, (M, "CURRENT_STYLE = Object.freeze({ alpha: 1, size: 10 })", "CURRENT_STYLE = Object.freeze({ alpha: 1, size: 9 })"))
+    fault('past alpha', '010', TM, (M, "PAST_STYLE = Object.freeze({ alpha: 0.45, size: 6 })", "PAST_STYLE = Object.freeze({ alpha: 0.5, size: 6 })"))
+    fault('past size', '010', TM, (M, "PAST_STYLE = Object.freeze({ alpha: 0.45, size: 6 })", "PAST_STYLE = Object.freeze({ alpha: 0.45, size: 7 })"))
+    fault('no current key', '011', TM, (M, "    Number(b.current) - Number(a.current) ||\n", ""))
+    fault('current last', '011', TM, (M, "Number(b.current) - Number(a.current)", "Number(a.current) - Number(b.current)"))
+    fault('no alert key', '011', TM, (M, "    ALERT_RANK[b.alert] - ALERT_RANK[a.alert] ||\n", ""))
+    fault('orange above red', '011', TM, (M, "ALERT_RANK = Object.freeze({ red: 3, orange: 2, green: 1 })", "ALERT_RANK = Object.freeze({ red: 2, orange: 3, green: 1 })"))
+    fault('alert after modified', '011', TM, (M, "    ALERT_RANK[b.alert] - ALERT_RANK[a.alert] ||\n    modifiedTime(b) - modifiedTime(a) ||\n", "    modifiedTime(b) - modifiedTime(a) ||\n    ALERT_RANK[b.alert] - ALERT_RANK[a.alert] ||\n"))
+    fault('oldest first', '011', TM, (M, "modifiedTime(b) - modifiedTime(a)", "modifiedTime(a) - modifiedTime(b)"))
+    fault('null modified first', '011', TM, (M, "event.modified === null ? -Infinity :", "event.modified === null ? Infinity :"))
+    fault('id last first', '011', TM, (M, "(a.id < b.id ? -1 : 1)", "(a.id < b.id ? 1 : -1)"))
+    fault('id as a number', '011', TM, (M, "(a.id < b.id ? -1 : 1)", "Number(a.id.slice(3)) - Number(b.id.slice(3))"))
+    fault('label limit 47', '011', TM, (M, "export const GDACS_LABEL_LIMIT = 48;", "export const GDACS_LABEL_LIMIT = 47;"))
+    fault('label limit 49', '011', TM, (M, "export const GDACS_LABEL_LIMIT = 48;", "export const GDACS_LABEL_LIMIT = 49;"))
+    fault('title 31', '011', TM, (M, "const LABEL_TITLE_MAX = 32;", "const LABEL_TITLE_MAX = 31;"))
+    fault('title 33', '011', TM, (M, "const LABEL_TITLE_MAX = 32;", "const LABEL_TITLE_MAX = 33;"))
+    fault('title in UTF-16 units', '011', TM, (M, "title: Array.from(item.name).slice(0, LABEL_TITLE_MAX).join(''),", "title: item.name.slice(0, LABEL_TITLE_MAX),"))
+    fault('first priority', '011', TM, (M, "priority: 100000 - index,", "priority: 100001 - index,"))
+    fault('priority step', '011', TM, (M, "priority: 100000 - index,", "priority: 100000 - 2 * index,"))
+    fault('accent not of the alert', '011', TM, (M, "accent: pointStyle(item).color,", "accent: '#ffffff',"))
+    fault('interactive label', '011', TM, (M, "interactive: false,", "interactive: true,"))
+    fault('collision capacity 25', '011', TM, (M, "export const GDACS_COLLISION_CAPACITY = 24;", "export const GDACS_COLLISION_CAPACITY = 25;"))
+    # Layer (gdacs-layer-001, 002, 012 to 017).
+    fault('other name', '001', TL, (I, "name: 'Disaster Alerts',", "name: 'Disaster alerts',"))
+    fault('other icon', '001', TL, (I, "icon: '\U0001f6a8',", "icon: '\U0001f4e1',"))
+    fault('other source name', '001', TL, (I, "source: 'GDACS',", "source: 'GDACS events',"))
+    fault('other interval', '001', TL, (I, "updateInterval: 600000,", "updateInterval: 300000,"))
+    fault('no source check', '001', TL, (I, "  if (typeof source?.getSnapshot !== 'function')\n    throw new TypeError('GDACS requires a snapshot source');\n", ""))
+    fault('no host check', '001', TL, (I, "  if (!overlayHost) throw new TypeError('GDACS requires an overlay host');\n", ""))
+    fault('no check of a second init', '002', TL, (I, "      if (_viewer) throw new Error('GDACS layer is already initialized');\n", ""))
+    fault('shown after init', '002', TL, (I, "      _dataSource.show = false;\n      viewer.dataSources.add(_dataSource);\n", "      _dataSource.show = true;\n      viewer.dataSources.add(_dataSource);\n"))
+    fault('other entity id', '012', TL, (I, "id: `gdacs:${item.id}`,", "id: `gdacs-${item.id}`,"))
+    fault('no ground clamp', '012', TL, (I, "heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,", "heightReference: Cesium.HeightReference.NONE,"))
+    fault('no alpha', '012', TL, (I, ".withAlpha(\n          style.alpha,\n        ),", ".withAlpha(1),"))
+    fault('cohort limit 24', '012', TL, (I, "cohortLimit: GDACS_LABEL_LIMIT,", "cohortLimit: GDACS_COLLISION_CAPACITY,"))
+    fault('moving labels', '012', TL, (I, "moving: false,", "moving: true,"))
+    fault('points kept when unavailable', '013', TL, (I, "          if (meta.unavailable) {\n            clearEvents();\n", "          if (meta.unavailable) {\n"))
+    fault('no default reason', '013', TL, (I, "_guidance = meta.reason || msg('GDACS unavailable');", "_guidance = meta.reason;"))
+    fault('default reason always', '013', TL, (I, "_guidance = meta.reason || msg('GDACS unavailable');", "_guidance = msg('GDACS unavailable');"))
+    fault('guidance kept after a good result', '013', TL, (I, "            _count = events.length;\n            _guidance = null;\n", "            _count = events.length;\n"))
+    fault('stale shows no points', '014', TL, (I, "          if (meta.unavailable) {", "          if (meta.unavailable || meta.stale) {"))
+    fault('points removed when a request fails', '015', TL, (I, "        if (_request === request)\n          _lastError =", "        if (_request === request) clearEvents();\n        if (_request === request)\n          _lastError ="))
+    fault('other default error', '015', TL, (I, "msg('GDACS source unavailable')", "msg('GDACS unavailable')"))
+    fault('update while not enabled', '016', TL, (I, "      if (!_enabled) return false;\n", ""))
+    fault('disable keeps the request', '016', TL, (I, "    disable() {\n      _request?.abort();\n", "    disable() {\n"))
+    fault('disable keeps the labels', '016', TL, (I, "      _dataSource.show = false;\n      overlayHost.clearSource(SOURCE_ID);\n      overlayHost.setVisible(SOURCE_ID, false);\n    },", "      _dataSource.show = false;\n      overlayHost.setVisible(SOURCE_ID, false);\n    },"))
+    fault('destroy keeps the data source', '017', TL, (I, "        viewer.dataSources.remove(_dataSource, true);\n", ""))
+    fault('destroy keeps the count', '017', TL, (I, "      _count = 0;\n      _lastUpdate = null;\n      _lastError = null;\n      _guidance = null;\n    },", "      _lastUpdate = null;\n      _lastError = null;\n      _guidance = null;\n    },"))
+    fault('init after destroy refused', '002', TL, (I, "      _request = null;\n      _viewer = null;\n", "      _request = null;\n"))
+    fault('error kept after an unavailable result', '013', TL, (I, "          _lastUpdate = Date.now();\n          _lastError = null;\n", "          _lastUpdate = Date.now();\n          if (!meta.unavailable) _lastError = null;\n"))
+    fault('cut before the sort', '011', TM, (M, "return events.slice().sort(compareEvents).slice(0, GDACS_LABEL_LIMIT);", "return events.slice(0, GDACS_LABEL_LIMIT).sort(compareEvents);"))
+    fault('total of an unsafe whole number', '009', TR, (R, "Number.isSafeInteger(total) && total >= 0", "Number.isInteger(total) && total >= 0"))
+    fault('a second id checked before the rules', '006', TR, (R, "    const item = normalizeEvent(record);\n    if (!item || seen.has(item.id)) continue;\n    seen.add(item.id);\n", "    const item = normalizeEvent(record);\n    if (seen.has(record?.id)) continue;\n    seen.add(record?.id);\n    if (!item) continue;\n"))
+    fault('events shown when unavailable', '013', TL, (I, "          if (meta.unavailable) {\n            clearEvents();\n", "          if (meta.unavailable) {\n            showEvents(events);\n"))
+    fault('answer of an aborted request used', '016', TL, (I, "        if (_request === request) {\n          if (meta.unavailable) {", "        if (true) {\n          if (meta.unavailable) {"))
+    fault('aborted answer clears the newest request', '016', TL, (I, "        if (_request === request) _request = null;\n", "        _request = null;\n"))
+    fault('error of an aborted request used', '016', TL, (I, "        if (_request === request)\n          _lastError =", "        _lastError ="))
+    # Registration (gdacs-layer-018 to 022).
+    fault('other disposition', '018', TG, ('src/data/layerState.js', "Object.freeze({ id: 'gdacs', token: '9', disposition: 'enabled-only' }),", "Object.freeze({ id: 'gdacs', token: '9', disposition: 'enabled+options', optionOwner: 'gdacs' }),"))
+    fault('catalog before gnss-integrity', '018', TG, ('src/app/constructCatalog.js', "        createApplicationGnssIntegrity({\n          source: sources['gnss-integrity'],\n        }),\n        createApplicationGdacs({ source: sources.gdacs }),\n", "        createApplicationGdacs({ source: sources.gdacs }),\n        createApplicationGnssIntegrity({\n          source: sources['gnss-integrity'],\n        }),\n"))
+    fault('no source contract', '018', TG, ('src/app/sourceComposition.js', "  gdacs: contract(['gdacs'], ['getSnapshot']),\n", ""))
+    fault('panel group before gnss-integrity', '019', TG, ('src/ui/layerPanel.js', "      'gnss-integrity',\n      'gdacs',\n", "      'gdacs',\n      'gnss-integrity',\n"))
+    fault('other voice text', '020', TG, ('src/voice/layerManifest.js', "gdacs: 'The GDACS layer has no voice tools.',", "gdacs: 'GDACS has no voice tools.',"))
+    fault('credit without the first sentence of the disclaimer', '021', TG, ('src/data/dataCredits.js', " The estimates of GDACS come from a machine, and an estimate can be wrong.", ""))
+    fault('credit without the second sentence of the disclaimer', '021', TG, ('src/data/dataCredits.js', " Check each estimate before you use it to make a decision.", ""))
+    fault('credit without the link', '021', TG, ('src/data/dataCredits.js', '<a href="https://www.gdacs.org/"', '<a href="https://gdacs.org/"'))
+    fault('other Spanish name', '022', TG, ('src/i18n/locales/es.json', '"Disaster Alerts": "Alertas de desastres",', '"Disaster Alerts": "Alertas de desastre",'))
+    fault('other Russian error text', '022', TG, ('src/i18n/locales/ru.json', '"GDACS source unavailable": "Источник GDACS недоступен",', '"GDACS source unavailable": "Источник недоступен",'))
+    fault('no layer name', '022', TG, ('src/ui/layerNames.js', "  gdacs: msg('Disaster Alerts'),\n", ""))
+    
+    
+    def sha(path):
+        with open(f'{clone}/{path}', 'rb') as handle:
+            return hashlib.sha256(handle.read()).hexdigest()
+    
+    
+    killed = survived = 0
+    for name, scenario, test_file, edits in FAULTS:
+        tag = f'[gdacs-layer-{scenario}]'
+        paths = sorted({path for path, _, _ in edits})
+        saved = {path: open(f'{clone}/{path}', encoding='utf-8').read() for path in paths}
+        before = {path: sha(path) for path in paths}
+        try:
+            for path, old, new in edits:
+                text = open(f'{clone}/{path}', encoding='utf-8').read()
+                assert text.count(old) == 1, (name, path, 'pattern count', text.count(old))
+                open(f'{clone}/{path}', 'w', encoding='utf-8').write(text.replace(old, new))
+            run = subprocess.run(['node', '--test', '--test-reporter=tap', test_file], cwd=clone, capture_output=True, text=True, timeout=300)
+            out = run.stdout + run.stderr
+            failed = [line.split(' - ', 1)[1] for line in out.splitlines() if line.startswith('not ok') and tag in line]
+            if not failed and any(line.startswith('not ok') and line.endswith(f' - {test_file}') for line in out.splitlines()):
+                failed = [f'the test file {test_file} does not load']
+            if failed:
+                killed += 1
+            else:
+                survived += 1
+            print(f"{'KILLED' if failed else 'SURVIVED'}: {tag} {name} ({', '.join(paths)}) | failed: {failed}", flush=True)
+        finally:
+            for path in paths:
+                open(f'{clone}/{path}', 'w', encoding='utf-8').write(saved[path])
+                assert sha(path) == before[path], ('not restored', path)
+    print(f'faults {len(FAULTS)}, killed {killed}, survived {survived}')
+
+Output:
+KILLED: [gdacs-layer-006] no type rule (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no text check of the id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no type prefix check of the id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] id of 17 digits (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-005] id of at most 15 digits (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
+KILLED: [gdacs-layer-006] first digit 0 (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no end anchor of the id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-005] no alert red (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
+KILLED: [gdacs-layer-005] no alert orange (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
+KILLED: [gdacs-layer-006] no alert rule (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no finite check of the latitude (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-005] latitude 90 dropped (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
+KILLED: [gdacs-layer-006] latitude 90.5 kept (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no finite check of the longitude (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-005] longitude 180 dropped (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
+KILLED: [gdacs-layer-006] longitude 180.5 kept (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-005] position (0, 0) dropped (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
+KILLED: [gdacs-layer-005] all fields copied (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
+KILLED: [gdacs-layer-006] no check of a second id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] the last of two equal ids (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] limit 499 (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] limit 501 (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] limit counts the events that are not valid (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] limit counts a second event with the same id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-007] current from loose equality (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-007] makes current true only for the value true and keeps only a modified value that is a date']
+KILLED: [gdacs-layer-007] current from truthiness (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-007] makes current true only for the value true and keeps only a modified value that is a date']
+KILLED: [gdacs-layer-007] modified from any text (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-007] makes current true only for the value true and keeps only a modified value that is a date']
+KILLED: [gdacs-layer-007] modified always null (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-007] makes current true only for the value true and keeps only a modified value that is a date']
+KILLED: [gdacs-layer-008] range 0x00 starts one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x00 ends one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x00 ends one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x3c not removed (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x3c starts one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x3c ends one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x3e not removed (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x3e starts one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x3e ends one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x7f starts one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x7f ends one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x7f starts one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x7f ends one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x61c not removed (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x61c starts one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x61c ends one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x200b starts one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x200b ends one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x200b starts one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x200b ends one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2028 starts one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2028 ends one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2028 starts one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2028 ends one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2060 starts one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2060 ends one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2060 starts one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2060 ends one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2066 starts one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2066 ends one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2066 starts one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0x2066 ends one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0xfeff not removed (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0xfeff starts one earlier (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] range 0xfeff ends one later (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] only spaces join (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] no trim at the start (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] no trim at the end (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] cut to 119 (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] cut to 121 (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] cut in UTF-16 units (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] cut before the join of white space (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] type name of TC (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] type name of VO (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-008] no name of the type (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type']
+KILLED: [gdacs-layer-009] unavailable from truthiness (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-009] stale from truthiness (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-009] reason not cleaned (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-009] reason empty text (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-009] fetchedAt always null (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-009] fetchedAt not checked (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-009] total of a fraction (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-009] total 0 not kept (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-009] total negative kept (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-009] schema version text (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-009] no list check (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-003] other path (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-003] reads the route with the signal of the caller and gives the result of the normalizer']
+KILLED: [gdacs-layer-003] no signal to fetch (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-003] reads the route with the signal of the caller and gives the result of the normalizer']
+KILLED: [gdacs-layer-003] no normalizer (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-003] reads the route with the signal of the caller and gives the result of the normalizer']
+KILLED: [gdacs-layer-004] no check of an aborted signal (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-004] refuses a bad answer']
+KILLED: [gdacs-layer-004] no status check (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-004] refuses a bad answer']
+KILLED: [gdacs-layer-004] other status text (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-004] refuses a bad answer']
+KILLED: [gdacs-layer-004] cap one byte less (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-004] refuses a bad answer']
+KILLED: [gdacs-layer-004] cap one byte more (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-004] refuses a bad answer']
+KILLED: [gdacs-layer-004] other invalid text (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-004] refuses a bad answer']
+KILLED: [gdacs-layer-010] color green (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] color orange (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] color red (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] current alpha (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] current size (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] past alpha (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] past size (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-011] no current key (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] current last (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] no alert key (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] orange above red (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] alert after modified (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] oldest first (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] null modified first (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] id last first (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] id as a number (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] label limit 47 (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] label limit 49 (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] title 31 (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] title 33 (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] title in UTF-16 units (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] first priority (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] priority step (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] accent not of the alert (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] interactive label (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-011] collision capacity 25 (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-001] other name (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host']
+KILLED: [gdacs-layer-001] other icon (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host']
+KILLED: [gdacs-layer-001] other source name (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host']
+KILLED: [gdacs-layer-001] other interval (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host']
+KILLED: [gdacs-layer-001] no source check (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host']
+KILLED: [gdacs-layer-001] no host check (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host']
+KILLED: [gdacs-layer-002] no check of a second init (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts a call of init after destroy']
+KILLED: [gdacs-layer-002] shown after init (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts a call of init after destroy']
+KILLED: [gdacs-layer-012] other entity id (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-012] shows the points on the ground and the labels, and fills the stats']
+KILLED: [gdacs-layer-012] no ground clamp (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-012] shows the points on the ground and the labels, and fills the stats']
+KILLED: [gdacs-layer-012] no alpha (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-012] shows the points on the ground and the labels, and fills the stats']
+KILLED: [gdacs-layer-012] cohort limit 24 (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-012] shows the points on the ground and the labels, and fills the stats']
+KILLED: [gdacs-layer-012] moving labels (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-012] shows the points on the ground and the labels, and fills the stats']
+KILLED: [gdacs-layer-013] points kept when unavailable (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-013] removes the points when GDACS is unavailable and gives the reason as guidance']
+KILLED: [gdacs-layer-013] no default reason (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-013] removes the points when GDACS is unavailable and gives the reason as guidance']
+KILLED: [gdacs-layer-013] default reason always (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-013] removes the points when GDACS is unavailable and gives the reason as guidance']
+KILLED: [gdacs-layer-013] guidance kept after a good result (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-013] removes the points when GDACS is unavailable and gives the reason as guidance']
+KILLED: [gdacs-layer-014] stale shows no points (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-014] keeps the points when the document is stale']
+KILLED: [gdacs-layer-015] points removed when a request fails (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-015] keeps the last points when a request fails and gives the error']
+KILLED: [gdacs-layer-015] other default error (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-015] keeps the last points when a request fails and gives the error']
+KILLED: [gdacs-layer-016] update while not enabled (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight']
+KILLED: [gdacs-layer-016] disable keeps the request (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight']
+KILLED: [gdacs-layer-016] disable keeps the labels (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight']
+KILLED: [gdacs-layer-017] destroy keeps the data source (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-017] removes the data source and the labels when destroy runs, aborts the request in flight, and ignores a second call of destroy']
+KILLED: [gdacs-layer-017] destroy keeps the count (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-017] removes the data source and the labels when destroy runs, aborts the request in flight, and ignores a second call of destroy']
+KILLED: [gdacs-layer-002] init after destroy refused (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts a call of init after destroy']
+KILLED: [gdacs-layer-013] error kept after an unavailable result (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-013] removes the points when GDACS is unavailable and gives the reason as guidance']
+KILLED: [gdacs-layer-011] cut before the sort (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
+KILLED: [gdacs-layer-009] total of an unsafe whole number (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-006] a second id checked before the rules (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-013] events shown when unavailable (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-013] removes the points when GDACS is unavailable and gives the reason as guidance']
+KILLED: [gdacs-layer-016] answer of an aborted request used (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight']
+KILLED: [gdacs-layer-016] aborted answer clears the newest request (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight']
+KILLED: [gdacs-layer-016] error of an aborted request used (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight']
+KILLED: [gdacs-layer-018] other disposition (src/data/layerState.js) | failed: ['the test file src/layers/gdacs/registration.test.mjs does not load']
+KILLED: [gdacs-layer-018] catalog before gnss-integrity (src/app/constructCatalog.js) | failed: ['[gdacs-layer-018] registers the layer in the catalog, the source contract, the reference sources and the share link']
+KILLED: [gdacs-layer-018] no source contract (src/app/sourceComposition.js) | failed: ['[gdacs-layer-018] registers the layer in the catalog, the source contract, the reference sources and the share link']
+KILLED: [gdacs-layer-019] panel group before gnss-integrity (src/ui/layerPanel.js) | failed: ['[gdacs-layer-019] puts the layer at the end of the Events group of the panel']
+KILLED: [gdacs-layer-020] other voice text (src/voice/layerManifest.js) | failed: ['[gdacs-layer-020] keeps the layer out of voice']
+KILLED: [gdacs-layer-021] credit without the first sentence of the disclaimer (src/data/dataCredits.js) | failed: ['[gdacs-layer-021] names GDACS and its two partners and gives the disclaimer of the estimates']
+KILLED: [gdacs-layer-021] credit without the second sentence of the disclaimer (src/data/dataCredits.js) | failed: ['[gdacs-layer-021] names GDACS and its two partners and gives the disclaimer of the estimates']
+KILLED: [gdacs-layer-021] credit without the link (src/data/dataCredits.js) | failed: ['[gdacs-layer-021] names GDACS and its two partners and gives the disclaimer of the estimates']
+KILLED: [gdacs-layer-022] other Spanish name (src/i18n/locales/es.json) | failed: ['[gdacs-layer-022] gives the Spanish and the Russian texts of the layer']
+KILLED: [gdacs-layer-022] other Russian error text (src/i18n/locales/ru.json) | failed: ['[gdacs-layer-022] gives the Spanish and the Russian texts of the layer']
+KILLED: [gdacs-layer-022] no layer name (src/ui/layerNames.js) | failed: ['[gdacs-layer-022] gives the Spanish and the Russian texts of the layer']
+faults 164, killed 164, survived 0

@@ -80,6 +80,7 @@ const PANEL_GROUPS = [
       'local-firms',
       'fire-perimeters',
       'gnss-integrity',
+      'gdacs',
     ],
   },
   {

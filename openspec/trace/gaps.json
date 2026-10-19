@@ -2002,11 +2002,11 @@
       "branches": 3,
       "functions": 1,
       "totals": {
-        "lines": 203,
+        "lines": 205,
         "branches": 13,
         "functions": 3
       },
-      "sha": "8ff89a5fa2d7a94b583f0bf3c62eb5bcf26189e01303fb420cee982135a98d10",
+      "sha": "e5fe774598d92cd32709b8ee18c554f8ee82363b479935061cd9234c99cd2d2b",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -2272,11 +2272,11 @@
       "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 121,
+        "lines": 122,
         "branches": 25,
         "functions": 10
       },
-      "sha": "4201dbe2b35a9a6b691b0408427fb747fcb760e55e85b01a7564441cdba192c1",
+      "sha": "9d44be4a1ccc6fd74d38baae263f2357879e79841fbe8342808fd2e70f792f75",
       "untrue": false,
       "origin": "upstream-sync-5",
       "since": "2026-10-10"
@@ -3022,11 +3022,11 @@
       "branches": 1,
       "functions": 2,
       "totals": {
-        "lines": 582,
+        "lines": 588,
         "branches": 23,
         "functions": 6
       },
-      "sha": "313c8be199e6a78eb9d616a95bd047debc972fdddd317fc335321fd3ea0191f8",
+      "sha": "f5b73681823d093d2415c36e78a2f31d589e5c78db08224a2d91099abec1eb33",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3337,11 +3337,11 @@
       "branches": 37,
       "functions": 1,
       "totals": {
-        "lines": 1125,
+        "lines": 1126,
         "branches": 311,
         "functions": 76
       },
-      "sha": "e650ddd0a6edc59d6d6acd305674964084208618964578b6eca96c60ffed800b",
+      "sha": "2eaa3c336b2de0bf426e7a0bbfeb5b8732ef94917e539d12a59e237a0f7e5f94",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -10882,11 +10882,11 @@
       "branches": 6,
       "functions": 0,
       "totals": {
-        "lines": 142,
+        "lines": 143,
         "branches": 29,
         "functions": 6
       },
-      "sha": "e26247760d0ea863370a4c7bed478d207cd99379f413550acb9952bb273602c3",
+      "sha": "5f4ec292ef7b7a15f598eba1112527803a4329e19588c10894d5b9e576138cb6",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -10897,11 +10897,11 @@
       "branches": 17,
       "functions": 2,
       "totals": {
-        "lines": 833,
+        "lines": 834,
         "branches": 287,
         "functions": 47
       },
-      "sha": "e7f80218a72e09c7765492fbe8755ec3179840d4e2a6749b463af14d65b78ac6",
+      "sha": "2648fd98dcf93137705474af8558475ff218b0efff6d95b929b400480357709e",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -11707,11 +11707,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 566,
+        "lines": 567,
         "branches": 45,
         "functions": 21
       },
-      "sha": "1b4ee69742ab2d7b693ab1a3102c4bf17be922fcee78f0d8767ef32d0b1c3c81",
+      "sha": "0baaae60300012dd13c1bd0d5cf0d72a6501455ce82f919bbe50bf05baec2d33",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"

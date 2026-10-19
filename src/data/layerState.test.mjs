@@ -205,7 +205,7 @@ test('[osh-033] registers the OSH systems layer with token 3, and localLayers.js
     LAYER_STATE_REGISTRY.find((entry) => entry.id === 'osh-systems'),
     { id: 'osh-systems', token: '3', disposition: 'enabled-only' },
   );
-  assert.equal(REGISTERED_LAYER_IDS.length, 35);
+  assert.equal(REGISTERED_LAYER_IDS.length, 36);
   assert.deepEqual(REGISTERED_LAYER_IDS, [...REGISTERED_LAYER_IDS].sort());
   const localLayers = (await import('./localLayers.js')).default;
   assert.ok(
@@ -216,8 +216,8 @@ test('[osh-033] registers the OSH systems layer with token 3, and localLayers.js
 
 test('production registry is exact, canonical, and rejects incomplete contracts', async () => {
   assert.equal(validateLayerStateRegistry(), true);
-  assert.equal(REGISTERED_LAYER_IDS.length, 35);
-  assert.equal(new Set(REGISTERED_LAYER_IDS).size, 35);
+  assert.equal(REGISTERED_LAYER_IDS.length, 36);
+  assert.equal(new Set(REGISTERED_LAYER_IDS).size, 36);
   assert.ok(REGISTERED_LAYER_IDS.includes('transit'));
   assert.deepEqual(REGISTERED_LAYER_IDS, [...REGISTERED_LAYER_IDS].sort());
   assert.deepEqual(LEGACY_LAYER_STATE_TOKENS, {
@@ -256,17 +256,22 @@ test('production registry is exact, canonical, and rejects incomplete contracts'
   for (const [id, token] of Object.entries(LEGACY_LAYER_STATE_TOKENS)) {
     assert.equal(LAYER_STATE_TOKEN_RESERVATIONS[id], token);
   }
-  assert.equal(nextLayerStateToken(), '9');
+  // The layer gdacs took the last free digit "9". The samples below need a
+  // free digit, so they use the ledger without gdacs.
+  assert.equal(nextLayerStateToken(), '00');
+  const beforeGdacs = { ...LAYER_STATE_TOKEN_RESERVATIONS };
+  delete beforeGdacs.gdacs;
+  assert.equal(nextLayerStateToken(beforeGdacs), '9');
   assert.equal(
     nextLayerStateToken({
-      ...LAYER_STATE_TOKEN_RESERVATIONS,
+      ...beforeGdacs,
       alpha: '9',
       bravo: '00',
     }),
     '01',
   );
   const digitsExhausted = {
-    ...LAYER_STATE_TOKEN_RESERVATIONS,
+    ...beforeGdacs,
     ...Object.fromEntries([...'9'].map((digit) => [`prior-${digit}`, digit])),
   };
   assert.equal(nextLayerStateToken(digitsExhausted), '00');
@@ -317,8 +322,8 @@ test('production registry is exact, canonical, and rejects incomplete contracts'
     true,
   );
   assert.equal(
-    validateLayerStateAllocations(LAYER_STATE_TOKEN_RESERVATIONS, {
-      ...LAYER_STATE_TOKEN_RESERVATIONS,
+    validateLayerStateAllocations(beforeGdacs, {
+      ...beforeGdacs,
       future: '9',
       next: '00',
     }),
@@ -326,8 +331,8 @@ test('production registry is exact, canonical, and rejects incomplete contracts'
   );
   assert.throws(
     () =>
-      validateLayerStateAllocations(LAYER_STATE_TOKEN_RESERVATIONS, {
-        ...LAYER_STATE_TOKEN_RESERVATIONS,
+      validateLayerStateAllocations(beforeGdacs, {
+        ...beforeGdacs,
         future: '00',
       }),
     /next free token 9/,
@@ -353,8 +358,8 @@ test('production registry is exact, canonical, and rejects incomplete contracts'
   assert.throws(
     () =>
       validateLayerStateAllocations(
-        { ...LAYER_STATE_TOKEN_RESERVATIONS, merged: '9' },
-        { ...LAYER_STATE_TOKEN_RESERVATIONS, merged: '9', competing: '9' },
+        { ...beforeGdacs, merged: '9' },
+        { ...beforeGdacs, merged: '9', competing: '9' },
       ),
     /next free token 00/,
   );

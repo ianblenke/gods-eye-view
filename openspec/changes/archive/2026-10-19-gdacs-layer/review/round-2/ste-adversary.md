@@ -1,0 +1,19 @@
+Verdict: FAIL
+Tip 8c12aec5, clone /home/ianblenke/docker/gev-work/gdacs-layer. C = openspec/changes/archive/2026-10-19-gdacs-layer. The main spec has the same text, 3 lines lower.
+
+- [ ] FINDING major C/specs/gdacs-layer/spec.md:41 @8c12aec5 The round-1 text "keep only the first event of each `id`" has two meanings. It can mean the first event of the input with that id, or the first event that meets the rules. records.js:100-102 checks the rules first. So a "FL-8" with the alert "purple", then a valid "FL-8", give the valid event. Under the first meaning they give none. No sample of 006 and no fault (faults.txt:55-62) has this case. Write: "Of the events that meet the rules, it MUST keep only the first event of each `id`, and it MUST NOT count a later event with that `id` toward the limit." Add the sample to 006 and its test. I could not run the sample.
+- [ ] FINDING major C/specs/gdacs-layer/spec.md:136,150-151 @8c12aec5 The round-1 text "MUST show the points and the labels of the newest result of the source" has no exception for `meta.unavailable` true. The normalizer keeps the events of that document (records.js:96-104), and index.js:117-120 removes all points. For an unavailable result with events, the requirement says "show them" and 013 says "no entity". The 013 test gives that result no events (layer.test.mjs:284). Add: "For a result with `meta.unavailable` true, it MUST remove all points and labels." In 013, write "a result with 2 events, `meta.unavailable` true and the reason ...".
+- [ ] FINDING minor C/evidence/faults.txt:181,375 @8c12aec5 The fault "credit without the disclaimer" removes only the first of the two sentences. The credit keeps the second sentence (dataCredits.js:179), so the name is now false. Rename the fault in the next run to "credit without the first sentence of the disclaimer". Do not edit the old output.
+- [ ] FINDING minor C/specs/gdacs-layer/spec.md:20, src/layers/gdacs/layer.test.mjs:133 @8c12aec5 "works" and "can show points again" are vague. The test checks one new data source and 3 entities (:153-158). Write: "AND after `destroy`, `init`, `enable` and `update` add one data source and show 3 points". In the title, write "accepts a call of init after destroy".
+- [ ] FINDING minor C/specs/gdacs-layer/spec.md:115, src/layers/gdacs/model.test.mjs:28 @8c12aec5 "Style the points" uses "style" as a verb. Round 1 found the same fault in the title of 010. I am not sure that STE approves "style". Write: "Give the points the color of the alert level and the size and the alpha of the current flag". In the title, write "the size and the alpha".
+
+The limit of five minor findings left out one more minor: spec.md:107 "when that is" has no noun, and :128 "the reverse order" does not say of which order.
+
+Checked, no finding:
+- These round-1 corrections are complete and true: emoji (:91 and :129 agree with records.test.mjs:199 and model.test.mjs:147-151), proposal :20 and :46, "sequence of white space characters", "the call of `setEntries`", the group in CHANGELOG and the six titles (003, 007, 010, 011, 016, 021).
+- The second sentence of the credit is the same as in gdacs.js:22, scenario 021 and registration.test.mjs:119. So design :45 and DATA_SOURCES.md:127 are now true.
+- I found no banned word and no banned form in the new prose and titles. "required" in osh-028 is upstream text that the delta must keep word for word.
+- Tasks 1.13, 2.17 and 3.20 each give one instruction, and 2.17 comes before 3.20.
+- CHANGELOG.md:3 "Up to 48 labels show the names" is not complete: a label shows the first 32 code points (spec :129, proposal :7). Each meaning is true, so this is not a finding.
+
+Note for the lead: two counts in the brief do not agree with the evidence. faults.txt:381 gives 159 faults, all killed, not 154. browser.txt has 6 PASS lines, not 5.

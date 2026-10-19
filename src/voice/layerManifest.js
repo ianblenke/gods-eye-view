@@ -410,6 +410,7 @@ const layers = [
 export const VOICE_OFF_LAYERS = Object.freeze({
   'osh-systems': 'OSH has no voice tools.',
   reticulum: 'The Reticulum layer has no voice tools.',
+  gdacs: 'The GDACS layer has no voice tools.',
   beemaps: 'The Bee Maps layer has no voice tools.',
   'beemaps-bursts': 'The Bee Maps bursts layer has no voice tools.',
   'bhote-koshi-2026': 'scene-driven event layer (control_scene)',

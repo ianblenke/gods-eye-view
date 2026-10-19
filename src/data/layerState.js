@@ -640,6 +640,7 @@ export const LAYER_STATE_REGISTRY = Object.freeze([
     disposition: 'enabled+options',
     optionOwner: 'flights',
   }),
+  Object.freeze({ id: 'gdacs', token: '9', disposition: 'enabled-only' }),
   Object.freeze({
     id: 'gnss-integrity',
     token: '7',
