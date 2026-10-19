@@ -1,6 +1,6 @@
-Host test run of gdacs-layer on commit 3f9b14eb. Host node: v26.8.2.
+Host test run of gdacs-layer on commit b834fe7d. Host node: v26.8.2.
 Command for each file: timeout 600 nice -n 19 node --test <file>, eight files at a time (xargs -P 8). One line for each file: the exit status and the counts of the node test runner.
-Start (UTC) 04:57:26, end (UTC) 05:03:27. Files: 787 (every *.test.mjs and *.test.js file that git lists, except src/tooling/spec/gates.test.mjs).
+Start (UTC) 06:55:25, end (UTC) 07:01:22. Files: 787 (every *.test.mjs and *.test.js file that git lists, except src/tooling/spec/gates.test.mjs).
 
 Totals:
 tests 11633 pass 11617 fail 0 skipped 16
@@ -11,7 +11,7 @@ src/data/focusAllocations.test.mjs: skipped 1
 src/keySetupHardening.test.mjs: skipped 1
 src/overlays/worldOverlayAllocation.test.mjs: skipped 14
 
-src/tooling/spec/gates.test.mjs ran alone on the same commit (timeout 2400 nice -n 19 node --test src/tooling/spec/gates.test.mjs), start (UTC) 05:04:56, end (UTC) 05:19:03:
+src/tooling/spec/gates.test.mjs ran alone on the same commit (timeout 2400 nice -n 19 node --test src/tooling/spec/gates.test.mjs), start (UTC) 07:01:22, end (UTC) 07:15:21:
 ℹ tests 241
 ℹ pass 241
 ℹ fail 0

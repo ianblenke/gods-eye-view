@@ -1,4 +1,4 @@
-Checks of gdacs-layer on commit 3f9b14eb. Host node: v26.8.2.
+Checks of gdacs-layer on commit b834fe7d. Host node: v26.8.2.
 Each output below shows at most its last two lines. The lead added each line `exit status`.
 
 $ env -u NODE_ENV -u HOST -u PORT node scripts/format.mjs --check

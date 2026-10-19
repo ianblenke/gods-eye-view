@@ -1,4 +1,4 @@
-Browser check of gdacs-layer on commit 3f9b14eb. The tools-side Vite config is not part of the repository.
+Browser check of gdacs-layer on commit b834fe7d. The tools-side Vite config is not part of the repository.
 The app gets a request counter and the route /api/gdacs with a fake upstream. The fake upstream answers the stored GDACS page of 2026-10-16 (65 records).
 No request leaves the machine. Chrome runs headless with a software renderer. The share link of the page is #v=2&lat=15&lon=110&alt=9000000&heading=0&pitch=-90&roll=0&l=9.
 
@@ -61,6 +61,7 @@ PASS the layer asks the route /api/gdacs and gets 200 | {"route":1,"upstream":1,
 PASS the route asks only page 1, because that page has fewer than 100 records | upstream 1
 row: {"name":"Disaster Alerts","enabled":true,"meta":"GDACS · just now","count":"65","group":"\n        DATA LAYERS\n        \n        +\n      "}
 PASS the row shows the source GDACS and the count of events | GDACS · just now | count 65
+PASS the loading text "Restoring shared view" is gone before the screenshot
 screenshot: /home/ianblenke/docker/gev-tools/gdacs-layer/browser/gdacs-layer.png
 PASS no console error names GDACS
 console (last 15):
