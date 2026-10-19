@@ -15,11 +15,11 @@
 
 ## 2. Tests
 
-- [x] 2.1 Write `src/layers/gdacs/records.test.mjs` for `gdacs-layer-005` to `gdacs-layer-009`.
+- [x] 2.1 Write `src/layers/gdacs/records.test.mjs` for `gdacs-layer-005`, `gdacs-layer-006`, `gdacs-layer-007`, `gdacs-layer-008` and `gdacs-layer-009`.
 - [x] 2.2 Write `src/layers/gdacs/source.test.mjs` for `gdacs-layer-003` and `gdacs-layer-004`.
 - [x] 2.3 Write `src/layers/gdacs/model.test.mjs` for `gdacs-layer-010` and `gdacs-layer-011`.
-- [x] 2.4 Write `src/layers/gdacs/layer.test.mjs` for `gdacs-layer-001`, `gdacs-layer-002` and `gdacs-layer-012` to `gdacs-layer-017`.
-- [x] 2.5 Write `src/layers/gdacs/registration.test.mjs` for `gdacs-layer-018` to `gdacs-layer-022`.
+- [x] 2.4 Write `src/layers/gdacs/layer.test.mjs` for `gdacs-layer-001`, `gdacs-layer-002`, `gdacs-layer-012`, `gdacs-layer-013`, `gdacs-layer-014`, `gdacs-layer-015`, `gdacs-layer-016` and `gdacs-layer-017`.
+- [x] 2.5 Write `src/layers/gdacs/registration.test.mjs` for `gdacs-layer-018`, `gdacs-layer-019`, `gdacs-layer-020`, `gdacs-layer-021` and `gdacs-layer-022`.
 - [x] 2.6 Change the test of `osh-033` to expect 36 entries.
 - [x] 2.7 Change the count of the registry to 36 in the test "production registry is exact, canonical, and rejects incomplete contracts".
 - [x] 2.8 Make that test expect the next free token "00" from the real ledger.
