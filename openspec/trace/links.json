@@ -3729,7 +3729,7 @@
     "src/layers/gdacs/records.test.mjs › [gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids"
   ],
   "gdacs-layer-006": [
-    "src/layers/gdacs/records.test.mjs › [gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events"
+    "src/layers/gdacs/records.test.mjs › [gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events"
   ],
   "gdacs-layer-007": [
     "src/layers/gdacs/records.test.mjs › [gdacs-layer-007] makes current true only for the value true and keeps only a modified value that is a date"
