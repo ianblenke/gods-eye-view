@@ -198,6 +198,14 @@ test('[gdacs-layer-008] cleans the names: removed characters, white space, the c
   assert.equal(nameOf('y'.repeat(120)), 'y'.repeat(120));
   assert.equal(nameOf('🌊'.repeat(125)), '🌊'.repeat(120));
   assert.equal(nameOf(`${'z'.repeat(119)} ${'w'.repeat(10)}`), 'z'.repeat(119));
+  assert.equal(
+    nameOf(`${'z'.repeat(118)}\u0001\u0002\u0003${'w'.repeat(10)}`),
+    `${'z'.repeat(118)}ww`,
+  );
+  assert.equal(
+    nameOf(`${'z'.repeat(118)}  ${'w'.repeat(10)}`),
+    `${'z'.repeat(118)} w`,
+  );
   const typeNames = {
     FL: 'Flood',
     DR: 'Drought',

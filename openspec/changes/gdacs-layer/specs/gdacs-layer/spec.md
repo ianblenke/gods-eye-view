@@ -89,6 +89,8 @@ Origin: spec-first
 - **AND** a name of 130 letters gives its first 120 letters, and a name of 120 letters stays whole
 - **AND** a name of 125 emoji gives its first 120 emoji
 - **AND** a name of 119 letters, a space and 10 letters gives the 119 letters
+- **AND** a name of 118 letters, 3 control characters and 10 letters gives 120 letters
+- **AND** a name of 118 letters, two spaces and 10 letters gives the 118 letters, one space and 1 letter
 - **AND** a name that is empty after the normalizer cleans it, or is not text, becomes the name of its type
 - **AND** the name of the type is "Flood", "Drought", "Volcano" or "Tropical cyclone" for the type FL, DR, VO or TC
 - **AND** the characters `&`, quotation marks and letters of any script stay

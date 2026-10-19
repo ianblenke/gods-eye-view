@@ -52,7 +52,7 @@
 - [x] 3.16 Add the new paths to `scripts/format-scope.json`.
 - [x] 3.17 Add the new paths to `scripts/package-boundaries.json`.
 - [x] 3.18 Write the entry in `CHANGELOG.md`.
-- [x] 3.19 Write the paragraph in `DATA_SOURCES.md`.
+- [x] 3.19 Name the layer in the GDACS row and in the GDACS section of `DATA_SOURCES.md`.
 
 ## 4. Evidence
 

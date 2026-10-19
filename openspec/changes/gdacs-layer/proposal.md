@@ -18,7 +18,7 @@ The names come from GDACS. The layer treats each name as untrusted text and clea
 - Change the count in the scenario `osh-033` of the capability `osh` from 33 to 36.
 - Add the test files `src/layers/gdacs/records.test.mjs`, `source.test.mjs`, `model.test.mjs`, `layer.test.mjs` and `registration.test.mjs`.
 - Update the tests that count layers, list the reference sources, or use the token "9" as a free token. `design.md` D6 names each test.
-- Write one entry in `CHANGELOG.md` and one paragraph in `DATA_SOURCES.md`.
+- Write one entry in `CHANGELOG.md`. Name the layer in the GDACS row and in the GDACS section of `DATA_SOURCES.md`.
 
 ## Capabilities
 
