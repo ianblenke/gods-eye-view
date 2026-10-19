@@ -862,11 +862,11 @@
       "branches": 9,
       "functions": 5,
       "totals": {
-        "lines": 155,
+        "lines": 156,
         "branches": 15,
         "functions": 10
       },
-      "sha": "125a10b89e446078cb7719c0a6e6fc95ebd7ab5915c68d03ceab3873e6630963",
+      "sha": "af514fe145efdd9756e3b0f76554375bc50e96ef179b350e227aa422f96578c4",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1822,26 +1822,26 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 37,
+        "lines": 39,
         "branches": 5,
         "functions": 2
       },
-      "sha": "c900c42325511759bd963b0db355b2ff2e5493f251ac13e6dec316299505cf17",
+      "sha": "0210db65e321e2ee2a45e11dda5245669b96832ba1b66a4cd81d42222f12fdbb",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/annotations/annotationEngine.js": {
       "loaded": true,
-      "lines": 692,
+      "lines": 683,
       "branches": 95,
       "functions": 27,
       "totals": {
-        "lines": 1606,
+        "lines": 1598,
         "branches": 284,
         "functions": 70
       },
-      "sha": "e36ad946357e255b6b3d895baaa7c593d96b918bca2e38a949a3672a8d82ff78",
+      "sha": "aec9d1af28d4206883684698b49255fc6e48e9fbbbefe5c85db765c8162165ed",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1852,11 +1852,11 @@
       "branches": 16,
       "functions": 0,
       "totals": {
-        "lines": 311,
-        "branches": 119,
-        "functions": 24
+        "lines": 306,
+        "branches": 118,
+        "functions": 23
       },
-      "sha": "e2901b674e16a0708411c555edbcd8afb1906743226d963e1adea81cf0b4588b",
+      "sha": "c0acba294606c028a12547e88ca9e97d858c0920aafbf857aae4e84df01be436",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -2464,14 +2464,14 @@
     "src/cockpitCloudEffects.js": {
       "loaded": true,
       "lines": 392,
-      "branches": 2,
+      "branches": 1,
       "functions": 19,
       "totals": {
-        "lines": 614,
-        "branches": 13,
+        "lines": 601,
+        "branches": 12,
         "functions": 23
       },
-      "sha": "bdda207525e8b17daca0ee0f263d7e3b7b5d3810f53f8ab012f53236b84033e0",
+      "sha": "d5e48f7fad1c53dea866a41010e361c607e3c1cdb033553caada964df10897aa",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2767,11 +2767,11 @@
       "branches": 59,
       "functions": 6,
       "totals": {
-        "lines": 1106,
+        "lines": 1099,
         "branches": 464,
         "functions": 63
       },
-      "sha": "632a83649861e553bbafa370293c4563dddf50a8711dd80189a2c31bff5b99b8",
+      "sha": "061196ceb3ab3808c6d99298b47d6237627f23e57a06333737b37e1fc070f32c",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3022,11 +3022,11 @@
       "branches": 1,
       "functions": 2,
       "totals": {
-        "lines": 579,
+        "lines": 582,
         "branches": 23,
         "functions": 6
       },
-      "sha": "6183c22335ff87a7eecc045877722788f7fe0eee897b6e8792203f0c4f486513",
+      "sha": "313c8be199e6a78eb9d616a95bd047debc972fdddd317fc335321fd3ea0191f8",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3547,11 +3547,11 @@
       "branches": 13,
       "functions": 0,
       "totals": {
-        "lines": 355,
-        "branches": 85,
-        "functions": 16
+        "lines": 349,
+        "branches": 84,
+        "functions": 15
       },
-      "sha": "e3362ee60ca1f0c1c871164514cd0018166133488d043572b0a47316923a3e68",
+      "sha": "4f8eb8c7895c55c1b73341df8cf11cf21448f94939fbc160535d0414e78d18a9",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3667,11 +3667,11 @@
       "branches": 16,
       "functions": 0,
       "totals": {
-        "lines": 171,
-        "branches": 76,
+        "lines": 162,
+        "branches": 75,
         "functions": 9
       },
-      "sha": "27d4b24c80b8f318dbccc84fd7589e6e70909a9b27f9104f6a59e40c9507efd1",
+      "sha": "12352ab67d20b8cdc32e873dea614eb3a649ae71c8c7377ed2c3da5e301ab2e2",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -3682,11 +3682,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 117,
-        "branches": 29,
-        "functions": 5
+        "lines": 101,
+        "branches": 26,
+        "functions": 4
       },
-      "sha": "d1e876ab6d8e4e4405eee26dc0d56c94362bd45344cdf73c25857fb723ae35c5",
+      "sha": "b498dbea5ed7957835ba90a7cb64d906e5609bae76ddfeae2f6c97653b5df2ff",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3877,11 +3877,11 @@
       "branches": 10,
       "functions": 0,
       "totals": {
-        "lines": 895,
-        "branches": 114,
-        "functions": 28
+        "lines": 892,
+        "branches": 113,
+        "functions": 27
       },
-      "sha": "c0c5822f95bf023d8218a9be1f63bb6b880042a0afb107fa12fd601794fe510e",
+      "sha": "b25caf0aaeb4115edc3370ef29cccc0e53043b82f172d5a01a4bd80f5ae1e626",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -3997,11 +3997,11 @@
       "branches": 43,
       "functions": 21,
       "totals": {
-        "lines": 1055,
-        "branches": 87,
-        "functions": 44
+        "lines": 1050,
+        "branches": 86,
+        "functions": 43
       },
-      "sha": "63cd47c02438b08fbfa0112c01efeb5599dc9224229b75d77c21430de01b6ef9",
+      "sha": "ff82f2026a4dc95ec8a1a2212facc8ce669307bff506f39c8636d0571591d4e5",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4552,11 +4552,11 @@
       "branches": 14,
       "functions": 0,
       "totals": {
-        "lines": 682,
+        "lines": 790,
         "branches": 23,
         "functions": 8
       },
-      "sha": "0db831cd7d8848ce3582b629736f4dd40cb47a0420b206028af731f2dffd45fe",
+      "sha": "0c3c128da6f3bc5d68e4819914c7f26c2608496c2d894c1d012219ff1ca3cff5",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4852,11 +4852,11 @@
       "branches": 18,
       "functions": 7,
       "totals": {
-        "lines": 577,
+        "lines": 573,
         "branches": 50,
         "functions": 24
       },
-      "sha": "6b54a5ddfdde0b9b351fa196af12ad00314c3cfbf28de31d41cedb99b29dc815",
+      "sha": "a1cfcc9054d73650828c4d8723a489c7cd469834e8d2127f4c0e4a5c1425eaad",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5366,7 +5366,7 @@
         "branches": 2,
         "functions": 0
       },
-      "sha": "29bb85506e911ff473e0e53198528a3768b92c0debf96c22414d3c400d6e7341",
+      "sha": "f7a9f92917f78fc3ed6ac00ce5dd11484f5e9d80b9d209c89b978ee2715b36aa",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6562,11 +6562,11 @@
       "branches": 13,
       "functions": 2,
       "totals": {
-        "lines": 239,
+        "lines": 240,
         "branches": 25,
         "functions": 7
       },
-      "sha": "eb0316548df461cb3e91175e349a4feacad6bfab04a8973349a252cd475ac6e4",
+      "sha": "7b325116dcf587e82d915ca80686afc797d078084c4a63bc8fe28ebc0fd0dc21",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6604,14 +6604,14 @@
     "src/layers/satellites/ingestion.js": {
       "loaded": true,
       "lines": 11,
-      "branches": 14,
+      "branches": 11,
       "functions": 0,
       "totals": {
-        "lines": 196,
-        "branches": 25,
+        "lines": 197,
+        "branches": 26,
         "functions": 7
       },
-      "sha": "a7d88363a406383af878e3a4ccf74fed738e7970ea20f0a4049792837360d35c",
+      "sha": "9b816a504c327affb324b18c499c682489807150cb9aecc4994707e8828141a6",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6671,7 +6671,7 @@
         "branches": 73,
         "functions": 22
       },
-      "sha": "91e07afe47be3487dcc7a1509172276e81685b45f4f701a350aa9ad799df8fbc",
+      "sha": "d3fe7779cd5d214428ad93f9655596db8c59c6cd9a36233a8e01e81ee68231ea",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -8317,11 +8317,11 @@
       "branches": 53,
       "functions": 13,
       "totals": {
-        "lines": 1030,
-        "branches": 179,
-        "functions": 37
+        "lines": 1017,
+        "branches": 178,
+        "functions": 36
       },
-      "sha": "81b1bf914cdf3c25147bf506561d640c09608639d19fb1a05cdc8551b0f36df7",
+      "sha": "f908f9c645eeea2c1bb4f16b36e47a08736c5751dd51aba9892ac922fdfd5f4b",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -9274,14 +9274,14 @@
     "src/sources/gbfsStations.js": {
       "loaded": true,
       "lines": 9,
-      "branches": 14,
+      "branches": 13,
       "functions": 0,
       "totals": {
-        "lines": 136,
-        "branches": 52,
-        "functions": 6
+        "lines": 163,
+        "branches": 59,
+        "functions": 8
       },
-      "sha": "ed09189e7b3f7b3d1d97ef17ca3449648cd619bda811d91c44b03513027f27d4",
+      "sha": "0493c4d1e8ea5be500b16c84bb078a7dcc5036f939162362f6e7f581251c5f07",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -11677,11 +11677,11 @@
       "branches": 342,
       "functions": 69,
       "totals": {
-        "lines": 5034,
-        "branches": 1202,
-        "functions": 205
+        "lines": 5023,
+        "branches": 1200,
+        "functions": 203
       },
-      "sha": "03367da520e2e791860d3d9eeb930bd74dd3d57a9904847f99bd954fef4ded32",
+      "sha": "0b699a4059fe954aa089a4ea5d567802e8b453ce846389183a305d029a8050df",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -16442,8 +16442,8 @@
       "names": {
         "greatCircleKm sanity: Austin -> ~5 km north": 1,
         "horizon gaze: far hit is pulled back to 12 km along the bearing": 1,
+        "invalid ground hit falls back to the camera nadir": 1,
         "oblique look within 12 km: uses the hit point verbatim": 1,
-        "pickEllipsoid failure (non-finite hit): falls back to the camera nadir": 1,
         "pull cap is honored for other maxPullKm values": 1,
         "span clamp is idempotent on already-clamped bounds (loadRoadsForBounds re-clamp)": 1,
         "span clamp keeps antimeridian bounds monotonic and request-safe": 1,
@@ -16888,6 +16888,18 @@
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
+    },
+    "src/geoDistance.test.mjs": {
+      "names": {
+        "canonical points require explicit latitude and longitude keys": 1,
+        "great-circle handles dateline crossing and antipodal points": 1,
+        "great-circle identity and symmetry": 1,
+        "great-circle one-degree calibration and canonical units": 1,
+        "invalid, missing, non-finite, and out-of-range points return Infinity": 1,
+        "latitude-before-longitude regression rejects a swapped Austin point": 1
+      },
+      "origin": "upstream-sync-7",
+      "since": "2026-10-19"
     },
     "src/googleGeocodeProxy.test.mjs": {
       "names": {
@@ -17486,6 +17498,19 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/layers/bikeshare/spainCitiesSystems.test.mjs": {
+      "names": {
+        "JCDecaux station names reach the layer without underscores": 1,
+        "PBSC station capacity reaches the layer as docks, without the geofenced area": 1,
+        "a camera over central Madrid activates BiciMAD and BicinRivas": 1,
+        "a camera over each outermost station activates its system": 1,
+        "each load radius reaches its outermost stations": 1,
+        "stations a feed lists away from its city are not loaded": 1,
+        "the Spanish city systems are registered and readable through the proxy": 1
+      },
+      "origin": "upstream-sync-7",
+      "since": "2026-10-19"
+    },
     "src/layers/bikeshare/usPbscCities.test.mjs": {
       "names": {
         "HIBike stays inactive away from Hawaii Island": 1,
@@ -18071,6 +18096,13 @@
       },
       "origin": "upstream-sync-5",
       "since": "2026-10-10"
+    },
+    "src/layers/satellites/ingestion.test.mjs": {
+      "names": {
+        "every Alpha-5 satellite keeps its own catalog entry through dedupe": 1
+      },
+      "origin": "upstream-sync-7",
+      "since": "2026-10-19"
     },
     "src/layers/satellites/source.test.mjs": {
       "names": {
@@ -20888,14 +20920,20 @@
         "English preference accepts case differences and regional language tags": 1,
         "GBFS v2 station names remain trimmed strings": 1,
         "GBFS v3 station names prefer English over the first translation": 1,
+        "a name of only underscores falls back to short_name, then to empty": 1,
         "a usable name takes precedence over an English short name": 1,
         "bad names do not lose valid stations or their metadata": 1,
+        "capacity counts docks, not the geofenced area PBSC adds to it": 1,
+        "capacity is read as given without a usable geofenced_capacity": 1,
         "localized names can fall back to legacy short_name strings": 1,
         "malformed language fields cannot abort translation selection": 1,
         "missing, empty and malformed names fall back to localized short_name": 1,
         "name shape is normalized even when a feed omits or misstates its version": 1,
         "no usable name leaves the station available with an empty name": 1,
         "normalizing a localized name leaves the feed document unchanged": 1,
+        "spacing without underscores stays as the operator published it": 1,
+        "underscores are read the same in GBFS v3 localized names": 1,
+        "underscores in station names read as word breaks": 1,
         "without usable English text the first usable translation wins": 1
       },
       "origin": "upstream-sync-6",
@@ -21511,6 +21549,7 @@
     "src/tooling/viteBuild.test.mjs": {
       "names": {
         "build export resolves in Node and has no browser fallback": 1,
+        "directories the server writes while it runs are kept out of the dev watcher": 1,
         "only embed-mode documents may be framed, and only by the allowed ancestors": 1,
         "root config retains existing named exports and standalone provider order": 1,
         "the CSP admits the event media embeds and the Maps JavaScript API, and no other script origin": 1
@@ -21861,10 +21900,17 @@
     },
     "src/tools/queries/space.test.mjs": {
       "names": {
+        "Alpha-5 catalog numbers decode, skipping I and O": 1,
+        "TLE parsing accepts matching Alpha-5 pairs and rejects mismatched Alpha-5 pairs": 1,
+        "TLE parsing rejects a pair whose catalog fields are malformed and resumes": 1,
+        "TLE parsing rejects pairs with mismatched catalog numbers and resumes": 1,
         "TLE parsing resumes after a set missing line 1": 1,
         "TLE parsing resumes after a set missing line 2": 1,
         "TLE text parses into named entries with catalog numbers": 1,
+        "a digit catalog field reads as it did before": 1,
+        "a malformed catalog field is no number": 1,
         "a pass that never comes is a normal answer, and catalog failures are unavailable": 1,
+        "a satellite numbered above 99999 keeps its number and is found by it": 1,
         "satellite and launch sources read the proxies stale markers": 1,
         "satellites are matched by name or catalog number within the group": 1,
         "satellites overhead are those above the elevation, highest first": 1,
