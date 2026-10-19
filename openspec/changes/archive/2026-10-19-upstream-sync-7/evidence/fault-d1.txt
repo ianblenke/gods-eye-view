@@ -1,0 +1,26 @@
+Fault D1: remove the line 'unwatchedRuntimeDirsPlugin(),' from standalonePlugins() in server/standalone/vite.config.js (tree 91de1b68).
+Without the fault:
+ok 1 - [credential-boundary-003] keeps three public names, plugin order and loopback protections
+ok 2 - [credential-boundary-003] build helper does not discover environment values or construct local providers
+ok 3 - root config retains existing named exports and standalone provider order
+ok 4 - directories the server writes while it runs are kept out of the dev watcher
+ok 5 - build export resolves in Node and has no browser fallback
+ok 6 - only embed-mode documents may be framed, and only by the allowed ancestors
+ok 7 - the CSP admits the event media embeds and the Maps JavaScript API, and no other script origin
+# tests 7
+# pass 7
+# fail 0
+Diff of the fault:
+-    unwatchedRuntimeDirsPlugin(),
+With the fault:
+ok 1 - [credential-boundary-003] keeps three public names, plugin order and loopback protections
+ok 2 - [credential-boundary-003] build helper does not discover environment values or construct local providers
+not ok 3 - root config retains existing named exports and standalone provider order
+not ok 4 - directories the server writes while it runs are kept out of the dev watcher
+ok 5 - build export resolves in Node and has no browser fallback
+ok 6 - only embed-mode documents may be framed, and only by the allowed ancestors
+ok 7 - the CSP admits the event media embeds and the Maps JavaScript API, and no other script origin
+# tests 7
+# pass 5
+# fail 2
+After restore: 0 changed files

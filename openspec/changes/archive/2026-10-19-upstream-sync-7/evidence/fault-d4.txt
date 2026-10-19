@@ -1,0 +1,32 @@
+Faults of decision D4 (test file src/control/route.test.mjs with the address 192.0.2.10; code tree 91de1b68).
+Without a fault:
+# tests 39
+# pass 39
+# fail 0
+
+Fault 028: add '192.0.2.10' to LOOPBACK_HOSTS in server/providers/common/loopback-command.js.
+-const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '::1']);
++const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '::1', '192.0.2.10']);
+not ok 15 - [osh-control-028] Refuse a cross-origin or untrusted-host POST
+not ok 26 - [osh-control-028] Refuse a host that is not a loopback host
+# tests 39
+# pass 37
+# fail 2
+
+Fault 039: add '192.0.2.10' to LOOPBACK_ADDRESSES in server/providers/common/loopback-command.js.
+-const LOOPBACK_ADDRESSES = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1']);
++const LOOPBACK_ADDRESSES = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1', '192.0.2.10']);
+not ok 29 - [osh-control-039] Refuse a POST from another machine and write the audit line
+# tests 39
+# pass 38
+# fail 1
+
+Fault 039b: add '::ffff:192.0.2.10' to LOOPBACK_ADDRESSES in server/providers/common/loopback-command.js.
+-const LOOPBACK_ADDRESSES = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1']);
++const LOOPBACK_ADDRESSES = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1', '::ffff:192.0.2.10']);
+not ok 29 - [osh-control-039] Refuse a POST from another machine and write the audit line
+# tests 39
+# pass 38
+# fail 1
+
+After restore: 0 changed code files

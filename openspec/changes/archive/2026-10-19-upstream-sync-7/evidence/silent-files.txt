@@ -1,0 +1,108 @@
+Check of upstream code files that import a code file that the fork changed. Branch head: 98e44aa7.
+The script reads each .js and .mjs file of the upstream range 73aec2e6..93ea088f and finds each relative import. It prints the import when the imported file on the branch differs from the same file at upstream (git diff --name-only 93ea088f 98e44aa7).
+
+Script (python3 -I):
+    import os, re, subprocess
+    def names(*args):
+        return subprocess.run(['git', 'diff', '--name-only', *args], capture_output=True, text=True, check=True).stdout.split()
+    fork = set(names('93ea088f', '98e44aa7'))          # files where the branch differs from upstream
+    upstream = names('73aec2e6', '93ea088f')           # files of the upstream range
+    pattern = re.compile(r"""(?:import|export)\s[^'"]*?from\s*['"]([^'"]+)['"]|import\(\s*['"]([^'"]+)['"]\s*\)|import\s*['"]([^'"]+)['"]""")
+    for f in upstream:
+        if not re.search(r'\.m?js$', f) or not os.path.exists(f):
+            continue
+        for m in pattern.finditer(open(f).read()):
+            spec = next(g for g in m.groups() if g)
+            if spec.startswith('.'):
+                target = os.path.normpath(os.path.join(os.path.dirname(f), spec))
+                if target in fork:
+                    print(f'{f} imports {target}')
+
+Output:
+server/standalone/vite.config.js imports build/vite.js
+server/standalone/vite.config.js imports server/providers/local.js
+src/data/analystEngine.js imports src/voice/layerManifest.js
+src/hud.js imports src/cityPois.js
+src/hud.js imports src/ui/layerPanel.js
+src/locations.js imports src/cityPois.js
+src/tooling/viteBuild.test.mjs imports build/vite.js
+src/tooling/viteBuild.test.mjs imports server/providers/local.js
+src/voice/gevActions.js imports src/cityPois.js
+src/voice/gevActions.js imports src/voice/layerManifest.js
+
+The upstream changes in the four files that import a fork file under src/:
+$ git diff 73aec2e6 93ea088f -- src/hud.js src/locations.js src/voice/gevActions.js src/data/analystEngine.js | grep -E '^[-+]import'
++import { greatCircleKm } from '../geoDistance.js';
++import { greatCircleKm } from './geoDistance.js';
++import { greatCircleKm } from './geoDistance.js';
++import { greatCircleKm } from '../geoDistance.js';
+
+Each call of the new function greatCircleKm in these four files:
+$ grep -n 'greatCircleKm(' src/hud.js src/locations.js src/voice/gevActions.js src/data/analystEngine.js
+src/hud.js:686:    return greatCircleKm({ lat: lat1, lon: lon1 }, { lat: lat2, lon: lon2 });
+src/locations.js:685:  const offsetKm = greatCircleKm(
+src/data/analystEngine.js:104:  return greatCircleKm({ lat: lat1, lon: lon1 }, { lat: lat2, lon: lon2 });
+src/voice/gevActions.js:3746:    greatCircleKm(
+src/voice/gevActions.js:4039:      const distanceKm = greatCircleKm({ lat: latitude, lon: longitude }, poi);
+
+src/voice/gevActions.js gives a city POI to greatCircleKm, which reads the fields lat and lon. The fork POIs in src/cityPois.js use these fields:
+$ git diff 93ea088f 98e44aa7 -- src/cityPois.js | grep -cE '^\+ +lat: '
+10
+$ git diff 93ea088f 98e44aa7 -- src/cityPois.js | grep -cE '^\+ +lon: '
+10
+$ git diff 93ea088f 98e44aa7 -- src/cityPois.js | grep -cE '^\+ +lng: '
+0
+
+The upstream changes of the two files that import build/vite.js and server/providers/local.js are the plugin of decision D1:
+$ git diff 73aec2e6 93ea088f -- server/standalone/vite.config.js src/tooling/viteBuild.test.mjs | grep -E '^[-+]' | grep -v -E '^(\+\+\+|---)'
++import { unwatchedRuntimeDirsPlugin } from './unwatched-cache.js';
++      unwatchedRuntimeDirsPlugin(),
+-    config.plugins.slice(3, -4).map((plugin) => plugin.name),
++    config.plugins.slice(3, -5).map((plugin) => plugin.name),
+-  assert.equal(config.plugins.at(-5).name, 'gev-key-setup');
++  assert.equal(config.plugins.at(-6).name, 'gev-key-setup');
+-  assert.equal(config.plugins.at(-4).name, 'local-mcp');
+-  assert.equal(config.plugins.at(-3).name, 'api-not-found');
++  assert.equal(config.plugins.at(-5).name, 'local-mcp');
++  assert.equal(config.plugins.at(-4).name, 'api-not-found');
++  // Config-only, so it sits after the provider slice rather than in it.
++  assert.equal(config.plugins.at(-3).name, 'gev-unwatched-runtime-dirs');
++test('directories the server writes while it runs are kept out of the dev watcher', () => {
++  // Providers write cache files and logs here while the app runs; none of it is
++  // source, so the dev watcher has no reason to stat it.
++  const config = standaloneConfig({ mode: 'test' });
++  const plugin = config.plugins.find(
++    ({ name }) => name === 'gev-unwatched-runtime-dirs',
++  );
++  // Dev only: preview and build have no watcher.
++  assert.equal(plugin.apply, 'serve');
++  assert.deepEqual(plugin.config().server.watch.ignored, [
++    '**/.gev-cache/**',
++    '**/.gev-logs/**',
++  ]);
++});
++
+
+Files that both sides changed after the shared ancestor 73aec2e6. Git merged each of them, and only server/standalone/vite.config.js had a conflict (evidence/conflicts.txt).
+$ comm -12 <(git diff --name-only 73aec2e6 93ea088f | sort) <(git diff --name-only 73aec2e6 2f53da24 | sort)
+DATA_SOURCES.md
+docs/CURRENT-STATE.md
+package-lock.json
+scripts/package-boundaries.json
+server/standalone/vite.config.js
+src/data/dataCredits.js
+src/hud.js
+src/tooling/viteBuild.test.mjs
+
+For each file, the command compares two lists of changed lines (the lines that start with + or -). The first list is the fork diff, from the shared ancestor 73aec2e6 to the base 2f53da24. The second list is the diff of the merged file against upstream, from 93ea088f to the merge commit 91de1b68. The count is the number of lines that are in only one of the two lists. A count of 0 shows that the merged file has the same changed lines against upstream as the fork has against the shared ancestor. The count does not compare the positions of the lines. server/standalone/vite.config.js has the count 2, because the resolution of design D1 moves the upstream plugin call into standalonePlugins().
+$ for f in <the 8 files>; do echo "$f $(diff <(git diff -U0 73aec2e6 2f53da24 -- $f | grep -E '^[-+]' | grep -v -E '^(\+\+\+|---) ') <(git diff -U0 93ea088f 91de1b68 -- $f | grep -E '^[-+]' | grep -v -E '^(\+\+\+|---) ') | grep -c -E '^[<>]')"; done
+DATA_SOURCES.md 0
+docs/CURRENT-STATE.md 0
+package-lock.json 0
+scripts/package-boundaries.json 0
+server/standalone/vite.config.js 2
+src/data/dataCredits.js 0
+src/hud.js 0
+src/tooling/viteBuild.test.mjs 0
+
+The test run of evidence/host-run.txt runs the tests of the code files of this list. One check of evidence/checks.txt reads package-boundaries.json, and one check examines the format of the code files.
