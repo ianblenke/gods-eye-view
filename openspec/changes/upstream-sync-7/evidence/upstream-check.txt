@@ -1,0 +1,111 @@
+Upstream check of upstream-sync-7. Date (UTC): 2026-10-19 01:03:50. Branch head: 98e44aa7.
+
+$ git ls-remote upstream main
+93ea088f4556a5a65b3292a2d15142d5a6c562bc	refs/heads/main
+
+$ git rev-parse upstream/main
+93ea088f4556a5a65b3292a2d15142d5a6c562bc
+
+$ git log -1 --format='merge commit %H%nparents %P' 91de1b68
+merge commit 91de1b6820e622a4a59e02d253419f37b0ec6764
+parents 7ca78eb1c6bc3f2e828bde8550ee5333a047466d 93ea088f4556a5a65b3292a2d15142d5a6c562bc
+
+$ git merge-base --is-ancestor 93ea088f4556a5a65b3292a2d15142d5a6c562bc upstream/main && echo upstream commit is an ancestor of upstream/main
+upstream commit is an ancestor of upstream/main
+
+$ git merge-base 2f53da248ca36889c1465d0fb22d4c5be9b96419 93ea088f4556a5a65b3292a2d15142d5a6c562bc
+73aec2e6b2ecfa865ddb7cb8839fa2d40fd0eb66
+
+$ git rev-list --count 73aec2e6..93ea088f
+37
+
+$ git rev-list --first-parent --count 73aec2e6..93ea088f
+13
+
+$ git log --first-parent --format='%h %s' 73aec2e6..93ea088f
+93ea088f docs(gbfs): note that overflow bikes can exceed dock capacity
+42e45e8f docs(changelog): add the Spanish city bike systems entry
+5508caa1 docs: credit and document the Spanish city bike systems
+23df7763 feat(bikeshare): add nine Spanish city bike systems
+53cda29b fix(gbfs): count docks, not PBSC's geofenced area, as station capacity
+ee686a32 fix(gbfs): read underscores in station names as word breaks
+dd079db9 Merge pull request #1101 from VG31OP/fix/tle-catalog-matching
+84da1b96 Merge pull request #287 from onionviolet/codex/shared-geodesy
+5ce56bdd Merge pull request #767 from hneogy/fix/alpha5-norad-id
+743ed639 fix(dev): stop the dev server watching .gev-cache and .gev-logs (#761)
+2f4b8460 fix(deps): bump dompurify, sharp and source-map-js for disclosed advisories (#1094)
+200a8346 Merge pull request #839 from dajiaohuang/docs/fix-adsbdb-cache-ttl
+710f2e97 Merge pull request #1196 from HyperionBurn/docs/qa-gate-npm-alias-list
+
+$ git diff --name-status 73aec2e6 93ea088f
+M	CONTRIBUTING.md
+M	DATA_SOURCES.md
+A	changelog.d/1094-dependency-security-patches.md
+A	changelog.d/1101-tle-catalog-number-match.md
+A	changelog.d/1190-bikeshare-spain-cities.md
+A	changelog.d/287-shared-great-circle-distance.md
+A	changelog.d/761-dev-unwatched-runtime-dirs.md
+A	changelog.d/767-alpha5-catalog-numbers.md
+M	docs/CURRENT-STATE.md
+M	package-lock.json
+M	scripts/package-boundaries.json
+M	server/providers/aircraft/enrichment.js
+A	server/standalone/unwatched-cache.js
+M	server/standalone/vite.config.js
+M	src/annotations/annotationEngine.js
+M	src/annotations/drawMode.js
+M	src/cockpitCloudEffects.js
+M	src/data/analystEngine.js
+M	src/data/dataCredits.js
+M	src/data/naturalEarthRegions.js
+M	src/data/naturalEarthRegions.test.mjs
+M	src/data/regionalModel.js
+M	src/data/routePlausible.js
+M	src/data/routePlausible.test.mjs
+M	src/data/trafficBounds.js
+M	src/data/trafficBounds.test.mjs
+M	src/data/transitFeeds.js
+A	src/geoDistance.js
+A	src/geoDistance.test.mjs
+M	src/hud.js
+M	src/layers/bikeshare/model.js
+M	src/layers/bikeshare/registry.js
+A	src/layers/bikeshare/spainCitiesSystems.test.mjs
+M	src/layers/cctv/model.js
+M	src/layers/flights/policy.js
+M	src/layers/satellites/catalog.js
+M	src/layers/satellites/ingestion.js
+A	src/layers/satellites/ingestion.test.mjs
+M	src/layers/satellites/orbits.js
+M	src/locations.js
+M	src/sources/gbfsStations.js
+M	src/sources/gbfsStations.test.mjs
+M	src/sources/tle.js
+M	src/tooling/viteBuild.test.mjs
+M	src/tools/queries/space.test.mjs
+M	src/voice/gevActions.js
+
+$ git diff --name-status 73aec2e6 93ea088f | cut -f1 | sort | uniq -c
+     11 A
+     35 M
+
+$ git diff --name-only 73aec2e6 93ea088f | grep -E '^(openspec/|\.claude/|scripts/spec/|scripts/qa-|AGENTS\.md$|Makefile$|package\.json$)' | wc -l
+0
+
+$ git diff --name-only 73aec2e6 93ea088f | grep -c -F src/data/layerStateTokenReservations.json
+0
+
+$ node --input-type=module -e 'import fs from "node:fs"; const owned=JSON.parse(fs.readFileSync("openspec/ownership.json","utf8")).owned; const files=fs.readFileSync(0,"utf8").split("\n").filter(Boolean); const hits=files.filter(f=>owned.some(p=>f===p||(p.endsWith("/")&&f.startsWith(p)))); console.log("upstream files in openspec/ownership.json:", hits.length, hits.join(" "));' < <(git diff --name-only 73aec2e6 93ea088f)
+upstream files in openspec/ownership.json: 0 
+
+# Files that the branch changes compared with the base commit, outside the change folder, and that the upstream range does not change:
+$ comm -23 <(git diff --name-only 2f53da24 98e44aa7 -- . ':(exclude)openspec/changes/upstream-sync-7' | sort) <(git diff --name-only 73aec2e6 93ea088f | sort)
+src/control/route.test.mjs
+
+# Files of the upstream range that the branch does not change compared with the base commit:
+$ comm -13 <(git diff --name-only 2f53da24 98e44aa7 -- . ':(exclude)openspec/changes/upstream-sync-7' | sort) <(git diff --name-only 73aec2e6 93ea088f | sort) | wc -l
+0
+
+$ git diff --name-only 2f53da24 98e44aa7 -- package.json package-lock.json
+package-lock.json
+

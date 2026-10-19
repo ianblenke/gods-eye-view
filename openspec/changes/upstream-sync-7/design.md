@@ -44,13 +44,14 @@ The adopt command records them. The rule 21 check of the second parent goes into
 ### D4: The LAN address in a fork test
 
 The owner asked on 2026-10-18 to remove the LAN address of the owner from the public fork.
-The address is in four lines of the owned test file `src/control/route.test.mjs`. The tests of `osh-control-028` and `osh-control-039` use it as an address of another machine.
+The address is in four lines of the owned test file `src/control/route.test.mjs`. Three tests use it as an address of another machine: two tests of `osh-control-028` and one test of `osh-control-039`.
 The change uses the documentation address `192.0.2.10` (RFC 5737) and its IPv4-mapped IPv6 form `::ffff:192.0.2.10` in its place.
 The code accepts only loopback hosts and loopback socket addresses, so the tests keep their meaning. The scenarios name no address, so their text does not change.
 
-Each test must fail against its fault:
-- `osh-control-028`: The fault makes the host check accept the host `192.0.2.10:5173`.
-- `osh-control-039`: The fault adds `192.0.2.10` to the loopback socket addresses.
+The three faults are in `server/providers/common/loopback-command.js`. Each fault must make a test fail:
+- The first fault adds `192.0.2.10` to the loopback hosts. The two tests of `osh-control-028` must then fail.
+- The second fault adds `192.0.2.10` to the loopback socket addresses. The test of `osh-control-039` must then fail.
+- The third fault adds `::ffff:192.0.2.10` to the loopback socket addresses. The test of `osh-control-039` must then fail.
 
 ### D5: The image of the gates
 
