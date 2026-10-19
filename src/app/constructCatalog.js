@@ -30,6 +30,7 @@ import { createApplicationBeemapsBursts } from './layers/beemapsBursts.js';
 import { createApplicationAirQuality } from './layers/airQuality.js';
 import { createApplicationFirePerimeters } from './layers/perimeters.js';
 import { createApplicationGnssIntegrity } from './layers/gnss.js';
+import { createApplicationGdacs } from './layers/gdacs.js';
 import { createApplicationCables } from './layers/submarineCables.js';
 import { createApplicationStreetLevel } from './layers/streetLevel.js';
 import { createApplicationOsh } from './layers/osh.js';
@@ -133,6 +134,7 @@ export function createApplicationCatalog({
         createApplicationGnssIntegrity({
           source: sources['gnss-integrity'],
         }),
+        createApplicationGdacs({ source: sources.gdacs }),
         createApplicationAlpr({ surface, source: sources.alpr }),
         createApplicationStreetLevel({
           surface,

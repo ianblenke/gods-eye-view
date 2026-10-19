@@ -174,6 +174,12 @@ export const DATA_CREDITS = [
       '<a href="https://reticulum.network/" target="_blank" rel="noopener">reticulum.network</a>',
   },
   {
+    key: 'gdacs',
+    html:
+      'Disaster alerts: GDACS, a cooperation framework of the United Nations and the European Commission. The estimates of GDACS come from a machine, and an estimate can be wrong. · ' +
+      '<a href="https://www.gdacs.org/" target="_blank" rel="noopener">gdacs.org</a>',
+  },
+  {
     key: 'beemaps',
     html:
       'Street-level frames: contributor dashcams, through the Bee Maps API · ' +

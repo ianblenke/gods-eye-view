@@ -44,6 +44,7 @@ export const LAYER_NAME_KEYS = Object.freeze({
   'alpr-cameras': msg('ALPR Cameras'),
   'osh-systems': msg('OSH SYSTEMS'),
   reticulum: msg('Reticulum Network'),
+  gdacs: msg('Disaster Alerts'),
   beemaps: msg('Bee Maps Frames'),
   'beemaps-bursts': msg('Bee Maps Bursts'),
 });
