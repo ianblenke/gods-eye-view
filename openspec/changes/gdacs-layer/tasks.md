@@ -63,11 +63,11 @@
 
 ## 4. Evidence
 
-- [ ] 4.1 Run the named faults on the host.
-- [ ] 4.2 Run each test file on the host.
-- [ ] 4.3 Run the four checks of `make precheck` on the host.
-- [ ] 4.4 Run the STE lint on the host.
-- [ ] 4.5 Look at the layer in a headless Chrome with a stored document.
+- [x] 4.1 Run the named faults on the host.
+- [x] 4.2 Run each test file on the host.
+- [x] 4.3 Run the four checks of `make precheck` on the host.
+- [x] 4.4 Run the STE lint on the host.
+- [x] 4.5 Look at the layer in a headless Chrome with a stored document.
 
 ## 5. Lead work in the image
 

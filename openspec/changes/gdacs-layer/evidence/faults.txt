@@ -1,4 +1,4 @@
-Named faults of gdacs-layer on commit 0f45ea0c. Host node: v26.8.2.
+Named faults of gdacs-layer on commit 7e74c9bf. Host node: v26.8.2.
 Command: python3 -I faults.py <clone>. For each fault, the runner changes the named text of the code files and runs the test file of the scenario.
 A fault counts as killed when a test of its scenario fails, or when the test file does not load. Then the runner restores the files and checks their hash.
 
@@ -175,6 +175,8 @@ Script (python3 -I):
     fault('a second id checked before the rules', '006', TR, (R, "    const item = normalizeEvent(record);\n    if (!item || seen.has(item.id)) continue;\n    seen.add(item.id);\n", "    const item = normalizeEvent(record);\n    if (seen.has(record?.id)) continue;\n    seen.add(record?.id);\n    if (!item) continue;\n"))
     fault('events shown when unavailable', '013', TL, (I, "          if (meta.unavailable) {\n            clearEvents();\n", "          if (meta.unavailable) {\n            showEvents(events);\n"))
     fault('answer of an aborted request used', '016', TL, (I, "        if (_request === request) {\n          if (meta.unavailable) {", "        if (true) {\n          if (meta.unavailable) {"))
+    fault('aborted answer clears the newest request', '016', TL, (I, "        if (_request === request) _request = null;\n", "        _request = null;\n"))
+    fault('error of an aborted request used', '016', TL, (I, "        if (_request === request)\n          _lastError =", "        _lastError ="))
     # Registration (gdacs-layer-018 to 022).
     fault('other disposition', '018', TG, ('src/data/layerState.js', "Object.freeze({ id: 'gdacs', token: '9', disposition: 'enabled-only' }),", "Object.freeze({ id: 'gdacs', token: '9', disposition: 'enabled+options', optionOwner: 'gdacs' }),"))
     fault('catalog before gnss-integrity', '018', TG, ('src/app/constructCatalog.js', "        createApplicationGnssIntegrity({\n          source: sources['gnss-integrity'],\n        }),\n        createApplicationGdacs({ source: sources.gdacs }),\n", "        createApplicationGdacs({ source: sources.gdacs }),\n        createApplicationGnssIntegrity({\n          source: sources['gnss-integrity'],\n        }),\n"))
@@ -222,30 +224,30 @@ Script (python3 -I):
     print(f'faults {len(FAULTS)}, killed {killed}, survived {survived}')
 
 Output:
-KILLED: [gdacs-layer-006] no type rule (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
-KILLED: [gdacs-layer-006] no text check of the id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
-KILLED: [gdacs-layer-006] no type prefix check of the id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
-KILLED: [gdacs-layer-006] id of 17 digits (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no type rule (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no text check of the id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no type prefix check of the id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] id of 17 digits (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
 KILLED: [gdacs-layer-005] id of at most 15 digits (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
-KILLED: [gdacs-layer-006] first digit 0 (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
-KILLED: [gdacs-layer-006] no end anchor of the id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] first digit 0 (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no end anchor of the id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
 KILLED: [gdacs-layer-005] no alert red (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
 KILLED: [gdacs-layer-005] no alert orange (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
-KILLED: [gdacs-layer-006] no alert rule (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
-KILLED: [gdacs-layer-006] no finite check of the latitude (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no alert rule (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no finite check of the latitude (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
 KILLED: [gdacs-layer-005] latitude 90 dropped (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
-KILLED: [gdacs-layer-006] latitude 90.5 kept (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
-KILLED: [gdacs-layer-006] no finite check of the longitude (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] latitude 90.5 kept (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no finite check of the longitude (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
 KILLED: [gdacs-layer-005] longitude 180 dropped (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
-KILLED: [gdacs-layer-006] longitude 180.5 kept (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] longitude 180.5 kept (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
 KILLED: [gdacs-layer-005] position (0, 0) dropped (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
 KILLED: [gdacs-layer-005] all fields copied (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the valid types, alerts, positions and ids']
-KILLED: [gdacs-layer-006] no check of a second id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
-KILLED: [gdacs-layer-006] the last of two equal ids (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
-KILLED: [gdacs-layer-006] limit 499 (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
-KILLED: [gdacs-layer-006] limit 501 (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
-KILLED: [gdacs-layer-006] limit counts the events that are not valid (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
-KILLED: [gdacs-layer-006] limit counts a second event with the same id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] no check of a second id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] the last of two equal ids (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] limit 499 (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] limit 501 (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] limit counts the events that are not valid (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] limit counts a second event with the same id (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
 KILLED: [gdacs-layer-007] current from loose equality (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-007] makes current true only for the value true and keeps only a modified value that is a date']
 KILLED: [gdacs-layer-007] current from truthiness (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-007] makes current true only for the value true and keeps only a modified value that is a date']
 KILLED: [gdacs-layer-007] modified from any text (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-007] makes current true only for the value true and keeps only a modified value that is a date']
@@ -370,9 +372,11 @@ KILLED: [gdacs-layer-002] init after destroy refused (src/layers/gdacs/index.js)
 KILLED: [gdacs-layer-013] error kept after an unavailable result (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-013] removes the points when GDACS is unavailable and gives the reason as guidance']
 KILLED: [gdacs-layer-011] cut before the sort (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
 KILLED: [gdacs-layer-009] total of an unsafe whole number (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
-KILLED: [gdacs-layer-006] a second id checked before the rules (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
+KILLED: [gdacs-layer-006] a second id checked before the rules (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events']
 KILLED: [gdacs-layer-013] events shown when unavailable (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-013] removes the points when GDACS is unavailable and gives the reason as guidance']
 KILLED: [gdacs-layer-016] answer of an aborted request used (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight']
+KILLED: [gdacs-layer-016] aborted answer clears the newest request (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight']
+KILLED: [gdacs-layer-016] error of an aborted request used (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight']
 KILLED: [gdacs-layer-018] other disposition (src/data/layerState.js) | failed: ['the test file src/layers/gdacs/registration.test.mjs does not load']
 KILLED: [gdacs-layer-018] catalog before gnss-integrity (src/app/constructCatalog.js) | failed: ['[gdacs-layer-018] registers the layer in the catalog, the source contract, the reference sources and the share link']
 KILLED: [gdacs-layer-018] no source contract (src/app/sourceComposition.js) | failed: ['[gdacs-layer-018] registers the layer in the catalog, the source contract, the reference sources and the share link']
@@ -384,4 +388,4 @@ KILLED: [gdacs-layer-021] credit without the link (src/data/dataCredits.js) | fa
 KILLED: [gdacs-layer-022] other Spanish name (src/i18n/locales/es.json) | failed: ['[gdacs-layer-022] gives the Spanish and the Russian texts of the layer']
 KILLED: [gdacs-layer-022] other Russian error text (src/i18n/locales/ru.json) | failed: ['[gdacs-layer-022] gives the Spanish and the Russian texts of the layer']
 KILLED: [gdacs-layer-022] no layer name (src/ui/layerNames.js) | failed: ['[gdacs-layer-022] gives the Spanish and the Russian texts of the layer']
-faults 162, killed 162, survived 0
+faults 164, killed 164, survived 0

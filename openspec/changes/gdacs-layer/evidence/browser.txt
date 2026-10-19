@@ -1,4 +1,4 @@
-Browser check of gdacs-layer on commit 0f45ea0c. The tools-side Vite config is not part of the repository.
+Browser check of gdacs-layer on commit 7e74c9bf. The tools-side Vite config is not part of the repository.
 The app gets a request counter and the route /api/gdacs with a fake upstream. The fake upstream answers the stored GDACS page of 2026-10-16 (65 records).
 No request leaves the machine. Chrome runs headless with a software renderer. The share link of the page is #v=2&lat=15&lon=110&alt=9000000&heading=0&pitch=-90&roll=0&l=9.
 
