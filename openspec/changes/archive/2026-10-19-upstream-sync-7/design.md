@@ -13,7 +13,7 @@ The merge brings seven pull requests (#287, #761, #767, #839, #1094, #1101 and #
 
 ## Conflict resolutions
 
-A trial merge reported one file with a conflict. The file `evidence/conflicts.txt` shows the conflict list.
+A merge of the same two commits in memory reports one file with a conflict. The file `evidence/conflicts.txt` shows the conflict list, and it shows that the merge commit differs from the automatic merge only in that file.
 
 | File | Resolution |
 |---|---|

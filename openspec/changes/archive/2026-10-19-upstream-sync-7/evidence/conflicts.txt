@@ -1,5 +1,5 @@
 Conflict list of the merge of upstream-sync-7. Date (UTC): 2026-10-19 03:11:44.
-The command does the merge of the plan commit 7ca78eb1 and the upstream commit 93ea088f again in memory. It writes no file and no ref.
+The command does the merge of the plan commit 7ca78eb1 and the upstream commit 93ea088f again in memory. It writes no file in the working tree and no ref.
 
 $ git merge-tree --write-tree --name-only --messages 7ca78eb1 93ea088f | grep -E '^(CONFLICT|Auto-merging)'
 Auto-merging DATA_SOURCES.md
@@ -15,3 +15,10 @@ Auto-merging src/tooling/viteBuild.test.mjs
 The second command prints the files with a conflict. They follow the line of the tree hash.
 $ git merge-tree --write-tree --name-only 7ca78eb1 93ea088f | sed -n '2,$p' | grep -v -E '^($|Auto-merging|CONFLICT)'
 server/standalone/vite.config.js
+
+The third command compares the merge commit 91de1b68 with the automatic merge of its two parents, and lists each file that differs. A file that a person edited by hand after the automatic merge is in this list. The diff of the conflict file removes the conflict markers.
+$ git show --remerge-diff --stat --format='%h %s' 91de1b68
+91de1b68 Merge upstream 93ea088f into upstream-sync-7 (sync 7)
+
+ server/standalone/vite.config.js | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
