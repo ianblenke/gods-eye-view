@@ -64,7 +64,7 @@
 
 ## 5. Lead work in the image
 
-- [ ] 5.1 Run `make ratchet CHANGE=gdacs-layer`.
+- [x] 5.1 Run `make ratchet CHANGE=gdacs-layer`.
 - [ ] 5.2 Run the two review agents.
 - [ ] 5.3 Write review.md.
 - [ ] 5.4 Run `make gates CHANGE=gdacs-layer` on the final tree.

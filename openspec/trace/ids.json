@@ -2809,6 +2809,116 @@
     "since": "2026-10-09",
     "change": "vendored-coverage-tolerance"
   },
+  "gdacs-layer-001": {
+    "hash": "a6c8ed5228fbd8e62c840e4d33c840912986f37ea232979b243f93bbb215b8fc",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-002": {
+    "hash": "82de63fe230804f54e1250544043393656db07ca22addfde56feb9dfead6aa56",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-003": {
+    "hash": "9d1026aaa51566526ce6d41a083dc7073c43cd0c7ee448a906df47403a3e96bf",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-004": {
+    "hash": "0585ae9dd65f0bdaedc01650d2363d3dbaaae28a23ae74da1bcb807db0a4998d",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-005": {
+    "hash": "4f40e3b26cda6223179acb0f59b7746ebf7b0d63bc8578b7f3cbf245a0961b2f",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-006": {
+    "hash": "aa513ce41d8936c14c91aaddd98631a4ddbd7a2a396a1b1d2576ed8007214fc5",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-007": {
+    "hash": "1857fbb180bd413c5c33996d6544ea21f96188a3f9e6f8a2302b42a0ff9d7bc5",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-008": {
+    "hash": "623e36394878e3ec5e9c4cf286461b8af0f44912f2f1c28a3c6b3afc77dfe421",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-009": {
+    "hash": "cd384e0408a106edd17ef9509c156cc1af3f5f9495cf7fc94bb324fbb362407b",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-010": {
+    "hash": "5653b6d041904dd36f95d1fd5398cebe1cdc6d318427e8c99a8dca93b53160f9",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-011": {
+    "hash": "13a5cba447ef0ceefc1c01404b50f2622301d34bb686217d47d0f962c0dc5687",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-012": {
+    "hash": "43f960a98e79472e2dfbd85e004a5a60bccaecc61ea95c8799ce517bff6301de",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-013": {
+    "hash": "2883c8769cf0d69dbee1aff0db6c7f91f4b6e659413283893b1ddd89763780e5",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-014": {
+    "hash": "98aa75f3a7575f1b2038f6af33fce8e9fa617ded6dd3b2d6f99cf034c9c6dfe8",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-015": {
+    "hash": "83c248d5919d4866196a4b7c5aa3f466d92063e41c551a2516baeaaf22852712",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-016": {
+    "hash": "a68927faeebac476a35b5d85aede9602f1468d5d9c7d04491b54674b2a7cfa1f",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-017": {
+    "hash": "f5aad7d7ace509d32217bf860f3264a875daa54304df7205fe2fd63e01212b56",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-018": {
+    "hash": "25119733b7911395fecac237beb34f04cc4b52a27f45594395fb3d735ae19ff4",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-019": {
+    "hash": "ddc2524e8bb12e9f564e5cf5bd8a71f6c8028521c00d322c8b9b28066e62ba9d",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-020": {
+    "hash": "dbc4183603d71a5192daef1919d49d6ab14c69de291146b336af01a3d663dd95",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-021": {
+    "hash": "0aada537347e405b9488050036fa27148ba7b1ae5d56ebfeca76b105af1b99fa",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
+  "gdacs-layer-022": {
+    "hash": "20a474d3ec79a6a0132f63a8374482b3a31b06adc73998dd8b591eaec0be7ccd",
+    "since": "2026-10-19",
+    "change": "gdacs-layer"
+  },
   "gdacs-source-001": {
     "hash": "4f0182ede54438d9249ae77feec819a112432bc0ab155d1d98ad2013e9ff35f3",
     "since": "2026-10-16",
@@ -3220,7 +3330,7 @@
     "change": "osh-fusion"
   },
   "osh-033": {
-    "hash": "bd7647007206d88d6d3cbf6608cb31da6e48de2b5c53016e797173a8de11b0f9",
+    "hash": "4692bf27b568d0e980b0bd7f73ca8314bf14bfa29518d1d38b99bcf68f75df8f",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
