@@ -17,7 +17,7 @@ Origin: spec-first
 - **AND** the data source has `show` false after `init` and `show` true after `enable`
 - **AND** the layer calls `setVisible` of the overlay host with false for the overlay source "gdacs" after `init`, and with true after `enable`
 - **AND** a second `init` without `destroy` throws "GDACS layer is already initialized"
-- **AND** after `destroy`, a call of `init`, `enable` and `update` adds one data source and shows 3 points
+- **AND** after `destroy`, calls of `init`, `enable` and `update` add one data source and show 3 points
 
 ### Requirement: Browser source
 The source MUST read the route `/api/gdacs` of the same origin with the abort signal of the caller. It MUST refuse an answer that is not a GDACS document of the schema version 1, and a body of more than 2 MiB. The result of the source is the output of the normalizer: the list `events` and the object `meta`.
@@ -134,7 +134,9 @@ Origin: spec-first
 - **AND** each entry has `edgeFade` "keyhole", `horizonCull` true, `terrainOcclusion` false, `gapPx` 15, `verticalOnly` true and `placement` "above"
 
 ### Requirement: Layer display
-While it is enabled, the layer MUST show the points and the labels of the result of its newest call of `update`. It MUST ignore an answer to a request that it aborted. For a result with `meta.unavailable` true, it MUST remove all points and labels. When a later request fails, it MUST keep the points and labels that it shows. It MUST poll only while it is enabled.
+While it is enabled, the layer MUST show the points of the last result that it accepted. It MUST show the labels of that result until the next call of `disable`. It MUST NOT accept an answer to a request that it aborted.
+
+For a result with `meta.unavailable` true, it MUST remove all the points and the labels. When a request fails, it MUST keep the points and the labels that it shows. It MUST poll only while it is enabled.
 Origin: spec-first
 
 #### Scenario: Show the points and the labels `gdacs-layer-012`

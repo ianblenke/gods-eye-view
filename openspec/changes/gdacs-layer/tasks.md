@@ -14,6 +14,7 @@
 - [x] 1.12 Correct the plan after the plan review.
 - [x] 1.13 Correct the specs and the plan after round 1 of the review.
 - [x] 1.14 Correct the specs and the plan after round 2 of the review.
+- [x] 1.15 Correct the specs after round 3 of the review.
 
 ## 2. Tests
 
@@ -35,6 +36,7 @@
 - [x] 2.16 Make the fixture of the two-character test compare its ledger with the published ledger without `gdacs`.
 - [x] 2.17 Add the samples of round 1 of the review to the tests.
 - [x] 2.18 Add the samples of round 2 of the review to the tests.
+- [x] 2.19 Add the order of round 3 of the review to the test of `gdacs-layer-016`.
 
 ## 3. Code
 
@@ -61,15 +63,15 @@
 
 ## 4. Evidence
 
-- [x] 4.1 Run the named faults on the host.
-- [x] 4.2 Run each test file on the host.
-- [x] 4.3 Run the four checks of `make precheck` on the host.
-- [x] 4.4 Run the STE lint on the host.
-- [x] 4.5 Look at the layer in a headless Chrome with a stored document.
+- [ ] 4.1 Run the named faults on the host.
+- [ ] 4.2 Run each test file on the host.
+- [ ] 4.3 Run the four checks of `make precheck` on the host.
+- [ ] 4.4 Run the STE lint on the host.
+- [ ] 4.5 Look at the layer in a headless Chrome with a stored document.
 
 ## 5. Lead work in the image
 
-- [x] 5.1 Run `make ratchet CHANGE=gdacs-layer`.
+- [ ] 5.1 Run `make ratchet CHANGE=gdacs-layer`.
 - [ ] 5.2 Run the two review agents.
 - [ ] 5.3 Write review.md.
 - [ ] 5.4 Run `make gates CHANGE=gdacs-layer` on the final tree.

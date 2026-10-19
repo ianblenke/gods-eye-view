@@ -95,7 +95,7 @@ test('[gdacs-layer-005] keeps exactly the 8 fields of a valid event and the vali
   );
 });
 
-test('[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events', () => {
+test('[gdacs-layer-006] drops the events that are not valid, keeps the first valid event of each id and keeps at most 500 valid events', () => {
   const bad = [
     ['type EQ', { type: 'EQ', id: 'EQ-7' }],
     ['type in lower case', { type: 'fl', id: 'fl-7' }],

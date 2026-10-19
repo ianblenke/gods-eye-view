@@ -412,6 +412,21 @@ test('[gdacs-layer-016] polls only while the layer is enabled, and disable and a
   waits[4].reject(new Error('after disable'));
   assert.equal(await stale, false);
   assert.equal(h.layer.getStats().error, 'late failure');
+
+  // The aborted request answers before the newest call. Its answer changes
+  // nothing, and the answer of the newest call still counts.
+  h.layer.enable(h.viewer);
+  const older = h.layer.update(h.viewer);
+  const newer = h.layer.update(h.viewer);
+  assert.equal(h.calls[5].signal.aborted, true);
+  assert.equal(h.calls[6].signal.aborted, false);
+  waits[5].resolve(snapshot(THREE));
+  assert.equal(await older, false);
+  waits[6].resolve(snapshot(THREE.slice(0, 2)));
+  assert.equal(await newer, true);
+  assert.equal(entitiesOf(h).length, 2);
+  assert.equal(h.layer.getStats().count, 2);
+  assert.equal(h.layer.getStats().error, null);
 });
 
 test('[gdacs-layer-017] removes the data source and the labels when destroy runs, aborts the request in flight, and ignores a second call of destroy', async () => {
