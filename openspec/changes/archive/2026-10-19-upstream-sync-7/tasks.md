@@ -24,4 +24,4 @@
 - [x] 3.3 Run `make ratchet CHANGE=upstream-sync-7` with the image of decision D5.
 - [x] 3.4 Run the two review agents.
 - [x] 3.5 Write review.md.
-- [ ] 3.6 Run `make gates CHANGE=upstream-sync-7` with the image of decision D5 on the final tree.
+- [x] 3.6 Run `make gates CHANGE=upstream-sync-7` with the image of decision D5 on the final tree.
