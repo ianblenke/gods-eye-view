@@ -22,6 +22,6 @@
 - [x] 3.1 Check the second parent of the merge commit against the upstream remote.
 - [x] 3.2 Run `make adopt CHANGE=upstream-sync-7 FROM=93ea088f4556a5a65b3292a2d15142d5a6c562bc` with the image of decision D5.
 - [x] 3.3 Run `make ratchet CHANGE=upstream-sync-7` with the image of decision D5.
-- [ ] 3.4 Run the two review agents.
-- [ ] 3.5 Write review.md.
+- [x] 3.4 Run the two review agents.
+- [x] 3.5 Write review.md.
 - [ ] 3.6 Run `make gates CHANGE=upstream-sync-7` with the image of decision D5 on the final tree.
