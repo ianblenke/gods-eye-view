@@ -43,6 +43,8 @@ The upstream code adds no dependency and no route. `package.json` does not chang
 `package-lock.json` changes the versions of `dompurify`, `sharp` and `source-map-js` and of the packages that `sharp` uses.
 The change has no spec delta, because the merge changes no requirement of the fork.
 
+The ratchet of this change removes 11 entries from `openspec/trace/ids.json`. These are the scenario IDs that sync 6 retired: `credential-boundary-007` to `credential-boundary-015`, `credential-boundary-017` and `credential-boundary-018`. The file `openspec/trace/retired-ids.json` keeps them.
+
 ## Known limits and later changes
 
 - Known limit `host-node`: Host tests run on Node 26, and the image uses Node 24.21.0. Host coverage cannot replace the image measurement.
