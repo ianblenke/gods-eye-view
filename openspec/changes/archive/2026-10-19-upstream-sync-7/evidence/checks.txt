@@ -1,0 +1,30 @@
+Checks of upstream-sync-7 on commit 98e44aa7 with the change files of the working tree. Host node: v26.8.2.
+Each output below shows at most its last two lines, or its last three lines for openspec validate. The format check, the import check and the layer token check print one line. The lead added each line `exit status`.
+
+$ env -u NODE_ENV -u HOST -u PORT node scripts/format.mjs --check
+Checked 1530 source files.
+exit status: 0
+
+$ env -u NODE_ENV -u HOST -u PORT node scripts/check-import-directions.mjs
+{"modules":1066,"portableEntries":83}
+exit status: 0
+
+$ env -u NODE_ENV -u HOST -u PORT node scripts/check-package-boundaries.mjs
+Checked air-quality: 1 exports, 11 owned modules.
+Checked air-quality-source: 1 exports, 4 owned modules.
+exit status: 0
+
+$ env -u NODE_ENV -u HOST -u PORT node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 35 published, 0 new.
+exit status: 0
+
+$ env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs lint
+WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
+STE: 0 errors, 1041 warnings.
+exit status: 0
+
+$ openspec validate --specs
+✓ spec/ste-lint
+✓ spec/wind
+Totals: 32 passed, 0 failed (32 items)
+exit status: 0
