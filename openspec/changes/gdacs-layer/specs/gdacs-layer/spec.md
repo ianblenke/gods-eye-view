@@ -134,7 +134,7 @@ Origin: spec-first
 - **AND** each entry has `edgeFade` "keyhole", `horizonCull` true, `terrainOcclusion` false, `gapPx` 15, `verticalOnly` true and `placement` "above"
 
 ### Requirement: Layer display
-The layer MUST accept the answer to its newest call of `update`, and it MUST NOT accept an answer to a request that it aborted. When the layer accepts a result with `meta.unavailable` true, it MUST remove all the points and the labels. When the layer accepts another result, it MUST replace the points and the labels with those of that result.
+The layer MUST NOT accept an answer to a request that it aborted. If the layer did not abort the request of its newest call of `update`, it MUST accept the answer to that request. When the layer accepts a result with `meta.unavailable` true, it MUST remove all the points and the labels. When the layer accepts a result with `meta.unavailable` false, it MUST replace the points and the labels with those of that result.
 
 When a request fails, the layer MUST keep the points and the labels that it shows. `disable` MUST hide the points and remove the labels, and `destroy` MUST remove the points and the labels. The layer MUST poll only while it is enabled.
 Origin: spec-first
