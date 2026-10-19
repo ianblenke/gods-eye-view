@@ -1,4 +1,5 @@
 Checks of upstream-sync-7 on commit 98e44aa7 with the change files of the working tree. Host node: v26.8.2.
+Each output below shows only its last lines: two lines, or three lines for openspec validate.
 
 $ env -u NODE_ENV -u HOST -u PORT node scripts/format.mjs --check
 Checked 1530 source files.

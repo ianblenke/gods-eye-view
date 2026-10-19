@@ -13,7 +13,7 @@ The merge brings seven pull requests (#287, #761, #767, #839, #1094, #1101 and #
 
 ## Conflict resolutions
 
-A trial merge reported one file with a conflict.
+A trial merge reported one file with a conflict. The file `evidence/conflicts.txt` shows the conflict list.
 
 | File | Resolution |
 |---|---|
@@ -45,7 +45,7 @@ The adopt command records them. The rule 21 check of the second parent goes into
 
 The owner asked on 2026-10-18 to remove the LAN address of the owner from the public fork.
 The address is in four lines of the owned test file `src/control/route.test.mjs`. Three tests use it as an address of another machine: two tests of `osh-control-028` and one test of `osh-control-039`.
-The change uses the documentation address `192.0.2.10` (RFC 5737) and its IPv4-mapped IPv6 form `::ffff:192.0.2.10` in its place.
+The change uses the documentation address `192.0.2.10` (RFC 5737) and its IPv4-mapped IPv6 form `::ffff:192.0.2.10` in place of the LAN address.
 The code accepts only loopback hosts and loopback socket addresses, so the tests keep their meaning. The scenarios name no address, so their text does not change.
 
 The three faults are in `server/providers/common/loopback-command.js`. Each fault must make a test fail:
@@ -55,7 +55,7 @@ The three faults are in `server/providers/common/loopback-command.js`. Each faul
 
 ### D5: The image of the gates
 
-`package-lock.json` changes the versions of three packages. The image `gods-eye-view:local` has the packages of the base commit.
+`package-lock.json` changes the versions of `dompurify`, `sharp` and `source-map-js` and of the packages that `sharp` uses. The image `gods-eye-view:local` has the packages of the base commit.
 The lead builds the image `gods-eye-view:sync7` from the merged tree and runs each Docker command of this change with `IMAGE=gods-eye-view:sync7`.
 The host tests use a copy of the packages of that image.
 
@@ -64,5 +64,5 @@ The host tests use a copy of the packages of that image.
 The change edits one owned test file and adds the plan, the evidence and the review files. The merge changes 46 files.
 
 The trace gate checks the scenario IDs and the links. The ledger gate checks the gaps of the upstream files against the adopt records.
-The format check, the import direction check, the package boundary check and the layer token check measure the configuration. The prose lint checks STE.
+The four checks of `make precheck` check the format, the import directions, the package boundaries and the layer tokens. The prose lint checks STE.
 The lead runs the gates in Docker and both review agents on the final tree.

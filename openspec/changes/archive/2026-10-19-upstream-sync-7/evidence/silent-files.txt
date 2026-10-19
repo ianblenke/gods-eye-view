@@ -1,5 +1,5 @@
 Check of upstream code files that import a code file that the fork changed. Branch head: 98e44aa7.
-The script reads each .js and .mjs file of the upstream range 73aec2e6..93ea088f, finds each relative import, and prints the import when the branch file differs from the upstream file (git diff --name-only 93ea088f 98e44aa7).
+The script reads each .js and .mjs file of the upstream range 73aec2e6..93ea088f and finds each relative import. It prints the import when the branch file differs from the upstream file (git diff --name-only 93ea088f 98e44aa7).
 
 Script (python3 -I):
     import os, re, subprocess
@@ -82,3 +82,27 @@ $ git diff 73aec2e6 93ea088f -- server/standalone/vite.config.js src/tooling/vit
 +  ]);
 +});
 +
+
+Files that both sides changed after the shared ancestor 73aec2e6. Git merged each of them, and only server/standalone/vite.config.js had a conflict (evidence/conflicts.txt).
+$ comm -12 <(git diff --name-only 73aec2e6 93ea088f | sort) <(git diff --name-only 73aec2e6 2f53da24 | sort)
+DATA_SOURCES.md
+docs/CURRENT-STATE.md
+package-lock.json
+scripts/package-boundaries.json
+server/standalone/vite.config.js
+src/data/dataCredits.js
+src/hud.js
+src/tooling/viteBuild.test.mjs
+
+For each file, the command compares two lists of changed lines (the lines that start with + or -). The first list is the fork diff, from the shared ancestor 73aec2e6 to the base 2f53da24. The second list is the diff of the merged file against upstream, from 93ea088f to the merge commit 91de1b68. The count is the number of lines that are in only one of the two lists. A count of 0 shows that the merged file has the fork lines on top of the upstream file. server/standalone/vite.config.js has the count 2, because the resolution of design D1 moves the upstream plugin call into standalonePlugins().
+$ for f in <the 8 files>; do echo "$f $(diff <(git diff -U0 73aec2e6 2f53da24 -- $f | grep -E '^[-+]' | grep -v -E '^(\+\+\+|---) ') <(git diff -U0 93ea088f 91de1b68 -- $f | grep -E '^[-+]' | grep -v -E '^(\+\+\+|---) ') | grep -c -E '^[<>]')"; done
+DATA_SOURCES.md 0
+docs/CURRENT-STATE.md 0
+package-lock.json 0
+scripts/package-boundaries.json 0
+server/standalone/vite.config.js 2
+src/data/dataCredits.js 0
+src/hud.js 0
+src/tooling/viteBuild.test.mjs 0
+
+The test run of evidence/host-run.txt covers the code files of this list. The four checks of evidence/checks.txt read package-boundaries.json and the format of the code files.

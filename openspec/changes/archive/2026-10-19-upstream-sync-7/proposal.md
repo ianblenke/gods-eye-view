@@ -35,7 +35,7 @@ Rule 23: the 11 added files are upstream files, because the fork does not write 
 Two of the added files are code files: `server/standalone/unwatched-cache.js` and `src/geoDistance.js`.
 
 Rule 25: the merge breaks no test with a scenario ID. The change retires no scenario and writes none again.
-The change edits two tests with scenario IDs, `osh-control-028` and `osh-control-039`, and keeps the text of both scenarios. Decision D4 gives the edit.
+The change edits three tests with scenario IDs: two tests of `osh-control-028` and one test of `osh-control-039`. It keeps the text of both scenarios. Decision D4 gives the edit.
 
 The change opens no new coverage gap for owned code. The adopt command records the gaps of the upstream files that the merge brings.
 
@@ -48,6 +48,7 @@ The ratchet of this change removes 11 entries from `openspec/trace/ids.json`. Th
 ## Known limits and later changes
 
 - Known limit `host-node`: Host tests run on Node 26, and the image uses Node 24.21.0. Host coverage cannot replace the image measurement.
-- Known limit `address-history`: The old LAN address stays in the Git history. It also stays in two archived records of older changes: `openspec/changes/archive/2026-10-15-osh-control-loopback/evidence/peer-address.txt` and the subnet in `openspec/changes/archive/2026-10-13-reticulum-listener/evidence/networks.txt`. The change does not edit archived records.
+- Known limit `address-history`: The old LAN address stays in the Git history. The change does not edit archived records, and six archived files keep the address or a part of it. The full address is in `openspec/changes/archive/2026-10-15-osh-control-loopback/evidence/peer-address.txt` and in line 36 of `evidence/mutations-script.txt` of the same change. The subnet is in `evidence/networks.txt`, `design.md` and `review/spec-adversary.md` of `openspec/changes/archive/2026-10-13-reticulum-listener/`. The first three numbers are in `openspec/changes/archive/2026-10-10-codex-voice-container/evidence/e2e.txt`.
+- Known limit `old-fault-039`: The archived fault 039 of `osh-control-loopback` adds the old LAN address to the loopback socket addresses. The edited test of `osh-control-039` does not use that address, so that old fault no longer makes the test fail. The second fault of decision D4 takes its place.
 - Known limit `changelog`: Upstream puts each new changelog entry in a file under `changelog.d/`. The fork still edits `CHANGELOG.md`, so a later sync can have a conflict there again.
 - Known limit `osh-source`: The OSH layer is not in the catalog source contracts of upstream. This is older than this change.
