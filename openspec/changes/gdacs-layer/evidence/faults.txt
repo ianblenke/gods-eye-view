@@ -1,4 +1,4 @@
-Named faults of gdacs-layer on commit b834fe7d. Host node: v26.8.2.
+Named faults of gdacs-layer on commit 0f45ea0c. Host node: v26.8.2.
 Command: python3 -I faults.py <clone>. For each fault, the runner changes the named text of the code files and runs the test file of the scenario.
 A fault counts as killed when a test of its scenario fails, or when the test file does not load. Then the runner restores the files and checks their hash.
 
@@ -172,13 +172,16 @@ Script (python3 -I):
     fault('error kept after an unavailable result', '013', TL, (I, "          _lastUpdate = Date.now();\n          _lastError = null;\n", "          _lastUpdate = Date.now();\n          if (!meta.unavailable) _lastError = null;\n"))
     fault('cut before the sort', '011', TM, (M, "return events.slice().sort(compareEvents).slice(0, GDACS_LABEL_LIMIT);", "return events.slice(0, GDACS_LABEL_LIMIT).sort(compareEvents);"))
     fault('total of an unsafe whole number', '009', TR, (R, "Number.isSafeInteger(total) && total >= 0", "Number.isInteger(total) && total >= 0"))
+    fault('a second id checked before the rules', '006', TR, (R, "    const item = normalizeEvent(record);\n    if (!item || seen.has(item.id)) continue;\n    seen.add(item.id);\n", "    const item = normalizeEvent(record);\n    if (seen.has(record?.id)) continue;\n    seen.add(record?.id);\n    if (!item) continue;\n"))
+    fault('events shown when unavailable', '013', TL, (I, "          if (meta.unavailable) {\n            clearEvents();\n", "          if (meta.unavailable) {\n            showEvents(events);\n"))
+    fault('answer of an aborted request used', '016', TL, (I, "        if (_request === request) {\n          if (meta.unavailable) {", "        if (true) {\n          if (meta.unavailable) {"))
     # Registration (gdacs-layer-018 to 022).
     fault('other disposition', '018', TG, ('src/data/layerState.js', "Object.freeze({ id: 'gdacs', token: '9', disposition: 'enabled-only' }),", "Object.freeze({ id: 'gdacs', token: '9', disposition: 'enabled+options', optionOwner: 'gdacs' }),"))
     fault('catalog before gnss-integrity', '018', TG, ('src/app/constructCatalog.js', "        createApplicationGnssIntegrity({\n          source: sources['gnss-integrity'],\n        }),\n        createApplicationGdacs({ source: sources.gdacs }),\n", "        createApplicationGdacs({ source: sources.gdacs }),\n        createApplicationGnssIntegrity({\n          source: sources['gnss-integrity'],\n        }),\n"))
     fault('no source contract', '018', TG, ('src/app/sourceComposition.js', "  gdacs: contract(['gdacs'], ['getSnapshot']),\n", ""))
     fault('panel group before gnss-integrity', '019', TG, ('src/ui/layerPanel.js', "      'gnss-integrity',\n      'gdacs',\n", "      'gdacs',\n      'gnss-integrity',\n"))
     fault('other voice text', '020', TG, ('src/voice/layerManifest.js', "gdacs: 'The GDACS layer has no voice tools.',", "gdacs: 'GDACS has no voice tools.',"))
-    fault('credit without the disclaimer', '021', TG, ('src/data/dataCredits.js', " The estimates of GDACS come from a machine, and an estimate can be wrong.", ""))
+    fault('credit without the first sentence of the disclaimer', '021', TG, ('src/data/dataCredits.js', " The estimates of GDACS come from a machine, and an estimate can be wrong.", ""))
     fault('credit without the second sentence of the disclaimer', '021', TG, ('src/data/dataCredits.js', " Check each estimate before you use it to make a decision.", ""))
     fault('credit without the link', '021', TG, ('src/data/dataCredits.js', '<a href="https://www.gdacs.org/"', '<a href="https://gdacs.org/"'))
     fault('other Spanish name', '022', TG, ('src/i18n/locales/es.json', '"Disaster Alerts": "Alertas de desastres",', '"Disaster Alerts": "Alertas de desastre",'))
@@ -312,13 +315,13 @@ KILLED: [gdacs-layer-004] other status text (src/layers/gdacs/source.js) | faile
 KILLED: [gdacs-layer-004] cap one byte less (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-004] refuses a bad answer']
 KILLED: [gdacs-layer-004] cap one byte more (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-004] refuses a bad answer']
 KILLED: [gdacs-layer-004] other invalid text (src/layers/gdacs/source.js) | failed: ['[gdacs-layer-004] refuses a bad answer']
-KILLED: [gdacs-layer-010] color green (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and alpha of its current flag']
-KILLED: [gdacs-layer-010] color orange (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and alpha of its current flag']
-KILLED: [gdacs-layer-010] color red (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and alpha of its current flag']
-KILLED: [gdacs-layer-010] current alpha (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and alpha of its current flag']
-KILLED: [gdacs-layer-010] current size (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and alpha of its current flag']
-KILLED: [gdacs-layer-010] past alpha (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and alpha of its current flag']
-KILLED: [gdacs-layer-010] past size (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and alpha of its current flag']
+KILLED: [gdacs-layer-010] color green (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] color orange (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] color red (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] current alpha (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] current size (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] past alpha (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
+KILLED: [gdacs-layer-010] past size (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag']
 KILLED: [gdacs-layer-011] no current key (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
 KILLED: [gdacs-layer-011] current last (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
 KILLED: [gdacs-layer-011] no alert key (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
@@ -344,8 +347,8 @@ KILLED: [gdacs-layer-001] other source name (src/layers/gdacs/index.js) | failed
 KILLED: [gdacs-layer-001] other interval (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host']
 KILLED: [gdacs-layer-001] no source check (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host']
 KILLED: [gdacs-layer-001] no host check (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host']
-KILLED: [gdacs-layer-002] no check of a second init (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts init after destroy']
-KILLED: [gdacs-layer-002] shown after init (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts init after destroy']
+KILLED: [gdacs-layer-002] no check of a second init (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts a call of init after destroy']
+KILLED: [gdacs-layer-002] shown after init (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts a call of init after destroy']
 KILLED: [gdacs-layer-012] other entity id (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-012] shows the points on the ground and the labels, and fills the stats']
 KILLED: [gdacs-layer-012] no ground clamp (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-012] shows the points on the ground and the labels, and fills the stats']
 KILLED: [gdacs-layer-012] no alpha (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-012] shows the points on the ground and the labels, and fills the stats']
@@ -363,19 +366,22 @@ KILLED: [gdacs-layer-016] disable keeps the request (src/layers/gdacs/index.js) 
 KILLED: [gdacs-layer-016] disable keeps the labels (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight']
 KILLED: [gdacs-layer-017] destroy keeps the data source (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-017] removes the data source and the labels when destroy runs, aborts the request in flight, and ignores a second call of destroy']
 KILLED: [gdacs-layer-017] destroy keeps the count (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-017] removes the data source and the labels when destroy runs, aborts the request in flight, and ignores a second call of destroy']
-KILLED: [gdacs-layer-002] init after destroy refused (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts init after destroy']
+KILLED: [gdacs-layer-002] init after destroy refused (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts a call of init after destroy']
 KILLED: [gdacs-layer-013] error kept after an unavailable result (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-013] removes the points when GDACS is unavailable and gives the reason as guidance']
 KILLED: [gdacs-layer-011] cut before the sort (src/layers/gdacs/model.js) | failed: ['[gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries']
 KILLED: [gdacs-layer-009] total of an unsafe whole number (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document']
+KILLED: [gdacs-layer-006] a second id checked before the rules (src/layers/gdacs/records.js) | failed: ['[gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events']
+KILLED: [gdacs-layer-013] events shown when unavailable (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-013] removes the points when GDACS is unavailable and gives the reason as guidance']
+KILLED: [gdacs-layer-016] answer of an aborted request used (src/layers/gdacs/index.js) | failed: ['[gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight']
 KILLED: [gdacs-layer-018] other disposition (src/data/layerState.js) | failed: ['the test file src/layers/gdacs/registration.test.mjs does not load']
 KILLED: [gdacs-layer-018] catalog before gnss-integrity (src/app/constructCatalog.js) | failed: ['[gdacs-layer-018] registers the layer in the catalog, the source contract, the reference sources and the share link']
 KILLED: [gdacs-layer-018] no source contract (src/app/sourceComposition.js) | failed: ['[gdacs-layer-018] registers the layer in the catalog, the source contract, the reference sources and the share link']
 KILLED: [gdacs-layer-019] panel group before gnss-integrity (src/ui/layerPanel.js) | failed: ['[gdacs-layer-019] puts the layer at the end of the Events group of the panel']
 KILLED: [gdacs-layer-020] other voice text (src/voice/layerManifest.js) | failed: ['[gdacs-layer-020] keeps the layer out of voice']
-KILLED: [gdacs-layer-021] credit without the disclaimer (src/data/dataCredits.js) | failed: ['[gdacs-layer-021] names GDACS and its two partners and gives the disclaimer of the estimates']
+KILLED: [gdacs-layer-021] credit without the first sentence of the disclaimer (src/data/dataCredits.js) | failed: ['[gdacs-layer-021] names GDACS and its two partners and gives the disclaimer of the estimates']
 KILLED: [gdacs-layer-021] credit without the second sentence of the disclaimer (src/data/dataCredits.js) | failed: ['[gdacs-layer-021] names GDACS and its two partners and gives the disclaimer of the estimates']
 KILLED: [gdacs-layer-021] credit without the link (src/data/dataCredits.js) | failed: ['[gdacs-layer-021] names GDACS and its two partners and gives the disclaimer of the estimates']
 KILLED: [gdacs-layer-022] other Spanish name (src/i18n/locales/es.json) | failed: ['[gdacs-layer-022] gives the Spanish and the Russian texts of the layer']
 KILLED: [gdacs-layer-022] other Russian error text (src/i18n/locales/ru.json) | failed: ['[gdacs-layer-022] gives the Spanish and the Russian texts of the layer']
 KILLED: [gdacs-layer-022] no layer name (src/ui/layerNames.js) | failed: ['[gdacs-layer-022] gives the Spanish and the Russian texts of the layer']
-faults 159, killed 159, survived 0
+faults 162, killed 162, survived 0
