@@ -3717,7 +3717,7 @@
     "src/layers/gdacs/layer.test.mjs › [gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host"
   ],
   "gdacs-layer-002": [
-    "src/layers/gdacs/layer.test.mjs › [gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts init after destroy"
+    "src/layers/gdacs/layer.test.mjs › [gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts a call of init after destroy"
   ],
   "gdacs-layer-003": [
     "src/layers/gdacs/source.test.mjs › [gdacs-layer-003] reads the route with the signal of the caller and gives the result of the normalizer"
@@ -3741,7 +3741,7 @@
     "src/layers/gdacs/records.test.mjs › [gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document"
   ],
   "gdacs-layer-010": [
-    "src/layers/gdacs/model.test.mjs › [gdacs-layer-010] gives each point the color of its alert level and the size and alpha of its current flag"
+    "src/layers/gdacs/model.test.mjs › [gdacs-layer-010] gives each point the color of its alert level and the size and the alpha of its current flag"
   ],
   "gdacs-layer-011": [
     "src/layers/gdacs/model.test.mjs › [gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries"
