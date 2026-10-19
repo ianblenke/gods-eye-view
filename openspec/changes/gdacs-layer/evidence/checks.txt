@@ -1,0 +1,28 @@
+Checks of gdacs-layer on commit 3f9b14eb. Host node: v26.8.2.
+Each output below shows at most its last two lines. The lead added each line `exit status`.
+
+$ env -u NODE_ENV -u HOST -u PORT node scripts/format.mjs --check
+Checked 1540 source files.
+exit status: 0
+
+$ env -u NODE_ENV -u HOST -u PORT node scripts/check-import-directions.mjs
+{"modules":1071,"portableEntries":84}
+exit status: 0
+
+$ env -u NODE_ENV -u HOST -u PORT node scripts/check-package-boundaries.mjs
+Checked air-quality: 1 exports, 11 owned modules.
+Checked air-quality-source: 1 exports, 4 owned modules.
+exit status: 0
+
+$ env -u NODE_ENV -u HOST -u PORT node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 35 published, 1 new.
+exit status: 0
+
+$ env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs lint
+WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
+STE: 0 errors, 1050 warnings.
+exit status: 0
+
+$ openspec validate gdacs-layer --strict
+Change 'gdacs-layer' is valid
+exit status: 0

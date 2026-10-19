@@ -1,0 +1,78 @@
+Browser check of gdacs-layer on commit 3f9b14eb. The tools-side Vite config is not part of the repository.
+The app gets a request counter and the route /api/gdacs with a fake upstream. The fake upstream answers the stored GDACS page of 2026-10-16 (65 records).
+No request leaves the machine. Chrome runs headless with a software renderer. The share link of the page is #v=2&lat=15&lon=110&alt=9000000&heading=0&pitch=-90&roll=0&l=9.
+
+Tools config:
+    // Tools-side Vite config for the browser run of gdacs-layer. It is NOT part of the repository.
+    // The app gets only a request counter and the GDACS route with a FAKE upstream that answers the
+    // stored GDACS page of 2026-10-16 (65 records) and then 204. No request leaves the machine.
+    import { readFileSync } from 'node:fs';
+    import { defineConfig } from 'vite';
+    import { createBrowserViteConfig } from './build/vite.js';
+    import { gdacsProxy } from './server/providers/gdacs.js';
+    import { apiNotFoundPlugin } from './server/standalone/api-not-found.js';
+    
+    const PAGE = readFileSync('/home/ianblenke/docker/gev-tools/gdacs-layer/browser/p1.json', 'utf8');
+    const counters = { route: 0, upstream: 0, answers: [] };
+    
+    const fakeFetch = async (url) => {
+      counters.upstream += 1;
+      const page = new URL(String(url)).searchParams.get('pagenumber');
+      if (page === '1')
+        return new Response(PAGE, { status: 200, headers: { 'content-type': 'application/json' } });
+      return new Response(null, { status: 204 });
+    };
+    
+    const probe = {
+      name: 'gd-probe',
+      configureServer({ middlewares }) {
+        middlewares.use('/__gd', (req, res) => {
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify(counters));
+        });
+        middlewares.use((req, res, next) => {
+          if ((req.url || '').split('?')[0] === '/api/gdacs') {
+            counters.route += 1;
+            res.on('finish', () => counters.answers.push(res.statusCode));
+          }
+          next();
+        });
+      },
+    };
+    
+    export default defineConfig(({ command }) =>
+      createBrowserViteConfig({
+        plugins: [
+          probe,
+          gdacsProxy({ fetchImpl: fakeFetch, now: () => Date.parse('2026-10-16T08:00:00Z') }),
+          apiNotFoundPlugin(),
+        ],
+        host: '127.0.0.1',
+        port: 5198,
+        command,
+      }),
+    );
+
+Transcript:
+Vite is up on 127.0.0.1:5198
+row after 43 s: {"name":"Disaster Alerts","enabled":true,"meta":"GDACS · just now","count":"65","group":"\n        DATA LAYERS\n        \n        +\n      "}
+PASS the share link l=9 enables the row "Disaster Alerts" | Disaster Alerts
+PASS the layer asks the route /api/gdacs and gets 200 | {"route":1,"upstream":1,"answers":[200]}
+PASS the route asks only page 1, because that page has fewer than 100 records | upstream 1
+row: {"name":"Disaster Alerts","enabled":true,"meta":"GDACS · just now","count":"65","group":"\n        DATA LAYERS\n        \n        +\n      "}
+PASS the row shows the source GDACS and the count of events | GDACS · just now | count 65
+screenshot: /home/ianblenke/docker/gev-tools/gdacs-layer/browser/gdacs-layer.png
+PASS no console error names GDACS
+console (last 15):
+debug: [vite] connecting...
+debug: [vite] connected.
+warning: [Init] Google 3D Tiles unavailable, using the keyless globe: Error: Google 3D tokens are not offered
+    at createGoogleTokenTileset (http://127.0.0.1:5198/src/maps/google3d.js:83:21)
+    at async loadPhotorealisticTileset (http://127.0.0.1:5198/src/maps/google3d.js:55:23)
+    at async crea
+log: [Detection] Initialized
+log: [TrackedReadout] Initialized
+log: [Detection] Mode: DENSE
+log: [Detection] Mode: OFF
+warning: [MapStack] Needs GOOGLE_MAPS_API_KEY — add it in Provider Settings — or a Cesium ion token for the ion-hosted route
+checks failed: 0
