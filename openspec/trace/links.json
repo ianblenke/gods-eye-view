@@ -3717,10 +3717,10 @@
     "src/layers/gdacs/layer.test.mjs › [gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host"
   ],
   "gdacs-layer-002": [
-    "src/layers/gdacs/layer.test.mjs › [gdacs-layer-002] sends no request when init and enable run, and refuses a second call of init"
+    "src/layers/gdacs/layer.test.mjs › [gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts init after destroy"
   ],
   "gdacs-layer-003": [
-    "src/layers/gdacs/source.test.mjs › [gdacs-layer-003] reads the route with the signal of the caller and gives the normalized document"
+    "src/layers/gdacs/source.test.mjs › [gdacs-layer-003] reads the route with the signal of the caller and gives the result of the normalizer"
   ],
   "gdacs-layer-004": [
     "src/layers/gdacs/source.test.mjs › [gdacs-layer-004] refuses a bad answer"
@@ -3732,7 +3732,7 @@
     "src/layers/gdacs/records.test.mjs › [gdacs-layer-006] drops the events that are not valid, keeps the first of two equal ids and keeps at most 500 valid events"
   ],
   "gdacs-layer-007": [
-    "src/layers/gdacs/records.test.mjs › [gdacs-layer-007] sets current only for the value true and keeps only a modified value that is a date"
+    "src/layers/gdacs/records.test.mjs › [gdacs-layer-007] makes current true only for the value true and keeps only a modified value that is a date"
   ],
   "gdacs-layer-008": [
     "src/layers/gdacs/records.test.mjs › [gdacs-layer-008] cleans the names: removed characters, white space, the cut to 120 code points and the name of the type"
@@ -3741,10 +3741,10 @@
     "src/layers/gdacs/records.test.mjs › [gdacs-layer-009] reads the meta of the document and returns null for a value that is not a document"
   ],
   "gdacs-layer-010": [
-    "src/layers/gdacs/model.test.mjs › [gdacs-layer-010] styles the points by alert level and current flag"
+    "src/layers/gdacs/model.test.mjs › [gdacs-layer-010] gives each point the color of its alert level and the size and alpha of its current flag"
   ],
   "gdacs-layer-011": [
-    "src/layers/gdacs/model.test.mjs › [gdacs-layer-011] chooses at most 48 labels in the order of current flag, alert, modified and id, and builds their entries"
+    "src/layers/gdacs/model.test.mjs › [gdacs-layer-011] chooses at most 48 labels in the order of the current flag, the alert level, the modified date and the id, and builds their entries"
   ],
   "gdacs-layer-012": [
     "src/layers/gdacs/layer.test.mjs › [gdacs-layer-012] shows the points on the ground and the labels, and fills the stats"
@@ -3759,7 +3759,7 @@
     "src/layers/gdacs/layer.test.mjs › [gdacs-layer-015] keeps the last points when a request fails and gives the error"
   ],
   "gdacs-layer-016": [
-    "src/layers/gdacs/layer.test.mjs › [gdacs-layer-016] polls only while enabled, and disable and a new call of update abort the request in flight"
+    "src/layers/gdacs/layer.test.mjs › [gdacs-layer-016] polls only while the layer is enabled, and disable and a new call of update abort the request in flight"
   ],
   "gdacs-layer-017": [
     "src/layers/gdacs/layer.test.mjs › [gdacs-layer-017] removes the data source and the labels when destroy runs, aborts the request in flight, and ignores a second call of destroy"
@@ -3774,7 +3774,7 @@
     "src/layers/gdacs/registration.test.mjs › [gdacs-layer-020] keeps the layer out of voice"
   ],
   "gdacs-layer-021": [
-    "src/layers/gdacs/registration.test.mjs › [gdacs-layer-021] credits GDACS, its two partners and the disclaimer of the estimates"
+    "src/layers/gdacs/registration.test.mjs › [gdacs-layer-021] names GDACS and its two partners and gives the disclaimer of the estimates"
   ],
   "gdacs-layer-022": [
     "src/layers/gdacs/registration.test.mjs › [gdacs-layer-022] gives the Spanish and the Russian texts of the layer"
