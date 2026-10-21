@@ -23,20 +23,6 @@ Origin: spec-first
 - **AND** a request with another method gets `405` with `{"error":"Method not allowed"}`
 - **AND** a request with the header `Sec-Fetch-Site: cross-site` gets `403`, and the answer does not hold the key text
 
-### Requirement: Local requests only
-The scenes route MUST accept only a POST request that comes from this machine.
-Origin: spec-first
-
-#### Scenario: Refuse a method that is not POST `skywatch-source-003`
-- **WHEN** a GET, PUT or DELETE request for `/api/skywatch/scenes` arrives
-- **THEN** the answer is `405` with `{"error":"Method not allowed"}`, and the plugin sends no upstream request
-
-#### Scenario: Refuse a request from another machine `skywatch-source-004`
-- **WHEN** a POST request for `/api/skywatch/scenes` fails one check of `isLoopbackCommand()`
-- **THEN** the answer is `403` with `{"error":"cross_origin"}`, and the plugin sends no upstream request
-- **AND** the samples include the socket address `192.0.2.10`, the proxy header `X-Forwarded-For` and the host name `example.test`
-- **AND** the samples include the origin `http://example.test` and the content type `text/plain`
-
 ### Requirement: Checked input
 The scenes route MUST accept only a JSON object with a box and two dates. It MUST refuse each other body before it reads the key.
 Origin: spec-first
@@ -145,7 +131,8 @@ Origin: spec-first
 
 #### Scenario: Run the steps in order `skywatch-source-018`
 - **WHEN** a scenes request meets more than one step that can answer
-- **THEN** the first step in this order answers: method, local request, rate limit, body, box, area, dates, key, store, daily count
+- **THEN** the first step in this order answers: method, same site, rate limit, body, box, area, dates, key, store, daily count
+- **AND** the same-site step is the check of `skywatch-source-004`, with its check of the header `Content-Type`
 - **AND** the store step answers when the store keeps an answer, or when a search for the same box and dates is in flight
 - **AND** a request that the store step answers gets its answer when the count of the day is equal to the limit
 - **AND** the plugin sends an upstream search only when all ten steps pass
@@ -234,4 +221,28 @@ Origin: spec-first
 - **AND** ten answers `202` give "[skywatch] failed kind=search_timeout polls=10 ms=40"
 - **AND** no line holds the key text, the search id, `https://` or `api.skywatch.co`
 - **AND** a request that does not start an upstream search writes no line
+
+### Requirement: Same-site requests only
+The scenes route MUST accept only a POST request that passes `admitSameSiteRequest()` and has the header `Content-Type: application/json`.
+Origin: spec-first
+
+#### Scenario: Refuse a method that is not POST `skywatch-source-003`
+- **WHEN** a GET, PUT, PATCH or DELETE request for `/api/skywatch/scenes` arrives
+- **THEN** the answer is `405` with `{"error":"Method not allowed"}`, and the plugin sends no upstream request
+
+#### Scenario: Refuse a request from another site `skywatch-source-004`
+- **WHEN** a POST request for `/api/skywatch/scenes` fails one check of `admitSameSiteRequest()`, or its header `Content-Type` is not exactly `application/json`
+- **THEN** the answer is `403` with `{"error":"cross_origin"}`, and the plugin sends no upstream request
+- **AND** the samples include the header `Sec-Fetch-Site: cross-site`, the proxy header `X-Forwarded-For` and the origin `null`
+- **AND** the samples include the origin `http://example.test` with the host `localhost:5173`
+- **AND** the samples include the header texts `text/plain` and `application/json; charset=utf-8`, and a request with no header `Content-Type`
+
+#### Scenario: Accept a request through the reverse proxy `skywatch-source-023`
+- **WHEN** a valid POST request for `/api/skywatch/scenes` comes from the socket address `192.0.2.10` with the host `godseye.example.test`
+- **AND** the request has the origin `http://godseye.example.test`, the header `Sec-Fetch-Site: same-origin` and no proxy header
+- **AND** the request has the header `Content-Type: application/json`, and `SKYWATCH_API_KEY` holds a key
+- **THEN** the plugin sends the upstream search, and the answer is `200`
+- **AND** a request from `127.0.0.1` with the host `localhost:5173`, the origin `http://localhost:5173` and no `Sec-Fetch-Site` header also gets `200`
+- **AND** a request with the origin `https://godseye.example.test` on an encrypted socket also gets `200`
+- **AND** a request with the origin `https://godseye.example.test` on a socket that is not encrypted gets `403` with `{"error":"cross_origin"}`
 
