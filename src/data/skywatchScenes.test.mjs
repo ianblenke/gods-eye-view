@@ -295,8 +295,9 @@ test('[skywatch-source-021] gives total from pagination.total when it is a whole
     {
       ...normalizeScenes(doc(data, { pagination: { total: 3 } })),
       scenes: undefined,
+      thumbnailUrls: undefined,
     },
-    { scenes: undefined, total: 3, truncated: false },
+    { scenes: undefined, total: 3, truncated: false, thumbnailUrls: undefined },
   );
   assert.equal(
     normalizeScenes(doc(data, { pagination: { total: 120 } })).total,

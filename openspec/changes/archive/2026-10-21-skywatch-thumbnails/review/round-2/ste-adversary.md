@@ -1,0 +1,16 @@
+Verdict: FAIL
+
+Commit 91ea3644, read from `.git/refs/heads/skywatch-thumbnails` (I ran no git). Round 2, scope: the diff from 201b1a14. I did not run the lint on the new texts that I suggest below.
+
+Round 1 findings:
+- STE S1, S2 and S4 to S9 are closed.
+- Spec adversary findings 1, 2 and 4 to 7 are closed. I compared `faults-3.log:126-127` with `faults.txt:87-89`: 125 killed, 53 tests, 0 with no fault.
+- STE S3 and spec adversary 3 are closed for the case of a proxy that keeps its `https` `Origin`. But the correction adds the new fault below.
+
+- [ ] FINDING major DATA_SOURCES.md:162 @91ea3644 "A request through a reverse proxy passes only when ... The proxy must also send in `Origin` the origin of its own request to this server" is false. `src/localRequestGate.mjs:122-123` checks `Origin` only when the request has one. The note at lines 87-88 says that a request with no `Origin` passes, and `same-site.js:14` gives `req.headers.origin` unchanged. So a proxy that removes `Origin` and the proxy headers also passes. The proposal's known limit `lan-access` says the same for a direct request. Write: "A request through a reverse proxy passes only when the proxy removes the proxy headers, such as `X-Forwarded-For`. When the request of the proxy to this server has the header `Origin`, that origin must have the protocol and the `Host` of that request." `CHANGELOG.md:3` ("can search through a reverse proxy that ... sends in `Origin` ...") gives a sufficient condition and is true. I could not check how the owner's Caddy behaves.
+- [ ] FINDING minor openspec/changes/archive/2026-10-21-skywatch-thumbnails/design.md:59 @91ea3644 "The plugin keeps a good image for 600000 ms and at most 32 images" has the two meanings that S1 corrected in the spec, the proposal and DATA_SOURCES (an age limit or a fixed time). Write it as the spec does at line 175: "The plugin keeps at most 32 good images, each for less than 600000 ms."
+- [ ] FINDING minor .env.example:227 @91ea3644 Articles and nouns. "that the store still keeps" names no store. No earlier line of the block has a store, and the thumbnail route also has an image store. `CHANGELOG.md:3` has the same fault. Write "that the store of the scenes route still keeps", as `DATA_SOURCES.md:170` does.
+- [ ] FINDING minor openspec/changes/archive/2026-10-21-skywatch-thumbnails/evidence/host-run.txt:17 @91ea3644 "Same command and file list rule as above." has no verb and no article. Write: "The command and the rule for the file list are the same as above."
+- [ ] FINDING minor openspec/changes/archive/2026-10-21-skywatch-thumbnails/evidence/checks.txt:32 @91ea3644 "Each of the six host checks gave exit 0. The result lines:" is followed by six lines. But the package boundary check has no line, and the sixth line is the check in the image. Write: "The result lines of the format check, the import check, the layer token check, openspec validate, the lint and make precheck in the image:".
+
+I found no banned word in the new prose, the new spec lines or the new and changed test titles. The new titles have no subject. The `302` sample of `skywatch-thumbnails-010` is a status in the test (`skywatchThumbnails.test.mjs:820-821`), separate from the redirect error, so it agrees with the spec. The new `/t.png` URLs of the 012 test do not collide with `CDN`. The change adds no word to `allowedIng`.

@@ -6266,10 +6266,10 @@
     "src/data/skywatchProxy.test.mjs › [skywatch-source-002] reports the status of the key, refuses another method and a cross-site request"
   ],
   "skywatch-source-003": [
-    "src/data/skywatchProxy.test.mjs › [skywatch-source-003] refuses GET, PUT and DELETE on the scenes route"
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-003] refuses GET, PUT, PATCH and DELETE on the scenes route"
   ],
   "skywatch-source-004": [
-    "src/data/skywatchProxy.test.mjs › [skywatch-source-004] refuses a scenes request that fails a check of isLoopbackCommand"
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-004] refuses a scenes request that fails a check of admitSameSiteRequest or has another Content-Type"
   ],
   "skywatch-source-005": [
     "src/data/skywatchInput.test.mjs › [skywatch-source-005] counts bytes and not characters, and counts all chunks",
@@ -6337,7 +6337,7 @@
     "src/data/skywatchProxy.test.mjs › [skywatch-source-018] answers with the first step that fails",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-018] checks the key before the store",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-018] checks the rate limit before the body, and the store before the daily count",
-    "src/data/skywatchProxy.test.mjs › [skywatch-source-018] refuses a request of another machine before the rate limit"
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-018] refuses a request from another site, or with another Content-Type, before the rate limit"
   ],
   "skywatch-source-019": [
     "src/data/skywatchProxy.test.mjs › [skywatch-source-015 skywatch-source-019] keeps no failure in the store",
@@ -6375,6 +6375,89 @@
     "src/data/skywatchProxy.test.mjs › [skywatch-source-022] writes no key, search id, URL or host name, and no line for a request with no search",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-022] writes one line for a good search, with the count of the answer, the number of result requests and the time",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-022] writes one line for each failure, with the number of result requests"
+  ],
+  "skywatch-source-023": [
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-023] accepts a request through the reverse proxy and a request from this machine"
+  ],
+  "skywatch-thumbnails-001": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-001] answers a path with an id and passes other paths to next",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-001] is once in localProviderPlugins, directly after skywatch-proxy",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-001] reads process.env in localProviderPlugins, and finds a scene of the skywatch-proxy plugin of the same list"
+  ],
+  "skywatch-thumbnails-002": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-002] accepts a request through the reverse proxy",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-002] refuses a request that fails a check of admitSameSiteRequest"
+  ],
+  "skywatch-thumbnails-003": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-003] refuses POST, PUT, DELETE and HEAD"
+  ],
+  "skywatch-thumbnails-004": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-004] answers thumbnails_off when SKYWATCH_THUMBNAILS is not the text true"
+  ],
+  "skywatch-thumbnails-005": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-005] has one count for all socket addresses, and an answer of the image store counts",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-005] lets the 30th request pass at 59999 ms after 29 requests at 0 ms",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-005] refuses the 31st request at 59999 ms after 30 requests at 0 ms, and lets it pass at 60000 ms"
+  ],
+  "skywatch-thumbnails-006": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] finds no scene of another call of skywatchPlugins",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] gives the URL of an answer that is 599999 ms old, and not of one that is 600000 ms old",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] gives the thumbnail of a scene of a kept answer of skywatchPlugins",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] knows no scene after the first 50 scenes and no scene with thumbnail false",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] knows no scene without the option thumbnailUrlOf",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] uses the newest kept answer, and the first scene with thumbnail true in scenes"
+  ],
+  "skywatch-thumbnails-007": [
+    "src/data/skywatchImage.test.mjs › [skywatch-thumbnails-007] accepts an https URL with a host name and no user name, password or port",
+    "src/data/skywatchImage.test.mjs › [skywatch-thumbnails-007] refuses a text that is not an absolute URL, another scheme, a user name, a password and a port",
+    "src/data/skywatchImage.test.mjs › [skywatch-thumbnails-007] refuses an IP address, localhost and a name that ends with .localhost",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-007] accepts the port 443, because the URL parser removes it",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-007] refuses each URL that fails the URL check, with no upstream request"
+  ],
+  "skywatch-thumbnails-008": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-008 skywatch-thumbnails-009] clears the timer at once and reads no body for a status that is not 200 or another media type",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-008] sends one GET request with Accept, no redirect and no other header",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-008] sends the trimmed key only to api.skywatch.co",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-008] sets a time limit of 15000 ms, and does not clear it before it reads all of the body"
+  ],
+  "skywatch-thumbnails-009": [
+    "src/data/skywatchImage.test.mjs › [skywatch-thumbnails-009] accepts only the media types image/png, image/jpeg and image/webp",
+    "src/data/skywatchImage.test.mjs › [skywatch-thumbnails-009] checks RIFF in the first 4 bytes and WEBP in the 9th to the 12th byte",
+    "src/data/skywatchImage.test.mjs › [skywatch-thumbnails-009] checks the first bytes of each type",
+    "src/data/skywatchImage.test.mjs › [skywatch-thumbnails-009] reads the media type before the first semicolon, trimmed and in lower case",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-008 skywatch-thumbnails-009] clears the timer at once and reads no body for a status that is not 200 or another media type",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-009 skywatch-thumbnails-010] gives upstream_failed when the time limit ends during the body",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-009] gives bad_upstream for a media type, a size or first bytes that fail the check",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-009] passes a body of 1048576 bytes and reads the media type of a header with parameters"
+  ],
+  "skywatch-thumbnails-010": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-009 skywatch-thumbnails-010] gives upstream_failed when the time limit ends during the body",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-010] gives the error of the image check for a failure of the image check",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-010] gives upstream_failed for a status that is not 200, a fetch error, a redirect and the time limit",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-010] holds no URL, host name or key text in a failure answer or a header"
+  ],
+  "skywatch-thumbnails-011": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-011] gives each JSON answer after the path step Content-Type and Cache-Control",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-011] sends the bytes with only its own headers"
+  ],
+  "skywatch-thumbnails-012": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-012] answers a repeated URL from the image store, found by the href text",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-012] keeps an image for 599999 ms and not for 600000 ms",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-012] keeps at most 32 images and removes the oldest image first",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-012] keeps no failure",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-012] makes an image that it fetches again after 600000 ms the newest image"
+  ],
+  "skywatch-thumbnails-013": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-013] shares an upstream request that is in flight, with its image or its failure"
+  ],
+  "skywatch-thumbnails-014": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-014] answers with the first step that fails",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-014] checks the rate limit before the scene, and the image store before the upstream request"
+  ],
+  "skywatch-thumbnails-015": [
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-015] logs with console.log when the test gives no log option",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-015] writes no line for an answer of the image store or of a step before the upstream request",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-015] writes one line for a good image and for each failure, with the time"
   ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"

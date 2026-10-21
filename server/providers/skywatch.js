@@ -1,7 +1,8 @@
-import { isLoopbackCommand } from './common/loopback-command.js';
 import { makeRateLimiter } from './common/rate-limit.js';
 import { admitSameSite } from './common/same-site.js';
 import { normalizeScenes } from './skywatch/normalize.js';
+import { isSameSite } from './skywatch/same-site.js';
+import { skywatchThumbnailProxy } from './skywatch/thumbnails.js';
 import { runSearch } from './skywatch/upstream.js';
 import { readBodyText, validateRequest } from './skywatch/validate.js';
 
@@ -11,11 +12,13 @@ import { readBodyText, validateRequest } from './skywatch/validate.js';
  * requests, and it keeps the key and the image URLs of SkyWatch on the server.
  *
  * GET  /api/skywatch/status -> {configured}
- * POST /api/skywatch/scenes -> scenes inside a box (this machine only)
+ * POST /api/skywatch/scenes -> scenes inside a box (same site, JSON only)
  *
- * The steps of a scenes request, in order: method, local request, rate limit,
+ * The steps of a scenes request, in order: method, same site, rate limit,
  * body, box, area, dates, key, store, daily count. The first step that
  * answers ends the request. Each upstream search writes one log line.
+ * `thumbnailUrlOf` gives the thumbnail URL of a scene of a kept answer to the
+ * thumbnail plugin of `skywatchPlugins()`.
  */
 
 const STORE_MS = 600_000;
@@ -107,6 +110,16 @@ export function skywatchProxy({
 
   const budget = () => ({ used: countOfToday().used, limit: limit() });
 
+  /** The thumbnail URL of a scene of the newest kept answer that has it, or null. */
+  function thumbnailUrlOf(id) {
+    for (const entry of [...store.values()].reverse()) {
+      if (now() - entry.at >= STORE_MS) continue;
+      const url = entry.thumbnailUrls.get(id);
+      if (url !== undefined) return url;
+    }
+    return null;
+  }
+
   async function search(id, apiKey, { bbox, start, end }) {
     const started = now();
     const result = await runSearch({
@@ -187,7 +200,10 @@ export function skywatchProxy({
     if (req.method !== 'POST') {
       return send(res, 405, { error: 'Method not allowed' });
     }
-    if (!isLoopbackCommand(req)) {
+    if (
+      !isSameSite(req) ||
+      req.headers['content-type'] !== 'application/json'
+    ) {
       return send(res, 403, { error: 'cross_origin' });
     }
     if (!allow('local')) {
@@ -230,5 +246,23 @@ export function skywatchProxy({
     name: 'skywatch-proxy',
     configureServer: install,
     configurePreviewServer: install,
+    thumbnailUrlOf,
   };
+}
+
+/**
+ * The scenes plugin and the thumbnail plugin, made with the same options. The
+ * thumbnail plugin finds the thumbnail URLs in the kept answers of the scenes
+ * plugin of the same call.
+ * @param {Parameters<typeof skywatchProxy>[0]} [options]
+ */
+export function skywatchPlugins(options = {}) {
+  const scenes = skywatchProxy(options);
+  return [
+    scenes,
+    skywatchThumbnailProxy({
+      ...options,
+      thumbnailUrlOf: scenes.thumbnailUrlOf,
+    }),
+  ];
 }

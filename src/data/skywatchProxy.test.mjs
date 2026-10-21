@@ -97,6 +97,7 @@ function install(t, { env = {}, respond, preview = false, clock } = {}) {
       body,
       headers = {},
       remote = '127.0.0.1',
+      encrypted = false,
     } = options;
     const text = typeof body === 'string' ? body : JSON.stringify(body);
     const req = Object.assign(
@@ -104,7 +105,7 @@ function install(t, { env = {}, respond, preview = false, clock } = {}) {
       {
         method,
         headers: { ...GOOD_HEADERS, ...headers },
-        socket: { remoteAddress: remote },
+        socket: { remoteAddress: remote, encrypted },
       },
     );
     const res = {
@@ -241,9 +242,9 @@ test('[skywatch-source-002] reports the status of the key, refuses another metho
   assert.equal(server.calls.length, 0);
 });
 
-test('[skywatch-source-003] refuses GET, PUT and DELETE on the scenes route', async (t) => {
+test('[skywatch-source-003] refuses GET, PUT, PATCH and DELETE on the scenes route', async (t) => {
   const server = install(t);
-  for (const method of ['GET', 'PUT', 'DELETE']) {
+  for (const method of ['GET', 'PUT', 'PATCH', 'DELETE']) {
     const answer = await server.scenes(undefined, { method });
     assert.equal(answer.status, 405, method);
     assert.deepEqual(answer.body, { error: 'Method not allowed' });
@@ -251,20 +252,65 @@ test('[skywatch-source-003] refuses GET, PUT and DELETE on the scenes route', as
   assert.equal(server.calls.length, 0);
 });
 
-test('[skywatch-source-004] refuses a scenes request that fails a check of isLoopbackCommand', async (t) => {
+test('[skywatch-source-004] refuses a scenes request that fails a check of admitSameSiteRequest or has another Content-Type', async (t) => {
   const server = install(t);
   for (const options of [
-    { remote: '192.0.2.10' },
+    { headers: { 'sec-fetch-site': 'cross-site' } },
+    { headers: { 'sec-fetch-site': 'same-site' } },
     { headers: { 'x-forwarded-for': '127.0.0.1' } },
-    { headers: { host: 'example.test', origin: 'http://example.test' } },
+    { headers: { origin: 'null' } },
+    { headers: { host: 'localhost:5173', origin: 'http://example.test' } },
     { headers: { origin: 'http://example.test' } },
     { headers: { 'content-type': 'text/plain' } },
+    { headers: { 'content-type': 'application/json; charset=utf-8' } },
+    { headers: { 'content-type': undefined } },
   ]) {
     const answer = await server.scenes(undefined, options);
     assert.equal(answer.status, 403, JSON.stringify(options));
     assert.deepEqual(answer.body, { error: 'cross_origin' });
   }
   assert.equal(server.calls.length, 0);
+});
+
+test('[skywatch-source-023] accepts a request through the reverse proxy and a request from this machine', async (t) => {
+  const server = install(t);
+  const proxied = await server.scenes(undefined, {
+    remote: '192.0.2.10',
+    headers: {
+      host: 'godseye.example.test',
+      origin: 'http://godseye.example.test',
+      'sec-fetch-site': 'same-origin',
+    },
+  });
+  assert.equal(proxied.status, 200);
+  assert.equal(searches(server), 1);
+  const local = await server.scenes(
+    { bbox: boxAt(1), ...DATES },
+    {
+      headers: { host: 'localhost:5173', origin: 'http://localhost:5173' },
+    },
+  );
+  assert.equal(local.status, 200);
+  assert.equal(local.body.cached, false);
+  assert.equal(searches(server), 2);
+  const proxyHeaders = {
+    host: 'godseye.example.test',
+    origin: 'https://godseye.example.test',
+    'sec-fetch-site': 'same-origin',
+  };
+  const encrypted = await server.scenes(
+    { bbox: boxAt(2), ...DATES },
+    { headers: proxyHeaders, encrypted: true },
+  );
+  assert.equal(encrypted.status, 200);
+  assert.equal(searches(server), 3);
+  const plain = await server.scenes(
+    { bbox: boxAt(3), ...DATES },
+    { headers: proxyHeaders },
+  );
+  assert.equal(plain.status, 403);
+  assert.deepEqual(plain.body, { error: 'cross_origin' });
+  assert.equal(searches(server), 3);
 });
 
 test('[skywatch-source-009] refuses a valid request when the key is not set or holds only white space', async (t) => {
@@ -547,17 +593,14 @@ test('[skywatch-source-018] answers with the first step that fails', async (t) =
     env: { SKYWATCH_API_KEY: '', SKYWATCH_DAILY_SEARCHES: '1' },
   });
   const badAll = { bbox: [0, 0, 5, 5], start: 'x' };
+  const crossSite = { 'sec-fetch-site': 'cross-site' };
   assert.equal(
-    (await server.scenes(badAll, { method: 'GET', remote: '192.0.2.10' }))
-      .status,
+    (await server.scenes(badAll, { method: 'GET', headers: crossSite })).status,
     405,
   );
-  assert.deepEqual(
-    (await server.scenes(badAll, { remote: '192.0.2.10' })).body,
-    {
-      error: 'cross_origin',
-    },
-  );
+  assert.deepEqual((await server.scenes(badAll, { headers: crossSite })).body, {
+    error: 'cross_origin',
+  });
   assert.deepEqual((await server.scenes('{"bbox":', {})).body, {
     error: 'bad_body',
   });
@@ -849,10 +892,18 @@ test('[skywatch-source-017] counts a request that the body step refuses', async 
   assert.deepEqual(limited.body, { error: 'rate_limited' });
 });
 
-test('[skywatch-source-018] refuses a request of another machine before the rate limit', async (t) => {
+test('[skywatch-source-018] refuses a request from another site, or with another Content-Type, before the rate limit', async (t) => {
   const server = install(t);
   for (let n = 0; n < 7; n++) {
-    const answer = await server.scenes(undefined, { remote: '192.0.2.10' });
+    const answer = await server.scenes(undefined, {
+      headers: { 'sec-fetch-site': 'cross-site' },
+    });
+    assert.deepEqual(answer.body, { error: 'cross_origin' });
+  }
+  for (let n = 0; n < 7; n++) {
+    const answer = await server.scenes(undefined, {
+      headers: { 'content-type': 'text/plain' },
+    });
     assert.deepEqual(answer.body, { error: 'cross_origin' });
   }
   const local = await server.scenes();
