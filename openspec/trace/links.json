@@ -3896,29 +3896,10 @@
   "live-sources-001": [
     "src/sources/live/contract.test.mjs › [live-sources-001] a transport abort error stays the same error"
   ],
-  "live-sources-002": [
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-002] map the Ontario rows",
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-002] send the application/json Accept header",
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-002] send the key parameter",
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-002] trim spaces from the key",
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-002] use a timeout of 15000 milliseconds"
-  ],
-  "live-sources-003": [
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-003] make no request without a key",
-    "src/data/cctvOntarioRows.test.mjs › [live-sources-003] write the first warning for an absent key"
-  ],
-  "live-sources-004": [
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-004] return an empty row list for an HTTP error with JSON rows",
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-004] write one warning for an invalid key",
-    "src/data/cctvOntarioRows.test.mjs › [live-sources-004] write the first warning for an HTTP error"
-  ],
-  "live-sources-005": [
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-005] keep the camera data error secret",
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-005] keep the fetch error secret",
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-005] keep the json error secret",
-    "src/data/cctvOntarioKey.test.mjs › [live-sources-005] keep the key text of a fetch error out of the warning",
-    "src/data/cctvOntarioRows.test.mjs › [live-sources-005] write the warning for a row error with the key text"
-  ],
+  "live-sources-002": [],
+  "live-sources-003": [],
+  "live-sources-004": [],
+  "live-sources-005": [],
   "live-sources-006": [
     "src/data/cctvOntarioRows.test.mjs › [live-sources-006 live-sources-007] return an empty source list for a capitalized Latitude of 0",
     "src/data/cctvOntarioRows.test.mjs › [live-sources-006 live-sources-007] return an empty source list for a capitalized Longitude of 0",

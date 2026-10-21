@@ -8,7 +8,7 @@
       "functions": 0,
       "totals": {
         "lines": 94,
-        "branches": 39,
+        "branches": 42,
         "functions": 11
       },
       "sha": "16369c96a07bc997d07f52ed5ebd9719af3b0d92bc188d0170f2f392c2a79626",
@@ -1261,21 +1261,6 @@
       "origin": "upstream-sync-8",
       "since": "2026-10-21"
     },
-    "server/providers/mapillary/routes.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 5,
-      "functions": 1,
-      "totals": {
-        "lines": 95,
-        "branches": 39,
-        "functions": 7
-      },
-      "sha": "78f5394cb2dc1d66fa31b546a18ca45005149aa6e40345c1cff7894819e05f38",
-      "untrue": false,
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
     "server/providers/mapillary/tiles.js": {
       "loaded": true,
       "lines": 0,
@@ -2493,12 +2478,12 @@
     },
     "src/cameraVerbs.js": {
       "loaded": true,
-      "lines": 180,
-      "branches": 48,
-      "functions": 3,
+      "lines": 178,
+      "branches": 51,
+      "functions": 2,
       "totals": {
         "lines": 1550,
-        "branches": 292,
+        "branches": 296,
         "functions": 43
       },
       "sha": "c75702426300dd14ed32c5fad3ce7616a57cabce509f0d33384d99570373a35d",
@@ -2648,7 +2633,7 @@
       "functions": 0,
       "totals": {
         "lines": 468,
-        "branches": 134,
+        "branches": 135,
         "functions": 25
       },
       "sha": "448677994f427f7f78ada102b64fe2e07350a6f70bbf863aa179c9022f1959bc",
@@ -2723,7 +2708,7 @@
       "functions": 1,
       "totals": {
         "lines": 803,
-        "branches": 238,
+        "branches": 239,
         "functions": 46
       },
       "sha": "90fc7801870c9a7c40b4c0d1d365a9f95bd922888767e652a5c271a249cf0028",
@@ -3843,12 +3828,12 @@
     },
     "src/data/terrainHeightsProxy.js": {
       "loaded": true,
-      "lines": 12,
-      "branches": 10,
+      "lines": 6,
+      "branches": 9,
       "functions": 1,
       "totals": {
         "lines": 284,
-        "branches": 87,
+        "branches": 89,
         "functions": 14
       },
       "sha": "3c14a7ad96a7aa6462dc630367a21552a21ab0030c7667bdd118f5202efd2407",
@@ -4808,7 +4793,7 @@
       "functions": 6,
       "totals": {
         "lines": 842,
-        "branches": 74,
+        "branches": 75,
         "functions": 34
       },
       "sha": "396a6d26a988e79feb1c290646ce2e57ed36a6a861ceab18aad2e664489d6d9d",
@@ -4943,7 +4928,7 @@
       "functions": 7,
       "totals": {
         "lines": 573,
-        "branches": 50,
+        "branches": 51,
         "functions": 24
       },
       "sha": "a1cfcc9054d73650828c4d8723a489c7cd469834e8d2127f4c0e4a5c1425eaad",
@@ -5524,11 +5509,11 @@
     "src/layers/flights/tracking.js": {
       "loaded": true,
       "lines": 322,
-      "branches": 43,
+      "branches": 42,
       "functions": 9,
       "totals": {
         "lines": 1275,
-        "branches": 149,
+        "branches": 148,
         "functions": 39
       },
       "sha": "b617a40bf0470000dd4e39456c7b029e9288b1e7932fbca6bf9dc2e8eaae1b9c",
@@ -5978,7 +5963,7 @@
       "functions": 0,
       "totals": {
         "lines": 37,
-        "branches": 13,
+        "branches": 16,
         "functions": 6
       },
       "sha": "110abf21ff19b2e1c228ba8bd29b68c04a636ed42591936b558d14cd46a2876f",
@@ -6708,13 +6693,13 @@
     },
     "src/layers/satellites/interaction.js": {
       "loaded": true,
-      "lines": 73,
-      "branches": 0,
-      "functions": 2,
+      "lines": 52,
+      "branches": 1,
+      "functions": 3,
       "totals": {
         "lines": 89,
-        "branches": 2,
-        "functions": 3
+        "branches": 4,
+        "functions": 5
       },
       "sha": "be782452742cad99cd189b9287122d90ec69fdcf76b972a60371d7040608183e",
       "untrue": false,
@@ -6826,21 +6811,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/layers/streetLevel/cameraFollow.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 7,
-      "functions": 0,
-      "totals": {
-        "lines": 209,
-        "branches": 83,
-        "functions": 17
-      },
-      "sha": "89f6b0da911577179c9521ecb8e8edf46161b0d1f1fdf09f94838292cf2eb06a",
-      "untrue": false,
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
     "src/layers/streetLevel/credits.js": {
       "loaded": true,
       "lines": 4,
@@ -6852,21 +6822,6 @@
         "functions": 4
       },
       "sha": "6730859f614253b58dca7e7b814d1d9d1833b18326de7e2d7c3a4983104eb29d",
-      "untrue": false,
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
-    "src/layers/streetLevel/groundCast.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 3,
-      "functions": 0,
-      "totals": {
-        "lines": 256,
-        "branches": 95,
-        "functions": 19
-      },
-      "sha": "17a2b8541c005214fec3e14a24cef537ec6cf788b7e14f8247884a0ca2c6d1e9",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -6927,21 +6882,6 @@
         "functions": 10
       },
       "sha": "bf8226ea6e16c1aa247bc0236bb2eea0f1445bf2f047df2a9b678f112a747aa7",
-      "untrue": false,
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
-    "src/layers/streetLevel/meshSampler.js": {
-      "loaded": true,
-      "lines": 4,
-      "branches": 14,
-      "functions": 1,
-      "totals": {
-        "lines": 371,
-        "branches": 112,
-        "functions": 26
-      },
-      "sha": "7f40cc7f1bf33902febdd76f0fc285ea66ff275a968b636f6f1ff23a47fa4c0c",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -7081,21 +7021,6 @@
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
-    "src/layers/streetLevel/providers/mapillary/coverage.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 70,
-        "branches": 9,
-        "functions": 4
-      },
-      "sha": "c8adfe9e46df352097476b63127ecd444f04b81bf536e28b2c2f91c8ae0f2ef8",
-      "untrue": false,
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
     "src/layers/streetLevel/providers/mapillary/coverageFixture.mjs": {
       "loaded": true,
       "lines": 0,
@@ -7152,21 +7077,6 @@
         "functions": 2
       },
       "sha": "a15b1ce6ccfa5c80292d55ee14ead7d329e48d8b3528d8650b528143423edaeb",
-      "untrue": false,
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
-    "src/layers/streetLevel/providers/mapillary/sequences.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 3,
-      "functions": 0,
-      "totals": {
-        "lines": 43,
-        "branches": 11,
-        "functions": 5
-      },
-      "sha": "4aec18c2acef1dfe078b21f980e29ff134d894e855309be1a6fbb82c961b02f6",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -8378,7 +8288,7 @@
       "functions": 0,
       "totals": {
         "lines": 154,
-        "branches": 33,
+        "branches": 34,
         "functions": 4
       },
       "sha": "19c60ce12107dbbbb2887e67629920c37961baa14c38561328330cb13674e7e7",
@@ -8403,12 +8313,12 @@
     },
     "src/locations.js": {
       "loaded": true,
-      "lines": 228,
-      "branches": 53,
-      "functions": 13,
+      "lines": 209,
+      "branches": 50,
+      "functions": 12,
       "totals": {
         "lines": 1017,
-        "branches": 178,
+        "branches": 197,
         "functions": 36
       },
       "sha": "f908f9c645eeea2c1bb4f16b36e47a08736c5751dd51aba9892ac922fdfd5f4b",
@@ -9608,7 +9518,7 @@
       "functions": 0,
       "totals": {
         "lines": 43,
-        "branches": 12,
+        "branches": 13,
         "functions": 8
       },
       "sha": "12c5d18c2a3de111ca266f2d03640bc6bc8efe6601440b72bdcb120c62bbed69",
@@ -11888,7 +11798,7 @@
       "functions": 0,
       "totals": {
         "lines": 37,
-        "branches": 17,
+        "branches": 20,
         "functions": 1
       },
       "sha": "0d59d9949ede7498c1fb4fe9e326a9e343d666fddd59e29a89e532d7bba0e02f",
@@ -11898,12 +11808,12 @@
     },
     "src/voice/narration.js": {
       "loaded": true,
-      "lines": 14,
-      "branches": 12,
-      "functions": 1,
+      "lines": 10,
+      "branches": 10,
+      "functions": 0,
       "totals": {
         "lines": 270,
-        "branches": 68,
+        "branches": 70,
         "functions": 29
       },
       "sha": "7f158a4b6e52fb3cb4814f1b90a2cebd8baaa43c39843a62e9edab1ad77646db",
@@ -11988,12 +11898,12 @@
     },
     "src/voice/realtimeConnection.js": {
       "loaded": true,
-      "lines": 104,
-      "branches": 30,
+      "lines": 97,
+      "branches": 31,
       "functions": 7,
       "totals": {
         "lines": 387,
-        "branches": 77,
+        "branches": 79,
         "functions": 28
       },
       "sha": "0a53d92d665af58276b2091631f597d289a8981def36876e43b3d0e19ee434d7",
@@ -12038,7 +11948,7 @@
       "functions": 3,
       "totals": {
         "lines": 226,
-        "branches": 64,
+        "branches": 66,
         "functions": 23
       },
       "sha": "bdc95fb09047a3d2d8eb5440f5438284d0861b33d15b7aa75049c12d78293462",
@@ -12098,7 +12008,7 @@
       "functions": 0,
       "totals": {
         "lines": 187,
-        "branches": 60,
+        "branches": 61,
         "functions": 11
       },
       "sha": "93d5d598fd1238f2a75d5522ff26bc352ab57383ed27125eade5e169f3abea6c",
@@ -12123,12 +12033,12 @@
     },
     "src/voice/realtimeProtocol.js": {
       "loaded": true,
-      "lines": 26,
-      "branches": 17,
+      "lines": 11,
+      "branches": 16,
       "functions": 0,
       "totals": {
         "lines": 200,
-        "branches": 73,
+        "branches": 78,
         "functions": 12
       },
       "sha": "755e3a5744961292bf3d47e88499ab5a4b5a15fb594370c290102772e869c9b8",
@@ -12259,11 +12169,11 @@
     "src/voice/speech.js": {
       "loaded": true,
       "lines": 50,
-      "branches": 73,
+      "branches": 72,
       "functions": 10,
       "totals": {
         "lines": 980,
-        "branches": 388,
+        "branches": 389,
         "functions": 74
       },
       "sha": "d08d28bd794a0800672ef3b3103e90faa5b4cc2fd354bd28df8889da7d485b72",
@@ -12293,7 +12203,7 @@
       "functions": 0,
       "totals": {
         "lines": 314,
-        "branches": 108,
+        "branches": 115,
         "functions": 26
       },
       "sha": "d310ac03ee4c9d4b5309888b93be7764aaea8b90c0e26cf0d5beda7ccca2d1d3",
@@ -18575,24 +18485,6 @@
       "origin": "upstream-sync-8",
       "since": "2026-10-21"
     },
-    "src/layers/streetLevel/cameraFollow.test.mjs": {
-      "names": {
-        "FOLLOW claims the camera once and ends when another feature takes it": 1,
-        "a photo claims the camera when it starts opening and frames once loaded, releasing tracking": 1,
-        "a photo that finishes loading after newer navigation does not frame": 1,
-        "a plausible mesh sample near bare earth wins (a street, or a modest roof)": 1,
-        "a refused claim (cockpit) neither frames the photo nor turns FOLLOW on": 1,
-        "cancelFraming leaves a landed flight and a newer navigation flight alone": 1,
-        "cancelFraming stops the framing flight while it is still ours": 1,
-        "destroying the follow part stops listening for handoffs": 1,
-        "following stands the camera at eye height above the checked ground": 1,
-        "framing a photo ignores a sample kilometres underground and uses bare earth": 1,
-        "turning FOLLOW on stops the framing flight so it cannot fight the follow view": 1,
-        "without bare earth an absurd sample falls back to the image altitude, never below the surface range": 1
-      },
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
     "src/layers/streetLevel/cameraFraming.test.mjs": {
       "names": {
         "a photo claims the camera when it starts opening and frames once loaded, releasing tracking": 1,
@@ -18614,30 +18506,6 @@
         "passesImageryFilter applies panorama mode and the cut-off": 1,
         "resolveFilter turns relative days into an absolute cut-off": 1,
         "sameFilter compares the stored form": 1
-      },
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
-    "src/layers/streetLevel/groundCast.test.mjs": {
-      "names": {
-        "a full cache drops its oldest corners, not every corner": 1,
-        "a full cache is cleared before a request counts its corners, so the request still casts": 1,
-        "a geoid fallback or a failing proxy leaves the heights unknown": 1,
-        "a line across the date line casts along the date line": 1,
-        "cancelling a prepare cancels its terrain request": 1,
-        "castLine refines heights with sampled mesh and densifies finer": 1,
-        "castLine returns lon, lat, height triples or null when a corner is missing": 1,
-        "densifyLine crosses the date line the short way and wraps what it adds": 1,
-        "densifyLine splits long segments and keeps the vertices": 1,
-        "prepared lines always cast with the mesh, however their segments cross the grid": 1,
-        "prepares run one at a time so neighbours share corners": 1,
-        "refineHeights carries the road under a canopy from both sides": 1,
-        "refineHeights follows the mesh where it is the road": 1,
-        "refineHeights keeps bare earth under a deck with no road beside it, and rejects bad probes": 1,
-        "surface mode: terrain only on Google 3D at street zoom, with hysteresis": 1,
-        "the caster interpolates cached grid corners and adds the lift": 1,
-        "the caster needs a terrain service": 1,
-        "too many corners are not requested, and aborted prepares do nothing": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -18751,26 +18619,6 @@
         "destroying the marker stops the horizon cull": 1,
         "the marker is clamped to the ground and turned to the bearing": 1,
         "the photo marker is hidden behind the globe, and shows from its side": 1
-      },
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
-    "src/layers/streetLevel/meshSampler.test.mjs": {
-      "names": {
-        "a failed refresh keeps the last good distance and is retried after the cooldown": 1,
-        "a large queue is ranked once, not sorted again every slice": 1,
-        "a missed cell is probed again after the retry window, not before": 1,
-        "a sample is probed again once the camera is twice as close, and the change is redrawn": 1,
-        "a sample needs a real bare-earth prior and must sit in the shared mesh window": 1,
-        "a slice keeps to its budget, counting the work before its first probe": 1,
-        "cells are probed once, nearest first, with overlays excluded": 1,
-        "cells out of range when asked are not queued, even once the camera reaches them": 1,
-        "destroy forgets the samples": 1,
-        "far cells are skipped, misses are not latched, and nothing runs while disabled": 1,
-        "probes wait while the visible tileset is still streaming": 1,
-        "refreshing stops once a cell was probed from close by": 1,
-        "remembered misses are bounded like the samples": 1,
-        "the sampling range is measured the short way round the date line": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -19037,37 +18885,6 @@
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
-    "src/layers/streetLevel/providers/mapillary/coverage.test.mjs": {
-      "names": {
-        "a cast tile whose heights were evicted is cast again, not left draped": 1,
-        "a line across the date line from the camera is in mesh range": 1,
-        "a rate limit holds every refresh inside its wait, not only the first": 1,
-        "a rate limit keeps the drawn tiles and asks again once the wait is over": 1,
-        "a rejected key stops coverage requests until the layer goes off": 1,
-        "a selection cleared while the old zoom is still shown uncolours its lines": 1,
-        "a selection made or cleared while a tile builds is applied once it is ready": 1,
-        "a selection made while the old zoom is still building is applied once it is ready": 1,
-        "a sequence that crosses a tile edge is counted once": 1,
-        "a street view toward the horizon ranks only the ground within range": 1,
-        "a superseded tile request cannot strand lines on the globe": 1,
-        "a tile left draped by a failed terrain lookup is cast on the next refresh": 1,
-        "a tile that fails before the terrain table loads is reported at once, never unhandled": 1,
-        "a tile whose lines cannot be cast is not rebuilt for nothing": 1,
-        "a tilted street view over ground 1,600 m up asks for the tiles it looks at first": 1,
-        "in terrain mode a tile draws draped, then swaps to cast lines without a blank frame": 1,
-        "lines a partial terrain lookup left draped are cast once the terrain recovers": 1,
-        "only lines within the mesh sampler range of the camera are asked for": 1,
-        "overview points behind the horizon are hidden, not drawn through the globe": 1,
-        "panning off a tile that is still loading stops counting it as loading": 1,
-        "the draped lines go after the wait even if the cast lines never get ready": 1,
-        "the draped lines go once the cast lines are ready": 1,
-        "the old zoom goes as soon as the new zoom has loaded, not after the stale wait": 1,
-        "the per-tile cap applies after the imagery filter, so a dense tile keeps its 360° lines": 1,
-        "zoom 0 is a zoom: the whole-earth view still shows coverage": 1
-      },
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
     "src/layers/streetLevel/providers/mapillary/decode.test.mjs": {
       "names": {
         "a sequence with a capture gap keeps its parts as separate lines": 1,
@@ -19095,20 +18912,6 @@
         "image deep links match the mapillary.com share format": 1,
         "picks route sequences to selection and images to the core opener": 1,
         "the definition satisfies the Street Level provider contract": 1
-      },
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
-    "src/layers/streetLevel/providers/mapillary/sequences.test.mjs": {
-      "names": {
-        "a cached sequence is re-selected without a lookup": 1,
-        "a failed sequence load leaves no stale cones and can be retried": 1,
-        "a late answer for a superseded sequence neither draws nor is cached": 1,
-        "a mesh sample away from the selected sequence changes no cone": 1,
-        "a mesh sample under a cone moves that cone in place, and no other": 1,
-        "a second click on a loading sequence does not start another lookup": 1,
-        "clearSelection cancels the lookup and uncolours the sequence": 1,
-        "cones behind the globe are hidden, and show again from the other side": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -21888,17 +21691,6 @@
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
-    "src/tooling/panelResizeQa.test.mjs": {
-      "names": {
-        "drift detection reports only pinned edges that moved": 1,
-        "growth deltas push each named edge outward": 1,
-        "handle points land inside the strip or corner for every direction": 1,
-        "pinned edges are exactly the sides a direction does not name": 1,
-        "the harness targets the key and minimums the controls use": 1
-      },
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
     "src/tooling/panelStorageDocs.test.mjs": {
       "names": {
         "documented panel storage keys are the keys the code writes": 1,
@@ -22919,26 +22711,6 @@
       "origin": "upstream-sync-8",
       "since": "2026-10-21"
     },
-    "src/ui/panelDock.test.mjs": {
-      "names": {
-        "a click on a docked panel’s resize edge leaves it docked and stores nothing": 1,
-        "a collapsed floating window keeps its chosen height through a drag and a reload": 1,
-        "a floating header never lands under the command dock or voice pill": 1,
-        "a floating window whose content grows is pulled back on-screen": 1,
-        "a header press that travels under the drag threshold is a click, not a lift": 1,
-        "a live window resize shrinks a floating window larger than the viewport": 1,
-        "a pointercancel mid-drag saves nothing and puts the panel back": 1,
-        "a pointercancel while dragging a floating window returns it to where it was": 1,
-        "a restored floating window stacks above the docked DISPLAY panel (z 110)": 1,
-        "a touch on the header or an edge does not lift the panel, and the rail can still scroll": 1,
-        "dockPanel returns a floating window to its rail and forgets its place": 1,
-        "only a dockOnCollapse panel docks when collapsed, and only on collapse": 1,
-        "renumbering the z ladder never drops a window below the docked panels": 1,
-        "two quick header presses snap a floating panel back; slow or distant ones do not": 1
-      },
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
-    },
     "src/ui/panelPositionControls.test.mjs": {
       "names": {
         "the floating panels’ stored positions and hint flag are dropped; collapse state stays": 1
@@ -22986,16 +22758,6 @@
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/ui/panelResize.test.mjs": {
-      "names": {
-        "east and south edges grow away from the anchored corner": 1,
-        "minimum size stops the moving edge, not the anchored one": 1,
-        "the viewport margin caps growth in every direction": 1,
-        "west and north edges keep the opposite edge pinned": 1
-      },
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
     },
     "src/ui/placeNames.test.mjs": {
       "names": {
