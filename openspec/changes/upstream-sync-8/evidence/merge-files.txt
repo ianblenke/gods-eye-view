@@ -1,0 +1,29 @@
+Files of the merge commit of upstream-sync-8. Date (UTC): 2026-10-21 07:22:21. Branch head: 098d2bd1.
+
+The merge commit is 4089abfe. Its first parent is the plan commit 21a12aef, and the parent of the plan commit is the base commit 67342d000c56204abd2e08a1cf05d19dd2e99b69. The plan commit adds only the change folder, so the commands below compare the merge commit with the base commit.
+
+$ git diff --name-only 67342d000c56204abd2e08a1cf05d19dd2e99b69 4089abfe -- . ':!openspec/changes/upstream-sync-8' | wc -l
+268
+
+$ git diff --name-only --diff-filter=A 67342d000c56204abd2e08a1cf05d19dd2e99b69 4089abfe -- . ':!openspec/changes/upstream-sync-8' | wc -l
+74
+
+$ git diff --name-only --diff-filter=D 67342d000c56204abd2e08a1cf05d19dd2e99b69 4089abfe -- . ':!openspec/changes/upstream-sync-8' | wc -l
+18
+
+The ownership check: the script reads the list "owned" of openspec/ownership.json at the merge commit. A path that ends with / covers each file under it. It prints each changed file that the list covers, and then the number of these files.
+$ python3 (script below)
+files 268, owned 0
+
+Script of the ownership check:
+  own = the list "owned" of openspec/ownership.json at the merge commit
+  files = git diff --name-only <base> <merge> -- . ':!openspec/changes/upstream-sync-8'
+  owned file = a file that equals an item of own, or that starts with an item of own that ends with /
+
+The plan commit changes only files of the change folder:
+$ git diff --name-only 67342d000c56204abd2e08a1cf05d19dd2e99b69 21a12aef
+openspec/changes/upstream-sync-8/design.md
+openspec/changes/upstream-sync-8/proposal.md
+openspec/changes/upstream-sync-8/specs/live-sources/spec.md
+openspec/changes/upstream-sync-8/specs/qa-scripts/spec.md
+openspec/changes/upstream-sync-8/tasks.md

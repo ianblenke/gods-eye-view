@@ -1,0 +1,44 @@
+Files that the change resolves to the upstream file, upstream-sync-8. Date (UTC): 2026-10-21 07:22:34. Branch head: 098d2bd1.
+
+1. For each file, the command prints the lines of the diff stat between the upstream commit and the branch head. No line means that the file on the branch head is the upstream file.
+
+$ git diff --stat 713285b554bbc99c8ae0261fe307beb3cbeb2adf HEAD -- server/providers/cctv/sources.js | wc -l
+0
+
+$ git diff --stat 713285b554bbc99c8ae0261fe307beb3cbeb2adf HEAD -- server/providers/cctv/constants.js | wc -l
+0
+
+$ git diff --stat 713285b554bbc99c8ae0261fe307beb3cbeb2adf HEAD -- src/tooling/mapillaryProvider.test.mjs | wc -l
+0
+
+$ git diff --stat 713285b554bbc99c8ae0261fe307beb3cbeb2adf HEAD -- src/layers/streetLevel/index.test.mjs | wc -l
+0
+
+2. SECURITY.md: the script lists each line of the upstream file (713285b5) that the file of the branch head does not have. For each line, it says whether the line is in the file of the shared ancestor 93ea088f, and whether it is in the file of the base commit (origin/main). It prints the first 90 characters of the line.
+in 93ea088f, not in origin/main: > The explicit browser `define` block in `build/vite.js` controls exactly what reaches the
+in 93ea088f, not in origin/main: **Places, Geocoding and the Street View Static fallback never needed to be on that list** 
+in 93ea088f, not in origin/main: the optional server key manually in the environment file. Pinokio uses
+in 93ea088f, not in origin/main: - **Redacted debug logging.** The voice debug log (`.gev-logs/`, gitignored) strips API ke
+not in 93ea088f, not in origin/main: - **Cross-site gate on cost/log endpoints.** The cost-bearing (`/api/realtime/token`, `/ap
+in 93ea088f, not in origin/main: - **Full Content-Security-Policy.** The dev and preview servers send a real CSP (`script-s
+in 93ea088f, not in origin/main: - **The panel carries the two browser keys.** The panel build (`npm run build:panel`) incl
+Lines: 7.
+A line that is in 93ea088f and not in origin/main is a difference that the fork made before this change. The one line that is not in 93ea088f is the upstream line of the gated routes. The branch has the fork version of that line, and the branch adds the upstream sentence about the terrain route to it:
+$ grep -c 'The keyless terrain route (`/api/terrain/heights`) uses the same cross-site checks' SECURITY.md
+1
+Script: a short Python script of the lead (outside the repository) that compares the lines of the three versions of the file with git show.
+
+3. The upstream SECURITY.md names no Gemini key and no Gemini route:
+$ git show 713285b554bbc99c8ae0261fe307beb3cbeb2adf:SECURITY.md | grep -ci gemini
+0
+
+4. .env.example: each of these keys is on one line of the file of the branch head.
+$ grep -c '^#\? *GEMINI_API_KEY=' .env.example
+1
+
+$ grep -c '^#\? *ONTARIO_511_API_KEY=' .env.example
+1
+
+$ grep -c 'Launch Library 2' .env.example
+1
+

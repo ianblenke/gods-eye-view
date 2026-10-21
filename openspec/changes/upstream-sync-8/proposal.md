@@ -1,13 +1,17 @@
 ## Why
 
-The owner wants a sync more often than once each week. On 2026-10-21 the owner told the lead to sync the fork with upstream again.
+The owner wants a sync more often than once each week. On 2026-10-21 the owner told the lead to start the eighth sync.
 Upstream has 248 commits after the seventh sync. The first-parent history of upstream has 25 commits in that range: 21 pull requests and four direct commits.
 
-The commits add Gemini Live as a second voice provider and a model-free World Packet boundary for the agent. They add camera packs for Taiwan freeways, Hong Kong and Florida (FL511, opt-in), and ground heights for the Norwegian cameras.
-They change the Street Level layer to one provider with docked panels and a proxy that keeps tiles only in memory. They remove the movable panels of the rail.
-They also fix the region names of the analyst, the route labels of flights and the catalog provenance of satellites. They fix the requests of Launch Library and the cross-site gate of the terrain route.
+The commits add Gemini Live as a second voice provider. They move the code that builds the view state for the voice tool `get_current_view_state` into a World Packet module.
+They add CCTV (traffic camera) packs for Taiwan freeways, Hong Kong and Florida, and ground heights for the Norwegian cameras. The Florida pack (FL511) stays off until the server sets `CCTV_FLORIDA_ENABLED`.
 
-Upstream pull request #1228 adds the Ontario 511 key `ONTARIO_511_API_KEY`. The fork added the same key in the change `fix-ontario-511`.
+In the Street Level layer, Mapillary, KartaView, Panoramax and Google Street View share one coverage layer and one photo viewer. One source is on at a time.
+The commits remove the movable and docked panels of Street Level, the movable panels of the rail and the disk cache of the Mapillary proxy.
+
+The commits also fix the region names of the analyst and the route labels of flights. They show the cached data of satellites and of Launch Library as stale in the list of data layers. They fix the requests of Launch Library and the cross-site gate of the terrain route.
+
+Upstream pull request #1228 adds the Ontario 511 key `ONTARIO_511_API_KEY`. The fork added the same key in the change `fix-ontario-511-key`.
 
 ## What Changes
 
@@ -15,7 +19,9 @@ Upstream pull request #1228 adds the Ontario 511 key `ONTARIO_511_API_KEY`. The 
 - Resolve the conflicts in 16 files. `design.md` gives each resolution.
 - Use the upstream code for the Ontario 511 key. Remove the fork module `server/providers/cctv/ontarioRequest.js` and its tests. Decision D2 gives the reason.
 - Change the scenario `qa-scripts-023` for the two QA scripts that upstream removes.
-- Edit four upstream tests, so that the tests measure the same coverage each time that they run and leave no live immediate. Decisions D6 and D7 give the edits.
+- Make three upstream test files wait for one immediate after they close their servers. Decision D6 gives the reason.
+- Add assertions to one upstream test of the Panoramax decoder, so that the coverage of `decode.js` is the same each time that the tests run. Decision D7 gives the reason.
+- Remove the duplicate key lines and the old comment of Launch Library 2 from `.env.example`.
 - Run the adopt command for each upstream file that the merge brings and that has a coverage gap.
 - Keep the upstream code as it is.
 
@@ -35,7 +41,7 @@ None.
 The merge changes 268 files. It adds 74 files and removes 18 files. None of the 268 files is in `openspec/ownership.json`.
 
 The change also removes the fork module `server/providers/cctv/ontarioRequest.js` and the fork test file `src/data/cctvOntarioKey.test.mjs`. It edits the fork test files `src/data/cctvOntarioRows.test.mjs` and `src/tooling/spec/qaRegister.test.mjs`. Of these four files, only `src/tooling/spec/qaRegister.test.mjs` is in `openspec/ownership.json`.
-The change also edits four upstream test files. Decisions D6 and D7 give these edits.
+The change also edits four upstream test files and `.env.example`. Decisions D6 and D7 give the test edits.
 
 Rule 23: the 74 added files are upstream files, because the fork does not write them. The manifest lists only paths that the fork writes.
 Fifteen of the added files are code files. `evidence/added-code.txt` lists them.
@@ -54,4 +60,9 @@ The upstream code adds no dependency, and `package-lock.json` does not change. `
 
 - Known limit `host-node`: Host tests run on Node 26, and the image uses Node 24.21.0. Host coverage cannot replace the image measurement.
 - Known limit `changelog`: Upstream puts each new changelog entry in a file under `changelog.d/`. The fork still edits `CHANGELOG.md`, so a later sync can have a conflict there again.
-- Known limit `osh-source`: The OSH (OpenSensorHub) layer is not in the catalog source contracts of upstream. This is older than this change.
+- Known limit `osh-source`: The OSH (OpenSensorHub) layer is not in the catalog source contracts of upstream. This gap is older than this change.
+- Known limit `ontario-warnings`: The upstream Ontario loader writes a warning for each failed download. The retired scenario `live-sources-004` gave one warning in each process. For a missing key, the upstream loader also writes one warning in each process.
+- Known limit `ontario-error-text`: The upstream Ontario loader writes the message of each error that it catches. When an error message holds the key text, the key text goes into the log. The retired scenario `live-sources-005` kept the key text out of each warning.
+- Known limit `fl511`: The owner removed the fork pack of FL511 cameras (Pensacola) on 2026-10-10, in the change `remove-pensacola-pack`. Upstream adds a Florida pack that also uses FL511. The pack stays off until the server sets `CCTV_FLORIDA_ENABLED`, and this change does not set it.
+- Known limit `security-gemini`: `SECURITY.md` names no Gemini key and no Gemini route. The upstream file names neither (`evidence/resolutions.txt`), and this change does not add them.
+- Known limit `silent-files`: The check of `evidence/silent-files.txt` reads only relative imports in code files. It does not find a fork change inside the body of an imported function. The file names these limits.

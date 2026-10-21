@@ -8,4 +8,4 @@ Origin: spec-first
 - **WHEN** the register checks the tracked QA scripts of this repository
 - **THEN** it checks all 97 tracked QA scripts
 - **AND** the register reports no QA error
-- **AND** qa-browserEvidence names `pending:application-shell` in its covers tag
+- **AND** the script qa-browserEvidence names `pending:application-shell` in its covers tag

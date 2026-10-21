@@ -3,7 +3,7 @@ Live timers and immediates of upstream-sync-8. Date (UTC): 2026-10-21 04:58:02.
 The probe runs one test file with --test-force-exit, as the gates do. At the exit of the process, it writes the live Timeout and Immediate resources (process.getActiveResourcesInfo()).
 Probe: /home/ianblenke/docker/gev-tools/upstream-sync-6/leak-preload.mjs, by the script hostleak.sh of the same folder (outside the repository).
 
-Before the change, at the commit 4b35414c: the probe ran the 87 test files that the merge adds or changes (git diff --name-only --diff-filter=AM origin/main HEAD, files that end with .test.mjs). Three files had a live resource:
+Before the change, at the commit 4b35414c: the probe ran the 87 test files that the branch adds or changes at that commit (git diff --name-only --diff-filter=AM origin/main HEAD, files that end with .test.mjs). These are 85 test files of the merge commit and the two fork test files src/data/cctvOntarioRows.test.mjs and src/tooling/spec/qaRegister.test.mjs. Three files had a live resource:
 src/layers/launches/ingestion.test.mjs :: 1 Immediate
 src/layers/satellites/stale.test.mjs :: 1 Immediate
 src/tooling/ll2Integration.test.mjs :: 1 Immediate

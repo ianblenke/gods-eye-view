@@ -195,3 +195,8 @@ Step 5. For each import of step 2, the script reads the imported names on the br
   src/voice/gevActions.js imports voiceLayerAliasMap from src/voice/layerManifest.js: 0 fork diff lines contain the name.
 
 Script: /home/ianblenke/docker/gev-tools/upstream-sync-8/silent-files.py (outside the repository).
+
+Round 1 addition: the limits and the result of this check.
+- The script reads only relative imports (a specifier that starts with ./ or ../) in files with the extension .js, .mjs or .cjs. It does not read imports of the package name (gods-eye-view/...), HTML templates or JSON files.
+- Step 5 counts only the fork diff lines that contain an imported name. A fork change inside the body of an imported function gives 0. Step 4 shows these changes: for example, the fork changes the deny list and the option envPrefix in build/vite.js, and the count for createBrowserViteConfig is 0.
+- Result: in step 3, upstream adds or removes no import of these targets. In step 4, the fork changes in the targets add data entries, fork routes, fork layers and the server options of build/vite.js. The host run of evidence/host-run.txt passes each upstream test that loads these files. The check finds no upstream caller that a fork change breaks.

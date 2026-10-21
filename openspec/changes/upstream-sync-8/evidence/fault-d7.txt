@@ -1,0 +1,40 @@
+Faults of decision D7 of upstream-sync-8. Date (UTC): 2026-10-21 07:21:13. Branch head: 0a8d7214, with the edited test src/layers/streetLevel/providers/panoramax/decode.test.mjs in the working tree.
+Each fault edits the upstream file src/layers/streetLevel/providers/panoramax/decode.js. The lead restores the file after each fault.
+
+Fault: the default pause does nothing
+$ git diff -U0 -- src/layers/streetLevel/providers/panoramax/decode.js
+-    pause = nextTask,
++    pause = async () => {},
+$ node --test --test-reporter=tap src/layers/streetLevel/providers/panoramax/decode.test.mjs (lines with "not ok" and the counts)
+not ok 4 - a sliced decode gives the page turns and decodes the same as one in one go
+# tests 10
+# pass 9
+# fail 1
+
+Fault: nextTask() gives no timer
+$ git diff -U0 -- src/layers/streetLevel/providers/panoramax/decode.js
+-  return new Promise((resolve) => setTimeout(resolve, 0));
++  return Promise.resolve();
+$ node --test --test-reporter=tap src/layers/streetLevel/providers/panoramax/decode.test.mjs (lines with "not ok" and the counts)
+not ok 4 - a sliced decode gives the page turns and decodes the same as one in one go
+# tests 10
+# pass 9
+# fail 1
+
+Fault: the default clock does not read performance.now()
+$ git diff -U0 -- src/layers/streetLevel/providers/panoramax/decode.js
+-    now = () => performance.now(),
++    now = () => 0,
+$ node --test --test-reporter=tap src/layers/streetLevel/providers/panoramax/decode.test.mjs (lines with "not ok" and the counts)
+not ok 4 - a sliced decode gives the page turns and decodes the same as one in one go
+# tests 10
+# pass 9
+# fail 1
+
+Without a fault:
+$ git diff --stat -- src/layers/streetLevel/providers/panoramax/decode.js | wc -l
+0
+$ node --test --test-reporter=tap src/layers/streetLevel/providers/panoramax/decode.test.mjs (the counts)
+# tests 10
+# pass 10
+# fail 0
