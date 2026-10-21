@@ -241,7 +241,7 @@ test('[skywatch-thumbnails-001] answers a path with an id and passes other paths
   }
 });
 
-test('[skywatch-thumbnails-001] localProviderPlugins holds the plugin once, directly after skywatch-proxy', () => {
+test('[skywatch-thumbnails-001] is once in localProviderPlugins, directly after skywatch-proxy', () => {
   const names = localProviderPlugins().map((plugin) => plugin.name);
   assert.equal(
     names.filter((name) => name === 'skywatch-thumbnail-proxy').length,
@@ -408,29 +408,7 @@ function installPair(t, searches) {
     plugin.configureServer({
       middlewares: { use: (route, handler) => routes.set(route, handler) },
     });
-  const searchBox = async (bbox) => {
-    const req = Object.assign(
-      Readable.from([Buffer.from(JSON.stringify({ bbox, ...DATES }))]),
-      {
-        method: 'POST',
-        url: '/',
-        headers: {
-          host: HOST,
-          origin: `http://${HOST}`,
-          'content-type': 'application/json',
-        },
-        socket: { remoteAddress: '127.0.0.1' },
-      },
-    );
-    const res = {
-      writeHead() {},
-      end(text) {
-        this.text = text;
-      },
-    };
-    await routes.get('/api/skywatch/scenes')(req, res, () => {});
-    return JSON.parse(res.text);
-  };
+  const searchBox = (bbox) => searchIn(routes, bbox);
   return {
     plugins,
     calls,
@@ -443,6 +421,72 @@ function installPair(t, searches) {
 }
 
 const boxAt = (n) => [10 + n * 0.1, 60, 10.02 + n * 0.1, 60.01];
+
+/** Send one search of a box through the scenes route of a route map. */
+async function searchIn(routes, bbox) {
+  const req = Object.assign(
+    Readable.from([Buffer.from(JSON.stringify({ bbox, ...DATES }))]),
+    {
+      method: 'POST',
+      url: '/',
+      headers: {
+        host: HOST,
+        origin: `http://${HOST}`,
+        'content-type': 'application/json',
+      },
+      socket: { remoteAddress: '127.0.0.1' },
+    },
+  );
+  const res = {
+    writeHead() {},
+    end(text) {
+      this.text = text;
+    },
+  };
+  await routes.get('/api/skywatch/scenes')(req, res, () => {});
+  return JSON.parse(res.text);
+}
+
+test('[skywatch-thumbnails-001] reads process.env in localProviderPlugins, and finds a scene of the skywatch-proxy plugin of the same list', async (t) => {
+  const names = ['SKYWATCH_API_KEY', 'SKYWATCH_THUMBNAILS'];
+  const saved = names.map((name) => process.env[name]);
+  t.after(() => {
+    names.forEach((name, i) => {
+      if (saved[i] === undefined) delete process.env[name];
+      else process.env[name] = saved[i];
+    });
+  });
+  process.env.SKYWATCH_API_KEY = KEY;
+  process.env.SKYWATCH_THUMBNAILS = 'true';
+  const fetched = [];
+  t.mock.method(globalThis, 'fetch', async (url) => {
+    fetched.push(String(url));
+    if (String(url) === SEARCH) return json(200, { data: { id: 'search-1' } });
+    if (String(url).startsWith(`${SEARCH}/`)) {
+      return json(200, {
+        data: [scene('s1', Date.UTC(2026, 9, 5))],
+        pagination: { total: 1 },
+      });
+    }
+    return image();
+  });
+  t.mock.method(console, 'log', () => {});
+  const plugins = localProviderPlugins();
+  const routes = new Map();
+  for (const name of ['skywatch-proxy', 'skywatch-thumbnail-proxy']) {
+    plugins
+      .find((plugin) => plugin.name === name)
+      .configureServer({
+        middlewares: { use: (route, handler) => routes.set(route, handler) },
+      });
+  }
+  const answer = await searchIn(routes, BOX);
+  assert.equal(answer.scenes[0].id, 's1');
+  const thumb = await send(routes, `${ROUTE}/s1`);
+  assert.equal(thumb.status, 200);
+  assert.equal(thumb.headers['content-type'], 'image/png');
+  assert.equal(fetched.at(-1), 'https://thumbs.example.test/s1.png');
+});
 
 test('[skywatch-thumbnails-006] gives the thumbnail of a scene of a kept answer of skywatchPlugins', async (t) => {
   const pair = installPair(t, [[scene('s1', Date.UTC(2026, 9, 5))]]);
@@ -496,7 +540,7 @@ test('[skywatch-thumbnails-006] uses the newest kept answer, and the first scene
   ]);
 });
 
-test('[skywatch-thumbnails-006] a second call of skywatchPlugins does not find a scene of the first call', async (t) => {
+test('[skywatch-thumbnails-006] finds no scene of another call of skywatchPlugins', async (t) => {
   const first = installPair(t, [[scene('s1', Date.UTC(2026, 9, 5))]]);
   await first.searchBox(BOX);
   assert.equal((await first.get('s1')).status, 200);
@@ -549,7 +593,7 @@ test('[skywatch-thumbnails-006] knows no scene after the first 50 scenes and no 
   assert.deepEqual(pair.fetched(), ['https://thumbs.example.test/m1.png']);
 });
 
-test('[skywatch-thumbnails-006] a thumbnail plugin with no thumbnailUrlOf knows no scene', async (t) => {
+test('[skywatch-thumbnails-006] knows no scene without the option thumbnailUrlOf', async (t) => {
   const server = install(t, { noLookup: true });
   for (const id of ['a', 's1', 'scene-0']) {
     const answer = await server.get(id);
@@ -570,6 +614,7 @@ test('[skywatch-thumbnails-007] refuses each URL that fails the URL check, with 
     'https://cdn.example.test:8443/t.png',
     'https://127.0.0.1/t.png',
     'https://[::1]/t.png',
+    'https://[2001:db8::1]/t.png',
     'https://2130706433/t.png',
     'https://localhost/t.png',
     'https://localhost./t.png',
@@ -624,6 +669,11 @@ test('[skywatch-thumbnails-008] sends the trimmed key only to api.skywatch.co', 
     [undefined, own, { Accept: ACCEPT }],
     [KEY, 'https://api.skywatch.co.example.test/t.png', { Accept: ACCEPT }],
     [KEY, 'https://xapi.skywatch.co/t.png', { Accept: ACCEPT }],
+    [
+      KEY,
+      'https://API.SKYWATCH.CO/t.png',
+      { Accept: ACCEPT, 'x-api-key': KEY },
+    ],
     [KEY, 'https://skywatch.co/t.png', { Accept: ACCEPT }],
     [KEY, CDN, { Accept: ACCEPT }],
   ]) {
@@ -637,7 +687,7 @@ test('[skywatch-thumbnails-008] sends the trimmed key only to api.skywatch.co', 
   }
 });
 
-test('[skywatch-thumbnails-008] sets a time limit of 15000 ms and clears it only after it reads the body', async (t) => {
+test('[skywatch-thumbnails-008] sets a time limit of 15000 ms, and does not clear it before it reads all of the body', async (t) => {
   const body = gatedBody([Uint8Array.from(JPEG), Uint8Array.from([1])]);
   const server = install(t, {
     urls: { a: CDN },
@@ -724,6 +774,7 @@ test('[skywatch-thumbnails-009] passes a body of 1048576 bytes and reads the med
     ],
     ['image/png ;x', () => image(bytesOf(PNG), 'image/png ;x'), 'image/png'],
     ['jpeg', () => image(bytesOf(JPEG, [0]), 'image/jpeg'), 'image/jpeg'],
+    ['IMAGE/JPEG', () => image(bytesOf(JPEG, [0]), 'IMAGE/JPEG'), 'image/jpeg'],
     [
       'webp',
       () =>
@@ -763,6 +814,7 @@ test('[skywatch-thumbnails-010] gives upstream_failed for a status that is not 2
   for (const [name, respond, fire] of [
     ['404', () => json(404, { error: 'CANARY-sig' })],
     ['500', () => json(500, {})],
+    ['201', () => json(201, {})],
     ['204', () => new Response(null, { status: 204 })],
     [
       '302',
@@ -883,8 +935,8 @@ test('[skywatch-thumbnails-012] answers a repeated URL from the image store, fou
   const server = install(t, {
     urls: {
       a: CDN,
-      b: 'https://cdn.example.test:443/same.png',
-      c: 'https://cdn.example.test/same.png',
+      b: 'https://cdn.example.test:443/t.png',
+      c: 'https://cdn.example.test/t.png',
     },
   });
   const first = await server.get('a');
@@ -990,6 +1042,7 @@ test('[skywatch-thumbnails-013] shares an upstream request that is in flight, wi
     assert.equal(one.status, two.status);
     assert.deepEqual([...one.bytes], [...two.bytes]);
     assert.equal(server.calls.length, 1);
+    assert.equal(server.lines.length, 1);
   }
 });
 
@@ -1076,6 +1129,11 @@ test('[skywatch-thumbnails-015] writes no line for an answer of the image store 
   await server.get('unknown');
   await server.get('a', { method: 'POST' });
   await server.get('a', { headers: { 'sec-fetch-site': 'cross-site' } });
+  server.env.SKYWATCH_THUMBNAILS = 'no';
+  assert.deepEqual((await server.get('a')).body, { error: 'thumbnails_off' });
+  server.env.SKYWATCH_THUMBNAILS = 'true';
+  for (let n = 0; n < 30; n++) await server.get('a');
+  assert.deepEqual((await server.get('a')).body, { error: 'rate_limited' });
   assert.equal(server.lines.length, 1);
   for (const secret of ['CANARY', 'cdn.example.test', KEY, "'a'", ' a ']) {
     assert.equal(server.lines[0].includes(secret), false, secret);
