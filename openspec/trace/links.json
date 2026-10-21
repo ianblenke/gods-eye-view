@@ -6381,7 +6381,8 @@
   ],
   "skywatch-thumbnails-001": [
     "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-001] answers a path with an id and passes other paths to next",
-    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-001] localProviderPlugins holds the plugin once, directly after skywatch-proxy"
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-001] is once in localProviderPlugins, directly after skywatch-proxy",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-001] reads process.env in localProviderPlugins, and finds a scene of the skywatch-proxy plugin of the same list"
   ],
   "skywatch-thumbnails-002": [
     "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-002] accepts a request through the reverse proxy",
@@ -6399,11 +6400,11 @@
     "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-005] refuses the 31st request at 59999 ms after 30 requests at 0 ms, and lets it pass at 60000 ms"
   ],
   "skywatch-thumbnails-006": [
-    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] a second call of skywatchPlugins does not find a scene of the first call",
-    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] a thumbnail plugin with no thumbnailUrlOf knows no scene",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] finds no scene of another call of skywatchPlugins",
     "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] gives the URL of an answer that is 599999 ms old, and not of one that is 600000 ms old",
     "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] gives the thumbnail of a scene of a kept answer of skywatchPlugins",
     "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] knows no scene after the first 50 scenes and no scene with thumbnail false",
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] knows no scene without the option thumbnailUrlOf",
     "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-006] uses the newest kept answer, and the first scene with thumbnail true in scenes"
   ],
   "skywatch-thumbnails-007": [
@@ -6417,7 +6418,7 @@
     "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-008 skywatch-thumbnails-009] clears the timer at once and reads no body for a status that is not 200 or another media type",
     "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-008] sends one GET request with Accept, no redirect and no other header",
     "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-008] sends the trimmed key only to api.skywatch.co",
-    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-008] sets a time limit of 15000 ms and clears it only after it reads the body"
+    "src/data/skywatchThumbnails.test.mjs › [skywatch-thumbnails-008] sets a time limit of 15000 ms, and does not clear it before it reads all of the body"
   ],
   "skywatch-thumbnails-009": [
     "src/data/skywatchImage.test.mjs › [skywatch-thumbnails-009] accepts only the media types image/png, image/jpeg and image/webp",

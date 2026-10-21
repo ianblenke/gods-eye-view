@@ -13,3 +13,15 @@ src/data/skywatchProxy.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 32 ℹ
 src/data/skywatchScenes.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 11 ℹ skipped 0 ℹ tests 11 
 src/data/skywatchThumbnails.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 40 ℹ skipped 0 ℹ tests 40 
 src/data/skywatchUpstream.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 17 ℹ skipped 0 ℹ tests 17 
+
+Round 1 addition: host run 2, on the commit 8bb62bf2 (after the round 1 corrections of the tests). The working tree had no changes. Same command and file list rule as above. Start (UTC) 20:07:32Z, end (UTC) 20:15:15Z. Files: 820.
+Totals:
+tests 12165 pass 12149 fail 0 skipped 16
+Lines with an exit status other than 0: 0
+The six SkyWatch test files:
+src/data/skywatchImage.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 7 ℹ skipped 0 ℹ tests 7 
+src/data/skywatchInput.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 12 ℹ skipped 0 ℹ tests 12 
+src/data/skywatchProxy.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 32 ℹ skipped 0 ℹ tests 32 
+src/data/skywatchScenes.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 11 ℹ skipped 0 ℹ tests 11 
+src/data/skywatchThumbnails.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 41 ℹ skipped 0 ℹ tests 41 
+src/data/skywatchUpstream.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 17 ℹ skipped 0 ℹ tests 17 
