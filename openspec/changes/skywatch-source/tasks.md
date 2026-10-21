@@ -16,7 +16,7 @@
 - [ ] 2.4 Write `server/providers/skywatch.js`.
 - [ ] 2.5 Add the plugin to `server/providers/local.js`.
 - [ ] 2.6 Add the new files to `openspec/ownership.json`.
-- [ ] 2.7 Add the new code files to `scripts/format-scope.json`.
+- [ ] 2.7 Format the new code files with Prettier.
 - [ ] 2.8 Write the entry in `CHANGELOG.md`.
 - [ ] 2.9 Write the paragraph in `DATA_SOURCES.md`.
 - [ ] 2.10 Write the block in `.env.example`.

@@ -70,7 +70,7 @@ The fixtures follow the fields of the API description. A fault of each check mus
 ## Files and measures
 
 New owned code files: `server/providers/skywatch.js` and the three files under `server/providers/skywatch/`. New owned test files: the four files `src/data/skywatch*.test.mjs` of the proposal.
-Changed files: `server/providers/local.js`, `openspec/ownership.json`, `scripts/format-scope.json`, `.env.example`, `DATA_SOURCES.md` and `CHANGELOG.md`.
+Changed files: `server/providers/local.js`, `openspec/ownership.json`, `.env.example`, `DATA_SOURCES.md` and `CHANGELOG.md`. The format check finds the new code files under `server/` with the rule of `scripts/format-runtime.json`.
 
 Each new code file must have 100% line, branch and function coverage. The trace gate checks the 22 scenario IDs and their tests. The prose lint checks STE.
 The lead runs the four checks of `make precheck` and the gates in Docker, and the two review agents on the final tree.

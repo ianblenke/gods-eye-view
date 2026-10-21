@@ -53,7 +53,14 @@ test('[skywatch-source-020] keeps only the allowed fields, from the named upstre
     },
   ]);
   const text = JSON.stringify(scenes);
-  for (const word of ['CANARY', 'preview', 'thumbs.example', 'intersection', 'minimum', 'nadir'])
+  for (const word of [
+    'CANARY',
+    'preview',
+    'thumbs.example',
+    'intersection',
+    'minimum',
+    'nadir',
+  ])
     assert.equal(text.includes(word), false, word);
 });
 
@@ -84,8 +91,21 @@ test('[skywatch-source-020] gives null for each number value that does not meet 
     ['location_coverage_percentage', 'coveragePercent'],
   ];
   for (const [upstream, field] of fields) {
-    for (const value of [null, '7', true, -1, Infinity, 'Upgrade your plan for price', {}, []]) {
-      assert.equal(one({ [upstream]: value })[field], null, `${upstream} ${String(value)}`);
+    for (const value of [
+      null,
+      '7',
+      true,
+      -1,
+      Infinity,
+      'Upgrade your plan for price',
+      {},
+      [],
+    ]) {
+      assert.equal(
+        one({ [upstream]: value })[field],
+        null,
+        `${upstream} ${String(value)}`,
+      );
     }
     assert.equal(one({ [upstream]: 0 })[field], 0, upstream);
     const missing = row(1);
@@ -106,21 +126,34 @@ test('[skywatch-source-020] gives null for each number value that does not meet 
 
 test('[skywatch-source-020] removes control characters and the white space at the ends, then keeps 120 code points', () => {
   assert.equal(one({ source: 'A\u0007B' }).provider, 'AB');
-  assert.equal(one({ source: '\u0000\u001fA\u007f\u009fB\u00a0' }).provider, 'AB');
+  assert.equal(
+    one({ source: '\u0000\u001fA\u007f\u009fB\u00a0' }).provider,
+    'AB',
+  );
   assert.equal(one({ source: '  Operator  ' }).provider, 'Operator');
   assert.equal(one({ source: ' \u0001 ' }).provider, null);
   assert.equal(one({ source: '' }).provider, null);
-  for (const value of [null, 5, true, {}, ['A']]) assert.equal(one({ source: value }).provider, null);
+  for (const value of [null, 5, true, {}, ['A']])
+    assert.equal(one({ source: value }).provider, null);
   const exact = '😀'.repeat(120);
   assert.equal(one({ product_name: exact }).product, exact);
   assert.equal(one({ product_name: exact + '😀' }).product, exact);
   assert.equal(one({ product_name: 'x'.repeat(121) }).product, 'x'.repeat(120));
-  assert.equal(one({ product_name: `${'x'.repeat(119)}\u0007yz` }).product, `${'x'.repeat(119)}y`);
-  assert.equal(one({ product_name: ` ${'x'.repeat(120)}` }).product, 'x'.repeat(120));
+  assert.equal(
+    one({ product_name: `${'x'.repeat(119)}\u0007yz` }).product,
+    `${'x'.repeat(119)}y`,
+  );
+  assert.equal(
+    one({ product_name: ` ${'x'.repeat(120)}` }).product,
+    'x'.repeat(120),
+  );
 });
 
 test('[skywatch-source-020] sets thumbnail from an absolute HTTPS thumbnail_uri only', () => {
-  assert.equal(one({ thumbnail_uri: 'https://a.example.invalid/t.png' }).thumbnail, true);
+  assert.equal(
+    one({ thumbnail_uri: 'https://a.example.invalid/t.png' }).thumbnail,
+    true,
+  );
   for (const value of [
     'http://a.example.invalid/t.png',
     '//a.example.invalid/t.png',
@@ -138,8 +171,14 @@ test('[skywatch-source-020] sets thumbnail from an absolute HTTPS thumbnail_uri 
 });
 
 test('[skywatch-source-020] gives the ISO text of a valid time, and null for an end_time that is not valid', () => {
-  assert.equal(one({ start_time: '2026-10-05T01:02:03Z' }).start, '2026-10-05T01:02:03.000Z');
-  assert.equal(one({ end_time: '2026-10-05T01:02:03+02:00' }).end, '2026-10-04T23:02:03.000Z');
+  assert.equal(
+    one({ start_time: '2026-10-05T01:02:03Z' }).start,
+    '2026-10-05T01:02:03.000Z',
+  );
+  assert.equal(
+    one({ end_time: '2026-10-05T01:02:03+02:00' }).end,
+    '2026-10-04T23:02:03.000Z',
+  );
   for (const value of ['not a time', '', null, 5, '2026-13-45T00:00:00Z'])
     assert.equal(one({ end_time: value }).end, null, String(value));
 });
@@ -180,7 +219,8 @@ test('[skywatch-source-020] accepts only a polygon with exactly one ring of 4 to
     ring.push([...ring[0]]);
     return ring;
   };
-  const ids = (location) => normalizeScenes(doc([row(1, { location })])).scenes.length;
+  const ids = (location) =>
+    normalizeScenes(doc([row(1, { location })])).scenes.length;
   assert.equal(ids(polygon([ringOf(4)])), 1);
   assert.equal(ids(polygon([ringOf(2000)])), 1);
   assert.equal(ids(polygon([ringOf(3)])), 0);
@@ -195,8 +235,21 @@ test('[skywatch-source-020] accepts only a polygon with exactly one ring of 4 to
   const withAltitude = RING.map(([lon, lat], i) => [lon, lat, i === 4 ? 0 : 5]);
   withAltitude[4] = [10, 60, 99];
   assert.equal(ids(polygon([withAltitude])), 1);
-  assert.deepEqual(one({ location: polygon([withAltitude]) }).footprint.coordinates, [RING]);
-  for (const bad of [[10], [10, 60, 1, 2], ['10', 60], [181, 60], [-181, 60], [10, 91], [10, -91], [NaN, 60], null]) {
+  assert.deepEqual(
+    one({ location: polygon([withAltitude]) }).footprint.coordinates,
+    [RING],
+  );
+  for (const bad of [
+    [10],
+    [10, 60, 1, 2],
+    ['10', 60],
+    [181, 60],
+    [-181, 60],
+    [10, 91],
+    [10, -91],
+    [NaN, 60],
+    null,
+  ]) {
     const ring = RING.map((p) => [...p]);
     ring[1] = bad;
     assert.equal(ids(polygon([ring])), 0, JSON.stringify(bad));
@@ -224,7 +277,9 @@ test('[skywatch-source-021] sorts all kept scenes, newest start first and then b
     ['z', 'B', 'a', 'b'],
   );
   const many = Array.from({ length: 51 }, (_, i) =>
-    row(i, { start_time: new Date(Date.UTC(2026, 0, 1) + i * 60000).toISOString() }),
+    row(i, {
+      start_time: new Date(Date.UTC(2026, 0, 1) + i * 60000).toISOString(),
+    }),
   );
   const result = normalizeScenes(doc(many));
   assert.equal(result.scenes.length, 50);
@@ -236,11 +291,20 @@ test('[skywatch-source-021] sorts all kept scenes, newest start first and then b
 test('[skywatch-source-021] gives total from pagination.total when it is a whole number not less than the data length', () => {
   const data = [row(1), row(2), null];
   assert.deepEqual(
-    { ...normalizeScenes(doc(data, { pagination: { total: 3 } })), scenes: undefined },
+    {
+      ...normalizeScenes(doc(data, { pagination: { total: 3 } })),
+      scenes: undefined,
+    },
     { scenes: undefined, total: 3, truncated: false },
   );
-  assert.equal(normalizeScenes(doc(data, { pagination: { total: 120 } })).total, 120);
-  assert.equal(normalizeScenes(doc(data, { pagination: { total: 120 } })).truncated, true);
+  assert.equal(
+    normalizeScenes(doc(data, { pagination: { total: 120 } })).total,
+    120,
+  );
+  assert.equal(
+    normalizeScenes(doc(data, { pagination: { total: 120 } })).truncated,
+    true,
+  );
   for (const total of [2, 3.5, '120', null, -1, Infinity]) {
     const result = normalizeScenes(doc(data, { pagination: { total } }));
     assert.equal(result.total, 3, String(total));
@@ -248,4 +312,38 @@ test('[skywatch-source-021] gives total from pagination.total when it is a whole
   }
   assert.equal(normalizeScenes(doc(data)).total, 3);
   assert.equal(normalizeScenes(doc(data, { pagination: null })).total, 3);
+});
+
+test('[skywatch-source-021] gives one order for each input order, also for two scenes with the same start and id', () => {
+  const early = '2026-10-01T00:00:00.000Z';
+  const late = '2026-10-02T00:00:00.000Z';
+  const items = [
+    row(1, { id: 'b', start_time: early }),
+    row(2, { id: 'a', start_time: late }),
+    row(3, { id: 'a', start_time: early }),
+    row(4, { id: 'c', start_time: early }),
+    row(5, { id: 'a', start_time: early }),
+    row(6, { id: 'b', start_time: late }),
+  ];
+  const expected = [
+    ['a', late],
+    ['b', late],
+    ['a', early],
+    ['a', early],
+    ['b', early],
+    ['c', early],
+  ];
+  for (const order of [
+    items,
+    [...items].reverse(),
+    [items[3], items[0], items[5], items[2], items[1], items[4]],
+  ]) {
+    assert.deepEqual(
+      normalizeScenes(doc(order)).scenes.map((scene) => [
+        scene.id,
+        scene.start,
+      ]),
+      expected,
+    );
+  }
 });

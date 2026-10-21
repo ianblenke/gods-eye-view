@@ -65,7 +65,10 @@ test('[skywatch-source-005] refuses a body that is not JSON, not an object or ha
     refused(validateRequest(text, NOW), 'bad_body');
   refused(good({ limit: 5 }), 'bad_body');
   refused(good({ polygon: {} }), 'bad_body');
-  refused(send({ bbox: BOX, start: DATES.start, end: DATES.end, extra: null }), 'bad_body');
+  refused(
+    send({ bbox: BOX, start: DATES.start, end: DATES.end, extra: null }),
+    'bad_body',
+  );
 });
 
 test('[skywatch-source-006] accepts a box of four finite numbers in the order west, south, east and north', () => {
@@ -137,7 +140,10 @@ test('[skywatch-source-008] accepts an end on the UTC date of the server clock, 
   refused(good({ start: '2026-10-21', end: '2026-10-22' }), 'bad_dates');
   const justBeforeMidnight = Date.UTC(2026, 9, 21, 23, 59, 59, 999);
   assert.equal(
-    send({ bbox: BOX, start: '2026-10-21', end: '2026-10-21' }, justBeforeMidnight).ok,
+    send(
+      { bbox: BOX, start: '2026-10-21', end: '2026-10-21' },
+      justBeforeMidnight,
+    ).ok,
     true,
   );
   const midnight = Date.UTC(2026, 9, 22, 0, 0, 0);
@@ -175,10 +181,17 @@ test('[skywatch-source-008] refuses a start after the end, a missing date and ea
 });
 
 test('[skywatch-source-005 skywatch-source-006 skywatch-source-007 skywatch-source-008] checks the body, the box, the area and then the dates', () => {
-  refused(validateRequest('{"bbox":[0,0,5,5],"start":"x","other":1}', NOW), 'bad_body');
+  refused(
+    validateRequest('{"bbox":[0,0,5,5],"start":"x","other":1}', NOW),
+    'bad_body',
+  );
   refused(send({ bbox: 'box', start: 'x', end: 'y' }), 'bad_bbox');
-  refused(send({ bbox: [0, 0, 5, 5], start: 'x', end: 'y' }), 'area_too_large', {
-    maxKm2: 2500,
-  });
+  refused(
+    send({ bbox: [0, 0, 5, 5], start: 'x', end: 'y' }),
+    'area_too_large',
+    {
+      maxKm2: 2500,
+    },
+  );
   refused(send({ bbox: BOX, start: 'x', end: 'y' }), 'bad_dates');
 });

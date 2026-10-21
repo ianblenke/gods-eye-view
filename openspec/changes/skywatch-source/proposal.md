@@ -29,7 +29,7 @@ None.
 New owned code files: `server/providers/skywatch.js`, `server/providers/skywatch/validate.js`, `server/providers/skywatch/upstream.js` and `server/providers/skywatch/normalize.js`. New owned test files: `src/data/skywatchProxy.test.mjs`, `src/data/skywatchInput.test.mjs`, `src/data/skywatchUpstream.test.mjs` and `src/data/skywatchScenes.test.mjs`.
 Rule 23: the change adds each new file to `openspec/ownership.json`.
 
-The change edits the upstream file `server/providers/local.js` to add the plugin, and the documents `.env.example`, `DATA_SOURCES.md` and `CHANGELOG.md`. It adds the new code files to `scripts/format-scope.json`.
+The change edits the upstream file `server/providers/local.js` to add the plugin, and the documents `.env.example`, `DATA_SOURCES.md` and `CHANGELOG.md`. The format check finds the new code files under `server/` with the rule of `scripts/format-runtime.json`.
 The change adds no dependency, no layer, no QA script and no layer token.
 
 ## Known limits and later changes
