@@ -792,3 +792,35 @@ test('[skywatch-source-012 skywatch-source-022] waits with setTimeout and logs w
   assert.equal(JSON.parse(res.text).count, 2);
   assert.deepEqual(lines, ['[skywatch] ok scenes=2 polls=2 ms=2000']);
 });
+
+test('[skywatch-source-014] counts a search while it is in flight, so a second box gets the budget refusal', async (t) => {
+  let release;
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  const server = install(t, {
+    env: { SKYWATCH_DAILY_SEARCHES: '1' },
+    respond: async (url) => {
+      await gate;
+      return url === SEARCH ? startedAnswer() : resultsAnswer();
+    },
+  });
+  const first = server.scenes({ bbox: boxAt(1), ...DATES });
+  await settle();
+  const second = await server.scenes({ bbox: boxAt(2), ...DATES });
+  assert.deepEqual(second.body, { error: 'budget', used: 1, limit: 1 });
+  release();
+  assert.equal((await first).status, 200);
+  assert.equal(searches(server), 1);
+});
+
+test('[skywatch-source-017] counts a request that the body read refuses', async (t) => {
+  const server = install(t);
+  const over = JSON.stringify({ bbox: BOX, ...DATES }).padEnd(4097, ' ');
+  for (let n = 0; n < 6; n++) {
+    assert.deepEqual((await server.scenes(over)).body, { error: 'bad_body' });
+  }
+  const limited = await server.scenes(over);
+  assert.equal(limited.status, 429);
+  assert.deepEqual(limited.body, { error: 'rate_limited' });
+});
