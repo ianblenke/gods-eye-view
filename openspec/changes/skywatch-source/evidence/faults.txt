@@ -1,4 +1,4 @@
-Named faults of skywatch-source (rule 13). Date (UTC): 2026-10-21 13:38:00. Branch head: 06998ac3 (see the last run below).
+Named faults of skywatch-source (rule 13). Date (UTC): 2026-10-21 13:38:00. Branch head: bbe14837.
 
 Runner: /home/ianblenke/docker/gev-tools/skywatch-source/faults.py (outside the repository). For each fault, the runner changes the named text of a code file, runs the named test file with the TAP reporter, and lists the failed tests that carry the scenario ID of the fault. Then it restores the file and checks its SHA-256.
 A fault counts as KILLED when at least one test of its scenario fails.
