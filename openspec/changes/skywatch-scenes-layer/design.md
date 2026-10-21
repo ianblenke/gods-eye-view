@@ -56,25 +56,33 @@ The row of the layer has the list of `sceneList`. The layer panel sends the `par
 
 ### D9: The thumbnail card
 
-A selection of a scene with `thumbnail` true sends one thumbnail request. The option `decodeImage` makes an image from the blob, and its default is `createImageBitmap`. The layer gives the overlay host one entry with the variant `thumbnail`, at the centre of the footprint. The function `thumbnailSize` fits the image in a square of 192 pixels. The layer calls `close` of each image that it stops to show, so the memory of the image is released.
+A selection of a scene with `thumbnail` true sends one thumbnail request. The option `decodeImage` makes an image from the blob, and its default is `createImageBitmap`. The layer gives the overlay host one entry with the variant `thumbnail`, at the centre of the footprint. The function `thumbnailSize` gives the image a longer side of 192 pixels. A selection of another scene removes the old card at once. The layer calls `close` of each image that it does not show now, so the browser releases the memory of the image.
 
 ### D10: The share token and the tests of the ledger
 
 Each token of one character has an owner. The function `nextLayerStateToken` gives "00". The check of `make precheck` needs the next free token, so the layer gets "00".
 
-The tests of the token ledger use "00" as the next free token. Their fixtures now leave out the row of `skywatch-scenes` and its registry entry, as they already do for `gdacs`. So each fixture has the free digit "9" and the free token "00" again, and each test title stays true. The test of the complete ledger reads all rows, counts 37 rows and expects `skywatch-scenes` with "00". The registry test expects the next free token "01" from the real ledger.
+The tests of the token ledger use "00" as the next free token. Their fixtures now do not include the row of `skywatch-scenes` and its registry entry, as they already do for `gdacs`. So each fixture has the free digit "9" and the free token "00" again, and each test title stays true. The test of the complete ledger reads all rows, counts 37 rows and expects `skywatch-scenes` with "00".
 
-### D11: The texts
+The registry test expects the next free token "01" from the real ledger. "00" now names a layer. So the test of the layer lists that are not valid uses "01" and "c.01" in place of "00" and "c.00".
+
+### D11: The QA script of the tokens of two characters
+
+The QA script `scripts/qa-layer-token-twochar.mjs` adds a fixture layer to a browser with a token of two characters. It used "00", and it stopped when the production ledger had "00". The script now gets the token of the fixture from `nextLayerStateToken`, after the free digits. That token is "01" after this change. The header of the script names a token of two characters, and not the first one. The headless Chrome check of task 4.6 checks the real token "00" in a share link and after a new page load.
+
+### D12: The texts
 
 The texts of the layer are English, as in the Bee Maps layers. Only the name of the layer goes through the translation, so the change adds a Spanish text and a Russian text for it.
 
-### D12: The tests
+### D13: The tests
 
 The tests use a fake source, a fake overlay host, a fake clock and a fake `decodeImage`. The test of `skywatch-scenes-layer-010` imports `validateRequest` and `boxAreaKm2` from the server. A test file can import server code, and a code file of the layer cannot. The lead runs a named fault for each check of the code, and records the test that each fault makes fail.
 
 ## Files and measures
 
-The change adds six code files in `src/layers/skywatchScenes/` and the file `src/app/layers/skywatchScenes.js`. It edits the registration files of the catalog, the share link, the layer panel, the layer names, the voice list and the credits. Each new code file and each edited owned file needs 100% line, branch and function coverage.
+The change adds six code files in `src/layers/skywatchScenes/` and the file `src/app/layers/skywatchScenes.js`. It edits these files of the registration: `src/app/constructCatalog.js`, `src/app/sourceComposition.js`, `src/sources/reference.js` and `src/data/layerState.js`. It also edits `src/data/layerStateTokenReservations.json`, `src/ui/layerPanel.js`, `src/ui/layerNames.js`, `src/voice/layerManifest.js` and `src/data/dataCredits.js`. Each new code file and each edited owned file needs 100% line, branch and function coverage.
+
+The change also edits the QA script `scripts/qa-layer-token-twochar.mjs` and `docs/CURRENT-STATE.md`, because the fixture of that script can no longer use "00".
 
 The lead runs the named faults, each test file and the four checks of `make precheck` on the host. The lead also looks at the layer in a headless Chrome with a stored answer and a stored image. The lead runs the gates in Docker, and the two review agents on the final tree.
 

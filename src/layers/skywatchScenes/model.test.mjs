@@ -208,6 +208,11 @@ test('[skywatch-scenes-layer-022] writes the resolution, the cloud cover and the
     textOf({ resolutionM: 0.123456 }),
     'Satellogic · 0.12 m · cloud 3%',
   );
+  assert.equal(
+    textOf({ resolutionM: 0.126 }),
+    'Satellogic · 0.13 m · cloud 3%',
+  );
+  assert.equal(textOf({ cloudPercent: 3.6 }), 'Satellogic · 0.5 m · cloud 4%');
   assert.equal(textOf({ cloudPercent: 0 }), 'Satellogic · 0.5 m · cloud 0%');
   assert.equal(textOf({ provider: null }), '0.5 m · cloud 3%');
   assert.equal(textOf({ resolutionM: null }), 'Satellogic · cloud 3%');
@@ -249,6 +254,7 @@ test('[skywatch-scenes-layer-023] fits the image in a square of 192 pixels and k
   assert.deepEqual(thumbnailSize(256, 256), { width: 192, height: 192 });
   assert.deepEqual(thumbnailSize(512, 256), { width: 192, height: 96 });
   assert.deepEqual(thumbnailSize(100, 400), { width: 48, height: 192 });
+  assert.deepEqual(thumbnailSize(96, 48), { width: 192, height: 96 });
   assert.deepEqual(thumbnailSize(1000, 1), { width: 192, height: 1 });
   assert.deepEqual(thumbnailSize(1, 1000), { width: 1, height: 192 });
   assert.deepEqual(thumbnailSize(100, 100), { width: 192, height: 192 });

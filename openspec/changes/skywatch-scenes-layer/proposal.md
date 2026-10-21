@@ -13,7 +13,9 @@ This is change 3 of 3. It adds the layer "SkyWatch Scenes". A press of the chip 
 - Add a Spanish text and a Russian text for the name of the layer.
 - Change the count in the scenario `osh-033` of the capability `osh` from 36 to 37.
 - Add the test files `box.test.mjs`, `records.test.mjs`, `source.test.mjs`, `messages.test.mjs`, `model.test.mjs`, `layer.test.mjs` and `registration.test.mjs` in the new folder.
-- Update the tests that count layers, list the reference sources, or use the token "00" as a free token. Tasks 2.10 to 2.19 name each change of these tests.
+- Update the tests that count layers, list the reference sources, or use the token "00" as a free token or as an unknown token. Tasks 2.11 to 2.22 name each change of these tests.
+- Make the QA script `scripts/qa-layer-token-twochar.mjs` use the next free token of two characters in place of "00".
+- Update the paragraph about that QA script in `docs/CURRENT-STATE.md`.
 - Write one entry in `CHANGELOG.md`. Name the layer in the SkyWatch section of `DATA_SOURCES.md`.
 
 ## Capabilities
@@ -30,9 +32,11 @@ This is change 3 of 3. It adds the layer "SkyWatch Scenes". A press of the chip 
 
 The new files are files that the fork writes. So the change adds their paths to `openspec/ownership.json`, `scripts/format-scope.json` and `scripts/package-boundaries.json`.
 
-The share token is "00". Each token of one character has an owner, and the check of `make precheck` needs the next free token. So there is no choice. The tests of the token ledger use "00" as the next free token. Their fixtures leave out the layer `skywatch-scenes`, so "00" stays free in each fixture and each test title stays true. `design.md` D10 gives the details.
+The share token is "00". Each token of one character has an owner, and the check of `make precheck` needs the next free token. So there is no choice. The tests of the token ledger use "00" as the next free token. Their fixtures do not include the layer `skywatch-scenes`, so "00" stays free in each fixture and each test title stays true. `design.md` D10 gives the details.
 
-The layer sends requests only to the two routes of changes 1 and 2 and to the status route. The change adds no route, no dependency and no server file.
+The QA script `scripts/qa-layer-token-twochar.mjs` adds a fixture layer with the token "00" to a browser, and it stops when the production ledger has "00". The change makes the script use the next free token of two characters, so the fixture gets "01". `docs/CURRENT-STATE.md` asks that the first real layer with "00" passes its own check of a share link and a new page load. Task 4.6 does that check in a headless Chrome.
+
+The layer sends requests only to the status route and the scenes route of change 1, and to the thumbnail route of change 2. The change adds no route, no dependency and no server file.
 
 ## Known limits and later changes
 
@@ -46,5 +50,7 @@ The layer sends requests only to the two routes of changes 1 and 2 and to the st
 - Known limit `thumbnails-off`: The route of the thumbnails is off until `SKYWATCH_THUMBNAILS=true` is in `.env`. Until then, a selection shows a message and no card.
 - Known limit `real-service`: No test and no check sends a request to SkyWatch, because the project has no key. The lead looks at the layer with a stored answer and a stored image.
 - Known limit `token`: The share token "00" is the first token of two characters. If upstream gives "00" to an upstream layer, an upstream share link with "00" opens this layer in the fork.
+- Known limit `image-size`: The layer does not limit the pixel size of a decoded thumbnail. The route sends at most 1 MiB, and the card shows the image at a longer side of 192 pixels. The API description of SkyWatch gives 100 by 100 pixels for a thumbnail.
+- Known limit `ui-texts`: The chip label "Searching…" and the text "Loading the thumbnail…" use -ing words. The layer "Bee Maps Frames" has the label "Fetching…".
 - Known limit `osh-count`: The scenario `osh-033` names the count of the registry, so each new layer needs a new delta of the capability `osh`.
 - Known limit `visual`: The lead looks at the layer on one machine in one headless Chrome. No test draws the footprints or the card.

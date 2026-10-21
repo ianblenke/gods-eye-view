@@ -4,6 +4,7 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import * as Cesium from 'cesium';
 import { createApplicationCatalog } from '../../app/constructCatalog.js';
+import { createApplicationSkywatchScenes } from '../../app/layers/skywatchScenes.js';
 import { createSurfaceServices } from '../../app/surfaceServices.js';
 import { CATALOG_SOURCE_CONTRACTS } from '../../app/sourceComposition.js';
 import { DATA_CREDITS } from '../../data/dataCredits.js';
@@ -16,6 +17,11 @@ import { getLocale, setLocale } from '../../i18n/index.js';
 import { createStandaloneLayerSources } from '../../standalone/layerSources.js';
 import { createReferenceSources } from '../../sources/reference.js';
 import { layerNameForId } from '../../ui/layerNames.js';
+import {
+  _resetRenderGovernorForTest,
+  getRenderGovernorDiagnostics,
+  installRenderGovernor,
+} from '../../renderGovernor.js';
 import { VOICE_OFF_LAYERS } from '../../voice/layerManifest.js';
 
 const RING = [
@@ -188,6 +194,43 @@ test('[skywatch-scenes-layer-033] selects a scene through setLayerParams of the 
     false,
   );
   layer.destroy(view);
+});
+
+test('[skywatch-scenes-layer-033] gives the layer of the application the render governor, and an option requestRender replaces it', async (t) => {
+  const frames = [];
+  installRenderGovernor({
+    scene: { requestRender: () => frames.push('frame') },
+  });
+  t.after(() => _resetRenderGovernorForTest());
+  const calls = { getStatus: 0, searchScenes: 0, getThumbnail: 0 };
+  const view = viewer();
+  const layer = createApplicationSkywatchScenes({ source: fakeSource(calls) });
+  layer.init(view);
+  layer.enable(view);
+  await layer.update(view);
+  const before = frames.length;
+  await layer.getRowControls().chips[0].onClick();
+  assert.equal(calls.searchScenes, 1);
+  assert.equal(frames.length, before + 1);
+  assert.equal(
+    getRenderGovernorDiagnostics().recentRequests.at(-1).reason,
+    'skywatch-scenes',
+  );
+  layer.destroy(view);
+  const own = [];
+  const custom = createApplicationSkywatchScenes({
+    source: fakeSource(calls),
+    requestRender: (reason) => own.push(reason),
+  });
+  const other = viewer();
+  custom.init(other);
+  custom.enable(other);
+  await custom.update(other);
+  const count = frames.length;
+  await custom.getRowControls().chips[0].onClick();
+  assert.deepEqual(own, ['skywatch-scenes']);
+  assert.equal(frames.length, count);
+  custom.destroy(other);
 });
 
 test('[skywatch-scenes-layer-034] puts the layer in the Cameras group right after recent-imagery', () => {

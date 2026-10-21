@@ -91,7 +91,10 @@ test('[skywatch-scenes-layer-009] refuses a centre above 80 or below -80 degrees
   assert.deepEqual(at(80.006, 0), { ok: false, reason: 'latitude' });
   assert.equal(at(-80.0, 0).ok, true);
   assert.equal(at(-80.004, 0).ok, true);
+  assert.deepEqual(at(-80.004, 0).centre, { lat: -80, lon: 0 });
   assert.deepEqual(at(-80.006, 0), { ok: false, reason: 'latitude' });
+  assert.equal(at(80.005, 0).ok, true);
+  assert.equal(at(-80.005, 0).ok, true);
   assert.deepEqual(at(89, 0), { ok: false, reason: 'latitude' });
   assert.deepEqual(at(-89, 0), { ok: false, reason: 'latitude' });
 });
@@ -105,6 +108,21 @@ test('[skywatch-scenes-layer-009] refuses a box that goes past longitude 180 or 
   assert.deepEqual(at(0, -180), { ok: false, reason: 'meridian' });
   assert.deepEqual(at(0, 179.78).bbox[2], 179.995837);
   assert.deepEqual(at(0, -179.78).bbox[0], -179.995837);
+});
+
+test('[skywatch-scenes-layer-009] gives a box that ends exactly at longitude 180 or -180', () => {
+  assert.deepEqual(at(39.57, 179.72), {
+    ok: true,
+    centre: { lat: 39.57, lon: 179.72 },
+    bbox: [179.44, 39.354163, 180, 39.785837],
+  });
+  assert.deepEqual(at(39.57, -179.72), {
+    ok: true,
+    centre: { lat: 39.57, lon: -179.72 },
+    bbox: [-180, 39.354163, -179.44, 39.785837],
+  });
+  assert.deepEqual(at(39.57, 179.73), { ok: false, reason: 'meridian' });
+  assert.deepEqual(at(39.57, -179.73), { ok: false, reason: 'meridian' });
 });
 
 test('[skywatch-scenes-layer-009] gives the first reason when two apply', () => {

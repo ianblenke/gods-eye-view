@@ -10,7 +10,7 @@ import {
 } from './messages.js';
 
 const CROSS_ORIGIN =
-  'The server refused the request. The proxy must remove the X-Forwarded headers.';
+  'The server refused the request, because the request did not come from the same site.';
 
 test('[skywatch-scenes-layer-018] names each failure of a search with the text of its row', () => {
   const rows = [

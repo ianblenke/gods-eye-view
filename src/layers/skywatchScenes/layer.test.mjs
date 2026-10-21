@@ -79,6 +79,7 @@ function harness({
   canvas = { clientWidth: 800, clientHeight: 600 },
   withRender = true,
   withDecode = true,
+  withNow = true,
 } = {}) {
   const calls = {
     getStatus: [],
@@ -147,7 +148,7 @@ function harness({
   const layer = createSkywatchScenesLayer({
     source,
     overlayHost,
-    now: () => clock.t,
+    ...(withNow ? { now: () => clock.t } : {}),
     ...(withRender ? { requestRender: (id) => renders.push(id) } : {}),
     ...(withDecode
       ? {
@@ -491,6 +492,16 @@ test('[skywatch-scenes-layer-011] sends the window of the time of the clock at t
   ]);
 });
 
+test('[skywatch-scenes-layer-011] uses Date.now as the clock when no option now is given', async (t) => {
+  const time = Date.parse('2024-03-01T00:00:00.000Z');
+  t.mock.method(Date, 'now', () => time);
+  const h = harness({ withNow: false });
+  await h.searched();
+  assert.equal(h.calls.searchScenes[0].start, '2023-12-01');
+  assert.equal(h.calls.searchScenes[0].end, '2024-03-01');
+  assert.equal(h.layer.getStats().lastUpdate, time);
+});
+
 test('[skywatch-scenes-layer-009] sends no search for a view that has no box and names the reason', async () => {
   const SKY = 'Point the view at the ground and press again.';
   const rows = [
@@ -506,7 +517,7 @@ test('[skywatch-scenes-layer-009] sends no search for a view that has no box and
     ],
     [{ canvas: { clientWidth: 0, clientHeight: 600 } }, SKY],
     [{ canvas: { clientWidth: 800 } }, SKY],
-    [{ canvas: undefined }, SKY],
+    [{ canvas: null }, SKY],
     [
       { pick: () => Cesium.Cartesian3.fromDegrees(0, 85) },
       'Move the view to a latitude from -80 to 80 degrees and press again.',
@@ -614,8 +625,8 @@ test('[skywatch-scenes-layer-025] keeps the footprints, the list and the selecti
   assert.equal(h.layer.setParams({ scene: 'a' }), true);
   await tick();
   await tick();
-  const card = h.cards().length;
-  assert.equal(card, 1);
+  assert.equal(h.cards().length, 1);
+  const clears = h.overlay.filter(([name]) => name === 'clearSource').length;
   await h.chip().onClick();
   assert.equal(h.dataSource().entities.values.length, 3);
   assert.equal(h.list().items.length, 3);
@@ -629,7 +640,11 @@ test('[skywatch-scenes-layer-025] keeps the footprints, the list and the selecti
     lastUpdate: NOW,
     error: 'Too many searches. Wait 60 seconds.',
   });
-  assert.equal(h.overlay.filter(([name]) => name === 'clearSource').length, 1);
+  assert.equal(
+    h.overlay.filter(([name]) => name === 'clearSource').length,
+    clears,
+  );
+  assert.equal(h.cards().length, 1);
 });
 
 test('[skywatch-scenes-layer-025] keeps the footprints for a press with no box, and a good answer removes the message', async () => {
@@ -738,6 +753,7 @@ test('[skywatch-scenes-layer-026] aborts the status request of the update before
   const first = deferred();
   const queue = [
     first.promise,
+    Promise.resolve({ ok: true, configured: true }),
     Promise.resolve({ ok: true, configured: true }),
   ];
   const h = harness({ status: () => queue.shift() });
@@ -1176,8 +1192,15 @@ test('[skywatch-scenes-layer-032] replaces the card and closes the old image onc
   assert.equal(h.layer.setParams({ scene: 'a' }), true);
   await tick();
   await tick();
+  const clears = h.overlay.filter(([name]) => name === 'clearSource').length;
   assert.equal(h.layer.setParams({ scene: 'b' }), true);
   assert.equal(kept[0].closed, 1);
+  assert.deepEqual(h.overlay.at(-1), ['clearSource', 'skywatch-scenes']);
+  assert.equal(
+    h.overlay.filter(([name]) => name === 'clearSource').length,
+    clears + 1,
+  );
+  assert.equal(h.cards().length, 1);
   await tick();
   await tick();
   assert.equal(h.cards().length, 2);
@@ -1216,5 +1239,39 @@ test('[skywatch-scenes-layer-032] closes the image of the card once on scene nul
       h.layer.destroy(h.viewer);
       assert.equal(image.closed, 1);
     }
+  }
+});
+
+test('[skywatch-scenes-layer-032] aborts a thumbnail request that runs on scene null and on a new good answer, and closes a late image', async () => {
+  for (const end of [
+    (h) => assert.equal(h.layer.setParams({ scene: null }), true),
+    (h) => h.chip().onClick(),
+  ]) {
+    const decoding = deferred();
+    const image = fakeImage();
+    const picture = deferred();
+    const h = harness({
+      thumbnail: () => picture.promise,
+      decode: () => decoding.promise,
+    });
+    await h.searched();
+    assert.equal(h.layer.setParams({ scene: 'a' }), true);
+    const signal = h.calls.getThumbnail[0].signal;
+    await end(h);
+    assert.equal(signal.aborted, true);
+    picture.resolve({ ok: true, blob: BLOB });
+    await tick();
+    assert.equal(h.calls.decode.length, 0);
+    const second = harness({ decode: () => decoding.promise });
+    await second.searched();
+    assert.equal(second.layer.setParams({ scene: 'a' }), true);
+    await tick();
+    assert.equal(second.calls.decode.length, 1);
+    await end(second);
+    decoding.resolve(image);
+    await tick();
+    await tick();
+    assert.equal(image.closed, 1);
+    assert.equal(second.cards().length, 0);
   }
 });
