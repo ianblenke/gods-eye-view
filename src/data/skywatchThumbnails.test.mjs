@@ -787,6 +787,19 @@ test('[skywatch-thumbnails-010] gives upstream_failed for a status that is not 2
   }
 });
 
+test('[skywatch-thumbnails-010] gives the error of the image check for a failure of the image check', async (t) => {
+  for (const respond of [
+    () => image(bytesOf(PNG), 'text/html'),
+    () => image(bytesOf(JPEG, [0]), 'image/png'),
+    () => image(new Uint8Array(0), 'image/png'),
+  ]) {
+    const server = install(t, { urls: { a: CDN }, respond });
+    const answer = await server.get('a');
+    assert.equal(answer.status, 502);
+    assert.deepEqual(answer.body, { error: 'bad_upstream' });
+  }
+});
+
 test('[skywatch-thumbnails-010] holds no URL, host name or key text in a failure answer or a header', async (t) => {
   const own = 'https://api.skywatch.co/earthcache/thumbs/CANARY-thumb.png';
   for (const respond of [
@@ -919,7 +932,7 @@ test('[skywatch-thumbnails-012] keeps at most 32 images and removes the oldest i
 });
 
 test('[skywatch-thumbnails-012] makes an image that it fetches again after 600000 ms the newest image', async (t) => {
-  const urls = {};
+  const urls = { x: 'https://cdn.example.test/x.png' };
   for (let n = 0; n < 33; n++)
     urls[`i${n}`] = `https://cdn.example.test/${n}.png`;
   const server = install(t, { urls });
@@ -928,14 +941,20 @@ test('[skywatch-thumbnails-012] makes an image that it fetches again after 60000
     assert.equal(answer.status, 200, id);
     server.advance(2001);
   };
-  for (let n = 0; n < 32; n++) await get(`i${n}`);
+  await get('x');
+  await get('i0');
   server.advance(600000);
+  for (let n = 1; n <= 30; n++) await get(`i${n}`);
+  assert.equal(server.calls.length, 32);
   await get('i0');
-  assert.equal(server.calls.length, 33);
+  await get('i31');
   await get('i32');
-  assert.equal(server.calls.length, 34);
+  assert.equal(server.calls.length, 35);
   await get('i0');
-  assert.equal(server.calls.length, 34);
+  assert.equal(server.calls.length, 35);
+  await get('i1');
+  assert.equal(server.calls.length, 36);
+  assert.equal(server.calls[35].url, 'https://cdn.example.test/1.png');
 });
 
 test('[skywatch-thumbnails-012] keeps no failure', async (t) => {
