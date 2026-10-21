@@ -1,9 +1,11 @@
-Named faults of skywatch-source (rule 13). Date (UTC): 2026-10-21 13:38:00. Branch head: bbe14837.
+Named faults of skywatch-source (rule 13). Date (UTC): 2026-10-21 13:38:00. Branch head: 06998ac3 (see the last run below).
 
 Runner: /home/ianblenke/docker/gev-tools/skywatch-source/faults.py (outside the repository). For each fault, the runner changes the named text of a code file, runs the named test file with the TAP reporter, and lists the failed tests that carry the scenario ID of the fault. Then it restores the file and checks its SHA-256.
 A fault counts as KILLED when at least one test of its scenario fails.
 
 Earlier runs: the first run gave 112 of 116 killed. Two survivors showed test gaps, and the lead added two tests (the daily count of a search in flight, and the rate limit of a request that the body read refuses). Two survivors were equivalent faults, and the runner no longer lists them: an end date at midnight compares with the clock as with the start of the day, and JSON gives no value that is not an object and has a valid id. One fault of the next run was in the wrong place (before the body check, which has no effect), and the lead moved it after the body check.
+
+The first ratchet stopped with TRACE-TOO-MANY-TAGS: the test of the order of the checks had four scenario IDs in its tag. The commit 06998ac3 gives it the one tag skywatch-source-018, and the fault "dates checked before the area" moved to scenario 018. The lead then ran all faults again on the branch head 06998ac3, on 2026-10-21 14:22 UTC.
 
 Result of the last run:
 KILLED: [skywatch-source-001] other plugin name (server/providers/skywatch.js) | failed: ['[skywatch-source-001] mounts the two routes and passes other paths to next', '[skywatch-source-001] localProviderPlugins holds the plugin once']
@@ -21,7 +23,7 @@ KILLED: [skywatch-source-005] body limit 4097 (server/providers/skywatch/validat
 KILLED: [skywatch-source-005] body limit 4095 (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-005] reads a body of exactly 4096 bytes and refuses a body of 4097 bytes', '[skywatch-source-005] counts bytes and not characters, and counts all chunks']
 KILLED: [skywatch-source-005] body read error ignored (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-005] gives null when the request body fails while it is read']
 KILLED: [skywatch-source-005] array body accepted (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-005] refuses a body that is not JSON, not an object or has another field']
-KILLED: [skywatch-source-005] other fields accepted (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-005] refuses a body that is not JSON, not an object or has another field', '[skywatch-source-005 skywatch-source-006 skywatch-source-007 skywatch-source-008] checks the body, the box, the area and then the dates']
+KILLED: [skywatch-source-005] other fields accepted (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-005] refuses a body that is not JSON, not an object or has another field']
 KILLED: [skywatch-source-005] route ignores the body limit (server/providers/skywatch.js) | failed: ['[skywatch-source-005] refuses a body of more than 4096 bytes on the route']
 KILLED: [skywatch-source-006] box of five numbers (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-006] refuses each other value of bbox, and a body without bbox']
 KILLED: [skywatch-source-006] no finite check of the box (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-006] refuses each other value of bbox, and a body without bbox']
@@ -31,8 +33,8 @@ KILLED: [skywatch-source-006] south -90.01 accepted (server/providers/skywatch/v
 KILLED: [skywatch-source-006] north 90.01 accepted (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-006] refuses each other value of bbox, and a body without bbox']
 KILLED: [skywatch-source-006] west equal to east accepted (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-006] refuses each other value of bbox, and a body without bbox']
 KILLED: [skywatch-source-006] south equal to north accepted (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-006] refuses each other value of bbox, and a body without bbox']
-KILLED: [skywatch-source-007] area limit 2501 (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-007] refuses a box of more than 2500 km² and accepts a box of 2500 km² or less', '[skywatch-source-005 skywatch-source-006 skywatch-source-007 skywatch-source-008] checks the body, the box, the area and then the dates']
-KILLED: [skywatch-source-007] area limit 2499 (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-007] refuses a box of more than 2500 km² and accepts a box of 2500 km² or less', '[skywatch-source-005 skywatch-source-006 skywatch-source-007 skywatch-source-008] checks the body, the box, the area and then the dates']
+KILLED: [skywatch-source-007] area limit 2501 (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-007] refuses a box of more than 2500 km² and accepts a box of 2500 km² or less']
+KILLED: [skywatch-source-007] area limit 2499 (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-007] refuses a box of more than 2500 km² and accepts a box of 2500 km² or less']
 KILLED: [skywatch-source-007] other radius (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-007] refuses a box of more than 2500 km² and accepts a box of 2500 km² or less', '[skywatch-source-007] uses a sphere with a radius of 6371008.8 m for the area']
 KILLED: [skywatch-source-007] flat area (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-007] refuses a box of more than 2500 km² and accepts a box of 2500 km² or less', '[skywatch-source-007] uses a sphere with a radius of 6371008.8 m for the area']
 KILLED: [skywatch-source-008] window of 92 days after the start (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-008] accepts a window of 92 calendar days and refuses a window of 93']
@@ -41,7 +43,7 @@ KILLED: [skywatch-source-008] no calendar check (server/providers/skywatch/valid
 KILLED: [skywatch-source-008] end after today accepted (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-008] accepts an end on the UTC date of the server clock, and refuses the next day']
 KILLED: [skywatch-source-008] start after the end accepted (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-008] refuses a start after the end, a missing date and each other form']
 KILLED: [skywatch-source-008] date pattern without the end anchor (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-008] refuses a start after the end, a missing date and each other form']
-KILLED: [skywatch-source-007] dates checked before the area (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-005 skywatch-source-006 skywatch-source-007 skywatch-source-008] checks the body, the box, the area and then the dates']
+KILLED: [skywatch-source-018] dates checked before the area (server/providers/skywatch/validate.js) | failed: ['[skywatch-source-018] checks the body, the box, the area and then the dates']
 KILLED: [skywatch-source-009] blank key accepted (server/providers/skywatch.js) | failed: ['[skywatch-source-009] refuses a valid request when the key is not set or holds only white space']
 KILLED: [skywatch-source-010] key not trimmed upstream (server/providers/skywatch.js) | failed: ['[skywatch-source-010] keeps the key out of each answer and sends the trimmed key in x-api-key']
 KILLED: [skywatch-source-010] key in the answer (server/providers/skywatch.js) | failed: ['[skywatch-source-010] keeps the key out of each answer and sends the trimmed key in x-api-key']
