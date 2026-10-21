@@ -26,6 +26,8 @@ Origin: spec-first
 - **AND** the request has the header `Content-Type: application/json`, and `SKYWATCH_API_KEY` holds a key
 - **THEN** the plugin sends the upstream search, and the answer is `200`
 - **AND** a request from `127.0.0.1` with the host `localhost:5173`, the origin `http://localhost:5173` and no `Sec-Fetch-Site` header also gets `200`
+- **AND** a request with the origin `https://godseye.example.test` on an encrypted socket also gets `200`
+- **AND** a request with the origin `https://godseye.example.test` on a socket that is not encrypted gets `403` with `{"error":"cross_origin"}`
 
 ### Requirement: Search control
 The plugin MUST limit the upstream searches with a daily count, an answer store and a rate limit.

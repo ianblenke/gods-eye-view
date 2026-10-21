@@ -24,7 +24,7 @@ A scene of the results of SkyWatch can have `thumbnail_uri`, which the API descr
 The new file `server/providers/skywatch/same-site.js` calls `admitSameSiteRequest()` from `src/localRequestGate.mjs`. It gives the fields `hostHeader`, `origin`, `secFetchSite` and `proxyHeaders` from the request, as `admitSameSite()` does. The field `protocol` is `https:` for an encrypted socket, and `http:` for another socket.
 
 The scenes route also needs the exact header text `application/json`, the same text that `isLoopbackCommand()` needs.
-A browser must send a CORS preflight before a cross-origin POST with that content type, and this server answers no preflight. A refused request gets `403` with `{"error":"cross_origin"}`, so the error of `skywatch-source-004` stays the same for the layer. The thumbnail route uses the same check and gives the same answer.
+A browser must send a CORS preflight before a cross-origin POST with that content type, and this server answers no preflight. A refused request gets `403` with `{"error":"cross_origin"}`, so the error of `skywatch-source-004` stays the same for the layer. The thumbnail route uses the same call of `admitSameSiteRequest()` with no check of the header `Content-Type`, and it gives the same answer.
 
 ### D2: A second plugin
 
@@ -33,9 +33,9 @@ The function `skywatchPlugins(options)` makes the two plugins with the same opti
 
 ### D3: The URLs stay in the answer store
 
-`normalizeScenes()` also gives the field `thumbnailUrls`. It is a map from the id to the `thumbnail_uri` text of the first scene with that id in `scenes` that has `thumbnail` true. The answer store of the scenes route keeps that map with each answer, and no answer gives the map to the browser.
+`normalizeScenes()` also gives the field `thumbnailUrls`. It is a map from the id to a `thumbnail_uri` text. For each id, the text comes from the first scene in `scenes` that has that id and has `thumbnail` true. The answer store of the scenes route keeps that map with each answer, and no answer gives the map to the browser.
 
-One kept test of `skywatch-source-021` in `src/data/skywatchScenes.test.mjs` compares the whole result of `normalizeScenes()`, so that test gets the new field.
+One test of `skywatch-source-021` in `src/data/skywatchScenes.test.mjs` compares the whole result of `normalizeScenes()`, so that test gets the new field.
 `thumbnailUrlOf(id)` reads the kept answers from the newest to the oldest. It uses the same age rule as the store step of `skywatch-source-015`. So the thumbnail route knows only the scenes that the browser can know.
 
 ### D4: The URL check
@@ -60,7 +60,7 @@ The plugin keeps a good image for 600000 ms and at most 32 images. The image sto
 
 A layer asks for the thumbnail of one selected scene at a time, so a rate limit of 30 requests in 60000 ms is enough. The plugin has one count for all requests. The route has no daily count, because a thumbnail is a file of the search results and not a search.
 
-### D8: The variable that turns the route on
+### D8: The variable `SKYWATCH_THUMBNAILS`
 
 `SKYWATCH_THUMBNAILS` must be the text `true`. SkyWatch publishes no terms for the display of thumbnails, so the owner decides when the route sends them.
 

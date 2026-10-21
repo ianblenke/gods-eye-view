@@ -25,7 +25,9 @@ Origin: spec-first
 - **THEN** the answer is `403` with `{"error":"cross_origin"}`, and the plugin sends no upstream request
 - **AND** the samples include the header `Sec-Fetch-Site: cross-site`, the proxy header `X-Forwarded-For` and the origin `null`
 - **AND** the samples include the origin `http://example.test` with the host `localhost:5173`
+- **AND** the samples include the origin `https://godseye.example.test` with the host `godseye.example.test` on a socket that is not encrypted
 - **AND** a request with the host `godseye.example.test`, the origin `http://godseye.example.test` and `Sec-Fetch-Site: same-origin` passes this step
+- **AND** a request with the host `godseye.example.test` and the origin `https://godseye.example.test` on an encrypted socket passes this step
 
 #### Scenario: Refuse a method that is not GET `skywatch-thumbnails-003`
 - **WHEN** a POST, PUT, DELETE or HEAD request for a thumbnail path passes `admitSameSiteRequest()`
@@ -63,10 +65,14 @@ Origin: spec-first
 - **AND** a kept answer is a good answer in the store of `skywatch-source-015` that is less than 600000 ms old
 - **AND** `thumbnailUrlOf` reads the kept answers from the newest answer to the oldest answer
 - **AND** in each kept answer, `thumbnailUrlOf` looks only at the scenes in `scenes` that have `thumbnail` true
-- **AND** `thumbnailUrlOf` gives the upstream `thumbnail_uri` text of the first such scene with that id in the newest kept answer that has one
+- **AND** `thumbnailUrlOf` uses the newest kept answer that has a scene with that id and with `thumbnail` true
+- **AND** in that answer, it gives the upstream `thumbnail_uri` text of the first scene in `scenes` that has that id and has `thumbnail` true
 - **AND** when no kept answer has such a scene, the thumbnail plugin answers `404` with `{"error":"unknown_scene"}`, and it sends no upstream request
 - **AND** an answer that is 599999 ms old gives the URL, and an answer that is 600000 ms old does not give it
-- **AND** the samples include two kept answers with different URLs for one id, and one answer with two scenes that have the same id
+- **AND** the samples include two kept answers with different URLs for one id
+- **AND** the samples include one answer with two scenes that have the same id and different URLs
+- **AND** the samples include one answer with two scenes that have the same id, where the first scene has `thumbnail` false
+- **AND** the thumbnail plugin of a second call of `skywatchPlugins()` does not find a scene of the first call
 - **AND** the samples include a scene after the first 50 scenes of `skywatch-source-021`, and a scene with `thumbnail` false
 - **AND** a thumbnail plugin that the test makes with no option `thumbnailUrlOf` answers `404` with `{"error":"unknown_scene"}` for each id
 
@@ -84,12 +90,13 @@ Origin: spec-first
 - **AND** for a text that is not an absolute URL and for each other URL, the answer is `502` with `{"error":"bad_upstream"}`
 - **AND** for each refused text, the thumbnail plugin sends no upstream request
 - **AND** the refused samples include `not a url`, `http://cdn.example.test/t.png` and `https://user@cdn.example.test/t.png`
+- **AND** the refused samples also include `https://:pw@cdn.example.test/t.png`, a URL with a password and no user name
 - **AND** the refused samples also include `https://cdn.example.test:8443/t.png`, `https://127.0.0.1/t.png`, `https://[::1]/t.png` and `https://2130706433/t.png`
 - **AND** the refused samples also include `https://localhost/t.png`, `https://localhost./t.png` and `https://a.localhost/t.png`
 - **AND** the thumbnail plugin accepts `https://cdn.example.test:443/t.png`, because the URL parser removes the port 443
 
 ### Requirement: One upstream request
-The thumbnail route MUST send one GET request to the checked thumbnail URL for each thumbnail request that the image store step does not answer.
+The thumbnail route MUST send an upstream request only for a thumbnail request that passes the URL check. For such a request, it MUST send one GET request to the checked URL when the image store step does not answer.
 Origin: spec-first
 
 #### Scenario: Request the thumbnail `skywatch-thumbnails-008`
@@ -98,9 +105,10 @@ Origin: spec-first
 - **AND** the request has the header `Accept: image/png, image/jpeg, image/webp`
 - **AND** the request has the header `x-api-key` with the trimmed key only when the host name is `api.skywatch.co` and the trimmed key is not empty
 - **AND** the samples include a key with spaces at its start and at its end, and a key of only spaces
+- **AND** the requests to `https://xapi.skywatch.co/t.png` and to `https://api.skywatch.co.example.test/t.png` have no header `x-api-key`
 - **AND** the request has no other header
 - **AND** the time limit of 15000 ms covers the headers and the body
-- **AND** the thumbnail plugin clears the timer after it reads the body, and at once when it reads no body
+- **AND** the thumbnail plugin clears the timer after it reads the body, and immediately when it reads no body
 
 ### Requirement: Checked image
 The thumbnail route MUST send only an image of the type PNG, JPEG or WebP with at most 1048576 bytes.
@@ -116,10 +124,13 @@ Origin: spec-first
 - **AND** for `image/webp`, the first 4 bytes must be the ASCII text "RIFF"
 - **AND** for `image/webp`, the 9th to the 12th byte must be the ASCII text "WEBP"
 - **AND** each answer 200 that does not meet these rules is the failure `bad_upstream`
-- **AND** a body read that stops with another error, such as the end of the time limit, is the failure `upstream_failed`
+- **AND** when the thumbnail plugin cannot read all of the body for a reason other than the limit of 1048576 bytes, the failure is `upstream_failed`
+- **AND** the end of the time limit is a sample of such a reason
 - **AND** the samples of `bad_upstream` include the media types `image/svg+xml` and `text/html`, and an answer with no header `Content-Type`
 - **AND** the samples of `bad_upstream` also include a body of 0 bytes, a body of 1048577 bytes and a header `Content-Length: 1048577`
 - **AND** the samples of `bad_upstream` also include the media type `image/png` with the first bytes of a JPEG image
+- **AND** the samples of `bad_upstream` also include the media type `image/webp` with a RIFF body that has "WAVE" in the 9th to the 12th byte
+- **AND** a WebP body with "WEBP" in the 9th to the 12th byte passes
 - **AND** a body of 1048576 bytes passes
 - **AND** the header text `Image/PNG; charset=x` gives the media type `image/png`, and the header text `image/png ;x` also gives `image/png`
 
@@ -157,6 +168,7 @@ Origin: spec-first
 - **WHEN** a thumbnail request has the same URL as a good image that the image store keeps
 - **THEN** the thumbnail plugin sends the same bytes with the headers of `skywatch-thumbnails-011`, and it sends no upstream request
 - **AND** the image store finds an image by the `href` text of the URL
+- **AND** two ids with the URLs `https://cdn.example.test:443/t.png` and `https://cdn.example.test/t.png` share one image, from one upstream request
 - **AND** the image store gives an image that is 599999 ms old, and it does not give an image that is 600000 ms old
 - **AND** the image store keeps at most 32 images, and it removes the oldest image first
 - **AND** the image store keeps no failure, so the next request after a failure sends a new upstream request

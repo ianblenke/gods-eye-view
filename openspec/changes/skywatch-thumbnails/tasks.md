@@ -6,7 +6,8 @@
 - [ ] 1.4 Write the tests for `skywatch-thumbnails-001`, `skywatch-thumbnails-002`, `skywatch-thumbnails-003`, `skywatch-thumbnails-004` and `skywatch-thumbnails-005` in `src/data/skywatchThumbnails.test.mjs`.
 - [ ] 1.5 Write the tests for `skywatch-thumbnails-006`, `skywatch-thumbnails-012`, `skywatch-thumbnails-013` and `skywatch-thumbnails-014` in the same file.
 - [ ] 1.6 Write the tests for `skywatch-thumbnails-008`, `skywatch-thumbnails-010`, `skywatch-thumbnails-011` and `skywatch-thumbnails-015` in the same file.
-- [ ] 1.7 Write the tests for `skywatch-thumbnails-007` and `skywatch-thumbnails-009` in `src/data/skywatchImage.test.mjs`.
+- [ ] 1.7 Write the tests of `server/providers/skywatch/image.js` for `skywatch-thumbnails-007` and `skywatch-thumbnails-009` in `src/data/skywatchImage.test.mjs`.
+- [ ] 1.8 Write the route tests for `skywatch-thumbnails-007` and `skywatch-thumbnails-009` in `src/data/skywatchThumbnails.test.mjs`.
 
 ## 2. Write the files
 
