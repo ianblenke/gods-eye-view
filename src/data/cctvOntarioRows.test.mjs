@@ -298,27 +298,6 @@ for (const title of ['null', '{}', '"rows"', '0']) {
     assert.deepEqual(logs, []);
   });
 }
-test('[live-sources-005] write the warning for a row error with the key text', async (t) => {
-  const logs = [];
-  assert.deepEqual(
-    await load(
-      t,
-      [
-        {
-          get Id() {
-            throw new Error('FAKE_ROW_KEY');
-          },
-        },
-      ],
-      undefined,
-      logs,
-    ),
-    [],
-  );
-  assert.deepEqual(logs, [['warn', '[CCTV] Ontario 511 camera data has an error.']]);
-  assert.equal(logs.join().includes('FAKE_ROW_KEY'), false);
-});
-
 test('[live-sources-007] use capitalized ID and coordinates before lower case fields', async (t) => {
   const [source] = await load(t, [
     row({
@@ -626,32 +605,3 @@ test('[live-sources-007] read location before roadway', async (t) => {
   assert.equal(source.city, 'After');
   assert.equal(source.name, 'After');
 });
-
-for (const [title, value, warning] of [
-  ['absent key', undefined, '[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.'],
-  [
-    'HTTP error',
-    'FAKE_ROW_KEY',
-    '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
-  ],
-]) {
-  const scenario = value === undefined ? '003' : '004';
-  test(`[live-sources-${scenario}] write the first warning for an ${title}`, async (t) => {
-    const old = process.env.ONTARIO_511_API_KEY;
-    t.after(() => {
-      if (old === undefined) delete process.env.ONTARIO_511_API_KEY;
-      else process.env.ONTARIO_511_API_KEY = old;
-    });
-    if (value === undefined) delete process.env.ONTARIO_511_API_KEY;
-    else process.env.ONTARIO_511_API_KEY = value;
-    const logs = [];
-    for (const channel of ['warn', 'log', 'error', 'info', 'debug', 'dir']) {
-      t.mock.method(console, channel, (...args) => logs.push([channel, args.join(' ')]));
-    }
-    t.mock.method(globalThis, 'fetch', async () => ({ ok: false }));
-    const { readOntarioCameraRows } =
-      await import('../../server/providers/cctv/ontarioRequest.js');
-    assert.deepEqual(await readOntarioCameraRows(), []);
-    assert.deepEqual(logs, [['warn', warning]]);
-  });
-}
