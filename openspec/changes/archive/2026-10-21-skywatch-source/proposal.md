@@ -39,6 +39,6 @@ The change adds no dependency, no layer, no QA script and no layer token.
 - Known limit `count-in-ram`: The server keeps the daily count only in RAM, so a restart of the server starts the count again at 0.
 - Known limit `search-cost`: SkyWatch states no cost for a search. The owner can confirm with SkyWatch that a search costs no money.
 - Known limit `first-page`: The plugin reads only the first page of at most 50 results. When SkyWatch has more results, the answer has `truncated` true.
-- Known limit `id-rule`: The API description gives only "string" for the id of a search and of a scene. The plugin accepts 1 to 128 ASCII letters, digits, hyphens or underscores. A real id of another form makes each search fail with `bad_upstream`, or removes each scene.
+- Known limit `id-rule`: The API description gives only "string" for the id of a search and of a scene. The plugin accepts only an id of 1 to 128 ASCII letters, digits, hyphens or underscores. When the real ids have another form, each search fails with `bad_upstream`, or the route removes each scene.
 - Known limit `display-terms`: SkyWatch publishes no terms for the display of footprints and thumbnails. On 2026-10-21 the lead asked the owner to get written terms from SkyWatch. This change shows no image.
 - Later change `skywatch-scenes-layer`: A layer that shows the footprints, and a thumbnail route that sends only the thumbnails of the results of this route.
