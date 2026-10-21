@@ -4895,12 +4895,12 @@
     "change": "skywatch-source"
   },
   "skywatch-source-003": {
-    "hash": "f535dfeb2791bc23ffd617e04fe60df2fc1d596cb9be5325931506e48506b614",
+    "hash": "c840e9076e19d5d3b8f90895b80573c3610a814eec558accfe34f29f6cb6c6ab",
     "since": "2026-10-21",
     "change": "skywatch-source"
   },
   "skywatch-source-004": {
-    "hash": "c73d353b1b1deb3e2c017316739d54280ab3f5608aca6c1e31a05e3872b6e712",
+    "hash": "182dd422bf82fa56d5710664a605fc6156ab3291efe3890be741baf08f33b87b",
     "since": "2026-10-21",
     "change": "skywatch-source"
   },
@@ -4970,7 +4970,7 @@
     "change": "skywatch-source"
   },
   "skywatch-source-018": {
-    "hash": "84cc9d0ee3f7a36a074441e5663634b249fe982bbf116f3df84aa7dfc512ec3f",
+    "hash": "d00314d25e91eed1f5ec6e5f8e1a41a7f3f3927f25333d4eed5ce5f5567941bf",
     "since": "2026-10-21",
     "change": "skywatch-source"
   },
@@ -4993,6 +4993,86 @@
     "hash": "f1bfc5e82862364f46267736f9044b15e2b04475e2b2edfc18d019986d1c1c90",
     "since": "2026-10-21",
     "change": "skywatch-source"
+  },
+  "skywatch-source-023": {
+    "hash": "934918cc9eccc472940cdafb21977c999e521feb9026ddc1b26c08fc0e584c70",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-001": {
+    "hash": "877fba78704ae45e0af3c218ffc3af1aa85ee5f4bb8bb699e8d1e6ae5cb091d6",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-002": {
+    "hash": "8ebd439b41e9d3cbce24ebe784a18a293d76ba4efa52ede71cab123959458212",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-003": {
+    "hash": "775184cd17b871cd1c1908ad7a69ccf80ea74bdc373145e1beba65bdf6436174",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-004": {
+    "hash": "cc71959d72ed827e9786ef0c73588a8c3a3f5035c069fb8f467f05cd1414286f",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-005": {
+    "hash": "2a96e6a4eb5df2bb905db0d5d6c6aaa655b94d3778434a2b0ed36a245d52e0cd",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-006": {
+    "hash": "9f0099a10cb8a3b579fd0650f018f3136ebd4c88773f463a8696f553585946ba",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-007": {
+    "hash": "335eb5e88275347574e80a86f8c5792513910356d3558b0411b542f415655a5a",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-008": {
+    "hash": "645b663f4ec2af77da973dd572c1bcb79e793f8eab84e96b752147742606a27b",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-009": {
+    "hash": "b432df1495bd3149320199188637adc46e051af3635982ee1c920e26ebc75d1f",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-010": {
+    "hash": "19220e9379529c4cb00dbaae99e5d9005d7d4036f3530ce8fa490f72b3cb8dc7",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-011": {
+    "hash": "367e84e110c5ad77b660ebec1a1f495a461e3342add1fa9ad78405e5f494aecd",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-012": {
+    "hash": "3796badd8c35d237e741daad413a959074b8df8ea617e69a508bfe58808fa698",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-013": {
+    "hash": "7bdc2b710c350e04ba765d1520166a57f84006f60f59943839db7c01aa017f75",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-014": {
+    "hash": "8d320d68239f79d5bfadb13e3f8294790559e006aa2cf86720efb25a83949089",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
+  },
+  "skywatch-thumbnails-015": {
+    "hash": "e658e42ea8208837640a281437e22bb464a91f0c390aa7bae433f5931c736d34",
+    "since": "2026-10-21",
+    "change": "skywatch-thumbnails"
   },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",

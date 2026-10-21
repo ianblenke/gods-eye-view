@@ -1,0 +1,30 @@
+Host checks of skywatch-thumbnails. Date (UTC): 2026-10-21 19:02:22. Branch head: 7f0072ea. Node v26.8.2 on the host. Each output shows at most its last three lines. The lead added each line "exit".
+
+$ node scripts/format.mjs --check
+Checked 1560 source files.
+exit 0
+$ node scripts/check-import-directions.mjs
+{"modules":1082,"portableEntries":84}
+exit 0
+$ node scripts/check-package-boundaries.mjs
+Checked air-quality: 1 exports, 11 owned modules.
+Checked air-quality-source: 1 exports, 4 owned modules.
+Checked agent-world-packet: 1 exports, 7 owned modules.
+exit 0
+$ node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 36 published, 0 new.
+exit 0
+$ npx --no-install openspec validate skywatch-thumbnails --strict
+Change 'skywatch-thumbnails' is valid
+exit 0
+$ node scripts/spec/gates.mjs lint (the last three lines)
+WARN STE-WORD-OLD openspec/specs/wind/spec.md:72 Use "closes", not "dismisses"
+WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
+STE: 0 errors, 1055 warnings.
+exit 0
+
+$ make precheck (in the image gods-eye-view:local; the result lines of the format check, the import check and the layer token check, and the exit status)
+Checked 1560 source files.
+{"modules":1082,"portableEntries":84}
+Layer tokens valid against origin/main: 36 published, 0 new.
+PRECHECK_EXIT=0
