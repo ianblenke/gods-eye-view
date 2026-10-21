@@ -109,14 +109,28 @@ const byNewestThenId = (a, b) => {
 };
 
 /**
- * The scenes of a results document whose `data` is an array.
+ * The scenes of a results document whose `data` is an array. The map
+ * `thumbnailUrls` stays on the server: for each id, it holds the
+ * `thumbnail_uri` text of the first scene in `scenes` with that id and with
+ * `thumbnail` true.
  * @param {{data: unknown[], pagination?: unknown}} document
- * @returns {{scenes: object[], total: number, truncated: boolean}}
+ * @returns {{scenes: object[], total: number, truncated: boolean, thumbnailUrls: Map<string, string>}}
  */
 export function normalizeScenes(document) {
   const rows = document.data;
-  const kept = rows.map(sceneOf).filter((scene) => scene !== null);
-  kept.sort(byNewestThenId);
+  const kept = [];
+  for (const item of rows) {
+    const scene = sceneOf(item);
+    if (scene !== null) kept.push({ scene, url: item.thumbnail_uri });
+  }
+  kept.sort((a, b) => byNewestThenId(a.scene, b.scene));
+  const first = kept.slice(0, MAX_SCENES);
+  const thumbnailUrls = new Map();
+  for (const { scene, url } of first) {
+    if (scene.thumbnail && !thumbnailUrls.has(scene.id)) {
+      thumbnailUrls.set(scene.id, url);
+    }
+  }
   const upstreamTotal = isObject(document.pagination)
     ? document.pagination.total
     : undefined;
@@ -125,8 +139,9 @@ export function normalizeScenes(document) {
       ? upstreamTotal
       : rows.length;
   return {
-    scenes: kept.slice(0, MAX_SCENES),
+    scenes: first.map((entry) => entry.scene),
     total,
     truncated: total > rows.length || kept.length > MAX_SCENES,
+    thumbnailUrls,
   };
 }
