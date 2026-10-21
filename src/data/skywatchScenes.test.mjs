@@ -208,7 +208,7 @@ test('[skywatch-source-020] removes an item that is not an object, or a scene wi
   assert.equal(one({ id: 'a'.repeat(128) }).id, 'a'.repeat(128));
 });
 
-test('[skywatch-source-020] accepts only a polygon with exactly one ring of 4 to 2000 closed positions', () => {
+test('[skywatch-source-020] accepts only a polygon with exactly one closed ring of 4 to 2000 positions', () => {
   const polygon = (coordinates) => ({ type: 'Polygon', coordinates });
   const ringOf = (count) => {
     const ring = [];
@@ -241,6 +241,7 @@ test('[skywatch-source-020] accepts only a polygon with exactly one ring of 4 to
   );
   for (const bad of [
     [10],
+    [10, 60, 'x'],
     [10, 60, 1, 2],
     ['10', 60],
     [181, 60],

@@ -1,6 +1,6 @@
 import { isLoopbackCommand } from './common/loopback-command.js';
 import { makeRateLimiter } from './common/rate-limit.js';
-import { sameSiteGated } from './common/same-site.js';
+import { admitSameSite } from './common/same-site.js';
 import { normalizeScenes } from './skywatch/normalize.js';
 import { runSearch } from './skywatch/upstream.js';
 import { readBodyText, validateRequest } from './skywatch/validate.js';
@@ -175,6 +175,7 @@ export function skywatchProxy({
 
   function handleStatus(req, res, next) {
     if (!onOwnPath(req)) return next();
+    if (admitSameSite(req, res)) return undefined;
     if (req.method !== 'GET') {
       return send(res, 405, { error: 'Method not allowed' });
     }
@@ -222,7 +223,7 @@ export function skywatchProxy({
   }
 
   const install = ({ middlewares }) => {
-    middlewares.use('/api/skywatch/status', sameSiteGated(handleStatus));
+    middlewares.use('/api/skywatch/status', handleStatus);
     middlewares.use('/api/skywatch/scenes', handleScenes);
   };
   return {

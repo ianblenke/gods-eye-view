@@ -151,6 +151,7 @@ function install(t, { env = {}, respond, preview = false, clock } = {}) {
     uses,
     request,
     scenes,
+    env: environment,
     calls,
     lines,
     waits,
@@ -190,6 +191,15 @@ test('[skywatch-source-001] mounts the two routes and passes other paths to next
   assert.equal(below.status, undefined);
   const belowStatus = await server.request(`${STATUS}/x`, { method: 'GET' });
   assert.equal(belowStatus.next, true);
+  const belowCross = await server.request(`${STATUS}/x`, {
+    method: 'GET',
+    headers: {
+      'sec-fetch-site': 'cross-site',
+      'x-forwarded-for': '192.0.2.10',
+    },
+  });
+  assert.equal(belowCross.next, true);
+  assert.equal(belowCross.status, undefined);
 });
 
 test('[skywatch-source-001] localProviderPlugins holds the plugin once', () => {
@@ -295,7 +305,7 @@ test('[skywatch-source-010] keeps the key out of each answer and sends the trimm
     assert.equal(call.init.headers['x-api-key'], KEY);
 });
 
-test('[skywatch-source-013] sends only the search request and the result requests in each flow', async (t) => {
+test('[skywatch-source-013] sends only the search request and the result requests for each answer of the fake fetch', async (t) => {
   const flows = [
     {},
     { respond: (url) => (url === SEARCH ? json(401, {}) : resultsAnswer()) },
@@ -308,9 +318,26 @@ test('[skywatch-source-013] sends only the search request and the result request
           : resultsAnswer(),
     },
     { respond: (url) => (url === SEARCH ? startedAnswer() : json(500, {})) },
+    { respond: (url) => (url === SEARCH ? json(403, {}) : resultsAnswer()) },
+    {
+      respond: (url) =>
+        url === SEARCH ? startedAnswer() : json(200, { data: {} }),
+    },
+    {
+      respond: (url) =>
+        url === SEARCH
+          ? startedAnswer()
+          : new Response('x'.repeat(4194305), { status: 200 }),
+    },
     {
       respond: () => {
         throw new TypeError('fetch failed');
+      },
+    },
+    {
+      respond: (url) => {
+        if (url === SEARCH) return startedAnswer();
+        throw new TypeError('redirect mode is set to error');
       },
     },
   ];
@@ -347,18 +374,13 @@ test('[skywatch-source-014] counts each new search against the daily limit and r
   assert.equal(searches(server), 2);
 });
 
-test('[skywatch-source-014] counts the search before it sends the request, also for a failed search', async (t) => {
-  let usedAtSend;
+test('[skywatch-source-014] counts a failed search against the daily limit', async (t) => {
   const server = install(t, {
     env: { SKYWATCH_DAILY_SEARCHES: '1' },
-    respond: (url) => {
-      if (url === SEARCH) usedAtSend = 'sent';
-      return json(500, {});
-    },
+    respond: () => json(500, {}),
   });
   const failed = await server.scenes({ bbox: boxAt(1), ...DATES });
   assert.equal(failed.status, 502);
-  assert.equal(usedAtSend, 'sent');
   const refused = await server.scenes({ bbox: boxAt(2), ...DATES });
   assert.deepEqual(refused.body, { error: 'budget', used: 1, limit: 1 });
 });
@@ -646,7 +668,7 @@ test('[skywatch-source-021] gives the shape of a good answer and the headers of 
   }
 });
 
-test('[skywatch-source-022] writes one line for a good search, with the count of the answer, the polls and the time', async (t) => {
+test('[skywatch-source-022] writes one line for a good search, with the count of the answer, the number of result requests and the time', async (t) => {
   const clock = { value: NOW };
   const server = install(t, {
     clock,
@@ -748,7 +770,7 @@ test('[skywatch-source-005] refuses a body of more than 4096 bytes on the route'
   assert.equal(server.calls.length, 2);
 });
 
-test('[skywatch-source-012 skywatch-source-022] waits with setTimeout and logs with console.log when the options are not given', async (t) => {
+test('[skywatch-source-012 skywatch-source-022] waits with setTimeout and logs with console.log when the test gives no options', async (t) => {
   t.mock.timers.enable({ apis: ['Date', 'setTimeout'], now: NOW });
   const lines = [];
   t.mock.method(console, 'log', (line) => lines.push(line));
@@ -816,7 +838,7 @@ test('[skywatch-source-014] counts a search while it is in flight, so a second b
   assert.equal(searches(server), 1);
 });
 
-test('[skywatch-source-017] counts a request that the body read refuses', async (t) => {
+test('[skywatch-source-017] counts a request that the body step refuses', async (t) => {
   const server = install(t);
   const over = JSON.stringify({ bbox: BOX, ...DATES }).padEnd(4097, ' ');
   for (let n = 0; n < 6; n++) {
@@ -825,4 +847,24 @@ test('[skywatch-source-017] counts a request that the body read refuses', async 
   const limited = await server.scenes(over);
   assert.equal(limited.status, 429);
   assert.deepEqual(limited.body, { error: 'rate_limited' });
+});
+
+test('[skywatch-source-018] refuses a request of another machine before the rate limit', async (t) => {
+  const server = install(t);
+  for (let n = 0; n < 7; n++) {
+    const answer = await server.scenes(undefined, { remote: '192.0.2.10' });
+    assert.deepEqual(answer.body, { error: 'cross_origin' });
+  }
+  const local = await server.scenes();
+  assert.equal(local.status, 200);
+});
+
+test('[skywatch-source-018] checks the key before the store', async (t) => {
+  const server = install(t);
+  assert.equal((await server.scenes()).status, 200);
+  const environment = server.env;
+  environment.SKYWATCH_API_KEY = '';
+  const stored = await server.scenes();
+  assert.equal(stored.status, 503);
+  assert.deepEqual(stored.body, { error: 'no_key', keyRequired: true });
 });

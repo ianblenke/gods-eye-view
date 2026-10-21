@@ -40,7 +40,7 @@ test('[skywatch-source-005] counts bytes and not characters, and counts all chun
   assert.equal(await readBodyText(stream()), '');
 });
 
-test('[skywatch-source-005] gives null when the request body fails while it is read', async () => {
+test('[skywatch-source-005] gives null when the request body fails while readBodyText reads it', async () => {
   const failing = Readable.from(
     (async function* () {
       yield Buffer.from('{"bbox":');
@@ -153,7 +153,7 @@ test('[skywatch-source-008] accepts an end on the UTC date of the server clock, 
   );
 });
 
-test('[skywatch-source-008] refuses a start after the end, a missing date and each other form', () => {
+test('[skywatch-source-008] refuses a start after the end, a body without a date and each other form', () => {
   refused(good({ start: '2026-10-20', end: '2026-10-19' }), 'bad_dates');
   refused(send({ bbox: BOX, start: '2026-10-01' }), 'bad_dates');
   refused(send({ bbox: BOX, end: '2026-10-01' }), 'bad_dates');

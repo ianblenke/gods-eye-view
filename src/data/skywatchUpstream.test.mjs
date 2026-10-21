@@ -352,8 +352,7 @@ test('[skywatch-source-019] gives upstream_failed for a network error and a redi
   });
   const redirect = await search([
     started(),
-    async (_url, init) => {
-      assert.equal(init.redirect, 'error');
+    async () => {
       throw new TypeError('redirect mode is set to error');
     },
   ]);
@@ -362,6 +361,7 @@ test('[skywatch-source-019] gives upstream_failed for a network error and a redi
     kind: 'upstream_failed',
     polls: 1,
   });
+  assert.equal(redirect.calls[1].init.redirect, 'error');
 });
 
 test('[skywatch-source-019] starts a timer of 15000 ms before each request and clears it after the body', async () => {
@@ -373,58 +373,62 @@ test('[skywatch-source-019] starts a timer of 15000 ms before each request and c
   assert.deepEqual(cleared, [1, 2, 3]);
 });
 
-test('[skywatch-source-019] stops a request when its timer fires, also while it reads the body', async () => {
-  const hanging = (url, init) =>
-    new Promise((_resolve, reject) => {
-      init.signal.addEventListener('abort', () =>
-        reject(new DOMException('aborted', 'AbortError')),
-      );
-    });
-  let fire;
-  const run = search([hanging], {
-    setTimer: (fn) => {
-      fire = fn;
-      return 1;
-    },
-  });
-  await settle();
-  fire();
-  const before = await run;
-  assert.deepEqual(before.result, {
-    ok: false,
-    kind: 'upstream_failed',
-    polls: 0,
-  });
-
-  let fireBody;
-  const slowBody = (_url, init) => {
-    const stream = new ReadableStream({
-      start(controller) {
-        controller.enqueue(new TextEncoder().encode('{"data":'));
+test(
+  '[skywatch-source-019] stops a request when its time limit ends, also while it reads the body',
+  { timeout: 10000 },
+  async () => {
+    const hanging = (url, init) =>
+      new Promise((_resolve, reject) => {
         init.signal.addEventListener('abort', () =>
-          controller.error(new DOMException('aborted', 'AbortError')),
+          reject(new DOMException('aborted', 'AbortError')),
         );
+      });
+    let fire;
+    const run = search([hanging], {
+      setTimer: (fn) => {
+        fire = fn;
+        return 1;
       },
     });
-    return new Response(stream, { status: 200 });
-  };
-  const timers = [];
-  const runBody = search([slowBody], {
-    setTimer: (fn) => {
-      timers.push(fn);
-      fireBody = fn;
-      return 1;
-    },
-  });
-  await settle();
-  fireBody();
-  const during = await runBody;
-  assert.deepEqual(during.result, {
-    ok: false,
-    kind: 'upstream_failed',
-    polls: 0,
-  });
-});
+    await settle();
+    fire();
+    const before = await run;
+    assert.deepEqual(before.result, {
+      ok: false,
+      kind: 'upstream_failed',
+      polls: 0,
+    });
+
+    let fireBody;
+    const slowBody = (_url, init) => {
+      const stream = new ReadableStream({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode('{"data":'));
+          init.signal.addEventListener('abort', () =>
+            controller.error(new DOMException('aborted', 'AbortError')),
+          );
+        },
+      });
+      return new Response(stream, { status: 200 });
+    };
+    const timers = [];
+    const runBody = search([slowBody], {
+      setTimer: (fn) => {
+        timers.push(fn);
+        fireBody = fn;
+        return 1;
+      },
+    });
+    await settle();
+    fireBody();
+    const during = await runBody;
+    assert.deepEqual(during.result, {
+      ok: false,
+      kind: 'upstream_failed',
+      polls: 0,
+    });
+  },
+);
 
 test('[skywatch-source-019] gives bad_upstream for a body that is not JSON or is too large, and reads a body of 4194304 bytes', async () => {
   const text = (status, body) =>
@@ -445,4 +449,24 @@ test('[skywatch-source-019] gives bad_upstream for a body that is not JSON or is
   assert.equal(fits.result.ok, true);
   const over = await search([started(), text(200, exact.replace('"}', 'a"}'))]);
   assert.deepEqual(over.result, { ok: false, kind: 'bad_upstream', polls: 1 });
+});
+
+test('[skywatch-source-019] clears the timer only after it reads the body', async () => {
+  let bodyDone = false;
+  const clearedWhen = [];
+  const slow = () => {
+    const stream = new ReadableStream({
+      async pull(controller) {
+        await new Promise((resolve) => setImmediate(resolve));
+        controller.enqueue(new TextEncoder().encode('{"data":{"id":"x"}}'));
+        bodyDone = true;
+        controller.close();
+      },
+    });
+    return new Response(stream, { status: 200 });
+  };
+  await search([slow], {
+    clearTimer: () => clearedWhen.push(bodyDone),
+  });
+  assert.deepEqual(clearedWhen.slice(0, 1), [true]);
 });
