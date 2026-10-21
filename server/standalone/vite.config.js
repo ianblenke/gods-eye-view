@@ -11,9 +11,9 @@ import { unwatchedRuntimeDirsPlugin } from './unwatched-cache.js';
 const root = fileURLToPath(new URL('../../', import.meta.url));
 
 /** Return the production browser plugins. */
-export function standalonePlugins() {
+export function standalonePlugins(tools = standaloneVoiceTools()) {
   return [
-    ...localProviderPlugins({ realtime: { tools: standaloneVoiceTools() } }),
+    ...localProviderPlugins({ realtime: { tools }, gemini: { tools } }),
     localMcpPlugin(),
     apiNotFoundPlugin(),
     unwatchedRuntimeDirsPlugin(),
@@ -26,8 +26,9 @@ export default defineConfig(({ command, mode }) => {
   for (const [key, value] of Object.entries(loaded)) {
     if (process.env[key] === undefined) process.env[key] = value;
   }
+  const tools = standaloneVoiceTools();
   return createBrowserViteConfig({
-    plugins: standalonePlugins(),
+    plugins: standalonePlugins(tools),
     googleApiKey: process.env.GOOGLE_MAPS_API_KEY,
     cesiumToken: process.env.CESIUM_ION_TOKEN,
     mapillaryToken: process.env.MAPILLARY_CLIENT_TOKEN,
