@@ -159,13 +159,15 @@ After an unknown answer, the layer warns that a burst can exist and disables the
 
 ### SkyWatch archive scenes (key in `.env`)
 
-SkyWatch EarthCache gives one API for the satellite images of many operators. The route `/api/skywatch/scenes` searches its archive for the scenes of one box of at most 2500 km² and a window of at most 92 days. It answers only the machine that runs the server.
+SkyWatch EarthCache gives one API for the satellite images of many operators. The route `/api/skywatch/scenes` searches its archive for the scenes of one box of at most 2500 km² and a window of at most 92 days. It accepts only a JSON request from the same site, also through a reverse proxy that removes the forwarding headers.
 
 The route sends only the archive search and its result requests to one fixed address, and it keeps the key `SKYWATCH_API_KEY` in the server. It gives the id, the footprint, the times, the resolution, the operator and the product of each scene. It also gives the cloud cover, the coverage, the area, the price for each km², the cost and a thumbnail flag, and no image URL.
 
 The daily limit is 20 searches. `SKYWATCH_DAILY_SEARCHES` changes it, and the server keeps the count only in RAM. An answer stays in the store for 10 minutes. The route writes one line to the log of the server for each search, with no key and no URL.
 
 The public API description names no cost for a search. An order costs money, and this version has no route that orders a scene, asks for a price or asks for a new image. SkyWatch publishes no terms for the display of footprints or thumbnails, so use the data for yourself only. No layer shows the scenes yet, and no test sends a request to SkyWatch.
+
+The route `/api/skywatch/thumbnail/<id>` sends the thumbnail of a scene that a search of the last 10 minutes gave. It is off until `SKYWATCH_THUMBNAILS=true` is in `.env`. It sends only a PNG, JPEG or WebP image of at most 1 MiB whose first bytes show its type, and it keeps the thumbnail URL in the server. It sends the key only to `api.skywatch.co`, and it refuses a thumbnail URL with an IP address or a loopback name. It keeps each image for 10 minutes and allows 30 requests in each minute.
 
 ### Notes on the live sources
 
