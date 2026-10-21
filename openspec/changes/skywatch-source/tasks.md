@@ -23,9 +23,9 @@
 
 ## 3. Check on the host
 
-- [ ] 3.1 Run the tests of the provider on the host.
+- [ ] 3.1 Run the tests of the plugin on the host.
 - [ ] 3.2 Write `evidence/api-description.txt` with the address, the date, the version and the SHA-256 of the public API description.
-- [ ] 3.3 Run the named faults of the provider.
+- [ ] 3.3 Run the named faults of the plugin.
 - [ ] 3.4 Write `evidence/faults.txt` with the result of each fault.
 - [ ] 3.5 Run each test file on the host.
 - [ ] 3.6 Run the four checks of `make precheck` on the host.

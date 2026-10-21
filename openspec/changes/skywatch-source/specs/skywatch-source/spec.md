@@ -7,13 +7,17 @@ Origin: spec-first
 #### Scenario: Mount the two routes `skywatch-source-001`
 - **WHEN** a test installs the plugin and sends requests to `/api/skywatch/status`, `/api/skywatch/scenes` and `/api/skywatch/other`
 - **THEN** the first two paths get an answer, and the third path goes to `next` with no answer
-- **AND** a path below one of the two routes, such as `/api/skywatch/scenes/x`, goes to `next` with no answer
+- **AND** the path `/api/skywatch/scenes/x` goes to `next` with no answer
+- **AND** the plugin name is "skywatch-proxy"
+- **AND** `configureServer` and `configurePreviewServer` install the same routes
+- **AND** the list that `localProviderPlugins` returns holds this plugin once
 
 #### Scenario: Report the status `skywatch-source-002`
 - **WHEN** a GET request for `/api/skywatch/status` arrives from the same site
-- **THEN** the answer is `200` with `{"configured":true}` when `SKYWATCH_API_KEY` holds text that is not blank, and `{"configured":false}` when it does not
+- **THEN** the answer is `200` with `{"configured":true}` when `SKYWATCH_API_KEY` holds a character that is not white space
+- **AND** the answer is `200` with `{"configured":false}` when `SKYWATCH_API_KEY` is not set or holds only white space
 - **AND** a request with another method gets `405` with `{"error":"Method not allowed"}`
-- **AND** a cross-site request gets `403`, and the answer holds no part of the key
+- **AND** a request with the header `Sec-Fetch-Site: cross-site` gets `403`, and the answer holds no part of the key
 
 ### Requirement: Local requests only
 The scenes route MUST accept only a POST request that comes from this machine.
@@ -26,101 +30,119 @@ Origin: spec-first
 #### Scenario: Refuse a request from another machine `skywatch-source-004`
 - **WHEN** a POST request for `/api/skywatch/scenes` fails one check of `isLoopbackCommand()`
 - **THEN** the answer is `403` with `{"error":"cross_origin"}`, and the plugin sends no upstream request
-- **AND** the samples are a socket address of another machine, a forwarding header and a host name that is not a loopback name
-- **AND** the samples also include another origin and a content type that is not JSON
+- **AND** the samples include the socket address `192.0.2.10`, the proxy header `X-Forwarded-For` and the host name `example.test`
+- **AND** the samples include the origin `http://example.test` and the content type `text/plain`
 
 ### Requirement: Checked input
 The scenes route MUST accept only a JSON object with a box and two dates. It MUST refuse each other body before it reads the key.
 Origin: spec-first
 
 #### Scenario: Read the body `skywatch-source-005`
-- **WHEN** the body has more than 4096 bytes, is not JSON, is not an object, or has a field other than `bbox`, `start` and `end`
+- **WHEN** the body has more than 4096 bytes, is not JSON, or is not a JSON object
 - **THEN** the answer is `400` with `{"error":"bad_body"}`
-- **AND** a body of exactly 4096 bytes with a valid box and valid dates is accepted
+- **AND** a body with a field other than `bbox`, `start` and `end` gets the same answer
+- **AND** a body of exactly 4096 bytes with a valid box and valid dates does not get `bad_body`
 
 #### Scenario: Read the box `skywatch-source-006`
 - **WHEN** the body has the field `bbox`
 - **THEN** the route accepts an array of four finite numbers in the order west, south, east and north
 - **AND** west is less than east, and south is less than north
-- **AND** each longitude is from -180 to 180 and each latitude is from -90 to 90
-- **AND** each other value of `bbox`, or a body with no `bbox`, gets `400` with `{"error":"bad_bbox"}`
+- **AND** each longitude is from -180 to 180, and each latitude is from -90 to 90
+- **AND** each other value of `bbox` gets `400` with `{"error":"bad_bbox"}`
+- **AND** a body without `bbox` gets the same answer
 
 #### Scenario: Refuse a box of more than 2500 km² `skywatch-source-007`
 - **WHEN** the area of the box on a sphere with a radius of 6371008.8 m is more than 2500 km²
 - **THEN** the answer is `400` with `{"error":"area_too_large","maxKm2":2500}`
-- **AND** a box with an area of 2500 km² or less is accepted
+- **AND** the box `[0,0,0.4497,0.4497]` (about 2500.4 km²) gets that answer
+- **AND** the box `[0,0,0.4496,0.4496]` (about 2499.3 km²) does not get that answer
 
 #### Scenario: Read the dates `skywatch-source-008`
 - **WHEN** the body has the fields `start` and `end`
-- **THEN** the route accepts two calendar dates with the form `YYYY-MM-DD`, with `start` not after `end`
-- **AND** `end` is not after the UTC date of the server clock, and the window from `start` to `end` has at most 92 days
-- **AND** each other value of `start` or `end`, or a body with one of them missing, gets `400` with `{"error":"bad_dates"}`
+- **THEN** the route accepts two calendar dates with the form `YYYY-MM-DD`
+- **AND** `start` is not after `end`, and `end` is not after the UTC date of the server clock
+- **AND** `end` is at most 91 days after `start`, so the window has at most 92 calendar days
+- **AND** the window from `2026-01-01` to `2026-04-02` passes, and the window from `2026-01-01` to `2026-04-03` gets `bad_dates`
+- **AND** each other value of `start` or `end` gets `400` with `{"error":"bad_dates"}`
+- **AND** a body without one of the two fields gets the same answer
 - **AND** the samples include the date `2026-02-30`, which is not a calendar date
 
 ### Requirement: Key on the server
-The plugin MUST read the key from `SKYWATCH_API_KEY` on the server, and it MUST keep the key out of each answer and each log line.
+The plugin MUST read the key from `SKYWATCH_API_KEY` on the server. It MUST keep the key out of each answer and each log line.
 Origin: spec-first
 
 #### Scenario: Refuse a request without a key `skywatch-source-009`
-- **WHEN** a valid scenes request arrives and `SKYWATCH_API_KEY` is missing or holds only white space
+- **WHEN** a valid scenes request arrives, and `SKYWATCH_API_KEY` is not set or holds only white space
 - **THEN** the answer is `503` with `{"error":"no_key","keyRequired":true}`, and the plugin sends no upstream request
 
 #### Scenario: Keep the key out of the browser `skywatch-source-010`
-- **WHEN** the plugin answers requests for each route with a key of fixture text
-- **THEN** no answer body and no answer header holds the key text
-- **AND** the plugin sends the trimmed key only in the header `x-api-key` of an upstream request
+- **WHEN** the plugin answers requests for each route with the key " fixture-key-Q7 "
+- **THEN** no answer body and no answer header holds the text `fixture-key-Q7`
+- **AND** each upstream request has the header `x-api-key` with the value `fixture-key-Q7`
 
 ### Requirement: Two fixed upstream requests
-The plugin MUST send only two kinds of upstream request, to the origin `https://api.skywatch.co` and the path prefix `/earthcache/archive/search`.
+The plugin MUST send only two kinds of upstream request. Each request MUST go to the origin `https://api.skywatch.co`.
 Origin: spec-first
 
 #### Scenario: Start the search `skywatch-source-011`
-- **WHEN** the plugin starts an upstream search for a valid request
+- **WHEN** the plugin starts an upstream search for the box `[w,s,e,n]` and the dates `start` and `end`
 - **THEN** it sends a POST request to `https://api.skywatch.co/earthcache/archive/search`
-- **AND** the body is a JSON object with `location`, `start_date`, `end_date` and `order_by` with the value `-date`
-- **AND** `location` is a closed polygon of the five corners of the box
-- **AND** the headers are `x-api-key`, `Content-Type: application/json` and `Accept: application/json`, and the request does not follow a redirect
+- **AND** the body is the JSON text of an object with the four members below, and no other member
+- **AND** `location` is `{"type":"Polygon","coordinates":[[[w,s],[e,s],[e,n],[w,n],[w,s]]]}`
+- **AND** `start_date` is `start`, `end_date` is `end`, and `order_by` is `-date`
+- **AND** the headers are `x-api-key`, `Content-Type: application/json` and `Accept: application/json`
+- **AND** the request has the option `redirect: 'error'`
 
 #### Scenario: Read the search results `skywatch-source-012`
-- **WHEN** the upstream search answers `200` with a search id that has 1 to 128 letters, digits, hyphens or underscores
-- **THEN** the plugin sends GET requests to `https://api.skywatch.co/earthcache/archive/search/<id>/search_results?per_page=50`
-- **AND** while the answer is `202`, the plugin waits 2000 ms and sends the request again, at most 10 times in all
-- **AND** after the tenth answer `202`, the scenes route answers `504` with `{"error":"search_timeout"}`
-- **AND** a search id of another form gives the failure `bad_upstream`, and the plugin sends no results request
+- **WHEN** the search answers `200` with a JSON object whose `data.id` has 1 to 128 ASCII letters, digits, hyphens or underscores
+- **THEN** the plugin sends a GET request to `https://api.skywatch.co/earthcache/archive/search/<id>/search_results?per_page=50`
+- **AND** after each of the first nine answers `202`, the plugin waits 2000 ms and sends the same request again
+- **AND** when the tenth result request also gets `202`, the scenes route answers `504` with `{"error":"search_timeout"}`
+- **AND** each result request has the headers and the option of `skywatch-source-011`, and no body
+- **AND** a `data.id` of another form gives `502` with `{"error":"bad_upstream"}`, and the plugin sends no result request
 
 #### Scenario: Send no other upstream request `skywatch-source-013`
 - **WHEN** a test runs each route and each failure of this specification through a fetch function that records each URL and method
-- **THEN** each recorded request is one of the two requests of `skywatch-source-011` and `skywatch-source-012`
+- **THEN** each recorded request is one of the requests of `skywatch-source-011` and `skywatch-source-012`
 - **AND** no recorded URL holds `pipelines`, `price`, `orders`, `outputs` or `offerings`
 
 ### Requirement: Search control
-The plugin MUST limit the upstream searches with a daily count, a memory of answers and a rate limit.
+The plugin MUST limit the upstream searches with a daily count, an answer store and a rate limit.
 Origin: spec-first
 
 #### Scenario: Count the searches of the day `skywatch-source-014`
 - **WHEN** a valid scenes request needs a new upstream search
-- **THEN** the plugin counts the search against the limit of the UTC day before it sends the request
-- **AND** the limit is the whole number in `SKYWATCH_DAILY_SEARCHES` from 1 to 1000, or 20 when the value is missing or not such a number
-- **AND** when the count of the day has reached the limit, the answer is `429` with `{"error":"budget","used":<count>,"limit":<limit>}`, and the plugin sends no upstream request
-- **AND** the count starts again at 0 on the next UTC day
+- **THEN** the plugin adds 1 to the count of the UTC day before it sends the search request
+- **AND** the daily limit is the value of `SKYWATCH_DAILY_SEARCHES` when that value has only the digits of a number from 1 to 1000
+- **AND** the daily limit is 20 for each other value, and when the variable is not set
+- **AND** when the count of the day is equal to the limit, the answer is `429` with `{"error":"budget","used":<count>,"limit":<limit>}`, and the plugin sends no upstream request
+- **AND** the count is 0 at the start of each UTC day
 
-#### Scenario: Answer a repeat from memory `skywatch-source-015`
-- **WHEN** a scenes request has the same box and dates as a good answer of the last 600000 ms
-- **THEN** the plugin gives that answer with `cached` true, does not count a search and sends no upstream request
-- **AND** the memory keeps at most 32 answers and drops the oldest answer first
+#### Scenario: Answer a repeated request from the store `skywatch-source-015`
+- **WHEN** a scenes request has the same box and dates as a good answer that the store keeps
+- **THEN** the plugin gives the scenes of that answer with `cached` true, does not change the count and sends no upstream request
+- **AND** the `budget` of the answer has the count of the day at the time of the answer
+- **AND** the store gives an answer that is 599999 ms old, and it does not give an answer that is 600000 ms old
+- **AND** the store keeps at most 32 answers, and it removes the oldest answer first
 
 #### Scenario: Share an upstream search that is in flight `skywatch-source-016`
-- **WHEN** two scenes requests with the same box and dates arrive before the first upstream search ends
-- **THEN** the plugin sends one upstream search and counts one search, and both requests get the answer
+- **WHEN** a scenes request arrives while an upstream search for the same box and dates has not ended
+- **THEN** the request waits for that search, the plugin sends no other request, and the count does not change
+- **AND** the request gets the scenes of that search with `cached` true, or the failure of that search
 
 #### Scenario: Limit the requests `skywatch-source-017`
-- **WHEN** more than 6 scenes requests from this machine arrive in 60000 ms
+- **WHEN** more than 6 scenes requests reach the rate-limit step in 60000 ms
 - **THEN** each request after the sixth gets `429` with `{"error":"rate_limited"}` and the header `Retry-After: 60`
+- **AND** after 6 requests at the time 0 ms, the 7th request at 59999 ms gets that answer
+- **AND** after 6 requests at the time 0 ms, the 7th request at 60000 ms passes
+- **AND** a request that the store answers counts for this limit
 
 #### Scenario: Run the steps in order `skywatch-source-018`
-- **WHEN** a scenes request fails more than one step
-- **THEN** the answer is the answer of the first step that fails
-- **AND** the order of the steps is method, local request, rate limit, body, box, area, dates, key, memory, daily count and upstream
+- **WHEN** a scenes request meets more than one step that would answer
+- **THEN** the first step in this order answers: method, local request, rate limit, body, box, area, dates, key, store, daily count
+- **AND** the store step answers when the store keeps an answer, or when a search for the same box and dates is in flight
+- **AND** a request that the store step answers gets its answer when the count of the day is equal to the limit
+- **AND** the plugin sends an upstream search only when all ten steps pass
 
 ### Requirement: Upstream failures
 The plugin MUST give a named failure for each upstream request that does not give a valid document.
@@ -129,44 +151,60 @@ Origin: spec-first
 #### Scenario: Name the failure `skywatch-source-019`
 - **WHEN** an upstream request answers `401` or `403`
 - **THEN** the scenes route answers `403` with `{"error":"key_rejected","keyRejected":true}`
-- **AND** an answer `429` gives `429` with `{"error":"upstream_rate_limit","retryAfter":<s>}` and the header `Retry-After`
-- **AND** the number of seconds is the whole number of the upstream header, at most 600
-- **AND** the number is 60 when the upstream header is missing, is not a whole number or is less than 1
-- **AND** each other status, a network error, a time of more than 15000 ms for one request and a redirect give `502` with `{"error":"upstream_failed"}`
+- **AND** an answer `429` gives `429` with `{"error":"upstream_rate_limit","retryAfter":<s>}` and the header `Retry-After: <s>`
+- **AND** `<s>` is the number of the upstream header `Retry-After` when the header has only digits and the number is from 1 to 600
+- **AND** `<s>` is 600 when the header has only digits and the number is more than 600
+- **AND** `<s>` is 60 when the upstream answer has no `Retry-After` header, or a header of another form
+- **AND** each other status gives `502` with `{"error":"upstream_failed"}`, with the exceptions of `200` for each request and `202` for a result request
+- **AND** a network error, a redirect and a time of more than 15000 ms for one request give the same answer
+- **AND** the plugin reads the body only of an answer `200`
 - **AND** a body that is not JSON, a body of more than 4194304 bytes and a document of the wrong shape give `502` with `{"error":"bad_upstream"}`
-- **AND** a failure is not kept in the memory
+- **AND** the store keeps no failure
 
 ### Requirement: Filtered answer
-The scenes route MUST give only the allowed fields of each scene. It MUST keep the upstream image URLs and the order fields of the upstream out of the answer.
+The scenes route MUST give only the allowed fields of each scene. It MUST keep the upstream fields `preview_uri`, `thumbnail_uri`, `intersection`, `minimum_area_sq_km` and `off_nadir_angle` out of the answer.
 Origin: spec-first
 
 #### Scenario: Keep only the allowed fields `skywatch-source-020`
-- **WHEN** the results document has a `data` array of scenes
-- **THEN** each scene of the answer has only `id`, `start`, `end`, `footprint`, `resolutionM`, `provider`, `product`, `cloudPercent`, `coveragePercent`, `areaKm2`, `pricePerKm2`, `cost` and `thumbnail`
-- **AND** `thumbnail` is true when the upstream `thumbnail_uri` is an HTTPS URL, and false when it is not
-- **AND** `cost` is null when the upstream `cost` is not a finite number, and the same rule applies to each number field
-- **AND** `provider` and `product` are the upstream `source` and `product_name` with control characters removed and at most 120 code points
-- **AND** the route drops a scene with an `id` that does not match the rule of `skywatch-source-012`
-- **AND** the route drops a scene with a `start_time` that is not a valid time
-- **AND** the route drops a scene with a `location` that is not a valid polygon or multipolygon
-- **AND** a valid polygon has rings of 4 to 2000 positions
-- **AND** each position has a finite longitude from -180 to 180 and a finite latitude from -90 to 90
+- **WHEN** the results document is an object with an array `data`
+- **THEN** each scene of the answer has only the fields of the list below, from the upstream field after the arrow
+- **AND** the list is `id` ← `id`, `start` ← `start_time`, `end` ← `end_time`, `footprint` ← `location` and `resolutionM` ← `resolution`
+- **AND** the list continues with `provider` ← `source`, `product` ← `product_name`, `cloudPercent` ← `result_cloud_cover_percentage` and `coveragePercent` ← `location_coverage_percentage`
+- **AND** the list ends with `areaKm2` ← `area_sq_km`, `pricePerKm2` ← `price_per_sq_km`, `cost` ← `cost` and `thumbnail` ← `thumbnail_uri`
+- **AND** a valid time is a text that `Date.parse` reads as a finite number, and `start` and `end` are the `toISOString()` text of that time
+- **AND** `end` is null when `end_time` is not a valid time
+- **AND** `cloudPercent` and `coveragePercent` are finite numbers from 0 to 100, and the other number fields are finite numbers of 0 or more
+- **AND** each number field is null when the upstream value does not meet its rule, so the text "Upgrade your plan for price" gives null
+- **AND** `provider` and `product` have no control characters and at most 120 code points, and each is null when no text stays
+- **AND** `thumbnail` is true when `thumbnail_uri` is an absolute URL with the scheme `https:`, and false when it is not
+- **AND** `footprint` is `{"type":"Polygon","coordinates":[ring]}`, where the ring has the longitude and the latitude of each upstream position, with no third number
+- **AND** the route removes a scene with an `id` that does not meet the rule of `skywatch-source-012`
+- **AND** the route removes a scene with a `start_time` that is not a valid time
+- **AND** the route removes a scene with a `location` that is not a polygon with exactly one ring
+- **AND** a valid ring has 4 to 2000 positions, and its first position is equal to its last position
+- **AND** each position has 2 or 3 numbers, a finite longitude from -180 to 180 and a finite latitude from -90 to 90
 
 #### Scenario: Give the shape of the answer `skywatch-source-021`
 - **WHEN** the scenes route gives a good answer
-- **THEN** the answer is `200` with `source` `SkyWatch`, `scenes`, `count`, `total`, `truncated`, `cached` and `budget` (`used` and `limit` of the day)
-- **AND** the scenes are in the order of the newest `start` first, and the order of `id` for an equal `start`
-- **AND** `total` is the upstream `pagination.total` when it is a whole number not less than the count of the scenes
-- **AND** `total` is the count of the scenes when the upstream value is not such a number
-- **AND** `truncated` is true when `total` is more than `count`
+- **THEN** the answer is `200` with the fields `source`, `scenes`, `count`, `total`, `truncated`, `cached` and `budget`
+- **AND** `source` is "SkyWatch", and `budget` is an object with `used`, the count of the day, and `limit`, the daily limit
+- **AND** `scenes` holds the first 50 kept scenes in the order of the newest `start` first
+- **AND** scenes with an equal `start` are in the ascending code-unit order of `id`
+- **AND** `count` is the length of `scenes`
+- **AND** `total` is the upstream `pagination.total` when it is a whole number not less than the length of the upstream `data`
+- **AND** `total` is the length of the upstream `data` when the upstream value is not such a number
+- **AND** `truncated` is true when `total` is more than the length of the upstream `data`, or when more than 50 scenes stay after the checks
+- **AND** each answer of `/api/skywatch/scenes` has the headers `Content-Type: application/json; charset=utf-8` and `Cache-Control: no-store`
 
 ### Requirement: Request log
-The plugin MUST write one log line for each upstream search, and the line MUST hold no key and no URL of the upstream.
+The plugin MUST write one log line for each upstream search that it starts. A line MUST NOT hold the key text, a search id, a URL or a host name.
 Origin: spec-first
 
 #### Scenario: Log each upstream search `skywatch-source-022`
-- **WHEN** an upstream search ends
-- **THEN** for a good answer, the plugin writes one line that starts with `[skywatch] ok`
-- **AND** the line holds the count of scenes, the count of result requests and the time in milliseconds
-- **AND** the plugin writes one line that starts with `[skywatch] failed kind=<failure>` with the same counts and the time, when the search fails
-- **AND** no line holds the key text, a search id or a part of an upstream URL
+- **WHEN** a test gives the plugin the options `log`, `now` and a fake fetch function, and the clock moves 40 ms during a search
+- **THEN** a good answer with 3 scenes after 2 result requests gives exactly one line, "[skywatch] ok scenes=3 polls=2 ms=40"
+- **AND** a failure gives exactly one line, "[skywatch] failed kind=<failure> polls=<n> ms=40", where `<n>` is the number of result requests that the plugin sent
+- **AND** an answer `401` to the search request gives "[skywatch] failed kind=key_rejected polls=0 ms=40"
+- **AND** ten answers `202` give "[skywatch] failed kind=search_timeout polls=10 ms=40"
+- **AND** no line holds the key text, the search id, `https://` or `api.skywatch.co`
+- **AND** a request that the store answers, and each request that a step before the store refuses, writes no line
