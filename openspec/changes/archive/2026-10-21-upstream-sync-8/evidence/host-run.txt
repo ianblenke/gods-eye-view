@@ -827,7 +827,7 @@ src/voice/voiceCost.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 60 ℹ sk
 src/weatherEffectsMath.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 6 ℹ skipped 0 ℹ tests 6 
 src/worldFocus.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 10 ℹ skipped 0 ℹ tests 10 
 
-Round 1 addition: host run 3, on commit 2a11265e (after the round 1 corrections of D6, D7 and .env.example). Same command and file list rule as above. Start (UTC) 07:26:26Z, end (UTC) 07:33:54Z. Files: 814.
+Round 1 addition: host run 3, on commit 2a11265e (after the round 1 corrections of D7 and .env.example). Same command and file list rule as above. Start (UTC) 07:26:26Z, end (UTC) 07:33:54Z. Files: 814.
 Totals:
 tests 12045 pass 12029 fail 0 skipped 16
 Lines with an exit status other than 0: 0

@@ -4,7 +4,7 @@ The owner wants a sync more often than once each week. On 2026-10-21 the owner t
 Upstream has 248 commits after the seventh sync. The first-parent history of upstream has 25 commits in that range: 21 pull requests and four direct commits.
 
 The commits add Gemini Live as a second voice provider. They move the code that builds the view state for the voice tool `get_current_view_state` into a World Packet module.
-They add CCTV (traffic camera) packs for Taiwan freeways, Hong Kong and Florida, and ground heights for the Norwegian cameras. The Florida pack (FL511) stays off until the server sets `CCTV_FLORIDA_ENABLED`.
+They add CCTV (traffic camera) packs for Taiwan freeways, Hong Kong and Florida, and ground heights for the Norwegian cameras. The Florida pack (FL511) stays off until the server sets `CCTV_FLORIDA_ENABLED` to 1.
 
 In the Street Level layer, Mapillary, KartaView, Panoramax and Google Street View share one coverage layer and one photo viewer. One source is on at a time.
 The commits remove the movable and docked panels of Street Level, the movable panels of the rail and the disk cache of the Mapillary proxy.
@@ -21,7 +21,7 @@ Upstream pull request #1228 adds the Ontario 511 key `ONTARIO_511_API_KEY`. The 
 - Change the scenario `qa-scripts-023` for the two QA scripts that upstream removes.
 - Make three upstream test files wait for one immediate after they close their servers. Decision D6 gives the reason.
 - Add assertions to one upstream test of the Panoramax decoder, so that the coverage of `decode.js` is the same each time that the tests run. Decision D7 gives the reason.
-- Remove the duplicate key lines and the old comment of Launch Library 2 from `.env.example`.
+- Remove the fork lines of the Gemini key and the Ontario key from `.env.example`, with their comments. Remove the old comment of Launch Library 2 from that file.
 - Run the adopt command for each upstream file that the merge brings and that has a coverage gap.
 - Keep the upstream code as it is.
 
@@ -60,9 +60,14 @@ The upstream code adds no dependency, and `package-lock.json` does not change. `
 
 - Known limit `host-node`: Host tests run on Node 26, and the image uses Node 24.21.0. Host coverage cannot replace the image measurement.
 - Known limit `changelog`: Upstream puts each new changelog entry in a file under `changelog.d/`. The fork still edits `CHANGELOG.md`, so a later sync can have a conflict there again.
-- Known limit `osh-source`: The OSH (OpenSensorHub) layer is not in the catalog source contracts of upstream. This gap is older than this change.
-- Known limit `ontario-warnings`: The upstream Ontario loader writes a warning for each failed download. The retired scenario `live-sources-004` gave one warning in each process. For a missing key, the upstream loader also writes one warning in each process.
-- Known limit `ontario-error-text`: The upstream Ontario loader writes the message of each error that it catches. When an error message holds the key text, the key text goes into the log. The retired scenario `live-sources-005` kept the key text out of each warning.
-- Known limit `fl511`: The owner removed the fork pack of FL511 cameras (Pensacola) on 2026-10-10, in the change `remove-pensacola-pack`. Upstream adds a Florida pack that also uses FL511. The pack stays off until the server sets `CCTV_FLORIDA_ENABLED`, and this change does not set it.
+- Known limit `osh-source`: The OSH (OpenSensorHub) layer is not in the catalog source contracts of upstream. This limit is older than this change.
+- Known limit `ontario-warnings`: The upstream Ontario loader writes a warning for each failed download. The fork code of the retired scenario `live-sources-004` wrote one warning in each process. When the server has no key, the upstream loader also writes one warning in each process.
+- Known limit `ontario-error-text`: The upstream Ontario loader writes the message of each error that it catches. When an error message holds the key text, the loader writes the key text to the log. The fork code of the retired scenario `live-sources-005` kept the key text out of each warning.
+- Known limit `fl511`: The owner removed the fork pack of FL511 cameras (Pensacola) on 2026-10-10, in the change `remove-pensacola-pack`. Upstream adds a Florida pack that also uses FL511. The pack stays off until the server sets `CCTV_FLORIDA_ENABLED` to 1 (`server/providers/cctv/catalog.js`), and this change does not set it.
 - Known limit `security-gemini`: `SECURITY.md` names no Gemini key and no Gemini route. The upstream file names neither (`evidence/resolutions.txt`), and this change does not add them.
 - Known limit `silent-files`: The check of `evidence/silent-files.txt` reads only relative imports in code files. It does not find a fork change inside the body of an imported function. The file names these limits.
+- Round 2 minor `fl511-value`: The words "sets `CCTV_FLORIDA_ENABLED`" had two meanings. The pack turns on only for the value 1 (`server/providers/cctv/catalog.js`). The proposal now names the value.
+- Round 2 minor `d2-reason`: D2 and the REMOVED Reason named no reason for the default. They now give it: upstream adds the same key in the same parameter.
+- Round 2 minor `d7-tasks`: No task named the two mock functions of D7 or the comment lines of `.env.example`. Tasks 1.16 and 1.18 now name them.
+- Round 2 minor `leaks-count`: No command supported the number 85 in `evidence/leaks.txt`. A round 2 section of that file gives the command and its output.
+- Round 2 minor `fault-d7-blob`: `evidence/fault-d7.txt` did not name the version of the test file of the faults. A round 2 section gives the blob of that file.

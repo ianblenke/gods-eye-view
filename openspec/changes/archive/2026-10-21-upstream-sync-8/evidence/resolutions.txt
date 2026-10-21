@@ -32,7 +32,7 @@ Script: a short Python script of the lead (outside the repository) that compares
 $ git show 713285b554bbc99c8ae0261fe307beb3cbeb2adf:SECURITY.md | grep -ci gemini
 0
 
-4. .env.example: each of these keys is on one line of the file of the branch head.
+4. .env.example: each of these keys, and the text of Launch Library 2, is on one line of the file of the branch head.
 $ grep -c '^#\? *GEMINI_API_KEY=' .env.example
 1
 

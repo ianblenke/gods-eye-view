@@ -47,7 +47,7 @@ index b4beb1b8..a6e0ee2c 100644
  
  test('a sliced decode stops at the next turn once aborted', async () => {
 
-Round 1 addition. Date (UTC): 2026-10-21 07:23:11. Branch head: 098d2bd1. The commit 03260b95 adds two pass-through spies to the same test (setTimeout and performance.now) and asserts more than 20 calls of setTimeout with 0 ms and more than 20 calls of performance.now. evidence/fault-d7.txt gives three faults.
+Round 1 addition. Date (UTC): 2026-10-21 07:23:11. Branch head: 098d2bd1. The commit 03260b95 adds two pass-through mock functions to the same test (setTimeout and performance.now). The test asserts more than 20 calls of setTimeout with 0 ms and more than 20 calls of performance.now. evidence/fault-d7.txt gives three faults.
 Three runs of the test file: the counts and the exit status, then the probe of the functions of decode.js.
 run 1: ℹ tests 10 ℹ pass 10 ℹ fail 0 exit 0
 run 1 probe: functions 15 zero 0 

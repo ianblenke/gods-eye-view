@@ -38,3 +38,8 @@ $ node --test --test-reporter=tap src/layers/streetLevel/providers/panoramax/dec
 # tests 10
 # pass 10
 # fail 0
+
+Round 2 addition. Date (UTC): 2026-10-21 08:24:59. Branch head: 9a4cb5c4. The faults above ran on the test file of the working tree. The lead committed that file with no other edit as 03260b95, after the faults. The blob of the test file in that commit and on the branch head:
+$ git rev-parse 03260b95:src/layers/streetLevel/providers/panoramax/decode.test.mjs HEAD:src/layers/streetLevel/providers/panoramax/decode.test.mjs
+55c2ff46a3cbd75aeed8570d659e27db4976aa75
+55c2ff46a3cbd75aeed8570d659e27db4976aa75

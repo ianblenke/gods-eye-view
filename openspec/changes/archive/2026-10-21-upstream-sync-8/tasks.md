@@ -15,9 +15,10 @@
 - [x] 1.13 Make three upstream test files wait for one immediate after they close their servers.
 - [x] 1.14 Check the upstream code files that import a code file that the fork changed.
 - [x] 1.15 Add a call of `decodeCoverageTileSliced()` with the default pause function and clock to one upstream test.
-- [x] 1.16 Test the three faults of decision D7.
-- [x] 1.17 Remove the duplicate key lines from `.env.example`.
-- [x] 1.18 Remove the old comment of Launch Library 2 from `.env.example`.
+- [x] 1.16 Add two pass-through mock functions and their two count assertions to the same test.
+- [x] 1.17 Test the three faults of decision D7.
+- [x] 1.18 Remove the fork lines of the Gemini key and the Ontario key from `.env.example`, with their comments.
+- [x] 1.19 Remove the old comment of Launch Library 2 from `.env.example`.
 
 ## 2. Host evidence
 
@@ -35,6 +36,6 @@
 - [x] 3.4 Write the Purpose of `live-sources` from `design.md`.
 - [x] 3.5 Add the four retired IDs to `openspec/trace/retired-ids.json`.
 - [x] 3.6 Remove the four empty links of these IDs from `openspec/trace/links.json`.
-- [ ] 3.7 Run the two review agents.
-- [ ] 3.8 Write review.md.
+- [x] 3.7 Run the two review agents.
+- [x] 3.8 Write review.md.
 - [ ] 3.9 Run `make gates CHANGE=upstream-sync-8` with the image of decision D9 on the final tree.

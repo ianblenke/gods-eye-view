@@ -34,3 +34,10 @@ src/layers/launches/ingestion.test.mjs: rc=0 ℹ tests 9 ℹ pass 9 ℹ fail 0
 src/layers/satellites/stale.test.mjs: rc=0 ℹ tests 7 ℹ pass 7 ℹ fail 0 
 src/tooling/ll2Integration.test.mjs: rc=0 ℹ tests 10 ℹ pass 10 ℹ fail 0 
 Live resources after the change: 0 lines.
+
+Round 2 addition. Date (UTC): 2026-10-21 08:24:59. Branch head: 9a4cb5c4. The command for the count 85 of the sentence above (the base commit and the merge commit):
+$ git diff --name-only --diff-filter=AM 67342d00 4089abfe | grep -c '\.test\.mjs$'
+85
+$ git diff --name-only --diff-filter=AM 4089abfe 4b35414c | grep '\.test\.mjs$'
+src/data/cctvOntarioRows.test.mjs
+src/tooling/spec/qaRegister.test.mjs

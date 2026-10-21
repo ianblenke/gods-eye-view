@@ -50,16 +50,16 @@ The fault is to remove the option `gemini` from `standalonePlugins()`. The upstr
 The change `fix-ontario-511-key` added the module `server/providers/cctv/ontarioRequest.js`. The module reads `ONTARIO_511_API_KEY` and sends it in the parameter `key`.
 Upstream pull request #1228 adds the same key, in the same parameter, to `loadOntarioSourcesFromOpenData()` in `server/providers/cctv/sources.js`. It adds the upstream test file `server/providers/cctv/ontario511.test.mjs`.
 
-In sync 6, the owner decided to use the upstream geocoding routes in place of the fork routes. The lead uses the upstream Ontario code here for the same reason, as a default. The owner can change this decision.
+In sync 6, upstream and the fork each added a geocoding route on the same path, and the owner decided to use the upstream routes. Here upstream and the fork each add the same key in the same parameter. So the lead uses the upstream Ontario code as a default. The owner can change this decision.
 
 The upstream code does not keep two rules of the fork requirement "Ontario camera key":
-- The fork wrote one warning in each process for the failed requests (`live-sources-004`). The upstream code writes a warning for each failed download.
-- The fork kept the key text out of each warning (`live-sources-005`). The upstream code writes the message of each error that it catches. When an error message holds the key text, the key text goes into the log.
+- The fork wrote one warning in each process for the failed downloads (`live-sources-004`). The upstream code writes a warning for each failed download.
+- The fork kept the key text out of each warning (`live-sources-005`). The upstream code writes the message of each error that it catches. When an error message holds the key text, the loader writes the key text to the log.
 
 The Known limits `ontario-warnings` and `ontario-error-text` of the proposal name these rules.
 
 The change removes `server/providers/cctv/ontarioRequest.js` and its test file `src/data/cctvOntarioKey.test.mjs`. It removes the requirement "Ontario camera key" and retires its four scenarios: `live-sources-002`, `live-sources-003`, `live-sources-004` and `live-sources-005`.
-After the archive, the lead adds the four IDs to `openspec/trace/retired-ids.json`. The lead also removes their four empty entries from `openspec/trace/links.json`.
+After the archive, the lead adds the four IDs to `openspec/trace/retired-ids.json`. The lead also removes their four empty links from `openspec/trace/links.json`.
 
 The change also removes three tests from `src/data/cctvOntarioRows.test.mjs`: one test of `live-sources-003`, one test of `live-sources-004` and one test of `live-sources-005`. The first two tests import the removed module. The upstream code writes the text of an error to the warning, so the third test fails on the merged tree.
 The change removes the path of the module from `scripts/package-boundaries.json`.
@@ -104,7 +104,7 @@ Thus the function coverage of `decode.js` was not the same each time that the te
 The change adds assertions to an upstream test in `src/layers/streetLevel/providers/panoramax/decode.test.mjs`. The name of the test is "a sliced decode gives the page turns and decodes the same as one in one go".
 The test calls `decodeCoverageTileSliced()` again with a slice of 0 ms and the default pause function and clock. It compares the result with the result of `decodeCoverageTile()`.
 
-The test replaces `setTimeout()` and `performance.now()` with mock functions. Each mock function records each call and then calls the real function. It asserts more than 20 calls of `setTimeout()` with 0 ms and more than 20 calls of `performance.now()`.
+The test replaces `setTimeout()` and `performance.now()` with mock functions. Each mock function records each call and then calls the real function. The test asserts more than 20 calls of `setTimeout()` with 0 ms and more than 20 calls of `performance.now()`.
 
 A slice of 0 ms calls the pause function at each step, so `nextTask()` and the default clock run each time that the test runs.
 `evidence/decode-coverage.txt` gives the ratchet error and the function counts before and after the change. `evidence/fault-d7.txt` gives three faults in `decode.js`, and each fault makes the test fail.
