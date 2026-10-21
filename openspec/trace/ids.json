@@ -4885,7 +4885,7 @@
     "change": "reticulum-provider"
   },
   "skywatch-source-001": {
-    "hash": "510b4a6f2ecab01918f97c7c31e1fab96e4e34a9122ef7850525e7dbab0c3369",
+    "hash": "1c23ac49e69953b4b91ba4abc60b996cdc92034e49f405d3ef81150746eb496f",
     "since": "2026-10-21",
     "change": "skywatch-source"
   },
@@ -4945,7 +4945,7 @@
     "change": "skywatch-source"
   },
   "skywatch-source-013": {
-    "hash": "33a09ae7d8384541a8a912c67e52b8efd7717102b01e5e00d5246ebcf1d74ae2",
+    "hash": "b2fd95bf83a79148f64208acdff429ee5e66c2d1f87dca2938b26e5c6e3e842e",
     "since": "2026-10-21",
     "change": "skywatch-source"
   },
@@ -4970,12 +4970,12 @@
     "change": "skywatch-source"
   },
   "skywatch-source-018": {
-    "hash": "c21891ea0356c4c4a43e05ae71484ded040b449298316ac137afb9f44ac4fbdd",
+    "hash": "84cc9d0ee3f7a36a074441e5663634b249fe982bbf116f3df84aa7dfc512ec3f",
     "since": "2026-10-21",
     "change": "skywatch-source"
   },
   "skywatch-source-019": {
-    "hash": "e3157e922d290d692777731bd84b72552f7292c55a98ece988d11379891c48f1",
+    "hash": "e052e12e717156d28a507fafed6835e9ceea101047be1ea99a960c494973ddb2",
     "since": "2026-10-21",
     "change": "skywatch-source"
   },

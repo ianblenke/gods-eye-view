@@ -6273,7 +6273,7 @@
   ],
   "skywatch-source-005": [
     "src/data/skywatchInput.test.mjs › [skywatch-source-005] counts bytes and not characters, and counts all chunks",
-    "src/data/skywatchInput.test.mjs › [skywatch-source-005] gives null when the request body fails while it is read",
+    "src/data/skywatchInput.test.mjs › [skywatch-source-005] gives null when the request body fails while readBodyText reads it",
     "src/data/skywatchInput.test.mjs › [skywatch-source-005] reads a body of exactly 4096 bytes and refuses a body of 4097 bytes",
     "src/data/skywatchInput.test.mjs › [skywatch-source-005] refuses a body that is not JSON, not an object or has another field",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-005] refuses a body of more than 4096 bytes on the route"
@@ -6289,7 +6289,7 @@
   "skywatch-source-008": [
     "src/data/skywatchInput.test.mjs › [skywatch-source-008] accepts a window of 92 calendar days and refuses a window of 93",
     "src/data/skywatchInput.test.mjs › [skywatch-source-008] accepts an end on the UTC date of the server clock, and refuses the next day",
-    "src/data/skywatchInput.test.mjs › [skywatch-source-008] refuses a start after the end, a missing date and each other form"
+    "src/data/skywatchInput.test.mjs › [skywatch-source-008] refuses a start after the end, a body without a date and each other form"
   ],
   "skywatch-source-009": [
     "src/data/skywatchProxy.test.mjs › [skywatch-source-009] refuses a valid request when the key is not set or holds only white space"
@@ -6302,7 +6302,7 @@
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-011] uses the start and the end of the request, and the corners of the box in order"
   ],
   "skywatch-source-012": [
-    "src/data/skywatchProxy.test.mjs › [skywatch-source-012 skywatch-source-022] waits with setTimeout and logs with console.log when the options are not given",
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-012 skywatch-source-022] waits with setTimeout and logs with console.log when the test gives no options",
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-012 skywatch-source-019] refuses a search document that is not an object or has no object data",
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-012] reads the results with GET requests and the same headers, with no body",
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-012] refuses a search id of another form and sends no result request",
@@ -6310,12 +6310,12 @@
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-012] waits 2000 ms after each of the first nine answers 202 and stops after the tenth"
   ],
   "skywatch-source-013": [
-    "src/data/skywatchProxy.test.mjs › [skywatch-source-013] sends only the search request and the result requests in each flow"
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-013] sends only the search request and the result requests for each answer of the fake fetch"
   ],
   "skywatch-source-014": [
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-014] counts a failed search against the daily limit",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-014] counts a search while it is in flight, so a second box gets the budget refusal",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-014] counts each new search against the daily limit and refuses at the limit",
-    "src/data/skywatchProxy.test.mjs › [skywatch-source-014] counts the search before it sends the request, also for a failed search",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-014] reads the daily limit from SKYWATCH_DAILY_SEARCHES, and uses 20 for each other value",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-014] starts the count again at 0 on the next UTC day"
   ],
@@ -6329,18 +6329,21 @@
     "src/data/skywatchProxy.test.mjs › [skywatch-source-016] shares an upstream search that is in flight"
   ],
   "skywatch-source-017": [
-    "src/data/skywatchProxy.test.mjs › [skywatch-source-017] counts a request that the body read refuses",
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-017] counts a request that the body step refuses",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-017] refuses the 7th request in 60000 ms, and a stored answer counts"
   ],
   "skywatch-source-018": [
     "src/data/skywatchInput.test.mjs › [skywatch-source-018] checks the body, the box, the area and then the dates",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-018] answers with the first step that fails",
-    "src/data/skywatchProxy.test.mjs › [skywatch-source-018] checks the rate limit before the body, and the store before the daily count"
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-018] checks the key before the store",
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-018] checks the rate limit before the body, and the store before the daily count",
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-018] refuses a request of another machine before the rate limit"
   ],
   "skywatch-source-019": [
     "src/data/skywatchProxy.test.mjs › [skywatch-source-015 skywatch-source-019] keeps no failure in the store",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-019] gives the named failure of the scenes route for each upstream failure",
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-012 skywatch-source-019] refuses a search document that is not an object or has no object data",
+    "src/data/skywatchUpstream.test.mjs › [skywatch-source-019] clears the timer only after it reads the body",
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-019] gives bad_upstream for a body that is not JSON or is too large, and reads a body of 4194304 bytes",
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-019] gives the seconds of Retry-After for an answer 429",
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-019] gives upstream_failed for a network error and a redirect",
@@ -6349,10 +6352,10 @@
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-019] reads the body only of an answer 200",
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-019] refuses a results document that is not an object, or whose data is not an array",
     "src/data/skywatchUpstream.test.mjs › [skywatch-source-019] starts a timer of 15000 ms before each request and clears it after the body",
-    "src/data/skywatchUpstream.test.mjs › [skywatch-source-019] stops a request when its timer fires, also while it reads the body"
+    "src/data/skywatchUpstream.test.mjs › [skywatch-source-019] stops a request when its time limit ends, also while it reads the body"
   ],
   "skywatch-source-020": [
-    "src/data/skywatchScenes.test.mjs › [skywatch-source-020] accepts only a polygon with exactly one ring of 4 to 2000 closed positions",
+    "src/data/skywatchScenes.test.mjs › [skywatch-source-020] accepts only a polygon with exactly one closed ring of 4 to 2000 positions",
     "src/data/skywatchScenes.test.mjs › [skywatch-source-020] gives null for each number value that does not meet its rule",
     "src/data/skywatchScenes.test.mjs › [skywatch-source-020] gives the ISO text of a valid time, and null for an end_time that is not valid",
     "src/data/skywatchScenes.test.mjs › [skywatch-source-020] keeps only the allowed fields, from the named upstream fields",
@@ -6368,9 +6371,9 @@
     "src/data/skywatchScenes.test.mjs › [skywatch-source-021] sorts all kept scenes, newest start first and then by id, and keeps the first 50"
   ],
   "skywatch-source-022": [
-    "src/data/skywatchProxy.test.mjs › [skywatch-source-012 skywatch-source-022] waits with setTimeout and logs with console.log when the options are not given",
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-012 skywatch-source-022] waits with setTimeout and logs with console.log when the test gives no options",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-022] writes no key, search id, URL or host name, and no line for a request with no search",
-    "src/data/skywatchProxy.test.mjs › [skywatch-source-022] writes one line for a good search, with the count of the answer, the polls and the time",
+    "src/data/skywatchProxy.test.mjs › [skywatch-source-022] writes one line for a good search, with the count of the answer, the number of result requests and the time",
     "src/data/skywatchProxy.test.mjs › [skywatch-source-022] writes one line for each failure, with the number of result requests"
   ],
   "spec-lint-001": [
