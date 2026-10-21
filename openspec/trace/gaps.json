@@ -258,30 +258,30 @@
     },
     "scripts/fixtures/street-level/kartaView.mjs": {
       "loaded": true,
-      "lines": 12,
+      "lines": 10,
       "branches": 13,
-      "functions": 1,
+      "functions": 0,
       "totals": {
-        "lines": 371,
+        "lines": 366,
         "branches": 98,
-        "functions": 29
+        "functions": 28
       },
-      "sha": "f3b858b01ffb1873fcb9e73ba08422c315d8a313ae07bb84e85286113203dcb0",
+      "sha": "2f01df4711243a77568730f78550c9954bf748092a7822533cc24f3168e5f716",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
     "scripts/fixtures/street-level/mapillaryGraph.mjs": {
       "loaded": true,
-      "lines": 5,
+      "lines": 14,
       "branches": 5,
-      "functions": 0,
+      "functions": 1,
       "totals": {
-        "lines": 218,
-        "branches": 56,
-        "functions": 18
+        "lines": 206,
+        "branches": 45,
+        "functions": 16
       },
-      "sha": "e9cbf7561a6a513905c443b5cda1286056c895ae0247aeb5eeeeb6509f99ac9b",
+      "sha": "0bb5c282a76b1c38b57629b6c7568f4846a5996383a5cfdb384c4d9c3fe35383",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -296,7 +296,7 @@
         "branches": 87,
         "functions": 31
       },
-      "sha": "83833696a310fbfb626fcec8e0995c01f627468564ba1a30dd0aa734e44c54fe",
+      "sha": "b5c70a50404bf527b5ddfcc49e8f861f43d9b9253253f9c5a99dc82181b520dc",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -498,15 +498,15 @@
     },
     "scripts/precompute-cctv-heights.mjs": {
       "loaded": true,
-      "lines": 217,
+      "lines": 219,
       "branches": 3,
       "functions": 7,
       "totals": {
-        "lines": 487,
+        "lines": 489,
         "branches": 100,
         "functions": 31
       },
-      "sha": "02702a2fefcd5cfcd474394355dc8d96fe9e9cce66197477e89b97bba876e192",
+      "sha": "c12b2e6d297dfef6a79d7614a020bc14129473228b0d9fec8b73df8c24b9e74e",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -911,7 +911,7 @@
         "branches": 167,
         "functions": 11
       },
-      "sha": "78a6a1f38b2e1ce35f11faa9cd64fc48179126894e8f746e050c442f33da5bb9",
+      "sha": "cb39393b9666bcfd9c8cbbd774e51569ba99421033321d4166e445f1ade8e909",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -933,15 +933,15 @@
     },
     "server/providers/cctv/catalog.js": {
       "loaded": true,
-      "lines": 17,
+      "lines": 9,
       "branches": 6,
       "functions": 0,
       "totals": {
-        "lines": 333,
-        "branches": 62,
-        "functions": 40
+        "lines": 380,
+        "branches": 83,
+        "functions": 44
       },
-      "sha": "df60dc154998a2b862f691980b960cf99c71375e58a10516aa18664464f21072",
+      "sha": "773e57387ac9cb8011dd8cba17d5a9876d83673d6c44702b4432a7f64cde303c",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -997,11 +997,11 @@
       "branches": 13,
       "functions": 9,
       "totals": {
-        "lines": 639,
-        "branches": 140,
-        "functions": 35
+        "lines": 661,
+        "branches": 150,
+        "functions": 37
       },
-      "sha": "55fdd775149abae020c3565a3df7bc40309536cd2090ef64eaea5588da7b114f",
+      "sha": "5f567db921d066f5458c6ed3b5c704fe1d3865a4670e27d3e854b1f55f57cf09",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1023,15 +1023,15 @@
     },
     "server/providers/cctv/sources.js": {
       "loaded": true,
-      "lines": 231,
-      "branches": 177,
-      "functions": 2,
+      "lines": 198,
+      "branches": 213,
+      "functions": 3,
       "totals": {
-        "lines": 2772,
-        "branches": 874,
-        "functions": 72
+        "lines": 3636,
+        "branches": 1188,
+        "functions": 109
       },
-      "sha": "c0650060732ac6d7c244e4e6d1fcd336e5e93e5547107567d028d0b747286f17",
+      "sha": "67658e3396f9e5460ded7ab3d40709a1c49adbed2082963b8423ac9622e7314a",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1050,6 +1050,21 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
+    },
+    "server/providers/cctv/taiwan.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 12,
+      "functions": 1,
+      "totals": {
+        "lines": 303,
+        "branches": 90,
+        "functions": 14
+      },
+      "sha": "4a8383d209655f970705eb83fa020b378d5c4f9d5e55d538580ac980c3eb298d",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "server/providers/common/http.js": {
       "loaded": true,
@@ -1087,11 +1102,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 47,
-        "branches": 11,
-        "functions": 5
+        "lines": 92,
+        "branches": 32,
+        "functions": 9
       },
-      "sha": "939c679fd9cd183c6b6bc35863eae2e5f36068655893a7ba744aaaccbd52fadb",
+      "sha": "4979751dffdb8c383abe6c129a0df562d52fcf07c8ffb26ee034047dcfd2b7e3",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1099,14 +1114,14 @@
     "server/providers/common/same-site.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 1,
+      "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 43,
-        "branches": 13,
-        "functions": 3
+        "lines": 88,
+        "branches": 21,
+        "functions": 5
       },
-      "sha": "9264cb05252850d64f836538695ea480176c8e860d041d8929936d82504fe8f6",
+      "sha": "d7a272e33935cae0a43b6294e77c42d47becffd5248d27e1c0313203da31ff9b",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -1156,6 +1171,51 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "server/providers/gemini/config.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 53,
+        "branches": 11,
+        "functions": 3
+      },
+      "sha": "6504f317ff5e4cab28d4719ff94358efca9cf07602c38e993b08ee335d072290",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "server/providers/gemini/realtime.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 2,
+      "functions": 10,
+      "totals": {
+        "lines": 208,
+        "branches": 70,
+        "functions": 18
+      },
+      "sha": "bdf313622c9e8313a768f623b1a3591d3cfaf0deaf841c6d2d3f4ecbb316826c",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "server/providers/gemini/request.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 3,
+      "functions": 0,
+      "totals": {
+        "lines": 79,
+        "branches": 35,
+        "functions": 3
+      },
+      "sha": "b96fb7ae5584235f1e604ee5a8afd069f6607fcc509e4c9bdd59e73af91ef064",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "server/providers/gnssIntegrity.js": {
       "loaded": true,
       "lines": 0,
@@ -1186,6 +1246,21 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "server/providers/mapillary.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 3,
+      "functions": 0,
+      "totals": {
+        "lines": 106,
+        "branches": 37,
+        "functions": 9
+      },
+      "sha": "0aabb3e25c33da664e38af4b4022c7787d37e530bfe5d62a3c973aaf52fe9964",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "server/providers/mapillary/routes.js": {
       "loaded": true,
       "lines": 0,
@@ -1203,15 +1278,15 @@
     },
     "server/providers/mapillary/tiles.js": {
       "loaded": true,
-      "lines": 11,
-      "branches": 15,
-      "functions": 6,
+      "lines": 0,
+      "branches": 1,
+      "functions": 1,
       "totals": {
-        "lines": 518,
-        "branches": 179,
-        "functions": 64
+        "lines": 265,
+        "branches": 90,
+        "functions": 26
       },
-      "sha": "bfad7403f7a6d53c80206c2fe200c79d5273e5d7b94f4950397c673701ca3e92",
+      "sha": "d550313936487cbd23fc1096554b29d73da997d05650e5adf56a0d61fcdda522",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -1219,14 +1294,14 @@
     "server/providers/mapillary/trim.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 4,
+      "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 56,
-        "branches": 19,
-        "functions": 6
+        "lines": 43,
+        "branches": 15,
+        "functions": 4
       },
-      "sha": "85ee817b6c2664140657eadd4d5e958792052af862c7c8d2979d5e200331fb15",
+      "sha": "c338961b192e2f4dd058c86be2a3b6d9b0f840c6419e74cde2a44368983b29db",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -1597,26 +1672,26 @@
       "branches": 8,
       "functions": 0,
       "totals": {
-        "lines": 144,
-        "branches": 31,
+        "lines": 146,
+        "branches": 35,
         "functions": 10
       },
-      "sha": "75c4f752581d60da6ca479e603493913a7cdd6a9580c39ea81dd91155ba74d49",
+      "sha": "39decc03837bb94e008830ed02519f87d0692d8aec9cfc7beb72c24bed26acac",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "server/providers/terrain.js": {
       "loaded": true,
-      "lines": 33,
-      "branches": 11,
+      "lines": 23,
+      "branches": 6,
       "functions": 1,
       "totals": {
-        "lines": 219,
-        "branches": 46,
-        "functions": 10
+        "lines": 314,
+        "branches": 69,
+        "functions": 12
       },
-      "sha": "fb032237026b28cdac278a9028b2f1584c6b42b0163a0858dc9fc58b88db9f53",
+      "sha": "022e39f06062dc73eaa3c6042b6289e221ca7285eef2b72dd098cdd334881046",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1822,14 +1897,29 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 39,
+        "lines": 40,
         "branches": 5,
         "functions": 2
       },
-      "sha": "0210db65e321e2ee2a45e11dda5245669b96832ba1b66a4cd81d42222f12fdbb",
+      "sha": "550497844062aa02d89fc9f3e0aa39d885ad606bfc9ccedae00157f349f0c636",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
+    },
+    "src/agent/worldPacket.js": {
+      "loaded": true,
+      "lines": 4,
+      "branches": 9,
+      "functions": 0,
+      "totals": {
+        "lines": 170,
+        "branches": 60,
+        "functions": 8
+      },
+      "sha": "c3b3fd99f57f95cb67c2a916d6d497df66f95673952267f3c471076af41cb40e",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/annotations/annotationEngine.js": {
       "loaded": true,
@@ -1908,15 +1998,15 @@
     },
     "src/annotations/resolver.js": {
       "loaded": true,
-      "lines": 417,
-      "branches": 135,
+      "lines": 362,
+      "branches": 134,
       "functions": 16,
       "totals": {
-        "lines": 2117,
-        "branches": 524,
-        "functions": 68
+        "lines": 2149,
+        "branches": 569,
+        "functions": 70
       },
-      "sha": "54a9e17145050b54cbd3590c7dd2ecfa9e2e31e7a4d195008ceae53e02b8a1b2",
+      "sha": "dbdf99e38fac8c8c6181143f9494c8de683de58ffa045af2a1de72d3ef2dbd16",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -2212,11 +2302,11 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 52,
-        "branches": 13,
+        "lines": 42,
+        "branches": 7,
         "functions": 3
       },
-      "sha": "21e7ecd7f2c87a8b09da3e97c15b1f118d231ac8af2ca3b09ea6970a9b337960",
+      "sha": "aa362271d3aef6a3dd1ff085e23f6681052fb0befc3c56ef10bdcc88d5e513c8",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -2767,11 +2857,11 @@
       "branches": 59,
       "functions": 6,
       "totals": {
-        "lines": 1099,
-        "branches": 464,
+        "lines": 1111,
+        "branches": 480,
         "functions": 63
       },
-      "sha": "061196ceb3ab3808c6d99298b47d6237627f23e57a06333737b37e1fc070f32c",
+      "sha": "29a5cbfc4fa99e977048be0083f8580277842498eb623eec6b8e7f944ff8f700",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3022,11 +3112,11 @@
       "branches": 1,
       "functions": 2,
       "totals": {
-        "lines": 588,
+        "lines": 631,
         "branches": 23,
         "functions": 6
       },
-      "sha": "f5b73681823d093d2415c36e78a2f31d589e5c78db08224a2d91099abec1eb33",
+      "sha": "38bf5c5524f913b976fbfe706d740d040cda35463cb05a03142eb8b39b2c3bdb",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3544,14 +3634,14 @@
     "src/data/naturalEarthRegions.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 13,
+      "branches": 12,
       "functions": 0,
       "totals": {
-        "lines": 349,
+        "lines": 356,
         "branches": 84,
-        "functions": 15
+        "functions": 16
       },
-      "sha": "4f8eb8c7895c55c1b73341df8cf11cf21448f94939fbc160535d0414e78d18a9",
+      "sha": "6d63047477525d099772fdf12ffa3c6f7f5b48f18f0ab89d81f2617a9cc0e527",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3678,15 +3768,15 @@
     },
     "src/data/routePlausible.js": {
       "loaded": true,
-      "lines": 2,
-      "branches": 2,
+      "lines": 0,
+      "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 101,
-        "branches": 26,
-        "functions": 4
+        "lines": 128,
+        "branches": 32,
+        "functions": 5
       },
-      "sha": "b498dbea5ed7957835ba90a7cb64d906e5609bae76ddfeae2f6c97653b5df2ff",
+      "sha": "550e4ef3256c079bcb6353561f40b9b536b432469c860649d12ef263d7804184",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3937,11 +4027,11 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 198,
-        "branches": 33,
-        "functions": 8
+        "lines": 161,
+        "branches": 22,
+        "functions": 7
       },
-      "sha": "88861c32d29554e286919eca0ece72c2170cb7cde2eaeed661688d1506a98325",
+      "sha": "5457bd2f5c5d57b53192e4f34df1869ba79ec1a56ea46bea768df1efcd18377e",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4083,15 +4173,15 @@
     },
     "src/keySetup.js": {
       "loaded": true,
-      "lines": 376,
-      "branches": 22,
-      "functions": 15,
+      "lines": 303,
+      "branches": 29,
+      "functions": 13,
       "totals": {
-        "lines": 743,
-        "branches": 104,
+        "lines": 745,
+        "branches": 117,
         "functions": 35
       },
-      "sha": "8768638e78aa69df8dc7a1d9f2563755fb156958da47150523311b694f01a48f",
+      "sha": "9d6c9f2db8780409785c9ee42155bdc06c9ff4a76a6418f1c0bb7ab9943de38f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4102,11 +4192,11 @@
       "branches": 12,
       "functions": 0,
       "totals": {
-        "lines": 638,
-        "branches": 171,
+        "lines": 649,
+        "branches": 174,
         "functions": 31
       },
-      "sha": "be2f991345bb3b029dcab5f277431941e670c8d4b337a585e6d536017a321449",
+      "sha": "64d3c65cf2194d43359bbf0b490fa382a293ba68e277ba0f7e3cd027f28dc00b",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4698,15 +4788,15 @@
     },
     "src/layers/cctv/frames.js": {
       "loaded": true,
-      "lines": 215,
-      "branches": 0,
-      "functions": 7,
+      "lines": 139,
+      "branches": 18,
+      "functions": 4,
       "totals": {
-        "lines": 368,
-        "branches": 11,
-        "functions": 11
+        "lines": 402,
+        "branches": 40,
+        "functions": 12
       },
-      "sha": "2156fedc4b8bb5fd8cd40d9f1f8e8bea2a210688b827b7e31c392451a83e2b1a",
+      "sha": "0b09253fa3060d40b9f0863f42b4e75e129fdbace902524c4b22b6f5cfab926f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4923,15 +5013,15 @@
     },
     "src/layers/cctv/rendering.js": {
       "loaded": true,
-      "lines": 66,
-      "branches": 24,
-      "functions": 2,
+      "lines": 31,
+      "branches": 19,
+      "functions": 3,
       "totals": {
-        "lines": 331,
-        "branches": 73,
-        "functions": 8
+        "lines": 336,
+        "branches": 76,
+        "functions": 11
       },
-      "sha": "bfd241a32b36995604d67634c7c4e6fb84c2a415bb3c30fd31901376b647d92c",
+      "sha": "918f4027dfd999295fdc09dc82d3b86f7df1b3408a2f7b2925081cfe6e8b7c82",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5677,11 +5767,11 @@
       "branches": 6,
       "functions": 1,
       "totals": {
-        "lines": 69,
+        "lines": 70,
         "branches": 12,
         "functions": 6
       },
-      "sha": "5548b5bb15b058334c9d00bb77fc5375c76ab023be9f06b51861140051741899",
+      "sha": "3ff0f8069fca8a79c3470f096a14b072533b7c8b14d3da4dd6c78e1889d1371f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5707,11 +5797,11 @@
       "branches": 11,
       "functions": 2,
       "totals": {
-        "lines": 268,
-        "branches": 51,
+        "lines": 276,
+        "branches": 61,
         "functions": 19
       },
-      "sha": "4c63d0dbfb17179912685c6f6ecb83245ad25cbf57b8b0439cfeb4993a81b827",
+      "sha": "13982f26193ee04e597d35816d6f22f25f72c4ee81fb344a951b0b714ce17a33",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5737,11 +5827,11 @@
       "branches": 5,
       "functions": 2,
       "totals": {
-        "lines": 175,
-        "branches": 20,
+        "lines": 177,
+        "branches": 24,
         "functions": 8
       },
-      "sha": "3129e893d537f4569f0d43794f6ee3aba4e1989984955362193505900bba04fb",
+      "sha": "0e026aa16ade19ce800caab851db624c9040d1595a0d9395a74e3ae08f13ec98",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6558,15 +6648,15 @@
     },
     "src/layers/satellites/catalog.js": {
       "loaded": true,
-      "lines": 52,
-      "branches": 13,
-      "functions": 2,
+      "lines": 34,
+      "branches": 15,
+      "functions": 1,
       "totals": {
-        "lines": 240,
-        "branches": 25,
+        "lines": 242,
+        "branches": 36,
         "functions": 7
       },
-      "sha": "7b325116dcf587e82d915ca80686afc797d078084c4a63bc8fe28ebc0fd0dc21",
+      "sha": "ac19a9e1bfa309a4033e7f66232bd6e7332fcc933848c9d8a83e83ee21bfec8c",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6574,14 +6664,14 @@
     "src/layers/satellites/controls.js": {
       "loaded": true,
       "lines": 126,
-      "branches": 32,
+      "branches": 31,
       "functions": 5,
       "totals": {
-        "lines": 571,
-        "branches": 108,
+        "lines": 574,
+        "branches": 112,
         "functions": 21
       },
-      "sha": "0dbbfa46e83972561243e35d1573c1a392b95ae49b4e022d8b28f7f8928c930e",
+      "sha": "8f66a12270dfc55e24315f150e7a884951b4cdc9b7f8324f097db079d60ab925",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6603,15 +6693,15 @@
     },
     "src/layers/satellites/ingestion.js": {
       "loaded": true,
-      "lines": 11,
-      "branches": 11,
+      "lines": 3,
+      "branches": 9,
       "functions": 0,
       "totals": {
-        "lines": 197,
-        "branches": 26,
+        "lines": 208,
+        "branches": 53,
         "functions": 7
       },
-      "sha": "9b816a504c327affb324b18c499c682489807150cb9aecc4994707e8828141a6",
+      "sha": "2e6524a103405801ee0b238a160c870c431ddcaa65318ef85677db0f74a9e377",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6648,15 +6738,15 @@
     },
     "src/layers/satellites/lifecycle.js": {
       "loaded": true,
-      "lines": 148,
-      "branches": 0,
-      "functions": 4,
+      "lines": 55,
+      "branches": 1,
+      "functions": 2,
       "totals": {
-        "lines": 179,
-        "branches": 2,
+        "lines": 183,
+        "branches": 5,
         "functions": 5
       },
-      "sha": "0f2c8f0134cb6b6ebf8874f966afd418a6d787bb3e08d75f46acfc162ee0ba92",
+      "sha": "5b280e1e44cad0142769b1015f7a4fd749e8eec18d2a5e4da9a4345f68d18715",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6798,30 +6888,30 @@
     },
     "src/layers/streetLevel/index.js": {
       "loaded": true,
-      "lines": 44,
-      "branches": 27,
-      "functions": 16,
+      "lines": 8,
+      "branches": 16,
+      "functions": 9,
       "totals": {
-        "lines": 785,
-        "branches": 260,
-        "functions": 95
+        "lines": 701,
+        "branches": 228,
+        "functions": 82
       },
-      "sha": "19ca7b91fff3024c3e8052fbad797e7b556cf7068822245c56a4a79893bd231e",
+      "sha": "c6a631073cbf67fc2d80712552d8ab2a0c1bf91d277d3dc5a7ca15e0faf32618",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
     "src/layers/streetLevel/lineCoverage.js": {
       "loaded": true,
-      "lines": 24,
-      "branches": 33,
-      "functions": 3,
+      "lines": 4,
+      "branches": 17,
+      "functions": 0,
       "totals": {
-        "lines": 1076,
-        "branches": 359,
-        "functions": 75
+        "lines": 527,
+        "branches": 163,
+        "functions": 36
       },
-      "sha": "dc42cb19f2622a7e6028d0322bfda0348321b2d2ba6022fac387375c940d80b4",
+      "sha": "382f902b5a3f8220badce099ca9adcad4bb68d5f8f3f75d1fd198ad251cdd799",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -6832,11 +6922,11 @@
       "branches": 6,
       "functions": 0,
       "totals": {
-        "lines": 155,
-        "branches": 54,
-        "functions": 14
+        "lines": 109,
+        "branches": 35,
+        "functions": 10
       },
-      "sha": "2ea337265e9355fe0f29ba1f2b961072b20dc1e87453a69cc8aea4f153315248",
+      "sha": "bf8226ea6e16c1aa247bc0236bb2eea0f1445bf2f047df2a9b678f112a747aa7",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -6877,11 +6967,11 @@
       "branches": 38,
       "functions": 7,
       "totals": {
-        "lines": 926,
-        "branches": 369,
-        "functions": 66
+        "lines": 942,
+        "branches": 370,
+        "functions": 67
       },
-      "sha": "3eb642e97052c854c1786888c3d56cc1c4c68c50c2e0e4aaa707327b8652a2cd",
+      "sha": "9d8c60afe59d60214c6c51096c09fed7e5f4acc96b1c43a0139ef3ffa2570a93",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -6890,13 +6980,13 @@
       "loaded": true,
       "lines": 0,
       "branches": 0,
-      "functions": 2,
+      "functions": 1,
       "totals": {
-        "lines": 185,
+        "lines": 181,
         "branches": 48,
-        "functions": 24
+        "functions": 23
       },
-      "sha": "4365b8a465165dab28c65470ee14992d303e98ef759e05f6f9ee543a95e78e6e",
+      "sha": "2bfbcb4bb2b0841073d8f923dbba1be440315d281bf6fd436d662ba001a57550",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -6941,22 +7031,22 @@
         "branches": 62,
         "functions": 12
       },
-      "sha": "5dff3c3a566f2be383ea3c8b100ea8f428ffe8c9a2a19a29cc72ba816a2dcaf7",
+      "sha": "588fa740497575b01cd338bfacfced52c8c2902dc84aae93bd3fd0e67fca5cc1",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
     "src/layers/streetLevel/providers/kartaview/index.js": {
       "loaded": true,
-      "lines": 4,
+      "lines": 2,
       "branches": 23,
-      "functions": 3,
+      "functions": 2,
       "totals": {
-        "lines": 611,
-        "branches": 181,
-        "functions": 58
+        "lines": 578,
+        "branches": 180,
+        "functions": 56
       },
-      "sha": "e68d5171761f07fcd0b2c461f8e04b8c8d506fef33c4fda18136afd42c4768d2",
+      "sha": "15ee2027f2c631f322f780fb19615b6e97040fdf099e62194825f9ff733a40f5",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -6967,11 +7057,11 @@
       "branches": 6,
       "functions": 0,
       "totals": {
-        "lines": 399,
+        "lines": 398,
         "branches": 109,
         "functions": 19
       },
-      "sha": "cd410aa57f0a8dc2618e991b36e93191626cc97aeb0a2f0e058100ee31bb6145",
+      "sha": "1851e5c96daa563d68f502a5a94b2ab6d062ba2851ee92e97e401d4681491450",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -7012,11 +7102,11 @@
       "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 127,
-        "branches": 35,
-        "functions": 14
+        "lines": 115,
+        "branches": 31,
+        "functions": 13
       },
-      "sha": "1c8b07a41e801b6b220e6bf075fe680d1f464e5ba89b297949b43dfb1d8ceab9",
+      "sha": "5180c708fe4d074b8f37f620c11249a250c3483288aa9a162c4edeaa867d4d1d",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -7024,29 +7114,29 @@
     "src/layers/streetLevel/providers/mapillary/decode.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 10,
+      "branches": 5,
       "functions": 0,
       "totals": {
-        "lines": 70,
-        "branches": 26,
+        "lines": 40,
+        "branches": 14,
         "functions": 2
       },
-      "sha": "b2e369258c8b3cce3e1eff5abccba897b6bb2e4ccd62e4255dcf5c2036b8a7a5",
+      "sha": "17db1e819e554744d83bc6362e28e29b86ceac27d670ea8f7ee764746f4e21f6",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
     "src/layers/streetLevel/providers/mapillary/index.js": {
       "loaded": true,
-      "lines": 15,
-      "branches": 3,
-      "functions": 6,
+      "lines": 21,
+      "branches": 2,
+      "functions": 2,
       "totals": {
-        "lines": 220,
+        "lines": 201,
         "branches": 29,
-        "functions": 21
+        "functions": 20
       },
-      "sha": "22443b726aa9b18512ae51f1acd2633377d554f7b6ea17b9b5ede7bae3994e1b",
+      "sha": "c5dff523bb618baedc0a31270564aede0ee5da3c4fd52642299bd1c8a03afe82",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -7057,11 +7147,11 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 83,
+        "lines": 74,
         "branches": 5,
         "functions": 2
       },
-      "sha": "6a528c498146239c710374c7c36d203b48a988a985e6f7638d57165cdba79587",
+      "sha": "a15b1ce6ccfa5c80292d55ee14ead7d329e48d8b3528d8650b528143423edaeb",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -7084,59 +7174,59 @@
     "src/layers/streetLevel/providers/mapillary/source.js": {
       "loaded": true,
       "lines": 10,
-      "branches": 8,
+      "branches": 7,
       "functions": 3,
       "totals": {
-        "lines": 148,
-        "branches": 32,
-        "functions": 11
+        "lines": 127,
+        "branches": 30,
+        "functions": 10
       },
-      "sha": "4052d127f02ef0037508a4a86054775b5b4c199b5ade25c0cd345667372e8b08",
+      "sha": "dc19f689244dff710e7bc4af3ea17d47b4c7ec2ad1b244e6f4451e4ca8466d92",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
     "src/layers/streetLevel/providers/mapillary/viewer.js": {
       "loaded": true,
-      "lines": 17,
-      "branches": 22,
+      "lines": 16,
+      "branches": 20,
       "functions": 4,
       "totals": {
-        "lines": 231,
-        "branches": 69,
-        "functions": 24
+        "lines": 221,
+        "branches": 59,
+        "functions": 22
       },
-      "sha": "54238adbfac2cedd179f61f98248da88c51f275d2c4672afea82795d7350c720",
+      "sha": "e5ba73a7cd94c50a1b07c858c411821673d8763c121d2770c32cefaabe5d4744",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
     "src/layers/streetLevel/providers/panoramax/decode.js": {
       "loaded": true,
-      "lines": 7,
+      "lines": 2,
       "branches": 16,
-      "functions": 1,
+      "functions": 0,
       "totals": {
-        "lines": 291,
-        "branches": 86,
-        "functions": 13
+        "lines": 238,
+        "branches": 74,
+        "functions": 14
       },
-      "sha": "3ce5183c976148fdc306d11ff127dc476d055b610be39333567137264711b17f",
+      "sha": "031093c72522de27e5d5150170a90be3c1659f29c6d75658d52f9fe7b42d1234",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
     "src/layers/streetLevel/providers/panoramax/index.js": {
       "loaded": true,
-      "lines": 7,
-      "branches": 8,
-      "functions": 4,
+      "lines": 3,
+      "branches": 7,
+      "functions": 2,
       "totals": {
-        "lines": 644,
-        "branches": 177,
-        "functions": 64
+        "lines": 578,
+        "branches": 160,
+        "functions": 61
       },
-      "sha": "805472801e3e77c04762507bebc1dc6ca5177bbc8b01e3a65f2de500c697cdd4",
+      "sha": "8699c2ae97464a95a0901b443fc31fb2a94f7491b7e35fbae76d3c9ebb419848",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -7147,11 +7237,11 @@
       "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 322,
+        "lines": 312,
         "branches": 97,
         "functions": 15
       },
-      "sha": "e5495fa86107afb05daed174f02b04dd1ddd4a1f27f5a446bfb674eb67540ecc",
+      "sha": "60dc69c6ee219c9244349f31f6f0cf4738aee18cf726b60736b143390e06bc61",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -7192,41 +7282,41 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 202,
+        "lines": 192,
         "branches": 50,
         "functions": 7
       },
-      "sha": "9841b2dfd16b22045d516004a3a87a30b6e28fdbeb5b940805ae687a3333caec",
+      "sha": "8572bada99091a67a1b2fa3d433b43fef946092f5483d24a03dda0c69379df74",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
     "src/layers/streetLevel/selection.js": {
       "loaded": true,
-      "lines": 5,
-      "branches": 19,
+      "lines": 0,
+      "branches": 10,
       "functions": 0,
       "totals": {
-        "lines": 205,
-        "branches": 73,
-        "functions": 18
+        "lines": 92,
+        "branches": 31,
+        "functions": 7
       },
-      "sha": "e22f8b8cc8460ded7d179afe2ced8e0affb87d35852a8c4453e6c39e41a2281a",
+      "sha": "9d0608ea0654fe45b5f92827621dcc3386fe265ce704768a9147fd94cfadb4fa",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
     "src/layers/streetLevel/sequenceCones.js": {
       "loaded": true,
-      "lines": 7,
-      "branches": 14,
-      "functions": 2,
+      "lines": 0,
+      "branches": 7,
+      "functions": 0,
       "totals": {
-        "lines": 334,
-        "branches": 95,
-        "functions": 28
+        "lines": 231,
+        "branches": 53,
+        "functions": 15
       },
-      "sha": "8b4a3293e099f4bd30f5857f23cc16dfbdfd5cade060916d71066eca1fd7c0a4",
+      "sha": "6733cc7b4ca006d3cfef78ff4b69f061a82451811a2d5a11e82b8342c8c747a3",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -7234,44 +7324,44 @@
     "src/layers/streetLevel/tileMath.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 2,
+      "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 214,
-        "branches": 84,
-        "functions": 22
+        "lines": 153,
+        "branches": 51,
+        "functions": 19
       },
-      "sha": "966de74d8beeec55f26e59f649fdf545cb714a430266f67e7dfd9918e09038cf",
+      "sha": "876888253ed33dba66efc58336465f9ac9d407662a0e1d4754e37f7b9bfd4b02",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
     "src/layers/streetLevel/view.js": {
       "loaded": true,
-      "lines": 12,
-      "branches": 18,
-      "functions": 0,
+      "lines": 20,
+      "branches": 17,
+      "functions": 1,
       "totals": {
-        "lines": 297,
-        "branches": 110,
-        "functions": 16
+        "lines": 284,
+        "branches": 97,
+        "functions": 17
       },
-      "sha": "d257f06ca0ea5a9bb1b69748ac3f501bd52f7ee139c37ca115eba10ecc64ad45",
+      "sha": "3c0e5006d05804fc07c7e873fad11a904cbf65adfa47a64cfd941a00713391bd",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
     "src/layers/streetLevel/viewerHost.js": {
       "loaded": true,
-      "lines": 16,
-      "branches": 12,
+      "lines": 6,
+      "branches": 8,
       "functions": 2,
       "totals": {
-        "lines": 254,
-        "branches": 128,
-        "functions": 17
+        "lines": 191,
+        "branches": 93,
+        "functions": 14
       },
-      "sha": "db594e553f3bd41578771291f3a7fa1428c33df4ac66625453dbfda617062a54",
+      "sha": "0aff9d434eda82551d29084f61ce7b824b6787a1acbede5b0ab93c82b17efcac",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -9172,11 +9262,11 @@
       "branches": 7,
       "functions": 0,
       "totals": {
-        "lines": 195,
+        "lines": 191,
         "branches": 28,
         "functions": 5
       },
-      "sha": "0c5b4c1bc9a15b3f98e72e2f14dfdc2adc0bd6eef9e43eba7e3138dc2286eb1e",
+      "sha": "6bebf8b473ff12f31637b0eeec4009fac120d053c02793f13f6c3dd4c4901870",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -9768,15 +9858,15 @@
     },
     "src/standalone/tools.js": {
       "loaded": false,
-      "lines": 22,
+      "lines": 26,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 22,
+        "lines": 26,
         "branches": null,
         "functions": null
       },
-      "sha": "4f06c3d826753996c3ed3a1356dac4c2705fe2034ed29a6cfdc26f401ef882f4",
+      "sha": "1801f256efb778987c3cdadbf66543b2d89aa3397398f8ccf2abf503444d9e59",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -9795,6 +9885,36 @@
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
+    },
+    "src/testSupport/geminiIntegrationFixture.mjs": {
+      "loaded": true,
+      "lines": 13,
+      "branches": 3,
+      "functions": 8,
+      "totals": {
+        "lines": 364,
+        "branches": 84,
+        "functions": 79
+      },
+      "sha": "bf61f93df7a303b9584576e183af2a0c6301c06bc52e56e5d655ce8bf137719f",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/testSupport/geminiNativeHarness.mjs": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 1,
+      "totals": {
+        "lines": 251,
+        "branches": 87,
+        "functions": 63
+      },
+      "sha": "a0e5947294a5359ba521e04d69b3f42a33c942db5295e496ce45441974c6eda6",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/testSupport/googleStreetViewFakes.mjs": {
       "loaded": true,
@@ -9843,15 +9963,15 @@
     },
     "src/testSupport/streetLevelFakes.mjs": {
       "loaded": true,
-      "lines": 0,
+      "lines": 2,
       "branches": 0,
-      "functions": 7,
+      "functions": 11,
       "totals": {
-        "lines": 237,
-        "branches": 37,
-        "functions": 41
+        "lines": 362,
+        "branches": 64,
+        "functions": 65
       },
-      "sha": "15792bc8f5795e726369d0c382be11d3879f5a2f62562a7b1f61cb601ae76516",
+      "sha": "cf839035a300cc4af1d4544da46a3bdbb579a317e441584ad4dbfd723b7859f1",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -9967,11 +10087,11 @@
       "branches": 19,
       "functions": 0,
       "totals": {
-        "lines": 389,
-        "branches": 137,
-        "functions": 30
+        "lines": 448,
+        "branches": 157,
+        "functions": 34
       },
-      "sha": "055575dbfb0241c6316a121a447887bdfd5df3a5638be46f7fedf99ded56ae41",
+      "sha": "216fd3e783e0910423b94efe0f281ee6aa18e841fe98fd11120a63703ce11400",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -10084,14 +10204,14 @@
     "src/tools/queries/maritime.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 4,
+      "branches": 6,
       "functions": 0,
       "totals": {
-        "lines": 234,
-        "branches": 50,
-        "functions": 19
+        "lines": 268,
+        "branches": 66,
+        "functions": 21
       },
-      "sha": "43edb94c58a614b32222c169553ba805bcab8deb42cdfd1df2438f63c915775f",
+      "sha": "514a4705bf242d510a42ef1d3c75b1fe5709ab58867b7b4cece0c67bd6e71d17",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -10263,15 +10383,15 @@
     },
     "src/ui/applicationShell.js": {
       "loaded": true,
-      "lines": 1218,
+      "lines": 1211,
       "branches": 4,
-      "functions": 58,
+      "functions": 57,
       "totals": {
-        "lines": 1779,
+        "lines": 1755,
         "branches": 22,
-        "functions": 68
+        "functions": 67
       },
-      "sha": "4fec949d053e849897fcced4ca1f20f4e65e0c307dd9c24758ae3274833f6a26",
+      "sha": "6f75d325c4abcfee494fbdc84d64903559d069808ad8bb13466a9c1ed5f7bd8e",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -10864,14 +10984,14 @@
     "src/ui/layerBindings.js": {
       "loaded": true,
       "lines": 95,
-      "branches": 5,
+      "branches": 4,
       "functions": 12,
       "totals": {
-        "lines": 293,
-        "branches": 48,
-        "functions": 24
+        "lines": 298,
+        "branches": 49,
+        "functions": 25
       },
-      "sha": "bdea28adebf67887dc68e2858998477e222be999b8dd36ccfe1223fd65185f44",
+      "sha": "8dd89775c6f8ced584d66bf61e57eb99fc9b3a5ee522cb81f071c2c2d10723c8",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -11043,15 +11163,15 @@
     },
     "src/ui/panelChrome.js": {
       "loaded": true,
-      "lines": 379,
-      "branches": 31,
-      "functions": 27,
+      "lines": 338,
+      "branches": 29,
+      "functions": 30,
       "totals": {
-        "lines": 655,
-        "branches": 105,
-        "functions": 30
+        "lines": 661,
+        "branches": 116,
+        "functions": 36
       },
-      "sha": "450c66dd816ecb21edbc317e03d4ba22c7ab68b5320e851e8553c8da9d58c155",
+      "sha": "0b48befc325412e0728538eeac163b667b273b7c7ef6ad7ce803eea44b360747",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -11073,15 +11193,15 @@
     },
     "src/ui/panelLayoutController.js": {
       "loaded": true,
-      "lines": 261,
-      "branches": 15,
+      "lines": 250,
+      "branches": 13,
       "functions": 9,
       "totals": {
-        "lines": 500,
-        "branches": 48,
+        "lines": 487,
+        "branches": 44,
         "functions": 18
       },
-      "sha": "2fe3c086055130a3a892342afaa6cbbc39b89d04583e4a82a383a381f1520851",
+      "sha": "373a3ee51d94b1b1725cc2fc2f0b4ba0d923fff53895f857696ffccf87a538b6",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -11103,15 +11223,15 @@
     },
     "src/ui/panelPositionControls.js": {
       "loaded": true,
-      "lines": 97,
-      "branches": 34,
-      "functions": 10,
+      "lines": 28,
+      "branches": 8,
+      "functions": 2,
       "totals": {
-        "lines": 844,
-        "branches": 180,
-        "functions": 69
+        "lines": 100,
+        "branches": 20,
+        "functions": 8
       },
-      "sha": "42c16f1a84df56b112d3e4b845a22b8bf3708cdd9eab551a16cab91a0c237b52",
+      "sha": "ed23d408824197791cdf90dc06ec8dcef9f390e52f1cd4219ddaff5e092570a7",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -11303,10 +11423,10 @@
       "functions": 0,
       "totals": {
         "lines": 345,
-        "branches": 117,
+        "branches": 116,
         "functions": 24
       },
-      "sha": "828db909afdecdad25a818c5213b527e3c3a3334b93e978a2681914fdb6df7f8",
+      "sha": "bf22e9d251567b459cc63150967590839cf7dbc7df79e2a13a650d7b3f112d29",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -11403,15 +11523,15 @@
     },
     "src/ui/shellFacade.js": {
       "loaded": true,
-      "lines": 528,
+      "lines": 510,
       "branches": 0,
-      "functions": 263,
+      "functions": 254,
       "totals": {
-        "lines": 1540,
+        "lines": 1454,
         "branches": 3,
-        "functions": 265
+        "functions": 256
       },
-      "sha": "7a9ab1e430519b5d48146839d60ac2d1a67633d857f8159a503618386d02edd5",
+      "sha": "53a43d9837129e1d7517566a2fdfe87cab3810ea798f0ef062d2b4fb9e450340",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -11448,15 +11568,15 @@
     },
     "src/ui/streetLevelControls.js": {
       "loaded": true,
-      "lines": 34,
-      "branches": 32,
-      "functions": 8,
+      "lines": 27,
+      "branches": 28,
+      "functions": 4,
       "totals": {
-        "lines": 680,
-        "branches": 205,
-        "functions": 67
+        "lines": 536,
+        "branches": 166,
+        "functions": 59
       },
-      "sha": "cde7cda0b00c45aa7767be2543d03ff4db35cfdbc853f8a501827ba3e635ac8a",
+      "sha": "b498f4932f419387235c332c4d533913f135f3c0db9a8d16bd5290b10fec57f3",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -11464,14 +11584,14 @@
     "src/ui/streetLevelPresentation.js": {
       "loaded": true,
       "lines": 14,
-      "branches": 12,
+      "branches": 19,
       "functions": 1,
       "totals": {
-        "lines": 331,
-        "branches": 139,
-        "functions": 23
+        "lines": 333,
+        "branches": 158,
+        "functions": 24
       },
-      "sha": "59a3305cb201c212e7cf52885802dc39ba80b4e02f9894356cbca9644d54c595",
+      "sha": "8d5108dc680d165a9df87dbef850d4060f23e51293123f8a1b682898faa2a73c",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -11613,30 +11733,30 @@
     },
     "src/voice/commands.js": {
       "loaded": true,
-      "lines": 5,
-      "branches": 0,
-      "functions": 1,
+      "lines": 3,
+      "branches": 1,
+      "functions": 0,
       "totals": {
-        "lines": 10,
-        "branches": 1,
+        "lines": 18,
+        "branches": 4,
         "functions": 1
       },
-      "sha": "5412b2b11072518a9f9b4ce4fcc086b724b5f713cc105c4077d481512080c73c",
+      "sha": "0c8b6f7f3ffb4240c623d9b14ad50a4a71fd5357750b5038240d2b4610f9542b",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/voice/control.js": {
       "loaded": true,
-      "lines": 94,
+      "lines": 100,
       "branches": 1,
       "functions": 1,
       "totals": {
-        "lines": 123,
+        "lines": 129,
         "branches": 8,
         "functions": 2
       },
-      "sha": "8cc3b3c2441a9faa34e454e89a6fb3d6d1c1f19540f3f7cb5dec40a10c4dc549",
+      "sha": "21c87bcbe3cda0fb9b7db6933f088fc199f9a92964945789ba29bcea6e84447e",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -11671,32 +11791,77 @@
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
+    "src/voice/geminiAudio.js": {
+      "loaded": true,
+      "lines": 6,
+      "branches": 13,
+      "functions": 1,
+      "totals": {
+        "lines": 380,
+        "branches": 124,
+        "functions": 24
+      },
+      "sha": "6d791a6fef954d276712bfc7bfe5efe5296f0b22261374e4b123d3d1479b2ad2",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiCaptureWorklet.js": {
+      "loaded": false,
+      "lines": 125,
+      "branches": null,
+      "functions": null,
+      "totals": {
+        "lines": 125,
+        "branches": null,
+        "functions": null
+      },
+      "sha": "e94388044b5c3036a322f5be63dc13d291949a413797f9dcc82c338935f08cd4",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiSession.js": {
+      "loaded": true,
+      "lines": 131,
+      "branches": 117,
+      "functions": 33,
+      "totals": {
+        "lines": 2511,
+        "branches": 1019,
+        "functions": 177
+      },
+      "sha": "9e1bf12cbbb21d2a276769b2859dae14b7f9062385bb0d7eb225a466eff5758f",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/voice/gevActions.js": {
       "loaded": true,
-      "lines": 1777,
-      "branches": 342,
-      "functions": 69,
+      "lines": 1676,
+      "branches": 334,
+      "functions": 67,
       "totals": {
-        "lines": 5023,
-        "branches": 1200,
-        "functions": 203
+        "lines": 4885,
+        "branches": 1204,
+        "functions": 195
       },
-      "sha": "0b699a4059fe954aa089a4ea5d567802e8b453ce846389183a305d029a8050df",
+      "sha": "1d40b26b8df5877322a8c92e62b2eb0cb05bf4f488596571a4232199c4c0cd95",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/voice/gevRealtime.js": {
       "loaded": true,
-      "lines": 36,
+      "lines": 34,
       "branches": 1,
       "functions": 1,
       "totals": {
-        "lines": 70,
+        "lines": 68,
         "branches": 12,
         "functions": 6
       },
-      "sha": "fc5160bccfeebb45500aa6bc325dac3028ed091516bd4534a7184808c7ae43be",
+      "sha": "9281f7868ed57c6f86c3fae1f998c97ec9c6ec75638a2ca930c8290c5da5afd6",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -11749,14 +11914,14 @@
     "src/voice/pointerContext.js": {
       "loaded": true,
       "lines": 11,
-      "branches": 21,
+      "branches": 22,
       "functions": 4,
       "totals": {
-        "lines": 366,
-        "branches": 127,
-        "functions": 31
+        "lines": 430,
+        "branches": 170,
+        "functions": 34
       },
-      "sha": "18c78ab1e1b1006584253db7d038f604642929c33034d7b4cd20cd041229d23b",
+      "sha": "b6595f2d9f892a3eeaaead9a50daa32b410a2d02cda75c290550d6f51d81ba89",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -11791,6 +11956,21 @@
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
+    "src/voice/providerCommands.js": {
+      "loaded": true,
+      "lines": 3,
+      "branches": 11,
+      "functions": 1,
+      "totals": {
+        "lines": 161,
+        "branches": 72,
+        "functions": 19
+      },
+      "sha": "3f37f936f216d2981870bed9162fe958dd6b1ca8bf0b444f466f88f7775ee48b",
+      "untrue": false,
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/voice/realtimeBackend.js": {
       "loaded": true,
       "lines": 3,
@@ -11824,14 +12004,14 @@
     "src/voice/realtimeController.js": {
       "loaded": true,
       "lines": 20,
-      "branches": 14,
+      "branches": 13,
       "functions": 14,
       "totals": {
-        "lines": 503,
-        "branches": 176,
+        "lines": 486,
+        "branches": 161,
         "functions": 97
       },
-      "sha": "13927df21f6f2e1c7570992d07844502b808eaaacc466cb519b162543e423d85",
+      "sha": "21372eb49613c81a0577c0cb29e7ee8d61ed269d2196d1032c34044395619997",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -11958,30 +12138,30 @@
     },
     "src/voice/realtimeRadio.js": {
       "loaded": true,
-      "lines": 14,
-      "branches": 10,
+      "lines": 3,
+      "branches": 8,
       "functions": 0,
       "totals": {
-        "lines": 365,
-        "branches": 104,
-        "functions": 38
+        "lines": 386,
+        "branches": 119,
+        "functions": 39
       },
-      "sha": "28cb8fa823609bb6364b03699e0c6376abb559b7938ec21f715c3f627af705d4",
+      "sha": "a704bee182ccecf8571ff64c07e6483552154711ed0a05a92ca4a3588c684292",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/voice/realtimeSession.js": {
       "loaded": true,
-      "lines": 31,
-      "branches": 0,
-      "functions": 1,
+      "lines": 6,
+      "branches": 1,
+      "functions": 3,
       "totals": {
-        "lines": 35,
-        "branches": 1,
-        "functions": 1
+        "lines": 36,
+        "branches": 9,
+        "functions": 10
       },
-      "sha": "d5df2c064ff5e7c0f56f35f560881782f96cf5d9259284a54b89d87f8e1bd5af",
+      "sha": "56d21b43131fcef19f6caa5225f463af98bbf7e3986c45a4060952c98d6e64e7",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -11989,14 +12169,14 @@
     "src/voice/realtimeTurns.js": {
       "loaded": true,
       "lines": 61,
-      "branches": 57,
+      "branches": 55,
       "functions": 0,
       "totals": {
         "lines": 1078,
-        "branches": 325,
+        "branches": 336,
         "functions": 39
       },
-      "sha": "07bb1cf4b6b0b5ca74ca1575d82f3f2aa542dd9bd861f17a037dceffc508fad2",
+      "sha": "f743f1b882e295ce4ead19ebb390121c067c3fff8fe0a1ccf0d40f5333dcfc3e",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -12049,29 +12229,29 @@
     "src/voice/session.js": {
       "loaded": true,
       "lines": 6,
-      "branches": 15,
+      "branches": 11,
       "functions": 1,
       "totals": {
-        "lines": 184,
-        "branches": 78,
+        "lines": 190,
+        "branches": 93,
         "functions": 20
       },
-      "sha": "ab3ba1657e9e75cc5670ffac1fa81ac544d239f3ebad83a6fd3662c405cf872c",
+      "sha": "d52c4ceb45505824a10db7532bb99bf8f2fc409a8456262f05c044082e8d9b8c",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/voice/sessionCommands.js": {
       "loaded": true,
-      "lines": 22,
-      "branches": 19,
-      "functions": 3,
+      "lines": 9,
+      "branches": 7,
+      "functions": 2,
       "totals": {
-        "lines": 148,
-        "branches": 42,
-        "functions": 11
+        "lines": 180,
+        "branches": 72,
+        "functions": 13
       },
-      "sha": "602c1ece0cac3d87bdc0b246a3d2e6656170db45a0f7c32875b3954007a52593",
+      "sha": "b6458c492fbce51851511b2970bf93afb0459997a686d2286c977f7d06f0d4ea",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -12303,6 +12483,34 @@
     }
   },
   "untracedTests": {
+    "server/providers/cctv/ontario511.test.mjs": {
+      "names": {
+        "a 400 points at the key by name, never by value": 1,
+        "a 401 points at the key by name, never by value": 1,
+        "a 403 points at the key by name, never by value": 1,
+        "a 429 is reported without blaming the key": 1,
+        "a 500 is reported without blaming the key": 1,
+        "a 503 is reported without blaming the key": 1,
+        "the source cap is read from the same environment as the key": 1,
+        "with a key the camera list is requested with it and parsed": 1,
+        "without ONTARIO_511_API_KEY the Ontario pack is skipped, logged once": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "server/providers/common/request.test.mjs": {
+      "names": {
+        "a prior data observer can abort synchronously without retaining or resolving that chunk": 1,
+        "already-aborted and already-closed requests settle and release their listeners": 1,
+        "default and cancellable readers preserve byte caps and UTF-8 across chunks": 1,
+        "default overflow rejects before end and drains without pausing or destroying": 1,
+        "early close and request error reject once; successful end wins over later abort": 1,
+        "overflow keeps its first failure through later abort and stream errors": 1,
+        "partial abort settles before end, discards late data and guards errors until close": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "server/providers/transitHistory.test.mjs": {
       "names": {
         "128-fix ring and bounded epoch contexts preserve breaks, never scene heights": 2,
@@ -12318,14 +12526,32 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/agent/worldPacket.test.mjs": {
+      "names": {
+        "World Packet ages feeds against the clock when now is not a finite number": 1,
+        "World Packet and voice preserve enabled-only payload and count disabled layers": 1,
+        "World Packet keeps stale/unavailable feed semantics distinct from empty": 1,
+        "World Packet matches the pre-extraction get_current_view_state payload": 1,
+        "World Packet preserves get_current_view_state parity": 1,
+        "World Packet rejects null options with the camera requirement": 1,
+        "voice get_current_view_state still returns the pre-extraction payload": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/annotations/adminOutline.test.mjs": {
       "names": {
         "\"Texas\", \"Travis County, Texas\" and \"Bavaria\" outline offline": 1,
         "Georgia resolves from camera geography without a geocoder": 1,
+        "Gold Coast in Australia cannot acquire its West African namesake outline": 1,
+        "cancellation while a bundled admin lookup is pending cannot publish an annotation": 1,
         "country asks and geocoded country scopes use the bundled outline": 1,
         "duplicate county names go to the one near the camera": 1,
+        "geocoded natural outlines respect district and around intent": 1,
         "multi-part outlines carry every part and hole": 1,
+        "natural annotation outlines require a geocoded anchor": 1,
         "non-admin asks and entity facts keep the existing path": 1,
+        "overlapping natural candidates continue through geocoding without choosing a ring": 1,
         "the engine keeps every part on the mark, drawn at once or upgraded": 1
       },
       "origin": "upstream-sync-2",
@@ -12456,7 +12682,11 @@
         "region ring: a geocoder-typed state resolves from the bundled pack": 1,
         "region ring: a slow admin-boundary lookup returns region-timeout within the budget": 1,
         "region ring: an unbounded budget waits for the lookup": 1,
-        "region ring: bundled states and counties resolve without a geocoder": 1
+        "region ring: bundled states and counties resolve without a geocoder": 1,
+        "region ring: cancellation during bundled lookup and geocode never returns a region": 1,
+        "region ring: duplicate natural names need a containing geocoded anchor": 1,
+        "region ring: geocoded administrative scope wins over duplicate natural geography": 1,
+        "region ring: outside and overlapping geocoded natural anchors stay unresolved": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -13480,17 +13710,30 @@
         "analyst: a follow-up naming other layers than the last answer is refused": 1,
         "analyst: a radius query centers on the active contact, not the parked camera": 1,
         "analyst: a region lookup timeout is reported as region-timeout": 1,
+        "analyst: a rejected superseded region lookup returns cancellation and retains its prior cohort": 1,
         "analyst: a subject without usable coordinates cannot lend its name to a camera-centred count": 1,
+        "analyst: an aborted owner cannot commit a region provider that returns a late success": 1,
         "analyst: an explicit center still wins over the active contact": 1,
+        "analyst: an explicit replacement region replaces retained provenance": 1,
+        "analyst: an explicit scope without provenance clears the retained region source": 1,
         "analyst: attribute filter — above 40,000 ft (~12,192 m)": 1,
         "analyst: cancelled pre-commit work cannot replace follow-up memory": 1,
         "analyst: count flights over a region": 1,
         "analyst: every scope names itself in words": 1,
         "analyst: failed pre-commit work cannot replace follow-up memory": 1,
+        "analyst: filter-only follow-ups retain the region source without resolving again": 1,
         "analyst: follow-up re-filters the remembered set without re-snapshot": 1,
         "analyst: follow-ups preserve partial and unanswered coverage": 1,
+        "analyst: live region AbortError propagates without changing memory": 1,
+        "analyst: live region Error propagates without changing memory": 1,
         "analyst: military flag + region compose": 1,
         "analyst: nearest sorting attaches distanceKm ascending": 1,
+        "analyst: pre-commit displayed cohort retains replacement boundary source and its feed provenance": 1,
+        "analyst: pre-commit displayed cohort retains window without a boundary source and its feed provenance": 1,
+        "analyst: real region resolver cancellation preserves memory (custom error reason)": 1,
+        "analyst: real region resolver cancellation preserves memory (default abort reason)": 1,
+        "analyst: real region resolver cancellation preserves memory (primitive reason and revoked authority)": 1,
+        "analyst: region coverage identifies the source of the boundary used for counting": 1,
         "analyst: region lookup receives and obeys the owning action signal": 1,
         "analyst: route fields queryable from cached enrichment only": 1,
         "analyst: satellites and local infrastructure are queryable layers": 1,
@@ -13684,6 +13927,7 @@
         "calibration v2: malformed/partial entries are dropped defensively": 1,
         "calibration v2: removing an entry (reset) then re-writing produces an empty store": 1,
         "calibrationPatchMovesAnchor: only north/east translation re-resolves ground": 1,
+        "camera icons are violet for video feeds, cyan for stills, amber when active": 1,
         "cap center sits rangeM along the view axis from the mount (ε < 0.5 m)": 1,
         "cap rectangle spans 2·halfW × 2·halfH (ε < 0.5 m)": 1,
         "clamped pose keeps corner/plane coincidence and the rigid 2·halfW × 2·halfH span": 1,
@@ -13773,8 +14017,11 @@
     "src/data/cctvCatalogCap.test.mjs": {
       "names": {
         "a duplicate inside one pack takes one slot, not two": 1,
+        "a failed background refresh keeps the catalog, warns once, and waits a TTL to retry": 1,
         "a pack trimmed to its nearest cameras reports how many it offered": 1,
         "a short pack releases its turns to the others": 1,
+        "an empty background refresh keeps the catalog and waits a TTL before fetching again": 1,
+        "an expired catalog is served at once while a slow pack refreshes in the background": 1,
         "duplicate ids resolve last-pack-wins and count against the winning pack": 1,
         "over the cap the packs share it round-robin, and the last pack is never starved": 1,
         "resolveCatalogCap bounds the env value and falls back to the default": 1,
@@ -13830,7 +14077,15 @@
       "names": {
         "Tallinn catalog loads curated ristmikud stills only": 1,
         "Tarktee DATEX image parser rejects non-official hosts": 1,
-        "Tarktee DATEX parsers join location UUIDs to image URLs": 1
+        "Tarktee DATEX parsers join location UUIDs to image URLs": 1,
+        "Tarktee DATEX requests wait 30 s, past the slow answers measured live": 1,
+        "Tarktee loader cancels fulfilled bodies when either fetch rejects > https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraImages, delayed sibling: false": 1,
+        "Tarktee loader cancels fulfilled bodies when either fetch rejects > https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraImages, delayed sibling: true": 1,
+        "Tarktee loader cancels fulfilled bodies when either fetch rejects > https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraLocations, delayed sibling: false": 1,
+        "Tarktee loader cancels fulfilled bodies when either fetch rejects > https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraLocations, delayed sibling: true": 1,
+        "Tarktee loader cancels the sibling body when one feed fails or overflows the byte cap": 1,
+        "Tarktee loader deduplicates cameras sharing an image number before the cap": 1,
+        "Tarktee loader refuses a redirect and cancels both response bodies": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -13848,6 +14103,25 @@
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
+    },
+    "src/data/cctvFlorida.test.mjs": {
+      "names": {
+        "NOT DIRECTIONAL takes the id-hash fallback at low confidence": 1,
+        "a failed later page keeps the pages already read": 1,
+        "a redirect on any page drops the whole pack and releases it": 1,
+        "a service that ignores resultOffset stops at the page ceiling with a warning": 1,
+        "an FL511 feature maps to a source on a pinned HTTPS frame host": 1,
+        "an oversized catalog page is refused": 1,
+        "camera ids come from the image channel, not the repeating ID column": 1,
+        "isLikelyFloridaCoordinate spans the state and rejects the rest": 1,
+        "pages shorter than requested keep paging while the server says more remain": 1,
+        "rows outside Florida, off-host frames and unusable rows are dropped": 1,
+        "the Florida lane stays off unless CCTV_FLORIDA_ENABLED=1": 1,
+        "the loader pages until exceededTransferLimit clears and collapses repeated rows": 1,
+        "with CCTV_FLORIDA_ENABLED=1 the Florida lane is wired into the catalog": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/data/cctvFootprint.test.mjs": {
       "names": {
@@ -13881,6 +14155,27 @@
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
+    },
+    "src/data/cctvHk.test.mjs": {
+      "names": {
+        "CCTV_HK_ENABLED=0 keeps the lane from being loaded at all": 1,
+        "a lowered HK cap still keeps Sha Tin when New Territories anchors are set": 1,
+        "a nameless row still gets a label": 1,
+        "a reduced catalog cap thins every pack instead of dropping HK": 1,
+        "an HK row maps to a source on the pinned HTTPS frame host": 1,
+        "an upstream failure yields an empty pack and releases the response": 1,
+        "frame URLs are rebuilt from the key and pinned to the TD host": 1,
+        "rows outside Hong Kong, off-host frames and unusable keys are dropped": 1,
+        "the HK lane is wired into the catalog and its loader runs": 1,
+        "the HK pack default sits above the full TD catalog and anchors the New Territories": 1,
+        "the XML parser reads each image block": 1,
+        "the catalog fetch refuses redirects and oversized bodies": 1,
+        "the loader reads the keyless catalog and collapses duplicate ids": 1,
+        "the shipped catalog ceiling is not raised to make room for this pack": 1,
+        "the unselected label is the description, trimmed to the code width": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/data/cctvHlsStream.test.mjs": {
       "names": {
@@ -14071,6 +14366,28 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/data/cctvTaiwan.test.mjs": {
+      "names": {
+        "CCTV_TAIWAN_ENABLED=0 makes no Freeway Bureau request": 1,
+        "CCTV_TAIWAN_MAX_SOURCES is clamped to 1-2000": 1,
+        "Chinese place names in CCTVID stay in the record without shaping the key": 1,
+        "a catalog over the byte cap or a failed request contributes an empty pack": 1,
+        "a failed download is not retried until the backoff ends": 1,
+        "a failed download serves the last good table": 1,
+        "a redirected or failed catalog contributes an empty pack": 1,
+        "camera numbers that are UUIDs keep their case in the frame URL only": 1,
+        "coordinates outside Taiwan, swapped or missing are rejected": 1,
+        "each camera server maps its stream path to its own still path only": 1,
+        "loader deduplicates cameras that share a camera number": 1,
+        "names fall back to the published ID when the row has no road details": 1,
+        "numeric character references in the table are decoded": 1,
+        "off-host, downgraded or malformed stream URLs never enter the proxy registry": 1,
+        "parses the MOTC 2.0 table and registers the same camera still": 1,
+        "the Taiwan pack is in the catalog by default": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/data/cctvToronto.test.mjs": {
       "names": {
         "CCTV_TORONTO_ENABLED=0 keeps the lane from being loaded at all": 1,
@@ -14111,11 +14428,36 @@
     "src/data/cctvVegvesen.test.mjs": {
       "names": {
         "CCTV_VEGVESEN_ENABLED=0 keeps the lane from being loaded": 1,
+        "CCTV_VEGVESEN_HEIGHTS=0 skips the lookup": 1,
+        "Kartverket heights come in batches of 20, matched by echoed coordinates": 1,
+        "Retry-After sets the backoff, bounded to [1 min, 1 h]": 1,
+        "a 429 backs off for its Retry-After, not the default": 1,
+        "a 4xx rejects that request only: its points get no height, the rest go on": 1,
+        "a 503, an unreadable or an oversized body stops the lookup": 1,
         "a Vegvesen feature maps to a source on the pinned frame host": 1,
+        "a lookup cut short by its deadline resumes on the next refresh": 1,
+        "a lookup started before a cache clear cannot write after it": 1,
+        "a point a 200 answer leaves out is cached as no height": 1,
+        "a slow lookup does not hold the catalog; the next refresh applies it": 1,
+        "a transport failure stops the lookup: no retries, no new requests": 1,
+        "a warm cache does not wait for a few new cameras": 1,
+        "after a failure no lookup starts until the backoff ends": 1,
         "cameras that publish HLS get live video with the still as fallback": 1,
+        "cameras without numeric coordinates are skipped, never thrown on": 1,
+        "either water marker counts as the surface": 1,
         "faulty cameras, off-host frames and bad geometry are dropped": 1,
+        "heights are cached, and misses are not asked again until they expire": 1,
+        "heights outside -20..2500 m and points outside Norway are not used": 1,
+        "no more than eight requests are in flight": 1,
+        "one hanging request times out on its own, as a failing service": 1,
+        "only the points a request asked about are recorded": 1,
+        "overlapping refreshes share one lookup": 1,
         "the Vegvesen lane is wired into the catalog": 1,
-        "the loader dedupes, and failures degrade to an empty pack": 1
+        "the deadline is shared: later requests do not get a fresh one": 1,
+        "the loader applies Kartverket heights to the cameras it returns": 1,
+        "the loader budgets the height wait from its own start": 1,
+        "the loader dedupes, and failures degrade to an empty pack": 1,
+        "the lookup deadline bounds a hanging service": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -14283,6 +14625,7 @@
       "names": {
         "OpenStreetMap has one generic data credit with separate tile and names distributors": 1,
         "adsbdb is credited and carries its published route-data restriction": 1,
+        "every Street Level imagery source is in the attribution lightbox": 1,
         "every credit carries a unique key and some markup to render": 1,
         "inline OSM attribution persists until its last display owner leaves": 1,
         "the NYC camera credit carries NYC DOT’s requested disclaimer": 1,
@@ -15740,16 +16083,20 @@
     "src/data/naturalEarthRegions.test.mjs": {
       "names": {
         "aliases and articles: \"the Alps\", \"Rockies\", \"Sahara Desert\", \"Himalaya\"": 1,
+        "duplicate natural-region names expose ambiguity instead of claiming uniqueness": 1,
         "listRegions() enumerates both kinds for diagnostics": 1,
         "major deserts/ranges resolve with sane areas": 1,
         "marine features resolve as kind \"marine\"": 1,
         "marquee ranges resolve with sane areas (owner acceptance: Alps + Rockies)": 1,
         "nonsense / non-natural-region queries return null": 1,
-        "outline lookup: Alps ring via containment anchor": 1,
+        "outline lookup: a unique physical-region name does not override an outside contemporary place": 1,
+        "outline lookup: aliases retain containment checks": 1,
         "outline lookup: anchor outside every ring → null (wrong-place guard)": 1,
+        "outline lookup: containing exact names win over broader suffix variants": 1,
         "outline lookup: duplicate names disambiguate by anchor containment": 1,
         "outline lookup: marine regions resolve (Gulf of Mexico)": 1,
         "outline lookup: non-region names never match": 1,
+        "outline lookup: overlapping duplicate candidates remain unresolved": 1,
         "pack byte-size budget: regions.json + marine.json <= 3 MB": 1,
         "pointInRing: basic square": 1,
         "returned polygons have >=8 vertices with valid lon/lat": 1,
@@ -16081,6 +16428,20 @@
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
+    },
+    "src/data/routeSegment.test.mjs": {
+      "names": {
+        "a short airport route cannot describe a plane thousands of kilometres beyond its destination": 1,
+        "backwards and antipodal extensions are not the scheduled airport leg": 1,
+        "minor-arc admission works across the antimeridian and near the pole": 1,
+        "ordinary route offsets and generous endpoint extensions stay plausible": 1,
+        "the actual native tracked label hides the wrong leg and keeps a healthy route": 1,
+        "the forward tolerance survives the signed-angle branch cut in both directions": 1,
+        "the generous endpoint tolerance still excludes a clearly different leg": 1,
+        "unjudgeable endpoint geometry and missing coordinates keep the loose contract": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/data/routeSteps.test.mjs": {
       "names": {
@@ -16889,6 +17250,59 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/geminiComposition.test.mjs": {
+      "names": {
+        "Gemini key setup uses the existing server-only status and save contract": 1,
+        "local hosts opt into Gemini explicitly and retain the default plugin order": 1,
+        "opted-in configurePreviewServer locks the standalone catalog into the Gemini token": 1,
+        "opted-in configureServer locks the standalone catalog into the Gemini token": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/geminiServer.test.mjs": {
+      "names": {
+        "LAN binding, exact configured hosts, IPs, and localhost subdomains follow the app host policy": 1,
+        "a chunked overflow delivers fixed 413 while its upload is still open": 1,
+        "a partial token request cannot hold the handler beyond its deadline": 1,
+        "a positive fraction applies a real cap and only explicit zero disables it": 1,
+        "a stalled mint is aborted at the deadline without forwarding error details": 1,
+        "all shared proxy signals and same-site cross-origin metadata fail before minting": 1,
+        "chunked client uploads are capped without starting a mint": 1,
+        "client bodies cannot override model or locked settings and stay byte bounded": 1,
+        "deadline responds before an abort-ignoring mint settles and cancels its late body": 1,
+        "dev and preview install the same bounded Gemini token endpoint": 1,
+        "disconnect at mint resolution settles without publishing and discards the response body": 1,
+        "forwarded requests cannot mint or consume the real socket peer rate cap": 1,
+        "malformed or oversized successful upstream replies never reach the browser": 1,
+        "mint locks canonical action schemas and server instructions with no permanent credential in browser data": 1,
+        "missing key and malformed model fail without an upstream request": 1,
+        "mounted token handler completes synchronous resolver failures without exposing details > healthy control": 1,
+        "mounted token handler completes synchronous resolver failures without exposing details > resolveAllowedHosts": 1,
+        "mounted token handler completes synchronous resolver failures without exposing details > resolveApiKey": 1,
+        "mounted token handler completes synchronous resolver failures without exposing details > resolveHost": 1,
+        "mounted token handler completes synchronous resolver failures without exposing details > resolveModel": 1,
+        "mounted token handler completes synchronous resolver failures without exposing details > resolveRateLimit": 1,
+        "only the PTT gesture selects manual activity in the complete locked setup": 1,
+        "other methods, missing/cross origins, hostile hosts and cross-site metadata cannot mint": 1,
+        "real Vite dev and preview reject hostile hosts before the Gemini middleware > dev": 1,
+        "real Vite dev and preview reject hostile hosts before the Gemini middleware > preview": 1,
+        "request disconnect cancels its pending mint and cannot publish a late token": 1,
+        "same-origin local and explicitly bound hosts work without trusting forwarded authority": 1,
+        "standalone mints lock the full voice query catalog in both credential and browser setup": 1,
+        "timeout also bounds a stalled upstream response body": 1,
+        "unset, blank, malformed and negative rate limits keep the 30-per-minute cap >   ": 1,
+        "unset, blank, malformed and negative rate limits keep the 30-per-minute cap > -1": 1,
+        "unset, blank, malformed and negative rate limits keep the 30-per-minute cap > 3O": 1,
+        "unset, blank, malformed and negative rate limits keep the 30-per-minute cap > <anonymous>": 1,
+        "unset, blank, malformed and negative rate limits keep the 30-per-minute cap > Infinity": 1,
+        "unset, blank, malformed and negative rate limits keep the 30-per-minute cap > undefined": 1,
+        "upstream refusals and network exceptions are normalized and never log secrets": 1,
+        "wrong-destination and redirected successful responses discard their bodies": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/geoDistance.test.mjs": {
       "names": {
         "canonical points require explicit latitude and longitude keys": 1,
@@ -17520,6 +17934,19 @@
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
+    "src/layers/cctv/frames.test.mjs": {
+      "names": {
+        "a 16:9 still fills the canvas": 1,
+        "a 4:3 still is pillarboxed at full height": 1,
+        "a missing or zero dimension falls back to the full canvas": 1,
+        "a source wider than 16:9 is letterboxed at full width": 1,
+        "a still is drawn into its fitted rectangle over a full matte": 1,
+        "same pixels at a new aspect redraw at the new fit": 1,
+        "same pixels at the same size skip the redraw": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/layers/cctv/headingConfidence.test.mjs": {
       "names": {
         "HUD token stays untagged for surveyed and calibrated bearings": 1,
@@ -17557,6 +17984,13 @@
       },
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
+    },
+    "src/layers/cctv/rendering.test.mjs": {
+      "names": {
+        "focus de-emphasis fades each icon from its own color": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/layers/cctv/source.test.mjs": {
       "names": {
@@ -17874,6 +18308,21 @@
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
+    "src/layers/launches/ingestion.test.mjs": {
+      "names": {
+        "STALE-ERROR provenance reaches the layer feed state without dropping records": 1,
+        "a fresh recovery clears stale launch provenance": 1,
+        "an empty stale snapshot still identifies its fallback provenance": 1,
+        "destroy clears the previous feed state and records": 1,
+        "destroy followed by actual init starts a clean instance with owned handlers": 1,
+        "disable cancels a pending stale response without committing it": 1,
+        "fresh launches remain nominal through ingestion and the layer stats": 1,
+        "getLaunches-only injected sources remain supported": 1,
+        "hiding retained stale records does not relabel them as fresh": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/layers/launches/missionStatus.i18n.test.mjs": {
       "names": {
         "a launch without a status keeps the English fallback in its record": 1,
@@ -18113,6 +18562,19 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/layers/satellites/stale.test.mjs": {
+      "names": {
+        "a stale duplicate cannot taint its earlier fresh winning record": 1,
+        "cancelling dense replacement preserves admitted stale extras until rebuild": 1,
+        "dense provenance belongs to its admitted records and clears on removal": 1,
+        "destroy aborts an in-flight response and initialization starts with new ownership": 1,
+        "failed and aborted core refreshes keep provenance of retained records": 1,
+        "invalid stale orbital elements are not admitted as provenance": 1,
+        "stale core records surface through actual HTTP, ingestion and feed state, then recover": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/layers/streetLevel/cameraFollow.test.mjs": {
       "names": {
         "FOLLOW claims the camera once and ends when another feature takes it": 1,
@@ -18130,6 +18592,20 @@
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
+    },
+    "src/layers/streetLevel/cameraFraming.test.mjs": {
+      "names": {
+        "a photo claims the camera when it starts opening and frames once loaded, releasing tracking": 1,
+        "a photo that finishes loading after newer navigation does not frame": 1,
+        "a photo that loads after the navigation was detached does not frame": 1,
+        "a refused claim (cockpit) does not frame the photo": 1,
+        "a sample kilometres underground falls back to the globe, then the image altitude": 1,
+        "cancel leaves a landed flight and a newer navigation flight alone": 1,
+        "cancel stops the framing flight while it is still ours": 1,
+        "framing a photo stands the sphere on a plausible scene sample": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/layers/streetLevel/filter.test.mjs": {
       "names": {
@@ -18187,45 +18663,50 @@
     },
     "src/layers/streetLevel/index.test.mjs": {
       "names": {
-        "FOLLOW is available only while the Google 3D map stack is active": 1,
-        "KartaView through the core: its own swatch without Selected, its lines counted as streets": 1,
-        "Street View appears only on the Google 3D map: chip, legend, credit, source and images": 1,
+        "KartaView through the core: its lines counted as streets": 1,
+        "Street View appears only on the Google 3D map: chip, credit, source and images": 1,
         "Street View lit off Google 3D says why the panel is empty": 1,
         "Street View starts off, and the layer row names the key of the providers that are on": 1,
         "a failed lookup’s error goes when another source is lit; a provider can open an image without framing": 1,
+        "a key status that failed is asked again on the next switch-on": 1,
+        "a key status that never answers gives up, so the next switch-on asks again": 1,
         "a lookup for the click-to-open providers asks only them and reports \"that point\"": 1,
         "a provider withdraws only the error it reported": 1,
         "a provider’s openNearest (a line click) asks only that provider and leaves the camera": 1,
         "a provider’s own open can leave the camera where it is; a default open frames": 1,
+        "a rejected key gates the layer as KEY REJECTED until it goes off": 1,
+        "a sequence that fails to load reports it apart from the photo, and the error goes with it": 1,
         "a source swap during a lookup reports no false \"no imagery\"": 1,
         "an empty provider composition enables and tears down without acquiring imagery": 1,
         "an image opened from a ground click leaves the camera where it is": 1,
         "an image picked during a nearest lookup wins over its late answer": 1,
         "an older nearest lookup that answers late cannot replace a newer one": 1,
-        "closing the photo leaves a newer navigation flight alone": 1,
-        "closing the photo stops the globe flying to it": 1,
+        "an unknown ground is measured only a few times, and not after the layer is off": 1,
+        "closing the photo, switching the layer off or destroying it stops the framing flight": 1,
         "closing the viewer or switching the layer off retires a nearest lookup": 1,
-        "getStats tells a rejected key from a missing one": 1,
+        "coverage asks for no tiles before the key status is known, and none without a key": 1,
         "leaving Google 3D during a Street View lookup ends it without an error or a stuck spinner": 1,
         "off Google 3D not even Google’s script is loaded for Street View": 1,
         "one imagery source at a time: lighting one darkens the other, either way": 1,
         "openNearest opens nothing once the layer went off during the lookup": 1,
         "openNearest skips a provider switched off during its lookup": 1,
         "openNearest without the panel reports it instead of loading forever": 1,
-        "setParams takes \"any date\" (0 days) and a provider switch over the current values (share-link defaults)": 1,
-        "switching a provider off deactivates it and closes the image it shows": 1,
+        "setParams ignores unknown keys and malformed values": 1,
+        "setParams takes \"any date\" (0 days) and the switch over the current values (share-link defaults)": 1,
+        "switching Mapillary off clears coverage and closes the image it shows": 1,
+        "switching Mapillary on while the layer is off draws nothing": 1,
         "switching a provider on while the layer is off activates nothing (M01)": 1,
         "switching source by params (the chip path) stops a running lookup and clears its spinner and error": 1,
         "switching source by params clears a failed lookup’s error; reapplying the same switches does not": 1,
-        "switching the layer off or destroying it stops the framing flight": 1,
-        "the CC BY-SA credit shows while a provider is on and goes with it": 1,
-        "the Mapillary provider hands the lookup signal to its source": 1,
+        "the CC BY-SA credit shows while Mapillary is on and goes with it": 1,
         "the UI state says when a click (or the button) can open Street View here": 1,
         "the button aimed at the sky opens nothing, and says to aim at a street": 1,
         "the button’s “centre of the view” is the ground under the middle of the screen": 1,
         "the layer lets go of the map stack when destroyed or re-attached": 1,
         "the layer starts with one source lit: the first that defaults on": 1,
         "the nearest-image refusal is written in the language of the page": 1,
+        "the panel says why a lit Street View draws nothing off Google 3D": 1,
+        "under Google 3D the ground is measured again once its tiles load, without a move": 1,
         "with no Mapillary token, the layer points at Street View, on Google 3D only": 1
       },
       "origin": "upstream-sync-3",
@@ -18243,18 +18724,23 @@
     },
     "src/layers/streetLevel/lineCoverage.test.mjs": {
       "names": {
-        "a point budget skips lines past it, and a shorter one later may still fit": 1,
-        "a provider’s passes() decides which lines are drawn and counted": 1,
-        "a refused key without its own message keeps the error it came with": 1,
-        "a second redraw while a swap still builds keeps the lines on screen": 1,
-        "a selected line outside the cap does not make its tile redraw on every settle, nor does one the filter hides": 1,
-        "a selected sequence the budget left out is drawn, highlighted": 1,
-        "a tile redrawn for a new share keeps its old lines until the new ones are ready": 1,
-        "above the zoom range the provider’s own “zoom in” hint shows; without one, the generic hint": 1,
-        "overview points take the provider’s size, each its own": 1,
-        "small share increases add up: a retained tile redraws once its share has grown past the threshold since its last draw": 1,
-        "the per-tile cap keeps the newest lines, or the provider’s own order with keepOrder": 1,
-        "the point budget is shared: a sparse tile keeps its few, a dense one gets the rest": 1
+        "a rate limit holds every refresh inside its wait, not only the first": 1,
+        "a rate limit keeps the drawn tiles and asks again once the wait is over": 1,
+        "a rejected key stops coverage requests until the layer goes off": 1,
+        "a sequence that crosses a tile edge is counted once": 1,
+        "a street view toward the horizon asks only for the ground within range": 1,
+        "a superseded tile request cannot strand lines on the globe": 1,
+        "a tile that fails before the terrain table loads is reported at once, never unhandled": 1,
+        "a tile that lands with the selected sequence draws the highlight again, on top": 1,
+        "a tilted street view over ground 1,600 m up asks for the ground it looks at, nearest the camera first": 1,
+        "a zoom change drops the old zoom's lines": 1,
+        "from orbit nothing is requested or drawn, and the hint says to zoom in": 1,
+        "panning off a tile that is still loading stops counting it as loading": 1,
+        "sequence lines are draped on the globe and on 3D tiles alike": 1,
+        "the key status gates coverage: nothing before it answers, nothing without a key": 1,
+        "the per-tile cap applies after the imagery filter, so a dense tile keeps its 360° lines": 1,
+        "the selected sequence is drawn and highlighted even past the per-tile cap": 1,
+        "the selected sequence is drawn over the coverage, and goes with the selection": 1
       },
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -18263,11 +18749,7 @@
       "names": {
         "a Street View photo gets a blue view cone; a Mapillary photo GEV’s pin": 1,
         "destroying the marker stops the horizon cull": 1,
-        "draped mode clamps the marker to the globe whatever the ground says": 1,
-        "ground that arrives after the marker moved on does not move it back": 1,
-        "in terrain mode the marker stands on the sampled road surface (mesh near bare earth)": 1,
-        "in terrain mode with no ground yet the marker clamps, then stands up once the ground arrives": 1,
-        "in terrain mode without a mesh sample the marker stands on bare earth and asks for one": 1,
+        "the marker is clamped to the ground and turned to the bearing": 1,
         "the photo marker is hidden behind the globe, and shows from its side": 1
       },
       "origin": "upstream-sync-3",
@@ -18318,6 +18800,7 @@
     "src/layers/streetLevel/photoViewer.test.mjs": {
       "names": {
         "Esc: the docked viewer offers it to the provider first; expanded, it is the dialog’s": 1,
+        "a browser without :fullscreen / :popover-open (Safari < 16.4) still opens a flat photo and hands Esc on": 1,
         "a header that declares a huge image is refused before anything decodes it": 1,
         "a lost WebGL context while the first panorama loads releases its bitmap": 1,
         "a new open, a close or an unmount stops the downloads of the open before it": 1,
@@ -18589,21 +19072,27 @@
       "names": {
         "a sequence with a capture gap keeps its parts as separate lines": 1,
         "an empty tile decodes to empty lists": 1,
-        "sequences and overview points decode into lon/lat records": 1
+        "sequences decode into lon/lat records; image points are skipped": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
+    "src/layers/streetLevel/providers/mapillary/mapillary.test.mjs": {
+      "names": {
+        "a sequence line pick names its sequence; other picks do not": 1,
+        "cone thinning across the date line drops images metres apart": 1,
+        "image deep links match the mapillary.com share format": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/layers/streetLevel/providers/mapillary/provider.test.mjs": {
       "names": {
-        "a \"since N days\" window follows the clock in a long-open tab": 1,
-        "any part of a multi-part sequence picks the whole sequence": 1,
+        "a line pick names its sequence; anything else is not a sequence": 1,
+        "a status the server never answers falls back to the bundled token once the core gives up": 1,
         "cone thinning across the date line drops images metres apart": 1,
-        "coverage asks for no tiles before the key status is known": 1,
+        "coverage asks for no tiles before the key status is known, and none without a key": 1,
         "image deep links match the mapillary.com share format": 1,
-        "nearestImage honours the imagery filter and reports key status": 1,
-        "nearestImage measures the short way round the date line": 1,
-        "nearestImage picks the closest image, not the first the API returned": 1,
         "picks route sequences to selection and images to the core opener": 1,
         "the definition satisfies the Street Level provider contract": 1
       },
@@ -18632,7 +19121,6 @@
         "graph API errors carry the upstream message and status": 1,
         "graph calls without a token fail fast as keyRequired without a request": 1,
         "graph lookups call graph.mapillary.com with the client token and requested fields": 1,
-        "the source exposes only imagery lookups": 1,
         "tiles go through the local proxy and never carry the token": 1
       },
       "origin": "upstream-sync-3",
@@ -18641,16 +19129,15 @@
     "src/layers/streetLevel/providers/panoramax/decode.test.mjs": {
       "names": {
         "a decoded GPS track keeps a fraction of its points": 1,
-        "a dense grid tile never draws more than the bins allow": 1,
         "a fast sliced decode takes no turns": 1,
         "a sliced decode gives the page turns and decodes the same as one in one go": 1,
         "a sliced decode stops at the next turn once aborted": 1,
         "a z15 tile’s pictures of one sequence become cones; other sequences’ are skipped": 1,
         "an empty tile decodes to nothing": 1,
-        "density cells bin to a bounded number of points that keep the counts and kinds": 1,
         "lines are simplified within a few tile units, ends and corners kept": 1,
         "lines come longest first, so a cap on lines drawn drops the shortest": 1,
-        "sequence lines keep their parts apart, with their day and camera type": 1
+        "sequence lines keep their parts apart, with their day and camera type": 1,
+        "the density grid is not read: nothing is drawn from orbit": 1
       },
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -18684,7 +19171,6 @@
         "a click on a line with no ground under it changes nothing: the open sequence keeps its cones": 1,
         "a cone opens its picture; foreign ids are not picked": 1,
         "a coverage tile decoded a moment ago is not fetched again; switched off, the tiles are let go": 1,
-        "a filter that hides every density dot says so": 1,
         "a line click whose sequence has nothing near falls back to any picture there": 1,
         "a line clicked from high up looks for its sequence further off; the radius grows with height, up to 400 m": 1,
         "a line clicked from low down still searches its own sequence within 50 m": 1,
@@ -18703,22 +19189,20 @@
         "cones re-centred into tiles already read do not read them again": 1,
         "cones read the z15 tile around a picture, and its neighbours near an edge": 1,
         "coverage hints: nothing while loading, “no pictures” once an empty view has loaded": 1,
-        "density dots grow with the pictures they stand for": 1,
-        "dots are drawn at their own sizes, and the busiest is the biggest": 1,
-        "from high up over empty sea the panel says there is nothing, not to zoom in": 1,
-        "from high up the density grid draws points, not counted as sequences, and the panel says to zoom in": 1,
-        "lines at z10–14 below 60 km, as Mapillary’s; density points from z5 down to z0 above": 1,
+        "from high up nothing is drawn or fetched, and the panel says to zoom in": 1,
+        "lines at z10–14 below 60 km, as Mapillary’s; nothing above": 1,
         "lines in view that the filter hides all of say so, not that there is nothing here": 1,
-        "lines keep the decoded (longest-first) order under a budget of points": 1,
+        "lines keep the decoded (longest-first) order under a cap on points": 1,
         "once a picture is on screen its sequence’s cones load from the z15 tile around it": 1,
         "one lookup for a picture asked twice at once": 1,
         "sequence lines draw near the ground, and the imagery filter thins them": 1,
         "switching off clears the cones and forgets a pending line click": 1,
         "the cones come in capture order, and a broken neighbour tile only thins them": 1,
         "the cones re-centre when › walks into another z15 tile": 1,
-        "the imagery filter: lines by type and day, density cells by what they hold": 1,
+        "the imagery filter: lines by type and day": 1,
         "the nearest picture within 50 m that passes the filter; filters go to the API": 1,
         "the open picture’s own tile draws its cones at once; a neighbour’s join as it arrives": 1,
+        "the selected sequence’s line is drawn again over the coverage, and goes with it": 1,
         "› and ‹ step along the picture’s links without moving the camera, asking only for the next picture": 1,
         "› within the tiles the cones came from reloads nothing": 1
       },
@@ -18785,37 +19269,44 @@
       "names": {
         "Esc in a text field or rich-text editor keeps the selection (M61)": 1,
         "Esc on the globe clears the selected sequence": 1,
-        "a camera that never stops (orbit, tracking) keeps hover throttled, not off": 1,
+        "a click on a line selects its sequence, on a cone opens its image, elsewhere does nothing": 1,
         "a click on a provider line hands it the ground under the click, measured only if asked": 1,
         "a click on nothing of ours goes to the ground handler with the pick, which decides": 1,
-        "a hover frame queued before the layer went off does not pick": 1,
-        "an Esc something else already handled keeps the selection (M60)": 1,
-        "hover does not pick while a mouse button is held": 1,
-        "hover picks at most every 120 ms through a burst of moves, ending on the last one": 1,
-        "when the camera stops, the pointer is picked again so the cursor cannot stick": 1
+        "a click on the position marker neither selects nor opens at the ground": 1,
+        "an Esc something else already handled keeps the selection (M60)": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
+    "src/layers/streetLevel/sequenceCones.test.mjs": {
+      "names": {
+        "a failed sequence load leaves no stale cones and can be retried": 1,
+        "a late answer for a superseded sequence draws nothing": 1,
+        "a second click on a loading sequence does not start another lookup": 1,
+        "clearSelection cancels the lookup and drops the highlight": 1,
+        "cones are clamped to the ground and turned to their compass angle": 1,
+        "cones behind the globe are hidden, and show again from the other side": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/layers/streetLevel/street-level-unique-tiles.test.mjs": {
       "names": {
-        "a limit that fits every distinct tile is not spent on repeats": 1,
-        "reachable polar dateline coverage ranks 24 distinct tiles before overview truncation": 1
+        "a limit is not spent on repeats": 1,
+        "a polar view across the date line ranks 24 distinct tiles": 1
       },
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
     "src/layers/streetLevel/tileMath.test.mjs": {
       "names": {
-        "a box across the date line ranks the tiles at the line first, without and with a focus": 1,
+        "a box across the date line ranks from the line, or from the camera across it": 1,
         "a box across the date line takes tiles on both sides of it, not the far side of the globe": 1,
-        "a focus ranks tiles along the line of sight, not from the box centre": 1,
-        "city-scale boxes span many z14 tiles": 1,
         "coverageZoomForHeight steps from coarse to z14 as the camera descends": 1,
         "lon/lat to tile matches the Sacramento reference tile": 1,
         "longitude 180 is the last column, so a world view keeps the eastern hemisphere": 1,
         "normalizeBbox orders and clamps coordinates": 1,
-        "overviewZoomForHeight covers the globe above the sequence ceiling": 1,
+        "ranking from the camera keeps the ground under it, not the box centre": 1,
         "tile-local coordinates round-trip into the tile bounds": 1,
         "tilesForBbox orders from the centre outwards and honours the cap": 1,
         "wrapLon wraps longitudes and their differences into [-180, 180]": 1
@@ -18825,37 +19316,37 @@
     },
     "src/layers/streetLevel/uiState.test.mjs": {
       "names": {
-        "Street View draws no lines: no legend swatch, and no Selected on its own": 1,
         "a key-gated layer offers the switched-off sources that would draw with a key already set": 1,
         "a lit provider that dates by upload puts a note under SINCE": 1,
         "a rejected key gates like a missing one and is named as rejected": 1,
-        "a source whose lines never show a selection lists no Selected swatch, and names its own lines": 1,
+        "a source names its own lines": 1,
         "counts add up across active providers only": 1,
         "every switched-on provider’s hint is kept, once each": 1,
         "hint and error come from the first active provider that has one": 1,
         "summarizeCoverage is what getStats reports, without building a snapshot": 1,
         "the filter controls show only for a lit provider that honours them": 1,
-        "the layer is key-gated only when every switched-on provider lacks its key": 1,
-        "the legend is one swatch per active source, in its colour, then Selected": 1,
-        "the surface mode defaults to draped and passes through": 1
+        "the layer is key-gated only when every switched-on provider lacks its key": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
     "src/layers/streetLevel/view.test.mjs": {
       "names": {
-        "a hidden globe (Google 3D) falls back to the bare-earth height": 1,
+        "a hidden globe (Google 3D) or a missing sample gives no ground": 1,
         "a shown globe answers the ground under the camera": 1,
         "a tilted street view over high ground boxes the streets it looks at, not the horizon": 1,
+        "a tilted view from 3 km loads the tile at the centre of the screen": 1,
         "a view across the date line is a narrow box with west > east": 1,
+        "an implausible or above-camera surface sample gives no ground": 1,
         "an ordinary view keeps west < east": 1,
         "cones and the marker stay visible on ground below the WGS84 ellipsoid": 1,
-        "looking at the horizon from eye height still boxes the ground around the camera": 1,
+        "looking at the horizon from eye height boxes the near ground, not the horizon": 1,
+        "looking straight down or at the sky, the focus is the ground under the camera": 1,
         "metresBetween measures the short way round the date line": 1,
+        "on Google 3D the rendered surface answers the ground under the camera": 1,
         "the horizon cull does no work while the camera stands still": 1,
         "the horizon cull still hides the far side of the Earth from orbit": 1,
-        "the horizon cull stops listening once nothing is left, and starts again for new items": 1,
-        "with no ground sample the ellipsoidal height is used": 1
+        "the horizon cull stops listening once nothing is left, and starts again for new items": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -18872,24 +19363,17 @@
         "a pose on another sequence selects it, but not while the image still loads": 1,
         "a pose that arrives after the photo was closed does not bring it back": 1,
         "a pose’s licence reaches the caption state, and a closed viewer forgets it": 1,
-        "a prewarm that gave up when the layer went off and on mid-download is followed by one that builds": 1,
-        "a prewarm that lands after another provider took the host is released, not built under it": 1,
-        "a prewarmed viewer is released when the layer goes off, or at once if it went off mid-load": 1,
         "an adapter that can frame but says this image has no frame offers no FIT / FILL": 1,
         "an image still opening when the photo is closed is neither framed nor selected": 1,
         "an open still mounting when the photo is closed does nothing when the mount lands": 1,
         "back-to-back Mapillary opens download only the newer image": 1,
         "closing the photo clears the marker": 1,
-        "closing the photo or switching the layer off stops its framing flight": 1,
         "closing the photo stops sequence playback in the hidden viewer": 1,
         "concurrent opens share one mount and one pose listener": 1,
-        "every pose the viewer reports moves the marker and the followed camera": 1,
-        "opening one provider's image releases another's prewarmed viewer in the shared host": 1,
-        "switching one provider off releases only its viewer": 1,
-        "switching the layer off and on during a cold first open keeps the shared viewer": 1,
-        "the Mapillary viewer leaves resizing to the panel, so a hidden one never asks for z=NaN": 1,
+        "every pose the viewer reports moves the marker; only the open frames the camera": 1,
         "the Mapillary viewer survives the layer going off and on during its first download": 1,
         "the render modes follow the viewer that is open": 1,
+        "two mounts on one host during the first download build one Mapillary viewer": 1,
         "unmounting while a mount is in flight does not leave it active": 1
       },
       "origin": "upstream-sync-3",
@@ -19612,9 +20096,12 @@
       "names": {
         "GLOBE_VIEW preset height sits in the global view band": 1,
         "a final authority veto returns cancellation without issuing a flight": 1,
+        "a geocoder miss returns null even over a namesake region": 1,
+        "a geocoder rejection propagates without nearby recovery or a flight": 1,
         "a globe flight without callbacks still flies (both hooks are optional)": 1,
         "a metro fallback straddling the antimeridian frames a metro box, not a hemisphere": 1,
         "a precise search without an outline frames against the resolved ground, not sea level": 1,
+        "a successful nearby recovery resolves after a geocoder miss": 1,
         "a well-centred region search still frames its whole bounds": 1,
         "admin types win over area types when both present": 1,
         "an antimeridian REGION frames its own span, not four times it": 1,
@@ -19622,6 +20109,7 @@
         "an explicit overview ask still reaches a well-centred region unchanged": 1,
         "an off-centre admin search lands over the place, not the box centroid": 1,
         "beforeFly runs once after resolution and immediately before the flight": 1,
+        "cancellation during nearby recovery cannot issue a flight": 1,
         "city and landmark flights expose completion and cancellation hooks": 1,
         "existing modes unchanged: admin, city, neighborhood, precise POI": 1,
         "geocoded Location branches forward the resolved-navigation ownership hook": 1,
@@ -19641,6 +20129,8 @@
         "regionFramingPlan: invalid viewports return null": 1,
         "regionFramingPlan: park- and lake-scale viewports keep full framing": 1,
         "regionFramingPlan: threshold splits full vs swath": 1,
+        "search cancellation before or during geocoding cannot issue a flight": 1,
+        "search retains main geocode authority for Gold Coast, Australia": 1,
         "search without an authority hook preserves the existing caller contract": 1,
         "streets frame as street-corridor (rootcause doc §3 — Sixth Street)": 1,
         "the globe flight publishes its callbacks under Cesium's own option names": 1
@@ -21105,22 +21595,31 @@
     },
     "src/streetLevelMarkup.test.mjs": {
       "names": {
-        "Clean View, recording and the cockpit hide the expanded viewer on <body> (P2-5)": 1,
         "OPEN STREET VIEW keeps its width beside a long coverage line": 1,
-        "Street Level is an ordinary collapsible GEV panel that starts collapsed": 1,
-        "labels say what the buttons do": 1,
-        "on phones the viewer is sized from the rail band, not its aspect ratio": 1,
-        "panel styles stay inside GEV conventions: no !important, no fixed panel": 1,
-        "radiogroups are one tab stop and their focus ring is not clipped (P3)": 1,
+        "Street Level is a collapsible right-rail panel that starts collapsed": 1,
+        "each radiogroup is one tab stop, on its checked button": 1,
         "the Cyber theme frames the Street Level panel like its rail peers (P3)": 1,
-        "the expanded viewer is a modal dialog that restores focus": 1,
-        "the expanded viewer keeps the panel tokens (P3)": 1,
-        "the keyless state gates the controls rather than leaving dead buttons": 1,
-        "the panel is registered with panel chrome, cockpit entry and the right rail": 1,
-        "the viewer comes first and the panel is a portable, resizable window": 1
+        "the key gate holds every filter, with the error line outside it": 1,
+        "the panel is registered with panel chrome, cockpit entry and the right rail": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
+    },
+    "src/terrainHeightsBounds.test.mjs": {
+      "names": {
+        "a coordinate off the globe is not a cache key": 1,
+        "a cross-site page cannot fill the cache or spend the visitor quota": 1,
+        "a second client keeps its own quota": 1,
+        "an out-of-range point is refused before it reaches upstream or the cache": 1,
+        "an over-large cache file is not read back into memory": 1,
+        "cost-bearing routes still refuse proxied requests": 1,
+        "one out-of-range point rejects the batch it is hidden in": 1,
+        "the app served behind a reverse proxy still gets terrain": 1,
+        "the point cache stops growing, and an evicted point is simply refetched": 1,
+        "the route refuses a flood of requests from one client": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/toolProjectRoot.test.mjs": {
       "names": {
@@ -21251,6 +21750,22 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/tooling/ll2Integration.test.mjs": {
+      "names": {
+        "LL2 bounds retain the 30-day UTC window at 2026-01-01T00:00:00.001Z": 1,
+        "LL2 bounds retain the 30-day UTC window at 2026-10-17T16:20:00.001Z": 1,
+        "LL2 bounds retain the 30-day UTC window at 2026-10-17T16:20:59.999Z": 1,
+        "LL2 bounds retain the 30-day UTC window at 2026-10-17T16:21:00.000Z": 1,
+        "LL2 headers identify the app and preserve optional server-only authorization": 1,
+        "LL2 proxy sends its identifying headers over real owned HTTP in development": 1,
+        "LL2 proxy sends its identifying headers over real owned HTTP in preview": 1,
+        "LL2 requests from the same UTC minute share a cache key without mutating callers": 1,
+        "actual setup rendering distinguishes optional paid LL2 from unrelated free keys": 1,
+        "real LL2 proxy sends cacheable headers and bounds, retaining its memory cache": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/tooling/localServices.test.mjs": {
       "names": {
         "OAuth launch errors are safe and cross-origin status requests cannot read credentials": 1,
@@ -21287,57 +21802,38 @@
     },
     "src/tooling/mapillaryProvider.test.mjs": {
       "names": {
-        "a 429 passes its Retry-After on and holds misses until it is over": 1,
-        "a body past the size cap aborts the upstream request as it streams": 1,
-        "a caller gone while the disk cache is read starts no upstream fetch": 1,
-        "a disk tile keeps its age in memory and through a retrim rewrite": 1,
-        "a far-off Retry-After (an HTTP date) holds misses for at most TILE_RATE_LIMIT_MAX_HOLD_MS": 1,
-        "a far-off Retry-After (seconds) holds misses for at most TILE_RATE_LIMIT_MAX_HOLD_MS": 1,
-        "a joined caller that aborts leaves at once and the first still gets the tile": 1,
-        "a joined tile request survives the first caller abandoning it": 1,
-        "a redirect off the tile origin (a look-alike host) is a 502, and the token stays home": 1,
-        "a redirect off the tile origin (a scheme-relative host) is a 502, and the token stays home": 1,
-        "a redirect off the tile origin (another host) is a 502, and the token stays home": 1,
-        "a redirect off the tile origin (another port) is a 502, and the token stays home": 1,
-        "a redirect off the tile origin (credentials in the URL) is a 502, and the token stays home": 1,
-        "a redirect off the tile origin (no Location) is a 502, and the token stays home": 1,
-        "a redirect off the tile origin (plain HTTP) is a 502, and the token stays home": 1,
-        "a redirect within the Mapillary tile origin is followed by hand": 1,
-        "a request arriving before a cancelled fetch has wound down starts a fresh one": 1,
-        "a rewrite overtaken by a fresh tile write steps aside cleanly": 1,
-        "a tile costing more than half the memory budget is served but not kept": 1,
-        "a tile held in memory past the 24 h TTL is fetched again": 1,
+        "a body too big to be a trimmed tile is served but not kept in memory": 1,
+        "a client that disconnects cancels its tile fetch and gets no answer": 1,
+        "a queued fetch whose client left never reaches Mapillary": 1,
+        "a refusal is scoped to the token that was refused": 1,
+        "a shared fetch is cancelled only when its last client leaves": 1,
+        "a streamed body past the size cap is cancelled and answered 502": 1,
+        "a tile held in memory past its TTL is fetched again": 1,
+        "a tile is trimmed, served with browser caching, then from memory": 1,
         "a tile without the layer is returned untouched": 1,
-        "an empty upstream tile (204) is a 204 with no body": 1,
-        "an empty upstream tile (404) is a 204 with no body": 1,
-        "an endless same-origin redirect stops after a few hops": 1,
+        "after a 429 the rest of the view waits out Retry-After here instead of asking Mapillary": 1,
+        "an HTTP-date Retry-After is passed on as the seconds left; garbage means a minute": 1,
+        "an empty upstream tile (204) is a 204 with no body, and is cached": 1,
+        "an empty upstream tile (404) is a 204 with no body, and is cached": 1,
+        "an upstream 302 is a 502, not the client's fault": 1,
         "an upstream 400 is a 502, not the client's fault": 1,
-        "an upstream 401 is a rejected key, and misses stop asking Mapillary": 1,
-        "an upstream 403 is a rejected key, and misses stop asking Mapillary": 1,
+        "an upstream 401 is a rejected key": 1,
+        "an upstream 403 is a rejected key": 1,
         "an upstream 410 is a 502, not the client's fault": 1,
-        "an upstream 422 is a 502, not the client's fault": 1,
-        "at most a few upstream fetches run at once; a queued abort never fetches": 1,
-        "caching a tile sweeps expired files off the disk in the background": 1,
-        "closing the response mid-flight aborts the upstream fetch": 1,
-        "concurrent disk hits on an untrimmed tile rewrite it once, keeping its age": 1,
-        "coverage zooms the app never requests (z6–10) are refused with a 400": 1,
+        "an upstream 429 (Retry-After 30) is passed on as 30 s": 1,
+        "an upstream 429 (Retry-After 999999) is passed on as 600 s": 1,
+        "an upstream 429 (Retry-After null) is passed on as 60 s": 1,
+        "an upstream 500 is a 502, not the client's fault": 1,
+        "at most a few upstream fetches run at once; the rest wait their turn": 1,
         "cross-site requests are refused on both routes; the app itself passes": 1,
         "dropping a layer keeps the others byte-for-byte": 1,
-        "empty tile files count toward the disk cap": 1,
-        "empty tiles are charged against the memory budget": 1,
-        "fetchTile serves from memory after one upstream fetch and strips the image layer": 1,
-        "layer names are read without decoding features": 1,
-        "normalizeTileAddress enforces layer names, zoom ranges and tile bounds": 1,
-        "normalizeTileAddress refuses prototype keys as layer names": 1,
-        "status reports whether a token exists, never its value, and rejects non-GET": 1,
-        "the disk sweep evicts the oldest tiles past the size cap": 1,
-        "the disk sweep removes expired tiles and keeps fresh ones": 1,
-        "the memory cache evicts the least recently used tile, not the oldest fetched": 1,
+        "fetches queued behind a 429 never reach Mapillary": 1,
+        "identical concurrent tile requests share one upstream fetch": 1,
+        "status reports whether a token exists, never its value": 1,
+        "the memory cache evicts the least recently used tile past its size": 1,
         "the plugin mounts the status and tile routes for dev and preview servers": 1,
         "the tile route answers 429 past its per-IP budget": 1,
-        "the tile route serves a trimmed protobuf tile, then from memory": 1,
-        "the upstream tile fetch is cancelled once every waiter has left": 1,
-        "tile route validates the path and refuses to proxy without a token": 1
+        "the tile route validates the path, then needs a token": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -21473,33 +21969,13 @@
     },
     "src/tooling/streetLevelQa.test.mjs": {
       "names": {
-        "--strict accepts only the documented skips": 1,
-        "CI runs the gates hermetically against a production build, strict, with evidence": 1,
         "KartaView fixtures draw the drive, answer nearest first, and refuse the storage host the API names": 1,
         "KartaView fixtures filter like KartaView: PNG tiles by view and upload date, the photo search by projection": 1,
         "Panoramax fixtures: two sequences on one street, searches honour sequence and filters, unknown calls are flagged": 1,
-        "QA_FAIL_ON_RETRY retries, with a warning, a miss the panel moving explains": 1,
-        "QA_FAIL_ON_RETRY turns a retry into a failure that says why": 1,
         "a Mapillary call no fixture covers is answered but flagged unknown": 1,
-        "a header double-click docks, waiting on the docked state": 1,
-        "a header press is retried only when it provably missed the header": 1,
-        "a lift whose press the rail moved off the header is retried, then lifts": 1,
-        "a panel reads as collapsed only with the collapsed class": 1,
-        "a press in the header that does not lift fails at once, naming the target": 1,
-        "a press that records no pointerdown fails at once, without a retry": 1,
         "answered calls are named without the token": 1,
-        "both gates save failure evidence and fail on render-loop errors": 1,
-        "both panel gates press the header through the shared helper": 1,
         "evidence never carries a Mapillary token": 1,
-        "fixture tiles give the hermetic gate something real to filter": 1,
-        "presses that keep missing stop after the retries and report the miss": 1,
-        "the Graph fixtures answer every call MapillaryJS makes to open a photo": 1,
-        "the Graph fixtures answer the provider’s nearest and sequence lookups": 1,
-        "the fixture photos: one sequence, 360° and flat, close enough for any nearest lookup on the line": 1,
-        "the gate requires the server’s real Mapillary status route": 1,
-        "the harness expects exactly the providers the app registers, in chip order": 1,
-        "the harness only runs its browser flow when executed directly": 1,
-        "the photo sequence runs through the parked view, clipped to each tile it crosses": 1
+        "the Graph fixtures answer every call MapillaryJS makes to open a photo": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -21730,12 +22206,17 @@
     "src/tools/queries/aviation.test.mjs": {
       "names": {
         "a regional fallback feed is named in the answer": 1,
+        "aircraft answers carry no breakdown or stats unless asked": 1,
         "aircraft are found by exactly one identifier across feeds": 1,
         "aircraft in an area are filtered, nearest first, with source details": 1,
+        "aircraft in an area can be counted by airline from their callsigns": 1,
+        "aircraft in an area can be counted by operator over every match": 1,
         "aircraft info combines type and route lookups": 1,
         "aircraft searches keep the feeds that answered and name the others": 1,
         "aircraft searches say when a feed that answered is stale": 1,
+        "aircraft stats are empty when every match is on the ground": 1,
         "altitude bands require a reported altitude from normalized OpenSky records": 1,
+        "an airline designator is read from an ICAO flight callsign only": 1,
         "live source failures become tool errors with retry guidance": 1,
         "the military feed is used on request and reported when missing": 1,
         "the real OpenSky source marks an hour-old snapshot stale for searches": 1,
@@ -21803,12 +22284,18 @@
     },
     "src/tools/queries/maritime.test.mjs": {
       "names": {
+        "AIS type 0 (not available) is counted as unknown, not as a type": 1,
+        "a destination with no letters counts as unknown": 1,
         "a missing AIS key surfaces as an unavailable feed": 1,
         "an area search names its area to the server; a vessel lookup asks for every vessel": 1,
+        "find_vessel answers carry normalized types and destinations": 1,
+        "numeric AIS ship-type codes group and filter by their family": 1,
+        "reserved AIS ship-type codes 100 to 255 count as unknown": 1,
         "vessel searches ask for every vessel the server retains": 1,
         "vessel tracks are ordered and drop untimed positions": 1,
         "vessels are found by exactly one identifier": 1,
-        "vessels in an area are nearest first and filterable by type": 1
+        "vessels in an area are nearest first and filterable by type": 1,
+        "vessels in an area can be counted by destination with a speed summary": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -21928,6 +22415,16 @@
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
+    },
+    "src/tools/results.test.mjs": {
+      "names": {
+        "a breakdown counts every row, case-insensitively, largest first": 1,
+        "a numeric summary skips missing values": 1,
+        "groups past the limit are counted as other": 1,
+        "the breakdown phrase names the three largest groups": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/tools/surfaces.test.mjs": {
       "names": {
@@ -22079,7 +22576,6 @@
       "names": {
         "explicit Cyber opening collapses peers and claims their restoration lanes": 1,
         "non-Cyber explicit panels and restored preferences retain their existing policy": 1,
-        "opening a floating Cyber window leaves the docked rail panels open": 1,
         "opening already-expanded Radio reveals Context and closes Display": 1
       },
       "origin": "upstream-sync",
@@ -22414,6 +22910,15 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/ui/panelChrome.radioOwnership.test.mjs": {
+      "names": {
+        "adaptive rail restore hides compact Radio before revealing Context": 1,
+        "opening an already-open Context still closes a stale compact Radio disclosure": 1,
+        "real PanelChrome constructor wires rail restore to compact Radio owner": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/ui/panelDock.test.mjs": {
       "names": {
         "a click on a docked panel’s resize edge leaves it docked and stores nothing": 1,
@@ -22433,6 +22938,13 @@
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
+    },
+    "src/ui/panelPositionControls.test.mjs": {
+      "names": {
+        "the floating panels’ stored positions and hint flag are dropped; collapse state stays": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/ui/panelRails.test.mjs": {
       "names": {
@@ -22467,7 +22979,6 @@
         "right rail follows a settled left rail whose CSS overrides the committed target": 1,
         "right rail keeps focus through 30 px content growth inside the hysteresis band": 1,
         "right rail measuring pass keeps an opted-in scroller position": 1,
-        "right rail neither measures nor allocates a panel floating out of it": 1,
         "right rail restores presentation even when intrinsic measurement throws": 1,
         "right rail retry cannot enqueue another retry even if disclosure changes before it runs": 1,
         "right rail settles mode-dependent CCTV and weather heights within two passes from focus": 1,
@@ -22623,16 +23134,16 @@
         "busy traffic completion is polled promptly without accelerating idle or global reads": 1,
         "feedback disposal clears toast and polling work and rejects retained notices": 1,
         "one-time UI listeners and cancelled notice timers release their registrations": 1,
-        "panel disposal cancels a live drag without saving or accepting later pointer movement": 1,
         "panel layout coalesces each rail and cannot rearm after destruction": 1,
         "recording restores the original HUD after repeated entry and revokes retained controls": 1,
-        "weather rail orders between CCTV and Context, resets positions, observes and syncs chrome": 1
+        "weather rail orders between CCTV and Context, observes and syncs chrome": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/ui/shellLifetime.test.mjs": {
       "names": {
+        "attaching the manager reconnects Street Level, so its switch-on requests reach the panel": 1,
         "camera-entry listeners are removed before any asynchronous layer cleanup": 1,
         "manager replacement releases Directions even when the new manager has no route layer": 1,
         "shell disposal settles a pending globe reset once and revokes its timeout": 1,
@@ -22646,7 +23157,6 @@
       "names": {
         "es catalog translates: Delete scene \"{scene}\" and all shots?": 1,
         "es catalog translates: Detailed outline unavailable": 1,
-        "es catalog translates: Double-click the header to snap the panel back": 1,
         "es catalog translates: Exit cockpit to fly to a camera": 1,
         "es catalog translates: Exit cockpit to fly to a location": 1,
         "es catalog translates: Exit cockpit to fly to a photo": 1,
@@ -22660,7 +23170,6 @@
         "es: the Cockpit refusal is translated": 1,
         "marked for translation: Delete scene \"{scene}\" and all shots?": 1,
         "marked for translation: Detailed outline unavailable": 1,
-        "marked for translation: Double-click the header to snap the panel back": 1,
         "marked for translation: Exit cockpit to fly to a camera": 1,
         "marked for translation: Exit cockpit to fly to a location": 1,
         "marked for translation: Exit cockpit to fly to a photo": 1,
@@ -22674,7 +23183,6 @@
         "no bare literal reaches showToast in the orientation and navigation code": 1,
         "ru catalog translates: Delete scene \"{scene}\" and all shots?": 1,
         "ru catalog translates: Detailed outline unavailable": 1,
-        "ru catalog translates: Double-click the header to snap the panel back": 1,
         "ru catalog translates: Exit cockpit to fly to a camera": 1,
         "ru catalog translates: Exit cockpit to fly to a location": 1,
         "ru catalog translates: Exit cockpit to fly to a photo": 1,
@@ -22717,38 +23225,35 @@
     },
     "src/ui/streetLevelControls.test.mjs": {
       "names": {
-        "Esc and Tab from a field outside the expanded viewer stay with that field (P3)": 1,
-        "Esc shrinks the expanded viewer after focus left it, and the map keeps its selection": 1,
-        "FIT / FILL show the selection while the viewer is expanded (P3)": 1,
+        "EXPAND puts the viewer full screen in place, and the button shrinks it again": 1,
+        "Esc in full screen shrinks the photo; the panel never sees it": 1,
+        "FIT / FILL show the selected render mode (P3)": 1,
         "OPEN STREET VIEW opens the nearest panorama at the view centre without moving the camera": 1,
-        "Street View lit hides the imagery filters and the legend; Mapillary lit shows them": 1,
-        "Tab from outside the expanded viewer brings focus back into it": 1,
+        "Street View lit hides the imagery filters; Mapillary lit shows them": 1,
         "a 360° click reaches the share link through the data manager": 1,
-        "a <body> child added while the viewer is expanded goes inert with the rest": 1,
-        "a CSS-hidden expanded viewer releases the app; showing it again, and new children, go inert": 1,
         "a hidden (0×0) viewer is not resized, so no z=NaN tile request (P3)": 1,
-        "a hidden expanded viewer (Clean View, recording, cockpit) holds neither Esc nor Tab (P2-5)": 1,
         "a note under SINCE says what date it compares, only while one is given": 1,
         "a refused Street View key cannot lock Mapillary out; its chip only explains itself": 1,
-        "a restored layer does not reopen a panel the user collapsed, and automatic opens are never stored (P2-1)": 1,
         "a swap names every registered provider, also those hidden on this map": 1,
-        "an image closed while expanded does not return focus into the hidden viewer": 1,
-        "an image closed while expanded releases the app": 1,
-        "an image closed while expanded returns the viewer into the panel": 1,
+        "an image closed while full screen leaves full screen": 1,
         "arrow keys move the selection within a radiogroup, which has one tab stop (P3)": 1,
         "closing the image from its × button leaves focus on the panel, not <body>": 1,
         "darkening the only lit chip turns the layer off and keeps the provider switched on": 1,
-        "destroying the panel while expanded returns the viewer into it": 1,
+        "destroying the panel while the iPhone popover is open leaves no popover behind": 1,
+        "entering cockpit-mode takes the photo out of full screen": 1,
+        "entering recording-mode takes the photo out of full screen": 1,
+        "entering ui-clean-view takes the photo out of full screen": 1,
         "identical renders write nothing to the DOM (P3: rail MutationObserver)": 1,
         "lighting a dark chip switches the provider on as a user params request, then the layer": 1,
+        "on iPhone (no element fullscreen) EXPAND opens the viewer as a popover over the page": 1,
+        "only an explicit switch-on opens the panel, unstored; a restore never does (P2-1)": 1,
         "releasing the SINCE slider records the window in the share link": 1,
-        "shrinking returns the viewer into the panel at its own place": 1,
-        "the expanded viewer makes the rest of the app inert and gives it back on shrink": 1,
-        "the legend rebuilds when a swatch changes, even at the same count": 1,
+        "the header pill switches the layer; provider switches are left alone": 1,
         "the viewer is resized once when it opens, not on every render": 1,
+        "under KEY REQUIRED the filters are gated and the error line says how to add the key": 1,
+        "under KEY REQUIRED the provider chip stays live and explains the key instead of toggling": 1,
         "under KEY REQUIRED the provider chip stays live and explains the key instead of toggling (P3)": 1,
-        "with request origins, only a user switch-on opens the panel; a restore never does (P2-1)": 1,
-        "without a stored choice, a restored layer still opens its panel, unstored (P2-1)": 1
+        "without the Fullscreen or Popover API there is no EXPAND button": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -22764,29 +23269,23 @@
     },
     "src/ui/streetLevelPresentation.test.mjs": {
       "names": {
-        "FOLLOW is disabled off Google 3D and says where to switch": 1,
+        "KEY REQUIRED disables every control and says how to add the key": 1,
         "KEY REQUIRED points at Street View when it would draw with the Google key": 1,
-        "KEY REQUIRED shows no raw error code under the pill": 1,
         "OPEN STREET VIEW shows while Street View is on, and waits for street zoom": 1,
+        "a SINCE window from a link lands on the nearest slider stop": 1,
         "a Street View caption names the place, dates it by month, and offers no FIT/FILL": 1,
         "a key Mapillary rejected reads KEY REJECTED and names the fix": 1,
         "a key problem outranks loading on the pill: KEY REJECTED, then KEY REQUIRED (M65)": 1,
-        "a key-gated layer disables every control and flags KEY REQUIRED": 1,
-        "a provider error is explained on its chip": 1,
         "an empty composition explains unavailable imagery even while disabled": 1,
+        "an empty view says so, and whether the filter emptied it": 1,
         "an image without a creator name leaves the left caption empty": 1,
-        "chips are dark while the layer is off, so the chip is the layer switch": 1,
-        "each provider chip carries its source colour": 1,
-        "errors from the viewer or the coverage web surface in one alert": 1,
-        "legend passes through in the layer’s order": 1,
-        "one chip per provider: on, off, loading, and keyless as an error chip": 1,
+        "errors from the viewer, the sequence or the coverage surface in one alert": 1,
         "the SINCE readout names the window and the cut-off date it means today": 1,
-        "the SINCE slider runs from any date on the left to the last month on the right": 1,
         "the caption names an image’s own licence after its author, and leaves it out when there is none": 1,
         "the header pill is the on/off switch and reads OFF, LOADING or ON": 1,
         "the meta line keeps the sequence count and adds the other providers’ hints": 1,
         "the meta line never mixes the visible-sequence count with the selected sequence": 1,
-        "viewer caption reads \"Image by\" left, date right, and links to the provider": 1
+        "viewer caption reads \"Image by\" left, date right, and links to Mapillary": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -22999,6 +23498,31 @@
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
+    "src/voice/cctvRouting.test.mjs": {
+      "names": {
+        "CCTV disable: already-aborted caller cannot enter lifecycle work": 1,
+        "CCTV disable: caller-abort preserves the manager outcome": 1,
+        "CCTV disable: false preserves the manager outcome": 1,
+        "CCTV disable: late-abort preserves the manager outcome": 1,
+        "CCTV disable: resource-abort preserves the manager outcome": 1,
+        "CCTV disable: success preserves the manager outcome": 1,
+        "CCTV disable: throw preserves the manager outcome": 1,
+        "CCTV enable: already-aborted caller cannot enter lifecycle work": 1,
+        "CCTV enable: caller-abort preserves the manager outcome": 1,
+        "CCTV enable: false preserves the manager outcome": 1,
+        "CCTV enable: late-abort preserves the manager outcome": 1,
+        "CCTV enable: resource-abort preserves the manager outcome": 1,
+        "CCTV enable: success preserves the manager outcome": 1,
+        "CCTV enable: throw preserves the manager outcome": 1,
+        "CCTV fallback managers report rejection, transitional state, and uncertainty": 1,
+        "CCTV non-toggle actions retain camera navigation and durable coverage": 1,
+        "CCTV toggles retain missing-module errors without calling visibility": 1,
+        "CCTV visibility composes only its outer speech envelope": 1,
+        "exported controlCctv refuses toggles without calling the manager": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/voice/cloudVoiceAuth.test.mjs": {
       "names": {
         "cloud voice auth defaults to API key and persists OAuth independently": 1
@@ -23023,6 +23547,334 @@
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
+    },
+    "src/voice/geminiAcquisition.test.mjs": {
+      "names": {
+        "aborted token acquisition closes the unread body before response": 1,
+        "aborted token acquisition closes the unread body between resolution and continuation": 1,
+        "already aborted token request does not acquire or read a response": 1,
+        "late audio initialization cannot connect a retired microphone or close successor audio": 1,
+        "permission grant resolved just before Stop releases its tracks and preserves a fresh start": 1,
+        "token body cap cancels a native response stream": 1,
+        "token body read ends promptly on caller abort and releases the reader": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiAudio.test.mjs": {
+      "names": {
+        "PCM decoding accepts both rate endpoints and the exact decoded chunk limit": 1,
+        "PCM decoding preserves little-endian signed samples and rejects malformed audio": 1,
+        "PTT admission bounds a long silent preroll and never regates voiced tails": 1,
+        "PTT admission isolates repeated holds, stale identities and close callbacks": 1,
+        "PTT admission leaves open-mic start, silence, PCM and end unchanged": 1,
+        "PTT admission preserves quiet short speech and final partial release in exact order": 1,
+        "PTT admission rejects isolated high-peak clicks across packet boundaries": 1,
+        "PTT admission suppresses zero and near-silent captures without protocol callbacks": 1,
+        "audio playback records completed samples only as sources naturally end": 1,
+        "capture diagnostics distinguish speech energy from silence without retaining audio": 1,
+        "capture uses the device context while playback owns its clock, stream and actual rate diagnostics": 1,
+        "clearing and closing a full queue release every source and ignore late completion": 1,
+        "closing queued playback cannot count stopped sources as completed audio": 1,
+        "context 0 close failure does not prevent closing the other context": 1,
+        "context 1 close failure does not prevent closing the other context": 1,
+        "interruption records queued samples as discarded and rejects stale ended callbacks": 1,
+        "module failure and aborted initialization release both capture and playback": 1,
+        "partial context construction failure closes the previously acquired capture context": 1,
+        "pending sources are capped before decoding or allocating and natural completion frees a slot": 1,
+        "resampler release flushes only owned PCM and clears phase/history before a successor": 1,
+        "resume failure in context 0 releases both contexts": 1,
+        "resume failure in context 1 releases both contexts": 1,
+        "the duration limit still rejects long chunks below the source cap": 1,
+        "worklet orders start, bounded PCM and the final partial chunk before end": 1,
+        "worklet rejects missing identity and stale release without changing the active capture": 1,
+        "worklet resamples 44100 Hz to bounded 16 kHz PCM independently of block boundaries": 1,
+        "worklet resamples 48000 Hz to bounded 16 kHz PCM independently of block boundaries": 1,
+        "worklet resamples 96000 Hz to bounded 16 kHz PCM independently of block boundaries": 1,
+        "worklet serializes rapid re-holds and ignores repeated enable or release": 1,
+        "worklet suppresses 12 kHz aliasing from a 44100 Hz microphone": 1,
+        "worklet suppresses 12 kHz aliasing from a 48000 Hz microphone": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiAutomaticVad.test.mjs": {
+      "names": {
+        "C1 actual old audio followed by onset fences late audio and tool until boundary": 1,
+        "C2 first server tool in flight is aborted and never answered after new onset": 1,
+        "C5 typed request before first server output still retires on next onset": 1,
+        "N1 VAD-only split admits the first real answer and completes after playback": 1,
+        "N10 stop, restart and destroy release automatic owner identities and timers": 1,
+        "N11 deferred typed ownership counts discarded open-mic PCM without queuing or replay": 1,
+        "N12 goAway before old completion still waits for the newer automatic owner": 1,
+        "N13 no successor clears retired ownership with goAway after interruption": 1,
+        "N13 no successor clears retired ownership with goAway before interruption": 1,
+        "N14 native interruption during goAway aborts pending old tool and suppresses late response": 1,
+        "N15 goAway still refuses local PTT and typed replacement without reopening microphone": 1,
+        "N2 VAD-only split does not arm a nonexistent reply timeout": 1,
+        "N3 server interruption before output still fences until ordered turnComplete": 1,
+        "N4 generationComplete is server evidence and next onset retires it": 1,
+        "N5 goAway during VAD-only activity waits for actual reply and playback": 1,
+        "N6 first server tool after VAD-only split executes exactly once": 1,
+        "N7 old retired boundary preserves the newer automatic owner for goAway": 1,
+        "N8 old automatic owner with no successor is cleared by its retired boundary": 1,
+        "N9 coalesced old completion and new VAD preserves the new owner": 1,
+        "T-C1 coalesced new START and natural old completion preserve newer automatic activity": 1,
+        "T-C2 generationComplete alone followed by natural completion emits completion with no retirement timer": 1,
+        "T-C3 silent PTT terminal completion emits spoken false without fabricated audio": 1,
+        "T-C4 silent terminal boundary waits for pending tool and native follow-up completion": 1,
+        "T-C5 terminal boundary with queued PCM waits for drain and preserves real spoken state": 1,
+        "T-C6 old retired terminal boundary cannot clear successor userTurnPending": 1,
+        "T-C7 reentrant silent completion observer keeps new input pending": 1,
+        "T-F1a PTT successor PCM survives retired boundary and a second input fences its late output": 1,
+        "T-F1b VAD then submitted text survives goAway after retired boundary": 1,
+        "T-F1b VAD then submitted text survives goAway before retired boundary": 1,
+        "T-F2 forwarded A superseded by deferred B cannot run after goAway": 1,
+        "T-F2 forwarded A superseded by deferred B cannot run after goAway shortened twice": 1,
+        "T-F3 VAD-only no-generation expiry waits to bounded native deadline and releases resources": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiDeferredInput.test.mjs": {
+      "names": {
+        "F04-5 deferred PTT flush loses its owner on Stop": 1,
+        "F04-5 deferred PTT flush loses its owner on Stop+restart": 1,
+        "F04-5 deferred PTT flush loses its owner on typed replacement": 1,
+        "F04-5 deferred typed onSent cannot resurrect replyPending after Stop+restart": 1,
+        "F04-5 ordinary deferred PTT flush preserves start, PCM and end exactly once": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiIntegration.test.mjs": {
+      "names": {
+        "Stop from adapter connecting observer prevents acquisition and permits fresh Start": 1,
+        "Stop from common action-call observer prevents runner and leaves no unhandled rejection": 1,
+        "Stop from common connecting observer prevents acquisition and permits fresh Start": 1,
+        "Stop from executing observer cannot recreate narration or dispatch the runner": 1,
+        "native idle observer restart remains connecting and public Stop cancels its pending permission": 1,
+        "native interruption discards a stale completed action result; successor changes camera once": 1,
+        "native tool reaches actual common session and camera runner without a caption": 1,
+        "stop discards a stale completed action result; successor changes camera once": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiNativeCaptionEvents.test.mjs": {
+      "names": {
+        "native caption events preserve received advisory segments without granting tool authority": 1,
+        "native old socket captions cannot enter a restarted controller event stream": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiNativeOwnership.test.mjs": {
+      "names": {
+        "H01 native: cancelling a current get_entity_context query preserves unrelated Radio preflight": 1,
+        "H02 native: cancelling a current control_radio query preserves unrelated Radio preflight": 1,
+        "H03 native: PTT fences playing reply and recovers the new call after its boundary": 1,
+        "H04 native: PTT fences before-first-output reply and recovers the new call after its boundary": 1,
+        "H05 native: local typed presentation survives audio drain and new input revokes old call ownership": 1,
+        "H08 native: replacing pending runner work cannot underflow tool counts or block successor": 1,
+        "H10 native: held speech dispatches without caption authority and new text revokes its call": 1,
+        "H11 native: pending tool cannot revive voice after Stop": 1,
+        "H12 native: pending tool cannot revive voice after Stop/restart": 1,
+        "H14 native: shared runner zoom executes promptly after interrupted retired boundary": 1,
+        "H15 native: shared runner zoom executes promptly after natural retired boundary": 1,
+        "H18 native: stop prevents queued camera dispatch and late captions cannot revive it": 1,
+        "H19 native: replacement prevents queued camera dispatch and late captions cannot revive it": 1,
+        "native: cancelled queued tool settles a completed provider turn": 1,
+        "native: cancelled running tool settles a completed provider turn": 1,
+        "native: cancelling queued output after turnComplete emits one completion": 1,
+        "native: cancelling queued output before turnComplete emits one completion": 1,
+        "native: queued-output cancellation completion fences reentrant input": 1,
+        "native: queued-output cancellation completion fences reentrant stop": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiNativeRadio.test.mjs": {
+      "names": {
+        "native Radio cancellation: preflight preserves selection truth and prevents stale speaker transfer": 1,
+        "native Radio cancellation: prepared preserves selection truth and prevents stale speaker transfer": 1,
+        "native Radio cancellation: settling preserves selection truth and prevents stale speaker transfer": 1,
+        "native Stop retires concurrent stronger Radio work without late output or count underflow": 1,
+        "native Stop/restart retires concurrent stronger Radio work without late output or count underflow": 1,
+        "native failed Stop releases its reservation and lets the older selection finish": 1,
+        "native pending Stop preserves selection completed before its own successful settlement": 1,
+        "native same-turn Radio disable preempts deferred play without cancelling a query sibling": 1,
+        "native same-turn Radio disable preempts deferred select without cancelling a query sibling": 1,
+        "native same-turn Radio off preempts deferred play without cancelling a query sibling": 1,
+        "native same-turn Radio off preempts deferred select without cancelling a query sibling": 1,
+        "native same-turn Radio pause preempts deferred play without cancelling a query sibling": 1,
+        "native same-turn Radio pause preempts deferred select without cancelling a query sibling": 1,
+        "native same-turn Radio stop preempts deferred play without cancelling a query sibling": 1,
+        "native same-turn Radio stop preempts deferred select without cancelling a query sibling": 1,
+        "native same-turn Stop revokes only voice-owned preflight playback and preserves completed station": 1,
+        "native same-turn Stop revokes only voice-owned prepared playback and preserves completed station": 1,
+        "native stronger Radio invalid-arguments cannot revoke a same-turn lookup": 1,
+        "native stronger Radio malformed cannot revoke a same-turn lookup": 1,
+        "native stronger Radio replay cannot revoke a same-turn lookup": 1,
+        "stronger Radio ordering: a failed stop leaves the older queued select current": 1,
+        "stronger Radio ordering: a select after the stop in the same turn still runs": 1,
+        "stronger Radio ordering: older queued select is revoked by a later successful stop": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiNativeRecovery.test.mjs": {
+      "names": {
+        "native replacement H20: before-boundary tool respects retired output and next onset recovers": 1,
+        "native replacement H21: after-boundary tool respects retired output and next onset recovers": 1,
+        "native replacement H30: ordinary tools run promptly and late caption fragments cannot strand siblings": 1,
+        "native replacement H32: stop retires owned in-flight work and late callbacks": 1,
+        "native replacement H33: restart retires owned in-flight work and late callbacks": 1,
+        "native replacement H34: new-input retires owned in-flight work and late callbacks": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiPacketOwnership.test.mjs": {
+      "names": {
+        "assistant transcript observer Stop fences the rest of a coalesced native packet": 1,
+        "assistant transcript observer Stop then Start fences the rest of a coalesced native packet": 1,
+        "assistant transcript observer typed successor fences the rest of a coalesced native packet": 1,
+        "ordinary coalesced packet plays and executes once, then completes only after its post-tool reply": 1,
+        "received native terminal preserves typed successor after final assistant transcript control": 1,
+        "received native terminal preserves typed successor after input transcript": 1,
+        "received native terminal preserves typed successor after interruption event": 1,
+        "received native terminal preserves typed successor after listening event": 1,
+        "received native terminal preserves typed successor after partial assistant transcript": 1,
+        "typed reentry retains a genuinely pending boundary when terminal already applied is false": 1,
+        "typed reentry retains a genuinely pending boundary when terminal already applied is true": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/geminiSession.test.mjs": {
+      "names": {
+        "B48 fence: a coalesced interrupted boundary keeps successor speech and its pointer": 1,
+        "B48 fence: an empty PTT hold creates no retired boundary for the next command": 1,
+        "B48 fence: duplicate automatic activity end cannot retire an idle next command": 1,
+        "B48 fence: push-to-talk permits the completed idle reply without an interruption marker": 1,
+        "B48 fence: push-to-talk permits the first idle reply without an interruption marker": 1,
+        "B48 fence: user-text permits the completed idle reply without an interruption marker": 1,
+        "B48 fence: user-text permits the first idle reply without an interruption marker": 1,
+        "B48 pointer: a cold held PTT turn freezes keydown and sends quiet context before activity": 1,
+        "B48 pointer: automatic speech snapshots once per onset and late input transcript keeps it": 1,
+        "B48 pointer: text uses recent availability, clears stale context and sends one turn": 1,
+        "B48 queue: 256 KiB input bound fails closed without flushing partial queued speech": 1,
+        "B48 queue: a boundary before deferred PTT worklet start still fences the submitted successor": 1,
+        "B48 queue: push-to-talk can replace the other unsent input mode without stale pointer context": 1,
+        "B48 queue: rapid push-to-talk keeps only the latest pointer/input and serializes reply boundaries": 1,
+        "B48 queue: rapid user-text keeps only the latest pointer/input and serializes reply boundaries": 1,
+        "B48 queue: user-text can replace the other unsent input mode without stale pointer context": 1,
+        "B48 queue: wait timeout fails closed and Stop releases queued input without replay": 1,
+        "Gemini model preamble and playback take priority over the working earcon": 1,
+        "Gemini progress is bounded and all terminal paths release narration ownership": 1,
+        "Gemini tool progress reaches the shared card event contract with its call id": 1,
+        "OFF during unresolved setup blocks late setup, error and close callbacks": 1,
+        "PTT locks manual activity and serializes cold and repeated held turns": 1,
+        "PTT pointer context is quiet, ordered once, and only PCM creates a pending reply": 1,
+        "PTT pointer context rejected by the channel fails closed without opening activity": 1,
+        "PTT release during microphone startup stays muted until a later hold": 1,
+        "PTT release during setup startup stays muted until a later hold": 1,
+        "PTT release during token startup stays muted until a later hold": 1,
+        "PTT release starts shared progress timing and a new hold cancels it": 1,
+        "R51-2: FIFO old capture messages stay retired after typed replacement and a fresh claim": 1,
+        "R51-2: a forwarded old capture closes once before fresh FIFO start and cannot close the new activity": 1,
+        "R51-2: a normal release keeps its delayed final PCM and end, without relabelling duplicate gates or tool aborts": 1,
+        "R51-2: absent metadata fails closed and Stop/error restart never reuse capture identity": 1,
+        "R51: a delayed old worklet start cannot reclaim a typed turn; a fresh hold still works": 1,
+        "R51: replaced unsent PTT contributes no unmatched end to the forwarded stream": 1,
+        "R51: typed override closes forwarded PTT before its queued text and suppresses the old flush": 1,
+        "R52: empty flush keeps the original retirement wait bound": 1,
+        "R52: replacement cannot extend a flushed retirement deadline and Stop cancels it": 1,
+        "R52: text flush keeps the original retirement wait bound": 1,
+        "Sameh P3-1: boundary clears an injected retirement deadline before replacement": 1,
+        "Sameh P3-1: deferred retirement deadline uses the injected clock and releases timers": 1,
+        "Sameh P3-1: flushed retirement deadline uses the injected clock and releases timers": 1,
+        "Sameh P3-1: stop clears an injected retirement deadline before replacement": 1,
+        "Stop during a permission prompt releases a late grant without touching the successor": 1,
+        "a delayed permission prompt does not mint a token or consume the network deadline": 1,
+        "a disposed pending microphone is stopped and cannot update the replacement UI": 1,
+        "a late caption after a completed push-to-talk turn cannot retire the next request": 1,
+        "a narration callback that submits a successor keeps the old packet tools from running": 1,
+        "a queued tool response is revoked by new-turn before pressure clears": 1,
+        "a queued tool response is revoked by server-call before pressure clears": 1,
+        "a refusal does not hold back the completion of the reply still playing": 1,
+        "a refused reply boundary that arrives after new push-to-talk input cannot close it": 1,
+        "a token config that disagrees with the gesture fails before socket creation and releases consented microphone": 1,
+        "an expired goAway deadline rejects late output before the timer callback can run": 1,
+        "an open-mic reply that starts with a caption is retired by newer typed input": 1,
+        "cancelled preflight rejection cannot emit a stale Radio failure correction": 1,
+        "cancelled stronger call releases only its reservation and retains prepared playback": 1,
+        "cancelling a pressure-queued response retains passive map context for the next owned text": 1,
+        "cancelling one queued Radio call preserves active and queued same-feature siblings": 1,
+        "close diagnostics preserve bounded code/category but never provider reason or credential text": 1,
+        "completed query and unknown cancellation IDs are inert and cannot poison future calls": 1,
+        "congested PTT markers remain ordered and forwarding flags commit only at wire delivery": 1,
+        "consented microphone stays muted through the network phase and its deadline releases tracks": 1,
+        "eligible entity context sends a bounded fresh image before its function result": 1,
+        "ephemeral credentials are sent only to the fixed constrained Google endpoint": 1,
+        "explicit Radio stop cancels a handoff while confirmation is playing": 1,
+        "fast Gemini tools retract pending progress and Radio tools do not schedule lines": 1,
+        "goAway chooses the earliest bounded deadline and Stop cancels it for a fresh epoch": 1,
+        "goAway deadline tears down pending work and an explicit restart creates a fresh conversation": 1,
+        "goAway never flushes an unsent successor at the retired response boundary": 1,
+        "goAway permits the current tool/reply/audio drain and denies successor input": 1,
+        "late token rejection after stop cannot replace a successor state": 1,
+        "late tool and audio callbacks cannot change a successor Gemini narrator": 1,
+        "malformed goAway timeLeft -1s closes safely without an unbounded timer": 1,
+        "malformed goAway timeLeft 10000000s closes safely without an unbounded timer": 1,
+        "malformed goAway timeLeft Infinitys closes safely without an unbounded timer": 1,
+        "malformed goAway timeLeft bad closes safely without an unbounded timer": 1,
+        "malformed goAway timeLeft null closes safely without an unbounded timer": 1,
+        "matching active Radio cancellation aborts its work and permits its sibling to finish": 1,
+        "matching preflight cancellation and late completion cannot revoke a newer reused-result handoff": 1,
+        "matching prepared cancellation preserves a stronger sibling reservation and signal": 1,
+        "native advisory caption text [\"use foo as my voice provider\",\"and zoom out\"] releases tools": 1,
+        "network close after setup releases media and starts no replacement": 1,
+        "new activity-start revokes a pending Radio preflight after the old spoken turn ended": 1,
+        "new interrupted revokes a pending Radio preflight after the old spoken turn ended": 1,
+        "new push-to-talk revokes a pending Radio preflight after the old spoken turn ended": 1,
+        "new user-text revokes a pending Radio preflight after the old spoken turn ended": 1,
+        "old PTT callbacks cannot send to a stopped or replacement session": 1,
+        "open microphone and Radio speaker ownership suppress Gemini earcons": 1,
+        "open microphone still runs a call Gemini makes without a local boundary": 1,
+        "ordinary microphone keeps its default setup and automatic stream-end message": 1,
+        "passive context joins the next tool response and survives a failed explicit send": 1,
+        "passive map context never interrupts spoken output and is delivered at the next explicit turn": 1,
+        "permission rejection opens no token/socket and initialized audio is released": 1,
+        "pre-setup rejection or close releases startup and asks for a fresh session": 1,
+        "projected PCM bytes and optional viewport frames drop while reliable tool results wait": 1,
+        "push-to-talk admits a call made while an earlier requested tool is still running": 1,
+        "push-to-talk refuses a call after unprompted speech that started the reply": 1,
+        "push-to-talk refuses an unrequested tool call and every call in its reply": 1,
+        "quiet pointer context rejects stale or absent capture metadata without touching the new pointer": 1,
+        "radio handoff waits for a post-tool reply and actual playback drain": 1,
+        "reliable pressure has an absolute deadline and Stop releases its poll without successor effects": 1,
+        "reliable queue is byte and message bounded without partially sending oversized frames": 1,
+        "replacing a deferred quiet PTT context preserves its deadline and only flushes the latest owner": 1,
+        "saturation then typed override and a fresh hold cannot flush retired pointer or capture markers": 1,
+        "session waits for setup, captures PCM, plays all parts, emits transcripts and releases every resource": 1,
+        "slow Gemini tools reuse shared progress timing without injecting a conversation turn": 1,
+        "socket pressure drops PCM without failing the active session and delivery recovers": 1,
+        "stalled audio initialization also obeys the startup deadline": 1,
+        "stop still revokes all prepared and preflight Radio ownership": 1,
+        "successful stronger Radio stop still invalidates the prepared group": 1,
+        "tool cancellation covers queued calls and interrupted results never return to the socket": 1,
+        "uncorrelated late transcription preserves its own successful Radio action and preflight": 1,
+        "unknown or malformed voice activity cannot revoke the current turn": 1,
+        "user-activity still revokes all prepared and preflight Radio ownership": 1,
+        "valid huge goAway duration is clamped to a bounded timer": 1,
+        "wire voiceActivity.type end respects automatic turn ownership": 1,
+        "wire voiceActivity.type end respects manual turn ownership": 1,
+        "wire voiceActivity.type start aborts pending work and discards old playback": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/voice/gevActions.test.mjs": {
       "names": {
@@ -23356,13 +24208,17 @@
     },
     "src/voice/pointerContext.test.mjs": {
       "names": {
+        "a capture arriving after destruction cannot restore an active referent": 1,
         "a stale turn clears the previous referent": 1,
         "chip: \"this\" names an entity, \"here\" gives the ground coordinate": 1,
+        "delayed speech uses its released capture without replacing a newer physical hold": 1,
         "destroy removes listeners and ignores later moves": 1,
         "dwell: the pick runs once when the pointer settles and the snapshot reuses it": 1,
+        "explicit stale captures clear the referent while a silent hold leaves it alone": 1,
         "format: the model item is compact inert JSON; labels are bounded data": 1,
         "freshness: off-canvas, parked at the edge, or idle too long is not a referent": 1,
         "open sky with no entity is not a referent": 1,
+        "pointer turn helpers reveal gesture targets, describe implicit ones by kind and dedupe repeats": 1,
         "push-to-talk: the keydown snapshot is held for every speech start in the hold": 1,
         "snapshot: a pointer resting on an aircraft names it, with its position": 1
       },
@@ -23390,6 +24246,33 @@
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
+    },
+    "src/voice/providerCommands.test.mjs": {
+      "names": {
+        "Gemini-only host falls back from saved OpenAI": 1,
+        "OpenAI-only host ignores saved Gemini": 1,
+        "Stop and error clear pointer/referents/conversation once: adapter emitsIdle=false": 1,
+        "Stop and error clear pointer/referents/conversation once: adapter emitsIdle=true": 1,
+        "Stop during replacement startup defeats late settlement and further automatic resume": 1,
+        "active switch keeps PTT mode, retires the held key, and disposes before mounting": 1,
+        "destroy from replacement adapter connecting observer prevents resume": 1,
+        "destroy from replacement common connecting observer prevents resume": 1,
+        "dual host restores Gemini": 1,
+        "error selection never autostarts; manual start still works": 1,
+        "idle selection never autostarts; manual start still works": 1,
+        "invalid or empty host support fails before mounting a control": 1,
+        "outer destruction disposes the runner once and removes each provider binding": 1,
+        "provider preference uses only the supplied host capability list": 1,
+        "public composition preserves the custom adapter path": 1,
+        "public composition preserves the default OpenAI adapter path": 1,
+        "retired startup reject and stale events cannot affect the current mount": 1,
+        "retired startup resolve and stale events cannot affect the current mount": 1,
+        "stop from replacement adapter connecting observer prevents resume": 1,
+        "stop from replacement common connecting observer prevents resume": 1,
+        "unknown, duplicate and unavailable factories are excluded": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
     },
     "src/voice/realtimeBackend.test.mjs": {
       "names": {
@@ -23453,16 +24336,52 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/voice/realtimeRadio.test.mjs": {
+      "names": {
+        "default OpenAI group cancellation silences rejected preflight without blocking the next failure correction": 1,
+        "default OpenAI reservation silences rejected frozen preflight and resumes retained result after failure": 1,
+        "per-result cancellation retains sibling result and epoch and ignores late failure or duplicate cancellation": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
+    "src/voice/realtimeTypedSend.test.mjs": {
+      "names": {
+        "accepted text with a rejected response.create releases the pending latch for a successor": 1,
+        "earlier accepted deferred input survives a newer failed send and answers once": 1,
+        "progress completion answers only accepted deferred input (accepted first=false)": 1,
+        "progress completion answers only accepted deferred input (accepted first=true)": 1,
+        "rejected idle text schedules no answer, and a successful successor answers once": 1,
+        "rejected text behind an active response cannot queue an answer": 1,
+        "rejected text preserves an outstanding create without adding deferred input": 1,
+        "rejected text still prepares narration and pointer context before sending": 1,
+        "successful deferred typed burst still retains both items and coalesces one answer": 1
+      },
+      "origin": "upstream-sync-8",
+      "since": "2026-10-21"
+    },
     "src/voice/session.test.mjs": {
       "names": {
+        "Stop and explicit reentrant successor start acquire only for the successor": 1,
         "a late rejection cannot settle a newer turn card": 1,
         "a rejected current action settles its card and preserves the rejection": 1,
         "action events carry the call id; progress after cancellation is dropped": 1,
+        "actual default OpenAI adapter stop publishes one common idle": 1,
         "alternate protocol shares session events and action execution without Realtime": 1,
         "caller cancellation and sibling actions preserve independent ownership": 1,
         "common button and annotation bindings work with an alternate adapter and clean up": 1,
+        "initial connecting observer destroy prevents adapter acquisition": 1,
+        "initial connecting observer stop prevents adapter acquisition": 1,
         "late actions cannot run after stop and failed startup closes the adapter": 1,
+        "ordinary start forwards caller settings once and remains stoppable": 1,
+        "preserveStatus Stop still prevents adapter acquisition": 1,
         "stale connect failure cannot stop a replacement session": 1,
+        "stop preserves custom adapter contract: emitsIdle=false, normal": 1,
+        "stop preserves custom adapter contract: emitsIdle=false, preserveStatus": 1,
+        "stop preserves custom adapter contract: emitsIdle=false, throw": 1,
+        "stop preserves custom adapter contract: emitsIdle=true, normal": 1,
+        "stop preserves custom adapter contract: emitsIdle=true, preserveStatus": 1,
+        "stop preserves custom adapter contract: emitsIdle=true, throw": 1,
         "stop, interruption and lifetime abort cancel actions and suppress stale results": 1,
         "wire events project only normalized transcript, interruption and completion fields": 1
       },
