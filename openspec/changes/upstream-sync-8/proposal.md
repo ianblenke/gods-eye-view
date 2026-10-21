@@ -15,6 +15,7 @@ Upstream pull request #1228 adds the Ontario 511 key `ONTARIO_511_API_KEY`. The 
 - Resolve the conflicts in 16 files. `design.md` gives each resolution.
 - Use the upstream code for the Ontario 511 key. Remove the fork module `server/providers/cctv/ontarioRequest.js` and its tests. Decision D2 gives the reason.
 - Change the scenario `qa-scripts-023` for the two QA scripts that upstream removes.
+- Edit four upstream tests, so that the tests measure the same coverage each time that they run and leave no live immediate. Decisions D6 and D7 give the edits.
 - Run the adopt command for each upstream file that the merge brings and that has a coverage gap.
 - Keep the upstream code as it is.
 
@@ -32,7 +33,9 @@ None.
 ## Impact
 
 The merge changes 268 files. It adds 74 files and removes 18 files. None of the 268 files is in `openspec/ownership.json`.
-The change also removes the fork module `server/providers/cctv/ontarioRequest.js` and the fork test file `src/data/cctvOntarioKey.test.mjs`. It edits the test files `src/data/cctvOntarioRows.test.mjs` and `src/tooling/spec/qaRegister.test.mjs`. Of these four files, only `src/tooling/spec/qaRegister.test.mjs` is in `openspec/ownership.json`.
+
+The change also removes the fork module `server/providers/cctv/ontarioRequest.js` and the fork test file `src/data/cctvOntarioKey.test.mjs`. It edits the fork test files `src/data/cctvOntarioRows.test.mjs` and `src/tooling/spec/qaRegister.test.mjs`. Of these four files, only `src/tooling/spec/qaRegister.test.mjs` is in `openspec/ownership.json`.
+The change also edits four upstream test files. Decisions D6 and D7 give these edits.
 
 Rule 23: the 74 added files are upstream files, because the fork does not write them. The manifest lists only paths that the fork writes.
 Fifteen of the added files are code files. `evidence/added-code.txt` lists them.

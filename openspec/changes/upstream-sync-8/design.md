@@ -85,18 +85,27 @@ Each of these files sends requests with the fetch function of Node to a test ser
 The change makes each of these tests wait for one immediate after it closes its servers. The probe then finds no live immediate.
 The file `evidence/leaks.txt` gives the probe results and the stacks before and after the change.
 
-### D7: The adopt command
+### D7: The coverage of the sliced Panoramax decode
+
+The upstream function `decodeCoverageTileSliced()` in `src/layers/streetLevel/providers/panoramax/decode.js` gives the page a turn when a slice of the decode takes 8 ms or more. The default turn is the function `nextTask()`, and the default clock is `performance.now()`.
+Before this change, only the provider called the decode with the default turn and clock. So `nextTask()` ran only when the machine was slow, and the function coverage of `decode.js` was not the same each time that the tests ran.
+The adopt run measured no function without coverage in `decode.js`. The first ratchet run measured one function without coverage and stopped with the error `LEDGER-LOST-COVERAGE`.
+
+The change adds one assertion to an upstream test in `src/layers/streetLevel/providers/panoramax/decode.test.mjs`. The name of the test is "a sliced decode gives the page turns and decodes the same as one in one go". The assertion decodes the same tile with a slice of 0 ms and the default turn and clock. It compares the result with the decode in one go.
+A slice of 0 ms gives a turn at each step, so `nextTask()` and the default clock run each time that the test runs. `evidence/decode-coverage.txt` gives the ratchet error and the function counts before and after the change.
+
+### D8: The adopt command
 
 The merge brings upstream tests with no scenario ID and upstream files with a coverage gap.
 The adopt command records them. The rule 21 check of the second parent goes into `review.md`.
 
-### D8: The image of the gates
+### D9: The image of the gates
 
 The merge does not change `package-lock.json`. The lead runs each Docker command of this change with the image `gods-eye-view:local`.
 
 ## Files and measures
 
-The change removes one fork code file and one fork test file. It edits two test files and adds the plan, the evidence and the review files. The merge changes 268 files.
+The change removes one fork code file and one fork test file. It edits two fork test files and four upstream test files, and it adds the plan, the evidence and the review files. The merge changes 268 files.
 
 The trace gate checks the scenario IDs and the links. The ledger gate checks the gaps of the upstream files against the adopt records.
 The four checks of `make precheck` check the format, the import directions, the package boundaries and the layer tokens. The prose lint checks STE.

@@ -32,3 +32,7 @@ $ timeout 2400 nice -n 10 node --test src/tooling/spec/gates.test.mjs (the count
 ℹ cancelled 0
 ℹ skipped 0
 rc=0
+
+Prose lint, on the host, at the commit 8d9a5c51. Date (UTC): 2026-10-21 05:46:51.
+$ node scripts/spec/gates.mjs lint (the lines of this change and the last line)
+STE: 0 errors, 1053 warnings.
