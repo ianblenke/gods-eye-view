@@ -350,12 +350,7 @@ export function createSkywatchScenesLayer({
       if (keys.length !== 1 || keys[0] !== 'scene') return false;
       const { scene } = params;
       if (scene === null) return select(null);
-      if (
-        typeof scene !== 'string' ||
-        !_answer?.scenes.some((item) => item.id === scene)
-      ) {
-        return false;
-      }
+      if (!_answer?.scenes.some((item) => item.id === scene)) return false;
       return select(scene);
     },
 

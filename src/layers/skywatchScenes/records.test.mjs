@@ -75,6 +75,8 @@ test('[skywatch-scenes-layer-016] drops a scene whose start is not a text that D
     scene('b', { start: 1760429000000 }),
     scene('c', { start: null }),
     scene('d', { start: 'Oct 14 2026 08:03:00 GMT' }),
+    scene('e', { start: 2026 }),
+    scene('f', { start: ['2026-10-14T08:03:00.000Z'] }),
   ]);
   const result = normalizeAnswer(payload);
   assert.deepEqual(
@@ -93,6 +95,14 @@ test('[skywatch-scenes-layer-016] drops a scene whose footprint is not a polygon
     scene('e', { footprint: { type: 'Polygon', coordinates: RING } }),
     scene('f', { footprint: { type: 'Polygon' } }),
     scene('g', { footprint: 'Polygon' }),
+    scene('i', {
+      footprint: {
+        type: 'Polygon',
+        coordinates: [
+          { 0: RING[0], 1: RING[1], 2: RING[2], 3: RING[0], length: 4 },
+        ],
+      },
+    }),
     scene('h'),
   ]);
   assert.deepEqual(idsOf(payload), ['h']);
@@ -137,6 +147,7 @@ test('[skywatch-scenes-layer-016] drops a scene with a position that is not two 
     ['10', 60],
     [NaN, 60],
     [10, Infinity],
+    [10, NaN],
     [180.0001, 60],
     [-180.0001, 60],
     [10, 90.0001],

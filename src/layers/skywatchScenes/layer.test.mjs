@@ -900,6 +900,13 @@ test('[skywatch-scenes-layer-029] removes the selection with scene null and send
   );
   assert.equal(h.layer.setParams({ scene: null }), true);
   assert.equal(h.calls.getThumbnail.length, 1);
+  assert.equal(h.layer.setParams({ scene: 'c' }), true);
+  assert.equal(
+    h.info(),
+    `${ANSWER_TEXT} · SkyWatch has no thumbnail for this scene.`,
+  );
+  assert.equal(h.layer.setParams({ scene: null }), true);
+  assert.equal(h.info(), ANSWER_TEXT);
 });
 
 test('[skywatch-scenes-layer-029] refuses each other parameter and changes nothing', async () => {
