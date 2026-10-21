@@ -1,0 +1,25 @@
+Host checks of skywatch-source. Date (UTC): 2026-10-21 13:46:11. Branch head: bbe14837. Node v26.8.2 on the host. Each output shows at most its last three lines. The lead added each line "exit".
+
+$ node scripts/format.mjs --check
+Checked 1557 source files.
+exit 0
+
+$ node scripts/check-import-directions.mjs
+{"modules":1079,"portableEntries":84}
+exit 0
+
+$ node scripts/check-package-boundaries.mjs
+Checked air-quality: 1 exports, 11 owned modules.
+Checked air-quality-source: 1 exports, 4 owned modules.
+Checked agent-world-packet: 1 exports, 7 owned modules.
+exit 0
+
+$ node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 36 published, 0 new.
+exit 0
+
+$ npx --no-install openspec validate skywatch-source --strict
+Change 'skywatch-source' is valid
+
+$ node scripts/spec/gates.mjs lint (the lines of this change and the last line)
+STE: 0 errors, 1055 warnings.
