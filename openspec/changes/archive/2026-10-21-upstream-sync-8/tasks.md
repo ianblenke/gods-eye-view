@@ -38,4 +38,4 @@
 - [x] 3.6 Remove the four empty links of these IDs from `openspec/trace/links.json`.
 - [x] 3.7 Run the two review agents.
 - [x] 3.8 Write review.md.
-- [ ] 3.9 Run `make gates CHANGE=upstream-sync-8` with the image of decision D9 on the final tree.
+- [x] 3.9 Run `make gates CHANGE=upstream-sync-8` with the image of decision D9 on the final tree.
