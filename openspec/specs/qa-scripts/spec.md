@@ -117,9 +117,9 @@ Origin: spec-first
 
 #### Scenario: The real repository passes the register check `qa-scripts-023`
 - **WHEN** the register checks the tracked QA scripts of this repository
-- **THEN** it checks all 97 tracked QA scripts
+- **THEN** it checks all 99 tracked QA scripts
 - **AND** the register reports no QA error
-- **AND** qa-browserEvidence names `pending:application-shell` in its covers tag
+- **AND** qa-browserEvidence, qa-panel-resize and qa-panelDrag each name `pending:application-shell` in their covers tag
 
 ### Requirement: Register errors stop the gate
 The gate MUST stop for each QA register error.

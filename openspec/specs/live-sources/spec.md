@@ -1,7 +1,7 @@
 # live-sources Specification
 
 ## Purpose
-Keep the identity of an error that a transport aborts. Reject a fetch with the same error object that the fetch function gave. The capability also has requirements for the Ontario row rules.
+Keep the identity of an error that a transport aborts. Reject a fetch with the same error object that the fetch function gave. The capability also has requirements for the Ontario camera key. It has requirements for the Ontario row rules.
 ## Requirements
 ### Requirement: Transport abort error
 `readResponse()` MUST reject with the same error object when a fetch function rejects with an `AbortError` and no external abort signal aborts the request.
@@ -10,6 +10,39 @@ Origin: backfill
 #### Scenario: Keep the transport abort error `live-sources-001`
 - **WHEN** `readResponse()` calls a fetch function that rejects with an `AbortError`, and no external abort signal aborts the request
 - **THEN** `readResponse()` rejects with that same error object
+
+### Requirement: Ontario camera key
+The Ontario pack MUST use a server key, make no request without the key and keep the key text out of the console channels.
+Origin: spec-first
+
+#### Scenario: Send the server key `live-sources-002`
+- **WHEN** the server sets `ONTARIO_511_API_KEY` to a nonblank value
+- **THEN** the request helper trims spaces at the start and end of that value and sends it in the `key` parameter
+- **AND** the Accept header is `application/json` and the timeout is 15000 milliseconds
+- **AND** the loader maps the camera rows by the rules of live-sources-006 to live-sources-008
+
+#### Scenario: Make no request without a key `live-sources-003`
+- **WHEN** the server has no key or a blank key and runs the request helper twice
+- **THEN** the request helper makes no request and returns an empty row list each time
+- **AND** the process writes one warning: "[CCTV] Ontario 511 needs ONTARIO_511_API_KEY."
+
+#### Scenario: Return an empty row list for an invalid key `live-sources-004`
+- **WHEN** the camera endpoint answers with an HTTP error, such as HTTP 400 with `Invalid Key`, twice
+- **THEN** the request helper returns an empty row list each time
+- **AND** the first request error in the process writes "[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY."
+- **AND** later request errors write no warning
+- **AND** no log line on the six console channels contains the key text
+- **AND** the request helper throws no error
+
+#### Scenario: Keep error text secret `live-sources-005`
+- **WHEN** the fetch, the JSON reader or the code that reads a row throws an error with the key text
+- **THEN** the request helper returns an empty row list for a fetch or JSON error
+- **AND** the first request error in the process writes "[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY."
+- **AND** later request errors write no warning
+- **AND** the loader returns an empty source list for a row error and writes "[CCTV] Ontario 511 camera data has an error."
+- **AND** no log line on the six console channels contains the key text
+- **AND** the request helper throws no error for a fetch or JSON error
+- **AND** the loader throws no error for a row error
 
 ### Requirement: Ontario row rules
 The Ontario pack MUST apply its current row, view, source and cap rules to the camera list that the request returns.
