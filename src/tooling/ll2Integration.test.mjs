@@ -227,6 +227,7 @@ for (const preview of [false, true]) {
         new Promise((resolve) => proxy.close(resolve)),
         new Promise((resolve) => upstream.close(resolve)),
       ]);
+      await new Promise((resolve) => setImmediate(resolve));
     }
   });
 }

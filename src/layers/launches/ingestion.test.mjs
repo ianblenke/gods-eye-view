@@ -153,6 +153,7 @@ async function fixture({ legacySource = false } = {}) {
       await parts.lifecycle.methods.destroy(viewer);
       server.closeAllConnections();
       await new Promise((resolve) => server.close(resolve));
+      await new Promise((resolve) => setImmediate(resolve));
     },
   };
 }

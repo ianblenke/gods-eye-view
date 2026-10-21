@@ -123,6 +123,7 @@ async function fixture(t) {
     else globalThis.document = previousDocument;
     server.closeAllConnections();
     await new Promise((resolve) => server.close(resolve));
+    await new Promise((resolve) => setImmediate(resolve));
   });
   return {
     state,
