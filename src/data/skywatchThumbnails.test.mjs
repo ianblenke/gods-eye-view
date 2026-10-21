@@ -879,8 +879,8 @@ test('[skywatch-thumbnails-012] answers a repeated URL from the image store, fou
   assert.deepEqual(again.headers, first.headers);
   assert.deepEqual([...again.bytes], [...first.bytes]);
   assert.equal(server.calls.length, 1);
-  assert.equal((await server.get('b')).status, 200);
   assert.equal((await server.get('c')).status, 200);
+  assert.equal((await server.get('b')).status, 200);
   assert.equal(server.calls.length, 2);
 });
 
@@ -916,6 +916,26 @@ test('[skywatch-thumbnails-012] keeps at most 32 images and removes the oldest i
   await get('i0');
   assert.equal(server.calls.length, 34);
   assert.equal(server.calls[33].url, 'https://cdn.example.test/0.png');
+});
+
+test('[skywatch-thumbnails-012] makes an image that it fetches again after 600000 ms the newest image', async (t) => {
+  const urls = {};
+  for (let n = 0; n < 33; n++)
+    urls[`i${n}`] = `https://cdn.example.test/${n}.png`;
+  const server = install(t, { urls });
+  const get = async (id) => {
+    const answer = await server.get(id);
+    assert.equal(answer.status, 200, id);
+    server.advance(2001);
+  };
+  for (let n = 0; n < 32; n++) await get(`i${n}`);
+  server.advance(600000);
+  await get('i0');
+  assert.equal(server.calls.length, 33);
+  await get('i32');
+  assert.equal(server.calls.length, 34);
+  await get('i0');
+  assert.equal(server.calls.length, 34);
 });
 
 test('[skywatch-thumbnails-012] keeps no failure', async (t) => {

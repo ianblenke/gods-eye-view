@@ -29,6 +29,10 @@ test('[skywatch-thumbnails-007] accepts an https URL with a host name and no use
     parseThumbnailUrl('https://localhost.example.test/t.png').hostname,
     'localhost.example.test',
   );
+  assert.equal(
+    parseThumbnailUrl('https://mylocalhost/t.png').hostname,
+    'mylocalhost',
+  );
 });
 
 test('[skywatch-thumbnails-007] refuses a text that is not an absolute URL, another scheme, a user name, a password and a port', () => {
