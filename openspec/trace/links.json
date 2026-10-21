@@ -3896,10 +3896,6 @@
   "live-sources-001": [
     "src/sources/live/contract.test.mjs › [live-sources-001] a transport abort error stays the same error"
   ],
-  "live-sources-002": [],
-  "live-sources-003": [],
-  "live-sources-004": [],
-  "live-sources-005": [],
   "live-sources-006": [
     "src/data/cctvOntarioRows.test.mjs › [live-sources-006 live-sources-007] return an empty source list for a capitalized Latitude of 0",
     "src/data/cctvOntarioRows.test.mjs › [live-sources-006 live-sources-007] return an empty source list for a capitalized Longitude of 0",

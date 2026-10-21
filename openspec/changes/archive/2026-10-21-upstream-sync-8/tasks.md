@@ -9,7 +9,7 @@
 - [x] 1.7 Remove the test file `src/data/cctvOntarioKey.test.mjs`.
 - [x] 1.8 Remove the tests of `live-sources-003`, `live-sources-004` and `live-sources-005` from `src/data/cctvOntarioRows.test.mjs`.
 - [x] 1.9 Remove the path of `ontarioRequest.js` from `scripts/package-boundaries.json`.
-- [ ] 1.10 Retire the scenarios `live-sources-002`, `live-sources-003`, `live-sources-004` and `live-sources-005`.
+- [x] 1.10 Retire the scenarios `live-sources-002`, `live-sources-003`, `live-sources-004` and `live-sources-005`.
 - [x] 1.11 Change the test of `qa-scripts-023` to 97 QA scripts.
 - [x] 1.12 Use the upstream file of `src/layers/streetLevel/index.test.mjs`.
 - [x] 1.13 Make three upstream tests wait for one immediate after they close their servers.
@@ -29,7 +29,7 @@
 - [x] 3.1 Check the second parent of the merge commit against the upstream remote.
 - [x] 3.2 Run `make adopt CHANGE=upstream-sync-8 FROM=713285b554bbc99c8ae0261fe307beb3cbeb2adf` with the image of decision D9.
 - [x] 3.3 Run `make ratchet CHANGE=upstream-sync-8` with the image of decision D9.
-- [ ] 3.4 Write the Purpose of `live-sources` from `design.md`.
+- [x] 3.4 Write the Purpose of `live-sources` from `design.md`.
 - [ ] 3.5 Run the two review agents.
 - [ ] 3.6 Write review.md.
 - [ ] 3.7 Run `make gates CHANGE=upstream-sync-8` with the image of decision D9 on the final tree.
