@@ -12,7 +12,7 @@ The API description of SkyWatch names no cost for a search. An order costs money
 - The scenes route accepts only a request from this machine. It checks a box of at most 2500 km² and a date window of at most 92 days.
 - The plugin reads the key from `SKYWATCH_API_KEY` on the server. It sends one search request and at most ten result requests to the archive search of SkyWatch.
 - The plugin limits the searches with a daily count (`SKYWATCH_DAILY_SEARCHES`, 20 by default) and an answer store of 10 minutes. A rate limit allows 6 requests in each minute.
-- The answer gives only the id, the footprint, the times, the resolution, the operator and the product of each scene. It also gives the cloud cover, the coverage, the area, the price and a thumbnail flag. It gives no URL of the upstream.
+- The answer gives only the id, the footprint, the times, the resolution, the operator and the product of each scene. It also gives the cloud cover, the coverage, the area, the price for each km², the cost and a thumbnail flag. It gives no URL of the upstream.
 
 ## Capabilities
 
@@ -38,6 +38,6 @@ The change adds no dependency, no layer, no QA script and no layer token.
 - Known limit `local-only`: The scenes route accepts only a request from this machine. A browser that uses the app through a reverse proxy cannot search.
 - Known limit `count-in-ram`: The server keeps the daily count only in RAM, so a restart of the server starts the count again at 0.
 - Known limit `search-cost`: SkyWatch states no cost for a search. The owner can confirm with SkyWatch that a search costs no money.
-- Known limit `first-page`: The plugin reads only the first page of at most 50 results. The answer then has `truncated` true.
+- Known limit `first-page`: The plugin reads only the first page of at most 50 results. When SkyWatch has more results, the answer has `truncated` true.
 - Known limit `display-terms`: SkyWatch publishes no terms for the display of footprints and thumbnails. On 2026-10-21 the lead asked the owner to get written terms from SkyWatch. This change shows no image.
 - Later change `skywatch-scenes-layer`: A layer that shows the footprints, and a thumbnail route that sends only the thumbnails of the results of this route.

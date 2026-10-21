@@ -31,7 +31,7 @@ The alternative was two routes, one to start and one to read. That alternative n
 ### D2: The limits of the input
 
 The box has at most 2500 km², about a square of 50 km. The window has at most 92 days.
-These limits keep each search small. The API description gives no limit for a polygon. The closed ring of the box has five positions.
+These limits keep each search small. The API description gives no maximum size for a polygon. The closed ring of the box has five positions.
 The area uses a sphere with a radius of 6371008.8 m, the same radius as `server/providers/beemaps/validate.js`.
 
 ### D3: The two upstream requests
@@ -45,7 +45,7 @@ The search body has `order_by` with the value `-date`, so the newest scenes come
 The plugin counts each new upstream search against a limit for each UTC day. The default limit is 20, and `SKYWATCH_DAILY_SEARCHES` can set a whole number from 1 to 1000.
 The server keeps the count only in RAM. The API description names no cost for a search, so a count that starts again after a restart is acceptable. The Known limit `count-in-ram` names this.
 
-`server/providers/beemaps.js` has a hold after a refusal of its key. This plugin has no hold, and the daily count limits the requests after a refusal.
+`server/providers/beemaps.js` stops its requests for a time after Bee Maps refuses its key. This plugin does not stop its requests, and the daily count limits the requests after a refusal.
 
 ### D5: The answer store
 
@@ -56,7 +56,7 @@ Two requests with the same box and dates share one upstream search that is in fl
 
 The answer gives the fields of `skywatch-source-020` for each scene. The upstream fields `preview_uri`, `thumbnail_uri`, `intersection`, `minimum_area_sq_km` and `off_nadir_angle` stay on the server.
 The flag `thumbnail` tells the later layer change that a thumbnail exists. The later change adds a route that sends only these thumbnails.
-For a test plan, the upstream `cost` can be the text "Upgrade your plan for price". The answer gives null for each value that is not a finite number.
+For an account on a test plan of SkyWatch, the upstream `cost` can be the text "Upgrade your plan for price". The answer gives null for each number field whose value does not meet its rule in `skywatch-source-020`.
 
 ### D7: The log
 
