@@ -826,3 +826,19 @@ src/voice/voiceCard.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 7 ℹ ski
 src/voice/voiceCost.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 60 ℹ skipped 0 ℹ tests 60 
 src/weatherEffectsMath.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 6 ℹ skipped 0 ℹ tests 6 
 src/worldFocus.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 10 ℹ skipped 0 ℹ tests 10 
+
+Round 1 addition: host run 3, on commit 2a11265e (after the round 1 corrections of D6, D7 and .env.example). Same command and file list rule as above. Start (UTC) 07:26:26Z, end (UTC) 07:33:54Z. Files: 814.
+Totals:
+tests 12045 pass 12029 fail 0 skipped 16
+Lines with an exit status other than 0: 0
+Files with skipped tests:
+src/data/focusAllocations.test.mjs: skipped 1
+src/keySetupHardening.test.mjs: skipped 1
+src/overlays/worldOverlayAllocation.test.mjs: skipped 14
+Lines of the test files that the commits after 4b35414c changed, and of two test files that read .env.example:
+src/keySetupCore.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 26 ℹ skipped 0 ℹ tests 26 
+src/layers/launches/ingestion.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 9 ℹ skipped 0 ℹ tests 9 
+src/layers/satellites/stale.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 7 ℹ skipped 0 ℹ tests 7 
+src/layers/streetLevel/providers/panoramax/decode.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 10 ℹ skipped 0 ℹ tests 10 
+src/tooling/bundleCredentials.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 6 ℹ skipped 0 ℹ tests 6 
+src/tooling/ll2Integration.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 10 ℹ skipped 0 ℹ tests 10 
