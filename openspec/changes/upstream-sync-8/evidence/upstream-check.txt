@@ -1,0 +1,58 @@
+Upstream check of upstream-sync-8. Date (UTC): 2026-10-21 04:50:02. Branch head: 4b35414c.
+
+$ git ls-remote upstream main
+713285b554bbc99c8ae0261fe307beb3cbeb2adf	refs/heads/main
+
+$ git rev-parse upstream/main
+713285b554bbc99c8ae0261fe307beb3cbeb2adf
+
+$ git log -1 --format='merge commit %H%nparents %P' 4089abfe
+merge commit 4089abfefe11e4a607a933b9664acbef96a3a523
+parents 21a12aef5892f55bbf8d4c9462ff16bc6027e8b6 713285b554bbc99c8ae0261fe307beb3cbeb2adf
+
+$ git log -1 --format='plan commit %H%nparent %P' 21a12aef
+plan commit 21a12aef5892f55bbf8d4c9462ff16bc6027e8b6
+parent 67342d000c56204abd2e08a1cf05d19dd2e99b69
+
+$ git merge-base --is-ancestor 713285b554bbc99c8ae0261fe307beb3cbeb2adf upstream/main && echo upstream commit is an ancestor of upstream/main
+upstream commit is an ancestor of upstream/main
+
+$ git merge-base 67342d000c56204abd2e08a1cf05d19dd2e99b69 713285b554bbc99c8ae0261fe307beb3cbeb2adf
+93ea088f4556a5a65b3292a2d15142d5a6c562bc
+
+$ git rev-list --count 93ea088f..713285b5
+248
+
+$ git rev-list --first-parent --count 93ea088f..713285b5
+25
+
+$ git rev-list --first-parent --merges --count 93ea088f..713285b5
+21
+
+$ git log --first-parent --format='%h %s' 93ea088f..713285b5
+713285b5 Merge pull request #1205 from manjunath22466/fix/cctv-tool-routing
+23feb16b Merge pull request #1235 from manjunath22466/fix/location-resolution
+064d51f7 Merge pull request #1237 from 419vive/feat/taiwan-freeway-cctv-pack
+3f1a0c06 Merge pull request #990 from JCY2515/feat/hk-cctv-pack
+f8826266 Merge pull request #1228 from quanticsoul4772/upstream/ontario-511-key
+7164373f Merge pull request #974 from bilawalsidhu/german/street-level-slim
+acc87a9e Merge pull request #1283 from rudycelekli/fix/satellite-cache-provenance-20261017
+505d2cb5 Merge pull request #1284 from rudycelekli/fix/route-plausibility-segment-20261020
+de2138e8 Merge pull request #1233 from yaka0007/fix/tarktee-datex-catalog-hardening
+5597c81e Merge pull request #945 from trygvehhh/feat/cctv-vegvesen-kartverket-heights
+38e037d3 Merge pull request #1234 from quanticsoul4772/upstream/cctv-tarktee-refresh
+b7fe29b5 Merge pull request #1133 from asturksever/fix/qa-cctv-v2-headful
+93c1f6cd Merge pull request #1220 from manjunath22466/codex/openai-typed-send-rejection
+2f171c7d Merge pull request #872 from manjunath22466/feat/gemini-voice
+5c513684 Merge pull request #1201 from Danielslay86/cctv-stills-aspect
+7fe95b76 Merge pull request #1200 from Danielslay86/cctv-live-icon-color
+0f51eb21 Merge pull request #816 from kvnloo/fix/context-radio-owner-invariant
+7214f718 Merge pull request #880 from kvnloo/feat/world-packet-boundary-clean-20260929
+3d8e1ef0 Merge pull request #605 from Danielslay86/cctv-florida-stills
+beca41c6 Merge pull request #1056 from quanticsoul4772/feat/tools-area-breakdowns
+7712ecf6 Merge pull request #975 from Sunil56224972/fix/terrain-same-site-gate-on-686
+ada7d885 docs(changelog): record launch cache provenance PR 1199
+7844e765 fix(launches): retain stale-cache provenance in layer status
+f747c482 docs: add Launch Library changelog for PR 1197
+a310cbc2 fix(space): align Launch Library requests with provider guidance
+

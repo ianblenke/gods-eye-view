@@ -1,0 +1,197 @@
+Silent-file check of upstream-sync-8. Date (UTC): 2026-10-21 04:49:42. Branch head: 4b35414c.
+
+Step 1. The script lists the code files that upstream changed between the shared ancestor 93ea088f and the upstream commit 713285b5.
+A code file has the extension .js, .mjs or .cjs and is not a test file (.test.mjs). The script keeps the files that exist on the branch head.
+Result: 116 files.
+
+Step 2. For each of these files, the script reads each relative import (import ... from, export ... from and import()).
+It keeps each import of a file that the fork changed between 93ea088f and origin/main and that upstream did not change.
+Result: 13 imports.
+  server/providers/local.js -> server/providers/osh.js
+  server/providers/local.js -> server/providers/osh-control.js
+  server/providers/local.js -> server/providers/osh-control/log.js
+  server/providers/local.js -> server/providers/reticulum.js
+  server/providers/local.js -> server/providers/gdacs.js
+  server/providers/local.js -> server/providers/beemaps.js
+  server/providers/local.js -> server/providers/beemaps-burst.js
+  server/standalone/vite.config.js -> build/vite.js
+  src/data/analystEngine.js -> src/voice/layerManifest.js
+  src/ui/layerBindings.js -> src/data/layerState.js
+  src/ui/streetLevelControls.js -> src/data/layerState.js
+  src/voice/gevActions.js -> src/cityPois.js
+  src/voice/gevActions.js -> src/voice/layerManifest.js
+
+Step 3. For each import of step 2, the script prints the import lines that upstream added or removed in the importing file.
+  server/providers/local.js: 0 changed import lines of these targets.
+  server/standalone/vite.config.js: 0 changed import lines of these targets.
+  src/data/analystEngine.js: 0 changed import lines of these targets.
+  src/ui/layerBindings.js: 0 changed import lines of these targets.
+  src/ui/streetLevelControls.js: 0 changed import lines of these targets.
+  src/voice/gevActions.js: 0 changed import lines of these targets.
+
+Step 4. For each target of step 2, the script prints the lines that the fork added or removed between 93ea088f and origin/main, without the lines of comments.
+  build/vite.js: 15 changed lines.
+    -        deny: ['.env', '.env.*', '*.{crt,pem}', '**/.git/**', '**/ENVIRONMENT'],
+    +        deny: [
+    +          '.env',
+    +          '.env.*',
+    +          '*.{crt,pem}',
+    +          '**/.git/**',
+    +          '**/ENVIRONMENT',
+    +          '**/.gev-logs/**',
+    +          '**/.gev-cache/**',
+    +        ],
+    +    envPrefix: 'VITE_AIS_LIVE_',
+    -      'import.meta.env.MAPILLARY_CLIENT_TOKEN': JSON.stringify(
+    ... 3 more lines
+  server/providers/beemaps-burst.js: 409 changed lines.
+    +import path from 'node:path';
+    +import { randomUUID } from 'node:crypto';
+    +import { isLoopbackCommand } from './common/loopback-command.js';
+    +import { clientKey } from './common/rate-limit.js';
+    +import { sameSiteGated } from './common/same-site.js';
+    +import { createAudit } from './beemaps-burst/audit.js';
+    +import { createCredits } from './beemaps-burst/credits.js';
+    +import { createLedger } from './beemaps-burst/ledger.js';
+    +import { createQuotes } from './beemaps-burst/quotes.js';
+    +import { createBurst, listBursts } from './beemaps-burst/upstream.js';
+    +import {
+    +  CONFIRM_BODY_MAX,
+    ... 397 more lines
+  server/providers/beemaps.js: 239 changed lines.
+    +import path from 'node:path';
+    +import { isLoopbackCommand } from './common/loopback-command.js';
+    +import { makeRateLimiter } from './common/rate-limit.js';
+    +import { sameSiteGated } from './common/same-site.js';
+    +import { createBudget } from './beemaps/budget.js';
+    +import { createCredits, creditsOf } from './beemaps/credits.js';
+    +import { normalizeDocument } from './beemaps/normalize.js';
+    +import { callUpstream } from './beemaps/upstream.js';
+    +import { readBodyText, validateRequest } from './beemaps/validate.js';
+    +
+    +
+    +const MEMORY_MS = 600_000;
+    ... 227 more lines
+  server/providers/gdacs.js: 289 changed lines.
+    +import { coalesceProxyRequest, readResponseTextCapped } from './common/http.js';
+    +
+    +
+    +const SOURCE = 'GDACS (Global Disaster Alert and Coordination System)';
+    +const ATTRIBUTION =
+    +  'GDACS, a cooperation framework of the United Nations and the European Commission';
+    +const LICENSE =
+    +  'The legal notice of the European Commission licenses content that the Union owns on the Commission website under CC BY 4.0. GDACS gives no separate license 
+    +const DISCLAIMER =
+    +  'The estimates of GDACS come from a machine, and an estimate can be wrong. Check each estimate before you use it to make a decision.';
+    +const COVERAGE =
+    +  'Flood, drought, volcano and tropical cyclone events active on any day from the UTC date 14 days before fetchedAt. The provider does not list earthquakes and
+    ... 277 more lines
+  server/providers/osh-control.js: 203 changed lines.
+    +import {
+    +  routeConfig,
+    +  resolveTargets,
+    +  resolveCommand,
+    +} from './osh-control/targets.js';
+    +import { OSH_CONTROL_COMMANDS } from './osh-control/commands.js';
+    +import { makeRateLimiter } from './common/rate-limit.js';
+    +import { clientKey } from './common/rate-limit.js';
+    +import { oshPostCommand } from './osh-control/post.js';
+    +import { oshCommandUrl, assertCommandUrl } from './osh-control/url.js';
+    +import { validateCommand } from './osh-control/commands.js';
+    +import { createOshBase } from './osh/base.js';
+    ... 191 more lines
+  server/providers/osh-control/log.js: 126 changed lines.
+    +import { promises as fs } from 'node:fs';
+    +import path from 'node:path';
+    +import { defaultSourceRoot } from '../common/source-root.js';
+    +import { OSH_ID_PATTERN } from '../osh/ids.js';
+    +import { OSH_CONTROL_COMMANDS } from './commands.js';
+    +
+    +const LOG_LIMIT = 4 * 1024 * 1024;
+    +const REASONS = new Set([
+    +  'control_off',
+    +  'no_key',
+    +  'no_account',
+    +  'same_account',
+    ... 114 more lines
+  server/providers/osh.js: 754 changed lines.
+    +import { coalesceProxyRequest } from './common/http.js';
+    +import { OSH_LIST_FORMAT, oshGet, oshListUrl, oshPages } from './osh/get.js';
+    +import { baseErrorCode, createOshBase } from './osh/base.js';
+    +import {
+    +  assertLiveUrl,
+    +  assertObservationUrl,
+    +  assertObservationsLatestUrl,
+    +  assertSchemaUrl,
+    +  assertSystemDatastreamsUrl,
+    +  assertSystemUrl,
+    +  assertVideoUrl,
+    +  liveUrl,
+    ... 742 more lines
+  server/providers/reticulum.js: 227 changed lines.
+    +import { parseTapAddress, tapUrl } from '../../src/data/tapAddress.js';
+    +import { coalesceProxyRequest, readResponseTextCapped } from './common/http.js';
+    +
+    +
+    +const SOURCE = 'Reticulum interface discovery';
+    +const ATTRIBUTION =
+    +  'Reticulum network operators who publish discoverable interfaces';
+    +const COVERAGE =
+    +  'Only operators who opt in; the operator sets each position and nobody checks it. A new listener hears more over its first hours.';
+    +const HOUR = 3600_000;
+    +const DAY = 24 * HOUR;
+    +const UNKNOWN_AFTER_MS = DAY;
+    ... 215 more lines
+  src/cityPois.js: 110 changed lines.
+    +  taiwan: {
+    +    name: 'Taiwan',
+    +    groundElevation: 30,
+    +    viewBounds: {
+    +      southwest: { lat: 21.8, lng: 119.3 },
+    +      northeast: { lat: 25.4, lng: 122.1 },
+    +    },
+    +    pois: [
+    +      {
+    +        name: 'Taiwan',
+    +        lat: 23.7,
+    +        lon: 121.0,
+    ... 98 more lines
+  src/data/layerState.js: 25 changed lines.
+    -    token: '4',
+    +    token: '8',
+    +  Object.freeze({
+    +    id: 'beemaps',
+    +    token: '5',
+    +    disposition: 'enabled-only',
+    +  }),
+    +  Object.freeze({
+    +    id: 'beemaps-bursts',
+    +    token: '6',
+    +    disposition: 'enabled-only',
+    +  }),
+    ... 13 more lines
+  src/voice/layerManifest.js: 5 changed lines.
+    +  'osh-systems': 'OSH has no voice tools.',
+    +  reticulum: 'The Reticulum layer has no voice tools.',
+    +  gdacs: 'The GDACS layer has no voice tools.',
+    +  beemaps: 'The Bee Maps layer has no voice tools.',
+    +  'beemaps-bursts': 'The Bee Maps bursts layer has no voice tools.',
+
+Step 5. For each import of step 2, the script reads the imported names on the branch head. It counts the lines of the fork diff of step 4 that contain each name.
+  server/providers/local.js imports oshProxy from server/providers/osh.js: 1 fork diff lines contain the name.
+  server/providers/local.js imports oshControlProxy from server/providers/osh-control.js: 1 fork diff lines contain the name.
+  server/providers/local.js imports createCommandLog from server/providers/osh-control/log.js: 1 fork diff lines contain the name.
+  server/providers/local.js imports reticulumProxy from server/providers/reticulum.js: 1 fork diff lines contain the name.
+  server/providers/local.js imports gdacsProxy from server/providers/gdacs.js: 1 fork diff lines contain the name.
+  server/providers/local.js imports beemapsProxy from server/providers/beemaps.js: 1 fork diff lines contain the name.
+  server/providers/local.js imports beemapsBurstProxy from server/providers/beemaps-burst.js: 1 fork diff lines contain the name.
+  server/standalone/vite.config.js imports createBrowserViteConfig from build/vite.js: 0 fork diff lines contain the name.
+  src/data/analystEngine.js imports VOICE_LAYER_MANIFEST from src/voice/layerManifest.js: 0 fork diff lines contain the name.
+  src/data/analystEngine.js imports voiceLayer from src/voice/layerManifest.js: 0 fork diff lines contain the name.
+  src/ui/layerBindings.js imports isExplicitLayerStateOrigin from src/data/layerState.js: 0 fork diff lines contain the name.
+  src/ui/streetLevelControls.js imports isExplicitLayerStateOrigin from src/data/layerState.js: 0 fork diff lines contain the name.
+  src/voice/gevActions.js imports CITY_POIS from src/cityPois.js: 0 fork diff lines contain the name.
+  src/voice/gevActions.js imports voiceLayer from src/voice/layerManifest.js: 0 fork diff lines contain the name.
+  src/voice/gevActions.js imports voiceLayerAliasMap from src/voice/layerManifest.js: 0 fork diff lines contain the name.
+
+Script: /home/ianblenke/docker/gev-tools/upstream-sync-8/silent-files.py (outside the repository).

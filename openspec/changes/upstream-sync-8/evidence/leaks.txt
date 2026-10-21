@@ -1,0 +1,36 @@
+Live timers and immediates of upstream-sync-8. Date (UTC): 2026-10-21 04:58:02.
+
+The probe runs one test file with --test-force-exit, as the gates do. At the exit of the process, it writes the live Timeout and Immediate resources (process.getActiveResourcesInfo()).
+Probe: /home/ianblenke/docker/gev-tools/upstream-sync-6/leak-preload.mjs, by the script hostleak.sh of the same folder (outside the repository).
+
+Before the change, at the commit 4b35414c: the probe ran the 87 test files that the merge adds or changes (git diff --name-only --diff-filter=AM origin/main HEAD, files that end with .test.mjs). Three files had a live resource:
+src/layers/launches/ingestion.test.mjs :: 1 Immediate
+src/layers/satellites/stale.test.mjs :: 1 Immediate
+src/tooling/ll2Integration.test.mjs :: 1 Immediate
+
+The stack tool records where each timer and immediate starts. At the exit, it writes the ones that are still live. Tool: /home/ianblenke/docker/gev-tools/upstream-sync-6/leak-stacks.mjs (outside the repository). Output for the same three files at 4b35414c:
+## src/layers/launches/ingestion.test.mjs
+1x setTimeout(3000) 
+1x setImmediate() at wasm://wasm/00034eea:wasm-function[20]:0x1c06
+## src/layers/satellites/stale.test.mjs
+1x setTimeout(4000) 
+10x setTimeout(3000) 
+1x setImmediate() at wasm://wasm/00034eea:wasm-function[20]:0x1c06
+## src/tooling/ll2Integration.test.mjs
+1x setTimeout(499) 
+1x setTimeout(3000) 
+1x setImmediate() at wasm://wasm/00034eea:wasm-function[20]:0x1c06
+
+The probe counts only active resources. The stack tool also lists timers that do not keep the process alive, so its list of timers is longer.
+
+After the change, at the commit 66b35b39: the probe ran each of the three files three times.
+src/layers/launches/ingestion.test.mjs: rc=0 ℹ tests 9 ℹ pass 9 ℹ fail 0 
+src/layers/satellites/stale.test.mjs: rc=0 ℹ tests 7 ℹ pass 7 ℹ fail 0 
+src/tooling/ll2Integration.test.mjs: rc=0 ℹ tests 10 ℹ pass 10 ℹ fail 0 
+src/layers/launches/ingestion.test.mjs: rc=0 ℹ tests 9 ℹ pass 9 ℹ fail 0 
+src/layers/satellites/stale.test.mjs: rc=0 ℹ tests 7 ℹ pass 7 ℹ fail 0 
+src/tooling/ll2Integration.test.mjs: rc=0 ℹ tests 10 ℹ pass 10 ℹ fail 0 
+src/layers/launches/ingestion.test.mjs: rc=0 ℹ tests 9 ℹ pass 9 ℹ fail 0 
+src/layers/satellites/stale.test.mjs: rc=0 ℹ tests 7 ℹ pass 7 ℹ fail 0 
+src/tooling/ll2Integration.test.mjs: rc=0 ℹ tests 10 ℹ pass 10 ℹ fail 0 
+Live resources after the change: 0 lines.

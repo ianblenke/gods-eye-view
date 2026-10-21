@@ -76,12 +76,21 @@ The file `src/layers/streetLevel/index.test.mjs` merged with no conflict. The fo
 Upstream removes `whenIdle()` from `view.js`. Two new upstream tests use mock timers, so the wait of the first edit never ends, and the two tests stop at their time limit.
 The change uses the upstream file. `evidence/street-level.txt` shows that the upstream file passes on the host and leaves no live timer when the process ends.
 
-### D6: The adopt command
+### D6: Live immediates at the end of three upstream tests
+
+The gates run the tests with `--test-force-exit`, and a test process must end with no live timer or immediate.
+A host probe found one live immediate at the end of each of three upstream test files: `src/layers/launches/ingestion.test.mjs`, `src/layers/satellites/stale.test.mjs` and `src/tooling/ll2Integration.test.mjs`.
+Each of these files sends requests with the fetch function of Node to a test server. The stack of each live immediate starts in WebAssembly code.
+
+The change makes each of these tests wait for one immediate after it closes its servers. The probe then finds no live immediate.
+The file `evidence/leaks.txt` gives the probe results and the stacks before and after the change.
+
+### D7: The adopt command
 
 The merge brings upstream tests with no scenario ID and upstream files with a coverage gap.
 The adopt command records them. The rule 21 check of the second parent goes into `review.md`.
 
-### D7: The image of the gates
+### D8: The image of the gates
 
 The merge does not change `package-lock.json`. The lead runs each Docker command of this change with the image `gods-eye-view:local`.
 

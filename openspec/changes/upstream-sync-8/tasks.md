@@ -12,7 +12,8 @@
 - [ ] 1.10 Retire the scenarios `live-sources-002`, `live-sources-003`, `live-sources-004` and `live-sources-005`.
 - [ ] 1.11 Change the test of `qa-scripts-023` to 97 QA scripts.
 - [ ] 1.12 Use the upstream file of `src/layers/streetLevel/index.test.mjs`.
-- [ ] 1.13 Check the upstream code files that import a code file that the fork changed.
+- [ ] 1.13 Make three upstream tests wait for one immediate after they close their servers.
+- [ ] 1.14 Check the upstream code files that import a code file that the fork changed.
 
 ## 2. Host evidence
 
@@ -25,9 +26,9 @@
 ## 3. Lead work before and in the image
 
 - [ ] 3.1 Check the second parent of the merge commit against the upstream remote.
-- [ ] 3.2 Run `make adopt CHANGE=upstream-sync-8 FROM=713285b554bbc99c8ae0261fe307beb3cbeb2adf` with the image of decision D7.
-- [ ] 3.3 Run `make ratchet CHANGE=upstream-sync-8` with the image of decision D7.
+- [ ] 3.2 Run `make adopt CHANGE=upstream-sync-8 FROM=713285b554bbc99c8ae0261fe307beb3cbeb2adf` with the image of decision D8.
+- [ ] 3.3 Run `make ratchet CHANGE=upstream-sync-8` with the image of decision D8.
 - [ ] 3.4 Write the Purpose of `live-sources` from `design.md`.
 - [ ] 3.5 Run the two review agents.
 - [ ] 3.6 Write review.md.
-- [ ] 3.7 Run `make gates CHANGE=upstream-sync-8` with the image of decision D7 on the final tree.
+- [ ] 3.7 Run `make gates CHANGE=upstream-sync-8` with the image of decision D8 on the final tree.

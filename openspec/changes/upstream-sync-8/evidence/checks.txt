@@ -1,0 +1,34 @@
+Host checks of upstream-sync-8. Date (UTC): 2026-10-21 04:59:27. Branch head: 66b35b39. Node v26.8.2 on the host. Each output shows at most its last three lines. The lead added each line "exit".
+
+$ node scripts/format.mjs --check
+Checked 1553 source files.
+exit 0
+
+$ node scripts/check-import-directions.mjs
+{"modules":1075,"portableEntries":84}
+exit 0
+
+$ node scripts/check-package-boundaries.mjs
+Checked air-quality: 1 exports, 11 owned modules.
+Checked air-quality-source: 1 exports, 4 owned modules.
+Checked agent-world-packet: 1 exports, 7 owned modules.
+exit 0
+
+$ node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 36 published, 0 new.
+exit 0
+
+$ npx --no-install openspec validate --specs
+✓ spec/ste-lint
+✓ spec/wind
+Totals: 33 passed, 0 failed (33 items)
+exit 0
+
+Test file of the gates, on the host, at the commit 66b35b39. Start (UTC) 04:59:24Z, end (UTC) 05:13:46Z.
+$ timeout 2400 nice -n 10 node --test src/tooling/spec/gates.test.mjs (the count lines and the exit status)
+ℹ tests 241
+ℹ pass 241
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+rc=0
