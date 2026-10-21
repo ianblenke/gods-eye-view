@@ -346,10 +346,11 @@ test('[skywatch-scenes-layer-004] sends one search for two presses and shows Sea
 });
 
 test('[skywatch-scenes-layer-005] sends no search after an error until the next press', async () => {
+  const rejects = async () => {
+    throw new Error('network');
+  };
   for (const scenes of [
-    async () => {
-      throw new Error('network');
-    },
+    rejects,
     async () => ({
       ok: false,
       status: 429,
@@ -361,6 +362,8 @@ test('[skywatch-scenes-layer-005] sends no search after an error until the next 
     const h = harness({ scenes });
     await h.searched();
     assert.equal(h.calls.searchScenes.length, 1);
+    if (scenes === rejects)
+      assert.equal(h.info(), 'The server did not answer.');
     h.clock.t += 10 * MINUTE;
     for (let index = 0; index < 3; index += 1) await h.layer.update();
     h.layer.disable(h.viewer);

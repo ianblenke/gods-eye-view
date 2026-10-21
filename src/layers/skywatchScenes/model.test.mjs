@@ -259,6 +259,7 @@ test('[skywatch-scenes-layer-023] fits the image in a square of 192 pixels and k
   assert.deepEqual(thumbnailSize(1, 1000), { width: 1, height: 192 });
   assert.deepEqual(thumbnailSize(100, 100), { width: 192, height: 192 });
   assert.deepEqual(thumbnailSize(300, 200), { width: 192, height: 128 });
+  assert.deepEqual(thumbnailSize(700, 400), { width: 192, height: 110 });
   for (const [width, height] of [
     [0, 100],
     [100, 0],

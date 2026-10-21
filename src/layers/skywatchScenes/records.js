@@ -23,9 +23,7 @@ function readPosition(position) {
 /** The ring of a footprint as [longitude, latitude] pairs, or null. */
 function readRing(footprint) {
   if (
-    footprint === null ||
-    typeof footprint !== 'object' ||
-    footprint.type !== 'Polygon' ||
+    footprint?.type !== 'Polygon' ||
     !Array.isArray(footprint.coordinates) ||
     footprint.coordinates.length !== 1
   ) {
@@ -51,8 +49,7 @@ function readRing(footprint) {
 }
 
 function readScene(item) {
-  if (item === null || typeof item !== 'object') return null;
-  if (typeof item.id !== 'string' || !ID.test(item.id)) return null;
+  if (typeof item?.id !== 'string' || !ID.test(item.id)) return null;
   if (typeof item.start !== 'string') return null;
   const time = Date.parse(item.start);
   if (Number.isNaN(time)) return null;

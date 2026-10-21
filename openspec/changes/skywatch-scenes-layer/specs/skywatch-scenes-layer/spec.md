@@ -41,6 +41,7 @@ Origin: spec-first
 - **WHEN** `searchScenes` rejects, or gives `ok` false with the error "upstream_rate_limit", or gives `ok` false with the error "search_timeout"
 - **THEN** the source has 1 `searchScenes` call after the fake clock moves 10 minutes, after 3 `update` calls and after `disable` and `enable`
 - **AND** the chip is enabled again, and the next press sends one search
+- **AND** after a rejection of `searchScenes`, the info text is the text of "unreachable" in `skywatch-scenes-layer-018`
 
 ### Requirement: Status of the key
 The layer MUST read the status route at each call of `update`. It MUST disable the chip when the status route says that the server has no key.
