@@ -18,11 +18,11 @@ A merge of the plan commit and the upstream commit in memory reports 16 files wi
 | File | Resolution |
 |---|---|
 | `.env.example` | Keep the fork lines of the OpenSky user name and password. Add the upstream text of Launch Library 2. |
-| `DATA_SOURCES.md` | Keep the fork row of GDACS. Use the upstream row of Mapillary. Use the upstream text of Ontario 511. |
-| `README.md` | Use the upstream row of the CCTV packs. |
+| `DATA_SOURCES.md` | Keep the fork row of GDACS (Global Disaster Alert and Coordination System). Use the upstream row of Mapillary. Use the upstream text of Ontario 511. |
+| `README.md` | Use the upstream row of the CCTV (traffic camera) packs. |
 | `SECURITY.md` | Keep the fork text of the debug log and of the gated routes. Add the upstream sentence about the terrain route. |
 | `docs/CURRENT-STATE.md` | Use the upstream row of the CCTV packs, with the fork name of the key `ONTARIO_511_API_KEY`. |
-| `package.json` | Keep the fork exports of OSH. Add the upstream export `./agent/world-packet`. |
+| `package.json` | Keep the fork exports of OSH (OpenSensorHub). Add the upstream export `./agent/world-packet`. |
 | `scripts/qa-panel-resize.mjs` | Remove the file, as upstream does. See decision D3. |
 | `scripts/qa-panelDrag.mjs` | Remove the file, as upstream does. See decision D3. |
 | `scripts/qa-street-level.mjs` | Keep the fork QA header. Use the upstream first line of the description. |

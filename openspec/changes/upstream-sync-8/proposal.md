@@ -51,4 +51,4 @@ The upstream code adds no dependency, and `package-lock.json` does not change. `
 
 - Known limit `host-node`: Host tests run on Node 26, and the image uses Node 24.21.0. Host coverage cannot replace the image measurement.
 - Known limit `changelog`: Upstream puts each new changelog entry in a file under `changelog.d/`. The fork still edits `CHANGELOG.md`, so a later sync can have a conflict there again.
-- Known limit `osh-source`: The OSH layer is not in the catalog source contracts of upstream. This is older than this change.
+- Known limit `osh-source`: The OSH (OpenSensorHub) layer is not in the catalog source contracts of upstream. This is older than this change.
