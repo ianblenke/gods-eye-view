@@ -218,8 +218,8 @@ Origin: spec-first
 
 #### Scenario: Log each upstream search `skywatch-source-022`
 - **WHEN** a test gives the plugin the options `log`, `now`, `wait` and a fake fetch function
-- **AND** the plugin reads `now` once when a search starts and once when it ends, and `ms` is the difference
-- **AND** the fake `now` gives 1000 and then 1040, and the fake `wait` ends at once
+- **AND** `ms` is the value of `now` when the search ends, less its value when the search starts
+- **AND** the fake `now` gives 1000 before the search, the fake fetch moves it to 1040, and the fake `wait` ends at once
 - **THEN** a good answer after 2 result requests gives "[skywatch] ok scenes=3 polls=2 ms=40"
 - **AND** that answer has 4 items in `data`, and the route removes one of them
 - **AND** `scenes` is the `count` of the answer
