@@ -165,9 +165,11 @@ The route sends only the archive search and its result requests to one fixed add
 
 The daily limit is 20 searches. `SKYWATCH_DAILY_SEARCHES` changes it, and the server keeps the count only in RAM. An answer stays in the store for 10 minutes. The route writes one line to the log of the server for each search, with no key and no URL.
 
-The public API description names no cost for a search. An order costs money, and this version has no route that orders a scene, asks for a price or asks for a new image. SkyWatch publishes no terms for the display of footprints or thumbnails, so use the data for yourself only. No layer shows the scenes yet, and no test sends a request to SkyWatch.
+The public API description names no cost for a search. An order costs money, and this version has no route that orders a scene, asks for a price or asks for a new image. SkyWatch publishes no terms for the display of footprints or thumbnails, so use the data for yourself only. The layer "SkyWatch Scenes" shows the scenes, and no test sends a request to SkyWatch.
 
 The route `/api/skywatch/thumbnail/<id>` sends the thumbnail of a scene that a search of the last 10 minutes gave, when the store of the scenes route still keeps that answer. It is off until `SKYWATCH_THUMBNAILS=true` is in `.env`. It sends only a PNG, JPEG or WebP image of at most 1 MiB whose first bytes show its type, and it keeps the thumbnail URL in the server. It sends the key only to `api.skywatch.co`. It refuses a thumbnail URL with a host name that is an IP address, `localhost` or a name that ends with `.localhost`. It keeps at most 32 images, each for less than 10 minutes, and it allows 30 requests in each minute.
+
+The layer "SkyWatch Scenes" sends one search when a person presses its chip "Search scenes here". The search is for a box of 48 km by 48 km at the view centre, and for the last 92 days. The layer draws the footprint of each scene, and its row lists the scenes. A click on a scene in the list shows its thumbnail as a card on the globe.
 
 ### Notes on the live sources
 

@@ -56,6 +56,7 @@ const PANEL_GROUPS = [
     ids: [
       'cctv',
       'recent-imagery',
+      'skywatch-scenes',
       'street-level',
       'beemaps',
       'beemaps-bursts',

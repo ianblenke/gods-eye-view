@@ -47,6 +47,10 @@ export const CATALOG_SOURCE_CONTRACTS = Object.freeze({
   earthquakes: contract(['earthquakes'], ['getSnapshot']),
   reticulum: contract(['reticulum'], ['getSnapshot']),
   gdacs: contract(['gdacs'], ['getSnapshot']),
+  'skywatch-scenes': contract(
+    ['skywatch-scenes'],
+    ['getStatus', 'searchScenes', 'getThumbnail'],
+  ),
   beemaps: contract(['beemaps'], ['getStatus', 'getFrames']),
   'beemaps-bursts': contract(
     ['beemaps-bursts'],
