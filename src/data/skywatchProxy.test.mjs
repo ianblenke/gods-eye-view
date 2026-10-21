@@ -807,10 +807,12 @@ test('[skywatch-source-014] counts a search while it is in flight, so a second b
   });
   const first = server.scenes({ bbox: boxAt(1), ...DATES });
   await settle();
-  const second = await server.scenes({ bbox: boxAt(2), ...DATES });
-  assert.deepEqual(second.body, { error: 'budget', used: 1, limit: 1 });
+  const pending = server.scenes({ bbox: boxAt(2), ...DATES });
+  await settle();
   release();
-  assert.equal((await first).status, 200);
+  const [done, second] = await Promise.all([first, pending]);
+  assert.deepEqual(second.body, { error: 'budget', used: 1, limit: 1 });
+  assert.equal(done.status, 200);
   assert.equal(searches(server), 1);
 });
 
