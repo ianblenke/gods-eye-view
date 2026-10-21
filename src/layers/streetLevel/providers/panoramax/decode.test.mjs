@@ -135,6 +135,11 @@ test('a sliced decode gives the page turns and decodes the same as one in one go
   });
   assert.ok(pauses > 20, `${pauses} turns`);
   assert.deepEqual(sliced, decodeCoverageTile(bytes, tile));
+  // The default turn and clock: a slice of 0 ms gives a turn at each step.
+  assert.deepEqual(
+    await decodeCoverageTileSliced(bytes, tile, { sliceMs: 0 }),
+    decodeCoverageTile(bytes, tile),
+  );
 });
 
 test('a sliced decode stops at the next turn once aborted', async () => {
