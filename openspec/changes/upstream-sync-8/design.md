@@ -39,11 +39,11 @@ A merge of the plan commit and the upstream commit in memory reports 16 files wi
 ### D1: The plugin list of the standalone server
 
 The fork moved the plugin list of `server/standalone/vite.config.js` into the function `standalonePlugins()`. The fork test `src/tooling/bundleCredentials.test.mjs` builds a page with that list.
-Upstream gives the same voice tools to the OpenAI provider and to the new Gemini provider: `localProviderPlugins({ realtime: { tools }, gemini: { tools } })`.
+Upstream gives the same voice tools to the OpenAI provider and to the new Gemini provider in the call of `localProviderPlugins()`.
 The change gives `standalonePlugins()` the parameter `tools`, with the value `standaloneVoiceTools()` when the caller gives no value. The config calls `standalonePlugins(tools)`.
 The config then has the same plugins in the same order as upstream.
 
-The fault is to remove the option `gemini` from `standalonePlugins()`. The upstream test "root config retains existing named exports and standalone provider order" in `src/tooling/viteBuild.test.mjs` must then fail.
+The fault is to remove the option `gemini` from `standalonePlugins()`. The upstream test of the order of the standalone providers in `src/tooling/viteBuild.test.mjs` must then fail.
 
 ### D2: The Ontario 511 key
 
@@ -52,13 +52,14 @@ Upstream pull request #1228 adds the same key, in the same parameter, to `loadOn
 The owner decided in sync 6 to use the upstream code when upstream adds the same function. The change uses the upstream code here for the same reason.
 
 The change removes `server/providers/cctv/ontarioRequest.js` and its test file `src/data/cctvOntarioKey.test.mjs`. It removes the requirement "Ontario camera key" and retires its four scenarios: `live-sources-002`, `live-sources-003`, `live-sources-004` and `live-sources-005`.
+
 The change also removes three tests from `src/data/cctvOntarioRows.test.mjs`: one test of `live-sources-003`, one test of `live-sources-004` and one test of `live-sources-005`. The first two tests import the removed module. The upstream code writes the text of an error to the warning, so the third test fails on the merged tree.
 The change removes the path of the module from `scripts/package-boundaries.json`.
 The requirement "Ontario row rules" stays. Its tests set the key and replace the fetch function, so they test the upstream code.
 
-### D3: The floating panels
+### D3: The movable panels
 
-Upstream removes the floating and resizable panels of the rail. It removes the QA scripts `scripts/qa-panel-resize.mjs` and `scripts/qa-panelDrag.mjs` and the test file `src/ui/panelDock.test.mjs`.
+Upstream removes the movable panels of the rail. The user could move these panels out of the rail and change their size. It removes the QA scripts `scripts/qa-panel-resize.mjs` and `scripts/qa-panelDrag.mjs` and the test file `src/ui/panelDock.test.mjs`.
 The fork changed those three files only to add QA headers and to stop timers in two tests. The change removes the three files, as upstream does.
 
 The scenario `qa-scripts-023` counts 99 tracked QA scripts and names `qa-panel-resize` and `qa-panelDrag`. The change counts 97 scripts and names only `qa-browserEvidence`.
@@ -70,7 +71,8 @@ The fork changed that test file only in the tests of the sweep of the tile files
 
 ### D5: The test of the Street Level layer
 
-The file `src/layers/streetLevel/index.test.mjs` merged with no conflict. The fork had added two edits to it in sync 3. The first edit waits 20 ms after each test, because `whenIdle()` in `view.js` waited 16 ms on a timer. The second edit stops the timers of one test.
+The file `src/layers/streetLevel/index.test.mjs` merged with no conflict. The fork had added two edits to it. Sync 6 added a wait of 20 ms after each test, because `whenIdle()` in `view.js` waited 16 ms on a timer. Sync 3 stopped the timers of one test.
+
 Upstream removes `whenIdle()` from `view.js`. Two new upstream tests use mock timers, so the wait of the first edit never ends, and the two tests stop at their time limit.
 The change uses the upstream file. `evidence/street-level.txt` shows that the upstream file passes on the host and leaves no live timer when the process ends.
 

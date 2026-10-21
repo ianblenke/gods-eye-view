@@ -4,8 +4,8 @@ The owner wants a sync more often than once each week. On 2026-10-21 the owner t
 Upstream has 248 commits after the seventh sync. The first-parent history of upstream has 25 commits in that range: 21 pull requests and four direct commits.
 
 The commits add Gemini Live as a second voice provider and a model-free World Packet boundary for the agent. They add camera packs for Taiwan freeways, Hong Kong and Florida (FL511, opt-in), and ground heights for the Norwegian cameras.
-They change the Street Level layer to one provider with docked panels and a proxy that keeps tiles only in memory. They remove the floating panels of the rail.
-They also fix the region names of the analyst, the route labels of flights, the catalog provenance of satellites, the requests of Launch Library and the cross-site gate of the terrain route.
+They change the Street Level layer to one provider with docked panels and a proxy that keeps tiles only in memory. They remove the movable panels of the rail.
+They also fix the region names of the analyst, the route labels of flights and the catalog provenance of satellites. They fix the requests of Launch Library and the cross-site gate of the terrain route.
 
 Upstream pull request #1228 adds the Ontario 511 key `ONTARIO_511_API_KEY`. The fork added the same key in the change `fix-ontario-511`.
 
@@ -37,12 +37,14 @@ The change also removes the fork module `server/providers/cctv/ontarioRequest.js
 Rule 23: the 74 added files are upstream files, because the fork does not write them. The manifest lists only paths that the fork writes.
 Fifteen of the added files are code files. `evidence/added-code.txt` lists them.
 
-Rule 25: the merge breaks two tests of the fork scenario `live-sources-005`. The merged file `server/providers/cctv/sources.js` does not call the fork module `ontarioRequest.js`. So the tests of `live-sources-002`, `live-sources-003` and `live-sources-004` test a module that the server does not use. The change retires the four scenarios of the requirement "Ontario camera key". Decision D2 gives the reason.
+Rule 25: the merge breaks two tests of the fork scenario `live-sources-005`. The merged file `server/providers/cctv/sources.js` does not call the fork module `ontarioRequest.js`. So the tests of `live-sources-002`, `live-sources-003` and `live-sources-004` test a module that the server does not use.
+The change retires the four scenarios of the requirement "Ontario camera key". Decision D2 gives the reason.
+
 The merge also breaks the test of `qa-scripts-023`. That scenario is for fork code. The change writes the scenario again for 97 QA scripts.
 
 The change opens no new coverage gap for owned code. The adopt command records the gaps of the upstream files that the merge brings.
 
-The upstream code adds the optional setting `GEMINI_API_KEY` and the route `/api/gemini/token`. The route uses the same cross-site check as the other routes that cost money.
+The upstream code adds the optional key `GEMINI_API_KEY` and the route `/api/gemini/token`. The route uses the same cross-site check as the other routes that cost money.
 The upstream code adds no dependency, and `package-lock.json` does not change. `package.json` adds the export `./agent/world-packet` and removes the script `qa:panel-resize`.
 
 ## Known limits and later changes
