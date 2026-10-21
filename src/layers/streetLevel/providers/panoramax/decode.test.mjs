@@ -121,7 +121,7 @@ function busyTile() {
   return { tile, bytes: encodePanoramaxTile(tile, { sequences, grid }) };
 }
 
-test('a sliced decode gives the page turns and decodes the same as one in one go', async () => {
+test('a sliced decode gives the page turns and decodes the same as one in one go', async (t) => {
   const { tile, bytes } = busyTile();
   let clock = 0;
   let pauses = 0;
@@ -136,10 +136,16 @@ test('a sliced decode gives the page turns and decodes the same as one in one go
   assert.ok(pauses > 20, `${pauses} turns`);
   assert.deepEqual(sliced, decodeCoverageTile(bytes, tile));
   // The default turn and clock: a slice of 0 ms gives a turn at each step.
+  // With no scheduler.yield(), each turn is a timer of 0 ms.
+  const timers = t.mock.method(globalThis, 'setTimeout');
+  const reads = t.mock.method(performance, 'now');
   assert.deepEqual(
     await decodeCoverageTileSliced(bytes, tile, { sliceMs: 0 }),
     decodeCoverageTile(bytes, tile),
   );
+  const turns = timers.mock.calls.filter((call) => call.arguments[1] === 0);
+  assert.ok(turns.length > 20, `${turns.length} turns`);
+  assert.ok(reads.mock.callCount() > 20, `${reads.mock.callCount()} reads`);
 });
 
 test('a sliced decode stops at the next turn once aborted', async () => {
