@@ -1,11 +1,11 @@
 ## 1. Write the tests
 
 - [x] 1.1 Write the tests for `skywatch-source-001`, `skywatch-source-002`, `skywatch-source-003` and `skywatch-source-004` in `src/data/skywatchProxy.test.mjs`.
-- [x] 1.2 Write the tests for `skywatch-source-009`, `skywatch-source-010` and `skywatch-source-017` in the same file.
+- [x] 1.2 Write the tests for `skywatch-source-009`, `skywatch-source-010`, `skywatch-source-013` and `skywatch-source-017` in the same file.
 - [x] 1.3 Write the tests for `skywatch-source-014`, `skywatch-source-015`, `skywatch-source-016` and `skywatch-source-018` in the same file.
 - [x] 1.4 Write the tests for `skywatch-source-019` and `skywatch-source-022` in the same file.
 - [x] 1.5 Write the tests for `skywatch-source-005`, `skywatch-source-006`, `skywatch-source-007` and `skywatch-source-008` in `src/data/skywatchInput.test.mjs`.
-- [x] 1.6 Write the tests for `skywatch-source-011`, `skywatch-source-012` and `skywatch-source-013` in `src/data/skywatchUpstream.test.mjs`.
+- [x] 1.6 Write the tests for `skywatch-source-011` and `skywatch-source-012` in `src/data/skywatchUpstream.test.mjs`.
 - [x] 1.7 Write the tests for `skywatch-source-020` and `skywatch-source-021` in `src/data/skywatchScenes.test.mjs`.
 
 ## 2. Write the files
@@ -34,7 +34,7 @@
 
 ## 4. Lead work in the image
 
-- [x] 4.1 Run `make ratchet CHANGE=skywatch-source`.
+- [ ] 4.1 Run `make ratchet CHANGE=skywatch-source`.
 - [ ] 4.2 Run the two review agents.
 - [ ] 4.3 Write review.md.
 - [ ] 4.4 Run `make gates CHANGE=skywatch-source` on the final tree.

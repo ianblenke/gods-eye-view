@@ -8,6 +8,7 @@ Origin: spec-first
 - **WHEN** a test installs the plugin and sends requests to `/api/skywatch/status`, `/api/skywatch/scenes` and `/api/skywatch/other`
 - **THEN** the first two paths get an answer, and the third path goes to `next` with no answer
 - **AND** the path `/api/skywatch/scenes/x` goes to `next` with no answer
+- **AND** the path `/api/skywatch/status/x` goes to `next` with no answer, also with the header `Sec-Fetch-Site: cross-site`
 - **AND** the plugin name is "skywatch-proxy"
 - **AND** `configureServer` and `configurePreviewServer` install the same routes
 - **AND** the list that `localProviderPlugins` returns holds this plugin once
@@ -103,7 +104,8 @@ Origin: spec-first
 - **AND** a `data.id` of another form gives `502` with `{"error":"bad_upstream"}`, and the plugin sends no result request
 
 #### Scenario: Send no other upstream request `skywatch-source-013`
-- **WHEN** a test runs each route and each failure of this specification through a fetch function that records each URL and method
+- **WHEN** a test runs the status route, a good search and each failure kind of `skywatch-source-012` and `skywatch-source-019`
+- **AND** the fetch function of the test records each URL and method
 - **THEN** each recorded request is one of the requests of `skywatch-source-011` and `skywatch-source-012`
 - **AND** no recorded URL holds `pipelines`, `price`, `orders`, `outputs` or `offerings`
 
@@ -139,14 +141,14 @@ Origin: spec-first
 - **AND** a request that the store answers counts for this limit
 
 #### Scenario: Run the steps in order `skywatch-source-018`
-- **WHEN** a scenes request meets more than one step that would answer
+- **WHEN** a scenes request meets more than one step that can answer
 - **THEN** the first step in this order answers: method, local request, rate limit, body, box, area, dates, key, store, daily count
 - **AND** the store step answers when the store keeps an answer, or when a search for the same box and dates is in flight
 - **AND** a request that the store step answers gets its answer when the count of the day is equal to the limit
 - **AND** the plugin sends an upstream search only when all ten steps pass
 
 ### Requirement: Upstream failures
-The plugin MUST give a named failure for each upstream request that does not give a valid document.
+The plugin MUST give a named failure for each upstream request that does not give a valid document. An answer `202` to one of the first nine result requests is not a failure.
 Origin: spec-first
 
 #### Scenario: Name the failure `skywatch-source-019`
@@ -159,7 +161,7 @@ Origin: spec-first
 - **AND** each other status gives `502` with `{"error":"upstream_failed"}`, with the exceptions of `200` for each request and `202` for a result request
 - **AND** a network error and a redirect give the same answer
 - **AND** before each upstream request, the plugin starts a timer of 15000 ms, and it clears the timer after it reads the body
-- **AND** when the timer fires, the plugin stops the request, and the scenes route gives `upstream_failed`
+- **AND** when the time limit ends, the plugin stops the request, and the scenes route gives `upstream_failed`
 - **AND** the plugin reads the body only of an answer `200`
 - **AND** a body that is not JSON and a body of more than 4194304 bytes give `502` with `{"error":"bad_upstream"}`
 - **AND** the plugin reads a body of exactly 4194304 bytes
