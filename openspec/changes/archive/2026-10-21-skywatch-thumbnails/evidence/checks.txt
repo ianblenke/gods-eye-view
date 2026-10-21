@@ -29,7 +29,7 @@ Checked 1560 source files.
 Layer tokens valid against origin/main: 36 published, 0 new.
 PRECHECK_EXIT=0
 
-Round 1 addition: the same checks on the commit 8bb62bf2. Date (UTC): 2026-10-21 20:15:15. Each of the six host checks gave exit 0. The result lines:
+Round 1 addition: the same checks on the commit 8bb62bf2. Date (UTC): 2026-10-21 20:15:15. Each of the six host checks gave exit 0. The result lines of the format check, the import check, the layer token check, openspec validate, the lint and make precheck in the image:
 Checked 1560 source files.
 {"modules":1082,"portableEntries":84}
 Layer tokens valid against origin/main: 36 published, 0 new.

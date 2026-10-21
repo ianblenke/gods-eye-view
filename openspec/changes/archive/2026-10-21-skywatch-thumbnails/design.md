@@ -35,7 +35,7 @@ The function `skywatchPlugins(options)` makes the two plugins with the same opti
 
 `normalizeScenes()` also gives the field `thumbnailUrls`. It is a map from the id to a `thumbnail_uri` text. For each id, the text comes from the first scene in `scenes` that has that id and has `thumbnail` true. The answer store of the scenes route keeps that map with each answer, and no answer gives the map to the browser.
 
-One test of `skywatch-source-021` in `src/data/skywatchScenes.test.mjs` compares the whole result of `normalizeScenes()`. That test leaves the field `thumbnailUrls` out of the comparison, and the tests of `skywatch-thumbnails-006` check the map.
+One test of `skywatch-source-021` in `src/data/skywatchScenes.test.mjs` compares the result of `normalizeScenes()`, with the fields `scenes` and `thumbnailUrls` left out of the comparison. The tests of `skywatch-thumbnails-006` check the map.
 `thumbnailUrlOf(id)` reads the kept answers from the newest to the oldest. It uses the same age rule as the store step of `skywatch-source-015`. So the thumbnail route knows only the scenes that the browser can know.
 
 ### D4: The URL check
@@ -56,7 +56,7 @@ The plugin checks the media type before it reads the body. It accepts at most 10
 
 ### D7: The image store and the limits
 
-The plugin keeps a good image for 600000 ms and at most 32 images. The image store finds an image by the `href` text of the URL. Two requests for the same URL share one upstream request that is in flight. The store keeps no failure.
+The thumbnail plugin keeps at most 32 good images, each for less than 600000 ms. The image store finds an image by the `href` text of the URL. Two requests for the same URL share one upstream request that is in flight. The store keeps no failure.
 
 A layer asks for the thumbnail of one selected scene at a time, so a rate limit of 30 requests in 60000 ms is enough. The plugin has one count for all requests. The route has no daily count, because a thumbnail is a file of the search results and not a search.
 

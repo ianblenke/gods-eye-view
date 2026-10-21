@@ -159,7 +159,7 @@ After an unknown answer, the layer warns that a burst can exist and disables the
 
 ### SkyWatch archive scenes (key in `.env`)
 
-SkyWatch EarthCache gives one API for the satellite images of many operators. The route `/api/skywatch/scenes` searches its archive for the scenes of one box of at most 2500 km² and a window of at most 92 days. It accepts only a JSON request from the same site. A request through a reverse proxy passes only when the proxy removes the proxy headers, such as `X-Forwarded-For`. The proxy must also send in `Origin` the origin of its own request to this server.
+SkyWatch EarthCache gives one API for the satellite images of many operators. The route `/api/skywatch/scenes` searches its archive for the scenes of one box of at most 2500 km² and a window of at most 92 days. It accepts only a JSON request from the same site. A request through a reverse proxy passes only when the proxy removes the proxy headers, such as `X-Forwarded-For`. When the request of the proxy to this server has the header `Origin`, that origin must have the protocol and the `Host` of that request.
 
 The route sends only the archive search and its result requests to one fixed address, and it keeps the key `SKYWATCH_API_KEY` in the server. It gives the id, the footprint, the times, the resolution, the operator and the product of each scene. It also gives the cloud cover, the coverage, the area, the price for each km², the cost and a thumbnail flag, and no image URL.
 

@@ -134,7 +134,7 @@ KILLED: [skywatch-thumbnails-015] no default log (server/providers/skywatch/thum
 
 Round 1 addition: run 3, after the round 1 corrections. Commit: 8bb62bf2. Start (UTC) 20:01:49Z, end (UTC) 20:07:31Z. Result: faults 125, killed 125, survived 0.
 Run 3 has the 121 faults of run 2 and 4 new faults: "local list makes the two plugins apart", "thumbnail plugin does not read process.env", "port check on the raw text" and "same-site step before the method step".
-In run 3, the runner runs each fault of image.js on two test files: src/data/skywatchImage.test.mjs and src/data/skywatchThumbnails.test.mjs. The runner also names each new or changed test of the change that no fault makes fail. Result: tests of the change: 53, with no fault that makes them fail: 0.
+In run 3, the runner runs each fault of image.js on two test files: src/data/skywatchImage.test.mjs and src/data/skywatchThumbnails.test.mjs. The runner also names each new or changed test of the change that no fault makes fail. Result: tests of the change: 53, with no fault that makes them fail: 0. (Round 2 found that this list did not have one changed test. The round 2 addition below gives the correction.)
 Run 3 is now the record. Its result lines follow, in the same form as above. Each failed test has the name of its test file.
 
 KILLED: [skywatch-source-003] scenes accepts PATCH (server/providers/skywatch.js) | failed: ['src/data/skywatchProxy.test.mjs: [skywatch-source-003] refuses GET, PUT, PATCH and DELETE on the scenes route']

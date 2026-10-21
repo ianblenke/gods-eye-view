@@ -14,7 +14,7 @@ src/data/skywatchScenes.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 11 �
 src/data/skywatchThumbnails.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 40 ℹ skipped 0 ℹ tests 40 
 src/data/skywatchUpstream.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 17 ℹ skipped 0 ℹ tests 17 
 
-Round 1 addition: host run 2, on the commit 8bb62bf2 (after the round 1 corrections of the tests). The working tree had no changes. Same command and file list rule as above. Start (UTC) 20:07:32Z, end (UTC) 20:15:15Z. Files: 820.
+Round 1 addition: host run 2, on the commit 8bb62bf2 (after the round 1 corrections of the tests). The working tree had no changes. The command and the rule for the file list are the same as above. Start (UTC) 20:07:32Z, end (UTC) 20:15:15Z. Files: 820.
 Totals:
 tests 12165 pass 12149 fail 0 skipped 16
 Lines with an exit status other than 0: 0
