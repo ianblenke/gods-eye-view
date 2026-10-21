@@ -1,0 +1,48 @@
+Conflicts of upstream-sync-8. Date (UTC): 2026-10-21 04:50:02. Branch head: 4b35414c.
+
+The first command merges the plan commit and the upstream commit in memory. It prints the tree, the files with a conflict and the messages of the merge.
+The lines below are the lines of its output that start with CONFLICT.
+$ git merge-tree --write-tree --name-only 21a12aef 713285b554bbc99c8ae0261fe307beb3cbeb2adf | grep '^CONFLICT'
+CONFLICT (content): Merge conflict in .env.example
+CONFLICT (content): Merge conflict in DATA_SOURCES.md
+CONFLICT (content): Merge conflict in README.md
+CONFLICT (content): Merge conflict in SECURITY.md
+CONFLICT (content): Merge conflict in docs/CURRENT-STATE.md
+CONFLICT (content): Merge conflict in package.json
+CONFLICT (modify/delete): scripts/qa-panel-resize.mjs deleted in 713285b554bbc99c8ae0261fe307beb3cbeb2adf and modified in 21a12aef.  Version 21a12aef of scripts/qa-panel-resize.mjs left in tree.
+CONFLICT (modify/delete): scripts/qa-panelDrag.mjs deleted in 713285b554bbc99c8ae0261fe307beb3cbeb2adf and modified in 21a12aef.  Version 21a12aef of scripts/qa-panelDrag.mjs left in tree.
+CONFLICT (content): Merge conflict in scripts/qa-street-level.mjs
+CONFLICT (content): Merge conflict in server/providers/cctv/constants.js
+CONFLICT (content): Merge conflict in server/providers/cctv/sources.js
+CONFLICT (content): Merge conflict in server/standalone/vite.config.js
+CONFLICT (content): Merge conflict in src/i18n/locales/es.json
+CONFLICT (content): Merge conflict in src/i18n/locales/ru.json
+CONFLICT (content): Merge conflict in src/tooling/mapillaryProvider.test.mjs
+CONFLICT (modify/delete): src/ui/panelDock.test.mjs deleted in 713285b554bbc99c8ae0261fe307beb3cbeb2adf and modified in 21a12aef.  Version 21a12aef of src/ui/panelDock.test.mjs left in tree.
+
+$ git merge-tree --write-tree --name-only 21a12aef 713285b554bbc99c8ae0261fe307beb3cbeb2adf | grep -c '^CONFLICT'
+16
+
+The next command shows the files in which the merge commit differs from the automatic merge of its two parents.
+$ git show --remerge-diff --stat --format='%h %s' 4089abfe
+4089abfe Merge upstream/main (713285b5) into upstream-sync-8
+
+ .env.example                           |    6 -
+ DATA_SOURCES.md                        |   12 -
+ README.md                              |    6 -
+ SECURITY.md                            |   10 +-
+ docs/CURRENT-STATE.md                  |    8 +-
+ package.json                           |    7 +-
+ scripts/qa-panel-resize.mjs            |  487 -------
+ scripts/qa-panelDrag.mjs               |  325 -----
+ scripts/qa-street-level.mjs            |    6 -
+ server/providers/cctv/constants.js     |    6 -
+ server/providers/cctv/sources.js       |   32 +-
+ server/standalone/vite.config.js       |   22 +-
+ src/i18n/locales/es.json               |    7 +-
+ src/i18n/locales/ru.json               |    7 +-
+ src/layers/streetLevel/index.test.mjs  |   15 -
+ src/tooling/mapillaryProvider.test.mjs | 2501 --------------------------------
+ src/ui/panelDock.test.mjs              |  582 --------
+ 17 files changed, 14 insertions(+), 4025 deletions(-)
+

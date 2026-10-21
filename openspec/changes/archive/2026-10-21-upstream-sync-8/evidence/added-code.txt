@@ -1,0 +1,23 @@
+Added code files of upstream-sync-8. Date (UTC): 2026-10-21 04:50:04. Branch head: 4b35414c.
+
+A code file has the extension .js, .mjs or .cjs and is not a test file (.test.mjs).
+$ git diff --diff-filter=A --name-only 67342d000c56204abd2e08a1cf05d19dd2e99b69 4089abfe | grep -E '\.(m?js|cjs)$' | grep -v '\.test\.mjs$'
+server/providers/cctv/taiwan.js
+server/providers/gemini.js
+server/providers/gemini/config.js
+server/providers/gemini/realtime.js
+server/providers/gemini/request.js
+src/agent/worldPacket.js
+src/data/vesselTypes.js
+src/layers/streetLevel/cameraFraming.js
+src/testSupport/geminiIntegrationFixture.mjs
+src/testSupport/geminiNativeHarness.mjs
+src/voice/geminiAudio.js
+src/voice/geminiCaptureWorklet.js
+src/voice/geminiSession.js
+src/voice/providerCapabilities.js
+src/voice/providerCommands.js
+
+$ git diff --diff-filter=A --name-only 67342d000c56204abd2e08a1cf05d19dd2e99b69 4089abfe | grep -E '\.(m?js|cjs)$' | grep -vc '\.test\.mjs$'
+15
+

@@ -1,0 +1,30 @@
+Fault of decision D1 of upstream-sync-8. Date (UTC): 2026-10-21 04:48:06. Branch head: 4b35414c.
+
+Fault: remove the option gemini from standalonePlugins() in server/standalone/vite.config.js.
+
+$ git diff -- server/standalone/vite.config.js
+diff --git a/server/standalone/vite.config.js b/server/standalone/vite.config.js
+index 110b2f6e..cabdb62a 100644
+--- a/server/standalone/vite.config.js
++++ b/server/standalone/vite.config.js
+@@ -13,7 +13,7 @@ const root = fileURLToPath(new URL('../../', import.meta.url));
+ /** Return the production browser plugins. */
+ export function standalonePlugins(tools = standaloneVoiceTools()) {
+   return [
+-    ...localProviderPlugins({ realtime: { tools }, gemini: { tools } }),
++    ...localProviderPlugins({ realtime: { tools } }),
+     localMcpPlugin(),
+     apiNotFoundPlugin(),
+     unwatchedRuntimeDirsPlugin(),
+
+$ node --test --test-reporter=tap src/tooling/viteBuild.test.mjs (lines with "not ok" and the counts)
+not ok 3 - root config retains existing named exports and standalone provider order
+# tests 7
+# pass 6
+# fail 1
+
+Without the fault:
+$ node --test --test-reporter=tap src/tooling/viteBuild.test.mjs (the counts)
+# tests 7
+# pass 7
+# fail 0

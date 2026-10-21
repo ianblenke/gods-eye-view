@@ -1,0 +1,57 @@
+Coverage of the sliced Panoramax decode, upstream-sync-8. Date (UTC): 2026-10-21 06:21:54. Branch head: 8d9a5c51, with the edit of decision D7 in the working tree.
+
+1. The first ratchet run (log outside the repository) stopped with this error:
+ERROR GATES-RATCHET openspec/trace/gaps.json The ratchet command cannot run while gaps are larger:
+LEDGER-LOST-COVERAGE src/layers/streetLevel/providers/panoramax/decode.js has 1 functions not covered and 12 covered. The ledger records 0 and 14.
+
+2. The adopt record of decode.js in openspec/trace/history.jsonl:
+{"date":"2026-10-21","change":"upstream-sync-8","commit":"3bab947b36417e7d3161c7b2cbd7dc70cc81bc38","kind":"adopt","file":"src/layers/streetLevel/providers/panoramax/decode.js","from":"713285b554bbc99c8ae0261fe307beb3cbeb2adf","lines":2,"branches":16,"functions":0,"untraced":0,"untrue":false}
+
+3. The probe runs one test file on the host with NODE_V8_COVERAGE. It prints the number of functions of decode.js and the functions with a count of 0 (the name and the start offset). Probe: /home/ianblenke/docker/gev-tools/upstream-sync-8/cov/fn-one.sh (outside the repository).
+The callers of decodeCoverageTileSliced outside decode.js:
+$ grep -rn "decodeCoverageTileSliced(" --include=*.js --include=*.mjs src | grep -v "panoramax/decode.js:"
+src/layers/streetLevel/providers/panoramax/decode.test.mjs:128:  const sliced = await decodeCoverageTileSliced(bytes, tile, {
+src/layers/streetLevel/providers/panoramax/decode.test.mjs:140:    await decodeCoverageTileSliced(bytes, tile, { sliceMs: 0 }),
+src/layers/streetLevel/providers/panoramax/decode.test.mjs:151:    decodeCoverageTileSliced(bytes, tile, {
+src/layers/streetLevel/providers/panoramax/decode.test.mjs:166:  await decodeCoverageTileSliced(bytes, tile, {
+src/layers/streetLevel/providers/panoramax/index.js:281:            decodeCoverageTileSliced(
+
+Before the edit (the test file of the commit 8d9a5c51, copied to zz-before.test.mjs in the same folder for the run):
+decode test, run 1: functions 14 zero 2 nextTask@2767 now@3587
+decode test, run 2: functions 14 zero 2 nextTask@2767 now@3587
+provider test, run 1: functions 14 zero 3 (anon)@1604 decodeCoverageTile@2505 nextTask@2767
+provider test, run 2: functions 14 zero 3 (anon)@1604 decodeCoverageTile@2505 nextTask@2767
+
+Offsets: nextTask@2767 is line 82 (nextTask), now@3587 is line 104 (the default clock).
+
+After the edit:
+decode test, run 1: functions 15 zero 0 
+decode test, run 2: functions 15 zero 0 
+decode test, run 3: functions 15 zero 0 
+
+The edit:
+diff --git a/src/layers/streetLevel/providers/panoramax/decode.test.mjs b/src/layers/streetLevel/providers/panoramax/decode.test.mjs
+index b4beb1b8..a6e0ee2c 100644
+--- a/src/layers/streetLevel/providers/panoramax/decode.test.mjs
++++ b/src/layers/streetLevel/providers/panoramax/decode.test.mjs
+@@ -135,6 +135,11 @@ test('a sliced decode gives the page turns and decodes the same as one in one go
+   });
+   assert.ok(pauses > 20, `${pauses} turns`);
+   assert.deepEqual(sliced, decodeCoverageTile(bytes, tile));
++  // The default turn and clock: a slice of 0 ms gives a turn at each step.
++  assert.deepEqual(
++    await decodeCoverageTileSliced(bytes, tile, { sliceMs: 0 }),
++    decodeCoverageTile(bytes, tile),
++  );
+ });
+ 
+ test('a sliced decode stops at the next turn once aborted', async () => {
+
+Round 1 addition. Date (UTC): 2026-10-21 07:23:11. Branch head: 098d2bd1. The commit 03260b95 adds two pass-through mock functions to the same test (setTimeout and performance.now). The test asserts more than 20 calls of setTimeout with 0 ms and more than 20 calls of performance.now. evidence/fault-d7.txt gives three faults.
+Three runs of the test file: the counts and the exit status, then the probe of the functions of decode.js.
+run 1: ℹ tests 10 ℹ pass 10 ℹ fail 0 exit 0
+run 1 probe: functions 15 zero 0 
+run 2: ℹ tests 10 ℹ pass 10 ℹ fail 0 exit 0
+run 2 probe: functions 15 zero 0 
+run 3: ℹ tests 10 ℹ pass 10 ℹ fail 0 exit 0
+run 3 probe: functions 15 zero 0 

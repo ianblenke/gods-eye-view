@@ -1,0 +1,28 @@
+Street Level test of upstream-sync-8. Date (UTC): 2026-10-21 05:03:53. Branch head: 66b35b39.
+
+1. The file on the branch head is the upstream file:
+$ git diff --stat 713285b5 HEAD -- src/layers/streetLevel/index.test.mjs | wc -l
+0
+
+2. The automatic merge kept the two fork edits. The trial branch commit 03791b26 has the file of the automatic merge. The lead copied that file to src/layers/streetLevel/zz-trial.test.mjs, ran it with a time limit of 20000 ms for each test, and then removed the copy. The lines below are the failed tests and the counts (TAP output):
+$ node --test --test-timeout=20000 --test-reporter=tap src/layers/streetLevel/zz-trial.test.mjs
+not ok 29 - under Google 3D the ground is measured again once its tiles load, without a move
+not ok 30 - an unknown ground is measured only a few times, and not after the layer is off
+# tests 45
+# pass 43
+# fail 2
+# cancelled 0
+
+3. The two tests that stop at the time limit use mock timers. The lines below come from the file of the branch head: the line of each test and the first line after it with t.mock.timers.enable.
+792:test('under Google 3D the ground is measured again once its tiles load, without a move', async (t) => {
+798:  t.mock.timers.enable({ apis: ['setTimeout'] });
+817:test('an unknown ground is measured only a few times, and not after the layer is off', (t) => {
+823:  t.mock.timers.enable({ apis: ['setTimeout'] });
+
+4. The upstream view.js has no whenIdle():
+$ grep -c whenIdle src/layers/streetLevel/view.js
+0
+
+5. The probe of evidence/leaks.txt, on the file of the branch head:
+src/layers/streetLevel/index.test.mjs: rc=0 ℹ tests 45 ℹ pass 45 ℹ fail 0 
+Live resources: 0 lines.
