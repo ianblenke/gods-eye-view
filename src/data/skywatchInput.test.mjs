@@ -180,7 +180,7 @@ test('[skywatch-source-008] refuses a start after the end, a missing date and ea
   assert.equal(good({ start: '2024-02-29', end: '2024-02-29' }).ok, true);
 });
 
-test('[skywatch-source-005 skywatch-source-006 skywatch-source-007 skywatch-source-008] checks the body, the box, the area and then the dates', () => {
+test('[skywatch-source-018] checks the body, the box, the area and then the dates', () => {
   refused(
     validateRequest('{"bbox":[0,0,5,5],"start":"x","other":1}', NOW),
     'bad_body',
