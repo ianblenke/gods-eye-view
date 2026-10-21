@@ -134,7 +134,7 @@ KILLED: [skywatch-thumbnails-015] no default log (server/providers/skywatch/thum
 
 Round 1 addition: run 3, after the round 1 corrections. Commit: 8bb62bf2. Start (UTC) 20:01:49Z, end (UTC) 20:07:31Z. Result: faults 125, killed 125, survived 0.
 Run 3 has the 121 faults of run 2 and 4 new faults: "local list makes the two plugins apart", "thumbnail plugin does not read process.env", "port check on the raw text" and "same-site step before the method step".
-In run 3, the runner runs each fault of image.js on two test files: src/data/skywatchImage.test.mjs and src/data/skywatchThumbnails.test.mjs. The runner also names each new or changed test of the change that no fault makes fail. Result: tests of the change: 53, with no fault that makes them fail: 0. (Round 2 found that this list did not have one changed test. The round 2 addition below gives the correction.)
+In run 3, the runner runs each fault of image.js on two test files: src/data/skywatchImage.test.mjs and src/data/skywatchThumbnails.test.mjs. The runner also names each new or changed test of the change that no fault makes fail. Result: tests of the change: 53, with no fault that makes them fail: 0. (Round 2 found one changed test that is not in the list of the 53 tests of the change. The round 2 addition below gives the correction.)
 Run 3 is now the record. Its result lines follow, in the same form as above. Each failed test has the name of its test file.
 
 KILLED: [skywatch-source-003] scenes accepts PATCH (server/providers/skywatch.js) | failed: ['src/data/skywatchProxy.test.mjs: [skywatch-source-003] refuses GET, PUT, PATCH and DELETE on the scenes route']
@@ -264,8 +264,8 @@ KILLED: [skywatch-thumbnails-007] port check on the raw text (server/providers/s
 KILLED: [skywatch-source-018] same-site step before the method step (server/providers/skywatch.js) | failed: ['src/data/skywatchProxy.test.mjs: [skywatch-source-018] answers with the first step that fails']
 
 Round 2 addition: run 4, after round 2. Commit: 06bcd1fc. Start (UTC) 21:09:15Z, end (UTC) 21:14:58Z. Result: faults 126, killed 126, survived 0.
-Round 2 found that the list of run 3 did not have one changed test: "[skywatch-source-021] gives total from pagination.total when it is a whole number not less than the data length" in src/data/skywatchScenes.test.mjs. No fault of run 3 ran that file.
-Run 4 has the 125 faults of run 3 and 1 new fault: "map under another field name" in normalize.js. It runs on src/data/skywatchScenes.test.mjs. The list of the tests of the change now has that test. Result: tests of the change: 54, with no fault that makes them fail: 0.
+Round 2 found that the list of run 3 did not have one changed test: "[skywatch-source-021] gives total from pagination.total when it is a whole number not less than the data length" in src/data/skywatchScenes.test.mjs. In run 3, the runner ran no fault on that file.
+Run 4 has the 125 faults of run 3 and 1 new fault: "map under another field name" in normalize.js. The runner runs that fault on src/data/skywatchScenes.test.mjs. The list of the tests of the change now has that test. Result: tests of the change: 54, with no fault that makes them fail: 0.
 The code files and the test files did not change after run 3. Run 4 is now the record. Its result lines follow, in the same form as above.
 
 KILLED: [skywatch-source-003] scenes accepts PATCH (server/providers/skywatch.js) | failed: ['src/data/skywatchProxy.test.mjs: [skywatch-source-003] refuses GET, PUT, PATCH and DELETE on the scenes route']

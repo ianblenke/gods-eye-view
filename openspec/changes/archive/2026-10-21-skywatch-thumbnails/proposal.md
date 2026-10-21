@@ -40,3 +40,4 @@ The change adds no dependency, no layer, no QA script and no layer token.
 - Known limit `key-host`: The plugin sends the key only to the host `api.skywatch.co`. When a thumbnail on another host needs the key, each request for it fails with `upstream_failed` or `bad_upstream`.
 - Known limit `thumbnail-only`: The route sends only the image of `thumbnail_uri`, which the API description gives as 100 × 100 pixels. It sends no image of `preview_uri`.
 - Later change `skywatch-scenes-layer`: A layer that searches the box under the view, shows the footprints and shows the thumbnail of a selected scene.
+- Review minor `round3-wording` (round 3): four sentences of `evidence/faults.txt`, `design.md` and `CHANGELOG.md` had two meanings, a phrasal verb or more than 25 words. The lead corrected them after round 3.
