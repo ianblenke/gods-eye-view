@@ -32,9 +32,9 @@
 - [x] 3.1 Check the second parent of the merge commit against the upstream remote.
 - [x] 3.2 Run `make adopt CHANGE=upstream-sync-8 FROM=713285b554bbc99c8ae0261fe307beb3cbeb2adf` with the image of decision D9.
 - [x] 3.3 Run `make ratchet CHANGE=upstream-sync-8` with the image of decision D9.
-- [ ] 3.4 Write the Purpose of `live-sources` from `design.md`.
-- [ ] 3.5 Add the four retired IDs to `openspec/trace/retired-ids.json`.
-- [ ] 3.6 Remove the four empty links of these IDs from `openspec/trace/links.json`.
+- [x] 3.4 Write the Purpose of `live-sources` from `design.md`.
+- [x] 3.5 Add the four retired IDs to `openspec/trace/retired-ids.json`.
+- [x] 3.6 Remove the four empty links of these IDs from `openspec/trace/links.json`.
 - [ ] 3.7 Run the two review agents.
 - [ ] 3.8 Write review.md.
 - [ ] 3.9 Run `make gates CHANGE=upstream-sync-8` with the image of decision D9 on the final tree.
