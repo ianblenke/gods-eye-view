@@ -7223,7 +7223,7 @@
       "functions": 0,
       "totals": {
         "lines": 231,
-        "branches": 53,
+        "branches": 55,
         "functions": 15
       },
       "sha": "6733cc7b4ca006d3cfef78ff4b69f061a82451811a2d5a11e82b8342c8c747a3",
@@ -9290,10 +9290,10 @@
       "loaded": true,
       "lines": 0,
       "branches": 3,
-      "functions": 5,
+      "functions": 4,
       "totals": {
         "lines": 129,
-        "branches": 75,
+        "branches": 77,
         "functions": 13
       },
       "sha": "e486290915f80a6429419a3189ebbfff02f3d12b9e3406358060c04afa11c48d",

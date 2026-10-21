@@ -3089,26 +3089,6 @@
     "since": "2026-09-27",
     "change": "backfill-live-sources"
   },
-  "live-sources-002": {
-    "hash": "dbe5644ea5a7a4f9ffdf3ed87dc57ab4a7dd3c20da9f1e31cfd70ca4a24ea7a6",
-    "since": "2026-10-09",
-    "change": "fix-ontario-511-key"
-  },
-  "live-sources-003": {
-    "hash": "d4e6f7099889268b72e23e85d4da945ca5c6abd57472b30573138f6a997fcbb0",
-    "since": "2026-10-09",
-    "change": "fix-ontario-511-key"
-  },
-  "live-sources-004": {
-    "hash": "793944e9bf5a5fd8e8592a2ac6fd11b1eaa8009d87e436b32e5ce14014ffc1a6",
-    "since": "2026-10-09",
-    "change": "fix-ontario-511-key"
-  },
-  "live-sources-005": {
-    "hash": "d7f4785a12d2e709240633e99213d7d160788d96264734adbbbf33827134d8a8",
-    "since": "2026-10-09",
-    "change": "fix-ontario-511-key"
-  },
   "live-sources-006": {
     "hash": "5805e6a808058599980bef09f274e22a554bf7118e4bcd80a7bdaebe0b875b3a",
     "since": "2026-10-09",
@@ -4903,6 +4883,116 @@
     "hash": "3d19cb62e6cdafdcb24a8245ea86a73ba9795e74a003c420c98728c0727d4014",
     "since": "2026-10-13",
     "change": "reticulum-provider"
+  },
+  "skywatch-source-001": {
+    "hash": "1c23ac49e69953b4b91ba4abc60b996cdc92034e49f405d3ef81150746eb496f",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-002": {
+    "hash": "527dd05b99c5b7d0b880bfe0b04692628428674e4dfcf25fab846c0876b4695f",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-003": {
+    "hash": "f535dfeb2791bc23ffd617e04fe60df2fc1d596cb9be5325931506e48506b614",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-004": {
+    "hash": "c73d353b1b1deb3e2c017316739d54280ab3f5608aca6c1e31a05e3872b6e712",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-005": {
+    "hash": "494948cdf4014e7e075bb27baa225441b2a839fc023fb6f9fd829a0acba1e20f",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-006": {
+    "hash": "9f107d6a373e3ad50f371e676c74a703f73c917f599fb77133ba6e48145ca950",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-007": {
+    "hash": "f62570a920c64ac21ef4c524ae1b5a18cb1806c0798403807a5f34b02a3013e6",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-008": {
+    "hash": "b335fd3fe69abbd1ca4a7637293b8e69fc81a6b9f6c55fc6f47ef5b8307b2c6e",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-009": {
+    "hash": "1505ba96046a0293ce2b4a1bdb6bd89d49b08516d33baab54f7755c7bcd000da",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-010": {
+    "hash": "3404b60c3dd25ec4dc07ce4d22f6555999f7c3637f257b0ce356023a081d88b5",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-011": {
+    "hash": "efeffdc061d40912cc135155cf821534f67ba6b4b640ef9c6a5ce7a298eb2536",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-012": {
+    "hash": "a4f5e32976bbe6ac595703785cdaf67078112df16ca7a06becc662ce789b7999",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-013": {
+    "hash": "b2fd95bf83a79148f64208acdff429ee5e66c2d1f87dca2938b26e5c6e3e842e",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-014": {
+    "hash": "17206c9d83c409606a2cd3041fab895a960ae8be7ce5ea1108c60992b3829dcb",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-015": {
+    "hash": "5353e4944b595f0861d439d8ef4e3d40fb76c013b76c2665d7d48c2443c8bf10",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-016": {
+    "hash": "2292d19d7f8228f921f8935ca803f4ca54ccfa42bd67fd01c7d5f244dbefe4ba",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-017": {
+    "hash": "ae493d2effe21dbf0bbb5470c85329f29ab93a1ea34743ae5d35a3045da0e893",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-018": {
+    "hash": "84cc9d0ee3f7a36a074441e5663634b249fe982bbf116f3df84aa7dfc512ec3f",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-019": {
+    "hash": "e052e12e717156d28a507fafed6835e9ceea101047be1ea99a960c494973ddb2",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-020": {
+    "hash": "18e639d4a3b7fe51cb2091fe38be7c3f36fcb2d09a09b305f481086989fd1aa4",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-021": {
+    "hash": "48eea3753371894d552d0276e1ecc0c56a6c4eed7633d59ac5725de21df1e693",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
+  },
+  "skywatch-source-022": {
+    "hash": "f1bfc5e82862364f46267736f9044b15e2b04475e2b2edfc18d019986d1c1c90",
+    "since": "2026-10-21",
+    "change": "skywatch-source"
   },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",

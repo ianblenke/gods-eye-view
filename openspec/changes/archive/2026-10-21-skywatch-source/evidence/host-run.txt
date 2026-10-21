@@ -1,0 +1,23 @@
+Host test run of skywatch-source on commit bbe14837 (code and test files; the working tree had changes only under openspec/changes/skywatch-source). Host node: v26.8.2.
+Command for each file: timeout 600 nice -n 19 node --test <file>, six files at a time (xargs -P 6). One line for each file: the exit status and the counts of the node test runner.
+Start (UTC) 13:38:06Z, end (UTC) 13:45:51Z. Files: 818 (every file that git lists with a name that ends with .test.mjs, except src/tooling/spec/gates.test.mjs).
+
+Totals:
+tests 12113 pass 12097 fail 0 skipped 16
+Lines with an exit status other than 0: 0
+
+The four test files of this change:
+src/data/skywatchInput.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 12 ℹ skipped 0 ℹ tests 12 
+src/data/skywatchProxy.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 29 ℹ skipped 0 ℹ tests 29 
+src/data/skywatchScenes.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 11 ℹ skipped 0 ℹ tests 11 
+src/data/skywatchUpstream.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 16 ℹ skipped 0 ℹ tests 16 
+
+Round 1 addition: host run 2, on commit 82137c9b (after the round 1 corrections of the code and the tests). Same command and file list rule as above. Start (UTC) 15:37:11Z, end (UTC) 15:45:25Z. Files: 818.
+Totals:
+tests 12116 pass 12100 fail 0 skipped 16
+Lines with an exit status other than 0: 0
+The four test files of this change:
+src/data/skywatchInput.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 12 ℹ skipped 0 ℹ tests 12 
+src/data/skywatchProxy.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 31 ℹ skipped 0 ℹ tests 31 
+src/data/skywatchScenes.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 11 ℹ skipped 0 ℹ tests 11 
+src/data/skywatchUpstream.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 17 ℹ skipped 0 ℹ tests 17 

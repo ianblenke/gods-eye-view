@@ -157,6 +157,16 @@ The layer "Bee Maps Bursts" in the group Cameras uses the burst routes. The chip
 
 After an unknown answer, the layer warns that a burst can exist and disables the chip "Quote burst here" until "Check my bursts" gets a fresh list answer. The chip "Check my bursts" asks for the bursts of the account and draws their boxes. A burst has a hit when the list says so. This version cannot draw an area, cancel a burst or fetch the frames of a burst.
 
+### SkyWatch archive scenes (key in `.env`)
+
+SkyWatch EarthCache gives one API for the satellite images of many operators. The route `/api/skywatch/scenes` searches its archive for the scenes of one box of at most 2500 km² and a window of at most 92 days. It answers only the machine that runs the server.
+
+The route sends only the archive search and its result requests to one fixed address, and it keeps the key `SKYWATCH_API_KEY` in the server. It gives the id, the footprint, the times, the resolution, the operator and the product of each scene. It also gives the cloud cover, the coverage, the area, the price for each km², the cost and a thumbnail flag, and no image URL.
+
+The daily limit is 20 searches. `SKYWATCH_DAILY_SEARCHES` changes it, and the server keeps the count only in RAM. An answer stays in the store for 10 minutes. The route writes one line to the log of the server for each search, with no key and no URL.
+
+The public API description names no cost for a search. An order costs money, and this version has no route that orders a scene, asks for a price or asks for a new image. SkyWatch publishes no terms for the display of footprints or thumbnails, so use the data for yourself only. No layer shows the scenes yet, and no test sends a request to SkyWatch.
+
 ### Notes on the live sources
 
 - **Air quality (ECCC AQHI).** Keyless. Read from the MSC GeoMet OGC API (`api.weather.gc.ca`): the `aqhi-stations` catalog plus `aqhi-observations-realtime`. **Coverage is Canada only** — ECCC is the single registered provider, and the layer row and readout card both say so. Roughly 134 stations across ECCC's five administrative zones (Atlantic, Quebec, Ontario, Prairies & North, Pacific & Yukon). AQHI publishes hourly, so readings poll every 20 minutes and the station catalog, which changes a few times a year, is refetched only every 12 hours. Observations are requested with `latest=true`; without it the collection returns the full history, roughly 2,000 rows nationally. Readings older than six hours are dropped rather than displayed as current.

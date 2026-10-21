@@ -1,0 +1,13 @@
+Public API description of SkyWatch EarthCache, read by the lead for skywatch-source.
+
+Address: https://docs.skywatch.com/openapi-spec.json
+Date of the download (UTC): 2026-10-21
+Size: 269136 bytes
+SHA-256: 51f7c5a8d15db1f7a36293063d60b7f4bd61d41c36841f07b294e9026a223281
+OpenAPI: 3.1.0; title: API Specification; version: 1.7
+Server: https://api.skywatch.co/earthcache
+Security schemes: Api key (apiKey, header x-api-key), BearerAuth (http,  bearer)
+POST /archive/search: Search; responses 200, 400, 500
+GET /archive/search/{id}/search_results: Search Results; responses 200, 202, 400, 500
+
+The tests use fixtures with the field names of the two paths above. No test sends a request to SkyWatch. The file itself is outside the repository: /home/ianblenke/docker/gev-tools/skywatch-source/download/openapi-spec.json.

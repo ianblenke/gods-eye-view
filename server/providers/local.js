@@ -34,6 +34,7 @@ import { reticulumProxy } from './reticulum.js';
 import { gdacsProxy } from './gdacs.js';
 import { beemapsProxy } from './beemaps.js';
 import { beemapsBurstProxy } from './beemaps-burst.js';
+import { skywatchProxy } from './skywatch.js';
 import { windProxy } from './wind.js';
 
 /**
@@ -62,6 +63,7 @@ function localProviderPlugins({ realtime, gemini } = {}) {
     gdacsProxy(),
     beemapsProxy(),
     beemapsBurstProxy(),
+    skywatchProxy(),
     transitProxy(),
     adsbLolProxy(),
     aisLiveProxy(),
