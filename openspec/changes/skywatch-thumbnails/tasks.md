@@ -2,7 +2,7 @@
 
 - [x] 1.1 Write the tests for `skywatch-source-003`, `skywatch-source-004`, `skywatch-source-018` and `skywatch-source-023` in `src/data/skywatchProxy.test.mjs`.
 - [x] 1.2 Keep the tests for `skywatch-source-014`, `skywatch-source-015`, `skywatch-source-016` and `skywatch-source-017`.
-- [x] 1.3 Add the field `thumbnailUrls` to the expected result in `src/data/skywatchScenes.test.mjs`.
+- [x] 1.3 Leave the field `thumbnailUrls` out of the comparison in `src/data/skywatchScenes.test.mjs`.
 - [x] 1.4 Write the tests for `skywatch-thumbnails-001`, `skywatch-thumbnails-002`, `skywatch-thumbnails-003`, `skywatch-thumbnails-004` and `skywatch-thumbnails-005` in `src/data/skywatchThumbnails.test.mjs`.
 - [x] 1.5 Write the tests for `skywatch-thumbnails-006`, `skywatch-thumbnails-012`, `skywatch-thumbnails-013` and `skywatch-thumbnails-014` in the same file.
 - [x] 1.6 Write the tests for `skywatch-thumbnails-008`, `skywatch-thumbnails-010`, `skywatch-thumbnails-011` and `skywatch-thumbnails-015` in the same file.

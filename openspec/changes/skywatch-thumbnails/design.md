@@ -35,7 +35,7 @@ The function `skywatchPlugins(options)` makes the two plugins with the same opti
 
 `normalizeScenes()` also gives the field `thumbnailUrls`. It is a map from the id to a `thumbnail_uri` text. For each id, the text comes from the first scene in `scenes` that has that id and has `thumbnail` true. The answer store of the scenes route keeps that map with each answer, and no answer gives the map to the browser.
 
-One test of `skywatch-source-021` in `src/data/skywatchScenes.test.mjs` compares the whole result of `normalizeScenes()`, so that test gets the new field.
+One test of `skywatch-source-021` in `src/data/skywatchScenes.test.mjs` compares the whole result of `normalizeScenes()`. That test leaves the field `thumbnailUrls` out of the comparison, and the tests of `skywatch-thumbnails-006` check the map.
 `thumbnailUrlOf(id)` reads the kept answers from the newest to the oldest. It uses the same age rule as the store step of `skywatch-source-015`. So the thumbnail route knows only the scenes that the browser can know.
 
 ### D4: The URL check

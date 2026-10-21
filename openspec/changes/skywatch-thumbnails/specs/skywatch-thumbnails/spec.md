@@ -15,6 +15,8 @@ Origin: spec-first
 - **AND** `configureServer` and `configurePreviewServer` install the same route
 - **AND** the list that `localProviderPlugins` returns holds this plugin once
 - **AND** in that list, this plugin is directly after the plugin "skywatch-proxy"
+- **AND** the thumbnail plugin of that list reads `process.env`
+- **AND** it finds a scene of a kept answer of the plugin "skywatch-proxy" of the same list
 
 ### Requirement: Same-site GET requests
 The thumbnail route MUST accept only a GET request that passes `admitSameSiteRequest()`.
@@ -77,7 +79,7 @@ Origin: spec-first
 - **AND** a thumbnail plugin that the test makes with no option `thumbnailUrlOf` answers `404` with `{"error":"unknown_scene"}` for each id
 
 ### Requirement: Checked thumbnail URL
-The thumbnail route MUST send a request only to a parsed URL with the scheme `https:` and no user name, password or port. It MUST send no request to an IP address or a loopback name.
+The thumbnail route MUST send a request only to a parsed URL with the scheme `https:` and no user name, password or port. It MUST send no request to a URL with a host name that is an IP address, `localhost` or a name that ends with `.localhost`.
 Origin: spec-first
 
 #### Scenario: Check the URL before the request `skywatch-thumbnails-007`
@@ -87,11 +89,13 @@ Origin: spec-first
 - **AND** the parsed URL must also have an empty user name and an empty password
 - **AND** the host name of the parsed URL, with one dot at its end removed, must not be an IPv4 address or an IPv6 address
 - **AND** that host name must also not be `localhost` or a name that ends with `.localhost`
-- **AND** for a text that is not an absolute URL and for each other URL, the answer is `502` with `{"error":"bad_upstream"}`
+- **AND** for a text that is not an absolute URL, the answer is `502` with `{"error":"bad_upstream"}`
+- **AND** for each URL that fails one of these checks, the answer is also `502` with `{"error":"bad_upstream"}`
 - **AND** for each refused text, the thumbnail plugin sends no upstream request
 - **AND** the refused samples include `not a url`, `http://cdn.example.test/t.png` and `https://user@cdn.example.test/t.png`
 - **AND** the refused samples also include `https://:pw@cdn.example.test/t.png`, a URL with a password and no user name
 - **AND** the refused samples also include `https://cdn.example.test:8443/t.png`, `https://127.0.0.1/t.png`, `https://[::1]/t.png` and `https://2130706433/t.png`
+- **AND** the refused samples also include `https://[2001:db8::1]/t.png`
 - **AND** the refused samples also include `https://localhost/t.png`, `https://localhost./t.png` and `https://a.localhost/t.png`
 - **AND** the thumbnail plugin accepts `https://cdn.example.test:443/t.png`, because the URL parser removes the port 443
 
@@ -103,9 +107,11 @@ Origin: spec-first
 - **WHEN** the URL passes the checks, and the image store step does not answer
 - **THEN** the thumbnail plugin sends one GET request to the `href` text of the parsed URL, with the option `redirect: 'error'`
 - **AND** the request has the header `Accept: image/png, image/jpeg, image/webp`
-- **AND** the request has the header `x-api-key` with the trimmed key only when the host name is `api.skywatch.co` and the trimmed key is not empty
+- **AND** the request has the header `x-api-key` with the trimmed key when the host name is `api.skywatch.co` and the trimmed key is not empty
+- **AND** in each other case, the request has no header `x-api-key`
 - **AND** the samples include a key with spaces at its start and at its end, and a key of only spaces
 - **AND** the requests to `https://xapi.skywatch.co/t.png` and to `https://api.skywatch.co.example.test/t.png` have no header `x-api-key`
+- **AND** a request to `https://API.SKYWATCH.CO/t.png` has the key, because the URL parser changes the host name to lower case
 - **AND** the request has no other header
 - **AND** the time limit of 15000 ms covers the headers and the body
 - **AND** the thumbnail plugin clears the timer after it reads the body, and immediately when it reads no body
@@ -123,7 +129,7 @@ Origin: spec-first
 - **AND** the first bytes must be the hexadecimal bytes 89 50 4E 47 0D 0A 1A 0A for `image/png`, and FF D8 FF for `image/jpeg`
 - **AND** for `image/webp`, the first 4 bytes must be the ASCII text "RIFF"
 - **AND** for `image/webp`, the 9th to the 12th byte must be the ASCII text "WEBP"
-- **AND** each answer 200 that does not meet these rules is the failure `bad_upstream`
+- **AND** each upstream answer 200 that does not meet these rules is the failure `bad_upstream`
 - **AND** when the thumbnail plugin cannot read all of the body for a reason other than the limit of 1048576 bytes, the failure is `upstream_failed`
 - **AND** the end of the time limit is a sample of such a reason
 - **AND** the samples of `bad_upstream` include the media types `image/svg+xml` and `text/html`, and an answer with no header `Content-Type`
@@ -133,6 +139,7 @@ Origin: spec-first
 - **AND** a WebP body with "WEBP" in the 9th to the 12th byte passes
 - **AND** a body of 1048576 bytes passes
 - **AND** the header text `Image/PNG; charset=x` gives the media type `image/png`, and the header text `image/png ;x` also gives `image/png`
+- **AND** the header text `IMAGE/JPEG` gives the media type `image/jpeg`
 
 ### Requirement: Thumbnail failures
 The thumbnail route MUST name each failure of the upstream request. A failure answer MUST NOT hold the URL, the host name or the key text.
@@ -140,7 +147,8 @@ Origin: spec-first
 
 #### Scenario: Name the failure `skywatch-thumbnails-010`
 - **WHEN** the upstream request fails
-- **THEN** an answer with a status that is not `200` gives `502` with `{"error":"upstream_failed"}`
+- **THEN** an upstream answer with a status that is not `200` gives `502` with `{"error":"upstream_failed"}`
+- **AND** the samples of such a status include `201`, `204`, `302`, `404` and `500`
 - **AND** a fetch that throws an error gives `502` with `{"error":"upstream_failed"}`
 - **AND** the samples of such an error include a redirect and the end of the time limit
 - **AND** a failure of `skywatch-thumbnails-009` gives `502` with the error of that failure
@@ -161,11 +169,11 @@ Origin: spec-first
 - **AND** each such answer has the header `Content-Type: application/json; charset=utf-8`
 
 ### Requirement: Image store
-The thumbnail route MUST keep each good image for 600000 ms, and it MUST share an upstream request that is in flight.
+The thumbnail route MUST keep at most 32 good images, each for less than 600000 ms. It MUST share an upstream request that is in flight.
 Origin: spec-first
 
 #### Scenario: Answer from the image store `skywatch-thumbnails-012`
-- **WHEN** a thumbnail request has the same URL as a good image that the image store keeps
+- **WHEN** the thumbnail URL of a thumbnail request is the URL of a good image that the image store keeps
 - **THEN** the thumbnail plugin sends the same bytes with the headers of `skywatch-thumbnails-011`, and it sends no upstream request
 - **AND** the image store finds an image by the `href` text of the URL
 - **AND** two ids with the URLs `https://cdn.example.test:443/t.png` and `https://cdn.example.test/t.png` share one image, from one upstream request
@@ -177,6 +185,7 @@ Origin: spec-first
 - **WHEN** a thumbnail request arrives while an upstream request for the same URL has not ended
 - **THEN** the request waits for that upstream request, and the thumbnail plugin sends no other request
 - **AND** the request gets the image of that upstream request, or the failure of that upstream request
+- **AND** the thumbnail plugin writes one log line for the shared upstream request
 
 ### Requirement: Thumbnail steps
 The thumbnail route MUST run its steps in one fixed order.
@@ -190,7 +199,7 @@ Origin: spec-first
 - **AND** the thumbnail plugin sends an upstream request only when all eight steps pass
 
 ### Requirement: Thumbnail log
-The plugin MUST write one log line for each upstream request that it sends. A line MUST NOT hold the key text, a scene id, a URL or a host name.
+The thumbnail plugin MUST write one log line for each upstream request that it sends. A line MUST NOT hold the key text, a scene id, a URL or a host name.
 Origin: spec-first
 
 #### Scenario: Log each upstream request `skywatch-thumbnails-015`
@@ -199,4 +208,5 @@ Origin: spec-first
 - **THEN** a good image of 4 bytes gives the line "[skywatch] thumbnail ok bytes=4 ms=25"
 - **AND** a failure gives the line "[skywatch] thumbnail failed kind=<kind> ms=25", where the kind is the error of `skywatch-thumbnails-010`
 - **AND** a request that the image store answers, or that a step before the upstream request answers, writes no line
+- **AND** the samples of such a step include the answers `thumbnails_off` and `rate_limited`
 - **AND** no line holds the key text, the scene id, the URL or its host name
