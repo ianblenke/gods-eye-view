@@ -6276,7 +6276,8 @@
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-004] sends one search for two presses and shows Searching… while it runs"
   ],
   "skywatch-scenes-layer-005": [
-    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-005] sends no search after an error until the next press"
+    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-005] sends no search after an error until the next press",
+    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-005] sends no search when the mocked timers move 10 minutes after an error"
   ],
   "skywatch-scenes-layer-006": [
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-006] disables the chip and shows the text for no key when the status has no key",
@@ -6290,7 +6291,7 @@
     "src/layers/skywatchScenes/messages.test.mjs › [skywatch-scenes-layer-007 skywatch-scenes-layer-030] gives the fixed texts of the status and the thumbnail"
   ],
   "skywatch-scenes-layer-008": [
-    "src/layers/skywatchScenes/box.test.mjs › [skywatch-scenes-layer-008] builds the box from the rows of the spec",
+    "src/layers/skywatchScenes/box.test.mjs › [skywatch-scenes-layer-008] builds the box from the samples of the spec",
     "src/layers/skywatchScenes/box.test.mjs › [skywatch-scenes-layer-008] keeps the same box height at every latitude and takes the width from the latitude of the centre",
     "src/layers/skywatchScenes/box.test.mjs › [skywatch-scenes-layer-008] rounds a centre to the nearest multiple of 0.01 and a tie to the higher one",
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-008] picks the middle of the canvas on the ellipsoid of the globe and sends its box"
@@ -6308,7 +6309,7 @@
     "src/layers/skywatchScenes/box.test.mjs › [skywatch-scenes-layer-010] builds a box that the server accepts at 33 latitudes and 35 longitudes"
   ],
   "skywatch-scenes-layer-011": [
-    "src/layers/skywatchScenes/box.test.mjs › [skywatch-scenes-layer-011] gives the last 92 days as the window, from the rows of the spec",
+    "src/layers/skywatchScenes/box.test.mjs › [skywatch-scenes-layer-011] gives the last 92 days as the window, from the samples of the spec",
     "src/layers/skywatchScenes/box.test.mjs › [skywatch-scenes-layer-011] gives the same window when the time zone of the machine is America/New_York",
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-011] sends the window of the time of the clock at the press",
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-011] uses Date.now as the clock when no option now is given"
@@ -6331,7 +6332,8 @@
     "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-014] gives the status, the error and the whole numbers of an error body",
     "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-014] gives unreachable when the 60 seconds end while it reads the body",
     "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-014] reads a body of 8388608 bytes and gives bad_answer for one byte more",
-    "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-014] rejects with the abort error when the signal of the caller is aborted",
+    "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-014] reads at most 8388608 bytes of the body of an answer that is not 2xx",
+    "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-014] rejects with the AbortError when the signal of the call aborts",
     "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-014] removes its listener from the signal of the call when the search ends",
     "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-014] sends one request for each search that fails, also after the timers of the call run"
   ],
@@ -6341,7 +6343,7 @@
     "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-015] gives the status and the error of an answer that is not 2xx",
     "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-015] gives unreachable for a rejection and for a call that does not end in 20 seconds",
     "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-015] reads a body of 1048576 bytes and gives bad_answer for one byte more",
-    "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-015] removes its listener from the signal of the call and rejects when that signal is aborted",
+    "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-015] removes its listener from the signal of the call and rejects when that signal aborts",
     "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-015] sends one GET for the thumbnail with a signal of its own and no other option"
   ],
   "skywatch-scenes-layer-016": [
@@ -6362,12 +6364,12 @@
     "src/layers/skywatchScenes/source.test.mjs › [skywatch-scenes-layer-017] gives bad_answer with the status 200 for an answer without a list of scenes"
   ],
   "skywatch-scenes-layer-018": [
-    "src/layers/skywatchScenes/messages.test.mjs › [skywatch-scenes-layer-018] names each failure of a search with the text of its row",
+    "src/layers/skywatchScenes/messages.test.mjs › [skywatch-scenes-layer-018] names each failure of a search with the text of its sample",
     "src/layers/skywatchScenes/messages.test.mjs › [skywatch-scenes-layer-018] names the daily limit with its count, in the singular for 1",
     "src/layers/skywatchScenes/messages.test.mjs › [skywatch-scenes-layer-018] names the wait of SkyWatch with its seconds, in the singular for 1"
   ],
   "skywatch-scenes-layer-019": [
-    "src/layers/skywatchScenes/messages.test.mjs › [skywatch-scenes-layer-019] names each failure of a thumbnail with the text of its row"
+    "src/layers/skywatchScenes/messages.test.mjs › [skywatch-scenes-layer-019] names each failure of a thumbnail with the text of its sample"
   ],
   "skywatch-scenes-layer-020": [
     "src/layers/skywatchScenes/model.test.mjs › [skywatch-scenes-layer-020] styles a footprint that is not selected and a selected footprint"
@@ -6399,12 +6401,12 @@
   ],
   "skywatch-scenes-layer-026": [
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-026] aborts each request on disable and ignores the answers that arrive afterwards",
-    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-026] aborts the status request of the update before, and not a status request that has ended",
+    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-026] aborts the status request of the update before, and not a status request that ended",
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-026] shows the hint and no list on the next enable, and forgets the status"
   ],
   "skywatch-scenes-layer-027": [
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-027] aborts a search and a status request in flight on destroy",
-    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-027] releases everything on destroy and can be initialized again"
+    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-027] releases everything on destroy and can initialize again"
   ],
   "skywatch-scenes-layer-028": [
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-028] calls the listener for a search, an update, a press with no box, a selection and the end of a thumbnail request"
@@ -6430,7 +6432,7 @@
   "skywatch-scenes-layer-032": [
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] aborts a thumbnail request that runs on scene null and on a new good answer, and closes a late image",
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] aborts the request of the first scene and closes the image that it gives",
-    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] closes an image that arrives after its request was aborted",
+    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] closes an image that arrives after the layer aborts its request",
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] closes the image of the card once on scene null, a new answer, disable and destroy",
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] replaces the card and closes the old image once"
   ],
