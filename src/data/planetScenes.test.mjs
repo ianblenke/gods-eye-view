@@ -27,6 +27,7 @@ const feature = (id, type = 'PSScene', changes = {}) => ({
   properties: {
     acquired: '2026-10-05T15:00:00Z',
     gsd: 3.9,
+    pixel_resolution: 3,
     cloud_percent: 5,
     provider: 'CANARY-provider',
   },
@@ -62,6 +63,7 @@ test('[planet-source-017] gives only the allowed fields of a scene, with the pro
         properties: {
           acquired: '2026-10-04T12:39:51.281Z',
           gsd: 0.63,
+          pixel_resolution: 0.5,
           cloud_percent: 0,
           cloud_cover: 0.9,
           provider: 'skysat',
@@ -284,6 +286,7 @@ test('[planet-source-018] removes a scene with a bad position', () => {
     ['10', 0],
     [0, null],
     'x',
+    5,
     null,
   ];
   for (const position of kept) {
@@ -313,6 +316,10 @@ test('[planet-source-018] removes a scene when a first ring is not valid, or the
     withGeometry('part-not-array', { type: 'MultiPolygon', coordinates: [5] }),
     withGeometry('ring-not-array', { type: 'Polygon', coordinates: ['x'] }),
     withGeometry('coordinates-text', { type: 'Polygon', coordinates: 'x' }),
+    withGeometry('multi-line', {
+      type: 'MultiLineString',
+      coordinates: [RING],
+    }),
     withGeometry('multi-text', { type: 'MultiPolygon', coordinates: 'x' }),
     withGeometry('point', { type: 'Point', coordinates: [-82.5, 27.9] }),
     withGeometry('line', { type: 'LineString', coordinates: RING }),
@@ -352,6 +359,39 @@ test('[planet-source-019] sorts the scenes of the two pages with the newest star
     'SkySatCollect',
     'PSScene',
     'PSScene',
+  ]);
+});
+
+test('[planet-source-019] keeps the upstream order of scenes with an equal start and an equal id, PSScene first', () => {
+  const at = (id, acquired, gsd, type = 'PSScene') =>
+    feature(id, type, { properties: { acquired, gsd } });
+  const result = both(
+    [
+      at('D', '2026-10-03T00:00:00Z', 1),
+      at('c', '2026-10-02T00:00:00Z', 9),
+      at('D', '2026-10-03T00:00:00Z', 2),
+      at('e', '2026-10-04T00:00:00Z', 9),
+      at('D', '2026-10-03T00:00:00Z', 3),
+    ],
+    [
+      at('D', '2026-10-03T00:00:00Z', 4, 'SkySatCollect'),
+      at('A', '2026-10-03T00:00:00Z', 9, 'SkySatCollect'),
+      at('D', '2026-10-03T00:00:00Z', 5, 'SkySatCollect'),
+    ],
+  );
+  assert.deepEqual(idsOf(result), ['e', 'A', 'D', 'D', 'D', 'D', 'D', 'c']);
+  assert.deepEqual(
+    result.scenes
+      .filter((scene) => scene.id === 'D')
+      .map((scene) => scene.resolutionM),
+    [1, 2, 3, 4, 5],
+  );
+  assert.deepEqual(result.types.slice(2, 7), [
+    'PSScene',
+    'PSScene',
+    'PSScene',
+    'SkySatCollect',
+    'SkySatCollect',
   ]);
 });
 

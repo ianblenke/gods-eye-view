@@ -346,7 +346,7 @@ test('[planet-source-016] gives bad_upstream for a body that is not JSON, a body
   }
 });
 
-test('[planet-source-016] reads a body of exactly 4194304 bytes', async () => {
+test('[planet-source-016] reads a body of exactly 4194304 bytes, and refuses a valid page of 4194305 bytes', async () => {
   const text = JSON.stringify({ features: [] });
   const exact = text.slice(0, -1) + ' '.repeat(4194304 - text.length) + '}';
   assert.equal(Buffer.byteLength(exact), 4194304);
@@ -355,6 +355,16 @@ test('[planet-source-016] reads a body of exactly 4194304 bytes', async () => {
   });
   assert.equal(result.ok, true);
   assert.deepEqual(result.pages[0].page, { features: [] });
+  const over = text.slice(0, -1) + ' '.repeat(4194305 - text.length) + '}';
+  assert.equal(Buffer.byteLength(over), 4194305);
+  const refused = await run({
+    respond: () => new Response(over, { status: 200 }),
+  });
+  assert.deepEqual(refused.result, {
+    ok: false,
+    kind: 'bad_upstream',
+    requests: 1,
+  });
 });
 
 test('[planet-source-016] gives upstream_failed when the body cannot be read', async () => {
