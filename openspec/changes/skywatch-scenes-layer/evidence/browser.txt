@@ -1,0 +1,91 @@
+Headless Chrome check of skywatch-scenes-layer (tasks 4.5 and 4.6) on the commit d3fcdd69. The tools are outside the repository: /home/ianblenke/docker/gev-tools/skywatch-scenes-layer/browser/ (prepare.sh, vite.sw.config.mjs, run.mjs).
+The Vite config gives the app only a request counter and the two SkyWatch plugins with a fake upstream. The fake gives one search, three scenes in the box of the search and a PNG of 100 by 100 pixels for each thumbnail URL. No request leaves the machine.
+The browser is Chrome for Testing 156.0.8078.4 of Playwright, and not the Chrome of the system. It runs with its sandbox, with no --no-sandbox, and with a new profile in /tmp/claude-1000/sw-browser/. The first lines of the transcript give the version and the page chrome://sandbox.
+The runs before this record used the system Chrome with a new profile. The owner then asked for a sandboxed browser that is not the system Chrome, so this record and the QA script use Chrome for Testing.
+The transcript of run.mjs follows.
+
+Vite is up on 127.0.0.1:5198
+browser: Chrome/156.0.8078.4 (/home/ianblenke/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome)
+chrome://sandbox: Sandbox Status | Layer 1 Sandbox	Namespace | PID namespaces	Yes | Network namespaces	Yes | Seccomp-BPF sandbox	Yes | Seccomp-BPF sandbox supports TSYNC	Yes | Ptrace Protection with Yama LSM (Broker)	Yes | Ptrace Protection with Yama LSM (Non-broker)	No | You are adequately sandboxed.
+--- step 1: load the share link with l=00 (the layer is enabled by the link)
+row: {"name":"SkyWatch Scenes","enabled":true,"chip":"Search scenes here","disabled":false,"info":"A press searches 92 days of the SkyWatch archive in a 48 km box at the view centre."}
+status 1, scenes 0, thumbnails 0, upstream [], answers [{"kind":"status","method":"GET","status":200,"type":"application/json; charset=utf-8"}]
+PASS 1 the share link l=00 enables the layer SkyWatch Scenes | SkyWatch Scenes
+PASS 1 the chip shows "Search scenes here" and is enabled
+PASS 1 the info line is the hint | A press searches 92 days of the SkyWatch archive in a 48 km box at the view centre.
+PASS 1 the status route was read | status calls 1
+PASS 1 no search reached the server or the fake upstream
+PASS 1 the hash keeps l=00 | #v=2&lat=27.9500&lon=-82.4600&alt=120000&heading=360&pitch=-90&roll=0&style=normal&bloom=0&sharpen=0&bi=100&bv=2&si=49&hud=tactical&hv=0&dm=OFF&dd=50&da=elastic&kf=16&ko=5&cr=0&sc=1&scf=35&map=esri-imagery&l=00&ui=c.c.1_c.p.0_l.c.1_l.p.0_d.c.0_v.c.1_i.c.0_t.c.1_r.c.1_s.c.1_g.c.1_p.c.1_m.c.0
+--- step 2: press the chip once
+status 1, scenes 1, thumbnails 0, upstream ["POST https://api.skywatch.co/earthcache/archive/search","GET https://api.skywatch.co/earthcache/archive/search/fixture-search-1/search_results"], answers [{"kind":"status","method":"GET","status":200,"type":"application/json; charset=utf-8"},{"kind":"scenes","method":"POST","status":200,"type":"application/json; charset=utf-8"}]
+row: {"info":"3 scenes · newest 2026-10-20 · searches today 1 of 20","items":[["scene:fixture-a","2026-10-20Satellogic · 0.5 m · cloud 3%","false"],["scene:fixture-b","2026-10-12PlanetScope · 3 m · cloud 12%","false"],["scene:fixture-c","2026-09-12Sentinel-2 · 10 m · cloud 0% · no thumbnail","false"]]}
+entities: {"show":true,"ids":["skywatch-scenes:fixture-a","skywatch-scenes:fixture-b","skywatch-scenes:fixture-c"],"polygons":[]}
+PASS 2 one search reached the server, and it answered 200 | [{"kind":"status","method":"GET","status":200,"type":"application/json; charset=utf-8"},{"kind":"scenes","method":"POST","status":200,"type":"application/json; charset=utf-8"}]
+PASS 2 the fake upstream got one search and one result request, with the key | [{"method":"POST","url":"https://api.skywatch.co/earthcache/archive/search","key":"fixture-key-browser-run"},{"method":"GET","url":"https://api.skywatch.co/earthcache/archive/search/fixture-search-1/search_results","key":"fixture-key-browser-run"}]
+PASS 2 the box is the box of the sample (27.95, -82.46) | [-82.704337,27.734163,-82.215663,28.165837]
+PASS 2 the window ends today in UTC and has 92 days | 2026-07-23 to 2026-10-22
+PASS 2 the row shows 3 scenes, the newest day and the searches of the day | 3 scenes · newest 2026-10-20 · searches today 1 of 20
+PASS 2 the list has 3 items, newest first | ["scene:fixture-a","scene:fixture-b","scene:fixture-c"]
+PASS 2 the item texts | ["2026-10-20Satellogic · 0.5 m · cloud 3%","2026-10-12PlanetScope · 3 m · cloud 12%","2026-09-12Sentinel-2 · 10 m · cloud 0% · no thumbnail"]
+PASS 2 the data source shows 3 footprints and no polygon | {"show":true,"ids":["skywatch-scenes:fixture-a","skywatch-scenes:fixture-b","skywatch-scenes:fixture-c"],"polygons":[]}
+--- step 3: select the first scene in the list
+row: {"info":"3 scenes · newest 2026-10-20 · searches today 1 of 20","items":[["scene:fixture-a","true"],["scene:fixture-b","false"],["scene:fixture-c","false"]]}
+entities: {"show":true,"ids":["skywatch-scenes:fixture-a","skywatch-scenes:fixture-b","skywatch-scenes:fixture-c"],"polygons":["skywatch-scenes:fixture-a"]} overlay: {"painted":1,"entries":1}
+PASS 3 one thumbnail request, answered 200 with image/png | [{"kind":"thumbnails","method":"GET","status":200,"type":"image/png"}]
+PASS 3 the fake upstream got the thumbnail URL, with no key | {"method":"GET","url":"https://thumbs.example.test/a.png","key":null}
+PASS 3 the first item is pressed, the others are not
+PASS 3 the selected footprint has a polygon | ["skywatch-scenes:fixture-a"]
+PASS 3 the info line has no message of the thumbnail | 3 scenes · newest 2026-10-20 · searches today 1 of 20
+PASS 3 the overlay host has one entry of the layer and paints it | {"painted":1,"entries":1}
+--- step 4: press the selected item again (no selection)
+PASS 4 no item is pressed | ["false","false","false"]
+PASS 4 the card is gone | {"painted":0,"entries":0}
+PASS 4 no new thumbnail request
+--- step 5: the thumbnail route is off, then select the second scene
+PASS 5 the route answers 404 | [{"kind":"thumbnails","method":"GET","status":200,"type":"image/png"},{"kind":"thumbnails","method":"GET","status":404,"type":"application/json; charset=utf-8"}]
+PASS 5 the info line ends with the text for thumbnails that are off | 3 scenes · newest 2026-10-20 · searches today 1 of 20 · Thumbnails are off. Set SKYWATCH_THUMBNAILS=true in .env and restart the app.
+PASS 5 no card
+--- step 6: the third scene has no thumbnail
+PASS 6 the info line ends with the text for no thumbnail, and no request | 3 scenes · newest 2026-10-20 · searches today 1 of 20 · SkyWatch has no thumbnail for this scene.
+--- step 7: a new page load of the share link (the authored URL)
+authored URL hash: #v=2&lat=27.9500&lon=-82.4600&alt=120000&heading=360&pitch=-90&roll=0&style=normal&bloom=0&sharpen=0&bi=100&bv=2&si=49&hud=tactical&hv=0&dm=OFF&dd=50&da=elastic&kf=16&ko=5&cr=0&sc=1&scf=35&map=esri-imagery&l=00&ui=c.c.1_c.p.0_l.c.1_l.p.0_d.c.0_v.c.1_i.c.0_t.c.1_r.c.1_s.c.1_g.c.1_p.c.1_m.c.0
+PASS 7 the authored hash has l=00 | #v=2&lat=27.9500&lon=-82.4600&alt=120000&heading=360&pitch=-90&roll=0&style=normal&bloom=0&sharpen=0&bi=100&bv=2&si=49&hud=tactical&hv=0&dm=OFF&dd=50&da=elastic&kf=16&ko=5&cr=0&sc=1&scf=35&map=esri-imagery&l=00&ui=c.c.1_c.p.0_l.c.1_l.p.0_d.c.0_v.c.1_i.c.0_t.c.1_r.c.1_s.c.1_g.c.1_p.c.1_m.c.0
+PASS 7 the new page load enables the layer again
+PASS 7 the new page load shows the hint and no list | A press searches 92 days of the SkyWatch archive in a 48 km box at the view centre.
+PASS 7 the hash still has l=00
+--- step 8: switch the layer off with its toggle
+PASS 8 the hash has no token 00 when the layer is off | #v=2&lat=27.9500&lon=-82.4600&alt=120000&heading=360&pitch=-90&roll=0&style=normal&bloom=0&sharpen=0&bi=100&bv=2&si=49&hud=tactical&hv=0&dm=OFF&dd=50&da=elastic&kf=16&ko=5&cr=0&sc=1&scf=35&map=esri-imagery&l=&ui=c.c.1_c.p.0_l.c.1_l.p.0_d.c.0_v.c.1_i.c.0_t.c.1_r.c.1_s.c.1_g.c.1_p.c.1_m.c.0
+PASS 8 no console error about the layer
+last console lines: warning: [Init] Google 3D Tiles unavailable, using the keyless globe: Error: Google 3D tokens are not offered
+    at createGoogleTokenTileset (http://127.0.0.1:5198/src/maps/google3d.js:83:21)
+    at async loadPhotorealisticTileset (http://127.0.0.1:5198/src/maps/google3d.js:55:23)
+    at async crea || log: [Detection] Initialized || log: [TrackedReadout] Initialized || log: [Detection] Mode: DENSE || log: [Detection] Mode: OFF
+RESULT: all checks passed
+BROWSER_EXIT=0
+
+The QA script scripts/qa-layer-token-twochar.mjs of the same commit, against a Vite dev server with the same config (gev-tools/skywatch-scenes-layer/qa-twochar.sh). The script gives --no-sandbox to puppeteer. The wrapper gev-tools/skywatch-scenes-layer/browser/sandboxed-chrome.sh removes that flag and starts the same Chrome for Testing.
+The script did not complete on this machine. Its time limit for a page load is 60000 ms. It keeps each page open, and each page draws the globe in software, so each later page loads more slowly.
+Three runs of the script stopped at that limit: run 3 after 2 PASS lines (with the system Chrome), run 4 after 5 and run 5 after 3. Run 4 is the record. The checks of the script for a legacy token, mixed tokens, a layer list that is not valid and a repeated field did not run in a browser.
+The output of run 4 follows.
+
+PASS: isolated fixture exhausts prior digits before allocating 01
+PASS: real user-origin enable encoded 01 in a full share URL
+PASS: cold recipient reload restored the 01 layer without writing local preferences
+PASS: a full recipient reload restores the same 01 layer state
+PASS: explicit OFF removes 01 from the authored share URL
+file:///home/ianblenke/docker/gev-work/node_modules/puppeteer-core/lib/puppeteer/util/Deferred.js:57
+            this.#timeoutError = new TimeoutError(opts.message);
+                                 ^
+
+TimeoutError: Navigation timeout of 60000 ms exceeded
+    at new Deferred (file:///home/ianblenke/docker/gev-work/node_modules/puppeteer-core/lib/puppeteer/util/Deferred.js:57:34)
+    at Deferred.create (file:///home/ianblenke/docker/gev-work/node_modules/puppeteer-core/lib/puppeteer/util/Deferred.js:18:16)
+    at new LifecycleWatcher (file:///home/ianblenke/docker/gev-work/node_modules/puppeteer-core/lib/puppeteer/cdp/LifecycleWatcher.js:70:46)
+    at CdpFrame.goto (file:///home/ianblenke/docker/gev-work/node_modules/puppeteer-core/lib/puppeteer/cdp/Frame.js:152:29)
+    at CdpFrame.<anonymous> (file:///home/ianblenke/docker/gev-work/node_modules/puppeteer-core/lib/puppeteer/util/decorators.js:101:27)
+    at CdpPage.goto (file:///home/ianblenke/docker/gev-work/node_modules/puppeteer-core/lib/puppeteer/api/Page.js:582:43)
+    at load (file:///tmp/claude-1000/sw-browser/app/scripts/qa-layer-token-twochar.mjs:184:14)
+    at file:///tmp/claude-1000/sw-browser/app/scripts/qa-layer-token-twochar.mjs:306:9
+
+Node.js v26.8.2
+QA_EXIT=1
