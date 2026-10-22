@@ -130,8 +130,8 @@ function searchBody(type, [west, south, east, north], start, end) {
 }
 
 /**
- * Run the two searches: `PSScene`, then `SkySatCollect` after a good first
- * page. The first failure ends the run.
+ * Run the two search requests: `PSScene`, then `SkySatCollect` after a valid
+ * first page. The first failure ends the run.
  * @param {object} options
  * @param {typeof fetch} options.fetchImpl
  * @param {string} options.key - Trimmed key.

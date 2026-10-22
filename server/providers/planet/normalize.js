@@ -1,7 +1,7 @@
 /** The fields of the Planet scenes that the route gives. Nothing in this file sends a request. */
 
 export const MAX_SCENES = 50;
-/** The item types of the two searches, in the order of the requests. */
+/** The item types of the two search requests, in their order. */
 export const ITEM_TYPES = ['PSScene', 'SkySatCollect'];
 const PROVIDERS = { PSScene: 'PlanetScope', SkySatCollect: 'SkySat' };
 const MIN_RING = 4;
@@ -67,7 +67,7 @@ function ringOf(ring) {
 const outerRingOf = (polygon) =>
   Array.isArray(polygon) ? ringOf(polygon[0]) : null;
 
-/** The footprint with the outer ring of each polygon, else null. */
+/** The footprint with the first ring of each polygon, else null. */
 function footprintOf(geometry) {
   if (!isObject(geometry)) return null;
   if (geometry.type === 'Polygon') {
