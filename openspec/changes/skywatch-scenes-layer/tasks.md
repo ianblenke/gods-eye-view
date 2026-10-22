@@ -12,6 +12,7 @@
 - [x] 1.10 Keep the scenario `osh-049` in the delta spec for `osh`.
 - [x] 1.11 Keep the scenario `osh-057` in the delta spec for `osh`.
 - [x] 1.12 Correct the plan after the plan review.
+- [x] 1.13 Correct the specs, the tests and the proposal after round 1 of the review.
 
 ## 2. Tests
 
