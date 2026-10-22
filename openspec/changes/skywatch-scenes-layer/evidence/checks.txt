@@ -1,4 +1,4 @@
-Host checks of skywatch-scenes-layer on the commit 7ac632aa. Host node: v26.8.2. Each output shows at most its last three lines. The lead added each line "exit".
+Host checks of skywatch-scenes-layer on the commit 54cb4f6d. Host node: v26.8.2. Each output shows at most its last three lines. The lead added each line "exit".
 
 $ node scripts/format.mjs --check
 Checked 1574 source files.
@@ -20,5 +20,5 @@ exit 0
 $ node scripts/spec/gates.mjs lint
 WARN STE-WORD-OLD openspec/specs/wind/spec.md:72 Use "closes", not "dismisses"
 WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
-STE: 0 errors, 1078 warnings.
+STE: 0 errors, 1079 warnings.
 exit 0

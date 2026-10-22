@@ -1,9 +1,9 @@
-Host test run of skywatch-scenes-layer on the commit 7ac632aa. The working tree had no changes. Host node: v26.8.2.
+Host test run of skywatch-scenes-layer on the commit 54cb4f6d. The working tree had no changes. Host node: v26.8.2.
 Command for each file: timeout 600 nice -n 19 node --test <file>, six files at a time (xargs -P 6). One line for each file gives the exit status and the counts of the node test runner.
-Start (UTC) 2026-10-22T02:24:03Z, end (UTC) 2026-10-22T02:31:37Z. Files: 827. These are the files that git lists with a name that ends with .test.mjs, except src/tooling/spec/gates.test.mjs.
+Start (UTC) 2026-10-22T04:00:57Z, end (UTC) 2026-10-22T04:08:33Z. Files: 827. These are the files that git lists with a name that ends with .test.mjs, except src/tooling/spec/gates.test.mjs.
 
 Totals:
-tests 12287 pass 12271 fail 0 skipped 16
+tests 12286 pass 12270 fail 0 skipped 16
 Lines with an exit status other than 0: 0
 
 The seven test files of the layer and the five edited test files:
@@ -12,7 +12,7 @@ src/app/sourceComposition.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 7 �
 src/data/layerState.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 67 ℹ skipped 0 ℹ tests 67 
 src/data/layerStateTokenLedger.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 8 ℹ skipped 0 ℹ tests 8 
 src/layers/skywatchScenes/box.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 11 ℹ skipped 0 ℹ tests 11 
-src/layers/skywatchScenes/layer.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 48 ℹ skipped 0 ℹ tests 48 
+src/layers/skywatchScenes/layer.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 47 ℹ skipped 0 ℹ tests 47 
 src/layers/skywatchScenes/messages.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 6 ℹ skipped 0 ℹ tests 6 
 src/layers/skywatchScenes/model.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 11 ℹ skipped 0 ℹ tests 11 
 src/layers/skywatchScenes/records.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 12 ℹ skipped 0 ℹ tests 12 

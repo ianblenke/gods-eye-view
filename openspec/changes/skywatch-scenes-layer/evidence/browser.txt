@@ -2,7 +2,7 @@ Headless Chrome check of skywatch-scenes-layer (tasks 4.5 and 4.6) on the commit
 The Vite config gives the app only a request counter and the two SkyWatch plugins with a fake upstream. The fake gives one search, three scenes in the box of the search and a PNG of 100 by 100 pixels for each thumbnail URL. No request leaves the machine.
 The browser is Chrome for Testing 156.0.8078.4 of Playwright, and not the Chrome of the system. It runs with its sandbox, with no --no-sandbox, and with a new profile in /tmp/claude-1000/sw-browser/. The first lines of the transcript give the version and the page chrome://sandbox.
 Browser runs 1 and 3 used the system Chrome with a new profile. The owner then asked for a sandboxed browser that is not the system Chrome. So each later run, this record and each run of the QA script after run 3 use Chrome for Testing.
-The transcript of run.mjs follows.
+After this commit, the change edits no code file. The transcript of run.mjs follows.
 
 Vite is up on 127.0.0.1:5198
 browser: Chrome/156.0.8078.4 (/home/ianblenke/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome)
