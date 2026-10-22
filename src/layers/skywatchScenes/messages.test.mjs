@@ -12,7 +12,7 @@ import {
 const CROSS_ORIGIN =
   'The server refused the request, because the request did not come from the same site.';
 
-test('[skywatch-scenes-layer-018] names each failure of a search with the text of its row', () => {
+test('[skywatch-scenes-layer-018] names each failure of a search with the text of its sample', () => {
   const rows = [
     [{ status: 403, error: 'cross_origin' }, CROSS_ORIGIN],
     [
@@ -97,7 +97,7 @@ test('[skywatch-scenes-layer-018] names the wait of SkyWatch with its seconds, i
     );
 });
 
-test('[skywatch-scenes-layer-019] names each failure of a thumbnail with the text of its row', () => {
+test('[skywatch-scenes-layer-019] names each failure of a thumbnail with the text of its sample', () => {
   const rows = [
     [
       { status: 404, error: 'thumbnails_off' },

@@ -255,6 +255,23 @@ test('[skywatch-scenes-layer-014] reads a body of 8388608 bytes and gives bad_an
   assert.deepEqual(declared, { ok: false, status: 200, error: 'bad_answer' });
 });
 
+test('[skywatch-scenes-layer-014] reads at most 8388608 bytes of the body of an answer that is not 2xx', async () => {
+  const pad = (size) => {
+    const head = '{"error":"budget","pad":"';
+    return head + 'a'.repeat(size - head.length - 2) + '"}';
+  };
+  const exact = pad(8388608);
+  assert.equal(Buffer.byteLength(exact), 8388608);
+  assert.deepEqual(
+    await search(make(() => new Response(exact, { status: 429 }))),
+    { ok: false, status: 429, error: 'budget' },
+  );
+  assert.deepEqual(
+    await search(make(() => new Response(pad(8388609), { status: 429 }))),
+    { ok: false, status: 429, error: 'bad_answer' },
+  );
+});
+
 test('[skywatch-scenes-layer-017] gives bad_answer with the status 200 for an answer without a list of scenes', async () => {
   for (const body of [{}, { scenes: 'x' }, { scenes: null }, [], null, 'x'])
     assert.deepEqual(await search(make(() => json(body))), {
@@ -381,7 +398,7 @@ test('[skywatch-scenes-layer-014] gives unreachable when the 60 seconds end whil
   });
 });
 
-test('[skywatch-scenes-layer-014] rejects with the abort error when the signal of the caller is aborted', async () => {
+test('[skywatch-scenes-layer-014] rejects with the AbortError when the signal of the call aborts', async () => {
   const made = make(stalled);
   const caller = new AbortController();
   const pending = search(made, { signal: caller.signal });
@@ -392,14 +409,16 @@ test('[skywatch-scenes-layer-014] rejects with the abort error when the signal o
   const before = new AbortController();
   before.abort();
   const idle = make(() => json(GOOD));
-  await assert.rejects(search(idle, { signal: before.signal }));
+  await assert.rejects(search(idle, { signal: before.signal }), {
+    name: 'AbortError',
+  });
   assert.equal(idle.calls.length, 0);
   const body = make(stalledBody);
   const second = new AbortController();
   const waiting = search(body, { signal: second.signal });
   await new Promise((resolve) => setTimeout(resolve, 20));
   second.abort();
-  await assert.rejects(waiting);
+  await assert.rejects(waiting, { name: 'AbortError' });
 });
 
 test('[skywatch-scenes-layer-013] uses the fetch function of the page when none is given', async (t) => {
@@ -549,7 +568,7 @@ test('[skywatch-scenes-layer-015] gives unreachable for a rejection and for a ca
   }
 });
 
-test('[skywatch-scenes-layer-015] removes its listener from the signal of the call and rejects when that signal is aborted', async () => {
+test('[skywatch-scenes-layer-015] removes its listener from the signal of the call and rejects when that signal aborts', async () => {
   for (const respond of [
     () => image(PNG, 'image/png'),
     () => json({ error: 'x' }, 500),
@@ -584,7 +603,9 @@ test('[skywatch-scenes-layer-015] removes its listener from the signal of the ca
   const before = new AbortController();
   before.abort();
   const idle = make(() => image(PNG, 'image/png'));
-  await assert.rejects(thumbnail(idle, { signal: before.signal }));
+  await assert.rejects(thumbnail(idle, { signal: before.signal }), {
+    name: 'AbortError',
+  });
   assert.equal(idle.calls.length, 0);
   const body = make(
     () =>
@@ -596,5 +617,5 @@ test('[skywatch-scenes-layer-015] removes its listener from the signal of the ca
   const waiting = thumbnail(body, { signal: second.signal });
   await new Promise((resolve) => setTimeout(resolve, 20));
   second.abort();
-  await assert.rejects(waiting);
+  await assert.rejects(waiting, { name: 'AbortError' });
 });

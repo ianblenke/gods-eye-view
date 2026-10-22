@@ -8,7 +8,7 @@ import {
 
 const at = (lat, lon) => scenesBox({ lat, lon });
 
-test('[skywatch-scenes-layer-008] builds the box from the rows of the spec', () => {
+test('[skywatch-scenes-layer-008] builds the box from the samples of the spec', () => {
   const rows = [
     [60.0, 10.0, 60, 10, [9.568326, 59.784163, 10.431674, 60.215837]],
     [0.0, 0.0, 0, 0, [-0.215837, -0.215837, 0.215837, 0.215837]],
@@ -159,7 +159,7 @@ test('[skywatch-scenes-layer-010] builds a box that the server accepts at 33 lat
   assert.equal(boxes, 33 * 35);
 });
 
-test('[skywatch-scenes-layer-011] gives the last 92 days as the window, from the rows of the spec', () => {
+test('[skywatch-scenes-layer-011] gives the last 92 days as the window, from the samples of the spec', () => {
   const rows = [
     ['2026-10-21T12:00:00.000Z', '2026-07-22', '2026-10-21'],
     ['2026-03-01T00:00:00.000Z', '2025-11-30', '2026-03-01'],

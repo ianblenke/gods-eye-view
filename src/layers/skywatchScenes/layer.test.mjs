@@ -54,6 +54,8 @@ const deferred = () => {
   return { promise, resolve, reject };
 };
 const tick = () => new Promise((resolve) => setImmediate(resolve));
+// The globe of the fake viewer has an ellipsoid of its own, so a default value cannot pass for it.
+const GLOBE_ELLIPSOID = Cesium.Ellipsoid.clone(Cesium.Ellipsoid.WGS84);
 const HINT =
   'A press searches 92 days of the SkyWatch archive in a 48 km box at the view centre.';
 const STATUS_FAILED = 'The server did not give the status of the key.';
@@ -139,7 +141,7 @@ function harness({
     },
     scene: {
       canvas,
-      globe: { ellipsoid: Cesium.Ellipsoid.WGS84 },
+      globe: { ellipsoid: GLOBE_ELLIPSOID },
       preRender: watch('scene.preRender'),
       postRender: watch('scene.postRender'),
     },
@@ -377,6 +379,26 @@ test('[skywatch-scenes-layer-005] sends no search after an error until the next 
   }
 });
 
+test('[skywatch-scenes-layer-005] sends no search when the mocked timers move 10 minutes after an error', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'setInterval'] });
+  const h = harness({
+    scenes: async () => ({
+      ok: false,
+      status: 429,
+      error: 'upstream_rate_limit',
+      retryAfter: 30,
+    }),
+  });
+  await h.searched();
+  assert.equal(h.calls.searchScenes.length, 1);
+  for (let minute = 0; minute < 10; minute += 1) {
+    t.mock.timers.tick(MINUTE);
+    await tick();
+  }
+  assert.equal(h.calls.searchScenes.length, 1);
+  assert.equal(h.chip().disabled, false);
+});
+
 test('[skywatch-scenes-layer-006] disables the chip and shows the text for no key when the status has no key', async () => {
   const state = { configured: false };
   const h = harness({ status: async () => ({ ok: true, ...state }) });
@@ -471,7 +493,9 @@ test('[skywatch-scenes-layer-008] picks the middle of the canvas on the ellipsoi
   const [position, ellipsoid] = h.picks[0];
   assert.equal(position.x, 400);
   assert.equal(position.y, 300);
-  assert.equal(ellipsoid, Cesium.Ellipsoid.WGS84);
+  assert.equal(ellipsoid, GLOBE_ELLIPSOID);
+  assert.notEqual(ellipsoid, Cesium.Ellipsoid.WGS84);
+  assert.notEqual(ellipsoid, Cesium.Ellipsoid.default);
   assert.deepEqual(
     h.calls.searchScenes[0].bbox,
     [9.568326, 59.784163, 10.431674, 60.215837],
@@ -752,7 +776,7 @@ test('[skywatch-scenes-layer-026] shows the hint and no list on the next enable,
   assert.equal(shown.info(), HINT);
 });
 
-test('[skywatch-scenes-layer-026] aborts the status request of the update before, and not a status request that has ended', async () => {
+test('[skywatch-scenes-layer-026] aborts the status request of the update before, and not a status request that ended', async () => {
   const first = deferred();
   const queue = [
     first.promise,
@@ -779,7 +803,7 @@ test('[skywatch-scenes-layer-026] aborts the status request of the update before
   assert.equal(done.aborted, false);
 });
 
-test('[skywatch-scenes-layer-027] releases everything on destroy and can be initialized again', async () => {
+test('[skywatch-scenes-layer-027] releases everything on destroy and can initialize again', async () => {
   const picture = deferred();
   const h = harness({ thumbnail: () => picture.promise });
   await h.searched();
@@ -1177,7 +1201,7 @@ test('[skywatch-scenes-layer-032] aborts the request of the first scene and clos
   assert.equal(h.info(), ANSWER_TEXT);
 });
 
-test('[skywatch-scenes-layer-032] closes an image that arrives after its request was aborted', async () => {
+test('[skywatch-scenes-layer-032] closes an image that arrives after the layer aborts its request', async () => {
   const decoding = deferred();
   const image = fakeImage();
   const h = harness({ decode: () => decoding.promise });

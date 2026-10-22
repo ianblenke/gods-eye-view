@@ -32,7 +32,9 @@ This is change 3 of 3. It adds the layer "SkyWatch Scenes". A press of the chip 
 
 The new files are files that the fork writes. So the change adds their paths to `openspec/ownership.json`, `scripts/format-scope.json` and `scripts/package-boundaries.json`.
 
-The share token is "00". Each token of one character has an owner, and the check of `make precheck` needs the next free token. So there is no choice. The tests of the token ledger use "00" as the next free token. Their fixtures do not include the layer `skywatch-scenes`, so "00" stays free in each fixture and each test title stays true. `design.md` D10 gives the details.
+The share token is "00". Each token of one character has an owner, and the check of `make precheck` needs the next free token. So there is no choice.
+
+The tests of the token ledger use "00" as the next free token. The ledger rows and the registry entries of each fixture do not include the layer `skywatch-scenes`. So "00" stays free in them, and each test title stays true. `design.md` D10 gives the details.
 
 The QA script `scripts/qa-layer-token-twochar.mjs` adds a fixture layer with the token "00" to a browser, and it stops when the production ledger has "00". The change makes the script use the next free token of two characters, so the fixture gets "01". `docs/CURRENT-STATE.md` asks that the first real layer with "00" passes its own check of a share link and a new page load. Task 4.6 does that check in a headless Chrome.
 
@@ -53,5 +55,6 @@ The layer sends requests only to the status route and the scenes route of change
 - Known limit `image-size`: The layer does not limit the pixel size of a decoded thumbnail. The route sends at most 1 MiB, and the card shows the image at a longer side of 192 pixels. The API description of SkyWatch gives 100 by 100 pixels for a thumbnail.
 - Known limit `ui-texts`: The chip label "Searching…" and the text "Loading the thumbnail…" use -ing words. The layer "Bee Maps Frames" has the label "Fetching…".
 - Known limit `osh-count`: The scenario `osh-033` names the count of the registry, so each new layer needs a new delta of the capability `osh`.
+- Known limit `untested-settings`: No scenario and no test name these settings. They are the card fields other than the fields of `skywatch-scenes-layer-030`, copied from the CCTV card, and the options of `setEntries`. They are also the call `setVisible` with false in `init`, and the limit of 1 MiB for the body of the status route. The headless Chrome check shows that the card paints.
 - Known limit `qa-twochar-time`: The QA script `scripts/qa-layer-token-twochar.mjs` stopped at its time limit for a page load on the machine of the lead. Its first checks passed with the token "01". Its checks for a legacy token, mixed tokens, a layer list that is not valid and a repeated field did not run in a browser. `evidence/browser.txt` gives the runs.
 - Known limit `visual`: The lead looks at the layer on one machine in one headless Chrome for Testing. No test draws the footprints or the card.

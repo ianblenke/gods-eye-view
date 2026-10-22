@@ -39,12 +39,13 @@ Origin: spec-first
 
 #### Scenario: Send no search after an error until the next press `skywatch-scenes-layer-005`
 - **WHEN** `searchScenes` rejects, or gives `ok` false with the error "upstream_rate_limit", or gives `ok` false with the error "search_timeout"
-- **THEN** the source has 1 `searchScenes` call after the fake clock moves 10 minutes, after 3 `update` calls and after `disable` and `enable`
+- **THEN** the source has 1 `searchScenes` call after the fake clock and the mocked timers move 10 minutes
+- **AND** it has 1 `searchScenes` call after 3 `update` calls, and after `disable` and `enable`
 - **AND** the chip is enabled again, and the next press sends one search
 - **AND** after a rejection of `searchScenes`, the info text is the text of "unreachable" in `skywatch-scenes-layer-018`
 
 ### Requirement: Status of the key
-The layer MUST read the status route at each call of `update`. It MUST disable the chip when the status route says that the server has no key.
+The layer MUST read the status route at each call of `update` while it is enabled. It MUST disable the chip when the status route says that the server has no key.
 Origin: spec-first
 
 #### Scenario: Read the status `skywatch-scenes-layer-006`
@@ -295,7 +296,7 @@ Origin: spec-first
 - **AND** the ring [[0,0],[2,0],[2,2],[0,2],[0,0]] gives the longitude 1 and the latitude 1
 
 ### Requirement: Layer display
-While it is enabled, the layer MUST show the footprints of the answer to its newest press. It MUST keep them when a later press fails, and it MUST release everything when it is disabled or destroyed.
+While it is enabled, the layer MUST show the footprints of its newest good answer, also after a later press fails. A call of `disable` MUST stop each request and remove the footprints and the card. A call of `destroy` MUST release everything.
 Origin: spec-first
 
 #### Scenario: Show the footprints `skywatch-scenes-layer-024`
@@ -388,7 +389,7 @@ Origin: spec-first
 - **WHEN** a test selects a second scene while the card of the first scene shows, or while its thumbnail request runs
 - **THEN** the layer removes the card of the first scene at once, before the result of the second request
 - **AND** the layer aborts the request of the first scene, and its result changes nothing
-- **AND** the layer calls `close` of an image that it gets after the abort of its request
+- **AND** the layer calls `close` of an image that it gets after the layer aborts its request
 - **AND** the layer calls `close` of the image of the old card once
 - **AND** `setParams({scene:null})`, a new good answer, `disable` and `destroy` each abort a thumbnail request that runs
 - **AND** each of them calls `close` of the image of the card once, and `clearSource` for the source "skywatch-scenes" of the overlay host
