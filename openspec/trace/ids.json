@@ -3310,7 +3310,7 @@
     "change": "osh-fusion"
   },
   "osh-033": {
-    "hash": "4692bf27b568d0e980b0bd7f73ca8314bf14bfa29518d1d38b99bcf68f75df8f",
+    "hash": "6950dcfefc257b36fd1ec047b8adc178573a095c43b9f73df697f9879b73972b",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -4883,6 +4883,191 @@
     "hash": "3d19cb62e6cdafdcb24a8245ea86a73ba9795e74a003c420c98728c0727d4014",
     "since": "2026-10-13",
     "change": "reticulum-provider"
+  },
+  "skywatch-scenes-layer-001": {
+    "hash": "31bf5e6f0b12fa75a63d980a87b55fc9b3b63e439709209ab3aa6121a40b33dd",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-002": {
+    "hash": "54a775ca3d017e137c099bf1de1d4247f3cd793931547a77fbe6482a62971be0",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-003": {
+    "hash": "126f7a6f0a90b5fdf9a14806d08ffb43035b38369cf3414fd32bd6c9fec85f17",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-004": {
+    "hash": "556bfc36dbae1a0a468e4b74f832758239c44e4517acda3dc42f061a1d1260d2",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-005": {
+    "hash": "2a1d8e163f3ec5bd9f04318c44a3881af4f19aee1383bdc447520093588be644",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-006": {
+    "hash": "957e0ac3f6bc0646130cefae086faed2ae4690d272adb63b4da6e897e322efdc",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-007": {
+    "hash": "a255419f4176457edd440daff98176638b5c08a1e97bfcf6a4fa364ec6af01ad",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-008": {
+    "hash": "4295051d0697fc8012c3a4cc9310c455c8d2b8a8fee1732b4056d76804046b47",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-009": {
+    "hash": "50fa4d002047ba19c1db9b01e6743992431d8fa3a063e2decf76a3ba4729012a",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-010": {
+    "hash": "c9af0f59fa5c3de36fa4f41cf5070fb78b2436b6fde53403a0f2276ed391a3b6",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-011": {
+    "hash": "dfd33defe4185b70b6ea40819f957754b5edda184cdc07e612a995818b2ea2af",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-012": {
+    "hash": "c43895b23059139b65156112b9b04863d12f044f74902263df81efdd3da2eeb1",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-013": {
+    "hash": "417d62ac9e805c8c8f36ef3344ff3caa6b4c056739a06ac9ee1b74290085c62b",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-014": {
+    "hash": "01b65b4b6abd8eccc5c2febe0bf17a66c5b9383d97b941339d982f099c96e313",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-015": {
+    "hash": "7275842e75258b6657e655d4090537b9964225dc3e60e762d56a15e919c22cc8",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-016": {
+    "hash": "b8f797f091e10ce5c4054c837d829fadb5a4d82773aac7428464f40e19ecfdb9",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-017": {
+    "hash": "b194850d51822d740b5e72e09bf77c3a7e9f47e52c7fc4decf09ade94402f721",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-018": {
+    "hash": "fe1f6ee27600ac38aafca60df6376eaa1f2aa4a15c5cb86922d7f92d4b4ef3c0",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-019": {
+    "hash": "2a2a3ab46bc8971b6116f924db4e8f027b234b13a5b361262166a7d3ebc5d5ad",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-020": {
+    "hash": "a09b6d855013765a58122b4f4aae4327e559dd0a1824bc79d80849128a735d6f",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-021": {
+    "hash": "e27850dc56ed1aa363f116f13a51334560ab2d0770b8c2e66dff5088cc4a4d74",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-022": {
+    "hash": "6043d515841e79c2c1950cdd5839fbc91e08b8b1a55122fb85b1197c797f77a0",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-023": {
+    "hash": "731b8139d56a78f4a9d58ef451dae6eeab750488f070c290b18f8d6f86b30864",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-024": {
+    "hash": "7abf184c6d1248a1a5af40771837a4daf2f97bc2de272f60b14cd72583a91d82",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-025": {
+    "hash": "50918f0e96846c9f8c2634d80915402e075c8beb17be31f7cf1ec76fc64b01fb",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-026": {
+    "hash": "229f81a3fdb8dfe64322007643b8e2e39b6fc9a1069ae334501728c45e48ad9d",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-027": {
+    "hash": "ed1fa3d90c975eeca086e4655c45ccc9a984683b9fffb781f6eb459fe41013b7",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-028": {
+    "hash": "c6a63d75d50b34b2c3ed56cf3f512aa7236bf619c70431a9e277be7ddc4f249e",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-029": {
+    "hash": "b7302902ac43223121fe96d036dc3241fa13e3ed740373555eaa0fd646e9359d",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-030": {
+    "hash": "279cc178059ba6beeab315755c3fe0b877440be8454ef089266dd525f0f6c493",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-031": {
+    "hash": "62bca28b6e98982a082a84d3de6a30084983e3742c154f1b023c2b6a706a22b4",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-032": {
+    "hash": "b9261d6353cc22a74628fdfc7dac78281170bd2f73851ae3a9232cca78cd8dc9",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-033": {
+    "hash": "13c6bd47440422e157ac9acb019adc5331af59c652daba41e0c20ee901a8437f",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-034": {
+    "hash": "b4cfb289217d5e41461778fec3136eed1721412694581c41bd7f77e2f5626224",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-035": {
+    "hash": "e84da757f0def27125c8305c1d6ae861b5a45e61523ac412052337c82501449d",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-036": {
+    "hash": "7dd2eac0a2ccf7b870e9a31bdee7b3779b7ebd6e9e8d40b11305de340299536f",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
+  },
+  "skywatch-scenes-layer-037": {
+    "hash": "e56c7ef8f8d666008bfdadf8f07cfc5e0e1884ca251b71909ccef1d340e55fa1",
+    "since": "2026-10-22",
+    "change": "skywatch-scenes-layer"
   },
   "skywatch-source-001": {
     "hash": "1c23ac49e69953b4b91ba4abc60b996cdc92034e49f405d3ef81150746eb496f",

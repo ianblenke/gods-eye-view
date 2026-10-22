@@ -31,6 +31,7 @@ import { createApplicationAirQuality } from './layers/airQuality.js';
 import { createApplicationFirePerimeters } from './layers/perimeters.js';
 import { createApplicationGnssIntegrity } from './layers/gnss.js';
 import { createApplicationGdacs } from './layers/gdacs.js';
+import { createApplicationSkywatchScenes } from './layers/skywatchScenes.js';
 import { createApplicationCables } from './layers/submarineCables.js';
 import { createApplicationStreetLevel } from './layers/streetLevel.js';
 import { createApplicationOsh } from './layers/osh.js';
@@ -135,6 +136,9 @@ export function createApplicationCatalog({
           source: sources['gnss-integrity'],
         }),
         createApplicationGdacs({ source: sources.gdacs }),
+        createApplicationSkywatchScenes({
+          source: sources['skywatch-scenes'],
+        }),
         createApplicationAlpr({ surface, source: sources.alpr }),
         createApplicationStreetLevel({
           surface,

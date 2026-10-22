@@ -4707,12 +4707,13 @@ and unreachable upstream (502/504) separately from road geometry.
   historical shapes fail closed.
   Pull-request CI runs this check against `origin/main`.
 - `scripts/qa-layer-token-twochar.mjs` simulates exhaustion of the earlier
-  digit slots and injects a no-network `00` layer only into isolated dev-browser
-  responses. It proves encoding, a cold-recipient reload, restoration, explicit
-  OFF, and legacy-token compatibility. This is synthetic
-  end-to-end evidence, not production allocation: `00` remains unreserved until
-  the first eligible real layer receives it after the free digits through the
-  normal allocation process and passes its own application share/reload check.
+  digit slots and injects a no-network layer with the next free two-character
+  token only into isolated dev-browser responses. The layer `skywatch-scenes`
+  owns `00`, so that fixture token is `01`. The script checks encoding, a
+  cold-recipient reload, restoration, an OFF action of the user, and
+  legacy-token compatibility. This is synthetic end-to-end evidence. The real layer
+  `skywatch-scenes` got `00` through the normal allocation process, and its
+  archive records its own application share and new-page-load check.
 - Stable visible options are limited to aircraft 3D mode, selected civilian and
   military flight IDs, Satellite catalog and selection, CCTV coverage/projection/
   auto-hop, and Radio filter/volume. Playback and tuning, live-data health,

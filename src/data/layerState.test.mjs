@@ -205,7 +205,7 @@ test('[osh-033] registers the OSH systems layer with token 3, and localLayers.js
     LAYER_STATE_REGISTRY.find((entry) => entry.id === 'osh-systems'),
     { id: 'osh-systems', token: '3', disposition: 'enabled-only' },
   );
-  assert.equal(REGISTERED_LAYER_IDS.length, 36);
+  assert.equal(REGISTERED_LAYER_IDS.length, 37);
   assert.deepEqual(REGISTERED_LAYER_IDS, [...REGISTERED_LAYER_IDS].sort());
   const localLayers = (await import('./localLayers.js')).default;
   assert.ok(
@@ -216,8 +216,8 @@ test('[osh-033] registers the OSH systems layer with token 3, and localLayers.js
 
 test('production registry is exact, canonical, and rejects incomplete contracts', async () => {
   assert.equal(validateLayerStateRegistry(), true);
-  assert.equal(REGISTERED_LAYER_IDS.length, 36);
-  assert.equal(new Set(REGISTERED_LAYER_IDS).size, 36);
+  assert.equal(REGISTERED_LAYER_IDS.length, 37);
+  assert.equal(new Set(REGISTERED_LAYER_IDS).size, 37);
   assert.ok(REGISTERED_LAYER_IDS.includes('transit'));
   assert.deepEqual(REGISTERED_LAYER_IDS, [...REGISTERED_LAYER_IDS].sort());
   assert.deepEqual(LEGACY_LAYER_STATE_TOKENS, {
@@ -256,11 +256,13 @@ test('production registry is exact, canonical, and rejects incomplete contracts'
   for (const [id, token] of Object.entries(LEGACY_LAYER_STATE_TOKENS)) {
     assert.equal(LAYER_STATE_TOKEN_RESERVATIONS[id], token);
   }
-  // The layer gdacs took the last free digit "9". The samples below need a
-  // free digit, so they use the ledger without gdacs.
-  assert.equal(nextLayerStateToken(), '00');
+  // The layer gdacs took the last free digit "9", and the layer
+  // skywatch-scenes took the next free token "00". The samples below need a
+  // free digit, so they use the ledger without these two layers.
+  assert.equal(nextLayerStateToken(), '01');
   const beforeGdacs = { ...LAYER_STATE_TOKEN_RESERVATIONS };
   delete beforeGdacs.gdacs;
+  delete beforeGdacs['skywatch-scenes'];
   assert.equal(nextLayerStateToken(beforeGdacs), '9');
   assert.equal(
     nextLayerStateToken({
@@ -517,7 +519,7 @@ test('unknown enabled-layer tokens reject the payload instead of becoming an emp
 });
 
 test('malformed enabled-layer lists reject the entire payload', () => {
-  for (const value of ['.c', 'c.', 'c..e', 'c.c', '00', 'c.00']) {
+  for (const value of ['.c', 'c.', 'c..e', 'c.c', '01', 'c.01']) {
     assert.equal(
       decodeLayerStateParams(new URLSearchParams(`v=2&l=${value}`)),
       null,

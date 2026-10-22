@@ -180,6 +180,12 @@ export const DATA_CREDITS = [
       '<a href="https://www.gdacs.org/" target="_blank" rel="noopener">gdacs.org</a>',
   },
   {
+    key: 'skywatch-scenes',
+    html:
+      'Satellite scenes: SkyWatch EarthCache, through the server of this app with your API key. SkyWatch publishes no terms for the display of footprints or thumbnails, so use the data for yourself only. · ' +
+      '<a href="https://skywatch.com/" target="_blank" rel="noopener">skywatch.com</a>',
+  },
+  {
     key: 'beemaps',
     html:
       'Street-level frames: contributor dashcams, through the Bee Maps API · ' +

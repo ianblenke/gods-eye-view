@@ -43,11 +43,17 @@ const ledgerRows = JSON.parse(
     'utf8',
   ),
 );
-// The layer gdacs took the last free digit "9". The fixtures of these tests
-// need a free digit, so they use the rows and the registry without gdacs.
+// The layer gdacs took the last free digit "9", and the layer skywatch-scenes
+// took the next free token "00". The fixtures of these tests need a free digit
+// and the free token "00", so they use the rows and the registry without these
+// two layers.
 const GDACS_REGISTRY_ENTRY =
   "  Object.freeze({ id: 'gdacs', token: '9', disposition: 'enabled-only' }),\n";
-const reservationRows = ledgerRows.filter(([id]) => id !== 'gdacs');
+const SKYWATCH_REGISTRY_ENTRY =
+  "  Object.freeze({\n    id: 'skywatch-scenes',\n    token: '00',\n    disposition: 'enabled-only',\n  }),\n";
+const reservationRows = ledgerRows.filter(
+  ([id]) => id !== 'gdacs' && id !== 'skywatch-scenes',
+);
 
 test('pre-ledger published ownership is independent of the candidate mapping', () => {
   assert.notStrictEqual(
@@ -111,7 +117,10 @@ function writeCodecFixture(cwd, rows, entries) {
   );
   const fullSource = readFileSync(CODEC_SOURCE_PATH, 'utf8');
   assert.equal(fullSource.split(GDACS_REGISTRY_ENTRY).length, 2);
-  const source = fullSource.replace(GDACS_REGISTRY_ENTRY, '');
+  assert.equal(fullSource.split(SKYWATCH_REGISTRY_ENTRY).length, 2);
+  const source = fullSource
+    .replace(GDACS_REGISTRY_ENTRY, '')
+    .replace(SKYWATCH_REGISTRY_ENTRY, '');
   const registryEnd = ']);\n\nexport const REGISTERED_LAYER_IDS';
   assert.equal(source.split(registryEnd).length, 2);
   const additions = entries
@@ -135,7 +144,7 @@ test('reservation ledger is complete, pinned, and rejects duplicate or malformed
     { ...parseLayerStateTokenReservations(ledgerRows) },
     { ...LAYER_STATE_TOKEN_RESERVATIONS },
   );
-  assert.equal(Object.keys(LAYER_STATE_TOKEN_RESERVATIONS).length, 36);
+  assert.equal(Object.keys(LAYER_STATE_TOKEN_RESERVATIONS).length, 37);
   assert.deepEqual(
     { ...LAYER_STATE_TOKEN_RESERVATIONS },
     {
@@ -148,6 +157,7 @@ test('reservation ledger is complete, pinned, and rejects duplicate or malformed
       'gnss-integrity': '7',
       'air-quality': '8',
       gdacs: '9',
+      'skywatch-scenes': '00',
     },
   );
   assert.throws(
