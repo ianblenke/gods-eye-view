@@ -296,7 +296,7 @@ Origin: spec-first
 - **AND** the ring [[0,0],[2,0],[2,2],[0,2],[0,0]] gives the longitude 1 and the latitude 1
 
 ### Requirement: Layer display
-While it is enabled, the layer MUST show the footprints of the newest good answer that it keeps, also after a later press fails. A call of `disable` MUST abort each request, forget the answer, and remove the footprints and the card. A call of `destroy` MUST release everything.
+While it is enabled, the layer MUST show the footprints of the newest good answer that it keeps, also after a later press fails. A call of `disable` MUST abort each request that runs, forget the answer, and remove the footprints and the card. A call of `destroy` MUST release everything.
 Origin: spec-first
 
 #### Scenario: Show the footprints `skywatch-scenes-layer-024`

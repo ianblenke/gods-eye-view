@@ -347,7 +347,7 @@ test('[skywatch-scenes-layer-004] sends one search for two presses and shows Sea
   assert.equal(h.chip().disabled, false);
 });
 
-test('[skywatch-scenes-layer-005] sends no search after an error until the next press, when the clock and the mocked timers move 10 minutes', async (t) => {
+test('[skywatch-scenes-layer-005] sends no search after an error while the fake clock and the mocked timers move 10 minutes, and sends one search at the next press', async (t) => {
   t.mock.timers.enable({ apis: ['setTimeout', 'setInterval'] });
   const rejects = async () => {
     throw new Error('network');
@@ -373,6 +373,8 @@ test('[skywatch-scenes-layer-005] sends no search after an error until the next 
       await tick();
     }
     assert.equal(h.calls.searchScenes.length, 1);
+    assert.equal(h.chip().disabled, false);
+    assert.equal(h.chip().label, 'Search scenes here');
     for (let index = 0; index < 3; index += 1) await h.layer.update();
     h.layer.disable(h.viewer);
     h.layer.enable(h.viewer);

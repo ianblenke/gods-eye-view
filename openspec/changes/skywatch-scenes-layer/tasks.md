@@ -13,7 +13,8 @@
 - [x] 1.11 Keep the scenario `osh-057` in the delta spec for `osh`.
 - [x] 1.12 Correct the plan after the plan review.
 - [x] 1.13 Correct the specs, the tests, the proposal and `docs/CURRENT-STATE.md` after round 1 of the review.
-- [x] 1.14 Correct the specs, the tests and the proposal after round 2 of the review.
+- [x] 1.14 Correct the specs, the tests, the proposal and `evidence/faults.txt` after round 2 of the review.
+- [x] 1.15 Correct the specs, the tests, the proposal and the evidence after round 3 of the review.
 
 ## 2. Tests
 
