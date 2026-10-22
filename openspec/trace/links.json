@@ -6276,7 +6276,7 @@
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-004] sends one search for two presses and shows Searching… while it runs"
   ],
   "skywatch-scenes-layer-005": [
-    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-005] sends no search after an error until the next press, when the clock and the mocked timers move 10 minutes"
+    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-005] sends no search after an error while the fake clock and the mocked timers move 10 minutes, and sends one search at the next press"
   ],
   "skywatch-scenes-layer-006": [
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-006] disables the chip and shows the text for no key when the status has no key",
