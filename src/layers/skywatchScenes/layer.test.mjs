@@ -347,7 +347,8 @@ test('[skywatch-scenes-layer-004] sends one search for two presses and shows Sea
   assert.equal(h.chip().disabled, false);
 });
 
-test('[skywatch-scenes-layer-005] sends no search after an error until the next press', async () => {
+test('[skywatch-scenes-layer-005] sends no search after an error until the next press, when the clock and the mocked timers move 10 minutes', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'setInterval'] });
   const rejects = async () => {
     throw new Error('network');
   };
@@ -366,7 +367,12 @@ test('[skywatch-scenes-layer-005] sends no search after an error until the next 
     assert.equal(h.calls.searchScenes.length, 1);
     if (scenes === rejects)
       assert.equal(h.info(), 'The server did not answer.');
-    h.clock.t += 10 * MINUTE;
+    for (let minute = 0; minute < 10; minute += 1) {
+      h.clock.t += MINUTE;
+      t.mock.timers.tick(MINUTE);
+      await tick();
+    }
+    assert.equal(h.calls.searchScenes.length, 1);
     for (let index = 0; index < 3; index += 1) await h.layer.update();
     h.layer.disable(h.viewer);
     h.layer.enable(h.viewer);
@@ -377,26 +383,6 @@ test('[skywatch-scenes-layer-005] sends no search after an error until the next 
     await h.chip().onClick();
     assert.equal(h.calls.searchScenes.length, 2);
   }
-});
-
-test('[skywatch-scenes-layer-005] sends no search when the mocked timers move 10 minutes after an error', async (t) => {
-  t.mock.timers.enable({ apis: ['setTimeout', 'setInterval'] });
-  const h = harness({
-    scenes: async () => ({
-      ok: false,
-      status: 429,
-      error: 'upstream_rate_limit',
-      retryAfter: 30,
-    }),
-  });
-  await h.searched();
-  assert.equal(h.calls.searchScenes.length, 1);
-  for (let minute = 0; minute < 10; minute += 1) {
-    t.mock.timers.tick(MINUTE);
-    await tick();
-  }
-  assert.equal(h.calls.searchScenes.length, 1);
-  assert.equal(h.chip().disabled, false);
 });
 
 test('[skywatch-scenes-layer-006] disables the chip and shows the text for no key when the status has no key', async () => {
@@ -1201,7 +1187,7 @@ test('[skywatch-scenes-layer-032] aborts the request of the first scene and clos
   assert.equal(h.info(), ANSWER_TEXT);
 });
 
-test('[skywatch-scenes-layer-032] closes an image that arrives after the layer aborts its request', async () => {
+test('[skywatch-scenes-layer-032] closes an image that arrives after the layer aborts the request of that image', async () => {
   const decoding = deferred();
   const image = fakeImage();
   const h = harness({ decode: () => decoding.promise });
