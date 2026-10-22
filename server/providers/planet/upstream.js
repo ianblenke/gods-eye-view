@@ -11,9 +11,6 @@ const DAY_MS = 86_400_000;
 const DEFAULT_RETRY_AFTER_S = 60;
 const MAX_RETRY_AFTER_S = 600;
 
-const isObject = (value) =>
-  value !== null && typeof value === 'object' && !Array.isArray(value);
-
 /** Seconds from a Retry-After header: digits only, 1 to 600, else 60. */
 function retryAfterOf(value) {
   if (!/^\d+$/.test(value ?? '') || Number(value) < 1) {
@@ -170,7 +167,7 @@ export async function runSearches({
       clearTimer,
     });
     if (!answer.ok) return { ...answer, requests };
-    if (!isObject(answer.value) || !Array.isArray(answer.value.features)) {
+    if (!Array.isArray(answer.value?.features)) {
       return { ok: false, kind: 'bad_upstream', requests };
     }
     pages.push({ type, page: answer.value });

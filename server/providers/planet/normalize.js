@@ -17,17 +17,9 @@ export const isSceneId = (value) =>
 export const thumbnailUrlOf = (type, id) =>
   `https://tiles.planet.com/data/v1/item-types/${type}/items/${id}/thumb`;
 
-const isObject = (value) =>
-  value !== null && typeof value === 'object' && !Array.isArray(value);
-
-/** A finite number from `min` to `max`, else null. */
+/** A number from `min` to `max`, else null. Both limits are finite, so Infinity and NaN give null. */
 const numberIn = (value, min, max) =>
-  typeof value === 'number' &&
-  Number.isFinite(value) &&
-  value >= min &&
-  value <= max
-    ? value
-    : null;
+  typeof value === 'number' && value >= min && value <= max ? value : null;
 
 /** The ISO text of a valid time, else null. */
 function timeOf(value) {
@@ -37,8 +29,7 @@ function timeOf(value) {
 }
 
 function positionOf(position) {
-  if (!Array.isArray(position)) return null;
-  if (position.length < 2 || position.length > 3) return null;
+  if (!Array.isArray(position) || position.length > 3) return null;
   const [lon, lat] = position;
   if (numberIn(lon, -180, 180) === null || numberIn(lat, -90, 90) === null) {
     return null;
@@ -69,12 +60,11 @@ const outerRingOf = (polygon) =>
 
 /** The footprint with the first ring of each polygon, else null. */
 function footprintOf(geometry) {
-  if (!isObject(geometry)) return null;
-  if (geometry.type === 'Polygon') {
+  if (geometry?.type === 'Polygon') {
     const ring = outerRingOf(geometry.coordinates);
     return ring === null ? null : { type: 'Polygon', coordinates: [ring] };
   }
-  if (geometry.type !== 'MultiPolygon') return null;
+  if (geometry?.type !== 'MultiPolygon') return null;
   const parts = geometry.coordinates;
   if (!Array.isArray(parts) || parts.length < 1 || parts.length > MAX_PARTS) {
     return null;
@@ -85,10 +75,9 @@ function footprintOf(geometry) {
 }
 
 function sceneOf(feature, type) {
-  if (!isObject(feature) || !isSceneId(feature.id)) return null;
+  if (!isSceneId(feature?.id)) return null;
   const properties = feature.properties;
-  if (!isObject(properties)) return null;
-  const start = timeOf(properties.acquired);
+  const start = timeOf(properties?.acquired);
   if (start === null) return null;
   const footprint = footprintOf(feature.geometry);
   if (footprint === null) return null;
@@ -99,9 +88,7 @@ function sceneOf(feature, type) {
     resolutionM: numberIn(properties.gsd, 0, Number.MAX_VALUE),
     provider: PROVIDERS[type],
     cloudPercent: numberIn(properties.cloud_percent, 0, 100),
-    thumbnail:
-      isObject(feature._links) &&
-      feature._links.thumbnail === thumbnailUrlOf(type, feature.id),
+    thumbnail: feature._links?.thumbnail === thumbnailUrlOf(type, feature.id),
   };
 }
 
@@ -112,8 +99,7 @@ const byNewestThenId = (a, b) => {
   return a.id < b.id ? -1 : 1;
 };
 
-const hasNextPage = (page) =>
-  isObject(page._links) && typeof page._links._next === 'string';
+const hasNextPage = (page) => typeof page._links?._next === 'string';
 
 /**
  * The kept scenes of the two pages, the newest first, at most 50, with the
