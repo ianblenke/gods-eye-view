@@ -151,6 +151,24 @@ test('[planet-source-009] ends the date filter at the start of the calendar date
   }
 });
 
+test('[planet-source-009] gives the calendar date after end in a time zone east of UTC', async (t) => {
+  const saved = process.env.TZ;
+  t.after(() => {
+    if (saved === undefined) delete process.env.TZ;
+    else process.env.TZ = saved;
+  });
+  process.env.TZ = 'Pacific/Kiritimati';
+  assert.equal(new Date(2026, 1, 28).getTimezoneOffset(), -840);
+  const { calls } = await run({ start: '2026-02-01', end: '2026-02-28' });
+  for (const call of calls) {
+    const filter = JSON.parse(call.init.body).filter.config[1];
+    assert.deepEqual(filter.config, {
+      gte: '2026-02-01T00:00:00Z',
+      lt: '2026-03-01T00:00:00Z',
+    });
+  }
+});
+
 test('[planet-source-009] sends the SkySatCollect search only after the PSScene search gives a good page', async () => {
   let release;
   const gate = new Promise((resolve) => {
