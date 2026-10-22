@@ -10,7 +10,7 @@ This is change 3 of 3. It adds the layer "SkyWatch Scenes". A press of the chip 
 - Add the capability `skywatch-scenes-layer` with 37 scenarios, `skywatch-scenes-layer-001` to `skywatch-scenes-layer-037`.
 - Register the layer in the catalog, the source composition, the reference sources, the share link and the token ledger.
 - Add the layer to the layer panel, the credits, the layer names and the voice-off list.
-- Add a Spanish text and a Russian text for the name of the layer.
+- Add a Spanish text and a Russian text for the name of the layer and for the label of its list.
 - Change the count in the scenario `osh-033` of the capability `osh` from 36 to 37.
 - Add the test files `box.test.mjs`, `records.test.mjs`, `source.test.mjs`, `messages.test.mjs`, `model.test.mjs`, `layer.test.mjs` and `registration.test.mjs` in the new folder.
 - Update the tests that count layers, list the reference sources, or use the token "00" as a free token or as an unknown token. Tasks 2.11 to 2.22 name each change of these tests.

@@ -72,7 +72,7 @@ The QA script `scripts/qa-layer-token-twochar.mjs` adds a fixture layer to a bro
 
 ### D12: The texts
 
-The texts of the layer are English, as in the Bee Maps layers. Only the name of the layer goes through the translation, so the change adds a Spanish text and a Russian text for it.
+The texts of the layer are English, as in the Bee Maps layers. Only the name of the layer and the label of the list go through the translation. The check of `npm run i18n` asks for the translation of the field `ariaLabel`, as the layer "Directions" does. So the change adds a Spanish text and a Russian text for each of the two texts.
 
 ### D13: The tests
 

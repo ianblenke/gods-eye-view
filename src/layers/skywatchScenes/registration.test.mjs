@@ -23,6 +23,7 @@ import {
   installRenderGovernor,
 } from '../../renderGovernor.js';
 import { VOICE_OFF_LAYERS } from '../../voice/layerManifest.js';
+import { sceneList } from './model.js';
 
 const RING = [
   [10, 60],
@@ -280,4 +281,33 @@ test('[skywatch-scenes-layer-037] gives the Spanish and the Russian name of the 
   assert.equal(layerNameForId('skywatch-scenes'), 'Escenas de SkyWatch');
   setLocale('en');
   assert.equal(layerNameForId('skywatch-scenes'), 'SkyWatch Scenes');
+});
+
+test('[skywatch-scenes-layer-037] gives the Spanish and the Russian label of the list', (t) => {
+  assert.equal(readLocale('es')['SkyWatch scenes'], 'Escenas de SkyWatch');
+  assert.equal(readLocale('ru')['SkyWatch scenes'], 'Сцены SkyWatch');
+  const before = getLocale();
+  t.after(() => setLocale(before));
+  const answer = {
+    scenes: [ANSWER.scenes[0]],
+    total: 1,
+    truncated: false,
+    used: 1,
+    limit: 20,
+  };
+  setLocale('es');
+  assert.equal(
+    sceneList({ answer, selectedId: null }).ariaLabel,
+    'Escenas de SkyWatch',
+  );
+  setLocale('ru');
+  assert.equal(
+    sceneList({ answer, selectedId: null }).ariaLabel,
+    'Сцены SkyWatch',
+  );
+  setLocale('en');
+  assert.equal(
+    sceneList({ answer, selectedId: null }).ariaLabel,
+    'SkyWatch scenes',
+  );
 });

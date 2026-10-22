@@ -425,7 +425,9 @@ Origin: spec-first
 - **THEN** the entry with the key "skywatch-scenes" names SkyWatch EarthCache and links to "https://skywatch.com/"
 - **AND** the entry has the text "SkyWatch publishes no terms for the display of footprints or thumbnails, so use the data for yourself only."
 
-#### Scenario: Give the Spanish and the Russian name `skywatch-scenes-layer-037`
+#### Scenario: Give the Spanish and the Russian texts `skywatch-scenes-layer-037`
 - **WHEN** a test reads the Spanish and the Russian texts
 - **THEN** the Spanish text of "SkyWatch Scenes" is "Escenas de SkyWatch", and the Russian text is "Сцены SkyWatch"
 - **AND** `layerNameForId('skywatch-scenes')` gives "Escenas de SkyWatch" in Spanish and "SkyWatch Scenes" in English
+- **AND** the Spanish text of the list label "SkyWatch scenes" is "Escenas de SkyWatch", and the Russian text is "Сцены SkyWatch"
+- **AND** in Spanish, `sceneList` gives the `ariaLabel` "Escenas de SkyWatch"
