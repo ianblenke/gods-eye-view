@@ -6276,8 +6276,7 @@
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-004] sends one search for two presses and shows Searching… while it runs"
   ],
   "skywatch-scenes-layer-005": [
-    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-005] sends no search after an error until the next press",
-    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-005] sends no search when the mocked timers move 10 minutes after an error"
+    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-005] sends no search after an error until the next press, when the clock and the mocked timers move 10 minutes"
   ],
   "skywatch-scenes-layer-006": [
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-006] disables the chip and shows the text for no key when the status has no key",
@@ -6432,7 +6431,7 @@
   "skywatch-scenes-layer-032": [
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] aborts a thumbnail request that runs on scene null and on a new good answer, and closes a late image",
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] aborts the request of the first scene and closes the image that it gives",
-    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] closes an image that arrives after the layer aborts its request",
+    "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] closes an image that arrives after the layer aborts the request of that image",
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] closes the image of the card once on scene null, a new answer, disable and destroy",
     "src/layers/skywatchScenes/layer.test.mjs › [skywatch-scenes-layer-032] replaces the card and closes the old image once"
   ],
