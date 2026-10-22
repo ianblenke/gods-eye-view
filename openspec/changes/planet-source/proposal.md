@@ -4,16 +4,18 @@ The owner has a Planet account and wants the archive scenes of Planet in the app
 
 This change is the first of three changes. It adds the server routes for the search and the thumbnails of Planet. The change `skyfi-source` adds the routes of SkyFi. The change `scene-layers` adds the layers "Planet Scenes" and "SkyFi Scenes".
 
-Planet states that a quick search and a thumbnail use no credits. An order, an activation, a subscription and a tile use credits or money. So this change sends only the search request and the thumbnail request.
+Planet states that a quick search and a thumbnail use no credits. An order, an activation, a subscription and a tile use credits or money. So the plugins of this change send to Planet only quick search requests and thumbnail requests.
 
 ## What Changes
 
 - Add the plugin `planetProxy()` in `server/providers/planet.js`, with the routes `GET /api/planet/status` and `POST /api/planet/scenes`.
 - The scenes route accepts only a request from the same site, as the SkyWatch scenes route does. It uses the checks of the SkyWatch route for the body, the box and the dates.
-- The plugin reads the key from `PLANET_API_KEY` on the server. For each new search, it sends one quick search for the item type `PSScene` and one for `SkySatCollect`, each for the 25 newest scenes.
-- The plugin limits the searches with a daily count (`PLANET_DAILY_SEARCHES`, 20 by default) and an answer store of 10 minutes. A rate limit allows 6 requests in each minute.
-- The answer gives the id, the time, the footprint, the resolution, the provider name, the cloud cover and a thumbnail flag of each scene. It gives no upstream URL.
-- Add the plugin `planetThumbnailProxy()` with the route `GET /api/planet/thumbnail/<id>`. It sends the thumbnail of a scene of a kept answer, and it keeps no copy of the image. `PLANET_THUMBNAILS=false` turns the route off.
+- The plugin reads the key from `PLANET_API_KEY` on the server. For each new upstream search, it sends one quick search request for the item type `PSScene` and one for `SkySatCollect`.
+- Each search request asks for the 25 newest scenes of its item type.
+- The plugin limits the upstream searches with a daily count (`PLANET_DAILY_SEARCHES`, 20 by default) and an answer store of 10 minutes. A rate limit allows 6 requests in each minute.
+- The answer gives the id, the time, the footprint, the resolution, the provider name, the cloud percent and a thumbnail flag of each scene. It gives no upstream URL.
+- Add the plugin `planetThumbnailProxy()` with the route `GET /api/planet/thumbnail/<id>`. It sends the thumbnail of a scene of a kept answer, and it keeps no copy of the image.
+- With `PLANET_THUMBNAILS=false`, the thumbnail route answers `404` and sends no request to Planet.
 
 ## Capabilities
 
@@ -39,9 +41,11 @@ The change opens no gap and closes no gap in `openspec/trace`.
 ## Known limits and later changes
 
 - Known limit `count-in-ram`: The server keeps the daily count only in RAM, so a restart of the server starts the count again at 0.
-- Known limit `first-page`: The plugin reads only the first page of each search. PlanetScope gives many scenes each day, so the 25 newest `PSScene` scenes can cover only a few days.
+- Known limit `first-page`: The plugin reads only the first page of each search request. PlanetScope gives many scenes each day, so the 25 newest `PSScene` scenes can cover only a few days.
 - Known limit `item-types`: The plugin searches only `PSScene` and `SkySatCollect`. On 2026-10-22 the account of the owner had both item types.
-- Known limit `one-user`: The terms of Planet do not allow a cache when the app sends Planet data to more than one user. The scenes route keeps each answer for 10 minutes. The owner uses the app alone. A site with more users must not use this route.
+- Known limit `one-user`: The terms of Planet do not allow a cache when the app sends Planet data to more than one user. They also do not allow source images for other users without an agreement.
+- In `one-user`, the scenes route keeps each answer for 10 minutes, and the thumbnail route sends source images. The owner uses the app alone. A site with more users must not use these routes.
+- Known limit `saved-searches`: Planet keeps each quick search for 30 days in the account. So each upstream search adds two searches to the list of searches of the owner.
 - Known limit `credit-line`: The terms of Planet ask for a copyright notice that names Planet. This change shows no image. The change `scene-layers` adds the credit.
 - Known limit `api-key`: Planet plans to replace the API keys with OAuth. Planet gives no date. Then the plugin needs a new way to send the key.
 - Known limit `live-probe`: On 2026-10-22 the owner allowed a small probe with the key. `evidence/probe.txt` gives its 4 requests and the shape of the answers. The tests use fixtures of that shape.

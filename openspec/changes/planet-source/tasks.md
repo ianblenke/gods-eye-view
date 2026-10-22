@@ -26,7 +26,7 @@
 - [ ] 3.1 Run the tests of the plugins on the host.
 - [ ] 3.2 Write `evidence/api-description.txt` with the address, the date and the SHA-256 of each document of Planet that the lead read.
 - [ ] 3.3 Write `evidence/probe.txt` with the requests and the answer shape of the probe of 2026-10-22.
-- [ ] 3.4 Run the named faults of the plugins.
+- [ ] 3.4 Run each named test against its fault.
 - [ ] 3.5 Write `evidence/faults.txt` with the result of each fault.
 - [ ] 3.6 Run each test file on the host.
 - [ ] 3.7 Run the four checks of `make precheck` on the host.
