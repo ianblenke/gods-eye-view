@@ -171,6 +171,18 @@ The route `/api/skywatch/thumbnail/<id>` sends the thumbnail of a scene that a s
 
 The layer "SkyWatch Scenes" sends one search when a person presses its chip "Search scenes here". The search is for a box of 48 km by 48 km at the view centre, and for the last 92 days. The layer draws the footprint of each scene, and its row lists the scenes. A click on a scene in the list shows its thumbnail as a card on the globe.
 
+### Planet archive scenes (key in `.env`)
+
+Planet gives the scenes of its PlanetScope and SkySat satellites. The route `/api/planet/scenes` searches the archive of Planet for one box of at most 2500 km² and a window of at most 92 days. It accepts only a JSON request from the same site, with the checks of the SkyWatch route.
+
+For each new search, the route sends two quick search requests to one fixed address, with the key `PLANET_API_KEY` from the server. One request asks for the 25 newest PlanetScope scenes, and one asks for the 25 newest SkySat scenes. The route gives the id, the time, the footprint, the resolution, the provider name, the cloud percent and a thumbnail flag of each scene, and no upstream URL.
+
+The daily limit is 20 searches. `PLANET_DAILY_SEARCHES` changes it, and the server keeps the count only in RAM. An answer stays in the store for 10 minutes. The route writes one line to the log of the server for each search, with no key and no URL.
+
+Planet states that a quick search and a thumbnail use no credits. An order, an activation, a subscription and a tile use credits, and this version sends none of them. Planet keeps each quick search for 30 days in the account. The terms of Planet allow you to view the data in this app for yourself. Do not give other people access to these routes.
+
+The route `/api/planet/thumbnail/<id>` sends the thumbnail of a scene that a search of the last 10 minutes gave. It is on by default, and `PLANET_THUMBNAILS=false` in `.env` stops it. It sends only a PNG, JPEG or WebP image of at most 1 MiB whose first bytes show its type, and it keeps no copy. It allows 30 requests in each minute. No layer shows the scenes yet, and no test sends a request to Planet.
+
 ### Notes on the live sources
 
 - **Air quality (ECCC AQHI).** Keyless. Read from the MSC GeoMet OGC API (`api.weather.gc.ca`): the `aqhi-stations` catalog plus `aqhi-observations-realtime`. **Coverage is Canada only** — ECCC is the single registered provider, and the layer row and readout card both say so. Roughly 134 stations across ECCC's five administrative zones (Atlantic, Quebec, Ontario, Prairies & North, Pacific & Yukon). AQHI publishes hourly, so readings poll every 20 minutes and the station catalog, which changes a few times a year, is refetched only every 12 hours. Observations are requested with `latest=true`; without it the collection returns the full history, roughly 2,000 rows nationally. Readings older than six hours are dropped rather than displayed as current.
