@@ -3,6 +3,7 @@
  * the readout, the list of the scenes, and the size and the position of the
  * thumbnail card. It does not import Cesium, so the tests run on the host.
  */
+import { t } from '../../i18n/index.js';
 
 export const HINT =
   'A press searches 92 days of the SkyWatch archive in a 48 km box at the view centre.';
@@ -73,7 +74,7 @@ function sceneText(scene) {
 export function sceneList({ answer, selectedId }) {
   if (!answer?.scenes.length) return null;
   return {
-    ariaLabel: 'SkyWatch scenes',
+    ariaLabel: t('SkyWatch scenes'),
     items: answer.scenes.map((scene) => {
       const active = scene.id === selectedId;
       return {
