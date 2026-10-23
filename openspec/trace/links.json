@@ -6419,6 +6419,330 @@
   "reticulum-source-014": [
     "src/data/reticulumProxy.test.mjs › [reticulum-source-014] accepts a list of exactly 4 MiB"
   ],
+  "scene-layers-001": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-001] Planet: describes the layer and has a method setParams",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-001] Planet: refuses a second init",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-001] Planet: refuses a service that is not planet or skyfi",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-001] Planet: refuses a source without getStatus, searchScenes or getThumbnail",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-001] Planet: refuses an overlay host without setEntries, clearSource or setVisible",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-001] SkyFi: describes the layer and has a method setParams",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-001] SkyFi: refuses a second init",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-001] SkyFi: refuses a service that is not planet or skyfi",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-001] SkyFi: refuses a source without getStatus, searchScenes or getThumbnail",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-001] SkyFi: refuses an overlay host without setEntries, clearSource or setVisible"
+  ],
+  "scene-layers-002": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-002] Planet: asks only for the status and adds no listener to the camera or the scene",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-002] Planet: reads the status only while it is enabled",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-002] SkyFi: asks only for the status and adds no listener to the camera or the scene",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-002] SkyFi: reads the status only while it is enabled"
+  ],
+  "scene-layers-003": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-003] Planet: has no chip after disable, and an old onClick sends no search",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-003] Planet: has one chip with an onClick function and no params, and one click gives one search",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-003] SkyFi: has no chip after disable, and an old onClick sends no search",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-003] SkyFi: has one chip with an onClick function and no params, and one click gives one search"
+  ],
+  "scene-layers-004": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-004] Planet: sends one search for two presses and shows Searching… while it runs",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-004] SkyFi: sends one search for two presses and shows Searching… while it runs"
+  ],
+  "scene-layers-005": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-005] Planet: sends no search after an error while the clock and the timers move 10 minutes, and one search at the next press",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-005] SkyFi: sends no search after an error while the clock and the timers move 10 minutes, and one search at the next press"
+  ],
+  "scene-layers-006": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-006] Planet: disables the chip and shows the text for no key when the status has no key",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-006] Planet: keeps the text for no key when a good answer arrives after a status with no key",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-006] SkyFi: disables the chip and shows the text for no key when the status has no key",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-006] SkyFi: keeps the text for no key when a good answer arrives after a status with no key"
+  ],
+  "scene-layers-007": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-007] Planet: enables the chip after a failed status that follows a status with no key",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-007] Planet: removes the failed status after a good status or a good answer",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-007] Planet: reports a status that fails and keeps the chip enabled",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-007] Planet: shows the message and the error of a press that fails after a failed status",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-007] SkyFi: enables the chip after a failed status that follows a status with no key",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-007] SkyFi: removes the failed status after a good status or a good answer",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-007] SkyFi: reports a status that fails and keeps the chip enabled",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-007] SkyFi: shows the message and the error of a press that fails after a failed status",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-007 scene-layers-028] Planet: gives the fixed texts of the status and the thumbnail",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-007 scene-layers-028] SkyFi: gives the fixed texts of the status and the thumbnail"
+  ],
+  "scene-layers-008": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] Planet: picks the middle of the canvas on the ellipsoid of the globe and sends its box",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] Planet: sends the box of each sample of the spec for the middle of the view",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] Planet: sends the window of the time of the clock at the press",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] Planet: uses Date.now as the clock when no option now is given",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] SkyFi: picks the middle of the canvas on the ellipsoid of the globe and sends its box",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] SkyFi: sends the box of each sample of the spec for the middle of the view",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] SkyFi: sends the window of the time of the clock at the press",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] SkyFi: uses Date.now as the clock when no option now is given"
+  ],
+  "scene-layers-009": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] Planet: gives the reason sky for a middle of the view that is not a finite point or is at the centre of the globe",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] Planet: sends a box at the limits of the latitude and the longitude, and refuses a box past them",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] Planet: sends no search for a view that has no box and names the reason",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] SkyFi: gives the reason sky for a middle of the view that is not a finite point or is at the centre of the globe",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] SkyFi: sends a box at the limits of the latitude and the longitude, and refuses a box past them",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] SkyFi: sends no search for a view that has no box and names the reason",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-009] Planet: names each reason of a view that has no box",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-009] SkyFi: names each reason of a view that has no box"
+  ],
+  "scene-layers-010": [
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-010] Planet: gives ok false for another body, for a status that is not 2xx and for a rejection",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-010] Planet: refuses a service that is not planet or skyfi",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-010] Planet: sends one GET for the status route with the signal and reads configured",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-010] SkyFi: gives ok false for another body, for a status that is not 2xx and for a rejection",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-010] SkyFi: refuses a service that is not planet or skyfi",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-010] SkyFi: sends one GET for the status route with the signal and reads configured"
+  ],
+  "scene-layers-011": [
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-011] Planet: gives the answer with the names of the satellite providers of the service",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-011] Planet: gives the result of the answer records for a good answer",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-011] Planet: sends one POST with one header and the box and the dates as the body",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-011] Planet: uses the fetch function of the page when none is given",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-011] SkyFi: gives the answer with the names of the satellite providers of the service",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-011] SkyFi: gives the result of the answer records for a good answer",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-011] SkyFi: sends one POST with one header and the box and the dates as the body",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-011] SkyFi: uses the fetch function of the page when none is given"
+  ],
+  "scene-layers-012": [
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: aborts a search that does not end in 60 seconds and clears the timer",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: gives the error bad_answer for a body that is not JSON",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: gives the error unknown for a JSON body without a text error",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: gives the fetch function a signal of its own that follows the call and the 60 seconds",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: gives the status 0 and the error unreachable for a rejection",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: gives the status, the error and the whole numbers of an error body",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: gives unreachable when the 60 seconds end while it reads the body",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: reads a body of 8388608 bytes and gives bad_answer for one byte more",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: reads at most 8388608 bytes of the body of an answer that is not 2xx",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: rejects with the AbortError when the signal of the call aborts",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: removes its listener from the signal of the call when the search ends",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] Planet: sends one request for each search that fails, also after the timers of the call run",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: aborts a search that does not end in 60 seconds and clears the timer",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: gives the error bad_answer for a body that is not JSON",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: gives the error unknown for a JSON body without a text error",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: gives the fetch function a signal of its own that follows the call and the 60 seconds",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: gives the status 0 and the error unreachable for a rejection",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: gives the status, the error and the whole numbers of an error body",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: gives unreachable when the 60 seconds end while it reads the body",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: reads a body of 8388608 bytes and gives bad_answer for one byte more",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: reads at most 8388608 bytes of the body of an answer that is not 2xx",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: rejects with the AbortError when the signal of the call aborts",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: removes its listener from the signal of the call when the search ends",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-012] SkyFi: sends one request for each search that fails, also after the timers of the call run"
+  ],
+  "scene-layers-013": [
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] Planet: gives a blob with the bytes and the media type of a good answer",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] Planet: gives bad_answer for another media type or no Content-Type",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] Planet: gives the status and the error of an answer that is not 2xx",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] Planet: gives unreachable for a rejection and for a call that does not end in 20 seconds",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] Planet: reads a body of 1048576 bytes and gives bad_answer for one byte more",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] Planet: removes its listener from the signal of the call and rejects when that signal aborts",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] Planet: sends one GET for the thumbnail with a signal of its own and no other option",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] SkyFi: gives a blob with the bytes and the media type of a good answer",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] SkyFi: gives bad_answer for another media type or no Content-Type",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] SkyFi: gives the status and the error of an answer that is not 2xx",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] SkyFi: gives unreachable for a rejection and for a call that does not end in 20 seconds",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] SkyFi: reads a body of 1048576 bytes and gives bad_answer for one byte more",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] SkyFi: removes its listener from the signal of the call and rejects when that signal aborts",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-013] SkyFi: sends one GET for the thumbnail with a signal of its own and no other option"
+  ],
+  "scene-layers-014": [
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: drops a scene whose first and last positions are not equal",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: drops a scene whose footprint is not a polygon with exactly one ring",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: drops a scene whose id does not have 1 to 128 letters, digits, hyphens or underscores",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: drops a scene whose start is not a text that Date.parse reads",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: drops a scene with a part or a type that is not valid",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: drops a scene with a position that is not two finite numbers in range",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: drops an item that is not an object and a repeated id, and keeps the order of the answer",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: gives one ring for a Polygon and one ring for each part of a MultiPolygon",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: gives the name of a satellite provider for the service",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: keeps a resolution of 0 or more, a cloud cover from 0 to 100, a provider text and only a true thumbnail",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: keeps a ring of 4 to 2000 positions, and drops a shorter or longer ring",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: keeps at most the first 50 valid scenes",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: keeps exactly the seven fields of a valid scene",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: reads total, truncated, used and limit, and gives null or false for each other value",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] Planet: refuses a service that is not planet or skyfi",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: drops a scene whose first and last positions are not equal",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: drops a scene whose footprint is not a polygon with exactly one ring",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: drops a scene whose id does not have 1 to 128 letters, digits, hyphens or underscores",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: drops a scene whose start is not a text that Date.parse reads",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: drops a scene with a part or a type that is not valid",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: drops a scene with a position that is not two finite numbers in range",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: drops an item that is not an object and a repeated id, and keeps the order of the answer",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: gives one ring for a Polygon and one ring for each part of a MultiPolygon",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: gives the name of a satellite provider for the service",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: keeps a resolution of 0 or more, a cloud cover from 0 to 100, a provider text and only a true thumbnail",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: keeps a ring of 4 to 2000 positions, and drops a shorter or longer ring",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: keeps at most the first 50 valid scenes",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: keeps exactly the seven fields of a valid scene",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: reads total, truncated, used and limit, and gives null or false for each other value",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-014] SkyFi: refuses a service that is not planet or skyfi"
+  ],
+  "scene-layers-015": [
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-015] Planet: gives null for an answer that is not an object or has no list of scenes",
+    "src/layers/sceneLayer/records.test.mjs › [scene-layers-015] SkyFi: gives null for an answer that is not an object or has no list of scenes",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-015] Planet: gives bad_answer with the status 200 for an answer without a list of scenes",
+    "src/layers/sceneLayer/source.test.mjs › [scene-layers-015] SkyFi: gives bad_answer with the status 200 for an answer without a list of scenes"
+  ],
+  "scene-layers-016": [
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-016] Planet: names each failure of a search with the text of its sample",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-016] Planet: names the daily limit with its count, in the singular for 1",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-016] Planet: names the wait of Planet with its seconds, in the singular for 1",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-016] SkyFi: names each failure of a search with the text of its sample",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-016] SkyFi: names the daily limit with its count, in the singular for 1",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-016] SkyFi: names the wait of SkyFi with its seconds, in the singular for 1"
+  ],
+  "scene-layers-017": [
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-017] Planet: names each failure of a thumbnail with the text of its sample",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-017] SkyFi: names each failure of a thumbnail with the text of its sample"
+  ],
+  "scene-layers-018": [
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-018] Planet: styles a footprint that is not selected and a selected footprint",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-018] SkyFi: styles a footprint that is not selected and a selected footprint"
+  ],
+  "scene-layers-019": [
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-019] Planet: gives the hint with no answer and no message",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-019] Planet: puts the message, the answer and the message of the thumbnail in that order",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-019] Planet: writes the count, the newest date and the searches of the day",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-019] Planet: writes the date of the newest scene in UTC when the time zone of the machine is not UTC",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-019] SkyFi: gives the hint with no answer and no message",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-019] SkyFi: puts the message, the answer and the message of the thumbnail in that order",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-019] SkyFi: writes the count, the newest date and the searches of the day",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-019] SkyFi: writes the date of the newest scene in UTC when the time zone of the machine is not UTC"
+  ],
+  "scene-layers-020": [
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-020] Planet: gives null for no answer and for an answer with no scene",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-020] Planet: gives one item for each scene, in the order of the answer",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-020] Planet: writes the UTC date as the lead when the time zone of the machine is not UTC",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-020] Planet: writes the resolution, the cloud cover and the parts that are null",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-020] SkyFi: gives null for no answer and for an answer with no scene",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-020] SkyFi: gives one item for each scene, in the order of the answer",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-020] SkyFi: writes the UTC date as the lead when the time zone of the machine is not UTC",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-020] SkyFi: writes the resolution, the cloud cover and the parts that are null"
+  ],
+  "scene-layers-021": [
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-021] Planet: fits the image in a square of 192 pixels and keeps its ratio",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-021] Planet: gives the mean position of a ring without its last position",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-021] SkyFi: fits the image in a square of 192 pixels and keeps its ratio",
+    "src/layers/sceneLayer/model.test.mjs › [scene-layers-021] SkyFi: gives the mean position of a ring without its last position"
+  ],
+  "scene-layers-022": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-022] Planet: calls requestRender with planet-scenes after each change of the entities",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-022] Planet: gives the list of the answer and replaces the footprints and the list with a second answer",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-022] Planet: shows one entity for each ring of a footprint and counts the scenes",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-022] Planet: shows one polyline on the ground for each scene, with the style of a footprint that is not selected",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-022] SkyFi: calls requestRender with skyfi-scenes after each change of the entities",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-022] SkyFi: gives the list of the answer and replaces the footprints and the list with a second answer",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-022] SkyFi: shows one entity for each ring of a footprint and counts the scenes",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-022] SkyFi: shows one polyline on the ground for each scene, with the style of a footprint that is not selected"
+  ],
+  "scene-layers-023": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-023] Planet: keeps the footprints for a press with no box, and a good answer removes the message",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-023] Planet: keeps the footprints, the list and the selection when a press fails",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-023] SkyFi: keeps the footprints for a press with no box, and a good answer removes the message",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-023] SkyFi: keeps the footprints, the list and the selection when a press fails"
+  ],
+  "scene-layers-024": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-024] Planet: aborts each request on disable and ignores the answers that arrive afterwards",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-024] Planet: aborts the status request of the update before, and not a status request that ended",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-024] Planet: shows the hint and no list on the next enable, and forgets the status",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-024] SkyFi: aborts each request on disable and ignores the answers that arrive afterwards",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-024] SkyFi: aborts the status request of the update before, and not a status request that ended",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-024] SkyFi: shows the hint and no list on the next enable, and forgets the status"
+  ],
+  "scene-layers-025": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-025] Planet: aborts a search and a status request in flight on destroy",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-025] Planet: releases everything on destroy and can initialize again",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-025] SkyFi: aborts a search and a status request in flight on destroy",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-025] SkyFi: releases everything on destroy and can initialize again"
+  ],
+  "scene-layers-026": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-026] Planet: calls the listener for a search, an update, a press with no box, a selection and the end of a thumbnail request",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-026] SkyFi: calls the listener for a search, an update, a press with no box, a selection and the end of a thumbnail request"
+  ],
+  "scene-layers-027": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-027] Planet: gives each entity of a selected scene the style of a selected footprint",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-027] Planet: refuses each other parameter and changes nothing",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-027] Planet: removes the selection with a new good answer",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-027] Planet: removes the selection with scene null and sends no new request for the selected id",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-027] Planet: selects a scene and gives it the style of a selected footprint",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-027] SkyFi: gives each entity of a selected scene the style of a selected footprint",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-027] SkyFi: refuses each other parameter and changes nothing",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-027] SkyFi: removes the selection with a new good answer",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-027] SkyFi: removes the selection with scene null and sends no new request for the selected id",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-027] SkyFi: selects a scene and gives it the style of a selected footprint"
+  ],
+  "scene-layers-028": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-028] Planet: decodes the blob with createImageBitmap of the page when no decodeImage is given",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-028] Planet: gets the thumbnail of the selected scene and shows it as one card",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-028] Planet: puts the card at the centre of the first ring",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-028] Planet: sends no thumbnail request for a scene that has no thumbnail",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-028] Planet: writes the date and the provider as the title of the card",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-028] SkyFi: decodes the blob with createImageBitmap of the page when no decodeImage is given",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-028] SkyFi: gets the thumbnail of the selected scene and shows it as one card",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-028] SkyFi: puts the card at the centre of the first ring",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-028] SkyFi: sends no thumbnail request for a scene that has no thumbnail",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-028] SkyFi: writes the date and the provider as the title of the card",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-007 scene-layers-028] Planet: gives the fixed texts of the status and the thumbnail",
+    "src/layers/sceneLayer/messages.test.mjs › [scene-layers-007 scene-layers-028] SkyFi: gives the fixed texts of the status and the thumbnail"
+  ],
+  "scene-layers-029": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-029] Planet: closes an image whose size gives no card and names it bad_image",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-029] Planet: keeps the error of the stats and sends a new request only on the next selection",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-029] Planet: shows the failure of a thumbnail and no card",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-029] SkyFi: closes an image whose size gives no card and names it bad_image",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-029] SkyFi: keeps the error of the stats and sends a new request only on the next selection",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-029] SkyFi: shows the failure of a thumbnail and no card"
+  ],
+  "scene-layers-030": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-030] Planet: aborts a thumbnail request that runs on scene null and on a new good answer, and closes a late image",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-030] Planet: aborts the request of the first scene and closes the image that it gives",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-030] Planet: closes an image that arrives after the layer aborts the request of that image",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-030] Planet: closes the image of the card once on scene null, a new answer, disable and destroy",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-030] Planet: replaces the card and closes the old image once",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-030] SkyFi: aborts a thumbnail request that runs on scene null and on a new good answer, and closes a late image",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-030] SkyFi: aborts the request of the first scene and closes the image that it gives",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-030] SkyFi: closes an image that arrives after the layer aborts the request of that image",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-030] SkyFi: closes the image of the card once on scene null, a new answer, disable and destroy",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-030] SkyFi: replaces the card and closes the old image once"
+  ],
+  "scene-layers-031": [
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-031] Planet: gives the layer its supplied source, and the stats error of a catalog without the source",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-031] Planet: gives the layer of the application the render governor, and an option requestRender replaces it",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-031] Planet: gives the reference source the routes of its own service",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-031] Planet: registers the layer in the catalog, the source contract, the reference sources and the share link",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-031] Planet: selects a scene through setLayerParams of the manager with the origin user",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-031] SkyFi: gives the layer its supplied source, and the stats error of a catalog without the source",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-031] SkyFi: gives the layer of the application the render governor, and an option requestRender replaces it",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-031] SkyFi: gives the reference source the routes of its own service",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-031] SkyFi: registers the layer in the catalog, the source contract, the reference sources and the share link",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-031] SkyFi: selects a scene through setLayerParams of the manager with the origin user"
+  ],
+  "scene-layers-032": [
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-032] Planet: puts the layer in the Cameras group right after the layer before it",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-032] SkyFi: puts the layer in the Cameras group right after the layer before it"
+  ],
+  "scene-layers-033": [
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-033] Planet: keeps the layer out of voice",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-033] SkyFi: keeps the layer out of voice"
+  ],
+  "scene-layers-034": [
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-034] Planet: gives the credit text with the terms and the link",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-034] SkyFi: gives the credit text with the terms and the link"
+  ],
+  "scene-layers-035": [
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-035] Planet: gives the Spanish and the Russian label of the list",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-035] Planet: gives the Spanish and the Russian name of the layer",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-035] SkyFi: gives the Spanish and the Russian label of the list",
+    "src/layers/sceneLayer/registration.test.mjs › [scene-layers-035] SkyFi: gives the Spanish and the Russian name of the layer"
+  ],
+  "scene-layers-036": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-036] Planet: sends only boxes that the server accepts, for the latitudes and the longitudes of the spec",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-036] SkyFi: sends only boxes that the server accepts, for the latitudes and the longitudes of the spec"
+  ],
   "skyfi-source-001": [
     "src/data/skyfiProxy.test.mjs › [skyfi-source-001] localProviderPlugins holds the scenes plugin once",
     "src/data/skyfiProxy.test.mjs › [skyfi-source-001] mounts the two routes and passes other paths to next"

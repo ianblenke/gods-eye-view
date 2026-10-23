@@ -1,0 +1,98 @@
+Browser check of the layers "Planet Scenes" and "SkyFi Scenes" on the commit 9b7357bf, run on 2026-10-23 (UTC).
+The browser is a Chrome for Testing (the Playwright build) with its sandbox and a new temporary profile for each run. It is not the system Chrome and not a profile of the owner. The run opens chrome://sandbox first and stops when the page does not say "You are adequately sandboxed."
+The app runs in a Vite server of the lead outside the repository (vite.sc.config.mjs). The routes of Planet and of SkyFi are the real plugins, with a fake fetch function for each upstream. No request leaves the machine. The fake Planet upstream gives a SkySat scene that is a MultiPolygon of two parts.
+Browser line of each run: browser: Chrome/156.0.8078.4 (/home/ianblenke/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome)
+chrome://sandbox: ker)	Yes | Ptrace Protection with Yama LSM (Non-broker)	No | You are adequately sandboxed.
+Each run opens the share link of the layer, presses the chip, selects scenes in the list, turns the thumbnail route off, loads the authored link again, and turns the layer off. The checks are the lines that start with PASS or FAIL.
+Runs on earlier commits had stopped with a time limit while the host had a high load (load average of 17 to 21, from other containers on the machine): one run of Planet Scenes at step 8 and several runs at an earlier step. Each of them stopped before a check failed, and no check of any run had the result FAIL. The runs of the record were made when the load was lower, and all checks of both layers passed in them. The host node was updated from 26.8.2 to 26.11.1 between the fault runs and these browser runs.
+
+=== Planet Scenes (share token 01)
+--- step 1: load the share link with l=01 (the layer is enabled by the link)
+PASS 1 the share link l=01 enables the layer Planet Scenes | Planet Scenes
+PASS 1 the chip shows "Search scenes here" and is enabled
+PASS 1 the info line is the hint | A press searches 92 days of the Planet archive in a 48 km box at the view centre.
+PASS 1 the status route was read | status calls 1
+PASS 1 no search reached the server or the fake upstream
+PASS 1 the hash keeps l=01 | #v=2&lat=27.9500&lon=-82.4600&alt=120000&heading=360&pitch=-90&roll=0&style=normal&bloom=0&sharpen=0&bi=100&bv=2&si=49&hud=tactical&hv=0&dm=OFF&dd=50&da=elastic&kf=16&ko=5&cr=0&sc=1&scf=35&map=esri-imagery&l=01&
+--- step 2: press the chip once
+PASS 2 one search reached the server, and it answered 200 | [{"kind":"status","method":"GET","status":200,"type":"application/json; charset=utf-8"},{"kind":"scenes","method":"POST","status":200,"type":"application/json; charset=utf-8"}]
+PASS 2 the fake upstream got 2 search request(s) with the key | [{"method":"POST","url":"https://api.planet.com/data/v1/quick-search","key":"api-key fixture-key-planet"},{"method":"POST","url":"https://api.planet.com/data/v1/quick-search","
+PASS 2 the box is the box of the sample (27.95, -82.46) | [-82.704337,27.734163,-82.215663,28.165837]
+PASS 2 the window ends today in UTC and has 92 days | {"box":[-82.704337,27.734163,-82.215663,28.165837],"gte":"2026-07-24T00:00:00Z","lt":"2026-10-24T00:00:00Z"}
+PASS 2 the row shows 3 scenes, the newest day and the searches of the day | 3 scenes · newest 2026-10-21 · searches today 1 of 20
+PASS 2 the list has 3 items, newest first | ["scene:fixture-ps-a","scene:fixture-ps-b","scene:fixture-sk-c"]
+PASS 2 the item texts | ["2026-10-21PlanetScope · 3.9 m · cloud 3%","2026-10-13PlanetScope · 3.9 m · cloud 12%","2026-09-13SkySat · 0.63 m · cloud 0%"]
+PASS 2 the data source shows 4 footprint entities and no polygon | {"show":true,"ids":["planet-scenes:fixture-ps-a","planet-scenes:fixture-ps-b","planet-scenes:fixture-sk-c","planet-scenes:fixture-sk-c:1"],"polygons":[]}
+PASS 2 the scene with two parts has two entities | ["planet-scenes:fixture-ps-a","planet-scenes:fixture-ps-b","planet-scenes:fixture-sk-c","planet-scenes:fixture-sk-c:1"]
+--- step 3: select the first scene in the list
+PASS 3 one thumbnail request, answered 200 with image/png | [{"kind":"thumbnails","method":"GET","status":200,"type":"image/png"}]
+PASS 3 the fake upstream got the thumbnail link of the scene | {"method":"GET","url":"https://tiles.planet.com/data/v1/item-types/PSScene/items/fixture-ps-a/thumb","key":"api-key fixture-key-planet"}
+PASS 3 the first item is pressed, the others are not
+PASS 3 the selected footprint has a polygon | ["planet-scenes:fixture-ps-a"]
+PASS 3 the info line has no message of the thumbnail | 3 scenes · newest 2026-10-21 · searches today 1 of 20
+PASS 3 the overlay host has one entry of the layer and paints it | {"painted":1,"entries":1}
+--- step 4: press the selected item again (no selection)
+PASS 4 no item is pressed | ["false","false","false"]
+PASS 4 the card is gone | {"painted":0,"entries":0}
+PASS 4 no new thumbnail request
+--- step 5: the thumbnail route is off, then select the second scene
+PASS 5 the route answers 404 | [{"kind":"thumbnails","method":"GET","status":200,"type":"image/png"},{"kind":"thumbnails","method":"GET","status":404,"type":"application/json; charset=utf-8"}]
+PASS 5 the info line ends with the text for thumbnails that are off | 3 scenes · newest 2026-10-21 · searches today 1 of 20 · Thumbnails are off. Remove PLANET_THUMBNAILS=false from .env and restart the app.
+PASS 5 no card
+--- step 6: select the scene with two parts
+PASS 6 both parts have the style of a selected footprint (a polygon each) | ["planet-scenes:fixture-sk-c","planet-scenes:fixture-sk-c:1"]
+PASS 6 the card shows | {"painted":1,"entries":1}
+--- step 7: a new page load of the share link (the authored URL)
+PASS 7 the authored hash has l=01 | #v=2&lat=27.9500&lon=-82.4600&alt=120000&heading=360&pitch=-90&roll=0&style=normal&bloom=0&sharpen=0&bi=100&bv=2&si=49&hud=tactical&hv=0&dm=OFF&dd=50&da=elastic&kf=16&ko=5&cr=0&sc=1&scf=35&map=esri-imager
+PASS 7 the new page load enables the layer again
+PASS 7 the new page load shows the hint and no list | A press searches 92 days of the Planet archive in a 48 km box at the view centre.
+PASS 7 the hash still has l=01
+--- step 8: switch the layer off with its toggle
+PASS 8 the hash has no token 01 when the layer is off | #v=2&lat=27.9500&lon=-82.4600&alt=120000&heading=360&pitch=-90&roll=0&style=normal&bloom=0&sharpen=0&bi=100&bv=2&si=49&hud=tactical&hv=0&dm=OFF&dd=50&da=elastic&kf=16&ko=5&cr=0&sc=1&sc
+PASS 8 no console error about the layer
+RESULT: all checks passed
+
+=== SkyFi Scenes (share token 02)
+--- step 1: load the share link with l=02 (the layer is enabled by the link)
+PASS 1 the share link l=02 enables the layer SkyFi Scenes | SkyFi Scenes
+PASS 1 the chip shows "Search scenes here" and is enabled
+PASS 1 the info line is the hint | A press searches 92 days of the SkyFi archive in a 48 km box at the view centre.
+PASS 1 the status route was read | status calls 1
+PASS 1 no search reached the server or the fake upstream
+PASS 1 the hash keeps l=02 | #v=2&lat=27.9500&lon=-82.4600&alt=120000&heading=360&pitch=-90&roll=0&style=normal&bloom=0&sharpen=0&bi=100&bv=2&si=49&hud=tactical&hv=0&dm=OFF&dd=50&da=elastic&kf=16&ko=5&cr=0&sc=1&scf=35&map=esri-imagery&l=02&
+--- step 2: press the chip once
+PASS 2 one search reached the server, and it answered 200 | [{"kind":"status","method":"GET","status":200,"type":"application/json; charset=utf-8"},{"kind":"scenes","method":"POST","status":200,"type":"application/json; charset=utf-8"}]
+PASS 2 the fake upstream got 1 search request(s) with the key | [{"method":"POST","url":"https://app.skyfi.com/platform-api/archives","key":"fixture-key-skyfi"}]
+PASS 2 the box is the box of the sample (27.95, -82.46) | [-82.704337,27.734163,-82.215663,28.165837]
+PASS 2 the window ends today in UTC and has 92 days | {"box":[-82.704337,27.734163,-82.215663,28.165837],"from":"2026-07-24T00:00:00+00:00","to":"2026-10-23T23:59:59+00:00","pageSize":50}
+PASS 2 the row shows 3 scenes, the newest day and the searches of the day | 3 scenes · newest 2026-10-21 · searches today 1 of 20
+PASS 2 the list has 3 items, newest first | ["scene:fixture-a","scene:fixture-b","scene:fixture-c"]
+PASS 2 the item texts | ["2026-10-21Vantor · 0.35 m · cloud 3%","2026-10-13Sentinel-2 · 10 m · cloud 12%","2026-09-13SOME CODE · 0.67 m · cloud 0% · no thumbnail"]
+PASS 2 the data source shows 3 footprint entities and no polygon | {"show":true,"ids":["skyfi-scenes:fixture-a","skyfi-scenes:fixture-b","skyfi-scenes:fixture-c"],"polygons":[]}
+--- step 3: select the first scene in the list
+PASS 3 one thumbnail request, answered 200 with image/png | [{"kind":"thumbnails","method":"GET","status":200,"type":"image/png"}]
+PASS 3 the fake upstream got the thumbnail link of the scene | {"method":"GET","url":"https://thumbnails.skyfi.com/fixture/a.png","key":null}
+PASS 3 the first item is pressed, the others are not
+PASS 3 the selected footprint has a polygon | ["skyfi-scenes:fixture-a"]
+PASS 3 the info line has no message of the thumbnail | 3 scenes · newest 2026-10-21 · searches today 1 of 20
+PASS 3 the overlay host has one entry of the layer and paints it | {"painted":1,"entries":1}
+--- step 4: press the selected item again (no selection)
+PASS 4 no item is pressed | ["false","false","false"]
+PASS 4 the card is gone | {"painted":0,"entries":0}
+PASS 4 no new thumbnail request
+--- step 5: the thumbnail route is off, then select the second scene
+PASS 5 the route answers 404 | [{"kind":"thumbnails","method":"GET","status":200,"type":"image/png"},{"kind":"thumbnails","method":"GET","status":404,"type":"application/json; charset=utf-8"}]
+PASS 5 the info line ends with the text for thumbnails that are off | 3 scenes · newest 2026-10-21 · searches today 1 of 20 · Thumbnails are off. Remove SKYFI_THUMBNAILS=false from .env and restart the app.
+PASS 5 no card
+--- step 6: the third scene has no thumbnail
+PASS 6 the info line ends with the text for no thumbnail, and no request | 3 scenes · newest 2026-10-21 · searches today 1 of 20 · SkyFi has no thumbnail for this scene.
+--- step 7: a new page load of the share link (the authored URL)
+PASS 7 the authored hash has l=02 | #v=2&lat=27.9500&lon=-82.4600&alt=120000&heading=360&pitch=-90&roll=0&style=normal&bloom=0&sharpen=0&bi=100&bv=2&si=49&hud=tactical&hv=0&dm=OFF&dd=50&da=elastic&kf=16&ko=5&cr=0&sc=1&scf=35&map=esri-imager
+PASS 7 the new page load enables the layer again
+PASS 7 the new page load shows the hint and no list | A press searches 92 days of the SkyFi archive in a 48 km box at the view centre.
+PASS 7 the hash still has l=02
+--- step 8: switch the layer off with its toggle
+PASS 8 the hash has no token 02 when the layer is off | #v=2&lat=27.9500&lon=-82.4600&alt=120000&heading=360&pitch=-90&roll=0&style=normal&bloom=0&sharpen=0&bi=100&bv=2&si=49&hud=tactical&hv=0&dm=OFF&dd=50&da=elastic&kf=16&ko=5&cr=0&sc=1&sc
+PASS 8 no console error about the layer
+RESULT: all checks passed
+

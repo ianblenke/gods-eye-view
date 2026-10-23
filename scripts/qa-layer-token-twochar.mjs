@@ -7,8 +7,8 @@
  */
 /**
  * End-to-end share/reload proof for a two-character token. The QA layer gets
- * the next free token after the free digits ("01" while skywatch-scenes owns
- * "00"). The QA layer and an exhausted-digit reservation scenario are injected
+ * the next free token after the free digits ("03" while skywatch-scenes,
+ * planet-scenes and skyfi-scenes own "00", "01" and "02"). The QA layer and an exhausted-digit reservation scenario are injected
  * into dev-server responses in this isolated browser only. Neither belongs in
  * a production bundle or ledger.
  *

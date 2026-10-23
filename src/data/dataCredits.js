@@ -186,6 +186,18 @@ export const DATA_CREDITS = [
       '<a href="https://skywatch.com/" target="_blank" rel="noopener">skywatch.com</a>',
   },
   {
+    key: 'planet-scenes',
+    html:
+      'Satellite scenes: Planet, through the server of this app with your API key. Imagery © Planet Labs PBC. The terms of Planet allow you to view the data for yourself. Do not give other people access to this app. · ' +
+      '<a href="https://www.planet.com/" target="_blank" rel="noopener">planet.com</a>',
+  },
+  {
+    key: 'skyfi-scenes',
+    html:
+      'Satellite scenes: SkyFi, through the server of this app with your API key. The terms of SkyFi give a personal and non-commercial license, so use the data for yourself only. Each scene comes from a satellite provider that the list names. · ' +
+      '<a href="https://skyfi.com/" target="_blank" rel="noopener">skyfi.com</a>',
+  },
+  {
     key: 'beemaps',
     html:
       'Street-level frames: contributor dashcams, through the Bee Maps API · ' +
