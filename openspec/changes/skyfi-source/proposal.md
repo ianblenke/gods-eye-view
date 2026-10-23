@@ -47,9 +47,10 @@ The change opens no gap and closes no gap in `openspec/trace`.
 - Known limit `open-data`: The search has no filter for open data. On 2026-10-23, 19 of the 50 scenes of the probe were open data scenes of Sentinel-1 and Sentinel-2, and they can fill a page.
 - Known limit `one-polygon`: The plugin keeps only the footprints of the type `POLYGON`. All 50 footprints of the probe had this type. A footprint of another type removes its scene.
 - Known limit `time-zone`: The probe gave capture times with an offset (`-04:00` and `-06:00`). The plugin converts each time to UTC, and it removes a scene with a time that has no offset. The documents of SkyFi do not say if the offset is the time zone of the place.
+- Known limit `time-format`: The plugin reads a time with the function `Date.parse`, after it checks the end of the text for `Z` or an offset. So a text of another form that `Date.parse` reads, and that ends with an offset, also gives a scene. The probe gave only the ISO form.
 - Known limit `gsd-unit`: The documents of SkyFi do not give the unit of `gsd`. The probe gave 34 and 1000, so the plugin takes centimeters.
 - Known limit `personal-use`: The terms of SkyFi give a personal and non-commercial license, and they forbid a public display, except where they allow it. They have no clause for thumbnails, footprints or search data. The owner uses the app alone.
 - Known limit `order-key`: The key of SkyFi can also place orders. The plugins send only the archive search with the key, and the tests check each request. The owner must keep no payment card on the account of SkyFi, or must set a budget with SkyFi.
 - Known limit `credit-line`: The change `scene-layers` shows the credit of SkyFi and of the provider of each scene. This change shows no image.
-- Known limit `live-probe`: On 2026-10-23 the owner allowed a small probe with the key. `evidence/probe.txt` gives its 5 requests and the shape of the answers. The tests use fixtures of that shape.
+- Known limit `live-probe`: On 2026-10-22 the owner allowed a small probe with the key, and the lead ran it on 2026-10-23. `evidence/probe.txt` gives its 5 requests and the shape of the answers. The tests use fixtures of that shape.
 - Later change `scene-layers`: One layer module for the three providers, and the layers "Planet Scenes" and "SkyFi Scenes".

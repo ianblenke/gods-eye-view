@@ -12,7 +12,7 @@ The commit that follows run 1 adds test samples, and the lead corrected the text
 - "good answer with 0 requests": a wrong target. The upstream tests do not read the member requests of a good answer. The log line of the scenes plugin does, so run 2 names the test of skyfi-source-031.
 - "link with an at sign": a test gap. The samples had the at sign only in the host part, where the rule for the host and the slash refuses it. The test now has the link https://app.skyfi.com/a@b.png.
 - "link with a backslash": a test gap, as for the at sign. The test now has a backslash in the path.
-- "white space between numbers": a test gap. A tab in the first ring makes a number that is not a number, so the scene went out for another reason. The test now has a tab in a later ring, which the plugin ignores when the text meets the rule.
+- "white space between numbers": a test gap. A tab in the first ring makes a number that is not a number, so the scene went out for another reason. The test now has a tab in a later ring. The text does not meet the rule, so the plugin removes the scene. The fault lets the tab pass, and then the test fails.
 
 The result line of each fault of run 2 follows. Each line gives the name of the fault, the changed files, the targets and the failed tests.
 

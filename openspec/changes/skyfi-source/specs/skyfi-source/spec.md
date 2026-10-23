@@ -1,8 +1,4 @@
-# skyfi-source Specification
-
-## Purpose
-Give the app the archive scenes of SkyFi for a small box and a date window, and the thumbnail of each scene. Send to SkyFi only the archive search with the key, and send a thumbnail request with no key.
-## Requirements
+## ADDED Requirements
 ### Requirement: Provider routes
 The plugin `skyfi-proxy` MUST answer only `/api/skyfi/status` and `/api/skyfi/scenes`. It MUST pass every other path to the next middleware.
 Origin: spec-first
@@ -167,7 +163,7 @@ Origin: spec-first
 - **AND** `<s>` is 600 when the header has only digits and the number is more than 600
 - **AND** `<s>` is 60 for each other value of the header, also `0`, and when the upstream answer has no `Retry-After` header
 - **AND** each other status that is not `200` gives `502` with `{"error":"upstream_failed"}`, and the samples include `422` and `500`
-- **AND** a network error and a redirect give the same answer
+- **AND** a network error and a redirect give `502` with `{"error":"upstream_failed"}`
 - **AND** before the search request, the plugin starts a timer of 15000 ms, and it clears the timer after it reads the body
 - **AND** when the time limit ends, the plugin stops the request, and the scenes route gives `upstream_failed`
 - **AND** the plugin reads the body only of an answer `200`
@@ -203,7 +199,7 @@ Origin: spec-first
 - **AND** `productType` is null in each other case, and the samples include the text `day`
 - **AND** `thumbnail` is true when `thumbnailUrls["300x300"]` is a text that meets the rule of the next two items, and false in each other case
 - **AND** the text starts with `https://app.skyfi.com/` or with `https://thumbnails.skyfi.com/`, and it has at most 2048 characters
-- **AND** the text has no `#`, no `@`, no backslash, no white space and no control character
+- **AND** the text has no `#`, no `@`, no backslash, no white space, no character from U+0000 to U+001F and no U+007F
 - **AND** the samples of `thumbnail` false include the host `skyfi.example.test` and the host `app.skyfi.com.example.test`
 - **AND** the samples of `thumbnail` false include the scheme `http`, the port `:8443`, the port `:443` and a user name
 - **AND** the samples of `thumbnail` false include a backslash, a fragment, a space and a text of 2049 characters
@@ -220,7 +216,8 @@ Origin: spec-first
 - **AND** the route removes each other ring of the polygon
 - **AND** the plugin reads at most 20000 characters, and it removes the scene for a text of 20001 characters
 - **AND** the samples include a text of exactly 20000 characters, which stays
-- **AND** the text is the word `POLYGON` in capital letters, zero or more spaces, and one or more rings in brackets
+- **AND** the text is the word `POLYGON` in capital letters, zero or more spaces, an open bracket, one or more rings and a close bracket
+- **AND** each ring is in its own brackets, so a text with one pair of brackets around the positions does not meet this rule
 - **AND** a comma is between two rings
 - **AND** a ring in brackets has one or more positions, with a comma between two positions
 - **AND** a comma can have spaces before it and after it, and a position has two numbers with one or more spaces between them

@@ -3,7 +3,7 @@
 The Platform API of SkyFi has an archive search: `POST https://app.skyfi.com/platform-api/archives`. The answer is one page of archive items and a text `nextPage` for the next page. The client sends one request and gets one page.
 The key goes in the header `X-Skyfi-Api-Key`. SkyFi gives no key for only a search. The same key can place orders, and an order costs money.
 
-`evidence/api-description.txt` names each document of SkyFi that the lead read. On 2026-10-23 the owner allowed a probe with the key. `evidence/probe.txt` gives the result. A search of a box at Tampa gave 50 scenes on one page, and the page had a `nextPage` text.
+`evidence/api-description.txt` names each document of SkyFi that the lead read. On 2026-10-22 the owner allowed a probe with the key, and the lead ran it on 2026-10-23. `evidence/probe.txt` gives the result. A search of a box at Tampa gave 50 scenes on one page, and the page had a `nextPage` text.
 Each thumbnail request of the probe got `200` with no key. So a thumbnail of SkyFi is a public image on one of two hosts of SkyFi.
 
 The plugin follows the shape of `server/providers/planet.js`. It has a status route, a same-site scenes route, checked input, a key on the server, a daily count, an answer store and a log. The thumbnail plugin follows `server/providers/planet/thumbnails.js`.
