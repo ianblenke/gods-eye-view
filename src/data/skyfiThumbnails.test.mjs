@@ -344,6 +344,10 @@ test('[skyfi-source-020] reads process.env in localProviderPlugins, and finds a 
   assert.equal(thumb.headers['content-type'], 'image/png');
   assert.equal(fetched.at(-1).url, thumbOf('p1'));
   assert.deepEqual(fetched.at(-1).init.headers, { Accept: ACCEPT });
+  process.env.SKYFI_THUMBNAILS = 'false';
+  const off = await send(routes, `${ROUTE}/p1`);
+  assert.equal(off.status, 404);
+  assert.deepEqual(off.body, { error: 'thumbnails_off' });
 });
 
 test('[skyfi-source-021] refuses a request that fails a check of admitSameSiteRequest', async (t) => {
