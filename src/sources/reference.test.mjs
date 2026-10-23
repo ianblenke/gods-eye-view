@@ -23,6 +23,8 @@ test('reference factories retain compatibility without starting acquisition or s
     'gnss-integrity',
     'gdacs',
     'skywatch-scenes',
+    'planet-scenes',
+    'skyfi-scenes',
   ]);
   assert.notEqual(first.earthquakes, second.earthquakes);
   assert.notEqual(first['air-quality'], second['air-quality']);
