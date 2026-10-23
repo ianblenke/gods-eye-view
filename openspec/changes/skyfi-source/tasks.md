@@ -23,7 +23,7 @@
 
 ## 3. Check on the host
 
-- [ ] 3.1 Run the tests of the plugins on the host.
+- [ ] 3.1 Run the four test files of the plugins with coverage on the host.
 - [ ] 3.2 Write `evidence/api-description.txt` with the address, the date and the SHA-256 of each document of SkyFi that the lead read.
 - [ ] 3.3 Write `evidence/probe.txt` with the requests and the answer shape of the probe of 2026-10-23.
 - [ ] 3.4 Run each named test against its fault.

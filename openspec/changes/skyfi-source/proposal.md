@@ -16,6 +16,7 @@ The key of SkyFi is not read-only. The same key can place orders that cost money
 - The answer also gives the provider code, the product type, the cloud percent and a thumbnail flag of each scene.
 - The answer gives no upstream URL and no price.
 - Add the plugin `skyfiThumbnailProxy()` with the route `GET /api/skyfi/thumbnail/<id>`. It sends the thumbnail of a scene of a kept answer, and it keeps no copy of the image. Its upstream request has no key.
+- Add the function `skyfiPlugins()`. It makes the two plugins from one set of options, and the thumbnail plugin gets the function `thumbnailUrlOf` of the scenes plugin.
 - With `SKYFI_THUMBNAILS=false`, the thumbnail route answers `404` and sends no request to SkyFi.
 
 ## Capabilities
@@ -45,7 +46,8 @@ The change opens no gap and closes no gap in `openspec/trace`.
 - Known limit `first-page`: The plugin reads only the first page of the search. The documents of SkyFi give no sort order, so the 50 scenes of that page are not always the 50 newest scenes of the window.
 - Known limit `open-data`: The search has no filter for open data. On 2026-10-23, 19 of the 50 scenes of the probe were open data scenes of Sentinel-1 and Sentinel-2, and they can fill a page.
 - Known limit `one-polygon`: The plugin keeps only the footprints of the type `POLYGON`. All 50 footprints of the probe had this type. A footprint of another type removes its scene.
-- Known limit `time-zone`: The probe gave capture times with an offset (`-04:00` and `-06:00`). The plugin converts each time to UTC. The documents of SkyFi do not say if the offset is the time zone of the place.
+- Known limit `time-zone`: The probe gave capture times with an offset (`-04:00` and `-06:00`). The plugin converts each time to UTC, and it removes a scene with a time that has no offset. The documents of SkyFi do not say if the offset is the time zone of the place.
+- Known limit `gsd-unit`: The documents of SkyFi do not give the unit of `gsd`. The probe gave 34 and 1000, so the plugin takes centimeters.
 - Known limit `personal-use`: The terms of SkyFi give a personal and non-commercial license, and they forbid a public display, except where they allow it. They have no clause for thumbnails, footprints or search data. The owner uses the app alone.
 - Known limit `order-key`: The key of SkyFi can also place orders. The plugins send only the archive search with the key, and the tests check each request. The owner must keep no payment card on the account of SkyFi, or must set a budget with SkyFi.
 - Known limit `credit-line`: The change `scene-layers` shows the credit of SkyFi and of the provider of each scene. This change shows no image.

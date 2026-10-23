@@ -38,7 +38,7 @@ This change does not edit these three files. The tests examine these checks thro
 
 `server/providers/skyfi/upstream.js` makes the search URL from one fixed text. The plugin sends the key only with this request.
 
-The thumbnail URL is a text of the upstream answer. The plugin accepts it only when it is an `https` URL with the host `app.skyfi.com` or `thumbnails.skyfi.com`. The URL has no port, no user name, no password and no fragment, and it has at most 2048 characters.
+The thumbnail link is a text of the upstream answer. The plugin accepts it only when it starts with `https://app.skyfi.com/` or with `https://thumbnails.skyfi.com/`. The link has no `#`, no `@`, no backslash and no white space, and it has at most 2048 characters. A text check and not a URL parser decides this, so a port or a user name never passes.
 
 The plugin takes the URL from the member `300x300` of `thumbnailUrls`. It keeps the URL on the server, and the answer holds only a flag. The plugin never sends a request to `tilesUrl`, to `nextPage` or to another link.
 
@@ -50,8 +50,8 @@ The daily count, the answer store and the rate limit have the values of the Plan
 
 ### D5: The answer
 
-The answer gives the fields of `skyfi-source-017` for each scene. The price fields, `tilesUrl`, the thumbnail URLs and the other upstream fields stay on the server.
-`resolutionM` is `gsd` divided by 100, because the probe gave `gsd` in centimeters. A scene of the resolution "SUPER HIGH" had 34, and a scene of Sentinel-2 had 1000. `cloudPercent` comes from `cloudCoveragePercent`.
+The answer gives the fields of `skyfi-source-017` for each scene. The price fields, `tilesUrl`, the thumbnail links and the other upstream fields stay on the server.
+`resolutionM` is `gsd` divided by 100. The probe gave 34 for a scene of the resolution "SUPER HIGH" and 1000 for a scene of Sentinel-2, so the plugin takes centimeters. `cloudPercent` comes from `cloudCoveragePercent`.
 
 `provider` is the upstream code, such as `VANTOR` or `SENTINEL2_CREODIAS`, when it has only capital letters, digits and underscores. The layer shows the name of the provider.
 

@@ -16,8 +16,8 @@ Origin: spec-first
 - **WHEN** a GET request for `/api/skyfi/status` arrives from the same site
 - **THEN** the answer is `200` with `{"configured":true}` when `SKYFI_API_KEY` holds a character that is not white space
 - **AND** the answer is `200` with `{"configured":false}` when `SKYFI_API_KEY` is not set or holds only white space
-- **AND** a request with another method gets `405` with `{"error":"Method not allowed"}`
-- **AND** a request with the header `Sec-Fetch-Site: cross-site` gets `403`, and the answer does not hold the key text
+- **AND** a request from the same site with another method gets `405` with `{"error":"Method not allowed"}`
+- **AND** a request with the header `Sec-Fetch-Site: cross-site` gets `403` for each method, and the answer does not contain the key text
 - **AND** the status route sends no upstream request
 
 ### Requirement: Same-site requests only
@@ -85,22 +85,28 @@ Origin: spec-first
 - **THEN** it sends one POST request to `https://app.skyfi.com/platform-api/archives`, and no other request
 - **AND** the body is the JSON text of an object with the four members `aoi`, `fromDate`, `toDate` and `pageSize`, and no other member
 - **AND** `aoi` is the text `POLYGON ((`, the five positions `w s`, `e s`, `e n`, `w n` and `w s`, and the text `))`
-- **AND** a comma and a space are between two positions, and each number has 6 digits after the decimal point
+- **AND** a comma and a space are between two positions
+- **AND** each number is the text that `toFixed(6)` gives for the number
+- **AND** so the text rounds the number, and it has a sign for a negative number
 - **AND** `fromDate` is `<start>T00:00:00+00:00`, `toDate` is `<end>T23:59:59+00:00`, and `pageSize` is the number 50
 - **AND** the samples include the box `[-82.701264,27.735005,-82.213136,28.166195]`
 - **AND** that box gives the positions `-82.701264 27.735005`, `-82.213136 27.735005`, `-82.213136 28.166195`, `-82.701264 28.166195` and `-82.701264 27.735005`
 - **AND** the samples include the box `[0.0000001,0,1,1]`, which gives a text with `0.000000` and no exponent
+- **AND** the samples include the box `[0,0,0.0000009,1]`, where the east number gives the text `0.000001`
+- **AND** the samples include the box `[-0.0000001,0,1,1]`, where the west number gives the text `-0.000000`
 - **AND** the headers are `X-Skyfi-Api-Key`, `Content-Type: application/json` and `Accept: application/json`
 - **AND** the request has the option `redirect: 'error'`
 
 #### Scenario: Send only the allowed requests `skyfi-source-010`
 - **WHEN** a test runs the status route, a valid upstream search, each failure of `skyfi-source-016` and each thumbnail answer of `skyfi-source-020` to `skyfi-source-030`
-- **AND** each fake page has a `nextPage` text, and each fake scene has a `tilesUrl` and the two thumbnail links `300x300` and `2048x2048`
-- **AND** the fetch function of the test records each URL, method and header name
+- **AND** each fake page has a `nextPage` text with the path `/platform-api/archives?page=abc`
+- **AND** each fake scene has a `tilesUrl` and the two thumbnail links `300x300` and `2048x2048`
+- **AND** the fetch function of the test records each URL, method and header name, with the header names in lower case
 - **THEN** each recorded request is a request of `skyfi-source-009` or of `skyfi-source-024`
 - **AND** the only request with the header `X-Skyfi-Api-Key` is the request of `skyfi-source-009`
-- **AND** no recorded URL is the `nextPage` text, a `tilesUrl`, a thumbnail link `2048x2048` or a URL with the path `/platform-api/auth/whoami`, `/platform-api/ping` or `/platform-api/order-archive`
-- **AND** no recorded method is a method other than POST for the search and GET for a thumbnail
+- **AND** no recorded URL is the `nextPage` text, a `tilesUrl`, a thumbnail link `2048x2048` or the host `app.skyfi.com` with the `nextPage` text
+- **AND** no recorded URL has the path `/platform-api/auth/whoami`, `/platform-api/ping` or `/platform-api/order-archive`
+- **AND** the search request uses POST, and each thumbnail request uses GET
 
 ### Requirement: Search control
 The plugin MUST limit the upstream searches with a daily count, an answer store and a rate limit.
@@ -108,7 +114,7 @@ Origin: spec-first
 
 #### Scenario: Count the searches of the day `skyfi-source-011`
 - **WHEN** a valid scenes request needs a new upstream search
-- **THEN** the plugin adds 1 to the count of the UTC day before it sends the first search request
+- **THEN** the plugin adds 1 to the count of the UTC day before it sends the search request
 - **AND** the count grows by 1 for one upstream search
 - **AND** the daily limit is the number of `SKYFI_DAILY_SEARCHES` when that text has only digits and its number is from 1 to 1000
 - **AND** the daily limit is 20 for each other value, and when the variable is not set
@@ -124,8 +130,8 @@ Origin: spec-first
 - **AND** the store keeps at most 32 answers, and it removes the oldest answer first
 - **AND** after 33 answers for 33 boxes, the store gives the answer of the second box and not the answer of the first box
 
-#### Scenario: Share an upstream search that is in flight `skyfi-source-013`
-- **WHEN** a scenes request arrives while an upstream search for the same box and dates has not ended
+#### Scenario: Share an upstream search that still runs `skyfi-source-013`
+- **WHEN** a scenes request arrives while an upstream search for the same box and dates still runs
 - **THEN** the request waits for that upstream search, the plugin sends no other request, and the count does not change
 - **AND** the request gets the scenes of that upstream search with `cached` true, or its failure
 
@@ -141,7 +147,7 @@ Origin: spec-first
 - **WHEN** a scenes request meets more than one step that can answer
 - **THEN** the first step in this order answers: method, same site, rate limit, body, box, area, dates, key, store, daily count
 - **AND** the same-site step is the check of `skyfi-source-004`, with its check of the header `Content-Type`
-- **AND** the store step answers when the store keeps an answer, or when an upstream search for the same box and dates is in flight
+- **AND** the store step answers when the store keeps an answer, or when an upstream search for the same box and dates still runs
 - **AND** a request that the store step answers gets its answer when the count of the day is equal to the limit
 - **AND** the plugin starts an upstream search only when all ten steps pass
 
@@ -163,7 +169,7 @@ Origin: spec-first
 - **AND** the plugin reads the body only of an answer `200`
 - **AND** a body that is not JSON and a body of more than 4194304 bytes give `502` with `{"error":"bad_upstream"}`
 - **AND** the plugin reads a body of exactly 4194304 bytes
-- **AND** a valid page is an object with an array `archives`, and each other page gives the same answer
+- **AND** a valid page is an object with an array `archives`, and each other page gives `502` with `{"error":"bad_upstream"}`
 - **AND** the store keeps no failure
 
 ### Requirement: Filtered answer
@@ -175,24 +181,33 @@ Origin: spec-first
 - **THEN** each scene of the answer has only the fields of the list below, from the upstream value after the arrow
 - **AND** the list is `id` ← `archiveId`, `start` ← `captureTimestamp`, `footprint` ← `footprint` and `resolutionM` ← `gsd`
 - **AND** the list continues with `provider` ← `provider`, `productType` ← `productType` and `cloudPercent` ← `cloudCoveragePercent`, and it ends with `thumbnail`
-- **AND** a valid time is a text that `Date.parse` reads as a finite number, and `start` is the `toISOString()` text of that time
-- **AND** the sample `2026-10-22T18:10:34-04:00` gives the `start` `2026-10-22T22:10:34.000Z`
+- **AND** a valid time is a text that ends with `Z` or with an offset such as `-04:00`
+- **AND** `Date.parse` reads a valid time as a finite number
+- **AND** `start` is the `toISOString()` text of that time
+- **AND** the samples of a text that is not a valid time include `2026-10-22T18:10:34`, which has no offset, and `2026-13-01T00:00:00Z`
+- **AND** the sample `2026-10-22T18:10:34-04:00` gives the `start` `2026-10-22T22:10:34.000Z`, and the sample `2026-10-22T18:10:34Z` gives `2026-10-22T18:10:34.000Z`
 - **AND** `cloudPercent` is a finite number from 0 to 100
 - **AND** `resolutionM` is the number `gsd` divided by 100, when `gsd` is a finite number of 0 or more
 - **AND** each number field is null when the upstream value does not meet its rule
 - **AND** the samples that give null for each number field include null, "7", true, -1 and a value that JSON reads as Infinity
+- **AND** the samples that give a number include a `cloudCoveragePercent` of 0 and of 100, and a `gsd` of 0
 - **AND** a `cloudCoveragePercent` of 101 gives a `cloudPercent` of null, and a `gsd` of 34 gives a `resolutionM` of 0.34
 - **AND** `provider` is the upstream text when it has 1 to 40 capital letters, digits or underscores, and null in each other case
+- **AND** the samples of `provider` null include an empty text, a text of 41 letters and the text `vantor`
+- **AND** the samples of `provider` kept include a text of 40 letters
 - **AND** `productType` is the upstream text when it is one of `DAY`, `NIGHT`, `VIDEO`, `MULTISPECTRAL`, `HYPERSPECTRAL`, `SAR`, `STEREO`, `BASEMAP` and `THERMAL`
-- **AND** `productType` is null in each other case
-- **AND** `thumbnail` is true when `thumbnailUrls["300x300"]` is a text that meets the rule of the next five items, and false in each other case
-- **AND** the text is an `https` URL with the host `app.skyfi.com` or `thumbnails.skyfi.com`, and it has at most 2048 characters
-- **AND** the text has no port, no user name, no password and no fragment
+- **AND** `productType` is null in each other case, and the samples include the text `day`
+- **AND** `thumbnail` is true when `thumbnailUrls["300x300"]` is a text that meets the rule of the next two items, and false in each other case
+- **AND** the text starts with `https://app.skyfi.com/` or with `https://thumbnails.skyfi.com/`, and it has at most 2048 characters
+- **AND** the text has no `#`, no `@`, no backslash, no white space and no control character
 - **AND** the samples of `thumbnail` false include the host `skyfi.example.test` and the host `app.skyfi.com.example.test`
-- **AND** the samples of `thumbnail` false include the scheme `http`, the port `:8443`, a user name, a fragment and a text of 2049 characters
+- **AND** the samples of `thumbnail` false include the scheme `http`, the port `:8443`, the port `:443` and a user name
+- **AND** the samples of `thumbnail` false include a backslash, a fragment, a space and a text of 2049 characters
+- **AND** the samples of `thumbnail` true include a text of 2048 characters and a text with a query
 - **AND** the samples of `thumbnail` false also include a scene that has only the link `2048x2048`, and a scene with a `thumbnailUrls` that is null
 - **AND** the route removes an item of `archives` that is not an object
 - **AND** the route removes a scene whose `archiveId` is not a text of 1 to 128 ASCII letters, digits, hyphens or underscores
+- **AND** the samples of `archiveId` include an empty text, a text of 128 letters, which stays, and a text of 129 letters
 - **AND** the route removes a scene with a `captureTimestamp` that is not a valid time
 
 #### Scenario: Keep the first ring of a polygon `skyfi-source-018`
@@ -200,16 +215,29 @@ Origin: spec-first
 - **THEN** a text of the type `POLYGON` gives `{"type":"Polygon","coordinates":[ring]}`, where the ring is the first ring of the WKT polygon
 - **AND** the route removes each other ring of the polygon
 - **AND** the plugin reads at most 20000 characters, and it removes the scene for a text of 20001 characters
+- **AND** the samples include a text of exactly 20000 characters, which stays
+- **AND** the text is the word `POLYGON` in capital letters, zero or more spaces, and one or more rings in brackets
+- **AND** a comma is between two rings
+- **AND** a ring in brackets has one or more positions, with a comma between two positions
+- **AND** a comma can have spaces before it and after it, and a position has two numbers with one or more spaces between them
+- **AND** a number is an optional `-`, one or more digits, and an optional `.` with one or more digits
+- **AND** the text has no other character
+- **AND** so it has no tab, no line break, no text before `POLYGON` and no text after the last bracket
+- **AND** the route removes a scene when the text does not meet this rule, and when it has no ring
 - **AND** a ring of the answer has the longitude and the latitude of each WKT position, as numbers
-- **AND** a valid ring has 4 to 2000 positions, and the samples include rings of 3, 4, 2000 and 2001 positions
+- **AND** a valid first ring has 4 to 2000 positions, and the samples include rings of 3, 4, 2000 and 2001 positions
 - **AND** the longitude and the latitude of the first position are equal to those of the last position
-- **AND** each position has 2 numbers, a longitude from -180 to 180 and a latitude from -90 to 90, with no exponent
-- **AND** the route removes a scene when the text is not a `POLYGON`
-- **AND** the route removes a scene when its ring is not a valid ring, and when it has no ring
+- **AND** the longitude is from -180 to 180 and the latitude is from -90 to 90 in the first ring
+- **AND** the route removes a scene when its first ring is not a valid ring
+- **AND** a later ring needs only the rule of the text
+- **AND** a scene with a valid first ring stays when a later ring has 3 positions or is not closed
+- **AND** a scene with a later ring that has a number such as `1e1` is removed, because the text does not meet the rule
 - **AND** the samples of removed texts include a `MULTIPOLYGON` of one polygon, a `POINT` and the text `POLYGON EMPTY`
-- **AND** the samples of removed texts include a position with 3 numbers and a position with the number `1e1`
+- **AND** the samples of removed texts include the text `polygon` in small letters and the text `POLYGON Z`
+- **AND** the samples of removed texts include the numbers `+1`, `.5`, `5.` and `1e1`
+- **AND** the samples of removed texts include a tab between two numbers, a position with 3 numbers and the text `x` after the last bracket
 - **AND** the samples of kept texts include a polygon with a second ring
-- **AND** the samples of kept texts include a polygon text that has no space after `POLYGON`, and no space after a comma
+- **AND** the samples of kept texts include a polygon text that has no space after `POLYGON` and no space after a comma
 - **AND** a scene with a `footprint` that is not a text is removed
 
 #### Scenario: Give the shape of the answer `skyfi-source-019`
@@ -274,12 +302,12 @@ Origin: spec-first
 - **THEN** the thumbnail plugin gets the URL from the function `thumbnailUrlOf` of the scenes plugin of the same call
 - **AND** `thumbnailUrlOf` reads the kept answers from the newest answer to the oldest answer, and it looks only at the scenes in `scenes`
 - **AND** it uses the newest kept answer that has a scene with that id and with `thumbnail` true
-- **AND** it gives the thumbnail URL of the first such scene in that answer
+- **AND** it gives the thumbnail link of the first such scene in that answer
 - **AND** the thumbnail plugin then sends one GET request to that URL
 - **AND** the request has the option `redirect: 'error'` and the header `Accept: image/png, image/jpeg, image/webp`, and no other header
 - **AND** an answer that is 599999 ms old gives the URL, and an answer that is 600000 ms old does not give it
 - **AND** the samples include a URL on the host `thumbnails.skyfi.com` and a URL on the host `app.skyfi.com`
-- **AND** the samples include one id in two kept answers with different URLs
+- **AND** the samples include one id in two kept answers with different links
 - **AND** the samples include one answer with two scenes that have the same id, where the first scene has `thumbnail` false
 
 #### Scenario: Refuse a scene that no kept answer has `skyfi-source-025`
@@ -288,6 +316,8 @@ Origin: spec-first
 - **AND** the samples include a scene with `thumbnail` false and a scene after the first 50 scenes of `skyfi-source-019`
 - **AND** the thumbnail plugin of a second call of `skyfiPlugins()` does not find a scene of the first call
 - **AND** a thumbnail plugin that the test makes with no option `thumbnailUrlOf` answers `404` with `{"error":"unknown_scene"}` for each id
+- **AND** a thumbnail plugin whose `thumbnailUrlOf` gives a text that fails the rule of `skyfi-source-017` answers the same, and it sends no upstream request
+- **AND** the samples of such a text include `http://app.skyfi.com/x`, `https://example.test/x` and `https://app.skyfi.com:443/x`, and a value that is not a text
 
 #### Scenario: Send no key with a thumbnail request `skyfi-source-026`
 - **WHEN** a thumbnail request reaches the upstream request, and `SKYFI_API_KEY` holds " fixture-key-Q7 "
@@ -312,7 +342,7 @@ Origin: spec-first
 - **AND** the samples of such an error include a redirect and the end of the time limit of 15000 ms
 - **AND** the time limit covers the headers and the body
 - **AND** the thumbnail plugin clears the timer after it reads the body, and immediately when it reads no body
-- **AND** no failure answer and no header of an answer holds the thumbnail URL, its host name or the key text
+- **AND** no failure answer and no header of an answer holds the thumbnail link, its host name or the key text
 
 #### Scenario: Send the thumbnail and keep no copy `skyfi-source-029`
 - **WHEN** the image passes the checks of `skyfi-source-027`
