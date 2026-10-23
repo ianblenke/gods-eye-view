@@ -2,10 +2,13 @@ Named faults of planet-source (AGENTS.md rule 13). The runner is the file faults
 For each fault, the runner changes the named text of one or more files and runs the test files of the fault. Each test has a time limit of 30000 ms. Then the runner puts back the files and checks their SHA-256.
 A fault is killed when a test with a scenario ID that the fault names fails. The runner also lists each test of the change that no fault makes fail.
 
-Run 3 is the record. Commit: db16bbf9. Start (UTC) 2026-10-22T23:27:22Z, end (UTC) 2026-10-22T23:37:53Z. Result: faults 231, killed 231, survived 0. The line of the runner for the tests of the change: "tests of the change: 94, with no fault that makes them fail: 0".
+Run 4 is the record. Commit: 04965f45. Start (UTC) 2026-10-23T02:49:59Z, end (UTC) 2026-10-23T02:59:58Z. Result: faults 233, killed 233, survived 0. The line of the runner for the tests of the change: "tests of the change: 95, with no fault that makes them fail: 0".
 
 Run 2 was on the commit e4abb7fd. Result: faults 230, killed 230, survived 0. The line for the tests of the change: "tests of the change: 93, with no fault that makes them fail: 0".
 After run 2, the commit db16bbf9 adds the test of the time zone, and run 3 has the fault "day after from local time" again.
+
+Run 3 was on the commit db16bbf9. Result: faults 231, killed 231, survived 0. The line for the tests of the change: "tests of the change: 94, with no fault that makes them fail: 0".
+After run 3, round 1 of the review gave two major findings. The code of normalize.js now refuses a third position value that is not a number, and a new test of planet-source-015 has an in-flight share at the daily limit. Run 4 has two new faults: "third value not checked" and "in-flight share after the budget". A first attempt of run 4 left the second fault alive (231 + 2 faults, 232 killed, 1 survived), because its text read the map of the searches in flight after the await, when the search had ended. The text now reads the map before the await, and the record is the second attempt of run 4.
 
 Run 1 was on the commit 4057dce5. Result: faults 229, killed 214, survived 15. The line for the tests of the change: "tests of the change: 92, with no fault that makes them fail: 2".
 The commit d621b0d7 adds test samples, and the commit e4abb7fd removes the checks of the equivalent faults. Each fault of run 1 that survived, and the correction for it:
@@ -29,7 +32,7 @@ The tests of run 1 with no fault that makes them fail. For each of them, run 2 h
 - [planet-source-021] accepts a same-origin request through the reverse proxy
 Run 2 also changes the old code text of the faults on the lines that the commit e4abb7fd edits.
 
-The result line of each fault of run 3 follows. Each line gives the name of the fault, the changed files, the targets and the failed tests.
+The result line of each fault of run 4 follows. Each line gives the name of the fault, the changed files, the targets and the failed tests.
 
 KILLED: other plugin name (server/providers/planet.js) | targets: ['001'] | failed: ['src/data/planetProxy.test.mjs: [planet-source-001] mounts the two routes and passes other paths to next', 'src/data/planetProxy.test.mjs: [planet-source-001] localProviderPlugins holds the scenes plugin once']
 KILLED: no preview server routes (server/providers/planet.js) | targets: ['001'] | failed: ['src/data/planetProxy.test.mjs: [planet-source-001] mounts the two routes and passes other paths to next']
@@ -78,7 +81,7 @@ KILLED: rate window of 60001 ms (server/providers/planet.js) | targets: ['014'] 
 KILLED: no Retry-After of the rate limit (server/providers/planet.js) | targets: ['014'] | failed: ['src/data/planetProxy.test.mjs: [planet-source-014] refuses the 7th request in 60000 ms, and a stored answer counts']
 KILLED: rate limit before the same-site check (server/providers/planet.js) | targets: ['015'] | failed: ['src/data/planetProxy.test.mjs: [planet-source-015] refuses a request from another site, or with another Content-Type, before the rate limit']
 KILLED: key checked after the store (server/providers/planet.js) | targets: ['015'] | failed: ['src/data/planetProxy.test.mjs: [planet-source-015] checks the key before the store']
-KILLED: budget before the store (server/providers/planet.js) | targets: ['015'] | failed: ['src/data/planetProxy.test.mjs: [planet-source-015] checks the rate limit before the body, and the store before the daily count']
+KILLED: budget before the store (server/providers/planet.js) | targets: ['015'] | failed: ['src/data/planetProxy.test.mjs: [planet-source-015] shares an upstream search that is in flight when the count equals the limit', 'src/data/planetProxy.test.mjs: [planet-source-015] checks the rate limit before the body, and the store before the daily count']
 KILLED: method after the same-site check (server/providers/planet.js) | targets: ['015'] | failed: ['src/data/planetProxy.test.mjs: [planet-source-015] answers with the first step that fails']
 KILLED: upstream rate limit gives 502 (server/providers/planet.js) | targets: ['016'] | failed: ['src/data/planetUpstream.test.mjs: [planet-source-016] gives the named answer of the scenes route for each failure']
 KILLED: no Retry-After of the upstream limit (server/providers/planet.js) | targets: ['016'] | failed: ['src/data/planetUpstream.test.mjs: [planet-source-016] gives the named answer of the scenes route for each failure']
@@ -261,4 +264,6 @@ KILLED: next link of each value (server/providers/planet/normalize.js) | targets
 KILLED: page read without the check (server/providers/planet/upstream.js) | targets: ['016'] | failed: ['src/data/planetUpstream.test.mjs: [planet-source-016] gives bad_upstream for a body that is not JSON, a body over 4194304 bytes, and a page of the wrong shape']
 KILLED: thumbnail route for this machine only (server/providers/planet/thumbnails.js) | targets: ['021'] | failed: ['src/data/planetThumbnails.test.mjs: [planet-source-021] accepts a same-origin request through the reverse proxy']
 KILLED: thumbnail route reads no encrypted socket (server/providers/planet/thumbnails.js) | targets: ['021'] | failed: ['src/data/planetThumbnails.test.mjs: [planet-source-021] accepts an https origin on an encrypted socket']
+KILLED: third value not checked (server/providers/planet/normalize.js) | targets: ['018'] | failed: ['src/data/planetScenes.test.mjs: [planet-source-018] removes a scene with a bad position']
+KILLED: in-flight share after the budget (server/providers/planet.js) | targets: ['015'] | failed: ['src/data/planetProxy.test.mjs: [planet-source-015] shares an upstream search that is in flight when the count equals the limit']
 KILLED: day after from local time (server/providers/planet/upstream.js) | targets: ['009'] | failed: ['src/data/planetUpstream.test.mjs: [planet-source-009] gives the calendar date after end in a time zone east of UTC']

@@ -1,4 +1,4 @@
-Host checks of planet-source on the commit db16bbf9. Host node: v26.8.2. Each output shows at most its last three lines. The lead added each line "exit".
+Host checks of planet-source on the commit 04965f45. Host node: v26.8.2. Each output shows at most its last three lines. The lead added each line "exit".
 
 $ node scripts/format.mjs --check
 Checked 1578 source files.
