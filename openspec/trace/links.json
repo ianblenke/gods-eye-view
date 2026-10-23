@@ -6471,10 +6471,20 @@
   ],
   "scene-layers-008": [
     "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] Planet: picks the middle of the canvas on the ellipsoid of the globe and sends its box",
-    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] SkyFi: picks the middle of the canvas on the ellipsoid of the globe and sends its box"
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] Planet: sends the box of each sample of the spec for the middle of the view",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] Planet: sends the window of the time of the clock at the press",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] Planet: uses Date.now as the clock when no option now is given",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] SkyFi: picks the middle of the canvas on the ellipsoid of the globe and sends its box",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] SkyFi: sends the box of each sample of the spec for the middle of the view",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] SkyFi: sends the window of the time of the clock at the press",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-008] SkyFi: uses Date.now as the clock when no option now is given"
   ],
   "scene-layers-009": [
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] Planet: gives the reason sky for a middle of the view that is not a finite point or is at the centre of the globe",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] Planet: sends a box at the limits of the latitude and the longitude, and refuses a box past them",
     "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] Planet: sends no search for a view that has no box and names the reason",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] SkyFi: gives the reason sky for a middle of the view that is not a finite point or is at the centre of the globe",
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] SkyFi: sends a box at the limits of the latitude and the longitude, and refuses a box past them",
     "src/layers/sceneLayer/layer.test.mjs › [scene-layers-009] SkyFi: sends no search for a view that has no box and names the reason",
     "src/layers/sceneLayer/messages.test.mjs › [scene-layers-009] Planet: names each reason of a view that has no box",
     "src/layers/sceneLayer/messages.test.mjs › [scene-layers-009] SkyFi: names each reason of a view that has no box"
@@ -6731,11 +6741,7 @@
   ],
   "scene-layers-036": [
     "src/layers/sceneLayer/layer.test.mjs › [scene-layers-036] Planet: sends only boxes that the server accepts, for the latitudes and the longitudes of the spec",
-    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-036] Planet: sends the window of the time of the clock at the press",
-    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-036] Planet: uses Date.now as the clock when no option now is given",
-    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-036] SkyFi: sends only boxes that the server accepts, for the latitudes and the longitudes of the spec",
-    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-036] SkyFi: sends the window of the time of the clock at the press",
-    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-036] SkyFi: uses Date.now as the clock when no option now is given"
+    "src/layers/sceneLayer/layer.test.mjs › [scene-layers-036] SkyFi: sends only boxes that the server accepts, for the latitudes and the longitudes of the spec"
   ],
   "skyfi-source-001": [
     "src/data/skyfiProxy.test.mjs › [skyfi-source-001] localProviderPlugins holds the scenes plugin once",
