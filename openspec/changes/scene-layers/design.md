@@ -7,7 +7,7 @@ On 2026-10-22 the owner selected one layer for each service on one shared module
 ## Goals / Non-Goals
 
 **Goals:**
-- Show the scenes of Planet and of SkyFi on the globe, with the same way of working as the layer "SkyWatch Scenes".
+- Show the scenes of Planet and of SkyFi on the globe, with the same behavior as the layer "SkyWatch Scenes".
 - Keep one copy of the code for the two new layers.
 
 **Non-Goals:**
@@ -18,7 +18,9 @@ On 2026-10-22 the owner selected one layer for each service on one shared module
 
 ### D1: One module, a service value for each layer
 
-The module `src/layers/sceneLayer/` has the functions `createSceneSource(service, options)` and `createSceneLayer(service, options)`. The value `provider` is "planet" or "skyfi". The file `services.js` holds the frozen values of each service. These are the layer id, the names, the icon, the label, the route base and the two variable names. They also include the list label and the names of the satellite providers.
+The module `src/layers/sceneLayer/` has the functions `createSceneSource(service, options)` and `createSceneLayer(service, options)`. The argument `service` is "planet" or "skyfi". The file `services.js` holds the frozen values of each service. These are the layer id, the names, the icon, the label, the route base and the two variable names. They also include the names of the satellite providers. The file `model.js` chooses the list label by the name of the service.
+
+The routes of Planet and SkyFi check the box and the dates with the function `validateRequest` of the SkyWatch provider. So the layer builds only boxes and windows that this function accepts.
 
 The module copies the code of the layer "SkyWatch Scenes" and replaces the fixed words with these values. It imports `scenesBox` and `searchWindow` from `src/layers/skywatchScenes/box.js`, because they do not depend on the service.
 
@@ -50,7 +52,7 @@ Each test runs for both services, with the expected values of each service writt
 
 New owned code files: `src/layers/sceneLayer/{services,records,messages,model,source,index}.js` and `src/app/layers/sceneLayers.js`. New owned test files: the six files of the proposal.
 
-Each new code file must have 100% line, branch and function coverage. The trace gate checks the 35 scenario IDs and their tests. The prose lint checks STE.
+Each new code file must have 100% line, branch and function coverage. The trace gate checks the 36 scenario IDs and their tests. The prose lint checks STE.
 The lead runs the four checks of `make precheck` on the host, and the gates in Docker. The two review agents read the final tree.
 
 ## Purpose at archive time

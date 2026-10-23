@@ -533,7 +533,7 @@ for (const S of SERVICES) {
     );
   });
 
-  test(`[scene-layers-036] ${S.label}: sends the window of the time of the clock at the press`, async () => {
+  test(`[scene-layers-008] ${S.label}: sends the window of the time of the clock at the press`, async () => {
     const h = harness();
     await h.ready();
     h.clock.t = Date.parse('2026-03-01T00:00:00.000Z');
@@ -550,7 +550,7 @@ for (const S of SERVICES) {
     ]);
   });
 
-  test(`[scene-layers-036] ${S.label}: uses Date.now as the clock when no option now is given`, async (t) => {
+  test(`[scene-layers-008] ${S.label}: uses Date.now as the clock when no option now is given`, async (t) => {
     const time = Date.parse('2024-03-01T00:00:00.000Z');
     t.mock.method(Date, 'now', () => time);
     const h = harness({ withNow: false });
@@ -1467,5 +1467,79 @@ for (const S of SERVICES) {
       }
     }
     assert.equal(boxes, 33 * 35);
+  });
+
+  test(`[scene-layers-008] ${S.label}: sends the box of each sample of the spec for the middle of the view`, async () => {
+    const rows = [
+      [60.0, 10.0, [9.568326, 59.784163, 10.431674, 60.215837]],
+      [30.2672, -97.7431, [-97.98991, 30.054163, -97.49009, 30.485837]],
+      [-33.9, 151.2, [150.939959, -34.115837, 151.460041, -33.684163]],
+    ];
+    for (const [lat, lon, bbox] of rows) {
+      const h = harness({
+        pick: () => Cesium.Cartesian3.fromDegrees(lon, lat),
+      });
+      await h.searched();
+      assert.deepEqual(h.calls.searchScenes[0].bbox, bbox, `${lat} ${lon}`);
+      assert.equal(h.calls.searchScenes[0].start, '2026-07-22');
+      assert.equal(h.calls.searchScenes[0].end, '2026-10-21');
+    }
+  });
+
+  test(`[scene-layers-009] ${S.label}: sends a box at the limits of the latitude and the longitude, and refuses a box past them`, async () => {
+    const MERIDIAN =
+      'Move the view away from the 180th meridian and press again.';
+    const LATITUDE =
+      'Move the view to a latitude from -80 to 80 degrees and press again.';
+    const rows = [
+      [80.004, 0, null],
+      [80.006, 0, LATITUDE],
+      [-80.004, 0, null],
+      [-80.006, 0, LATITUDE],
+      [0, 179.78, null],
+      [0, -179.78, null],
+      [0, 179.79, MERIDIAN],
+      [0, -179.79, MERIDIAN],
+      [39.57, 179.72, null],
+      [39.57, -179.72, null],
+      [85, 179.9, LATITUDE],
+    ];
+    for (const [lat, lon, reason] of rows) {
+      const h = harness({
+        pick: () => Cesium.Cartesian3.fromDegrees(lon, lat),
+      });
+      await h.searched();
+      if (reason === null) {
+        assert.equal(h.calls.searchScenes.length, 1, `${lat} ${lon}`);
+      } else {
+        assert.equal(h.calls.searchScenes.length, 0, `${lat} ${lon}`);
+        assert.equal(h.info(), reason, `${lat} ${lon}`);
+        assert.equal(h.layer.getStats().error, reason);
+      }
+    }
+    const east = harness({
+      pick: () => Cesium.Cartesian3.fromDegrees(179.72, 39.57),
+    });
+    await east.searched();
+    assert.equal(east.calls.searchScenes[0].bbox[2], 180);
+    const west = harness({
+      pick: () => Cesium.Cartesian3.fromDegrees(-179.72, 39.57),
+    });
+    await west.searched();
+    assert.equal(west.calls.searchScenes[0].bbox[0], -180);
+  });
+
+  test(`[scene-layers-009] ${S.label}: gives the reason sky for a middle of the view that is not a finite point or is at the centre of the globe`, async () => {
+    const SKY = 'Point the view at the ground and press again.';
+    for (const position of [
+      new Cesium.Cartesian3(Number.NaN, 0, 0),
+      new Cesium.Cartesian3(0, Number.POSITIVE_INFINITY, 0),
+      new Cesium.Cartesian3(0, 0, 0),
+    ]) {
+      const h = harness({ pick: () => position });
+      await h.searched();
+      assert.equal(h.calls.searchScenes.length, 0);
+      assert.equal(h.info(), SKY);
+    }
   });
 }

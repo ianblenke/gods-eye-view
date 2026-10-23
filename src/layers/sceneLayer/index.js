@@ -13,17 +13,18 @@ const SEARCHING_LABEL = 'Searching…';
 function viewCentre(viewer) {
   const canvas = viewer.scene?.canvas;
   if (!canvas?.clientWidth || !canvas?.clientHeight) return null;
-  let hit;
+  let position;
   try {
-    hit = viewer.camera.pickEllipsoid(
+    const hit = viewer.camera.pickEllipsoid(
       new Cesium.Cartesian2(canvas.clientWidth / 2, canvas.clientHeight / 2),
       viewer.scene.globe?.ellipsoid,
     );
+    // A sky pick gives undefined, and fromCartesian throws for it.
+    position = Cesium.Cartographic.fromCartesian(hit);
   } catch {
     return null;
   }
-  if (!hit) return null;
-  const position = Cesium.Cartographic.fromCartesian(hit);
+  if (!position) return null;
   return {
     lat: Cesium.Math.toDegrees(position.latitude),
     lon: Cesium.Math.toDegrees(position.longitude),

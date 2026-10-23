@@ -2,7 +2,7 @@
 
 The owner has accounts at Planet and SkyFi. The changes `planet-source` and `skyfi-source` added the server routes for both services. This change, the third of three, adds the layers that show their scenes. On 2026-10-22 the owner selected one layer for each service, on one shared layer module. The layer "SkyWatch Scenes" and its token stay as they are.
 
-The two layers copy the way of working of the layer "SkyWatch Scenes". A person presses a chip, and the layer sends one search for a box of about 48 km at the view centre. The layer draws the footprint of each scene on the ground. A click on a scene in the list shows its thumbnail as a card.
+The two layers copy the behavior of the layer "SkyWatch Scenes". A person presses a chip, and the layer sends one search for a box of about 48 km at the view centre. The layer draws the footprint of each scene on the ground. A click on a scene in the list shows its thumbnail as a card.
 
 The change adds no server code and sends no request to a service. The layers call only the routes of this app.
 
@@ -41,6 +41,7 @@ The change adds no dependency. It opens no gap and closes no gap in `openspec/tr
 - Known limit `no-product-type`: The routes give the product type of a SkyFi scene (optical, radar). The layer does not show it.
 - Known limit `service-names`: The layer knows the names of four satellite providers of SkyFi. For another code, it shows the code with each underscore changed to a space.
 - Known limit `thumbnail-only-first-part`: The card of a scene is at the centre of the first footprint part.
+- Known limit `thumbnail-id`: The source puts the id of a scene into the thumbnail URL as it is. The records rule lets only ids of letters, digits, hyphens and underscores pass, so a bad id never reaches the URL.
 - Known limit `thumbnail-codes`: The thumbnail routes can answer `no_key` or `key_rejected`. The layer has no text for them and shows the text for an unknown error.
 - Known limit `one-user`: The terms of Planet and SkyFi allow the owner to view the data. The layers keep no image, but the routes do not suit a site with more users.
 - Known limit `press-after-error`: As in the layer "SkyWatch Scenes", no test presses the chip again after a failed search. The tests call `disable` and `enable` first.

@@ -15,8 +15,8 @@ Origin: spec-first
 - **AND** a test runs each scenario below for the layer of Planet and for the layer of SkyFi
 - **AND** the `updateInterval` is 0, and the layer has a method `setParams`
 - **AND** `getStats` gives `count` 0, `lastUpdate` null and `error` null
-- **AND** the layer throws a `TypeError` for a source that lacks `getStatus`, `searchScenes` or `getThumbnail`
-- **AND** the layer throws a `TypeError` for an overlay host that lacks `setEntries`, `clearSource` or `setVisible`
+- **AND** `createSceneLayer` throws a `TypeError` for a source that lacks `getStatus`, `searchScenes` or `getThumbnail`
+- **AND** `createSceneLayer` throws a `TypeError` for an overlay host that lacks `setEntries`, `clearSource` or `setVisible`
 - **AND** the function throws a `TypeError` for a service that is not "planet" or "skyfi"
 - **AND** a second `init` throws an error
 ### Requirement: No search without a press
@@ -78,10 +78,10 @@ Origin: spec-first
 
 #### Scenario: Send the box and the dates of the SkyWatch layer `scene-layers-008`
 - **WHEN** a test presses the chip with a fake viewer, and the fake clock is at 2026-10-21T12:00:00.000Z
-- **AND** the middle of the view of the fake viewer is the point (60.0, 10.0)
+- **AND** the middle of the view of the fake viewer is the point with latitude 60.0 and longitude 10.0
 - **THEN** the source gets one `searchScenes` call with the box [9.568326, 59.784163, 10.431674, 60.215837], `start` "2026-07-22" and `end` "2026-10-21"
-- **AND** the sample (30.2672, -97.7431) gives the box [-97.98991, 30.054163, -97.49009, 30.485837]
-- **AND** the sample (-33.9, 151.2) gives the box [150.939959, -34.115837, 151.460041, -33.684163]
+- **AND** the sample with latitude 30.2672 and longitude -97.7431 gives the box [-97.98991, 30.054163, -97.49009, 30.485837]
+- **AND** the sample with latitude -33.9 and longitude 151.2 gives the box [150.939959, -34.115837, 151.460041, -33.684163]
 - **AND** the layer calls `pickEllipsoid` at half of the `clientWidth` and half of the `clientHeight` of the canvas, with the ellipsoid of the globe
 - **AND** the clock 2024-03-01T00:00:00.000Z gives `start` "2023-12-01" and `end` "2024-03-01"
 - **AND** a layer without the option `now` uses `Date.now` as its clock
@@ -110,7 +110,6 @@ Origin: spec-first
 - **AND** it does so for each longitude from -170 to 170 in steps of 10
 - **AND** the fake clock is at 2026-10-21T12:00:00.000Z
 - **THEN** the function `validateRequest` of the server accepts each body `{bbox, start, end}` that the layer gives to `searchScenes`
-- **AND** the routes of Planet and SkyFi use that function for their checks
 - **AND** `start` is "2026-07-22" and `end` is "2026-10-21"
 - **AND** the area of each box, from the function `boxAreaKm2` of the server, is from 2303.99 to 2304.01 km²
 
@@ -138,7 +137,7 @@ Origin: spec-first
 - **AND** a JSON body without a text `error` gives the error "unknown"
 - **AND** a body that is not JSON gives the error "bad_answer" with the HTTP status of the answer
 - **AND** the source reads a body of 8388608 bytes, and a body of 8388609 bytes gives the error "bad_answer"
-- **AND** a rejection gives the status 0 and the error "unreachable"
+- **AND** a rejection of the fetch function, except an abort by the signal of the call, gives the status 0 and the error "unreachable"
 - **AND** the source aborts a call that does not end in 60 seconds, and the call gives the status 0 and the error "unreachable"
 - **AND** the source clears the timer of that call when the call ends
 - **AND** the source aborts the signal that it makes when the signal of the call aborts, and when the 60 seconds end
@@ -157,7 +156,7 @@ Origin: spec-first
 - **AND** the source reads a body of 1048576 bytes, and a body of 1048577 bytes gives the error "bad_answer"
 - **AND** an answer with an HTTP status that is not `2xx` gives `{ok:false, status, error}`, where `error` is the text `error` of its JSON body
 - **AND** such an answer gives the error "unknown" for a JSON body without a text `error`, and "bad_answer" for a body that is not JSON
-- **AND** a rejection gives the status 0 and the error "unreachable"
+- **AND** a rejection of the fetch function, except an abort by the signal of the call, gives the status 0 and the error "unreachable"
 - **AND** the source aborts a call that does not end in 20 seconds, and the call gives the status 0 and the error "unreachable"
 - **AND** the source clears the timer of that call when the call ends, and the call removes its listener from the signal of the call
 - **AND** a call rejects with the `AbortError` when the signal of the call aborts
@@ -186,7 +185,7 @@ Origin: spec-first
 - **AND** it drops a scene when a position has a longitude that is not from -180 to 180
 - **AND** it drops a scene when a position has a latitude that is not from -90 to 90
 - **AND** it drops a scene when the first position and the last position of a ring are not equal
-- **AND** it drops an entry of `scenes` that is not an object, and a scene when an earlier scene has the same `id`
+- **AND** it drops an entry of `scenes` that is not an object, and a scene when an earlier kept scene has the same `id`
 - **AND** it keeps at most the first 50 valid scenes, in the order of the answer
 - **AND** the samples include rings of 3, 4, 2000 and 2001 positions, ids of 128 and 129 characters, and answers of 50 and 51 scenes
 - **AND** `resolutionM` is a finite number of 0 or more, or null

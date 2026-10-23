@@ -72,11 +72,11 @@ function sceneText(scene, label) {
   return parts.length > 0 ? parts.join(' · ') : `${label} scene`;
 }
 
-/** The ordered list of the row: one item for each scene of the answer, or null. */
 /** The label of the list in the language of the page. The literal texts are the keys of the catalogs. */
 const listLabel = (serviceName) =>
   serviceName === 'planet' ? t('Planet scenes') : t('SkyFi scenes');
 
+/** The ordered list of the row: one item for each scene of the answer, or null. */
 function sceneList({ answer, selectedId }, label, serviceName) {
   if (!answer?.scenes.length) return null;
   return {
