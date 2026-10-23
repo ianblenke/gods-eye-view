@@ -1,0 +1,24 @@
+Host checks of planet-source on the commit 04965f45. Host node: v26.8.2. Each output shows at most its last three lines. The lead added each line "exit".
+
+$ node scripts/format.mjs --check
+Checked 1578 source files.
+exit 0
+$ node scripts/check-import-directions.mjs
+{"modules":1093,"portableEntries":85}
+exit 0
+$ node scripts/check-package-boundaries.mjs
+Checked air-quality: 1 exports, 11 owned modules.
+Checked air-quality-source: 1 exports, 4 owned modules.
+Checked agent-world-packet: 1 exports, 7 owned modules.
+exit 0
+$ node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 37 published, 0 new.
+exit 0
+$ npx --no-install openspec validate planet-source --strict
+Change 'planet-source' is valid
+exit 0
+$ node scripts/spec/gates.mjs lint
+WARN STE-WORD-OLD openspec/specs/wind/spec.md:72 Use "closes", not "dismisses"
+WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
+STE: 0 errors, 1093 warnings.
+exit 0

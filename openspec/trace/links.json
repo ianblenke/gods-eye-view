@@ -5432,6 +5432,167 @@
     "src/data/firePerimetersProxy.test.mjs › [perimeters-027] publication redirects share a signal, cancel the redirect body and force HTTPS",
     "src/data/firePerimetersProxy.test.mjs › [perimeters-027] unsafe publication redirect locations fail before a second fetch"
   ],
+  "planet-source-001": [
+    "src/data/planetProxy.test.mjs › [planet-source-001] localProviderPlugins holds the scenes plugin once",
+    "src/data/planetProxy.test.mjs › [planet-source-001] mounts the two routes and passes other paths to next"
+  ],
+  "planet-source-002": [
+    "src/data/planetProxy.test.mjs › [planet-source-002] reports the status of the key, refuses another method and a cross-site request"
+  ],
+  "planet-source-003": [
+    "src/data/planetProxy.test.mjs › [planet-source-003] refuses GET, PUT, PATCH and DELETE on the scenes route"
+  ],
+  "planet-source-004": [
+    "src/data/planetProxy.test.mjs › [planet-source-004] refuses a scenes request that fails a check of admitSameSiteRequest or has another Content-Type"
+  ],
+  "planet-source-005": [
+    "src/data/planetProxy.test.mjs › [planet-source-005] accepts a request through the reverse proxy and a request from this machine"
+  ],
+  "planet-source-006": [
+    "src/data/planetProxy.test.mjs › [planet-source-006] checks the end date against the UTC date of the option now, not of Date",
+    "src/data/planetProxy.test.mjs › [planet-source-006] refuses each body that fails a check of the SkyWatch route and sends no upstream request"
+  ],
+  "planet-source-007": [
+    "src/data/planetProxy.test.mjs › [planet-source-007] refuses a valid request when the key is not set or holds only white space"
+  ],
+  "planet-source-008": [
+    "src/data/planetProxy.test.mjs › [planet-source-008] keeps the key out of each answer and sends the trimmed key in Authorization"
+  ],
+  "planet-source-009": [
+    "src/data/planetUpstream.test.mjs › [planet-source-009] ends the date filter at the start of the calendar date after end",
+    "src/data/planetUpstream.test.mjs › [planet-source-009] gives the calendar date after end in a time zone east of UTC",
+    "src/data/planetUpstream.test.mjs › [planet-source-009] sends a PSScene search and then a SkySatCollect search with the fixed URL, body, headers and option",
+    "src/data/planetUpstream.test.mjs › [planet-source-009] sends the SkySatCollect search only after the PSScene search gives a good page"
+  ],
+  "planet-source-010": [
+    "src/data/planetProxy.test.mjs › [planet-source-010] sends only the search requests and the thumbnail requests, and no request to a URL of the links"
+  ],
+  "planet-source-011": [
+    "src/data/planetProxy.test.mjs › [planet-source-011] counts a failed search against the daily limit",
+    "src/data/planetProxy.test.mjs › [planet-source-011] counts a search while it is in flight, so a second box gets the budget refusal",
+    "src/data/planetProxy.test.mjs › [planet-source-011] counts each new search once against the daily limit and refuses at the limit",
+    "src/data/planetProxy.test.mjs › [planet-source-011] reads the daily limit from PLANET_DAILY_SEARCHES, and uses 20 for each other value",
+    "src/data/planetProxy.test.mjs › [planet-source-011] starts the count again at 0 on the next UTC day"
+  ],
+  "planet-source-012": [
+    "src/data/planetProxy.test.mjs › [planet-source-012 planet-source-016] keeps no failure in the store",
+    "src/data/planetProxy.test.mjs › [planet-source-012] answers a repeated request from the store for 599999 ms, with the budget of the new request",
+    "src/data/planetProxy.test.mjs › [planet-source-012] keeps at most 32 answers and removes the oldest answer first"
+  ],
+  "planet-source-013": [
+    "src/data/planetProxy.test.mjs › [planet-source-013] gives the failure of a shared search to each request that waits",
+    "src/data/planetProxy.test.mjs › [planet-source-013] shares an upstream search that is in flight"
+  ],
+  "planet-source-014": [
+    "src/data/planetProxy.test.mjs › [planet-source-014] counts a request that the body step refuses",
+    "src/data/planetProxy.test.mjs › [planet-source-014] lets the 6th request pass at 59999 ms after 5 requests at 0 ms",
+    "src/data/planetProxy.test.mjs › [planet-source-014] refuses the 7th request in 60000 ms, and a stored answer counts"
+  ],
+  "planet-source-015": [
+    "src/data/planetProxy.test.mjs › [planet-source-015] answers with the first step that fails",
+    "src/data/planetProxy.test.mjs › [planet-source-015] checks the key before the store",
+    "src/data/planetProxy.test.mjs › [planet-source-015] checks the rate limit before the body, and the store before the daily count",
+    "src/data/planetProxy.test.mjs › [planet-source-015] refuses a request from another site, or with another Content-Type, before the rate limit",
+    "src/data/planetProxy.test.mjs › [planet-source-015] shares an upstream search that is in flight when the count equals the limit"
+  ],
+  "planet-source-016": [
+    "src/data/planetProxy.test.mjs › [planet-source-012 planet-source-016] keeps no failure in the store",
+    "src/data/planetUpstream.test.mjs › [planet-source-016] clears the timer after the body, not before it",
+    "src/data/planetUpstream.test.mjs › [planet-source-016] gives bad_upstream for a body that is not JSON, a body over 4194304 bytes, and a page of the wrong shape",
+    "src/data/planetUpstream.test.mjs › [planet-source-016] gives the named answer of the scenes route for each failure",
+    "src/data/planetUpstream.test.mjs › [planet-source-016] gives upstream_failed for a network error and a redirect",
+    "src/data/planetUpstream.test.mjs › [planet-source-016] gives upstream_failed when the body cannot be read",
+    "src/data/planetUpstream.test.mjs › [planet-source-016] names the failure of each status that is not 200, and reads no body of such an answer",
+    "src/data/planetUpstream.test.mjs › [planet-source-016] reads Retry-After of an answer 429: digits from 1 to 600, 600 above, else 60",
+    "src/data/planetUpstream.test.mjs › [planet-source-016] reads a body of exactly 4194304 bytes, and refuses a valid page of 4194305 bytes",
+    "src/data/planetUpstream.test.mjs › [planet-source-016] starts a timer of 15000 ms before each search request and clears it after the body",
+    "src/data/planetUpstream.test.mjs › [planet-source-016] stops after a failure of the PSScene search, and fails after a failure of the SkySatCollect search",
+    "src/data/planetUpstream.test.mjs › [planet-source-016] stops the request when the time limit ends, and gives upstream_failed"
+  ],
+  "planet-source-017": [
+    "src/data/planetScenes.test.mjs › [planet-source-017] gives null for each number that does not meet its rule, and does not read cloud_cover",
+    "src/data/planetScenes.test.mjs › [planet-source-017] gives only the allowed fields of a scene, with the provider name of the item type",
+    "src/data/planetScenes.test.mjs › [planet-source-017] reads start with Date.parse and writes it with toISOString",
+    "src/data/planetScenes.test.mjs › [planet-source-017] removes an item that is not an object, and a scene with a bad id, time or properties",
+    "src/data/planetScenes.test.mjs › [planet-source-017] sets thumbnail true only for the exact thumbnail link of the item type and the id"
+  ],
+  "planet-source-018": [
+    "src/data/planetScenes.test.mjs › [planet-source-018] keeps a multipolygon of 1 or 16 polygons, and removes one of 0 or 17 polygons",
+    "src/data/planetScenes.test.mjs › [planet-source-018] keeps a ring of 4 to 2000 positions that ends at its first position",
+    "src/data/planetScenes.test.mjs › [planet-source-018] keeps the first ring of a polygon and of each polygon of a multipolygon",
+    "src/data/planetScenes.test.mjs › [planet-source-018] removes a scene when a first ring is not valid, or the geometry has another shape",
+    "src/data/planetScenes.test.mjs › [planet-source-018] removes a scene with a bad position"
+  ],
+  "planet-source-019": [
+    "src/data/planetScenes.test.mjs › [planet-source-019] gives the shape of a good answer and the headers of each answer of the scenes route",
+    "src/data/planetScenes.test.mjs › [planet-source-019] keeps the first 50 scenes, and sets truncated for more than 50 scenes or a text _next",
+    "src/data/planetScenes.test.mjs › [planet-source-019] keeps the upstream order of scenes with an equal start and an equal id, PSScene first",
+    "src/data/planetScenes.test.mjs › [planet-source-019] sorts the scenes of the two pages with the newest start first, then by the code units of the id, then in the upstream order"
+  ],
+  "planet-source-020": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-020] answers a path with an id and passes other paths to next",
+    "src/data/planetThumbnails.test.mjs › [planet-source-020] is once in localProviderPlugins, directly after planet-proxy",
+    "src/data/planetThumbnails.test.mjs › [planet-source-020] reads process.env in localProviderPlugins, and finds a scene of the planet-proxy plugin of the same list"
+  ],
+  "planet-source-021": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-021] accepts a same-origin request through the reverse proxy",
+    "src/data/planetThumbnails.test.mjs › [planet-source-021] accepts an https origin on an encrypted socket",
+    "src/data/planetThumbnails.test.mjs › [planet-source-021] refuses POST, PUT, DELETE and HEAD after the same-site step",
+    "src/data/planetThumbnails.test.mjs › [planet-source-021] refuses a request that fails a check of admitSameSiteRequest"
+  ],
+  "planet-source-022": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-022] answers thumbnails_off only when PLANET_THUMBNAILS is exactly the text false"
+  ],
+  "planet-source-023": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-023] lets the 30th request pass, and has one count for all socket addresses",
+    "src/data/planetThumbnails.test.mjs › [planet-source-023] refuses the 31st request at 59999 ms after 30 requests at 0 ms, and lets it pass at 60000 ms"
+  ],
+  "planet-source-024": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-024] gives the thumbnail of a scene of a kept answer of planetPlugins",
+    "src/data/planetThumbnails.test.mjs › [planet-source-024] knows the scene of an answer that is 599999 ms old, and not of one that is 600000 ms old",
+    "src/data/planetThumbnails.test.mjs › [planet-source-024] sends one GET request with only Authorization and Accept, and no redirect",
+    "src/data/planetThumbnails.test.mjs › [planet-source-024] uses the first scene of an answer with the id and with thumbnail true",
+    "src/data/planetThumbnails.test.mjs › [planet-source-024] uses the newest kept answer that has the id, and the item type of its page"
+  ],
+  "planet-source-025": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-025] answers unknown_scene for a scene with thumbnail false, a scene after the first 50, and a scene of another call",
+    "src/data/planetThumbnails.test.mjs › [planet-source-025] knows no scene without the option thumbnailTypeOf"
+  ],
+  "planet-source-026": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-026] answers no_key when the key is not set or holds only white space"
+  ],
+  "planet-source-027": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-027 planet-source-028] gives upstream_failed when the body cannot be read, also at the end of the time limit",
+    "src/data/planetThumbnails.test.mjs › [planet-source-027] gives bad_upstream for a media type, a size or first bytes that fail the check",
+    "src/data/planetThumbnails.test.mjs › [planet-source-027] passes a PNG image of 9 bytes and the other image types of the SkyWatch check"
+  ],
+  "planet-source-028": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-027 planet-source-028] gives upstream_failed when the body cannot be read, also at the end of the time limit",
+    "src/data/planetThumbnails.test.mjs › [planet-source-028] clears the timer at once and reads no body for a status that is not 200 or another media type",
+    "src/data/planetThumbnails.test.mjs › [planet-source-028] gives upstream_failed for a status that is not 200, a fetch error, a redirect and the time limit",
+    "src/data/planetThumbnails.test.mjs › [planet-source-028] holds no URL, host name or key text in a failure answer or a header",
+    "src/data/planetThumbnails.test.mjs › [planet-source-028] sets a time limit of 15000 ms, and does not clear it before it reads all of the body"
+  ],
+  "planet-source-029": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-029] gives each JSON answer after the path step Content-Type and Cache-Control",
+    "src/data/planetThumbnails.test.mjs › [planet-source-029] keeps no image, so two requests for the same id send two upstream requests",
+    "src/data/planetThumbnails.test.mjs › [planet-source-029] sends the bytes with only its own headers, and copies no upstream header"
+  ],
+  "planet-source-030": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-030] answers with the first step that fails",
+    "src/data/planetThumbnails.test.mjs › [planet-source-030] checks the rate limit before the key and the scene"
+  ],
+  "planet-source-031": [
+    "src/data/planetProxy.test.mjs › [planet-source-031] logs with console.log when the test gives no option log",
+    "src/data/planetProxy.test.mjs › [planet-source-031] writes no key, scene id, URL or host name, and no line for a request with no search",
+    "src/data/planetProxy.test.mjs › [planet-source-031] writes one line for a good search, with the count of the answer, the number of search requests and the time",
+    "src/data/planetProxy.test.mjs › [planet-source-031] writes one line for each failure, with the number of search requests"
+  ],
+  "planet-source-032": [
+    "src/data/planetThumbnails.test.mjs › [planet-source-032] logs with console.log when the test gives no log option",
+    "src/data/planetThumbnails.test.mjs › [planet-source-032] writes no line for a step before the upstream request, and no key, id, URL or host name",
+    "src/data/planetThumbnails.test.mjs › [planet-source-032] writes one line for a good image and for each failure, with the time"
+  ],
   "qa-scripts-001": [
     "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-001] accepts a shebang and reads all four tags"
   ],

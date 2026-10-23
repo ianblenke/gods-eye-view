@@ -1,0 +1,63 @@
+Probe of the Planet Data API with the key of the owner, 2026-10-22 (UTC).
+
+On 2026-10-22 the owner allowed a small read-only probe. The limit was at most
+5 search requests, 1 status request and 2 thumbnail requests. The lead sent 4
+requests: 1 status request, 1 search request and 2 thumbnail requests.
+
+The probe script read PLANET_API_KEY from .env and sent it only in the header
+"Authorization: api-key <key>". The output holds no key: the script replaced
+each copy of the key text, and a search of the output for the key found 0
+lines. The script recorded no scene id and no full URL. It recorded only the
+form of each id and of each thumbnail link. Each request had the option
+redirect: 'manual'.
+
+Requests and answers:
+
+1. GET https://api.planet.com/data/v1/item-types/
+   200 in 758 ms. The item types of the account: PelicanScene, PSScene,
+   REOrthoTile, REScene, SkySatCollect, SkySatScene, SkySatVideo,
+   TanagerScene and TanagerMethane.
+2. POST https://api.planet.com/data/v1/quick-search?_page_size=50&_sort=acquired%20desc
+   The body had item_types ["PSScene","SkySatCollect"], a GeometryFilter for a
+   box of 48 km at Tampa (west -82.701264, south 27.735005, east -82.213136,
+   north 28.166195) and a DateRangeFilter of acquired from 2026-07-23 to
+   2026-10-22.
+   200 in 689 ms, 97064 bytes. The answer was an object with "type"
+   "FeatureCollection", "features" and "_links". The "_links" had "_first",
+   "_next" and "_self", and the host of "_next" was api.planet.com.
+   The 50 features had acquired times from 2026-10-18 to 2026-10-22:
+   47 PSScene and 3 SkySatCollect.
+3. GET of the thumbnail link of one PSScene feature: 200 in 541 ms,
+   image/png of 256 x 256 pixels, 69273 bytes, Cache-Control "public,
+   max-age=86400".
+4. GET of the thumbnail link of one SkySatCollect feature: 200 in 258 ms,
+   image/png of 256 x 256 pixels, 21485 bytes, the same Cache-Control.
+
+No answer had a header X-Credits-Spent or a rate-limit header. No thumbnail
+answer was a redirect.
+
+Shape of the 50 features:
+
+- Each feature had the keys _links, _permissions, assets, geometry, id,
+  properties and type, with "type" "Feature".
+- The "_links" of each feature had _self, assets and thumbnail.
+- The "_permissions" of each feature was an empty array, and the two
+  thumbnail requests still got 200.
+- Each id had 1 to 128 ASCII letters, digits, hyphens or underscores. PSScene
+  ids had the form 99999999_999999_99_999a, and SkySatCollect ids had the form
+  99999999_999999_aaa99_a9999 (9 is a digit, a is a letter).
+- Each PSScene geometry was a Polygon with one closed ring of 5 positions of
+  2 numbers.
+- Two SkySatCollect geometries were Polygons with one ring of 104 and of 117
+  positions. One SkySatCollect geometry was a MultiPolygon of 2 polygons with
+  rings of 65 and 16 positions.
+- "gsd" was a number from 0.63 to 3.9, and "pixel_resolution" was 0.5 for
+  SkySat and 3 for PSScene.
+- "cloud_cover" was a number from 0 to 0.29, and "cloud_percent" was a whole
+  number from 0 to 29. "clear_percent" was a whole number from 51 to 100.
+- "quality_category" was "standard" for 42 features and "test" for 8.
+- "publishing_stage" was "finalized" for 38 features, "preview" for 8 and
+  "standard" for 4.
+- "provider" was "planetscope" or "skysat".
+- Each thumbnail link had the form
+  https://tiles.planet.com/data/v1/item-types/<type>/items/<id>/thumb.

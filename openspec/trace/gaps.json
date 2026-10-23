@@ -9290,10 +9290,10 @@
       "loaded": true,
       "lines": 0,
       "branches": 3,
-      "functions": 4,
+      "functions": 3,
       "totals": {
         "lines": 129,
-        "branches": 77,
+        "branches": 79,
         "functions": 13
       },
       "sha": "e486290915f80a6429419a3189ebbfff02f3d12b9e3406358060c04afa11c48d",

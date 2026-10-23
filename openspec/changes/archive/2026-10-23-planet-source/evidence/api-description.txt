@@ -1,0 +1,58 @@
+Public documents of Planet that the lead read for the change planet-source.
+
+The lead read each document on 2026-10-22 (UTC). A scout agent downloaded them
+with no key and no account. The copies are in
+/home/ianblenke/docker/gev-tools/imagery-scout/download/planet/ on the machine
+of the lead.
+
+Address, local copy and SHA-256 of the copy:
+
+1. https://docs.planet.com/redocusaurus/data-api-spec.yaml
+   openapi/data-api-spec.yaml (Swagger 2.0, "Planet Data API", version 1.0.0)
+   95cb3b47c0654061c476b7e7ab26dfb465326d40098479894657440a84d7b106
+2. https://docs.planet.com/develop/apis/data/item-search/
+   item-search.html
+   b77dacaff20f9ff5c0c0a5e43537f62dd0c3d61075cd3be762f93a00810ea580
+3. https://docs.planet.com/develop/apis/data/
+   md/develop_apis_data.md
+   dd3a0fb1f508049378e049016080ca13ac8d0ca024661fc592c89d38755e6f4a
+4. https://docs.planet.com/develop/apis/data/items/
+   md/develop_apis_data_items.md
+   b8ea1b208d03768ddc7442d08a4cf479e3c86fb61c79e26d47710e5970122db9
+5. https://docs.planet.com/develop/authentication/
+   md/develop_authentication.md
+   c5e09d34c2b2687ed289fa8364383a69edd6673105b424853c4c087f6ede95c3
+6. https://docs.planet.com/platform/monitoring-credits/
+   md/platform_monitoring-credits.md
+   95154c75077eeb4c3eb684bcadea62fb10b98a64122d62bf650e4f57a04fdf7f
+7. https://docs.planet.com/develop/apis/tiles/
+   md/develop_apis_tiles.md
+   deea33a1f159494fc98498a47a934a698fd3b4bcc16797caa5bdd9e7c16a1f76
+8. https://docs.planet.com/develop/rate-limiting/
+   md/develop_rate-limiting.md
+   0b44541060edc3d0c04062f740de02e84a734650ec81cc38a7cdeb86fe89ba6b
+9. https://www.planet.com/terms-of-use/ (in effect from 2026-09-01)
+   legal/www.planet.com_terms-of-use_.html
+   030f020dbae80f56edac808532832165ea755cfb4a0f2115d1a44c57235765de
+
+Facts that the change uses, with the document that states each fact:
+
+- The quick search is POST https://api.planet.com/data/v1/quick-search, with
+  item_types and a filter. The query parameters _page_size and _sort give the
+  page size and the order (1, 2).
+- An API key goes in the header "Authorization: api-key <api_key>" (5).
+- An API key gives the same access as its owner (5).
+- "Thumbnail previews and Data API Quick Search requests do not use Monitoring
+  Credits." (6)
+- Data Activation, downloads, item tiles and basemap tiles use credits (6, 7).
+- The search endpoint allows 5 requests in each second (3).
+- The link "thumbnail" in the "_links" of an item gives its thumbnail, a PNG
+  of 256 x 256 pixels by default. A request for a thumbnail uses the
+  authentication of the API (4). The example URL of (4) has the form
+  https://tiles.planet.com/data/v1/item-types/<type>/items/<id>/thumb.
+- Quick searches stay available through the API for 30 days (2).
+- The licensee may view Planet Data through the Platform and third-party
+  applications (9).
+- For more than one end user, Planet Data must not rely on caching, redirection
+  or other local storage (9).
+- The licensee shows a copyright notice that names Planet as the source (9).
