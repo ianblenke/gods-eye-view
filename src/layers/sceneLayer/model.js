@@ -73,10 +73,14 @@ function sceneText(scene, label) {
 }
 
 /** The ordered list of the row: one item for each scene of the answer, or null. */
+/** The label of the list in the language of the page. The literal texts are the keys of the catalogs. */
+const listLabel = (list) =>
+  list === 'Planet scenes' ? t('Planet scenes') : t('SkyFi scenes');
+
 function sceneList({ answer, selectedId }, label, list) {
   if (!answer?.scenes.length) return null;
   return {
-    ariaLabel: t(list),
+    ariaLabel: listLabel(list),
     items: answer.scenes.map((scene) => {
       const active = scene.id === selectedId;
       return {

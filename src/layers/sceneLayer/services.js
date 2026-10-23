@@ -12,6 +12,7 @@ export const SERVICES = Object.freeze({
     layer: 'planet-scenes',
     name: 'Planet Scenes',
     icon: '🪐',
+    // i18n-ignore: product name
     label: 'Planet',
     list: 'Planet scenes',
     key: 'PLANET_API_KEY',
@@ -24,6 +25,7 @@ export const SERVICES = Object.freeze({
     layer: 'skyfi-scenes',
     name: 'SkyFi Scenes',
     icon: '🛰',
+    // i18n-ignore: product name
     label: 'SkyFi',
     list: 'SkyFi scenes',
     key: 'SKYFI_API_KEY',
