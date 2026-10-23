@@ -5044,6 +5044,186 @@
     "since": "2026-10-13",
     "change": "reticulum-provider"
   },
+  "scene-layers-001": {
+    "hash": "bbc3f0168cfc012c7125ca81f0cc51260b57cc49fab11d06bd47e4823d608b1f",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-002": {
+    "hash": "54a775ca3d017e137c099bf1de1d4247f3cd793931547a77fbe6482a62971be0",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-003": {
+    "hash": "126f7a6f0a90b5fdf9a14806d08ffb43035b38369cf3414fd32bd6c9fec85f17",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-004": {
+    "hash": "556bfc36dbae1a0a468e4b74f832758239c44e4517acda3dc42f061a1d1260d2",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-005": {
+    "hash": "e74eb4c94f6ff1c3226bd708a6e255d8b1bb1b3df490f34e8d0dbd560818c13b",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-006": {
+    "hash": "1ad82838168bff9e0b22a8fe2d3b1e235930207965a461d19d3dfe56433ad4c1",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-007": {
+    "hash": "a255419f4176457edd440daff98176638b5c08a1e97bfcf6a4fa364ec6af01ad",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-008": {
+    "hash": "aa2449f875367193ea58325e29cde4fdaa57d6d43ee73e7c2dd5daab729230bd",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-009": {
+    "hash": "eed008984119ba97e5992304df5c4c99de16a583c4a5a1c77696272671cb3a09",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-010": {
+    "hash": "3fda923a911bd1ca31a4efb8d9850c5e477f45ed2c12deccfd2fdc58e7d372ff",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-011": {
+    "hash": "f889ab99f688989776c107d71717adc035ea31917e55604c84527e91f3cfa421",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-012": {
+    "hash": "3ec47789027ff0e5e1337c766dbcab90ec7c08728f7182f47b9864c9f79d3f19",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-013": {
+    "hash": "6db25a20d17d51e2b1dce5d23226258c925e51335da0e211961693f87252504f",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-014": {
+    "hash": "cb8dc638f1058327c1c0c19fcd6a95277ad810eeda8520669d64ddef0f8029e9",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-015": {
+    "hash": "b194850d51822d740b5e72e09bf77c3a7e9f47e52c7fc4decf09ade94402f721",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-016": {
+    "hash": "3b3b6a73d695c1d10e6a5cb9ab02a080e9304196bc1de0ad609875f25544130c",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-017": {
+    "hash": "b8cd6bbc8d18c6755f8fa26e42e1dc5c87487479221560bfbba3773ce67068c5",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-018": {
+    "hash": "a09b6d855013765a58122b4f4aae4327e559dd0a1824bc79d80849128a735d6f",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-019": {
+    "hash": "bd2f601a7d22cbf2877379001d8ed29d2f8467f532bbe158a64e9ace3b126400",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-020": {
+    "hash": "f506ac14db36bc214835b0ca8f80860306f66eb2fb3b7e73a43e7e33f02d1972",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-021": {
+    "hash": "731b8139d56a78f4a9d58ef451dae6eeab750488f070c290b18f8d6f86b30864",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-022": {
+    "hash": "a1df451add7bd768411145e1d96d829d8db86c9d5280acc6d0a4290b9dbd04a8",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-023": {
+    "hash": "50918f0e96846c9f8c2634d80915402e075c8beb17be31f7cf1ec76fc64b01fb",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-024": {
+    "hash": "ca5d401922ed01b73b2fa014da309de671e4082ccbba923233693780253fa4b4",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-025": {
+    "hash": "c67d7e3e83d581efdcf61980d7c8eadf0627c162df4e3231ad6f9f9db5775d55",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-026": {
+    "hash": "c6a63d75d50b34b2c3ed56cf3f512aa7236bf619c70431a9e277be7ddc4f249e",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-027": {
+    "hash": "8de00451a9fcca9f3f7c662817993ed66e42d08147b646fef439442151b7f9a4",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-028": {
+    "hash": "074f8e34002c99d35853e3a7bb40ea2450bda47381099c28b1b3b95515014fb6",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-029": {
+    "hash": "62bca28b6e98982a082a84d3de6a30084983e3742c154f1b023c2b6a706a22b4",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-030": {
+    "hash": "e2210eb96011cef6932a0ca34cf4c61bf1c742a9eaf4c0d6276dab8b971fe2b5",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-031": {
+    "hash": "8015508097412341a520244292a0ec04449208fa9d135a0d47b74c6b294744aa",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-032": {
+    "hash": "42f64f72a01efecf3e6f19bd1715eea17bfda7bb0a5c06726cd8bb7cd4fc3d72",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-033": {
+    "hash": "7daf244527441505182974fde2a3a98addeb0971a1eafcee3bdaa6d4429cdf46",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-034": {
+    "hash": "470714299e7f3ff8b1fdc92abbea3dc131a56109543a3e40576d90f5e3107cf1",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-035": {
+    "hash": "826587f25f9a265f1f9a3d3ae286786f89ecc65c2158e89fad3448b99252de8e",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
+  "scene-layers-036": {
+    "hash": "5d9bff567cd673e16f566c50d8e81e68c589f9323df046b975ca1afbe2d1bad9",
+    "since": "2026-10-23",
+    "change": "scene-layers"
+  },
   "skyfi-source-001": {
     "hash": "1dee7dbfe06ab30a1c04a0948eec674103cf92cd7c898a05f78def325be9750b",
     "since": "2026-10-23",
