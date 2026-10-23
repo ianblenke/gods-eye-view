@@ -189,6 +189,9 @@ test('[skyfi-source-017] sets thumbnail true only for a link of the 300x300 key 
     'https://app.skyfi.com\\@example.test/a.png',
     'https://app.skyfi.com/a.png#x',
     'https://app.skyfi.com/a b.png',
+    'https://app.skyfi.com/a\u0000b.png',
+    'https://app.skyfi.com/a\u001fb.png',
+    'https://app.skyfi.com/a\u007fb.png',
     'https://app.skyfi.com/a@b.png',
     'https://app.skyfi.com/a\\b.png',
     'https://app.skyfi.com/a\tb.png',
@@ -251,6 +254,10 @@ test('[skyfi-source-018] keeps the first ring of a polygon and removes each othe
       'spaces',
       `POLYGON  ((${RING_TEXT.replaceAll(', ', ' , ')})  ,  (${textOf(hole)}))`,
     ),
+    withFootprint(
+      'wide-gap',
+      wkt(RING_TEXT.replaceAll(' ', '   ').replaceAll(',   ', ', ')),
+    ),
     withFootprint('short-later', wkt(RING_TEXT, '1 1, 2 2, 3 3')),
     withFootprint('open-later', wkt(RING_TEXT, '1 1, 2 2, 3 3, 4 4')),
     withFootprint(
@@ -258,7 +265,7 @@ test('[skyfi-source-018] keeps the first ring of a polygon and removes each othe
       wkt(RING_TEXT, '500 500, 600 600, 700 700, 500 500'),
     ),
   ]);
-  assert.equal(result.scenes.length, 6);
+  assert.equal(result.scenes.length, 7);
   for (const scene of result.scenes) {
     assert.deepEqual(scene.footprint, { type: 'Polygon', coordinates: [RING] });
   }
@@ -317,6 +324,8 @@ test('[skyfi-source-018] removes a scene when the text does not meet the rule of
     `POLYGON ((${ring.replace('-82.5 27.9', '-82.5\t27.9')}))`,
     ` POLYGON ((${ring}))`,
     `POLYGON ((${ring})) x`,
+    `POLYGON ((${ring})) `,
+    `POLYGON ((${ring}))\n`,
     `POLYGON ((${ring})`,
     `POLYGON (${ring})`,
     `POLYGON ((${ring}), (1e1 1, 2 2, 3 3, 1e1 1))`,
