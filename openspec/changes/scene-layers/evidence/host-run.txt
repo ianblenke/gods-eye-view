@@ -1,0 +1,15 @@
+Host test run of scene-layers on the commit 16c25d54. The working tree had no changes. Host node: v26.8.2.
+Command for each file: timeout 600 nice -n 19 node --test <file>, six files at a time (xargs -P 6). One line for each file gives the exit status and the counts of the node test runner.
+Start (UTC) 2026-10-23T13:43:59Z, end (UTC) 2026-10-23T13:52:05Z. Files: 841. These are the files that git lists with a name that ends with .test.mjs, except src/tooling/spec/gates.test.mjs.
+
+Totals:
+tests 12719 pass 12703 fail 0 skipped 16
+Lines with an exit status other than 0: 0
+
+The six test files of the shared module:
+src/layers/sceneLayer/layer.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 104 ℹ skipped 0 ℹ tests 104 
+src/layers/sceneLayer/messages.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 12 ℹ skipped 0 ℹ tests 12 
+src/layers/sceneLayer/model.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 22 ℹ skipped 0 ℹ tests 22 
+src/layers/sceneLayer/records.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 32 ℹ skipped 0 ℹ tests 32 
+src/layers/sceneLayer/registration.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 20 ℹ skipped 0 ℹ tests 20 
+src/layers/sceneLayer/source.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 54 ℹ skipped 0 ℹ tests 54 
