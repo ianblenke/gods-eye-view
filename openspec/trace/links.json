@@ -5492,7 +5492,8 @@
     "src/data/planetProxy.test.mjs › [planet-source-015] answers with the first step that fails",
     "src/data/planetProxy.test.mjs › [planet-source-015] checks the key before the store",
     "src/data/planetProxy.test.mjs › [planet-source-015] checks the rate limit before the body, and the store before the daily count",
-    "src/data/planetProxy.test.mjs › [planet-source-015] refuses a request from another site, or with another Content-Type, before the rate limit"
+    "src/data/planetProxy.test.mjs › [planet-source-015] refuses a request from another site, or with another Content-Type, before the rate limit",
+    "src/data/planetProxy.test.mjs › [planet-source-015] shares an upstream search that is in flight when the count equals the limit"
   ],
   "planet-source-016": [
     "src/data/planetProxy.test.mjs › [planet-source-012 planet-source-016] keeps no failure in the store",
