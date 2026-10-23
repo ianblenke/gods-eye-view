@@ -1,0 +1,65 @@
+Probe of the Platform API of SkyFi with the key of the owner, 2026-10-23 (UTC).
+
+On 2026-10-22 the owner allowed a small read-only probe. The limit was at most
+5 search requests, 1 status request and 2 thumbnail requests. The lead sent 5
+requests: 1 status request, 2 search requests and 2 thumbnail requests.
+
+The probe script read SKYFI_API_KEY from .env and sent it only in the header
+"X-Skyfi-Api-Key" of the search requests. The thumbnail requests and the status
+request had no key. The output holds no key: the script replaced each copy of
+the key text, and a search of the output files for the key found 0 files. The
+script recorded no archive id and no full URL. It recorded only the form of
+each field and the host names of the thumbnail links. Each request had no
+redirect.
+
+Requests and answers:
+
+1. GET https://app.skyfi.com/platform-api/ping
+   200 in 321 ms, with the body {"message":"pong"}. The request had no key.
+2. POST https://app.skyfi.com/platform-api/archives
+   The body had aoi, fromDate, toDate and pageSize 50. The area was a box of
+   48 km at Tampa (west -82.701264, south 27.735005, east -82.213136, north
+   28.166195). The dates were 2026-07-23 to 2026-10-22.
+   200 in 1055 ms, 65848 bytes. The answer was an object with the members
+   "archives", "nextPage", "request" and "total". The member "total" was null,
+   and "nextPage" was a text. The member "archives" had 50 items.
+3. The same search again, to measure the unit of "gsd".
+   200 in 747 ms, 65848 bytes, with the same 50 items.
+4. GET of the thumbnail link "300x300" of one item on app.skyfi.com
+   (provider VANTOR): 200 in 1281 ms, image/png of 256 x 256 pixels, 66713
+   bytes, no Cache-Control header. The request had no key.
+5. GET of the thumbnail link "300x300" of one item on thumbnails.skyfi.com
+   (provider SENTINEL2_CREODIAS): 200 in 443 ms, image/png of 300 x 300
+   pixels, 209340 bytes, Cache-Control "public,max-age=3600". The request had
+   no key.
+
+No thumbnail answer was a redirect. No answer had a rate-limit header.
+
+Shape of the 50 items:
+
+- The providers were VANTOR (30), SENTINEL2_CREODIAS (14), SENTINEL1_CREODIAS
+  (5) and PLANET (1). The product types were DAY (31), MULTISPECTRAL (14) and
+  SAR (5). 19 items had openData true.
+- Each item had the members archiveId, identifier, provider, constellation,
+  productType, platformResolution, resolution, captureTimestamp,
+  cloudCoveragePercent, offNadirAngle, footprint, minSqKm, maxSqKm,
+  priceForOneSquareKm, priceForOneSquareKmCents, priceFullScene,
+  fullSceneOnly, openData, totalAreaSquareKm, deliveryTimeHours,
+  thumbnailUrls, gsd, tilesUrl, overlapRatio and overlapSqkm.
+- The 50 archiveId values were different. Each is a UUID.
+- Each footprint was a text that started with "POLYGON ((". The longest had
+  4357 characters.
+- The capture times had an offset: -04:00 for 39 items, -06:00 for 10 items
+  and -05:00 for 1 item. The earliest time was on 2026-09-20 and the latest on
+  2026-10-22.
+- The member cloudCoveragePercent was from 0.0 to 100.0.
+- The member gsd was from 34.18 to 1000.0. It was 34.18 to 39.97 for the 19
+  items of the resolution "SUPER HIGH", and 40.46 to 67.0 for the 12 items of
+  "VERY HIGH". It was 1000.0 for the 19 items of the resolution "LOW", which
+  are the items of Sentinel-1 and Sentinel-2. These values fit centimeters, and
+  the documents of SkyFi do not give the unit.
+- The member thumbnailUrls had the key "300x300" for each item, and the key
+  "2048x2048" for 30 items. The links had no query. The host was app.skyfi.com
+  for 30 items and thumbnails.skyfi.com for 20 items. All links used https.
+- The member tilesUrl was on app.skyfi.com (30 items) or on
+  metadata-tiles.skyfi.com (20 items). The probe sent no request to a tiles link.
