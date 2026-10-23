@@ -6,7 +6,7 @@ Date: 2026-10-23
 Gates: make gates CHANGE=scene-layers passed
 Rounds: 2
 Scope: diff 69dca8f9
-Reviewed-Tree: PLACEHOLDER
+Reviewed-Tree: a7c7c7c0c84796ed0066b36ad8c6544c1359add1465b1ab526c3010bfcd8acfd
 
 ## Findings
 
