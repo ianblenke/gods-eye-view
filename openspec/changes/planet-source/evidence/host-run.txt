@@ -1,0 +1,13 @@
+Host test run of planet-source on the commit db16bbf9. The working tree had no changes. Host node: v26.8.2.
+Command for each file: timeout 600 nice -n 19 node --test <file>, six files at a time (xargs -P 6). One line for each file gives the exit status and the counts of the node test runner.
+Start (UTC) 2026-10-22T23:37:53Z, end (UTC) 2026-10-22T23:46:59Z. Files: 831. These are the files that git lists with a name that ends with .test.mjs, except src/tooling/spec/gates.test.mjs.
+
+Totals:
+tests 12380 pass 12364 fail 0 skipped 16
+Lines with an exit status other than 0: 0
+
+The four test files of this change:
+src/data/planetProxy.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 32 ℹ skipped 0 ℹ tests 32 
+src/data/planetScenes.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 14 ℹ skipped 0 ℹ tests 14 
+src/data/planetThumbnails.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 33 ℹ skipped 0 ℹ tests 33 
+src/data/planetUpstream.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 15 ℹ skipped 0 ℹ tests 15 
