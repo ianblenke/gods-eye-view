@@ -4224,6 +4224,166 @@
     "since": "2026-09-27",
     "change": "backfill-perimeters"
   },
+  "planet-source-001": {
+    "hash": "7601fe04250e5197f7ce728489613e873f70f62f891dd8ba9248b0e58d624f00",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-002": {
+    "hash": "d27eb21da71820fa252f5c86528e552abcf8491be411bcedd86d6966fa788a27",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-003": {
+    "hash": "ac3a5e6edd3ea7c485bff6d5830db1f0e8056ad304809610b90d8096f4dde5ef",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-004": {
+    "hash": "4a517c7e2b1196338938e4391b6832c9b1bad7fddad0c7c61d33428589418d41",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-005": {
+    "hash": "4416aabb40141de82e4f477f49ac447576c04cda49b63620512fb27852b27416",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-006": {
+    "hash": "eb5c30a177a96d434193108c30f3fe3c6a7ada316e1d8c6b58a20279d383cdb2",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-007": {
+    "hash": "4465ff034836900bedebb1e082c0ff58fd479717f044c72bb48ba43f21832fd8",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-008": {
+    "hash": "61c320b4499242bf618b83248dea51ac983f306abd741343286996680deb827f",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-009": {
+    "hash": "a1db313b8ff43dca9f4619237e9eee6b5f522e53fbffe90ecb6da108266d6d75",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-010": {
+    "hash": "9589aeb8d452df6e7e59c4de00aa813e69bfc0efa45e98cbcb960bce7360f07d",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-011": {
+    "hash": "fa76aac5a7a7f8bcf6b7efb1e567f0643ef97e78b4893fc1f608f31b36b39d96",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-012": {
+    "hash": "fad71d0d004a6958777c047383a798365557463e64afc64bbabc13ec4514318c",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-013": {
+    "hash": "a027ee290fa14ed9ff8389ddf0fb1ffa31e927b1f2199738d1c43622904e1b95",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-014": {
+    "hash": "8d4e288a55c0a6aea2f945e2f1a743826e5c32ddea4e5ba963036a6e9188a4ea",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-015": {
+    "hash": "b8d39e10dd55785b46b21ae486cc9a752738cf94ba32848bc89d968a61225bf7",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-016": {
+    "hash": "9b2ba4e8a5b341d92bdca34e9dee2420a69ab3438da5853320a30649d537ab0d",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-017": {
+    "hash": "17f7caba34c55c111ee249ee2480c16fe0eea7fd64493d87f75467f571458ff7",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-018": {
+    "hash": "c6c58cc174326c33048e6290387d1e8f01aca2cf10c961db3e5dc45d2dc1f8a0",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-019": {
+    "hash": "faac01eae8bb24b714abd66f71fe48d3bdb13e512605e5ddbcdc6f13e1ba5f91",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-020": {
+    "hash": "f7a91d721e324374c503d958e755dd5e524e81daaeb9aa1c84e63e329cb499d8",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-021": {
+    "hash": "13fae81ace7d1161b3ec00dd0038d51ce8db4b2b58bf0cecaff48d65d73db031",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-022": {
+    "hash": "96817fd3ca07831789aecbfa289946bf57dc9cecb8e190e5c71f6e81988fe3a9",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-023": {
+    "hash": "38f10d6b0a7b38e9335976e74c539b3fd46054c63a23516e7561d45d3a95551f",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-024": {
+    "hash": "e7534275b7d653ce9db03927f75d053732f24902045d83caa2f0bb850967a478",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-025": {
+    "hash": "304d98f3b2344ade23692659830b4bf92883d7a33c04c975ebeeafb21d7dac31",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-026": {
+    "hash": "60c741da26b2d6516ee6f4b9d03cefe3548d58bd58e239889a5f39bf79619205",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-027": {
+    "hash": "b33f073e146e6993924f835a220154dbb9096facf0de645d50a19cf922b37e22",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-028": {
+    "hash": "93ed91ec7df88d1fd6a399dc6be08a897e3e880d89404c2ad9776ad38a253126",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-029": {
+    "hash": "03a0ca5f6aa39eb6cfbb0154751055c892ed53db5e16d8da89792a19cf5fa179",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-030": {
+    "hash": "1c5c9207f14c0e3fca54d4df7497e324c81d3ab248c83dda4cd3b7ca0973a69a",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-031": {
+    "hash": "4d69cf13a626b9b99cee17e0522ee4bfc68f221ff679e6bd2983f37b3db62a47",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
+  "planet-source-032": {
+    "hash": "3a390ba51c1c6694d5d2bd33f0a31107a43fb12826ba3c87904d47d551e8eb74",
+    "since": "2026-10-23",
+    "change": "planet-source"
+  },
   "qa-scripts-001": {
     "hash": "3b33d8de81e3c696fa245d10f8a0a7cd6a69e45d241f104c62abb43579367d2e",
     "since": "2026-09-26",
