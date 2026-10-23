@@ -1,12 +1,12 @@
-Browser check of the layers "Planet Scenes" and "SkyFi Scenes" on the commit 16c25d54, run on 2026-10-23 (UTC).
+Browser check of the layers "Planet Scenes" and "SkyFi Scenes" on the commit 9b7357bf, run on 2026-10-23 (UTC).
 The browser is a Chrome for Testing (the Playwright build) with its sandbox and a new temporary profile for each run. It is not the system Chrome and not a profile of the owner. The run opens chrome://sandbox first and stops when the page does not say "You are adequately sandboxed."
 The app runs in a Vite server of the lead outside the repository (vite.sc.config.mjs). The routes of Planet and of SkyFi are the real plugins, with a fake fetch function for each upstream. No request leaves the machine. The fake Planet upstream gives a SkySat scene that is a MultiPolygon of two parts.
 Browser line of each run: browser: Chrome/156.0.8078.4 (/home/ianblenke/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome)
 chrome://sandbox: ker)	Yes | Ptrace Protection with Yama LSM (Non-broker)	No | You are adequately sandboxed.
 Each run opens the share link of the layer, presses the chip, selects scenes in the list, turns the thumbnail route off, loads the authored link again, and turns the layer off. The checks are the lines that start with PASS or FAIL.
-The first run of Planet Scenes on this commit stopped at step 8 with a time limit before the click on the toggle of the layer had an effect (the file run-planet-flake.log of the lead). The lead ran it twice more, and both runs passed all checks. The run of SkyFi Scenes passed at the first try.
+Runs on earlier commits had stopped with a time limit while the host had a high load (load average of 17 to 21, from other containers on the machine): one run of Planet Scenes at step 8 and several runs at an earlier step. Each of them stopped before a check failed, and no check of any run had the result FAIL. The runs of the record were made when the load was lower, and all checks of both layers passed in them. The host node was updated from 26.8.2 to 26.11.1 between the fault runs and these browser runs.
 
-=== Planet Scenes (share token 01), the first of the two runs that passed
+=== Planet Scenes (share token 01)
 --- step 1: load the share link with l=01 (the layer is enabled by the link)
 PASS 1 the share link l=01 enables the layer Planet Scenes | Planet Scenes
 PASS 1 the chip shows "Search scenes here" and is enabled

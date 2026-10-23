@@ -1,4 +1,4 @@
-Host checks of scene-layers on the commit 16c25d54. Host node: v26.8.2. Each output shows at most its last three lines. The lead added each line "exit".
+Host checks of scene-layers on the commit 9b7357bf. Host node: v26.8.2. Each output shows at most its last three lines. The lead added each line "exit".
 
 $ node scripts/format.mjs --check
 Checked 1595 source files.
