@@ -1,0 +1,13 @@
+Host test run of skyfi-source on the commit afaf18c8. The working tree had no changes. Host node: v26.8.2.
+Command for each file: timeout 600 nice -n 19 node --test <file>, six files at a time (xargs -P 6). One line for each file gives the exit status and the counts of the node test runner.
+Start (UTC) 2026-10-23T08:23:45Z, end (UTC) 2026-10-23T08:31:33Z. Files: 835. These are the files that git lists with a name that ends with .test.mjs, except src/tooling/spec/gates.test.mjs.
+
+Totals:
+tests 12475 pass 12459 fail 0 skipped 16
+Lines with an exit status other than 0: 0
+
+The four test files of this change:
+src/data/skyfiProxy.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 33 ℹ skipped 0 ℹ tests 33 
+src/data/skyfiScenes.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 14 ℹ skipped 0 ℹ tests 14 
+src/data/skyfiThumbnails.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 34 ℹ skipped 0 ℹ tests 34 
+src/data/skyfiUpstream.test.mjs: rc=0 ℹ cancelled 0 ℹ fail 0 ℹ pass 13 ℹ skipped 0 ℹ tests 13 

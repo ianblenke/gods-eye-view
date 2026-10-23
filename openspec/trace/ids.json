@@ -5044,6 +5044,166 @@
     "since": "2026-10-13",
     "change": "reticulum-provider"
   },
+  "skyfi-source-001": {
+    "hash": "1dee7dbfe06ab30a1c04a0948eec674103cf92cd7c898a05f78def325be9750b",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-002": {
+    "hash": "6382c506c16ae509805995a58a4b66932303b57f3198484647986e601074cca7",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-003": {
+    "hash": "0324c2ec7d2167a4e5f9e81a991d60008872b8d73de008da8c05d27c3a953374",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-004": {
+    "hash": "a3f9e206efa72f79a47c7c51e06a7650235bfe62479ffe3f82abea04e0222666",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-005": {
+    "hash": "5edf2f2eac3e09b3527ef52fbda11c3d58866adba342b143f24d2e2ba57f953e",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-006": {
+    "hash": "eb5c30a177a96d434193108c30f3fe3c6a7ada316e1d8c6b58a20279d383cdb2",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-007": {
+    "hash": "5109e489a522ba776eb7632a0cd46ee6652817d20c532608d3f1aaf0b3d6a20c",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-008": {
+    "hash": "cce77a5ff6e2309a12f67fa1c4c3860457ea8f0f5c79738e4735ce799841e5f6",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-009": {
+    "hash": "79bf87325bb278b21c42d415040e4ad95d63e2a8460c53fe18a088757aa7ac4e",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-010": {
+    "hash": "8d17eef855d031fcf655d1d7616bbac1d4fbb4c0b2cdca9faab529c1c77afd96",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-011": {
+    "hash": "32e8d119f3f6b0cb2acbbcafadacd5d93252c0c75e02c98d5f78ef4f7d743991",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-012": {
+    "hash": "fad71d0d004a6958777c047383a798365557463e64afc64bbabc13ec4514318c",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-013": {
+    "hash": "614b307d6b96376c27022249e09b2114b3b2defc03abd60a9ea3f056415534dd",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-014": {
+    "hash": "8d4e288a55c0a6aea2f945e2f1a743826e5c32ddea4e5ba963036a6e9188a4ea",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-015": {
+    "hash": "05db94a1b1ce77e02c57d5f31924e754b039d4c200143639a8bbee8e1ad6b079",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-016": {
+    "hash": "1c011b095b935d1069bc27b31d1fbccd15fd018b00ce5345a6000e3e4b8d93ef",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-017": {
+    "hash": "dc4438eb85e0c89d10d27e74dbf0b6349b5b88a6df2fed3d480288073989ca11",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-018": {
+    "hash": "910ef49ea3b2e5efa05cc04f3ffa57d9b3b371778fbe1bf7b789887c4d0a2d06",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-019": {
+    "hash": "e0ef7b8a2bb6ccd5b784a69fb4d3af914b2da9d95f54c51362612e2a25c8992e",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-020": {
+    "hash": "8598385e0b90132f490a23974db844338282f7a1eabc98c72b9474d4af72479b",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-021": {
+    "hash": "5044a0db87bed7908796f8efa9146e1e0ee3cbf02aaeaade26a5504d51d51400",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-022": {
+    "hash": "e07cdd55560781a13af4cf1e525c3171adecd327afa9c1cd48e9f6dd7ca6507e",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-023": {
+    "hash": "255380299d5670b808439d8172f24396f2eb82bbaa356ca560c426d19fb9a5f8",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-024": {
+    "hash": "85d5bb88c0d6e66eef1e4c7b1f2952aeebc87501200c1c89180d56fc8af3029a",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-025": {
+    "hash": "5ba72243ef50211aa06de99e2cc526e7da1024833bef5a3c71002a61da0d82e4",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-026": {
+    "hash": "9c318ce06b9e8cb4e36fa8f88f730796414909fa591a45372a0c7b6213a039a9",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-027": {
+    "hash": "ca759d877475abd200076fbd3fdf052eaed1b5a7b65b6779c46129d80c4c02cb",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-028": {
+    "hash": "9c1fb97d583ce7398e3cc155f55db854ba700645de9f7178e1a78f56908d2549",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-029": {
+    "hash": "f42c929b6299d814da30df84224b2fac300ef8a3714fc8228192a5e5e494e10e",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-030": {
+    "hash": "d0cfc86f4a2bc067fd321803cdcc981c6408b8d6b90042d66f6040900d717b8e",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-031": {
+    "hash": "bdd0adbf346e1d402aed2045fee97627beaaf564f28154cc2a0b0dad6eb42318",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
+  "skyfi-source-032": {
+    "hash": "1bb3e2f481757a1cb444855737af5fca19be1e72fc3a947ff21c4ea663fabd00",
+    "since": "2026-10-23",
+    "change": "skyfi-source"
+  },
   "skywatch-scenes-layer-001": {
     "hash": "31bf5e6f0b12fa75a63d980a87b55fc9b3b63e439709209ab3aa6121a40b33dd",
     "since": "2026-10-22",

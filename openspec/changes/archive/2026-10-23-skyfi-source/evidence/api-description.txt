@@ -1,0 +1,47 @@
+Public documents of SkyFi that the lead read for the change skyfi-source.
+
+The lead read each document on 2026-10-22 and 2026-10-23 (UTC). A scout agent
+downloaded the first group with no key and no account. The copies are in
+/home/ianblenke/docker/gev-tools/imagery-scout/download/skyfi/ on the machine
+of the lead.
+
+Address, local copy and SHA-256 of the copy:
+
+1. https://app.skyfi.com/platform-api/openapi.json
+   openapi.json (OpenAPI 3.1.0, version 2.0.0)
+   c2d5504e7740c734dbf48a50b90cfb09e5174fc10441261f86761de70e8138cc
+2. The article "API key" of SkyFi Support on dev.to
+   devto/article-2704802.json
+   ac061def7df6c334cc6814f99350d42dc448c74dd77101bcc03dc21ec1afb519
+3. The article "Ping and health" of SkyFi Support on dev.to
+   devto/article-2706478.json
+   f6d894aab7ec29e12f002123da5686998ffc0ad902fa61b6602e546196e6ade4
+4. The article "Search filters" of SkyFi Support on dev.to
+   devto/article-2723062.json
+   9507437b6990518b0e7d62c7962365c3ad2846661871ecdc453f985b49cf28d5
+5. The article "Area of interest" of SkyFi Support on dev.to
+   devto/article-2701048.json
+   d919bc501074d4c7cfc371e87a387d3f564bddc59e8fb9d078c867bc269bb97c
+
+The scout also read the Terms of Service at https://skyfi.com/en/terms-of-service
+and the End User License Agreement at
+https://skyfi.com/en/end-user-license-agreement. These are web pages with no
+date. The scout kept no copy of them, so this file gives no SHA-256 for them.
+
+Facts that the change uses, with the document that states each fact:
+
+- The archive search is POST https://app.skyfi.com/platform-api/archives. The
+  key goes in the header "X-Skyfi-Api-Key" (1, 2).
+- The field "aoi" of the body is a WKT polygon. It must be a simple convex
+  polygon with at most 500 vertices. The field "pageSize" is from 1 to 100 (1, 5).
+- The fields "fromDate" and "toDate" are date-times in UTC (1).
+- The answer has "archives" and a "nextPage" text for the next page (1).
+- Each archive has a "thumbnailUrls" object that maps a size to a URL, and a
+  "tilesUrl" (1).
+- The same key can place orders (1, 2). The API has no key that can only search.
+- GET /platform-api/ping needs no key and does not check the key (3).
+- GET /platform-api/auth/whoami returns personal data of the account (1).
+- The documents give no rate limit for the archive search (1).
+- The Terms of Service give a personal, non-commercial license. They forbid a
+  public display, except where they allow it. They have no clause for
+  thumbnails, footprints or search data.
