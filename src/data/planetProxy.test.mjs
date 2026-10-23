@@ -689,6 +689,31 @@ test('[planet-source-013] shares an upstream search that is in flight', async (t
   assert.deepEqual(b.body.budget, { used: 1, limit: 20 });
 });
 
+test('[planet-source-015] shares an upstream search that is in flight when the count equals the limit', async (t) => {
+  let release;
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  const server = install(t, {
+    env: { PLANET_DAILY_SEARCHES: '1' },
+    respond: async (url, init) => {
+      await gate;
+      return goodPage(init);
+    },
+  });
+  const first = server.scenes();
+  await settle();
+  const second = server.scenes();
+  await settle();
+  release();
+  const [a, b] = await Promise.all([first, second]);
+  assert.equal(a.status, 200);
+  assert.equal(b.status, 200);
+  assert.equal(b.body.cached, true);
+  assert.deepEqual(b.body.budget, { used: 1, limit: 1 });
+  assert.equal(searches(server), 2);
+});
+
 test('[planet-source-013] gives the failure of a shared search to each request that waits', async (t) => {
   let release;
   const gate = new Promise((resolve) => {

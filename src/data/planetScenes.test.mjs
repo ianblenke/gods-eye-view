@@ -278,6 +278,8 @@ test('[planet-source-018] removes a scene with a bad position', () => {
   const removed = [
     [10],
     [10, 20, 30, 40],
+    [10, 20, 'x'],
+    [10, 20, null],
     [180.0001, 0],
     [-180.0001, 0],
     [0, 90.0001],

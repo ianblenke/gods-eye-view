@@ -30,6 +30,7 @@ function timeOf(value) {
 
 function positionOf(position) {
   if (!Array.isArray(position) || position.length > 3) return null;
+  if (position.slice(2).some((value) => typeof value !== 'number')) return null;
   const [lon, lat] = position;
   if (numberIn(lon, -180, 180) === null || numberIn(lat, -90, 90) === null) {
     return null;
