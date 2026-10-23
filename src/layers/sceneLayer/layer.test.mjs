@@ -264,7 +264,10 @@ for (const S of SERVICES) {
     ])
       assert.throws(
         () => createSceneLayer(S.service, { source, overlayHost: host }),
-        TypeError,
+        {
+          name: 'TypeError',
+          message: `${S.name} requires a source with getStatus, searchScenes and getThumbnail`,
+        },
       );
     assert.doesNotThrow(() =>
       createSceneLayer(S.service, { source: all, overlayHost: host }),
@@ -284,7 +287,10 @@ for (const S of SERVICES) {
     ])
       assert.throws(
         () => createSceneLayer(S.service, { source, overlayHost }),
-        TypeError,
+        {
+          name: 'TypeError',
+          message: `${S.name} requires an overlay host with setEntries, clearSource and setVisible`,
+        },
       );
     assert.throws(() => createSceneLayer(S.service), TypeError);
   });
@@ -1355,14 +1361,16 @@ for (const S of SERVICES) {
       '',
       'Planet',
       'SKYFI',
+      'toString',
+      'constructor',
       undefined,
       null,
       5,
     ]) {
-      assert.throws(
-        () => createSceneLayer(service, { source, overlayHost }),
-        TypeError,
-      );
+      assert.throws(() => createSceneLayer(service, { source, overlayHost }), {
+        name: 'TypeError',
+        message: 'The service must be "planet" or "skyfi"',
+      });
     }
   });
 

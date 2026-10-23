@@ -655,8 +655,39 @@ for (const S of SERVICES) {
   });
 
   test(`[scene-layers-010] ${S.label}: refuses a service that is not planet or skyfi`, () => {
-    for (const service of ['other', '', 'Planet', undefined, null, 5]) {
-      assert.throws(() => createSceneSource(service), TypeError);
+    for (const service of [
+      'other',
+      '',
+      'Planet',
+      'toString',
+      'constructor',
+      undefined,
+      null,
+      5,
+    ]) {
+      assert.throws(() => createSceneSource(service), {
+        name: 'TypeError',
+        message: 'The service must be "planet" or "skyfi"',
+      });
     }
+  });
+
+  test(`[scene-layers-011] ${S.label}: gives the answer with the names of the satellite providers of the service`, async () => {
+    const body = {
+      ...GOOD,
+      scenes: GOOD.scenes.map((item) => ({
+        ...item,
+        provider: 'SENTINEL1_CREODIAS',
+      })),
+    };
+    const source = createSceneSource(S.service, {
+      fetchImpl: async () => json(body),
+    });
+    const result = await source.searchScenes(SEARCH);
+    assert.equal(result.ok, true);
+    const expected =
+      S.service === 'skyfi' ? 'Sentinel-1' : 'SENTINEL1_CREODIAS';
+    for (const item of result.answer.scenes)
+      assert.equal(item.provider, expected);
   });
 }

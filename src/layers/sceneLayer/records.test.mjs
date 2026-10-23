@@ -324,14 +324,16 @@ for (const S of SERVICES) {
       '',
       'Planet',
       'SKYFI',
+      'toString',
+      'constructor',
       undefined,
       null,
       5,
     ]) {
-      assert.throws(
-        () => normalizeAnswer(answer([scene('a')]), service),
-        TypeError,
-      );
+      assert.throws(() => normalizeAnswer(answer([scene('a')]), service), {
+        name: 'TypeError',
+        message: 'The service must be "planet" or "skyfi"',
+      });
     }
   });
 
@@ -389,6 +391,12 @@ for (const S of SERVICES) {
         footprint: { type: 'MultiPolygon', coordinates: 'x' },
       }),
       scene('line', { footprint: { type: 'LineString', coordinates: RING } }),
+      scene('line-part', {
+        footprint: { type: 'LineString', coordinates: [[RING]] },
+      }),
+      scene('collection', {
+        footprint: { type: 'GeometryCollection', coordinates: [[RING]] },
+      }),
       scene('point', { footprint: { type: 'Point', coordinates: [10, 60] } }),
       scene('none', { footprint: null }),
       scene('kept'),
@@ -405,6 +413,9 @@ for (const S of SERVICES) {
             ['SENTINEL2_CREODIAS', 'Sentinel-2'],
             ['PLANET', 'Planet'],
             ['SOME_CODE', 'SOME CODE'],
+            ['A_B_C', 'A B C'],
+            ['toString', 'toString'],
+            ['constructor', 'constructor'],
             ['PlanetScope', 'PlanetScope'],
             ['SkySat', 'SkySat'],
           ]
@@ -412,6 +423,9 @@ for (const S of SERVICES) {
             ['PlanetScope', 'PlanetScope'],
             ['SkySat', 'SkySat'],
             ['SOME_CODE', 'SOME_CODE'],
+            ['A_B_C', 'A_B_C'],
+            ['toString', 'toString'],
+            ['constructor', 'constructor'],
             ['VANTOR', 'VANTOR'],
             ['PLANET', 'PLANET'],
           ];

@@ -36,7 +36,7 @@ export const SERVICES = Object.freeze({
 
 /** The values of a service, or a TypeError for a name that is not "planet" or "skyfi". */
 export function serviceOf(service) {
-  if (typeof service !== 'string' || !Object.hasOwn(SERVICES, service)) {
+  if (!Object.hasOwn(SERVICES, service)) {
     throw new TypeError('The service must be "planet" or "skyfi"');
   }
   return SERVICES[service];

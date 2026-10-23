@@ -45,6 +45,7 @@ const SERVICES = [
       'The terms of Planet allow you to view the data for yourself.',
       'Do not give other people access to this app.',
       'href="https://www.planet.com/"',
+      '>planet.com</a>',
     ],
   },
   {
@@ -65,6 +66,7 @@ const SERVICES = [
       'The terms of SkyFi give a personal and non-commercial license, so use the data for yourself only.',
       'Each scene comes from a satellite provider that the list names.',
       'href="https://skyfi.com/"',
+      '>skyfi.com</a>',
     ],
   },
 ];
@@ -351,5 +353,18 @@ for (const S of SERVICES) {
       modelFor(S.service).sceneList({ answer, selectedId: null }).ariaLabel,
       `${S.list}`,
     );
+  });
+
+  test(`[scene-layers-031] ${S.label}: gives the reference source the routes of its own service`, async (t) => {
+    const urls = [];
+    t.mock.method(globalThis, 'fetch', async (url) => {
+      urls.push(String(url));
+      return new Response(JSON.stringify({ configured: true }), {
+        status: 200,
+      });
+    });
+    const source = createReferenceSources()[S.layer];
+    assert.deepEqual(await source.getStatus(), { ok: true, configured: true });
+    assert.deepEqual(urls, [`${S.route}/status`]);
   });
 }
