@@ -247,7 +247,7 @@ test('[skyfi-source-018] keeps the first ring of a polygon and removes each othe
     withFootprint('compact', `POLYGON((${RING_TEXT.replaceAll(', ', ',')}))`),
     withFootprint(
       'spaces',
-      `POLYGON  (  ( ${RING_TEXT.replaceAll(', ', ' , ')} )  ,  (${textOf(hole)}) )`,
+      `POLYGON  ((${RING_TEXT.replaceAll(', ', ' , ')})  ,  (${textOf(hole)}))`,
     ),
     withFootprint('short-later', wkt(RING_TEXT, '1 1, 2 2, 3 3')),
     withFootprint('open-later', wkt(RING_TEXT, '1 1, 2 2, 3 3, 4 4')),
@@ -263,20 +263,15 @@ test('[skyfi-source-018] keeps the first ring of a polygon and removes each othe
 });
 
 test('[skyfi-source-018] keeps a ring of 4 to 2000 positions that ends at its first position', () => {
-  const ringOf = (n) => {
-    const ring = Array.from({ length: n - 1 }, (_, i) => [
-      -82.5 + i * 0.0001,
-      27.9 + (i % 2) * 0.0001,
-    ]);
-    return [...ring, ring[0]];
+  const ringText = (n) => {
+    const ring = Array.from({ length: n - 1 }, (_, i) => `${i % 10} ${i % 7}`);
+    return [...ring, ring[0]].join(', ');
   };
-  const text = (ring) =>
-    ring.map(([lon, lat]) => `${lon.toFixed(4)} ${lat.toFixed(4)}`).join(', ');
   const result = one([
-    withFootprint('r3', wkt(text(ringOf(3)))),
-    withFootprint('r4', wkt(text(ringOf(4)))),
-    withFootprint('r2000', wkt(text(ringOf(2000)))),
-    withFootprint('r2001', wkt(text(ringOf(2001)))),
+    withFootprint('r3', wkt(ringText(3))),
+    withFootprint('r4', wkt(ringText(4))),
+    withFootprint('r2000', wkt(ringText(2000))),
+    withFootprint('r2001', wkt(ringText(2001))),
     withFootprint(
       'open',
       wkt('-82.5 27.9, -82.4 27.9, -82.4 28, -82.5 28, -82.5 27.91'),

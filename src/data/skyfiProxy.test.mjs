@@ -492,7 +492,7 @@ test('[skyfi-source-010] sends only the search request and the thumbnail request
     },
   ];
   const all = [];
-  const ids = [feature(1).id, feature(3).id, 'unknown-id'];
+  const ids = [feature(1).archiveId, feature(3).archiveId, 'unknown-id'];
   for (const flow of flows) {
     const server = install(t, { ...flow, both: true });
     await server.request(STATUS, { method: 'GET' });
@@ -502,7 +502,7 @@ test('[skyfi-source-010] sends only the search request and the thumbnail request
       await server.request(`${THUMBS}/${id}`, { method: 'GET' });
     all.push(...server.calls);
   }
-  const thumbs = [thumbOf(feature(1).id), thumbOf(feature(3).id)];
+  const thumbs = [thumbOf(feature(1).archiveId), thumbOf(feature(3).archiveId)];
   const forbidden = [
     NEXT_PAGE,
     `https://app.skyfi.com${NEXT_PAGE}`,
@@ -912,8 +912,8 @@ test('[skyfi-source-031] writes no key, scene id, URL or host name, and no line 
   const lines = [...server.lines, ...good.lines].join('\n');
   for (const word of [
     KEY,
-    feature(1).id,
-    feature(3).id,
+    feature(1).archiveId,
+    feature(3).archiveId,
     'https://',
     'api.planet.com',
     'tiles.planet.com',
