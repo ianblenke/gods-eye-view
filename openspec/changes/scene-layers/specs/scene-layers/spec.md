@@ -1,23 +1,23 @@
 ## ADDED Requirements
 
 ### Requirement: Layer record
-The function `createSceneLayer` MUST make the layer of one provider: Planet or SkyFi. Each layer MUST have the update interval 0, and it MUST accept only the parameter `scene`.
+The function `createSceneLayer` MUST make the layer of one service: Planet or SkyFi. Each layer MUST have the update interval 0, and it MUST accept only the parameter `scene`.
 Origin: spec-first
 
 #### Scenario: Describe the layer `scene-layers-001`
-- **WHEN** a test creates the layer of each provider with a fake source and a fake overlay host
+- **WHEN** a test creates the layer of each service with a fake source and a fake overlay host
 - **THEN** the layer of Planet has the `id` "planet-scenes", the `name` "Planet Scenes", the `icon` "🪐" and the `source` "Planet"
 - **AND** the layer of SkyFi has the `id` "skyfi-scenes", the `name` "SkyFi Scenes", the `icon` "🛰" and the `source` "SkyFi"
-- **AND** the scenarios below name the values of the layer under test: `<layer>` is the `id`, `<name>` is the `name` and `<label>` is the `source`
+- **AND** the scenarios below name the values of the layer under test: `<layer>` is the `id` of the layer and `<label>` is its `source`
 - **AND** they name the list label as `<list>`, the key variable as `<key>`, the thumbnail variable as `<thumbs>` and the route base as `<route>`
 - **AND** for Planet, `<list>` is "Planet scenes", `<key>` is PLANET_API_KEY, `<thumbs>` is PLANET_THUMBNAILS and `<route>` is "/api/planet"
 - **AND** for SkyFi, `<list>` is "SkyFi scenes", `<key>` is SKYFI_API_KEY, `<thumbs>` is SKYFI_THUMBNAILS and `<route>` is "/api/skyfi"
 - **AND** a test runs each scenario below for the layer of Planet and for the layer of SkyFi
 - **AND** the `updateInterval` is 0, and the layer has a method `setParams`
 - **AND** `getStats` gives `count` 0, `lastUpdate` null and `error` null
-- **AND** the layer throws a `TypeError` for a source that does not have one of `getStatus`, `searchScenes` and `getThumbnail`
-- **AND** the layer throws a `TypeError` for an overlay host that does not have one of `setEntries`, `clearSource` and `setVisible`
-- **AND** the function throws a `TypeError` for a provider that is not "planet" or "skyfi"
+- **AND** the layer throws a `TypeError` for a source that lacks `getStatus`, `searchScenes` or `getThumbnail`
+- **AND** the layer throws a `TypeError` for an overlay host that lacks `setEntries`, `clearSource` or `setVisible`
+- **AND** the function throws a `TypeError` for a service that is not "planet" or "skyfi"
 - **AND** a second `init` throws an error
 ### Requirement: No search without a press
 The layer MUST send a search only when a person presses the chip "search" of its row. It MUST send at most one search for each press. After an error, it MUST send no search until a person presses that chip again.
@@ -73,14 +73,13 @@ Origin: spec-first
 - **AND** a press that fails after a failed status shows the message and the `error` of the press
 
 ### Requirement: Search box and dates
-The layer MUST build the box of a search from the point in the middle of the view. The box MUST have an area of about 2304 km², and the server MUST accept it. The window of a search MUST be the last 92 calendar days in UTC.
+The layer MUST build the box of a search from the point in the middle of the view. The box MUST have an area of about 2304 km², and the routes MUST accept it. The window of a search MUST be the last 92 calendar days in UTC.
 Origin: spec-first
 
 #### Scenario: Send the box and the dates of the SkyWatch layer `scene-layers-008`
 - **WHEN** a test presses the chip with a fake viewer, and the fake clock is at 2026-10-21T12:00:00.000Z
 - **AND** the middle of the view of the fake viewer is the point (60.0, 10.0)
 - **THEN** the source gets one `searchScenes` call with the box [9.568326, 59.784163, 10.431674, 60.215837], `start` "2026-07-22" and `end` "2026-10-21"
-- **AND** the layer uses the functions `scenesBox` and `searchWindow` of the layer "skywatch-scenes", so it keeps their rules
 - **AND** the sample (30.2672, -97.7431) gives the box [-97.98991, 30.054163, -97.49009, 30.485837]
 - **AND** the sample (-33.9, 151.2) gives the box [150.939959, -34.115837, 151.460041, -33.684163]
 - **AND** the layer calls `pickEllipsoid` at half of the `clientWidth` and half of the `clientHeight` of the canvas, with the ellipsoid of the globe
@@ -106,8 +105,17 @@ Origin: spec-first
 - **AND** the samples (0.0, 179.79) and (0.0, -179.79) get the reason "meridian"
 - **AND** the sample (39.57, 179.72) gives a box with the east value 180, and (39.57, -179.72) gives a box with the west value -180
 
+#### Scenario: Build only boxes that the routes accept `scene-layers-036`
+- **WHEN** a test presses the chip for each latitude from -80 to 80 in steps of 5
+- **AND** it does so for each longitude from -170 to 170 in steps of 10
+- **AND** the fake clock is at 2026-10-21T12:00:00.000Z
+- **THEN** the function `validateRequest` of the server accepts each body `{bbox, start, end}` that the layer gives to `searchScenes`
+- **AND** the routes of Planet and SkyFi use that function for their checks
+- **AND** `start` is "2026-07-22" and `end` is "2026-10-21"
+- **AND** the area of each box, from the function `boxAreaKm2` of the server, is from 2303.99 to 2304.01 km²
+
 ### Requirement: Browser source
-The source MUST read the status, send the search and get a thumbnail through the same-origin routes of the provider. It MUST read at most 8 MiB of a search answer and at most 1 MiB of a thumbnail.
+The source MUST read the status, send the search and get a thumbnail through the same-origin routes of the service. It MUST read at most 8 MiB of a search answer and at most 1 MiB of a thumbnail.
 Origin: spec-first
 
 #### Scenario: Read the status route `scene-layers-010`
@@ -168,8 +176,9 @@ Origin: spec-first
 - **AND** the function drops a scene whose `id` is not a text of 1 to 128 characters
 - **AND** it drops a scene whose `id` has a character that is not an ASCII letter, a digit, a hyphen or an underscore
 - **AND** it drops a scene when `start` is not a text, or when `Date.parse` does not read it
-- **AND** it drops a scene when `footprint` is not an object with the `type` "Polygon" and exactly one ring in `coordinates`
-- **AND** it also keeps a `footprint` with the `type` "MultiPolygon" and 1 to 16 parts that each have exactly one ring
+- **AND** it drops a scene when `footprint` is not an object with the `type` "Polygon" or "MultiPolygon"
+- **AND** it drops a scene when a Polygon has more or less than one ring in `coordinates`
+- **AND** it keeps a `footprint` with the `type` "MultiPolygon" and 1 to 16 parts that each have exactly one ring
 - **AND** it drops a scene with a `MultiPolygon` of 0 parts or of 17 parts
 - **AND** it drops a scene with a part that does not have exactly one ring
 - **AND** it drops a scene when a ring does not have 4 to 2000 positions
@@ -179,12 +188,14 @@ Origin: spec-first
 - **AND** it drops a scene when the first position and the last position of a ring are not equal
 - **AND** it drops an entry of `scenes` that is not an object, and a scene when an earlier scene has the same `id`
 - **AND** it keeps at most the first 50 valid scenes, in the order of the answer
+- **AND** the samples include rings of 3, 4, 2000 and 2001 positions, ids of 128 and 129 characters, and answers of 50 and 51 scenes
 - **AND** `resolutionM` is a finite number of 0 or more, or null
 - **AND** `cloudPercent` is a finite number from 0 to 100, or null
 - **AND** `provider` is null when the value of the answer is not a text, or is an empty text
+- **AND** the function `normalizeAnswer` has the service as its second argument
 - **AND** the layer of SkyFi gives the name "Vantor" for the text "VANTOR", "Sentinel-1" for "SENTINEL1_CREODIAS", "Sentinel-2" for "SENTINEL2_CREODIAS" and "Planet" for "PLANET"
-- **AND** every other text gives the text with each underscore changed to a space, so "SOME_CODE" gives "SOME CODE"
-- **AND** the layer of Planet gives the text "PlanetScope" and the text "SkySat" as they are
+- **AND** for the layer of SkyFi, every other text gives the text with each underscore changed to a space, so "SOME_CODE" gives "SOME CODE"
+- **AND** the layer of Planet keeps each text as it is, so "PlanetScope", "SkySat" and "SOME_CODE" stay the same
 - **AND** `thumbnail` is true only when the value of the answer is true
 - **AND** the result has the kept scenes as `scenes`, and the fields `total`, `truncated`, `used` and `limit`
 - **AND** `total` is a whole number of 0 or more or null, and `truncated` is true only when the value of the answer is true
@@ -263,11 +274,11 @@ Origin: spec-first
 - **AND** the result has the `ariaLabel` "<list>" and one item for each scene, in the order of the answer
 - **AND** the `id` of an item is "scene:" followed by the `id` of the scene
 - **AND** the `lead` of an item is the UTC date of the scene with the form `YYYY-MM-DD`
-- **AND** the `text` of an item is the provider, the resolution, the cloud cover and the note "no thumbnail", with " · " between them
+- **AND** the `text` of an item is the `provider` of the scene, the resolution, the cloud cover and the note "no thumbnail", with " · " between them
 - **AND** the text has the note "no thumbnail" only for a scene with `thumbnail` false
-- **AND** the text has no part for a provider, a resolution or a cloud cover that is null
+- **AND** the text has no part for a `provider`, a resolution or a cloud cover that is null
 - **AND** the text is "<label> scene" when it has no part
-- **AND** so a scene with `thumbnail` false and no provider, resolution or cloud cover has the text "no thumbnail"
+- **AND** so a scene with `thumbnail` false and no `provider`, resolution or cloud cover has the text "no thumbnail"
 - **AND** the resolution 0.5 gives "0.5 m", the resolution 3 gives "3 m", the resolution 0.123456 gives "0.12 m", and 0.126 gives "0.13 m"
 - **AND** the cloud cover 3.4 gives "cloud 3%", the cloud cover 3.6 gives "cloud 4%", and the cloud cover 0 gives "cloud 0%"
 - **AND** the item of the selected scene has `active` true and the `params` `{scene:null}`
@@ -280,7 +291,7 @@ Origin: spec-first
 - **AND** a smaller image grows, so (96, 48) gives (192, 96)
 - **AND** each side is the result of `Math.round`, and at least 1, so (1000, 1) gives (192, 1)
 - **AND** a width or a height that is not a finite number more than 0 gives null
-- **AND** the function `footprintCentre` gives the mean longitude and the mean latitude of each position of the first ring of a scene, except the last
+- **AND** the function `footprintCentre` gives the mean longitude and the mean latitude of each position of a ring, except the last
 - **AND** the ring [[0,0],[2,0],[2,2],[0,2],[0,0]] gives the longitude 1 and the latitude 1
 
 ### Requirement: Layer display
@@ -298,6 +309,7 @@ Origin: spec-first
 - **AND** the polyline has the color, the outline alpha and the width of the style of a footprint that is not selected
 - **AND** an entity of a footprint that is not selected has no polygon
 - **AND** the stats have `count` 3 for 3 scenes, `lastUpdate` equal to the time of the clock of the layer, and `error` null
+- **AND** `count` is the number of scenes, not the number of entities
 - **AND** the row controls have the list of `sceneList` for that answer
 - **AND** a second good answer replaces the footprints and the list of the first
 - **AND** the layer calls its option `requestRender` with "<layer>" after each change of the entities
@@ -345,7 +357,7 @@ Origin: spec-first
 - **AND** each other entity has the style of a footprint that is not selected
 - **AND** each entity of the selected scene has a polygon of its ring with the fill alpha of that style
 - **AND** the list item of that scene has `active` true
-- **AND** `setParams({scene:null})` returns true and removes the selection
+- **AND** `setParams({scene:null})` returns true and removes the selection, and no entity has a polygon
 - **AND** `setParams` with the `id` of the selected scene returns true and sends no new thumbnail request
 - **AND** `setParams` returns false and changes nothing for an `id` that is not in the answer
 - **AND** it does the same for a `scene` that is not a text and not null, and for a value that is not an object
@@ -362,9 +374,9 @@ Origin: spec-first
 - **AND** then the overlay host gets one call of `setEntries` for the source "<layer>" with one entry
 - **AND** the entry has the `id` "selected", the `variant` "thumbnail", the `image` that `decodeImage` gave and `requireImage` true
 - **AND** the entry has `thumbnailWidth` and `thumbnailHeight` from `thumbnailSize` of the `width` and the `height` of that image
-- **AND** the `title` of the entry is the UTC date of the scene, a space and the provider
-- **AND** the `title` is only that date when the provider is null
-- **AND** the `position` of the entry is the point of `footprintCentre` of the first ring of the scene, on the ellipsoid
+- **AND** the `title` of the entry is the UTC date of the scene, a space and the `provider` of the scene
+- **AND** the `title` is only that date when the `provider` of the scene is null
+- **AND** the `position` of the entry is the point of `footprintCentre` of the first ring of `rings`, on the ellipsoid
 - **AND** after the card, the info text has no message of the thumbnail
 - **AND** a scene that has `thumbnail` false gives no `getThumbnail` call, and the info text ends with "<label> has no thumbnail for this scene."
 
@@ -404,9 +416,9 @@ Origin: spec-first
 - **AND** a catalog without the source "planet-scenes" gives that layer the stats error "Data source not configured: planet-scenes"
 - **AND** a catalog without the source "skyfi-scenes" gives that layer the stats error "Data source not configured: skyfi-scenes"
 - **AND** after a search, the method `setLayerParams` of the manager selects a scene with `{scene:<id>}` and the origin "user", and returns true
-- **AND** the layer of `createApplicationSceneLayer` calls the function `requestRender` of the Cesium scene of the render governor after a search
-- **AND** an option `requestRender` of `createApplicationSceneLayer` replaces the render governor
-- **AND** the QA script for the two-character token uses the free token "03" for its fixture
+- **AND** the layer of `createApplicationSceneLayer(service)` calls the function `requestRender` of the Cesium scene of the render governor after a search
+- **AND** an option `requestRender` of `createApplicationSceneLayer(service, options)` replaces the render governor
+- **AND** the function `nextLayerStateToken` gives the token "03" for the ledger and the free digits that the QA script uses
 #### Scenario: Put the layers in the Cameras group `scene-layers-032`
 - **WHEN** a test reads the groups of the layer panel
 - **THEN** the group "Cameras" has the layers "skywatch-scenes", "planet-scenes" and "skyfi-scenes" in this order, right after "recent-imagery"
