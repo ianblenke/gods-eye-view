@@ -383,7 +383,7 @@ for (const S of SERVICES) {
     assert.equal(h.chip().disabled, false);
   });
 
-  test(`[scene-layers-005] ${S.label}: sends no search after an error while the fake clock and the mocked timers move 10 minutes, and sends one search at the next press`, async (t) => {
+  test(`[scene-layers-005] ${S.label}: sends no search after an error while the clock and the timers move 10 minutes, and one search at the next press`, async (t) => {
     t.mock.timers.enable({ apis: ['setTimeout', 'setInterval'] });
     const rejects = async () => {
       throw new Error('network');
