@@ -74,13 +74,13 @@ function sceneText(scene, label) {
 
 /** The ordered list of the row: one item for each scene of the answer, or null. */
 /** The label of the list in the language of the page. The literal texts are the keys of the catalogs. */
-const listLabel = (list) =>
-  list === 'Planet scenes' ? t('Planet scenes') : t('SkyFi scenes');
+const listLabel = (serviceName) =>
+  serviceName === 'planet' ? t('Planet scenes') : t('SkyFi scenes');
 
-function sceneList({ answer, selectedId }, label, list) {
+function sceneList({ answer, selectedId }, label, serviceName) {
   if (!answer?.scenes.length) return null;
   return {
-    ariaLabel: listLabel(list),
+    ariaLabel: listLabel(serviceName),
     items: answer.scenes.map((scene) => {
       const active = scene.id === selectedId;
       return {
@@ -125,7 +125,7 @@ export function footprintCentre(ring) {
  * @param {'planet'|'skyfi'} serviceName
  */
 export function modelFor(serviceName) {
-  const { label, list } = serviceOf(serviceName);
+  const { label } = serviceOf(serviceName);
   return {
     HINT: hint(label),
     dateOf,
@@ -133,6 +133,6 @@ export function modelFor(serviceName) {
     footprintCentre,
     thumbnailSize,
     readoutText: (state) => readoutText(state, label),
-    sceneList: (state) => sceneList(state, label, list),
+    sceneList: (state) => sceneList(state, label, serviceName),
   };
 }

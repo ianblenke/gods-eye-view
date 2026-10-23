@@ -14,7 +14,6 @@ export const SERVICES = Object.freeze({
     icon: '🪐',
     // i18n-ignore: product name
     label: 'Planet',
-    list: 'Planet scenes',
     key: 'PLANET_API_KEY',
     thumbs: 'PLANET_THUMBNAILS',
     route: '/api/planet',
@@ -27,7 +26,6 @@ export const SERVICES = Object.freeze({
     icon: '🛰',
     // i18n-ignore: product name
     label: 'SkyFi',
-    list: 'SkyFi scenes',
     key: 'SKYFI_API_KEY',
     thumbs: 'SKYFI_THUMBNAILS',
     route: '/api/skyfi',
