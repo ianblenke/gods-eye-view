@@ -6,7 +6,7 @@
 - [x] 1.4 Write the test for `planet-source-031` in the same file.
 - [x] 1.5 Write the tests for `planet-source-009` and `planet-source-016` in `src/data/planetUpstream.test.mjs`.
 - [x] 1.6 Write the tests for `planet-source-017`, `planet-source-018` and `planet-source-019` in `src/data/planetScenes.test.mjs`.
-- [x] 1.7 Write the tests for `planet-source-020` to `planet-source-030` and `planet-source-032` in `src/data/planetThumbnails.test.mjs`.
+- [x] 1.7 Write the tests for `planet-source-020`, `planet-source-021`, `planet-source-022`, `planet-source-023`, `planet-source-024`, `planet-source-025`, `planet-source-026`, `planet-source-027`, `planet-source-028`, `planet-source-029`, `planet-source-030` and `planet-source-032` in `src/data/planetThumbnails.test.mjs`.
 
 ## 2. Write the files
 
