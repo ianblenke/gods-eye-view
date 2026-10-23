@@ -3,7 +3,7 @@ For each fault, the runner changes the named text of one or more files and runs 
 A fault is killed when a test with a scenario ID that the fault names fails. The runner also lists each test of the change that no fault makes fail.
 The list has 143 faults that the lead took from the fault list of planet-source, because their text is the same in both plugins, and 145 faults that the lead wrote for the files of SkyFi.
 
-Run 2 is the record. Commit: 25ab15b8. Start (UTC) 2026-10-23T06:30:06Z, end (UTC) 2026-10-23T06:40:51Z. Result: faults 288, killed 288, survived 0. The line of the runner for the tests of the change: "tests of the change: 94, with no fault that makes them fail: 0".
+Run 3 is the record. Commit: afaf18c8. Start (UTC) 2026-10-23T08:13:17Z, end (UTC) 2026-10-23T08:23:45Z. Result: faults 293, killed 293, survived 0. The line of the runner for the tests of the change: "tests of the change: 94, with no fault that makes them fail: 0".
 
 Run 1 was on the commit 7921966c. Result: faults 288, killed 282, survived 6. The line for the tests of the change: "tests of the change: 94, with no fault that makes them fail: 0".
 The commit that follows run 1 adds test samples, and the lead corrected the text of two faults. Each fault of run 1 that survived, and the correction for it:
@@ -14,7 +14,12 @@ The commit that follows run 1 adds test samples, and the lead corrected the text
 - "link with a backslash": a test gap, as for the at sign. The test now has a backslash in the path.
 - "white space between numbers": a test gap. A tab in the first ring makes a number that is not a number, so the scene went out for another reason. The test now has a tab in a later ring. The text does not meet the rule, so the plugin removes the scene. The fault lets the tab pass, and then the test fails.
 
-The result line of each fault of run 2 follows. Each line gives the name of the fault, the changed files, the targets and the failed tests.
+Run 2 was on the commit 25ab15b8. Result: faults 288, killed 288, survived 0. The line for the tests of the change: "tests of the change: 94, with no fault that makes them fail: 0".
+Round 2 of the review found two test gaps that no fault showed. No test had the code points U+0000, U+001F and U+007F in a thumbnail link, and no test had more than one space between two numbers of a position.
+The commit that follows run 2 changes only the test file src/data/skyfiScenes.test.mjs in the folders server and src. It adds bad links with these three code points, a footprint with three spaces between two numbers, and two footprints with a space or a line break at the end.
+Run 3 has five faults more than run 2: "link without DEL refused", "link control up to 1e", "link control from 1", "one space between numbers" and "trailing white space accepted".
+
+The result line of each fault of run 3 follows. Each line gives the name of the fault, the changed files, the targets and the failed tests.
 
 KILLED: other plugin name (server/providers/skyfi.js) | targets: ['001'] | failed: ['src/data/skyfiProxy.test.mjs: [skyfi-source-001] mounts the two routes and passes other paths to next', 'src/data/skyfiProxy.test.mjs: [skyfi-source-001] localProviderPlugins holds the scenes plugin once']
 KILLED: no preview server routes (server/providers/skyfi.js) | targets: ['001'] | failed: ['src/data/skyfiProxy.test.mjs: [skyfi-source-001] mounts the two routes and passes other paths to next']
@@ -304,3 +309,8 @@ KILLED: thumbnail log without the bytes (server/providers/skyfi/thumbnails.js) |
 KILLED: no thumbnail log of a failure (server/providers/skyfi/thumbnails.js) | targets: ['032'] | failed: ['src/data/skyfiThumbnails.test.mjs: [skyfi-source-032] writes one line for a good image and for each failure, with the time']
 KILLED: thumbnail log line for a step (server/providers/skyfi/thumbnails.js) | targets: ['032'] | failed: ['src/data/skyfiThumbnails.test.mjs: [skyfi-source-032] writes one line for a good image and for each failure, with the time', 'src/data/skyfiThumbnails.test.mjs: [skyfi-source-032] writes no line for a step before the upstream request, and no key, id, URL or host name', 'src/data/skyfiThumbnails.test.mjs: [skyfi-source-032] logs with console.log when the test gives no log option']
 KILLED: thumbnail log of the id (server/providers/skyfi/thumbnails.js) | targets: ['032'] | failed: ['src/data/skyfiThumbnails.test.mjs: [skyfi-source-032] writes one line for a good image and for each failure, with the time', 'src/data/skyfiThumbnails.test.mjs: [skyfi-source-032] writes no line for a step before the upstream request, and no key, id, URL or host name']
+KILLED: link without DEL refused (server/providers/skyfi/normalize.js) | targets: ['017'] | failed: ['src/data/skyfiScenes.test.mjs: [skyfi-source-017] sets thumbnail true only for a link of the 300x300 key that starts with an allowed host and path']
+KILLED: link control up to 1e (server/providers/skyfi/normalize.js) | targets: ['017'] | failed: ['src/data/skyfiScenes.test.mjs: [skyfi-source-017] sets thumbnail true only for a link of the 300x300 key that starts with an allowed host and path']
+KILLED: link control from 1 (server/providers/skyfi/normalize.js) | targets: ['017'] | failed: ['src/data/skyfiScenes.test.mjs: [skyfi-source-017] sets thumbnail true only for a link of the 300x300 key that starts with an allowed host and path']
+KILLED: one space between numbers (server/providers/skyfi/normalize.js) | targets: ['018'] | failed: ['src/data/skyfiScenes.test.mjs: [skyfi-source-018] keeps the first ring of a polygon and removes each other ring']
+KILLED: trailing white space accepted (server/providers/skyfi/normalize.js) | targets: ['018'] | failed: ['src/data/skyfiScenes.test.mjs: [skyfi-source-018] removes a scene when the text does not meet the rule of the WKT reader']

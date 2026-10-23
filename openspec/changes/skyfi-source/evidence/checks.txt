@@ -1,4 +1,4 @@
-Host checks of skyfi-source on the commit 25ab15b8. Host node: v26.8.2. Each output shows at most its last three lines. The lead added each line "exit".
+Host checks of skyfi-source on the commit afaf18c8. Host node: v26.8.2. Each output shows at most its last three lines. The lead added each line "exit".
 
 $ node scripts/format.mjs --check
 Checked 1582 source files.
