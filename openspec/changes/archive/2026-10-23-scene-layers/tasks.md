@@ -61,4 +61,4 @@
 - [x] 4.1 Run `make ratchet CHANGE=scene-layers`.
 - [x] 4.2 Run the two review agents.
 - [x] 4.3 Write review.md.
-- [ ] 4.4 Run `make gates CHANGE=scene-layers` on the final tree.
+- [x] 4.4 Run `make gates CHANGE=scene-layers` on the final tree.
