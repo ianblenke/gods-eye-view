@@ -181,7 +181,7 @@ The daily limit is 20 searches. `PLANET_DAILY_SEARCHES` changes it, and the serv
 
 Planet states that a quick search and a thumbnail use no credits. An order, an activation, a subscription and a tile use credits, and this version sends none of them. Planet keeps each quick search for 30 days in the account. The terms of Planet allow you to view the data in this app for yourself. Do not give other people access to these routes.
 
-The route `/api/planet/thumbnail/<id>` sends the thumbnail of a scene that a search of the last 10 minutes gave. It is on by default, and `PLANET_THUMBNAILS=false` in `.env` stops it. It sends only a PNG, JPEG or WebP image of at most 1 MiB whose first bytes show its type, and it keeps no copy. It allows 30 requests in each minute. No layer shows the scenes yet, and no test sends a request to Planet.
+The route `/api/planet/thumbnail/<id>` sends the thumbnail of a scene that a search of the last 10 minutes gave. It is on by default, and `PLANET_THUMBNAILS=false` in `.env` stops it. It sends only a PNG, JPEG or WebP image of at most 1 MiB whose first bytes show its type, and it keeps no copy. It allows 30 requests in each minute. The layer "Planet Scenes" shows the scenes, and no test sends a request to Planet.
 
 ### SkyFi archive scenes (key in `.env`)
 
@@ -193,7 +193,15 @@ The key of SkyFi can also place orders that cost money. The routes send the key 
 
 The daily limit is 20 searches. `SKYFI_DAILY_SEARCHES` changes it, and the server keeps the count only in RAM. An answer stays in the store for 10 minutes. The route writes one line to the log of the server for each search, with no key and no URL.
 
-The route `/api/skyfi/thumbnail/<id>` sends the thumbnail of a scene that a search of the last 10 minutes gave. A thumbnail of SkyFi is a public image, so the request has no key. The route is on by default, and `SKYFI_THUMBNAILS=false` in `.env` stops it. It sends only a PNG, JPEG or WebP image of at most 1 MiB, and it keeps no copy. No layer shows the scenes yet, and no test sends a request to SkyFi.
+The route `/api/skyfi/thumbnail/<id>` sends the thumbnail of a scene that a search of the last 10 minutes gave. A thumbnail of SkyFi is a public image, so the request has no key. The route is on by default, and `SKYFI_THUMBNAILS=false` in `.env` stops it. It sends only a PNG, JPEG or WebP image of at most 1 MiB, and it keeps no copy. The layer "SkyFi Scenes" shows the scenes, and no test sends a request to SkyFi.
+
+### Planet Scenes and SkyFi Scenes (layers)
+
+The layers "Planet Scenes" and "SkyFi Scenes" are in the group "Cameras", right after "SkyWatch Scenes". They work as the layer "SkyWatch Scenes" does. A press of the chip "Search scenes here" sends one search for a box of 48 km by 48 km at the view centre and for the last 92 days. The layer draws the footprint of each scene, and its row lists the scenes. A click on a scene in the list shows its thumbnail as a card on the globe.
+
+A scene of Planet can have more than one footprint part, and the layer draws each part. The list of "SkyFi Scenes" names the satellite provider of each scene, such as Vantor or Sentinel-2. Each layer needs its key in `.env` (`PLANET_API_KEY` or `SKYFI_API_KEY`), and the row tells you when the key is not set.
+
+The layers call only the routes of this app. The credit of "Planet Scenes" has the copyright notice that the terms of Planet ask for. The terms of Planet and of SkyFi allow you to view the data for yourself, so do not give other people access to this app.
 
 ### Notes on the live sources
 
