@@ -51,6 +51,14 @@ export const CATALOG_SOURCE_CONTRACTS = Object.freeze({
     ['skywatch-scenes'],
     ['getStatus', 'searchScenes', 'getThumbnail'],
   ),
+  'planet-scenes': contract(
+    ['planet-scenes'],
+    ['getStatus', 'searchScenes', 'getThumbnail'],
+  ),
+  'skyfi-scenes': contract(
+    ['skyfi-scenes'],
+    ['getStatus', 'searchScenes', 'getThumbnail'],
+  ),
   beemaps: contract(['beemaps'], ['getStatus', 'getFrames']),
   'beemaps-bursts': contract(
     ['beemaps-bursts'],

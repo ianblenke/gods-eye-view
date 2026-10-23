@@ -46,6 +46,8 @@ export const LAYER_NAME_KEYS = Object.freeze({
   reticulum: msg('Reticulum Network'),
   gdacs: msg('Disaster Alerts'),
   'skywatch-scenes': msg('SkyWatch Scenes'),
+  'planet-scenes': msg('Planet Scenes'),
+  'skyfi-scenes': msg('SkyFi Scenes'),
   beemaps: msg('Bee Maps Frames'),
   'beemaps-bursts': msg('Bee Maps Bursts'),
 });
