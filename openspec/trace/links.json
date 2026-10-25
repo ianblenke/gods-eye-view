@@ -1095,6 +1095,9 @@
   "ci-gates-012": [
     "src/tooling/spec/gates.test.mjs › [ci-gates-012] add a document gate target"
   ],
+  "ci-gates-013": [
+    "src/tooling/spec/ciFiles.test.mjs › [ci-gates-013] pins a Node release with the fix for the Brotli flaw"
+  ],
   "coverage-gate-001": [
     "src/tooling/spec/inventory.test.mjs › [coverage-gate-001] includes each tracked JS and TypeScript file in the inventory"
   ],
