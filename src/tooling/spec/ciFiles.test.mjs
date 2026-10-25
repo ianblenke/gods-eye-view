@@ -71,10 +71,13 @@ function hasBrotliFix(version) {
 test('[ci-gates-013] pins a Node release with the fix for the Brotli flaw', () => {
   assert.equal(hasBrotliFix('24.22.1'), true);
   assert.equal(hasBrotliFix('24.22.0'), false);
+  assert.equal(hasBrotliFix('24.22.2'), true);
   assert.equal(hasBrotliFix('24.21.0'), false);
   assert.equal(hasBrotliFix('24.23.0'), true);
   assert.equal(hasBrotliFix('26.12.1'), true);
   assert.equal(hasBrotliFix('26.12.0'), false);
+  assert.equal(hasBrotliFix('26.12.2'), true);
+  assert.equal(hasBrotliFix('22.23.4'), false);
   assert.equal(hasBrotliFix('26.11.9'), false);
   assert.equal(hasBrotliFix('26.13.0'), true);
   assert.equal(hasBrotliFix('25.0.0'), false);
