@@ -1,7 +1,7 @@
 ## Context
 
-The flaw is in the decoder of Brotli. Only code that decodes untrusted Brotli data can be harmed. The server of this project uses `fetch` for its upstream calls. `fetch` sends `Accept-Encoding: gzip, deflate`, and it still decodes a response with `Content-Encoding: br`.
-A visitor cannot make the server fetch a server of the visitor. The exposure is a bad or taken-over upstream.
+The flaw is in the decoder of Brotli. It harms only code that decodes untrusted Brotli data. The server of this project uses `fetch` for its upstream calls. `fetch` sends `Accept-Encoding: gzip, deflate`, and it still decodes a response with `Content-Encoding: br`.
+A visitor cannot make the server fetch data from a host of the visitor. The risk is a bad upstream, or an upstream that an attacker took.
 
 The gates run in the Docker image, and the image must have the Node version of `.node-version` (`ci-gates-008`). So one change of two files moves the app container and the gates to the fixed version.
 

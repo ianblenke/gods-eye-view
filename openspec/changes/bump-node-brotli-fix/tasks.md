@@ -11,7 +11,7 @@
 ## 3. Check on the host
 
 - [x] 3.1 Run `src/tooling/spec/ciFiles.test.mjs` on the host.
-- [x] 3.2 Run the test against its fault.
+- [x] 3.2 Run the test with each named fault of `evidence/faults.txt`.
 - [x] 3.3 Run the STE lint on the host.
 - [x] 3.4 Run `openspec validate bump-node-brotli-fix --strict` on the host.
 

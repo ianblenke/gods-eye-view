@@ -1,14 +1,16 @@
-Named faults of bump-node-brotli-fix (AGENTS.md rule 13). The lead ran each fault by hand on the commit 97818c5a, with the host node v26.11.1.
+Named faults of bump-node-brotli-fix (AGENTS.md rule 13). The lead ran each fault by hand after round 1 of the review, with the host node v26.11.1.
 For each fault, the lead changed one text of src/tooling/spec/ciFiles.test.mjs (or of .node-version), ran "node --test src/tooling/spec/ciFiles.test.mjs", and put back the file. A fault is killed when the test ci-gates-013 fails.
 
 KILLED: "minor > first[0] ||" changed to "minor >= first[0] ||"
 KILLED: "patch >= first[1]" changed to "patch > first[1]"
+KILLED: "patch >= first[1]" changed to "patch === first[1]"
 KILLED: "minor === first[0] &&" changed to "minor !== first[0] &&"
 KILLED: "major > 26" changed to "major > 27"
-KILLED: the table row for the line 24 "[22, 1]" changed to "[21, 1]"
-KILLED: the table row for the line 26 "[12, 1]" changed to "[11, 1]"
+KILLED: the table "{ 24: [22, 1], 26: [12, 1] }" changed to "{ 24: [21, 1], 26: [12, 1] }"
+KILLED: the table changed to "{ 22: [23, 4], 24: [22, 1], 26: [12, 1] }" (the sample "22.23.4" fails)
+KILLED: "26: [12, 1]" changed to "26: [11, 1]"
 KILLED: "[22, 1]" changed to "[22, 0]"
 KILLED: "[12, 1]" changed to "[12, 0]"
 KILLED: "first === undefined" changed to "first !== undefined"
 KILLED: .node-version changed to 24.21.0 (the test of ci-gates-008 still passes, because the Dockerfile is not changed in this fault)
-SURVIVED: "return major > 26" changed to "return major >= 26". This fault is equivalent. The line 26 is in the table, so a version of the line 26 never reaches this line. The sample "27.0.0" and the sample "25.0.0" both give the same result under the fault.
+SURVIVED: "return major > 26" changed to "return major >= 26". This fault is equivalent. The line 26 is in the table, so a version of the line 26 never reaches this line. Each of the samples "27.0.0" and "25.0.0" gives the same result with the fault and without it.

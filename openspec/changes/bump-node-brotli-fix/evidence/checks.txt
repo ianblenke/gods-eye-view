@@ -1,4 +1,4 @@
-Host and image checks of bump-node-brotli-fix. The lead ran each command on the commit 97818c5a or on a later commit that changes only files under openspec/.
+Host and image checks of bump-node-brotli-fix, before round 1 of the review. Round 1 changed the spec, the test, CHANGELOG.md and the prose, and the lead then ran the ratchet again (see review.md). The lead ran each command on the commit 97818c5a or on a later commit that changes only files under openspec/.
 node --test src/tooling/spec/ciFiles.test.mjs: tests 5, pass 5, fail 0 (before the change of .node-version, the test ci-gates-013 failed with the version 24.21.0).
 make precheck (format, import directions, package boundaries, layer tokens): exit 0. Last line: "Layer tokens valid against origin/main: 39 published, 0 new."
 make lint with the image gods-eye-view:node24221: "STE: 0 errors, 1140 warnings." Exit 0.

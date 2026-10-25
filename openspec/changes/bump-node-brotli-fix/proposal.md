@@ -1,8 +1,8 @@
 ## Why
 
-On 2026-10-21 Node.js disclosed the flaw CVE-2026-111497 in its Brotli decoder. A response with crafted Brotli data can write outside a buffer. The fixed Node versions are 22.23.4, 24.22.1 and 26.12.1.
+On 2026-10-21 Node.js published the flaw CVE-2026-111497 in its Brotli decoder. A response with Brotli data that an attacker made for the flaw can write outside a buffer. The fixed Node versions are 22.23.4, 24.22.1 and 26.12.1.
 
-The app container runs Node 24.21.0, which has the flaw. The server calls many upstream services with `fetch`. `fetch` asks only for gzip and deflate, but it also decodes Brotli when an upstream sends it. So a bad or taken-over upstream can send such a response.
+The app container runs Node 24.21.0, which has the flaw. The server calls many upstream services with `fetch`. `fetch` asks only for gzip and deflate, but it also decodes Brotli when an upstream sends it. So a bad upstream, or an upstream that an attacker took, can send such a response.
 
 The owner said yes on 2026-10-25 to a small change that moves the image to a fixed Node version.
 
@@ -30,6 +30,6 @@ The image changes, so the gates run on the new Node version. The coverage counts
 
 ## Known limits and later changes
 
-- Known limit `floor`: The `engines` field of `package.json`, the CI jobs with Node 24.14.0, the setup doctor and the contributor documents keep the floor 24.14. These files are upstream files, and a contributor machine does not run the server for other people. A later change can raise the floor.
+- Known limit `floor`: The `engines` field of `package.json`, the CI jobs with Node 24.14.0, the setup doctor and the contributor documents keep the floor 24.14. These files are upstream files, and a contributor machine runs the server only for its own user. A later change can raise the floor.
 - Known limit `host`: The Node of the host is not part of this change. The owner or the lead updates it with the package manager. The host Node was 26.11.1 on 2026-10-25, and the fixed version of that line is 26.12.1.
-- Known limit `fixed-table`: The test knows the fixed versions of the lines 24 and 26 only. A new line needs a new row in the test.
+- Known limit `fixed-table`: The test knows the fixed versions of the lines 24 and 26 only. A new line needs a new row in the test. The line 22 is not in the table, so the test refuses 22.23.4, which has the fix.
