@@ -60,6 +60,28 @@ test('[ci-gates-008] pins the Node version of the image and installs Git', () =>
   assert.match(dockerfile, /apt-get install -y --no-install-recommends git/);
 });
 
+/** True when a Node version has the fix for the Brotli flaw CVE-2026-111497. */
+function hasBrotliFix(version) {
+  const [major, minor, patch] = version.split('.').map(Number);
+  const first = { 24: [22, 1], 26: [12, 1] }[major];
+  if (first === undefined) return major > 26;
+  return minor > first[0] || (minor === first[0] && patch >= first[1]);
+}
+
+test('[ci-gates-013] pins a Node release with the fix for the Brotli flaw', () => {
+  assert.equal(hasBrotliFix('24.22.1'), true);
+  assert.equal(hasBrotliFix('24.22.0'), false);
+  assert.equal(hasBrotliFix('24.21.0'), false);
+  assert.equal(hasBrotliFix('24.23.0'), true);
+  assert.equal(hasBrotliFix('26.12.1'), true);
+  assert.equal(hasBrotliFix('26.12.0'), false);
+  assert.equal(hasBrotliFix('26.11.9'), false);
+  assert.equal(hasBrotliFix('26.13.0'), true);
+  assert.equal(hasBrotliFix('25.0.0'), false);
+  assert.equal(hasBrotliFix('27.0.0'), true);
+  assert.equal(hasBrotliFix(read('.node-version').trim()), true);
+});
+
 test('[gap-ledger-099] runs the adopt command with make', () => {
   const makefile = read('Makefile');
   assert.match(makefile, /^FROM_ARG := \$\(if \$\(FROM\),--from \$\(FROM\),\)$/m);
