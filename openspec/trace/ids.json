@@ -919,6 +919,11 @@
     "since": "2026-10-07",
     "change": "gates-one-measurement"
   },
+  "ci-gates-013": {
+    "hash": "73d6f31eaf0bf3e3431d42771b362d941a76a586ae58edb5350182dfa9ea6877",
+    "since": "2026-10-25",
+    "change": "bump-node-brotli-fix"
+  },
   "coverage-gate-001": {
     "hash": "22565bebf0824c441282127bbb46b08ae6f67a08a29b7661d1e2ae231ca0366a",
     "since": "2026-09-14",

@@ -1,0 +1,8 @@
+Host and image checks of bump-node-brotli-fix, before round 1 of the review. Round 1 changed the spec, the test, CHANGELOG.md and the prose, and the lead then ran the ratchet again (see review.md). The lead ran each command on the commit 97818c5a or on a later commit that changes only files under openspec/.
+node --test src/tooling/spec/ciFiles.test.mjs: tests 5, pass 5, fail 0 (before the change of .node-version, the test ci-gates-013 failed with the version 24.21.0).
+make precheck (format, import directions, package boundaries, layer tokens): exit 0. Last line: "Layer tokens valid against origin/main: 39 published, 0 new."
+make lint with the image gods-eye-view:node24221: "STE: 0 errors, 1140 warnings." Exit 0.
+openspec validate bump-node-brotli-fix --strict: "Change 'bump-node-brotli-fix' is valid".
+The gates image was built from the Dockerfile of the change (docker build -t gods-eye-view:node24221 .). The command "docker run --rm --entrypoint node gods-eye-view:node24221 -v" printed v24.22.1. The tag gods-eye-view:local is the image of the running app container, and the lead did not change it.
+make ratchet CHANGE=bump-node-brotli-fix IMAGE=gods-eye-view:node24221 (first line of the log: the docker command, then "gates ratchet --change bump-node-brotli-fix"; 2026-10-25, 33 minutes): the only error is REVIEW-MISSING. "COVERAGE-DIFF: " lines show no change of the coverage counts of Node 24.21.0.
+make gates-docs CHANGE=bump-node-brotli-fix IMAGE=gods-eye-view:node24221 on the archived tree: "COVERAGE-DIFF: 0 changed lines, 0 brought by the merged upstream commit, 0 need coverage.", "Ledger: 0 entries do not match the current gaps.", "STE: 0 errors, 1446 warnings.". The only error is REVIEW-MISSING.

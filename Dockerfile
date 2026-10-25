@@ -2,7 +2,7 @@
 # middleware and client keys are injected when the config loads.
 # The Node version must match .node-version: the spec gates stop on any other
 # version because V8 versions give different coverage counts.
-FROM node:24.21.0-bookworm-slim
+FROM node:24.22.1-bookworm-slim
 
 # The spec gates read the Git history.
 RUN apt-get update \
