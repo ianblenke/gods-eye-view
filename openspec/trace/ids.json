@@ -920,7 +920,7 @@
     "change": "gates-one-measurement"
   },
   "ci-gates-013": {
-    "hash": "8380b96c19e1038cb5caad43426aa5681131e20ef04d43881c87150dd50397db",
+    "hash": "73d6f31eaf0bf3e3431d42771b362d941a76a586ae58edb5350182dfa9ea6877",
     "since": "2026-10-25",
     "change": "bump-node-brotli-fix"
   },
