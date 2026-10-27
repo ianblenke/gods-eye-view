@@ -40,7 +40,7 @@ for (const key of KEYS) {
     assert.ok(messages.has(key), `not marked with t()/msg(): ${key}`);
   });
   for (const locale of shippedLocales()) {
-    test(`${locale} catalog translates: ${key}`, () => {
+    test(`[i18n-catalogs-003] ${locale} catalog translates: ${key}`, () => {
       const value = readCatalog(locale)[key];
       assert.ok(value, `missing in ${locale}.json`);
       assert.notEqual(value, key);

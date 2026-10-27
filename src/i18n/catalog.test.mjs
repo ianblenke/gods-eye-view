@@ -22,7 +22,7 @@ test('every catalog file is a shipped locale and every non-English locale has a 
 });
 
 for (const locale of shippedLocales()) {
-  test(`${locale} catalog matches the code (npm run i18n)`, () => {
+  test(`[i18n-catalogs-001] ${locale} catalog matches the code (npm run i18n)`, () => {
     const { missing, stale, errors } = checkCatalog(
       locale,
       readCatalog(locale),

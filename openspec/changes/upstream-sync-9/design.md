@@ -92,7 +92,17 @@ The gates run all test files at the same time, and the first adopt run failed th
 Each of the three tests now measures the CPU time of the code with `process.cpuUsage()`. The limits are 2000 ms for the burst of filters, 20000 ms for the KML roots and 1000 ms for the KartaView tile. The wall time of the parent stays as a long guard against a hung child.
 The test `geoFileImport.test.mjs` took more than 5 s of wall time on this machine, also when it ran alone in the image. So the old limit of 5 s could not pass here.
 
-### D14: Image
+### D14: The test of the source slot
+
+Upstream removes the compatibility module `src/app/sourceSlot.js` and its test file. That test file is the only test of `src/sources/sourceSlot.js`. Without it, the coverage of the module falls and the ratchet stops.
+The change keeps the test file at its old path, so the ledger keeps its two test names. The import points to `src/sources/sourceSlot.js`.
+
+### D15: Tests of the catalogs
+
+The catalog tests make one test for each shipped locale. The new locale `zh-CN` adds 26 test names to three test files that upstream did not change. The adopt command cannot record the names of a file that upstream did not change.
+So the three test files get the IDs of the new scenarios `i18n-catalogs-001`, `i18n-catalogs-002` and `i18n-catalogs-003`. Each title of the three tests starts with the ID. The scenarios are the spec of existing behavior, so the requirement has the origin backfill.
+
+### D16: Image
 
 The lock file does not change, so the gates run in the image `gods-eye-view:local`. A test of the host run reads the same lock file.
 
@@ -100,3 +110,7 @@ The lock file does not change, so the gates run in the image `gods-eye-view:loca
 
 The trace gate checks the scenario IDs `osh-033` and `qa-scripts-023`. The prose lint checks STE.
 The lead runs every test file of the host, then the four checks of `make precheck`, then the adopt command and the gates in Docker. The two review agents read the final tree.
+
+## Purpose at archive time
+
+The catalog of each shipped locale has a text for each message of the code and no text that the code does not use.

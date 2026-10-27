@@ -10,11 +10,13 @@ They also remove four modules that nothing uses, among them `src/data/localLayer
 ## What Changes
 
 - Merge the upstream commit `15de9d738c4a85be1a96726c6114181caef87eeb` into the plan commit. The plan commit has the base commit `d9a39077` as its parent.
-- Resolve the conflicts in 19 files, and adapt 18 more files that the merge breaks. `design.md` gives each decision.
+- Resolve the conflicts in 19 files, and adapt 22 more files that the merge breaks. `design.md` gives each decision.
 - Give the layer `s2-ghostmaps` the share token `03`, because the layer `beemaps` owns the token `5`.
 - Keep the Docker files of the fork. Do not take the health check and the other Docker changes of upstream.
 - Change the scenario `osh-033`, because upstream removes `src/data/localLayers.js`.
 - Change the scenario `qa-scripts-023` for the nine QA scripts that upstream adds.
+- Keep the test of `src/sources/sourceSlot.js`. Upstream removes the test file `src/app/sourceSlot.test.mjs`, and that file is the only test of the module. The change keeps the file and points its import to the module.
+- Give the tests of the catalogs the IDs `i18n-catalogs-001`, `i18n-catalogs-002` and `i18n-catalogs-003`.
 - Add 20 Chinese texts to `src/i18n/locales/zh-CN.json` for the texts of the fork, and remove one text that no code uses.
 - Run the adopt command for each upstream file that the merge brings and that has a coverage gap.
 - Keep the upstream code as it is, except for the two lines of `standalonePlugins()` and the CSS selector that decision D3 names.
@@ -23,7 +25,7 @@ They also remove four modules that nothing uses, among them `src/data/localLayer
 
 ### New Capabilities
 
-None.
+- `i18n-catalogs`: The catalog of each shipped locale matches the code. Three scenarios give the tests of the catalogs an ID, because the new locale `zh-CN` adds test names.
 
 ### Modified Capabilities
 
@@ -33,7 +35,7 @@ None.
 ## Impact
 
 The upstream side changes 688 files: 200 added, 12 removed and 476 changed. Two of them, `Dockerfile` and `compose.yaml`, are in `openspec/ownership.json`. The merge keeps the version of the fork for both.
-The change edits 18 more files of the fork to adapt them to the merged code. It adds the test file `src/hudMarkingsDom.test.mjs`, and it adds that path to `openspec/ownership.json`. `evidence/adapted-files.txt` lists them.
+The change edits 22 more files of the fork to adapt them to the merged code. It adds the test file `src/hudMarkingsDom.test.mjs`, and it adds that path to `openspec/ownership.json`. `evidence/adapted-files.txt` lists them.
 
 Rule 23: the 200 added files are upstream files, because the fork does not write them. The manifest lists only paths that the fork writes.
 Forty-eight of the added files are code files of the types js, mjs, cjs or html, not counting test files. `evidence/added-code.txt` lists them.

@@ -17,3 +17,7 @@ src/tooling/trafficFixtures.test.mjs D12
 server/providers/overpass/requestAdmission.test.mjs D13
 src/data/geoFileImport.test.mjs D13
 src/layers/streetLevel/providers/kartaview/decode.test.mjs D13
+src/app/sourceSlot.test.mjs D14
+src/i18n/catalog.test.mjs D15
+src/scenes/directorStorageNotices.test.mjs D15
+src/ui/shellToasts.i18n.test.mjs D15

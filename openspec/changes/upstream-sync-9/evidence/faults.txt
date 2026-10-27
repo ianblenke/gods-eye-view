@@ -9,3 +9,8 @@ Live timers (decision D12): the lead loaded a preload that lists the timers stil
 
 KILLED: src/hud.js, the left part of the top bar gets the text TOP SECRET. Test file: src/hudMarkingsDom.test.mjs.
 KILLED: src/hud.js, the left part of the top bar loses its hud-readout wrapper. Test file: src/hudMarkingsDom.test.mjs.
+
+KILLED: src/i18n/locales/zh-CN.json without the text of Taiwan. Test: i18n-catalogs-001 for zh-CN in src/i18n/catalog.test.mjs.
+KILLED: src/i18n/locales/zh-CN.json with a stale text. Test: i18n-catalogs-001 for zh-CN.
+KILLED: src/i18n/locales/zh-CN.json with the text of "Stopped by voice" equal to the English notice. Test: i18n-catalogs-002 in src/scenes/directorStorageNotices.test.mjs.
+KILLED: src/i18n/locales/zh-CN.json with the text of "Tilted view" equal to the English toast. Test: i18n-catalogs-003 in src/ui/shellToasts.i18n.test.mjs.

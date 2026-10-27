@@ -19,6 +19,10 @@
 - [x] 1.17 Cancel the live timers of `globeResetConfirmation.test.mjs` and wait for one immediate in two more test files.
 - [x] 1.18 Make the three timing tests measure CPU time.
 - [x] 1.19 Write the test `src/hudMarkingsDom.test.mjs` and add it to `openspec/ownership.json`.
+- [x] 1.20 Keep the test file `src/app/sourceSlot.test.mjs` and point its import to `src/sources/sourceSlot.js`.
+- [x] 1.21 Write the ID `i18n-catalogs-001` in the title of the test in `src/i18n/catalog.test.mjs`.
+- [x] 1.22 Write the ID `i18n-catalogs-002` in the title of the test in `src/scenes/directorStorageNotices.test.mjs`.
+- [x] 1.23 Write the ID `i18n-catalogs-003` in the title of the test in `src/ui/shellToasts.i18n.test.mjs`.
 
 ## 2. Host evidence
 
