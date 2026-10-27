@@ -28,6 +28,7 @@
 - [x] 1.26 Write the ID `i18n-catalogs-001` in the title of the test in `src/i18n/catalog.test.mjs`.
 - [x] 1.27 Write the ID `i18n-catalogs-002` in the title of the test in `src/scenes/directorStorageNotices.test.mjs`.
 - [x] 1.28 Write the ID `i18n-catalogs-003` in the title of the test in `src/ui/shellToasts.i18n.test.mjs`.
+- [x] 1.29 Wait 2000 ms after each `server.close()` in `src/tooling/viteBuild.test.mjs`.
 
 ## 2. Host evidence
 

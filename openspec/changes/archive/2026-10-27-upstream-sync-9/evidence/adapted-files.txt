@@ -21,3 +21,4 @@ src/app/sourceSlot.test.mjs D14 cbdd8864
 src/i18n/catalog.test.mjs D15 cbdd8864
 src/scenes/directorStorageNotices.test.mjs D15 7958dd45
 src/ui/shellToasts.i18n.test.mjs D15 cbdd8864
+src/tooling/viteBuild.test.mjs D17 d192f322

@@ -1,7 +1,7 @@
 ## Context
 
 The fork has its own Docker setup, its own layers and its own tokens for share links. Upstream changed some of the same files. A trial merge in a clone gave 19 conflicts.
-After the resolutions, the test files of the host showed 13 failing files. Decisions D1 to D15 give the cause and the fix of each failure.
+After the resolutions, the test files of the host showed 13 failing files. Decisions D1 to D17 give the cause and the fix of each failure.
 The lock file `package-lock.json` is the same on both sides, so the image of the fork (`gods-eye-view:local`, Node 24.22.1) runs the gates.
 
 ## Goals / Non-Goals
@@ -117,3 +117,12 @@ The lead runs every test file of the host, then the four checks of `make prechec
 ## Purpose at archive time
 
 The catalog of each shipped locale has a text for each message of the code and no text that the code does not use.
+
+### D17: Wait for the Vite teardown in viteBuild.test.mjs
+
+Upstream adds a test that starts a real Vite dev server and a real Vite preview server, and closes each one. The CI job Spec gates failed with `GATES-TEST-LEAK` for this file, with two live timers. The failure came twice in two runs of the same commit.
+The lead could not make the leak appear on the host or in the image. It did not appear with the variables of CI, or in a container with one CPU and busy loops. `evidence/ci-leak.txt` gives the runs and the commands.
+
+The change adds a real wait of 2000 ms after each `server.close()`, as the memory of an earlier leak of the same kind suggests. The wait is a margin and not a proof.
+After the wait, the CI run 40579420645 had no `GATES-TEST-LEAK`. One run is evidence and not proof, so the change names a Known limit.
+

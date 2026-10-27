@@ -10,7 +10,7 @@ They also remove four modules that nothing uses, among them `src/data/localLayer
 ## What Changes
 
 - Merge the upstream commit `15de9d738c4a85be1a96726c6114181caef87eeb` into the plan commit. The plan commit has the base commit `d9a39077` as its parent.
-- Resolve the conflicts in 19 files, and adapt 22 more files that the merge breaks. `design.md` gives each decision.
+- Resolve the conflicts in 19 files, and adapt 23 more files that the merge breaks. `design.md` gives each decision.
 - Give the layer `s2-ghostmaps` the share token `03`, because the layer `beemaps` owns the token `5`.
 - Keep the Docker files of the fork. Do not take the health check and the other Docker changes of upstream.
 - Change the scenario `osh-033`, because upstream removes `src/data/localLayers.js`.
@@ -35,7 +35,7 @@ They also remove four modules that nothing uses, among them `src/data/localLayer
 ## Impact
 
 The upstream side changes 688 files: 200 added, 12 removed and 476 changed. Two of them, `Dockerfile` and `compose.yaml`, are in `openspec/ownership.json`. The merge keeps the version of the fork for both.
-The change edits 22 more files of the fork to adapt them to the merged code. It adds the test file `src/hudMarkingsDom.test.mjs`, and it adds that path to `openspec/ownership.json`. `evidence/adapted-files.txt` lists them.
+The change edits 23 more files of the fork to adapt them to the merged code. It adds the test file `src/hudMarkingsDom.test.mjs`, and it adds that path to `openspec/ownership.json`. `evidence/adapted-files.txt` lists them.
 
 Rule 23: the 200 added files are upstream files, because the fork does not write them. The manifest lists only paths that the fork writes.
 Forty-eight of the added files are code files of the types js, mjs, cjs or html, not counting test files. `evidence/added-code.txt` lists them.
@@ -50,4 +50,5 @@ Rule 25: the merge breaks no test that has a scenario ID for upstream code. It b
 - Known limit `hud-classification-css`: The file `src/ui/styles/cyber.css` keeps the rule for `.hud-classification` as upstream has it, because a test of upstream reads it. The HUD of the fork has no such element, so the rule matches nothing.
 - Known limit `cpu-time`: Three upstream tests check a time limit with a child process or with a decode run: `requestAdmission.test.mjs`, `geoFileImport.test.mjs` and `kartaview/decode.test.mjs`. The change makes them measure CPU time, so a loaded machine cannot fail them. The limits are 2000 ms, 20000 ms and 1000 ms of CPU time. The limit for the KML roots was 5 s of wall time. A regression that costs less than 20 s of CPU time now passes.
 - Known limit `allocation-load`: The test `src/overlays/worldOverlayAllocation.test.mjs` failed in the first adopt run. It passed alone in the image and in the second adopt run. The change does not edit it.
+- Known limit `vite-teardown`: The wait of 2000 ms in `src/tooling/viteBuild.test.mjs` is a margin. The leak showed only in CI, and no local run could show it. A slower machine can need a longer wait.
 - Known limit `backfill`: The new upstream code files have no spec of the fork. The adopt command records their coverage gaps. Later backfill changes add the specs and the tests.

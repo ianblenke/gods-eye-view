@@ -26,3 +26,4 @@ KILLED: src/layers/cyclones/index.js, the label of PTC changed to Potential trop
 KILLED: src/sources/sourceSlot.js, the line that stops an old cleanup removed. The test "replacing a source rejects its late result and old cleanup cannot clear the new source" in src/app/sourceSlot.test.mjs fails.
 KILLED: the index of git without the tracked script scripts/qa-ghostmaps.mjs (git rm --cached, then git add). The test qa-scripts-023 fails, because it counts 105 tracked QA scripts.
 
+No fault for the wait of decision D17 (src/tooling/viteBuild.test.mjs). The leak showed only in CI, and no local run showed it, so no local fault can make a test fail for it. The evidence is the CI record of evidence/ci-leak.txt: two failed attempts before the wait, and no GATES-TEST-LEAK after it.
