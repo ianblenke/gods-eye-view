@@ -4075,6 +4075,7 @@
     "modules": [
       "src/i18n/index.js",
       "src/i18n/locales/ru.json",
+      "src/i18n/locales/zh-CN.json",
       "src/i18n/locales/es.json",
       "src/i18n/locale.js",
       "src/i18n/marker.js",
@@ -4354,6 +4355,7 @@
       "src/i18n/marker.js",
       "src/i18n/index.js",
       "src/i18n/locales/ru.json",
+      "src/i18n/locales/zh-CN.json",
       "src/i18n/locales/es.json",
       "src/i18n/locale.js",
       "src/data/iconOrientation.js",

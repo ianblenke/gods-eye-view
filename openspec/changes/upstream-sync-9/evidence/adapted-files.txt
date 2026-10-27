@@ -10,3 +10,4 @@ src/layers/gdacs/registration.test.mjs D8
 src/layers/cyclones/labels.test.mjs D6
 src/layers/cyclones/index.test.mjs D6
 src/dockerTrustedPeers.test.mjs D1
+scripts/package-boundaries.json D9

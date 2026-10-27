@@ -15,6 +15,7 @@
 - [ ] 1.13 Change the test of `osh-033`.
 - [ ] 1.14 Keep the tests for `osh-028`, `osh-029`, `osh-030`, `osh-031`, `osh-032`, `osh-046`, `osh-049` and `osh-057`.
 - [ ] 1.15 Change the test of `qa-scripts-023` to 106 QA scripts.
+- [ ] 1.16 Add `zh-CN.json` to the two packages of `scripts/package-boundaries.json` that list `ru.json`.
 
 ## 2. Host evidence
 

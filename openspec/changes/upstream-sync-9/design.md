@@ -63,6 +63,7 @@ The panel group "Events" ends with `gdacs`, as `gdacs-layer-019` says. The layer
 
 Upstream adds the catalog `zh-CN`. The catalog test needs a text for each message of the code. The fork has 20 messages that upstream does not have. The lead wrote the 20 Chinese texts.
 The message "Flying to Austin, TX..." has no user in the fork any more, so the change removes its entry.
+Two packages of `scripts/package-boundaries.json` list the locale files `es.json` and `ru.json`. The change adds `zh-CN.json` to both lists, because the boundary check refuses an unowned module.
 
 ### D10: Credential names
 

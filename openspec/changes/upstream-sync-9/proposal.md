@@ -10,7 +10,7 @@ They also remove four modules that nothing uses, among them `src/data/localLayer
 ## What Changes
 
 - Merge the upstream commit `15de9d738c4a85be1a96726c6114181caef87eeb` into the plan commit. The plan commit has the base commit `d9a39077` as its parent.
-- Resolve the conflicts in 19 files, and adapt 11 more files that the merge breaks. `design.md` gives each decision.
+- Resolve the conflicts in 19 files, and adapt 12 more files that the merge breaks. `design.md` gives each decision.
 - Give the layer `s2-ghostmaps` the share token `03`, because the layer `beemaps` owns the token `5`.
 - Keep the Docker files of the fork. Do not take the health check and the other Docker changes of upstream.
 - Change the scenario `osh-033`, because upstream removes `src/data/localLayers.js`.
@@ -33,7 +33,7 @@ None.
 ## Impact
 
 The upstream side changes 688 files: 200 added, 12 removed and 476 changed. Two of them, `Dockerfile` and `compose.yaml`, are in `openspec/ownership.json`. The merge keeps the version of the fork for both.
-The change edits 11 more files of the fork to adapt them to the merged code. `evidence/adapted-files.txt` lists them.
+The change edits 12 more files of the fork to adapt them to the merged code. `evidence/adapted-files.txt` lists them.
 
 Rule 23: the 200 added files are upstream files, because the fork does not write them. The manifest lists only paths that the fork writes.
 Forty-eight of the added files are code files of the types js, mjs, cjs or html, not counting test files. `evidence/added-code.txt` lists them.
