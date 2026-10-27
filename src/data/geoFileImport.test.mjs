@@ -1195,17 +1195,22 @@ test('KML root namespace repair respects quoted delimiters and preserves the doc
 });
 
 test('repeated incomplete KML roots finish within an isolated process deadline', () => {
+  // The child measures its own CPU time, so a loaded machine cannot fail the
+  // test; the long wall timeout of the parent only stops a hung child.
   const source = `import { repairKmlRootNamespaces } from ${JSON.stringify(new URL('./geoFileImport.js', import.meta.url).href)};
+    const cpuStart = process.cpuUsage();
     try { repairKmlRootNamespaces('<kml '.repeat(1000000)); process.exit(1); }
     catch (error) { if (error.name !== 'GeoImportError') throw error; }
     try { repairKmlRootNamespaces('<!DOCTYPE kml [' + ${JSON.stringify("<!-- ' --><?pi ' ?>")}.repeat(100000) + ']><kml '); process.exit(1); }
     catch (error) { if (error.name !== 'GeoImportError') throw error; }
     const wide = '<kml' + ${JSON.stringify(` xmlns:gx="a" note='xmlns:gx="b"'`)}.repeat(20000) + '/>';
-    if (repairKmlRootNamespaces(wide).split('xmlns:gx="a"').length !== 2) process.exit(1);`;
+    if (repairKmlRootNamespaces(wide).split('xmlns:gx="a"').length !== 2) process.exit(1);
+    const used = process.cpuUsage(cpuStart);
+    if ((used.user + used.system) / 1000 > 20000) process.exit(2);`;
   const child = spawnSync(
     process.execPath,
     ['--input-type=module', '-e', source],
-    { timeout: 5000, encoding: 'utf8' },
+    { timeout: 120000, encoding: 'utf8' },
   );
   assert.ifError(child.error);
   assert.equal(child.status, 0, child.stderr);

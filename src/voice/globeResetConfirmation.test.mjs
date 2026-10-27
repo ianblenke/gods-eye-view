@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import test from 'node:test';
+import test, { after } from 'node:test';
 import { GevRealtimeController } from './realtimeController.js';
 import {
   CALL_DEDUPE_MS,
@@ -11,6 +11,16 @@ const refusal = {
   action: 'move_camera',
   reason: 'globe-view-required',
 };
+
+// Each controller keeps a settle timer and a narration timer after its test.
+// The hook below cancels them, so that no timer is live when the file ends.
+const controllers = [];
+after(() => {
+  for (const controller of controllers) {
+    controller._metrics.cancelSettle();
+    controller._turns.narration.cancel();
+  }
+});
 
 function harness(result) {
   const sent = [];
@@ -35,6 +45,7 @@ function harness(result) {
   controller.recordUsage = () => {};
   controller.captureViewportScreenshot = async () => null;
   controller.cancelRadioHandoff = () => {};
+  controllers.push(controller);
   return { controller, sent, calls };
 }
 

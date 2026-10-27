@@ -33,6 +33,8 @@ async function withServer({ beforeFallback } = {}, check) {
   } finally {
     server.close();
     await once(server, 'close');
+    // The fetch client of Node leaves one immediate after the socket closes.
+    await new Promise((resolve) => setImmediate(resolve));
   }
 }
 

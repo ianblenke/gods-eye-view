@@ -10,7 +10,7 @@ They also remove four modules that nothing uses, among them `src/data/localLayer
 ## What Changes
 
 - Merge the upstream commit `15de9d738c4a85be1a96726c6114181caef87eeb` into the plan commit. The plan commit has the base commit `d9a39077` as its parent.
-- Resolve the conflicts in 19 files, and adapt 12 more files that the merge breaks. `design.md` gives each decision.
+- Resolve the conflicts in 19 files, and adapt 18 more files that the merge breaks. `design.md` gives each decision.
 - Give the layer `s2-ghostmaps` the share token `03`, because the layer `beemaps` owns the token `5`.
 - Keep the Docker files of the fork. Do not take the health check and the other Docker changes of upstream.
 - Change the scenario `osh-033`, because upstream removes `src/data/localLayers.js`.
@@ -33,7 +33,7 @@ None.
 ## Impact
 
 The upstream side changes 688 files: 200 added, 12 removed and 476 changed. Two of them, `Dockerfile` and `compose.yaml`, are in `openspec/ownership.json`. The merge keeps the version of the fork for both.
-The change edits 12 more files of the fork to adapt them to the merged code. `evidence/adapted-files.txt` lists them.
+The change edits 18 more files of the fork to adapt them to the merged code. `evidence/adapted-files.txt` lists them.
 
 Rule 23: the 200 added files are upstream files, because the fork does not write them. The manifest lists only paths that the fork writes.
 Forty-eight of the added files are code files of the types js, mjs, cjs or html, not counting test files. `evidence/added-code.txt` lists them.
@@ -45,5 +45,5 @@ Rule 25: the merge breaks no test that has a scenario ID for upstream code. It b
 - Known limit `token-ghostmaps`: Upstream gives the layer `s2-ghostmaps` the token `5`. The fork gives it `03`. A share link that upstream made for this layer opens the layer `beemaps` in the fork.
 - Known limit `docker-files`: The fork keeps its own `Dockerfile` and `compose.yaml`. The health check of upstream pull request 1394 and the SELinux flag of pull request 1391 are not in the fork. The test of the compose file in `src/dockerTrustedPeers.test.mjs` is removed.
 - Known limit `zh-CN`: The lead wrote the 20 Chinese texts. No native speaker has read them.
-- Known limit `host-timing`: A test of `src/data/geoFileImport.test.mjs` has a time limit of 5 s for incomplete KML roots. It fails on the host when six test files run at the same time. It passes when it runs alone.
+- Known limit `cpu-time`: Three upstream tests check a time limit with a child process or with a decode run: `requestAdmission.test.mjs`, `geoFileImport.test.mjs` and `kartaview/decode.test.mjs`. The change makes them measure CPU time, so a loaded machine cannot fail them. The limits are 2000 ms, 20000 ms and 1000 ms of CPU time.
 - Known limit `backfill`: The new upstream code files have no spec of the fork. The adopt command records their coverage gaps. Later backfill changes add the specs and the tests.

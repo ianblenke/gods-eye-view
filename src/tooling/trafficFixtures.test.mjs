@@ -88,6 +88,8 @@ test('flat terrain fixture decodes through Cesium and advertises no network chil
   } finally {
     server.closeAllConnections();
     await new Promise((resolve) => server.close(resolve));
+    // The HTTP client of Node leaves one immediate after the socket closes.
+    await new Promise((resolve) => setImmediate(resolve));
   }
 });
 

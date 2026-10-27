@@ -11,3 +11,9 @@ src/layers/cyclones/labels.test.mjs D6
 src/layers/cyclones/index.test.mjs D6
 src/dockerTrustedPeers.test.mjs D1
 scripts/package-boundaries.json D9
+src/voice/globeResetConfirmation.test.mjs D12
+src/tooling/googleTokenUnavailable.test.mjs D12
+src/tooling/trafficFixtures.test.mjs D12
+server/providers/overpass/requestAdmission.test.mjs D13
+src/data/geoFileImport.test.mjs D13
+src/layers/streetLevel/providers/kartaview/decode.test.mjs D13

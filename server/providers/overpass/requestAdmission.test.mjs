@@ -42,17 +42,22 @@ test('bounded queries preserve quoted brackets, comments, multiple tags and time
 test('a burst of maximum-size unterminated filters completes within a bounded process deadline', () => {
   // A child deadline can stop synchronous regex backtracking; a test timeout in
   // the same event loop cannot. The old parser takes several seconds for this.
+  // The child measures its own CPU time, so a loaded machine cannot fail the
+  // test; the long wall timeout of the parent only stops a hung child.
   const result = spawnSync(
     process.execPath,
     [
       '--input-type=module',
       '-e',
       `import { sanitizeOverpassBody } from ${JSON.stringify(new URL('./query.js', import.meta.url).href)};
+       const cpuStart = process.cpuUsage();
        for (let i = 0; i < 20; i++) {
          if (sanitizeOverpassBody('data=node' + '['.repeat(24000)).ok) process.exit(1);
-       }`,
+       }
+       const used = process.cpuUsage(cpuStart);
+       if ((used.user + used.system) / 1000 > 2000) process.exit(2);`,
     ],
-    { timeout: 2000, encoding: 'utf8' },
+    { timeout: 60000, encoding: 'utf8' },
   );
   assert.ifError(result.error);
   assert.equal(result.status, 0, result.stderr);

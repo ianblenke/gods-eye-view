@@ -16,6 +16,8 @@
 - [x] 1.14 Keep the tests for `osh-028`, `osh-029`, `osh-030`, `osh-031`, `osh-032`, `osh-046`, `osh-049` and `osh-057`.
 - [x] 1.15 Change the test of `qa-scripts-023` to 106 QA scripts.
 - [x] 1.16 Add `zh-CN.json` to the two packages of `scripts/package-boundaries.json` that list `ru.json`.
+- [x] 1.17 Cancel the live timers of `globeResetConfirmation.test.mjs` and wait for one immediate in two more test files.
+- [x] 1.18 Make the three timing tests measure CPU time.
 
 ## 2. Host evidence
 
@@ -25,6 +27,7 @@
 - [x] 2.4 Run the lint on the host.
 - [x] 2.5 Run `openspec validate --specs` on the host.
 - [x] 2.6 Write `evidence/added-code.txt` and `evidence/adapted-files.txt`.
+- [ ] 2.7 Write `evidence/faults.txt` with the result of each fault.
 
 ## 3. Lead work before and in the image
 

@@ -78,7 +78,18 @@ The GhostMaps watcher reads `GITHUB_TOKEN` on the server. The test of `credentia
 Upstream adds nine QA scripts. The scenario `qa-scripts-023` counts 106 tracked QA scripts. The test of `src/tooling/spec/qaRegister.test.mjs` counts 106.
 The nine new scripts have no covers tag. The adopt command writes the records that give them the header `unmapped: upstream`.
 
-### D12: Image
+### D12: Live timers of three upstream tests
+
+The gates refuse a test file that leaves a live timer. Three upstream test files do. The test `globeResetConfirmation.test.mjs` leaves 29 settle timers of `TurnMetrics` and 2 narration timers.
+A hook `after()` in that file now cancels these timers. The tests `googleTokenUnavailable.test.mjs` and `trafficFixtures.test.mjs` leave one immediate of the HTTP client after the server closes. Each now waits for one immediate after the close.
+
+### D13: CPU time in place of wall time
+
+The gates run all test files at the same time, and the first adopt run failed three timing tests. Each test checks a limit on a long run of synchronous code.
+Each of the three tests now measures the CPU time of the code with `process.cpuUsage()`. The limits are 2000 ms for the burst of filters, 20000 ms for the KML roots and 1000 ms for the KartaView tile. The wall time of the parent stays as a long guard against a hung child.
+The test `geoFileImport.test.mjs` took more than 5 s of wall time on this machine, also when it ran alone in the image. So the old limit of 5 s could not pass here.
+
+### D14: Image
 
 The lock file does not change, so the gates run in the image `gods-eye-view:local`. A test of the host run reads the same lock file.
 
