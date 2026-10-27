@@ -14,3 +14,15 @@ KILLED: src/i18n/locales/zh-CN.json without the text of Taiwan. Test: i18n-catal
 KILLED: src/i18n/locales/zh-CN.json with a stale text. Test: i18n-catalogs-001 for zh-CN.
 KILLED: src/i18n/locales/zh-CN.json with the text of "Stopped by voice" equal to the English notice. Test: i18n-catalogs-002 in src/scenes/directorStorageNotices.test.mjs.
 KILLED: src/i18n/locales/zh-CN.json with the text of "Tilted view" equal to the English toast. Test: i18n-catalogs-003 in src/ui/shellToasts.i18n.test.mjs.
+
+Faults of the fork edits after the merge (round 1 of the review). The lead ran each one on the host with node v26.11.1 and put back the file. The fault changes one text of the file, and the named test file fails.
+KILLED: src/data/layerState.js, the token of s2-ghostmaps changed from 03 to 5. The file src/data/layerState.test.mjs fails (the registry check refuses the token, so the file stops at the import).
+KILLED: src/data/layerStateTokenReservations.json, the token of s2-ghostmaps changed from 03 to 04. The file src/data/layerState.test.mjs fails.
+KILLED: src/data/layerState.js, the id skyfi-scenes changed to skyfi-scenes-x. The file src/data/layerState.test.mjs fails (the pin of 40 registered layers in osh-033 and the ledger check).
+KILLED: src/ui/layerPanel.js, s2-ghostmaps and gdacs swapped in the group Events. The test gdacs-layer-019 fails.
+KILLED: src/layers/wind/index.js, the return of the catch branch changed to false. The test wind-010 fails.
+KILLED: src/ui/segmentedControl.js, the tabindex of the selected button changed from 0 to 1. The test recent-imagery-044 fails.
+KILLED: src/layers/cyclones/index.js, the label of PTC changed to Potential tropical cyclone. The test cyclones-021 fails.
+KILLED: src/sources/sourceSlot.js, the line that stops an old cleanup removed. The test "replacing a source rejects its late result and old cleanup cannot clear the new source" in src/app/sourceSlot.test.mjs fails.
+KILLED: the index of git without the tracked script scripts/qa-ghostmaps.mjs (git rm --cached, then git add). The test qa-scripts-023 fails, because it counts 105 tracked QA scripts.
+

@@ -6,23 +6,28 @@
 - [x] 1.4 Commit the merge.
 - [x] 1.5 Give the layer `s2-ghostmaps` the token `03` in the registry and in the ledger.
 - [x] 1.6 Update the token tests and the catalog tests for 40 layers and 41 catalog layers.
-- [x] 1.7 Write the 20 Chinese texts and remove the stale text in `zh-CN.json`.
-- [x] 1.8 Add the block for `GITHUB_TOKEN` to `.env.example`.
-- [x] 1.9 Remove the compose test from `src/dockerTrustedPeers.test.mjs`.
-- [x] 1.10 Change the CSS selector in `overlays.css` and add the plugin to `standalonePlugins()`.
-- [x] 1.11 Update the cyclone tests, the wind test and the Recent Imagery test.
-- [x] 1.12 Put `s2-ghostmaps` before `gdacs` in the panel group Events.
-- [x] 1.13 Change the test of `osh-033`.
-- [x] 1.14 Keep the tests for `osh-028`, `osh-029`, `osh-030`, `osh-031`, `osh-032`, `osh-046`, `osh-049` and `osh-057`.
-- [x] 1.15 Change the test of `qa-scripts-023` to 106 QA scripts.
-- [x] 1.16 Add `zh-CN.json` to the two packages of `scripts/package-boundaries.json` that list `ru.json`.
-- [x] 1.17 Cancel the live timers of `globeResetConfirmation.test.mjs` and wait for one immediate in two more test files.
-- [x] 1.18 Make the three timing tests measure CPU time.
-- [x] 1.19 Write the test `src/hudMarkingsDom.test.mjs` and add it to `openspec/ownership.json`.
-- [x] 1.20 Keep the test file `src/app/sourceSlot.test.mjs` and point its import to `src/sources/sourceSlot.js`.
-- [x] 1.21 Write the ID `i18n-catalogs-001` in the title of the test in `src/i18n/catalog.test.mjs`.
-- [x] 1.22 Write the ID `i18n-catalogs-002` in the title of the test in `src/scenes/directorStorageNotices.test.mjs`.
-- [x] 1.23 Write the ID `i18n-catalogs-003` in the title of the test in `src/ui/shellToasts.i18n.test.mjs`.
+- [x] 1.7 Write the 20 Chinese texts in `zh-CN.json`.
+- [x] 1.8 Remove the stale text from `zh-CN.json`.
+- [x] 1.9 Add the block for `GITHUB_TOKEN` to `.env.example`.
+- [x] 1.10 Remove the compose test from `src/dockerTrustedPeers.test.mjs`.
+- [x] 1.11 Change the CSS selector in `overlays.css`.
+- [x] 1.12 Add the plugin to `standalonePlugins()`.
+- [x] 1.13 Update the cyclone tests, the wind test and the Recent Imagery test.
+- [x] 1.14 Put `s2-ghostmaps` before `gdacs` in the panel group Events.
+- [x] 1.15 Change the test of `osh-033`.
+- [x] 1.16 Keep the tests for `osh-028`, `osh-029`, `osh-030`, `osh-031`, `osh-032`, `osh-046`, `osh-049` and `osh-057`.
+- [x] 1.17 Change the test of `qa-scripts-023` to 106 QA scripts.
+- [x] 1.18 Add `zh-CN.json` to the two packages of `scripts/package-boundaries.json` that list `ru.json`.
+- [x] 1.19 Cancel the live timers of `globeResetConfirmation.test.mjs`.
+- [x] 1.20 Wait for one immediate in two more test files.
+- [x] 1.21 Make the three timing tests measure CPU time.
+- [x] 1.22 Write the test `src/hudMarkingsDom.test.mjs`.
+- [x] 1.23 Add the test file to `openspec/ownership.json`.
+- [x] 1.24 Keep the test file `src/app/sourceSlot.test.mjs`.
+- [x] 1.25 Point its import to `src/sources/sourceSlot.js`.
+- [x] 1.26 Write the ID `i18n-catalogs-001` in the title of the test in `src/i18n/catalog.test.mjs`.
+- [x] 1.27 Write the ID `i18n-catalogs-002` in the title of the test in `src/scenes/directorStorageNotices.test.mjs`.
+- [x] 1.28 Write the ID `i18n-catalogs-003` in the title of the test in `src/ui/shellToasts.i18n.test.mjs`.
 
 ## 2. Host evidence
 

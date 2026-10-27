@@ -1,23 +1,23 @@
-Files of the fork that the lead edited after the merge, outside the 19 conflict files. Each line gives the file and the decision of design.md.
-src/data/layerState.js D2
-src/data/layerStateTokenReservations.json D2
-.env.example D10
-src/i18n/locales/zh-CN.json D9
-src/ui/styles/overlays.css D3
-src/tooling/spec/qaRegister.test.mjs D11
-src/ui/recentImagery.test.mjs D7
-src/layers/gdacs/registration.test.mjs D8
-src/layers/cyclones/labels.test.mjs D6
-src/layers/cyclones/index.test.mjs D6
-src/dockerTrustedPeers.test.mjs D1
-scripts/package-boundaries.json D9
-src/voice/globeResetConfirmation.test.mjs D12
-src/tooling/googleTokenUnavailable.test.mjs D12
-src/tooling/trafficFixtures.test.mjs D12
-server/providers/overpass/requestAdmission.test.mjs D13
-src/data/geoFileImport.test.mjs D13
-src/layers/streetLevel/providers/kartaview/decode.test.mjs D13
-src/app/sourceSlot.test.mjs D14
-src/i18n/catalog.test.mjs D15
-src/scenes/directorStorageNotices.test.mjs D15
-src/ui/shellToasts.i18n.test.mjs D15
+Files of the fork that the lead edited after the merge, outside the 19 conflict files. Each line gives the file, the decision of design.md and the commit. The word merge means that the file has this content in the merge commit ea54ccf9. Otherwise the file changed in the named later commit.
+src/data/layerState.js D2 merge
+src/data/layerStateTokenReservations.json D2 merge
+.env.example D10 merge
+src/i18n/locales/zh-CN.json D9 merge
+src/ui/styles/overlays.css D3 merge
+src/tooling/spec/qaRegister.test.mjs D11 merge
+src/ui/recentImagery.test.mjs D7 merge
+src/layers/gdacs/registration.test.mjs D8 merge
+src/layers/cyclones/labels.test.mjs D6 merge
+src/layers/cyclones/index.test.mjs D6 merge
+src/dockerTrustedPeers.test.mjs D1 merge
+scripts/package-boundaries.json D9 66990ccb
+src/voice/globeResetConfirmation.test.mjs D12 aeecad9d
+src/tooling/googleTokenUnavailable.test.mjs D12 aeecad9d
+src/tooling/trafficFixtures.test.mjs D12 aeecad9d
+server/providers/overpass/requestAdmission.test.mjs D13 aeecad9d
+src/data/geoFileImport.test.mjs D13 aeecad9d
+src/layers/streetLevel/providers/kartaview/decode.test.mjs D13 aeecad9d
+src/app/sourceSlot.test.mjs D14 cbdd8864
+src/i18n/catalog.test.mjs D15 cbdd8864
+src/scenes/directorStorageNotices.test.mjs D15 7958dd45
+src/ui/shellToasts.i18n.test.mjs D15 cbdd8864

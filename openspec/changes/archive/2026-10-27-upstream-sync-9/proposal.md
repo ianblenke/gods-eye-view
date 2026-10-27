@@ -19,7 +19,7 @@ They also remove four modules that nothing uses, among them `src/data/localLayer
 - Give the tests of the catalogs the IDs `i18n-catalogs-001`, `i18n-catalogs-002` and `i18n-catalogs-003`.
 - Add 20 Chinese texts to `src/i18n/locales/zh-CN.json` for the texts of the fork, and remove one text that no code uses.
 - Run the adopt command for each upstream file that the merge brings and that has a coverage gap.
-- Keep the upstream code as it is, except for the two lines of `standalonePlugins()` and the CSS selector that decision D3 names.
+- Keep the upstream code as it is. The fork edits only the upstream files of the 19 conflicts and the files of `evidence/adapted-files.txt`.
 
 ## Capabilities
 
@@ -47,6 +47,7 @@ Rule 25: the merge breaks no test that has a scenario ID for upstream code. It b
 - Known limit `token-ghostmaps`: Upstream gives the layer `s2-ghostmaps` the token `5`. The fork gives it `03`. A share link that upstream made for this layer opens the layer `beemaps` in the fork.
 - Known limit `docker-files`: The fork keeps its own `Dockerfile` and `compose.yaml`. The health check of upstream pull request 1394 and the SELinux flag of pull request 1391 are not in the fork. The test of the compose file in `src/dockerTrustedPeers.test.mjs` is removed.
 - Known limit `zh-CN`: The lead wrote the 20 Chinese texts. No native speaker has read them.
-- Known limit `cpu-time`: Three upstream tests check a time limit with a child process or with a decode run: `requestAdmission.test.mjs`, `geoFileImport.test.mjs` and `kartaview/decode.test.mjs`. The change makes them measure CPU time, so a loaded machine cannot fail them. The limits are 2000 ms, 20000 ms and 1000 ms of CPU time.
-- Known limit `allocation-load`: The test `src/overlays/worldOverlayAllocation.test.mjs` failed once in the first adopt run, when the machine was loaded. It passed alone and in the second adopt run. The change does not edit it.
+- Known limit `hud-classification-css`: The file `src/ui/styles/cyber.css` keeps the rule for `.hud-classification` as upstream has it, because a test of upstream reads it. The HUD of the fork has no such element, so the rule matches nothing.
+- Known limit `cpu-time`: Three upstream tests check a time limit with a child process or with a decode run: `requestAdmission.test.mjs`, `geoFileImport.test.mjs` and `kartaview/decode.test.mjs`. The change makes them measure CPU time, so a loaded machine cannot fail them. The limits are 2000 ms, 20000 ms and 1000 ms of CPU time. The limit for the KML roots was 5 s of wall time, so a regression that costs less than 20 s of CPU time now passes.
+- Known limit `allocation-load`: The test `src/overlays/worldOverlayAllocation.test.mjs` failed in the first adopt run. It passed alone in the image and in the second adopt run. The change does not edit it.
 - Known limit `backfill`: The new upstream code files have no spec of the fork. The adopt command records their coverage gaps. Later backfill changes add the specs and the tests.
