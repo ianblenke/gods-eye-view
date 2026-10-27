@@ -27,7 +27,7 @@
 - [x] 2.4 Run the lint on the host.
 - [x] 2.5 Run `openspec validate --specs` on the host.
 - [x] 2.6 Write `evidence/added-code.txt` and `evidence/adapted-files.txt`.
-- [ ] 2.7 Write `evidence/faults.txt` with the result of each fault.
+- [x] 2.7 Write `evidence/faults.txt` with the result of each fault.
 
 ## 3. Lead work before and in the image
 
