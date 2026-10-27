@@ -39,6 +39,8 @@ Upstream wraps each HUD readout in a `hud-readout` element for the Scope control
 Upstream adds the plugin `googleTokenUnavailablePlugin()` to the inline list of plugins. The fork moved that list into `standalonePlugins()`, so the change adds the plugin there.
 The CSS rule `.hud-readout:has(> :is(.hud-classification, .hud-system))` in `src/ui/styles/overlays.css` names the removed element. The change shortens it to `.hud-readout:has(> .hud-system)`, so the test of `hud-markings-004` passes. The rule in `cyber.css` stays as upstream has it, because a test of upstream reads it.
 
+The line of the left part of the top bar is a line of the fork, because it has no marking text. It needs coverage. The new test file `src/hudMarkingsDom.test.mjs` builds the real HUD with a fake page element and reads the markup. It has the tag of `hud-markings-003`.
+
 ### D4: Upstream wins for four files
 
 The merge takes the upstream version of `build/vite.js`. Its deny list is the list of the fork, plus the root-anchored `dist` rule. The merge also takes the upstream version of `src/camera.js`, because upstream removes the unused presets. The merge takes the added import line of `scripts/qa-transit-scenes.mjs` too.

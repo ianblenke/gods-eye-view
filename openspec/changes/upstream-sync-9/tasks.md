@@ -18,6 +18,7 @@
 - [x] 1.16 Add `zh-CN.json` to the two packages of `scripts/package-boundaries.json` that list `ru.json`.
 - [x] 1.17 Cancel the live timers of `globeResetConfirmation.test.mjs` and wait for one immediate in two more test files.
 - [x] 1.18 Make the three timing tests measure CPU time.
+- [x] 1.19 Write the test `src/hudMarkingsDom.test.mjs` and add it to `openspec/ownership.json`.
 
 ## 2. Host evidence
 

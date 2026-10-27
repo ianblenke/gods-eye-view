@@ -6,3 +6,6 @@ KILLED: src/data/geoFileImport.js, function repairKmlRootNamespaces, a loop of 2
 KILLED: src/layers/streetLevel/providers/kartaview/decode.js, function decodeCoverageTile, a loop of 1600 ms of CPU time. Test file: src/layers/streetLevel/providers/kartaview/decode.test.mjs. The limit is 1000 ms.
 
 Live timers (decision D12): the lead loaded a preload that lists the timers still live after the last test of a file. Before the change, globeResetConfirmation.test.mjs left 29 timers of TurnMetrics.scheduleSettle and 2 timers of the narration scheduler. After the change, it leaves none. The two files with an immediate leave none.
+
+KILLED: src/hud.js, the left part of the top bar gets the text TOP SECRET. Test file: src/hudMarkingsDom.test.mjs.
+KILLED: src/hud.js, the left part of the top bar loses its hud-readout wrapper. Test file: src/hudMarkingsDom.test.mjs.

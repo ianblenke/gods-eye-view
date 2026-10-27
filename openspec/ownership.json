@@ -115,6 +115,7 @@
     "src/director/interactions/document.test.mjs",
     "src/director/interactions/session.test.mjs",
     "src/hudMarkings.test.mjs",
+    "src/hudMarkingsDom.test.mjs",
     "src/layers/beemaps/",
     "src/layers/beemapsBursts/",
     "src/layers/gdacs/",

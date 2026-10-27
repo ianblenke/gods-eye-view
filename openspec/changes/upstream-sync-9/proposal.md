@@ -33,7 +33,7 @@ None.
 ## Impact
 
 The upstream side changes 688 files: 200 added, 12 removed and 476 changed. Two of them, `Dockerfile` and `compose.yaml`, are in `openspec/ownership.json`. The merge keeps the version of the fork for both.
-The change edits 18 more files of the fork to adapt them to the merged code. `evidence/adapted-files.txt` lists them.
+The change edits 18 more files of the fork to adapt them to the merged code. It adds the test file `src/hudMarkingsDom.test.mjs`, and it adds that path to `openspec/ownership.json`. `evidence/adapted-files.txt` lists them.
 
 Rule 23: the 200 added files are upstream files, because the fork does not write them. The manifest lists only paths that the fork writes.
 Forty-eight of the added files are code files of the types js, mjs, cjs or html, not counting test files. `evidence/added-code.txt` lists them.
