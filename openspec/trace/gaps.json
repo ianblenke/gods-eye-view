@@ -500,10 +500,10 @@
       "loaded": true,
       "lines": 45,
       "branches": 1,
-      "functions": 4,
+      "functions": 3,
       "totals": {
         "lines": 67,
-        "branches": 3,
+        "branches": 4,
         "functions": 5
       },
       "sha": "c483baccb1145ec3942341affdc9500019292380e4b15f2793cdc0e39be4c5cc",
@@ -693,12 +693,12 @@
     },
     "scripts/voice-bench/grade.mjs": {
       "loaded": true,
-      "lines": 10,
-      "branches": 19,
+      "lines": 7,
+      "branches": 14,
       "functions": 4,
       "totals": {
         "lines": 289,
-        "branches": 145,
+        "branches": 152,
         "functions": 43
       },
       "sha": "a9c14461cf844f3b97ad7a14869cb84b347c4f9eccb55fa00f6e9797308cb243",
@@ -1148,7 +1148,7 @@
       "functions": 0,
       "totals": {
         "lines": 88,
-        "branches": 21,
+        "branches": 22,
         "functions": 5
       },
       "sha": "d7a272e33935cae0a43b6294e77c42d47becffd5248d27e1c0313203da31ff9b",
@@ -1774,11 +1774,11 @@
     "server/providers/vessels/ais-store.js": {
       "loaded": true,
       "lines": 11,
-      "branches": 25,
+      "branches": 24,
       "functions": 1,
       "totals": {
         "lines": 355,
-        "branches": 147,
+        "branches": 148,
         "functions": 22
       },
       "sha": "1130234d2c0d3bdd5bd8e369ccec9ff88c68e995442b283e9a4e0856b79adeca",
@@ -2598,12 +2598,12 @@
     },
     "src/celestialRing.js": {
       "loaded": true,
-      "lines": 536,
-      "branches": 3,
-      "functions": 19,
+      "lines": 488,
+      "branches": 6,
+      "functions": 18,
       "totals": {
         "lines": 844,
-        "branches": 41,
+        "branches": 52,
         "functions": 31
       },
       "sha": "c9e09013b6fae865243f4261a3a3c57413900bde8af20d409f9ffa3c3ab66785",
@@ -2873,7 +2873,7 @@
       "functions": 1,
       "totals": {
         "lines": 580,
-        "branches": 156,
+        "branches": 155,
         "functions": 36
       },
       "sha": "73bbb8b88eb556ce7465f4f2246885f8eb0458c4617d3b41bf772c2e50b90997",
@@ -3526,21 +3526,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/data/localGeojson.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 30,
-        "branches": 6,
-        "functions": 2
-      },
-      "sha": "08aa0cce28193806a62509dc5f6394b2d684103e16be3779f289c7c7df949df7",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/data/localGeojsonCore.js": {
       "loaded": true,
       "lines": 22,
@@ -3878,7 +3863,7 @@
       "functions": 0,
       "totals": {
         "lines": 98,
-        "branches": 31,
+        "branches": 32,
         "functions": 3
       },
       "sha": "fff67a58eba50d9a09149a4fb3ebee720d392a00e4fb614d069b10ec386b73f0",
@@ -4143,12 +4128,12 @@
     },
     "src/hud.js": {
       "loaded": true,
-      "lines": 242,
-      "branches": 54,
+      "lines": 178,
+      "branches": 53,
       "functions": 16,
       "totals": {
         "lines": 1088,
-        "branches": 139,
+        "branches": 138,
         "functions": 47
       },
       "sha": "478aefa0853752fdc1d6c56567c42c112f642e0a9016eec8263b92c3e9c5ee3a",
@@ -4159,32 +4144,17 @@
     "src/hudLayouts.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 4,
+      "branches": 3,
       "functions": 0,
       "totals": {
         "lines": 64,
-        "branches": 18,
+        "branches": 17,
         "functions": 4
       },
       "sha": "970ef879d04dfd0c8814a60ddb91368ab424225cc5f688deef47fdcaad4852c1",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/hudLocalityFormat.js": {
-      "loaded": true,
-      "lines": 6,
-      "branches": 0,
-      "functions": 2,
-      "totals": {
-        "lines": 41,
-        "branches": 3,
-        "functions": 4
-      },
-      "sha": "6f27b20603c57e1c711b775ba958f42660289eb9b1e602845a20163a7e1250ba",
-      "untrue": false,
-      "origin": "upstream-sync-6",
-      "since": "2026-10-17"
     },
     "src/hudSummaryResponse.js": {
       "loaded": true,
@@ -6424,11 +6394,11 @@
     "src/layers/radio/catalogModel.js": {
       "loaded": true,
       "lines": 8,
-      "branches": 19,
+      "branches": 18,
       "functions": 2,
       "totals": {
         "lines": 147,
-        "branches": 50,
+        "branches": 49,
         "functions": 12
       },
       "sha": "f8e9926d6fa48d32571c3c4e60ba01827446060cdc7f4e296a8992beb99b681f",
@@ -6503,7 +6473,7 @@
       "functions": 4,
       "totals": {
         "lines": 162,
-        "branches": 39,
+        "branches": 40,
         "functions": 10
       },
       "sha": "661ba7e48ead4ac82f08fa600bfbe70dd544a7f3cd388e251530eb1f0e684568",
@@ -6578,7 +6548,7 @@
       "functions": 4,
       "totals": {
         "lines": 394,
-        "branches": 111,
+        "branches": 112,
         "functions": 22
       },
       "sha": "4ab8d18a157f0a5915b2dbea6029599f828f7810758fee17228d1882fe6f7513",
@@ -7563,8 +7533,8 @@
     },
     "src/layers/traffic/animation.js": {
       "loaded": true,
-      "lines": 35,
-      "branches": 37,
+      "lines": 32,
+      "branches": 35,
       "functions": 0,
       "totals": {
         "lines": 371,
@@ -9548,7 +9518,7 @@
       "functions": 3,
       "totals": {
         "lines": 129,
-        "branches": 79,
+        "branches": 81,
         "functions": 13
       },
       "sha": "e486290915f80a6429419a3189ebbfff02f3d12b9e3406358060c04afa11c48d",
@@ -9663,12 +9633,12 @@
     },
     "src/sources/overpass.js": {
       "loaded": true,
-      "lines": 11,
-      "branches": 4,
+      "lines": 5,
+      "branches": 2,
       "functions": 0,
       "totals": {
         "lines": 48,
-        "branches": 17,
+        "branches": 20,
         "functions": 1
       },
       "sha": "36098d3582a2858ee9479f19d1a9ee073173a16aade1a3c0b05376cf7d5d1b0e",
@@ -9848,7 +9818,7 @@
       "functions": 4,
       "totals": {
         "lines": 438,
-        "branches": 148,
+        "branches": 149,
         "functions": 44
       },
       "sha": "b382f4d10687e0e964225db8a25cca9b94c8a61fc36fb470c9e5ba1f21bded3f",
@@ -10032,21 +10002,6 @@
         "functions": null
       },
       "sha": "9e72c1c065c9a875f9cc3a15397f28bc500f8e8446eea79af2efd0008b13546b",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
-    "src/standalone/ui.js": {
-      "loaded": false,
-      "lines": 1,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 1,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "1af9e63de2cee804abb064899cd31571ebea2636ecd8b0585da7fd5f1e2fe131",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -10531,21 +10486,6 @@
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
-    "src/ui.js": {
-      "loaded": false,
-      "lines": 16,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 16,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "cd0018cd538e7cdc85f580ca3353bfa889c0afc8ff31491b48111cdf68c8d401",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/ui/actionButton.js": {
       "loaded": true,
       "lines": 0,
@@ -10638,12 +10578,12 @@
     },
     "src/ui/cctvControls.js": {
       "loaded": true,
-      "lines": 18,
+      "lines": 16,
       "branches": 6,
-      "functions": 6,
+      "functions": 5,
       "totals": {
         "lines": 129,
-        "branches": 30,
+        "branches": 31,
         "functions": 21
       },
       "sha": "7b6c1be4ebc4caac13f099c9d5c16fdfe3d79036bade9fc1aeb609efe5cb3a31",
@@ -10923,13 +10863,13 @@
     },
     "src/ui/contextActions.js": {
       "loaded": true,
-      "lines": 206,
-      "branches": 4,
+      "lines": 150,
+      "branches": 16,
       "functions": 2,
       "totals": {
         "lines": 270,
-        "branches": 10,
-        "functions": 7
+        "branches": 27,
+        "functions": 9
       },
       "sha": "3582b45d47ea900c116bde2657ccaacae0f94c4204cfd415b471236a28816d5f",
       "untrue": false,
@@ -10953,12 +10893,12 @@
     },
     "src/ui/contextControls.js": {
       "loaded": true,
-      "lines": 26,
+      "lines": 18,
       "branches": 0,
-      "functions": 12,
+      "functions": 8,
       "totals": {
         "lines": 138,
-        "branches": 19,
+        "branches": 23,
         "functions": 25
       },
       "sha": "dab6fb4d9e102569f7e403f4f65ed826c800047f070e3f9a8f9ad0879149966f",
@@ -11028,13 +10968,13 @@
     },
     "src/ui/contextTransactions.js": {
       "loaded": true,
-      "lines": 262,
-      "branches": 0,
-      "functions": 3,
+      "lines": 141,
+      "branches": 22,
+      "functions": 2,
       "totals": {
         "lines": 272,
-        "branches": 1,
-        "functions": 3
+        "branches": 31,
+        "functions": 7
       },
       "sha": "3a12cb6b183365f9b8967c46c2f213d22d129ac7cdc2e2ff5217f88ad1c7ca3e",
       "untrue": false,
@@ -11584,11 +11524,11 @@
     "src/ui/railTestFixture.mjs": {
       "loaded": true,
       "lines": 1,
-      "branches": 5,
+      "branches": 4,
       "functions": 0,
       "totals": {
         "lines": 116,
-        "branches": 49,
+        "branches": 50,
         "functions": 21
       },
       "sha": "c83cb81170b133199ba8d4122441870a1105767d5e845ede234e50e06798ca07",
@@ -11868,12 +11808,12 @@
     },
     "src/ui/uiLifetime.js": {
       "loaded": true,
-      "lines": 2,
+      "lines": 0,
       "branches": 2,
-      "functions": 2,
+      "functions": 1,
       "totals": {
         "lines": 54,
-        "branches": 23,
+        "branches": 24,
         "functions": 11
       },
       "sha": "6ea50eb1870538219836092af9ab540242fb22ca8e15db05a3f13095155399ac",
@@ -12319,11 +12259,11 @@
     "src/voice/providerCommands.js": {
       "loaded": true,
       "lines": 3,
-      "branches": 11,
+      "branches": 10,
       "functions": 1,
       "totals": {
         "lines": 161,
-        "branches": 72,
+        "branches": 74,
         "functions": 19
       },
       "sha": "3f37f936f216d2981870bed9162fe958dd6b1ca8bf0b444f466f88f7775ee48b",
@@ -12454,11 +12394,11 @@
     "src/voice/realtimeInputPolicy.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 5,
+      "branches": 4,
       "functions": 0,
       "totals": {
         "lines": 187,
-        "branches": 61,
+        "branches": 60,
         "functions": 11
       },
       "sha": "93d5d598fd1238f2a75d5522ff26bc352ab57383ed27125eade5e169f3abea6c",
@@ -12513,12 +12453,12 @@
     },
     "src/voice/realtimeSession.js": {
       "loaded": true,
-      "lines": 6,
-      "branches": 1,
+      "lines": 0,
+      "branches": 0,
       "functions": 3,
       "totals": {
         "lines": 36,
-        "branches": 9,
+        "branches": 8,
         "functions": 10
       },
       "sha": "56d21b43131fcef19f6caa5225f463af98bbf7e3986c45a4060952c98d6e64e7",
@@ -12589,11 +12529,11 @@
     "src/voice/session.js": {
       "loaded": true,
       "lines": 6,
-      "branches": 11,
+      "branches": 9,
       "functions": 1,
       "totals": {
         "lines": 190,
-        "branches": 93,
+        "branches": 95,
         "functions": 20
       },
       "sha": "d52c4ceb45505824a10db7532bb99bf8f2fc409a8456262f05c044082e8d9b8c",
@@ -15626,23 +15566,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/data/flowTiles.test.mjs": {
-      "names": {
-        "decode of a non-MVT buffer returns [] (defensive)": 1,
-        "fetchFlowForBounds: aborted signal rejects (AbortSignal-aware)": 1,
-        "fetchFlowForBounds: decode cache serves repeat calls within TTL (no refetch)": 1,
-        "fetchFlowForBounds: fetches covering tiles via /api/tomtom and decodes": 1,
-        "fetchFlowForBounds: non-OK tile responses reject when nothing succeeds": 1,
-        "fixture decode: all coordinates land in downtown Austin": 1,
-        "fixture decode: congestion exists (at least one trafficLevel < 1)": 1,
-        "fixture decode: every trafficLevel is within [0, 1]": 1,
-        "fixture decode: more than 50 flow segments": 1,
-        "fixture decode: segment shape is {coords, trafficLevel, roadType, closure}": 1,
-        "tilesForBounds: 30.2672,-97.7431 @ z12 -> covers x935 y1686": 1
-      },
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/data/focusAllocations.test.mjs": {
       "names": {
         "converged focus treatment stays within the GC-bracketed allocation budget": 1
@@ -15966,15 +15889,6 @@
         "snapping never pushes a bbox off the globe": 1,
         "the cache bbox snaps OUTWARD so a cached answer always covers the request": 1,
         "the snapped bbox stays acceptable to the request validator": 1
-      },
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
-    "src/data/issPass.test.mjs": {
-      "names": {
-        "finds a structurally-consistent ISS pass within 24h of the TLE epoch": 1,
-        "forwards its original 30 s coarse step and fineStepSec to the pass engine": 1,
-        "returns null when no pass clears an absurd threshold": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -18026,10 +17940,8 @@
       "names": {
         "checkCatalog reports a translation left in English unless it is allowed": 1,
         "checkCatalog reports missing, stale, placeholder and plural problems": 1,
-        "es catalog matches the code (npm run i18n)": 1,
         "every UI string is marked for translation or kept on purpose (npm run i18n)": 1,
         "every catalog file is a shipped locale and every non-English locale has a catalog": 1,
-        "ru catalog matches the code (npm run i18n)": 1,
         "unmarkedMarkup finds text and attributes without data-i18n*": 1,
         "unmarkedScript finds literals that reach the page without t/tn/msg": 1,
         "unmarkedScript sees human-readable status, loadingLabel and statusMessage fields": 1,
@@ -21587,33 +21499,7 @@
         "Director notice is marked with t()/msg(): Seeking scene clock": 1,
         "Director notice is marked with t()/msg(): Stopped": 1,
         "Director notice is marked with t()/msg(): Stopped (Esc)": 1,
-        "Director notice is marked with t()/msg(): Stopped by voice": 1,
-        "es catalog translates: Camera move interrupted": 1,
-        "es catalog translates: Camera ownership changed": 1,
-        "es catalog translates: Importing project": 1,
-        "es catalog translates: Saved project could not be read; storage preserved. Import a valid file to resume saving.": 1,
-        "es catalog translates: Scene layer turned off": 1,
-        "es catalog translates: Scene media timed out": 1,
-        "es catalog translates: Scene not saved — browser storage unavailable": 1,
-        "es catalog translates: Scene not saved — existing saved project could not be read. Export edits or import a valid file.": 1,
-        "es catalog translates: Scene not saved — {reason}": 1,
-        "es catalog translates: Seeking scene clock": 1,
-        "es catalog translates: Stopped": 1,
-        "es catalog translates: Stopped (Esc)": 1,
-        "es catalog translates: Stopped by voice": 1,
-        "ru catalog translates: Camera move interrupted": 1,
-        "ru catalog translates: Camera ownership changed": 1,
-        "ru catalog translates: Importing project": 1,
-        "ru catalog translates: Saved project could not be read; storage preserved. Import a valid file to resume saving.": 1,
-        "ru catalog translates: Scene layer turned off": 1,
-        "ru catalog translates: Scene media timed out": 1,
-        "ru catalog translates: Scene not saved — browser storage unavailable": 1,
-        "ru catalog translates: Scene not saved — existing saved project could not be read. Export edits or import a valid file.": 1,
-        "ru catalog translates: Scene not saved — {reason}": 1,
-        "ru catalog translates: Seeking scene clock": 1,
-        "ru catalog translates: Stopped": 1,
-        "ru catalog translates: Stopped (Esc)": 1,
-        "ru catalog translates: Stopped by voice": 1
+        "Director notice is marked with t()/msg(): Stopped by voice": 1
       },
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -24113,18 +23999,6 @@
     },
     "src/ui/shellToasts.i18n.test.mjs": {
       "names": {
-        "es catalog translates: Delete scene \"{scene}\" and all shots?": 1,
-        "es catalog translates: Detailed outline unavailable": 1,
-        "es catalog translates: Exit cockpit to fly to a camera": 1,
-        "es catalog translates: Exit cockpit to fly to a location": 1,
-        "es catalog translates: Exit cockpit to fly to a photo": 1,
-        "es catalog translates: Exit cockpit to fly to a shared view": 1,
-        "es catalog translates: Expand Radio section in Context": 1,
-        "es catalog translates: Go to expanded Radio section": 1,
-        "es catalog translates: New scene name": 1,
-        "es catalog translates: North up": 1,
-        "es catalog translates: Straight-down view": 1,
-        "es catalog translates: Tilted view": 1,
         "es: the Cockpit refusal is translated": 1,
         "marked for translation: Delete scene \"{scene}\" and all shots?": 1,
         "marked for translation: Detailed outline unavailable": 1,
@@ -24139,18 +24013,6 @@
         "marked for translation: Straight-down view": 1,
         "marked for translation: Tilted view": 1,
         "no bare literal reaches showToast in the orientation and navigation code": 1,
-        "ru catalog translates: Delete scene \"{scene}\" and all shots?": 1,
-        "ru catalog translates: Detailed outline unavailable": 1,
-        "ru catalog translates: Exit cockpit to fly to a camera": 1,
-        "ru catalog translates: Exit cockpit to fly to a location": 1,
-        "ru catalog translates: Exit cockpit to fly to a photo": 1,
-        "ru catalog translates: Exit cockpit to fly to a shared view": 1,
-        "ru catalog translates: Expand Radio section in Context": 1,
-        "ru catalog translates: Go to expanded Radio section": 1,
-        "ru catalog translates: New scene name": 1,
-        "ru catalog translates: North up": 1,
-        "ru catalog translates: Straight-down view": 1,
-        "ru catalog translates: Tilted view": 1,
         "ru: the Cockpit refusal is translated": 1,
         "the Cockpit refusal keeps its English wording per noun": 1
       },

@@ -3079,6 +3079,21 @@
     "since": "2026-09-16",
     "change": "remove-classification-banner"
   },
+  "i18n-catalogs-001": {
+    "hash": "9f45eaed366db486fb10967f56ea9c5011db8b53d89871f9946080c9d629831b",
+    "since": "2026-10-27",
+    "change": "upstream-sync-9"
+  },
+  "i18n-catalogs-002": {
+    "hash": "b4d9b8fef76bd614c6272af876ad32294c929f4c2bc1a3032601f2ac0263f306",
+    "since": "2026-10-27",
+    "change": "upstream-sync-9"
+  },
+  "i18n-catalogs-003": {
+    "hash": "0a79a5bd84eacd150db773615d4f4d965fd2dcb8e6eda21ced3e48e097ae8f6d",
+    "since": "2026-10-27",
+    "change": "upstream-sync-9"
+  },
   "layer-lifecycle-001": {
     "hash": "6fcdeafbbe7444a86d71f413b7316ea58cefb11c86f6538757d6bf65de2c0a12",
     "since": "2026-09-26",
@@ -3315,7 +3330,7 @@
     "change": "osh-fusion"
   },
   "osh-033": {
-    "hash": "6950dcfefc257b36fd1ec047b8adc178573a095c43b9f73df697f9879b73972b",
+    "hash": "a6b0723ee79418c8bd47ffc92574dc04e9dbff07a9b3623bd14339824cf40cc8",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -4500,7 +4515,7 @@
     "change": "qa-script-register"
   },
   "qa-scripts-023": {
-    "hash": "e546167739a13d0295c64b86a099f3e4937617b53b5675ab1bc2f92fdcaec6ab",
+    "hash": "05e7f57459fe922876238d7592640d8b03ed456c2025351be8fbb9601867c713",
     "since": "2026-09-26",
     "change": "qa-script-register"
   },
