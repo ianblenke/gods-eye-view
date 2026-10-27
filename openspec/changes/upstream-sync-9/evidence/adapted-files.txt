@@ -1,0 +1,12 @@
+Files of the fork that the lead edited after the merge, outside the 19 conflict files. Each line gives the file and the decision of design.md.
+src/data/layerState.js D2
+src/data/layerStateTokenReservations.json D2
+.env.example D10
+src/i18n/locales/zh-CN.json D9
+src/ui/styles/overlays.css D3
+src/tooling/spec/qaRegister.test.mjs D11
+src/ui/recentImagery.test.mjs D7
+src/layers/gdacs/registration.test.mjs D8
+src/layers/cyclones/labels.test.mjs D6
+src/layers/cyclones/index.test.mjs D6
+src/dockerTrustedPeers.test.mjs D1
