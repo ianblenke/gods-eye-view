@@ -32,7 +32,7 @@
 ## 3. Lead work before and in the image
 
 - [x] 3.1 Check the second parent of the merge commit against the upstream remote.
-- [ ] 3.2 Run `make adopt CHANGE=upstream-sync-9 FROM=15de9d738c4a85be1a96726c6114181caef87eeb`.
+- [x] 3.2 Run `make adopt CHANGE=upstream-sync-9 FROM=15de9d738c4a85be1a96726c6114181caef87eeb`.
 - [ ] 3.3 Run `make ratchet CHANGE=upstream-sync-9`.
 - [ ] 3.4 Run the two review agents.
 - [ ] 3.5 Write review.md.
