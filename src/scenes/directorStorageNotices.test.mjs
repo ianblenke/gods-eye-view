@@ -34,7 +34,7 @@ for (const text of NOTICES) {
     assert.ok(messages.has(text), `not marked for translation: ${text}`);
   });
   for (const locale of shippedLocales()) {
-    test(`${locale} catalog translates: ${text}`, () => {
+    test(`[i18n-catalogs-002] ${locale} catalog translates the notice ${NOTICES.indexOf(text) + 1}`, () => {
       const value = readCatalog(locale)[text];
       assert.ok(value, `missing in ${locale}.json`);
       assert.notEqual(value, text);

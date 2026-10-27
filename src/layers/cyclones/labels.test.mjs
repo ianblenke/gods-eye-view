@@ -6,9 +6,7 @@ import {
   CYCLONE_OVERLAY_COHORT_LIMIT,
   CYCLONE_OVERLAY_SOURCE_ID,
   createCycloneLabels,
-  cycloneLeadEntry,
   cycloneOverlayEntries,
-  cycloneStormEntry,
   cycloneStormIdFromEntryId,
 } from './labels.js';
 import {
@@ -18,6 +16,13 @@ import {
   WORLD_OVERLAY_PAINT_LANES,
 } from '../../overlays/worldOverlay.js';
 import { distanceFade } from '../../overlays/worldOverlayDraw.js';
+
+// The two entry builders are not exported (upstream dropped unused exports), so
+// the tests reach them through the public list of overlay entries.
+const cycloneStormEntry = (storm, selected) =>
+  cycloneOverlayEntries([storm], selected ? storm.id : null)[0];
+const cycloneLeadEntry = (stormId, point) =>
+  cycloneOverlayEntries([{ id: stormId, forecasts: [point] }], stormId)[1];
 
 const anchor = (longitude, latitude) =>
   Cesium.Cartesian3.fromDegrees(longitude, latitude, 0);

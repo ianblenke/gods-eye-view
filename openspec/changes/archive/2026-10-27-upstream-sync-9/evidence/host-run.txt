@@ -1,0 +1,11 @@
+Host test run of upstream-sync-9 on the commit a6dc040a (the archive commit; the working tree had no change). Host node: v26.11.1.
+Command for each file: timeout 600 nice -n 19 node --test <file>, six files at a time (xargs -P 6), with HOST and PORT unset. One line for each file gives the exit status and the counts of the node test runner.
+Start (UTC) 2026-10-27T17:54:26Z, end (UTC) 2026-10-27T18:03:32Z. Files: 891. These are the files that git lists with a name that ends with .test.mjs, except src/tooling/spec/gates.test.mjs.
+
+Totals:
+tests 13361 pass 13345 fail 0 skipped 16
+Lines with an exit status other than 0: 0
+
+
+Earlier runs on the same branch (the trial merge): the first run had 129 failing files, and all but 13 came from the token of the layer s2-ghostmaps. The second run had 13. The third run (before the timing and catalog fixes) had 3: layerStateTokenLedger, geoFileImport and src/ui/cyberTheme.test.mjs. Each was fixed by the decisions of design.md.
+The test src/overlays/worldOverlayAllocation.test.mjs skips on the host, because the host node is v26 and the budgets are for node 24. The gates run it in the image.

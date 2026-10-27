@@ -413,7 +413,7 @@ test('[recent-imagery-043] the body is a fixed stack of seven blocks in a fixed 
   assert.match(rule('.recent-imagery-readout .ri-card'), /height: 112px/);
   assert.match(
     rule('.recent-imagery-readout .ri-selection'),
-    /grid-template-rows: 20px 20px 20px/,
+    /grid-template-rows: 26px 20px 20px/,
   );
   assert.match(rule('.recent-imagery-readout .ri-slot'), /height: 20px/);
   assert.match(rule('.recent-imagery-readout .ri-controls'), /height: 22px/);
@@ -446,7 +446,7 @@ test('[recent-imagery-043] no control changes place in the tree, no block is hid
   /**
    * Every block that must keep its height: the node carrying the class, that
    * class, and the rule it gets its height from. The mode row is the first
-   * 20 px track of the selection grid. The details header has no height of
+   * 26 px track of the selection grid. The details header has no height of
    * its own: it is the last block, so it moves nothing below it, and its
    * title is held to one line.
    */
@@ -492,7 +492,7 @@ test('[recent-imagery-043] no control changes place in the tree, no block is hid
         mode.parentNode.children[0] === mode ? mode.parentNode : null,
         'ri-selection',
         readout('.ri-selection'),
-        /grid-template-rows: 20px 20px 20px/,
+        /grid-template-rows: 26px 20px 20px/,
       ],
       'ri-slot-a': [
         f.byId('ri-slot-a'),
@@ -2224,9 +2224,9 @@ test('[recent-imagery-044] the active mode alone has the zero tab index', async 
   const buttons = p.readout.root.findAll((node) =>
     node.classList.contains('ri-mode-btn'),
   );
-  assert.equal(buttons[0].tabIndex, 0);
-  assert.equal(buttons[1].tabIndex, -1);
-  assert.equal(buttons[2].tabIndex, -1);
+  assert.equal(buttons[0].getAttribute('tabindex'), '0');
+  assert.equal(buttons[1].getAttribute('tabindex'), '-1');
+  assert.equal(buttons[2].getAttribute('tabindex'), '-1');
   p.readout.destroy();
 });
 

@@ -1,0 +1,29 @@
+Named faults of upstream-sync-9 (AGENTS.md rule 13). The lead ran each fault by hand on the host with node v26.11.1, and put back the file after each run.
+Each fault adds a loop that uses CPU time before the work of the function. A fault is killed when the named test file reports a failed test.
+
+KILLED: server/providers/overpass/query.js, function sanitizeOverpassBody, a loop of 300 ms of CPU time. Test file: server/providers/overpass/requestAdmission.test.mjs. The 20 calls use 6000 ms, and the limit is 2000 ms.
+KILLED: src/data/geoFileImport.js, function repairKmlRootNamespaces, a loop of 25000 ms of CPU time for a value longer than 1000000 characters. Test file: src/data/geoFileImport.test.mjs. The limit is 20000 ms.
+KILLED: src/layers/streetLevel/providers/kartaview/decode.js, function decodeCoverageTile, a loop of 1600 ms of CPU time. Test file: src/layers/streetLevel/providers/kartaview/decode.test.mjs. The limit is 1000 ms.
+
+Live timers (decision D12): the lead loaded a preload that lists the timers still live after the last test of a file. Before the change, globeResetConfirmation.test.mjs left 29 timers of TurnMetrics.scheduleSettle and 2 timers of the narration scheduler. After the change, it leaves none. The two files with an immediate leave none.
+
+KILLED: src/hud.js, the left part of the top bar gets the text TOP SECRET. Test file: src/hudMarkingsDom.test.mjs.
+KILLED: src/hud.js, the left part of the top bar loses its hud-readout wrapper. Test file: src/hudMarkingsDom.test.mjs.
+
+KILLED: src/i18n/locales/zh-CN.json without the text of Taiwan. Test: i18n-catalogs-001 for zh-CN in src/i18n/catalog.test.mjs.
+KILLED: src/i18n/locales/zh-CN.json with a stale text. Test: i18n-catalogs-001 for zh-CN.
+KILLED: src/i18n/locales/zh-CN.json with the text of "Stopped by voice" equal to the English notice. Test: i18n-catalogs-002 in src/scenes/directorStorageNotices.test.mjs.
+KILLED: src/i18n/locales/zh-CN.json with the text of "Tilted view" equal to the English toast. Test: i18n-catalogs-003 in src/ui/shellToasts.i18n.test.mjs.
+
+Faults of the fork edits after the merge (round 1 of the review). The lead ran each one on the host with node v26.11.1 and put back the file. The fault changes one text of the file, and the named test file fails.
+KILLED: src/data/layerState.js, the token of s2-ghostmaps changed from 03 to 5. The file src/data/layerState.test.mjs fails (the registry check refuses the token, so the file stops at the import).
+KILLED: src/data/layerStateTokenReservations.json, the token of s2-ghostmaps changed from 03 to 04. The file src/data/layerState.test.mjs fails.
+KILLED: src/data/layerState.js, the id skyfi-scenes changed to skyfi-scenes-x. The file src/data/layerState.test.mjs fails (the pin of 40 registered layers in osh-033 and the ledger check).
+KILLED: src/ui/layerPanel.js, s2-ghostmaps and gdacs swapped in the group Events. The test gdacs-layer-019 fails.
+KILLED: src/layers/wind/index.js, the first return of the catch branch (the line that starts with enabled and ends with request !== controller, after the check controller.signal.aborted || request !== controller) changed to false. The test wind-010 fails. The return true of the same catch block is a different line, and the test wind-013 covers it.
+KILLED: src/ui/segmentedControl.js, the tabindex of the selected button changed from 0 to 1. The test recent-imagery-044 fails.
+KILLED: src/layers/cyclones/index.js, the label of PTC changed to Potential tropical cyclone. The test cyclones-021 fails.
+KILLED: src/sources/sourceSlot.js, the line that stops an old cleanup removed. The test "replacing a source rejects its late result and old cleanup cannot clear the new source" in src/app/sourceSlot.test.mjs fails.
+KILLED: the index of git without the tracked script scripts/qa-ghostmaps.mjs (git rm --cached, then git add). The test qa-scripts-023 fails, because it counts 105 tracked QA scripts.
+
+No fault for the wait of decision D17 (src/tooling/viteBuild.test.mjs). The leak showed only in CI, and no local run showed it, so no local fault can make a test fail for it. The evidence is the CI record of evidence/ci-leak.txt: two failed attempts before the wait, and no GATES-TEST-LEAK after it.

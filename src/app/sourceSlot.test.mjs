@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createSourceSlot } from './sourceSlot.js';
+import { createSourceSlot } from '../sources/sourceSlot.js';
 
 test('replacing a source rejects its late result and old cleanup cannot clear the new source', async () => {
   let finish;

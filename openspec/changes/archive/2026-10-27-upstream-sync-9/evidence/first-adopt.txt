@@ -1,0 +1,11 @@
+The first run of the adopt command (2026-10-27 13:25 to 14:04 UTC, image gods-eye-view:local) stopped with 7 errors and wrote no record. This is the list of the errors, copied from the log of the run (grep of the lines that start with ERROR).
+ERROR GATES-TEST-LEAK src/voice/globeResetConfirmation.test.mjs A test process left a live timer: Timeout, Timeout, Timeout, Timeout, Timeout, Timeout, Timeout, Timeout, Timeout, Timeout, Timeout, Timeout, Timeout, Timeout, Timeou
+ERROR GATES-TEST-LEAK src/tooling/googleTokenUnavailable.test.mjs A test process left a live timer: Immediate
+ERROR GATES-TEST-LEAK src/tooling/trafficFixtures.test.mjs A test process left a live timer: Immediate
+ERROR TRACE-FAILED-TEST server/providers/overpass/requestAdmission.test.mjs Test "a burst of maximum-size unterminated filters completes within a bounded process deadline" failed
+ERROR TRACE-FAILED-TEST src/data/geoFileImport.test.mjs Test "repeated incomplete KML roots finish within an isolated process deadline" failed
+ERROR TRACE-FAILED-TEST src/layers/streetLevel/providers/kartaview/decode.test.mjs Test "a tile whose segments all share one point decodes in linear time" failed
+ERROR TRACE-FAILED-TEST src/overlays/worldOverlayAllocation.test.mjs Test "steady moving-source frames stay in budget with infrastructure, FIRMS, and vessels live" failed
+
+The second run (14:36 to 15:11 UTC) ended with: Adopt: 458 files from 15de9d738c4a85be1a96726c6114181caef87eeb. Gates passed.
+Alone in the image, the tests requestAdmission, kartaview decode and worldOverlayAllocation passed, and geoFileImport failed after 5076 ms (spawnSync ETIMEDOUT). The lead ran: docker run --rm -v <clone>:/app -v /app/node_modules -w /app gods-eye-view:local, then node --test for each file.

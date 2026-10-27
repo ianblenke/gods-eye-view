@@ -1,0 +1,20 @@
+The 19 files with a conflict in the merge of upstream/main (15de9d73), and the resolution of each. The lead resolved them in a trial merge, then built the branch with the plan commit first: the merge commit has the tree of the trial merge (git read-tree -u --reset).
+Dockerfile - ours (D1). The fork runs npm run dev. The health check of upstream is not taken.
+compose.yaml - ours, 2 hunks (D1). Named volumes and env_file of the fork. The SELinux flag and the environment list of upstream are not taken.
+SECURITY.md - ours (D1).
+src/dockerLauncher.test.mjs - ours (D1). The fork removed the launcher test in an earlier sync.
+build/vite.js - theirs (D4). The deny list of upstream is the list of the fork plus the root-anchored dist rule.
+server/standalone/vite.config.js - ours, then the plugin googleTokenUnavailablePlugin() added to standalonePlugins() (D3).
+scripts/qa-transit-scenes.mjs - both: the header of the fork, then the import line of upstream (D4).
+src/hud.js - upstream wrappers (hud-readout) without the classification text (D3).
+src/camera.js - theirs (D4). Upstream removes the unused presets.
+src/data/localLayers.js - deleted (D4). Upstream removes it. The fork changed it for the OSH layer, and nothing in the fork reads it.
+src/app/constructCatalog.js - both: the import and the entry of the layer GhostMaps after gnss-integrity (D2).
+src/ui/layerPanel.js - both; the order in the group Events is gnss-integrity, s2-ghostmaps, gdacs (D8).
+src/app/constructCatalog.test.mjs - ours with 41 catalog layers (D2).
+src/app/sourceComposition.test.mjs - ours with 41 layers (D2).
+src/data/layerState.test.mjs - ours with 40 registered layers and the next free token 04 (D2, D5).
+src/data/layerStateTokenLedger.test.mjs - ours; the fixtures leave out the layer s2-ghostmaps (D2).
+src/data/manager.test.mjs - both, with a closing line added to the first block.
+src/layers/wind/index.test.mjs - both, with a closing line added to the first block.
+src/ui/locationControls.test.mjs - both, with a closing line added to the first block.

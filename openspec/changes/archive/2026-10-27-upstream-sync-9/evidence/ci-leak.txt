@@ -1,0 +1,13 @@
+The CI job Spec gates and the test src/tooling/viteBuild.test.mjs (decision D17). Commands: gh run view <run> -R ianblenke/gods-eye-view --log-failed, filtered for the lines that contain ERROR or Gates failed.
+
+Run 40574356132 (commit b9119b9b, before the wait). The first attempt and the second attempt (the lead ran the failed job again) gave the same error. The log below is the log of the second attempt:
+2026-10-27T20:30:10.8722493Z ERROR GATES-TEST-LEAK src/tooling/viteBuild.test.mjs A test process left a live timer: Timeout, Timeout
+2026-10-27T20:30:10.8722617Z Gates failed with 1 errors.
+
+Run 40579420645 (commit d192f322, with the wait of 2000 ms after each server.close()):
+2026-10-27T20:43:59.7660285Z ERROR REVIEW-TREE openspec/changes/archive/2026-10-27-upstream-sync-9/review.md The reviewed tree b8412e837040 is not the current tree f98e7e24c609. Review the change again.
+2026-10-27T20:43:59.7660386Z Gates failed with 1 errors.
+
+The error of the last run is REVIEW-TREE: the file of the test changed after the review, so the tree is new. The gates found no GATES-TEST-LEAK in that run.
+
+The lead could not make the leak appear anywhere else. In each case the test left only the timer of the trace tool: on the host (node v26.11.1), in the image (node 24.22.1), with CI=true and GITHUB_ACTIONS=true, and in a container with --cpus=1 and three busy loops. The command for the trace: node with --import of a preload that wraps setTimeout and prints process.getActiveResourcesInfo() after the last test.

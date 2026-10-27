@@ -7,6 +7,7 @@
 const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 export const BOSTON = {
   id: 'boston',
+  feedId: 'mbta',
   label: 'Boston (MBTA)',
   lat: 42.3554,
   lon: -71.0605,
@@ -17,6 +18,7 @@ const LIVE_CITIES = [
   BOSTON,
   {
     id: 'austin',
+    feedId: 'capmetro-austin',
     label: 'Austin (CapMetro)',
     lat: 30.2672,
     lon: -97.7431,
@@ -25,6 +27,7 @@ const LIVE_CITIES = [
   },
   {
     id: 'minneapolis',
+    feedId: 'metrotransit-msp',
     label: 'Minneapolis (Metro Transit)',
     lat: 44.9778,
     lon: -93.265,
@@ -33,6 +36,7 @@ const LIVE_CITIES = [
   },
   {
     id: 'helsinki',
+    feedId: 'hsl-helsinki',
     label: 'Helsinki (HSL)',
     lat: 60.1699,
     lon: 24.9384,
@@ -41,6 +45,7 @@ const LIVE_CITIES = [
   },
   {
     id: 'oslo',
+    feedId: 'entur-norway',
     label: 'Oslo (Entur)',
     lat: 59.9139,
     lon: 10.7522,

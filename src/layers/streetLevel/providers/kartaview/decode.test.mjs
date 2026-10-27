@@ -99,9 +99,11 @@ test('a tile whose segments all share one point decodes in linear time', () => {
   const lines = Array.from({ length: 60_000 }, (_, i) => ({
     track: [at(0, 0), at(1 + i * 1e-6, 1), at(0, 0)],
   }));
-  const started = performance.now();
+  // CPU time and not wall time: a loaded machine cannot fail the test.
+  const started = process.cpuUsage();
   const { sequences } = decodeCoverageTile({ lines }, TILE);
-  const ms = performance.now() - started;
+  const used = process.cpuUsage(started);
+  const ms = (used.user + used.system) / 1000;
   assert.ok(
     ms < 1_000,
     `${Math.round(ms)} ms (quadratic chaining took ~200 ms per 20k and grows fourfold per doubling)`,
