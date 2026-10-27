@@ -21,24 +21,27 @@ The lock file `package-lock.json` is the same on both sides, so the image of the
 ### D1: Docker files of the fork
 
 The merge keeps `Dockerfile`, `compose.yaml` and `SECURITY.md` of the fork. The fork runs `npm run dev` with named volumes. It does not use the launcher `scripts/docker-start.mjs`.
+
 The test of the compose file in `src/dockerTrustedPeers.test.mjs` reads the compose file of upstream. It fails for the compose file of the fork, so the change removes this one test. The other three tests of the file stay.
 The fork already removed the matching test in `src/dockerLauncher.test.mjs` in an earlier sync, so the merge keeps that removal.
 
 ### D2: Token of the layer s2-ghostmaps
 
 Upstream gives the layer `s2-ghostmaps` the token `5`. The fork gave `5` to the layer `beemaps` before. A second owner of one token breaks every share link of the fork.
+
 The fork gives `s2-ghostmaps` the next free token `03`. The next free token is then `04`. The ledger and the registry hold 40 layers, and the catalog holds 41 layers.
 The tests of the ledger leave out the layer `s2-ghostmaps` from their fixtures, as they leave out `gdacs` and the three scene layers.
 
 ### D3: HUD, standalone plugins and CSS
 
 Upstream wraps each HUD readout in a `hud-readout` element for the Scope controls. The merged `src/hud.js` has the wrappers and has no classification text, because the fork removed the markings.
+
 Upstream adds the plugin `googleTokenUnavailablePlugin()` to the inline list of plugins. The fork moved that list into `standalonePlugins()`, so the change adds the plugin there.
 The CSS rule `.hud-readout:has(> :is(.hud-classification, .hud-system))` in `src/ui/styles/overlays.css` names the removed element. The change shortens it to `.hud-readout:has(> .hud-system)`, so the test of `hud-markings-004` passes. The rule in `cyber.css` stays as upstream has it, because a test of upstream reads it.
 
 ### D4: Upstream wins for four files
 
-The merge takes the upstream version of `build/vite.js` (the deny list is the same as the fork list, plus the root-anchored `dist` rule), of `src/camera.js` (upstream removes the unused presets), and of the added text in `scripts/qa-transit-scenes.mjs`.
+The merge takes the upstream version of `build/vite.js`. Its deny list is the list of the fork, plus the root-anchored `dist` rule. The merge also takes the upstream version of `src/camera.js`, because upstream removes the unused presets. The merge takes the added import line of `scripts/qa-transit-scenes.mjs` too.
 The merge removes `src/data/localLayers.js`, because upstream removes it and nothing in the fork reads it.
 
 ### D5: The scenario osh-033
@@ -62,6 +65,7 @@ The panel group "Events" ends with `gdacs`, as `gdacs-layer-019` says. The layer
 ### D9: Chinese texts
 
 Upstream adds the catalog `zh-CN`. The catalog test needs a text for each message of the code. The fork has 20 messages that upstream does not have. The lead wrote the 20 Chinese texts.
+
 The message "Flying to Austin, TX..." has no user in the fork any more, so the change removes its entry.
 Two packages of `scripts/package-boundaries.json` list the locale files `es.json` and `ru.json`. The change adds `zh-CN.json` to both lists, because the boundary check refuses an unowned module.
 

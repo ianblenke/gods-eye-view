@@ -45,5 +45,5 @@ Rule 25: the merge breaks no test that has a scenario ID for upstream code. It b
 - Known limit `token-ghostmaps`: Upstream gives the layer `s2-ghostmaps` the token `5`. The fork gives it `03`. A share link that upstream made for this layer opens the layer `beemaps` in the fork.
 - Known limit `docker-files`: The fork keeps its own `Dockerfile` and `compose.yaml`. The health check of upstream pull request 1394 and the SELinux flag of pull request 1391 are not in the fork. The test of the compose file in `src/dockerTrustedPeers.test.mjs` is removed.
 - Known limit `zh-CN`: The lead wrote the 20 Chinese texts. No native speaker has read them.
-- Known limit `host-timing`: The test `repeated incomplete KML roots finish within an isolated process deadline` fails on the host when six test files run at the same time. It passes when it runs alone.
+- Known limit `host-timing`: A test of `src/data/geoFileImport.test.mjs` has a time limit of 5 s for incomplete KML roots. It fails on the host when six test files run at the same time. It passes when it runs alone.
 - Known limit `backfill`: The new upstream code files have no spec of the fork. The adopt command records their coverage gaps. Later backfill changes add the specs and the tests.
