@@ -1,12 +1,9 @@
 Verdict: PASS
 
-Tip 424c34f3, scope diff 7ff92e91. I read the files and ran nothing. I judged the nine new faults from the test bodies and the code.
+Tip 17c2c5a5, round 3 (narrow), spec adversary. I read the files and ran no code.
 
-Round 1 findings: all closed (design.md:11 goal; proposal.md:22 and design.md:17 point to the 19 conflict files and evidence/adapted-files.txt; the nine faults of evidence/faults.txt:19-27; the weaker 20 s CPU limit in D13 and in the Known limit cpu-time; the allocation-load wording; the limit hud-classification-css; the commit of each adapted file; the five split tasks and the three STE corrections). The accepted items (a) to (d) stay accepted.
+Checks: (1) The statements are true against the files. I could not check the CI run ids and the error lines, because I cannot run gh. They are consistent with each other, and the only error of the last run is REVIEW-TREE. (2) The text is honest: D17 calls the wait a margin and says one run is evidence and not proof; the Known limit vite-teardown names it; faults.txt gives the reason for the missing fault; ci-leak.txt lists the local attempts. (3) evidence/adapted-files.txt has 23 file entries (24 lines with the header), and the decisions D1 to D17 are consistent. (4) In src/tooling/viteBuild.test.mjs lines 437-442 the wait sits after close() inside finally, in both loop iterations, and it cannot hide a failure.
 
-The nine faults, each judged: token 03 to 5 (killed: the registry check refuses the token); reservations 03 to 04 (killed by the pins of 04 and 03); id skyfi-scenes-x (killed by the pin of 40 layers and the ledger check); Events group swap (gdacs-layer-019 kills it); tabindex 1 (recent-imagery-044 kills it); PTC label (cyclones test line 522 kills it); source-slot guard (the test kills it); tracked QA script removed (the count 106 kills it); wind catch branch to false (kills wind-010 only if the line is index.js:198).
-
-New findings:
-- [ ] FINDING minor evidence/faults.txt:23 "The return of the catch branch changed to false" does not name a line. wind/index.js has two returns in the catch branch. Line 198 is `enabled && !signal?.aborted && request !== controller`, and wind-010 at index.test.mjs:477 kills it. Line 200 is `return true`, and wind-013 kills it, not wind-010. The statement is true for line 198, so this is not a major.
-
-No new critical or major problem found.
+- [ ] FINDING minor design.md:123 D17 says "twice in two runs of the same commit"; ci-leak.txt describes one run with two attempts. Change the text to "two attempts of one run".
+- [ ] FINDING minor design.md:126 "as the memory of an earlier leak of the same kind suggests" points to a source that is not in the repository. Name the earlier change or delete the clause.
+- [ ] FINDING minor design.md:121 D17 sits after the section "Purpose at archive time". Move it up to follow D16, or accept the order.

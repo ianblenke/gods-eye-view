@@ -4,8 +4,8 @@ Verdict: PASS
 Reviewers: spec-adversary, ste-adversary
 Date: 2026-10-27
 Gates: make gates CHANGE=upstream-sync-9 passed
-Rounds: 2
-Scope: diff 7ff92e91
+Rounds: 3
+Scope: diff 424c34f3
 Reviewed-Tree: b8412e837040fd2093f55a877fba57988c7d10e658c145a4284f6f2cb065de56
 
 ## Rule 21 check
@@ -18,7 +18,9 @@ Resolved files: `Dockerfile`, `SECURITY.md`, `build/vite.js`, `compose.yaml`, `s
 
 Round 1 had the scope full, at the commit 7ff92e91. Both reviewers gave FAIL. The corrections changed only files under `openspec/` (documents, evidence and nine named faults that the lead ran on the host). So the lead did not move the change back from the archive, and ran no new ratchet. The commit 424c34f3 holds the corrections. Round 2 had the scope diff 7ff92e91, at the commit 424c34f3. Both reviewers gave PASS.
 
-The reports of round 1 are in `review/round-1/`. The reports of round 2 are in `review/round-2/` and in `review/`. Each file holds a copy of the report that the lead shortened. The lead removed the lists of checked points and shortened some texts. Each finding keeps its meaning.
+After round 2, the Spec gates job of CI failed twice with `GATES-TEST-LEAK` for `src/tooling/viteBuild.test.mjs` (decision D17, `evidence/ci-leak.txt`). The lead added a wait of 2000 ms after each `server.close()` in that test file (commit d192f322). The tree changed, so round 3 had the scope diff 424c34f3, at the commit 17c2c5a5. Both reviewers gave PASS.
+
+The reports of round 1 are in `review/round-1/`. The reports of round 2 are in `review/round-2/` and in `review/`. The reports of round 3 are in `review/round-3/`. Each file holds a copy of the report that the lead shortened. The lead removed the lists of checked points and shortened some texts. Each finding keeps its meaning.
 
 Four ratchet runs came before the review. Run 1 stopped on `COVERAGE-DIFF` for `src/hud.js` line 285 (the new test `src/hudMarkingsDom.test.mjs`). Run 2 stopped on `GATES-RATCHET` (the coverage of `src/sources/sourceSlot.js` and 26 test names of `zh-CN`; decisions D14 and D15). Run 3 stopped on three `STE-WORD` errors in test titles. Run 4 gave only `REVIEW-MISSING`.
 
@@ -43,3 +45,10 @@ Four ratchet runs came before the review. Run 1 stopped on `COVERAGE-DIFF` for `
 ### Round 2 (commit 424c34f3)
 
 - [x] FINDING minor (spec adversary) `evidence/faults.txt` did not name the line of the wind fault. Fixed: the text names the return and the check before it.
+
+### Round 3 (commit 17c2c5a5)
+
+- [x] FINDING minor (spec adversary) D17 said "twice in two runs of the same commit", but `evidence/ci-leak.txt` describes one run with two attempts. Fixed: "in two attempts of the same run".
+- [x] FINDING minor (spec adversary) The clause "as the memory of an earlier leak of the same kind suggests" named no source in the repository. Fixed: "as an earlier leak of the same kind showed".
+- [x] FINDING minor (spec adversary) D17 sat after the section "Purpose at archive time". Fixed: D17 follows D16.
+- [x] FINDING minor (STE adversary) Same as the first two findings of the spec adversary. Fixed.

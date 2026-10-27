@@ -109,6 +109,14 @@ So the three test files get the IDs of the new scenarios `i18n-catalogs-001`, `i
 
 The lock file does not change, so the gates run in the image `gods-eye-view:local`. A test of the host run reads the same lock file.
 
+### D17: Wait for the Vite teardown in viteBuild.test.mjs
+
+Upstream adds a test that starts a real Vite dev server and a real Vite preview server, and closes each one. The CI job Spec gates failed with `GATES-TEST-LEAK` for this file, with two live timers. The failure came in two attempts of the same run.
+The lead could not make the leak appear on the host or in the image. It did not appear with the variables of CI, or in a container with one CPU and busy loops. `evidence/ci-leak.txt` gives the runs and the commands.
+
+The change adds a real wait of 2000 ms after each `server.close()`, as an earlier leak of the same kind showed. The wait is a margin and not a proof.
+After the wait, the CI run 40579420645 had no `GATES-TEST-LEAK`. One run is evidence and not proof, so the change names a Known limit.
+
 ## Files and measures
 
 The trace gate checks the scenario IDs `osh-033` and `qa-scripts-023`. The prose lint checks STE.
@@ -117,12 +125,3 @@ The lead runs every test file of the host, then the four checks of `make prechec
 ## Purpose at archive time
 
 The catalog of each shipped locale has a text for each message of the code and no text that the code does not use.
-
-### D17: Wait for the Vite teardown in viteBuild.test.mjs
-
-Upstream adds a test that starts a real Vite dev server and a real Vite preview server, and closes each one. The CI job Spec gates failed with `GATES-TEST-LEAK` for this file, with two live timers. The failure came twice in two runs of the same commit.
-The lead could not make the leak appear on the host or in the image. It did not appear with the variables of CI, or in a container with one CPU and busy loops. `evidence/ci-leak.txt` gives the runs and the commands.
-
-The change adds a real wait of 2000 ms after each `server.close()`, as the memory of an earlier leak of the same kind suggests. The wait is a margin and not a proof.
-After the wait, the CI run 40579420645 had no `GATES-TEST-LEAK`. One run is evidence and not proof, so the change names a Known limit.
-
