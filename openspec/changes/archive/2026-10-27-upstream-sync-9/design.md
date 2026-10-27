@@ -87,7 +87,9 @@ A hook `after()` in that file now cancels these timers. The tests `googleTokenUn
 
 ### D13: CPU time in place of wall time
 
-The gates run all test files at the same time, and the first adopt run failed three timing tests. Each test checks a limit on a long run of synchronous code.
+The gates run all test files at the same time, and the first adopt run failed four timing tests. `evidence/first-adopt.txt` lists them. Three of them check a limit on a long run of synchronous code.
+
+The fourth is the allocation test `worldOverlayAllocation.test.mjs`. It passed when it ran alone in the image and in the second adopt run, so the change leaves it as it is.
 
 Each of the three tests now measures the CPU time of the code with `process.cpuUsage()`. The limits are 2000 ms for the burst of filters, 20000 ms for the KML roots and 1000 ms for the KartaView tile. The wall time of the parent stays as a long guard against a hung child.
 The test `geoFileImport.test.mjs` took more than 5 s of wall time on this machine, also when it ran alone in the image. So the old limit of 5 s could not pass here.
