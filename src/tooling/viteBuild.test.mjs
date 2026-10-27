@@ -436,6 +436,9 @@ test('every API response carries the API policy and nosniff on real dev and prev
         );
     } finally {
       await server.close();
+      // The close() of Vite resolves before its own teardown ends. A real wait
+      // lets the timers of Vite finish, so that no timer is live at exit.
+      await new Promise((resolve) => setTimeout(resolve, 2000));
     }
   }
 });
