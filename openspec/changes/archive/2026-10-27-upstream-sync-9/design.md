@@ -92,6 +92,7 @@ The gates run all test files at the same time, and the first adopt run failed fo
 The fourth is the allocation test `worldOverlayAllocation.test.mjs`. It passed when it ran alone in the image and in the second adopt run, so the change leaves it as it is.
 
 Each of the three tests now measures the CPU time of the code with `process.cpuUsage()`. The limits are 2000 ms for the burst of filters, 20000 ms for the KML roots and 1000 ms for the KartaView tile. The wall time of the parent stays as a long guard against a hung child. The limit of the KML roots grows from 5 s of wall time to 20 s of CPU time. So the test no longer catches a regression that costs less than 20 s.
+
 The test `geoFileImport.test.mjs` took more than 5 s of wall time on this machine, also when it ran alone in the image. So the old limit of 5 s could not pass here.
 
 ### D14: The test of the source slot
