@@ -101,7 +101,7 @@ test('[gdacs-layer-019] puts the layer at the end of the Events group of the pan
   const group = /label: msg\('Events'\),\s*ids: \[([^\]]*)\]/.exec(text);
   assert.notEqual(group, null);
   const ids = [...group[1].matchAll(/'([^']+)'/g)].map((match) => match[1]);
-  assert.deepEqual(ids.slice(-2), ['gnss-integrity', 'gdacs']);
+  assert.deepEqual(ids.slice(-2), ['s2-ghostmaps', 'gdacs']);
 });
 
 test('[gdacs-layer-020] keeps the layer out of voice', () => {

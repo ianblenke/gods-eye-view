@@ -2,6 +2,11 @@
 
 God's Eye View is a local-first client for **public** data. It is built for exploration, demos, and learning — not as a hardened production service. This document explains the security model so you can run it safely and report issues responsibly.
 
+Vite's development file server also denies `.gev-logs/`, `.gev-cache/`, and
+the package checkout's root `dist/` directory. Dependency `dist/` directories
+remain available. This filesystem deny list does not filter `public/` assets or
+preview output; never put private artifacts in a public asset directory.
+
 ## Reporting a vulnerability
 
 Please report security issues **privately** — do not open a public issue for anything exploitable.
@@ -75,6 +80,8 @@ The data proxies under `server/providers/` are written so the browser cannot tur
 - **No verbatim client headers upstream.** The CCTV media route is the one route that relays a request header (`Range`, for video seeking). It is parsed and canonicalized before it is forwarded: one `bytes=` range only, with every accepted form — explicit span, open-ended and suffix — bounded to the same 64 MiB ceiling the relay applies to a declared response body. Multi-range, malformed, inverted and non-`bytes` values are dropped and the request proceeds without a `Range`, as RFC 7233 §3.1 prescribes. Bounding the request bounds what is asked for: a response that declares no length — live streamed media, or a chunked body from an upstream that ignores the `Range` — has no ceiling. An upstream request the browser has stopped waiting for is cancelled rather than left running, whether the viewer leaves before the headers arrive or during the body.
 - **Transit fetches registered feeds only.** `/api/transit/vehicles/<id>` resolves the id against `src/data/transitFeeds.js`; the browser never supplies a URL, and a feed that is registered but disabled does not resolve at all. Redirects are followed manually and each hop is validated against the feed's own https origin before it is requested, so an off-origin or downgraded hop is refused rather than contacted. Bodies are capped at 8 MB, the protobuf is decoded server-side under entity-count and string-length ceilings, a differential feed is refused, and snapshots live 15 s in memory with no disk cache. A per-feed admission limiter and a failure cooldown ladder bound what this process can ask of any operator.
 - **Local receiver feeds are operator-configured and local-only.** `/api/local-receivers/aircraft` reads only the `aircraft.json` URLs in the server's `LOCAL_RECEIVER_FEEDS`; the browser never supplies an address. Each host must pass the shared tap address rule (`src/data/tapAddress.js`: loopback, RFC1918, `localhost`, `*.local`; no link-local, IPv6 or other names), the scheme must be http(s), the path must end in `aircraft.json`, and credentials, queries and fragments are refused. Invalid entries are logged at startup and never fetched. Reads use a 2 s timeout, refuse redirects, cap bodies at 2 MB and share one read per second; responses name each feed by band only and never carry upstream error text.
+- **Validated response formats.** Proxied bodies are relayed only in the format the route serves. CCTV frames and the Street View fallback accept JPEG, PNG, GIF, WebP and AVIF only, sent under their canonical type; any other type falls through to the next fallback. Live CCTV media must match its feed kind (`video/mp4`, `video/webm`, or `multipart/x-mixed-replace` with a boundary) before it is relayed or the camera counts as healthy, and its redirects stay on the registered origin. GBFS bodies must parse as JSON and are re-serialized as `application/json; charset=utf-8`. Camera catalog URLs are pinned by parsed URL — scheme, exact host, no credentials, default port, and a normalized path inside the agency's image directory — and a redirect on a pinned host must stay inside the same directory. Every `/api/cctv` route uses the keyless cross-site checks described below, so cameras stay reachable behind a reverse proxy; a request carrying forwarding headers never reaches the key-bearing Street View fallback and gets the placeholder frame instead, as when no key is configured.
+- **Consistent API response headers.** Every `/api` response, including errors, partial content, Host refusals and unknown routes, carries `Content-Security-Policy: default-src 'none'; sandbox` and `X-Content-Type-Options: nosniff` (`apiResponseHeadersPlugin` in `build/vite.js`, installed ahead of the Host check). A route that sets its own policy adds it as a further policy; it never replaces this one.
 - **Response-size caps and timeouts** on proxied responses.
 - **Sanitized errors** — internal error details are not echoed back to clients.
 - **Coalesced OAuth refresh** and cached successful responses only (OpenSky).
@@ -103,6 +110,11 @@ The dev server is a **key broker**: every server-side key above is spendable by 
   `compose.yaml` publishes on `127.0.0.1`: **widen that mapping and every LAN
   client arrives from the same gateway address, which hands them Provider
   Settings too.** Treat publishing beyond loopback as the LAN opt-in above.
+  Compose forwards `GEV_KEY_SETUP_TRUSTED_PEERS` and `GEV_ALLOWED_HOSTS` from
+  the shell or project `.env` before the launcher runs. Set trusted peers to
+  `none` when widening the publish: it becomes an explicit empty list before
+  Vite loads configuration, so the gateway cannot regain Provider Settings
+  access. Unset or blank values preserve automatic gateway discovery.
 - **Provider-side budgets are the real backstop.** For hard spend protection, configure limits where the money is: OpenAI platform usage limits, Google Cloud budget alerts + per-API quotas, and equivalent controls for any other keyed provider.
 - **Pinokio LAN and Cloudflare sharing are refused.** The current supported
   Pinokio release re-reads sharing state when an app registers its Open URL and

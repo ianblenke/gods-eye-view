@@ -518,12 +518,13 @@ test('[cyclones-023 cyclones-025] only the latest queued focus runs and an uncha
 });
 test('[cyclones-021] classification display expands known codes without altering the source or guessing unknown meanings', async () => {
   for (const [code, label] of [
-    ['PTC', 'Potential tropical cyclone'],
+    ['PC', 'Potential tropical cyclone'],
+    ['PTC', 'Post-tropical cyclone'],
     ['HU', 'Hurricane'],
     ['TS', 'Tropical storm'],
     ['TD', 'Tropical depression'],
-    ['SS', 'Subtropical storm'],
-    ['SD', 'Subtropical depression'],
+    ['STS', 'Subtropical storm'],
+    ['STD', 'Subtropical depression'],
     ['EX', 'EX'],
     ['UNKNOWN', 'UNKNOWN'],
   ]) {
@@ -1244,7 +1245,7 @@ test('[cyclones-021] the row controls of a selected storm with a coherent track 
   h.layer.enable();
   await h.layer.update();
   const detail =
-    'Fifteen-E · Potential tropical cyclone · Advisory 10 · issued 09-\u206016\u00a003:00\u00a0UTC';
+    'Fifteen-E · Post-tropical cyclone · Advisory 10 · issued 09-\u206016\u00a003:00\u00a0UTC';
   assert.deepEqual(h.layer.getRowControls(), {
     readout: true,
     summary: {
@@ -1282,7 +1283,7 @@ test('[cyclones-021] the row controls of a selected storm with a coherent track 
           id: 'ep152026',
           ordinal: 1,
           lead: 'EP',
-          text: 'Fifteen-E · Potential tropical cyclone · 25\u00a0kt',
+          text: 'Fifteen-E · Post-tropical cyclone · 25\u00a0kt',
           active: true,
           params: { stormId: 'ep152026', focus: true },
         },
@@ -1338,7 +1339,7 @@ test('[cyclones-021] a storm with no wind, pressure or time shows Unavailable, a
   await h.layer.update();
   const controls = h.layer.getRowControls();
   const detail =
-    'Fifteen-E · Potential tropical cyclone · Advisory 10 · issued Unavailable';
+    'Fifteen-E · Post-tropical cyclone · Advisory 10 · issued Unavailable';
   assert.equal(controls.summary.detail, detail);
   assert.deepEqual(controls.summary.actions, []);
   assert.deepEqual(controls.summary.lines, [
@@ -1356,7 +1357,7 @@ test('[cyclones-021] a storm with no wind, pressure or time shows Unavailable, a
   assert.equal(controls.summary.status, 'Track/cone awaiting advisory 10');
   assert.equal(
     controls.list.items[0].text,
-    'Fifteen-E · Potential tropical cyclone · Wind unavailable',
+    'Fifteen-E · Post-tropical cyclone · Wind unavailable',
   );
   assert.equal(
     controls.info,
@@ -1480,7 +1481,7 @@ test('[cyclones-021] the detail counts the active storms when the layer has no s
   );
   assert.equal(
     controls.list.items[1].text,
-    'Another system · Potential tropical cyclone · 25\u00a0kt',
+    'Another system · Post-tropical cyclone · 25\u00a0kt',
   );
   next = snapshot([storm()]);
   await h.layer.update();

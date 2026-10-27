@@ -4,6 +4,7 @@
  * @run node --test src/tooling/transitQa.test.mjs
  * @needs Node and the transit test files.
  */
+import { captureQaScreenshot } from './qa-chrome.mjs';
 import { getRegisteredTransitFeed } from '../src/data/transitFeeds.js';
 
 // Not registered or active: camera discovery and live polls never own this feed.
@@ -225,7 +226,7 @@ export async function runFleetBudgets({
         allocations.layerFrameBytes / allocationTrace.rows.length <= 8192,
       `${allocations.layerFrameBytes / allocationTrace.rows.length} transit-authored bytes/frame; whole frame ${allocations.frameBytes / allocationTrace.rows.length}; top three ${JSON.stringify(details.topAllocatorsPerFrame)}; collected objects included. Full profile saved.`,
     );
-    await page.screenshot({
+    await captureQaScreenshot(page, {
       path: `${shots}/${tag}-fleet-${count}.jpg`,
       type: 'jpeg',
       quality: 85,
@@ -398,7 +399,7 @@ export async function runBostonMatrix({
         JSON.stringify({ pixels, contrast }),
         { unexercised: pixels.length < 6 },
       );
-      await page.screenshot({
+      await captureQaScreenshot(page, {
         path: `${shots}/${tag}-matrix-${background.name}-${look.name}-fleet.jpg`,
         type: 'jpeg',
         quality: 90,
@@ -413,7 +414,7 @@ export async function runBostonMatrix({
           target.key,
         );
         await wait(500);
-        await page.screenshot({
+        await captureQaScreenshot(page, {
           path: `${shots}/${tag}-matrix-${background.name}-${look.name}-${target.route}-selected.jpg`,
           type: 'jpeg',
           quality: 90,
@@ -437,7 +438,7 @@ export async function runBostonMatrix({
         );
       }
       await wait(300);
-      await page.screenshot({
+      await captureQaScreenshot(page, {
         path: `${shots}/${tag}-matrix-${background.name}-${look.name}-restored.jpg`,
         type: 'jpeg',
         quality: 90,
@@ -585,7 +586,7 @@ export async function runBostonLive({
       JSON.stringify(selection),
       { unexercised: !target },
     );
-    await page.screenshot({
+    await captureQaScreenshot(page, {
       path: `${shots}/${tag}-boston-live-${view.name}.jpg`,
       type: 'jpeg',
       quality: 90,
@@ -1016,7 +1017,7 @@ export async function runTrailVisibility({
     stable: pixels.stable[i],
     eligible: pixels.eligible[i],
   }));
-  await page.screenshot({
+  await captureQaScreenshot(page, {
     path: `${shots}/${tag}-${altitude}m-trail-visible.jpg`,
     type: 'jpeg',
     quality: 95,

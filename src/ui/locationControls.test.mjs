@@ -89,6 +89,7 @@ function fixture() {
     onCity: (id) => calls.push(['city', id]),
     onPoi: (id, index) => calls.push(['poi', id, index]),
     onSearch: (query) => calls.push(['search', query]),
+    onSearchEdit: () => calls.push(['edit']),
     onReset: () => calls.push(['reset']),
     doc,
     requestFrame: (fn) => {
@@ -296,4 +297,15 @@ test('[location-presets-008] a click on the Tampa pill flies to the downtown vie
   assert.ok(Math.abs(Cesium.Math.toDegrees(point.latitude) - 27.9468) < 1e-8);
   assert.ok(Math.abs(Cesium.Math.toDegrees(point.longitude) + 82.4591) < 1e-8);
   controls.destroy();
+});
+
+test('typing clears a failed search error and closing the emptied field drops it too', () => {
+  const f = fixture();
+  f.elements.search.value = 'Pariss';
+  f.elements.search.fire('blur');
+  assert.deepEqual(f.calls, [], 'leaving a kept query keeps its error');
+  f.elements.search.fire('input');
+  f.elements.search.value = '';
+  f.elements.search.fire('blur');
+  assert.deepEqual(f.calls, [['edit'], ['edit']]);
 });
