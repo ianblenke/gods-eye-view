@@ -20,7 +20,7 @@ KILLED: src/data/layerState.js, the token of s2-ghostmaps changed from 03 to 5. 
 KILLED: src/data/layerStateTokenReservations.json, the token of s2-ghostmaps changed from 03 to 04. The file src/data/layerState.test.mjs fails.
 KILLED: src/data/layerState.js, the id skyfi-scenes changed to skyfi-scenes-x. The file src/data/layerState.test.mjs fails (the pin of 40 registered layers in osh-033 and the ledger check).
 KILLED: src/ui/layerPanel.js, s2-ghostmaps and gdacs swapped in the group Events. The test gdacs-layer-019 fails.
-KILLED: src/layers/wind/index.js, the return of the catch branch changed to false. The test wind-010 fails.
+KILLED: src/layers/wind/index.js, the first return of the catch branch (the line that starts with enabled and ends with request !== controller, after the check controller.signal.aborted || request !== controller) changed to false. The test wind-010 fails. The return true of the same catch block is a different line, and the test wind-013 covers it.
 KILLED: src/ui/segmentedControl.js, the tabindex of the selected button changed from 0 to 1. The test recent-imagery-044 fails.
 KILLED: src/layers/cyclones/index.js, the label of PTC changed to Potential tropical cyclone. The test cyclones-021 fails.
 KILLED: src/sources/sourceSlot.js, the line that stops an old cleanup removed. The test "replacing a source rejects its late result and old cleanup cannot clear the new source" in src/app/sourceSlot.test.mjs fails.
