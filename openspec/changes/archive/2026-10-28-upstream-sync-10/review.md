@@ -18,7 +18,7 @@ Resolved files: `CHANGELOG.md`, `package.json`, `src/director/clock.test.mjs`, `
 
 Round 1 had the scope full, at the commit 6d35c612. Both reviewers gave FAIL. The corrections changed only files under `openspec/`, so the lead ran no new ratchet. Round 2 had the scope diff 6d35c612, at the commit 9f867124. Both reviewers gave PASS. After round 2 the lead fixed the seven minor findings in `proposal.md`, `tasks.md` and `evidence/upstream-check.txt`. These edits are wording and evidence only.
 
-The reports are in `review/round-1/` and `review/round-2/`. Each file holds a copy that the lead shortened. Each finding keeps its meaning.
+The reports of round 1 are in `review/round-1/`. The reports of round 2 are in `review/round-2/` and in `review/`. Each file holds a copy that the lead shortened. Each finding keeps its meaning.
 
 One ratchet run came before the review. It gave only `REVIEW-MISSING`.
 
