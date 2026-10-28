@@ -962,3 +962,68 @@ test('[director-036] The single scene queue starts at scene a and keeps source o
   assert.equal(queue[0].shot, scenes[0].shots[0]);
   assert.equal(queue[1].shot, scenes[0].shots[1]);
 });
+
+test('a phase failure is preserved when final scene release also throws', async () => {
+  const phaseError = new Error('travel failed');
+  const releaseError = new Error('release failed');
+  const warnings = [];
+  const origWarn = console.warn;
+  console.warn = (...args) => warnings.push(args);
+  try {
+    const f = fixture({
+      travel: async () => {
+        throw phaseError;
+      },
+      releaseScene: async () => {
+        throw releaseError;
+      },
+    });
+    await assert.rejects(
+      playSceneQueue(buildPlaybackQueue(scenes, 'a', { single: true }), f),
+      (error) => error === phaseError,
+    );
+    assert.equal(warnings.length, 1);
+    assert.equal(warnings[0][0], '[Scenes] Scene release failed:');
+    assert.equal(warnings[0][1], releaseError);
+  } finally {
+    console.warn = origWarn;
+  }
+});
+
+test('a failing inter-scene release releases the active scene only once', async () => {
+  const releaseError = new Error('release failed');
+  const released = [];
+  const f = fixture({
+    releaseScene: async (scene) => {
+      released.push(scene.id);
+      throw releaseError;
+    },
+  });
+  await assert.rejects(
+    playSceneQueue(buildPlaybackQueue(scenes, 'a'), f),
+    (error) => error === releaseError,
+  );
+  assert.deepEqual(released, ['a']);
+});
+
+test('a falsy phase failure is still preserved over a release failure', async () => {
+  const releaseError = new Error('release failed');
+  const origWarn = console.warn;
+  console.warn = () => {};
+  try {
+    const f = fixture({
+      travel: async () => {
+        throw undefined;
+      },
+      releaseScene: async () => {
+        throw releaseError;
+      },
+    });
+    await assert.rejects(
+      playSceneQueue(buildPlaybackQueue(scenes, 'a', { single: true }), f),
+      (error) => error === undefined,
+    );
+  } finally {
+    console.warn = origWarn;
+  }
+});

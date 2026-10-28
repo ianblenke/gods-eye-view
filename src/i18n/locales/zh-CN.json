@@ -2882,5 +2882,7 @@
   "Bee Maps Bursts": "Bee Maps 连拍",
   "Taiwan": "台湾",
   "Tampa": "坦帕",
-  "OpenSensorHub selection": "OpenSensorHub 选择"
+  "OpenSensorHub selection": "OpenSensorHub 选择",
+  "routing busy — too many routes at once": "路线服务繁忙：同时请求的路线过多",
+  "route proxy error": "路线代理出错"
 }
