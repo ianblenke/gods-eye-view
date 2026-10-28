@@ -1,0 +1,56 @@
+## Context
+
+Base commit: `e2637a5e`, the merge of sync 9.
+Upstream commit: `e608fee7935b21251ca8f601003d7d47c813797d`. The lead took it from the output of `git ls-remote upstream main` on 2026-10-28.
+The shared ancestor is the commit `15de9d73`, which sync 9 merged.
+
+The first parent of the merge commit is the plan commit. The upstream commit is the second parent.
+The lead must record the check of the second parent in `review.md`.
+
+The merge brings ten pull requests (#1014, #1209, #1344, #1374, #1401, #1402, #1404, #1430, #1431 and #1439) and the commits between them.
+
+## Conflict resolutions
+
+A trial merge in a clone reports seven files with a conflict. The file `evidence/conflicts.txt` shows the list.
+
+| File | Resolution |
+|---|---|
+| `CHANGELOG.md` | Keep the heading `[Unreleased]`, put the fork entries below it, and then keep the upstream sections from `[0.3.0]`. |
+| `package.json` | Take the upstream version 0.3.0. The two descriptions differ only in the escape of one character. |
+| `src/director/clock.test.mjs` | Keep the tests of both sides. Both sides added tests at the same place. |
+| `src/director/playback.test.mjs` | Keep the tests of both sides. The two sides share the last line of the hunk. |
+| `src/layers/perimeters/ownership.test.mjs` | Keep the tests of both sides. The two sides share the last line of the hunk. |
+| `src/layers/perimeters/source.test.mjs` | Keep the tests of both sides. The two sides share the last line of the hunk. |
+| `src/i18n/locales/zh-CN.json` | Keep the 20 fork texts and the two new upstream texts. |
+
+## Decisions
+
+### D1: No spec delta
+
+The merge changes no requirement of the fork. No test with a scenario ID fails on the merged tree after the fixes of D2.
+The merge adds no QA script and no layer token.
+
+### D2: The new locale zh-Hant
+
+Upstream adds the locale `zh-Hant`. Its catalog has no text for the 20 messages that the fork added, and it keeps one stale text, "Flying to Austin, TX...".
+The test `[i18n-catalogs-001]` for `zh-Hant` fails for these 21 problems. The change adds the 20 texts in Traditional characters and removes the stale text. This is the same work as in sync 9 for `zh-CN`.
+The two fork packages `reticulum` and `osh-layer` list the catalogs of `zh-CN`. The change lists `zh-Hant.json` in the same two packages.
+
+The fault is to remove one text of the 20 from `zh-Hant.json`. The test `[i18n-catalogs-001]` for `zh-Hant` must then fail.
+
+### D3: The adopt command
+
+The merge brings upstream tests with no scenario ID and upstream files with a coverage gap.
+The adopt command records them. The rule 21 check of the second parent goes into `review.md`.
+
+### D4: The image of the gates
+
+`package-lock.json` changes only the version fields, so the image `gods-eye-view:local` runs the gates.
+
+## Files and measures
+
+The change edits `scripts/package-boundaries.json` and the catalogs of the locales, and it adds the plan, the evidence and the review files.
+
+The trace gate checks the scenario IDs and the links. The ledger gate checks the gaps of the upstream files against the adopt records.
+The four checks of `make precheck` check the format, the import directions, the package boundaries and the layer tokens. The prose lint checks STE.
+The lead runs the gates in Docker and both review agents on the final tree.
