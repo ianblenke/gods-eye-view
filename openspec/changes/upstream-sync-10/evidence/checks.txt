@@ -1,0 +1,25 @@
+Host checks of upstream-sync-10 on the commit c6a8b749. Host node: v26.11.1. Each output shows at most its last three lines. The lead added each line "exit".
+
+$ node scripts/format.mjs --check
+Checked 1673 source files.
+exit 0
+
+$ node scripts/check-import-directions.mjs
+{"modules":1132,"portableEntries":87}
+exit 0
+
+$ node scripts/check-package-boundaries.mjs
+Checked air-quality: 1 exports, 13 owned modules.
+Checked air-quality-source: 1 exports, 4 owned modules.
+Checked agent-world-packet: 1 exports, 7 owned modules.
+exit 0
+
+$ node scripts/check-layer-state-tokens.mjs --base-ref main
+Layer tokens valid against main: 40 published, 0 new.
+exit 0
+
+$ openspec validate --specs
+✓ spec/ste-lint
+✓ spec/wind
+Totals: 40 passed, 0 failed (40 items)
+exit 0

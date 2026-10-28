@@ -3,7 +3,8 @@
 The owner asked on 2026-10-28 to refresh the fork from upstream.
 Upstream has 106 commits after the ninth sync. The first-parent history of upstream has 11 commits in that range, and each one merges a pull request.
 
-The pull requests fix the Scene Director callbacks and the seek of layers. They also mark a stale traffic layer, pause polled refreshes while the tab is hidden, pause terrain requests after an error 429, and change how a stale fire-perimeter snapshot reads.
+The pull requests fix the Scene Director callbacks and the seek of layers. They also mark a stale traffic layer and pause polled refreshes while the tab is hidden.
+They pause terrain requests after an error 429, and they change how a stale fire-perimeter snapshot reads.
 Upstream also adds the locale `zh-Hant`, keeps layer errors in English in data, and ships the version 0.3.0.
 
 ## What Changes

@@ -34,6 +34,7 @@ The merge adds no QA script and no layer token.
 
 Upstream adds the locale `zh-Hant`. Its catalog has no text for the 20 messages that the fork added, and it keeps one stale text, "Flying to Austin, TX...".
 The test `[i18n-catalogs-001]` for `zh-Hant` fails for these 21 problems. The change adds the 20 texts in Traditional characters and removes the stale text. This is the same work as in sync 9 for `zh-CN`.
+
 The two fork packages `reticulum` and `osh-layer` list the catalogs of `zh-CN`. The change lists `zh-Hant.json` in the same two packages.
 
 The fault is to remove one text of the 20 from `zh-Hant.json`. The test `[i18n-catalogs-001]` for `zh-Hant` must then fail.
