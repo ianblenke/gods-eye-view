@@ -3967,11 +3967,11 @@
       "branches": 0,
       "functions": 2,
       "totals": {
-        "lines": 21,
-        "branches": 1,
-        "functions": 2
+        "lines": 30,
+        "branches": 2,
+        "functions": 3
       },
-      "sha": "774ea762162f296c0101a82c0fd8fb67d0c66b875b0f47c839c788b15b3b6f86",
+      "sha": "a104fac4b66c5b1b9111e6cf7c40a66d7b3ff3c345205461bb13c2164972ab9f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7567,11 +7567,11 @@
       "branches": 11,
       "functions": 2,
       "totals": {
-        "lines": 369,
-        "branches": 69,
+        "lines": 384,
+        "branches": 76,
         "functions": 10
       },
-      "sha": "2e10864881ec4facfbceb2f59b9a20e8fd01af7638e0681893540196625dca35",
+      "sha": "3c4def8a655c9af97281cbfddfa1c3a6496d3612ae8c48c9971261e7d0106d95",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7579,14 +7579,14 @@
     "src/layers/traffic/flow.js": {
       "loaded": true,
       "lines": 110,
-      "branches": 37,
+      "branches": 38,
       "functions": 4,
       "totals": {
-        "lines": 562,
-        "branches": 198,
+        "lines": 571,
+        "branches": 202,
         "functions": 30
       },
-      "sha": "5bfe1a6f751c345514752645521713f4836f62ee654c5501df7e3856fba1f5d4",
+      "sha": "fc7c762b48120ee670d03886fdb99cc53d647edb2bbaefc279ff5335a13ac582",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7672,11 +7672,11 @@
       "branches": 6,
       "functions": 1,
       "totals": {
-        "lines": 206,
+        "lines": 210,
         "branches": 27,
         "functions": 8
       },
-      "sha": "65a8426d5366af5a3eb89f4604e41ac005fdce49fb9c7fac8c9ba93adb4baabc",
+      "sha": "1693b21e2c5297c8b8e18e44ba93950a803d8855925a8318b3fc68a2b091d181",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7687,11 +7687,11 @@
       "branches": 19,
       "functions": 0,
       "totals": {
-        "lines": 411,
-        "branches": 130,
+        "lines": 423,
+        "branches": 136,
         "functions": 13
       },
-      "sha": "f4f14a89130fc6429dfea1446168008b35c4be7c9b6b9deee1da27e757c3efa1",
+      "sha": "7c9ce72e23d393fa9d4262c0b66088d4234ce39ea0f14c84a5d2c3b972e77bf6",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7822,11 +7822,11 @@
       "branches": 12,
       "functions": 0,
       "totals": {
-        "lines": 249,
+        "lines": 252,
         "branches": 49,
         "functions": 10
       },
-      "sha": "294f7efe78809e32ee17d7dcf56b616409fdbd0f3285c1741e656dd36ef64fcd",
+      "sha": "009b8c36b51293cbe060aa3222e81e84082d9392cb21c67d09c41ce2af4a4491",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -11182,11 +11182,11 @@
       "branches": 17,
       "functions": 2,
       "totals": {
-        "lines": 838,
-        "branches": 287,
+        "lines": 844,
+        "branches": 291,
         "functions": 47
       },
-      "sha": "ab352e5ea1bf06d90b35eef62d81151f9c810a308f7cd76ed600ccf5b64c2acf",
+      "sha": "eda0a8fb347d8c691190170cfd41a7b436942f05669ebee185b1a01279acb2ec",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -17319,6 +17319,7 @@
         "the manager reads keyless as FALLBACK and an outage as DEGRADED": 1,
         "the rendered steady-state meta line carries the SIMULATED copy": 1,
         "the shipped layer boots keyless-honest before any status check": 1,
+        "the traffic layer source passes fetchFlowDetail through, so stale tiles reach the layer": 1,
         "traffic can be destroyed before its first enable and destroyed repeatedly": 1,
         "zero matched dots never claims live coverage": 1
       },
@@ -20109,6 +20110,7 @@
         "road modes have key-aware defaults, explicit overrides and keyless fallback": 1,
         "road-source params persist in existing layer-state lo field and local storage": 1,
         "row chips use real params; query overrides passive restore and user can change it": 1,
+        "stale proxy flow tiles reach the layer stats and never read LIVE": 1,
         "status names the drawn road source for each mode": 1,
         "uncertain flow values still dedupe OSM; every TomTom road and closure survives": 1
       },
@@ -23640,6 +23642,7 @@
     },
     "src/ui/layerPanel.test.mjs": {
       "names": {
+        "a stale row dates cached data by its oldest tile, not the last load": 1,
         "an omitted source is visibly unavailable and cannot be toggled on": 1,
         "panel presentation places Transit between Street Traffic and Bike Share in Movement": 1,
         "partial feed controls distinguish incomplete records from stale data and outages": 1,
