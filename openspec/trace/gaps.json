@@ -3248,7 +3248,7 @@
       "functions": 0,
       "totals": {
         "lines": 55,
-        "branches": 45,
+        "branches": 46,
         "functions": 1
       },
       "sha": "5bfe81076c446b9b4910bb3620f291ad03bb2eaf13199265afedd546acf9d0d6",
@@ -8978,7 +8978,7 @@
       "functions": 0,
       "totals": {
         "lines": 170,
-        "branches": 29,
+        "branches": 30,
         "functions": 4
       },
       "sha": "457eec1af3eeabf8cb57b73f88213543138aca08c1a34b7a0d75942e0c407e0a",
@@ -9023,7 +9023,7 @@
       "functions": 1,
       "totals": {
         "lines": 175,
-        "branches": 84,
+        "branches": 85,
         "functions": 15
       },
       "sha": "dad4c68d0a0e2c676a5b1631f542f8fd1e0ed923f66b443dc4a3b9fb0b3d77aa",
@@ -9765,21 +9765,6 @@
       "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
-    },
-    "src/sources/sourceSlot.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 52,
-        "branches": 25,
-        "functions": 8
-      },
-      "sha": "588fa56e25b5300632116091aff8cb118ad0ae3a9cd5c0bb121f265f93a9fab7",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
     },
     "src/sources/transitHistory.js": {
       "loaded": true,
