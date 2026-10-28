@@ -1,0 +1,9 @@
+Count of the changed files between the shared ancestor 15de9d73 and the upstream commit 2bcdca1c.
+
+$ git diff --name-status 15de9d73 2bcdca1c | cut -c1 | sort | uniq -c
+     14 A
+    128 D
+     70 M
+
+$ git diff --name-only 15de9d73 2bcdca1c | wc -l
+212

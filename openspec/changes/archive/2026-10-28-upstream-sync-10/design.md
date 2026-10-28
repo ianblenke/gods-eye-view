@@ -5,7 +5,7 @@ Upstream commit: `2bcdca1c9a2bc0a34074577cc5f4de01d4759233`. The lead took it fr
 The shared ancestor is the commit `15de9d73`, which sync 9 merged.
 
 The first merge commit has the plan commit as its first parent and the commit `e608fee7` as its second parent. A second merge commit brings the commit `2bcdca1c`, which upstream published later on 2026-10-28. The second merge has no conflict.
-The lead must record the check of the second parent in `review.md`.
+The lead must record the check of the second parent of each merge commit in `review.md`.
 
 The merge brings eleven pull requests (#1014, #1209, #1344, #1374, #1401, #1402, #1404, #1405, #1430, #1431 and #1439) and the commits between them.
 
@@ -37,12 +37,12 @@ The test `[i18n-catalogs-001]` for `zh-Hant` fails for these 21 problems. The ch
 
 The two fork packages `reticulum` and `osh-layer` list the catalogs of `zh-CN`. The change lists `zh-Hant.json` in the same two packages.
 
-The fault is to remove one text of the 20 from `zh-Hant.json`. The test `[i18n-catalogs-001]` for `zh-Hant` must then fail.
+The first fault removes one text of the 20 from `zh-Hant.json`. The second fault puts back the stale text. The test `[i18n-catalogs-001]` for `zh-Hant` must fail under each fault.
 
 ### D3: The adopt command
 
 The merge brings upstream tests with no scenario ID and upstream files with a coverage gap.
-The adopt command records them. The rule 21 check of the second parent goes into `review.md`.
+The adopt command records them. The check of the second parent of each merge commit goes into `review.md`.
 
 ### D4: The image of the gates
 
@@ -54,4 +54,4 @@ The change edits `scripts/package-boundaries.json` and the catalogs of the local
 
 The trace gate checks the scenario IDs and the links. The ledger gate checks the gaps of the upstream files against the adopt records.
 The four checks of `make precheck` check the format, the import directions, the package boundaries and the layer tokens. The prose lint checks STE.
-The lead runs the gates in Docker and both review agents on the final tree.
+The lead runs the gates in Docker. The lead also runs both review agents on the final tree.

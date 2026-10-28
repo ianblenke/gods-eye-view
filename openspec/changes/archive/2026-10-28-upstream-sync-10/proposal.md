@@ -4,8 +4,8 @@ The owner asked on 2026-10-28 to refresh the fork from upstream.
 Upstream has 106 commits after the ninth sync. The first-parent history of upstream has 11 commits in that range, and each one merges a pull request.
 
 The pull requests fix the Scene Director callbacks and the seek of layers. They also mark a stale traffic layer and pause polled refreshes while the tab is hidden.
-They pause terrain requests after an error 429, and they change how a stale fire-perimeter snapshot reads.
-Upstream also adds the locale `zh-Hant`, keeps layer errors in English in data, and ships the version 0.3.0.
+They pause terrain requests after an error 429, and they change the text for a stale fire-perimeter snapshot.
+Upstream also adds the locale `zh-Hant`, keeps layer errors in English in data, and releases version 0.3.0.
 
 ## What Changes
 
@@ -28,14 +28,14 @@ None.
 
 ## Impact
 
-The merge changes 212 files: 14 added, 128 removed and 70 changed. The removed files are changelog fragments of `changelog.d/` that the release 0.3.0 folded into `CHANGELOG.md`.
+The merge changes 212 files: 14 added, 128 removed and 70 changed (`evidence/diff-count.txt`). The removed files are changelog fragments of `changelog.d/` that the release 0.3.0 put into `CHANGELOG.md`.
 17 files changed on both sides. Seven of them have a conflict.
 
 Rule 23: the 14 added files are upstream files, because the fork does not write them. The manifest lists only paths that the fork writes.
 The change adds no layer, no route and no QA script. It adds no layer token.
 
-Rule 25: the merge breaks no test with a scenario ID. The change retires no scenario and writes none again.
-The scenario `i18n-catalogs-001` runs once for each shipped locale, so it covers `zh-Hant` with no new scenario. Decision D2 gives the fork texts.
+Rule 25: the merge breaks the run of `[i18n-catalogs-001]` for `zh-Hant`. Decision D2 fixes it, so the change retires no scenario and writes none again.
+The scenario `i18n-catalogs-001` runs once for each shipped locale, so it covers `zh-Hant` with no new scenario. Decision D2 describes the work on the `zh-Hant` catalog.
 
 The change has no spec delta, because the merge changes no requirement of the fork.
 `package.json` changes only the version, which is now 0.3.0. `package-lock.json` changes the same version fields.

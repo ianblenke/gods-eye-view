@@ -38,3 +38,5 @@ e37e8453 Merge pull request #1014 from deepeshbind/fix/scene-director-callback-e
 a4d3701c Merge pull request #1430 from bilawalsidhu/codex/hal-646-zh-hant
 72eb3fdc Merge pull request #1439 from bilawalsidhu/release/v0.3.0
 9448c49a Merge pull request #1431 from Rohilalala/fix/b-street-bearing-north
+
+The lead ran the checks above at the commit 711df7e3. The branch has these commits after the merge commit 73d24eb4: the commit 356b7397 holds the adopt trace of the first step, and the commit 711df7e3 is the second merge. The commits after 711df7e3 hold only files under openspec/ (documents, evidence and trace files), so the parents of both merge commits do not change.
