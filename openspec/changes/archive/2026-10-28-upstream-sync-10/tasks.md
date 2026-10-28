@@ -6,7 +6,7 @@
 - [x] 1.4 Add the 20 fork texts to `zh-Hant.json`.
 - [x] 1.5 Remove the stale text from `zh-Hant.json`.
 - [x] 1.6 Add `zh-Hant.json` to the packages `reticulum` and `osh-layer`.
-- [x] 1.7 Commit the merge.
+- [x] 1.7 Commit each merge.
 - [x] 1.8 Run the two faults of decision D2.
 
 ## 2. Host evidence
@@ -19,9 +19,9 @@
 
 ## 3. Lead work in the image
 
-- [x] 3.1 Check the second parent of the merge commit against the upstream remote.
-- [x] 3.2 Run `make adopt CHANGE=upstream-sync-10 FROM=2bcdca1c9a2bc0a34074577cc5f4de01d4759233`.
+- [x] 3.1 Check the second parent of each merge commit against the upstream remote.
+- [x] 3.2 Run the adopt command with `FROM` set to the merged upstream commit after each merge step.
 - [x] 3.3 Run `make ratchet CHANGE=upstream-sync-10`.
-- [ ] 3.4 Run the two review agents.
-- [ ] 3.5 Write review.md.
-- [ ] 3.6 Run `make gates CHANGE=upstream-sync-10` on the final tree.
+- [x] 3.4 Run the two review agents.
+- [x] 3.5 Write review.md.
+- [x] 3.6 Run `make gates CHANGE=upstream-sync-10` on the final tree.
