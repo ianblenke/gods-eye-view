@@ -1,13 +1,13 @@
 ## Context
 
 Base commit: `e2637a5e`, the merge of sync 9.
-Upstream commit: `e608fee7935b21251ca8f601003d7d47c813797d`. The lead took it from the output of `git ls-remote upstream main` on 2026-10-28.
+Upstream commit: `2bcdca1c9a2bc0a34074577cc5f4de01d4759233`. The lead took it from the output of `git ls-remote upstream main` on 2026-10-28.
 The shared ancestor is the commit `15de9d73`, which sync 9 merged.
 
-The first parent of the merge commit is the plan commit. The upstream commit is the second parent.
+The first merge commit has the plan commit as its first parent and the commit `e608fee7` as its second parent. A second merge commit brings the commit `2bcdca1c`, which upstream published later on 2026-10-28. The second merge has no conflict.
 The lead must record the check of the second parent in `review.md`.
 
-The merge brings ten pull requests (#1014, #1209, #1344, #1374, #1401, #1402, #1404, #1430, #1431 and #1439) and the commits between them.
+The merge brings eleven pull requests (#1014, #1209, #1344, #1374, #1401, #1402, #1404, #1405, #1430, #1431 and #1439) and the commits between them.
 
 ## Conflict resolutions
 

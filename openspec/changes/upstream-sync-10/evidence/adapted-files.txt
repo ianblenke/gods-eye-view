@@ -1,0 +1,3 @@
+Files that the fork edited after the automatic merge (outside the 7 conflict files): 2
+src/i18n/locales/zh-Hant.json
+scripts/package-boundaries.json

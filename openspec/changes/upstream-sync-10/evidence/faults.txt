@@ -1,0 +1,5 @@
+Fault of decision D2 (rule 13). Host node: v26.11.1.
+Change: remove the text of the message "Tampa" from src/i18n/locales/zh-Hant.json.
+Command: node --test src/i18n/catalog.test.mjs
+Result: the test "[i18n-catalogs-001] zh-Hant catalog matches the code (npm run i18n)" failed; 14 tests passed and 1 failed.
+The file was put back and git status showed no change.

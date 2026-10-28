@@ -1,0 +1,10 @@
+Conflicts of the trial merge of upstream-sync-10 (git merge --no-commit of e608fee7935b21251ca8f601003d7d47c813797d into the plan commit), 7 files:
+CHANGELOG.md
+package.json
+src/director/clock.test.mjs
+src/director/playback.test.mjs
+src/i18n/locales/zh-CN.json
+src/layers/perimeters/ownership.test.mjs
+src/layers/perimeters/source.test.mjs
+
+The first merge commit 73d24eb4 differs from the automatic merge in these 7 files, in src/i18n/locales/zh-Hant.json and in scripts/package-boundaries.json. The second merge commit 711df7e3 has no conflict.
