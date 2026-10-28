@@ -1717,11 +1717,11 @@
       "branches": 7,
       "functions": 1,
       "totals": {
-        "lines": 323,
-        "branches": 70,
+        "lines": 364,
+        "branches": 84,
         "functions": 13
       },
-      "sha": "213cbc33157645d5d4a30d8cb128b8af9fb23c957cee415a0ebe788286439f6a",
+      "sha": "ad8465e5f801f5efe7eac59e84216be16fe5e336faac88841cf39dc7c031da89",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2167,11 +2167,11 @@
       "branches": 4,
       "functions": 3,
       "totals": {
-        "lines": 64,
-        "branches": 12,
+        "lines": 67,
+        "branches": 10,
         "functions": 6
       },
-      "sha": "b8db7b4b5f87eef160f018933db4275bea02b1ad98eb7f98ac9c1750d765fe27",
+      "sha": "21bc79826ab03aec2f541627255b6cae8e54bc0dc130020df4ec8f55eb58f92d",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -2179,14 +2179,14 @@
     "src/app/embed.js": {
       "loaded": true,
       "lines": 8,
-      "branches": 14,
+      "branches": 16,
       "functions": 4,
       "totals": {
-        "lines": 305,
-        "branches": 84,
-        "functions": 30
+        "lines": 327,
+        "branches": 92,
+        "functions": 36
       },
-      "sha": "f48e6e8accb97f9a3f94416fe44fc8fdd21ec810e75559ae4595fe367c222bf6",
+      "sha": "8b6efaedf57ef5333c87ab90b034c5f128bb43a61eae1c422c913e28ccf16631",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -3592,11 +3592,11 @@
       "branches": 11,
       "functions": 0,
       "totals": {
-        "lines": 184,
+        "lines": 185,
         "branches": 72,
         "functions": 9
       },
-      "sha": "c909edc82047b83b8d2c6fb05db9f3438bd93a52ac6b1440382251f6b2bdc75e",
+      "sha": "61e537540863592b33e9020c8060d8f17e29c1ff8a16dd25f90612144909e52f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3888,15 +3888,15 @@
     },
     "src/data/terrainHeightsProxy.js": {
       "loaded": true,
-      "lines": 6,
+      "lines": 3,
       "branches": 9,
-      "functions": 1,
+      "functions": 0,
       "totals": {
-        "lines": 287,
-        "branches": 88,
-        "functions": 14
+        "lines": 292,
+        "branches": 96,
+        "functions": 15
       },
-      "sha": "2551bc1224078260bb175feb470000486e8f57c95c1f32611db977e7d5435659",
+      "sha": "0bcaf3ed484657161306c06d7f08054cdedee2d52a17deb936fdbbf5c356f3f5",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4102,14 +4102,29 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 61,
-        "branches": 24,
-        "functions": 10
+        "lines": 68,
+        "branches": 26,
+        "functions": 11
       },
-      "sha": "6c81341bbe871d3df8f5b3bd89a342c42a9375cd9149a00e0aff163a8be7f1a2",
+      "sha": "a0598cf1f2e7979d8a7c3177ab3b27e6133eade54da14f0f84add9734fc224f3",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
+    },
+    "src/director/playback.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 155,
+        "branches": 47,
+        "functions": 6
+      },
+      "sha": "79a5512bcaaa1efd1eab17d4c2dcb487311f2ea13504b64c57ba27239811d114",
+      "untrue": false,
+      "origin": "upstream-sync-10",
+      "since": "2026-10-28"
     },
     "src/firstRunExperience.js": {
       "loaded": true,
@@ -4128,15 +4143,15 @@
     },
     "src/hud.js": {
       "loaded": true,
-      "lines": 178,
-      "branches": 53,
+      "lines": 177,
+      "branches": 52,
       "functions": 16,
       "totals": {
-        "lines": 1088,
+        "lines": 1091,
         "branches": 138,
         "functions": 47
       },
-      "sha": "478aefa0853752fdc1d6c56567c42c112f642e0a9016eec8263b92c3e9c5ee3a",
+      "sha": "f3ffad93f6b5dfe95ffe95382d473e4e7a46968fc4e3c4f9dacc09e5e98bced3",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4177,11 +4192,11 @@
       "branches": 16,
       "functions": 1,
       "totals": {
-        "lines": 331,
+        "lines": 332,
         "branches": 102,
         "functions": 25
       },
-      "sha": "b9715ce3973067ebac5cbc0ad94dc184ebc607769db06209c193ca42081489a8",
+      "sha": "6ecb3d1ae3c2568328516a69e984a07a7cb6967f7cf8cb04045420b2efcefd7f",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -4192,11 +4207,11 @@
       "branches": 9,
       "functions": 0,
       "totals": {
-        "lines": 95,
-        "branches": 35,
+        "lines": 98,
+        "branches": 38,
         "functions": 7
       },
-      "sha": "45025e6fed2b8ac13c2f8b3a20181a706f29ffafc9cefcfdb301e02e0bc0172a",
+      "sha": "1dcdcee0b4d7f2cdc35905a5988f3dc9722479f6e6248c96b3dc85128c3a5bbb",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -4234,14 +4249,14 @@
     "src/keylessGeocoder.js": {
       "loaded": true,
       "lines": 4,
-      "branches": 5,
+      "branches": 8,
       "functions": 1,
       "totals": {
-        "lines": 434,
-        "branches": 134,
-        "functions": 19
+        "lines": 514,
+        "branches": 158,
+        "functions": 25
       },
-      "sha": "22e6ab69d6b371ebd859a5cd2068fb1e3c9a2939b693dd6362aa0af7b4b456c7",
+      "sha": "c2eafb41f49dceabb27827027d95e1a04155cc7dfdf5251f737f66b12ee46b60",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5133,15 +5148,15 @@
     },
     "src/layers/directions/index.js": {
       "loaded": true,
-      "lines": 258,
-      "branches": 45,
+      "lines": 255,
+      "branches": 41,
       "functions": 16,
       "totals": {
-        "lines": 1750,
-        "branches": 468,
-        "functions": 79
+        "lines": 1737,
+        "branches": 469,
+        "functions": 78
       },
-      "sha": "402e07357e8ec468f0ed61fd3af37c1491d3699657f557958f209bd3c3d5fe53",
+      "sha": "2bbdad2970ce9b8d3fa0974d7afa671fbbeda2b4f436dfe8f03c3a45a6629213",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -6157,11 +6172,11 @@
       "branches": 63,
       "functions": 9,
       "totals": {
-        "lines": 870,
+        "lines": 872,
         "branches": 234,
         "functions": 67
       },
-      "sha": "5ea4148470e108eb534c3f0b3bb0c80e826feb5ed1bf033d846688b3e06c953a",
+      "sha": "3fa713b8781b647d12530622f8f6f85938c7b5c94b28fb18d7f4b875221b605f",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -6203,10 +6218,10 @@
       "functions": 0,
       "totals": {
         "lines": 151,
-        "branches": 63,
+        "branches": 65,
         "functions": 10
       },
-      "sha": "8d48a7be9abbfccaad8dbf95da197493aa3b17ede888a583bdeecfa83fd61ffe",
+      "sha": "004455424cfda98e698133db85576cfd97725ab0568e2180e4e6ab894c9bfcd0",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -6382,11 +6397,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 450,
-        "branches": 141,
+        "lines": 469,
+        "branches": 147,
         "functions": 34
       },
-      "sha": "1a3ffe2a630b9796b5f7387824c84a7002b00ab819349babd73d6496df14837d",
+      "sha": "2d0a6835195b3d4ea1711af287782d9b24108876435f617384e905da78869d52",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -6697,11 +6712,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 52,
+        "lines": 54,
         "branches": 16,
         "functions": 7
       },
-      "sha": "58aa6caeccb0161ca8b871cebc67a7a678a60c11763d4f0144afcbfb49efd728",
+      "sha": "0e1f6a12ee1922e58e4934009c4f7591b768293d83240bc68823da94af0daf27",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -8838,15 +8853,15 @@
     },
     "src/scenes/director.js": {
       "loaded": true,
-      "lines": 364,
-      "branches": 150,
+      "lines": 358,
+      "branches": 156,
       "functions": 41,
       "totals": {
-        "lines": 2572,
-        "branches": 665,
-        "functions": 199
+        "lines": 2669,
+        "branches": 711,
+        "functions": 204
       },
-      "sha": "3a67666a34b3c0037d0f6c97b7ba495a0bbe8842a8015a46f91c79c6b5bae751",
+      "sha": "5897f44aa9023d896a8262fb9837f6080493ecf444b1e0cdc68a8c7ed01a8a34",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -9048,15 +9063,15 @@
     },
     "src/sdr/controller.js": {
       "loaded": true,
-      "lines": 135,
-      "branches": 87,
+      "lines": 129,
+      "branches": 86,
       "functions": 8,
       "totals": {
         "lines": 1914,
-        "branches": 492,
-        "functions": 146
+        "branches": 500,
+        "functions": 147
       },
-      "sha": "c136338d9441fe3701123338f68e40bd9cbd5f2fb049b4c5a9ad32b1eb021636",
+      "sha": "dbba5a2bfd499565fedd2bfffeb7fbef60a7c418854b5280955f8671df36be48",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -10267,11 +10282,11 @@
       "branches": 39,
       "functions": 2,
       "totals": {
-        "lines": 526,
-        "branches": 115,
+        "lines": 537,
+        "branches": 119,
         "functions": 35
       },
-      "sha": "3753a19a214a536be3359a174cac3411ece7cdcac677345d1287121e68b0443c",
+      "sha": "3102388a0b5103f3c320bcbf149cdc686a9b7d5c643b59aa421eb8b2c11b1c1a",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -10706,7 +10721,7 @@
         "branches": 1,
         "functions": 3
       },
-      "sha": "4f1d086df989f4476b255cabcd372879bf1485d7d2b16873d505fd38cff7d9e0",
+      "sha": "4a4450d677eb6ab455544fe8803cf90f67e550d348dd87167da8b0054b6e4cd8",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -10811,7 +10826,7 @@
         "branches": 8,
         "functions": 8
       },
-      "sha": "cb0d0f34f62a113020dcea2006557c8922c57c42f4dce40ca05ef92e160c0399",
+      "sha": "568cb992e66e20aa1e528fceaaa2ebd130812fe5115d36936527fc9f7f1c1a71",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -11223,15 +11238,15 @@
     },
     "src/ui/localePicker.js": {
       "loaded": true,
-      "lines": 292,
+      "lines": 293,
       "branches": 5,
       "functions": 7,
       "totals": {
-        "lines": 629,
+        "lines": 635,
         "branches": 100,
         "functions": 36
       },
-      "sha": "e6cf7864b223747381b4d7900457502f51466561e8accd4cf49bb40387de2ac8",
+      "sha": "a38c493e0a6f9b91b4ccdbb2773d7c14931e3469918c719db7d120e7ae903dd7",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -11752,11 +11767,11 @@
       "branches": 2,
       "functions": 3,
       "totals": {
-        "lines": 233,
-        "branches": 56,
-        "functions": 31
+        "lines": 267,
+        "branches": 62,
+        "functions": 35
       },
-      "sha": "39a7c17449f35688a45bf684d07d799820b89346d2c1cec2ae4e933f4c75107c",
+      "sha": "aed64ac603d852ca96c7511aabbde413de1a03e4c2f08af1f6c1a7766f600f13",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -11782,11 +11797,11 @@
       "branches": 19,
       "functions": 1,
       "totals": {
-        "lines": 333,
+        "lines": 334,
         "branches": 158,
         "functions": 24
       },
-      "sha": "8d5108dc680d165a9df87dbef850d4060f23e51293123f8a1b682898faa2a73c",
+      "sha": "d79519c4c2aa556479298baf7240122c9fcbe6ca8422e031e7c540267f24846a",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -13086,6 +13101,7 @@
       "names": {
         "catalog captures membership and metadata while preserving the supplied instances": 1,
         "controls bind catalog instances rather than similarly named defaults": 1,
+        "data setup keeps layers polling in an inline panel its host reports hidden": 1,
         "data setup seals the caller catalog before controls can restore and drains its exact instances": 1,
         "duplicate, missing and extra metadata fail before application registration": 1
       },
@@ -13111,7 +13127,8 @@
         "an app loaded inline into a panel page talks through its own window": 1,
         "an embedded page takes views only from its parent and answers it": 1,
         "annotations in a link are drawn after it restores, embedded or not": 1,
-        "embed mode is opt-in by query parameter": 1
+        "embed mode is opt-in by query parameter": 1,
+        "polled layers keep refreshing in an inline panel its host reports hidden": 1
       },
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -16390,6 +16407,7 @@
         "awareness cohorts sort nearest-first and do not turn empty data into out of range": 1,
         "awareness cycling excludes satellites, which retain independent tracking": 1,
         "awareness formatters preserve valid zeroes and replace missing or invalid values": 1,
+        "cohort reasons stay English in data and translate where the panel shows them": 1,
         "empty proximity searches double their radius until an aircraft is found": 1,
         "expanding proximity search stops at its global bound when feeds are empty": 1,
         "navigation prioritizes nearby targets from the selected cohort": 1,
@@ -17149,6 +17167,7 @@
     "src/data/terrainHeightsProxy.test.mjs": {
       "names": {
         "429 retry honors Retry-After before the next attempt": 1,
+        "a Retry-After longer than the retry budget ends the retries without sleeping": 1,
         "a dropped position remains a genuine upstream fault": 1,
         "a null-height row counts as absent, not a refresh failure, and is re-asked next poll": 1,
         "malformed height objects remain refresh failures, not absent readings": 1,
@@ -17639,6 +17658,13 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/director/clock.test.mjs": {
+      "names": {
+        "a subscriber throwing on immediate snapshot does not crash subscribe and receives unsubscribe handle": 1
+      },
+      "origin": "upstream-sync-10",
+      "since": "2026-10-28"
+    },
     "src/director/director-dateline-seek.test.mjs": {
       "names": {
         "director seek follows the short dateline arc in both directions": 1,
@@ -17650,7 +17676,9 @@
     },
     "src/director/interactions/interactions.test.mjs": {
       "names": {
+        "a throwing changed observer does not break session dispatch, activation, or clearing": 1,
         "actions preserve camera refusal, layer admission signal and explicit transition cap": 1,
+        "an observer that always throws cannot stop activate or clear": 1,
         "settled pack shots cannot take the same-shot seek shortcut after Stop released geometry": 1
       },
       "origin": "upstream-sync",
@@ -17673,6 +17701,9 @@
     },
     "src/director/playback.test.mjs": {
       "names": {
+        "a failing inter-scene release releases the active scene only once": 1,
+        "a falsy phase failure is still preserved over a release failure": 1,
+        "a phase failure is preserved when final scene release also throws": 1,
         "a prior scene must release before playback; a refused handoff starts no shot": 1,
         "flag cancellation while awaiting applyLayers stops subsequent work and releases resources": 1,
         "flag cancellation while awaiting applyVisual stops subsequent work and releases resources": 1,
@@ -17922,6 +17953,13 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/hudPageVisibility.test.mjs": {
+      "names": {
+        "the HUD readout pauses in a hidden page but keeps updating in an inline panel": 1
+      },
+      "origin": "upstream-sync-10",
+      "since": "2026-10-28"
+    },
     "src/hudSummaryResponse.test.mjs": {
       "names": {
         "AI summaries missing a non-nominal provenance token fall back deterministically": 1,
@@ -18105,6 +18143,15 @@
       "origin": "upstream-sync-9",
       "since": "2026-10-27"
     },
+    "src/i18n/zh-Hant-display.test.mjs": {
+      "names": {
+        "Traditional Chinese persists and exposes the script locale for legacy choices": 1,
+        "Traditional Chinese readouts preserve unit case, coordinates and natural relative dates": 1,
+        "Traditional Chinese resolves from URL, saved preference and browser language": 1
+      },
+      "origin": "upstream-sync-10",
+      "since": "2026-10-28"
+    },
     "src/keySetup.test.mjs": {
       "names": {
         "OAuth login polling respects timeout and an aborted setup surface": 1,
@@ -18216,6 +18263,9 @@
     },
     "src/keylessGeocoder.test.mjs": {
       "names": {
+        "\"Paris, Texas\" is the town in Texas, not a pub of that name in Budapest": 1,
+        "\"UK\" names the United Kingdom": 1,
+        "\"USA\" and \"UK\" name their countries, and a trailing comma keeps the nearby answer": 1,
         "Photon's own country name stays inside the label — it is not a field": 1,
         "a \"place, region\" query is matched on the place, not the region": 1,
         "a biased match that leads with the name is taken without a second request": 1,
@@ -18227,7 +18277,14 @@
         "a malformed or out-of-range extent yields no bounds rather than a bad box": 1,
         "a missing key is never a thrown error on the client": 1,
         "a name is matched at its head, so a street that merely contains it loses": 1,
+        "a nearby place whose own name has a comma still wins when nothing matches as place and region": 1,
         "a network failure resolves to null — callers read null as not-found": 1,
+        "a region can be the city or the county a candidate lies in": 1,
+        "a region is checked against where a candidate is, not its name": 1,
+        "a region is matched by whole words, and every word has to fit": 1,
+        "a region match takes the place itself, not a place whose name starts with it": 1,
+        "a region nearby fits nothing, so the unbiased answer decides": 1,
+        "a region query without a camera bias still takes the place in the region": 1,
         "a tag rule wins over the coarse class — a town square is not a city": 1,
         "accents and punctuation do not change what a name compares as": 1,
         "an HTTP refusal counts as silence, not as \"no such place\"": 1,
@@ -18237,12 +18294,15 @@
         "an unanswered request is never memoized, so the next attempt really retries": 1,
         "area features keep an area type so the camera frames them, not a rooftop": 1,
         "forward geocoding is composed once and consumers do not call a source directly": 1,
+        "if the unbiased request fails, the nearby whole-name match is still the answer": 1,
         "repeat queries are served from the memo, misses included": 1,
         "the Google bias becomes a SOFT proximity bias, never a hard bbox": 1,
         "the extent is read as [west, north, east, south], not as [w,s,e,n]": 1,
         "the label names the place, then only containers it does not already name": 1,
+        "the nearby whole-name fallback takes an exact name, not one that only starts with the query": 1,
         "the normalized result carries the canonical name its callers need": 1,
         "the outcome reports which of the two a null result was": 1,
+        "when a POI and the place both fit the region, the place wins": 1,
         "wrapped view bias stays near the antimeridian and malformed coordinates are omitted": 1
       },
       "origin": "pre-spec",
@@ -18600,6 +18660,17 @@
       },
       "origin": "upstream-sync-5",
       "since": "2026-10-10"
+    },
+    "src/layers/directions/statusLocale.test.mjs": {
+      "names": {
+        "en: the Directions row shows the English error": 1,
+        "es: Directions errors stay English in stats and read translated in the row": 1,
+        "es: route request failures stay English in stats and read translated in the row": 1,
+        "ru: Directions errors stay English in stats and read translated in the row": 1,
+        "ru: route request failures stay English in stats and read translated in the row": 1
+      },
+      "origin": "upstream-sync-10",
+      "since": "2026-10-28"
     },
     "src/layers/earthquakes/ownership.test.mjs": {
       "names": {
@@ -19050,9 +19121,11 @@
     },
     "src/layers/localAdsb/statusLocale.test.mjs": {
       "names": {
+        "es: a WebUSB receiver error stays English in stats and reads translated": 1,
         "es: a lone invalid decoder feed with nothing heard is translated": 1,
         "es: a lone unreachable decoder feed with nothing heard is translated": 1,
         "es: the streaming Local ADS-B row is translated": 1,
+        "ru: a WebUSB receiver error stays English in stats and reads translated": 1,
         "ru: a lone invalid decoder feed with nothing heard is translated": 1,
         "ru: a lone unreachable decoder feed with nothing heard is translated": 1,
         "ru: the streaming Local ADS-B row is translated": 1
@@ -19111,6 +19184,23 @@
       },
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
+    },
+    "src/layers/perimeters/ownership.test.mjs": {
+      "names": {
+        "a failed refresh after a stale snapshot reads as the failure, not stale": 1,
+        "a stale snapshot reads stale, dated by its own fetch, and a fresh one clears it": 1
+      },
+      "origin": "upstream-sync-10",
+      "since": "2026-10-28"
+    },
+    "src/layers/perimeters/source.test.mjs": {
+      "names": {
+        "a failed refresh serves the last snapshot marked stale for a day, then refuses": 1,
+        "getSnapshot works when taken off its source object": 1,
+        "the snapshot detail carries the proxy staleness and fetch time": 1
+      },
+      "origin": "upstream-sync-10",
+      "since": "2026-10-28"
     },
     "src/layers/radio/ingestionErrors.i18n.test.mjs": {
       "names": {
@@ -21445,6 +21535,7 @@
         "a previously installed Nepal scene stays deleted when its marker remains": 1,
         "a provider-owned hold fails boundedly if its owner never settles": 1,
         "a refused layer is reported, never counted as applied": 1,
+        "a rejected loadShot does not cancel an in-flight LOAD": 1,
         "a run refuses the visual commit of a shot cancelled mid-transition": 1,
         "a scene run supersedes a LOAD still suspended on its visual await": 1,
         "a seek waiting for run teardown is revoked by newer Stop, Load, Start or destroy": 1,
@@ -21467,7 +21558,15 @@
         "newer imports win delayed file reads, and an empty project is preserved": 1,
         "only Play Shot or a scene run grants transient media authority; LOAD, Stop and replacement revoke it": 1,
         "public defaults include Nepal without an extra standalone flood recipe": 1,
+        "refused same-shot seek rollback keeps a manual toggle still in flight": 1,
         "replay, adjacent and seek report layer refusal rather than success": 1,
+        "same-shot seeking aborts in-flight admission when superseded by an early-return load or start": 1,
+        "same-shot seeking keeps the shortcut when declared visibility is unchanged": 1,
+        "same-shot seeking reports refusal when a manually disabled layer cannot be restored": 1,
+        "same-shot seeking restores a layer whose superseded LOAD transition rolls back": 1,
+        "same-shot seeking restores declared layer visibility after manual changes": 1,
+        "same-shot seeking restores visibility a manual toggle is still changing": 1,
+        "same-shot seeking rolls back earlier layers and preserves Context, clock and camera when a later layer is refused": 1,
         "scene camera waits for provider completion and fade rather than the saved media hold": 1,
         "scene clock seek resolves the exact shot phase and camera in both directions": 1,
         "scene clock subscribers receive authoritative forward playback snapshots": 1,
@@ -22379,6 +22478,11 @@
       "names": {
         "FIRMS retains a large successful source during partial failure and filters stale data at serve time": 1,
         "GBFS keeps host/path/method guards, response caps and distinct information/status cache headers": 1,
+        "a far-off Retry-After pauses the terrain upstream for at most 10 minutes": 1,
+        "a shorter concurrent Retry-After never cuts a terrain 429 pause short": 1,
+        "a terrain upstream failure other than 429 does not pause later requests": 1,
+        "after a 429 the terrain proxy leaves the upstream alone and logs once": 1,
+        "during a terrain 429 pause fully cached points, even stale ones, are still served": 1,
         "standalone composition mounts every extracted provider exactly once without acquisition": 1,
         "terrain middleware bounds missing points and reconstructs repeated/reordered requests from cache": 1,
         "terrain middleware migrates valid legacy disk points without fabricating omitted heights": 1,
@@ -23003,6 +23107,7 @@
         "map features name what is at a location and report an unconfigured server": 1,
         "military awareness gathers contacts around a point and marks failures": 1,
         "military installations need a bounded area and are nearest first": 1,
+        "stale fire perimeters say so, with when they were fetched": 1,
         "stale weather and partial fire data reach answers and the HUD caption": 1,
         "terrain heights are returned in request order": 1,
         "the HUD caption context carries each section feed state": 1,
@@ -24103,6 +24208,7 @@
         "OPEN STREET VIEW shows while Street View is on, and waits for street zoom": 1,
         "a SINCE window from a link lands on the nearest slider stop": 1,
         "a Street View caption names the place, dates it by month, and offers no FIT/FILL": 1,
+        "a bearing that rounds to north reads 0°, not 360°": 1,
         "a key Mapillary rejected reads KEY REJECTED and names the fix": 1,
         "a key problem outranks loading on the pill: KEY REJECTED, then KEY REQUIRED (M65)": 1,
         "an empty composition explains unavailable imagery even while disabled": 1,
