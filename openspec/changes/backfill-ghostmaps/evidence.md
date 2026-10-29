@@ -27,7 +27,7 @@ The lead still needs the ratchet, gates and formal review.
 | `src/layers/ghostMaps/records.js` | 100.00 | 100.00 | 100.00 |
 | `src/layers/ghostMaps/source.js` | 100.00 | 100.00 | 100.00 |
 
-The [coverage data](coverage.json) records each exact command and its test result.
+The [coverage data](coverage.txt) records each exact command and its test result.
 
 ## Paths that cannot run
 
