@@ -1,7 +1,6 @@
 Verdict: PASS
 
-Tip and scope: tip 9f867124, scope diff 6d35c612. The lead shortened this copy.
+Tip and scope: tip 81e490f8, scope diff 6a8e3e17. The lead shortened this copy. This is the narrow confirmation of the three major findings of round 3.
 
-- [x] FINDING minor evidence/diff-count.txt:3 The count was of upstream, and proposal.md said "The merge changes". Fixed in proposal.md.
-- [x] FINDING minor evidence/upstream-check.txt:42 The claim about the later commits had no command output. Fixed: the output is in the file.
-- [x] FINDING minor tasks.md:23 Task 3.2 named one adopt command for two steps. Fixed: the task says after each merge step.
+- [x] FINDING minor review.md:21 Two lines said that the reports of round 3 are in `review/round-3/`. Fixed: the lead removed the second sentence.
+- [x] FINDING minor review/round-3/spec-adversary.md:1 The copy of the report of round 3 says FAIL. Kept: the file records the report of round 3, and `review/spec-adversary.md` holds this confirmation.

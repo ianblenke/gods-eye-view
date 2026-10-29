@@ -18,9 +18,9 @@ Resolved files: `CHANGELOG.md`, `package.json`, `src/director/clock.test.mjs`, `
 
 Round 1 had the scope full, at the commit 6d35c612. Both reviewers gave FAIL. The corrections changed only files under `openspec/`, so the lead ran no new ratchet. Round 2 had the scope diff 6d35c612, at the commit 9f867124. Both reviewers gave PASS. After round 2 the lead fixed the seven minor findings in `proposal.md`, `tasks.md` and `evidence/upstream-check.txt`. These edits are wording and evidence only.
 
-The final `make gates` then failed in two of three runs on a wall-time limit of the upstream test `src/tools/tool-schema-codepoints.test.mjs` (decision D5, `evidence/gates-timing.txt`). The lead changed that test to CPU time at the commit 6a8e3e17. Round 3 had the scope diff bb0077ce, at that commit. The reports of round 3 are in `review/round-3/`.
+The final `make gates` then failed in two of three runs on a wall-time limit of the upstream test `src/tools/tool-schema-codepoints.test.mjs` (decision D5, `evidence/gates-timing.txt`). The lead changed that test to CPU time at the commit 6a8e3e17. Round 3 had the scope diff bb0077ce, at that commit. The spec adversary gave FAIL for three stale statements in this file. The lead corrected them, and a narrow confirmation at the commit 81e490f8 gave PASS.
 
-The reports of round 1 are in `review/round-1/`. The reports of round 2 are in `review/round-2/`. The reports of round 3 are in `review/round-3/` and in `review/`. Each file holds a copy that the lead shortened. Each finding keeps its meaning.
+The reports of round 1 are in `review/round-1/`. The reports of round 2 are in `review/round-2/`. The reports of round 3 and the confirmation are in `review/round-3/`. The files in `review/` are the current reports. Each file holds a copy that the lead shortened. Each finding keeps its meaning.
 
 One ratchet run came before the review. It gave only `REVIEW-MISSING`. The edit of the test in round 3 needs the final `make gates` on the final tree, and the lead records its result in the line `Gates` above.
 
