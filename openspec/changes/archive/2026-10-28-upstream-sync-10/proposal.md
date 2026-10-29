@@ -15,7 +15,7 @@ Upstream also adds the locale `zh-Hant`, keeps layer errors in English in data, 
 - Add `zh-Hant.json` to the two fork packages that list `zh-CN.json` in `scripts/package-boundaries.json`.
 - Change the limit of one upstream timing test to CPU time. Decision D5 gives the reason.
 - Run the adopt command for each upstream file that the merge brings and that has a coverage gap.
-- Keep the upstream code as it is.
+- Keep the upstream code files as they are, except for the one test file of decision D5.
 
 ## Capabilities
 
@@ -45,5 +45,5 @@ The change has no spec delta, because the merge changes no requirement of the fo
 
 - Known limit `zh-Hant`: The lead wrote the 20 Traditional Chinese texts. No native speaker checked them.
 - Known limit `changelog`: Upstream puts each new changelog entry in a file under `changelog.d/`. The fork still edits `CHANGELOG.md`, so a later sync can have a conflict there again.
-- Known limit `cpu-time`: The edited test cannot see a delay that costs no CPU time. The old wall-time limit of 200 ms could see such a delay, but it failed under the load of the gates.
+- Known limit `cpu-time`: The edited test cannot see a delay that costs no CPU time. The old wall-time limit of 200 ms could see such a delay, but the limit failed the test under the load of the gates.
 - Known limit `backfill`: Specs and tests for the new upstream areas of sync 9 are still open. This change does not add them.

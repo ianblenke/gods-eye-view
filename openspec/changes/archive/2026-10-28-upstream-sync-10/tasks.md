@@ -8,7 +8,7 @@
 - [x] 1.6 Add `zh-Hant.json` to the packages `reticulum` and `osh-layer`.
 - [x] 1.7 Commit each merge.
 - [x] 1.8 Run the two faults of decision D2.
-- [x] 1.9 Change the limit of the timing test of `tool-schema-codepoints.test.mjs` to CPU time.
+- [x] 1.9 Change the limit of the timing test in `tool-schema-codepoints.test.mjs` to CPU time.
 - [x] 1.10 Run the fault of decision D5.
 
 ## 2. Host evidence

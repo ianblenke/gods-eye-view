@@ -4,4 +4,4 @@ Run 1, start 2026-10-28 (UTC): ERROR TRACE-FAILED-TEST src/tools/tool-schema-cod
 Run 2: that test did not fail. The run stopped on two REVIEW-AGENT-NOT-PASS errors (the verdict line of the review copies).
 Run 3: the same TRACE-FAILED-TEST error as run 1.
 
-Alone in the image with NODE_V8_COVERAGE set, the file passed in three of three runs (durations 544, 578 and 560 ms).
+When the test file ran by itself in the image with NODE_V8_COVERAGE set, it passed in three of three runs (durations 544, 578 and 560 ms).
