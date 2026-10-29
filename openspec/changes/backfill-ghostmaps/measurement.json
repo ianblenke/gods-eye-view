@@ -1,0 +1,33 @@
+{
+  "commit": "b5a64127667c22af8c68b53706e9f27d866acac0",
+  "tests": 275,
+  "tagged": 274,
+  "oldTests": 23,
+  "oldNamesChanged": [],
+  "untraced": [
+    {
+      "file": "src/layers/ghostMaps/catalog.test.mjs",
+      "name": "oversized, empty, non-KMZ and malformed entries are skipped"
+    }
+  ],
+  "scenarios": 35,
+  "titleErrors": [],
+  "mutations": 386,
+  "mutationStates": {
+    "KILLED": 366,
+    "SURVIVED": 20
+  },
+  "audit": {
+    "rows": 170,
+    "tested": 151,
+    "equivalent": 19,
+    "defaultValue": 0,
+    "open": 0,
+    "classes": {
+      "LogicalExpression": 113,
+      "ConditionalExpression": 31,
+      "ForOfStatement": 25,
+      "SwitchStatement": 1
+    }
+  }
+}

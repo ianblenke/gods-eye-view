@@ -1,0 +1,3251 @@
+{
+  "commit": "b5a64127667c22af8c68b53706e9f27d866acac0",
+  "data": {
+    "summary": {
+      "rows": 170,
+      "tested": 151,
+      "equivalent": 19,
+      "defaultValue": 0,
+      "open": 0,
+      "classes": {
+        "LogicalExpression": 113,
+        "ConditionalExpression": 31,
+        "ForOfStatement": 25,
+        "SwitchStatement": 1
+      }
+    },
+    "rows": [
+      {
+        "id": "A001",
+        "file": "server/providers/ghostMaps.js",
+        "line": 40,
+        "class": "LogicalExpression",
+        "text": "!raw || !Number.isFinite(seconds)",
+        "start": 1547,
+        "end": 1580,
+        "left": "!raw",
+        "right": "!Number.isFinite(seconds)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A001-left",
+          "A001-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A002",
+        "file": "server/providers/ghostMaps.js",
+        "line": 54,
+        "class": "LogicalExpression",
+        "text": "process.env.GITHUB_TOKEN || ''",
+        "start": 2117,
+        "end": 2147,
+        "left": "process.env.GITHUB_TOKEN",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A002-left",
+          "A002-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A003",
+        "file": "server/providers/ghostMaps.js",
+        "line": 78,
+        "class": "ConditionalExpression",
+        "text": "token() ? { Authorization: `Bearer ${token()}` } : {}",
+        "start": 2699,
+        "end": 2752,
+        "left": null,
+        "right": null,
+        "consequent": "{ Authorization: `Bearer ${token()}` }",
+        "alternate": "{}",
+        "result": "TESTED",
+        "mutations": [
+          "A003-true",
+          "A003-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A004",
+        "file": "server/providers/ghostMaps.js",
+        "line": 123,
+        "class": "LogicalExpression",
+        "text": "Date.parse(commit?.commit?.committer?.date) || null",
+        "start": 4196,
+        "end": 4247,
+        "left": "Date.parse(commit?.commit?.committer?.date)",
+        "right": "null",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A004-left",
+          "A004-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A005",
+        "file": "server/providers/ghostMaps.js",
+        "line": 124,
+        "class": "LogicalExpression",
+        "text": "commit?.commit?.message || ''",
+        "start": 4272,
+        "end": 4301,
+        "left": "commit?.commit?.message",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A005-left",
+          "A005-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A006",
+        "file": "server/providers/ghostMaps.js",
+        "line": 140,
+        "class": "LogicalExpression",
+        "text": "/^[0-9a-f]{40}$/.test(saved?.commit) && Array.isArray(saved.products)",
+        "start": 4738,
+        "end": 4807,
+        "left": "/^[0-9a-f]{40}$/.test(saved?.commit)",
+        "right": "Array.isArray(saved.products)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A006-left",
+          "A006-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A007",
+        "file": "server/providers/ghostMaps.js",
+        "line": 162,
+        "class": "ForOfStatement",
+        "text": "for (const listener of listeners) {\n      try {\n        listener(event);\n      } catch {\n        /* a broken subscriber must not stop the rest */\n      }\n    }",
+        "start": 5396,
+        "end": 5555,
+        "left": "const listener",
+        "right": "listeners",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A007-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A008",
+        "file": "server/providers/ghostMaps.js",
+        "line": 196,
+        "class": "ConditionalExpression",
+        "text": "next.message ? ` \"${next.message}\"` : ''",
+        "start": 6230,
+        "end": 6270,
+        "left": null,
+        "right": null,
+        "consequent": "` \"${next.message}\"`",
+        "alternate": "''",
+        "result": "TESTED",
+        "mutations": [
+          "A008-true",
+          "A008-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A009",
+        "file": "server/providers/ghostMaps.js",
+        "line": 197,
+        "class": "LogicalExpression",
+        "text": "changed.join(', ') || 'none'",
+        "start": 6291,
+        "end": 6319,
+        "left": "changed.join(', ')",
+        "right": "'none'",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A009-left",
+          "A009-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A010",
+        "file": "server/providers/ghostMaps.js",
+        "line": 202,
+        "class": "ForOfStatement",
+        "text": "for (const product of state.products)\n      if (product.defaultOn) file(product.id).catch(() => {});",
+        "start": 6437,
+        "end": 6537,
+        "left": "const product",
+        "right": "state.products",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A010-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A011",
+        "file": "server/providers/ghostMaps.js",
+        "line": 234,
+        "class": "ConditionalExpression",
+        "text": "failures\n      ? FAILURE_BACKOFF_MS[Math.min(failures, FAILURE_BACKOFF_MS.length) - 1]\n      : pollMs",
+        "start": 7244,
+        "end": 7345,
+        "left": null,
+        "right": null,
+        "consequent": "FAILURE_BACKOFF_MS[Math.min(failures, FAILURE_BACKOFF_MS.length) - 1]",
+        "alternate": "pollMs",
+        "result": "TESTED",
+        "mutations": [
+          "A011-true",
+          "A011-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A012",
+        "file": "server/providers/ghostMaps.js",
+        "line": 246,
+        "class": "LogicalExpression",
+        "text": "checking || Promise.resolve(false)",
+        "start": 7584,
+        "end": 7618,
+        "left": "checking",
+        "right": "Promise.resolve(false)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A012-left",
+          "A012-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A013",
+        "file": "server/providers/ghostMaps.js",
+        "line": 335,
+        "class": "ForOfStatement",
+        "text": "for (const name of await fsp.readdir(dir).catch(() => [])) {\n      if (!keep.has(name) && !name.endsWith('.tmp'))\n        await fsp.rm(path.join(dir, name), { force: true }).catch(() => {});\n    }",
+        "start": 10025,
+        "end": 10221,
+        "left": "const name",
+        "right": "await fsp.readdir(dir).catch(() => [])",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A013-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A014",
+        "file": "server/providers/ghostMaps.js",
+        "line": 336,
+        "class": "LogicalExpression",
+        "text": "!keep.has(name) && !name.endsWith('.tmp')",
+        "start": 10096,
+        "end": 10137,
+        "left": "!keep.has(name)",
+        "right": "!name.endsWith('.tmp')",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A014-left",
+          "A014-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A015",
+        "file": "server/providers/ghostMaps.js",
+        "line": 364,
+        "class": "ConditionalExpression",
+        "text": "status === 405 ? { Allow: 'GET' } : {}",
+        "start": 10807,
+        "end": 10845,
+        "left": null,
+        "right": null,
+        "consequent": "{ Allow: 'GET' }",
+        "alternate": "{}",
+        "result": "TESTED",
+        "mutations": [
+          "A015-true",
+          "A015-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A016",
+        "file": "server/providers/ghostMaps.js",
+        "line": 396,
+        "class": "LogicalExpression",
+        "text": "req.url || '/'",
+        "start": 11838,
+        "end": 11852,
+        "left": "req.url",
+        "right": "'/'",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A016-left",
+          "A016-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A017",
+        "file": "server/providers/ghostMaps.js",
+        "line": 398,
+        "class": "LogicalExpression",
+        "text": "!['/catalog', '/events'].includes(url.pathname) && !match",
+        "start": 11947,
+        "end": 12004,
+        "left": "!['/catalog', '/events'].includes(url.pathname)",
+        "right": "!match",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A017-left",
+          "A017-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A018",
+        "file": "server/providers/ghostMaps.js",
+        "line": 418,
+        "class": "ConditionalExpression",
+        "text": "pinned\n          ? 'private, max-age=31536000, immutable'\n          : 'no-store'",
+        "start": 12943,
+        "end": 13023,
+        "left": null,
+        "right": null,
+        "consequent": "'private, max-age=31536000, immutable'",
+        "alternate": "'no-store'",
+        "result": "TESTED",
+        "mutations": [
+          "A018-true",
+          "A018-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A019",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 127,
+        "class": "LogicalExpression",
+        "text": "fileName || ''",
+        "start": 3972,
+        "end": 3986,
+        "left": "fileName",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A019-left",
+          "A019-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A020",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 136,
+        "class": "LogicalExpression",
+        "text": "month >= 0 && new Date(at).getUTCDate() === day",
+        "start": 4359,
+        "end": 4406,
+        "left": "month >= 0",
+        "right": "new Date(at).getUTCDate() === day",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A020-left",
+          "A020-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A021",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 138,
+        "class": "ConditionalExpression",
+        "text": "match ? stem.slice(match.index + match[0].length) : stem",
+        "start": 4440,
+        "end": 4496,
+        "left": null,
+        "right": null,
+        "consequent": "stem.slice(match.index + match[0].length)",
+        "alternate": "stem",
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A021-true",
+          "A021-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A022",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 139,
+        "class": "LogicalExpression",
+        "text": "EDITION_IN_NAME.exec(tail)?.[1] ?? 0",
+        "start": 4523,
+        "end": 4559,
+        "left": "EDITION_IN_NAME.exec(tail)?.[1]",
+        "right": "0",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A022-left",
+          "A022-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A023",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 145,
+        "class": "LogicalExpression",
+        "text": "a.dateMs ?? -Infinity",
+        "start": 4654,
+        "end": 4675,
+        "left": "a.dateMs",
+        "right": "-Infinity",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A023-left",
+          "A023-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A024",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 146,
+        "class": "LogicalExpression",
+        "text": "b.dateMs ?? -Infinity",
+        "start": 4690,
+        "end": 4711,
+        "left": "b.dateMs",
+        "right": "-Infinity",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A024-left",
+          "A024-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A025",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 154,
+        "class": "LogicalExpression",
+        "text": "fileName || ''",
+        "start": 4978,
+        "end": 4992,
+        "left": "fileName",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A025-left",
+          "A025-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A026",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 172,
+        "class": "ForOfStatement",
+        "text": "for (const entry of Array.isArray(tree) ? tree : []) {\n    if (entry?.type !== 'blob' || typeof entry.path !== 'string') continue;\n    if (!/\\.kmz$/i.test(entry.path)) continue;\n    if (!/^[0-9a-f]{40}$/.test(entry.sha || '')) continue;\n    const size = Number(entry.size);\n    if (!Number.isFinite(size) || size <= 0 || size > GHOSTMAPS_MAX_FILE_BYTES)\n      continue;\n    const fileName = entry.path.slice(entry.path.lastIndexOf('/') + 1);\n    const candidate = {\n      path: entry.path,\n      fileName,\n      version: entry.sha,\n      size,\n      ...parseGhostMapsEdition(fileName),\n    };\n    const product = GHOSTMAPS_PRODUCTS.find(({ pattern }) =>\n      pattern.test(entry.path),\n    );\n    if (product) {\n      if (newer(candidate, best.get(product.id)))\n        best.set(product.id, candidate);\n    } else if (\n      entry.path.startsWith(INCIDENTS) &&\n      !LATEST_DROP_EXCLUDED.test(`/${entry.path}`) &&\n      candidate.dateMs != null &&\n      newer(candidate, drop)\n    ) {\n      drop = candidate;\n    }\n  }",
+        "start": 5569,
+        "end": 6588,
+        "left": "const entry",
+        "right": "Array.isArray(tree) ? tree : []",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A026-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A027",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 172,
+        "class": "ConditionalExpression",
+        "text": "Array.isArray(tree) ? tree : []",
+        "start": 5589,
+        "end": 5620,
+        "left": null,
+        "right": null,
+        "consequent": "tree",
+        "alternate": "[]",
+        "result": "TESTED",
+        "mutations": [
+          "A027-true",
+          "A027-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A028",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 173,
+        "class": "LogicalExpression",
+        "text": "entry?.type !== 'blob' || typeof entry.path !== 'string'",
+        "start": 5632,
+        "end": 5688,
+        "left": "entry?.type !== 'blob'",
+        "right": "typeof entry.path !== 'string'",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A028-left",
+          "A028-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A029",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 175,
+        "class": "LogicalExpression",
+        "text": "entry.sha || ''",
+        "start": 5778,
+        "end": 5793,
+        "left": "entry.sha",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A029-left",
+          "A029-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A030",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 177,
+        "class": "LogicalExpression",
+        "text": "!Number.isFinite(size) || size <= 0 || size > GHOSTMAPS_MAX_FILE_BYTES",
+        "start": 5851,
+        "end": 5921,
+        "left": "!Number.isFinite(size) || size <= 0",
+        "right": "size > GHOSTMAPS_MAX_FILE_BYTES",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A030-left",
+          "A030-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A031",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 177,
+        "class": "LogicalExpression",
+        "text": "!Number.isFinite(size) || size <= 0",
+        "start": 5851,
+        "end": 5886,
+        "left": "!Number.isFinite(size)",
+        "right": "size <= 0",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A031-left",
+          "A031-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A032",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 194,
+        "class": "LogicalExpression",
+        "text": "entry.path.startsWith(INCIDENTS) &&\n      !LATEST_DROP_EXCLUDED.test(`/${entry.path}`) &&\n      candidate.dateMs != null &&\n      newer(candidate, drop)",
+        "start": 6394,
+        "end": 6546,
+        "left": "entry.path.startsWith(INCIDENTS) &&\n      !LATEST_DROP_EXCLUDED.test(`/${entry.path}`) &&\n      candidate.dateMs != null",
+        "right": "newer(candidate, drop)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A032-left",
+          "A032-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A033",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 194,
+        "class": "LogicalExpression",
+        "text": "entry.path.startsWith(INCIDENTS) &&\n      !LATEST_DROP_EXCLUDED.test(`/${entry.path}`) &&\n      candidate.dateMs != null",
+        "start": 6394,
+        "end": 6514,
+        "left": "entry.path.startsWith(INCIDENTS) &&\n      !LATEST_DROP_EXCLUDED.test(`/${entry.path}`)",
+        "right": "candidate.dateMs != null",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A033-left",
+          "A033-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A034",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 194,
+        "class": "LogicalExpression",
+        "text": "entry.path.startsWith(INCIDENTS) &&\n      !LATEST_DROP_EXCLUDED.test(`/${entry.path}`)",
+        "start": 6394,
+        "end": 6480,
+        "left": "entry.path.startsWith(INCIDENTS)",
+        "right": "!LATEST_DROP_EXCLUDED.test(`/${entry.path}`)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A034-left",
+          "A034-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A035",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 203,
+        "class": "ForOfStatement",
+        "text": "for (const product of [...GHOSTMAPS_PRODUCTS, GHOSTMAPS_LATEST_DROP]) {\n    const file =\n      product === GHOSTMAPS_LATEST_DROP ? drop : best.get(product.id);\n    if (!file) continue;\n    rows.push({\n      id: product.id,\n      title: product.title,\n      defaultOn: product.defaultOn,\n      ...file,\n      fileTitle: ghostMapsFileTitle(file.fileName),\n    });\n  }",
+        "start": 6610,
+        "end": 6975,
+        "left": "const product",
+        "right": "[...GHOSTMAPS_PRODUCTS, GHOSTMAPS_LATEST_DROP]",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A035-loop",
+          "PRODUCT-cip",
+          "PRODUCT-kinetic-30d",
+          "PRODUCT-border-crisis",
+          "PRODUCT-iran-cip",
+          "PRODUCT-iran-kinetic",
+          "PRODUCT-yemen-flot",
+          "PRODUCT-latest-drop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A036",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 205,
+        "class": "ConditionalExpression",
+        "text": "product === GHOSTMAPS_LATEST_DROP ? drop : best.get(product.id)",
+        "start": 6705,
+        "end": 6768,
+        "left": null,
+        "right": null,
+        "consequent": "drop",
+        "alternate": "best.get(product.id)",
+        "result": "TESTED",
+        "mutations": [
+          "A036-true",
+          "A036-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A037",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 238,
+        "class": "ForOfStatement",
+        "text": "for (const line of String(text || '').split('\\n')) {\n    // pkt-line: 4 hex length digits, then \"<sha> <ref>\" (the first ref line\n    // also carries a NUL and the capability list).\n    const match = /^[0-9a-f]{4}([0-9a-f]{40}) ([^\\0\\s]+)/.exec(line);\n    if (match && match[2] === ref) return match[1];\n  }",
+        "start": 7746,
+        "end": 8053,
+        "left": "const line",
+        "right": "String(text || '').split('\\n')",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A037-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A038",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 238,
+        "class": "LogicalExpression",
+        "text": "text || ''",
+        "start": 7772,
+        "end": 7782,
+        "left": "text",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A038-left",
+          "A038-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A039",
+        "file": "src/layers/ghostMaps/catalog.js",
+        "line": 242,
+        "class": "LogicalExpression",
+        "text": "match && match[2] === ref",
+        "start": 8006,
+        "end": 8031,
+        "left": "match",
+        "right": "match[2] === ref",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A039-left",
+          "A039-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A040",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 62,
+        "class": "LogicalExpression",
+        "text": "globalThis.localStorage ?? null",
+        "start": 1709,
+        "end": 1740,
+        "left": "globalThis.localStorage",
+        "right": "null",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A040-left",
+          "A040-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A041",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 70,
+        "class": "LogicalExpression",
+        "text": "storage?.getItem(STORAGE_KEY) ?? 'null'",
+        "start": 1855,
+        "end": 1894,
+        "left": "storage?.getItem(STORAGE_KEY)",
+        "right": "'null'",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A041-left",
+          "A041-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A042",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 71,
+        "class": "ConditionalExpression",
+        "text": "Array.isArray(value) ? new Set(value.map(String)) : null",
+        "start": 1908,
+        "end": 1964,
+        "left": null,
+        "right": null,
+        "consequent": "new Set(value.map(String))",
+        "alternate": "null",
+        "result": "TESTED",
+        "mutations": [
+          "A042-true",
+          "A042-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A043",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 110,
+        "class": "ConditionalExpression",
+        "text": "rgba\n    ? new Cesium.Color(rgba[0], rgba[1], rgba[2], alpha ?? rgba[3])\n    : Cesium.Color.fromCssColorString(fallback).withAlpha(alpha ?? 1)",
+        "start": 2921,
+        "end": 3063,
+        "left": null,
+        "right": null,
+        "consequent": "new Cesium.Color(rgba[0], rgba[1], rgba[2], alpha ?? rgba[3])",
+        "alternate": "Cesium.Color.fromCssColorString(fallback).withAlpha(alpha ?? 1)",
+        "result": "TESTED",
+        "mutations": [
+          "A043-true",
+          "A043-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A044",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 111,
+        "class": "LogicalExpression",
+        "text": "alpha ?? rgba[3]",
+        "start": 2976,
+        "end": 2992,
+        "left": "alpha",
+        "right": "rgba[3]",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A044-left",
+          "A044-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A045",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 112,
+        "class": "LogicalExpression",
+        "text": "alpha ?? 1",
+        "start": 3052,
+        "end": 3062,
+        "left": "alpha",
+        "right": "1",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A045-left",
+          "A045-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A046",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 117,
+        "class": "ConditionalExpression",
+        "text": "geometry.type === 'polygon' ? geometry.outer : geometry.positions",
+        "start": 3174,
+        "end": 3239,
+        "left": null,
+        "right": null,
+        "consequent": "geometry.outer",
+        "alternate": "geometry.positions",
+        "result": "TESTED",
+        "mutations": [
+          "A046-true",
+          "A046-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A047",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 120,
+        "class": "ForOfStatement",
+        "text": "for (const [x, y] of ring) {\n    lon += x;\n    lat += y;\n  }",
+        "start": 3273,
+        "end": 3333,
+        "left": "const [x, y]",
+        "right": "ring",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A047-loop",
+          "ANCHOR-lon",
+          "ANCHOR-lat"
+        ],
+        "open": []
+      },
+      {
+        "id": "A048",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 171,
+        "class": "ForOfStatement",
+        "text": "for (const item of _loaded.values()) yield* item.pins;",
+        "start": 4933,
+        "end": 4987,
+        "left": "const item",
+        "right": "_loaded.values()",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A048-loop",
+          "LOOP-horizon"
+        ],
+        "open": []
+      },
+      {
+        "id": "A049",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 176,
+        "class": "LogicalExpression",
+        "text": "overlayHost && screenSpaceEventHandlerFactory && picking",
+        "start": 5053,
+        "end": 5109,
+        "left": "overlayHost && screenSpaceEventHandlerFactory",
+        "right": "picking",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A049-left",
+          "A049-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A050",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 176,
+        "class": "LogicalExpression",
+        "text": "overlayHost && screenSpaceEventHandlerFactory",
+        "start": 5053,
+        "end": 5098,
+        "left": "overlayHost",
+        "right": "screenSpaceEventHandlerFactory",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A050-left",
+          "A050-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A051",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 179,
+        "class": "ConditionalExpression",
+        "text": "_selection ? _selection.has(product.id) : product.defaultOn",
+        "start": 5152,
+        "end": 5211,
+        "left": null,
+        "right": null,
+        "consequent": "_selection.has(product.id)",
+        "alternate": "product.defaultOn",
+        "result": "TESTED",
+        "mutations": [
+          "A051-true",
+          "A051-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A052",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 183,
+        "class": "LogicalExpression",
+        "text": "_catalog?.products || []",
+        "start": 5257,
+        "end": 5281,
+        "left": "_catalog?.products",
+        "right": "[]",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A052-left",
+          "A052-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A053",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 211,
+        "class": "ConditionalExpression",
+        "text": "path && entries.get(path).length <= MAX_ICON_BYTES\n        ? resolvePacked(href)\n        : null",
+        "start": 6396,
+        "end": 6491,
+        "left": null,
+        "right": null,
+        "consequent": "resolvePacked(href)",
+        "alternate": "null",
+        "result": "TESTED",
+        "mutations": [
+          "A053-true",
+          "A053-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A054",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 211,
+        "class": "LogicalExpression",
+        "text": "path && entries.get(path).length <= MAX_ICON_BYTES",
+        "start": 6396,
+        "end": 6446,
+        "left": "path",
+        "right": "entries.get(path).length <= MAX_ICON_BYTES",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A054-left",
+          "A054-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A055",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 222,
+        "class": "LogicalExpression",
+        "text": "PRODUCT_COLORS[product.id] || ACCENT",
+        "start": 6709,
+        "end": 6745,
+        "left": "PRODUCT_COLORS[product.id]",
+        "right": "ACCENT",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A055-left",
+          "A055-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A056",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 242,
+        "class": "LogicalExpression",
+        "text": "style.icon || markerImage(color)",
+        "start": 7492,
+        "end": 7524,
+        "left": "style.icon",
+        "right": "markerImage(color)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A056-left",
+          "A056-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A057",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 245,
+        "class": "LogicalExpression",
+        "text": "style.iconScale ?? 1",
+        "start": 7616,
+        "end": 7636,
+        "left": "style.iconScale",
+        "right": "1",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A057-left",
+          "A057-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A058",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 248,
+        "class": "ConditionalExpression",
+        "text": "style.icon && style.iconColor\n                    ? cesiumColor(style.iconColor)\n                    : undefined",
+        "start": 7706,
+        "end": 7818,
+        "left": null,
+        "right": null,
+        "consequent": "cesiumColor(style.iconColor)",
+        "alternate": "undefined",
+        "result": "TESTED",
+        "mutations": [
+          "A058-true",
+          "A058-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A059",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 248,
+        "class": "LogicalExpression",
+        "text": "style.icon && style.iconColor",
+        "start": 7706,
+        "end": 7735,
+        "left": "style.icon",
+        "right": "style.iconColor",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A059-left",
+          "A059-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A060",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 274,
+        "class": "LogicalExpression",
+        "text": "style.lineWidth ?? 2",
+        "start": 8752,
+        "end": 8772,
+        "left": "style.lineWidth",
+        "right": "2",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A060-left",
+          "A060-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A061",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 292,
+        "class": "ConditionalExpression",
+        "text": "style.fill === false\n                    ? Cesium.Color.TRANSPARENT\n                    : cesiumColor(\n                        style.polyColor,\n                        color,\n                        style.polyColor ? undefined : 0.25,\n                      )",
+        "start": 9400,
+        "end": 9658,
+        "left": null,
+        "right": null,
+        "consequent": "Cesium.Color.TRANSPARENT",
+        "alternate": "cesiumColor(\n                        style.polyColor,\n                        color,\n                        style.polyColor ? undefined : 0.25,\n                      )",
+        "result": "TESTED",
+        "mutations": [
+          "A061-true",
+          "A061-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A062",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 297,
+        "class": "ConditionalExpression",
+        "text": "style.polyColor ? undefined : 0.25",
+        "start": 9599,
+        "end": 9633,
+        "left": null,
+        "right": null,
+        "consequent": "undefined",
+        "alternate": "0.25",
+        "result": "TESTED",
+        "mutations": [
+          "A062-true",
+          "A062-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A063",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 307,
+        "class": "LogicalExpression",
+        "text": "style.lineWidth ?? 2",
+        "start": 10033,
+        "end": 10053,
+        "left": "style.lineWidth",
+        "right": "2",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A063-left",
+          "A063-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A064",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 332,
+        "class": "LogicalExpression",
+        "text": "!_enabled || !_viewer || !_catalog",
+        "start": 10799,
+        "end": 10833,
+        "left": "!_enabled || !_viewer",
+        "right": "!_catalog",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A064-left",
+          "A064-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A065",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 332,
+        "class": "LogicalExpression",
+        "text": "!_enabled || !_viewer",
+        "start": 10799,
+        "end": 10820,
+        "left": "!_enabled",
+        "right": "!_viewer",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A065-left",
+          "A065-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A066",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 335,
+        "class": "ForOfStatement",
+        "text": "for (const id of [..._loaded.keys()]) {\n        const product = products.get(id);\n        if (!product || !wanted(product)) unload(id);\n      }",
+        "start": 10961,
+        "end": 11104,
+        "left": "const id",
+        "right": "[..._loaded.keys()]",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A066-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A067",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 337,
+        "class": "LogicalExpression",
+        "text": "!product || !wanted(product)",
+        "start": 11055,
+        "end": 11083,
+        "left": "!product",
+        "right": "!wanted(product)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A067-left",
+          "A067-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A068",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 339,
+        "class": "ForOfStatement",
+        "text": "for (const product of _catalog.products) {\n        if (!wanted(product) || signal.aborted) continue;\n        if (_loaded.get(product.id)?.version === product.version) continue;\n        _loading.set(product.id, product.version);\n        _failed.delete(product.id);\n        notifyRow();\n        try {\n          const next = await load(product, signal);\n          if (signal.aborted || !_enabled) {\n            next.urls.forEach((url) => URL.revokeObjectURL(url));\n            return;\n          }\n          // Cull before the first frame so far-side pins never flash.\n          _horizon.update(next.pins);\n          await _viewer.dataSources.add(next.dataSource);\n          // The new edition is on the globe before the old one leaves.\n          unload(product.id);\n          _loaded.set(product.id, next);\n        } catch (error) {\n          if (signal.aborted) return;\n          console.warn(`[Data:GhostMaps] ${product.id}:`, error);\n          _failed.set(\n            product.id,\n            error?.template ||\n              error?.message ||\n              msg('GhostMaps file could not be read'),\n          );\n        } finally {\n          _loading.delete(product.id);\n          notifyRow();\n          render();\n        }\n      }",
+        "start": 11111,
+        "end": 12342,
+        "left": "const product",
+        "right": "_catalog.products",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A068-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A069",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 340,
+        "class": "LogicalExpression",
+        "text": "!wanted(product) || signal.aborted",
+        "start": 11166,
+        "end": 11200,
+        "left": "!wanted(product)",
+        "right": "signal.aborted",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A069-left",
+          "A069-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A070",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 347,
+        "class": "LogicalExpression",
+        "text": "signal.aborted || !_enabled",
+        "start": 11476,
+        "end": 11503,
+        "left": "signal.aborted",
+        "right": "!_enabled",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A070-left",
+          "A070-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A071",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 362,
+        "class": "LogicalExpression",
+        "text": "error?.template ||\n              error?.message ||\n              msg('GhostMaps file could not be read')",
+        "start": 12104,
+        "end": 12208,
+        "left": "error?.template ||\n              error?.message",
+        "right": "msg('GhostMaps file could not be read')",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A071-left",
+          "A071-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A072",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 362,
+        "class": "LogicalExpression",
+        "text": "error?.template ||\n              error?.message",
+        "start": 12104,
+        "end": 12151,
+        "left": "error?.template",
+        "right": "error?.message",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A072-left",
+          "A072-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A073",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 379,
+        "class": "LogicalExpression",
+        "text": "catalog.error || null",
+        "start": 12482,
+        "end": 12503,
+        "left": "catalog.error",
+        "right": "null",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A073-left",
+          "A073-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A074",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 398,
+        "class": "LogicalExpression",
+        "text": "_catalog?.products.find((p) => p.id === productId) || null",
+        "start": 13060,
+        "end": 13118,
+        "left": "_catalog?.products.find((p) => p.id === productId)",
+        "right": "null",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A074-left",
+          "A074-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A075",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 399,
+        "class": "LogicalExpression",
+        "text": "_loaded.get(productId)?.features[Number(index)] || null",
+        "start": 13135,
+        "end": 13190,
+        "left": "_loaded.get(productId)?.features[Number(index)]",
+        "right": "null",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A075-left",
+          "A075-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A076",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 405,
+        "class": "ConditionalExpression",
+        "text": "_selectedKey ? featureFor(_selectedKey) : {}",
+        "start": 13294,
+        "end": 13338,
+        "left": null,
+        "right": null,
+        "consequent": "featureFor(_selectedKey)",
+        "alternate": "{}",
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A076-true",
+          "A076-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A077",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 418,
+        "class": "LogicalExpression",
+        "text": "links[0] || null",
+        "start": 13675,
+        "end": 13691,
+        "left": "links[0]",
+        "right": "null",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A077-left",
+          "A077-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A078",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 419,
+        "class": "LogicalExpression",
+        "text": "PRODUCT_LABELS[product?.id] || product?.title || ''",
+        "start": 13716,
+        "end": 13767,
+        "left": "PRODUCT_LABELS[product?.id] || product?.title",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A078-left",
+          "A078-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A079",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 419,
+        "class": "LogicalExpression",
+        "text": "PRODUCT_LABELS[product?.id] || product?.title",
+        "start": 13716,
+        "end": 13761,
+        "left": "PRODUCT_LABELS[product?.id]",
+        "right": "product?.title",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A079-left",
+          "A079-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A080",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 423,
+        "class": "ForOfStatement",
+        "text": "for (const { label, value } of fields) {\n      if (details.length >= MAX_CARD_LINES) break;\n      // ArcGIS repeats the feature type as the first row; the title has it.\n      if (value === feature.name) continue;\n      const line = label ? `${fieldLabel(label)}: ${value}` : value;\n      details.push(\n        ...wrapCardText(line, 60, Math.min(4, MAX_CARD_LINES - details.length)),\n      );\n    }",
+        "start": 13974,
+        "end": 14371,
+        "left": "const { label, value }",
+        "right": "fields",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A080-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A081",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 427,
+        "class": "ConditionalExpression",
+        "text": "label ? `${fieldLabel(label)}: ${value}` : value",
+        "start": 14206,
+        "end": 14254,
+        "left": null,
+        "right": null,
+        "consequent": "`${fieldLabel(label)}: ${value}`",
+        "alternate": "value",
+        "result": "TESTED",
+        "mutations": [
+          "A081-true",
+          "A081-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A082",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 432,
+        "class": "LogicalExpression",
+        "text": "_selectedLink && openExternal",
+        "start": 14380,
+        "end": 14409,
+        "left": "_selectedLink",
+        "right": "openExternal",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A082-left",
+          "A082-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A083",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 442,
+        "class": "LogicalExpression",
+        "text": "fieldLabel(feature.name || feature.folder) || t('Report')",
+        "start": 14708,
+        "end": 14765,
+        "left": "fieldLabel(feature.name || feature.folder)",
+        "right": "t('Report')",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A083-left",
+          "A083-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A084",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 442,
+        "class": "LogicalExpression",
+        "text": "feature.name || feature.folder",
+        "start": 14719,
+        "end": 14749,
+        "left": "feature.name",
+        "right": "feature.folder",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A084-left",
+          "A084-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A085",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 447,
+        "class": "LogicalExpression",
+        "text": "_selectedLink && openExternal",
+        "start": 14887,
+        "end": 14916,
+        "left": "_selectedLink",
+        "right": "openExternal",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A085-left",
+          "A085-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A086",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 450,
+        "class": "LogicalExpression",
+        "text": "PRODUCT_COLORS[product?.id] || ACCENT",
+        "start": 14961,
+        "end": 14998,
+        "left": "PRODUCT_COLORS[product?.id]",
+        "right": "ACCENT",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A086-left",
+          "A086-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A087",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 490,
+        "class": "LogicalExpression",
+        "text": "typeof pickId !== 'string' || !pickId.startsWith(PICK_PREFIX)",
+        "start": 16318,
+        "end": 16379,
+        "left": "typeof pickId !== 'string'",
+        "right": "!pickId.startsWith(PICK_PREFIX)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A087-left",
+          "A087-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A088",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 493,
+        "class": "ConditionalExpression",
+        "text": "_loaded.get(productId)?.features[Number(index)]\n      ? `${productId}:${index}`\n      : null",
+        "start": 16487,
+        "end": 16579,
+        "left": null,
+        "right": null,
+        "consequent": "`${productId}:${index}`",
+        "alternate": "null",
+        "result": "TESTED",
+        "mutations": [
+          "A088-true",
+          "A088-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A089",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 499,
+        "class": "LogicalExpression",
+        "text": "!canSelect() || _clickHandler || !_viewer",
+        "start": 16629,
+        "end": 16670,
+        "left": "!canSelect() || _clickHandler",
+        "right": "!_viewer",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A089-left",
+          "A089-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A090",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 499,
+        "class": "LogicalExpression",
+        "text": "!canSelect() || _clickHandler",
+        "start": 16629,
+        "end": 16658,
+        "left": "!canSelect()",
+        "right": "_clickHandler",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A090-left",
+          "A090-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A091",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 503,
+        "class": "LogicalExpression",
+        "text": "typeof pickedId === 'string' && pickedId.startsWith(PICK_PREFIX)",
+        "start": 16767,
+        "end": 16831,
+        "left": "typeof pickedId === 'string'",
+        "right": "pickedId.startsWith(PICK_PREFIX)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A091-left",
+          "A091-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A092",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 507,
+        "class": "LogicalExpression",
+        "text": "pointer && !pointer.isPointerFree()",
+        "start": 16957,
+        "end": 16992,
+        "left": "pointer",
+        "right": "!pointer.isPointerFree()",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A092-left",
+          "A092-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A093",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 513,
+        "class": "LogicalExpression",
+        "text": "cardHit && cardHit.entryId === _selectedCardId",
+        "start": 17171,
+        "end": 17217,
+        "left": "cardHit",
+        "right": "cardHit.entryId === _selectedCardId",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A093-left",
+          "A093-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A094",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 514,
+        "class": "LogicalExpression",
+        "text": "_selectedLink && openExternal",
+        "start": 17233,
+        "end": 17262,
+        "left": "_selectedLink",
+        "right": "openExternal",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A094-left",
+          "A094-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A095",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 518,
+        "class": "ConditionalExpression",
+        "text": "picked ? pickedKey(picked) : null",
+        "start": 17392,
+        "end": 17425,
+        "left": null,
+        "right": null,
+        "consequent": "pickedKey(picked)",
+        "alternate": "null",
+        "result": "TESTED",
+        "mutations": [
+          "A095-true",
+          "A095-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A096",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 527,
+        "class": "LogicalExpression",
+        "text": "pickId && picking.isOwnedByOtherLayer(GHOSTMAPS_LAYER_ID, pickId)",
+        "start": 17623,
+        "end": 17688,
+        "left": "pickId",
+        "right": "picking.isOwnedByOtherLayer(GHOSTMAPS_LAYER_ID, pickId)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A096-left",
+          "A096-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A097",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 545,
+        "class": "ForOfStatement",
+        "text": "for (const item of _loaded.values()) count += item.features.length;",
+        "start": 18049,
+        "end": 18116,
+        "left": "const item",
+        "right": "_loaded.values()",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A097-loop",
+          "LOOP-count"
+        ],
+        "open": []
+      },
+      {
+        "id": "A098",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 566,
+        "class": "ForOfStatement",
+        "text": "for (const item of _loaded.values()) item.dataSource.show = true;",
+        "start": 18620,
+        "end": 18685,
+        "left": "const item",
+        "right": "_loaded.values()",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A098-loop",
+          "LOOP-enable"
+        ],
+        "open": []
+      },
+      {
+        "id": "A099",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 568,
+        "class": "LogicalExpression",
+        "text": "!_unsubscribe && typeof source.subscribe === 'function'",
+        "start": 18725,
+        "end": 18780,
+        "left": "!_unsubscribe",
+        "right": "typeof source.subscribe === 'function'",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A099-left",
+          "A099-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A100",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 590,
+        "class": "ForOfStatement",
+        "text": "for (const id of [..._loaded.keys()]) unload(id);",
+        "start": 19290,
+        "end": 19339,
+        "left": "const id",
+        "right": "[..._loaded.keys()]",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A100-loop",
+          "LOOP-disable"
+        ],
+        "open": []
+      },
+      {
+        "id": "A101",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 595,
+        "class": "LogicalExpression",
+        "text": "!_enabled || signal?.aborted",
+        "start": 19422,
+        "end": 19450,
+        "left": "!_enabled",
+        "right": "signal?.aborted",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A101-left",
+          "A101-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A102",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 602,
+        "class": "LogicalExpression",
+        "text": "signal?.aborted || !_enabled",
+        "start": 19670,
+        "end": 19698,
+        "left": "signal?.aborted",
+        "right": "!_enabled",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A102-left",
+          "A102-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A103",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 604,
+        "class": "LogicalExpression",
+        "text": "error?.message || msg('GhostMaps catalog unavailable')",
+        "start": 19799,
+        "end": 19853,
+        "left": "error?.message",
+        "right": "msg('GhostMaps catalog unavailable')",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A103-left",
+          "A103-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A104",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 623,
+        "class": "LogicalExpression",
+        "text": "_catalog?.products || []",
+        "start": 20234,
+        "end": 20258,
+        "left": "_catalog?.products",
+        "right": "[]",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A104-left",
+          "A104-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A105",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 625,
+        "class": "ConditionalExpression",
+        "text": "commit\n        ? _stream === 'open'\n          ? t('LIVE · GitHub {commit} · {message} · checked every {seconds}s', {\n              commit: commit.slice(0, 7),\n              message: _catalog.message || '—',\n              seconds: formatNumber(\n                Math.round((_catalog.pollMs || 15000) / 1000),\n              ),\n            })\n          : t('GitHub {commit} · {message} · reconnecting for live updates', {\n              commit: commit.slice(0, 7),\n              message: _catalog.message || '—',\n            })\n        : t('Connecting to the S2 GhostMaps repository…')",
+        "start": 20318,
+        "end": 20898,
+        "left": null,
+        "right": null,
+        "consequent": "_stream === 'open'\n          ? t('LIVE · GitHub {commit} · {message} · checked every {seconds}s', {\n              commit: commit.slice(0, 7),\n              message: _catalog.message || '—',\n              seconds: formatNumber(\n                Math.round((_catalog.pollMs || 15000) / 1000),\n              ),\n            })\n          : t('GitHub {commit} · {message} · reconnecting for live updates', {\n              commit: commit.slice(0, 7),\n              message: _catalog.message || '—',\n            })",
+        "alternate": "t('Connecting to the S2 GhostMaps repository…')",
+        "result": "TESTED",
+        "mutations": [
+          "A105-true",
+          "A105-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A106",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 626,
+        "class": "ConditionalExpression",
+        "text": "_stream === 'open'\n          ? t('LIVE · GitHub {commit} · {message} · checked every {seconds}s', {\n              commit: commit.slice(0, 7),\n              message: _catalog.message || '—',\n              seconds: formatNumber(\n                Math.round((_catalog.pollMs || 15000) / 1000),\n              ),\n            })\n          : t('GitHub {commit} · {message} · reconnecting for live updates', {\n              commit: commit.slice(0, 7),\n              message: _catalog.message || '—',\n            })",
+        "start": 20335,
+        "end": 20840,
+        "left": null,
+        "right": null,
+        "consequent": "t('LIVE · GitHub {commit} · {message} · checked every {seconds}s', {\n              commit: commit.slice(0, 7),\n              message: _catalog.message || '—',\n              seconds: formatNumber(\n                Math.round((_catalog.pollMs || 15000) / 1000),\n              ),\n            })",
+        "alternate": "t('GitHub {commit} · {message} · reconnecting for live updates', {\n              commit: commit.slice(0, 7),\n              message: _catalog.message || '—',\n            })",
+        "result": "TESTED",
+        "mutations": [
+          "A106-true",
+          "A106-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A107",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 629,
+        "class": "LogicalExpression",
+        "text": "_catalog.message || '—'",
+        "start": 20500,
+        "end": 20523,
+        "left": "_catalog.message",
+        "right": "'—'",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A107-left",
+          "A107-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A108",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 631,
+        "class": "LogicalExpression",
+        "text": "_catalog.pollMs || 15000",
+        "start": 20590,
+        "end": 20614,
+        "left": "_catalog.pollMs",
+        "right": "15000",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A108-left",
+          "A108-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A109",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 636,
+        "class": "LogicalExpression",
+        "text": "_catalog.message || '—'",
+        "start": 20801,
+        "end": 20824,
+        "left": "_catalog.message",
+        "right": "'—'",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A109-left",
+          "A109-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A110",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 645,
+        "class": "LogicalExpression",
+        "text": "PRODUCT_LABELS[product.id] || product.title",
+        "start": 21126,
+        "end": 21169,
+        "left": "PRODUCT_LABELS[product.id]",
+        "right": "product.title",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A110-left",
+          "A110-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A111",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 648,
+        "class": "ConditionalExpression",
+        "text": "failed ? 'error' : undefined",
+        "start": 21272,
+        "end": 21300,
+        "left": null,
+        "right": null,
+        "consequent": "'error'",
+        "alternate": "undefined",
+        "result": "TESTED",
+        "mutations": [
+          "A111-true",
+          "A111-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A112",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 652,
+        "class": "ConditionalExpression",
+        "text": "loaded\n                ? tn(\n                    loaded.features.length,\n                    '{count} placemark',\n                    '{count} placemarks',\n                    {\n                      count: formatNumber(loaded.features.length),\n                    },\n                  )\n                : null",
+        "start": 21417,
+        "end": 21727,
+        "left": null,
+        "right": null,
+        "consequent": "tn(\n                    loaded.features.length,\n                    '{count} placemark',\n                    '{count} placemarks',\n                    {\n                      count: formatNumber(loaded.features.length),\n                    },\n                  )",
+        "alternate": "null",
+        "result": "TESTED",
+        "mutations": [
+          "A112-true",
+          "A112-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A113",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 662,
+        "class": "ConditionalExpression",
+        "text": "failed ? t(failed) : null",
+        "start": 21743,
+        "end": 21768,
+        "left": null,
+        "right": null,
+        "consequent": "t(failed)",
+        "alternate": "null",
+        "result": "TESTED",
+        "mutations": [
+          "A113-true",
+          "A113-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A114",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 681,
+        "class": "LogicalExpression",
+        "text": "_catalog?.commit || null",
+        "start": 22311,
+        "end": 22335,
+        "left": "_catalog?.commit",
+        "right": "null",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A114-left",
+          "A114-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A115",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 682,
+        "class": "LogicalExpression",
+        "text": "_catalog?.committedAt || _catalog?.changedAt || null",
+        "start": 22357,
+        "end": 22409,
+        "left": "_catalog?.committedAt || _catalog?.changedAt",
+        "right": "null",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A115-left",
+          "A115-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A116",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 682,
+        "class": "LogicalExpression",
+        "text": "_catalog?.committedAt || _catalog?.changedAt",
+        "start": 22357,
+        "end": 22401,
+        "left": "_catalog?.committedAt",
+        "right": "_catalog?.changedAt",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A116-left",
+          "A116-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A117",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 683,
+        "class": "LogicalExpression",
+        "text": "_catalog?.checkedAt || null",
+        "start": 22430,
+        "end": 22457,
+        "left": "_catalog?.checkedAt",
+        "right": "null",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A117-left",
+          "A117-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A118",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 686,
+        "class": "LogicalExpression",
+        "text": "_lastError || [..._failed.values()][0] || null",
+        "start": 22535,
+        "end": 22581,
+        "left": "_lastError || [..._failed.values()][0]",
+        "right": "null",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A118-left",
+          "A118-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A119",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 686,
+        "class": "LogicalExpression",
+        "text": "_lastError || [..._failed.values()][0]",
+        "start": 22535,
+        "end": 22573,
+        "left": "_lastError",
+        "right": "[..._failed.values()][0]",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A119-left",
+          "A119-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A120",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 695,
+        "class": "ForOfStatement",
+        "text": "for (const [productId, item] of _loaded) {\n        for (const feature of item.features) {\n          if (out.length >= maxCount) return out;\n          out.push({\n            product: productId,\n            name: feature.name,\n            folder: feature.folder,\n            lon: feature.anchor[0],\n            lat: feature.anchor[1],\n          });\n        }\n      }",
+        "start": 22795,
+        "end": 23159,
+        "left": "const [productId, item]",
+        "right": "_loaded",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A120-loop",
+          "LOOP-records"
+        ],
+        "open": []
+      },
+      {
+        "id": "A121",
+        "file": "src/layers/ghostMaps/index.js",
+        "line": 696,
+        "class": "ForOfStatement",
+        "text": "for (const feature of item.features) {\n          if (out.length >= maxCount) return out;\n          out.push({\n            product: productId,\n            name: feature.name,\n            folder: feature.folder,\n            lon: feature.anchor[0],\n            lat: feature.anchor[1],\n          });\n        }",
+        "start": 22846,
+        "end": 23151,
+        "left": "const feature",
+        "right": "item.features",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A121-loop",
+          "LOOP-features"
+        ],
+        "open": []
+      },
+      {
+        "id": "A122",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 11,
+        "class": "LogicalExpression",
+        "text": "el?.children || []",
+        "start": 476,
+        "end": 494,
+        "left": "el?.children",
+        "right": "[]",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A122-left",
+          "A122-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A123",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 13,
+        "class": "LogicalExpression",
+        "text": "[...(el?.children || [])].find((child) => child.localName === name) || null",
+        "start": 577,
+        "end": 652,
+        "left": "[...(el?.children || [])].find((child) => child.localName === name)",
+        "right": "null",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A123-left",
+          "A123-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A124",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 13,
+        "class": "LogicalExpression",
+        "text": "el?.children || []",
+        "start": 582,
+        "end": 600,
+        "left": "el?.children",
+        "right": "[]",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A124-left",
+          "A124-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A125",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 15,
+        "class": "LogicalExpression",
+        "text": "el?.getElementsByTagName?.('*') || []",
+        "start": 695,
+        "end": 732,
+        "left": "el?.getElementsByTagName?.('*')",
+        "right": "[]",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A125-left",
+          "A125-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A126",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 18,
+        "class": "LogicalExpression",
+        "text": "el?.textContent ?? ''",
+        "start": 811,
+        "end": 832,
+        "left": "el?.textContent",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A126-left",
+          "A126-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A127",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 22,
+        "class": "ConditionalExpression",
+        "text": "el && Number.isFinite(value) ? value : fallback",
+        "start": 918,
+        "end": 965,
+        "left": null,
+        "right": null,
+        "consequent": "value",
+        "alternate": "fallback",
+        "result": "TESTED",
+        "mutations": [
+          "A127-true",
+          "A127-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A128",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 22,
+        "class": "LogicalExpression",
+        "text": "el && Number.isFinite(value)",
+        "start": 918,
+        "end": 946,
+        "left": "el",
+        "right": "Number.isFinite(value)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A128-left",
+          "A128-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A129",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 28,
+        "class": "ForOfStatement",
+        "text": "for (const tuple of String(value ?? '')\n    .trim()\n    .split(/\\s+/)) {\n    const [lon, lat] = tuple.split(',').map(Number);\n    if (\n      Number.isFinite(lon) &&\n      Number.isFinite(lat) &&\n      Math.abs(lat) <= 90 &&\n      Math.abs(lon) <= 180\n    )\n      out.push([lon, lat]);\n  }",
+        "start": 1119,
+        "end": 1407,
+        "left": "const tuple",
+        "right": "String(value ?? '')\n    .trim()\n    .split(/\\s+/)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A129-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A130",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 28,
+        "class": "LogicalExpression",
+        "text": "value ?? ''",
+        "start": 1146,
+        "end": 1157,
+        "left": "value",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A130-left",
+          "A130-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A131",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 33,
+        "class": "LogicalExpression",
+        "text": "Number.isFinite(lon) &&\n      Number.isFinite(lat) &&\n      Math.abs(lat) <= 90 &&\n      Math.abs(lon) <= 180",
+        "start": 1260,
+        "end": 1369,
+        "left": "Number.isFinite(lon) &&\n      Number.isFinite(lat) &&\n      Math.abs(lat) <= 90",
+        "right": "Math.abs(lon) <= 180",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A131-left",
+          "A131-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A132",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 33,
+        "class": "LogicalExpression",
+        "text": "Number.isFinite(lon) &&\n      Number.isFinite(lat) &&\n      Math.abs(lat) <= 90",
+        "start": 1260,
+        "end": 1339,
+        "left": "Number.isFinite(lon) &&\n      Number.isFinite(lat)",
+        "right": "Math.abs(lat) <= 90",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A132-left",
+          "A132-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A133",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 33,
+        "class": "LogicalExpression",
+        "text": "Number.isFinite(lon) &&\n      Number.isFinite(lat)",
+        "start": 1260,
+        "end": 1310,
+        "left": "Number.isFinite(lon)",
+        "right": "Number.isFinite(lat)",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A133-left",
+          "A133-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A134",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 48,
+        "class": "ConditionalExpression",
+        "text": "href ? resolveImage(href) : null",
+        "start": 1638,
+        "end": 1670,
+        "left": null,
+        "right": null,
+        "consequent": "resolveImage(href)",
+        "alternate": "null",
+        "result": "TESTED",
+        "mutations": [
+          "A134-true",
+          "A134-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A135",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 69,
+        "class": "ForOfStatement",
+        "text": "for (const el of descendants(doc, 'Style')) {\n    const id = el.getAttribute('id');\n    if (id) styles.set(id, readStyle(el, resolveImage));\n  }",
+        "start": 2408,
+        "end": 2552,
+        "left": "const el",
+        "right": "descendants(doc, 'Style')",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A135-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A136",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 74,
+        "class": "ForOfStatement",
+        "text": "for (const el of descendants(doc, 'StyleMap')) {\n    const id = el.getAttribute('id');\n    if (!id) continue;\n    const normal = childrenNamed(el, 'Pair').find(\n      (pair) => text(firstChild(pair, 'key')) === 'normal',\n    );\n    if (!normal) continue;\n    const inline = firstChild(normal, 'Style');\n    maps.set(\n      id,\n      inline\n        ? readStyle(inline, resolveImage)\n        : text(firstChild(normal, 'styleUrl')),\n    );\n  }",
+        "start": 2581,
+        "end": 3021,
+        "left": "const el",
+        "right": "descendants(doc, 'StyleMap')",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A136-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A137",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 84,
+        "class": "ConditionalExpression",
+        "text": "inline\n        ? readStyle(inline, resolveImage)\n        : text(firstChild(normal, 'styleUrl'))",
+        "start": 2914,
+        "end": 3009,
+        "left": null,
+        "right": null,
+        "consequent": "readStyle(inline, resolveImage)",
+        "alternate": "text(firstChild(normal, 'styleUrl'))",
+        "result": "TESTED",
+        "mutations": [
+          "A137-true",
+          "A137-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A138",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 90,
+        "class": "LogicalExpression",
+        "text": "url || ''",
+        "start": 3084,
+        "end": 3093,
+        "left": "url",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A138-left",
+          "A138-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A139",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 91,
+        "class": "LogicalExpression",
+        "text": "!id || url.includes('/') || depth > 2",
+        "start": 3122,
+        "end": 3159,
+        "left": "!id || url.includes('/')",
+        "right": "depth > 2",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A139-left",
+          "A139-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A140",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 91,
+        "class": "LogicalExpression",
+        "text": "!id || url.includes('/')",
+        "start": 3122,
+        "end": 3146,
+        "left": "!id",
+        "right": "url.includes('/')",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A140-left",
+          "A140-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A141",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 95,
+        "class": "LogicalExpression",
+        "text": "mapped || {}",
+        "start": 3334,
+        "end": 3346,
+        "left": "mapped",
+        "right": "{}",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A141-left",
+          "A141-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A142",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 101,
+        "class": "SwitchStatement",
+        "text": "switch (el.localName) {\n    case 'Point': {\n      const [position] = parseKmlCoordinates(\n        text(firstChild(el, 'coordinates')),\n      );\n      if (position) {\n        budget.positions += 1;\n        out.push({ type: 'point', position });\n      }\n      break;\n    }\n    case 'LineString':\n    case 'LinearRing': {\n      const positions = parseKmlCoordinates(\n        text(firstChild(el, 'coordinates')),\n      );\n      if (positions.length >= 2) {\n        budget.positions += positions.length;\n        out.push({ type: 'line', positions });\n      }\n      break;\n    }\n    case 'Polygon': {\n      const ring = (boundary) =>\n        parseKmlCoordinates(\n          text(firstChild(firstChild(boundary, 'LinearRing'), 'coordinates')),\n        );\n      const outer = ring(firstChild(el, 'outerBoundaryIs'));\n      if (outer.length >= 3) {\n        const holes = childrenNamed(el, 'innerBoundaryIs')\n          .map(ring)\n          .filter((hole) => hole.length >= 3);\n        budget.positions +=\n          outer.length + holes.reduce((n, hole) => n + hole.length, 0);\n        out.push({ type: 'polygon', outer, holes });\n      }\n      break;\n    }\n    case 'MultiGeometry':\n      for (const child of el.children) readGeometry(child, out, budget);\n      break;\n    default:\n      // Models, tracks and anything newer are not drawn.\n      break;\n  }",
+        "start": 3417,
+        "end": 4762,
+        "left": null,
+        "right": null,
+        "consequent": null,
+        "alternate": null,
+        "cases": [
+          "'Point'",
+          "'LineString'",
+          "'LinearRing'",
+          "'Polygon'",
+          "'MultiGeometry'",
+          null
+        ],
+        "result": "TESTED",
+        "mutations": [
+          "A142-case-0",
+          "A142-case-1",
+          "A142-case-2",
+          "A142-case-3",
+          "A142-case-4"
+        ],
+        "open": []
+      },
+      {
+        "id": "A143",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 140,
+        "class": "ForOfStatement",
+        "text": "for (const child of el.children) readGeometry(child, out, budget);",
+        "start": 4595,
+        "end": 4661,
+        "left": "const child",
+        "right": "el.children",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A143-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A144",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 151,
+        "class": "LogicalExpression",
+        "text": "node.localName === 'Folder' || node.localName === 'Document'",
+        "start": 4944,
+        "end": 5004,
+        "left": "node.localName === 'Folder'",
+        "right": "node.localName === 'Document'",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A144-left",
+          "A144-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A145",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 171,
+        "class": "ForOfStatement",
+        "text": "for (const placemark of descendants(doc, 'Placemark')) {\n    // A hidden placemark (visibility 0) is drawn hidden by Google Earth too.\n    if (text(firstChild(placemark, 'visibility')) === '0') continue;\n    const geometries = [];\n    for (const child of placemark.children)\n      readGeometry(child, geometries, budget);\n    if (!geometries.length) continue;\n    if (\n      features.length >= MAX_GHOSTMAPS_FEATURES ||\n      budget.positions > MAX_GHOSTMAPS_POSITIONS\n    ) {\n      over = true;\n      break;\n    }\n    const inline = firstChild(placemark, 'Style');\n    features.push({\n      name: text(firstChild(placemark, 'name')).slice(0, 200),\n      folder: folderName(placemark).slice(0, 120),\n      description: text(firstChild(placemark, 'description')),\n      style: {\n        ...styleFor(text(firstChild(placemark, 'styleUrl'))),\n        ...(inline ? readStyle(inline, resolveImage) : {}),\n      },\n      geometries,\n    });\n  }",
+        "start": 5609,
+        "end": 6547,
+        "left": "const placemark",
+        "right": "descendants(doc, 'Placemark')",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A145-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A146",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 175,
+        "class": "ForOfStatement",
+        "text": "for (const child of placemark.children)\n      readGeometry(child, geometries, budget);",
+        "start": 5844,
+        "end": 5930,
+        "left": "const child",
+        "right": "placemark.children",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A146-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A147",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 179,
+        "class": "LogicalExpression",
+        "text": "features.length >= MAX_GHOSTMAPS_FEATURES ||\n      budget.positions > MAX_GHOSTMAPS_POSITIONS",
+        "start": 5984,
+        "end": 6077,
+        "left": "features.length >= MAX_GHOSTMAPS_FEATURES",
+        "right": "budget.positions > MAX_GHOSTMAPS_POSITIONS",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A147-left",
+          "A147-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A148",
+        "file": "src/layers/ghostMaps/kml.js",
+        "line": 192,
+        "class": "ConditionalExpression",
+        "text": "inline ? readStyle(inline, resolveImage) : {}",
+        "start": 6461,
+        "end": 6506,
+        "left": null,
+        "right": null,
+        "consequent": "readStyle(inline, resolveImage)",
+        "alternate": "{}",
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A148-true",
+          "A148-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A149",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 16,
+        "class": "LogicalExpression",
+        "text": "text ?? ''",
+        "start": 464,
+        "end": 474,
+        "left": "text",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A149-left",
+          "A149-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A150",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 21,
+        "class": "ConditionalExpression",
+        "text": "ref[1] === 'x' || ref[1] === 'X'\n            ? parseInt(ref.slice(2), 16)\n            : parseInt(ref.slice(1), 10)",
+        "start": 615,
+        "end": 729,
+        "left": null,
+        "right": null,
+        "consequent": "parseInt(ref.slice(2), 16)",
+        "alternate": "parseInt(ref.slice(1), 10)",
+        "result": "TESTED",
+        "mutations": [
+          "A150-true",
+          "A150-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A151",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 21,
+        "class": "LogicalExpression",
+        "text": "ref[1] === 'x' || ref[1] === 'X'",
+        "start": 615,
+        "end": 647,
+        "left": "ref[1] === 'x'",
+        "right": "ref[1] === 'X'",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A151-left",
+          "A151-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A152",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 24,
+        "class": "ConditionalExpression",
+        "text": "code > 0 &&\n          code <= 0x10ffff &&\n          !(code >= 0xd800 && code <= 0xdfff)\n          ? String.fromCodePoint(code)\n          : ''",
+        "start": 746,
+        "end": 887,
+        "left": null,
+        "right": null,
+        "consequent": "String.fromCodePoint(code)",
+        "alternate": "''",
+        "result": "TESTED",
+        "mutations": [
+          "A152-true",
+          "A152-false"
+        ],
+        "open": []
+      },
+      {
+        "id": "A153",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 24,
+        "class": "LogicalExpression",
+        "text": "code > 0 &&\n          code <= 0x10ffff &&\n          !(code >= 0xd800 && code <= 0xdfff)",
+        "start": 746,
+        "end": 833,
+        "left": "code > 0 &&\n          code <= 0x10ffff",
+        "right": "!(code >= 0xd800 && code <= 0xdfff)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A153-left",
+          "A153-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A154",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 24,
+        "class": "LogicalExpression",
+        "text": "code > 0 &&\n          code <= 0x10ffff",
+        "start": 746,
+        "end": 784,
+        "left": "code > 0",
+        "right": "code <= 0x10ffff",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A154-left",
+          "A154-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A155",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 26,
+        "class": "LogicalExpression",
+        "text": "code >= 0xd800 && code <= 0xdfff",
+        "start": 800,
+        "end": 832,
+        "left": "code >= 0xd800",
+        "right": "code <= 0xdfff",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A155-left",
+          "A155-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A156",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 30,
+        "class": "LogicalExpression",
+        "text": "ENTITIES[ref.toLowerCase()] ?? whole",
+        "start": 910,
+        "end": 946,
+        "left": "ENTITIES[ref.toLowerCase()]",
+        "right": "whole",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A156-left",
+          "A156-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A157",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 38,
+        "class": "LogicalExpression",
+        "text": "html ?? ''",
+        "start": 1079,
+        "end": 1089,
+        "left": "html",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A157-left",
+          "A157-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A158",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 61,
+        "class": "LogicalExpression",
+        "text": "html ?? ''",
+        "start": 1951,
+        "end": 1961,
+        "left": "html",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A158-left",
+          "A158-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A159",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 68,
+        "class": "ForOfStatement",
+        "text": "for (const match of markup.matchAll(/href\\s*=\\s*[\"']([^\"']+)[\"']/gi)) {\n      const url = decodeHtmlEntities(match[1]).trim();\n      if (/^https?:\\/\\/[^\\s]+$/i.test(url) && !links.includes(url))\n        links.push(url);\n    }",
+        "start": 2113,
+        "end": 2338,
+        "left": "const match",
+        "right": "markup.matchAll(/href\\s*=\\s*[\"']([^\"']+)[\"']/gi)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A159-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A160",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 70,
+        "class": "LogicalExpression",
+        "text": "/^https?:\\/\\/[^\\s]+$/i.test(url) && !links.includes(url)",
+        "start": 2250,
+        "end": 2306,
+        "left": "/^https?:\\/\\/[^\\s]+$/i.test(url)",
+        "right": "!links.includes(url)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A160-left",
+          "A160-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A161",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 76,
+        "class": "ForOfStatement",
+        "text": "for (const row of source.matchAll(\n    /<tr\\b[^>]*>((?:(?!<tr\\b)[\\s\\S])*?)<\\/tr\\s*>/gi,\n  )) {\n    const cells = [\n      ...row[1].matchAll(/<t[dh]\\b[^>]*>([\\s\\S]*?)<\\/t[dh]\\s*>/gi),\n    ].map((cell) => cell[1]);\n    if (cells.length !== 2) continue;\n    const label = htmlToText(cells[0]);\n    const value = htmlToText(cells[1]);\n    if (!label || SKIPPED_LABELS.has(label.toLowerCase())) continue;\n    if (EMPTY_VALUES.has(value.toLowerCase())) continue;\n    addLinks(cells[1]);\n    // A bare research link is carried by `links`; the card does not need\n    // the URL twice.\n    if (/^https?:\\/\\/\\S+$/i.test(value)) continue;\n    if (fields.length < MAX_FIELDS)\n      fields.push({ label, value: value.slice(0, MAX_VALUE) });\n  }",
+        "start": 2492,
+        "end": 3223,
+        "left": "const row",
+        "right": "source.matchAll(\n    /<tr\\b[^>]*>((?:(?!<tr\\b)[\\s\\S])*?)<\\/tr\\s*>/gi,\n  )",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A161-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A162",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 85,
+        "class": "LogicalExpression",
+        "text": "!label || SKIPPED_LABELS.has(label.toLowerCase())",
+        "start": 2831,
+        "end": 2880,
+        "left": "!label",
+        "right": "SKIPPED_LABELS.has(label.toLowerCase())",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A162-left",
+          "A162-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A163",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 94,
+        "class": "LogicalExpression",
+        "text": "!fields.length && !links.length",
+        "start": 3230,
+        "end": 3261,
+        "left": "!fields.length",
+        "right": "!links.length",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A163-left",
+          "A163-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A164",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 108,
+        "class": "LogicalExpression",
+        "text": "text ?? ''",
+        "start": 3625,
+        "end": 3635,
+        "left": "text",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "EQUIVALENT",
+        "mutations": [
+          "A164-left",
+          "A164-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A165",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 127,
+        "class": "ForOfStatement",
+        "text": "for (let word of String(text ?? '')\n    .split(/\\s+/)\n    .filter(Boolean)) {\n    while (word.length > width) {\n      if (line) {\n        lines.push(line);\n        line = '';\n      }\n      lines.push(word.slice(0, width));\n      word = word.slice(width);\n    }\n    if (!line) line = word;\n    else if (line.length + 1 + word.length <= width) line += ` ${word}`;\n    else {\n      lines.push(line);\n      line = word;\n    }\n    if (lines.length >= maxLines) {\n      cut = true;\n      break;\n    }\n  }",
+        "start": 4207,
+        "end": 4705,
+        "left": "let word",
+        "right": "String(text ?? '')\n    .split(/\\s+/)\n    .filter(Boolean)",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A165-loop"
+        ],
+        "open": []
+      },
+      {
+        "id": "A166",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 127,
+        "class": "LogicalExpression",
+        "text": "text ?? ''",
+        "start": 4231,
+        "end": 4241,
+        "left": "text",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A166-left",
+          "A166-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A167",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 149,
+        "class": "LogicalExpression",
+        "text": "line && lines.length < maxLines",
+        "start": 4712,
+        "end": 4743,
+        "left": "line",
+        "right": "lines.length < maxLines",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A167-left",
+          "A167-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A168",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 152,
+        "class": "LogicalExpression",
+        "text": "cut && kept.length",
+        "start": 4839,
+        "end": 4857,
+        "left": "cut",
+        "right": "kept.length",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A168-left",
+          "A168-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A169",
+        "file": "src/layers/ghostMaps/records.js",
+        "line": 161,
+        "class": "LogicalExpression",
+        "text": "label ?? ''",
+        "start": 5100,
+        "end": 5111,
+        "left": "label",
+        "right": "''",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A169-left",
+          "A169-right"
+        ],
+        "open": []
+      },
+      {
+        "id": "A170",
+        "file": "src/layers/ghostMaps/source.js",
+        "line": 62,
+        "class": "LogicalExpression",
+        "text": "states[events.readyState] ?? 'connecting'",
+        "start": 2117,
+        "end": 2158,
+        "left": "states[events.readyState]",
+        "right": "'connecting'",
+        "consequent": null,
+        "alternate": null,
+        "result": "TESTED",
+        "mutations": [
+          "A170-left",
+          "A170-right"
+        ],
+        "open": []
+      }
+    ]
+  }
+}
