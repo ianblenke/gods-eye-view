@@ -133,3 +133,9 @@ These inputs include objects with their own text conversion methods.
 | `A141-right` | `src/layers/ghostMaps/kml.js:95` | An unresolved map gives undefined. The object spread at line 191 adds the same empty set of keys as an empty object. |
 | `A148-false` | `src/layers/ghostMaps/kml.js:192` | An absent inline style calls the guarded child helper at lines 45, 52 and 57. That path returns an empty object without an image call. |
 | `A164-right` | `src/layers/ghostMaps/records.js:108` | The exact color pattern at line 111 rejects the text forms of null and undefined. Custom text objects follow the same conversion. |
+
+## Purpose at archive time
+
+The lead sets this Purpose at archive time:
+
+Describe how the proxy reads the GhostMaps repository on GitHub, and how the layer shows the KMZ products of that repository on the globe.
