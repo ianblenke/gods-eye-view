@@ -27,7 +27,11 @@ test('tool string bounds hold at their edges and on huge arguments', () => {
   assert.deepEqual(validateValue(string({}), 'x'.repeat(1e6)), []);
   // Counting all of it takes roughly 0.7 s; stopping at the limit takes none.
   const huge = 'x'.repeat(1e8);
-  const started = performance.now();
+  const started = process.cpuUsage();
   assert.equal(validateValue(string({ maxLength: 60 }), huge).length, 1);
-  assert.ok(performance.now() - started < 200, 'stops counting past the limit');
+  const spent = process.cpuUsage(started);
+  assert.ok(
+    (spent.user + spent.system) / 1000 < 200,
+    'stops counting past the limit',
+  );
 });

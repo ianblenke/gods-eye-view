@@ -8,6 +8,8 @@
 - [x] 1.6 Add `zh-Hant.json` to the packages `reticulum` and `osh-layer`.
 - [x] 1.7 Commit each merge.
 - [x] 1.8 Run the two faults of decision D2.
+- [x] 1.9 Change the limit of the timing test of `tool-schema-codepoints.test.mjs` to CPU time.
+- [x] 1.10 Run the fault of decision D5.
 
 ## 2. Host evidence
 
@@ -22,6 +24,6 @@
 - [x] 3.1 Check the second parent of each merge commit against the upstream remote.
 - [x] 3.2 Run the adopt command with `FROM` set to the merged upstream commit after each merge step.
 - [x] 3.3 Run `make ratchet CHANGE=upstream-sync-10`.
-- [x] 3.4 Run the two review agents.
+- [x] 3.4 Run the two review agents in each round.
 - [x] 3.5 Write review.md.
 - [x] 3.6 Run `make gates CHANGE=upstream-sync-10` on the final tree.

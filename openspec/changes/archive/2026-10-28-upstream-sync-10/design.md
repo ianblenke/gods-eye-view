@@ -48,6 +48,14 @@ The adopt command records them. The check of the second parent of each merge com
 
 `package-lock.json` changes only the version fields, so the image `gods-eye-view:local` runs the gates.
 
+### D5: One timing test uses CPU time
+
+The upstream test `src/tools/tool-schema-codepoints.test.mjs` measures a string of 100 million characters with a wall-time limit of 200 ms.
+The test passed alone in the image three times. In the final gates run it failed in two of three runs, with no code change between them (`evidence/gates-timing.txt`).
+The change measures the CPU time of the process in place of the wall time. The limit stays 200 ms.
+
+The fault removes the stop of the count in `src/tools/schema.js`. The count then runs over all 100 million characters, and the test must fail.
+
 ## Files and measures
 
 The change edits `scripts/package-boundaries.json` and the catalogs of the locales, and it adds the plan, the evidence and the review files.
