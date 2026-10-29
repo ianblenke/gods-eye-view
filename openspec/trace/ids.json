@@ -3059,6 +3059,181 @@
     "since": "2026-10-16",
     "change": "gdacs-source"
   },
+  "ghostmaps-001": {
+    "hash": "ac70a3406a9b0cc42a9f1c0eb71f2f229fec0e22c51081fdb174c1c7382edba7",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-002": {
+    "hash": "929283913d6a866189ec11064a9b19c96ca99711484b1337d60936708d374153",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-003": {
+    "hash": "eb031b11fac48c524094c6bbcf3d0f72519919bc717f75122abc9cb31f1b9de5",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-004": {
+    "hash": "8ccbbe96bc24a84744f937615d382d24fecdd3cd08e32d93a262b00c056603c7",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-005": {
+    "hash": "5f56ee32ce956b206a1ff88d9dda9af84228d6e79312817f69dea6542f835c5c",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-006": {
+    "hash": "82fcd774a07efa1143ff343b2a64bd74228bcc023bd52b508ca7e33043d3927e",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-007": {
+    "hash": "8d3f7db1f3a572b92f2c075496bc45e4f50675d87454ba4b2973f571ca5aee3c",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-008": {
+    "hash": "d7fa36110794a13e109ba3337f0cb909e2605e3dc01be986e81466a319f85a82",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-009": {
+    "hash": "d8f59bb9aaf499762ce751bf4054bcd7de0e5cc8dbb57273120a967c53615f7d",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-010": {
+    "hash": "c7427890b20f2c952cc950c70f603f8a412e1542270d716e57a75c0b2fbbef2f",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-011": {
+    "hash": "57e47d2a87669d1b98cf446b1ea7b317d73bb616b71f8aab9fdcda61c5f602e6",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-012": {
+    "hash": "fe2b83ea3659631863f5b96efddef39c26d62223c18bbb2ef353e8397ee3a494",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-013": {
+    "hash": "f6b284bc1dd3bdb2cb31e3bba8c80e8bed998c441220e9d4c2a0b204e0ea7cb0",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-014": {
+    "hash": "f3d813bbb0c6709abb4988689858853e6d2b7c1b4559447880c39c094bcb25ef",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-015": {
+    "hash": "913d285160ee59ee40b89a6ca54df14d1c130a0ffa961ab7f4fb14d2686adbfe",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-016": {
+    "hash": "e2b07c9fdff176ba478deaea1f641976c4d0daa6befc14965a2ca642d121fa51",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-017": {
+    "hash": "6fc7c49aad3b1befbbb9cd9760e993495c8dfa6bbb28de418fb0bf64c94433a3",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-018": {
+    "hash": "041a619686b32198dc8729d74c6fce286a488b25c190f13078e3dde8b20dae6b",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-019": {
+    "hash": "e02b01feea2a087e7202a444fd478e9613e0d2deb319f8f1265bf20970d22aaf",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-020": {
+    "hash": "0395d05991ac6d6e07865f05c28a8af2e2b53edbbd53c3c36dfa53e91071edba",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-021": {
+    "hash": "df6e4870a347fa49b7c15d872f9e40a6af65d046fbde858a05f5d5cd513ef1ed",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-022": {
+    "hash": "e6d957f30b527aa96b375ad342dc770bd1b39848d79eeb1dc0d3223c36ad3670",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-023": {
+    "hash": "530b9e80c1d82638ef288fae10fdf548fe8707621bdc9bd61182ef8d75e8bb86",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-024": {
+    "hash": "ec62a182c599f2140aa206702ca8af6135127e928bb60250dc34506103d529dc",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-025": {
+    "hash": "e22b9d89fe12faf8154d09e6e03885ae46557555bb55f48f6e7a484c399cf21a",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-026": {
+    "hash": "44fb4bec1d057e312bb829f77cbb5f7d5c46521dc5dccae8dc8909f40a572959",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-027": {
+    "hash": "8f6bec666df1ef5d39c536c8a5b85904d50d54fb8af8c9e61c6ab016b6ae3e14",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-028": {
+    "hash": "a82cd752271bddbf2ee3ff628105c6d10b6211f46481887eea422c7b1448bd1c",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-029": {
+    "hash": "fd7102ab4547f976c68280471efdbd2eada7cd526abdfebb8b572632a54f32d0",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-030": {
+    "hash": "67d1c291327b5a9ea601ff18547bc8ee99450babe928d3729a85d4326991af03",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-031": {
+    "hash": "9d4b754a5838c51067bb33fd4fa0c38fb6128d26b7d0145258e103311a19a1e0",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-032": {
+    "hash": "e419580a748138b9892dcbef7c726c1ace0c98c4d3e7937918bcdbe5b0063050",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-033": {
+    "hash": "e1f6fde3a726f9b24896784f544304766698ea44cdfbadd459fbe3b121765ae2",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-034": {
+    "hash": "e76841bba0e6378456beef92261505432decab882fd6bcee552af1030eda03cb",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
+  "ghostmaps-035": {
+    "hash": "aaac9a6ca64dc322202ac5b52030dd15c361cc863238c8731772f856da847fe2",
+    "since": "2026-10-29",
+    "change": "backfill-ghostmaps"
+  },
   "hud-markings-001": {
     "hash": "bf07f3ac338e3fd2d2154e6b57509df6157b73411cd9031a3d84856c0ef48c0a",
     "since": "2026-09-16",
