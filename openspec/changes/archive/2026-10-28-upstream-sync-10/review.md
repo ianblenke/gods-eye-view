@@ -6,7 +6,7 @@ Date: 2026-10-28
 Gates: make gates CHANGE=upstream-sync-10 passed
 Rounds: 3
 Scope: diff bb0077ce
-Reviewed-Tree: b1af1390906b6ea722ecc03593a1f128131dff255f51ede079e4ca509a8c9b53
+Reviewed-Tree: fcd5c3547a3210264bc3a09eb0d95e2c55b244b7956eaa3f77dccea6cedf555b
 
 ## Rule 21 check
 
