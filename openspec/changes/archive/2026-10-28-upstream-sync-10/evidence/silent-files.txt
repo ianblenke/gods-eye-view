@@ -1,0 +1,19 @@
+Files that both sides changed since the shared ancestor 15de9d73: 17. Seven of them have a conflict (evidence/conflicts.txt).
+
+CHANGELOG.md
+docs/CURRENT-STATE.md
+package.json
+package-lock.json
+scripts/package-boundaries.json
+scripts/qa-director-timing.mjs
+src/director/clock.test.mjs
+src/director/interactions/interactions.test.mjs
+src/director/playback.test.mjs
+src/hud.js
+src/i18n/locales/es.json
+src/i18n/locales/ru.json
+src/i18n/locales/zh-CN.json
+src/i18n/same-as-english.json
+src/layers/perimeters/ownership.test.mjs
+src/layers/perimeters/source.test.mjs
+src/ui/layerPanel.js

@@ -1,0 +1,48 @@
+Upstream check of upstream-sync-10. Date (UTC): 2026-10-28 22:21:32. Branch head: 711df7e3.
+
+$ git ls-remote upstream main
+2bcdca1c9a2bc0a34074577cc5f4de01d4759233	refs/heads/main
+
+$ git rev-parse upstream/main
+2bcdca1c9a2bc0a34074577cc5f4de01d4759233
+
+$ git log -1 --format='merge commit %H%nparents %P' 73d24eb4
+merge commit 73d24eb4c242facec50f544e54d417681d531a39
+parents 5fb4368d538b258133d1e1406d18049f5ece6cc8 e608fee7935b21251ca8f601003d7d47c813797d
+
+$ git log -1 --format='merge commit %H%nparents %P' 711df7e3
+merge commit 711df7e322b0177e128bb9abf6288b5ea0bed80c
+parents 356b73975d3e6b1607300ed90fdde666f1725ec6 2bcdca1c9a2bc0a34074577cc5f4de01d4759233
+
+$ git merge-base --is-ancestor 2bcdca1c9a2bc0a34074577cc5f4de01d4759233 upstream/main && echo upstream commit is an ancestor of upstream/main
+upstream commit is an ancestor of upstream/main
+
+$ git merge-base e2637a5e 2bcdca1c9a2bc0a34074577cc5f4de01d4759233
+15de9d738c4a85be1a96726c6114181caef87eeb
+
+$ git rev-list --count 15de9d73..2bcdca1c
+106
+
+$ git rev-list --first-parent --count 15de9d73..2bcdca1c
+11
+
+$ git log --first-parent --format='%h %s' 15de9d73..2bcdca1c
+2bcdca1c Merge pull request #1405 from quanticsoul4772/upstream/traffic-layer-stale
+e608fee7 Merge pull request #1344 from nu-stats/pr/pause-hidden-polling
+3a6f2762 Merge pull request #1402 from quanticsoul4772/upstream/terrain-429-pause
+6d16b479 Merge pull request #1401 from quanticsoul4772/upstream/geocode-place-region
+55dc94ab Merge pull request #1374 from oneill9/codex/fix-seek-layer-state
+f7efbb03 Merge pull request #1404 from quanticsoul4772/upstream/perimeters-stale
+4730f85f Merge pull request #1209 from daikaginza/fix/i18n-layer-errors-in-data
+e37e8453 Merge pull request #1014 from deepeshbind/fix/scene-director-callback-errors
+a4d3701c Merge pull request #1430 from bilawalsidhu/codex/hal-646-zh-hant
+72eb3fdc Merge pull request #1439 from bilawalsidhu/release/v0.3.0
+9448c49a Merge pull request #1431 from Rohilalala/fix/b-street-bearing-north
+
+The lead ran the checks above at the commit 711df7e3. The branch has these commits after the merge commit 73d24eb4: the commit 356b7397 holds the adopt trace of the first step, and the commit 711df7e3 is the second merge. The commits after 711df7e3 hold only files under openspec/ (documents, evidence and trace files), so the parents of both merge commits do not change.
+
+$ git diff --name-only 711df7e3..HEAD | sed "s#/[^/]*$##" | sort | uniq -c
+      4 openspec/changes/archive/2026-10-28-upstream-sync-10
+      8 openspec/changes/archive/2026-10-28-upstream-sync-10/evidence
+      1 openspec/changes/upstream-sync-10
+      3 openspec/trace

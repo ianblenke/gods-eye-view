@@ -1,0 +1,7 @@
+Final gates runs of upstream-sync-10 (command: make gates CHANGE=upstream-sync-10, image gods-eye-view:local, Node 24.22.1). The test file src/tools/tool-schema-codepoints.test.mjs was the same in each run.
+
+Run 1, start 2026-10-28 (UTC): ERROR TRACE-FAILED-TEST src/tools/tool-schema-codepoints.test.mjs, test "tool string bounds hold at their edges and on huge arguments".
+Run 2: that test did not fail. The run stopped on two REVIEW-AGENT-NOT-PASS errors (the verdict line of the review copies).
+Run 3: the same TRACE-FAILED-TEST error as run 1.
+
+When the test file ran by itself in the image with NODE_V8_COVERAGE set, it passed in three of three runs (durations 544, 578 and 560 ms).

@@ -1,0 +1,7 @@
+Host test run of upstream-sync-10 on the trial tree 24d7ce7b6f8ba139de5ec3a7a40b837cee955524. Host node: v26.11.1.
+Command for each file: timeout 600 nice -n 19 node --test <file>, six files at a time. Start (UTC) 2026-10-28T21:48:41Z, end (UTC) 2026-10-28T21:58:06Z.
+Files: 894. Files with a status other than 0: 1 (src/i18n/catalog.test.mjs, zh-Hant texts missing). After decision D2 the file passed: node --test src/i18n gave pass 122, fail 0.
+
+src/i18n/catalog.test.mjs: rc=1 ℹ cancelled 0 ℹ fail 1 ℹ pass 14 ℹ skipped 0 ℹ tests 15 
+Second step: after the merge of 2bcdca1c the lead ran node --test on src/data/traffic.test.mjs, src/layers/traffic, src/ui and src/i18n: 0 failures.
+Host run of src/tooling/spec/gates.test.mjs on the commit 1d56ad04, host node v26.11.1: tests 241, pass 241, fail 0, skipped 0. Start (UTC) 2026-10-28T22:22:24Z, end (UTC) 2026-10-28T22:24:23Z.

@@ -1,0 +1,4 @@
+Files that the fork edited after the automatic merge (outside the 7 conflict files): 3
+src/i18n/locales/zh-Hant.json
+scripts/package-boundaries.json
+src/tools/tool-schema-codepoints.test.mjs
