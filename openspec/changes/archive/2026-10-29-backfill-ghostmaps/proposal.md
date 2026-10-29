@@ -34,5 +34,7 @@ The design records the sweep commands, coverage evidence and known limits.
 The pack and share paths in the request do not belong to this capability.
 This change does not edit them.
 
+The ratchet also writes one totals line for `src/layers/streetLevel/view.js`, from 97 to 98 branches. This change does not edit that file. The line is the known limit `ghostmaps-ratchet-noise`: the branch count of that file changes between runs.
+
 The new test files keep the upstream class of their adjacent modules.
 They test code from the upstream sync and do not add runtime modules.
