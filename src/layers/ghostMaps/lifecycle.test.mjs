@@ -100,8 +100,12 @@ function fixture(
 ) {
   const previous = Object.getOwnPropertyDescriptor(globalThis, 'DOMParser');
   globalThis.DOMParser = class {
-    parseFromString() {
-      return documentOverride || documentFixture();
+    parseFromString(xml) {
+      return (
+        (typeof documentOverride === 'function'
+          ? documentOverride(xml)
+          : documentOverride) || documentFixture()
+      );
     }
   };
   t.after(() => {
@@ -154,7 +158,35 @@ function fixture(
   return { layer, viewer, mounted, created, revoked };
 }
 
-test('[ghostmaps-029] cancelling a file read does not allocate packed-image URLs', async (t) => {
+const twoImages = () => ({
+  files: [
+    ['doc.kml', '<kml/>'],
+    ['one.png', 'first image'],
+    ['two.png', 'second image'],
+  ],
+  document: element('document', [
+    ...['one', 'two'].map((id) =>
+      element(
+        'Style',
+        [
+          element('IconStyle', [
+            element('Icon', [element('href', [], `${id}.png`)]),
+          ]),
+        ],
+        '',
+        { id },
+      ),
+    ),
+    ...['one', 'two'].map((id) =>
+      element('Placemark', [
+        element('styleUrl', [], `#${id}`),
+        element('Point', [element('coordinates', [], '12,34')]),
+      ]),
+    ),
+  ]),
+});
+
+test('[ghostmaps-044] cancelling a file read does not allocate packed-image URLs', async (t) => {
   const { layer, viewer, mounted, created, revoked } = fixture(t, {
     beforeFileReturns: (layer) => queueMicrotask(() => layer.disable()),
   });
@@ -166,35 +198,39 @@ test('[ghostmaps-029] cancelling a file read does not allocate packed-image URLs
 
 test('[ghostmaps-029] cancellation during parsing releases every packed-image URL', async (t) => {
   const { layer, viewer, mounted, created, revoked } = fixture(t, {
+    ...twoImages(),
     onCreateUrl: (layer) => layer.disable(),
   });
   await layer.update(viewer);
-  assert.equal(created.length, 1);
-  assert.deepEqual(revoked, created);
+  assert.equal(created.length, 2);
+  assert.deepEqual(created, ['blob:local-0', 'blob:local-1']);
+  assert.deepEqual(revoked, ['blob:local-0', 'blob:local-1']);
   assert.equal(mounted.size, 0);
 });
 
 test('[ghostmaps-029] entity construction failure releases parsed image URLs', async (t) => {
-  const { layer, viewer, mounted, created, revoked } = fixture(t);
+  const { layer, viewer, mounted, created, revoked } = fixture(t, twoImages());
   t.mock.method(Cesium.EntityCollection.prototype, 'add', () => {
     throw new Error('fixture entity failure');
   });
   await layer.update(viewer);
-  assert.equal(created.length, 1);
-  assert.deepEqual(revoked, created);
+  assert.equal(created.length, 2);
+  assert.deepEqual(created, ['blob:local-0', 'blob:local-1']);
+  assert.deepEqual(revoked, ['blob:local-0', 'blob:local-1']);
   assert.equal(mounted.size, 0);
   assert.equal(layer.getStats().error, 'fixture entity failure');
 });
 
-test('[ghostmaps-030] successful load keeps icons until the product is disabled', async (t) => {
-  const { layer, viewer, mounted, created, revoked } = fixture(t);
+test('[ghostmaps-060] successful load keeps icons until the product is disabled', async (t) => {
+  const { layer, viewer, mounted, created, revoked } = fixture(t, twoImages());
   await layer.update(viewer);
-  assert.equal(created.length, 1);
+  assert.equal(created.length, 2);
   assert.equal(revoked.length, 0);
   assert.equal(mounted.size, 1);
-  assert.equal(layer.getStats().count, 1);
+  assert.equal(layer.getStats().count, 2);
   layer.disable();
-  assert.deepEqual(revoked, created);
+  assert.deepEqual(created, ['blob:local-0', 'blob:local-1']);
+  assert.deepEqual(revoked, ['blob:local-0', 'blob:local-1']);
   assert.equal(mounted.size, 0);
 });
 
@@ -321,6 +357,27 @@ test('[ghostmaps-030] The layer creates point line and polygon entities', async 
   assert.equal(ds.entities.values.length, 4);
   const [pin, line, poly, outline] = ds.entities.values;
   assert.equal(pin.id, 'ghostmaps:cip:0:0');
+  assert.deepEqual(
+    pin.position.getValue(),
+    Cesium.Cartesian3.fromDegrees(12, 34),
+  );
+  assert.deepEqual(
+    line.polyline.positions.getValue(),
+    Cesium.Cartesian3.fromDegreesArray([0, 0, 4, 4]),
+  );
+  const hierarchy = poly.polygon.hierarchy.getValue();
+  assert.deepEqual(
+    hierarchy.positions,
+    Cesium.Cartesian3.fromDegreesArray([0, 0, 6, 0, 6, 6]),
+  );
+  assert.deepEqual(
+    hierarchy.holes.map((hole) => hole.positions),
+    [Cesium.Cartesian3.fromDegreesArray([1, 1, 2, 1, 2, 2])],
+  );
+  assert.deepEqual(
+    outline.polyline.positions.getValue(),
+    Cesium.Cartesian3.fromDegreesArray([0, 0, 6, 0, 6, 6, 0, 0]),
+  );
   assert.equal(pin.billboard.heightReference.getValue(), 1);
   assert.equal(pin.billboard.disableDepthTestDistance.getValue(), Infinity);
   assert.equal(pin.billboard.scale.getValue(), 0.7);
@@ -458,14 +515,16 @@ test('[ghostmaps-030] The layer uses a canvas marker and caches its image', asyn
   });
   await h.layer.update();
   assert.equal(canvases, 1);
-  assert.equal(
-    [...h.mounted][0].entities.values[0].billboard.image.getValue(),
-    'data:marker',
+  assert.deepEqual(
+    [...h.mounted][0].entities.values.map((entity) =>
+      entity.billboard.image.getValue(),
+    ),
+    ['data:marker', 'data:marker'],
   );
   assert.equal(context.fillStyle, '#39d0ff');
 });
 
-test('[ghostmaps-029] A KMZ without a KML document reports an error', async (t) => {
+test('[ghostmaps-061] A KMZ without a KML document reports an error', async (t) => {
   const h = fixture(t, { files: [['icon.png', 'x']] });
   await h.layer.update();
   assert.equal(h.layer.getStats().error, 'That KMZ holds no KML document.');
@@ -503,7 +562,7 @@ for (const [name, getItem, active] of [
     true,
   ],
 ]) {
-  test(`[ghostmaps-031] The layer reads the ${name} case from storage`, async (t) => {
+  test(`[ghostmaps-045] The layer reads the ${name} case from storage`, async (t) => {
     const h = fixture(t, {
       options: {
         storage: {
@@ -525,11 +584,22 @@ for (const [name, getItem, active] of [
 test('[ghostmaps-032] The layer replaces a changed product after it adds the new data', async (t) => {
   let catalog = { products: [plainProduct()] };
   const order = [];
+  const requests = [];
   const h = fixture(t, {
+    document: (xml) =>
+      reportDoc({
+        name: xml.includes('edition-b') ? 'New report' : 'Old report',
+        geometry: pointNode(xml.includes('edition-b') ? '20,40' : '12,34'),
+      }),
     options: {
       source: {
         getCatalog: async () => catalog,
-        getFile: async () => fixtureKmz(),
+        getFile: async (id, version) => {
+          requests.push([id, version]);
+          return fixtureKmz([
+            ['doc.kml', version === 'b' ? '<edition-b/>' : '<edition-a/>'],
+          ]);
+        },
       },
     },
   });
@@ -546,16 +616,36 @@ test('[ghostmaps-032] The layer replaces a changed product after it adds the new
   await h.layer.update();
   await h.layer.update();
   assert.deepEqual(order, ['add']);
+  assert.deepEqual(requests, [['cip', 'a']]);
+  assert.deepEqual(
+    [...h.mounted][0].entities.values[0].position.getValue(),
+    Cesium.Cartesian3.fromDegrees(12, 34),
+  );
+  const oldSource = [...h.mounted][0];
   catalog = { products: [plainProduct('cip', 'b')] };
   await h.layer.update();
   assert.deepEqual(order, ['add', 'add', 'remove']);
+  assert.deepEqual(requests, [
+    ['cip', 'a'],
+    ['cip', 'b'],
+  ]);
+  assert.equal(h.mounted.has(oldSource), false);
+  const nextSource = [...h.mounted][0];
+  assert.notEqual(nextSource, oldSource);
+  assert.deepEqual(
+    nextSource.entities.values[0].position.getValue(),
+    Cesium.Cartesian3.fromDegrees(20, 40),
+  );
+  assert.deepEqual(h.layer.getAnalystRecords(), [
+    { product: 'cip', name: 'New report', folder: 'Folder', lon: 20, lat: 40 },
+  ]);
   assert.equal(h.mounted.size, 1);
   catalog = { products: [] };
   await h.layer.update();
   assert.equal(h.mounted.size, 0);
 });
 
-test('[ghostmaps-032] A disabled layer rejects updates and removes its records', async (t) => {
+test('[ghostmaps-044] A disabled layer rejects updates and removes its records', async (t) => {
   let catalogs = 0;
   const h = fixture(t, {
     options: {
@@ -576,12 +666,12 @@ test('[ghostmaps-032] A disabled layer rejects updates and removes its records',
   assert.throws(() => h.layer.init(h.viewer), /already initialized/);
 });
 
-test('[ghostmaps-032] The layer rejects an absent catalog source', () => {
+test('[ghostmaps-043] The layer rejects an absent catalog source', () => {
   assert.throws(() => createGhostMapsLayer(), /catalog source/);
   assert.throws(() => createGhostMapsLayer({ source: {} }), /catalog source/);
 });
 
-test('[ghostmaps-032] An aborted signal rejects the catalog update', async (t) => {
+test('[ghostmaps-044] An aborted signal rejects the catalog update', async (t) => {
   const h = fixture(t);
   assert.equal(
     await h.layer.update(null, { signal: AbortSignal.abort() }),
@@ -591,7 +681,7 @@ test('[ghostmaps-032] An aborted signal rejects the catalog update', async (t) =
 });
 
 for (const name of ['late catalog', 'late error', 'signal error']) {
-  test(`[ghostmaps-032] The layer rejects a ${name} after cancellation`, async (t) => {
+  test(`[ghostmaps-044] The layer rejects a ${name} after cancellation`, async (t) => {
     const controller = new AbortController();
     let h;
     h = fixture(t, {
@@ -619,7 +709,7 @@ for (const [name, error, expected] of [
   ['message', { message: 'Message' }, 'Message'],
   ['default text', null, 'GhostMaps file could not be read'],
 ]) {
-  test(`[ghostmaps-034] A file error uses its ${name}`, async (t) => {
+  test(`[ghostmaps-059] A file error uses its ${name}`, async (t) => {
     const h = fixture(t, {
       options: {
         source: {
@@ -643,7 +733,7 @@ for (const [name, error, expected] of [
   ['message', new Error('Catalog error'), 'Catalog error'],
   ['default text', null, 'GhostMaps catalog unavailable'],
 ]) {
-  test(`[ghostmaps-034] A catalog error uses its ${name}`, async (t) => {
+  test(`[ghostmaps-059] A catalog error uses its ${name}`, async (t) => {
     const h = fixture(t, {
       options: {
         source: {
@@ -739,7 +829,7 @@ test('[ghostmaps-034] The layer reports initial state and live stream data', asy
   assert.equal(stops, 1);
 });
 
-test('[ghostmaps-033] A selected marker publishes a card and opens its source link', async (t) => {
+test('[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link', async (t) => {
   const h = selectionFixture(t, {
     description:
       '<tr><td>Note</td><td>Detail</td></tr><tr><td>Research</td><td><a href="https://a.test/">https://a.test/</a></td></tr><tr><td>Other</td><td><a href="https://b.test/">https://b.test/</a></td></tr>',
@@ -787,7 +877,7 @@ for (const [name, picked] of [
   ['empty ground', null],
   ['empty id', { id: '' }],
 ]) {
-  test(`[ghostmaps-033] The card closes for the ${name} pick`, async (t) => {
+  test(`[ghostmaps-054] The card closes for the ${name} pick`, async (t) => {
     const h = selectionFixture(t);
     await h.layer.update();
     h.click();
@@ -798,7 +888,7 @@ for (const [name, picked] of [
   });
 }
 
-test('[ghostmaps-033] The pointer owner and foreign picks keep the current card', async (t) => {
+test('[ghostmaps-055] The pointer owner and foreign picks keep the current card', async (t) => {
   const h = selectionFixture(t);
   await h.layer.update();
   h.click();
@@ -845,7 +935,7 @@ for (const [name, config, title, heading] of [
   });
 }
 
-test('[ghostmaps-030] The horizon callback updates point visibility after a camera change', async (t) => {
+test('[ghostmaps-050] The horizon callback updates point visibility after a camera change', async (t) => {
   let frame;
   const h = fixture(t, { document: reportDoc() });
   h.viewer.camera = {
@@ -867,6 +957,9 @@ test('[ghostmaps-030] The horizon callback updates point visibility after a came
   );
   frame();
   assert.equal(pin.show, false);
+  h.viewer.camera.positionWC = Cesium.Cartesian3.fromDegrees(12, 34, 1000000);
+  frame();
+  assert.equal(pin.show, true);
   [...h.mounted][0].show = false;
   h.layer.enable();
   assert.equal([...h.mounted][0].show, true);
@@ -886,7 +979,19 @@ test('[ghostmaps-033] The card caps fields and excludes the repeated feature nam
   await h.layer.update();
   h.click();
   assert.equal(h.card().details.length, 12);
-  assert.equal(h.card().details[1], 'Field 0: Text');
+  assert.deepEqual(h.card().details.slice(1), [
+    'Field 0: Text',
+    'Field 1: Text',
+    'Field 2: Text',
+    'Field 3: Text',
+    'Field 4: Text',
+    'Field 5: Text',
+    'Field 6: Text',
+    'Field 7: Text',
+    'Field 8: Text',
+    'Field 9: Text',
+    'Field 10: Text',
+  ]);
   assert.match(h.card().details[0], /06-01/);
 });
 
@@ -908,7 +1013,7 @@ for (const key of [
   'screenSpaceEventHandlerFactory',
   'picking',
 ]) {
-  test(`[ghostmaps-033] An absent ${key === 'picking' ? 'pick registry' : key} prevents card input`, async (t) => {
+  test(`[ghostmaps-046] An absent ${key === 'picking' ? 'pick registry' : key} prevents card input`, async (t) => {
     let handlers = 0;
     const options = {
       overlayHost: { setEntries() {} },
@@ -926,7 +1031,7 @@ for (const key of [
   });
 }
 
-test('[ghostmaps-032] The layer accepts an update before a viewer exists', async () => {
+test('[ghostmaps-044] The layer accepts an update before a viewer exists', async () => {
   const layer = createGhostMapsLayer({
     storage: null,
     source: { getCatalog: async () => ({ products: [plainProduct()] }) },
@@ -949,7 +1054,7 @@ for (const [name, descriptor] of [
     },
   ],
 ]) {
-  test(`[ghostmaps-031] The default storage handles ${name}`, async (t) => {
+  test(`[ghostmaps-045] The default storage handles ${name}`, async (t) => {
     const old = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
     Object.defineProperty(globalThis, 'localStorage', {
       configurable: true,
@@ -971,7 +1076,7 @@ for (const [name, descriptor] of [
 
 for (const name of ['signal', 'disabled flag', 'old signal']) {
   test(`[ghostmaps-029] The layer frees constructed icons after the ${name} changes`, async (t) => {
-    const h = fixture(t);
+    const h = fixture(t, twoImages());
     const resume = Cesium.EntityCollection.prototype.resumeEvents;
     t.mock.method(
       Cesium.EntityCollection.prototype,
@@ -984,13 +1089,13 @@ for (const name of ['signal', 'disabled flag', 'old signal']) {
       },
     );
     await h.layer.update();
-    assert.equal(h.created.length, 1);
-    assert.deepEqual(h.revoked, ['blob:local-0']);
+    assert.equal(h.created.length, 2);
+    assert.deepEqual(h.revoked, ['blob:local-0', 'blob:local-1']);
     assert.equal(h.mounted.size, 0);
   });
 }
 
-test('[ghostmaps-032] A row callback error does not block the next catalog', async (t) => {
+test('[ghostmaps-034] A row callback error does not block the next catalog', async (t) => {
   const h = fixture(t);
   let rows = 0;
   h.layer.setRowControlsListener(() => {
@@ -1002,7 +1107,7 @@ test('[ghostmaps-032] A row callback error does not block the next catalog', asy
   assert.equal(h.layer.getStats().count, 1);
 });
 
-test('[ghostmaps-031] A saved chip callback accepts an absent catalog after destruction', async (t) => {
+test('[ghostmaps-044] A saved chip callback accepts an absent catalog after destruction', async (t) => {
   const h = fixture(t);
   await h.layer.update();
   const chip = h.layer.getRowControls().chips[0];
@@ -1012,7 +1117,7 @@ test('[ghostmaps-031] A saved chip callback accepts an absent catalog after dest
   assert.equal(h.layer.getStats().count, 0);
 });
 
-test('[ghostmaps-033] A chip change removes the selected card', async (t) => {
+test('[ghostmaps-054] A chip change removes the selected card', async (t) => {
   const h = selectionFixture(t);
   await h.layer.update();
   h.click();
@@ -1021,7 +1126,7 @@ test('[ghostmaps-033] A chip change removes the selected card', async (t) => {
   assert.equal(h.card(), undefined);
 });
 
-test('[ghostmaps-033] A custom catalog can remove the feature during a pick', async (t) => {
+test('[ghostmaps-046] A custom catalog can remove the feature during a pick', async (t) => {
   const products = [plainProduct()];
   const h = selectionFixture(t, { catalog: { products } });
   await h.layer.update();
@@ -1086,7 +1191,7 @@ test('[ghostmaps-035] The application card opens the link through the window hos
   ]);
 });
 
-test('[ghostmaps-032] A stale chip cannot load data without a catalog', async (t) => {
+test('[ghostmaps-044] A stale chip cannot load data without a catalog', async (t) => {
   const h = fixture(t);
   await h.layer.update();
   const chip = h.layer.getRowControls().chips[0];
@@ -1108,7 +1213,7 @@ for (const [name, config] of [
     },
   ],
 ]) {
-  test(`[ghostmaps-033] The card stays plain with an ${name}`, async (t) => {
+  test(`[ghostmaps-047] The card stays plain with an ${name}`, async (t) => {
     const h = selectionFixture(t, config);
     await h.layer.update();
     h.click();
@@ -1128,14 +1233,14 @@ for (const [name, options] of [
   ['absent factory', { screenSpaceEventHandlerFactory: null }],
   ['absent registry', { picking: null }],
 ]) {
-  test(`[ghostmaps-033] The application accepts an ${name}`, async (t) => {
+  test(`[ghostmaps-046] The application accepts an ${name}`, async (t) => {
     const h = fixture(t, { factory: createApplicationGhostMaps, options });
     await h.layer.update();
     assert.equal(h.layer.getStats().count, 1);
   });
 }
 
-test('[ghostmaps-031] A stored object cannot use an inherited array method', async (t) => {
+test('[ghostmaps-045] A stored object cannot use an inherited array method', async (t) => {
   const old = Object.getOwnPropertyDescriptor(Object.prototype, 'map');
   Object.defineProperty(Object.prototype, 'map', {
     configurable: true,
@@ -1181,7 +1286,7 @@ for (const [id, label, color] of [
   });
 }
 
-test('[ghostmaps-032] A product getter can cancel before its file request', async (t) => {
+test('[ghostmaps-044] A product getter can cancel before its file request', async (t) => {
   let calls = 0;
   let h;
   const product = {
@@ -1207,7 +1312,7 @@ test('[ghostmaps-032] A product getter can cancel before its file request', asyn
   assert.equal(calls, 0);
 });
 
-test('[ghostmaps-032] An absent viewer prevents access to catalog products', async () => {
+test('[ghostmaps-044] An absent viewer prevents access to catalog products', async () => {
   let fields = 0;
   const catalog = {
     get products() {
@@ -1226,7 +1331,7 @@ test('[ghostmaps-032] An absent viewer prevents access to catalog products', asy
   layer.destroy();
 });
 
-test('[ghostmaps-032] The disabled state prevents access to catalog products', async (t) => {
+test('[ghostmaps-044] The disabled state prevents access to catalog products', async (t) => {
   let fields = 0;
   const product = plainProduct();
   const catalog = {
@@ -1254,7 +1359,7 @@ test('[ghostmaps-032] The disabled state prevents access to catalog products', a
   assert.equal(fields, 0);
 });
 
-test('[ghostmaps-033] An invalid feature index prevents access to product metadata', async (t) => {
+test('[ghostmaps-046] An invalid feature index prevents access to product metadata', async (t) => {
   let reads = 0;
   const products = [plainProduct()];
   products.find = (...args) => {
@@ -1268,7 +1373,7 @@ test('[ghostmaps-033] An invalid feature index prevents access to product metada
   assert.equal(h.card(), undefined);
 });
 
-test('[ghostmaps-033] The layer does not create an input handler without a viewer', () => {
+test('[ghostmaps-046] The layer does not create an input handler without a viewer', () => {
   let handlers = 0;
   const layer = createGhostMapsLayer({
     storage: null,
@@ -1285,13 +1390,13 @@ test('[ghostmaps-033] The layer does not create an input handler without a viewe
   layer.destroy();
 });
 
-test('[ghostmaps-033] The layer keeps one input handler after a repeated enable call', async (t) => {
+test('[ghostmaps-065] The layer keeps one input handler after a repeated enable call', async (t) => {
   const h = selectionFixture(t);
   h.layer.enable();
   assert.equal(h.owners.length, 1);
 });
 
-test('[ghostmaps-033] An empty pick id does not call another owner', async (t) => {
+test('[ghostmaps-046] An empty pick id does not call another owner', async (t) => {
   let checks = 0;
   const h = selectionFixture(t, {
     options: {
@@ -1310,7 +1415,7 @@ test('[ghostmaps-033] An empty pick id does not call another owner', async (t) =
   assert.equal(h.card(), undefined);
 });
 
-test('[ghostmaps-032] A row callback can remove the catalog before synchronization', async (t) => {
+test('[ghostmaps-044] A row callback can remove the catalog before synchronization', async (t) => {
   const h = fixture(t);
   h.layer.setRowControlsListener(() => {
     h.layer.destroy();
@@ -1387,7 +1492,7 @@ test('[ghostmaps-030] The polygon alpha value takes precedence over the inherite
   assert.equal(material.color.getValue().alpha, 0.25);
 });
 
-test('[ghostmaps-030 ghostmaps-032 ghostmaps-034] The layer owns all products and all report records', async (t) => {
+test('[ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records', async (t) => {
   let frame;
   const document = element('document', [
     element('Placemark', [textNode('name', 'One'), pointNode()]),
@@ -1415,6 +1520,12 @@ test('[ghostmaps-030 ghostmaps-032 ghostmaps-034] The layer owns all products an
   await h.layer.update();
   assert.equal(h.mounted.size, 3);
   assert.equal(h.layer.getStats().count, 6);
+  assert.deepEqual(
+    [...h.mounted].flatMap((ds) =>
+      ds.entities.values.map((entity) => entity.show),
+    ),
+    [true, true, true, true, true, true],
+  );
   assert.deepEqual(h.layer.getStats().products, [
     'cip',
     'kinetic-30d',
@@ -1446,4 +1557,65 @@ test('[ghostmaps-030 ghostmaps-032 ghostmaps-034] The layer owns all products an
   h.layer.disable();
   assert.equal(h.mounted.size, 0);
   assert.deepEqual(h.layer.getAnalystRecords(), []);
+});
+
+test('[ghostmaps-032] A pushed edition changes only its product data source', async (t) => {
+  let onCatalog;
+  const requests = [];
+  const h = fixture(t, {
+    document: (xml) =>
+      reportDoc({
+        geometry: pointNode(xml.includes('new-kinetic') ? '28,46' : '12,34'),
+      }),
+    options: {
+      source: {
+        getCatalog: async () => ({
+          products: [
+            plainProduct('cip', 'a'),
+            plainProduct('kinetic-30d', 'b'),
+          ],
+        }),
+        getFile: async (id, version) => {
+          requests.push([id, version]);
+          return fixtureKmz([
+            [
+              'doc.kml',
+              id === 'kinetic-30d' && version === 'c'
+                ? '<new-kinetic/>'
+                : '<old/>',
+            ],
+          ]);
+        },
+        subscribe: (listener) => {
+          onCatalog = listener;
+          return () => {};
+        },
+      },
+    },
+  });
+  await h.layer.update();
+  const first = [...h.mounted];
+  assert.deepEqual(
+    first.map((ds) => ds.name),
+    ['s2-ghostmaps:cip', 's2-ghostmaps:kinetic-30d'],
+  );
+  onCatalog({
+    products: [plainProduct('cip', 'a'), plainProduct('kinetic-30d', 'c')],
+  });
+  await settleLayer();
+  const second = [...h.mounted];
+  assert.equal(second[0], first[0]);
+  assert.notEqual(second[1], first[1]);
+  assert.deepEqual(requests, [
+    ['cip', 'a'],
+    ['kinetic-30d', 'b'],
+    ['kinetic-30d', 'c'],
+  ]);
+  assert.deepEqual(
+    second[1].entities.values[0].position.getValue(),
+    Cesium.Cartesian3.fromDegrees(28, 46),
+  );
+  onCatalog({ products: [plainProduct('cip', 'a')] });
+  await settleLayer();
+  assert.deepEqual([...h.mounted], [first[0]]);
 });

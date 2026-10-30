@@ -179,7 +179,7 @@ for (const [name, entry] of [
   });
 }
 
-test('[ghostmaps-001] The edition parser accepts an absent name', () => {
+test('[ghostmaps-062] The edition parser accepts an absent name', () => {
   assert.deepEqual(parseGhostMapsEdition(), { dateMs: null, edition: 0 });
   assert.equal(ghostMapsFileTitle(), '');
 });
@@ -279,7 +279,7 @@ for (const [name, paths] of [
   });
 }
 
-test('[ghostmaps-006] The ref parser accepts an absent advertisement', () => {
+test('[ghostmaps-066] The ref parser accepts an absent advertisement', () => {
   assert.equal(parseGitRefAdvertisement(), null);
 });
 

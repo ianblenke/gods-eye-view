@@ -1,5 +1,5 @@
 {
-  "commit": "b5a64127667c22af8c68b53706e9f27d866acac0",
+  "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb",
   "data": {
     "ghostmaps-001": {
       "title": "Read edition dates",
@@ -7,10 +7,6 @@
         {
           "file": "src/layers/ghostMaps/catalog.test.mjs",
           "name": "[ghostmaps-001] editions read the date and export/version number written in the name"
-        },
-        {
-          "file": "src/layers/ghostMaps/catalog.test.mjs",
-          "name": "[ghostmaps-001] The edition parser accepts an absent name"
         }
       ]
     },
@@ -156,10 +152,6 @@
         {
           "file": "src/layers/ghostMaps/catalog.test.mjs",
           "name": "[ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement"
-        },
-        {
-          "file": "src/layers/ghostMaps/catalog.test.mjs",
-          "name": "[ghostmaps-006] The ref parser accepts an absent advertisement"
         }
       ]
     },
@@ -254,7 +246,7 @@
         },
         {
           "file": "src/layers/ghostMaps/records.test.mjs",
-          "name": "[ghostmaps-009] The parser caps source links and free text"
+          "name": "[ghostmaps-009 ghostmaps-063] The parser caps source links and free text"
         }
       ]
     },
@@ -283,15 +275,15 @@
         },
         {
           "file": "src/layers/ghostMaps/records.test.mjs",
-          "name": "[ghostmaps-010] The decoder checks upper bound"
+          "name": "[ghostmaps-010] The decoder checks the upper bound"
         },
         {
           "file": "src/layers/ghostMaps/records.test.mjs",
-          "name": "[ghostmaps-010] The decoder checks low surrogate bound"
+          "name": "[ghostmaps-010] The decoder checks the low surrogate bound"
         },
         {
           "file": "src/layers/ghostMaps/records.test.mjs",
-          "name": "[ghostmaps-010] The decoder checks high surrogate bound"
+          "name": "[ghostmaps-010] The decoder checks the high surrogate bound"
         },
         {
           "file": "src/layers/ghostMaps/records.test.mjs",
@@ -303,7 +295,7 @@
         },
         {
           "file": "src/layers/ghostMaps/records.test.mjs",
-          "name": "[ghostmaps-010] The decoder checks unknown name"
+          "name": "[ghostmaps-010] The decoder checks an unknown name"
         },
         {
           "file": "src/layers/ghostMaps/records.test.mjs",
@@ -395,39 +387,7 @@
         },
         {
           "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The API token is present"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The API token is absent"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
           "name": "[ghostmaps-014] A subscriber error does not stop the next subscriber"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The watcher handles invalid refs"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The watcher handles invalid tree"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The watcher handles commit error"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The watcher handles truncated tree"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The watcher handles invalid date"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The watcher handles empty message"
         },
         {
           "file": "server/providers/ghostMaps.test.mjs",
@@ -435,27 +395,7 @@
         },
         {
           "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The default helpers use fetch log and warning callbacks"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] A failed response tolerates a body cancel error"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The default token helper checks the present token"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The default token helper checks the absent token"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The watcher records the message and date"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-014] The watcher records the empty message and date"
+          "name": "[ghostmaps-014 ghostmaps-048] The default helpers use fetch log and warning callbacks"
         },
         {
           "file": "server/providers/ghostMaps.test.mjs",
@@ -502,14 +442,6 @@
         {
           "file": "server/providers/ghostMaps.test.mjs",
           "name": "[ghostmaps-016] The disk catalog checks valid data"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-016] The disk catalog checks invalid commit data"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-016] The disk catalog checks invalid products data"
         }
       ]
     },
@@ -541,26 +473,6 @@
         {
           "file": "server/providers/ghostMaps.test.mjs",
           "name": "[ghostmaps-019] routes: unknown paths and methods are refused without contacting GitHub"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-019] The proxy serves current file bytes and cache headers"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-019] The proxy waits for the first catalog and file check"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-019] The proxy reports file errors"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-019] A destroyed response does not receive JSON"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-019] The proxy creates local routes before it starts the watcher"
         }
       ]
     },
@@ -583,10 +495,6 @@
         {
           "file": "server/providers/ghostMaps.test.mjs",
           "name": "[ghostmaps-021] The event route sends catalogs heartbeats and close callbacks"
-        },
-        {
-          "file": "server/providers/ghostMaps.test.mjs",
-          "name": "[ghostmaps-021] The event route caps subscribers"
         }
       ]
     },
@@ -596,22 +504,6 @@
         {
           "file": "src/layers/ghostMaps/source.test.mjs",
           "name": "[ghostmaps-022] The source returns the catalog and passes its signal"
-        },
-        {
-          "file": "src/layers/ghostMaps/source.test.mjs",
-          "name": "[ghostmaps-022] The source rejects a catalog with an HTTP error"
-        },
-        {
-          "file": "src/layers/ghostMaps/source.test.mjs",
-          "name": "[ghostmaps-022] The source rejects a catalog with null data"
-        },
-        {
-          "file": "src/layers/ghostMaps/source.test.mjs",
-          "name": "[ghostmaps-022] The source rejects a catalog with absent products"
-        },
-        {
-          "file": "src/layers/ghostMaps/source.test.mjs",
-          "name": "[ghostmaps-022] The source rejects a catalog with invalid products"
         },
         {
           "file": "src/layers/ghostMaps/source.test.mjs",
@@ -625,10 +517,6 @@
         {
           "file": "src/layers/ghostMaps/source.test.mjs",
           "name": "[ghostmaps-023] The source encodes file values and returns bytes"
-        },
-        {
-          "file": "src/layers/ghostMaps/source.test.mjs",
-          "name": "[ghostmaps-023] The source rejects a file response error"
         },
         {
           "file": "src/layers/ghostMaps/source.test.mjs",
@@ -657,10 +545,6 @@
         },
         {
           "file": "src/layers/ghostMaps/source.test.mjs",
-          "name": "[ghostmaps-024] An absent event source reports a closed stream"
-        },
-        {
-          "file": "src/layers/ghostMaps/source.test.mjs",
           "name": "[ghostmaps-024] The stream accepts an absent state callback"
         }
       ]
@@ -678,19 +562,19 @@
         },
         {
           "file": "src/layers/ghostMaps/kml.test.mjs",
-          "name": "[ghostmaps-025] The coordinate parser checks north bound"
+          "name": "[ghostmaps-025] The coordinate parser checks the north bound"
         },
         {
           "file": "src/layers/ghostMaps/kml.test.mjs",
-          "name": "[ghostmaps-025] The coordinate parser checks south bound"
+          "name": "[ghostmaps-025] The coordinate parser checks the south bound"
         },
         {
           "file": "src/layers/ghostMaps/kml.test.mjs",
-          "name": "[ghostmaps-025] The coordinate parser checks east bound"
+          "name": "[ghostmaps-025] The coordinate parser checks the east bound"
         },
         {
           "file": "src/layers/ghostMaps/kml.test.mjs",
-          "name": "[ghostmaps-025] The coordinate parser checks west bound"
+          "name": "[ghostmaps-025] The coordinate parser checks the west bound"
         },
         {
           "file": "src/layers/ghostMaps/kml.test.mjs",
@@ -760,10 +644,6 @@
         {
           "file": "src/layers/ghostMaps/kml.test.mjs",
           "name": "[ghostmaps-026] The reader caps report names and folder names"
-        },
-        {
-          "file": "src/layers/ghostMaps/kml.test.mjs",
-          "name": "[ghostmaps-026] The reader accepts an absent document"
         }
       ]
     },
@@ -870,19 +750,11 @@
       "tests": [
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-029] cancelling a file read does not allocate packed-image URLs"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-029] cancellation during parsing releases every packed-image URL"
         },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-029] entity construction failure releases parsed image URLs"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-029] A KMZ without a KML document reports an error"
         },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
@@ -901,10 +773,6 @@
     "ghostmaps-030": {
       "title": "Draw product geometry",
       "tests": [
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-030] successful load keeps icons until the product is disabled"
-        },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-030] The layer creates point line and polygon entities"
@@ -955,10 +823,6 @@
         },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-030] The horizon callback updates point visibility after a camera change"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color"
         },
         {
@@ -991,7 +855,7 @@
         },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-030 ghostmaps-032 ghostmaps-034] The layer owns all products and all report records"
+          "name": "[ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records"
         }
       ]
     },
@@ -1001,46 +865,6 @@
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-031] A chip change stores the whole current selection"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-031] The layer reads the empty list case from storage"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-031] The layer reads the id list case from storage"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-031] The layer reads the invalid JSON case from storage"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-031] The layer reads the object case from storage"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-031] The layer reads the blocked storage case from storage"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-031] The default storage handles absent storage"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-031] The default storage handles valid storage"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-031] The default storage handles blocked storage"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-031] A saved chip callback accepts an absent catalog after destruction"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-031] A stored object cannot use an inherited array method"
         }
       ]
     },
@@ -1053,59 +877,7 @@
         },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] A disabled layer rejects updates and removes its records"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] The layer rejects an absent catalog source"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] An aborted signal rejects the catalog update"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] The layer rejects a late catalog after cancellation"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] The layer rejects a late error after cancellation"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] The layer rejects a signal error after cancellation"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] The layer accepts an update before a viewer exists"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] A row callback error does not block the next catalog"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] A stale chip cannot load data without a catalog"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] A product getter can cancel before its file request"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] An absent viewer prevents access to catalog products"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] The disabled state prevents access to catalog products"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-032] A row callback can remove the catalog before synchronization"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-030 ghostmaps-032 ghostmaps-034] The layer owns all products and all report records"
+          "name": "[ghostmaps-032] A pushed edition changes only its product data source"
         }
       ]
     },
@@ -1114,35 +886,7 @@
       "tests": [
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] A selected marker publishes a card and opens its source link"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The card closes for the number pick"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The card closes for the foreign prefix pick"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The card closes for the lookalike prefix pick"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The card closes for the absent index pick"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The card closes for the empty ground pick"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The card closes for the empty id pick"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The pointer owner and foreign picks keep the current card"
+          "name": "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
         },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
@@ -1166,47 +910,7 @@
         },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] An absent overlayHost prevents card input"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] An absent screenSpaceEventHandlerFactory prevents card input"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] An absent pick registry prevents card input"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] A chip change removes the selected card"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] A custom catalog can remove the feature during a pick"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-033] A custom catalog can remove product metadata during a pick"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The card stays plain with an absent link"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The card stays plain with an absent external host"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The application accepts an absent host"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The application accepts an absent factory"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The application accepts an absent registry"
         },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
@@ -1235,22 +939,6 @@
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The latest-drop product uses its label and color"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] An invalid feature index prevents access to product metadata"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The layer does not create an input handler without a viewer"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] The layer keeps one input handler after a repeated enable call"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-033] An empty pick id does not call another owner"
         },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
@@ -1267,27 +955,11 @@
       "tests": [
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-034] A file error uses its template"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-034] A file error uses its message"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-034] A file error uses its default text"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-034] A catalog error uses its message"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-034] A catalog error uses its default text"
-        },
-        {
-          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-034] The layer reports initial state and live stream data"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-034] A row callback error does not block the next catalog"
         },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
@@ -1319,7 +991,7 @@
         },
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
-          "name": "[ghostmaps-030 ghostmaps-032 ghostmaps-034] The layer owns all products and all report records"
+          "name": "[ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records"
         }
       ]
     },
@@ -1337,6 +1009,505 @@
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-035] The application card opens the link through the window host"
+        }
+      ]
+    },
+    "ghostmaps-036": {
+      "title": "Serve file responses",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-036] The proxy serves current file bytes and cache headers"
+        }
+      ]
+    },
+    "ghostmaps-037": {
+      "title": "Wait for the first catalog",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-037] The proxy waits for the first catalog and file check"
+        }
+      ]
+    },
+    "ghostmaps-038": {
+      "title": "Report file errors",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-038] The proxy reports file errors"
+        }
+      ]
+    },
+    "ghostmaps-039": {
+      "title": "Skip a destroyed response",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-039] A destroyed response does not receive JSON"
+        }
+      ]
+    },
+    "ghostmaps-040": {
+      "title": "Install local routes",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-040] The proxy creates local routes before it starts the watcher"
+        }
+      ]
+    },
+    "ghostmaps-041": {
+      "title": "Reject invalid catalog responses",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/source.test.mjs",
+          "name": "[ghostmaps-041] The source rejects a catalog with an HTTP error"
+        },
+        {
+          "file": "src/layers/ghostMaps/source.test.mjs",
+          "name": "[ghostmaps-041] The source rejects a catalog with null data"
+        },
+        {
+          "file": "src/layers/ghostMaps/source.test.mjs",
+          "name": "[ghostmaps-041] The source rejects a catalog with absent products"
+        },
+        {
+          "file": "src/layers/ghostMaps/source.test.mjs",
+          "name": "[ghostmaps-041] The source rejects a catalog with invalid products"
+        }
+      ]
+    },
+    "ghostmaps-042": {
+      "title": "Reject failed file responses",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/source.test.mjs",
+          "name": "[ghostmaps-042] The source rejects a file response error"
+        }
+      ]
+    },
+    "ghostmaps-043": {
+      "title": "Reject an absent catalog source",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-043] The layer rejects an absent catalog source"
+        }
+      ]
+    },
+    "ghostmaps-044": {
+      "title": "Guard catalog updates",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] cancelling a file read does not allocate packed-image URLs"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] A disabled layer rejects updates and removes its records"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] An aborted signal rejects the catalog update"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] The layer rejects a late catalog after cancellation"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] The layer rejects a late error after cancellation"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] The layer rejects a signal error after cancellation"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] The layer accepts an update before a viewer exists"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] A saved chip callback accepts an absent catalog after destruction"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] A stale chip cannot load data without a catalog"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] A product getter can cancel before its file request"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] An absent viewer prevents access to catalog products"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] The disabled state prevents access to catalog products"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-044] A row callback can remove the catalog before synchronization"
+        }
+      ]
+    },
+    "ghostmaps-045": {
+      "title": "Read stored product choice",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-045] The layer reads the empty list case from storage"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-045] The layer reads the id list case from storage"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-045] The layer reads the invalid JSON case from storage"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-045] The layer reads the object case from storage"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-045] The layer reads the blocked storage case from storage"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-045] The default storage handles absent storage"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-045] The default storage handles valid storage"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-045] The default storage handles blocked storage"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-045] A stored object cannot use an inherited array method"
+        }
+      ]
+    },
+    "ghostmaps-046": {
+      "title": "Guard card input",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-046] An absent overlayHost prevents card input"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-046] An absent screenSpaceEventHandlerFactory prevents card input"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-046] An absent pick registry prevents card input"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-046] A custom catalog can remove the feature during a pick"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-046] The application accepts an absent host"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-046] The application accepts an absent factory"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-046] The application accepts an absent registry"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-046] An invalid feature index prevents access to product metadata"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-046] The layer does not create an input handler without a viewer"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-046] An empty pick id does not call another owner"
+        }
+      ]
+    },
+    "ghostmaps-047": {
+      "title": "Keep a plain card",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-047] The card stays plain with an absent link"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-047] The card stays plain with an absent external host"
+        }
+      ]
+    },
+    "ghostmaps-048": {
+      "title": "Report check errors",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-048] The watcher handles invalid refs"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-048] The watcher handles an invalid tree"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-014 ghostmaps-048] The default helpers use fetch log and warning callbacks"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-048] A failed response tolerates a body cancel error"
+        }
+      ]
+    },
+    "ghostmaps-049": {
+      "title": "Report optional commit data",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-049] The watcher handles a commit error"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-049] The watcher handles an invalid date"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-049] The watcher handles an empty message"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-049] The watcher records the message and date"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-049] The watcher records the empty message and date"
+        }
+      ]
+    },
+    "ghostmaps-050": {
+      "title": "Cull local point pins",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-050] The horizon callback updates point visibility after a camera change"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records"
+        }
+      ]
+    },
+    "ghostmaps-051": {
+      "title": "Reject absent KML data",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/kml.test.mjs",
+          "name": "[ghostmaps-051] The reader accepts an absent document"
+        }
+      ]
+    },
+    "ghostmaps-052": {
+      "title": "Set request credentials",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-052] The API token is present"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-052] The API token is absent"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-052] The default token helper checks the present token"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-052] The default token helper checks the absent token"
+        }
+      ]
+    },
+    "ghostmaps-053": {
+      "title": "Report inactive stream data",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/source.test.mjs",
+          "name": "[ghostmaps-053] An absent event source reports a closed stream"
+        }
+      ]
+    },
+    "ghostmaps-054": {
+      "title": "Close a selected card",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-054] The card closes for the number pick"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-054] The card closes for the foreign prefix pick"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-054] The card closes for the lookalike prefix pick"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-054] The card closes for the absent index pick"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-054] The card closes for the empty ground pick"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-054] The card closes for the empty id pick"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-054] A chip change removes the selected card"
+        }
+      ]
+    },
+    "ghostmaps-055": {
+      "title": "Keep the current card",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-055] The pointer owner and foreign picks keep the current card"
+        }
+      ]
+    },
+    "ghostmaps-056": {
+      "title": "Open the first source link",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
+        }
+      ]
+    },
+    "ghostmaps-057": {
+      "title": "Reject invalid disk data",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-057] The disk catalog checks invalid commit data"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-057] The disk catalog checks invalid products data"
+        }
+      ]
+    },
+    "ghostmaps-058": {
+      "title": "Accept incomplete tree data",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-058] The watcher handles a truncated tree"
+        }
+      ]
+    },
+    "ghostmaps-059": {
+      "title": "Report layer errors",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-059] A file error uses its template"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-059] A file error uses its message"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-059] A file error uses its default text"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-059] A catalog error uses its message"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-059] A catalog error uses its default text"
+        }
+      ]
+    },
+    "ghostmaps-060": {
+      "title": "Keep image URLs until removal",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-060] successful load keeps icons until the product is disabled"
+        }
+      ]
+    },
+    "ghostmaps-061": {
+      "title": "Report invalid KML files",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-061] A KMZ without a KML document reports an error"
+        }
+      ]
+    },
+    "ghostmaps-062": {
+      "title": "Read an absent edition name",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/catalog.test.mjs",
+          "name": "[ghostmaps-062] The edition parser accepts an absent name"
+        }
+      ]
+    },
+    "ghostmaps-063": {
+      "title": "Bound source links",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/records.test.mjs",
+          "name": "[ghostmaps-009 ghostmaps-063] The parser caps source links and free text"
+        }
+      ]
+    },
+    "ghostmaps-064": {
+      "title": "Limit event subscribers",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-064] The event route caps subscribers"
+        }
+      ]
+    },
+    "ghostmaps-065": {
+      "title": "Keep one input handler",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-065] The layer keeps one input handler after a repeated enable call"
+        }
+      ]
+    },
+    "ghostmaps-066": {
+      "title": "Read absent refs",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/catalog.test.mjs",
+          "name": "[ghostmaps-066] The ref parser accepts an absent advertisement"
         }
       ]
     }

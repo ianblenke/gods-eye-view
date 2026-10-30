@@ -25,10 +25,10 @@ const ring = (name, value) =>
 for (const [name, value, expected] of [
   ['finite longitude', 'NaN,1', []],
   ['finite latitude', '1,NaN', []],
-  ['north bound', '1,91', []],
-  ['south bound', '1,-91', []],
-  ['east bound', '181,1', []],
-  ['west bound', '-181,1', []],
+  ['the north bound', '1,91', []],
+  ['the south bound', '1,-91', []],
+  ['the east bound', '181,1', []],
+  ['the west bound', '-181,1', []],
   [
     'bounds',
     '-180,-90 180,90',
@@ -273,14 +273,23 @@ for (const [name, defs, url, expected] of [
 test('[ghostmaps-027] An inline style replaces the shared values', () => {
   assert.deepEqual(
     read([
-      style([lineStyle()]),
+      style([
+        lineStyle(),
+        el('PolyStyle', [text('fill', '0'), text('outline', '0')]),
+      ]),
       mark([
         text('styleUrl', '#s'),
-        style([lineStyle('5', 'ffff0000')]),
+        style([lineStyle('5', 'ffff0000')], ''),
         point(),
       ]),
     ]).features[0].style,
-    { lineWidth: 5, lineColor: [0, 0, 1, 1] },
+    {
+      lineWidth: 5,
+      lineColor: [0, 0, 1, 1],
+      polyColor: null,
+      fill: false,
+      outline: false,
+    },
   );
 });
 
@@ -300,7 +309,7 @@ test('[ghostmaps-027] The default resolver rejects an image URL', () => {
   );
 });
 
-test('[ghostmaps-026] The reader accepts an absent document', () => {
+test('[ghostmaps-051] The reader accepts an absent document', () => {
   assert.deepEqual(readGhostMapsKml(null), {
     features: [],
     positions: 0,

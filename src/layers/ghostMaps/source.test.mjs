@@ -10,11 +10,16 @@ test('[ghostmaps-022] The source returns the catalog and passes its signal', asy
   const source = createGhostMapsSource({
     fetchImpl: async (...args) => {
       calls.push(args);
-      return response('{"products":[],"commit":"test"}');
+      return response(
+        '{"products":[{"id":"cip","version":"edition-a"},{"id":"kinetic-30d","version":"edition-b"}],"commit":"test"}',
+      );
     },
   });
   assert.deepEqual(await source.getCatalog({ signal }), {
-    products: [],
+    products: [
+      { id: 'cip', version: 'edition-a' },
+      { id: 'kinetic-30d', version: 'edition-b' },
+    ],
     commit: 'test',
   });
   assert.equal(calls[0][0], '/api/ghostmaps/catalog');
@@ -27,7 +32,7 @@ for (const [name, body, status, message] of [
   ['absent products', '{}', 200, /Malformed GhostMaps catalog/],
   ['invalid products', '{"products":{}}', 200, /Malformed GhostMaps catalog/],
 ]) {
-  test(`[ghostmaps-022] The source rejects a catalog with ${name}`, async () => {
+  test(`[ghostmaps-041] The source rejects a catalog with ${name}`, async () => {
     const source = createGhostMapsSource({
       fetchImpl: async () => response(body, status),
     });
@@ -52,7 +57,7 @@ test('[ghostmaps-023] The source encodes file values and returns bytes', async (
   assert.equal(calls[0][1].signal, signal);
 });
 
-test('[ghostmaps-023] The source rejects a file response error', async () => {
+test('[ghostmaps-042] The source rejects a file response error', async () => {
   const source = createGhostMapsSource({
     fetchImpl: async () => response('', 502),
   });
@@ -66,10 +71,16 @@ test('[ghostmaps-022 ghostmaps-023] The default source calls the global fetch he
   const calls = [];
   t.mock.method(globalThis, 'fetch', async (url) => {
     calls.push(url);
-    return response(url.endsWith('/catalog') ? '{"products":[]}' : 'A');
+    return response(
+      url.endsWith('/catalog')
+        ? '{"products":[{"id":"border-crisis","version":"edition-c"}]}'
+        : 'A',
+    );
   });
   const source = createGhostMapsSource();
-  assert.deepEqual(await source.getCatalog(), { products: [] });
+  assert.deepEqual(await source.getCatalog(), {
+    products: [{ id: 'border-crisis', version: 'edition-c' }],
+  });
   assert.deepEqual(await source.getFile('cip', 'a'), new Uint8Array([65]));
   assert.deepEqual(calls, [
     '/api/ghostmaps/catalog',
@@ -114,21 +125,33 @@ for (const [code, expected] of [
     assert.equal(events.url, '/api/ghostmaps/events');
     assert.equal(events.name, 'catalog');
     assert.deepEqual(states, [expected]);
+    events.readyState = 1;
     events.onopen();
+    events.readyState = 2;
     events.onerror();
-    assert.deepEqual(states, [expected, expected, expected]);
+    assert.deepEqual(states, [expected, 'open', 'closed']);
     for (const data of ['invalid', 'null', '{}', '{"products":{}}'])
       events.listener({ data });
     assert.deepEqual(catalogs, []);
-    events.listener({ data: '{"products":[],"commit":"test"}' });
-    assert.deepEqual(catalogs, [{ products: [], commit: 'test' }]);
+    events.listener({
+      data: '{"products":[{"id":"cip","version":"new-a"},{"id":"kinetic-30d","version":"new-b"}],"commit":"test"}',
+    });
+    assert.deepEqual(catalogs, [
+      {
+        products: [
+          { id: 'cip', version: 'new-a' },
+          { id: 'kinetic-30d', version: 'new-b' },
+        ],
+        commit: 'test',
+      },
+    ]);
     stop();
     assert.equal(events.removed, true);
     assert.equal(events.closed, true);
   });
 }
 
-test('[ghostmaps-024] An absent event source reports a closed stream', () => {
+test('[ghostmaps-053] An absent event source reports a closed stream', () => {
   const states = [];
   const source = createGhostMapsSource({ EventSourceImpl: null });
   source.subscribe(
@@ -146,13 +169,20 @@ test('[ghostmaps-024] The stream accepts an absent state callback', () => {
     constructor() {
       events = this;
     }
-    addEventListener() {}
+    addEventListener(_name, listener) {
+      this.listener = listener;
+    }
     removeEventListener() {}
     close() {
       this.closed = true;
     }
   }
   const source = createGhostMapsSource({ EventSourceImpl: FakeEvents });
-  source.subscribe(() => {})();
+  const catalogs = [];
+  const stop = source.subscribe((catalog) => catalogs.push(catalog));
+  assert.doesNotThrow(() => events.onopen());
+  events.listener({ data: '{"products":[{"id":"cip","version":"last"}]}' });
+  assert.deepEqual(catalogs, [{ products: [{ id: 'cip', version: 'last' }] }]);
+  stop();
   assert.equal(events.closed, true);
 });

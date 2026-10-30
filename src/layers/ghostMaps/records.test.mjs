@@ -63,7 +63,14 @@ test('[ghostmaps-009] field values and counts are bounded', () => {
   ).join('');
   const { fields } = parseDescriptionFields(`<table>${rows}</table>`);
   assert.equal(fields.length, 24);
-  assert.equal(fields[0].value.length, 600);
+  assert.deepEqual(
+    fields.map((field) => field.value.length),
+    Array(24).fill(600),
+  );
+  assert.deepEqual(
+    fields.map((field) => field.label),
+    Array.from({ length: 24 }, (_, i) => `K${i}`),
+  );
 });
 
 test('[ghostmaps-010] entities and tags decode to text', () => {
@@ -110,12 +117,12 @@ for (const [name, input, expected] of [
   ['uppercase hex', '&#X41;', 'A'],
   ['decimal', '&#65;', 'A'],
   ['zero', '&#0;', ''],
-  ['upper bound', '&#1114112;', ''],
-  ['low surrogate bound', '&#55296;', ''],
-  ['high surrogate bound', '&#57343;', ''],
+  ['the upper bound', '&#1114112;', ''],
+  ['the low surrogate bound', '&#55296;', ''],
+  ['the high surrogate bound', '&#57343;', ''],
   ['below surrogate', '&#55295;', '\ud7ff'],
   ['above surrogate', '&#57344;', '\ue000'],
-  ['unknown name', '&bogus;', '&bogus;'],
+  ['an unknown name', '&bogus;', '&bogus;'],
   ['absent text', undefined, ''],
   ['amp', '&amp;', '&'],
   ['lt', '&lt;', '<'],
@@ -157,7 +164,7 @@ test('[ghostmaps-008] The text helper accepts absent markup', () => {
   assert.equal(htmlToText(), '');
 });
 
-test('[ghostmaps-009] The parser caps source links and free text', () => {
+test('[ghostmaps-009 ghostmaps-063] The parser caps source links and free text', () => {
   assert.equal(
     parseDescriptionFields('a'.repeat(700)).fields[0].value.length,
     600,

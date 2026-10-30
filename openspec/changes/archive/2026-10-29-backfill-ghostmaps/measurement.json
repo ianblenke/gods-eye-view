@@ -1,7 +1,7 @@
 {
-  "commit": "b5a64127667c22af8c68b53706e9f27d866acac0",
-  "tests": 275,
-  "tagged": 274,
+  "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb",
+  "tests": 276,
+  "tagged": 275,
   "oldTests": 23,
   "oldNamesChanged": [],
   "untraced": [
@@ -10,13 +10,14 @@
       "name": "oversized, empty, non-KMZ and malformed entries are skipped"
     }
   ],
-  "scenarios": 35,
+  "scenarios": 66,
   "titleErrors": [],
-  "mutations": 386,
+  "mutations": 430,
   "mutationStates": {
-    "KILLED": 366,
+    "KILLED": 410,
     "SURVIVED": 20
   },
+  "oldLedgerCommit": "b5a64127667c22af8c68b53706e9f27d866acac0",
   "audit": {
     "rows": 170,
     "tested": 151,

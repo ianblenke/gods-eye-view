@@ -1,0 +1,432 @@
+cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/ghostmaps/node-cache python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/ghostmaps /home/ianblenke/docker/gev-tools/ghostmaps/muts.json
+A001-left: KILLED [ghostmaps-018] The poll helper checks zero negative and fractional settings
+A001-right: KILLED [ghostmaps-018] The poll helper checks zero negative and fractional settings
+A002-left: KILLED [ghostmaps-052] The default token helper checks the present token
+A002-right: KILLED [ghostmaps-052] The default token helper checks the absent token
+A003-true: KILLED [ghostmaps-052] The API token is present
+A003-false: KILLED [ghostmaps-052] The API token is absent
+A004-left: KILLED [ghostmaps-049] The watcher records the message and date
+A004-right: KILLED [ghostmaps-049] The watcher handles an empty message
+A005-left: KILLED [ghostmaps-014] a new commit is announced once, naming only the products that changed
+A005-right: KILLED [ghostmaps-049] The watcher records the empty message and date
+A006-left: KILLED [ghostmaps-057] The disk catalog checks invalid commit data
+A006-right: KILLED [ghostmaps-057] The disk catalog checks invalid products data
+A007-loop: KILLED [ghostmaps-014] A subscriber error does not stop the next subscriber
+A008-true: KILLED [ghostmaps-049] The watcher records the message and date
+A008-false: KILLED [ghostmaps-049] The watcher records the empty message and date
+A009-left: KILLED [ghostmaps-014] The watcher log names each changed product
+A009-right: KILLED [ghostmaps-014 ghostmaps-048] The default helpers use fetch log and warning callbacks
+A010-loop: KILLED [ghostmaps-015] The watcher warms only the default products
+A011-true: KILLED [ghostmaps-020] The watcher uses bounded failure delays
+A011-false: KILLED [ghostmaps-020] The watcher coalesces checks and follows its start and stop state
+A012-left: KILLED [ghostmaps-020] The watcher coalesces checks and follows its start and stop state
+A012-right: KILLED [ghostmaps-020] The watcher coalesces checks and follows its start and stop state
+A013-loop: KILLED [ghostmaps-015] The file cache keeps temporary files and current blobs
+A014-left: KILLED [ghostmaps-015] The file cache keeps temporary files and current blobs
+A014-right: KILLED [ghostmaps-015] The file cache keeps temporary files and current blobs
+A015-true: KILLED [ghostmaps-036] The proxy serves current file bytes and cache headers
+A015-false: KILLED [ghostmaps-036] The proxy serves current file bytes and cache headers
+A016-left: KILLED [ghostmaps-038] The proxy reports file errors
+A016-right: SURVIVED 
+A017-left: KILLED [ghostmaps-037] The proxy waits for the first catalog and file check
+A017-right: KILLED [ghostmaps-038] The proxy reports file errors
+A018-true: KILLED [ghostmaps-036] The proxy serves current file bytes and cache headers
+A018-false: KILLED [ghostmaps-036] The proxy serves current file bytes and cache headers
+A019-left: KILLED [ghostmaps-001] editions read the date and export/version number written in the name
+A019-right: SURVIVED 
+A020-left: SURVIVED 
+A020-right: KILLED [ghostmaps-001] editions read the date and export/version number written in the name
+A021-true: SURVIVED 
+A021-false: KILLED [ghostmaps-062] The edition parser accepts an absent name
+A022-left: KILLED [ghostmaps-001] editions read the date and export/version number written in the name
+A022-right: KILLED [ghostmaps-062] The edition parser accepts an absent name
+A023-left: KILLED [ghostmaps-002] each product keeps its newest edition by date, then edition number
+A023-right: KILLED [ghostmaps-002] The catalog rejects a lower path after an undated edition
+A024-left: KILLED [ghostmaps-002] The catalog selects by date over a later undated file
+A024-right: KILLED [ghostmaps-002] The catalog selects by path
+A025-left: KILLED [ghostmaps-002] each product keeps its newest edition by date, then edition number
+A025-right: KILLED [ghostmaps-062] The edition parser accepts an absent name
+A026-loop: KILLED [ghostmaps-002] The catalog selects by date over a later undated file
+A027-true: KILLED [ghostmaps-002] The catalog selects by date over a later undated file
+A027-false: KILLED oversized, empty, non-KMZ and malformed entries are skipped
+A028-left: KILLED [ghostmaps-004] The catalog rejects an invalid tree
+A028-right: KILLED [ghostmaps-004] The catalog rejects a path object with a KMZ string value
+A029-left: KILLED [ghostmaps-002] The catalog selects by date over a later undated file
+A029-right: SURVIVED 
+A030-left: KILLED [ghostmaps-004] The catalog rejects an invalid finite size
+A030-right: KILLED [ghostmaps-004] The catalog rejects an invalid maximum size
+A031-left: KILLED [ghostmaps-004] The catalog rejects an invalid finite size
+A031-right: KILLED [ghostmaps-004] The catalog rejects an invalid positive size
+A032-left: KILLED [ghostmaps-002] each product keeps its newest edition by date, then edition number
+A032-right: KILLED [ghostmaps-003] The incident catalog checks the older date
+A033-left: KILLED [ghostmaps-002] each product keeps its newest edition by date, then edition number
+A033-right: KILLED [ghostmaps-003] The incident catalog checks the date
+A034-left: KILLED [ghostmaps-002] each product keeps its newest edition by date, then edition number
+A034-right: KILLED [ghostmaps-003] The incident catalog excludes 0_Archive
+A035-loop: KILLED [ghostmaps-002] The catalog selects by date over a later undated file
+A036-true: KILLED [ghostmaps-003] The incident catalog checks the older date
+A036-false: KILLED [ghostmaps-002] The catalog selects by date over a later undated file
+A037-loop: KILLED [ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement
+A038-left: KILLED [ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement
+A038-right: SURVIVED 
+A039-left: KILLED [ghostmaps-066] The ref parser accepts an absent advertisement
+A039-right: KILLED [ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement
+A040-left: KILLED [ghostmaps-045] The default storage handles valid storage
+A040-right: SURVIVED 
+A041-left: KILLED [ghostmaps-045] The default storage handles valid storage
+A041-right: SURVIVED 
+A042-true: KILLED [ghostmaps-045] The default storage handles valid storage
+A042-false: KILLED [ghostmaps-045] A stored object cannot use an inherited array method
+A043-true: KILLED [ghostmaps-030] The layer applies the line width
+A043-false: KILLED [ghostmaps-030] The layer anchors a line at its mean coordinates
+A044-left: KILLED [ghostmaps-030] The polygon alpha value takes precedence over the inherited color alpha
+A044-right: KILLED [ghostmaps-030] The layer applies the polygon color
+A045-left: KILLED [ghostmaps-030] The layer applies the line width
+A045-right: KILLED [ghostmaps-030] The layer anchors a line at its mean coordinates
+A046-true: KILLED [ghostmaps-030] The layer anchors a polygon at its mean coordinates
+A046-false: KILLED [ghostmaps-030] The layer anchors a line at its mean coordinates
+A047-loop: KILLED [ghostmaps-030] The layer anchors a line at its mean coordinates
+A048-loop: KILLED [ghostmaps-050] The horizon callback updates point visibility after a camera change
+A049-left: KILLED [ghostmaps-046] An absent overlayHost prevents card input
+A049-right: KILLED [ghostmaps-046] An absent pick registry prevents card input; [ghostmaps-046] The application accepts an absent registry
+A050-left: KILLED [ghostmaps-046] An absent overlayHost prevents card input
+A050-right: KILLED [ghostmaps-046] An absent screenSpaceEventHandlerFactory prevents card input
+A051-true: KILLED [ghostmaps-031] A chip change stores the whole current selection
+A051-false: KILLED [ghostmaps-061] A KMZ without a KML document reports an error
+A052-left: KILLED [ghostmaps-031] A chip change stores the whole current selection
+A052-right: KILLED [ghostmaps-044] A saved chip callback accepts an absent catalog after destruction
+A053-true: KILLED [ghostmaps-029] The layer frees constructed icons after the disabled flag changes
+A053-false: KILLED [ghostmaps-030] The layer checks the large icon
+A054-left: KILLED [ghostmaps-030] The layer checks the absent icon
+A054-right: KILLED [ghostmaps-030] The layer checks the large icon
+A055-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+A055-right: KILLED [ghostmaps-033] The card uses the custom product
+A056-left: KILLED [ghostmaps-030] The layer checks the packed icon
+A056-right: KILLED [ghostmaps-030] The layer uses a canvas marker and caches its image
+A057-left: KILLED [ghostmaps-030] The layer checks the absent icon
+A057-right: KILLED [ghostmaps-030] The layer creates point line and polygon entities
+A058-true: KILLED [ghostmaps-030] The layer checks the maximum icon
+A058-false: KILLED [ghostmaps-029] entity construction failure releases parsed image URLs
+A059-left: KILLED [ghostmaps-030] The layer checks the absent icon
+A059-right: KILLED [ghostmaps-029] entity construction failure releases parsed image URLs
+A060-left: KILLED [ghostmaps-030] The layer applies the line width
+A060-right: KILLED [ghostmaps-030] The layer applies the polygon color
+A061-true: KILLED [ghostmaps-030] The layer applies the polygon fill
+A061-false: KILLED [ghostmaps-030] The layer applies the line width
+A062-true: KILLED [ghostmaps-030] The layer applies the polygon color
+A062-false: KILLED [ghostmaps-030] The layer applies the line width
+A063-left: KILLED [ghostmaps-030] The layer applies the line width
+A063-right: KILLED [ghostmaps-030] The layer applies the polygon color
+A064-left: KILLED [ghostmaps-044] An absent viewer prevents access to catalog products
+A064-right: KILLED [ghostmaps-044] A row callback can remove the catalog before synchronization
+A065-left: KILLED [ghostmaps-044] The disabled state prevents access to catalog products
+A065-right: KILLED [ghostmaps-044] An absent viewer prevents access to catalog products
+A066-loop: KILLED [ghostmaps-031] A chip change stores the whole current selection
+A067-left: KILLED [ghostmaps-032] The layer replaces a changed product after it adds the new data
+A067-right: KILLED [ghostmaps-031] A chip change stores the whole current selection
+A068-loop: KILLED [ghostmaps-061] A KMZ without a KML document reports an error
+A069-left: KILLED [ghostmaps-031] A chip change stores the whole current selection
+A069-right: KILLED [ghostmaps-044] A product getter can cancel before its file request
+A070-left: KILLED [ghostmaps-029] The layer frees constructed icons after the old signal changes
+A070-right: KILLED [ghostmaps-029] The layer frees constructed icons after the disabled flag changes
+A071-left: KILLED [ghostmaps-061] A KMZ without a KML document reports an error
+A071-right: KILLED [ghostmaps-059] A file error uses its default text
+A072-left: KILLED [ghostmaps-059] A file error uses its template
+A072-right: KILLED [ghostmaps-061] A KMZ without a KML document reports an error
+A073-left: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A073-right: SURVIVED 
+A074-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+A074-right: KILLED [ghostmaps-033] A false product value does not supply an inherited title
+A075-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+A075-right: SURVIVED 
+A076-true: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+A076-false: SURVIVED 
+A077-left: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+A077-right: SURVIVED 
+A078-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+A078-right: KILLED [ghostmaps-033] An absent product label stays empty with a custom locale
+A079-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+A079-right: KILLED [ghostmaps-033] The card uses the custom product
+A080-loop: KILLED [ghostmaps-033] A plain description gives an unlabelled card line
+A081-true: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+A081-false: KILLED [ghostmaps-033] A plain description gives an unlabelled card line
+A082-left: KILLED [ghostmaps-033] The card caps fields and excludes the repeated feature name
+A082-right: KILLED [ghostmaps-047] The card stays plain with an absent external host
+A083-left: KILLED [ghostmaps-033] The card uses the folder title
+A083-right: KILLED [ghostmaps-033] The card uses the default title
+A084-left: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+A084-right: KILLED [ghostmaps-033] The card uses the folder title
+A085-left: KILLED [ghostmaps-047] The card stays plain with an absent link
+A085-right: KILLED [ghostmaps-047] The card stays plain with an absent external host
+A086-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+A086-right: KILLED [ghostmaps-033] The card uses the custom product
+A087-left: KILLED [ghostmaps-054] The card closes for the number pick
+A087-right: KILLED [ghostmaps-054] The card closes for the lookalike prefix pick
+A088-true: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+A088-false: KILLED [ghostmaps-046] An invalid feature index prevents access to product metadata
+A089-left: KILLED [ghostmaps-061] A KMZ without a KML document reports an error
+A089-right: KILLED [ghostmaps-046] The layer does not create an input handler without a viewer
+A090-left: KILLED [ghostmaps-061] A KMZ without a KML document reports an error
+A090-right: KILLED [ghostmaps-065] The layer keeps one input handler after a repeated enable call
+A091-left: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+A091-right: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+A092-left: KILLED [ghostmaps-033] A plain description gives an unlabelled card line
+A092-right: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+A093-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+A093-right: KILLED [ghostmaps-055] The pointer owner and foreign picks keep the current card
+A094-left: KILLED [ghostmaps-047] The card stays plain with an absent link
+A094-right: KILLED [ghostmaps-047] The card stays plain with an absent external host
+A095-true: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+A095-false: KILLED [ghostmaps-054] The card closes for the empty ground pick
+A096-left: KILLED [ghostmaps-046] An empty pick id does not call another owner
+A096-right: KILLED [ghostmaps-054] The card closes for the absent index pick
+A097-loop: KILLED [ghostmaps-060] successful load keeps icons until the product is disabled
+A098-loop: KILLED [ghostmaps-050] The horizon callback updates point visibility after a camera change
+A099-left: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A099-right: KILLED [ghostmaps-030] The layer creates point line and polygon entities
+A100-loop: KILLED [ghostmaps-060] successful load keeps icons until the product is disabled
+A101-left: KILLED [ghostmaps-044] A disabled layer rejects updates and removes its records
+A101-right: KILLED [ghostmaps-044] An aborted signal rejects the catalog update
+A102-left: KILLED [ghostmaps-044] The layer rejects a signal error after cancellation
+A102-right: KILLED [ghostmaps-044] The layer rejects a late error after cancellation
+A103-left: KILLED [ghostmaps-059] A catalog error uses its message
+A103-right: KILLED [ghostmaps-059] A catalog error uses its default text
+A104-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color
+A104-right: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A105-true: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A105-false: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A106-true: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A106-false: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A107-left: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A107-right: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A108-left: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A108-right: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A109-left: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A109-right: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A110-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color
+A110-right: KILLED [ghostmaps-033] The card uses the custom product
+A111-true: KILLED [ghostmaps-059] A file error uses its message
+A111-false: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color
+A112-true: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color
+A112-false: KILLED [ghostmaps-059] A file error uses its message
+A113-true: KILLED [ghostmaps-059] A file error uses its message
+A113-false: KILLED [ghostmaps-033] An absent product label stays empty with a custom locale
+A114-left: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A114-right: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A115-left: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A115-right: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A116-left: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A116-right: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A117-left: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A117-right: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A118-left: KILLED [ghostmaps-059] A file error uses its message
+A118-right: KILLED [ghostmaps-034] The layer reports initial state and live stream data
+A119-left: KILLED [ghostmaps-059] A catalog error uses its message
+A119-right: KILLED [ghostmaps-059] A file error uses its message
+A120-loop: KILLED [ghostmaps-030] The layer anchors a line at its mean coordinates
+A121-loop: KILLED [ghostmaps-030] The layer anchors a line at its mean coordinates
+A122-left: KILLED [ghostmaps-026] The reader accepts Polygon
+A122-right: KILLED [ghostmaps-027] A style map without children gives an empty style
+A123-left: KILLED [ghostmaps-026] The reader accepts LineString
+A123-right: SURVIVED 
+A124-left: KILLED [ghostmaps-026] The reader accepts LineString
+A124-right: KILLED [ghostmaps-027] The reader resolves the icon defaults style
+A125-left: KILLED [ghostmaps-026] The reader accepts LineString
+A125-right: KILLED [ghostmaps-051] The reader accepts an absent document
+A126-left: KILLED [ghostmaps-026] The reader accepts LineString
+A126-right: KILLED [ghostmaps-026] The reader accepts LineString
+A127-true: KILLED [ghostmaps-027] An inline style replaces the shared values
+A127-false: KILLED [ghostmaps-027] The reader resolves the absent number style
+A128-left: KILLED [ghostmaps-027] The reader resolves the absent number style
+A128-right: KILLED [ghostmaps-027] The reader resolves the invalid number style
+A129-loop: KILLED [ghostmaps-025] The coordinate parser checks altitude
+A130-left: KILLED [ghostmaps-025] The coordinate parser checks altitude
+A130-right: SURVIVED 
+A131-left: KILLED [ghostmaps-025] The coordinate parser checks absent text
+A131-right: KILLED [ghostmaps-025] The coordinate parser checks the east bound
+A132-left: SURVIVED 
+A132-right: KILLED [ghostmaps-025] The coordinate parser checks the north bound
+A133-left: SURVIVED 
+A133-right: SURVIVED 
+A134-true: KILLED [ghostmaps-027] The reader resolves the icon style
+A134-false: KILLED [ghostmaps-027] The reader resolves the icon defaults style
+A135-loop: KILLED [ghostmaps-027] An inline style replaces the shared values; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader resolves the absent number style; [ghostmaps-027] The reader resolves the icon defaults style; [ghostmaps-027] The reader resolves the icon style; [ghostmaps-027] 
+A136-loop: KILLED [ghostmaps-027] The reader checks the inline map; [ghostmaps-027] The reader checks the normal map
+A137-true: KILLED [ghostmaps-027] The reader checks the inline map
+A137-false: KILLED [ghostmaps-027] The reader checks the normal map
+A138-left: KILLED [ghostmaps-027] An inline style replaces the shared values; [ghostmaps-027] The reader checks the inline map; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader resolves the absent number style; [ghostmaps-027] The reader resolves the icon defaults style; [ghostmaps-027] Th
+A138-right: KILLED [ghostmaps-027] The reader accepts a null style URL from a custom element
+A139-left: KILLED [ghostmaps-027] The reader checks the remote style
+A139-right: KILLED [ghostmaps-027] The reader checks the cycle
+A140-left: KILLED [ghostmaps-027] The reader accepts a null style URL from a custom element
+A140-right: KILLED [ghostmaps-027] The reader checks the remote style
+A141-left: KILLED [ghostmaps-027] The reader checks the inline map
+A141-right: SURVIVED 
+A142-case-0: KILLED [ghostmaps-026] The reader accepts MultiGeometry
+A142-case-1: KILLED [ghostmaps-026] The reader accepts LineString
+A142-case-2: KILLED [ghostmaps-026] The reader accepts LinearRing
+A142-case-3: KILLED [ghostmaps-026] The reader accepts Polygon
+A142-case-4: KILLED [ghostmaps-026] The reader accepts MultiGeometry
+A143-loop: KILLED [ghostmaps-026] The reader accepts MultiGeometry
+A144-left: KILLED [ghostmaps-026] The reader accepts LineString
+A144-right: KILLED [ghostmaps-026] The reader uses the nearest named folder or document
+A145-loop: KILLED [ghostmaps-026] The reader accepts LineString
+A146-loop: KILLED [ghostmaps-026] The reader accepts LineString
+A147-left: KILLED [ghostmaps-028] The reader caps the feature total
+A147-right: KILLED [ghostmaps-028] The reader caps the position total
+A148-true: KILLED [ghostmaps-027] The default resolver rejects an image URL
+A148-false: SURVIVED 
+A149-left: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
+A149-right: KILLED [ghostmaps-010] The decoder checks absent text
+A150-true: KILLED [ghostmaps-010] The decoder checks lowercase hex
+A150-false: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
+A151-left: KILLED [ghostmaps-010] The decoder checks lowercase hex
+A151-right: KILLED [ghostmaps-010] The decoder checks uppercase hex
+A152-true: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
+A152-false: KILLED [ghostmaps-010] The decoder checks the high surrogate bound
+A153-left: KILLED [ghostmaps-010] The decoder checks the upper bound
+A153-right: KILLED [ghostmaps-010] The decoder checks the high surrogate bound
+A154-left: KILLED [ghostmaps-010] The decoder checks zero
+A154-right: KILLED [ghostmaps-010] The decoder checks the upper bound
+A155-left: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
+A155-right: KILLED [ghostmaps-010] The decoder checks above surrogate
+A156-left: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
+A156-right: KILLED [ghostmaps-010] The decoder checks an unknown name
+A157-left: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
+A157-right: KILLED [ghostmaps-008] The text helper accepts absent markup
+A158-left: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
+A158-right: KILLED [ghostmaps-008] free-form descriptions become one unlabelled field; scripts are dropped
+A159-loop: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
+A160-left: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
+A160-right: KILLED [ghostmaps-007] The table parser keeps one copy of each valid link
+A161-loop: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
+A162-left: KILLED [ghostmaps-007] The table parser excludes the empty label
+A162-right: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
+A163-left: KILLED [ghostmaps-007] The table parser excludes the &lt;blank&gt; value
+A163-right: KILLED [ghostmaps-007] A link table does not add a duplicate text field
+A164-left: KILLED [ghostmaps-011] KML aabbggrr colors convert to rgba
+A164-right: SURVIVED 
+A165-loop: KILLED [ghostmaps-012] The wrapper accepts absent text and its default width
+A166-left: KILLED [ghostmaps-012] The wrapper accepts absent text and its default width
+A166-right: KILLED [ghostmaps-012] The wrapper accepts absent text and its default width
+A167-left: KILLED [ghostmaps-012] The wrapper accepts absent text and its default width
+A167-right: KILLED [ghostmaps-012] The wrapper checks the final line limit before it adds text
+A168-left: KILLED [ghostmaps-012] The wrapper accepts absent text and its default width
+A168-right: KILLED [ghostmaps-012] The wrapper accepts absent text and its default width
+A169-left: KILLED [ghostmaps-013] CamelCase field labels read as words
+A169-right: KILLED [ghostmaps-013] The label helper accepts absent text
+A170-left: KILLED [ghostmaps-024] The stream reports the connection state for code 1
+A170-right: KILLED [ghostmaps-024] The stream reports the connection state for code 9
+S001: KILLED [ghostmaps-001] editions read the date and export/version number written in the name
+S002: KILLED [ghostmaps-002] The catalog selects by date over a later undated file; [ghostmaps-002] The catalog selects by date over an undated file; [ghostmaps-002] each product keeps its newest edition by date, then edition number
+S003: KILLED [ghostmaps-003] A newer incident replaces an older incident
+S005: KILLED [ghostmaps-005] raw URLs are pinned to the commit and encode every path segment
+S008: KILLED [ghostmaps-008] The text helper excludes script content
+S009: KILLED [ghostmaps-009] field values and counts are bounded
+S011: KILLED [ghostmaps-011] The color parser returns the blue channel
+S013: KILLED [ghostmaps-013] CamelCase field labels read as words
+S014: KILLED [ghostmaps-014 ghostmaps-048] The default helpers use fetch log and warning callbacks; [ghostmaps-014] A disk write error does not stop catalog events; [ghostmaps-014] The watcher log names each changed product; [ghostmaps-014] a new commit is announced once, naming only the products that changed
+S017: KILLED [ghostmaps-017] an unchanged head clears an upstream outage and announces recovery once
+S021: KILLED [ghostmaps-021] The event route sends catalogs heartbeats and close callbacks
+S022: KILLED [ghostmaps-022] The source returns the catalog and passes its signal
+S023: KILLED [ghostmaps-023] The source encodes file values and returns bytes
+S027: KILLED [ghostmaps-027] The reader resolves the line style
+S028: KILLED [ghostmaps-028] The reader caps the feature total
+S029: KILLED [ghostmaps-029] entity construction failure releases parsed image URLs
+S030: KILLED [ghostmaps-030] The layer creates point line and polygon entities
+S031: KILLED [ghostmaps-031] A chip change stores the whole current selection
+S032: KILLED [ghostmaps-032] The layer replaces a changed product after it adds the new data
+S033: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+S034: KILLED [ghostmaps-060] successful load keeps icons until the product is disabled
+S035: KILLED [ghostmaps-035] The application card opens the link through the window host
+PRODUCT-cip: KILLED [ghostmaps-002] The catalog selects the cip product
+PRODUCT-kinetic-30d: KILLED [ghostmaps-002] The catalog selects the kinetic-30d product
+PRODUCT-border-crisis: KILLED [ghostmaps-002] The catalog selects the border-crisis product
+PRODUCT-iran-cip: KILLED [ghostmaps-002] The catalog selects the iran-cip product
+PRODUCT-iran-kinetic: KILLED [ghostmaps-002] The catalog selects the iran-kinetic product
+PRODUCT-yemen-flot: KILLED [ghostmaps-002] The catalog selects the yemen-flot product
+LABEL-cip: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color
+COLOR-cip: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color
+LABEL-kinetic-30d: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The kinetic-30d product uses its label and color
+COLOR-kinetic-30d: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The kinetic-30d product uses its label and color
+LABEL-border-crisis: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+COLOR-border-crisis: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+LABEL-iran-cip: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-cip product uses its label and color
+COLOR-iran-cip: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-cip product uses its label and color
+LABEL-iran-kinetic: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-kinetic product uses its label and color
+COLOR-iran-kinetic: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-kinetic product uses its label and color
+LABEL-yemen-flot: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The yemen-flot product uses its label and color
+COLOR-yemen-flot: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The yemen-flot product uses its label and color
+LABEL-latest-drop: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The latest-drop product uses its label and color
+COLOR-latest-drop: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The latest-drop product uses its label and color
+ENTITY-amp: KILLED [ghostmaps-010] The decoder checks amp
+ENTITY-lt: KILLED [ghostmaps-010] The decoder checks lt
+ENTITY-gt: KILLED [ghostmaps-010] The decoder checks gt
+ENTITY-quot: KILLED [ghostmaps-010] The decoder checks quot
+ENTITY-apos: KILLED [ghostmaps-010] The decoder checks apos
+ENTITY-nbsp: KILLED [ghostmaps-010] The decoder checks nbsp
+FIELD-shape: KILLED [ghostmaps-007] The table parser excludes the shape label
+FIELD-objectid: KILLED [ghostmaps-007] The table parser excludes the objectid label
+FIELD-fid: KILLED [ghostmaps-007] The table parser excludes the fid label
+FIELD-globalid: KILLED [ghostmaps-007] The table parser excludes the globalid label
+EMPTY-0: KILLED [ghostmaps-007] The table parser excludes the empty value
+EMPTY-1: KILLED [ghostmaps-007] The table parser excludes the &lt;null&gt; value
+EMPTY-2: KILLED [ghostmaps-007] The table parser excludes the null value
+EMPTY-3: KILLED [ghostmaps-007] The table parser excludes the n/a value
+EMPTY-4: KILLED [ghostmaps-007] The table parser excludes the - value
+EMPTY-5: KILLED [ghostmaps-007] The table parser excludes the &lt;blank&gt; value
+S008-source: KILLED [ghostmaps-008] The description parser excludes rows inside script markup
+PRODUCT-latest-drop: KILLED [ghostmaps-003] latest drop is the newest dated incident file outside curated, archived and base dat
+ANCHOR-lon: KILLED [ghostmaps-030] The layer anchors a line at its mean coordinates
+ANCHOR-lat: KILLED [ghostmaps-030] The layer anchors a line at its mean coordinates
+LOOP-horizon: KILLED [ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records
+LOOP-count: KILLED [ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records
+LOOP-enable: KILLED [ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records
+LOOP-disable: KILLED [ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records
+LOOP-records: KILLED [ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records
+LOOP-features: KILLED [ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records
+R1F01-id: KILLED [ghostmaps-032] The layer replaces a changed product after it adds the new data
+R1F01-version: KILLED [ghostmaps-032] The layer replaces a changed product after it adds the new data
+R1F02-line: KILLED [ghostmaps-030] The layer creates point line and polygon entities
+R1F02-point: KILLED [ghostmaps-030] The layer creates point line and polygon entities
+R1F02-polygon: KILLED [ghostmaps-030] The layer creates point line and polygon entities
+R1F02-hole: KILLED [ghostmaps-030] The layer creates point line and polygon entities
+R1F03-stop: KILLED [ghostmaps-020] The watcher coalesces checks and follows its start and stop state
+R1F04-read: KILLED [ghostmaps-022] The source returns the catalog and passes its signal
+R1F04-event: KILLED [ghostmaps-024] The stream reports the connection state for code 0; [ghostmaps-024] The stream reports the connection state for code 1; [ghostmaps-024] The stream reports the connection state for code 2; [ghostmaps-024] The stream reports the connection state for code 9
+R1F05-state: KILLED [ghostmaps-024] The stream reports the connection state for code 0; [ghostmaps-024] The stream reports the connection state for code 1; [ghostmaps-024] The stream reports the connection state for code 2; [ghostmaps-024] The stream reports the connection state for code 9
+R1F06-cleanup: KILLED [ghostmaps-029] entity construction failure releases parsed image URLs
+R1F07-values: KILLED [ghostmaps-009] field values and counts are bounded
+R1F08-shared: KILLED [ghostmaps-027] An inline style replaces the shared values
+R1F09-disk: KILLED [ghostmaps-016] the catalog survives a restart from disk, and upstream failures are reported
+R1F10-commit: KILLED [ghostmaps-014] a new commit is announced once, naming only the products that changed
+R1F11-file: KILLED [ghostmaps-037] The proxy waits for the first catalog and file check
+R2-cleanup-unload: KILLED [ghostmaps-060] successful load keeps icons until the product is disabled
+R2-cleanup-late: KILLED [ghostmaps-029] The layer frees constructed icons after the disabled flag changes; [ghostmaps-029] The layer frees constructed icons after the old signal changes; [ghostmaps-029] The layer frees constructed icons after the signal changes
+R2-cleanup-parse: KILLED [ghostmaps-029] cancellation during parsing releases every packed-image URL
+R2-stop-backoff: KILLED [ghostmaps-020] The watcher uses bounded failure delays
+R2-default-products: KILLED [ghostmaps-022 ghostmaps-023] The default source calls the global fetch helper
+R2-disk-load: KILLED [ghostmaps-016] The disk catalog checks valid data
+R2-event-products: KILLED [ghostmaps-014] a new commit is announced once, naming only the products that changed
+R2-heartbeat-stop: KILLED [ghostmaps-021] The event route sends catalogs heartbeats and close callbacks
+R2-horizon-restore: KILLED [ghostmaps-050] The horizon callback updates point visibility after a camera change
+R2-push-product: KILLED [ghostmaps-032] A pushed edition changes only its product data source
+R2-first-catalog: KILLED [ghostmaps-037] The proxy waits for the first catalog and file check
+R2-first-file: KILLED [ghostmaps-037] The proxy waits for the first catalog and file check
+R2-file-error: KILLED [ghostmaps-038] The proxy reports file errors
+R2-destroyed: KILLED [ghostmaps-039] A destroyed response does not receive JSON
+R2-install-server: KILLED [ghostmaps-040] The proxy creates local routes before it starts the watcher
+R2-install-preview: KILLED [ghostmaps-040] The proxy creates local routes before it starts the watcher
+R2-invalid-catalog: KILLED [ghostmaps-041] The source rejects a catalog with absent products; [ghostmaps-041] The source rejects a catalog with invalid products; [ghostmaps-041] The source rejects a catalog with null data
+R2-failed-file: KILLED [ghostmaps-042] The source rejects a file response error
+R2-absent-events: KILLED [ghostmaps-053] An absent event source reports a closed stream
+R2-catalog-method: KILLED [ghostmaps-043] The layer rejects an absent catalog source
+R2-no-kml: KILLED [ghostmaps-061] A KMZ without a KML document reports an error
+R2-invalid-document: KILLED [ghostmaps-051] The reader accepts an absent document
+R2-event-route-products: KILLED [ghostmaps-021] The event route sends catalogs heartbeats and close callbacks
+R2-prune-later: KILLED [ghostmaps-015] The file cache keeps temporary files and current blobs
+R2-truncated-warning: KILLED [ghostmaps-058] The watcher handles a truncated tree
+R2-unsupported-start: KILLED [ghostmaps-019] routes: unknown paths and methods are refused without contacting GitHub
+R2-link-limit: KILLED [ghostmaps-009 ghostmaps-063] The parser caps source links and free text
+R2-subscriber-limit: KILLED [ghostmaps-064] The event route caps subscribers
+SURVIVORS: [('A016-right', 'SURVIVED'), ('A019-right', 'SURVIVED'), ('A020-left', 'SURVIVED'), ('A021-true', 'SURVIVED'), ('A029-right', 'SURVIVED'), ('A038-right', 'SURVIVED'), ('A040-right', 'SURVIVED'), ('A041-right', 'SURVIVED'), ('A073-right', 'SURVIVED'), ('A075-right', 'SURVIVED'), ('A076-false', 'SURVIVED'), ('A077-right', 'SURVIVED'), ('A123-right', 'SURVIVED'), ('A130-right', 'SURVIVED'), ('A132-left', 'SURVIVED'), ('A133-left', 'SURVIVED'), ('A133-right', 'SURVIVED'), ('A141-right', 'SURVIVED'), ('A148-false', 'SURVIVED'), ('A164-right', 'SURVIVED')]

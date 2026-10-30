@@ -1,0 +1,70 @@
+{
+  "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb",
+  "command": "cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/ghostmaps /home/ianblenke/docker/gev-tools/ghostmaps/round1-reproductions.json",
+  "results": [
+    {
+      "id": "R1F01-id",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F01-version",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F02-line",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F02-point",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F02-polygon",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F02-hole",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F03-stop",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F04-read",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F04-event",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F05-state",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F06-cleanup",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F07-values",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F08-shared",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F09-disk",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F10-commit",
+      "status": "SURVIVED"
+    },
+    {
+      "id": "R1F11-file",
+      "status": "SURVIVED"
+    }
+  ]
+}

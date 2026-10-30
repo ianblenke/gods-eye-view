@@ -1,6 +1,6 @@
 ## Context
 
-This change reads commit `b5a64127667c22af8c68b53706e9f27d866acac0` on branch `backfill-ghostmaps`.
+This change reads commit `03be515cbbc11ee27a7445b8c628cbc06a1289fb` on branch `backfill-ghostmaps`.
 The proxy checks a GitHub branch and caches product files by blob SHA.
 The browser reads the catalog, parses KMZ data and draws reports.
 Tests use local data and custom fakes.
@@ -31,7 +31,7 @@ The host cannot give the QA purpose lines from the full gates.
 
 The scratch folder is `/home/ianblenke/docker/gev-tools/ghostmaps/`.
 The evidence gives the exact commands for the test, title, coverage and audit totals.
-The ledger sweep gives 23 old tests across the GhostMaps entries.
+The original ledger sweep gives 23 old tests across the GhostMaps entries.
 The import sweep resolves relative paths across all repository test files.
 It includes paths such as `./index.js` that a brand search cannot find.
 
@@ -41,7 +41,7 @@ The evidence will list each limit with its file, line, reason and test attempt.
 
 ### Known limit `ghostmaps-source-attach`
 
-This limit describes commit `b5a64127667c22af8c68b53706e9f27d866acac0`.
+This limit describes commit `03be515cbbc11ee27a7445b8c628cbc06a1289fb`.
 At `src/layers/ghostMaps/index.js:353`, a rejected data source attachment leaves the new image URLs outside the product cache.
 A call to `disable` during that attachment can leave the new data source on the viewer.
 The local probe uses a viewer whose `add` method throws or calls `disable`.
@@ -49,7 +49,7 @@ No scenario states this behavior.
 
 ### Known limit `ghostmaps-caller-signal`
 
-This limit describes commit `b5a64127667c22af8c68b53706e9f27d866acac0`.
+This limit describes commit `03be515cbbc11ee27a7445b8c628cbc06a1289fb`.
 At `src/layers/ghostMaps/index.js:599`, a catalog request can succeed after the caller signal aborts.
 The layer then applies the catalog with its own lifetime signal.
 The local probe aborts the caller signal inside a fake catalog source and returns product data.
@@ -57,7 +57,7 @@ No scenario states this behavior.
 
 ### Known limit `ghostmaps-empty-table`
 
-This limit describes commit `b5a64127667c22af8c68b53706e9f27d866acac0`.
+This limit describes commit `03be515cbbc11ee27a7445b8c628cbc06a1289fb`.
 At `src/layers/ghostMaps/records.js:94`, a description with only excluded table rows can enter the plain text path.
 The result includes the text of those rows.
 The local probe supplies a table with only a SHAPE row.
@@ -65,7 +65,7 @@ No scenario states this behavior.
 
 ### Known limit `ghostmaps-private-card-paths`
 
-This limit describes commit `b5a64127667c22af8c68b53706e9f27d866acac0`.
+This limit describes commit `03be515cbbc11ee27a7445b8c628cbc06a1289fb`.
 No input can reach the return at `src/layers/ghostMaps/index.js:404`.
 Only the installed click handler calls `publishCard`.
 The handler needs the overlay host, input factory and pick registry.
@@ -79,7 +79,7 @@ The last case reaches the separate empty-feature branch at line 406.
 
 ### Known limit `ghostmaps-old-title`
 
-This limit describes commit `b5a64127667c22af8c68b53706e9f27d866acac0`.
+This limit describes commit `03be515cbbc11ee27a7445b8c628cbc06a1289fb`.
 The old catalog test below keeps its name because the owner forbids a rename.
 The title contains the banned word `malformed`.
 The change leaves this test without a tag.
@@ -139,3 +139,36 @@ These inputs include objects with their own text conversion methods.
 The lead sets this Purpose at archive time:
 
 Describe how the proxy reads the GhostMaps repository on GitHub, and how the layer shows the KMZ products of that repository on the globe.
+
+## Round one corrections
+
+The correction reads commit `03be515cbbc11ee27a7445b8c628cbc06a1289fb`.
+The tests check literal metadata, request arguments, distinct editions and each allocated image URL.
+The scenario links separate supported routes from unsupported requests.
+The evidence records the host measurements and each mutation result.
+
+## QA links after round one
+
+| QA behavior | Local scenario | Browser limit |
+| --- | --- | --- |
+| Default products and chips | `ghostmaps-030`, `ghostmaps-034` | `ghostmaps-live-repository` |
+| Cards and empty ground | `ghostmaps-033` | `ghostmaps-browser-pixels` |
+| Product editions and removal | `ghostmaps-032` | The browser script checks the full app. |
+| Product choice after page load | `ghostmaps-031`, `ghostmaps-045` | The browser script checks the full app. |
+| Layer removal | `ghostmaps-044` | The browser script checks the full app. |
+| Phone width | None | `ghostmaps-phone-layout` |
+| Horizon visibility | `ghostmaps-050` | `ghostmaps-browser-horizon` |
+
+## Host measurements
+
+The host suite passes 276 tests, with 275 tagged tests.
+The delta contains 66 scenarios.
+The mutation spec contains 430 cases: 410 killed cases and 20 documented equivalents.
+The audit contains 170 rows, with 0 open rows.
+The command below supplies these values.
+
+```bash
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-round2.py
+```
+
+The audit command is in [evidence.md](evidence.md).

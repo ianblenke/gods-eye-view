@@ -13,7 +13,7 @@ Origin: backfill
 
 #### Scenario: Select a product edition `ghostmaps-002`
 
-- **WHEN** a product contains dated editions
+- **WHEN** a product contains editions
 - **THEN** the catalog selects the newest date and then the highest edition
 
 #### Scenario: Select the latest incident `ghostmaps-003`
@@ -64,17 +64,17 @@ Origin: backfill
 
 #### Scenario: Read KML colors `ghostmaps-011`
 
-- **WHEN** a color contains eight hexadecimal digits
-- **THEN** the parser returns red, green, blue and alpha values
+- **WHEN** the helper reads color text
+- **THEN** the parser returns RGBA values for eight hexadecimal digits, or null for invalid text
 
 #### Scenario: Wrap card text `ghostmaps-012`
 
-- **WHEN** text exceeds a card line width
+- **WHEN** the helper formats card text
 - **THEN** the helper splits words and marks text that exceeds the line limit
 
 #### Scenario: Format field labels `ghostmaps-013`
 
-- **WHEN** a field label contains capitals, digits or underscores
+- **WHEN** the helper formats a field label
 - **THEN** the helper separates its words
 
 ### Requirement: Proxy service
@@ -132,7 +132,7 @@ Origin: backfill
 #### Scenario: Read the local catalog `ghostmaps-022`
 
 - **WHEN** the local catalog response succeeds with a products array
-- **THEN** the source returns the catalog
+- **THEN** the source returns the catalog with each product and its metadata
 
 #### Scenario: Read local file bytes `ghostmaps-023`
 
@@ -153,18 +153,18 @@ Origin: backfill
 
 #### Scenario: Read coordinates `ghostmaps-025`
 
-- **WHEN** coordinate tuples contain valid and invalid positions
+- **WHEN** the parser reads coordinate text
 - **THEN** the parser keeps finite positions within longitude and latitude bounds
 
 #### Scenario: Read geometry `ghostmaps-026`
 
-- **WHEN** visible placemarks contain supported geometry
-- **THEN** the reader returns points, lines and polygons with their folder names
+- **WHEN** the reader processes KML placemarks
+- **THEN** the reader returns visible points, lines and polygons with their folder names, and excludes hidden or invalid geometry
 
 #### Scenario: Resolve styles `ghostmaps-027`
 
-- **WHEN** a placemark names a shared style or supplies an inline style
-- **THEN** the reader resolves local styles and gives inline values precedence
+- **WHEN** the reader processes placemark style data
+- **THEN** the reader keeps shared properties and gives inline values precedence
 
 #### Scenario: Bound KML data `ghostmaps-028`
 
@@ -185,7 +185,7 @@ Origin: backfill
 #### Scenario: Draw product geometry `ghostmaps-030`
 
 - **WHEN** a product contains supported geometry
-- **THEN** the layer creates data source entities for that geometry
+- **THEN** the layer creates entities at the point, line, polygon and hole coordinates
 
 #### Scenario: Store product choice `ghostmaps-031`
 
@@ -195,16 +195,17 @@ Origin: backfill
 #### Scenario: Sync product data `ghostmaps-032`
 
 - **WHEN** a catalog changes a product version or removes a product
-- **THEN** the layer replaces the changed product and removes an absent product
+- **THEN** the layer requests the new product id and version before it replaces the data source
+- **AND** the layer removes an absent product
 
 #### Scenario: Select report cards `ghostmaps-033`
 
-- **WHEN** the person selects a loaded marker with source links and an external host
-- **THEN** the layer publishes a report card and opens its first source link on activation
+- **WHEN** the person selects a loaded marker
+- **THEN** the layer publishes a card with the report fields
 
 #### Scenario: Report layer state `ghostmaps-034`
 
-- **WHEN** the layer receives catalog and stream data
+- **WHEN** the layer receives catalog or stream data
 - **THEN** the layer reports product chips, totals and connection state
 
 ### Requirement: Application factory
@@ -217,3 +218,164 @@ Origin: backfill
 
 - **WHEN** the application creates the GhostMaps layer
 - **THEN** the factory returns the layer with the caller source
+
+### Requirement: Local boundary checks
+
+The local helpers MUST guard invalid input and report service state.
+
+Origin: backfill
+
+#### Scenario: Serve file responses `ghostmaps-036`
+
+- **WHEN** a GET request names a current product
+- **THEN** the proxy returns its bytes, version and cache headers
+
+#### Scenario: Wait for the first catalog `ghostmaps-037`
+
+- **WHEN** a supported request arrives before the first catalog
+- **THEN** the proxy waits for the first check before it reads the catalog or file
+
+#### Scenario: Report file errors `ghostmaps-038`
+
+- **WHEN** the file method throws an error
+- **THEN** the proxy returns HTTP 502 with the service error code
+
+#### Scenario: Skip a destroyed response `ghostmaps-039`
+
+- **WHEN** a request uses a destroyed response
+- **THEN** the proxy does not write JSON to that response
+
+#### Scenario: Install local routes `ghostmaps-040`
+
+- **WHEN** the plugin configures the server or preview server
+- **THEN** the plugin installs local routes and keeps the watcher stopped
+
+#### Scenario: Reject invalid catalog responses `ghostmaps-041`
+
+- **WHEN** a catalog response fails or lacks a products array
+- **THEN** the source rejects the response with an error
+
+#### Scenario: Reject failed file responses `ghostmaps-042`
+
+- **WHEN** a file response returns an HTTP error
+- **THEN** the source rejects the response with an error
+
+#### Scenario: Reject an absent catalog source `ghostmaps-043`
+
+- **WHEN** the caller supplies no catalog method
+- **THEN** the layer constructor rejects the source
+
+#### Scenario: Guard catalog updates `ghostmaps-044`
+
+- **WHEN** an absent viewer, absent catalog or cancellation prevents the layer from an update
+- **THEN** the layer does not mount new product data
+
+#### Scenario: Read stored product choice `ghostmaps-045`
+
+- **WHEN** the layer reads a stored choice or receives invalid storage data
+- **THEN** the layer uses the stored ids or the default selection
+
+#### Scenario: Guard card input `ghostmaps-046`
+
+- **WHEN** a card host, viewer or valid feature is absent
+- **THEN** the layer does not publish a new card
+
+#### Scenario: Keep a plain card `ghostmaps-047`
+
+- **WHEN** a selected feature lacks a source link or an external host
+- **THEN** the layer publishes a card without an activation callback
+
+#### Scenario: Report check errors `ghostmaps-048`
+
+- **WHEN** a branch or tree check fails
+- **THEN** the watcher reports the error without a new product catalog
+
+#### Scenario: Report optional commit data `ghostmaps-049`
+
+- **WHEN** the watcher reads optional commit metadata
+- **THEN** the catalog holds the first message line or an empty value, and gives the parsed date or null
+
+#### Scenario: Cull local point pins `ghostmaps-050`
+
+- **WHEN** a frame follows a camera change across the globe
+- **THEN** the layer hides far pins and shows near pins
+
+#### Scenario: Reject absent KML data `ghostmaps-051`
+
+- **WHEN** the reader receives an absent document
+- **THEN** the reader returns no feature
+
+#### Scenario: Set request credentials `ghostmaps-052`
+
+- **WHEN** the watcher reads the branch and API data
+- **THEN** the watcher sends the token only to the API when the token exists
+
+#### Scenario: Report inactive stream data `ghostmaps-053`
+
+- **WHEN** the event source is absent
+- **THEN** the source reports a closed stream
+
+#### Scenario: Close a selected card `ghostmaps-054`
+
+- **WHEN** a person selects empty ground, an invalid marker or an inactive chip
+- **THEN** the layer clears the selected card
+
+#### Scenario: Keep the current card `ghostmaps-055`
+
+- **WHEN** the pointer or another layer owns the input
+- **THEN** the layer keeps the current card
+
+#### Scenario: Open the first source link `ghostmaps-056`
+
+- **WHEN** a selected report supplies source links and an external host
+- **THEN** the card opens the first source link on activation
+
+#### Scenario: Reject invalid disk data `ghostmaps-057`
+
+- **WHEN** the disk catalog contains an invalid commit or products value
+- **THEN** the watcher keeps its empty initial catalog
+
+#### Scenario: Accept incomplete tree data `ghostmaps-058`
+
+- **WHEN** the API marks a tree as truncated
+- **THEN** the watcher records a warning and accepts the tree
+
+#### Scenario: Report layer errors `ghostmaps-059`
+
+- **WHEN** a file or catalog method fails
+- **THEN** the layer reports the error text
+
+#### Scenario: Keep image URLs until removal `ghostmaps-060`
+
+- **WHEN** the layer loads a product with packed images and then disables the product
+- **THEN** the layer keeps the images until it removes that product
+
+#### Scenario: Report invalid KML files `ghostmaps-061`
+
+- **WHEN** a KMZ contains no KML document
+- **THEN** the layer reports a file error without a data source
+
+#### Scenario: Read an absent edition name `ghostmaps-062`
+
+- **WHEN** the edition name is absent
+- **THEN** the parser returns a null date and edition zero
+
+#### Scenario: Bound source links `ghostmaps-063`
+
+- **WHEN** a report contains more than six valid source links
+- **THEN** the parser keeps the first six links
+
+#### Scenario: Limit event subscribers `ghostmaps-064`
+
+- **WHEN** the event route already holds 64 subscribers
+- **THEN** the proxy rejects the new subscriber with HTTP 429
+
+#### Scenario: Keep one input handler `ghostmaps-065`
+
+- **WHEN** the layer receives repeated enable calls
+- **THEN** the layer keeps one input handler
+
+#### Scenario: Read absent refs `ghostmaps-066`
+
+- **WHEN** the branch advertisement is absent
+- **THEN** the ref parser returns null

@@ -1,19 +1,42 @@
 # GhostMaps evidence
 
-Source commit: `b5a64127667c22af8c68b53706e9f27d866acac0`.
+Source commit: `03be515cbbc11ee27a7445b8c628cbc06a1289fb`.
 Branch: `backfill-ghostmaps`.
 
 ## Results
 
-The host tests pass: 275 tests, with 274 tagged tests.
-The delta contains 35 scenarios.
-The ledger and title sweep finds 23 old tests and keeps every old name.
+The host suite passes 276 tests, with 275 tagged tests.
+The delta contains 66 scenarios.
+The mutation spec contains 430 cases: 410 killed cases and 20 documented equivalents.
+The audit contains 170 rows, with 0 open rows.
+The command below supplies these values.
+
+```bash
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-round2.py
+```
+
+The audit command is in [evidence.md](evidence.md).
+
+The original ledger contains 23 old GhostMaps tests.
+The title sweep keeps every old name.
+The original ledger comes from commit `b5a64127667c22af8c68b53706e9f27d866acac0`.
+The measurement command reads that ledger with `git show`.
+
+## Count changes
+
+| Item | Before | After |
+| --- | ---: | ---: |
+| Tests | 275 | 276 |
+| Tagged tests | 274 | 275 |
+| Scenarios | 35 | 66 |
+| Mutations | 386 | 430 |
+
 The commands below supply these values.
 
-Every scoped file reaches full line and function coverage on the host.
-The host uses Node `v26.11.1`.
-The gate image can give different branch values.
-The lead still needs the ratchet, gates and formal review.
+```bash
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/before-counts.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-round2.py
+```
 
 ## Coverage
 
@@ -27,600 +50,192 @@ The lead still needs the ratchet, gates and formal review.
 | `src/layers/ghostMaps/records.js` | 100.00 | 100.00 | 100.00 |
 | `src/layers/ghostMaps/source.js` | 100.00 | 100.00 | 100.00 |
 
-The [coverage data](coverage.txt) records each exact command and its test result.
+The [coverage data](coverage.txt) records the exact command and test result for each file.
+The host uses Node `v26.12.1`.
+Host coverage does not state a gate verdict.
+The lead will repeat the ratchet because the scenario set changes.
 
-## Paths that cannot run
+## Review corrections
 
-The design records each [private card limit](design.md#known-limit-ghostmaps-private-card-paths).
-The host reports no uncovered source line.
-It reports these unreachable branch results:
+The [baseline results](review-reproductions.json) record each survivor before the test corrections.
+The [mutation results](mutation-results.json) record each exact production edit and failed test after the corrections.
+The report names no exact edit for F11.
+Its reproduction sends the wrong file id through the supported route test.
 
-| File and line | Path | Reason | Tests tried |
-| --- | --- | --- | --- |
-| `src/layers/ghostMaps/index.js:404` | The early return | The sole caller needs stable true host references. | Absent hosts, absent viewer and repeated enable calls |
-| `src/layers/ghostMaps/index.js:405` | The false arm | The caller sets a nonempty key immediately before the call. | Invalid indices, false pick ids and metadata that removes the feature |
+| Finding | Mutation | Before | After | Failed test |
+| --- | --- | --- | --- | --- |
+| F1 | `R1F01-id` | SURVIVED | KILLED | `ghostmaps-032` |
+| F1 | `R1F01-version` | SURVIVED | KILLED | `ghostmaps-032` |
+| F2 | `R1F02-line` | SURVIVED | KILLED | `ghostmaps-030` |
+| F2 | `R1F02-point` | SURVIVED | KILLED | `ghostmaps-030` |
+| F2 | `R1F02-polygon` | SURVIVED | KILLED | `ghostmaps-030` |
+| F2 | `R1F02-hole` | SURVIVED | KILLED | `ghostmaps-030` |
+| F3 | `R1F03-stop` | SURVIVED | KILLED | `ghostmaps-020` |
+| F4 | `R1F04-read` | SURVIVED | KILLED | `ghostmaps-022` |
+| F4 | `R1F04-event` | SURVIVED | KILLED | `ghostmaps-024` |
+| F5 | `R1F05-state` | SURVIVED | KILLED | `ghostmaps-024` |
+| F6 | `R1F06-cleanup` | SURVIVED | KILLED | `ghostmaps-029` |
+| F7 | `R1F07-values` | SURVIVED | KILLED | `ghostmaps-009` |
+| F8 | `R1F08-shared` | SURVIVED | KILLED | `ghostmaps-027` |
+| F9 | `R1F09-disk` | SURVIVED | KILLED | `ghostmaps-016` |
+| F10 | `R1F10-commit` | SURVIVED | KILLED | `ghostmaps-014` |
+| F11 | `R1F11-file` | SURVIVED | KILLED | `ghostmaps-037` |
 
-## Old title without a tag
+The text below records the exact failed test names.
 
-The sweep finds 1 old test without a tag.
-The title contains the banned word `malformed`.
-The owner rule forbids a rename.
-New metadata tests carry `ghostmaps-004`.
+```text
+R1F01-id :: [ghostmaps-032] The layer replaces a changed product after it adds the new data
+R1F01-version :: [ghostmaps-032] The layer replaces a changed product after it adds the new data
+R1F02-line :: [ghostmaps-030] The layer creates point line and polygon entities
+R1F02-point :: [ghostmaps-030] The layer creates point line and polygon entities
+R1F02-polygon :: [ghostmaps-030] The layer creates point line and polygon entities
+R1F02-hole :: [ghostmaps-030] The layer creates point line and polygon entities
+R1F03-stop :: [ghostmaps-020] The watcher coalesces checks and follows its start and stop state
+R1F04-read :: [ghostmaps-022] The source returns the catalog and passes its signal
+R1F04-event :: [ghostmaps-024] The stream reports the connection state for code 0
+R1F05-state :: [ghostmaps-024] The stream reports the connection state for code 0
+R1F06-cleanup :: [ghostmaps-029] entity construction failure releases parsed image URLs
+R1F07-values :: [ghostmaps-009] field values and counts are bounded
+R1F08-shared :: [ghostmaps-027] An inline style replaces the shared values
+R1F09-disk :: [ghostmaps-016] the catalog survives a restart from disk, and upstream failures are reported
+R1F10-commit :: [ghostmaps-014] a new commit is announced once, naming only the products that changed
+R1F11-file :: [ghostmaps-037] The proxy waits for the first catalog and file check
+```
+
+The shared-style fixture gave the shared and inline styles the same id.
+The inline style now uses an empty id, so the shared lookup keeps its own properties.
+
+## Sweep results
+
+- Catalog reads and event frames hold distinct products with literal expected metadata.
+- Stream callbacks report state after the fake changes its state code.
+- File requests record product ids and versions, and different editions produce different geometry.
+- Entity assertions cover points, lines, polygon boundaries, holes and closed outlines.
+- Image cleanup checks distinct URLs after parse cancellation, entity errors, late cancellation and product removal.
+- Both watcher timer tests record cancellation of the active timer.
+- The event route checks heartbeat timer cancellation and nonempty product frames.
+- The cache cleanup test supplies distinct obsolete files.
+- Field bounds cover every returned field, and card assertions cover every visible field.
+- Marker cache assertions cover both point entities.
+- Disk tests compare full product metadata with literal values.
+- The tag sweep separates invalid input, route errors, absent data and valid catalog changes.
+
+The [scenario links](test-links.json) list each scenario title and its tagged tests.
+The source import sweep reads every repository test file.
+It finds only the scoped test files for these production modules.
+
+## Audit
+
+The [audit data](audit.json) records each decision expression and loop.
+The Markdown table is `/home/ianblenke/docker/gev-tools/ghostmaps/audit.md`.
+
+Rows: 170. Tested: 151. Equivalent: 19. Default-value: 0. Open: 0.
+
+The [design](design.md#equivalent-mutations) gives the public API proof for each equivalent mutation.
+
+## Known limits
+
+The branch at `src/layers/ghostMaps/index.js:404` cannot reach its early return.
+The sole caller needs stable true host references.
+Tests tried absent hosts, an absent viewer and repeated enable calls.
+
+The branch at `src/layers/ghostMaps/index.js:405` cannot use its false result.
+The sole caller sets a nonempty key immediately before the call.
+Tests tried false pick ids, invalid indices and metadata changes during a pick.
+
+The title sweep leaves the old catalog title without a tag because it contains the banned word `malformed`.
+The owner forbids a change to that old title.
 
 ```text
 src/layers/ghostMaps/catalog.test.mjs
 oversized, empty, non-KMZ and malformed entries are skipped
 ```
 
-## Mutations
-
-The helper checked 386 saved mutations.
-The latest results record 366 killed cases and 20 equivalent cases.
-The [mutation results](mutation-results.json) give each id, file, exact code change and failed test name.
-The [design](design.md#equivalent-mutations) gives the public API proof for each equivalent case.
-The helper restores each production file after each test.
-
-The product, label, color, entity, excluded-label and empty-value cases each select their own test.
-The results name the failed test for each killed case.
-The later loop cases keep only the first entry to check each other entry.
-
-## Audit
-
-The audit contains 170 rows.
-Tested: 151. Equivalent: 19. Default-value: 0. Open: 0.
-
-The [audit data](audit.json) records each statement, test and mutation.
-The Markdown table also lives at `/home/ianblenke/docker/gev-tools/ghostmaps/audit.md`.
+The [proposal](proposal.md#known-limits) names browser limits for phone width, real horizon visibility, pixels and live repository data.
+The browser script proves them.
+Local tests prove the callback behavior and pushed product data with custom fakes.
 
 ## Decisions for the lead
 
-These limits describe commit `b5a64127667c22af8c68b53706e9f27d866acac0`.
-The local probes confirm each behavior.
-They do not add a scenario that states the behavior as a requirement.
+These unchanged code limits describe commit `03be515cbbc11ee27a7445b8c628cbc06a1289fb`.
+The [design](design.md#known-limits) records their source lines and local probes.
 
-- A rejected data source can leave image URLs outside the product cache, at `src/layers/ghostMaps/index.js:353`.
-- A viewer can attach new data after `disable`, at `src/layers/ghostMaps/index.js:353`.
-- A successful catalog request can apply data after caller cancellation, at `src/layers/ghostMaps/index.js:599`.
-- A description with only excluded table rows can return their plain text, at `src/layers/ghostMaps/records.js:94`.
+- A rejected data source attachment can leave its image URLs outside the product cache.
+- A viewer can attach data after the layer calls `disable`.
+- A catalog request can apply data after caller cancellation.
+- A description with only excluded table rows can return their plain text.
 
-The design names these [known limits](design.md#known-limits).
-The local probe log records the results in the scratch folder.
-
-## Format and STE
-
-Both standard format commands stopped before they gave a format verdict.
-Each command reported `spawnSync git EPERM`.
-The direct Prettier check passed for the changed test files.
-STE lint reports 0 errors and 1164 warnings across the repository prose.
-The title sweep reports no banned word or length error in a tagged title.
+No scenario states that the code must use those behaviors.
 
 ## Commands
 
-The commands use the project directory.
-The first command supplies the test, title, scenario and mutation values.
-The next commands supply the statement audit and per-file coverage values.
+These commands supply the import, statement audit, coverage and format results.
 
 ```bash
-cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/sweep.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/imports-round2.py
 cd /home/ianblenke/docker/gev-work/ghostmaps && node /home/ianblenke/docker/gev-tools/ghostmaps/inventory.mjs
-cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/audit.py
-cd /home/ianblenke/docker/gev-work/ghostmaps && python3 -u /home/ianblenke/docker/gev-tools/ghostmaps/coverage.py
-```
-
-The coverage script starts one Node process at a time.
-Each command in the coverage data uses the coverage flags and the test files that load the target.
-
-The mutation helper uses the saved spec and named tests.
-
-```bash
-cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/ghostmaps/node-cache NODE_OPTIONS=--test-isolation=none python3 -u /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/ghostmaps /home/ianblenke/docker/gev-tools/ghostmaps/muts.json
-```
-
-The checks below supply the format and prose results.
-
-```bash
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/audit-round2.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/coverage.py
 cd /home/ianblenke/docker/gev-work/ghostmaps && node scripts/format.mjs --write
 cd /home/ianblenke/docker/gev-work/ghostmaps && node scripts/format.mjs --check
-cd /home/ianblenke/docker/gev-work/ghostmaps && node ../node_modules/prettier/bin/prettier.cjs --check server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/{catalog,records,kml,source,lifecycle}.test.mjs
-cd /home/ianblenke/docker/gev-work/ghostmaps && node scripts/spec/gates.mjs lint --change backfill-ghostmaps 2>&1 | grep -E "^(ERROR|STE)"
+cd /home/ianblenke/docker/gev-work/ghostmaps && node scripts/spec/gates.mjs lint
 ```
 
-The complete test command writes the trace records that the title sweep reads.
+The [measurement data](measurement.json) records the derived totals.
+The coverage script starts one Node process at a time.
+The full host test command writes the records for the measurement script.
+The command starts with empty scratch record files.
 
 ```bash
-cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none node --test --test-force-exit --test-reporter=spec --test-reporter-destination=stdout --test-reporter=./scripts/spec/lib/trace-reporter.mjs --test-reporter-destination=/home/ianblenke/docker/gev-tools/ghostmaps/records.jsonl server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/{catalog,records,kml,source,lifecycle}.test.mjs
+cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none node --test --test-force-exit --test-reporter=spec --test-reporter-destination=stdout --test-reporter=./scripts/spec/lib/trace-reporter.mjs --test-reporter-destination=/home/ianblenke/docker/gev-tools/ghostmaps/round2-records.jsonl server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/{catalog,records,kml,source,lifecycle}.test.mjs
 ```
 
-The scratch probes check the code limits without a network request.
+The mutation helper restores each source file after its test.
+The [complete output](mutation-run.txt) records the final full pass.
 
 ```bash
-cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none node --test --test-force-exit /home/ianblenke/docker/gev-tools/ghostmaps/limits.test.mjs
+cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/ghostmaps/node-cache python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/ghostmaps /home/ianblenke/docker/gev-tools/ghostmaps/muts.json
 ```
 
-## Scenario links
-
-The list gives each id, title and tagged test.
-The [test links](test-links.json) supply the same data as JSON.
-
-### ghostmaps-001: Read edition dates
-
-```text
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-001] editions read the date and export/version number written in the name
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-001] The edition parser accepts an absent name
-```
-
-### ghostmaps-002: Select a product edition
-
-```text
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] each product keeps its newest edition by date, then edition number
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] The catalog selects by path
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] The catalog selects by date over an undated file
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] The catalog selects by date over a later undated file
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] The catalog selects by edition
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] The catalog selects the cip product
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] The catalog selects the kinetic-30d product
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] The catalog selects the border-crisis product
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] The catalog selects the iran-cip product
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] The catalog selects the iran-kinetic product
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] The catalog selects the yemen-flot product
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-002] The catalog rejects a lower path after an undated edition
-```
-
-### ghostmaps-003: Select the latest incident
-
-```text
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-003] latest drop is the newest dated incident file outside curated, archived and base data
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-003] The incident catalog excludes 0_Archive
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-003] The incident catalog excludes Basedata
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-003] The incident catalog excludes Reference Material
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-003] The incident catalog checks the root
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-003] The incident catalog checks the date
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-003] The incident catalog checks the older date
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-003] A newer incident replaces an older incident
-```
-
-### ghostmaps-004: Reject invalid entries
-
-```text
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-004] The catalog rejects an invalid tree
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-004] The catalog rejects an invalid path
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-004] The catalog rejects an invalid SHA
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-004] The catalog rejects an invalid finite size
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-004] The catalog rejects an invalid positive size
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-004] The catalog rejects an invalid maximum size
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-004] The catalog rejects an invalid extension
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-004] The catalog rejects a path object with a KMZ string value
-```
-
-### ghostmaps-005: Build file URLs
-
-```text
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-005] raw URLs are pinned to the commit and encode every path segment
-```
-
-### ghostmaps-006: Read branch refs
-
-```text
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement
-src/layers/ghostMaps/catalog.test.mjs :: [ghostmaps-006] The ref parser accepts an absent advertisement
-```
-
-### ghostmaps-007: Read table fields
-
-```text
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser excludes the shape label
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser excludes the objectid label
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser excludes the fid label
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser excludes the globalid label
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser excludes the empty label
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser excludes the empty value
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser excludes the &lt;null&gt; value
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser excludes the null value
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser excludes the n/a value
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser excludes the - value
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser excludes the &lt;blank&gt; value
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] The table parser keeps one copy of each valid link
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-007] A link table does not add a duplicate text field
-```
-
-### ghostmaps-008: Read free text
-
-```text
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-008] free-form descriptions become one unlabelled field; scripts are dropped
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-008] The text helper accepts absent markup
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-008] The text helper excludes script content
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-008] The description parser excludes rows inside script markup
-```
-
-### ghostmaps-009: Bound report fields
-
-```text
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-009] field values and counts are bounded
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-009] The parser caps source links and free text
-```
-
-### ghostmaps-010: Decode text
-
-```text
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] entities and tags decode to text
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks lowercase hex
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks uppercase hex
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks decimal
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks zero
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks upper bound
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks low surrogate bound
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks high surrogate bound
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks below surrogate
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks above surrogate
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks unknown name
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks absent text
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks amp
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks lt
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks gt
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks quot
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks apos
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-010] The decoder checks nbsp
-```
-
-### ghostmaps-011: Read KML colors
-
-```text
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-011] KML aabbggrr colors convert to rgba
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-011] The color parser accepts absent text
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-011] The color parser returns the blue channel
-```
-
-### ghostmaps-012: Wrap card text
-
-```text
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-012] card text wraps on words, cuts long words and marks truncation
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-012] The wrapper places a short word before a long word
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-012] The wrapper accepts absent text and its default width
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-012] The wrapper checks the final line limit before it adds text
-```
-
-### ghostmaps-013: Format field labels
-
-```text
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-013] CamelCase field labels read as words
-src/layers/ghostMaps/records.test.mjs :: [ghostmaps-013] The label helper accepts absent text
-```
-
-### ghostmaps-014: Announce commits
-
-```text
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] a new commit is announced once, naming only the products that changed
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The API token is present
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The API token is absent
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] A subscriber error does not stop the next subscriber
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The watcher handles invalid refs
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The watcher handles invalid tree
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The watcher handles commit error
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The watcher handles truncated tree
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The watcher handles invalid date
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The watcher handles empty message
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] A disk write error does not stop catalog events
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The default helpers use fetch log and warning callbacks
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] A failed response tolerates a body cancel error
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The default token helper checks the present token
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The default token helper checks the absent token
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The watcher records the message and date
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The watcher records the empty message and date
-server/providers/ghostMaps.test.mjs :: [ghostmaps-014] The watcher log names each changed product
-```
-
-### ghostmaps-015: Cache file bytes
-
-```text
-server/providers/ghostMaps.test.mjs :: [ghostmaps-015] files download by commit-pinned URL, cache by blob, and stale blobs are pruned
-server/providers/ghostMaps.test.mjs :: [ghostmaps-015] The file cache keeps temporary files and current blobs
-server/providers/ghostMaps.test.mjs :: [ghostmaps-015] A default file error does not reject the catalog check
-server/providers/ghostMaps.test.mjs :: [ghostmaps-015] The file cache tolerates a readdir error
-server/providers/ghostMaps.test.mjs :: [ghostmaps-015] The file cache tolerates a rm error
-server/providers/ghostMaps.test.mjs :: [ghostmaps-015] The watcher warms only the default products
-```
-
-### ghostmaps-016: Restore the catalog
-
-```text
-server/providers/ghostMaps.test.mjs :: [ghostmaps-016] the catalog survives a restart from disk, and upstream failures are reported
-server/providers/ghostMaps.test.mjs :: [ghostmaps-016] The disk catalog checks valid data
-server/providers/ghostMaps.test.mjs :: [ghostmaps-016] The disk catalog checks invalid commit data
-server/providers/ghostMaps.test.mjs :: [ghostmaps-016] The disk catalog checks invalid products data
-```
-
-### ghostmaps-017: Report recovery
-
-```text
-server/providers/ghostMaps.test.mjs :: [ghostmaps-017] an unchanged head clears an upstream outage and announces recovery once
-```
-
-### ghostmaps-018: Set the poll interval
-
-```text
-server/providers/ghostMaps.test.mjs :: [ghostmaps-018] poll interval is configurable with a 5 s floor
-server/providers/ghostMaps.test.mjs :: [ghostmaps-018] The poll helper checks zero negative and fractional settings
-```
-
-### ghostmaps-019: Route local requests
-
-```text
-server/providers/ghostMaps.test.mjs :: [ghostmaps-019] routes: unknown paths and methods are refused without contacting GitHub
-server/providers/ghostMaps.test.mjs :: [ghostmaps-019] The proxy serves current file bytes and cache headers
-server/providers/ghostMaps.test.mjs :: [ghostmaps-019] The proxy waits for the first catalog and file check
-server/providers/ghostMaps.test.mjs :: [ghostmaps-019] The proxy reports file errors
-server/providers/ghostMaps.test.mjs :: [ghostmaps-019] A destroyed response does not receive JSON
-server/providers/ghostMaps.test.mjs :: [ghostmaps-019] The proxy creates local routes before it starts the watcher
-```
-
-### ghostmaps-020: Schedule branch checks
-
-```text
-server/providers/ghostMaps.test.mjs :: [ghostmaps-020] The watcher coalesces checks and follows its start and stop state
-server/providers/ghostMaps.test.mjs :: [ghostmaps-020] The watcher uses bounded failure delays
-```
-
-### ghostmaps-021: Send catalog events
-
-```text
-server/providers/ghostMaps.test.mjs :: [ghostmaps-021] The event route sends catalogs heartbeats and close callbacks
-server/providers/ghostMaps.test.mjs :: [ghostmaps-021] The event route caps subscribers
-```
-
-### ghostmaps-022: Read the local catalog
-
-```text
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-022] The source returns the catalog and passes its signal
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-022] The source rejects a catalog with an HTTP error
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-022] The source rejects a catalog with null data
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-022] The source rejects a catalog with absent products
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-022] The source rejects a catalog with invalid products
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-022 ghostmaps-023] The default source calls the global fetch helper
-```
-
-### ghostmaps-023: Read local file bytes
-
-```text
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-023] The source encodes file values and returns bytes
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-023] The source rejects a file response error
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-022 ghostmaps-023] The default source calls the global fetch helper
-```
-
-### ghostmaps-024: Follow catalog events
-
-```text
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-024] The stream reports the connection state for code 0
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-024] The stream reports the connection state for code 1
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-024] The stream reports the connection state for code 2
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-024] The stream reports the connection state for code 9
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-024] An absent event source reports a closed stream
-src/layers/ghostMaps/source.test.mjs :: [ghostmaps-024] The stream accepts an absent state callback
-```
-
-### ghostmaps-025: Read coordinates
-
-```text
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-025] The coordinate parser checks finite longitude
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-025] The coordinate parser checks finite latitude
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-025] The coordinate parser checks north bound
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-025] The coordinate parser checks south bound
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-025] The coordinate parser checks east bound
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-025] The coordinate parser checks west bound
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-025] The coordinate parser checks bounds
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-025] The coordinate parser checks altitude
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-025] The coordinate parser checks absent text
-```
-
-### ghostmaps-026: Read geometry
-
-```text
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader accepts Point
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader accepts LineString
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader accepts LinearRing
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader accepts Polygon
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader accepts MultiGeometry
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader excludes an invalid point
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader excludes an invalid line
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader excludes an invalid polygon
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader excludes an invalid model
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader excludes an invalid network link
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader excludes hidden placemarks
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader uses the nearest named folder or document
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader caps report names and folder names
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-026] The reader accepts an absent document
-```
-
-### ghostmaps-027: Resolve styles
-
-```text
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader resolves the line style
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader resolves the polygon style
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader resolves the polygon defaults style
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader resolves the icon style
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader resolves the icon defaults style
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader resolves the invalid number style
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader resolves the absent number style
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader checks the normal map
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader checks the inline map
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader checks the absent map id
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader checks the absent normal pair
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader checks the absent style id
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader checks the remote style
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader checks the cycle
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader checks the unknown style
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader checks the absent style
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] An inline style replaces the shared values
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The default resolver rejects an image URL
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] A style map without children gives an empty style
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-027] The reader accepts a null style URL from a custom element
-```
-
-### ghostmaps-028: Bound KML data
-
-```text
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-028] The reader caps the feature total
-src/layers/ghostMaps/kml.test.mjs :: [ghostmaps-028] The reader caps the position total
-```
-
-### ghostmaps-029: Own image URLs
-
-```text
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-029] cancelling a file read does not allocate packed-image URLs
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-029] cancellation during parsing releases every packed-image URL
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-029] entity construction failure releases parsed image URLs
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-029] A KMZ without a KML document reports an error
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-029] The layer frees constructed icons after the signal changes
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-029] The layer frees constructed icons after the disabled flag changes
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-029] The layer frees constructed icons after the old signal changes
-```
-
-### ghostmaps-030: Draw product geometry
-
-```text
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] successful load keeps icons until the product is disabled
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer creates point line and polygon entities
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer anchors a line at its mean coordinates
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer anchors a polygon at its mean coordinates
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer applies the line width
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer applies the polygon color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer applies the polygon fill
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer applies the polygon outline
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer checks the packed icon
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer checks the absent icon
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer checks the large icon
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer checks the maximum icon
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The layer uses a canvas marker and caches its image
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The horizon callback updates point visibility after a camera change
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The kinetic-30d product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-cip product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-kinetic product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The yemen-flot product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The latest-drop product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030] The polygon alpha value takes precedence over the inherited color alpha
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-032 ghostmaps-034] The layer owns all products and all report records
-```
-
-### ghostmaps-031: Store product choice
-
-```text
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-031] A chip change stores the whole current selection
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-031] The layer reads the empty list case from storage
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-031] The layer reads the id list case from storage
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-031] The layer reads the invalid JSON case from storage
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-031] The layer reads the object case from storage
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-031] The layer reads the blocked storage case from storage
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-031] The default storage handles absent storage
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-031] The default storage handles valid storage
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-031] The default storage handles blocked storage
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-031] A saved chip callback accepts an absent catalog after destruction
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-031] A stored object cannot use an inherited array method
-```
-
-### ghostmaps-032: Sync product data
-
-```text
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] The layer replaces a changed product after it adds the new data
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] A disabled layer rejects updates and removes its records
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] The layer rejects an absent catalog source
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] An aborted signal rejects the catalog update
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] The layer rejects a late catalog after cancellation
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] The layer rejects a late error after cancellation
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] The layer rejects a signal error after cancellation
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] The layer accepts an update before a viewer exists
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] A row callback error does not block the next catalog
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] A stale chip cannot load data without a catalog
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] A product getter can cancel before its file request
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] An absent viewer prevents access to catalog products
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] The disabled state prevents access to catalog products
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-032] A row callback can remove the catalog before synchronization
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-032 ghostmaps-034] The layer owns all products and all report records
-```
-
-### ghostmaps-033: Select report cards
-
-```text
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] A selected marker publishes a card and opens its source link
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card closes for the number pick
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card closes for the foreign prefix pick
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card closes for the lookalike prefix pick
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card closes for the absent index pick
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card closes for the empty ground pick
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card closes for the empty id pick
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The pointer owner and foreign picks keep the current card
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card uses the folder title
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card uses the default title
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card uses the custom product
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card caps fields and excludes the repeated feature name
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] A plain description gives an unlabelled card line
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] An absent overlayHost prevents card input
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] An absent screenSpaceEventHandlerFactory prevents card input
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] An absent pick registry prevents card input
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] A chip change removes the selected card
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] A custom catalog can remove the feature during a pick
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] A custom catalog can remove product metadata during a pick
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card stays plain with an absent link
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The card stays plain with an absent external host
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The application accepts an absent host
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The application accepts an absent factory
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The application accepts an absent registry
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The kinetic-30d product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-cip product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-kinetic product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The yemen-flot product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The latest-drop product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] An invalid feature index prevents access to product metadata
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The layer does not create an input handler without a viewer
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] The layer keeps one input handler after a repeated enable call
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] An empty pick id does not call another owner
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] A false product value does not supply an inherited title
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-033] An absent product label stays empty with a custom locale
-```
-
-### ghostmaps-034: Report layer state
-
-```text
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-034] A file error uses its template
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-034] A file error uses its message
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-034] A file error uses its default text
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-034] A catalog error uses its message
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-034] A catalog error uses its default text
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-034] The layer reports initial state and live stream data
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The kinetic-30d product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-cip product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-kinetic product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The yemen-flot product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-033 ghostmaps-034] The latest-drop product uses its label and color
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-030 ghostmaps-032 ghostmaps-034] The layer owns all products and all report records
-```
-
-### ghostmaps-035: Connect the application layer
-
-```text
-src/app/layers/ghostMaps.test.mjs :: [ghostmaps-035] The application factory accepts a source and host options
-src/app/layers/ghostMaps.test.mjs :: [ghostmaps-035] The application factory creates the standard input handler
-src/layers/ghostMaps/lifecycle.test.mjs :: [ghostmaps-035] The application card opens the link through the window host
-```
+The early full passes stopped before completion during the pattern correction.
+They give no verdict.
+The final full pass checks each saved mutation against the final tests.
+
+## Format and STE
+
+The final command logs give the format and STE results.
+Both standard format commands pass for 1673 source files.
+The STE command reports 0 errors.
+The correction does not run Docker, full gates or ratchet.
+The lead owns the final gate and review verdicts.
 
 ## Final tree
 
-The final tree changes only test files and this change folder.
+This status describes the correction from the source commit.
+The archived change already includes the capability spec and trace records.
+This correction changes tests, archive files and the copied capability spec.
 The production files and QA scripts match the source commit.
-The command `git status --short` gives this result.
+The trace files keep their bytes.
+The command `git status --short` supplies the text below.
 
 ```text
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/audit.json
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/coverage.txt
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/design.md
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/evidence.md
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/measurement.json
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/mutation-results.json
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/proposal.md
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/specs/ghostmaps/spec.md
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/tasks.md
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/test-links.json
+ M openspec/specs/ghostmaps/spec.md
  M server/providers/ghostMaps.test.mjs
  M src/layers/ghostMaps/catalog.test.mjs
+ M src/layers/ghostMaps/kml.test.mjs
  M src/layers/ghostMaps/lifecycle.test.mjs
  M src/layers/ghostMaps/records.test.mjs
-?? openspec/changes/backfill-ghostmaps/
-?? src/app/layers/ghostMaps.test.mjs
-?? src/layers/ghostMaps/kml.test.mjs
-?? src/layers/ghostMaps/source.test.mjs
+ M src/layers/ghostMaps/source.test.mjs
+?? openspec/changes/archive/2026-10-29-backfill-ghostmaps/mutation-run.txt
+?? openspec/changes/archive/2026-10-29-backfill-ghostmaps/review-reproductions.json
 ```

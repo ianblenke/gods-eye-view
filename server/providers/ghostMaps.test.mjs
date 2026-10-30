@@ -92,13 +92,33 @@ test('[ghostmaps-014] a new commit is announced once, naming only the products t
     assert.equal(await watcher.checkNow(), true);
     await warmDefaults(watcher);
     const first = watcher.catalog();
-    assert.equal(first.commit, sha('1'));
+    assert.equal(first.commit, '1111111111111111111111111111111111111111');
     assert.equal(first.message, 'Oct 18 Update');
     assert.deepEqual(
       first.products.map((p) => p.id),
       ['cip', 'kinetic-30d'],
     );
     assert.equal(events.length, 1);
+    assert.equal(events[0].commit, '1111111111111111111111111111111111111111');
+    assert.deepEqual(
+      events[0].products.map(({ id, version, fileTitle }) => ({
+        id,
+        version,
+        fileTitle,
+      })),
+      [
+        {
+          id: 'cip',
+          version: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+          fileTitle: 'S2U Common Intelligence Picture October 15 2026 Export 1',
+        },
+        {
+          id: 'kinetic-30d',
+          version: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+          fileTitle: 'Kinetic Activities Last 30 Days',
+        },
+      ],
+    );
 
     // Same head: one ref read, no REST calls, no event.
     repo.calls.length = 0;
@@ -120,12 +140,32 @@ test('[ghostmaps-014] a new commit is announced once, naming only the products t
     assert.equal(await watcher.checkNow(), true);
     await warmDefaults(watcher);
     assert.equal(events.length, 2);
+    assert.equal(events[1].commit, '2222222222222222222222222222222222222222');
+    assert.deepEqual(
+      events[1].products.map(({ id, version, fileTitle }) => ({
+        id,
+        version,
+        fileTitle,
+      })),
+      [
+        {
+          id: 'cip',
+          version: 'cccccccccccccccccccccccccccccccccccccccc',
+          fileTitle: 'S2U Common Intelligence Picture October 18 2026 Export 1',
+        },
+        {
+          id: 'kinetic-30d',
+          version: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+          fileTitle: 'Kinetic Activities Last 30 Days',
+        },
+      ],
+    );
     const cip = events[1].products.find((p) => p.id === 'cip');
-    assert.equal(cip.version, sha('c'));
+    assert.equal(cip.version, 'cccccccccccccccccccccccccccccccccccccccc');
     assert.match(cip.fileName, /October_18/);
     assert.equal(
       events[1].products.find((p) => p.id === 'kinetic-30d').version,
-      sha('b'),
+      'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
     );
     // Repository paths stay on the server.
     assert.equal('path' in cip, false);
@@ -147,7 +187,11 @@ test('[ghostmaps-015] files download by commit-pinned URL, cache by blob, and st
     const raw = repo.calls.filter((url) =>
       url.includes('raw.githubusercontent'),
     );
-    assert.ok(raw.every((url) => url.includes(`/GhostMaps/${sha('1')}/`)));
+    assert.ok(
+      raw.every((url) =>
+        url.includes('/GhostMaps/1111111111111111111111111111111111111111/'),
+      ),
+    );
     assert.ok(
       raw.some((url) => url.endsWith('/Kinetic_Activities_Last_30_Days.kmz')),
     );
@@ -171,7 +215,10 @@ test('[ghostmaps-015] files download by commit-pinned URL, cache by blob, and st
     await watcher.checkNow();
     await watcher.file('cip');
     const files = (await readdir(path.join(cacheDir, 'files'))).sort();
-    assert.deepEqual(files, [`${sha('b')}.kmz`, `${sha('c')}.kmz`]);
+    assert.deepEqual(files, [
+      'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.kmz',
+      'cccccccccccccccccccccccccccccccccccccccc.kmz',
+    ]);
     watcher.stop();
   }));
 
@@ -189,8 +236,30 @@ test('[ghostmaps-016] the catalog survives a restart from disk, and upstream fai
     });
     assert.equal(await offline.checkNow(), false);
     const catalog = offline.catalog();
-    assert.equal(catalog.commit, sha('1'));
-    assert.equal(catalog.products.length, 2);
+    assert.equal(catalog.commit, '1111111111111111111111111111111111111111');
+    assert.deepEqual(catalog.products, [
+      {
+        id: 'cip',
+        title: 'Common Intelligence Picture',
+        defaultOn: true,
+        fileName:
+          'S2U_Common_Intelligence_Picture_October_15_2026_Export_1.kmz',
+        fileTitle: 'S2U Common Intelligence Picture October 15 2026 Export 1',
+        version: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        size: 4,
+        dateMs: 1792022400000,
+      },
+      {
+        id: 'kinetic-30d',
+        title: 'Kinetic Activity (30 days)',
+        defaultOn: true,
+        fileName: 'Kinetic_Activities_Last_30_Days.kmz',
+        fileTitle: 'Kinetic Activities Last 30 Days',
+        version: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+        size: 4,
+        dateMs: null,
+      },
+    ]);
     assert.match(catalog.error, /HTTP 503/);
   }));
 
@@ -290,7 +359,10 @@ test('[ghostmaps-019] routes: unknown paths and methods are refused without cont
   assert.equal((await call('GET', '/file/cip')).status, 404);
   const catalog = await call('GET', '/catalog');
   assert.equal(catalog.status, 200);
-  assert.equal(JSON.parse(catalog.body).commit, sha('1'));
+  assert.equal(
+    JSON.parse(catalog.body).commit,
+    '1111111111111111111111111111111111111111',
+  );
   assert.equal(started, 2);
 });
 
@@ -339,7 +411,13 @@ function routeFixture(watcher) {
 }
 const routeWatcher = (options = {}) => ({
   start: async () => false,
-  catalog: () => ({ commit: 'a', products: [] }),
+  catalog: () => ({
+    commit: 'a',
+    products: [
+      { id: 'cip', version: 'one' },
+      { id: 'kinetic-30d', version: 'two' },
+    ],
+  }),
   file: async () => ({
     product: { version: 'blob' },
     bytes: Buffer.from('KMZ!'),
@@ -349,7 +427,7 @@ const routeWatcher = (options = {}) => ({
   ...options,
 });
 
-test('[ghostmaps-019] The proxy serves current file bytes and cache headers', async () => {
+test('[ghostmaps-036] The proxy serves current file bytes and cache headers', async () => {
   const { call } = routeFixture(routeWatcher());
   const pinned = (await call('/file/cip?v=blob')).res;
   assert.equal(pinned.status, 200);
@@ -370,15 +448,17 @@ test('[ghostmaps-019] The proxy serves current file bytes and cache headers', as
   assert.equal(absent.headers.Allow, undefined);
 });
 
-test('[ghostmaps-019] The proxy waits for the first catalog and file check', async () => {
+test('[ghostmaps-037] The proxy waits for the first catalog and file check', async () => {
   let commit = null;
+  const files = [];
   const watcher = routeWatcher({
     catalog: () => ({ commit, products: [] }),
     start: async () => {
       await Promise.resolve();
       commit = 'ready';
     },
-    file: async () => {
+    file: async (id) => {
+      files.push(id);
       assert.equal(commit, 'ready');
       return null;
     },
@@ -387,9 +467,10 @@ test('[ghostmaps-019] The proxy waits for the first catalog and file check', asy
   assert.equal(JSON.parse((await call('/catalog')).res.body).commit, 'ready');
   commit = null;
   assert.equal((await call('/file/cip')).res.status, 404);
+  assert.deepEqual(files, ['cip']);
 });
 
-test('[ghostmaps-019] The proxy reports file errors', async () => {
+test('[ghostmaps-038] The proxy reports file errors', async () => {
   const { call } = routeFixture(
     routeWatcher({
       file: async () => {
@@ -402,7 +483,7 @@ test('[ghostmaps-019] The proxy reports file errors', async () => {
   assert.equal(JSON.parse(res.body).error, 'ghostmaps_unavailable');
 });
 
-test('[ghostmaps-019] A destroyed response does not receive JSON', async () => {
+test('[ghostmaps-039] A destroyed response does not receive JSON', async () => {
   let handler;
   ghostMapsProxy({ watcher: routeWatcher() }).configureServer({
     middlewares: {
@@ -448,12 +529,18 @@ test('[ghostmaps-021] The event route sends catalogs heartbeats and close callba
   assert.equal(res.headers['Content-Type'], 'text/event-stream');
   assert.deepEqual(res.chunks, [
     'retry: 5000\n\n',
-    'event: catalog\ndata: {"commit":"a","products":[]}\n\n',
+    'event: catalog\ndata: {"commit":"a","products":[{"id":"cip","version":"one"},{"id":"kinetic-30d","version":"two"}]}\n\n',
   ]);
-  listener({ products: [], commit: 'b' });
+  listener({
+    products: [
+      { id: 'cip', version: 'three' },
+      { id: 'kinetic-30d', version: 'two' },
+    ],
+    commit: 'b',
+  });
   assert.equal(
     res.chunks.at(-1),
-    'event: catalog\ndata: {"products":[],"commit":"b"}\n\n',
+    'event: catalog\ndata: {"products":[{"id":"cip","version":"three"},{"id":"kinetic-30d","version":"two"}],"commit":"b"}\n\n',
   );
   assert.equal(delay, 25000);
   heartbeat();
@@ -463,9 +550,11 @@ test('[ghostmaps-021] The event route sends catalogs heartbeats and close callba
   callbacks['res:error']();
   assert.equal(unsubscribed, 2);
   assert.equal(timers[0], 'unref');
+  assert.equal(typeof timers[1].unref, 'function');
+  assert.equal(timers[2], timers[1]);
 });
 
-test('[ghostmaps-021] The event route caps subscribers', async () => {
+test('[ghostmaps-064] The event route caps subscribers', async () => {
   const { call } = routeFixture(routeWatcher({ subscribers: () => 64 }));
   const { res } = await call('/events');
   assert.equal(res.status, 429);
@@ -506,7 +595,8 @@ test('[ghostmaps-020] The watcher coalesces checks and follows its start and sto
       timers.push(timer);
       return timer;
     });
-    t.mock.method(globalThis, 'clearTimeout', () => {});
+    const cleared = [];
+    t.mock.method(globalThis, 'clearTimeout', (timer) => cleared.push(timer));
     const remote = emptyRemote();
     const watcher = createGhostMapsWatcher({
       cacheDir,
@@ -526,6 +616,8 @@ test('[ghostmaps-020] The watcher coalesces checks and follows its start and sto
     await timers[0].fn();
     assert.equal(timers.length, 2);
     watcher.stop();
+    assert.equal(cleared.at(-1), timers[1]);
+    assert.equal(cleared.filter((timer) => timer === timers[1]).length, 1);
     await timers[1].fn();
     assert.equal(timers.length, 2);
   }));
@@ -534,10 +626,12 @@ test('[ghostmaps-020] The watcher uses bounded failure delays', (t) =>
   withCache(async (cacheDir) => {
     const timers = [];
     t.mock.method(globalThis, 'setTimeout', (fn, ms) => {
-      timers.push({ fn, ms });
-      return {};
+      const timer = { fn, ms };
+      timers.push(timer);
+      return timer;
     });
-    t.mock.method(globalThis, 'clearTimeout', () => {});
+    const cleared = [];
+    t.mock.method(globalThis, 'clearTimeout', (timer) => cleared.push(timer));
     const watcher = createGhostMapsWatcher({
       cacheDir,
       fetchImpl: emptyRemote({ status: 503 }).fetchImpl,
@@ -551,13 +645,14 @@ test('[ghostmaps-020] The watcher uses bounded failure delays', (t) =>
       [15000, 30000, 60000, 120000, 300000, 300000],
     );
     watcher.stop();
+    assert.equal(cleared.at(-1), timers[5]);
   }));
 
 for (const [name, token, expected] of [
   ['present', () => 'secret-test', 'Bearer secret-test'],
   ['absent', () => '', undefined],
 ]) {
-  test(`[ghostmaps-014] The API token is ${name}`, () =>
+  test(`[ghostmaps-052] The API token is ${name}`, () =>
     withCache(async (cacheDir) => {
       const remote = emptyRemote();
       const watcher = createGhostMapsWatcher({
@@ -576,11 +671,30 @@ for (const [name, token, expected] of [
 }
 
 for (const [name, saved] of [
-  ['valid', { commit: sha('1'), products: [], error: 'old', message: 'saved' }],
+  [
+    'valid',
+    {
+      commit: sha('1'),
+      products: [
+        {
+          id: 'saved-product',
+          version: 'saved-version',
+          title: 'Saved product',
+          defaultOn: false,
+          fileName: 'saved.kmz',
+          fileTitle: 'Saved edition',
+          size: 7,
+          dateMs: 123,
+        },
+      ],
+      error: 'old',
+      message: 'saved',
+    },
+  ],
   ['invalid commit', { commit: 'bad', products: [], message: 'saved' }],
   ['invalid products', { commit: sha('1'), products: {}, message: 'saved' }],
 ]) {
-  test(`[ghostmaps-016] The disk catalog checks ${name} data`, () =>
+  test(`[${name === 'valid' ? 'ghostmaps-016' : 'ghostmaps-057'}] The disk catalog checks ${name} data`, () =>
     withCache(async (cacheDir) => {
       const fsp = await import('node:fs/promises');
       await fsp.writeFile(
@@ -601,6 +715,23 @@ for (const [name, saved] of [
       assert.equal(
         watcher.catalog().message,
         name === 'valid' ? 'saved' : null,
+      );
+      assert.deepEqual(
+        watcher.catalog().products,
+        name === 'valid'
+          ? [
+              {
+                id: 'saved-product',
+                version: 'saved-version',
+                title: 'Saved product',
+                defaultOn: false,
+                fileName: 'saved.kmz',
+                fileTitle: 'Saved edition',
+                size: 7,
+                dateMs: 123,
+              },
+            ]
+          : [],
       );
     }));
 }
@@ -633,7 +764,7 @@ for (const name of [
   'invalid date',
   'empty message',
 ]) {
-  test(`[ghostmaps-014] The watcher handles ${name}`, () =>
+  test(`[${['invalid refs', 'invalid tree'].includes(name) ? 'ghostmaps-048' : name === 'truncated tree' ? 'ghostmaps-058' : 'ghostmaps-049'}] The watcher handles ${{ 'invalid tree': 'an invalid tree', 'commit error': 'a commit error', 'truncated tree': 'a truncated tree', 'invalid date': 'an invalid date', 'empty message': 'an empty message' }[name] || name}`, () =>
     withCache(async (cacheDir) => {
       const warnings = [];
       const remote = emptyRemote();
@@ -695,7 +826,10 @@ test('[ghostmaps-014] A disk write error does not stop catalog events', () =>
       log() {},
       warn: (...args) => warnings.push(args),
     });
+    const events = [];
+    watcher.subscribe((catalog) => events.push(catalog));
     assert.equal(await watcher.checkNow(), true);
+    assert.equal(events[0].commit, '1111111111111111111111111111111111111111');
     assert.equal(warnings[0][0], '[ghostmaps] could not save catalog:');
   }));
 
@@ -705,6 +839,7 @@ test('[ghostmaps-015] The file cache keeps temporary files and current blobs', (
     await fsp.mkdir(path.join(cacheDir, 'files'));
     await fsp.writeFile(path.join(cacheDir, 'files', 'keep.tmp'), 'temp');
     await fsp.writeFile(path.join(cacheDir, 'files', 'stale.kmz'), 'stale');
+    await fsp.writeFile(path.join(cacheDir, 'files', 'other.kmz'), 'other');
     const { fetchImpl } = fakeGitHub();
     const watcher = createGhostMapsWatcher({
       cacheDir,
@@ -729,7 +864,7 @@ test('[ghostmaps-018] The poll helper checks zero negative and fractional settin
   assert.equal(ghostMapsPollMs('Infinity'), 15000);
 });
 
-test('[ghostmaps-014] The default helpers use fetch log and warning callbacks', (t) =>
+test('[ghostmaps-014 ghostmaps-048] The default helpers use fetch log and warning callbacks', (t) =>
   withCache(async (cacheDir) => {
     const remote = emptyRemote();
     const logs = [];
@@ -738,7 +873,10 @@ test('[ghostmaps-014] The default helpers use fetch log and warning callbacks', 
     t.mock.method(console, 'log', (...args) => logs.push(args));
     t.mock.method(console, 'warn', (...args) => warnings.push(args));
     const watcher = createGhostMapsWatcher({ cacheDir });
+    const events = [];
+    watcher.subscribe((catalog) => events.push(catalog));
     assert.equal(await watcher.checkNow(), true);
+    assert.equal(events[0].commit, '1111111111111111111111111111111111111111');
     assert.match(logs[0][0], /updated: none/);
     t.mock.method(
       globalThis,
@@ -749,7 +887,7 @@ test('[ghostmaps-014] The default helpers use fetch log and warning callbacks', 
     assert.equal(warnings[0][0], '[ghostmaps] check failed:');
   }));
 
-test('[ghostmaps-014] A failed response tolerates a body cancel error', () =>
+test('[ghostmaps-048] A failed response tolerates a body cancel error', () =>
   withCache(async (cacheDir) => {
     let cancelled = 0;
     const watcher = createGhostMapsWatcher({
@@ -850,7 +988,7 @@ test('[ghostmaps-015] The watcher warms only the default products', async (t) =>
   }));
 
 for (const name of ['present', 'absent']) {
-  test(`[ghostmaps-014] The default token helper checks the ${name} token`, async (t) =>
+  test(`[ghostmaps-052] The default token helper checks the ${name} token`, async (t) =>
     withCache(async (cacheDir) => {
       const old = process.env.GITHUB_TOKEN;
       if (name === 'present') process.env.GITHUB_TOKEN = ' test-token ';
@@ -888,7 +1026,7 @@ for (const [name, commit, text, date] of [
   ],
   ['empty message', {}, '', null],
 ]) {
-  test(`[ghostmaps-014] The watcher records the ${name} and date`, () =>
+  test(`[ghostmaps-049] The watcher records the ${name} and date`, () =>
     withCache(async (cacheDir) => {
       const logs = [];
       const watcher = createGhostMapsWatcher({
@@ -918,7 +1056,10 @@ test('[ghostmaps-014] The watcher log names each changed product', () =>
       log: (text) => logs.push(text),
       warn() {},
     });
+    const events = [];
+    watcher.subscribe((catalog) => events.push(catalog));
     await watcher.checkNow();
+    assert.equal(events[0].commit, '1111111111111111111111111111111111111111');
     assert.equal(
       logs[0],
       '[ghostmaps] commit 11111111 "Oct 18 Update"; updated: cip, kinetic-30d',
@@ -926,7 +1067,11 @@ test('[ghostmaps-014] The watcher log names each changed product', () =>
     await warmDefaults(watcher);
   }));
 
-test('[ghostmaps-019] The proxy creates local routes before it starts the watcher', (t) => {
+test('[ghostmaps-040] The proxy creates local routes before it starts the watcher', async (t) => {
+  const { default: fsp } = await import('node:fs/promises');
+  t.mock.method(fsp, 'readFile', async () => {
+    throw new Error('absent catalog');
+  });
   let requests = 0;
   t.mock.method(globalThis, 'fetch', async () => {
     requests++;
@@ -944,5 +1089,18 @@ test('[ghostmaps-019] The proxy creates local routes before it starts the watche
   plugin.configurePreviewServer({ middlewares });
   assert.equal(plugin.name, 'ghostmaps');
   assert.deepEqual(paths, ['/api/ghostmaps', '/api/ghostmaps']);
+  await new Promise((resolve) => setImmediate(resolve));
   assert.equal(requests, 0);
+  let starts = 0;
+  const supplied = ghostMapsProxy({
+    watcher: routeWatcher({
+      start: () => {
+        starts++;
+        return Promise.resolve(false);
+      },
+    }),
+  });
+  supplied.configureServer({ middlewares: { use() {} } });
+  supplied.configurePreviewServer({ middlewares: { use() {} } });
+  assert.equal(starts, 0);
 });
