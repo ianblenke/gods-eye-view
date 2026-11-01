@@ -123,6 +123,8 @@ function fixture(
   t.mock.method(URL, 'revokeObjectURL', (url) => revoked.push(url));
   t.mock.method(console, 'warn', () => {});
   const mounted = new Set();
+  const catalogCalls = [];
+  const fileCalls = [];
   const viewer = {
     scene: { requestRender() {} },
     dataSources: {
@@ -139,13 +141,27 @@ function fixture(
   const layer = factory({
     storage: null,
     source: {
-      getCatalog: async () => ({
-        ...catalogOverride,
-        products: catalogOverride?.products || [
-          { id: 'cip', version: 'a'.repeat(40), defaultOn: true },
-        ],
-      }),
-      getFile: async () => {
+      getCatalog: async (options) => {
+        catalogCalls.push(options);
+        return {
+          ...catalogOverride,
+          products: catalogOverride?.products || [
+            { id: 'cip', version: 'a'.repeat(40), defaultOn: true },
+          ],
+        };
+      },
+      getFile: async (id, version, { signal }) => {
+        fileCalls.push([id, version]);
+        const products = catalogOverride?.products || [
+          { id: 'cip', version: 'a'.repeat(40) },
+        ];
+        const product = Array.prototype.find.call(
+          products,
+          (product) => product.id === id,
+        );
+        assert.ok(product);
+        assert.equal(version, product.version);
+        assert.ok(signal instanceof AbortSignal);
         beforeFileReturns?.(layer);
         return fixtureKmz(files);
       },
@@ -155,7 +171,7 @@ function fixture(
   layer.init(viewer);
   layer.enable();
   t.after(() => layer.destroy());
-  return { layer, viewer, mounted, created, revoked };
+  return { layer, viewer, mounted, created, revoked, catalogCalls, fileCalls };
 }
 
 const twoImages = () => ({
@@ -247,6 +263,9 @@ const polygonNode = () =>
     element('innerBoundaryIs', [
       element('LinearRing', [textNode('coordinates', '1,1 2,1 2,2')]),
     ]),
+    element('innerBoundaryIs', [
+      element('LinearRing', [textNode('coordinates', '3,1 4,1 4,2')]),
+    ]),
   ]);
 const reportDoc = ({
   name = 'Report',
@@ -279,6 +298,8 @@ const settleLayer = () => new Promise((resolve) => setImmediate(resolve));
 
 function selectionFixture(t, config = {}) {
   const published = [];
+  const picks = [];
+  const hitTests = [];
   const opened = [];
   const owners = [];
   let picked = { id: 'ghostmaps:cip:0:0' };
@@ -288,12 +309,18 @@ function selectionFixture(t, config = {}) {
   let destroyed = 0;
   const controls = {
     overlayHost: {
-      setEntries: (source, entries, options) =>
-        published.push({ source, entries, options }),
+      setEntries: (source, entries, options) => {
+        assert.equal(source, 's2-ghostmaps');
+        published.push({ source, entries, options });
+      },
       setVisible: (source, visible) => {
         controls.visible = [source, visible];
       },
-      hitTest: () => hit,
+      hitTest: (x, y, options) => {
+        assert.deepEqual([x, y, options], [8, 9, { sourceId: 's2-ghostmaps' }]);
+        hitTests.push([x, y, options]);
+        return hit;
+      },
     },
     screenSpaceEventHandlerFactory: () => ({
       setInputAction: (fn, type) => {
@@ -310,7 +337,10 @@ function selectionFixture(t, config = {}) {
         controls.unregistered = id;
       },
       resolvePickId: (value) => value.id,
-      isOwnedByOtherLayer: (_id, value) => value === 'other',
+      isOwnedByOtherLayer: (id, value) => {
+        assert.equal(id, 's2-ghostmaps');
+        return value === 'other';
+      },
     },
     pointer: { isPointerFree: () => free },
     openExternal: (url) => opened.push(url),
@@ -322,10 +352,16 @@ function selectionFixture(t, config = {}) {
     ...config,
     options: controls,
   });
-  h.viewer.scene.pick = () => picked;
+  h.viewer.scene.pick = (position) => {
+    assert.deepEqual(position, { x: 8, y: 9 });
+    picks.push(position);
+    return picked;
+  };
   return {
     ...h,
     published,
+    picks,
+    hitTests,
     opened,
     owners,
     controls,
@@ -372,7 +408,10 @@ test('[ghostmaps-030] The layer creates point line and polygon entities', async 
   );
   assert.deepEqual(
     hierarchy.holes.map((hole) => hole.positions),
-    [Cesium.Cartesian3.fromDegreesArray([1, 1, 2, 1, 2, 2])],
+    [
+      Cesium.Cartesian3.fromDegreesArray([1, 1, 2, 1, 2, 2]),
+      Cesium.Cartesian3.fromDegreesArray([3, 1, 4, 1, 4, 2]),
+    ],
   );
   assert.deepEqual(
     outline.polyline.positions.getValue(),
@@ -383,7 +422,7 @@ test('[ghostmaps-030] The layer creates point line and polygon entities', async 
   assert.equal(pin.billboard.scale.getValue(), 0.7);
   assert.equal(line.polyline.width.getValue(), 2);
   assert.equal(line.polyline.clampToGround.getValue(), true);
-  assert.equal(poly.polygon.hierarchy.getValue().holes.length, 1);
+  assert.equal(poly.polygon.hierarchy.getValue().holes.length, 2);
   assert.equal(poly.polygon.material.color.getValue().alpha, 0.25);
   assert.equal(outline.id, 'ghostmaps:cip:0:2:outline');
   assert.equal(outline.polyline.width.getValue(), 2);
@@ -496,9 +535,16 @@ test('[ghostmaps-030] The layer uses a canvas marker and caches its image', asyn
   Object.defineProperty(globalThis, 'document', {
     configurable: true,
     value: {
-      createElement: () => {
+      createElement: (name) => {
+        assert.equal(name, 'canvas');
         canvases++;
-        return { getContext: () => context, toDataURL: () => 'data:marker' };
+        return {
+          getContext: (name) => {
+            assert.equal(name, '2d');
+            return context;
+          },
+          toDataURL: () => 'data:marker',
+        };
       },
     },
   });
@@ -509,12 +555,21 @@ test('[ghostmaps-030] The layer uses a canvas marker and caches its image', asyn
   );
   const h = fixture(t, {
     document: reportDoc({
-      geometry: element('MultiGeometry', [pointNode(), pointNode()]),
+      geometry: element('MultiGeometry', [pointNode(), pointNode('20,40')]),
     }),
     catalog: { products: [plainProduct('iran-cip')] },
   });
   await h.layer.update();
   assert.equal(canvases, 1);
+  assert.deepEqual(
+    [...h.mounted][0].entities.values.map((entity) =>
+      entity.position.getValue(),
+    ),
+    [
+      Cesium.Cartesian3.fromDegrees(12, 34),
+      Cesium.Cartesian3.fromDegrees(20, 40),
+    ],
+  );
   assert.deepEqual(
     [...h.mounted][0].entities.values.map((entity) =>
       entity.billboard.image.getValue(),
@@ -539,10 +594,12 @@ test('[ghostmaps-031] A chip change stores the whole current selection', async (
     },
   });
   await h.layer.update();
+  assert.equal(h.layer.getRowControls().chips[0].active, true);
   h.layer.getRowControls().chips[0].onClick();
   await settleLayer();
   assert.deepEqual(writes, [['gev.ghostmaps.products', '[]']]);
   assert.equal(h.mounted.size, 0);
+  assert.equal(h.layer.getRowControls().chips[0].active, false);
   h.layer.getRowControls().chips[0].onClick();
   await settleLayer();
   assert.deepEqual(writes[1], ['gev.ghostmaps.products', '["cip"]']);
@@ -551,7 +608,7 @@ test('[ghostmaps-031] A chip change stores the whole current selection', async (
 
 for (const [name, getItem, active] of [
   ['empty list', () => '[]', false],
-  ['id list', () => '["cip"]', true],
+  ['id list', () => '["kinetic-30d",42]', false],
   ['invalid JSON', () => '{', true],
   ['object', () => '{}', true],
   [
@@ -564,6 +621,13 @@ for (const [name, getItem, active] of [
 ]) {
   test(`[ghostmaps-045] The layer reads the ${name} case from storage`, async (t) => {
     const h = fixture(t, {
+      catalog: {
+        products: [
+          plainProduct(),
+          { ...plainProduct('kinetic-30d'), defaultOn: false },
+          { ...plainProduct('42'), defaultOn: false },
+        ],
+      },
       options: {
         storage: {
           getItem,
@@ -574,7 +638,20 @@ for (const [name, getItem, active] of [
       },
     });
     await h.layer.update();
-    assert.equal(h.layer.getRowControls().chips[0].active, active);
+    assert.deepEqual(
+      h.layer.getRowControls().chips.map(({ id, active }) => [id, active]),
+      name === 'id list'
+        ? [
+            ['cip', false],
+            ['kinetic-30d', true],
+            ['42', true],
+          ]
+        : [
+            ['cip', active],
+            ['kinetic-30d', false],
+            ['42', false],
+          ],
+    );
     h.layer.getRowControls().chips[0].onClick();
     assert.equal(h.layer.getRowControls().chips[0].active, !active);
     await settleLayer();
@@ -673,11 +750,13 @@ test('[ghostmaps-043] The layer rejects an absent catalog source', () => {
 
 test('[ghostmaps-044] An aborted signal rejects the catalog update', async (t) => {
   const h = fixture(t);
+  assert.equal(h.catalogCalls.length, 0);
   assert.equal(
     await h.layer.update(null, { signal: AbortSignal.abort() }),
     false,
   );
   assert.equal(h.mounted.size, 0);
+  assert.equal(h.catalogCalls.length, 0);
 });
 
 for (const name of ['late catalog', 'late error', 'signal error']) {
@@ -835,6 +914,7 @@ test('[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens
       '<tr><td>Note</td><td>Detail</td></tr><tr><td>Research</td><td><a href="https://a.test/">https://a.test/</a></td></tr><tr><td>Other</td><td><a href="https://b.test/">https://b.test/</a></td></tr>',
   });
   await h.layer.update();
+  assert.equal(h.card(), undefined);
   h.click();
   const card = h.card();
   assert.equal(h.owners[0].id, 's2-ghostmaps');
@@ -860,8 +940,12 @@ test('[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens
     moving: false,
   });
   assert.deepEqual(h.controls.visible, ['s2-ghostmaps', true]);
+  assert.equal(h.picks.length, 1);
+  assert.equal(h.hitTests.length, 1);
   h.hit({ entryId: 'ghostmaps-card:cip:0' });
   h.click();
+  assert.equal(h.picks.length, 1);
+  assert.equal(h.hitTests.length, 2);
   assert.deepEqual(h.opened, ['https://a.test/', 'https://a.test/']);
   h.layer.disable();
   assert.equal(h.published.at(-1).entries.length, 0);
@@ -880,6 +964,7 @@ for (const [name, picked] of [
   test(`[ghostmaps-054] The card closes for the ${name} pick`, async (t) => {
     const h = selectionFixture(t);
     await h.layer.update();
+    assert.equal(h.card(), undefined);
     h.click();
     assert.equal(h.card().title, 'S2 · Report');
     h.controls.picking.isOwnedByOtherLayer = () => false;
@@ -891,9 +976,15 @@ for (const [name, picked] of [
 test('[ghostmaps-055] The pointer owner and foreign picks keep the current card', async (t) => {
   const h = selectionFixture(t);
   await h.layer.update();
+  assert.equal(h.card(), undefined);
   h.click();
+  assert.equal(h.card().title, 'S2 · Report');
+  assert.equal(h.picks.length, 1);
+  assert.equal(h.hitTests.length, 1);
   h.free(false);
   h.click(null);
+  assert.equal(h.picks.length, 1);
+  assert.equal(h.hitTests.length, 1);
   assert.equal(h.card().title, 'S2 · Report');
   h.free(true);
   h.click({ id: 'other' });
@@ -921,6 +1012,7 @@ for (const [name, config, title, heading] of [
   test(`[ghostmaps-033] The card uses the ${name}`, async (t) => {
     const h = selectionFixture(t, config);
     await h.layer.update();
+    assert.equal(h.card(), undefined);
     h.click({ id: `ghostmaps:${config.productId || 'cip'}:0:0` });
     assert.equal(h.card().title, title);
     assert.equal(h.card().details[0], heading);
@@ -937,9 +1029,14 @@ for (const [name, config, title, heading] of [
 
 test('[ghostmaps-050] The horizon callback updates point visibility after a camera change', async (t) => {
   let frame;
-  const h = fixture(t, { document: reportDoc() });
+  const mountedStates = [];
+  const h = fixture(t, {
+    document: reportDoc(),
+    onAdd: (ds) =>
+      mountedStates.push(ds.entities.values.map((entity) => entity.show)),
+  });
   h.viewer.camera = {
-    positionWC: Cesium.Cartesian3.fromDegrees(12, 34, 1000000),
+    positionWC: Cesium.Cartesian3.fromDegrees(-168, -34, 1000000),
   };
   h.viewer.scene.preRender = {
     addEventListener: (fn) => {
@@ -949,6 +1046,10 @@ test('[ghostmaps-050] The horizon callback updates point visibility after a came
   };
   await h.layer.update();
   const pin = [...h.mounted][0].entities.values[0];
+  assert.deepEqual(mountedStates, [[false]]);
+  assert.equal(pin.show, false);
+  h.viewer.camera.positionWC = Cesium.Cartesian3.fromDegrees(12, 34, 1000000);
+  frame();
   assert.equal(pin.show, true);
   h.viewer.camera.positionWC = Cesium.Cartesian3.fromDegrees(
     -168,
@@ -957,9 +1058,6 @@ test('[ghostmaps-050] The horizon callback updates point visibility after a came
   );
   frame();
   assert.equal(pin.show, false);
-  h.viewer.camera.positionWC = Cesium.Cartesian3.fromDegrees(12, 34, 1000000);
-  frame();
-  assert.equal(pin.show, true);
   [...h.mounted][0].show = false;
   h.layer.enable();
   assert.equal([...h.mounted][0].show, true);
@@ -970,27 +1068,28 @@ test('[ghostmaps-033] The card caps fields and excludes the repeated feature nam
     '<tr><td>Type</td><td>Report</td></tr>' +
     Array.from(
       { length: 20 },
-      (_, i) => `<tr><td>Field${i}</td><td>Text</td></tr>`,
+      (_, i) => `<tr><td>Field${i}</td><td>Text ${i}</td></tr>`,
     ).join('');
   const h = selectionFixture(t, {
     description,
     catalog: { products: [{ ...plainProduct(), dateMs: 1780272000000 }] },
   });
   await h.layer.update();
+  assert.equal(h.card(), undefined);
   h.click();
   assert.equal(h.card().details.length, 12);
   assert.deepEqual(h.card().details.slice(1), [
-    'Field 0: Text',
-    'Field 1: Text',
-    'Field 2: Text',
-    'Field 3: Text',
-    'Field 4: Text',
-    'Field 5: Text',
-    'Field 6: Text',
-    'Field 7: Text',
-    'Field 8: Text',
-    'Field 9: Text',
-    'Field 10: Text',
+    'Field 0: Text 0',
+    'Field 1: Text 1',
+    'Field 2: Text 2',
+    'Field 3: Text 3',
+    'Field 4: Text 4',
+    'Field 5: Text 5',
+    'Field 6: Text 6',
+    'Field 7: Text 7',
+    'Field 8: Text 8',
+    'Field 9: Text 9',
+    'Field 10: Text 10',
   ]);
   assert.match(h.card().details[0], /06-01/);
 });
@@ -1001,6 +1100,7 @@ test('[ghostmaps-033] A plain description gives an unlabelled card line', async 
     options: { pointer: null, openExternal: null },
   });
   await h.layer.update();
+  assert.equal(h.card(), undefined);
   h.click();
   assert.deepEqual(h.card().details, [
     'Intel Picture · Folder',
@@ -1111,6 +1211,7 @@ test('[ghostmaps-044] A saved chip callback accepts an absent catalog after dest
   const h = fixture(t);
   await h.layer.update();
   const chip = h.layer.getRowControls().chips[0];
+  assert.equal(chip.active, true);
   h.layer.destroy();
   chip.onClick();
   await settleLayer();
@@ -1120,9 +1221,13 @@ test('[ghostmaps-044] A saved chip callback accepts an absent catalog after dest
 test('[ghostmaps-054] A chip change removes the selected card', async (t) => {
   const h = selectionFixture(t);
   await h.layer.update();
+  assert.equal(h.card(), undefined);
   h.click();
+  assert.equal(h.card().title, 'S2 · Report');
+  assert.equal(h.layer.getRowControls().chips[0].active, true);
   h.layer.getRowControls().chips[0].onClick();
   await settleLayer();
+  assert.equal(h.layer.getRowControls().chips[0].active, false);
   assert.equal(h.card(), undefined);
 });
 
@@ -1130,6 +1235,7 @@ test('[ghostmaps-046] A custom catalog can remove the feature during a pick', as
   const products = [plainProduct()];
   const h = selectionFixture(t, { catalog: { products } });
   await h.layer.update();
+  assert.equal(h.card(), undefined);
   products.find = () => {
     h.layer.disable();
     return null;
@@ -1143,6 +1249,7 @@ test('[ghostmaps-033] A custom catalog can remove product metadata during a pick
   const products = [plainProduct()];
   const h = selectionFixture(t, { catalog: { products } });
   await h.layer.update();
+  assert.equal(h.card(), undefined);
   products.find = () => null;
   h.click();
   assert.equal(h.card().details[0], 'Folder');
@@ -1162,11 +1269,21 @@ test('[ghostmaps-035] The application card opens the link through the window hos
   );
   let click;
   let card;
+  let picked = { id: 'ghostmaps:cip:0:0' };
   const h = fixture(t, {
     factory: createApplicationGhostMaps,
-    document: reportDoc({
-      description: '<a href="https://a.test/">Source</a>',
-    }),
+    document: element('document', [
+      element('Placemark', [
+        textNode('name', 'One'),
+        textNode('description', '<a href="https://a.test/">Source A</a>'),
+        pointNode(),
+      ]),
+      element('Placemark', [
+        textNode('name', 'Two'),
+        textNode('description', '<a href="https://b.test/">Source B</a>'),
+        pointNode('20,40'),
+      ]),
+    ]),
     options: {
       overlayHost: {
         setEntries: (_source, entries) => {
@@ -1179,15 +1296,27 @@ test('[ghostmaps-035] The application card opens the link through the window hos
         },
         destroy() {},
       }),
-      picking: { resolvePickId: () => 'ghostmaps:cip:0:0' },
+      picking: { resolvePickId: (value) => value.id },
     },
   });
-  h.viewer.scene.pick = () => ({});
+  h.viewer.scene.pick = () => picked;
   await h.layer.update();
+  assert.equal(card, undefined);
+  assert.equal(h.layer.getStats().count, 2);
   click({ position: { x: 0, y: 0 } });
+  assert.equal(card.id, 'ghostmaps-card:cip:0');
   assert.equal(card.activate(), true);
   assert.deepEqual(calls, [
     ['https://a.test/', '_blank', 'noopener,noreferrer'],
+  ]);
+  assert.equal(card.id, 'ghostmaps-card:cip:0');
+  picked = { id: 'ghostmaps:cip:1:0' };
+  click({ position: { x: 0, y: 0 } });
+  assert.equal(card.id, 'ghostmaps-card:cip:1');
+  assert.equal(card.activate(), true);
+  assert.deepEqual(calls, [
+    ['https://a.test/', '_blank', 'noopener,noreferrer'],
+    ['https://b.test/', '_blank', 'noopener,noreferrer'],
   ]);
 });
 
@@ -1195,6 +1324,7 @@ test('[ghostmaps-044] A stale chip cannot load data without a catalog', async (t
   const h = fixture(t);
   await h.layer.update();
   const chip = h.layer.getRowControls().chips[0];
+  assert.equal(chip.active, true);
   h.layer.destroy();
   h.layer.init(h.viewer);
   h.layer.enable();
@@ -1216,8 +1346,11 @@ for (const [name, config] of [
   test(`[ghostmaps-047] The card stays plain with an ${name}`, async (t) => {
     const h = selectionFixture(t, config);
     await h.layer.update();
+    assert.equal(h.card(), undefined);
     h.click();
     assert.equal(h.card().interactive, false);
+    assert.equal(Object.hasOwn(h.card(), 'activate'), false);
+    assert.equal(Object.hasOwn(h.card(), 'accessibilityLabel'), false);
     assert.equal(
       h.card().details.some((line) => line.includes('click card')),
       false,
@@ -1268,6 +1401,7 @@ for (const [id, label, color] of [
   test(`[ghostmaps-030 ghostmaps-033 ghostmaps-034] The ${id} product uses its label and color`, async (t) => {
     const h = selectionFixture(t, { productId: id, geometry: lineNode() });
     await h.layer.update();
+    assert.equal(h.card(), undefined);
     h.click({ id: `ghostmaps:${id}:0:0` });
     assert.equal(h.card().accent, color);
     assert.equal(h.card().details[0], `${label} · Folder`);
@@ -1350,9 +1484,11 @@ test('[ghostmaps-044] The disabled state prevents access to catalog products', a
   });
   await h.layer.update();
   const chip = h.layer.getRowControls().chips[0];
+  assert.equal(chip.active, true);
   h.layer.disable();
   chip.onClick();
   await settleLayer();
+  assert.equal(h.layer.getRowControls().chips[0].active, false);
   fields = 0;
   chip.onClick();
   await settleLayer();
@@ -1368,6 +1504,7 @@ test('[ghostmaps-046] An invalid feature index prevents access to product metada
   };
   const h = selectionFixture(t, { catalog: { products } });
   await h.layer.update();
+  assert.equal(h.card(), undefined);
   h.click({ id: 'ghostmaps:cip:99:0' });
   assert.equal(reads, 0);
   assert.equal(h.card(), undefined);
@@ -1392,6 +1529,7 @@ test('[ghostmaps-046] The layer does not create an input handler without a viewe
 
 test('[ghostmaps-065] The layer keeps one input handler after a repeated enable call', async (t) => {
   const h = selectionFixture(t);
+  assert.equal(h.owners.length, 1);
   h.layer.enable();
   assert.equal(h.owners.length, 1);
 });
@@ -1410,6 +1548,7 @@ test('[ghostmaps-046] An empty pick id does not call another owner', async (t) =
     },
   });
   await h.layer.update();
+  assert.equal(h.card(), undefined);
   h.click({ id: '' });
   assert.equal(checks, 0);
   assert.equal(h.card(), undefined);
@@ -1440,6 +1579,7 @@ test('[ghostmaps-033] A false product value does not supply an inherited title',
   const products = [plainProduct()];
   const h = selectionFixture(t, { catalog: { products } });
   await h.layer.update();
+  assert.equal(h.card(), undefined);
   products.find = () => 0;
   h.click();
   assert.equal(h.card().details[0], 'Folder');
@@ -1461,6 +1601,7 @@ test('[ghostmaps-033] An absent product label stays empty with a custom locale',
   const products = [plainProduct()];
   const h = selectionFixture(t, { catalog: { products } });
   await h.layer.update();
+  assert.equal(h.card(), undefined);
   products.find = () => null;
   h.click();
   assert.equal(h.card().details[0], 'Folder');
@@ -1618,4 +1759,145 @@ test('[ghostmaps-032] A pushed edition changes only its product data source', as
   onCatalog({ products: [plainProduct('cip', 'a')] });
   await settleLayer();
   assert.deepEqual([...h.mounted], [first[0]]);
+  assert.deepEqual(requests, [
+    ['cip', 'a'],
+    ['kinetic-30d', 'b'],
+    ['kinetic-30d', 'c'],
+  ]);
+});
+
+test('[ghostmaps-055] An inactive product chip keeps the current card when it becomes active', async (t) => {
+  const h = selectionFixture(t, {
+    catalog: {
+      products: [
+        plainProduct(),
+        { ...plainProduct('kinetic-30d'), defaultOn: false },
+      ],
+    },
+  });
+  await h.layer.update();
+  assert.equal(h.card(), undefined);
+  assert.deepEqual(
+    h.layer.getRowControls().chips.map(({ id, active }) => [id, active]),
+    [
+      ['cip', true],
+      ['kinetic-30d', false],
+    ],
+  );
+  h.click();
+  const card = h.card();
+  assert.equal(card.title, 'S2 · Report');
+  h.layer.getRowControls().chips[1].onClick();
+  await settleLayer();
+  assert.deepEqual(
+    h.layer.getRowControls().chips.map(({ id, active }) => [id, active]),
+    [
+      ['cip', true],
+      ['kinetic-30d', true],
+    ],
+  );
+  assert.equal(h.card(), card);
+});
+
+test('[ghostmaps-031] A chip change keeps the other product choices in storage', async (t) => {
+  const writes = [];
+  const reads = [];
+  const h = fixture(t, {
+    catalog: {
+      products: [
+        plainProduct(),
+        plainProduct('kinetic-30d'),
+        { ...plainProduct('border-crisis'), defaultOn: false },
+      ],
+    },
+    options: {
+      storage: {
+        getItem: (key) => {
+          reads.push(key);
+          return null;
+        },
+        setItem: (...args) => writes.push(args),
+      },
+    },
+  });
+  await h.layer.update();
+  assert.deepEqual(reads, ['gev.ghostmaps.products']);
+  assert.deepEqual(h.fileCalls, [
+    ['cip', 'a'],
+    ['kinetic-30d', 'a'],
+  ]);
+  assert.deepEqual(
+    h.layer.getRowControls().chips.map(({ id, active }) => [id, active]),
+    [
+      ['cip', true],
+      ['kinetic-30d', true],
+      ['border-crisis', false],
+    ],
+  );
+  h.layer.getRowControls().chips[2].onClick();
+  await settleLayer();
+  assert.deepEqual(h.fileCalls, [
+    ['cip', 'a'],
+    ['kinetic-30d', 'a'],
+    ['border-crisis', 'a'],
+  ]);
+  assert.deepEqual(writes, [
+    ['gev.ghostmaps.products', '["cip","kinetic-30d","border-crisis"]'],
+  ]);
+  assert.deepEqual(
+    h.layer.getRowControls().chips.map(({ id, active }) => [id, active]),
+    [
+      ['cip', true],
+      ['kinetic-30d', true],
+      ['border-crisis', true],
+    ],
+  );
+  h.layer.getRowControls().chips[1].onClick();
+  await settleLayer();
+  assert.deepEqual(h.fileCalls, [
+    ['cip', 'a'],
+    ['kinetic-30d', 'a'],
+    ['border-crisis', 'a'],
+  ]);
+  assert.deepEqual(writes, [
+    ['gev.ghostmaps.products', '["cip","kinetic-30d","border-crisis"]'],
+    ['gev.ghostmaps.products', '["cip","border-crisis"]'],
+  ]);
+  assert.deepEqual(
+    h.layer.getRowControls().chips.map(({ id, active }) => [id, active]),
+    [
+      ['cip', true],
+      ['kinetic-30d', false],
+      ['border-crisis', true],
+    ],
+  );
+});
+
+test('[ghostmaps-035 ghostmaps-055] The application uses the caller pointer and external hosts', async (t) => {
+  const h = selectionFixture(t, {
+    factory: createApplicationGhostMaps,
+    description: '<a href="https://caller.test/source">Source</a>',
+  });
+  await h.layer.update();
+  assert.equal(h.card(), undefined);
+  h.click();
+  const card = h.card();
+  assert.equal(card.title, 'S2 · Report');
+  h.free(false);
+  h.click(null);
+  assert.equal(h.card(), card);
+  h.free(true);
+  assert.equal(card.activate(), true);
+  assert.deepEqual(h.opened, ['https://caller.test/source']);
+});
+
+test('[ghostmaps-068] The layer sets the caller signal on its catalog request', async (t) => {
+  const signal = new AbortController().signal;
+  const h = fixture(t);
+  assert.equal(h.catalogCalls.length, 0);
+  assert.equal(await h.layer.update(null, { signal }), true);
+  assert.equal(h.catalogCalls.length, 1);
+  assert.equal(Object.hasOwn(h.catalogCalls[0], 'signal'), true);
+  assert.equal(h.catalogCalls[0].signal, signal);
+  assert.equal(h.mounted.size, 1);
 });

@@ -138,7 +138,7 @@ Origin: backfill
 
 - **WHEN** the local file response succeeds
 - **THEN** the source requests a URL with encoded product and version values
-- **AND** the source returns the bytes
+- **AND** the source returns the bytes for each requested product and version
 
 #### Scenario: Follow catalog events `ghostmaps-024`
 
@@ -159,12 +159,17 @@ Origin: backfill
 #### Scenario: Read geometry `ghostmaps-026`
 
 - **WHEN** the reader processes KML placemarks
-- **THEN** the reader returns visible points, lines and polygons with their folder names, and excludes hidden or invalid geometry
+- **THEN** the reader returns supported point, line and polygon data with the folder names
+- **AND** the reader excludes placemarks with visibility text `0` and geometry types that it does not support
+- **AND** the reader excludes points without a valid position
+- **AND** the reader excludes lines with fewer than two valid positions
+- **AND** the reader excludes polygon boundaries with fewer than three valid positions
 
 #### Scenario: Resolve styles `ghostmaps-027`
 
 - **WHEN** the reader processes placemark style data
 - **THEN** the reader keeps shared properties and gives inline values precedence
+- **AND** the reader uses the normal pair of each style map when that pair exists
 
 #### Scenario: Bound KML data `ghostmaps-028`
 
@@ -194,8 +199,8 @@ Origin: backfill
 
 #### Scenario: Sync product data `ghostmaps-032`
 
-- **WHEN** a catalog changes a product version or removes a product
-- **THEN** the layer requests the new product id and version before it replaces the data source
+- **WHEN** a catalog of active products changes a product version or removes a product
+- **THEN** the layer requests each product whose version changes by its id and new version before it replaces that data source
 - **AND** the layer removes an absent product
 
 #### Scenario: Select report cards `ghostmaps-033`
@@ -232,8 +237,8 @@ Origin: backfill
 
 #### Scenario: Wait for the first catalog `ghostmaps-037`
 
-- **WHEN** a supported request arrives before the first catalog
-- **THEN** the proxy waits for the first check before it reads the catalog or file
+- **WHEN** a GET request for `/catalog` or `/file/cip` arrives before the first catalog
+- **THEN** the proxy waits for the first check before it returns the catalog or reads the file
 
 #### Scenario: Report file errors `ghostmaps-038`
 
@@ -297,7 +302,7 @@ Origin: backfill
 
 #### Scenario: Cull local point pins `ghostmaps-050`
 
-- **WHEN** a frame follows a camera change across the globe
+- **WHEN** the layer loads a product with a camera position, or a frame follows a camera change
 - **THEN** the layer hides far pins and shows near pins
 
 #### Scenario: Reject absent KML data `ghostmaps-051`
@@ -317,12 +322,12 @@ Origin: backfill
 
 #### Scenario: Close a selected card `ghostmaps-054`
 
-- **WHEN** a person selects empty ground, an invalid marker or an inactive chip
+- **WHEN** a person selects empty ground, selects an invalid marker or deactivates the selected product
 - **THEN** the layer clears the selected card
 
 #### Scenario: Keep the current card `ghostmaps-055`
 
-- **WHEN** the pointer or another layer owns the input
+- **WHEN** the pointer or another layer owns the input, or the person activates another product
 - **THEN** the layer keeps the current card
 
 #### Scenario: Open the first source link `ghostmaps-056`
@@ -368,7 +373,7 @@ Origin: backfill
 #### Scenario: Limit event subscribers `ghostmaps-064`
 
 - **WHEN** the event route already holds 64 subscribers
-- **THEN** the proxy rejects the new subscriber with HTTP 429
+- **THEN** the proxy rejects the new subscriber with HTTP 429 without a subscription or heartbeat timer
 
 #### Scenario: Keep one input handler `ghostmaps-065`
 
@@ -379,3 +384,19 @@ Origin: backfill
 
 - **WHEN** the branch advertisement is absent
 - **THEN** the ref parser returns null
+
+#### Scenario: Send the initial event catalog `ghostmaps-067`
+
+- **WHEN** an event client subscribes before the first check completes
+- **THEN** the proxy sends the current catalog before that check completes
+
+### Requirement: Catalog request input
+
+The browser layer MUST set a supplied caller signal on the catalog request options object itself.
+
+Origin: backfill
+
+#### Scenario: Pass a caller signal `ghostmaps-068`
+
+- **WHEN** a caller supplies a signal for a catalog update
+- **THEN** the layer sets that signal on the request options object itself

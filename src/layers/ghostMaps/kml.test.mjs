@@ -8,8 +8,11 @@ function el(localName, children = [], value = '', attributes = {}) {
     children,
     textContent: value,
     getAttribute: (key) => attributes[key] ?? null,
-    getElementsByTagName: () =>
-      children.flatMap((child) => [child, ...child.getElementsByTagName('*')]),
+    getElementsByTagName: (name) =>
+      children.flatMap((child) => [
+        ...(name === '*' || name === child.localName ? [child] : []),
+        ...child.getElementsByTagName(name),
+      ]),
   };
   for (const child of children) child.parentElement = node;
   return node;
@@ -60,7 +63,8 @@ for (const name of [
           ? el(name, [
               ring('outerBoundaryIs', '0,0 4,0 4,4'),
               ring('innerBoundaryIs', '1,1 2,1 2,2'),
-              ring('innerBoundaryIs', '0,0'),
+              ring('innerBoundaryIs', '0,0 1,1'),
+              ring('innerBoundaryIs', '3,1 4,1 4,2'),
             ])
           : name === 'MultiGeometry'
             ? el(name, [
@@ -95,6 +99,11 @@ for (const name of [
                     [2, 1],
                     [2, 2],
                   ],
+                  [
+                    [3, 1],
+                    [4, 1],
+                    [4, 2],
+                  ],
                 ],
               },
             ]
@@ -122,7 +131,7 @@ for (const name of [
     assert.equal(
       result.positions,
       name === 'Polygon'
-        ? 6
+        ? 9
         : name === 'MultiGeometry'
           ? 3
           : name === 'Point'
@@ -154,6 +163,25 @@ test('[ghostmaps-026] The reader excludes hidden placemarks', () => {
     positions: 0,
     over: false,
   });
+  assert.deepEqual(
+    read([
+      mark([text('name', 'Hidden'), text('visibility', '0'), point()]),
+      mark([text('name', 'Visible'), text('visibility', '1'), point('20,40')]),
+    ]),
+    {
+      features: [
+        {
+          name: 'Visible',
+          folder: '',
+          description: '',
+          style: {},
+          geometries: [{ type: 'point', position: [20, 40] }],
+        },
+      ],
+      positions: 1,
+      over: false,
+    },
+  );
 });
 
 test('[ghostmaps-026] The reader uses the nearest named folder or document', () => {
@@ -233,6 +261,7 @@ for (const [name, children, expected] of [
       [style(children), mark([text('styleUrl', '#s'), point()])],
       (href) => {
         calls.push(href);
+        assert.equal(href, 'pin.png');
         return 'blob:packed';
       },
     );
@@ -347,4 +376,54 @@ test('[ghostmaps-027] The reader accepts a null style URL from a custom element'
   const url = text('styleUrl', '');
   url.textContent = { trim: () => null };
   assert.deepEqual(read([mark([url, point()])]).features[0].style, {});
+});
+
+test('[ghostmaps-027] The reader resolves distinct images for separate styles', () => {
+  const calls = [];
+  const icon = (id, href) =>
+    style([el('IconStyle', [el('Icon', [text('href', href)])])], id);
+  const result = read(
+    [
+      icon('one', 'one.png'),
+      icon('two', 'two.png'),
+      mark([text('styleUrl', '#two'), point('20,40')]),
+      mark([text('styleUrl', '#one'), point('12,34')]),
+    ],
+    (href) => {
+      calls.push(href);
+      const urls = { 'one.png': 'blob:first', 'two.png': 'blob:second' };
+      assert.ok(Object.hasOwn(urls, href));
+      return urls[href];
+    },
+  );
+  assert.deepEqual(calls, ['one.png', 'two.png']);
+  assert.deepEqual(
+    result.features.map(({ style }) => style.icon),
+    ['blob:second', 'blob:first'],
+  );
+});
+
+test('[ghostmaps-027] The reader selects each normal pair after a highlight pair', () => {
+  const map = (id, normal, highlight) =>
+    el(
+      'StyleMap',
+      [
+        el('Pair', [text('key', 'highlight'), text('styleUrl', highlight)]),
+        pair([text('styleUrl', normal)]),
+      ],
+      '',
+      { id },
+    );
+  const result = read([
+    style([lineStyle('3')], 'one'),
+    style([lineStyle('5')], 'two'),
+    map('first', '#one', '#two'),
+    map('second', '#two', '#one'),
+    mark([text('styleUrl', '#second'), point('20,40')]),
+    mark([text('styleUrl', '#first'), point('12,34')]),
+  ]);
+  assert.deepEqual(
+    result.features.map(({ style }) => style.lineWidth),
+    [5, 3],
+  );
 });

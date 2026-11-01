@@ -1,5 +1,6 @@
 {
-  "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb",
+  "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8",
+  "node": "v26.12.1",
   "data": [
     {
       "file": "server/providers/ghostMaps.js",

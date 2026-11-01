@@ -88,6 +88,7 @@ test('[ghostmaps-002] each product keeps its newest edition by date, then editio
     blob(`${INCIDENTS}Yemen 2026/Yemen FLOT_October_10_2026.kmz`),
     { path: `${INCIDENTS}Yemen 2026`, type: 'tree', sha: 'f'.repeat(40) },
   ];
+  tree[1].sha = '0123456789abcdef0123456789abcdef01234567';
   const rows = buildGhostMapsCatalog(tree);
   const byId = Object.fromEntries(rows.map((row) => [row.id, row]));
   assert.deepEqual(
@@ -99,7 +100,7 @@ test('[ghostmaps-002] each product keeps its newest edition by date, then editio
   assert.equal(byId['kinetic-30d'].defaultOn, true);
   assert.match(byId['border-crisis'].fileName, /Export_v2/);
   assert.equal(byId['yemen-flot'].fileName, 'Yemen FLOT_October_10_2026.kmz');
-  assert.equal(byId.cip.version, tree[1].sha);
+  assert.equal(byId.cip.version, '0123456789abcdef0123456789abcdef01234567');
   assert.equal(
     byId.cip.fileTitle,
     'Common Intelligence Picture October 16 2026 Export 1',
@@ -159,7 +160,10 @@ test('[ghostmaps-006] the branch head comes from the smart-HTTP ref advertisemen
     `003d${head} refs/heads/main`,
     '0000',
   ].join('\n');
-  assert.equal(parseGitRefAdvertisement(text), head);
+  assert.equal(
+    parseGitRefAdvertisement(text),
+    '142d7630bc8f1f2c4b96e16ee865ca50d1ab578d',
+  );
   assert.equal(parseGitRefAdvertisement(text, 'dev'), null);
   assert.equal(parseGitRefAdvertisement(''), null);
 });

@@ -1,5 +1,5 @@
 {
-  "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb",
+  "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8",
   "data": {
     "ghostmaps-001": {
       "title": "Read edition dates",
@@ -486,6 +486,10 @@
         {
           "file": "server/providers/ghostMaps.test.mjs",
           "name": "[ghostmaps-020] The watcher uses bounded failure delays"
+        },
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-020] The watcher does not start a timer after it stops during the first check"
         }
       ]
     },
@@ -729,6 +733,14 @@
         {
           "file": "src/layers/ghostMaps/kml.test.mjs",
           "name": "[ghostmaps-027] The reader accepts a null style URL from a custom element"
+        },
+        {
+          "file": "src/layers/ghostMaps/kml.test.mjs",
+          "name": "[ghostmaps-027] The reader resolves distinct images for separate styles"
+        },
+        {
+          "file": "src/layers/ghostMaps/kml.test.mjs",
+          "name": "[ghostmaps-027] The reader selects each normal pair after a highlight pair"
         }
       ]
     },
@@ -865,6 +877,10 @@
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-031] A chip change stores the whole current selection"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-031] A chip change keeps the other product choices in storage"
         }
       ]
     },
@@ -1009,6 +1025,10 @@
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-035] The application card opens the link through the window host"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-035 ghostmaps-055] The application uses the caller pointer and external hosts"
         }
       ]
     },
@@ -1389,6 +1409,14 @@
         {
           "file": "src/layers/ghostMaps/lifecycle.test.mjs",
           "name": "[ghostmaps-055] The pointer owner and foreign picks keep the current card"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-055] An inactive product chip keeps the current card when it becomes active"
+        },
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-035 ghostmaps-055] The application uses the caller pointer and external hosts"
         }
       ]
     },
@@ -1508,6 +1536,24 @@
         {
           "file": "src/layers/ghostMaps/catalog.test.mjs",
           "name": "[ghostmaps-066] The ref parser accepts an absent advertisement"
+        }
+      ]
+    },
+    "ghostmaps-067": {
+      "title": "Send the initial event catalog",
+      "tests": [
+        {
+          "file": "server/providers/ghostMaps.test.mjs",
+          "name": "[ghostmaps-067] The event route sends the current catalog before the first check completes"
+        }
+      ]
+    },
+    "ghostmaps-068": {
+      "title": "Pass a caller signal",
+      "tests": [
+        {
+          "file": "src/layers/ghostMaps/lifecycle.test.mjs",
+          "name": "[ghostmaps-068] The layer sets the caller signal on its catalog request"
         }
       ]
     }

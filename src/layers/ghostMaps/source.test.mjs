@@ -44,17 +44,28 @@ test('[ghostmaps-023] The source encodes file values and returns bytes', async (
   const calls = [];
   const signal = new AbortController().signal;
   const source = createGhostMapsSource({
-    fetchImpl: async (...args) => {
-      calls.push(args);
-      return response(new Uint8Array([4, 5, 6]));
+    fetchImpl: async (url, options) => {
+      calls.push([url, options]);
+      const bytes = {
+        '/api/ghostmaps/file/a%2Fb?v=v%20%3F%23': [4, 5, 6],
+        '/api/ghostmaps/file/kinetic-30d?v=edition-two': [9, 8],
+      };
+      assert.ok(Object.hasOwn(bytes, url));
+      return response(new Uint8Array(bytes[url]));
     },
   });
   assert.deepEqual(
     await source.getFile('a/b', 'v ?#', { signal }),
     new Uint8Array([4, 5, 6]),
   );
-  assert.equal(calls[0][0], '/api/ghostmaps/file/a%2Fb?v=v%20%3F%23');
-  assert.equal(calls[0][1].signal, signal);
+  assert.deepEqual(
+    await source.getFile('kinetic-30d', 'edition-two'),
+    new Uint8Array([9, 8]),
+  );
+  assert.deepEqual(calls, [
+    ['/api/ghostmaps/file/a%2Fb?v=v%20%3F%23', { signal }],
+    ['/api/ghostmaps/file/kinetic-30d?v=edition-two', { signal: undefined }],
+  ]);
 });
 
 test('[ghostmaps-042] The source rejects a file response error', async () => {
@@ -69,8 +80,10 @@ test('[ghostmaps-042] The source rejects a file response error', async () => {
 
 test('[ghostmaps-022 ghostmaps-023] The default source calls the global fetch helper', async (t) => {
   const calls = [];
-  t.mock.method(globalThis, 'fetch', async (url) => {
-    calls.push(url);
+  const catalogSignal = new AbortController().signal;
+  const fileSignal = new AbortController().signal;
+  t.mock.method(globalThis, 'fetch', async (url, options) => {
+    calls.push([url, options]);
     return response(
       url.endsWith('/catalog')
         ? '{"products":[{"id":"border-crisis","version":"edition-c"}]}'
@@ -78,13 +91,16 @@ test('[ghostmaps-022 ghostmaps-023] The default source calls the global fetch he
     );
   });
   const source = createGhostMapsSource();
-  assert.deepEqual(await source.getCatalog(), {
+  assert.deepEqual(await source.getCatalog({ signal: catalogSignal }), {
     products: [{ id: 'border-crisis', version: 'edition-c' }],
   });
-  assert.deepEqual(await source.getFile('cip', 'a'), new Uint8Array([65]));
+  assert.deepEqual(
+    await source.getFile('cip', 'a', { signal: fileSignal }),
+    new Uint8Array([65]),
+  );
   assert.deepEqual(calls, [
-    '/api/ghostmaps/catalog',
-    '/api/ghostmaps/file/cip?v=a',
+    ['/api/ghostmaps/catalog', { signal: catalogSignal }],
+    ['/api/ghostmaps/file/cip?v=a', { signal: fileSignal }],
   ]);
 });
 
@@ -145,6 +161,8 @@ for (const [code, expected] of [
         commit: 'test',
       },
     ]);
+    assert.equal(events.removed, undefined);
+    assert.equal(events.closed, undefined);
     stop();
     assert.equal(events.removed, true);
     assert.equal(events.closed, true);
@@ -169,10 +187,15 @@ test('[ghostmaps-024] The stream accepts an absent state callback', () => {
     constructor() {
       events = this;
     }
-    addEventListener(_name, listener) {
+    addEventListener(name, listener) {
+      assert.equal(name, 'catalog');
       this.listener = listener;
     }
-    removeEventListener() {}
+    removeEventListener(name, listener) {
+      assert.equal(name, 'catalog');
+      assert.equal(listener, this.listener);
+      this.removed = true;
+    }
     close() {
       this.closed = true;
     }
@@ -183,6 +206,9 @@ test('[ghostmaps-024] The stream accepts an absent state callback', () => {
   assert.doesNotThrow(() => events.onopen());
   events.listener({ data: '{"products":[{"id":"cip","version":"last"}]}' });
   assert.deepEqual(catalogs, [{ products: [{ id: 'cip', version: 'last' }] }]);
+  assert.equal(events.closed, undefined);
+  assert.equal(events.removed, undefined);
   stop();
+  assert.equal(events.removed, true);
   assert.equal(events.closed, true);
 });

@@ -14,7 +14,7 @@
     "failedTests": [
       "[ghostmaps-018] The poll helper checks zero negative and fractional settings"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A001-right",
@@ -31,7 +31,7 @@
     "failedTests": [
       "[ghostmaps-018] The poll helper checks zero negative and fractional settings"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A002-left",
@@ -48,7 +48,7 @@
     "failedTests": [
       "[ghostmaps-052] The default token helper checks the present token"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A002-right",
@@ -65,7 +65,7 @@
     "failedTests": [
       "[ghostmaps-052] The default token helper checks the absent token"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A003-true",
@@ -82,7 +82,7 @@
     "failedTests": [
       "[ghostmaps-052] The API token is present"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A003-false",
@@ -99,7 +99,7 @@
     "failedTests": [
       "[ghostmaps-052] The API token is absent"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A004-left",
@@ -116,7 +116,7 @@
     "failedTests": [
       "[ghostmaps-049] The watcher records the message and date"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A004-right",
@@ -133,7 +133,7 @@
     "failedTests": [
       "[ghostmaps-049] The watcher handles an empty message"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A005-left",
@@ -150,7 +150,7 @@
     "failedTests": [
       "[ghostmaps-014] a new commit is announced once, naming only the products that changed"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A005-right",
@@ -167,7 +167,7 @@
     "failedTests": [
       "[ghostmaps-049] The watcher records the empty message and date"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A006-left",
@@ -184,7 +184,7 @@
     "failedTests": [
       "[ghostmaps-057] The disk catalog checks invalid commit data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A006-right",
@@ -201,7 +201,7 @@
     "failedTests": [
       "[ghostmaps-057] The disk catalog checks invalid products data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A007-loop",
@@ -218,7 +218,7 @@
     "failedTests": [
       "[ghostmaps-014] A subscriber error does not stop the next subscriber"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A008-true",
@@ -235,7 +235,7 @@
     "failedTests": [
       "[ghostmaps-049] The watcher records the message and date"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A008-false",
@@ -252,7 +252,7 @@
     "failedTests": [
       "[ghostmaps-049] The watcher records the empty message and date"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A009-left",
@@ -269,7 +269,7 @@
     "failedTests": [
       "[ghostmaps-014] The watcher log names each changed product"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A009-right",
@@ -286,7 +286,7 @@
     "failedTests": [
       "[ghostmaps-014 ghostmaps-048] The default helpers use fetch log and warning callbacks"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A010-loop",
@@ -303,7 +303,7 @@
     "failedTests": [
       "[ghostmaps-015] The watcher warms only the default products"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A011-true",
@@ -320,7 +320,7 @@
     "failedTests": [
       "[ghostmaps-020] The watcher uses bounded failure delays"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A011-false",
@@ -337,7 +337,7 @@
     "failedTests": [
       "[ghostmaps-020] The watcher coalesces checks and follows its start and stop state"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A012-left",
@@ -354,7 +354,7 @@
     "failedTests": [
       "[ghostmaps-020] The watcher coalesces checks and follows its start and stop state"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A012-right",
@@ -371,7 +371,7 @@
     "failedTests": [
       "[ghostmaps-020] The watcher coalesces checks and follows its start and stop state"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A013-loop",
@@ -388,7 +388,7 @@
     "failedTests": [
       "[ghostmaps-015] The file cache keeps temporary files and current blobs"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A014-left",
@@ -405,7 +405,7 @@
     "failedTests": [
       "[ghostmaps-015] The file cache keeps temporary files and current blobs"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A014-right",
@@ -422,7 +422,7 @@
     "failedTests": [
       "[ghostmaps-015] The file cache keeps temporary files and current blobs"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A015-true",
@@ -439,7 +439,7 @@
     "failedTests": [
       "[ghostmaps-036] The proxy serves current file bytes and cache headers"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A015-false",
@@ -456,7 +456,7 @@
     "failedTests": [
       "[ghostmaps-036] The proxy serves current file bytes and cache headers"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A016-left",
@@ -473,7 +473,7 @@
     "failedTests": [
       "[ghostmaps-038] The proxy reports file errors"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A016-right",
@@ -488,7 +488,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A017-left",
@@ -505,7 +505,7 @@
     "failedTests": [
       "[ghostmaps-037] The proxy waits for the first catalog and file check"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A017-right",
@@ -522,7 +522,7 @@
     "failedTests": [
       "[ghostmaps-038] The proxy reports file errors"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A018-true",
@@ -539,7 +539,7 @@
     "failedTests": [
       "[ghostmaps-036] The proxy serves current file bytes and cache headers"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A018-false",
@@ -556,7 +556,7 @@
     "failedTests": [
       "[ghostmaps-036] The proxy serves current file bytes and cache headers"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A019-left",
@@ -573,7 +573,7 @@
     "failedTests": [
       "[ghostmaps-001] editions read the date and export/version number written in the name"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A019-right",
@@ -588,7 +588,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A020-left",
@@ -603,7 +603,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A020-right",
@@ -620,7 +620,7 @@
     "failedTests": [
       "[ghostmaps-001] editions read the date and export/version number written in the name"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A021-true",
@@ -635,7 +635,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A021-false",
@@ -652,7 +652,7 @@
     "failedTests": [
       "[ghostmaps-062] The edition parser accepts an absent name"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A022-left",
@@ -669,7 +669,7 @@
     "failedTests": [
       "[ghostmaps-001] editions read the date and export/version number written in the name"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A022-right",
@@ -686,7 +686,7 @@
     "failedTests": [
       "[ghostmaps-062] The edition parser accepts an absent name"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A023-left",
@@ -703,7 +703,7 @@
     "failedTests": [
       "[ghostmaps-002] each product keeps its newest edition by date, then edition number"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A023-right",
@@ -720,7 +720,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog rejects a lower path after an undated edition"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A024-left",
@@ -737,7 +737,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects by date over a later undated file"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A024-right",
@@ -754,7 +754,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects by path"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A025-left",
@@ -771,7 +771,7 @@
     "failedTests": [
       "[ghostmaps-002] each product keeps its newest edition by date, then edition number"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A025-right",
@@ -788,7 +788,7 @@
     "failedTests": [
       "[ghostmaps-062] The edition parser accepts an absent name"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A026-loop",
@@ -805,7 +805,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects by date over a later undated file"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A027-true",
@@ -822,7 +822,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects by date over a later undated file"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A027-false",
@@ -839,7 +839,7 @@
     "failedTests": [
       "oversized, empty, non-KMZ and malformed entries are skipped"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A028-left",
@@ -856,7 +856,7 @@
     "failedTests": [
       "[ghostmaps-004] The catalog rejects an invalid tree"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A028-right",
@@ -873,7 +873,7 @@
     "failedTests": [
       "[ghostmaps-004] The catalog rejects a path object with a KMZ string value"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A029-left",
@@ -890,7 +890,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects by date over a later undated file"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A029-right",
@@ -905,7 +905,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A030-left",
@@ -922,7 +922,7 @@
     "failedTests": [
       "[ghostmaps-004] The catalog rejects an invalid finite size"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A030-right",
@@ -939,7 +939,7 @@
     "failedTests": [
       "[ghostmaps-004] The catalog rejects an invalid maximum size"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A031-left",
@@ -956,7 +956,7 @@
     "failedTests": [
       "[ghostmaps-004] The catalog rejects an invalid finite size"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A031-right",
@@ -973,7 +973,7 @@
     "failedTests": [
       "[ghostmaps-004] The catalog rejects an invalid positive size"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A032-left",
@@ -990,7 +990,7 @@
     "failedTests": [
       "[ghostmaps-002] each product keeps its newest edition by date, then edition number"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A032-right",
@@ -1007,7 +1007,7 @@
     "failedTests": [
       "[ghostmaps-003] The incident catalog checks the older date"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A033-left",
@@ -1024,7 +1024,7 @@
     "failedTests": [
       "[ghostmaps-002] each product keeps its newest edition by date, then edition number"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A033-right",
@@ -1041,7 +1041,7 @@
     "failedTests": [
       "[ghostmaps-003] The incident catalog checks the date"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A034-left",
@@ -1058,7 +1058,7 @@
     "failedTests": [
       "[ghostmaps-002] each product keeps its newest edition by date, then edition number"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A034-right",
@@ -1075,7 +1075,7 @@
     "failedTests": [
       "[ghostmaps-003] The incident catalog excludes 0_Archive"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A035-loop",
@@ -1092,7 +1092,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects by date over a later undated file"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A036-true",
@@ -1109,7 +1109,7 @@
     "failedTests": [
       "[ghostmaps-003] The incident catalog checks the older date"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A036-false",
@@ -1126,7 +1126,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects by date over a later undated file"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A037-loop",
@@ -1143,7 +1143,7 @@
     "failedTests": [
       "[ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A038-left",
@@ -1160,7 +1160,7 @@
     "failedTests": [
       "[ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A038-right",
@@ -1175,7 +1175,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A039-left",
@@ -1192,7 +1192,7 @@
     "failedTests": [
       "[ghostmaps-066] The ref parser accepts an absent advertisement"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A039-right",
@@ -1209,7 +1209,7 @@
     "failedTests": [
       "[ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A040-left",
@@ -1226,7 +1226,7 @@
     "failedTests": [
       "[ghostmaps-045] The default storage handles valid storage"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A040-right",
@@ -1241,7 +1241,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A041-left",
@@ -1258,7 +1258,7 @@
     "failedTests": [
       "[ghostmaps-045] The default storage handles valid storage"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A041-right",
@@ -1273,7 +1273,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A042-true",
@@ -1290,7 +1290,7 @@
     "failedTests": [
       "[ghostmaps-045] The default storage handles valid storage"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A042-false",
@@ -1307,7 +1307,7 @@
     "failedTests": [
       "[ghostmaps-045] A stored object cannot use an inherited array method"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A043-true",
@@ -1324,7 +1324,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer applies the line width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A043-false",
@@ -1341,7 +1341,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer anchors a line at its mean coordinates"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A044-left",
@@ -1358,7 +1358,7 @@
     "failedTests": [
       "[ghostmaps-030] The polygon alpha value takes precedence over the inherited color alpha"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A044-right",
@@ -1375,7 +1375,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer applies the polygon color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A045-left",
@@ -1392,7 +1392,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer applies the line width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A045-right",
@@ -1409,7 +1409,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer anchors a line at its mean coordinates"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A046-true",
@@ -1426,7 +1426,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer anchors a polygon at its mean coordinates"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A046-false",
@@ -1443,7 +1443,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer anchors a line at its mean coordinates"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A047-loop",
@@ -1460,7 +1460,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer anchors a line at its mean coordinates"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A048-loop",
@@ -1477,7 +1477,7 @@
     "failedTests": [
       "[ghostmaps-050] The horizon callback updates point visibility after a camera change"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A049-left",
@@ -1494,7 +1494,7 @@
     "failedTests": [
       "[ghostmaps-046] An absent overlayHost prevents card input"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A049-right",
@@ -1511,7 +1511,7 @@
       "[ghostmaps-046] An absent pick registry prevents card input",
       "[ghostmaps-046] The application accepts an absent registry"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A050-left",
@@ -1528,7 +1528,7 @@
     "failedTests": [
       "[ghostmaps-046] An absent overlayHost prevents card input"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A050-right",
@@ -1545,7 +1545,7 @@
     "failedTests": [
       "[ghostmaps-046] An absent screenSpaceEventHandlerFactory prevents card input"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A051-true",
@@ -1562,7 +1562,7 @@
     "failedTests": [
       "[ghostmaps-031] A chip change stores the whole current selection"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A051-false",
@@ -1579,7 +1579,7 @@
     "failedTests": [
       "[ghostmaps-061] A KMZ without a KML document reports an error"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A052-left",
@@ -1596,7 +1596,7 @@
     "failedTests": [
       "[ghostmaps-031] A chip change stores the whole current selection"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A052-right",
@@ -1613,7 +1613,7 @@
     "failedTests": [
       "[ghostmaps-044] A saved chip callback accepts an absent catalog after destruction"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A053-true",
@@ -1630,7 +1630,7 @@
     "failedTests": [
       "[ghostmaps-029] The layer frees constructed icons after the disabled flag changes"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A053-false",
@@ -1647,7 +1647,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer checks the large icon"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A054-left",
@@ -1664,7 +1664,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer checks the absent icon"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A054-right",
@@ -1681,7 +1681,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer checks the large icon"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A055-left",
@@ -1698,7 +1698,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A055-right",
@@ -1715,7 +1715,7 @@
     "failedTests": [
       "[ghostmaps-033] The card uses the custom product"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A056-left",
@@ -1732,7 +1732,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer checks the packed icon"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A056-right",
@@ -1749,7 +1749,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer uses a canvas marker and caches its image"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A057-left",
@@ -1766,7 +1766,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer checks the absent icon"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A057-right",
@@ -1783,7 +1783,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer creates point line and polygon entities"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A058-true",
@@ -1800,7 +1800,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer checks the maximum icon"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A058-false",
@@ -1817,7 +1817,7 @@
     "failedTests": [
       "[ghostmaps-029] entity construction failure releases parsed image URLs"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A059-left",
@@ -1834,7 +1834,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer checks the absent icon"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A059-right",
@@ -1851,7 +1851,7 @@
     "failedTests": [
       "[ghostmaps-029] entity construction failure releases parsed image URLs"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A060-left",
@@ -1868,7 +1868,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer applies the line width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A060-right",
@@ -1885,7 +1885,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer applies the polygon color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A061-true",
@@ -1902,7 +1902,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer applies the polygon fill"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A061-false",
@@ -1919,7 +1919,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer applies the line width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A062-true",
@@ -1936,7 +1936,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer applies the polygon color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A062-false",
@@ -1953,7 +1953,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer applies the line width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A063-left",
@@ -1970,7 +1970,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer applies the line width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A063-right",
@@ -1987,7 +1987,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer applies the polygon color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A064-left",
@@ -2004,7 +2004,7 @@
     "failedTests": [
       "[ghostmaps-044] An absent viewer prevents access to catalog products"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A064-right",
@@ -2021,7 +2021,7 @@
     "failedTests": [
       "[ghostmaps-044] A row callback can remove the catalog before synchronization"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A065-left",
@@ -2038,7 +2038,7 @@
     "failedTests": [
       "[ghostmaps-044] The disabled state prevents access to catalog products"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A065-right",
@@ -2055,7 +2055,7 @@
     "failedTests": [
       "[ghostmaps-044] An absent viewer prevents access to catalog products"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A066-loop",
@@ -2072,7 +2072,7 @@
     "failedTests": [
       "[ghostmaps-031] A chip change stores the whole current selection"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A067-left",
@@ -2089,7 +2089,7 @@
     "failedTests": [
       "[ghostmaps-032] The layer replaces a changed product after it adds the new data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A067-right",
@@ -2106,7 +2106,7 @@
     "failedTests": [
       "[ghostmaps-031] A chip change stores the whole current selection"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A068-loop",
@@ -2123,7 +2123,7 @@
     "failedTests": [
       "[ghostmaps-061] A KMZ without a KML document reports an error"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A069-left",
@@ -2140,7 +2140,7 @@
     "failedTests": [
       "[ghostmaps-031] A chip change stores the whole current selection"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A069-right",
@@ -2157,7 +2157,7 @@
     "failedTests": [
       "[ghostmaps-044] A product getter can cancel before its file request"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A070-left",
@@ -2174,7 +2174,7 @@
     "failedTests": [
       "[ghostmaps-029] The layer frees constructed icons after the old signal changes"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A070-right",
@@ -2191,7 +2191,7 @@
     "failedTests": [
       "[ghostmaps-029] The layer frees constructed icons after the disabled flag changes"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A071-left",
@@ -2208,7 +2208,7 @@
     "failedTests": [
       "[ghostmaps-061] A KMZ without a KML document reports an error"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A071-right",
@@ -2225,7 +2225,7 @@
     "failedTests": [
       "[ghostmaps-059] A file error uses its default text"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A072-left",
@@ -2242,7 +2242,7 @@
     "failedTests": [
       "[ghostmaps-059] A file error uses its template"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A072-right",
@@ -2259,7 +2259,7 @@
     "failedTests": [
       "[ghostmaps-061] A KMZ without a KML document reports an error"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A073-left",
@@ -2276,7 +2276,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A073-right",
@@ -2291,7 +2291,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A074-left",
@@ -2308,7 +2308,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A074-right",
@@ -2325,7 +2325,7 @@
     "failedTests": [
       "[ghostmaps-033] A false product value does not supply an inherited title"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A075-left",
@@ -2342,7 +2342,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A075-right",
@@ -2357,7 +2357,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A076-true",
@@ -2374,7 +2374,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A076-false",
@@ -2389,7 +2389,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A077-left",
@@ -2406,7 +2406,7 @@
     "failedTests": [
       "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A077-right",
@@ -2421,7 +2421,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A078-left",
@@ -2438,7 +2438,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A078-right",
@@ -2455,7 +2455,7 @@
     "failedTests": [
       "[ghostmaps-033] An absent product label stays empty with a custom locale"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A079-left",
@@ -2472,7 +2472,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A079-right",
@@ -2489,7 +2489,7 @@
     "failedTests": [
       "[ghostmaps-033] The card uses the custom product"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A080-loop",
@@ -2506,7 +2506,7 @@
     "failedTests": [
       "[ghostmaps-033] A plain description gives an unlabelled card line"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A081-true",
@@ -2523,7 +2523,7 @@
     "failedTests": [
       "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A081-false",
@@ -2540,7 +2540,7 @@
     "failedTests": [
       "[ghostmaps-033] A plain description gives an unlabelled card line"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A082-left",
@@ -2557,7 +2557,7 @@
     "failedTests": [
       "[ghostmaps-033] The card caps fields and excludes the repeated feature name"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A082-right",
@@ -2574,7 +2574,7 @@
     "failedTests": [
       "[ghostmaps-047] The card stays plain with an absent external host"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A083-left",
@@ -2591,7 +2591,7 @@
     "failedTests": [
       "[ghostmaps-033] The card uses the folder title"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A083-right",
@@ -2608,7 +2608,7 @@
     "failedTests": [
       "[ghostmaps-033] The card uses the default title"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A084-left",
@@ -2625,7 +2625,7 @@
     "failedTests": [
       "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A084-right",
@@ -2642,7 +2642,7 @@
     "failedTests": [
       "[ghostmaps-033] The card uses the folder title"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A085-left",
@@ -2659,7 +2659,7 @@
     "failedTests": [
       "[ghostmaps-047] The card stays plain with an absent link"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A085-right",
@@ -2676,7 +2676,7 @@
     "failedTests": [
       "[ghostmaps-047] The card stays plain with an absent external host"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A086-left",
@@ -2693,7 +2693,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A086-right",
@@ -2710,7 +2710,7 @@
     "failedTests": [
       "[ghostmaps-033] The card uses the custom product"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A087-left",
@@ -2727,7 +2727,7 @@
     "failedTests": [
       "[ghostmaps-054] The card closes for the number pick"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A087-right",
@@ -2744,7 +2744,7 @@
     "failedTests": [
       "[ghostmaps-054] The card closes for the lookalike prefix pick"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A088-true",
@@ -2761,7 +2761,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A088-false",
@@ -2778,7 +2778,7 @@
     "failedTests": [
       "[ghostmaps-046] An invalid feature index prevents access to product metadata"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A089-left",
@@ -2795,7 +2795,7 @@
     "failedTests": [
       "[ghostmaps-061] A KMZ without a KML document reports an error"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A089-right",
@@ -2812,7 +2812,7 @@
     "failedTests": [
       "[ghostmaps-046] The layer does not create an input handler without a viewer"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A090-left",
@@ -2829,7 +2829,7 @@
     "failedTests": [
       "[ghostmaps-061] A KMZ without a KML document reports an error"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A090-right",
@@ -2846,7 +2846,7 @@
     "failedTests": [
       "[ghostmaps-065] The layer keeps one input handler after a repeated enable call"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A091-left",
@@ -2863,7 +2863,7 @@
     "failedTests": [
       "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A091-right",
@@ -2880,7 +2880,7 @@
     "failedTests": [
       "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A092-left",
@@ -2897,7 +2897,7 @@
     "failedTests": [
       "[ghostmaps-033] A plain description gives an unlabelled card line"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A092-right",
@@ -2914,7 +2914,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A093-left",
@@ -2931,7 +2931,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A093-right",
@@ -2948,7 +2948,7 @@
     "failedTests": [
       "[ghostmaps-055] The pointer owner and foreign picks keep the current card"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A094-left",
@@ -2965,7 +2965,7 @@
     "failedTests": [
       "[ghostmaps-047] The card stays plain with an absent link"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A094-right",
@@ -2982,7 +2982,7 @@
     "failedTests": [
       "[ghostmaps-047] The card stays plain with an absent external host"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A095-true",
@@ -2999,7 +2999,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A095-false",
@@ -3016,7 +3016,7 @@
     "failedTests": [
       "[ghostmaps-054] The card closes for the empty ground pick"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A096-left",
@@ -3033,7 +3033,7 @@
     "failedTests": [
       "[ghostmaps-046] An empty pick id does not call another owner"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A096-right",
@@ -3050,7 +3050,7 @@
     "failedTests": [
       "[ghostmaps-054] The card closes for the absent index pick"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A097-loop",
@@ -3067,7 +3067,7 @@
     "failedTests": [
       "[ghostmaps-060] successful load keeps icons until the product is disabled"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A098-loop",
@@ -3084,7 +3084,7 @@
     "failedTests": [
       "[ghostmaps-050] The horizon callback updates point visibility after a camera change"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A099-left",
@@ -3101,7 +3101,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A099-right",
@@ -3118,7 +3118,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer creates point line and polygon entities"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A100-loop",
@@ -3135,7 +3135,7 @@
     "failedTests": [
       "[ghostmaps-060] successful load keeps icons until the product is disabled"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A101-left",
@@ -3152,7 +3152,7 @@
     "failedTests": [
       "[ghostmaps-044] A disabled layer rejects updates and removes its records"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A101-right",
@@ -3169,7 +3169,7 @@
     "failedTests": [
       "[ghostmaps-044] An aborted signal rejects the catalog update"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A102-left",
@@ -3186,7 +3186,7 @@
     "failedTests": [
       "[ghostmaps-044] The layer rejects a signal error after cancellation"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A102-right",
@@ -3203,7 +3203,7 @@
     "failedTests": [
       "[ghostmaps-044] The layer rejects a late error after cancellation"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A103-left",
@@ -3220,7 +3220,7 @@
     "failedTests": [
       "[ghostmaps-059] A catalog error uses its message"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A103-right",
@@ -3237,7 +3237,7 @@
     "failedTests": [
       "[ghostmaps-059] A catalog error uses its default text"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A104-left",
@@ -3254,7 +3254,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A104-right",
@@ -3271,7 +3271,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A105-true",
@@ -3288,7 +3288,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A105-false",
@@ -3305,7 +3305,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A106-true",
@@ -3322,7 +3322,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A106-false",
@@ -3339,7 +3339,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A107-left",
@@ -3356,7 +3356,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A107-right",
@@ -3373,7 +3373,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A108-left",
@@ -3390,7 +3390,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A108-right",
@@ -3407,7 +3407,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A109-left",
@@ -3424,7 +3424,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A109-right",
@@ -3441,7 +3441,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A110-left",
@@ -3458,7 +3458,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A110-right",
@@ -3475,7 +3475,7 @@
     "failedTests": [
       "[ghostmaps-033] The card uses the custom product"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A111-true",
@@ -3492,7 +3492,7 @@
     "failedTests": [
       "[ghostmaps-059] A file error uses its message"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A111-false",
@@ -3509,7 +3509,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A112-true",
@@ -3526,7 +3526,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A112-false",
@@ -3543,7 +3543,7 @@
     "failedTests": [
       "[ghostmaps-059] A file error uses its message"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A113-true",
@@ -3560,7 +3560,7 @@
     "failedTests": [
       "[ghostmaps-059] A file error uses its message"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A113-false",
@@ -3577,7 +3577,7 @@
     "failedTests": [
       "[ghostmaps-033] An absent product label stays empty with a custom locale"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A114-left",
@@ -3594,7 +3594,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A114-right",
@@ -3611,7 +3611,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A115-left",
@@ -3628,7 +3628,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A115-right",
@@ -3645,7 +3645,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A116-left",
@@ -3662,7 +3662,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A116-right",
@@ -3679,7 +3679,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A117-left",
@@ -3696,7 +3696,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A117-right",
@@ -3713,7 +3713,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A118-left",
@@ -3730,7 +3730,7 @@
     "failedTests": [
       "[ghostmaps-059] A file error uses its message"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A118-right",
@@ -3747,7 +3747,7 @@
     "failedTests": [
       "[ghostmaps-034] The layer reports initial state and live stream data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A119-left",
@@ -3764,7 +3764,7 @@
     "failedTests": [
       "[ghostmaps-059] A catalog error uses its message"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A119-right",
@@ -3781,7 +3781,7 @@
     "failedTests": [
       "[ghostmaps-059] A file error uses its message"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A120-loop",
@@ -3798,7 +3798,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer anchors a line at its mean coordinates"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A121-loop",
@@ -3815,7 +3815,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer anchors a line at its mean coordinates"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A122-left",
@@ -3832,7 +3832,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts Polygon"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A122-right",
@@ -3849,7 +3849,7 @@
     "failedTests": [
       "[ghostmaps-027] A style map without children gives an empty style"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A123-left",
@@ -3866,7 +3866,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts LineString"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A123-right",
@@ -3881,7 +3881,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A124-left",
@@ -3898,7 +3898,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts LineString"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A124-right",
@@ -3915,7 +3915,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader resolves the icon defaults style"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A125-left",
@@ -3932,7 +3932,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts LineString"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A125-right",
@@ -3949,7 +3949,7 @@
     "failedTests": [
       "[ghostmaps-051] The reader accepts an absent document"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A126-left",
@@ -3966,7 +3966,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts LineString"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A126-right",
@@ -3983,7 +3983,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts LineString"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A127-true",
@@ -4000,7 +4000,7 @@
     "failedTests": [
       "[ghostmaps-027] An inline style replaces the shared values"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A127-false",
@@ -4017,7 +4017,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader resolves the absent number style"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A128-left",
@@ -4034,7 +4034,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader resolves the absent number style"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A128-right",
@@ -4051,7 +4051,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader resolves the invalid number style"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A129-loop",
@@ -4068,7 +4068,7 @@
     "failedTests": [
       "[ghostmaps-025] The coordinate parser checks altitude"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A130-left",
@@ -4085,7 +4085,7 @@
     "failedTests": [
       "[ghostmaps-025] The coordinate parser checks altitude"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A130-right",
@@ -4100,7 +4100,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A131-left",
@@ -4117,7 +4117,7 @@
     "failedTests": [
       "[ghostmaps-025] The coordinate parser checks absent text"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A131-right",
@@ -4134,7 +4134,7 @@
     "failedTests": [
       "[ghostmaps-025] The coordinate parser checks the east bound"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A132-left",
@@ -4149,7 +4149,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A132-right",
@@ -4166,7 +4166,7 @@
     "failedTests": [
       "[ghostmaps-025] The coordinate parser checks the north bound"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A133-left",
@@ -4181,7 +4181,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A133-right",
@@ -4196,7 +4196,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A134-true",
@@ -4213,7 +4213,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader resolves the icon style"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A134-false",
@@ -4230,7 +4230,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader resolves the icon defaults style"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A135-loop",
@@ -4242,30 +4242,15 @@
     ],
     "what": "Remove the loop data",
     "status": "KILLED",
-    "tests": "[ghostmaps-027] An inline style replaces the shared values; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader resolves the absent number style; [ghostmaps-027] The reader resolves the icon defaults style; [ghostmaps-027] The reader resolves the icon style; [ghostmaps-027] ",
+    "tests": "[ghostmaps-027] An inline style replaces the shared values; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader resolves distinct images for separate styles; [ghostmaps-027] The reader resolves the absent number style; [ghostmaps-027] The reader resolves the icon defaults st",
     "failedTests": [
       "[ghostmaps-027] An inline style replaces the shared values",
       "[ghostmaps-027] The reader checks the normal map",
+      "[ghostmaps-027] The reader resolves distinct images for separate styles",
       "[ghostmaps-027] The reader resolves the absent number style",
-      "[ghostmaps-027] The reader resolves the icon defaults style",
-      "[ghostmaps-027] The reader resolves the icon style",
-      "[ghostmaps-027] The reader resolves the line style",
-      "[ghostmaps-027] The reader resolves the polygon style",
-      "[ghostmaps-027] The reader resolves the polygon defaults style",
-      "[ghostmaps-027] The reader resolves the invalid number style",
-      "[ghostmaps-027] The reader checks the inline map",
-      "[ghostmaps-027] The reader checks the absent map id",
-      "[ghostmaps-027] The reader checks the absent normal pair",
-      "[ghostmaps-027] The reader checks the absent style id",
-      "[ghostmaps-027] The reader checks the remote style",
-      "[ghostmaps-027] The reader checks the cycle",
-      "[ghostmaps-027] The reader checks the unknown style",
-      "[ghostmaps-027] The reader checks the absent style",
-      "[ghostmaps-027] The default resolver rejects an image URL",
-      "[ghostmaps-027] A style map without children gives an empty style",
-      "[ghostmaps-027] The reader accepts a null style URL from a custom element"
+      "[ghostmaps-027] The reader resolves the icon defaults style"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A136-loop",
@@ -4277,12 +4262,13 @@
     ],
     "what": "Remove the loop data",
     "status": "KILLED",
-    "tests": "[ghostmaps-027] The reader checks the inline map; [ghostmaps-027] The reader checks the normal map",
+    "tests": "[ghostmaps-027] The reader checks the inline map; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader selects each normal pair after a highlight pair",
     "failedTests": [
       "[ghostmaps-027] The reader checks the inline map",
-      "[ghostmaps-027] The reader checks the normal map"
+      "[ghostmaps-027] The reader checks the normal map",
+      "[ghostmaps-027] The reader selects each normal pair after a highlight pair"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A137-true",
@@ -4298,7 +4284,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader checks the inline map"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A137-false",
@@ -4310,11 +4296,12 @@
     ],
     "what": "Remove the false result of inline\n        ? readStyle(inline, resolveImage)\n        : text(firstChild(normal, 'styleUrl'))",
     "status": "KILLED",
-    "tests": "[ghostmaps-027] The reader checks the normal map",
+    "tests": "[ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader selects each normal pair after a highlight pair",
     "failedTests": [
-      "[ghostmaps-027] The reader checks the normal map"
+      "[ghostmaps-027] The reader checks the normal map",
+      "[ghostmaps-027] The reader selects each normal pair after a highlight pair"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A138-left",
@@ -4326,17 +4313,40 @@
     ],
     "what": "Remove the left operand of url || ''",
     "status": "KILLED",
-    "tests": "[ghostmaps-027] An inline style replaces the shared values; [ghostmaps-027] The reader checks the inline map; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader resolves the absent number style; [ghostmaps-027] The reader resolves the icon defaults style; [ghostmaps-027] Th",
+    "tests": "[ghostmaps-027] An inline style replaces the shared values; [ghostmaps-027] The reader checks the inline map; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader resolves distinct images for separate styles; [ghostmaps-027] The reader resolves the absent number style; [ghost",
     "failedTests": [
       "[ghostmaps-027] An inline style replaces the shared values",
       "[ghostmaps-027] The reader checks the inline map",
       "[ghostmaps-027] The reader checks the normal map",
+      "[ghostmaps-027] The reader resolves distinct images for separate styles",
       "[ghostmaps-027] The reader resolves the absent number style",
-      "[ghostmaps-027] The reader resolves the icon defaults style",
+      "[ghostmaps-025] The coordinate parser checks finite longitude",
+      "[ghostmaps-025] The coordinate parser checks finite latitude",
+      "[ghostmaps-025] The coordinate parser checks the north bound",
+      "[ghostmaps-025] The coordinate parser checks the south bound",
+      "[ghostmaps-025] The coordinate parser checks the east bound",
+      "[ghostmaps-025] The coordinate parser checks the west bound",
+      "[ghostmaps-025] The coordinate parser checks bounds",
+      "[ghostmaps-025] The coordinate parser checks altitude",
+      "[ghostmaps-025] The coordinate parser checks absent text",
+      "[ghostmaps-026] The reader accepts Point",
+      "[ghostmaps-026] The reader accepts LineString",
+      "[ghostmaps-026] The reader accepts LinearRing",
+      "[ghostmaps-026] The reader accepts Polygon",
+      "[ghostmaps-026] The reader accepts MultiGeometry",
+      "[ghostmaps-026] The reader excludes an invalid point",
+      "[ghostmaps-026] The reader excludes an invalid line",
+      "[ghostmaps-026] The reader excludes an invalid polygon",
+      "[ghostmaps-026] The reader excludes an invalid model",
+      "[ghostmaps-026] The reader excludes an invalid network link",
+      "[ghostmaps-026] The reader excludes hidden placemarks",
+      "[ghostmaps-026] The reader uses the nearest named folder or document",
+      "[ghostmaps-026] The reader caps report names and folder names",
       "[ghostmaps-027] The reader resolves the line style",
       "[ghostmaps-027] The reader resolves the polygon style",
       "[ghostmaps-027] The reader resolves the polygon defaults style",
       "[ghostmaps-027] The reader resolves the icon style",
+      "[ghostmaps-027] The reader resolves the icon defaults style",
       "[ghostmaps-027] The reader resolves the invalid number style",
       "[ghostmaps-027] The reader checks the absent map id",
       "[ghostmaps-027] The reader checks the absent normal pair",
@@ -4346,9 +4356,14 @@
       "[ghostmaps-027] The reader checks the unknown style",
       "[ghostmaps-027] The reader checks the absent style",
       "[ghostmaps-027] The default resolver rejects an image URL",
-      "[ghostmaps-027] The reader accepts a null style URL from a custom element"
+      "[ghostmaps-051] The reader accepts an absent document",
+      "[ghostmaps-028] The reader caps the feature total",
+      "[ghostmaps-028] The reader caps the position total",
+      "[ghostmaps-027] A style map without children gives an empty style",
+      "[ghostmaps-027] The reader accepts a null style URL from a custom element",
+      "[ghostmaps-027] The reader selects each normal pair after a highlight pair"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A138-right",
@@ -4365,7 +4380,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader accepts a null style URL from a custom element"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A139-left",
@@ -4381,7 +4396,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader checks the remote style"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A139-right",
@@ -4397,7 +4412,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader checks the cycle"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A140-left",
@@ -4414,7 +4429,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader accepts a null style URL from a custom element"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A140-right",
@@ -4430,7 +4445,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader checks the remote style"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A141-left",
@@ -4446,7 +4461,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader checks the inline map"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A141-right",
@@ -4461,7 +4476,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A142-case-0",
@@ -4478,7 +4493,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts MultiGeometry"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A142-case-1",
@@ -4495,7 +4510,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts LineString"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A142-case-2",
@@ -4512,7 +4527,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts LinearRing"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A142-case-3",
@@ -4529,7 +4544,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts Polygon"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A142-case-4",
@@ -4546,7 +4561,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts MultiGeometry"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A143-loop",
@@ -4563,7 +4578,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts MultiGeometry"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A144-left",
@@ -4580,7 +4595,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts LineString"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A144-right",
@@ -4597,7 +4612,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader uses the nearest named folder or document"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A145-loop",
@@ -4614,7 +4629,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts LineString"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A146-loop",
@@ -4631,7 +4646,7 @@
     "failedTests": [
       "[ghostmaps-026] The reader accepts LineString"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A147-left",
@@ -4648,7 +4663,7 @@
     "failedTests": [
       "[ghostmaps-028] The reader caps the feature total"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A147-right",
@@ -4665,7 +4680,7 @@
     "failedTests": [
       "[ghostmaps-028] The reader caps the position total"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A148-true",
@@ -4682,7 +4697,7 @@
     "failedTests": [
       "[ghostmaps-027] The default resolver rejects an image URL"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A148-false",
@@ -4697,7 +4712,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A149-left",
@@ -4714,7 +4729,7 @@
     "failedTests": [
       "[ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A149-right",
@@ -4731,7 +4746,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks absent text"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A150-true",
@@ -4748,7 +4763,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks lowercase hex"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A150-false",
@@ -4765,7 +4780,7 @@
     "failedTests": [
       "[ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A151-left",
@@ -4782,7 +4797,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks lowercase hex"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A151-right",
@@ -4799,7 +4814,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks uppercase hex"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A152-true",
@@ -4816,7 +4831,7 @@
     "failedTests": [
       "[ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A152-false",
@@ -4833,7 +4848,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks the high surrogate bound"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A153-left",
@@ -4850,7 +4865,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks the upper bound"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A153-right",
@@ -4867,7 +4882,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks the high surrogate bound"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A154-left",
@@ -4884,7 +4899,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks zero"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A154-right",
@@ -4901,7 +4916,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks the upper bound"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A155-left",
@@ -4918,7 +4933,7 @@
     "failedTests": [
       "[ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A155-right",
@@ -4935,7 +4950,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks above surrogate"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A156-left",
@@ -4952,7 +4967,7 @@
     "failedTests": [
       "[ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A156-right",
@@ -4969,7 +4984,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks an unknown name"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A157-left",
@@ -4986,7 +5001,7 @@
     "failedTests": [
       "[ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A157-right",
@@ -5003,7 +5018,7 @@
     "failedTests": [
       "[ghostmaps-008] The text helper accepts absent markup"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A158-left",
@@ -5020,7 +5035,7 @@
     "failedTests": [
       "[ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A158-right",
@@ -5037,7 +5052,7 @@
     "failedTests": [
       "[ghostmaps-008] free-form descriptions become one unlabelled field; scripts are dropped"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A159-loop",
@@ -5054,7 +5069,7 @@
     "failedTests": [
       "[ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A160-left",
@@ -5071,7 +5086,7 @@
     "failedTests": [
       "[ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A160-right",
@@ -5088,7 +5103,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser keeps one copy of each valid link"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A161-loop",
@@ -5105,7 +5120,7 @@
     "failedTests": [
       "[ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A162-left",
@@ -5122,7 +5137,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the empty label"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A162-right",
@@ -5139,7 +5154,7 @@
     "failedTests": [
       "[ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A163-left",
@@ -5156,7 +5171,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the &lt;blank&gt; value"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A163-right",
@@ -5173,7 +5188,7 @@
     "failedTests": [
       "[ghostmaps-007] A link table does not add a duplicate text field"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A164-left",
@@ -5190,7 +5205,7 @@
     "failedTests": [
       "[ghostmaps-011] KML aabbggrr colors convert to rgba"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A164-right",
@@ -5205,7 +5220,7 @@
     "status": "SURVIVED",
     "tests": "",
     "failedTests": [],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A165-loop",
@@ -5222,7 +5237,7 @@
     "failedTests": [
       "[ghostmaps-012] The wrapper accepts absent text and its default width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A166-left",
@@ -5239,7 +5254,7 @@
     "failedTests": [
       "[ghostmaps-012] The wrapper accepts absent text and its default width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A166-right",
@@ -5256,7 +5271,7 @@
     "failedTests": [
       "[ghostmaps-012] The wrapper accepts absent text and its default width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A167-left",
@@ -5273,7 +5288,7 @@
     "failedTests": [
       "[ghostmaps-012] The wrapper accepts absent text and its default width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A167-right",
@@ -5290,7 +5305,7 @@
     "failedTests": [
       "[ghostmaps-012] The wrapper checks the final line limit before it adds text"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A168-left",
@@ -5307,7 +5322,7 @@
     "failedTests": [
       "[ghostmaps-012] The wrapper accepts absent text and its default width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A168-right",
@@ -5324,7 +5339,7 @@
     "failedTests": [
       "[ghostmaps-012] The wrapper accepts absent text and its default width"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A169-left",
@@ -5341,7 +5356,7 @@
     "failedTests": [
       "[ghostmaps-013] CamelCase field labels read as words"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A169-right",
@@ -5358,7 +5373,7 @@
     "failedTests": [
       "[ghostmaps-013] The label helper accepts absent text"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A170-left",
@@ -5375,7 +5390,7 @@
     "failedTests": [
       "[ghostmaps-024] The stream reports the connection state for code 1"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "A170-right",
@@ -5392,7 +5407,7 @@
     "failedTests": [
       "[ghostmaps-024] The stream reports the connection state for code 9"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S001",
@@ -5409,7 +5424,7 @@
     "failedTests": [
       "[ghostmaps-001] editions read the date and export/version number written in the name"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S002",
@@ -5428,7 +5443,7 @@
       "[ghostmaps-002] The catalog selects by date over an undated file",
       "[ghostmaps-002] each product keeps its newest edition by date, then edition number"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S003",
@@ -5445,7 +5460,7 @@
     "failedTests": [
       "[ghostmaps-003] A newer incident replaces an older incident"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S005",
@@ -5462,7 +5477,7 @@
     "failedTests": [
       "[ghostmaps-005] raw URLs are pinned to the commit and encode every path segment"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S008",
@@ -5479,7 +5494,7 @@
     "failedTests": [
       "[ghostmaps-008] The text helper excludes script content"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S009",
@@ -5496,7 +5511,7 @@
     "failedTests": [
       "[ghostmaps-009] field values and counts are bounded"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S011",
@@ -5513,7 +5528,7 @@
     "failedTests": [
       "[ghostmaps-011] The color parser returns the blue channel"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S013",
@@ -5530,7 +5545,7 @@
     "failedTests": [
       "[ghostmaps-013] CamelCase field labels read as words"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S014",
@@ -5550,7 +5565,7 @@
       "[ghostmaps-014] The watcher log names each changed product",
       "[ghostmaps-014] a new commit is announced once, naming only the products that changed"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S017",
@@ -5567,7 +5582,7 @@
     "failedTests": [
       "[ghostmaps-017] an unchanged head clears an upstream outage and announces recovery once"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S021",
@@ -5584,7 +5599,7 @@
     "failedTests": [
       "[ghostmaps-021] The event route sends catalogs heartbeats and close callbacks"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S022",
@@ -5601,7 +5616,7 @@
     "failedTests": [
       "[ghostmaps-022] The source returns the catalog and passes its signal"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S023",
@@ -5618,7 +5633,7 @@
     "failedTests": [
       "[ghostmaps-023] The source encodes file values and returns bytes"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S027",
@@ -5635,7 +5650,7 @@
     "failedTests": [
       "[ghostmaps-027] The reader resolves the line style"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S028",
@@ -5652,7 +5667,7 @@
     "failedTests": [
       "[ghostmaps-028] The reader caps the feature total"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S029",
@@ -5669,7 +5684,7 @@
     "failedTests": [
       "[ghostmaps-029] entity construction failure releases parsed image URLs"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S030",
@@ -5686,7 +5701,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer creates point line and polygon entities"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S031",
@@ -5703,7 +5718,7 @@
     "failedTests": [
       "[ghostmaps-031] A chip change stores the whole current selection"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S032",
@@ -5720,7 +5735,7 @@
     "failedTests": [
       "[ghostmaps-032] The layer replaces a changed product after it adds the new data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S033",
@@ -5737,7 +5752,7 @@
     "failedTests": [
       "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S034",
@@ -5754,7 +5769,7 @@
     "failedTests": [
       "[ghostmaps-060] successful load keeps icons until the product is disabled"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S035",
@@ -5771,7 +5786,7 @@
     "failedTests": [
       "[ghostmaps-035] The application card opens the link through the window host"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "PRODUCT-cip",
@@ -5788,7 +5803,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects the cip product"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "PRODUCT-kinetic-30d",
@@ -5805,7 +5820,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects the kinetic-30d product"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "PRODUCT-border-crisis",
@@ -5822,7 +5837,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects the border-crisis product"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "PRODUCT-iran-cip",
@@ -5839,7 +5854,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects the iran-cip product"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "PRODUCT-iran-kinetic",
@@ -5856,7 +5871,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects the iran-kinetic product"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "PRODUCT-yemen-flot",
@@ -5873,7 +5888,7 @@
     "failedTests": [
       "[ghostmaps-002] The catalog selects the yemen-flot product"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LABEL-cip",
@@ -5890,7 +5905,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "COLOR-cip",
@@ -5907,7 +5922,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LABEL-kinetic-30d",
@@ -5924,7 +5939,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The kinetic-30d product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "COLOR-kinetic-30d",
@@ -5941,7 +5956,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The kinetic-30d product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LABEL-border-crisis",
@@ -5958,7 +5973,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "COLOR-border-crisis",
@@ -5975,7 +5990,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LABEL-iran-cip",
@@ -5992,7 +6007,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-cip product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "COLOR-iran-cip",
@@ -6009,7 +6024,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-cip product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LABEL-iran-kinetic",
@@ -6026,7 +6041,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-kinetic product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "COLOR-iran-kinetic",
@@ -6043,7 +6058,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-kinetic product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LABEL-yemen-flot",
@@ -6060,7 +6075,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The yemen-flot product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "COLOR-yemen-flot",
@@ -6077,7 +6092,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The yemen-flot product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LABEL-latest-drop",
@@ -6094,7 +6109,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The latest-drop product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "COLOR-latest-drop",
@@ -6111,7 +6126,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The latest-drop product uses its label and color"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "ENTITY-amp",
@@ -6128,7 +6143,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks amp"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "ENTITY-lt",
@@ -6145,7 +6160,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks lt"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "ENTITY-gt",
@@ -6162,7 +6177,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks gt"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "ENTITY-quot",
@@ -6179,7 +6194,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks quot"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "ENTITY-apos",
@@ -6196,7 +6211,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks apos"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "ENTITY-nbsp",
@@ -6213,7 +6228,7 @@
     "failedTests": [
       "[ghostmaps-010] The decoder checks nbsp"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "FIELD-shape",
@@ -6230,7 +6245,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the shape label"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "FIELD-objectid",
@@ -6247,7 +6262,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the objectid label"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "FIELD-fid",
@@ -6264,7 +6279,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the fid label"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "FIELD-globalid",
@@ -6281,7 +6296,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the globalid label"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "EMPTY-0",
@@ -6298,7 +6313,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the empty value"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "EMPTY-1",
@@ -6315,7 +6330,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the &lt;null&gt; value"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "EMPTY-2",
@@ -6332,7 +6347,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the null value"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "EMPTY-3",
@@ -6349,7 +6364,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the n/a value"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "EMPTY-4",
@@ -6366,7 +6381,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the - value"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "EMPTY-5",
@@ -6383,7 +6398,7 @@
     "failedTests": [
       "[ghostmaps-007] The table parser excludes the &lt;blank&gt; value"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "S008-source",
@@ -6400,7 +6415,7 @@
     "failedTests": [
       "[ghostmaps-008] The description parser excludes rows inside script markup"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "PRODUCT-latest-drop",
@@ -6417,7 +6432,7 @@
     "failedTests": [
       "[ghostmaps-003] latest drop is the newest dated incident file outside curated, archived and base data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "ANCHOR-lon",
@@ -6434,7 +6449,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer anchors a line at its mean coordinates"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "ANCHOR-lat",
@@ -6451,7 +6466,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer anchors a line at its mean coordinates"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LOOP-horizon",
@@ -6468,7 +6483,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LOOP-count",
@@ -6485,7 +6500,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LOOP-enable",
@@ -6502,7 +6517,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LOOP-disable",
@@ -6519,7 +6534,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LOOP-records",
@@ -6536,7 +6551,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "LOOP-features",
@@ -6553,7 +6568,7 @@
     "failedTests": [
       "[ghostmaps-030 ghostmaps-034 ghostmaps-050] The layer owns all products and all report records"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F01-id",
@@ -6569,7 +6584,7 @@
     "failedTests": [
       "[ghostmaps-032] The layer replaces a changed product after it adds the new data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F01-version",
@@ -6585,7 +6600,7 @@
     "failedTests": [
       "[ghostmaps-032] The layer replaces a changed product after it adds the new data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F02-line",
@@ -6601,7 +6616,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer creates point line and polygon entities"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F02-point",
@@ -6617,7 +6632,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer creates point line and polygon entities"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F02-polygon",
@@ -6633,7 +6648,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer creates point line and polygon entities"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F02-hole",
@@ -6649,7 +6664,7 @@
     "failedTests": [
       "[ghostmaps-030] The layer creates point line and polygon entities"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F03-stop",
@@ -6665,7 +6680,7 @@
     "failedTests": [
       "[ghostmaps-020] The watcher coalesces checks and follows its start and stop state"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F04-read",
@@ -6681,7 +6696,7 @@
     "failedTests": [
       "[ghostmaps-022] The source returns the catalog and passes its signal"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F04-event",
@@ -6700,7 +6715,7 @@
       "[ghostmaps-024] The stream reports the connection state for code 2",
       "[ghostmaps-024] The stream reports the connection state for code 9"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F05-state",
@@ -6719,7 +6734,7 @@
       "[ghostmaps-024] The stream reports the connection state for code 2",
       "[ghostmaps-024] The stream reports the connection state for code 9"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F06-cleanup",
@@ -6735,7 +6750,7 @@
     "failedTests": [
       "[ghostmaps-029] entity construction failure releases parsed image URLs"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F07-values",
@@ -6751,7 +6766,7 @@
     "failedTests": [
       "[ghostmaps-009] field values and counts are bounded"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F08-shared",
@@ -6767,7 +6782,7 @@
     "failedTests": [
       "[ghostmaps-027] An inline style replaces the shared values"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F09-disk",
@@ -6783,7 +6798,7 @@
     "failedTests": [
       "[ghostmaps-016] the catalog survives a restart from disk, and upstream failures are reported"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F10-commit",
@@ -6799,7 +6814,7 @@
     "failedTests": [
       "[ghostmaps-014] a new commit is announced once, naming only the products that changed"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R1F11-file",
@@ -6815,7 +6830,7 @@
     "failedTests": [
       "[ghostmaps-037] The proxy waits for the first catalog and file check"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-cleanup-unload",
@@ -6831,7 +6846,7 @@
     "failedTests": [
       "[ghostmaps-060] successful load keeps icons until the product is disabled"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-cleanup-late",
@@ -6849,7 +6864,7 @@
       "[ghostmaps-029] The layer frees constructed icons after the old signal changes",
       "[ghostmaps-029] The layer frees constructed icons after the signal changes"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-cleanup-parse",
@@ -6865,7 +6880,7 @@
     "failedTests": [
       "[ghostmaps-029] cancellation during parsing releases every packed-image URL"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-stop-backoff",
@@ -6881,7 +6896,7 @@
     "failedTests": [
       "[ghostmaps-020] The watcher uses bounded failure delays"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-default-products",
@@ -6897,7 +6912,7 @@
     "failedTests": [
       "[ghostmaps-022 ghostmaps-023] The default source calls the global fetch helper"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-disk-load",
@@ -6913,7 +6928,7 @@
     "failedTests": [
       "[ghostmaps-016] The disk catalog checks valid data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-event-products",
@@ -6929,7 +6944,7 @@
     "failedTests": [
       "[ghostmaps-014] a new commit is announced once, naming only the products that changed"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-heartbeat-stop",
@@ -6945,7 +6960,7 @@
     "failedTests": [
       "[ghostmaps-021] The event route sends catalogs heartbeats and close callbacks"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-horizon-restore",
@@ -6961,7 +6976,7 @@
     "failedTests": [
       "[ghostmaps-050] The horizon callback updates point visibility after a camera change"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-push-product",
@@ -6977,7 +6992,7 @@
     "failedTests": [
       "[ghostmaps-032] A pushed edition changes only its product data source"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-first-catalog",
@@ -6993,7 +7008,7 @@
     "failedTests": [
       "[ghostmaps-037] The proxy waits for the first catalog and file check"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-first-file",
@@ -7009,7 +7024,7 @@
     "failedTests": [
       "[ghostmaps-037] The proxy waits for the first catalog and file check"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-file-error",
@@ -7025,7 +7040,7 @@
     "failedTests": [
       "[ghostmaps-038] The proxy reports file errors"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-destroyed",
@@ -7041,7 +7056,7 @@
     "failedTests": [
       "[ghostmaps-039] A destroyed response does not receive JSON"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-install-server",
@@ -7057,7 +7072,7 @@
     "failedTests": [
       "[ghostmaps-040] The proxy creates local routes before it starts the watcher"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-install-preview",
@@ -7073,7 +7088,7 @@
     "failedTests": [
       "[ghostmaps-040] The proxy creates local routes before it starts the watcher"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-invalid-catalog",
@@ -7091,7 +7106,7 @@
       "[ghostmaps-041] The source rejects a catalog with invalid products",
       "[ghostmaps-041] The source rejects a catalog with null data"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-failed-file",
@@ -7107,7 +7122,7 @@
     "failedTests": [
       "[ghostmaps-042] The source rejects a file response error"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-absent-events",
@@ -7123,7 +7138,7 @@
     "failedTests": [
       "[ghostmaps-053] An absent event source reports a closed stream"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-catalog-method",
@@ -7139,7 +7154,7 @@
     "failedTests": [
       "[ghostmaps-043] The layer rejects an absent catalog source"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-no-kml",
@@ -7155,7 +7170,7 @@
     "failedTests": [
       "[ghostmaps-061] A KMZ without a KML document reports an error"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-invalid-document",
@@ -7171,7 +7186,7 @@
     "failedTests": [
       "[ghostmaps-051] The reader accepts an absent document"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-event-route-products",
@@ -7187,7 +7202,7 @@
     "failedTests": [
       "[ghostmaps-021] The event route sends catalogs heartbeats and close callbacks"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-prune-later",
@@ -7203,7 +7218,7 @@
     "failedTests": [
       "[ghostmaps-015] The file cache keeps temporary files and current blobs"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-truncated-warning",
@@ -7219,7 +7234,7 @@
     "failedTests": [
       "[ghostmaps-058] The watcher handles a truncated tree"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-unsupported-start",
@@ -7235,7 +7250,7 @@
     "failedTests": [
       "[ghostmaps-019] routes: unknown paths and methods are refused without contacting GitHub"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-link-limit",
@@ -7251,7 +7266,7 @@
     "failedTests": [
       "[ghostmaps-009 ghostmaps-063] The parser caps source links and free text"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   },
   {
     "id": "R2-subscriber-limit",
@@ -7267,6 +7282,1570 @@
     "failedTests": [
       "[ghostmaps-064] The event route caps subscribers"
     ],
-    "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb"
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "R2F01-events",
+    "file": "server/providers/ghostMaps.js",
+    "old": "if (url.pathname === '/events') return events(req, res);",
+    "new": "if (url.pathname === '/events') { await first; return events(req, res); }",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "ghostmaps-067",
+    "status": "KILLED",
+    "tests": "[ghostmaps-067] The event route sends the current catalog before the first check completes",
+    "failedTests": [
+      "[ghostmaps-067] The event route sends the current catalog before the first check completes"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "R2F02-chip",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "writeStoredSelection(storage, _selection);",
+    "new": "clearSelection();\n    writeStoredSelection(storage, _selection);",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "ghostmaps-054|ghostmaps-055",
+    "status": "KILLED",
+    "tests": "[ghostmaps-055] An inactive product chip keeps the current card when it becomes active",
+    "failedTests": [
+      "[ghostmaps-055] An inactive product chip keeps the current card when it becomes active"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "R2F03-activate",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "if (card.interactive) {",
+    "new": "if (card.interactive || !openExternal) {",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "ghostmaps-047",
+    "status": "KILLED",
+    "tests": "[ghostmaps-047] The card stays plain with an absent external host",
+    "failedTests": [
+      "[ghostmaps-047] The card stays plain with an absent external host"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "R2F04-tree",
+    "file": "server/providers/ghostMaps.js",
+    "old": "buildGhostMapsCatalog(tree.tree)",
+    "new": "buildGhostMapsCatalog(tree.truncated ? [] : tree.tree)",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "ghostmaps-058",
+    "status": "KILLED",
+    "tests": "[ghostmaps-058] The watcher handles a truncated tree",
+    "failedTests": [
+      "[ghostmaps-058] The watcher handles a truncated tree"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "R2F05-storage",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "value.map(String)",
+    "new": "value.map(() => 'cip')",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "ghostmaps-045",
+    "status": "KILLED",
+    "tests": "[ghostmaps-045] The layer reads the id list case from storage",
+    "failedTests": [
+      "[ghostmaps-045] The layer reads the id list case from storage"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "R2F06-id",
+    "file": "server/providers/ghostMaps.js",
+    "old": "watcher.file(match[1])",
+    "new": "watcher.file('cip')",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "ghostmaps-036|ghostmaps-037",
+    "status": "KILLED",
+    "tests": "[ghostmaps-036] The proxy serves current file bytes and cache headers",
+    "failedTests": [
+      "[ghostmaps-036] The proxy serves current file bytes and cache headers"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "R2F07-commit",
+    "file": "server/providers/ghostMaps.js",
+    "old": "get(`${api}/commits/${sha}`, apiHeaders())",
+    "new": "get(`${api}/commits/${sha}`)",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "ghostmaps-052",
+    "status": "KILLED",
+    "tests": "[ghostmaps-052] The API token is absent; [ghostmaps-052] The API token is present; [ghostmaps-052] The default token helper checks the absent token; [ghostmaps-052] The default token helper checks the present token",
+    "failedTests": [
+      "[ghostmaps-052] The API token is absent",
+      "[ghostmaps-052] The API token is present",
+      "[ghostmaps-052] The default token helper checks the absent token",
+      "[ghostmaps-052] The default token helper checks the present token"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-raw-product",
+    "file": "server/providers/ghostMaps.js",
+    "old": "ghostMapsRawUrl(commit, product.path)",
+    "new": "ghostMapsRawUrl(commit, state.products[0].path)",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "files download by commit",
+    "status": "KILLED",
+    "tests": "[ghostmaps-015] files download by commit-pinned URL, cache by blob, and stale blobs are pruned",
+    "failedTests": [
+      "[ghostmaps-015] files download by commit-pinned URL, cache by blob, and stale blobs are pruned"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-raw-credentials",
+    "file": "server/providers/ghostMaps.js",
+    "old": "ghostMapsRawUrl(commit, product.path),\n          { 'User-Agent': USER_AGENT },",
+    "new": "ghostMapsRawUrl(commit, product.path),\n          { 'User-Agent': USER_AGENT, Authorization: `Bearer ${token()}` },",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "The API token is",
+    "status": "KILLED",
+    "tests": "[ghostmaps-052] The API token is absent; [ghostmaps-052] The API token is present",
+    "failedTests": [
+      "[ghostmaps-052] The API token is absent",
+      "[ghostmaps-052] The API token is present"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-commit-url",
+    "file": "server/providers/ghostMaps.js",
+    "old": "`${api}/commits/${sha}`",
+    "new": "`${api}/commits/wrong`",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "The API token is",
+    "status": "KILLED",
+    "tests": "[ghostmaps-052] The API token is absent; [ghostmaps-052] The API token is present",
+    "failedTests": [
+      "[ghostmaps-052] The API token is absent",
+      "[ghostmaps-052] The API token is present"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-tree-url",
+    "file": "server/providers/ghostMaps.js",
+    "old": "`${api}/git/trees/${sha}?recursive=1`",
+    "new": "`${api}/git/trees/wrong?recursive=1`",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "The API token is",
+    "status": "KILLED",
+    "tests": "[ghostmaps-052] The API token is absent; [ghostmaps-052] The API token is present",
+    "failedTests": [
+      "[ghostmaps-052] The API token is absent",
+      "[ghostmaps-052] The API token is present"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-absent-credentials",
+    "file": "server/providers/ghostMaps.js",
+    "old": "...(token() ? { Authorization: `Bearer ${token()}` } : {}),",
+    "new": "...{ Authorization: `Bearer ${token()}` },",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "The API token is absent|The default token helper checks the absent token",
+    "status": "KILLED",
+    "tests": "[ghostmaps-052] The API token is absent; [ghostmaps-052] The default token helper checks the absent token",
+    "failedTests": [
+      "[ghostmaps-052] The API token is absent",
+      "[ghostmaps-052] The default token helper checks the absent token"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-tree-credentials",
+    "file": "server/providers/ghostMaps.js",
+    "old": "get(`${api}/git/trees/${sha}?recursive=1`, apiHeaders())",
+    "new": "get(`${api}/git/trees/${sha}?recursive=1`, {})",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "The API token is present|The default token helper checks the present token",
+    "status": "KILLED",
+    "tests": "[ghostmaps-052] The API token is present; [ghostmaps-052] The default token helper checks the present token",
+    "failedTests": [
+      "[ghostmaps-052] The API token is present",
+      "[ghostmaps-052] The default token helper checks the present token"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-cap-subscription",
+    "file": "server/providers/ghostMaps.js",
+    "old": "return json(res, 429, { error: 'too_many_subscribers' });",
+    "new": "return (watcher.subscribe(() => {}), json(res, 429, { error: 'too_many_subscribers' }));",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "The event route caps subscribers",
+    "status": "KILLED",
+    "tests": "[ghostmaps-064] The event route caps subscribers",
+    "failedTests": [
+      "[ghostmaps-064] The event route caps subscribers"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-cap-timer",
+    "file": "server/providers/ghostMaps.js",
+    "old": "return json(res, 429, { error: 'too_many_subscribers' });",
+    "new": "return (setInterval(() => {}, HEARTBEAT_MS), json(res, 429, { error: 'too_many_subscribers' }));",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "The event route caps subscribers",
+    "status": "KILLED",
+    "tests": "[ghostmaps-064] The event route caps subscribers",
+    "failedTests": [
+      "[ghostmaps-064] The event route caps subscribers"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-stop-pending",
+    "file": "server/providers/ghostMaps.js",
+    "old": "if (!running) return;",
+    "new": "if (false) return;",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "The watcher does not start a timer after it stops during the first check",
+    "status": "KILLED",
+    "tests": "[ghostmaps-020] The watcher does not start a timer after it stops during the first check",
+    "failedTests": [
+      "[ghostmaps-020] The watcher does not start a timer after it stops during the first check"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-plain-link",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "if (card.interactive) {",
+    "new": "if (card.interactive || !_selectedLink) {",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The card stays plain with an absent link",
+    "status": "KILLED",
+    "tests": "[ghostmaps-047] The card stays plain with an absent link",
+    "failedTests": [
+      "[ghostmaps-047] The card stays plain with an absent link"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-storage-key",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "storage?.getItem(STORAGE_KEY)",
+    "new": "storage?.getItem('wrong')",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A chip change keeps the other product choices in storage",
+    "status": "KILLED",
+    "tests": "[ghostmaps-031] A chip change keeps the other product choices in storage",
+    "failedTests": [
+      "[ghostmaps-031] A chip change keeps the other product choices in storage"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-selection-first",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "new Set(selectedIds())",
+    "new": "new Set(selectedIds().slice(0, 1))",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A chip change keeps the other product choices in storage",
+    "status": "KILLED",
+    "tests": "[ghostmaps-031] A chip change keeps the other product choices in storage",
+    "failedTests": [
+      "[ghostmaps-031] A chip change keeps the other product choices in storage"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-selection-delete",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_selection.delete(id)",
+    "new": "_selection.delete('cip')",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A chip change keeps the other product choices in storage",
+    "status": "KILLED",
+    "tests": "[ghostmaps-031] A chip change keeps the other product choices in storage",
+    "failedTests": [
+      "[ghostmaps-031] A chip change keeps the other product choices in storage"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-selection-add",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_selection.add(id)",
+    "new": "_selection.add('cip')",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A chip change keeps the other product choices in storage",
+    "status": "KILLED",
+    "tests": "[ghostmaps-031] A chip change keeps the other product choices in storage",
+    "failedTests": [
+      "[ghostmaps-031] A chip change keeps the other product choices in storage"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-file-signal",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "source.getFile(product.id, product.version, { signal })",
+    "new": "source.getFile(product.id, product.version, { signal: undefined })",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The layer creates point line and polygon entities",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030] The layer creates point line and polygon entities",
+    "failedTests": [
+      "[ghostmaps-030] The layer creates point line and polygon entities"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-dom-query",
+    "file": "src/layers/ghostMaps/kml.js",
+    "old": "el?.getElementsByTagName?.('*')",
+    "new": "el?.getElementsByTagName?.('Style')",
+    "test": [
+      "src/layers/ghostMaps/kml.test.mjs"
+    ],
+    "pattern": "The reader accepts Point",
+    "status": "KILLED",
+    "tests": "[ghostmaps-026] The reader accepts Point",
+    "failedTests": [
+      "[ghostmaps-026] The reader accepts Point"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-image-href",
+    "file": "src/layers/ghostMaps/kml.js",
+    "old": "href ? resolveImage(href) : null",
+    "new": "href ? resolveImage('pin.png') : null",
+    "test": [
+      "src/layers/ghostMaps/kml.test.mjs"
+    ],
+    "pattern": "The reader resolves distinct images",
+    "status": "KILLED",
+    "tests": "[ghostmaps-027] The reader resolves distinct images for separate styles",
+    "failedTests": [
+      "[ghostmaps-027] The reader resolves distinct images for separate styles"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-image-first",
+    "file": "src/layers/ghostMaps/kml.js",
+    "old": "...styleFor(text(firstChild(placemark, 'styleUrl')))",
+    "new": "...styleFor('#one')",
+    "test": [
+      "src/layers/ghostMaps/kml.test.mjs"
+    ],
+    "pattern": "The reader resolves distinct images",
+    "status": "KILLED",
+    "tests": "[ghostmaps-027] The reader resolves distinct images for separate styles",
+    "failedTests": [
+      "[ghostmaps-027] The reader resolves distinct images for separate styles"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-fields-first",
+    "file": "src/layers/ghostMaps/records.js",
+    "old": "value: value.slice(0, MAX_VALUE)",
+    "new": "value: (fields[0]?.value || value).slice(0, MAX_VALUE)",
+    "test": [
+      "src/layers/ghostMaps/records.test.mjs"
+    ],
+    "pattern": "field values and counts are bounded",
+    "status": "KILLED",
+    "tests": "[ghostmaps-009] field values and counts are bounded",
+    "failedTests": [
+      "[ghostmaps-009] field values and counts are bounded"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-source-first",
+    "file": "src/layers/ghostMaps/source.js",
+    "old": "`/api/ghostmaps/file/${encodeURIComponent(id)}?v=${encodeURIComponent(version)}`",
+    "new": "'/api/ghostmaps/file/a%2Fb?v=v%20%3F%23'",
+    "test": [
+      "src/layers/ghostMaps/source.test.mjs"
+    ],
+    "pattern": "The source encodes file values",
+    "status": "KILLED",
+    "tests": "[ghostmaps-023] The source encodes file values and returns bytes",
+    "failedTests": [
+      "[ghostmaps-023] The source encodes file values and returns bytes"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-stream-early-close",
+    "file": "src/layers/ghostMaps/source.js",
+    "old": "events.addEventListener('catalog', listener);",
+    "new": "events.addEventListener('catalog', listener); events.close();",
+    "test": [
+      "src/layers/ghostMaps/source.test.mjs"
+    ],
+    "pattern": "The stream reports the connection state|The stream accepts an absent state callback",
+    "status": "KILLED",
+    "tests": "[ghostmaps-024] The stream accepts an absent state callback; [ghostmaps-024] The stream reports the connection state for code 0; [ghostmaps-024] The stream reports the connection state for code 1; [ghostmaps-024] The stream reports the connection state for code 2; [ghostmaps-024] The stream reports ",
+    "failedTests": [
+      "[ghostmaps-024] The stream accepts an absent state callback",
+      "[ghostmaps-024] The stream reports the connection state for code 0",
+      "[ghostmaps-024] The stream reports the connection state for code 1",
+      "[ghostmaps-024] The stream reports the connection state for code 2",
+      "[ghostmaps-024] The stream reports the connection state for code 9"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-stream-event",
+    "file": "src/layers/ghostMaps/source.js",
+    "old": "events.addEventListener('catalog', listener);",
+    "new": "events.addEventListener('wrong', listener);",
+    "test": [
+      "src/layers/ghostMaps/source.test.mjs"
+    ],
+    "pattern": "The stream accepts an absent state callback",
+    "status": "KILLED",
+    "tests": "[ghostmaps-024] The stream accepts an absent state callback",
+    "failedTests": [
+      "[ghostmaps-024] The stream accepts an absent state callback"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-removal-request",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "if (!product || !wanted(product)) unload(id);",
+    "new": "if (!product) await source.getFile(id, 'removed');\n        if (!product || !wanted(product)) unload(id);",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A pushed edition changes only its product data source",
+    "status": "KILLED",
+    "tests": "[ghostmaps-032] A pushed edition changes only its product data source",
+    "failedTests": [
+      "[ghostmaps-032] A pushed edition changes only its product data source"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-initial",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A selected marker publishes a card",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link",
+    "failedTests": [
+      "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-01",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-054\\]\\ The\\ card\\ closes\\ for\\ the\\ number\\ pick$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-054] The card closes for the number pick",
+    "failedTests": [
+      "[ghostmaps-054] The card closes for the number pick"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-02",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-054\\]\\ The\\ card\\ closes\\ for\\ the\\ foreign\\ prefix\\ pick$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-054] The card closes for the foreign prefix pick",
+    "failedTests": [
+      "[ghostmaps-054] The card closes for the foreign prefix pick"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-03",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-054\\]\\ The\\ card\\ closes\\ for\\ the\\ lookalike\\ prefix\\ pick$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-054] The card closes for the lookalike prefix pick",
+    "failedTests": [
+      "[ghostmaps-054] The card closes for the lookalike prefix pick"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-04",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-054\\]\\ The\\ card\\ closes\\ for\\ the\\ absent\\ index\\ pick$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-054] The card closes for the absent index pick",
+    "failedTests": [
+      "[ghostmaps-054] The card closes for the absent index pick"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-05",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-054\\]\\ The\\ card\\ closes\\ for\\ the\\ empty\\ ground\\ pick$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-054] The card closes for the empty ground pick",
+    "failedTests": [
+      "[ghostmaps-054] The card closes for the empty ground pick"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-06",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-054\\]\\ The\\ card\\ closes\\ for\\ the\\ empty\\ id\\ pick$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-054] The card closes for the empty id pick",
+    "failedTests": [
+      "[ghostmaps-054] The card closes for the empty id pick"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-07",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-055\\]\\ The\\ pointer\\ owner\\ and\\ foreign\\ picks\\ keep\\ the\\ current\\ card$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-055] The pointer owner and foreign picks keep the current card",
+    "failedTests": [
+      "[ghostmaps-055] The pointer owner and foreign picks keep the current card"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-08",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-033\\]\\ The\\ card\\ uses\\ the\\ folder\\ title$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033] The card uses the folder title",
+    "failedTests": [
+      "[ghostmaps-033] The card uses the folder title"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-09",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-033\\]\\ The\\ card\\ uses\\ the\\ default\\ title$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033] The card uses the default title",
+    "failedTests": [
+      "[ghostmaps-033] The card uses the default title"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-10",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-033\\]\\ The\\ card\\ uses\\ the\\ custom\\ product$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033] The card uses the custom product",
+    "failedTests": [
+      "[ghostmaps-033] The card uses the custom product"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-11",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-033\\]\\ The\\ card\\ caps\\ fields\\ and\\ excludes\\ the\\ repeated\\ feature\\ name$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033] The card caps fields and excludes the repeated feature name",
+    "failedTests": [
+      "[ghostmaps-033] The card caps fields and excludes the repeated feature name"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-12",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-033\\]\\ A\\ plain\\ description\\ gives\\ an\\ unlabelled\\ card\\ line$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033] A plain description gives an unlabelled card line",
+    "failedTests": [
+      "[ghostmaps-033] A plain description gives an unlabelled card line"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-13",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-054\\]\\ A\\ chip\\ change\\ removes\\ the\\ selected\\ card$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-054] A chip change removes the selected card",
+    "failedTests": [
+      "[ghostmaps-054] A chip change removes the selected card"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-14",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-046\\]\\ A\\ custom\\ catalog\\ can\\ remove\\ the\\ feature\\ during\\ a\\ pick$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-046] A custom catalog can remove the feature during a pick",
+    "failedTests": [
+      "[ghostmaps-046] A custom catalog can remove the feature during a pick"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-15",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-033\\]\\ A\\ custom\\ catalog\\ can\\ remove\\ product\\ metadata\\ during\\ a\\ pick$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033] A custom catalog can remove product metadata during a pick",
+    "failedTests": [
+      "[ghostmaps-033] A custom catalog can remove product metadata during a pick"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-application-card-start",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-035\\]\\ The\\ application\\ card\\ opens\\ the\\ link\\ through\\ the\\ window\\ host$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-035] The application card opens the link through the window host",
+    "failedTests": [
+      "[ghostmaps-035] The application card opens the link through the window host"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-17",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-047\\]\\ The\\ card\\ stays\\ plain\\ with\\ an\\ absent\\ link$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-047] The card stays plain with an absent link",
+    "failedTests": [
+      "[ghostmaps-047] The card stays plain with an absent link"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-18",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-047\\]\\ The\\ card\\ stays\\ plain\\ with\\ an\\ absent\\ external\\ host$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-047] The card stays plain with an absent external host",
+    "failedTests": [
+      "[ghostmaps-047] The card stays plain with an absent external host"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-19",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-030\\ ghostmaps\\-033\\ ghostmaps\\-034\\]\\ The\\ cip\\ product\\ uses\\ its\\ label\\ and\\ color$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color",
+    "failedTests": [
+      "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-20",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-030\\ ghostmaps\\-033\\ ghostmaps\\-034\\]\\ The\\ kinetic\\-30d\\ product\\ uses\\ its\\ label\\ and\\ color$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The kinetic-30d product uses its label and color",
+    "failedTests": [
+      "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The kinetic-30d product uses its label and color"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-21",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-030\\ ghostmaps\\-033\\ ghostmaps\\-034\\]\\ The\\ border\\-crisis\\ product\\ uses\\ its\\ label\\ and\\ color$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color",
+    "failedTests": [
+      "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-22",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-030\\ ghostmaps\\-033\\ ghostmaps\\-034\\]\\ The\\ iran\\-cip\\ product\\ uses\\ its\\ label\\ and\\ color$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-cip product uses its label and color",
+    "failedTests": [
+      "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-cip product uses its label and color"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-23",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-030\\ ghostmaps\\-033\\ ghostmaps\\-034\\]\\ The\\ iran\\-kinetic\\ product\\ uses\\ its\\ label\\ and\\ color$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-kinetic product uses its label and color",
+    "failedTests": [
+      "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-kinetic product uses its label and color"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-24",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-030\\ ghostmaps\\-033\\ ghostmaps\\-034\\]\\ The\\ yemen\\-flot\\ product\\ uses\\ its\\ label\\ and\\ color$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The yemen-flot product uses its label and color",
+    "failedTests": [
+      "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The yemen-flot product uses its label and color"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-25",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-030\\ ghostmaps\\-033\\ ghostmaps\\-034\\]\\ The\\ latest\\-drop\\ product\\ uses\\ its\\ label\\ and\\ color$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The latest-drop product uses its label and color",
+    "failedTests": [
+      "[ghostmaps-030 ghostmaps-033 ghostmaps-034] The latest-drop product uses its label and color"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-26",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-046\\]\\ An\\ invalid\\ feature\\ index\\ prevents\\ access\\ to\\ product\\ metadata$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-046] An invalid feature index prevents access to product metadata",
+    "failedTests": [
+      "[ghostmaps-046] An invalid feature index prevents access to product metadata"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-27",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-046\\]\\ An\\ empty\\ pick\\ id\\ does\\ not\\ call\\ another\\ owner$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-046] An empty pick id does not call another owner",
+    "failedTests": [
+      "[ghostmaps-046] An empty pick id does not call another owner"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-28",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-033\\]\\ A\\ false\\ product\\ value\\ does\\ not\\ supply\\ an\\ inherited\\ title$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033] A false product value does not supply an inherited title",
+    "failedTests": [
+      "[ghostmaps-033] A false product value does not supply an inherited title"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-start-29",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_loaded.set(product.id, next);",
+    "new": "_loaded.set(product.id, next); _selectedKey = `${product.id}:0`; publishCard();",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "^\\[ghostmaps\\-033\\]\\ An\\ absent\\ product\\ label\\ stays\\ empty\\ with\\ a\\ custom\\ locale$",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033] An absent product label stays empty with a custom locale",
+    "failedTests": [
+      "[ghostmaps-033] An absent product label stays empty with a custom locale"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-chip-start-saved",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "return _selection ? _selection.has(product.id) : product.defaultOn;",
+    "new": "return _selection ? _selection.has(product.id) : false;",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A saved chip callback accepts an absent catalog after destruction",
+    "status": "KILLED",
+    "tests": "[ghostmaps-044] A saved chip callback accepts an absent catalog after destruction",
+    "failedTests": [
+      "[ghostmaps-044] A saved chip callback accepts an absent catalog after destruction"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-chip-start-stale",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "return _selection ? _selection.has(product.id) : product.defaultOn;",
+    "new": "return _selection ? _selection.has(product.id) : false;",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A stale chip cannot load data without a catalog",
+    "status": "KILLED",
+    "tests": "[ghostmaps-044] A stale chip cannot load data without a catalog",
+    "failedTests": [
+      "[ghostmaps-044] A stale chip cannot load data without a catalog"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-chip-start-disabled",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "return _selection ? _selection.has(product.id) : product.defaultOn;",
+    "new": "return _selection ? _selection.has(product.id) : false;",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The disabled state prevents access to catalog products",
+    "status": "KILLED",
+    "tests": "[ghostmaps-044] The disabled state prevents access to catalog products",
+    "failedTests": [
+      "[ghostmaps-044] The disabled state prevents access to catalog products"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-event-send",
+    "file": "server/providers/ghostMaps.js",
+    "old": "    const send = (catalog) =>\n      res.write(`event: catalog\\ndata: ${JSON.stringify(catalog)}\\n\\n`);",
+    "new": "    const send = (catalog) => watcher.start().then(() =>\n      res.write(`event: catalog\\ndata: ${JSON.stringify(catalog)}\\n\\n`));",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "ghostmaps-067",
+    "status": "KILLED",
+    "tests": "[ghostmaps-067] The event route sends the current catalog before the first check completes",
+    "failedTests": [
+      "[ghostmaps-067] The event route sends the current catalog before the first check completes"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-map-first",
+    "file": "src/layers/ghostMaps/kml.js",
+    "old": "for (const el of descendants(doc, 'StyleMap'))",
+    "new": "for (const el of descendants(doc, 'StyleMap').slice(0, 1))",
+    "test": [
+      "src/layers/ghostMaps/kml.test.mjs"
+    ],
+    "pattern": "ghostmaps-027",
+    "status": "KILLED",
+    "tests": "[ghostmaps-027] The reader selects each normal pair after a highlight pair",
+    "failedTests": [
+      "[ghostmaps-027] The reader selects each normal pair after a highlight pair"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-pair-first",
+    "file": "src/layers/ghostMaps/kml.js",
+    "old": "text(firstChild(pair, 'key')) === 'normal'",
+    "new": "true",
+    "test": [
+      "src/layers/ghostMaps/kml.test.mjs"
+    ],
+    "pattern": "ghostmaps-027",
+    "status": "KILLED",
+    "tests": "[ghostmaps-027] The reader selects each normal pair after a highlight pair",
+    "failedTests": [
+      "[ghostmaps-027] The reader selects each normal pair after a highlight pair"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-values",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "const line = label ? `${fieldLabel(label)}: ${value}` : value;",
+    "new": "const line = label ? `${fieldLabel(label)}: ${fields[1].value}` : value;",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The card caps fields and excludes the repeated feature name",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033] The card caps fields and excludes the repeated feature name",
+    "failedTests": [
+      "[ghostmaps-033] The card caps fields and excludes the repeated feature name"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-window-url",
+    "file": "src/app/layers/ghostMaps.js",
+    "old": "window.open(url, '_blank', 'noopener,noreferrer')",
+    "new": "window.open('https://a.test/', '_blank', 'noopener,noreferrer')",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The application card opens the link through the window host",
+    "status": "KILLED",
+    "tests": "[ghostmaps-035] The application card opens the link through the window host",
+    "failedTests": [
+      "[ghostmaps-035] The application card opens the link through the window host"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-window-pick",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "  function pickedKey(picked) {\n    const pickId = picking.resolvePickId(picked);\n    if (typeof pickId !== 'string' || !pickId.startsWith(PICK_PREFIX))\n      return null;\n    const [productId, index] = pickId.slice(PICK_PREFIX.length).split(':');\n    return _loaded.get(productId)?.features[Number(index)]\n      ? `${productId}:${index}`\n      : null;\n  }\n",
+    "new": "  function pickedKey(picked) {\n    const pickId = picking.resolvePickId({id: 'ghostmaps:cip:0:0'});\n    if (typeof pickId !== 'string' || !pickId.startsWith(PICK_PREFIX))\n      return null;\n    const [productId, index] = pickId.slice(PICK_PREFIX.length).split(':');\n    return _loaded.get(productId)?.features[Number(index)]\n      ? `${productId}:${index}`\n      : null;\n  }\n",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The application card opens the link through the window host",
+    "status": "KILLED",
+    "tests": "[ghostmaps-035] The application card opens the link through the window host",
+    "failedTests": [
+      "[ghostmaps-035] The application card opens the link through the window host"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-pick-position",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_viewer.scene.pick(click.position)",
+    "new": "_viewer.scene.pick({x:0,y:0})",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A selected marker publishes a card",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link",
+    "failedTests": [
+      "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-hit-x",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "click.position?.x",
+    "new": "0",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A selected marker publishes a card",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link",
+    "failedTests": [
+      "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-hit-y",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "click.position?.y",
+    "new": "0",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A selected marker publishes a card",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link",
+    "failedTests": [
+      "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-hit-source",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "{ sourceId: GHOSTMAPS_OVERLAY_SOURCE_ID }",
+    "new": "{ sourceId: 'wrong' }",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A selected marker publishes a card",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link",
+    "failedTests": [
+      "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-owner-id",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "picking.isOwnedByOtherLayer(GHOSTMAPS_LAYER_ID, pickId)",
+    "new": "picking.isOwnedByOtherLayer('wrong', pickId)",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The pointer owner and foreign picks keep the current card",
+    "status": "KILLED",
+    "tests": "[ghostmaps-055] The pointer owner and foreign picks keep the current card",
+    "failedTests": [
+      "[ghostmaps-055] The pointer owner and foreign picks keep the current card"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-source",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "overlayHost.setEntries(\n      GHOSTMAPS_OVERLAY_SOURCE_ID,\n      [card],",
+    "new": "overlayHost.setEntries(\n      'wrong',\n      [card],",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A selected marker publishes a card",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link",
+    "failedTests": [
+      "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-marker-tag",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "document.createElement('canvas')",
+    "new": "document.createElement('div')",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The layer uses a canvas marker and caches its image",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030] The layer uses a canvas marker and caches its image",
+    "failedTests": [
+      "[ghostmaps-030] The layer uses a canvas marker and caches its image"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-marker-context",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "canvas.getContext('2d')",
+    "new": "canvas.getContext('webgl')",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The layer uses a canvas marker and caches its image",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030] The layer uses a canvas marker and caches its image",
+    "failedTests": [
+      "[ghostmaps-030] The layer uses a canvas marker and caches its image"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-global-fetch-options",
+    "file": "src/layers/ghostMaps/source.js",
+    "old": "globalThis.fetch(...args)",
+    "new": "globalThis.fetch(args[0])",
+    "test": [
+      "src/layers/ghostMaps/source.test.mjs"
+    ],
+    "pattern": "The default source calls the global fetch helper",
+    "status": "KILLED",
+    "tests": "[ghostmaps-022 ghostmaps-023] The default source calls the global fetch helper",
+    "failedTests": [
+      "[ghostmaps-022 ghostmaps-023] The default source calls the global fetch helper"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-default-fetch-options",
+    "file": "server/providers/ghostMaps.js",
+    "old": "globalThis.fetch(...args)",
+    "new": "globalThis.fetch(args[0])",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "The default helpers use fetch log and warning callbacks",
+    "status": "KILLED",
+    "tests": "[ghostmaps-014 ghostmaps-048] The default helpers use fetch log and warning callbacks",
+    "failedTests": [
+      "[ghostmaps-014 ghostmaps-048] The default helpers use fetch log and warning callbacks"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-factory-storage",
+    "file": "src/app/layers/ghostMaps.js",
+    "old": "    ...options,",
+    "new": "    ...options,\n    storage: null,",
+    "test": [
+      "src/app/layers/ghostMaps.test.mjs"
+    ],
+    "pattern": "The application factory accepts a source and host options",
+    "status": "KILLED",
+    "tests": "[ghostmaps-035] The application factory accepts a source and host options",
+    "failedTests": [
+      "[ghostmaps-035] The application factory accepts a source and host options"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-factory-pointer",
+    "file": "src/app/layers/ghostMaps.js",
+    "old": "    ...options,",
+    "new": "    ...options,\n    pointer: { isPointerFree },",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The application uses the caller pointer and external hosts",
+    "status": "KILLED",
+    "tests": "[ghostmaps-035 ghostmaps-055] The application uses the caller pointer and external hosts",
+    "failedTests": [
+      "[ghostmaps-035 ghostmaps-055] The application uses the caller pointer and external hosts"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-factory-external",
+    "file": "src/app/layers/ghostMaps.js",
+    "old": "    ...options,",
+    "new": "    ...options,\n    openExternal: (url) => window.open(url, '_blank', 'noopener,noreferrer'),",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The application uses the caller pointer and external hosts",
+    "status": "KILLED",
+    "tests": "[ghostmaps-035 ghostmaps-055] The application uses the caller pointer and external hosts",
+    "failedTests": [
+      "[ghostmaps-035 ghostmaps-055] The application uses the caller pointer and external hosts"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-owned-pick",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "if (pointer && !pointer.isPointerFree()) return;",
+    "new": "if (pointer && !pointer.isPointerFree()) { _viewer.scene.pick(click.position); return; }",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The pointer owner and foreign picks keep the current card",
+    "status": "KILLED",
+    "tests": "[ghostmaps-055] The pointer owner and foreign picks keep the current card",
+    "failedTests": [
+      "[ghostmaps-055] The pointer owner and foreign picks keep the current card"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-card-pick",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "if (_selectedLink && openExternal) openExternal(_selectedLink);\n        return;",
+    "new": "if (_selectedLink && openExternal) openExternal(_selectedLink);\n        _viewer.scene.pick(click.position);\n        return;",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A selected marker publishes a card",
+    "status": "KILLED",
+    "tests": "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link",
+    "failedTests": [
+      "[ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-aborted-request",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "if (!_enabled || signal?.aborted) return false;",
+    "new": "if (signal?.aborted) await source.getCatalog({ signal });\n      if (!_enabled || signal?.aborted) return false;",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "An aborted signal rejects the catalog update",
+    "status": "KILLED",
+    "tests": "[ghostmaps-044] An aborted signal rejects the catalog update",
+    "failedTests": [
+      "[ghostmaps-044] An aborted signal rejects the catalog update"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-catalog-signal",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "source.getCatalog({ signal })",
+    "new": "source.getCatalog({ signal: undefined })",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "ghostmaps-068",
+    "status": "KILLED",
+    "tests": "[ghostmaps-068] The layer sets the caller signal on its catalog request",
+    "failedTests": [
+      "[ghostmaps-068] The layer sets the caller signal on its catalog request"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-catalog-own-signal",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "source.getCatalog({ signal })",
+    "new": "source.getCatalog(Object.create({ signal }))",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "ghostmaps-068",
+    "status": "KILLED",
+    "tests": "[ghostmaps-068] The layer sets the caller signal on its catalog request",
+    "failedTests": [
+      "[ghostmaps-068] The layer sets the caller signal on its catalog request"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-raw-commit",
+    "file": "server/providers/ghostMaps.js",
+    "old": "const commit = state.commit;",
+    "new": "const commit = '1111111111111111111111111111111111111111';",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "files download by commit",
+    "status": "KILLED",
+    "tests": "[ghostmaps-015] files download by commit-pinned URL, cache by blob, and stale blobs are pruned",
+    "failedTests": [
+      "[ghostmaps-015] files download by commit-pinned URL, cache by blob, and stale blobs are pruned"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-commit-edition",
+    "file": "server/providers/ghostMaps.js",
+    "old": "`${api}/commits/${sha}`",
+    "new": "`${api}/commits/1111111111111111111111111111111111111111`",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "a new commit is announced once",
+    "status": "KILLED",
+    "tests": "[ghostmaps-014] a new commit is announced once, naming only the products that changed",
+    "failedTests": [
+      "[ghostmaps-014] a new commit is announced once, naming only the products that changed"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-allow-absent",
+    "file": "server/providers/ghostMaps.js",
+    "old": "...(status === 405 ? { Allow: 'GET' } : {}),",
+    "new": "...(status === 405 ? { Allow: 'GET' } : { Allow: undefined }),",
+    "test": [
+      "server/providers/ghostMaps.test.mjs"
+    ],
+    "pattern": "The proxy serves current file bytes and cache headers",
+    "status": "KILLED",
+    "tests": "[ghostmaps-036] The proxy serves current file bytes and cache headers",
+    "failedTests": [
+      "[ghostmaps-036] The proxy serves current file bytes and cache headers"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-reader-hole-first",
+    "file": "src/layers/ghostMaps/kml.js",
+    "old": ".filter((hole) => hole.length >= 3);",
+    "new": ".filter((hole) => hole.length >= 3).map((_, __, holes) => holes[0]);",
+    "test": [
+      "src/layers/ghostMaps/kml.test.mjs"
+    ],
+    "pattern": "The reader accepts Polygon",
+    "status": "KILLED",
+    "tests": "[ghostmaps-026] The reader accepts Polygon",
+    "failedTests": [
+      "[ghostmaps-026] The reader accepts Polygon"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-hole-minimum",
+    "file": "src/layers/ghostMaps/kml.js",
+    "old": "hole.length >= 3",
+    "new": "hole.length >= 2",
+    "test": [
+      "src/layers/ghostMaps/kml.test.mjs"
+    ],
+    "pattern": "The reader accepts Polygon",
+    "status": "KILLED",
+    "tests": "[ghostmaps-026] The reader accepts Polygon",
+    "failedTests": [
+      "[ghostmaps-026] The reader accepts Polygon"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-layer-hole-first",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "(hole) => new Cesium.PolygonHierarchy(ring(hole)),",
+    "new": "(hole) => new Cesium.PolygonHierarchy(ring(geometry.holes[0])), ",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The layer creates point line and polygon entities",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030] The layer creates point line and polygon entities",
+    "failedTests": [
+      "[ghostmaps-030] The layer creates point line and polygon entities"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-point-first",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "...geometry.position,",
+    "new": "...feature.geometries[0].position,",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The layer uses a canvas marker and caches its image",
+    "status": "KILLED",
+    "tests": "[ghostmaps-030] The layer uses a canvas marker and caches its image",
+    "failedTests": [
+      "[ghostmaps-030] The layer uses a canvas marker and caches its image"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-visibility-default",
+    "file": "src/layers/ghostMaps/kml.js",
+    "old": "text(firstChild(placemark, 'visibility')) === '0'",
+    "new": "Boolean(text(firstChild(placemark, 'visibility')))",
+    "test": [
+      "src/layers/ghostMaps/kml.test.mjs"
+    ],
+    "pattern": "The reader excludes hidden placemarks",
+    "status": "KILLED",
+    "tests": "[ghostmaps-026] The reader excludes hidden placemarks",
+    "failedTests": [
+      "[ghostmaps-026] The reader excludes hidden placemarks"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-initial-horizon",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "_horizon.update(next.pins);",
+    "new": "/* no initial cull */",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "The horizon callback updates point visibility after a camera change",
+    "status": "KILLED",
+    "tests": "[ghostmaps-050] The horizon callback updates point visibility after a camera change",
+    "failedTests": [
+      "[ghostmaps-050] The horizon callback updates point visibility after a camera change"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+  },
+  {
+    "id": "SW3-cached-request",
+    "file": "src/layers/ghostMaps/index.js",
+    "old": "if (_loaded.get(product.id)?.version === product.version) continue;",
+    "new": "if (product.id === 'cip' && _loaded.get(product.id)?.version === product.version) continue;",
+    "test": [
+      "src/layers/ghostMaps/lifecycle.test.mjs"
+    ],
+    "pattern": "A chip change keeps the other product choices in storage",
+    "status": "KILLED",
+    "tests": "[ghostmaps-031] A chip change keeps the other product choices in storage",
+    "failedTests": [
+      "[ghostmaps-031] A chip change keeps the other product choices in storage"
+    ],
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
   }
 ]

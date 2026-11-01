@@ -159,16 +159,26 @@ The evidence records the host measurements and each mutation result.
 | Phone width | None | `ghostmaps-phone-layout` |
 | Horizon visibility | `ghostmaps-050` | `ghostmaps-browser-horizon` |
 
+## Round two corrections
+
+The correction reads commit `9714441e9f3cc9fe4348d09a63ddba7f31f538f8`.
+The tests distinguish product ids, versions, file bytes, storage keys and image URLs.
+The tests check each remote request with a present and absent token.
+The tests check initial card and chip states before each action.
+The evidence records each review mutation and the systematic sweep.
+
 ## Host measurements
 
-The host suite passes 276 tests, with 275 tagged tests.
-The delta contains 66 scenarios.
-The mutation spec contains 430 cases: 410 killed cases and 20 documented equivalents.
+The host suite passes 284 tests, with 283 tagged tests.
+The delta contains 68 scenarios.
+The mutation spec contains 527 cases: 507 killed cases and 20 documented equivalents.
 The audit contains 170 rows, with 0 open rows.
-The command below supplies these values.
+
+The systematic sweep checks 284 tests across 7 files.
+The commands below supply these values.
 
 ```bash
-cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-round2.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-round3.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/audit-round3.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/sweep-round3.py
 ```
-
-The audit command is in [evidence.md](evidence.md).

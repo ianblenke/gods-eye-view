@@ -39,17 +39,48 @@ function fakeGitHub() {
       );
     const tree = /git\/trees\/([0-9a-f]{40})/.exec(url);
     if (tree) return body(JSON.stringify({ tree: repo.trees.get(tree[1]) }));
-    if (/\/commits\//.test(url))
-      return body(
-        JSON.stringify({
-          commit: {
-            message: 'Oct 18 Update\nmore',
-            committer: { date: '2026-10-18T00:00:00Z' },
-          },
-        }),
-      );
-    if (url.startsWith('https://raw.githubusercontent.com/'))
-      return body('KMZ!');
+    const commit = /\/commits\/([0-9a-f]{40})$/.exec(url);
+    if (commit) {
+      const metadata = {
+        [sha('1')]: {
+          message: 'Oct 18 Update\nmore',
+          committer: { date: '2026-10-18T00:00:00Z' },
+        },
+        [sha('2')]: {
+          message: 'Oct 19 Update\nmore',
+          committer: { date: '2026-10-19T00:00:00Z' },
+        },
+      }[commit[1]];
+      return metadata
+        ? body(JSON.stringify({ commit: metadata }))
+        : body('no commit', 404);
+    }
+    if (url.startsWith('https://raw.githubusercontent.com/')) {
+      const pathname = decodeURIComponent(new URL(url).pathname);
+      const parts = pathname.split('/');
+      if (
+        !repo.trees
+          .get(parts[3])
+          ?.some((entry) => entry.path === parts.slice(4).join('/'))
+      )
+        return body('no file', 404);
+      if (pathname.endsWith('/Kinetic_Activities_Last_30_Days.kmz'))
+        return body('KMZ!');
+      if (
+        pathname.endsWith(
+          '/S2U_Common_Intelligence_Picture_October_15_2026_Export_1.kmz',
+        )
+      )
+        return body('CIP!');
+      if (
+        pathname.endsWith(
+          '/S2U_Common_Intelligence_Picture_October_18_2026_Export_1.kmz',
+        )
+      )
+        return body('NEW!');
+      if (pathname.endsWith('/S2Underground_Border_Crisis_Map.kmz'))
+        return body('MAP!');
+    }
     return body('nope', 404);
   };
   return { repo, fetchImpl };
@@ -140,6 +171,8 @@ test('[ghostmaps-014] a new commit is announced once, naming only the products t
     assert.equal(await watcher.checkNow(), true);
     await warmDefaults(watcher);
     assert.equal(events.length, 2);
+    assert.equal(events[1].message, 'Oct 19 Update');
+    assert.equal(events[1].committedAt, Date.UTC(2026, 9, 19));
     assert.equal(events[1].commit, '2222222222222222222222222222222222222222');
     assert.deepEqual(
       events[1].products.map(({ id, version, fileTitle }) => ({
@@ -184,6 +217,7 @@ test('[ghostmaps-015] files download by commit-pinned URL, cache by blob, and st
     await watcher.checkNow();
     const found = await watcher.file('kinetic-30d');
     assert.equal(found.bytes.toString(), 'KMZ!');
+    await warmDefaults(watcher);
     const raw = repo.calls.filter((url) =>
       url.includes('raw.githubusercontent'),
     );
@@ -201,7 +235,8 @@ test('[ghostmaps-015] files download by commit-pinned URL, cache by blob, and st
     assert.equal(await watcher.file('not-a-product'), null);
 
     // When the edition changes, the old blob leaves the disk cache.
-    await watcher.file('cip');
+    assert.equal((await watcher.file('cip')).bytes.toString(), 'CIP!');
+    const updatedStart = repo.calls.length;
     repo.head = sha('2');
     repo.trees.set(sha('2'), [
       {
@@ -213,7 +248,16 @@ test('[ghostmaps-015] files download by commit-pinned URL, cache by blob, and st
       { path: KINETIC, type: 'blob', size: 4, sha: sha('b') },
     ]);
     await watcher.checkNow();
-    await watcher.file('cip');
+    assert.equal((await watcher.file('cip')).bytes.toString(), 'NEW!');
+    assert.equal((await watcher.file('kinetic-30d')).bytes.toString(), 'KMZ!');
+    assert.deepEqual(
+      repo.calls
+        .slice(updatedStart)
+        .filter((url) => url.startsWith('https://raw.githubusercontent.com/')),
+      [
+        'https://raw.githubusercontent.com/s2underground/GhostMaps/2222222222222222222222222222222222222222/ArcGIS%20Data%20for%20ATAK%20(KMZs)/Common%20Intelligence%20Picture/Master%20Database/S2U_Common_Intelligence_Picture_October_18_2026_Export_1.kmz',
+      ],
+    );
     const files = (await readdir(path.join(cacheDir, 'files'))).sort();
     assert.deepEqual(files, [
       'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.kmz',
@@ -418,17 +462,31 @@ const routeWatcher = (options = {}) => ({
       { id: 'kinetic-30d', version: 'two' },
     ],
   }),
-  file: async () => ({
-    product: { version: 'blob' },
-    bytes: Buffer.from('KMZ!'),
-  }),
+  file: async (id) => {
+    const files = {
+      cip: { product: { version: 'blob' }, bytes: Buffer.from('KMZ!') },
+      'kinetic-30d': {
+        product: { version: 'second' },
+        bytes: Buffer.from('OTHER'),
+      },
+    };
+    assert.ok(Object.hasOwn(files, id));
+    return files[id];
+  },
   subscribe: () => () => {},
   subscribers: () => 0,
   ...options,
 });
 
 test('[ghostmaps-036] The proxy serves current file bytes and cache headers', async () => {
-  const { call } = routeFixture(routeWatcher());
+  const ids = [];
+  const watcher = routeWatcher();
+  const file = watcher.file;
+  watcher.file = (id) => {
+    ids.push(id);
+    return file(id);
+  };
+  const { call } = routeFixture(watcher);
   const pinned = (await call('/file/cip?v=blob')).res;
   assert.equal(pinned.status, 200);
   assert.equal(pinned.body.toString(), 'KMZ!');
@@ -440,12 +498,26 @@ test('[ghostmaps-036] The proxy serves current file bytes and cache headers', as
   });
   const current = (await call('/file/cip?v=other')).res;
   assert.equal(current.headers['Cache-Control'], 'no-store');
+  const second = (await call('/file/kinetic-30d?v=second')).res;
+  assert.equal(second.status, 200);
+  assert.equal(second.body.toString(), 'OTHER');
+  assert.deepEqual(second.headers, {
+    'Content-Type': 'application/vnd.google-earth.kmz',
+    'Content-Length': 5,
+    'X-GhostMaps-Version': 'second',
+    'Cache-Control': 'private, max-age=31536000, immutable',
+  });
+  const unpinned = (await call('/file/kinetic-30d')).res;
+  assert.equal(unpinned.body.toString(), 'OTHER');
+  assert.equal(unpinned.headers['Cache-Control'], 'no-store');
+  assert.deepEqual(ids, ['cip', 'cip', 'kinetic-30d', 'kinetic-30d']);
   const error = (await call('/catalog', { method: 'POST' })).res;
   assert.equal(error.headers.Allow, 'GET');
   assert.equal(JSON.parse(error.body).error, 'method_not_allowed');
   const absent = (await call(undefined)).res;
   assert.equal(absent.status, 404);
   assert.equal(absent.headers.Allow, undefined);
+  assert.equal(Object.hasOwn(absent.headers, 'Allow'), false);
 });
 
 test('[ghostmaps-037] The proxy waits for the first catalog and file check', async () => {
@@ -554,11 +626,34 @@ test('[ghostmaps-021] The event route sends catalogs heartbeats and close callba
   assert.equal(timers[2], timers[1]);
 });
 
-test('[ghostmaps-064] The event route caps subscribers', async () => {
-  const { call } = routeFixture(routeWatcher({ subscribers: () => 64 }));
+test('[ghostmaps-064] The event route caps subscribers', async (t) => {
+  let timers = 0;
+  let subscriptions = 0;
+  let catalogs = 0;
+  t.mock.method(globalThis, 'setInterval', () => {
+    timers++;
+    return { unref() {} };
+  });
+  const { call } = routeFixture(
+    routeWatcher({
+      subscribers: () => 64,
+      subscribe: () => {
+        subscriptions++;
+        return () => {};
+      },
+      catalog: () => {
+        catalogs++;
+        return { products: [] };
+      },
+    }),
+  );
   const { res } = await call('/events');
   assert.equal(res.status, 429);
   assert.equal(JSON.parse(res.body).error, 'too_many_subscribers');
+  assert.equal(timers, 0);
+  assert.equal(subscriptions, 0);
+  assert.equal(catalogs, 0);
+  assert.deepEqual(res.chunks, []);
 });
 
 function emptyRemote({
@@ -654,7 +749,9 @@ for (const [name, token, expected] of [
 ]) {
   test(`[ghostmaps-052] The API token is ${name}`, () =>
     withCache(async (cacheDir) => {
-      const remote = emptyRemote();
+      const remote = emptyRemote({
+        tree: [{ path: KINETIC, type: 'blob', size: 4, sha: sha('b') }],
+      });
       const watcher = createGhostMapsWatcher({
         cacheDir,
         token,
@@ -663,7 +760,38 @@ for (const [name, token, expected] of [
         warn() {},
       });
       await watcher.checkNow();
-      assert.equal(remote.calls[1].options.headers.Authorization, expected);
+      await warmDefaults(watcher);
+      assert.deepEqual(
+        remote.calls.map(({ url }) => url),
+        [
+          'https://github.com/s2underground/GhostMaps.git/info/refs?service=git-upload-pack',
+          'https://api.github.com/repos/s2underground/GhostMaps/git/trees/1111111111111111111111111111111111111111?recursive=1',
+          'https://api.github.com/repos/s2underground/GhostMaps/commits/1111111111111111111111111111111111111111',
+          'https://raw.githubusercontent.com/s2underground/GhostMaps/1111111111111111111111111111111111111111/ArcGIS%20Data%20for%20ATAK%20(KMZs)/Common%20Intelligence%20Picture/30-Day%20Pulls/Kinetic_Activities_Last_30_Days.kmz',
+        ],
+      );
+      for (const index of [1, 2]) {
+        assert.equal(
+          remote.calls[index].options.headers.Authorization,
+          expected,
+        );
+        assert.equal(
+          Object.hasOwn(remote.calls[index].options.headers, 'Authorization'),
+          name === 'present',
+        );
+        assert.equal(
+          remote.calls[index].options.headers.Accept,
+          'application/vnd.github+json',
+        );
+      }
+      assert.equal(
+        Object.hasOwn(remote.calls[0].options.headers, 'Authorization'),
+        false,
+      );
+      assert.equal(
+        Object.hasOwn(remote.calls[3].options.headers, 'Authorization'),
+        false,
+      );
       assert.equal(remote.calls[0].options.headers.Authorization, undefined);
       assert.equal(remote.calls[0].options.redirect, 'follow');
       assert.ok(remote.calls[0].options.signal instanceof AbortSignal);
@@ -779,7 +907,19 @@ for (const name of [
           if (name === 'invalid tree' && url.includes('/git/trees/'))
             return new Response('{"tree":null}');
           if (name === 'truncated tree' && url.includes('/git/trees/'))
-            return new Response('{"tree":[],"truncated":true}');
+            return new Response(
+              JSON.stringify({
+                tree: [
+                  {
+                    path: KINETIC,
+                    type: 'blob',
+                    size: 5,
+                    sha: sha('b'),
+                  },
+                ],
+                truncated: true,
+              }),
+            );
           if (url.includes('/commits/')) {
             if (name === 'commit error')
               return new Response('bad', { status: 503 });
@@ -806,11 +946,25 @@ for (const name of [
         );
       if (name === 'invalid tree')
         assert.equal(watcher.catalog().error, 'GhostMaps tree malformed');
-      if (name === 'truncated tree')
+      if (name === 'truncated tree') {
+        assert.deepEqual(watcher.catalog().products, [
+          {
+            id: 'kinetic-30d',
+            title: 'Kinetic Activity (30 days)',
+            defaultOn: true,
+            fileName: 'Kinetic_Activities_Last_30_Days.kmz',
+            fileTitle: 'Kinetic Activities Last 30 Days',
+            version: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+            size: 5,
+            dateMs: null,
+          },
+        ]);
+        await warmDefaults(watcher);
         assert.equal(
           warnings[0][0],
           '[ghostmaps] repository tree listing truncated',
         );
+      }
     }));
 }
 
@@ -872,10 +1026,26 @@ test('[ghostmaps-014 ghostmaps-048] The default helpers use fetch log and warnin
     t.mock.method(globalThis, 'fetch', remote.fetchImpl);
     t.mock.method(console, 'log', (...args) => logs.push(args));
     t.mock.method(console, 'warn', (...args) => warnings.push(args));
-    const watcher = createGhostMapsWatcher({ cacheDir });
+    const watcher = createGhostMapsWatcher({
+      cacheDir,
+      token: () => 'host-token',
+    });
     const events = [];
     watcher.subscribe((catalog) => events.push(catalog));
     assert.equal(await watcher.checkNow(), true);
+    assert.deepEqual(
+      remote.calls.map(({ options }) => [
+        Object.hasOwn(options.headers, 'Authorization'),
+        options.headers.Authorization ?? null,
+        options.redirect,
+        options.signal instanceof AbortSignal,
+      ]),
+      [
+        [false, null, 'follow', true],
+        [true, 'Bearer host-token', 'follow', true],
+        [true, 'Bearer host-token', 'follow', true],
+      ],
+    );
     assert.equal(events[0].commit, '1111111111111111111111111111111111111111');
     assert.match(logs[0][0], /updated: none/);
     t.mock.method(
@@ -946,7 +1116,7 @@ for (const operation of ['readdir', 'rm']) {
       });
       await watcher.checkNow();
       await warmDefaults(watcher);
-      assert.equal((await watcher.file('cip')).bytes.toString(), 'KMZ!');
+      assert.equal((await watcher.file('cip')).bytes.toString(), 'CIP!');
       t.mock.restoreAll();
     }));
 }
@@ -1005,9 +1175,20 @@ for (const name of ['present', 'absent']) {
         warn() {},
       });
       await watcher.checkNow();
+      assert.equal(remote.calls.length, 3);
+      for (const index of [1, 2]) {
+        assert.equal(
+          remote.calls[index].options.headers.Authorization,
+          name === 'present' ? 'Bearer test-token' : undefined,
+        );
+        assert.equal(
+          Object.hasOwn(remote.calls[index].options.headers, 'Authorization'),
+          name === 'present',
+        );
+      }
       assert.equal(
-        remote.calls[1].options.headers.Authorization,
-        name === 'present' ? 'Bearer test-token' : undefined,
+        Object.hasOwn(remote.calls[0].options.headers, 'Authorization'),
+        false,
       );
     }));
 }
@@ -1104,3 +1285,78 @@ test('[ghostmaps-040] The proxy creates local routes before it starts the watche
   supplied.configurePreviewServer({ middlewares: { use() {} } });
   assert.equal(starts, 0);
 });
+
+test('[ghostmaps-067] The event route sends the current catalog before the first check completes', async (t) => {
+  let finish;
+  const first = new Promise((resolve) => {
+    finish = resolve;
+  });
+  let reads = 0;
+  let subscribed = 0;
+  t.mock.method(globalThis, 'setInterval', () => ({ unref() {} }));
+  t.mock.method(globalThis, 'clearInterval', () => {});
+  const { call } = routeFixture(
+    routeWatcher({
+      start: () => first,
+      catalog: () => {
+        reads++;
+        return { commit: null, products: [] };
+      },
+      subscribe: () => {
+        subscribed++;
+        return () => {};
+      },
+    }),
+  );
+  const pending = call('/events');
+  const initialReads = reads;
+  const initialSubscribers = subscribed;
+  const initialChunks = await Promise.race([
+    pending.then(({ res }) => [...res.chunks]),
+    new Promise((resolve) => setImmediate(() => resolve([]))),
+  ]);
+  finish(false);
+  const { res } = await pending;
+  assert.equal(initialReads, 1);
+  assert.equal(initialSubscribers, 1);
+  assert.deepEqual(initialChunks, [
+    'retry: 5000\n\n',
+    'event: catalog\ndata: {"commit":null,"products":[]}\n\n',
+  ]);
+  assert.deepEqual(res.chunks, [
+    'retry: 5000\n\n',
+    'event: catalog\ndata: {"commit":null,"products":[]}\n\n',
+  ]);
+});
+
+test('[ghostmaps-020] The watcher does not start a timer after it stops during the first check', (t) =>
+  withCache(async (cacheDir) => {
+    const timers = [];
+    t.mock.method(globalThis, 'setTimeout', (...args) => {
+      timers.push(args);
+      return { unref() {} };
+    });
+    t.mock.method(globalThis, 'clearTimeout', () => {});
+    let finish;
+    const first = new Promise((resolve) => {
+      finish = resolve;
+    });
+    const remote = emptyRemote();
+    const watcher = createGhostMapsWatcher({
+      cacheDir,
+      token: () => '',
+      fetchImpl: async (url, options) => {
+        await first;
+        return remote.fetchImpl(url, options);
+      },
+      log() {},
+      warn() {},
+    });
+    assert.deepEqual(timers, []);
+    const pending = watcher.start();
+    watcher.stop();
+    finish();
+    assert.equal(await pending, true);
+    await Promise.resolve();
+    assert.deepEqual(timers, []);
+  }));

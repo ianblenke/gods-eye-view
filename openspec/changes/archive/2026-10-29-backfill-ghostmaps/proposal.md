@@ -26,7 +26,7 @@ None.
 ## Impact
 
 The scope includes the proxy, the application factory and the browser modules in `src/layers/ghostMaps/`.
-The change adds only specs and tests for old code.
+This backfill adds specs and tests for old code, with trace records and archive evidence.
 The original ledger sweep finds 23 old GhostMaps tests.
 The sweep reads the original ledger at commit `b5a64127667c22af8c68b53706e9f27d866acac0`.
 The evidence names the command.
@@ -76,16 +76,26 @@ Unit tests use local data and cannot prove the live repository or a real event c
 The browser script proves them.
 The script is `scripts/qa-ghostmaps.mjs`.
 
+## Round two corrections
+
+The correction reads commit `9714441e9f3cc9fe4348d09a63ddba7f31f538f8`.
+The tests distinguish product ids, versions, file bytes, storage keys and image URLs.
+The tests check each remote request with a present and absent token.
+The tests check initial card and chip states before each action.
+The evidence records each review mutation and the systematic sweep.
+
 ## Host measurements
 
-The host suite passes 276 tests, with 275 tagged tests.
-The delta contains 66 scenarios.
-The mutation spec contains 430 cases: 410 killed cases and 20 documented equivalents.
+The host suite passes 284 tests, with 283 tagged tests.
+The delta contains 68 scenarios.
+The mutation spec contains 527 cases: 507 killed cases and 20 documented equivalents.
 The audit contains 170 rows, with 0 open rows.
-The command below supplies these values.
+
+The systematic sweep checks 284 tests across 7 files.
+The commands below supply these values.
 
 ```bash
-cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-round2.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-round3.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/audit-round3.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/sweep-round3.py
 ```
-
-The audit command is in [evidence.md](evidence.md).

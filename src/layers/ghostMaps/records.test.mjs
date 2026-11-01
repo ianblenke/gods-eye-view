@@ -59,13 +59,18 @@ test('[ghostmaps-008] free-form descriptions become one unlabelled field; script
 test('[ghostmaps-009] field values and counts are bounded', () => {
   const rows = Array.from(
     { length: 40 },
-    (_, i) => `<tr><td>K${i}</td><td>${'x'.repeat(900)}</td></tr>`,
+    (_, i) =>
+      `<tr><td>K${i}</td><td>${String.fromCharCode(65 + (i % 26)).repeat(900)}</td></tr>`,
   ).join('');
   const { fields } = parseDescriptionFields(`<table>${rows}</table>`);
   assert.equal(fields.length, 24);
   assert.deepEqual(
     fields.map((field) => field.value.length),
     Array(24).fill(600),
+  );
+  assert.deepEqual(
+    fields.map((field) => field.value),
+    'ABCDEFGHIJKLMNOPQRSTUVWX'.split('').map((letter) => letter.repeat(600)),
   );
   assert.deepEqual(
     fields.map((field) => field.label),

@@ -1,4 +1,4 @@
-cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/ghostmaps/node-cache python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/ghostmaps /home/ianblenke/docker/gev-tools/ghostmaps/muts.json
+COMMAND: cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/ghostmaps/node-cache PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/ghostmaps /home/ianblenke/docker/gev-tools/ghostmaps/muts.json
 A001-left: KILLED [ghostmaps-018] The poll helper checks zero negative and fractional settings
 A001-right: KILLED [ghostmaps-018] The poll helper checks zero negative and fractional settings
 A002-left: KILLED [ghostmaps-052] The default token helper checks the present token
@@ -27,16 +27,16 @@ A014-right: KILLED [ghostmaps-015] The file cache keeps temporary files and curr
 A015-true: KILLED [ghostmaps-036] The proxy serves current file bytes and cache headers
 A015-false: KILLED [ghostmaps-036] The proxy serves current file bytes and cache headers
 A016-left: KILLED [ghostmaps-038] The proxy reports file errors
-A016-right: SURVIVED 
+A016-right: SURVIVED
 A017-left: KILLED [ghostmaps-037] The proxy waits for the first catalog and file check
 A017-right: KILLED [ghostmaps-038] The proxy reports file errors
 A018-true: KILLED [ghostmaps-036] The proxy serves current file bytes and cache headers
 A018-false: KILLED [ghostmaps-036] The proxy serves current file bytes and cache headers
 A019-left: KILLED [ghostmaps-001] editions read the date and export/version number written in the name
-A019-right: SURVIVED 
-A020-left: SURVIVED 
+A019-right: SURVIVED
+A020-left: SURVIVED
 A020-right: KILLED [ghostmaps-001] editions read the date and export/version number written in the name
-A021-true: SURVIVED 
+A021-true: SURVIVED
 A021-false: KILLED [ghostmaps-062] The edition parser accepts an absent name
 A022-left: KILLED [ghostmaps-001] editions read the date and export/version number written in the name
 A022-right: KILLED [ghostmaps-062] The edition parser accepts an absent name
@@ -52,7 +52,7 @@ A027-false: KILLED oversized, empty, non-KMZ and malformed entries are skipped
 A028-left: KILLED [ghostmaps-004] The catalog rejects an invalid tree
 A028-right: KILLED [ghostmaps-004] The catalog rejects a path object with a KMZ string value
 A029-left: KILLED [ghostmaps-002] The catalog selects by date over a later undated file
-A029-right: SURVIVED 
+A029-right: SURVIVED
 A030-left: KILLED [ghostmaps-004] The catalog rejects an invalid finite size
 A030-right: KILLED [ghostmaps-004] The catalog rejects an invalid maximum size
 A031-left: KILLED [ghostmaps-004] The catalog rejects an invalid finite size
@@ -68,13 +68,13 @@ A036-true: KILLED [ghostmaps-003] The incident catalog checks the older date
 A036-false: KILLED [ghostmaps-002] The catalog selects by date over a later undated file
 A037-loop: KILLED [ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement
 A038-left: KILLED [ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement
-A038-right: SURVIVED 
+A038-right: SURVIVED
 A039-left: KILLED [ghostmaps-066] The ref parser accepts an absent advertisement
 A039-right: KILLED [ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement
 A040-left: KILLED [ghostmaps-045] The default storage handles valid storage
-A040-right: SURVIVED 
+A040-right: SURVIVED
 A041-left: KILLED [ghostmaps-045] The default storage handles valid storage
-A041-right: SURVIVED 
+A041-right: SURVIVED
 A042-true: KILLED [ghostmaps-045] The default storage handles valid storage
 A042-false: KILLED [ghostmaps-045] A stored object cannot use an inherited array method
 A043-true: KILLED [ghostmaps-030] The layer applies the line width
@@ -134,15 +134,15 @@ A071-right: KILLED [ghostmaps-059] A file error uses its default text
 A072-left: KILLED [ghostmaps-059] A file error uses its template
 A072-right: KILLED [ghostmaps-061] A KMZ without a KML document reports an error
 A073-left: KILLED [ghostmaps-034] The layer reports initial state and live stream data
-A073-right: SURVIVED 
+A073-right: SURVIVED
 A074-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
 A074-right: KILLED [ghostmaps-033] A false product value does not supply an inherited title
 A075-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
-A075-right: SURVIVED 
+A075-right: SURVIVED
 A076-true: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
-A076-false: SURVIVED 
+A076-false: SURVIVED
 A077-left: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
-A077-right: SURVIVED 
+A077-right: SURVIVED
 A078-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
 A078-right: KILLED [ghostmaps-033] An absent product label stays empty with a custom locale
 A079-left: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
@@ -228,7 +228,7 @@ A121-loop: KILLED [ghostmaps-030] The layer anchors a line at its mean coordinat
 A122-left: KILLED [ghostmaps-026] The reader accepts Polygon
 A122-right: KILLED [ghostmaps-027] A style map without children gives an empty style
 A123-left: KILLED [ghostmaps-026] The reader accepts LineString
-A123-right: SURVIVED 
+A123-right: SURVIVED
 A124-left: KILLED [ghostmaps-026] The reader accepts LineString
 A124-right: KILLED [ghostmaps-027] The reader resolves the icon defaults style
 A125-left: KILLED [ghostmaps-026] The reader accepts LineString
@@ -241,27 +241,27 @@ A128-left: KILLED [ghostmaps-027] The reader resolves the absent number style
 A128-right: KILLED [ghostmaps-027] The reader resolves the invalid number style
 A129-loop: KILLED [ghostmaps-025] The coordinate parser checks altitude
 A130-left: KILLED [ghostmaps-025] The coordinate parser checks altitude
-A130-right: SURVIVED 
+A130-right: SURVIVED
 A131-left: KILLED [ghostmaps-025] The coordinate parser checks absent text
 A131-right: KILLED [ghostmaps-025] The coordinate parser checks the east bound
-A132-left: SURVIVED 
+A132-left: SURVIVED
 A132-right: KILLED [ghostmaps-025] The coordinate parser checks the north bound
-A133-left: SURVIVED 
-A133-right: SURVIVED 
+A133-left: SURVIVED
+A133-right: SURVIVED
 A134-true: KILLED [ghostmaps-027] The reader resolves the icon style
 A134-false: KILLED [ghostmaps-027] The reader resolves the icon defaults style
-A135-loop: KILLED [ghostmaps-027] An inline style replaces the shared values; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader resolves the absent number style; [ghostmaps-027] The reader resolves the icon defaults style; [ghostmaps-027] The reader resolves the icon style; [ghostmaps-027] 
-A136-loop: KILLED [ghostmaps-027] The reader checks the inline map; [ghostmaps-027] The reader checks the normal map
+A135-loop: KILLED [ghostmaps-027] An inline style replaces the shared values; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader resolves distinct images for separate styles; [ghostmaps-027] The reader resolves the absent number style; [ghostmaps-027] The reader resolves the icon defaults st
+A136-loop: KILLED [ghostmaps-027] The reader checks the inline map; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader selects each normal pair after a highlight pair
 A137-true: KILLED [ghostmaps-027] The reader checks the inline map
-A137-false: KILLED [ghostmaps-027] The reader checks the normal map
-A138-left: KILLED [ghostmaps-027] An inline style replaces the shared values; [ghostmaps-027] The reader checks the inline map; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader resolves the absent number style; [ghostmaps-027] The reader resolves the icon defaults style; [ghostmaps-027] Th
+A137-false: KILLED [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader selects each normal pair after a highlight pair
+A138-left: KILLED [ghostmaps-027] An inline style replaces the shared values; [ghostmaps-027] The reader checks the inline map; [ghostmaps-027] The reader checks the normal map; [ghostmaps-027] The reader resolves distinct images for separate styles; [ghostmaps-027] The reader resolves the absent number style; [ghost
 A138-right: KILLED [ghostmaps-027] The reader accepts a null style URL from a custom element
 A139-left: KILLED [ghostmaps-027] The reader checks the remote style
 A139-right: KILLED [ghostmaps-027] The reader checks the cycle
 A140-left: KILLED [ghostmaps-027] The reader accepts a null style URL from a custom element
 A140-right: KILLED [ghostmaps-027] The reader checks the remote style
 A141-left: KILLED [ghostmaps-027] The reader checks the inline map
-A141-right: SURVIVED 
+A141-right: SURVIVED
 A142-case-0: KILLED [ghostmaps-026] The reader accepts MultiGeometry
 A142-case-1: KILLED [ghostmaps-026] The reader accepts LineString
 A142-case-2: KILLED [ghostmaps-026] The reader accepts LinearRing
@@ -275,7 +275,7 @@ A146-loop: KILLED [ghostmaps-026] The reader accepts LineString
 A147-left: KILLED [ghostmaps-028] The reader caps the feature total
 A147-right: KILLED [ghostmaps-028] The reader caps the position total
 A148-true: KILLED [ghostmaps-027] The default resolver rejects an image URL
-A148-false: SURVIVED 
+A148-false: SURVIVED
 A149-left: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value fields and http links
 A149-right: KILLED [ghostmaps-010] The decoder checks absent text
 A150-true: KILLED [ghostmaps-010] The decoder checks lowercase hex
@@ -305,7 +305,7 @@ A162-right: KILLED [ghostmaps-007] ArcGIS popup tables become plain label/value 
 A163-left: KILLED [ghostmaps-007] The table parser excludes the &lt;blank&gt; value
 A163-right: KILLED [ghostmaps-007] A link table does not add a duplicate text field
 A164-left: KILLED [ghostmaps-011] KML aabbggrr colors convert to rgba
-A164-right: SURVIVED 
+A164-right: SURVIVED
 A165-loop: KILLED [ghostmaps-012] The wrapper accepts absent text and its default width
 A166-left: KILLED [ghostmaps-012] The wrapper accepts absent text and its default width
 A166-right: KILLED [ghostmaps-012] The wrapper accepts absent text and its default width
@@ -429,4 +429,101 @@ R2-truncated-warning: KILLED [ghostmaps-058] The watcher handles a truncated tre
 R2-unsupported-start: KILLED [ghostmaps-019] routes: unknown paths and methods are refused without contacting GitHub
 R2-link-limit: KILLED [ghostmaps-009 ghostmaps-063] The parser caps source links and free text
 R2-subscriber-limit: KILLED [ghostmaps-064] The event route caps subscribers
+R2F01-events: KILLED [ghostmaps-067] The event route sends the current catalog before the first check completes
+R2F02-chip: KILLED [ghostmaps-055] An inactive product chip keeps the current card when it becomes active
+R2F03-activate: KILLED [ghostmaps-047] The card stays plain with an absent external host
+R2F04-tree: KILLED [ghostmaps-058] The watcher handles a truncated tree
+R2F05-storage: KILLED [ghostmaps-045] The layer reads the id list case from storage
+R2F06-id: KILLED [ghostmaps-036] The proxy serves current file bytes and cache headers
+R2F07-commit: KILLED [ghostmaps-052] The API token is absent; [ghostmaps-052] The API token is present; [ghostmaps-052] The default token helper checks the absent token; [ghostmaps-052] The default token helper checks the present token
+SW3-raw-product: KILLED [ghostmaps-015] files download by commit-pinned URL, cache by blob, and stale blobs are pruned
+SW3-raw-credentials: KILLED [ghostmaps-052] The API token is absent; [ghostmaps-052] The API token is present
+SW3-commit-url: KILLED [ghostmaps-052] The API token is absent; [ghostmaps-052] The API token is present
+SW3-tree-url: KILLED [ghostmaps-052] The API token is absent; [ghostmaps-052] The API token is present
+SW3-absent-credentials: KILLED [ghostmaps-052] The API token is absent; [ghostmaps-052] The default token helper checks the absent token
+SW3-tree-credentials: KILLED [ghostmaps-052] The API token is present; [ghostmaps-052] The default token helper checks the present token
+SW3-cap-subscription: KILLED [ghostmaps-064] The event route caps subscribers
+SW3-cap-timer: KILLED [ghostmaps-064] The event route caps subscribers
+SW3-stop-pending: KILLED [ghostmaps-020] The watcher does not start a timer after it stops during the first check
+SW3-plain-link: KILLED [ghostmaps-047] The card stays plain with an absent link
+SW3-storage-key: KILLED [ghostmaps-031] A chip change keeps the other product choices in storage
+SW3-selection-first: KILLED [ghostmaps-031] A chip change keeps the other product choices in storage
+SW3-selection-delete: KILLED [ghostmaps-031] A chip change keeps the other product choices in storage
+SW3-selection-add: KILLED [ghostmaps-031] A chip change keeps the other product choices in storage
+SW3-file-signal: KILLED [ghostmaps-030] The layer creates point line and polygon entities
+SW3-dom-query: KILLED [ghostmaps-026] The reader accepts Point
+SW3-image-href: KILLED [ghostmaps-027] The reader resolves distinct images for separate styles
+SW3-image-first: KILLED [ghostmaps-027] The reader resolves distinct images for separate styles
+SW3-fields-first: KILLED [ghostmaps-009] field values and counts are bounded
+SW3-source-first: KILLED [ghostmaps-023] The source encodes file values and returns bytes
+SW3-stream-early-close: KILLED [ghostmaps-024] The stream accepts an absent state callback; [ghostmaps-024] The stream reports the connection state for code 0; [ghostmaps-024] The stream reports the connection state for code 1; [ghostmaps-024] The stream reports the connection state for code 2; [ghostmaps-024] The stream reports
+SW3-stream-event: KILLED [ghostmaps-024] The stream accepts an absent state callback
+SW3-removal-request: KILLED [ghostmaps-032] A pushed edition changes only its product data source
+SW3-card-initial: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+SW3-card-start-01: KILLED [ghostmaps-054] The card closes for the number pick
+SW3-card-start-02: KILLED [ghostmaps-054] The card closes for the foreign prefix pick
+SW3-card-start-03: KILLED [ghostmaps-054] The card closes for the lookalike prefix pick
+SW3-card-start-04: KILLED [ghostmaps-054] The card closes for the absent index pick
+SW3-card-start-05: KILLED [ghostmaps-054] The card closes for the empty ground pick
+SW3-card-start-06: KILLED [ghostmaps-054] The card closes for the empty id pick
+SW3-card-start-07: KILLED [ghostmaps-055] The pointer owner and foreign picks keep the current card
+SW3-card-start-08: KILLED [ghostmaps-033] The card uses the folder title
+SW3-card-start-09: KILLED [ghostmaps-033] The card uses the default title
+SW3-card-start-10: KILLED [ghostmaps-033] The card uses the custom product
+SW3-card-start-11: KILLED [ghostmaps-033] The card caps fields and excludes the repeated feature name
+SW3-card-start-12: KILLED [ghostmaps-033] A plain description gives an unlabelled card line
+SW3-card-start-13: KILLED [ghostmaps-054] A chip change removes the selected card
+SW3-card-start-14: KILLED [ghostmaps-046] A custom catalog can remove the feature during a pick
+SW3-card-start-15: KILLED [ghostmaps-033] A custom catalog can remove product metadata during a pick
+SW3-application-card-start: KILLED [ghostmaps-035] The application card opens the link through the window host
+SW3-card-start-17: KILLED [ghostmaps-047] The card stays plain with an absent link
+SW3-card-start-18: KILLED [ghostmaps-047] The card stays plain with an absent external host
+SW3-card-start-19: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The cip product uses its label and color
+SW3-card-start-20: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The kinetic-30d product uses its label and color
+SW3-card-start-21: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The border-crisis product uses its label and color
+SW3-card-start-22: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-cip product uses its label and color
+SW3-card-start-23: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The iran-kinetic product uses its label and color
+SW3-card-start-24: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The yemen-flot product uses its label and color
+SW3-card-start-25: KILLED [ghostmaps-030 ghostmaps-033 ghostmaps-034] The latest-drop product uses its label and color
+SW3-card-start-26: KILLED [ghostmaps-046] An invalid feature index prevents access to product metadata
+SW3-card-start-27: KILLED [ghostmaps-046] An empty pick id does not call another owner
+SW3-card-start-28: KILLED [ghostmaps-033] A false product value does not supply an inherited title
+SW3-card-start-29: KILLED [ghostmaps-033] An absent product label stays empty with a custom locale
+SW3-chip-start-saved: KILLED [ghostmaps-044] A saved chip callback accepts an absent catalog after destruction
+SW3-chip-start-stale: KILLED [ghostmaps-044] A stale chip cannot load data without a catalog
+SW3-chip-start-disabled: KILLED [ghostmaps-044] The disabled state prevents access to catalog products
+SW3-event-send: KILLED [ghostmaps-067] The event route sends the current catalog before the first check completes
+SW3-map-first: KILLED [ghostmaps-027] The reader selects each normal pair after a highlight pair
+SW3-pair-first: KILLED [ghostmaps-027] The reader selects each normal pair after a highlight pair
+SW3-card-values: KILLED [ghostmaps-033] The card caps fields and excludes the repeated feature name
+SW3-window-url: KILLED [ghostmaps-035] The application card opens the link through the window host
+SW3-window-pick: KILLED [ghostmaps-035] The application card opens the link through the window host
+SW3-pick-position: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+SW3-hit-x: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+SW3-hit-y: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+SW3-hit-source: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+SW3-owner-id: KILLED [ghostmaps-055] The pointer owner and foreign picks keep the current card
+SW3-card-source: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+SW3-marker-tag: KILLED [ghostmaps-030] The layer uses a canvas marker and caches its image
+SW3-marker-context: KILLED [ghostmaps-030] The layer uses a canvas marker and caches its image
+SW3-global-fetch-options: KILLED [ghostmaps-022 ghostmaps-023] The default source calls the global fetch helper
+SW3-default-fetch-options: KILLED [ghostmaps-014 ghostmaps-048] The default helpers use fetch log and warning callbacks
+SW3-factory-storage: KILLED [ghostmaps-035] The application factory accepts a source and host options
+SW3-factory-pointer: KILLED [ghostmaps-035 ghostmaps-055] The application uses the caller pointer and external hosts
+SW3-factory-external: KILLED [ghostmaps-035 ghostmaps-055] The application uses the caller pointer and external hosts
+SW3-owned-pick: KILLED [ghostmaps-055] The pointer owner and foreign picks keep the current card
+SW3-card-pick: KILLED [ghostmaps-033 ghostmaps-056] A selected marker publishes a card and opens its source link
+SW3-aborted-request: KILLED [ghostmaps-044] An aborted signal rejects the catalog update
+SW3-catalog-signal: KILLED [ghostmaps-068] The layer sets the caller signal on its catalog request
+SW3-catalog-own-signal: KILLED [ghostmaps-068] The layer sets the caller signal on its catalog request
+SW3-raw-commit: KILLED [ghostmaps-015] files download by commit-pinned URL, cache by blob, and stale blobs are pruned
+SW3-commit-edition: KILLED [ghostmaps-014] a new commit is announced once, naming only the products that changed
+SW3-allow-absent: KILLED [ghostmaps-036] The proxy serves current file bytes and cache headers
+SW3-reader-hole-first: KILLED [ghostmaps-026] The reader accepts Polygon
+SW3-hole-minimum: KILLED [ghostmaps-026] The reader accepts Polygon
+SW3-layer-hole-first: KILLED [ghostmaps-030] The layer creates point line and polygon entities
+SW3-point-first: KILLED [ghostmaps-030] The layer uses a canvas marker and caches its image
+SW3-visibility-default: KILLED [ghostmaps-026] The reader excludes hidden placemarks
+SW3-initial-horizon: KILLED [ghostmaps-050] The horizon callback updates point visibility after a camera change
+SW3-cached-request: KILLED [ghostmaps-031] A chip change keeps the other product choices in storage
 SURVIVORS: [('A016-right', 'SURVIVED'), ('A019-right', 'SURVIVED'), ('A020-left', 'SURVIVED'), ('A021-true', 'SURVIVED'), ('A029-right', 'SURVIVED'), ('A038-right', 'SURVIVED'), ('A040-right', 'SURVIVED'), ('A041-right', 'SURVIVED'), ('A073-right', 'SURVIVED'), ('A075-right', 'SURVIVED'), ('A076-false', 'SURVIVED'), ('A077-right', 'SURVIVED'), ('A123-right', 'SURVIVED'), ('A130-right', 'SURVIVED'), ('A132-left', 'SURVIVED'), ('A133-left', 'SURVIVED'), ('A133-right', 'SURVIVED'), ('A141-right', 'SURVIVED'), ('A148-false', 'SURVIVED'), ('A164-right', 'SURVIVED')]

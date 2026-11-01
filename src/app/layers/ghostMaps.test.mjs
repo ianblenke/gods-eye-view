@@ -13,10 +13,21 @@ function property(t, key, value) {
 test('[ghostmaps-035] The application factory accepts a source and host options', async () => {
   let catalogs = 0;
   let subscriptions = 0;
+  const reads = [];
   const source = {
     getCatalog: async () => {
       catalogs++;
-      return { products: [] };
+      return {
+        commit: 'caller-head',
+        products: [
+          {
+            id: 'border-crisis',
+            title: 'Border Crisis Map',
+            version: 'caller-version',
+            defaultOn: true,
+          },
+        ],
+      };
     },
     subscribe: () => {
       subscriptions++;
@@ -25,7 +36,12 @@ test('[ghostmaps-035] The application factory accepts a source and host options'
   };
   const layer = createApplicationGhostMaps({
     source,
-    storage: null,
+    storage: {
+      getItem: (key) => {
+        reads.push(key);
+        return key === 'gev.ghostmaps.products' ? '[]' : null;
+      },
+    },
     overlayHost: null,
   });
   assert.equal(layer.id, 's2-ghostmaps');
@@ -33,7 +49,13 @@ test('[ghostmaps-035] The application factory accepts a source and host options'
   layer.enable();
   assert.equal(await layer.update(), true);
   assert.equal(catalogs, 1);
+  assert.deepEqual(reads, ['gev.ghostmaps.products']);
   assert.equal(subscriptions, 1);
+  assert.equal(layer.getStats().commit, 'caller-head');
+  assert.deepEqual(
+    layer.getRowControls().chips.map(({ id, active }) => [id, active]),
+    [['border-crisis', false]],
+  );
   layer.destroy();
 });
 
@@ -52,6 +74,7 @@ test('[ghostmaps-035] The application factory creates the standard input handler
     picking: { registerPickOwner() {}, unregisterPickOwner() {} },
   });
   layer.init({ scene: { canvas, requestRender() {} } });
+  assert.deepEqual(events, []);
   layer.enable();
   assert.ok(events.includes('mousedown') || events.includes('pointerdown'));
   layer.destroy();

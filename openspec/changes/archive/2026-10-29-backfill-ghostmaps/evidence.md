@@ -1,42 +1,93 @@
 # GhostMaps evidence
 
-Source commit: `03be515cbbc11ee27a7445b8c628cbc06a1289fb`.
+Source commit: `9714441e9f3cc9fe4348d09a63ddba7f31f538f8`.
 Branch: `backfill-ghostmaps`.
+This report describes the uncommitted correction after round two.
 
 ## Results
 
-The host suite passes 276 tests, with 275 tagged tests.
-The delta contains 66 scenarios.
-The mutation spec contains 430 cases: 410 killed cases and 20 documented equivalents.
+The host suite passes 284 tests, with 283 tagged tests.
+The delta contains 68 scenarios.
+The mutation spec contains 527 cases: 507 killed cases and 20 documented equivalents.
 The audit contains 170 rows, with 0 open rows.
-The command below supplies these values.
+
+The systematic sweep checks 284 tests across 7 files.
+The commands below supply these values.
 
 ```bash
-cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-round2.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-round3.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/audit-round3.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/sweep-round3.py
 ```
-
-The audit command is in [evidence.md](evidence.md).
 
 The original ledger contains 23 old GhostMaps tests.
 The title sweep keeps every old name.
-The original ledger comes from commit `b5a64127667c22af8c68b53706e9f27d866acac0`.
 The measurement command reads that ledger with `git show`.
+The ledger commit is `b5a64127667c22af8c68b53706e9f27d866acac0`.
 
 ## Count changes
 
 | Item | Before | After |
 | --- | ---: | ---: |
-| Tests | 275 | 276 |
-| Tagged tests | 274 | 275 |
-| Scenarios | 35 | 66 |
-| Mutations | 386 | 430 |
+| Tests | 276 | 284 |
+| Tagged tests | 275 | 283 |
+| Scenarios | 66 | 68 |
+| Mutations | 430 | 527 |
 
-The commands below supply these values.
+The commands below supply the values from the reviewed commit and the current files.
 
 ```bash
-cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/before-counts.py
-cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-round2.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/count-before-round3.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-round3.py
 ```
+
+## Review corrections
+
+The [baseline results](review-reproductions.json) record each survivor before the test corrections.
+The [mutation results](mutation-results.json) record each exact edit and failed test after the corrections.
+The report supplies exact code edits for F3 through F7.
+The F1 mutation adds a wait before the initial event response.
+The F2 mutation clears the card on every chip change.
+These two edits test the conditions that the report corrects.
+
+| Finding | Mutation | Before | After | Test |
+| --- | --- | --- | --- | --- |
+| F1 | `R2F01-events` | SURVIVED | KILLED | [ghostmaps-067] The event route sends the current catalog before the first check completes |
+| F2 | `R2F02-chip` | SURVIVED | KILLED | [ghostmaps-055] An inactive product chip keeps the current card when it becomes active |
+| F3 | `R2F03-activate` | SURVIVED | KILLED | [ghostmaps-047] The card stays plain with an absent external host |
+| F4 | `R2F04-tree` | SURVIVED | KILLED | [ghostmaps-058] The watcher handles a truncated tree |
+| F5 | `R2F05-storage` | SURVIVED | KILLED | [ghostmaps-045] The layer reads the id list case from storage |
+| F6 | `R2F06-id` | SURVIVED | KILLED | [ghostmaps-036] The proxy serves current file bytes and cache headers |
+| F7 | `R2F07-commit` | SURVIVED | KILLED | [ghostmaps-052] The API token is absent |
+
+Both plain-card cases assert that the card object lacks the activation and accessibility properties.
+The extra case `SW3-plain-link` checks the absent-link branch.
+The removal case `SW3-removal-request` checks that removal does not request replacement bytes.
+The version condition names active products because the sync guard excludes inactive products.
+F8 stays with the lead because this correction does not run the formal review or gates.
+
+## Systematic sweep
+
+The table is `/home/ianblenke/docker/gev-tools/ghostmaps/sweep-round3.md`.
+Each row names a test and records checks for shapes a through f.
+The table covers each scoped test file.
+The JSON data in [audit.json](audit.json) includes the table data.
+
+| Shape | Tests checked | Correction mutations |
+| --- | ---: | ---: |
+| a | 284 | 28 |
+| b | 284 | 22 |
+| c | 284 | 14 |
+| d | 284 | 8 |
+| e | 284 | 38 |
+| f | 284 | 5 |
+
+The sweep links 97 distinct correction mutations.
+Some mutations test more than one shape.
+The mutation results name the exact edits and failed tests.
+Each corrected initial-card assertion also gets a mutation with its own test pattern.
+The storage fake records its key for an assertion outside the catch block.
+An assertion inside that fake alone cannot prove the key because the reader catches its error.
 
 ## Coverage
 
@@ -53,97 +104,27 @@ cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/g
 The [coverage data](coverage.txt) records the exact command and test result for each file.
 The host uses Node `v26.12.1`.
 Host coverage does not state a gate verdict.
-The lead will repeat the ratchet because the scenario set changes.
-
-## Review corrections
-
-The [baseline results](review-reproductions.json) record each survivor before the test corrections.
-The [mutation results](mutation-results.json) record each exact production edit and failed test after the corrections.
-The report names no exact edit for F11.
-Its reproduction sends the wrong file id through the supported route test.
-
-| Finding | Mutation | Before | After | Failed test |
-| --- | --- | --- | --- | --- |
-| F1 | `R1F01-id` | SURVIVED | KILLED | `ghostmaps-032` |
-| F1 | `R1F01-version` | SURVIVED | KILLED | `ghostmaps-032` |
-| F2 | `R1F02-line` | SURVIVED | KILLED | `ghostmaps-030` |
-| F2 | `R1F02-point` | SURVIVED | KILLED | `ghostmaps-030` |
-| F2 | `R1F02-polygon` | SURVIVED | KILLED | `ghostmaps-030` |
-| F2 | `R1F02-hole` | SURVIVED | KILLED | `ghostmaps-030` |
-| F3 | `R1F03-stop` | SURVIVED | KILLED | `ghostmaps-020` |
-| F4 | `R1F04-read` | SURVIVED | KILLED | `ghostmaps-022` |
-| F4 | `R1F04-event` | SURVIVED | KILLED | `ghostmaps-024` |
-| F5 | `R1F05-state` | SURVIVED | KILLED | `ghostmaps-024` |
-| F6 | `R1F06-cleanup` | SURVIVED | KILLED | `ghostmaps-029` |
-| F7 | `R1F07-values` | SURVIVED | KILLED | `ghostmaps-009` |
-| F8 | `R1F08-shared` | SURVIVED | KILLED | `ghostmaps-027` |
-| F9 | `R1F09-disk` | SURVIVED | KILLED | `ghostmaps-016` |
-| F10 | `R1F10-commit` | SURVIVED | KILLED | `ghostmaps-014` |
-| F11 | `R1F11-file` | SURVIVED | KILLED | `ghostmaps-037` |
-
-The text below records the exact failed test names.
-
-```text
-R1F01-id :: [ghostmaps-032] The layer replaces a changed product after it adds the new data
-R1F01-version :: [ghostmaps-032] The layer replaces a changed product after it adds the new data
-R1F02-line :: [ghostmaps-030] The layer creates point line and polygon entities
-R1F02-point :: [ghostmaps-030] The layer creates point line and polygon entities
-R1F02-polygon :: [ghostmaps-030] The layer creates point line and polygon entities
-R1F02-hole :: [ghostmaps-030] The layer creates point line and polygon entities
-R1F03-stop :: [ghostmaps-020] The watcher coalesces checks and follows its start and stop state
-R1F04-read :: [ghostmaps-022] The source returns the catalog and passes its signal
-R1F04-event :: [ghostmaps-024] The stream reports the connection state for code 0
-R1F05-state :: [ghostmaps-024] The stream reports the connection state for code 0
-R1F06-cleanup :: [ghostmaps-029] entity construction failure releases parsed image URLs
-R1F07-values :: [ghostmaps-009] field values and counts are bounded
-R1F08-shared :: [ghostmaps-027] An inline style replaces the shared values
-R1F09-disk :: [ghostmaps-016] the catalog survives a restart from disk, and upstream failures are reported
-R1F10-commit :: [ghostmaps-014] a new commit is announced once, naming only the products that changed
-R1F11-file :: [ghostmaps-037] The proxy waits for the first catalog and file check
-```
-
-The shared-style fixture gave the shared and inline styles the same id.
-The inline style now uses an empty id, so the shared lookup keeps its own properties.
-
-## Sweep results
-
-- Catalog reads and event frames hold distinct products with literal expected metadata.
-- Stream callbacks report state after the fake changes its state code.
-- File requests record product ids and versions, and different editions produce different geometry.
-- Entity assertions cover points, lines, polygon boundaries, holes and closed outlines.
-- Image cleanup checks distinct URLs after parse cancellation, entity errors, late cancellation and product removal.
-- Both watcher timer tests record cancellation of the active timer.
-- The event route checks heartbeat timer cancellation and nonempty product frames.
-- The cache cleanup test supplies distinct obsolete files.
-- Field bounds cover every returned field, and card assertions cover every visible field.
-- Marker cache assertions cover both point entities.
-- Disk tests compare full product metadata with literal values.
-- The tag sweep separates invalid input, route errors, absent data and valid catalog changes.
-
-The [scenario links](test-links.json) list each scenario title and its tagged tests.
-The source import sweep reads every repository test file.
-It finds only the scoped test files for these production modules.
 
 ## Audit
 
-The [audit data](audit.json) records each decision expression and loop.
-The Markdown table is `/home/ianblenke/docker/gev-tools/ghostmaps/audit.md`.
-
 Rows: 170. Tested: 151. Equivalent: 19. Default-value: 0. Open: 0.
 
-The [design](design.md#equivalent-mutations) gives the public API proof for each equivalent mutation.
+The [audit data](audit.json) records each decision expression, loop, test and mutation.
+The table is `/home/ianblenke/docker/gev-tools/ghostmaps/audit.md`.
+The [design](design.md#equivalent-mutations) gives the public API proof for each equivalent case.
+The [scenario links](test-links.json) list every scenario title and each tagged test.
 
 ## Known limits
 
-The branch at `src/layers/ghostMaps/index.js:404` cannot reach its early return.
+No input can reach the early return at `src/layers/ghostMaps/index.js:404`.
 The sole caller needs stable true host references.
 Tests tried absent hosts, an absent viewer and repeated enable calls.
 
-The branch at `src/layers/ghostMaps/index.js:405` cannot use its false result.
+No input can reach the false result at `src/layers/ghostMaps/index.js:405`.
 The sole caller sets a nonempty key immediately before the call.
 Tests tried false pick ids, invalid indices and metadata changes during a pick.
 
-The title sweep leaves the old catalog title without a tag because it contains the banned word `malformed`.
+The old catalog title stays without a tag because it contains the banned word `malformed`.
 The owner forbids a change to that old title.
 
 ```text
@@ -151,13 +132,12 @@ src/layers/ghostMaps/catalog.test.mjs
 oversized, empty, non-KMZ and malformed entries are skipped
 ```
 
-The [proposal](proposal.md#known-limits) names browser limits for phone width, real horizon visibility, pixels and live repository data.
-The browser script proves them.
-Local tests prove the callback behavior and pushed product data with custom fakes.
+The [proposal](proposal.md#known-limits) records browser limits for phone width, real horizon visibility, pixels and live repository data.
+Local tests use custom fakes.
 
 ## Decisions for the lead
 
-These unchanged code limits describe commit `03be515cbbc11ee27a7445b8c628cbc06a1289fb`.
+These code limits describe commit `9714441e9f3cc9fe4348d09a63ddba7f31f538f8`.
 The [design](design.md#known-limits) records their source lines and local probes.
 
 - A rejected data source attachment can leave its image URLs outside the product cache.
@@ -169,53 +149,87 @@ No scenario states that the code must use those behaviors.
 
 ## Commands
 
-These commands supply the import, statement audit, coverage and format results.
+The full test command writes fresh records for the measurement and sweep scripts.
+
+```bash
+cd /home/ianblenke/docker/gev-work/ghostmaps && rm -f /home/ianblenke/docker/gev-tools/ghostmaps/round3-records.jsonl /home/ianblenke/docker/gev-tools/ghostmaps/round3-records.jsonl.sync
+cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none node --test --test-force-exit --test-reporter=spec --test-reporter-destination=stdout --test-reporter=./scripts/spec/lib/trace-reporter.mjs --test-reporter-destination=/home/ianblenke/docker/gev-tools/ghostmaps/round3-records.jsonl server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/{catalog,records,kml,source,lifecycle}.test.mjs
+```
+
+These commands supply the import, statement, test-body and coverage data.
 
 ```bash
 cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/imports-round2.py
 cd /home/ianblenke/docker/gev-work/ghostmaps && node /home/ianblenke/docker/gev-tools/ghostmaps/inventory.mjs
-cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/audit-round2.py
+cd /home/ianblenke/docker/gev-work/ghostmaps && node /home/ianblenke/docker/gev-tools/ghostmaps/round3-test-bodies.mjs
 cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/coverage.py
-cd /home/ianblenke/docker/gev-work/ghostmaps && node scripts/format.mjs --write
-cd /home/ianblenke/docker/gev-work/ghostmaps && node scripts/format.mjs --check
-cd /home/ianblenke/docker/gev-work/ghostmaps && node scripts/spec/gates.mjs lint
+cd /home/ianblenke/docker/gev-work/ghostmaps && python3 /home/ianblenke/docker/gev-tools/ghostmaps/measure-coverage-round3.py
 ```
 
-The [measurement data](measurement.json) records the derived totals.
+The import sweep resolves relative paths in every repository test file.
+It finds the scoped test files for these production modules.
 The coverage script starts one Node process at a time.
-The full host test command writes the records for the measurement script.
-The command starts with empty scratch record files.
+
+The [complete mutation output](mutation-run.txt) records the final full pass.
 
 ```bash
-cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none node --test --test-force-exit --test-reporter=spec --test-reporter-destination=stdout --test-reporter=./scripts/spec/lib/trace-reporter.mjs --test-reporter-destination=/home/ianblenke/docker/gev-tools/ghostmaps/round2-records.jsonl server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/{catalog,records,kml,source,lifecycle}.test.mjs
+cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/ghostmaps/node-cache PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/ghostmaps /home/ianblenke/docker/gev-tools/ghostmaps/muts.json
 ```
 
-The mutation helper restores each source file after its test.
-The [complete output](mutation-run.txt) records the final full pass.
+The first full pass checks the earlier event assertion.
+The next full pass stops before completion during the sweep.
+It gives no verdict.
+The final full pass repeats every case after the sweep corrections.
 
-```bash
-cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/ghostmaps/node-cache python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/ghostmaps /home/ianblenke/docker/gev-tools/ghostmaps/muts.json
-```
+The case `SW3-event-send` delays the bytes but keeps the catalog read at once.
+The event test checks the actual chunks before it completes the first check.
+The map tests distinguish later map ids and normal pairs after highlight pairs.
 
-The early full passes stopped before completion during the pattern correction.
-They give no verdict.
+The card fields hold distinct values.
+The application card test supplies distinct picked ids and source URLs.
+
+The pick and overlay fakes check coordinates and source ids.
+The default fetch tests check their options.
+The signal test checks the value and the object that owns its property.
+The later commit tests distinguish both API metadata and raw URLs.
+
+The geometry tests distinguish point positions and valid polygon holes.
+The visibility tests use text `0` and text `1`.
+The far pin test checks pin state before attachment.
+The cache test rejects extra file requests for current products.
+
+The early sweep kept a wrong storage key.
+The corrected assertion kills that mutation.
+
+The [baseline data](review-reproductions.json) also records the map, card, callback and collection checks.
+The initial horizon control already fails before the new assertion of initial state.
 The final full pass checks each saved mutation against the final tests.
 
 ## Format and STE
 
-The final command logs give the format and STE results.
-Both standard format commands pass for 1673 source files.
-The STE command reports 0 errors.
-The correction does not run Docker, full gates or ratchet.
+The first format command stopped at `spawnSync git EPERM` before it gave a verdict.
+The next format commands passed with permission for the child Git command.
+The format logs record 1673 source files.
+The direct test format check also passed.
+The final STE command reports 0 errors.
+
+```bash
+cd /home/ianblenke/docker/gev-work/ghostmaps && node scripts/format.mjs --write
+cd /home/ianblenke/docker/gev-work/ghostmaps && node scripts/format.mjs --check
+cd /home/ianblenke/docker/gev-work/ghostmaps && node ../node_modules/prettier/bin/prettier.cjs --check server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/{catalog,records,kml,source,lifecycle}.test.mjs
+cd /home/ianblenke/docker/gev-work/ghostmaps && node scripts/spec/gates.mjs lint
+```
+
+The correction does not run Docker, gates or ratchet.
+It does not make a commit.
 The lead owns the final gate and review verdicts.
 
 ## Final tree
 
-This status describes the correction from the source commit.
-The archived change already includes the capability spec and trace records.
-This correction changes tests, archive files and the copied capability spec.
-The production files and QA scripts match the source commit.
-The trace files keep their bytes.
+The final change from `03be515c` changes tests, archive files, the capability spec and four trace files.
+This correction from `9714441e` does not edit the trace files.
+The production files and QA scripts match both source commits.
+The scope check records the Git commands that prove those claims.
 The command `git status --short` supplies the text below.
 
 ```text
@@ -225,17 +239,32 @@ The command `git status --short` supplies the text below.
  M openspec/changes/archive/2026-10-29-backfill-ghostmaps/evidence.md
  M openspec/changes/archive/2026-10-29-backfill-ghostmaps/measurement.json
  M openspec/changes/archive/2026-10-29-backfill-ghostmaps/mutation-results.json
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/mutation-run.txt
  M openspec/changes/archive/2026-10-29-backfill-ghostmaps/proposal.md
+ M openspec/changes/archive/2026-10-29-backfill-ghostmaps/review-reproductions.json
  M openspec/changes/archive/2026-10-29-backfill-ghostmaps/specs/ghostmaps/spec.md
  M openspec/changes/archive/2026-10-29-backfill-ghostmaps/tasks.md
  M openspec/changes/archive/2026-10-29-backfill-ghostmaps/test-links.json
  M openspec/specs/ghostmaps/spec.md
  M server/providers/ghostMaps.test.mjs
+ M src/app/layers/ghostMaps.test.mjs
  M src/layers/ghostMaps/catalog.test.mjs
  M src/layers/ghostMaps/kml.test.mjs
  M src/layers/ghostMaps/lifecycle.test.mjs
  M src/layers/ghostMaps/records.test.mjs
  M src/layers/ghostMaps/source.test.mjs
-?? openspec/changes/archive/2026-10-29-backfill-ghostmaps/mutation-run.txt
-?? openspec/changes/archive/2026-10-29-backfill-ghostmaps/review-reproductions.json
+```
+
+## Scope commands
+
+The commands below check each claim about the source files and trace files.
+
+```bash
+cd /home/ianblenke/docker/gev-work/ghostmaps && git branch --show-current
+cd /home/ianblenke/docker/gev-work/ghostmaps && git diff --name-only HEAD -- server/providers/ghostMaps.js src/app/layers/ghostMaps.js src/layers/ghostMaps/catalog.js src/layers/ghostMaps/index.js src/layers/ghostMaps/kml.js src/layers/ghostMaps/records.js src/layers/ghostMaps/source.js scripts/qa-*.mjs
+cd /home/ianblenke/docker/gev-work/ghostmaps && git diff --name-only 03be515c -- server/providers/ghostMaps.js src/app/layers/ghostMaps.js src/layers/ghostMaps/catalog.js src/layers/ghostMaps/index.js src/layers/ghostMaps/kml.js src/layers/ghostMaps/records.js src/layers/ghostMaps/source.js scripts/qa-*.mjs
+cd /home/ianblenke/docker/gev-work/ghostmaps && git diff --name-only HEAD -- openspec/trace/
+cd /home/ianblenke/docker/gev-work/ghostmaps && git diff --name-only 03be515c HEAD -- openspec/trace/
+cd /home/ianblenke/docker/gev-work/ghostmaps && git diff --name-only HEAD
+cd /home/ianblenke/docker/gev-work/ghostmaps && git status --short
 ```
