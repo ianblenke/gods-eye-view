@@ -1246,21 +1246,6 @@
       "origin": "upstream-sync-8",
       "since": "2026-10-21"
     },
-    "server/providers/ghostMaps.js": {
-      "loaded": true,
-      "lines": 55,
-      "branches": 19,
-      "functions": 12,
-      "totals": {
-        "lines": 437,
-        "branches": 94,
-        "functions": 46
-      },
-      "sha": "bc88aa4b2f4ed9d3947c906ec248dd90da1e454c5faf8f14ca4f23e112e2f3e8",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
     "server/providers/gnssIntegrity.js": {
       "loaded": true,
       "lines": 0,
@@ -2265,21 +2250,6 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/app/layers/ghostMaps.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 0,
-      "functions": 1,
-      "totals": {
-        "lines": 23,
-        "branches": 3,
-        "functions": 3
-      },
-      "sha": "8d6465f685c1f853c5e4776fefff4189a75b1d699b66381d7f5b470a177744f2",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
     },
     "src/app/layers/localAdsb.js": {
       "loaded": true,
@@ -5581,77 +5551,17 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/layers/ghostMaps/catalog.js": {
-      "loaded": true,
-      "lines": 1,
-      "branches": 5,
-      "functions": 0,
-      "totals": {
-        "lines": 245,
-        "branches": 57,
-        "functions": 8
-      },
-      "sha": "9db17d844c8068098e6c9cf1ee26c6094a2770d26a7c073a787ef8cb22d68ded",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
     "src/layers/ghostMaps/index.js": {
       "loaded": true,
-      "lines": 297,
-      "branches": 32,
-      "functions": 22,
-      "totals": {
-        "lines": 711,
-        "branches": 81,
-        "functions": 53
-      },
-      "sha": "818b9666f5184af4a22a0084f6792fba538ab92075a4341fdfb8461cd44fa78d",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/layers/ghostMaps/kml.js": {
-      "loaded": true,
-      "lines": 52,
-      "branches": 21,
-      "functions": 6,
-      "totals": {
-        "lines": 198,
-        "branches": 43,
-        "functions": 19
-      },
-      "sha": "cf4aa98ac2ff794a3e60a8fb9c74f49d10155bb00e30169f4656e44518d28edc",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/layers/ghostMaps/records.js": {
-      "loaded": true,
-      "lines": 3,
-      "branches": 6,
+      "lines": 0,
+      "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 165,
-        "branches": 59,
-        "functions": 10
+        "lines": 711,
+        "branches": 288,
+        "functions": 58
       },
-      "sha": "5542c8e1d24c9fdeeb664de6dca1c8133b3d1c2a676d9da305c9c3c95d110313",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/layers/ghostMaps/source.js": {
-      "loaded": true,
-      "lines": 47,
-      "branches": 0,
-      "functions": 5,
-      "totals": {
-        "lines": 81,
-        "branches": 2,
-        "functions": 6
-      },
-      "sha": "1b534a1d142262e379c513b46293733bad069f65f4856a672fca2b1ed195f255",
+      "sha": "818b9666f5184af4a22a0084f6792fba538ab92075a4341fdfb8461cd44fa78d",
       "untrue": false,
       "origin": "upstream-sync-9",
       "since": "2026-10-27"
@@ -7388,7 +7298,7 @@
       "functions": 1,
       "totals": {
         "lines": 284,
-        "branches": 97,
+        "branches": 98,
         "functions": 17
       },
       "sha": "3c0e5006d05804fc07c7e873fad11a904cbf65adfa47a64cfd941a00713391bd",
@@ -12820,18 +12730,6 @@
       },
       "origin": "upstream-sync-8",
       "since": "2026-10-21"
-    },
-    "server/providers/ghostMaps.test.mjs": {
-      "names": {
-        "a new commit is announced once, naming only the products that changed": 1,
-        "an unchanged head clears an upstream outage and announces recovery once": 1,
-        "files download by commit-pinned URL, cache by blob, and stale blobs are pruned": 1,
-        "poll interval is configurable with a 5 s floor": 1,
-        "routes: unknown paths and methods are refused without contacting GitHub": 1,
-        "the catalog survives a restart from disk, and upstream failures are reported": 1
-      },
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
     },
     "server/providers/overpass/requestAdmission.test.mjs": {
       "names": {
@@ -18757,35 +18655,7 @@
     },
     "src/layers/ghostMaps/catalog.test.mjs": {
       "names": {
-        "each product keeps its newest edition by date, then edition number": 1,
-        "editions read the date and export/version number written in the name": 1,
-        "latest drop is the newest dated incident file outside curated, archived and base data": 1,
-        "oversized, empty, non-KMZ and malformed entries are skipped": 1,
-        "raw URLs are pinned to the commit and encode every path segment": 1,
-        "the branch head comes from the smart-HTTP ref advertisement": 1
-      },
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/layers/ghostMaps/lifecycle.test.mjs": {
-      "names": {
-        "cancellation during parsing releases every packed-image URL": 1,
-        "cancelling a file read does not allocate packed-image URLs": 1,
-        "entity construction failure releases parsed image URLs": 1,
-        "successful load keeps icons until the product is disabled": 1
-      },
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/layers/ghostMaps/records.test.mjs": {
-      "names": {
-        "ArcGIS popup tables become plain label/value fields and http links": 1,
-        "CamelCase field labels read as words": 1,
-        "KML aabbggrr colors convert to rgba": 1,
-        "card text wraps on words, cuts long words and marks truncation": 1,
-        "entities and tags decode to text": 1,
-        "field values and counts are bounded": 1,
-        "free-form descriptions become one unlabelled field; scripts are dropped": 1
+        "oversized, empty, non-KMZ and malformed entries are skipped": 1
       },
       "origin": "upstream-sync-9",
       "since": "2026-10-27"
