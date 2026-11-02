@@ -257,7 +257,7 @@ The command `git status --short` supplies the text below.
 
 ## Scope commands
 
-Round 3 adds one test for `ghostmaps-050`. The test places two pins on opposite sides of the planet and moves the camera. The reviewer names the mutation `R3F01-position`, which gives each pin the position of the first pin. The new test fails under this mutation, and the lead puts back the production file. The 527 cases of the mutation spec do not include this mutation.
+Round 3 adds one test for `ghostmaps-050`. The test places two pins on opposite sides of the planet and moves the camera. The reviewer names the mutation `R3F01-position`, which gives each pin the position of the first pin. The new test fails under this mutation, and the lead restores the production file. The 527 cases of the mutation spec do not include this mutation.
 
 The commands below check each claim about the source files and trace files.
 
