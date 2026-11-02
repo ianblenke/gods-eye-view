@@ -207,7 +207,7 @@ for (const [key, value, expected] of numberCases)
       expected,
     );
   });
-for (const bad of [
+for (const [index, bad] of [
   null,
   undefined,
   false,
@@ -218,8 +218,8 @@ for (const bad of [
   '',
   ' ',
   'bad',
-]) {
-  test(`[share-codec-048] The invalid number uses defaults for case ${String(bad)}`, () => {
+].entries()) {
+  test(`[share-codec-048] The invalid number uses defaults for case ${index}`, () => {
     const out = c.normalizeShareViewState({
       lat: bad,
       lon: bad,
