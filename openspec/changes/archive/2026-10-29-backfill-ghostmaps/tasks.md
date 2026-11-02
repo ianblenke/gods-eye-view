@@ -4,7 +4,7 @@
 
 - [x] 1.2 Add tests for `ghostmaps-001`.
 
-  Mutation: Change `src/layers/ghostMaps/catalog.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/catalog.js` below makes the test fail.
 
   Case: `A019-left`.
 
@@ -14,7 +14,7 @@
 
 - [x] 1.3 Add tests for `ghostmaps-002`.
 
-  Mutation: Change `src/layers/ghostMaps/catalog.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/catalog.js` below makes the test fail.
 
   Case: `A023-left`.
 
@@ -24,7 +24,7 @@
 
 - [x] 1.4 Add tests for `ghostmaps-003`.
 
-  Mutation: Change `src/layers/ghostMaps/catalog.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/catalog.js` below makes the test fail.
 
   Case: `A032-right`.
 
@@ -34,7 +34,7 @@
 
 - [x] 1.5 Add tests for `ghostmaps-004`.
 
-  Mutation: Change `src/layers/ghostMaps/catalog.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/catalog.js` below makes the test fail.
 
   Case: `A028-left`.
 
@@ -44,7 +44,7 @@
 
 - [x] 1.6 Add tests for `ghostmaps-005`.
 
-  Mutation: Change `src/layers/ghostMaps/catalog.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/catalog.js` below makes the test fail.
 
   Case: `S005`.
 
@@ -54,7 +54,7 @@
 
 - [x] 1.7 Add tests for `ghostmaps-006`.
 
-  Mutation: Change `src/layers/ghostMaps/catalog.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/catalog.js` below makes the test fail.
 
   Case: `A037-loop`.
 
@@ -64,7 +64,7 @@
 
 - [x] 1.8 Add tests for `ghostmaps-007`.
 
-  Mutation: Change `src/layers/ghostMaps/records.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/records.js` below makes the test fail.
 
   Case: `A149-left`.
 
@@ -74,7 +74,7 @@
 
 - [x] 1.9 Add tests for `ghostmaps-008`.
 
-  Mutation: Change `src/layers/ghostMaps/records.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/records.js` below makes the test fail.
 
   Case: `A157-right`.
 
@@ -84,7 +84,7 @@
 
 - [x] 1.10 Add tests for `ghostmaps-009`.
 
-  Mutation: Change `src/layers/ghostMaps/records.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/records.js` below makes the test fail.
 
   Case: `R1F07-values`.
 
@@ -94,7 +94,7 @@
 
 - [x] 1.11 Add tests for `ghostmaps-010`.
 
-  Mutation: Change `src/layers/ghostMaps/records.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/records.js` below makes the test fail.
 
   Case: `A149-right`.
 
@@ -104,7 +104,7 @@
 
 - [x] 1.12 Add tests for `ghostmaps-011`.
 
-  Mutation: Change `src/layers/ghostMaps/records.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/records.js` below makes the test fail.
 
   Case: `A164-left`.
 
@@ -114,7 +114,7 @@
 
 - [x] 1.13 Add tests for `ghostmaps-012`.
 
-  Mutation: Change `src/layers/ghostMaps/records.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/records.js` below makes the test fail.
 
   Case: `A165-loop`.
 
@@ -124,7 +124,7 @@
 
 - [x] 1.14 Add tests for `ghostmaps-013`.
 
-  Mutation: Change `src/layers/ghostMaps/records.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/records.js` below makes the test fail.
 
   Case: `A169-left`.
 
@@ -134,7 +134,7 @@
 
 - [x] 1.15 Add tests for `ghostmaps-014`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R1F10-commit`.
 
@@ -144,7 +144,7 @@
 
 - [x] 1.16 Add tests for `ghostmaps-015`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R2-prune-later`.
 
@@ -154,7 +154,7 @@
 
 - [x] 1.17 Add tests for `ghostmaps-016`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R1F09-disk`.
 
@@ -164,7 +164,7 @@
 
 - [x] 1.18 Add tests for `ghostmaps-017`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `S017`.
 
@@ -174,7 +174,7 @@
 
 - [x] 1.19 Add tests for `ghostmaps-018`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `A001-left`.
 
@@ -184,7 +184,7 @@
 
 - [x] 1.20 Add tests for `ghostmaps-019`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R2-unsupported-start`.
 
@@ -194,7 +194,7 @@
 
 - [x] 1.21 Add tests for `ghostmaps-020`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R1F03-stop`.
 
@@ -204,7 +204,7 @@
 
 - [x] 1.22 Add tests for `ghostmaps-021`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R2-event-route-products`.
 
@@ -214,7 +214,7 @@
 
 - [x] 1.23 Add tests for `ghostmaps-022`.
 
-  Mutation: Change `src/layers/ghostMaps/source.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/source.js` below makes the test fail.
 
   Case: `R1F04-read`.
 
@@ -224,7 +224,7 @@
 
 - [x] 1.24 Add tests for `ghostmaps-023`.
 
-  Mutation: Change `src/layers/ghostMaps/source.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/source.js` below makes the test fail.
 
   Case: `R2-default-products`.
 
@@ -234,7 +234,7 @@
 
 - [x] 1.25 Add tests for `ghostmaps-024`.
 
-  Mutation: Change `src/layers/ghostMaps/source.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/source.js` below makes the test fail.
 
   Case: `R1F04-event`.
 
@@ -244,7 +244,7 @@
 
 - [x] 1.26 Add tests for `ghostmaps-025`.
 
-  Mutation: Change `src/layers/ghostMaps/kml.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/kml.js` below makes the test fail.
 
   Case: `A129-loop`.
 
@@ -254,7 +254,7 @@
 
 - [x] 1.27 Add tests for `ghostmaps-026`.
 
-  Mutation: Change `src/layers/ghostMaps/kml.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/kml.js` below makes the test fail.
 
   Case: `A122-left`.
 
@@ -264,7 +264,7 @@
 
 - [x] 1.28 Add tests for `ghostmaps-027`.
 
-  Mutation: Change `src/layers/ghostMaps/kml.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/kml.js` below makes the test fail.
 
   Case: `SW3-pair-first`.
 
@@ -274,7 +274,7 @@
 
 - [x] 1.29 Add tests for `ghostmaps-028`.
 
-  Mutation: Change `src/layers/ghostMaps/kml.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/kml.js` below makes the test fail.
 
   Case: `A147-left`.
 
@@ -284,7 +284,7 @@
 
 - [x] 1.30 Add tests for `ghostmaps-029`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `R1F06-cleanup`.
 
@@ -294,7 +294,7 @@
 
 - [x] 1.31 Add tests for `ghostmaps-030`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `R1F02-hole`.
 
@@ -304,7 +304,7 @@
 
 - [x] 1.32 Add tests for `ghostmaps-031`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `A051-true`.
 
@@ -314,7 +314,7 @@
 
 - [x] 1.33 Add tests for `ghostmaps-032`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `R1F01-id`.
 
@@ -324,7 +324,7 @@
 
 - [x] 1.34 Add tests for `ghostmaps-033`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `SW3-card-values`.
 
@@ -334,7 +334,7 @@
 
 - [x] 1.35 Add tests for `ghostmaps-034`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `A055-left`.
 
@@ -344,7 +344,7 @@
 
 - [x] 1.36 Add tests for `ghostmaps-035`.
 
-  Mutation: Change `src/app/layers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `src/app/layers/ghostMaps.js` below makes the test fail.
 
   Case: `S035`.
 
@@ -354,7 +354,7 @@
 
 - [x] 1.37 Add tests for `ghostmaps-036`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R2F06-id`.
 
@@ -364,7 +364,7 @@
 
 - [x] 1.38 Add tests for `ghostmaps-037`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R1F11-file`.
 
@@ -374,7 +374,7 @@
 
 - [x] 1.39 Add tests for `ghostmaps-038`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R2-file-error`.
 
@@ -384,7 +384,7 @@
 
 - [x] 1.40 Add tests for `ghostmaps-039`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R2-destroyed`.
 
@@ -394,7 +394,7 @@
 
 - [x] 1.41 Add tests for `ghostmaps-040`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R2-install-preview`.
 
@@ -404,7 +404,7 @@
 
 - [x] 1.42 Add tests for `ghostmaps-041`.
 
-  Mutation: Change `src/layers/ghostMaps/source.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/source.js` below makes the test fail.
 
   Case: `R2-invalid-catalog`.
 
@@ -414,7 +414,7 @@
 
 - [x] 1.43 Add tests for `ghostmaps-042`.
 
-  Mutation: Change `src/layers/ghostMaps/source.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/source.js` below makes the test fail.
 
   Case: `R2-failed-file`.
 
@@ -424,7 +424,7 @@
 
 - [x] 1.44 Add tests for `ghostmaps-043`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `R2-catalog-method`.
 
@@ -434,7 +434,7 @@
 
 - [x] 1.45 Add tests for `ghostmaps-044`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `A052-right`.
 
@@ -444,7 +444,7 @@
 
 - [x] 1.46 Add tests for `ghostmaps-045`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `R2F05-storage`.
 
@@ -454,7 +454,7 @@
 
 - [x] 1.47 Add tests for `ghostmaps-046`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `A049-left`.
 
@@ -464,7 +464,7 @@
 
 - [x] 1.48 Add tests for `ghostmaps-047`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `R2F03-activate`.
 
@@ -474,7 +474,7 @@
 
 - [x] 1.49 Add tests for `ghostmaps-048`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `A009-right`.
 
@@ -484,7 +484,7 @@
 
 - [x] 1.50 Add tests for `ghostmaps-049`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `A004-left`.
 
@@ -494,7 +494,7 @@
 
 - [x] 1.51 Add tests for `ghostmaps-050`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `R2-horizon-restore`.
 
@@ -504,7 +504,7 @@
 
 - [x] 1.52 Add tests for `ghostmaps-051`.
 
-  Mutation: Change `src/layers/ghostMaps/kml.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/kml.js` below makes the test fail.
 
   Case: `R2-invalid-document`.
 
@@ -514,7 +514,7 @@
 
 - [x] 1.53 Add tests for `ghostmaps-052`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R2F07-commit`.
 
@@ -524,7 +524,7 @@
 
 - [x] 1.54 Add tests for `ghostmaps-053`.
 
-  Mutation: Change `src/layers/ghostMaps/source.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/source.js` below makes the test fail.
 
   Case: `R2-absent-events`.
 
@@ -534,7 +534,7 @@
 
 - [x] 1.55 Add tests for `ghostmaps-054`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `A087-left`.
 
@@ -544,7 +544,7 @@
 
 - [x] 1.56 Add tests for `ghostmaps-055`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `R2F02-chip`.
 
@@ -554,7 +554,7 @@
 
 - [x] 1.57 Add tests for `ghostmaps-056`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `A077-left`.
 
@@ -564,7 +564,7 @@
 
 - [x] 1.58 Add tests for `ghostmaps-057`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `A006-left`.
 
@@ -574,7 +574,7 @@
 
 - [x] 1.59 Add tests for `ghostmaps-058`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R2F04-tree`.
 
@@ -584,7 +584,7 @@
 
 - [x] 1.60 Add tests for `ghostmaps-059`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `A071-right`.
 
@@ -594,7 +594,7 @@
 
 - [x] 1.61 Add tests for `ghostmaps-060`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `R2-cleanup-unload`.
 
@@ -604,7 +604,7 @@
 
 - [x] 1.62 Add tests for `ghostmaps-061`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `R2-no-kml`.
 
@@ -614,7 +614,7 @@
 
 - [x] 1.63 Add tests for `ghostmaps-062`.
 
-  Mutation: Change `src/layers/ghostMaps/catalog.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/catalog.js` below makes the test fail.
 
   Case: `A021-false`.
 
@@ -624,7 +624,7 @@
 
 - [x] 1.64 Add tests for `ghostmaps-063`.
 
-  Mutation: Change `src/layers/ghostMaps/records.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/records.js` below makes the test fail.
 
   Case: `R2-link-limit`.
 
@@ -634,7 +634,7 @@
 
 - [x] 1.65 Add tests for `ghostmaps-064`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R2-subscriber-limit`.
 
@@ -644,7 +644,7 @@
 
 - [x] 1.66 Add tests for `ghostmaps-065`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `A090-right`.
 
@@ -654,7 +654,7 @@
 
 - [x] 1.67 Add tests for `ghostmaps-066`.
 
-  Mutation: Change `src/layers/ghostMaps/catalog.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/catalog.js` below makes the test fail.
 
   Case: `A039-left`.
 
@@ -664,7 +664,7 @@
 
 - [x] 1.68 Add tests for `ghostmaps-067`.
 
-  Mutation: Change `server/providers/ghostMaps.js` as shown below. The test must fail.
+  The mutation of `server/providers/ghostMaps.js` below makes the test fail.
 
   Case: `R2F01-events`.
 
@@ -674,7 +674,7 @@
 
 - [x] 1.69 Add tests for `ghostmaps-068`.
 
-  Mutation: Change `src/layers/ghostMaps/index.js` as shown below. The test must fail.
+  The mutation of `src/layers/ghostMaps/index.js` below makes the test fail.
 
   Case: `SW3-catalog-own-signal`.
 
@@ -691,7 +691,7 @@
 
 ## Host measurements
 
-The host suite passes 284 tests, with 283 tagged tests.
+The host suite passes 285 tests, with 284 tagged tests.
 The delta contains 68 scenarios.
 The mutation spec contains 527 cases: 507 killed cases and 20 documented equivalents.
 The audit contains 170 rows, with 0 open rows.

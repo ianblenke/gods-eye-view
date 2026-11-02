@@ -169,7 +169,7 @@ The evidence records each review mutation and the systematic sweep.
 
 ## Host measurements
 
-The host suite passes 284 tests, with 283 tagged tests.
+The host suite passes 285 tests, with 284 tagged tests.
 The delta contains 68 scenarios.
 The mutation spec contains 527 cases: 507 killed cases and 20 documented equivalents.
 The audit contains 170 rows, with 0 open rows.

@@ -1,0 +1,3 @@
+Verdict: FAIL
+- [ ] F1 critical src/layers/ghostMaps/lifecycle.test.mjs:1030 At `f280ffa7`, the `ghostmaps-050` tests cannot detect reuse of the first pin’s cull position. All multi-pin cases place every pin on the same side. Replacing `position` in `index.js:259` with `position: pins[0]?.position ?? position` leaves these assertions unchanged. Add opposite-side pins in one product. Assert their distinct visibility before attachment and after camera movement. Record the failed mutation.
+- [ ] F2 minor openspec/changes/archive/2026-10-29-backfill-ghostmaps/tasks.md:690 At `f280ffa7`, the supplied document check completes with `ERROR REVIEW-MISSING`. It runs no tests and reports one error. Record both formal reviews in `review.md`, then obtain the final gate result.

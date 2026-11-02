@@ -1,0 +1,4 @@
+Verdict: FAIL
+
+- [ ] F1 major openspec/changes/archive/2026-10-29-backfill-ghostmaps/tasks.md:5,7,15,17,665,667,675,677 At commit `f280ffa7`, tasks 1.2 through 1.69 each give two sequential instructions. For example, task 1.2 says “Add tests for `ghostmaps-001`” and “Change `src/layers/ghostMaps/catalog.js` as shown below”. The test must exist before the mutation can test it. Split each pair into separate tasks. Write: “Add tests for `ghostmaps-001`.” Then write a separate task: “Apply mutation `A019-left` to `src/layers/ghostMaps/catalog.js`.”
+- [ ] F2 minor openspec/changes/archive/2026-10-29-backfill-ghostmaps/specs/ghostmaps/spec.md:395 At commit `f280ffa7`, “catalog request options object” contains four nouns. Write: “The browser layer MUST set a supplied caller signal as an own property of the options object for the catalog request.”

@@ -1063,6 +1063,54 @@ test('[ghostmaps-050] The horizon callback updates point visibility after a came
   assert.equal([...h.mounted][0].show, true);
 });
 
+test('[ghostmaps-050] The horizon cull gives each pin its own position', async (t) => {
+  let frame;
+  const mountedStates = [];
+  const placemark = (name, coordinates) =>
+    element('Placemark', [
+      textNode('name', name),
+      textNode('description', ''),
+      pointNode(coordinates),
+    ]);
+  const h = fixture(t, {
+    document: element('document', [
+      element('Document', [
+        textNode('name', 'Folder'),
+        placemark('East', '12,34'),
+        placemark('West', '-168,-34'),
+      ]),
+    ]),
+    onAdd: (ds) =>
+      mountedStates.push(ds.entities.values.map((entity) => entity.show)),
+  });
+  h.viewer.camera = {
+    positionWC: Cesium.Cartesian3.fromDegrees(12, 34, 1000000),
+  };
+  h.viewer.scene.preRender = {
+    addEventListener: (fn) => {
+      frame = fn;
+      return () => {};
+    },
+  };
+  await h.layer.update();
+  const pins = [...h.mounted][0].entities.values;
+  assert.deepEqual(mountedStates, [[true, false]]);
+  assert.deepEqual(
+    pins.map((pin) => pin.show),
+    [true, false],
+  );
+  h.viewer.camera.positionWC = Cesium.Cartesian3.fromDegrees(
+    -168,
+    -34,
+    1000000,
+  );
+  frame();
+  assert.deepEqual(
+    pins.map((pin) => pin.show),
+    [false, true],
+  );
+});
+
 test('[ghostmaps-033] The card caps fields and excludes the repeated feature name', async (t) => {
   const description =
     '<tr><td>Type</td><td>Report</td></tr>' +

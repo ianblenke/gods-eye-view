@@ -6,7 +6,7 @@ This report describes the uncommitted correction after round two.
 
 ## Results
 
-The host suite passes 284 tests, with 283 tagged tests.
+The host suite passes 285 tests, with 284 tagged tests.
 The delta contains 68 scenarios.
 The mutation spec contains 527 cases: 507 killed cases and 20 documented equivalents.
 The audit contains 170 rows, with 0 open rows.
@@ -29,8 +29,8 @@ The ledger commit is `b5a64127667c22af8c68b53706e9f27d866acac0`.
 
 | Item | Before | After |
 | --- | ---: | ---: |
-| Tests | 276 | 284 |
-| Tagged tests | 275 | 283 |
+| Tests | 276 | 285 |
+| Tagged tests | 275 | 284 |
 | Scenarios | 66 | 68 |
 | Mutations | 430 | 527 |
 
@@ -256,6 +256,8 @@ The command `git status --short` supplies the text below.
 ```
 
 ## Scope commands
+
+Round 3 adds one test for `ghostmaps-050`. The test places two pins on opposite sides of the planet and moves the camera. The reviewer names the mutation `R3F01-position`, which gives each pin the position of the first pin. The new test fails under this mutation, and the production file is restored. The 527 cases of the mutation spec do not include this mutation.
 
 The commands below check each claim about the source files and trace files.
 
