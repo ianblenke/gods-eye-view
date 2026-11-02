@@ -1,0 +1,62 @@
+{
+  "sourceCommit": "5fd416b9ed4a80c9a1ceeded81836aa69f3ebc0c",
+  "file": "src/share/viewCodec.js",
+  "mainReport": {
+    "line": 100,
+    "branch": 98.68,
+    "function": 100
+  },
+  "uncoveredAcrossContexts": [
+    {
+      "line": 307,
+      "text": ": undefined",
+      "start": 9270,
+      "end": 9281
+    },
+    {
+      "line": 941,
+      "text": "writeEnum(writer, field, state.view.kind);",
+      "start": 33315,
+      "end": 33357
+    },
+    {
+      "line": 1063,
+      "text": "return undefined;",
+      "start": 37219,
+      "end": 37236
+    },
+    {
+      "line": 1211,
+      "text": "return null;",
+      "start": 42287,
+      "end": 42299
+    }
+  ],
+  "workerWitnesses": [
+    {
+      "line": 544,
+      "count": 2,
+      "text": "? detection.profile"
+    },
+    {
+      "line": 544,
+      "count": 5,
+      "text": ": 'OFF'"
+    },
+    {
+      "line": 866,
+      "count": 1,
+      "text": "?? {}"
+    },
+    {
+      "line": 870,
+      "count": 1,
+      "text": "continue;"
+    },
+    {
+      "line": 870,
+      "count": 4,
+      "text": "\n    if (values[spec.key] === defaults[spec.key]) "
+    }
+  ]
+}

@@ -10,7 +10,6 @@ import {
 import { VIEW_FOLLOW_KINDS, VIEW_MAPS, VIEW_STYLES } from '../view/index.js';
 import { HUD_LAYOUTS } from '../hudLayoutPolicy.js';
 import { ALLOCATION_STRATEGIES } from '../data/detectionPolicy.js';
-import { BLOOM_INTENSITY_DEFAULT, BLOOM_SCALE_VERSION } from '../bloom.js';
 import {
   pick,
   randomLayerState,
@@ -39,7 +38,6 @@ import {
   SHARE_VIEW_ENUMS,
   SHARE_VIEW_EPOCH_S,
   SHARE_VIEW_FIELDS,
-  BY_STYLE,
   SHARE_VIEW_FLAGS,
   SHARE_VIEW_FOLLOW_OFFSET_DEFAULT,
   SHARE_VIEW_STYLE_DEFAULTS,
@@ -175,14 +173,14 @@ function randomState(random) {
   return state;
 }
 
-test('an all-default view is the version byte and its check byte', () => {
+test('[share-codec-011] an all-default view is the version byte and its check byte', () => {
   const hash = encodeShareView(createDefaultShareViewState());
   assert.equal(hash, 'AQc');
   assert.deepEqual(decodeOk(hash).state, normalizeShareViewState({}));
   assert.deepEqual(normalizeShareViewState({}), createDefaultShareViewState());
 });
 
-test('each setting costs bytes only when it differs from its default', () => {
+test('[share-codec-012] each setting costs bytes only when it differs from its default', () => {
   const base = payloadBytes(encodeShareView({})).length;
   const changes = {
     lat: 10,
@@ -237,7 +235,7 @@ test('each setting costs bytes only when it differs from its default', () => {
   assert.equal(payloadBytes(assertRoundTrip(flipped)).length, base + 2);
 });
 
-test('a view just switched to any style costs its camera and style only', () => {
+test('[share-codec-014] a view just switched to any style costs its camera and style only', () => {
   const camera = { lat: 48.8584, lon: 2.2945, alt: 1200, heading: 120 };
   const cameraOnly = payloadBytes(encodeShareView(camera)).length;
   for (const style of VIEW_STYLES) {
@@ -265,7 +263,7 @@ test('a view just switched to any style costs its camera and style only', () => 
   }
 });
 
-test('invalid style parameters keep the style’s own value', () => {
+test('[share-codec-015] invalid style parameters keep the style’s own value', () => {
   for (const bad of [undefined, NaN, 'x', null])
     assertRoundTrip({ style: 'noir', styleParams: { contrastAmt: bad } });
   assert.equal(
@@ -275,7 +273,7 @@ test('invalid style parameters keep the style’s own value', () => {
   );
 });
 
-test('every registered field round-trips at once', () => {
+test('[share-codec-012] every registered field round-trips at once', () => {
   const layerState = createDefaultLayerState();
   layerState.enabledLayerIds = [
     'flights',
@@ -379,7 +377,7 @@ test('every registered field round-trips at once', () => {
   }
 });
 
-test('generated states round-trip exactly and encode canonically', () => {
+test('[share-codec-036] generated states round-trip exactly and encode canonically', () => {
   const random = rng(0x5eed);
   let things = 0;
   for (let i = 0; i < 1500; i += 1) {
@@ -395,7 +393,7 @@ test('generated states round-trip exactly and encode canonically', () => {
   assert.ok(things > 400, 'generator covers thing views');
 });
 
-test('normalization is idempotent', () => {
+test('[share-codec-036] normalization is idempotent', () => {
   const random = rng(42);
   for (let i = 0; i < 300; i += 1) {
     const once = normalizeShareViewState(randomState(random));
@@ -403,7 +401,7 @@ test('normalization is idempotent', () => {
   }
 });
 
-test('precision: coordinates 1e-4 degrees, angles and lengths whole units', () => {
+test('[share-codec-013] precision: coordinates 1e-4 degrees, angles and lengths whole units', () => {
   const { state } = decodeOk(
     encodeShareView({
       lat: 30.26724,
@@ -430,13 +428,13 @@ test('precision: coordinates 1e-4 degrees, angles and lengths whole units', () =
   assert.deepEqual([wild.lat, wild.lon, wild.pitch], [90, -170, -90]);
 });
 
-test('defaults travel as frozen meanings that match today’s app defaults', () => {
+test('[share-codec-010] defaults travel as frozen meanings that match today’s app defaults', () => {
   const defaults = createDefaultShareViewState();
   // When an app default moves, these tests should be updated to document the
   // drift; the codec's defaults table must NOT change (see SHARE-LINK-FORMAT).
-  assert.equal(defaults.bloomIntensity, BLOOM_INTENSITY_DEFAULT);
-  assert.equal(defaults.bloomVersion, BLOOM_SCALE_VERSION);
-  assert.equal(defaults.hudVariant, HUD_LAYOUTS[0]);
+  assert.equal(defaults.bloomIntensity, 0);
+  assert.equal(defaults.bloomVersion, 2);
+  assert.equal(defaults.hudVariant, 'tactical');
   assert.deepEqual(SHARE_VIEW_ENUMS.hudVariant.slice(0, HUD_LAYOUTS.length), [
     ...HUD_LAYOUTS,
   ]);
@@ -452,7 +450,7 @@ test('defaults travel as frozen meanings that match today’s app defaults', () 
     );
 });
 
-test('the field registry is well formed and permanent', () => {
+test('[share-codec-010] the field registry is well formed and permanent', () => {
   const numbers = SHARE_VIEW_FIELDS.map((f) => f.number);
   assert.equal(new Set(numbers).size, numbers.length);
   assert.equal(
@@ -478,27 +476,27 @@ test('the field registry is well formed and permanent', () => {
       [13, 'thing', null],
       [14, 'style', 'normal'],
       [15, 'mapStack', 'photoreal'],
-      [16, 'hudVariant', BY_STYLE],
-      [17, 'bloomIntensity', BY_STYLE],
+      [16, 'hudVariant', 'by-style'],
+      [17, 'bloomIntensity', 'by-style'],
       [18, 'bloomVersion', 2],
-      [19, 'sharpenIntensity', BY_STYLE],
-      [20, 'detectionMode', BY_STYLE],
-      [21, 'detectionDensity', BY_STYLE],
-      [22, 'detectionAllocation', BY_STYLE],
-      [23, 'detectionFadePct', BY_STYLE],
-      [24, 'detectionOutsideOpacityPct', BY_STYLE],
+      [19, 'sharpenIntensity', 'by-style'],
+      [20, 'detectionMode', 'by-style'],
+      [21, 'detectionDensity', 'by-style'],
+      [22, 'detectionAllocation', 'by-style'],
+      [23, 'detectionFadePct', 'by-style'],
+      [24, 'detectionOutsideOpacityPct', 'by-style'],
       [25, 'scopeFeatherPct', 100],
       [26, 'scopeTerminusPct', null],
-      [27, 'styleParams', BY_STYLE],
+      [27, 'styleParams', 'by-style'],
     ],
   );
   assert.deepEqual(
     SHARE_VIEW_FLAGS.map((f) => [f.bit, f.key, f.default]),
     [
-      [0, 'bloom', BY_STYLE],
-      [1, 'sharpen', BY_STYLE],
-      [2, 'hudVisible', BY_STYLE],
-      [3, 'celestialRing', BY_STYLE],
+      [0, 'bloom', 'by-style'],
+      [1, 'sharpen', 'by-style'],
+      [2, 'hudVisible', 'by-style'],
+      [3, 'celestialRing', 'by-style'],
       [4, 'scopeEnabled', true],
     ],
   );
@@ -562,22 +560,46 @@ test('the field registry is well formed and permanent', () => {
   );
   assert.deepEqual(
     SHARE_VIEW_PANELS.map((p) => [p.number, p.id]),
-    SHARE_VIEW_PANELS.map((p, i) => [i, p.id]),
+    [
+      [0, 'control-panel'],
+      [1, 'location-bar'],
+      [2, 'data-panel'],
+      [3, 'cctv-panel'],
+      [4, 'recent-imagery-panel'],
+      [5, 'street-level-panel'],
+      [6, 'radio-panel'],
+      [7, 'scene-panel'],
+      [8, 'global-context-panel'],
+      [9, 'pp-toggles'],
+      [10, 'param-slider-panel'],
+    ],
   );
 });
 
-test('the panel table agrees with the long form’s panel tokens', () => {
-  for (const panel of SHARE_VIEW_PANELS) {
+test('[share-codec-019] the panel table agrees with the long form’s panel tokens', () => {
+  for (const [id, token, pinnable] of [
+    ['control-panel', 'c', true],
+    ['location-bar', 'l', true],
+    ['data-panel', 'd', false],
+    ['cctv-panel', 'v', false],
+    ['recent-imagery-panel', 'i', false],
+    ['street-level-panel', 't', false],
+    ['radio-panel', 'r', false],
+    ['scene-panel', 's', false],
+    ['global-context-panel', 'g', false],
+    ['pp-toggles', 'p', false],
+    ['param-slider-panel', 'm', false],
+  ]) {
     const decoded = decodePanelStateParams(
-      new URLSearchParams(`v=2&ui=${panel.token}.c.1_${panel.token}.p.1`),
+      new URLSearchParams(`v=2&ui=${token}.c.1_${token}.p.1`),
     );
     assert.deepEqual(decoded.specs, [
-      { id: panel.id, collapsed: true, pinned: panel.pinnable ? true : null },
+      { id, collapsed: true, pinned: pinnable ? true : null },
     ]);
   }
 });
 
-test('the style parameter table agrees with the long form’s `sp` codec', () => {
+test('[share-codec-015] the style parameter table agrees with the long form’s `sp` codec', () => {
   for (const [style, specs] of Object.entries(SHARE_VIEW_STYLE_PARAMS)) {
     const values = Object.fromEntries(
       specs.map((s, i) => [s.key, s.min + ((s.max - s.min) * (i + 1)) / 7]),
@@ -599,7 +621,7 @@ test('the style parameter table agrees with the long form’s `sp` codec', () =>
   }
 });
 
-test('every layer option has a frozen absent meaning', () => {
+test('[share-codec-018] every layer option has a frozen absent meaning', () => {
   for (const entry of LAYER_STATE_REGISTRY) {
     if (!entry.optionOwner) continue;
     for (const spec of optionSpecs(entry.optionOwner)) {
@@ -619,7 +641,7 @@ test('every layer option has a frozen absent meaning', () => {
   assert.equal(bytes.includes(0x5a), false, 'no layer-options field');
 });
 
-test('layer tokens map to permanent numbers covering the whole ledger', () => {
+test('[share-codec-016] layer tokens map to permanent numbers covering the whole ledger', () => {
   for (const token of Object.values(LAYER_STATE_TOKEN_RESERVATIONS)) {
     assert.equal(layerTokenFromNumber(layerTokenNumber(token)), token);
   }
@@ -631,7 +653,7 @@ test('layer tokens map to permanent numbers covering the whole ledger', () => {
   assert.equal(new Set(numbers).size, numbers.length);
 });
 
-test('layer sets: absent, explicitly empty and populated stay distinct', () => {
+test('[share-codec-017] layer sets: absent, explicitly empty and populated stay distinct', () => {
   assert.equal(
     decodeOk(encodeShareView({ layerState: null })).state.layerState,
     null,
@@ -645,7 +667,7 @@ test('layer sets: absent, explicitly empty and populated stay distinct', () => {
   assertRoundTrip({ layerState: all });
 });
 
-test('panels: only differences from the frozen layout are written', () => {
+test('[share-codec-019] panels: only differences from the frozen layout are written', () => {
   const defaults = {
     specs: SHARE_VIEW_PANELS.map((p) => ({
       id: p.id,
@@ -674,7 +696,7 @@ test('panels: only differences from the frozen layout are written', () => {
   );
 });
 
-test('a place view opens at its camera; a thing view also names what to follow', () => {
+test('[share-codec-020] a place view opens at its camera; a thing view also names what to follow', () => {
   const place = decodeOk(encodeShareView({ lat: 1, lon: 2 })).state;
   assert.deepEqual(place.view, { kind: 'place' });
   for (const entry of SHARE_VIEW_ENTITY_KINDS) {
@@ -689,7 +711,7 @@ test('a place view opens at its camera; a thing view also names what to follow',
     assert.deepEqual(state.view, {
       kind: 'thing',
       entity: { kind: entry.kind, id },
-      offset: { ...SHARE_VIEW_FOLLOW_OFFSET_DEFAULT },
+      offset: { range: 2000, heading: 0, pitch: -35 },
       lastKnown: null,
     });
     // Without a last-known fix the view keeps its stored camera.
@@ -698,7 +720,7 @@ test('a place view opens at its camera; a thing view also names what to follow',
   }
 });
 
-test('thing ids use the compact numeric form when they can, text otherwise', () => {
+test('[share-codec-021] thing ids use the compact numeric form when they can, text otherwise', () => {
   const size = (kind, id) =>
     payloadBytes(
       encodeShareView({ view: { kind: 'thing', entity: { kind, id } } }),
@@ -739,7 +761,7 @@ test('thing ids use the compact numeric form when they can, text otherwise', () 
   );
 });
 
-test('last-known time is stored relative to the created-at time when there is one', () => {
+test('[share-codec-023] last-known time is stored relative to the created-at time when there is one', () => {
   const lastKnown = {
     lat: 10.0012,
     lon: 20.0034,
@@ -765,7 +787,7 @@ test('last-known time is stored relative to the created-at time when there is on
   );
 });
 
-test('tracking selections in layer options become a thing view', () => {
+test('[share-codec-022] tracking selections in layer options become a thing view', () => {
   const layerState = createDefaultLayerState();
   layerState.enabledLayerIds = ['military'];
   layerState.options.flights.selectedMilitaryTrackingId = 'AE1234';
@@ -773,7 +795,7 @@ test('tracking selections in layer options become a thing view', () => {
   assert.deepEqual(state.view, {
     kind: 'thing',
     entity: { kind: 'military_aircraft', id: 'ae1234' },
-    offset: { ...SHARE_VIEW_FOLLOW_OFFSET_DEFAULT },
+    offset: { range: 2000, heading: 0, pitch: -35 },
     lastKnown: null,
   });
   assert.equal(
@@ -783,7 +805,7 @@ test('tracking selections in layer options become a thing view', () => {
   assertRoundTrip({ layerState });
 });
 
-test('a created-at time in the future is dropped, like the long form’s `at`', () => {
+test('[share-codec-027] a created-at time in the future is dropped, like the long form’s `at`', () => {
   const hash = encodeShareView({ sharedAtMs: NOW_MS + 60_000 });
   assert.equal(decode(hash).state.sharedAtMs, null);
   assert.equal(
@@ -798,7 +820,7 @@ test('a created-at time in the future is dropped, like the long form’s `at`', 
     );
 });
 
-test('a code is the bare base64url payload; URL forms are not codes', () => {
+test('[share-codec-034] a code is the bare base64url payload; URL forms are not codes', () => {
   const code = encodeShareView({ lat: 51.5, lon: -0.12 });
   assert.match(code, /^[A-Za-z0-9_-]+$/);
   for (const form of [`#${code}`, `s=${code}`, `/share/${code}`])
@@ -815,7 +837,7 @@ function withExtraFields(hash, write) {
   return hashOf(writer.finish());
 }
 
-test('unknown top-level fields of every wire type are skipped and reported', () => {
+test('[share-codec-028] unknown top-level fields of every wire type are skipped and reported', () => {
   const state = {
     lat: 48.8584,
     lon: 2.2945,
@@ -844,7 +866,7 @@ test('unknown top-level fields of every wire type are skipped and reported', () 
   );
 });
 
-test('unknown fields inside a thing view, codes and bits are skipped too', () => {
+test('[share-codec-029] unknown fields inside a thing view, codes and bits are skipped too', () => {
   const thing = new WireWriter();
   thing.uintField(1, 0xa1b2c3).uintField(5, 900);
   thing.textField(20, 'cockpit'); // a future thing field
@@ -862,7 +884,7 @@ test('unknown fields inside a thing view, codes and bits are skipped too', () =>
   assert.deepEqual(result.state.view, {
     kind: 'thing',
     entity: { kind: 'aircraft', id: 'a1b2c3' },
-    offset: { ...SHARE_VIEW_FOLLOW_OFFSET_DEFAULT, range: 900 },
+    offset: { range: 900, heading: 0, pitch: -35 },
     lastKnown: null,
   });
   assert.equal(result.state.bloom, true);
@@ -881,7 +903,7 @@ test('unknown fields inside a thing view, codes and bits are skipped too', () =>
   );
 });
 
-test('an unknown view kind falls back to the stored camera', () => {
+test('[share-codec-030] an unknown view kind falls back to the stored camera', () => {
   const camera = {
     lat: 35.6762,
     lon: 139.6503,
@@ -906,7 +928,7 @@ test('an unknown view kind falls back to the stored camera', () => {
   assert.equal(decodeOk(hashOf(missing.finish())).fallback, 'missing-thing');
 });
 
-test('an unknown or invalid entity falls back to the camera its fix implies', () => {
+test('[share-codec-031] an unknown or invalid entity falls back to the camera its fix implies', () => {
   const fix = { lat: 35.6762, lon: 139.6503, alt: 900, observedAtMs: null };
   const offset = { range: 3000, heading: 90, pitch: -40 };
   const thingOf = (write) => {
@@ -943,7 +965,7 @@ test('an unknown or invalid entity falls back to the camera its fix implies', ()
   assert.deepEqual(badId.state, expected);
 });
 
-test('enum names outside the code tables travel as text', () => {
+test('[share-codec-032] enum names outside the code tables travel as text', () => {
   const hash = encodeShareView({
     hudVariant: 'future-hud',
     mapStack: 'future-map',
@@ -1026,7 +1048,7 @@ test('malformed input is rejected with a reason, never thrown', () => {
   }
 });
 
-test('every truncation and single-byte corruption of real payloads is handled', () => {
+test('[share-codec-035] every truncation and single-byte corruption of real payloads is handled', () => {
   const random = rng(7);
   for (let i = 0; i < 60; i += 1) {
     const bytes = payloadBytes(encodeShareView(randomState(random)));
@@ -1049,7 +1071,7 @@ test('every truncation and single-byte corruption of real payloads is handled', 
 
 /* ---------------- sizes ---------------- */
 
-test('size: a camera-only place view', () => {
+test('[share-codec-013] size: a camera-only place view', () => {
   const hash = assertRoundTrip({
     lat: 48.8584,
     lon: 2.2945,
@@ -1069,7 +1091,7 @@ test('size: a camera-only place view', () => {
   assert.equal(copied.length, 31);
 });
 
-test('size: following an aircraft', () => {
+test('[share-codec-025] size: following an aircraft', () => {
   const layerState = createDefaultLayerState();
   layerState.enabledLayerIds = ['flights'];
   layerState.options.flights.models3d = true;
@@ -1130,7 +1152,7 @@ test('size: following an aircraft', () => {
   );
 });
 
-test('the follow offset converts to and from east/north/up metres', () => {
+test('[share-codec-024] the follow offset converts to and from east/north/up metres', () => {
   for (const offset of [
     { range: 5800, heading: 0, pitch: -35 },
     { range: 1500, heading: 30, pitch: -20 },
@@ -1148,7 +1170,7 @@ test('the follow offset converts to and from east/north/up metres', () => {
   assert.equal(followOffsetFromEnu({ east: 0, north: 0, up: 0 }), null);
 });
 
-test('the derived camera looks at the fix from the offset, even from orbit', () => {
+test('[share-codec-025] the derived camera looks at the fix from the offset, even from orbit', () => {
   const R = 6_371_000;
   const ecef = ({ lat, lon, alt }) => {
     const r = R + alt;
@@ -1188,7 +1210,7 @@ test('the derived camera looks at the fix from the offset, even from orbit', () 
   }
 });
 
-test('a fix without its own time is as of the link', () => {
+test('[share-codec-023] a fix without its own time is as of the link', () => {
   const view = {
     kind: 'thing',
     entity: { kind: 'satellite', id: '25544' },
@@ -1204,7 +1226,7 @@ test('a fix without its own time is as of the link', () => {
   );
 });
 
-test('the check byte rejects every single-character typo', () => {
+test('[share-codec-026] the check byte rejects every single-character typo', () => {
   const ALPHABET =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
   const random = rng(0xc0de);
@@ -1226,7 +1248,7 @@ test('the check byte rejects every single-character typo', () => {
 
 /* ---------------- review regressions ---------------- */
 
-test('unknown detection names fall back to their defaults and are reported', () => {
+test('[share-codec-033] unknown detection names fall back to their defaults and are reported', () => {
   const writer = new WireWriter();
   writer.bytes.push(1);
   writer.textField(20, 'FUTURE').textField(22, 'GREEDY');
@@ -1239,7 +1261,7 @@ test('unknown detection names fall back to their defaults and are reported', () 
   ]);
 });
 
-test('extreme and negative-zero numbers normalize to values the decoder returns', () => {
+test('[share-codec-048] extreme and negative-zero numbers normalize to values the decoder returns', () => {
   assert.ok(Number.isFinite(normalizeShareViewState({ lon: 1e305 }).lon));
   assertRoundTrip({ lon: 1e305, lat: -1e305 });
   for (const state of [
@@ -1254,7 +1276,7 @@ test('extreme and negative-zero numbers normalize to values the decoder returns'
   }
 });
 
-test('future panel values and style tokens are skipped, not applied', () => {
+test('[share-codec-049] future panel values and style tokens are skipped, not applied', () => {
   const panels = new WireWriter();
   panels.bytes.push(1);
   panels.bytesField(
@@ -1279,14 +1301,17 @@ test('future panel values and style tokens are skipped, not applied', () => {
   );
   const styleResult = decodeOk(hashOf(style.finish()));
   // Unknown tokens change nothing: the style keeps its own parameters.
-  assert.deepEqual(
-    styleResult.state.styleParams,
-    SHARE_VIEW_STYLE_DEFAULTS.thermal.styleParams,
-  );
+  assert.deepEqual(styleResult.state.styleParams, {
+    sensitivity: 0.85,
+    bloom: 0.2,
+    mode: 0.33,
+    pixelation: 1,
+    palette: 0,
+  });
   assert.equal(styleResult.unknownFields.length, 2);
 });
 
-test('a layer option filed under a mirror layer is ignored', () => {
+test('[share-codec-050] a layer option filed under a mirror layer is ignored', () => {
   const writer = new WireWriter();
   writer.bytes.push(1);
   const military = layerTokenNumber('m');
@@ -1295,13 +1320,18 @@ test('a layer option filed under a mirror layer is ignored', () => {
     11,
     new WireWriter()
       .varint(military)
-      .varint(layerTokenNumber('m') * 2) // option `m` (models3dMode) as integer
-      .varint(0)
+      .varint(layerTokenNumber('m') * 2 + 1) // The mode option uses text.
+      .varint(1)
+      .varint(97)
       .finish(),
   );
   const result = decodeOk(hashOf(writer.finish()));
   assert.deepEqual(result.state.layerState.enabledLayerIds, ['military']);
+  assert.equal(
+    result.state.layerState.options.flights.models3dMode,
+    'proximity',
+  );
   assert.deepEqual(result.unknownFields, [
-    { scope: 'layer-option', code: `${military}.${layerTokenNumber('m')}` },
+    { scope: 'layer-option', code: '22.22' },
   ]);
 });

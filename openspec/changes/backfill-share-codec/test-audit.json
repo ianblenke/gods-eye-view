@@ -1,0 +1,6320 @@
+{
+  "sourceCommit": "5fd416b9ed4a80c9a1ceeded81836aa69f3ebc0c",
+  "tests": 473,
+  "tagged": 472,
+  "syntacticCallbacks": 149,
+  "failedBodies": [],
+  "titleFindings": [
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-012] The flag celestialRing uses its own bit\": check the -ing word \"celestialRing\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways\": check the -ing word \"tracking\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-022 share-codec-039] The tracking slot for military_aircraft moves both ways\": check the -ing word \"tracking\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-022 share-codec-039] The tracking slot for satellite moves both ways\": check the -ing word \"tracking\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-022] The own view wins over a tracking slot\": check the -ing word \"tracking\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-043] The legacy flag celestialRing copies its own value\": check the -ing word \"celestialRing\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-034] The invalid payload reports padding\": check the -ing word \"padding\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-050] The option length checks the cap before its remaining bytes\": check the -ing word \"remaining\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-010] The default state sets the field celestialRing\": check the -ing word \"celestialRing\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-022] The raw tracking option for aircraft becomes its entity\": check the -ing word \"tracking\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-022] The raw tracking option for military_aircraft becomes its entity\": check the -ing word \"tracking\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/backfill.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-022] The raw tracking option for satellite becomes its entity\": check the -ing word \"tracking\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-039] a tracking selection becomes a thing view and back\": check the -ing word \"tracking\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-043] the converter ignores non-objects and restore bookkeeping\": check the -ing word \"bookkeeping\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-012] each setting costs bytes only when it differs from its default\": check the -ing word \"setting\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-016] layer tokens map to permanent numbers covering the whole ledger\": check the -ing word \"covering\""
+    },
+    {
+      "rule": "STE-PASSIVE",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-019] panels: only differences from the frozen layout are written\": check for passive voice: \"are written\""
+    },
+    {
+      "rule": "STE-PASSIVE",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-023] last-known time is stored relative to the created-at time when there is one\": check for passive voice: \"is stored\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-022] tracking selections in layer options become a thing view\": check the -ing word \"tracking\""
+    },
+    {
+      "rule": "STE-PASSIVE",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-027] a created-at time in the future is dropped, like the long form’s `at`\": check for passive voice: \"is dropped\""
+    },
+    {
+      "rule": "STE-PASSIVE",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-028] unknown top-level fields of every wire type are skipped and reported\": check for passive voice: \"are skipped\""
+    },
+    {
+      "rule": "STE-PASSIVE",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-029] unknown fields inside a thing view, codes and bits are skipped too\": check for passive voice: \"are skipped\""
+    },
+    {
+      "rule": "STE-PASSIVE",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-035] every truncation and single-byte corruption of real payloads is handled\": check for passive voice: \"is handled\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-025] size: following an aircraft\": check the -ing word \"following\""
+    },
+    {
+      "rule": "STE-PASSIVE",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-033] unknown detection names fall back to their defaults and are reported\": check for passive voice: \"are reported\""
+    },
+    {
+      "rule": "STE-PASSIVE",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-049] future panel values and style tokens are skipped, not applied\": check for passive voice: \"are skipped\""
+    },
+    {
+      "rule": "STE-PASSIVE",
+      "level": "warning",
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-050] a layer option filed under a mirror layer is ignored\": check for passive voice: \"is ignored\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/wire.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-001] base64url round-trips every length and byte value without padding\": check the -ing word \"padding\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/wire.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-002] base64url rejects padding, foreign characters, bad lengths and stray bits\": check the -ing word \"padding\""
+    },
+    {
+      "rule": "STE-ING",
+      "level": "warning",
+      "file": "src/share/wire.test.mjs",
+      "line": 0,
+      "message": "Test \"[share-codec-006] the reader rejects truncated, overlong and overflowing varints\": check the -ing word \"overflowing\""
+    }
+  ],
+  "bodies": [
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 90,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 108,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 121,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 131,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 144,
+      "methods": 7,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 159,
+      "methods": 7,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 222,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 257,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 277,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 296,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 315,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 327,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 353,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 360,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 366,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 381,
+      "methods": 6,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 427,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 444,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 507,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 518,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 657,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "methods": 8,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1007,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1014,
+      "methods": 8,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1056,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1060,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1132,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1144,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1151,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1182,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1226,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1236,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1247,
+      "methods": 7,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1268,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1280,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1291,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1300,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1337,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1386,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1423,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1467,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1481,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1496,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1517,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1587,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1593,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1613,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1629,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "methods": 7,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1900,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1917,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2003,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2023,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2026,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2031,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2042,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2050,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2116,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2134,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2151,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2159,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2179,
+      "methods": 6,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2202,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2222,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2234,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2239,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2247,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2257,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2273,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2297,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2308,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2318,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2349,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2361,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2375,
+      "methods": 7,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2391,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2409,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2436,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2460,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2466,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2473,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2550,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 90,
+      "methods": 9,
+      "bare": 0
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 110,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 140,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 167,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 179,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 267,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 284,
+      "methods": 6,
+      "bare": 0
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 298,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/shareLinkPath.test.mjs",
+      "line": 5,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/shareLinkPath.test.mjs",
+      "line": 21,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/shareLinkPath.test.mjs",
+      "line": 36,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 176,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 183,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 238,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 266,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 276,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 380,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 396,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 404,
+      "methods": 9,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 431,
+      "methods": 8,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 453,
+      "methods": 7,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 579,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 602,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 624,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 644,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 656,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 670,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 699,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 723,
+      "methods": 6,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 764,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 790,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 808,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 823,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 840,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 869,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 906,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 931,
+      "methods": 7,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 968,
+      "methods": 6,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 993,
+      "methods": 1,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1051,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1074,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1094,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1155,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1173,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1213,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1229,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1251,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1264,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1279,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1314,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 28,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 43,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 58,
+      "methods": 2,
+      "bare": 0
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 65,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 88,
+      "methods": 5,
+      "bare": 0
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 96,
+      "methods": 4,
+      "bare": 0
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 126,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 147,
+      "methods": 3,
+      "bare": 0
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 169,
+      "methods": 3,
+      "bare": 0
+    }
+  ],
+  "checks": [
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar lat uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar lon uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar alt uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar heading uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar pitch uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar roll uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar sharedAtMs uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar style uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar mapStack uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar hudVariant uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar bloomIntensity uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar bloomVersion uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar sharpenIntensity uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar detectionMode uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar detectionDensity uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar detectionAllocation uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar detectionFadePct uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar detectionOutsideOpacityPct uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar scopeFeatherPct uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 73,
+      "name": "[share-codec-012] The scalar scopeTerminusPct uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 90,
+      "name": "[share-codec-012] The flag bloom uses its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 90,
+      "name": "[share-codec-012] The flag sharpen uses its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 90,
+      "name": "[share-codec-012] The flag hudVisible uses its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 90,
+      "name": "[share-codec-012] The flag celestialRing uses its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 90,
+      "name": "[share-codec-012] The flag scopeEnabled uses its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 108,
+      "name": "[share-codec-045] The path parser keeps invalid escapes for the decoder",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 121,
+      "name": "[share-codec-055] The zero offset keeps the fix and supplied angles",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 131,
+      "name": "[share-codec-024] The local geometry uses each axis with its sign",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 144,
+      "name": "[share-codec-053] The ASCII helpers check both bounds",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 159,
+      "name": "[share-codec-005] The writer checks each numeric bound",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for lat accepts 95",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for lat accepts -95",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for lon accepts 190",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for lon accepts -190",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for alt accepts 1000000000000",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for alt accepts -1000000000000",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for pitch accepts 95",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for pitch accepts -95",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for heading accepts -10",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for roll accepts 721",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for bloomIntensity accepts 10000000",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for bloomIntensity accepts -5",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for bloomVersion accepts 10000000",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for sharpenIntensity accepts -5",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for detectionFadePct accepts 50",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for detectionOutsideOpacityPct accepts 101",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for scopeFeatherPct accepts 201",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for scopeTerminusPct accepts 3",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for scopeTerminusPct accepts 101",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for lat accepts  12.5 ",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 203,
+      "name": "[share-codec-048] The numeric bound for lon accepts 23.5",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 222,
+      "name": "[share-codec-048] The invalid number uses defaults for case null",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 222,
+      "name": "[share-codec-048] The invalid number uses defaults for case undefined",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 222,
+      "name": "[share-codec-048] The invalid number uses defaults for case false",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 222,
+      "name": "[share-codec-048] The invalid number uses defaults for case [object Object]",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 222,
+      "name": "[share-codec-048] The invalid number uses defaults for case ",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 222,
+      "name": "[share-codec-048] The invalid number uses defaults for case NaN",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 222,
+      "name": "[share-codec-048] The invalid number uses defaults for case Infinity",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 222,
+      "name": "[share-codec-048] The invalid number uses defaults for case ",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 222,
+      "name": "[share-codec-048] The invalid number uses defaults for case  ",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 222,
+      "name": "[share-codec-048] The invalid number uses defaults for case bad",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 257,
+      "name": "[share-codec-052] The time decoder checks each bound",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 277,
+      "name": "[share-codec-054] The decoder reports an internal exception",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 296,
+      "name": "[share-codec-032 share-codec-056] The open name hudVariant checks future_name-2",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 296,
+      "name": "[share-codec-032 share-codec-056] The open name hudVariant checks bad name",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 296,
+      "name": "[share-codec-032 share-codec-056] The open name hudVariant checks empty",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 296,
+      "name": "[share-codec-032 share-codec-056] The open name mapStack checks future_name-2",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 296,
+      "name": "[share-codec-032 share-codec-056] The open name mapStack checks bad name",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 296,
+      "name": "[share-codec-032 share-codec-056] The open name mapStack checks empty",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 315,
+      "name": "[share-codec-033] The closed name detectionMode accepts known text",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 315,
+      "name": "[share-codec-033] The closed name detectionAllocation accepts known text",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 327,
+      "name": "[share-codec-021] The entity aircraft uses its own numeric field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 327,
+      "name": "[share-codec-021] The entity military_aircraft uses its own numeric field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 327,
+      "name": "[share-codec-021] The entity vessel uses its own numeric field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 327,
+      "name": "[share-codec-021] The entity satellite uses its own numeric field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 353,
+      "name": "[share-codec-021] The entity aircraft keeps text ~ab1234",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 353,
+      "name": "[share-codec-021] The entity military_aircraft keeps text adsb_x-1",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 353,
+      "name": "[share-codec-021] The entity vessel keeps text 002442000",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 360,
+      "name": "[share-codec-021] The invalid entity id uses a place for null",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 360,
+      "name": "[share-codec-021] The invalid entity id uses a place for [object Object]",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 360,
+      "name": "[share-codec-021] The invalid entity id uses a place for NaN",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 360,
+      "name": "[share-codec-021] The invalid entity id uses a place for Infinity",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 360,
+      "name": "[share-codec-021] The invalid entity id uses a place for ",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 360,
+      "name": "[share-codec-021] The invalid entity id uses a place for bad id",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 360,
+      "name": "[share-codec-021] The invalid entity id uses a place for xxxxxxxxxxxxxxxxx",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 366,
+      "name": "[share-codec-021] The numeric entity id and absent entity use separate paths",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 381,
+      "name": "[share-codec-051] The fix and offset reject invalid source values",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 427,
+      "name": "[share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 427,
+      "name": "[share-codec-022 share-codec-039] The tracking slot for military_aircraft moves both ways",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 427,
+      "name": "[share-codec-022 share-codec-039] The tracking slot for satellite moves both ways",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 444,
+      "name": "[share-codec-022] The own view wins over a tracking slot",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 507,
+      "name": "[share-codec-034] The decoder rejects the thing duplicate",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 507,
+      "name": "[share-codec-034] The decoder rejects the thing latitude",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 507,
+      "name": "[share-codec-034] The decoder rejects the thing longitude",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 507,
+      "name": "[share-codec-034] The decoder rejects the camera longitude",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 507,
+      "name": "[share-codec-034] The decoder rejects the thing wire",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 507,
+      "name": "[share-codec-034] The decoder rejects the style duplicate",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 507,
+      "name": "[share-codec-034] The decoder rejects the style truncated",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 518,
+      "name": "[share-codec-030] The view kind uses the text place path",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 518,
+      "name": "[share-codec-030] The view kind uses the text thing path",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 518,
+      "name": "[share-codec-030] The view kind uses the text future path",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 518,
+      "name": "[share-codec-030] The view kind uses the number place path",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 518,
+      "name": "[share-codec-030] The view kind uses the empty entity path",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 657,
+      "name": "[share-codec-010 share-codec-014] The style normal keeps its defaults",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 657,
+      "name": "[share-codec-010 share-codec-014] The style retro keeps its defaults",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 657,
+      "name": "[share-codec-010 share-codec-014] The style surveillance keeps its defaults",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 657,
+      "name": "[share-codec-010 share-codec-014] The style thermal keeps its defaults",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 657,
+      "name": "[share-codec-010 share-codec-014] The style anime keeps its defaults",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 657,
+      "name": "[share-codec-010 share-codec-014] The style noir keeps its defaults",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 657,
+      "name": "[share-codec-010 share-codec-014] The style snow keeps its defaults",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter retro pixelation uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter retro distortion uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter retro instability uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter surveillance gain uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter surveillance bloom uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter surveillance scanlineStr uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter surveillance pixelation uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter thermal sensitivity uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter thermal bloom uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter thermal mode uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter thermal pixelation uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter thermal palette uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter anime saturation uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter anime edgeThick uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter noir contrastAmt uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter noir grainAmt uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter noir vignetteAmt uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter snow density uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 700,
+      "name": "[share-codec-015] The parameter snow wind uses its own token",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "name": "[share-codec-019] The panel control-panel uses its own entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "name": "[share-codec-019] The panel location-bar uses its own entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "name": "[share-codec-019] The panel data-panel uses its own entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "name": "[share-codec-019] The panel cctv-panel uses its own entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "name": "[share-codec-019] The panel recent-imagery-panel uses its own entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "name": "[share-codec-019] The panel street-level-panel uses its own entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "name": "[share-codec-019] The panel radio-panel uses its own entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "name": "[share-codec-019] The panel scene-panel uses its own entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "name": "[share-codec-019] The panel global-context-panel uses its own entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "name": "[share-codec-019] The panel pp-toggles uses its own entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 827,
+      "name": "[share-codec-019] The panel param-slider-panel uses its own entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option traffic roadMode keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option weather-lightning opacity keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option weather-radar opacity keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option weather-satellite infrared keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option weather-satellite opacity keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option weather-satellite product keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option wind model keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option wind overlay keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option wind units keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option wind paused keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option flights models3d keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option flights models3dMode keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option satellites catalog keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option cctv coverageMode keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option cctv showProjection keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option cctv autoHop keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option recent-imagery west keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option recent-imagery south keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option recent-imagery east keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option recent-imagery north keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option recent-imagery a keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option recent-imagery b keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option recent-imagery mode keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option recent-imagery split keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option recent-imagery viirs keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option street-level mapillary keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option street-level providerSwitches keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option street-level pano keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option street-level sinceDays keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option radio filter keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 984,
+      "name": "[share-codec-018] The option radio volume keeps its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1007,
+      "name": "[share-codec-018] The absent options match every frozen value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1014,
+      "name": "[share-codec-043] The legacy converter uses own fields and excludes metadata",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field lat copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field lon copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field alt copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field heading copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field pitch copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field roll copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field sharedAtMs copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field style copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field mapStack copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field hudVariant copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field bloomIntensity copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field bloomVersion copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field sharpenIntensity copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field detectionMode copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field detectionDensity copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field detectionAllocation copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field detectionFadePct copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field detectionOutsideOpacityPct copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field scopeFeatherPct copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1045,
+      "name": "[share-codec-043] The legacy field scopeTerminusPct copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1056,
+      "name": "[share-codec-043] The legacy flag bloom copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1056,
+      "name": "[share-codec-043] The legacy flag sharpen copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1056,
+      "name": "[share-codec-043] The legacy flag hudVisible copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1056,
+      "name": "[share-codec-043] The legacy flag celestialRing copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1056,
+      "name": "[share-codec-043] The legacy flag scopeEnabled copies its own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1060,
+      "name": "[share-codec-043] The legacy converter copies composite state fields",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1132,
+      "name": "[share-codec-050] The layer option handles duplicate",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1132,
+      "name": "[share-codec-050] The layer option handles excessive text",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1132,
+      "name": "[share-codec-050] The layer option handles bad ASCII text",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1132,
+      "name": "[share-codec-050] The layer option handles absent text",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1132,
+      "name": "[share-codec-050] The layer option handles unknown owner",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1132,
+      "name": "[share-codec-050] The layer option handles unknown key",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1132,
+      "name": "[share-codec-050] The layer option handles invalid value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1144,
+      "name": "[share-codec-050] The option without layers reports its scope",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1151,
+      "name": "[share-codec-019] The panel source checks every entry before use",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1182,
+      "name": "[share-codec-043] The legacy view without layers supplies the entity layer",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1226,
+      "name": "[share-codec-045] The path parser rejects a custom text object",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1236,
+      "name": "[share-codec-046] The root uses both share paths and page directories",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1247,
+      "name": "[share-codec-010] The default state keeps the selected style and valid keys",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1268,
+      "name": "[share-codec-048] The numeric source rejects a custom time object",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1280,
+      "name": "[share-codec-021] The entity text uses trim and lowercase",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1291,
+      "name": "[share-codec-015] The style source rejects function objects and absent data",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1300,
+      "name": "[share-codec-051] The fix and offset reject function objects",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1337,
+      "name": "[share-codec-023] The fix time uses relative age",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1337,
+      "name": "[share-codec-023] The fix time uses absolute time",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1337,
+      "name": "[share-codec-023] The fix time uses current fix",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1337,
+      "name": "[share-codec-023] The fix time uses absent time",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports non-string",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports empty",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports padding",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports short",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports bound",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports checksum",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports version",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports wire",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports truncated varint",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports overlong varint",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports unsafe varint",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports duplicate field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports wrong field type",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1377,
+      "name": "[share-codec-034] The invalid payload reports latitude",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1386,
+      "name": "[share-codec-020] The follow offset range uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1386,
+      "name": "[share-codec-020] The follow offset heading uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1386,
+      "name": "[share-codec-020] The follow offset pitch uses its own field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1423,
+      "name": "[share-codec-051] The complete fix supplies every coordinate and altitude",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1467,
+      "name": "[share-codec-050] The option length checks the cap before its remaining bytes",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1481,
+      "name": "[share-codec-019] The panel pin differs while its collapse value stays at default",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1496,
+      "name": "[share-codec-019] The absent panel pin differs from a false pin",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1517,
+      "name": "[share-codec-005] The signed writer reports its own range error",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1587,
+      "name": "[share-codec-025] The camera uses the sphere at latitude 0 longitude 0",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1587,
+      "name": "[share-codec-025] The camera uses the sphere at latitude 0 longitude 90",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1587,
+      "name": "[share-codec-025] The camera uses the sphere at latitude 45 longitude -120",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1593,
+      "name": "[share-codec-050] The mirror layer rejects a valid owner option",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1613,
+      "name": "[share-codec-049] The unknown style token 35 reports its value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1613,
+      "name": "[share-codec-049] The unknown style token 36 reports its value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1629,
+      "name": "[share-codec-049] The future panel reports its number",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer air-quality keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer ais-live-vessels keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer alpr-cameras keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer beemaps keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer beemaps-bursts keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer bhote-koshi-2026 keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer bhote-koshi-locator keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer bikeshare keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer cctv keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer directions keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer earthquakes keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer fire-perimeters keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer flights keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer gdacs keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer gnss-integrity keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer local-dams keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer local-datacenters keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer local-firms keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer military keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer military-awareness keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer military-installations keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer osh-systems keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer planet-scenes keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer radio keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer recent-imagery keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer reticulum keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer rocket-launches keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer s2-ghostmaps keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer satellites keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer skyfi-scenes keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer skywatch-scenes keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer street-level keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer telegeography-submarine-cables keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer traffic keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer transit keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer weather-cyclones keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer weather-lightning keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer weather-radar keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer weather-satellite keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1887,
+      "name": "[share-codec-016 share-codec-017] The layer wind keeps its own bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1900,
+      "name": "[share-codec-057] The decoder uses Normal for an unknown style",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 1917,
+      "name": "[share-codec-058] The style initializer uses distinct source values",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2003,
+      "name": "[share-codec-052] The positive epoch guard does not read the clock",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2003,
+      "name": "[share-codec-052] The safe epoch guard does not read the clock",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2023,
+      "name": "[share-codec-001] The encoder does not read byte 1 beyond the length",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2023,
+      "name": "[share-codec-001] The encoder does not read byte 2 beyond the length",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2026,
+      "name": "[share-codec-030] The unknown numeric view kind reports one value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2031,
+      "name": "[share-codec-049] The style parameter without a style reports Normal",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2042,
+      "name": "[share-codec-011] The default result excludes optional report properties",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2050,
+      "name": "[share-codec-018] The option decoder keeps all values within each owner",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option traffic roadMode uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option weather-lightning opacity uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option weather-radar opacity uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option weather-satellite infrared uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option weather-satellite opacity uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option weather-satellite product uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option wind model uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option wind overlay uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option wind units uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option wind paused uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option flights models3d uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option flights models3dMode uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option satellites catalog uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option cctv coverageMode uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option cctv showProjection uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option cctv autoHop uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option recent-imagery west uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option recent-imagery south uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option recent-imagery east uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option recent-imagery north uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option recent-imagery a uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option recent-imagery b uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option recent-imagery mode uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option recent-imagery split uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option recent-imagery viirs uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option street-level mapillary uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option street-level providerSwitches uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option street-level pano uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option street-level sinceDays uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option radio filter uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2098,
+      "name": "[share-codec-018] The option radio volume uses one wire entry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2116,
+      "name": "[share-codec-041] The supplied layer set keeps other layers and options",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2134,
+      "name": "[share-codec-048] The state source rejects a function with numeric fields",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2151,
+      "name": "[share-codec-048] The invalid detection mode uses the default for undefined",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2151,
+      "name": "[share-codec-048] The invalid detection mode uses the default for ",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2151,
+      "name": "[share-codec-048] The invalid detection mode uses the default for 17",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2151,
+      "name": "[share-codec-048] The invalid detection mode uses the default for true",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2151,
+      "name": "[share-codec-048] The invalid detection mode uses the default for OFF",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2159,
+      "name": "[share-codec-048] The disabled detection mode keeps a valid density and defaults an invalid density",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2179,
+      "name": "[share-codec-025] The state derives each camera field at latitude 0 longitude 0",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2179,
+      "name": "[share-codec-025] The state derives each camera field at latitude 0 longitude 90",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2179,
+      "name": "[share-codec-025] The state derives each camera field at latitude 45 longitude -120",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2202,
+      "name": "[share-codec-017] The implied layer for aircraft uses no entity bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2202,
+      "name": "[share-codec-017] The implied layer for military_aircraft uses no entity bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2202,
+      "name": "[share-codec-017] The implied layer for vessel uses no entity bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2202,
+      "name": "[share-codec-017] The implied layer for satellite uses no entity bit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2222,
+      "name": "[share-codec-013] The angle heading at 10 uses the nearest signed turn",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2222,
+      "name": "[share-codec-013] The angle heading at 180 uses the nearest signed turn",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2222,
+      "name": "[share-codec-013] The angle heading at 181 uses the nearest signed turn",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2222,
+      "name": "[share-codec-013] The angle roll at 50 uses the nearest signed turn",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2222,
+      "name": "[share-codec-013] The angle roll at 359 uses the nearest signed turn",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2234,
+      "name": "[share-codec-033] The unknown enum style uses its default",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2234,
+      "name": "[share-codec-033] The unknown enum mapStack uses its default",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2234,
+      "name": "[share-codec-033] The unknown enum hudVariant uses its default",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2234,
+      "name": "[share-codec-033] The unknown enum detectionMode uses its default",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2234,
+      "name": "[share-codec-033] The unknown enum detectionAllocation uses its default",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2239,
+      "name": "[share-codec-029] The layer bits keep known layers beside unknown layers",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2247,
+      "name": "[share-codec-034] The duplicate panel entry fails before its second value applies",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2257,
+      "name": "[share-codec-023] The fix ignores an age without a share time",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2273,
+      "name": "[share-codec-031] The unknown entity uses a fix with default altitude",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2297,
+      "name": "[share-codec-021] The entity getter can remove its value before id access",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2308,
+      "name": "[share-codec-023] The absent fix time takes the share time",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2318,
+      "name": "[share-codec-010] The enum and panel tables match their permanent values",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2349,
+      "name": "[share-codec-021] The decimal entity satellite keeps six decimal digits",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2349,
+      "name": "[share-codec-021] The decimal entity vessel keeps six decimal digits",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2361,
+      "name": "[share-codec-021] The aircraft entity aircraft keeps decimal text outside six digits",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2361,
+      "name": "[share-codec-021] The aircraft entity military_aircraft keeps decimal text outside six digits",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2375,
+      "name": "[share-codec-008] The wire cursor skips type 0 to its next field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2375,
+      "name": "[share-codec-008] The wire cursor skips type 2 to its next field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2375,
+      "name": "[share-codec-008] The wire cursor skips type 1 to its next field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2375,
+      "name": "[share-codec-008] The wire cursor skips type 5 to its next field",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2391,
+      "name": "[share-codec-043] The legacy converter does not read metadata getters",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2409,
+      "name": "[share-codec-021] The invalid identifier type does not reach the grammar",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2436,
+      "name": "[share-codec-019] The unknown panel does not supply a collapse value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2460,
+      "name": "[share-codec-032] The open name hudVariant accepts its full width",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2466,
+      "name": "[share-codec-056] The open name hudVariant rejects excess width",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2460,
+      "name": "[share-codec-032] The open name mapStack accepts its full width",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2466,
+      "name": "[share-codec-056] The open name mapStack rejects excess width",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2473,
+      "name": "[share-codec-034] The text limit accepts its exact bound before version validation",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field view",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field lat",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field lon",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field alt",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field heading",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field pitch",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field roll",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field sharedAtMs",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state excludes the field flags",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field layerState",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state excludes the field layerOptions",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field panelState",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state excludes the field thing",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field style",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field mapStack",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field hudVariant",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field bloomIntensity",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field bloomVersion",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field sharpenIntensity",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field detectionMode",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field detectionDensity",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field detectionAllocation",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field detectionFadePct",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field detectionOutsideOpacityPct",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field scopeFeatherPct",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field scopeTerminusPct",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field styleParams",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field bloom",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field sharpen",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field hudVisible",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field celestialRing",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2519,
+      "name": "[share-codec-010] The default state sets the field scopeEnabled",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2550,
+      "name": "[share-codec-022] The raw tracking option for aircraft becomes its entity",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2550,
+      "name": "[share-codec-022] The raw tracking option for military_aircraft becomes its entity",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/backfill.test.mjs",
+      "line": 2550,
+      "name": "[share-codec-022] The raw tracking option for satellite becomes its entity",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 90,
+      "name": "[share-codec-037] the HAL example survives the round trip and shrinks to 39 characters",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 110,
+      "name": "[share-codec-038] links from earlier long-form versions keep their historical meaning",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 140,
+      "name": "[share-codec-039] a tracking selection becomes a thing view and back",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 167,
+      "name": "[share-codec-040] thing views the long form cannot express convert without one",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 179,
+      "name": "[share-codec-041] a thing view turns its layer on, with or without a layer set",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 267,
+      "name": "[share-codec-042] links written by the long-form generator survive the compact form",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 284,
+      "name": "[share-codec-043] the converter ignores non-objects and restore bookkeeping",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/legacyShareState.test.mjs",
+      "line": 298,
+      "name": "[share-codec-044] the converter knows every key of the long form’s parsed state",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/shareLinkPath.test.mjs",
+      "line": 5,
+      "name": "[share-codec-045] a share path names its code and the app base path",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/shareLinkPath.test.mjs",
+      "line": 21,
+      "name": "[share-codec-046] the app root drops a share path and the hash, and keeps the query",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/shareLinkPath.test.mjs",
+      "line": 36,
+      "name": "[share-codec-047] a share link sits under the app root without the sender ?lang",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 176,
+      "name": "[share-codec-011] an all-default view is the version byte and its check byte",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 183,
+      "name": "[share-codec-012] each setting costs bytes only when it differs from its default",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 238,
+      "name": "[share-codec-014] a view just switched to any style costs its camera and style only",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 266,
+      "name": "[share-codec-015] invalid style parameters keep the style’s own value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 276,
+      "name": "[share-codec-012] every registered field round-trips at once",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 380,
+      "name": "[share-codec-036] generated states round-trip exactly and encode canonically",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 396,
+      "name": "[share-codec-036] normalization is idempotent",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 404,
+      "name": "[share-codec-013] precision: coordinates 1e-4 degrees, angles and lengths whole units",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 431,
+      "name": "[share-codec-010] defaults travel as frozen meanings that match today’s app defaults",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 453,
+      "name": "[share-codec-010] the field registry is well formed and permanent",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 579,
+      "name": "[share-codec-019] the panel table agrees with the long form’s panel tokens",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 602,
+      "name": "[share-codec-015] the style parameter table agrees with the long form’s `sp` codec",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 624,
+      "name": "[share-codec-018] every layer option has a frozen absent meaning",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 644,
+      "name": "[share-codec-016] layer tokens map to permanent numbers covering the whole ledger",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 656,
+      "name": "[share-codec-017] layer sets: absent, explicitly empty and populated stay distinct",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 670,
+      "name": "[share-codec-019] panels: only differences from the frozen layout are written",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 699,
+      "name": "[share-codec-020] a place view opens at its camera; a thing view also names what to follow",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 723,
+      "name": "[share-codec-021] thing ids use the compact numeric form when they can, text otherwise",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 764,
+      "name": "[share-codec-023] last-known time is stored relative to the created-at time when there is one",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 790,
+      "name": "[share-codec-022] tracking selections in layer options become a thing view",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 808,
+      "name": "[share-codec-027] a created-at time in the future is dropped, like the long form’s `at`",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 823,
+      "name": "[share-codec-034] a code is the bare base64url payload; URL forms are not codes",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 840,
+      "name": "[share-codec-028] unknown top-level fields of every wire type are skipped and reported",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 869,
+      "name": "[share-codec-029] unknown fields inside a thing view, codes and bits are skipped too",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 906,
+      "name": "[share-codec-030] an unknown view kind falls back to the stored camera",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 931,
+      "name": "[share-codec-031] an unknown or invalid entity falls back to the camera its fix implies",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 968,
+      "name": "[share-codec-032] enum names outside the code tables travel as text",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 993,
+      "name": "malformed input is rejected with a reason, never thrown",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1051,
+      "name": "[share-codec-035] every truncation and single-byte corruption of real payloads is handled",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1074,
+      "name": "[share-codec-013] size: a camera-only place view",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1094,
+      "name": "[share-codec-025] size: following an aircraft",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1155,
+      "name": "[share-codec-024] the follow offset converts to and from east/north/up metres",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1173,
+      "name": "[share-codec-025] the derived camera looks at the fix from the offset, even from orbit",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1213,
+      "name": "[share-codec-023] a fix without its own time is as of the link",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1229,
+      "name": "[share-codec-026] the check byte rejects every single-character typo",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1251,
+      "name": "[share-codec-033] unknown detection names fall back to their defaults and are reported",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1264,
+      "name": "[share-codec-048] extreme and negative-zero numbers normalize to values the decoder returns",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1279,
+      "name": "[share-codec-049] future panel values and style tokens are skipped, not applied",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "line": 1314,
+      "name": "[share-codec-050] a layer option filed under a mirror layer is ignored",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 28,
+      "name": "[share-codec-001] base64url round-trips every length and byte value without padding",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 43,
+      "name": "[share-codec-002] base64url rejects padding, foreign characters, bad lengths and stray bits",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 58,
+      "name": "[share-codec-003] zigzag maps small magnitudes of either sign to small codes",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 65,
+      "name": "[share-codec-004] varints round-trip up to the largest safe integer",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 88,
+      "name": "[share-codec-005] the writer refuses values the format cannot carry",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 96,
+      "name": "[share-codec-006] the reader rejects truncated, overlong and overflowing varints",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 126,
+      "name": "[share-codec-007] the reader bounds lengths and rejects group and reserved wire types",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 147,
+      "name": "[share-codec-008] skip steps over each wire type and stops at a truncated value",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    },
+    {
+      "file": "src/share/wire.test.mjs",
+      "line": 169,
+      "name": "[share-codec-009] crc8 is CRC-8/SMBUS and catches every burst of up to 8 bits",
+      "argumentFakes": "reviewed",
+      "defaults": "reviewed",
+      "absence": "reviewed",
+      "items": "reviewed",
+      "start": "reviewed",
+      "sentences": "reviewed"
+    }
+  ]
+}

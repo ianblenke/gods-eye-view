@@ -1,0 +1,1678 @@
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/sharecodec/node-cache PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/sharecodec /home/ianblenke/docker/gev-tools/sharecodec/muts.json
+A001-true: KILLED [share-codec-024] The local geometry uses each axis with its sign
+A001-false: KILLED [share-codec-024] The local geometry uses each axis with its sign
+A002-true: KILLED [share-codec-025] The camera uses the sphere at latitude 0 longitude 0
+A002-false: KILLED [share-codec-055] The zero offset keeps the fix and supplied angles
+A003-left: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A003-right: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A004-empty: KILLED [share-codec-043] The legacy converter copies composite state fields
+A005-left: KILLED [share-codec-043] The legacy converter does not read metadata getters
+A005-right: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A006-true: KILLED [share-codec-043] The legacy converter copies composite state fields
+A006-false: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+A007-true: KILLED [share-codec-043] The legacy converter copies composite state fields
+A007-false: KILLED [share-codec-043] The legacy view without layers supplies the entity layer
+A008-left: KILLED [share-codec-043] The legacy field alt copies its own value
+A008-right: KILLED [share-codec-039] a tracking selection becomes a thing view and back
+A009-true: KILLED [share-codec-043] The legacy converter copies composite state fields
+A009-false: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+A010-left: KILLED [share-codec-043] The legacy converter copies composite state fields
+A010-right: SURVIVED 
+A011-left: SURVIVED 
+A011-right: KILLED [share-codec-043] The legacy converter copies composite state fields
+A012-true: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+A012-false: SURVIVED 
+A013-empty: KILLED [share-codec-043] The legacy converter copies composite state fields
+A014-true: KILLED [share-codec-045] The path parser keeps invalid escapes for the decoder
+A014-false: KILLED [share-codec-045] The path parser rejects a custom text object
+A015-true: KILLED [share-codec-045] The path parser keeps invalid escapes for the decoder
+A015-false: KILLED [share-codec-045] The path parser keeps invalid escapes for the decoder
+A016-true: KILLED [share-codec-046] The root uses both share paths and page directories
+A016-false: KILLED [share-codec-046] The root uses both share paths and page directories
+A017-true: SURVIVED 
+A017-false: KILLED [share-codec-018] The option cctv autoHop uses one wire entry
+A018-left: SURVIVED 
+A018-right: SURVIVED 
+A019-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A019-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A020-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A020-right: KILLED [share-codec-057] The decoder uses Normal after a custom style getter changes
+A021-true: KILLED [share-codec-010] The default state keeps the selected style and valid keys
+A021-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A023-left: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A023-right: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A024-left: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A024-right: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A025-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A025-false: KILLED [share-codec-010] The default state keeps the selected style and valid keys
+A026-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A027-true: KILLED [share-codec-048] The numeric bound for lat accepts  12.5 
+A027-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A028-left: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A028-right: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A029-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A029-right: KILLED [share-codec-048] The invalid number uses defaults for case ; [share-codec-048] The invalid number uses defaults for case  
+A030-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A030-false: KILLED [share-codec-012] The scalar alt uses its own field
+A031-true: KILLED [share-codec-012] The scalar heading uses its own field
+A031-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A032-true: KILLED [share-codec-012] The scalar lat uses its own field
+A032-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A033-true: KILLED [share-codec-012] The scalar lon uses its own field
+A033-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A034-left: KILLED [share-codec-048] The numeric bound for lon accepts -190
+A034-right: KILLED [share-codec-048] The numeric bound for lon accepts 190
+A035-true: KILLED [share-codec-012] The scalar sharedAtMs uses its own field
+A035-false: KILLED [share-codec-048] The numeric source rejects a custom time object
+A036-true: KILLED [share-codec-052] The time decoder checks each bound
+A036-false: KILLED [share-codec-012] The scalar sharedAtMs uses its own field
+A037-left: KILLED [share-codec-052] The time decoder checks each bound
+A037-right: KILLED [share-codec-052] The time decoder checks each bound
+A038-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A038-false: KILLED [share-codec-012] The scalar hudVariant uses its own field
+A039-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A039-right: KILLED [share-codec-032 share-codec-056] The open name hudVariant checks bad name
+A040-left: SURVIVED 
+A040-right: SURVIVED 
+A041-true: KILLED [share-codec-021] The entity text uses trim and lowercase
+A041-false: KILLED [share-codec-021] The numeric entity id and absent entity use separate paths
+A042-left: SURVIVED 
+A042-right: KILLED [share-codec-021] The invalid identifier type does not reach the grammar
+A043-true: KILLED [share-codec-021] The invalid entity id uses a place for Infinity
+A043-false: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A044-left: KILLED [share-codec-021] The invalid identifier type does not reach the grammar
+A044-right: KILLED [share-codec-021] The invalid entity id uses a place for bad id
+A045-left: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A045-right: KILLED [share-codec-021] The entity satellite uses its own numeric field
+A046-left: KILLED src/share/backfill.test.mjs
+A046-right: KILLED [share-codec-015] The style source rejects function objects and absent data
+A047-left: KILLED src/share/backfill.test.mjs
+A047-right: KILLED [share-codec-015] The style source rejects function objects and absent data
+A048-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A049-left: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A049-right: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A050-true: KILLED [share-codec-058] The style initializer uses distinct source values
+A050-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A051-left: KILLED [share-codec-010 share-codec-014] The style retro keeps its defaults
+A051-right: KILLED src/share/backfill.test.mjs
+A052-left: KILLED [share-codec-058] The style initializer uses distinct source values
+A052-right: KILLED [share-codec-058] The style initializer uses distinct source values
+A053-left: KILLED [share-codec-058] The style initializer uses distinct source values
+A053-right: KILLED [share-codec-058] The style initializer uses distinct source values
+A054-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A055-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A055-right: KILLED src/share/backfill.test.mjs
+A056-left: KILLED [share-codec-010 share-codec-014] The style retro keeps its defaults
+A056-right: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A057-true: SURVIVED 
+A057-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A058-left: KILLED [share-codec-058] The style initializer uses distinct source values
+A058-right: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A059-left: KILLED [share-codec-058] The style initializer uses distinct source values
+A059-right: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A060-left: KILLED [share-codec-058] The style initializer uses distinct source values
+A060-right: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A061-left: KILLED [share-codec-058] The style initializer uses distinct source values
+A061-right: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A062-left: KILLED [share-codec-058] The style initializer uses distinct source values
+A062-right: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A063-left: KILLED [share-codec-058] The style initializer uses distinct source values
+A063-right: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A064-true: KILLED [share-codec-058] The style initializer uses distinct source values
+A064-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A065-true: KILLED [share-codec-058] The style initializer uses distinct source values
+A065-false: KILLED [share-codec-058] The style initializer uses distinct source values
+A066-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A066-right: KILLED [share-codec-019] The panel source checks every entry before use
+A067-empty: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A068-left: KILLED [share-codec-019] The panel source checks every entry before use
+A068-right: KILLED [share-codec-019] The panel source checks every entry before use
+A069-left: KILLED [share-codec-019] The panel source checks every entry before use
+A069-right: KILLED [share-codec-019] The unknown panel does not supply a collapse value
+A070-empty: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A071-true: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A071-false: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A072-true: KILLED [share-codec-019] The panel source checks every entry before use
+A072-false: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A073-left: KILLED [share-codec-019] The panel source checks every entry before use
+A073-right: KILLED [share-codec-019] The panel source checks every entry before use
+A074-true: KILLED [share-codec-019] The panel source checks every entry before use
+A074-false: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A075-true: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A075-false: KILLED [share-codec-051] The fix and offset reject invalid source values
+A076-left: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A076-right: KILLED [share-codec-051] The fix and offset reject function objects
+A077-left: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A077-right: KILLED [share-codec-051] The fix and offset reject function objects
+A078-left: KILLED [share-codec-051] The fix and offset reject invalid source values
+A078-right: KILLED [share-codec-051] The fix and offset reject invalid source values
+A079-true: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A079-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A080-true: KILLED [share-codec-021] The entity text uses trim and lowercase
+A080-false: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A081-true: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A081-false: KILLED [share-codec-021] The invalid entity id uses a place for ; [share-codec-021] The invalid entity id uses a place for Infinity; [share-codec-021] The invalid entity id uses a place for NaN; [share-codec-021] The invalid entity id uses a place for [object Object]; [share-codec-021] The invalid entity i
+A082-empty: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+A083-true: SURVIVED 
+A083-false: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+A084-true: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+A084-false: KILLED [share-codec-018] The absent options match every frozen value
+A085-left: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A085-right: KILLED [share-codec-022] The own view wins over a tracking slot
+A086-true: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A086-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A087-left: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A087-right: KILLED [share-codec-048] The state source rejects a function with numeric fields
+A088-true: KILLED [share-codec-012] The flag bloom uses its own bit
+A088-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A089-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A090-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A090-false: KILLED [share-codec-012] The flag bloom uses its own bit
+A091-true: KILLED [share-codec-048] The invalid detection mode uses the default for ; [share-codec-048] The invalid detection mode uses the default for 17; [share-codec-048] The invalid detection mode uses the default for OFF; [share-codec-048] The invalid detection mode uses the default for true; [share-codec-048] T
+A091-false: KILLED [share-codec-012] The scalar detectionMode uses its own field
+A092-left: KILLED [share-codec-048] The invalid detection mode uses the default for 17
+A092-right: KILLED [share-codec-048] The invalid detection mode uses the default for 
+A093-true: KILLED [share-codec-048] The disabled detection mode keeps a valid density and defaults an invalid density
+A093-false: KILLED [share-codec-012] The scalar detectionDensity uses its own field
+A094-true: KILLED [share-codec-048] The disabled detection mode keeps a valid density and defaults an invalid density
+A094-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A095-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A095-false: KILLED [share-codec-012] The scalar scopeFeatherPct uses its own field
+A096-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A096-false: KILLED [share-codec-018] The absent options match every frozen value
+A097-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A097-false: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+A098-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A098-false: KILLED [share-codec-012] every registered field round-trips at once
+A099-left: KILLED [share-codec-023] The fix time uses relative age
+A099-right: SURVIVED 
+A100-true: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A100-false: KILLED [share-codec-012] every registered field round-trips at once
+A101-left: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A101-right: SURVIVED 
+A102-true: KILLED [share-codec-016 share-codec-017] The layer planet-scenes keeps its own bit
+A102-false: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A103-true: KILLED [share-codec-016 share-codec-017] The layer planet-scenes keeps its own bit
+A103-false: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A104-true: KILLED [share-codec-016 share-codec-017] The layer planet-scenes keeps its own bit
+A104-false: KILLED [share-codec-016] layer tokens map to permanent numbers covering the whole ledger
+A105-left: KILLED [share-codec-021] The decimal entity satellite keeps six decimal digits
+A105-right: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A106-left: KILLED [share-codec-021] The aircraft entity aircraft keeps decimal text outside six digits
+A106-right: KILLED [share-codec-021] The entity vessel keeps text 002442000
+A107-true: KILLED [share-codec-057] The decoder uses Normal after a custom style getter changes
+A107-false: KILLED [share-codec-012] The scalar detectionAllocation uses its own field
+A108-empty: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A109-true: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A109-false: KILLED [share-codec-017] The implied layer for aircraft uses no entity bit
+A111-empty: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A112-empty: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A113-left: SURVIVED 
+A113-right: KILLED [share-codec-018] The option cctv autoHop uses one wire entry
+A114-left: SURVIVED 
+A114-right: SURVIVED 
+A115-true: KILLED [share-codec-018] The option cctv coverageMode keeps its own value
+A115-false: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A116-true: KILLED [share-codec-018] The option cctv coverageMode keeps its own value
+A116-false: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A117-true: KILLED [share-codec-018] every layer option has a frozen absent meaning
+A117-false: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A118-true: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A118-false: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A119-true: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A119-false: KILLED [share-codec-019] The panel control-panel uses its own entry
+A120-empty: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A121-true: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A121-false: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A122-left: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A122-right: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A123-left: KILLED [share-codec-019] panels: only differences from the frozen layout are written
+A123-right: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A124-true: KILLED [share-codec-019] panels: only differences from the frozen layout are written
+A124-false: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A125-true: KILLED [share-codec-019] panels: only differences from the frozen layout are written
+A125-false: KILLED [share-codec-019] The panel control-panel uses its own entry
+A126-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A126-right: KILLED [share-codec-058] The style initializer uses distinct source values
+A127-empty: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A128-true: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A128-false: SURVIVED 
+A129-true: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A129-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A130-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A130-false: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A131-true: KILLED [share-codec-013] The angle heading at 10 uses the nearest signed turn
+A131-false: KILLED [share-codec-012] The scalar heading uses its own field
+A132-true: KILLED [share-codec-021] The entity aircraft uses its own numeric field
+A132-false: KILLED [share-codec-020] The follow offset range uses its own field
+A133-true: KILLED [share-codec-021] The entity aircraft uses its own numeric field
+A133-false: KILLED [share-codec-020] The follow offset heading uses its own field
+A134-true: KILLED [share-codec-021] The entity aircraft uses its own numeric field
+A134-false: KILLED [share-codec-020] The follow offset pitch uses its own field
+A135-true: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A135-false: KILLED [share-codec-023] The fix time uses absent time
+A136-true: KILLED [share-codec-051] The complete fix supplies every coordinate and altitude
+A136-false: KILLED [share-codec-023] The fix time uses absent time
+A137-left: SURVIVED 
+A137-right: KILLED [share-codec-023] The fix time uses absolute time
+A138-true: KILLED [share-codec-023] The fix time uses current fix
+A138-false: KILLED [share-codec-023] The fix time uses relative age
+A139-true: KILLED [share-codec-023] The fix time uses absent time
+A139-false: KILLED [share-codec-023] The fix time uses absolute time
+A140-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A140-false: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A141-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A141-false: KILLED [share-codec-017] The implied layer for aircraft uses no entity bit
+A142-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A143-left: KILLED [share-codec-012] The scalar alt uses its own field
+A143-right: KILLED [share-codec-023] The fix time uses absent time
+A144-case0: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A144-case1: KILLED [share-codec-012] The scalar lat uses its own field
+A144-case2: KILLED [share-codec-012] The scalar lon uses its own field
+A144-case3: KILLED [share-codec-012] The scalar heading uses its own field
+A144-case4: KILLED [share-codec-012] The scalar roll uses its own field
+A144-case5: KILLED [share-codec-012] The scalar sharedAtMs uses its own field
+A144-case6: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A144-case7: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A144-case8: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A144-case9: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A144-case10: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A144-case11: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A145-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A145-false: SURVIVED 
+A146-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A146-false: KILLED [share-codec-017] The implied layer for aircraft uses no entity bit
+A147-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A147-false: KILLED [share-codec-012] The scalar lat uses its own field
+A148-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A148-false: KILLED [share-codec-012] The scalar heading uses its own field
+A149-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A149-false: KILLED [share-codec-012] The scalar sharedAtMs uses its own field
+A150-empty: KILLED [share-codec-012] The flag bloom uses its own bit
+A151-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A151-false: KILLED [share-codec-012] The flag bloom uses its own bit
+A152-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A152-false: KILLED [share-codec-012] The flag bloom uses its own bit
+A153-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A153-false: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A154-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A154-false: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A155-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A155-false: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A156-true: KILLED [share-codec-010 share-codec-014] The style normal keeps its defaults
+A156-false: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A157-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A157-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A158-true: KILLED [share-codec-012] The scalar alt uses its own field
+A158-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A159-true: KILLED [share-codec-012] The scalar bloomIntensity uses its own field
+A159-false: KILLED [share-codec-012] The scalar alt uses its own field
+A161-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A161-false: KILLED [share-codec-028] unknown top-level fields of every wire type are skipped and reported
+A162-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A162-false: KILLED [share-codec-034] The decoder rejects the thing wire
+A163-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A163-false: KILLED [share-codec-034] The invalid payload reports duplicate field
+A164-true: KILLED [share-codec-012] The flag bloom uses its own bit
+A164-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A165-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A165-false: SURVIVED 
+A166-true: KILLED [share-codec-012] The scalar detectionAllocation uses its own field
+A166-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A167-left: KILLED [share-codec-032 share-codec-056] The open name hudVariant checks future_name-2
+A167-right: KILLED [share-codec-033] The closed name detectionAllocation accepts known text
+A168-true: KILLED [share-codec-012] The scalar detectionAllocation uses its own field
+A168-false: KILLED [share-codec-029] unknown fields inside a thing view, codes and bits are skipped too
+A171-true: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A171-false: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A172-true: KILLED [share-codec-029] The layer bits keep known layers beside unknown layers
+A172-false: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A174-left: KILLED [share-codec-018] The absent options match every frozen value
+A174-right: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A175-true: KILLED [share-codec-018] The option cctv coverageMode keeps its own value
+A175-false: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A176-left: KILLED [share-codec-050] The option length checks the cap before its remaining bytes
+A176-right: KILLED [share-codec-050] The layer option handles absent text
+A177-true: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A177-false: KILLED [share-codec-050] The layer option handles duplicate
+A178-true: KILLED [share-codec-050] The mirror layer rejects a valid owner option
+A178-false: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A179-true: SURVIVED 
+A179-false: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A180-true: KILLED [share-codec-050] The layer option handles unknown key
+A180-false: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A181-left: KILLED [share-codec-050] The layer option handles invalid value
+A181-right: SURVIVED 
+A182-empty: SURVIVED 
+A183-empty: SURVIVED 
+A184-true: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A184-false: SURVIVED 
+A186-true: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A186-false: KILLED [share-codec-034] The duplicate panel entry fails before its second value applies
+A187-empty: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A188-left: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A188-right: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A189-left: KILLED [share-codec-049] The future panel reports its number
+A189-right: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A190-empty: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A191-true: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A191-false: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A192-left: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A192-right: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A193-left: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A193-right: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A194-true: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A194-false: KILLED [share-codec-019] The panel control-panel uses its own entry
+A195-left: SURVIVED 
+A195-right: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A196-true: SURVIVED 
+A196-false: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A197-left: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A197-right: KILLED [share-codec-034] The decoder rejects the style duplicate
+A199-true: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A199-false: KILLED [share-codec-034] The decoder rejects the style duplicate
+A200-true: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A200-false: KILLED [share-codec-034] The decoder rejects the style duplicate
+A201-left: KILLED [share-codec-049] The unknown style token 35 reports its value
+A201-right: KILLED [share-codec-049] The unknown style token 36 reports its value
+A202-true: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A202-false: SURVIVED 
+A203-true: KILLED [share-codec-021] The entity aircraft uses its own numeric field
+A203-false: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A204-true: KILLED [share-codec-021] The entity satellite uses its own numeric field
+A204-false: KILLED [share-codec-021] The entity aircraft uses its own numeric field
+A205-true: KILLED [share-codec-031] an unknown or invalid entity falls back to the camera its fix implies
+A205-false: KILLED [share-codec-021] The entity aircraft uses its own numeric field
+A206-left: KILLED [share-codec-034] The decoder rejects the thing latitude
+A206-right: KILLED [share-codec-031] The unknown entity uses a fix with default altitude
+A207-left: KILLED [share-codec-020] The follow offset range uses its own field
+A207-right: SURVIVED 
+A208-true: SURVIVED 
+A208-false: KILLED [share-codec-020] The follow offset heading uses its own field
+A209-true: KILLED [share-codec-020] The follow offset heading uses its own field
+A209-false: KILLED [share-codec-020] The follow offset pitch uses its own field
+A210-left: KILLED [share-codec-034] The decoder rejects the thing latitude
+A210-right: KILLED [share-codec-034] The decoder rejects the thing longitude
+A211-true: KILLED [share-codec-023] The fix time uses absent time
+A211-false: KILLED [share-codec-023] The fix time uses absolute time
+A212-true: KILLED [share-codec-023] The fix ignores an age without a share time
+A212-false: KILLED [share-codec-023] The fix time uses relative age
+A213-left: KILLED [share-codec-034] The decoder rejects the thing latitude
+A213-right: KILLED [share-codec-034] The decoder rejects the thing longitude
+A214-true: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A214-false: KILLED [share-codec-031] The unknown entity uses a fix with default altitude
+A215-true: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A215-false: KILLED [share-codec-034] The decoder rejects the thing duplicate
+A216-true: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A216-false: KILLED [share-codec-030] The view kind uses the empty entity path
+A217-true: KILLED [share-codec-030] The view kind uses the empty entity path
+A217-false: KILLED [share-codec-031] The unknown entity uses a fix with default altitude
+A218-true: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A218-false: KILLED [share-codec-031] an unknown or invalid entity falls back to the camera its fix implies
+A219-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A219-false: KILLED [share-codec-034] The invalid payload reports non-string
+A220-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A220-false: KILLED [share-codec-034] The invalid payload reports bound
+A221-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A221-false: KILLED [share-codec-034] The invalid payload reports short
+A222-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A222-false: KILLED [share-codec-034] The invalid payload reports checksum
+A223-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A223-false: KILLED [share-codec-034] The invalid payload reports version
+A224-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A225-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A225-right: KILLED [share-codec-030] The view kind uses the text place path
+A226-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A226-right: SURVIVED 
+A227-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A227-right: SURVIVED 
+A228-true: KILLED [share-codec-012] The scalar alt uses its own field
+A228-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A229-true: KILLED [share-codec-012] The scalar alt uses its own field
+A229-false: KILLED [share-codec-012] The scalar lat uses its own field
+A230-left: KILLED [share-codec-012] The scalar alt uses its own field
+A230-right: KILLED [share-codec-012] The scalar heading uses its own field
+A231-true: SURVIVED 
+A231-false: KILLED [share-codec-012] The scalar bloomIntensity uses its own field
+A232-empty: KILLED [share-codec-034] The decoder rejects the camera longitude
+A233-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A233-false: KILLED [share-codec-034] The decoder rejects the camera longitude
+A234-true: KILLED [share-codec-048] The numeric bound for lon accepts -190
+A234-false: KILLED [share-codec-034] The invalid payload reports latitude
+A235-left: KILLED [share-codec-010 share-codec-014] The style normal keeps its defaults
+A235-right: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A236-true: SURVIVED 
+A236-false: KILLED [share-codec-057] The decoder uses Normal after a custom style getter changes
+A237-empty: KILLED [share-codec-032 share-codec-056] The open name hudVariant checks bad name
+A238-left: SURVIVED 
+A238-right: KILLED [share-codec-012] The scalar hudVariant uses its own field
+A239-left: KILLED [share-codec-012] The flag bloom uses its own bit
+A239-right: SURVIVED 
+A240-empty: KILLED [share-codec-012] The flag bloom uses its own bit
+A241-left: KILLED [share-codec-058] The style initializer uses distinct source values
+A241-right: SURVIVED 
+A242-true: KILLED [share-codec-012] The scalar alt uses its own field
+A242-false: KILLED [share-codec-029] unknown fields inside a thing view, codes and bits are skipped too
+A243-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A243-false: KILLED [share-codec-012] The scalar sharedAtMs uses its own field
+A244-true: KILLED [share-codec-054] The decoder reports an internal exception
+A244-false: KILLED [share-codec-012] The scalar sharedAtMs uses its own field
+A245-left: KILLED [share-codec-052] The positive epoch guard does not read the clock
+A245-right: KILLED [share-codec-054] The decoder reports an internal exception
+A246-left: KILLED [share-codec-052] The positive epoch guard does not read the clock
+A246-right: KILLED [share-codec-052] The safe epoch guard does not read the clock
+A247-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A247-false: KILLED [share-codec-018] The absent options match every frozen value
+A248-left: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A248-right: SURVIVED 
+A249-true: KILLED [share-codec-012] The scalar alt uses its own field
+A249-false: KILLED [share-codec-050] The option without layers reports its scope
+A250-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A250-false: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A251-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A251-false: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A252-left: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A252-right: KILLED [share-codec-049] The style parameter without a style reports Normal
+A253-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A253-false: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A254-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A254-false: KILLED [share-codec-031] The unknown entity uses a fix with default altitude
+A255-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A255-false: KILLED [share-codec-030] The view kind uses the text future path
+A256-true: KILLED [share-codec-030] The view kind uses the number place path
+A256-false: KILLED [share-codec-030] The view kind uses the text place path
+A257-left: KILLED [share-codec-030] The view kind uses the number place path
+A257-right: KILLED [share-codec-030] The unknown numeric view kind reports one value
+A258-true: KILLED [share-codec-011] The default result excludes optional report properties
+A258-false: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A259-true: KILLED [share-codec-030] The view kind uses the number place path
+A259-false: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A260-true: KILLED [share-codec-030] The view kind uses the empty entity path
+A260-false: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+A261-left: KILLED [share-codec-030] The view kind uses the empty entity path
+A261-right: KILLED [share-codec-030] The view kind uses the text thing path
+A262-true: KILLED [share-codec-012] The scalar alt uses its own field
+A262-false: KILLED [share-codec-030] The view kind uses the text future path
+A263-true: KILLED [share-codec-012] The scalar alt uses its own field
+A263-false: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A264-true: KILLED [share-codec-011] The default result excludes optional report properties
+A264-false: KILLED [share-codec-030] The view kind uses the empty entity path
+A265-true: KILLED [share-codec-054] The decoder reports an internal exception
+A265-false: KILLED [share-codec-034] The decoder rejects the style duplicate
+A266-true: KILLED [share-codec-053] The ASCII helpers check both bounds
+A266-false: KILLED [share-codec-053] The ASCII helpers check both bounds
+A268-true: KILLED [share-codec-001] The encoder does not read byte 1 beyond the length
+A268-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A269-true: KILLED [share-codec-001] The encoder does not read byte 2 beyond the length
+A269-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A270-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A270-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A271-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A271-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A272-left: KILLED [share-codec-005] The writer checks each numeric bound
+A272-right: KILLED [share-codec-034] The invalid payload reports empty
+A273-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A273-false: KILLED [share-codec-002] base64url rejects padding, foreign characters, bad lengths and stray bits
+A274-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A275-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A275-false: KILLED [share-codec-034] The invalid payload reports padding
+A276-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A276-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A277-left: SURVIVED 
+A277-right: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A278-empty: KILLED [share-codec-012] The flag bloom uses its own bit
+A280-true: KILLED [share-codec-012] The flag bloom uses its own bit
+A280-false: KILLED [share-codec-012] The flag bloom uses its own bit
+A281-true: KILLED [share-codec-005] The writer checks each numeric bound
+A281-false: KILLED [share-codec-012] The scalar alt uses its own field; src/share/backfill.test.mjs
+A282-true: KILLED [share-codec-012] The scalar heading uses its own field
+A282-false: KILLED [share-codec-012] The scalar alt uses its own field
+A283-left: KILLED [share-codec-005] The writer checks each numeric bound
+A283-right: KILLED [share-codec-005] The writer checks each numeric bound
+A285-left: KILLED [share-codec-005] The writer checks each numeric bound
+A285-right: KILLED [share-codec-005] The writer checks each numeric bound
+A286-left: KILLED [share-codec-005] The writer checks each numeric bound
+A286-right: KILLED [share-codec-005] The writer checks each numeric bound
+A287-left: KILLED [share-codec-005] The writer checks each numeric bound
+A287-right: KILLED [share-codec-005] The writer checks each numeric bound
+A288-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A290-left: KILLED [share-codec-053] The ASCII helpers check both bounds
+A290-right: KILLED [share-codec-053] The ASCII helpers check both bounds
+A291-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A292-left: KILLED [share-codec-050] The layer option handles bad ASCII text
+A292-right: KILLED [share-codec-053] The ASCII helpers check both bounds
+A294-true: KILLED [share-codec-005] The writer checks each numeric bound
+A294-false: KILLED [share-codec-034] The decoder rejects the style truncated
+A295-true: KILLED [share-codec-005] The writer checks each numeric bound
+A295-false: KILLED [share-codec-005] The writer checks each numeric bound
+A296-left: KILLED [share-codec-018] The absent options match every frozen value
+A296-right: KILLED [share-codec-005] The writer checks each numeric bound
+A297-true: KILLED [share-codec-005] The writer checks each numeric bound
+A297-false: KILLED [share-codec-006] the reader rejects truncated, overlong and overflowing varints
+A298-left: KILLED [share-codec-034] The invalid payload reports field
+A298-right: KILLED [share-codec-005] The writer checks each numeric bound
+A299-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A299-right: KILLED [share-codec-005] The writer checks each numeric bound
+A300-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A300-right: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A301-left: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A301-right: KILLED [share-codec-008] skip steps over each wire type and stops at a truncated value
+A302-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A302-false: KILLED [share-codec-007] the reader bounds lengths and rejects group and reserved wire types
+A303-true: KILLED [share-codec-008] skip steps over each wire type and stops at a truncated value
+A303-false: KILLED [share-codec-008] skip steps over each wire type and stops at a truncated value
+A304-true: KILLED [share-codec-008] skip steps over each wire type and stops at a truncated value
+A304-false: KILLED [share-codec-031] The unknown entity uses a fix with default altitude
+A305-true: KILLED [share-codec-008] skip steps over each wire type and stops at a truncated value
+A305-false: KILLED [share-codec-008] skip steps over each wire type and stops at a truncated value
+A306-true: KILLED [share-codec-008] skip steps over each wire type and stops at a truncated value
+A306-false: KILLED [share-codec-008] skip steps over each wire type and stops at a truncated value
+A004-key-lat: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A004-key-lon: KILLED [share-codec-043] The legacy field lon copies its own value
+A004-key-alt: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A004-key-heading: KILLED [share-codec-043] The legacy field heading copies its own value
+A004-key-pitch: KILLED [share-codec-043] The legacy field pitch copies its own value
+A004-key-roll: KILLED [share-codec-043] The legacy field roll copies its own value
+A004-key-style: KILLED [share-codec-043] The legacy converter copies composite state fields
+A004-key-styleParams: KILLED [share-codec-043] The legacy converter copies composite state fields
+A004-key-bloom: KILLED [share-codec-043] The legacy flag bloom copies its own value
+A004-key-sharpen: KILLED [share-codec-043] The legacy flag sharpen copies its own value
+A004-key-bloomIntensity: KILLED [share-codec-043] The legacy field bloomIntensity copies its own value
+A004-key-bloomVersion: KILLED [share-codec-043] The legacy field bloomVersion copies its own value
+A004-key-sharpenIntensity: KILLED [share-codec-043] The legacy field sharpenIntensity copies its own value
+A004-key-hudVariant: KILLED [share-codec-043] The legacy field hudVariant copies its own value
+A004-key-hudVisible: KILLED [share-codec-043] The legacy flag hudVisible copies its own value
+A004-key-detectionMode: KILLED [share-codec-043] The legacy field detectionMode copies its own value
+A004-key-detectionDensity: KILLED [share-codec-043] The legacy field detectionDensity copies its own value
+A004-key-detectionAllocation: KILLED [share-codec-043] The legacy field detectionAllocation copies its own value
+A004-key-detectionFadePct: KILLED [share-codec-043] The legacy field detectionFadePct copies its own value
+A004-key-detectionOutsideOpacityPct: KILLED [share-codec-043] The legacy field detectionOutsideOpacityPct copies its own value
+A004-key-celestialRing: KILLED [share-codec-043] The legacy flag celestialRing copies its own value
+A004-key-scopeEnabled: KILLED [share-codec-043] The legacy flag scopeEnabled copies its own value
+A004-key-scopeFeatherPct: KILLED [share-codec-043] The legacy field scopeFeatherPct copies its own value
+A004-key-scopeTerminusPct: KILLED [share-codec-043] The legacy field scopeTerminusPct copies its own value
+A004-key-mapStack: KILLED [share-codec-043] The legacy field mapStack copies its own value
+A004-key-layerState: KILLED [share-codec-043] The legacy converter copies composite state fields
+A004-key-layerStateInvalid: SURVIVED 
+A004-key-panelState: KILLED [share-codec-043] The legacy converter copies composite state fields
+A004-key-sharedAtMs: KILLED [share-codec-043] The legacy field sharedAtMs copies its own value
+A013-key-lat: KILLED [share-codec-043] The legacy field lat copies its own value
+A013-key-lon: KILLED [share-codec-043] The legacy field lon copies its own value
+A013-key-alt: KILLED [share-codec-043] The legacy field alt copies its own value
+A013-key-heading: KILLED [share-codec-043] The legacy field heading copies its own value
+A013-key-pitch: KILLED [share-codec-043] The legacy field pitch copies its own value
+A013-key-roll: KILLED [share-codec-043] The legacy field roll copies its own value
+A013-key-style: KILLED [share-codec-043] The legacy field style copies its own value
+A013-key-styleParams: KILLED [share-codec-043] The legacy converter copies composite state fields
+A013-key-bloom: KILLED [share-codec-043] The legacy flag bloom copies its own value
+A013-key-sharpen: KILLED [share-codec-043] The legacy flag sharpen copies its own value
+A013-key-bloomIntensity: KILLED [share-codec-043] The legacy field bloomIntensity copies its own value
+A013-key-bloomVersion: KILLED [share-codec-043] The legacy field bloomVersion copies its own value
+A013-key-sharpenIntensity: KILLED [share-codec-043] The legacy field sharpenIntensity copies its own value
+A013-key-hudVariant: KILLED [share-codec-043] The legacy field hudVariant copies its own value
+A013-key-hudVisible: KILLED [share-codec-043] The legacy flag hudVisible copies its own value
+A013-key-detectionMode: KILLED [share-codec-043] The legacy field detectionMode copies its own value
+A013-key-detectionDensity: KILLED [share-codec-043] The legacy field detectionDensity copies its own value
+A013-key-detectionAllocation: KILLED [share-codec-043] The legacy field detectionAllocation copies its own value
+A013-key-detectionFadePct: KILLED [share-codec-043] The legacy field detectionFadePct copies its own value
+A013-key-detectionOutsideOpacityPct: KILLED [share-codec-043] The legacy field detectionOutsideOpacityPct copies its own value
+A013-key-celestialRing: KILLED [share-codec-043] The legacy flag celestialRing copies its own value
+A013-key-scopeEnabled: KILLED [share-codec-043] The legacy flag scopeEnabled copies its own value
+A013-key-scopeFeatherPct: KILLED [share-codec-043] The legacy field scopeFeatherPct copies its own value
+A013-key-scopeTerminusPct: KILLED [share-codec-043] The legacy field scopeTerminusPct copies its own value
+A013-key-mapStack: KILLED [share-codec-043] The legacy field mapStack copies its own value
+A013-key-layerState: SURVIVED 
+A013-key-layerStateInvalid: SURVIVED 
+A013-key-panelState: KILLED [share-codec-043] The legacy converter copies composite state fields
+A013-key-sharedAtMs: KILLED [share-codec-043] The legacy field sharedAtMs copies its own value
+A022-key-view: SURVIVED 
+A022-key-lat: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-lon: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-alt: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-heading: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A022-key-pitch: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-roll: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A022-key-sharedAtMs: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A022-key-flags: SURVIVED 
+A022-key-layerState: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A022-key-layerOptions: SURVIVED 
+A022-key-panelState: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A022-key-thing: SURVIVED 
+A022-key-style: KILLED [share-codec-010] The default state keeps the selected style and valid keys
+A022-key-mapStack: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-hudVariant: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-bloomIntensity: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-bloomVersion: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-sharpenIntensity: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-detectionMode: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A022-key-detectionDensity: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A022-key-detectionAllocation: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A022-key-detectionFadePct: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-detectionOutsideOpacityPct: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-scopeFeatherPct: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A022-key-scopeTerminusPct: KILLED [share-codec-043] The legacy converter uses own fields and excludes metadata
+A022-key-styleParams: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A026-key-bloom: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A026-key-sharpen: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A026-key-hudVisible: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A026-key-celestialRing: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A026-key-scopeEnabled: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A048-key-retro-pixelation: KILLED [share-codec-010 share-codec-014] The style retro keeps its defaults
+A048-key-retro-distortion: KILLED [share-codec-010 share-codec-014] The style retro keeps its defaults
+A048-key-retro-instability: KILLED [share-codec-010 share-codec-014] The style retro keeps its defaults
+A048-key-surveillance-gain: KILLED [share-codec-010 share-codec-014] The style surveillance keeps its defaults
+A048-key-surveillance-bloom: KILLED [share-codec-010 share-codec-014] The style surveillance keeps its defaults
+A048-key-surveillance-scanlineStr: KILLED [share-codec-010 share-codec-014] The style surveillance keeps its defaults
+A048-key-surveillance-pixelation: KILLED [share-codec-010 share-codec-014] The style surveillance keeps its defaults
+A048-key-thermal-sensitivity: KILLED [share-codec-010 share-codec-014] The style thermal keeps its defaults
+A048-key-thermal-bloom: KILLED [share-codec-010 share-codec-014] The style thermal keeps its defaults
+A048-key-thermal-mode: KILLED [share-codec-010 share-codec-014] The style thermal keeps its defaults
+A048-key-thermal-pixelation: KILLED [share-codec-010 share-codec-014] The style thermal keeps its defaults
+A048-key-thermal-palette: KILLED [share-codec-010 share-codec-014] The style thermal keeps its defaults
+A048-key-anime-saturation: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A048-key-anime-edgeThick: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A048-key-noir-contrastAmt: KILLED [share-codec-010 share-codec-014] The style noir keeps its defaults
+A048-key-noir-grainAmt: KILLED [share-codec-010 share-codec-014] The style noir keeps its defaults
+A048-key-noir-vignetteAmt: KILLED [share-codec-010 share-codec-014] The style noir keeps its defaults
+A048-key-snow-density: KILLED [share-codec-010 share-codec-014] The style snow keeps its defaults
+A048-key-snow-wind: KILLED [share-codec-010 share-codec-014] The style snow keeps its defaults
+A054-key-retro-pixelation: KILLED [share-codec-010 share-codec-014] The style retro keeps its defaults
+A054-key-retro-distortion: KILLED [share-codec-010 share-codec-014] The style retro keeps its defaults
+A054-key-retro-instability: KILLED [share-codec-010 share-codec-014] The style retro keeps its defaults
+A054-key-surveillance-gain: KILLED [share-codec-010 share-codec-014] The style surveillance keeps its defaults
+A054-key-surveillance-bloom: KILLED [share-codec-010 share-codec-014] The style surveillance keeps its defaults
+A054-key-surveillance-scanlineStr: KILLED [share-codec-010 share-codec-014] The style surveillance keeps its defaults
+A054-key-surveillance-pixelation: KILLED [share-codec-010 share-codec-014] The style surveillance keeps its defaults
+A054-key-thermal-sensitivity: KILLED [share-codec-010 share-codec-014] The style thermal keeps its defaults
+A054-key-thermal-bloom: KILLED [share-codec-010 share-codec-014] The style thermal keeps its defaults
+A054-key-thermal-mode: KILLED [share-codec-010 share-codec-014] The style thermal keeps its defaults
+A054-key-thermal-pixelation: KILLED [share-codec-010 share-codec-014] The style thermal keeps its defaults
+A054-key-thermal-palette: KILLED [share-codec-010 share-codec-014] The style thermal keeps its defaults
+A054-key-anime-saturation: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A054-key-anime-edgeThick: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A054-key-noir-contrastAmt: KILLED [share-codec-010 share-codec-014] The style noir keeps its defaults
+A054-key-noir-grainAmt: KILLED [share-codec-010 share-codec-014] The style noir keeps its defaults
+A054-key-noir-vignetteAmt: KILLED [share-codec-010 share-codec-014] The style noir keeps its defaults
+A054-key-snow-density: KILLED [share-codec-010 share-codec-014] The style snow keeps its defaults
+A054-key-snow-wind: KILLED [share-codec-010 share-codec-014] The style snow keeps its defaults
+A070-key-control-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A070-key-location-bar: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A070-key-data-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A070-key-cctv-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A070-key-recent-imagery-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A070-key-street-level-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A070-key-radio-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A070-key-scene-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A070-key-global-context-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A070-key-pp-toggles: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A070-key-param-slider-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A082-key-aircraft: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+A082-key-military_aircraft: KILLED [share-codec-022 share-codec-039] The tracking slot for military_aircraft moves both ways
+A082-key-vessel: SURVIVED 
+A082-key-satellite: KILLED [share-codec-022 share-codec-039] The tracking slot for satellite moves both ways
+A089-key-bloom: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A089-key-sharpen: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A089-key-hudVisible: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A089-key-celestialRing: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A089-key-scopeEnabled: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A111-key-traffic: KILLED [share-codec-018] The option traffic roadMode keeps its own value
+A111-key-weather-lightning: KILLED [share-codec-018] The option weather-lightning opacity keeps its own value
+A111-key-weather-radar: KILLED [share-codec-018] The option weather-radar opacity keeps its own value
+A111-key-weather-satellite: KILLED [share-codec-018] The option weather-satellite infrared keeps its own value
+A111-key-wind: KILLED [share-codec-018] The option wind model keeps its own value
+A111-key-flights: KILLED [share-codec-018] The option flights models3d keeps its own value
+A111-key-satellites: KILLED [share-codec-018] The option satellites catalog keeps its own value
+A111-key-cctv: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A111-key-recent-imagery: KILLED [share-codec-018] The option recent-imagery a keeps its own value
+A111-key-street-level: KILLED [share-codec-018] The option street-level mapillary keeps its own value
+A111-key-radio: KILLED [share-codec-018] The option radio filter keeps its own value
+A112-key-traffic-roadMode: KILLED [share-codec-018] The option traffic roadMode keeps its own value
+A112-key-weather-lightning-opacity: KILLED [share-codec-018] The option weather-lightning opacity keeps its own value
+A112-key-weather-radar-opacity: KILLED [share-codec-018] The option weather-radar opacity keeps its own value
+A112-key-weather-satellite-infrared: KILLED [share-codec-018] The option weather-satellite infrared keeps its own value
+A112-key-weather-satellite-opacity: KILLED [share-codec-018] The option weather-satellite opacity keeps its own value
+A112-key-weather-satellite-product: KILLED [share-codec-018] The option weather-satellite product keeps its own value
+A112-key-wind-model: KILLED [share-codec-018] The option wind model keeps its own value
+A112-key-wind-overlay: KILLED [share-codec-018] The option wind overlay keeps its own value
+A112-key-wind-units: KILLED [share-codec-018] The option wind units keeps its own value
+A112-key-wind-paused: KILLED [share-codec-018] The option wind paused keeps its own value
+A112-key-flights-models3d: KILLED [share-codec-018] The option flights models3d keeps its own value
+A112-key-flights-models3dMode: KILLED [share-codec-018] The option flights models3dMode keeps its own value
+A112-key-flights-selectedFlightsTrackingId: SURVIVED 
+A112-key-flights-selectedMilitaryTrackingId: SURVIVED 
+A112-key-satellites-catalog: KILLED [share-codec-018] The option satellites catalog keeps its own value
+A112-key-satellites-selectedSatTrackingId: SURVIVED 
+A112-key-cctv-coverageMode: KILLED [share-codec-018] The option cctv coverageMode keeps its own value
+A112-key-cctv-showProjection: KILLED [share-codec-018] The option cctv showProjection keeps its own value
+A112-key-cctv-autoHop: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A112-key-recent-imagery-west: KILLED [share-codec-018] The option recent-imagery west keeps its own value
+A112-key-recent-imagery-south: KILLED [share-codec-018] The option recent-imagery south keeps its own value
+A112-key-recent-imagery-east: KILLED [share-codec-018] The option recent-imagery east keeps its own value
+A112-key-recent-imagery-north: KILLED [share-codec-018] The option recent-imagery north keeps its own value
+A112-key-recent-imagery-a: KILLED [share-codec-018] The option recent-imagery a keeps its own value
+A112-key-recent-imagery-b: KILLED [share-codec-018] The option recent-imagery b keeps its own value
+A112-key-recent-imagery-mode: KILLED [share-codec-018] The option recent-imagery mode keeps its own value
+A112-key-recent-imagery-split: KILLED [share-codec-018] The option recent-imagery split keeps its own value
+A112-key-recent-imagery-viirs: KILLED [share-codec-018] The option recent-imagery viirs keeps its own value
+A112-key-street-level-mapillary: KILLED [share-codec-018] The option street-level mapillary keeps its own value
+A112-key-street-level-providerSwitches: KILLED [share-codec-018] The option street-level providerSwitches keeps its own value
+A112-key-street-level-pano: KILLED [share-codec-018] The option street-level pano keeps its own value
+A112-key-street-level-sinceDays: KILLED [share-codec-018] The option street-level sinceDays keeps its own value
+A112-key-radio-filter: KILLED [share-codec-018] The option radio filter keeps its own value
+A112-key-radio-volume: KILLED [share-codec-018] The option radio volume keeps its own value
+A120-key-control-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A120-key-location-bar: KILLED [share-codec-019] The panel location-bar uses its own entry
+A120-key-data-panel: KILLED [share-codec-019] The panel data-panel uses its own entry
+A120-key-cctv-panel: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A120-key-recent-imagery-panel: KILLED [share-codec-019] The panel recent-imagery-panel uses its own entry
+A120-key-street-level-panel: KILLED [share-codec-019] The panel street-level-panel uses its own entry
+A120-key-radio-panel: KILLED [share-codec-019] The panel radio-panel uses its own entry
+A120-key-scene-panel: KILLED [share-codec-019] The panel scene-panel uses its own entry
+A120-key-global-context-panel: KILLED [share-codec-019] The panel global-context-panel uses its own entry
+A120-key-pp-toggles: KILLED [share-codec-019] The panel pp-toggles uses its own entry
+A120-key-param-slider-panel: KILLED [share-codec-019] The panel param-slider-panel uses its own entry
+A127-key-retro-pixelation: KILLED [share-codec-015] The parameter retro pixelation uses its own token
+A127-key-retro-distortion: KILLED [share-codec-015] The parameter retro distortion uses its own token
+A127-key-retro-instability: KILLED [share-codec-015] The parameter retro instability uses its own token
+A127-key-surveillance-gain: KILLED [share-codec-015] The parameter surveillance gain uses its own token
+A127-key-surveillance-bloom: KILLED [share-codec-015] The parameter surveillance bloom uses its own token
+A127-key-surveillance-scanlineStr: KILLED [share-codec-015] The parameter surveillance scanlineStr uses its own token
+A127-key-surveillance-pixelation: KILLED [share-codec-015] The parameter surveillance pixelation uses its own token
+A127-key-thermal-sensitivity: KILLED [share-codec-015] The parameter thermal sensitivity uses its own token
+A127-key-thermal-bloom: KILLED [share-codec-015] The parameter thermal bloom uses its own token
+A127-key-thermal-mode: KILLED [share-codec-015] The parameter thermal mode uses its own token
+A127-key-thermal-pixelation: KILLED [share-codec-015] The parameter thermal pixelation uses its own token
+A127-key-thermal-palette: KILLED [share-codec-015] The parameter thermal palette uses its own token
+A127-key-anime-saturation: KILLED [share-codec-015] The parameter anime saturation uses its own token
+A127-key-anime-edgeThick: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A127-key-noir-contrastAmt: KILLED [share-codec-015] The parameter noir contrastAmt uses its own token
+A127-key-noir-grainAmt: KILLED [share-codec-015] The parameter noir grainAmt uses its own token
+A127-key-noir-vignetteAmt: KILLED [share-codec-015] The parameter noir vignetteAmt uses its own token
+A127-key-snow-density: KILLED [share-codec-015] The parameter snow density uses its own token
+A127-key-snow-wind: KILLED [share-codec-015] The parameter snow wind uses its own token
+A142-key-view: SURVIVED 
+A142-key-lat: KILLED [share-codec-012] The scalar lat uses its own field
+A142-key-lon: KILLED [share-codec-012] The scalar lon uses its own field
+A142-key-alt: KILLED [share-codec-012] The scalar alt uses its own field
+A142-key-heading: KILLED [share-codec-012] The scalar heading uses its own field
+A142-key-pitch: KILLED [share-codec-012] The scalar pitch uses its own field
+A142-key-roll: KILLED [share-codec-012] The scalar roll uses its own field
+A142-key-sharedAtMs: KILLED [share-codec-012] The scalar sharedAtMs uses its own field
+A142-key-flags: KILLED [share-codec-012] The flag bloom uses its own bit
+A142-key-layerState: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A142-key-layerOptions: SURVIVED 
+A142-key-panelState: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A142-key-thing: KILLED [share-codec-020] The follow offset heading uses its own field
+A142-key-style: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A142-key-mapStack: KILLED [share-codec-012] The scalar mapStack uses its own field
+A142-key-hudVariant: KILLED [share-codec-012] The scalar hudVariant uses its own field
+A142-key-bloomIntensity: KILLED [share-codec-012] The scalar bloomIntensity uses its own field
+A142-key-bloomVersion: KILLED [share-codec-012] The scalar bloomVersion uses its own field
+A142-key-sharpenIntensity: KILLED [share-codec-012] The scalar sharpenIntensity uses its own field
+A142-key-detectionMode: KILLED [share-codec-012] The scalar detectionMode uses its own field
+A142-key-detectionDensity: KILLED [share-codec-012] The scalar detectionDensity uses its own field
+A142-key-detectionAllocation: KILLED [share-codec-012] The scalar detectionAllocation uses its own field
+A142-key-detectionFadePct: KILLED [share-codec-012] The scalar detectionFadePct uses its own field
+A142-key-detectionOutsideOpacityPct: KILLED [share-codec-012] The scalar detectionOutsideOpacityPct uses its own field
+A142-key-scopeFeatherPct: KILLED [share-codec-012] The scalar scopeFeatherPct uses its own field
+A142-key-scopeTerminusPct: KILLED [share-codec-012] The scalar scopeTerminusPct uses its own field
+A142-key-styleParams: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A150-key-bloom: KILLED [share-codec-012] The flag bloom uses its own bit
+A150-key-sharpen: KILLED [share-codec-012] The flag sharpen uses its own bit
+A150-key-hudVisible: KILLED [share-codec-012] The flag hudVisible uses its own bit
+A150-key-celestialRing: KILLED [share-codec-012] The flag celestialRing uses its own bit
+A150-key-scopeEnabled: KILLED [share-codec-012] The flag scopeEnabled uses its own bit
+A182-key-traffic: SURVIVED 
+A182-key-weather-lightning: SURVIVED 
+A182-key-weather-radar: SURVIVED 
+A182-key-weather-satellite: SURVIVED 
+A182-key-wind: SURVIVED 
+A182-key-flights: SURVIVED 
+A182-key-satellites: SURVIVED 
+A182-key-cctv: SURVIVED 
+A182-key-recent-imagery: SURVIVED 
+A182-key-street-level: SURVIVED 
+A182-key-radio: SURVIVED 
+A183-key-traffic-roadMode: SURVIVED 
+A183-key-weather-lightning-opacity: SURVIVED 
+A183-key-weather-radar-opacity: SURVIVED 
+A183-key-weather-satellite-infrared: SURVIVED 
+A183-key-weather-satellite-opacity: SURVIVED 
+A183-key-weather-satellite-product: SURVIVED 
+A183-key-wind-model: SURVIVED 
+A183-key-wind-overlay: SURVIVED 
+A183-key-wind-units: SURVIVED 
+A183-key-wind-paused: SURVIVED 
+A183-key-flights-models3d: SURVIVED 
+A183-key-flights-models3dMode: SURVIVED 
+A183-key-flights-selectedFlightsTrackingId: SURVIVED 
+A183-key-flights-selectedMilitaryTrackingId: SURVIVED 
+A183-key-satellites-catalog: SURVIVED 
+A183-key-satellites-selectedSatTrackingId: SURVIVED 
+A183-key-cctv-coverageMode: SURVIVED 
+A183-key-cctv-showProjection: SURVIVED 
+A183-key-cctv-autoHop: SURVIVED 
+A183-key-recent-imagery-west: SURVIVED 
+A183-key-recent-imagery-south: SURVIVED 
+A183-key-recent-imagery-east: SURVIVED 
+A183-key-recent-imagery-north: SURVIVED 
+A183-key-recent-imagery-a: SURVIVED 
+A183-key-recent-imagery-b: SURVIVED 
+A183-key-recent-imagery-mode: SURVIVED 
+A183-key-recent-imagery-split: SURVIVED 
+A183-key-recent-imagery-viirs: SURVIVED 
+A183-key-street-level-mapillary: SURVIVED 
+A183-key-street-level-providerSwitches: SURVIVED 
+A183-key-street-level-pano: SURVIVED 
+A183-key-street-level-sinceDays: SURVIVED 
+A183-key-radio-filter: SURVIVED 
+A183-key-radio-volume: SURVIVED 
+A190-key-control-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A190-key-location-bar: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A190-key-data-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A190-key-cctv-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A190-key-recent-imagery-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A190-key-street-level-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A190-key-radio-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A190-key-scene-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A190-key-global-context-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A190-key-pp-toggles: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A190-key-param-slider-panel: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A224-key-view: SURVIVED 
+A224-key-lat: KILLED [share-codec-012] The scalar lat uses its own field
+A224-key-lon: KILLED [share-codec-012] The scalar lon uses its own field
+A224-key-alt: KILLED [share-codec-012] The scalar alt uses its own field
+A224-key-heading: KILLED [share-codec-012] The scalar heading uses its own field
+A224-key-pitch: KILLED [share-codec-012] The scalar pitch uses its own field
+A224-key-roll: KILLED [share-codec-012] The scalar roll uses its own field
+A224-key-sharedAtMs: SURVIVED 
+A224-key-flags: SURVIVED 
+A224-key-layerState: SURVIVED 
+A224-key-layerOptions: SURVIVED 
+A224-key-panelState: SURVIVED 
+A224-key-thing: SURVIVED 
+A224-key-style: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A224-key-mapStack: KILLED [share-codec-012] The scalar mapStack uses its own field
+A224-key-hudVariant: KILLED [share-codec-012] The scalar hudVariant uses its own field
+A224-key-bloomIntensity: KILLED [share-codec-012] The scalar bloomIntensity uses its own field
+A224-key-bloomVersion: KILLED [share-codec-012] The scalar bloomVersion uses its own field
+A224-key-sharpenIntensity: KILLED [share-codec-012] The scalar sharpenIntensity uses its own field
+A224-key-detectionMode: KILLED [share-codec-012] The scalar detectionMode uses its own field
+A224-key-detectionDensity: KILLED [share-codec-012] The scalar detectionDensity uses its own field
+A224-key-detectionAllocation: KILLED [share-codec-012] The scalar detectionAllocation uses its own field
+A224-key-detectionFadePct: KILLED [share-codec-012] The scalar detectionFadePct uses its own field
+A224-key-detectionOutsideOpacityPct: KILLED [share-codec-012] The scalar detectionOutsideOpacityPct uses its own field
+A224-key-scopeFeatherPct: KILLED [share-codec-012] The scalar scopeFeatherPct uses its own field
+A224-key-scopeTerminusPct: KILLED [share-codec-012] The scalar scopeTerminusPct uses its own field
+A224-key-styleParams: SURVIVED 
+A232-key-lat: KILLED [share-codec-034] The invalid payload reports latitude
+A232-key-lon: KILLED [share-codec-034] The decoder rejects the camera longitude
+A237-key-hudVariant: KILLED [share-codec-032 share-codec-056] The open name hudVariant checks bad name
+A237-key-mapStack: KILLED [share-codec-032 share-codec-056] The open name mapStack checks bad name
+A240-key-bloom: KILLED [share-codec-012] The flag bloom uses its own bit
+A240-key-sharpen: KILLED [share-codec-012] The flag sharpen uses its own bit
+A240-key-hudVisible: KILLED [share-codec-012] The flag hudVisible uses its own bit
+A240-key-celestialRing: KILLED [share-codec-012] The flag celestialRing uses its own bit
+A240-key-scopeEnabled: KILLED [share-codec-012] The flag scopeEnabled uses its own bit
+A108-key-air-quality: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A172-key-air-quality: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A108-key-ais-live-vessels: KILLED [share-codec-016 share-codec-017] The layer ais-live-vessels keeps its own bit
+A172-key-ais-live-vessels: KILLED [share-codec-016 share-codec-017] The layer ais-live-vessels keeps its own bit
+A108-key-alpr-cameras: KILLED [share-codec-016 share-codec-017] The layer alpr-cameras keeps its own bit
+A172-key-alpr-cameras: KILLED [share-codec-016 share-codec-017] The layer alpr-cameras keeps its own bit
+A108-key-beemaps: KILLED [share-codec-016 share-codec-017] The layer beemaps keeps its own bit
+A172-key-beemaps: KILLED [share-codec-016 share-codec-017] The layer beemaps keeps its own bit
+A108-key-beemaps-bursts: KILLED [share-codec-016 share-codec-017] The layer beemaps-bursts keeps its own bit
+A172-key-beemaps-bursts: KILLED [share-codec-016 share-codec-017] The layer beemaps-bursts keeps its own bit
+A108-key-bhote-koshi-2026: KILLED [share-codec-016 share-codec-017] The layer bhote-koshi-2026 keeps its own bit
+A172-key-bhote-koshi-2026: KILLED [share-codec-016 share-codec-017] The layer bhote-koshi-2026 keeps its own bit
+A108-key-bhote-koshi-locator: KILLED [share-codec-016 share-codec-017] The layer bhote-koshi-locator keeps its own bit
+A172-key-bhote-koshi-locator: KILLED [share-codec-016 share-codec-017] The layer bhote-koshi-locator keeps its own bit
+A108-key-bikeshare: KILLED [share-codec-016 share-codec-017] The layer bikeshare keeps its own bit
+A172-key-bikeshare: KILLED [share-codec-016 share-codec-017] The layer bikeshare keeps its own bit
+A108-key-cctv: KILLED [share-codec-016 share-codec-017] The layer cctv keeps its own bit
+A172-key-cctv: KILLED [share-codec-016 share-codec-017] The layer cctv keeps its own bit
+A108-key-directions: KILLED [share-codec-016 share-codec-017] The layer directions keeps its own bit
+A172-key-directions: KILLED [share-codec-016 share-codec-017] The layer directions keeps its own bit
+A108-key-earthquakes: KILLED [share-codec-016 share-codec-017] The layer earthquakes keeps its own bit
+A172-key-earthquakes: KILLED [share-codec-016 share-codec-017] The layer earthquakes keeps its own bit
+A108-key-fire-perimeters: KILLED [share-codec-016 share-codec-017] The layer fire-perimeters keeps its own bit
+A172-key-fire-perimeters: KILLED [share-codec-016 share-codec-017] The layer fire-perimeters keeps its own bit
+A108-key-flights: KILLED [share-codec-016 share-codec-017] The layer flights keeps its own bit
+A172-key-flights: KILLED [share-codec-016 share-codec-017] The layer flights keeps its own bit
+A108-key-gdacs: KILLED [share-codec-016 share-codec-017] The layer gdacs keeps its own bit
+A172-key-gdacs: KILLED [share-codec-016 share-codec-017] The layer gdacs keeps its own bit
+A108-key-gnss-integrity: KILLED [share-codec-016 share-codec-017] The layer gnss-integrity keeps its own bit
+A172-key-gnss-integrity: KILLED [share-codec-016 share-codec-017] The layer gnss-integrity keeps its own bit
+A108-key-local-dams: KILLED [share-codec-016 share-codec-017] The layer local-dams keeps its own bit
+A172-key-local-dams: KILLED [share-codec-016 share-codec-017] The layer local-dams keeps its own bit
+A108-key-local-datacenters: KILLED [share-codec-016 share-codec-017] The layer local-datacenters keeps its own bit
+A172-key-local-datacenters: KILLED [share-codec-016 share-codec-017] The layer local-datacenters keeps its own bit
+A108-key-local-firms: KILLED [share-codec-016 share-codec-017] The layer local-firms keeps its own bit
+A172-key-local-firms: KILLED [share-codec-016 share-codec-017] The layer local-firms keeps its own bit
+A108-key-military: KILLED [share-codec-016 share-codec-017] The layer military keeps its own bit
+A172-key-military: KILLED [share-codec-016 share-codec-017] The layer military keeps its own bit
+A108-key-military-awareness: KILLED [share-codec-016 share-codec-017] The layer military-awareness keeps its own bit
+A172-key-military-awareness: KILLED [share-codec-016 share-codec-017] The layer military-awareness keeps its own bit
+A108-key-military-installations: KILLED [share-codec-016 share-codec-017] The layer military-installations keeps its own bit
+A172-key-military-installations: KILLED [share-codec-016 share-codec-017] The layer military-installations keeps its own bit
+A108-key-osh-systems: KILLED [share-codec-016 share-codec-017] The layer osh-systems keeps its own bit
+A172-key-osh-systems: KILLED [share-codec-016 share-codec-017] The layer osh-systems keeps its own bit
+A108-key-planet-scenes: KILLED [share-codec-016 share-codec-017] The layer planet-scenes keeps its own bit
+A172-key-planet-scenes: KILLED [share-codec-016 share-codec-017] The layer planet-scenes keeps its own bit
+A108-key-radio: KILLED [share-codec-016 share-codec-017] The layer radio keeps its own bit
+A172-key-radio: KILLED [share-codec-016 share-codec-017] The layer radio keeps its own bit
+A108-key-recent-imagery: KILLED [share-codec-016 share-codec-017] The layer recent-imagery keeps its own bit
+A172-key-recent-imagery: KILLED [share-codec-016 share-codec-017] The layer recent-imagery keeps its own bit
+A108-key-reticulum: KILLED [share-codec-016 share-codec-017] The layer reticulum keeps its own bit
+A172-key-reticulum: KILLED [share-codec-016 share-codec-017] The layer reticulum keeps its own bit
+A108-key-rocket-launches: KILLED [share-codec-016 share-codec-017] The layer rocket-launches keeps its own bit
+A172-key-rocket-launches: KILLED [share-codec-016 share-codec-017] The layer rocket-launches keeps its own bit
+A108-key-s2-ghostmaps: KILLED [share-codec-016 share-codec-017] The layer s2-ghostmaps keeps its own bit
+A172-key-s2-ghostmaps: KILLED [share-codec-016 share-codec-017] The layer s2-ghostmaps keeps its own bit
+A108-key-satellites: KILLED [share-codec-016 share-codec-017] The layer satellites keeps its own bit
+A172-key-satellites: KILLED [share-codec-016 share-codec-017] The layer satellites keeps its own bit
+A108-key-skyfi-scenes: KILLED [share-codec-016 share-codec-017] The layer skyfi-scenes keeps its own bit
+A172-key-skyfi-scenes: KILLED [share-codec-016 share-codec-017] The layer skyfi-scenes keeps its own bit
+A108-key-skywatch-scenes: KILLED [share-codec-016 share-codec-017] The layer skywatch-scenes keeps its own bit
+A172-key-skywatch-scenes: KILLED [share-codec-016 share-codec-017] The layer skywatch-scenes keeps its own bit
+A108-key-street-level: KILLED [share-codec-016 share-codec-017] The layer street-level keeps its own bit
+A172-key-street-level: KILLED [share-codec-016 share-codec-017] The layer street-level keeps its own bit
+A108-key-telegeography-submarine-cables: KILLED [share-codec-016 share-codec-017] The layer telegeography-submarine-cables keeps its own bit
+A172-key-telegeography-submarine-cables: KILLED [share-codec-016 share-codec-017] The layer telegeography-submarine-cables keeps its own bit
+A108-key-traffic: KILLED [share-codec-016 share-codec-017] The layer traffic keeps its own bit
+A172-key-traffic: KILLED [share-codec-016 share-codec-017] The layer traffic keeps its own bit
+A108-key-transit: KILLED [share-codec-016 share-codec-017] The layer transit keeps its own bit
+A172-key-transit: KILLED [share-codec-016 share-codec-017] The layer transit keeps its own bit
+A108-key-weather-cyclones: KILLED [share-codec-016 share-codec-017] The layer weather-cyclones keeps its own bit
+A172-key-weather-cyclones: KILLED [share-codec-016 share-codec-017] The layer weather-cyclones keeps its own bit
+A108-key-weather-lightning: KILLED [share-codec-016 share-codec-017] The layer weather-lightning keeps its own bit
+A172-key-weather-lightning: KILLED [share-codec-016 share-codec-017] The layer weather-lightning keeps its own bit
+A108-key-weather-radar: KILLED [share-codec-016 share-codec-017] The layer weather-radar keeps its own bit
+A172-key-weather-radar: KILLED [share-codec-016 share-codec-017] The layer weather-radar keeps its own bit
+A108-key-weather-satellite: KILLED [share-codec-016 share-codec-017] The layer weather-satellite keeps its own bit
+A172-key-weather-satellite: KILLED [share-codec-016 share-codec-017] The layer weather-satellite keeps its own bit
+A108-key-wind: KILLED [share-codec-016 share-codec-017] The layer wind keeps its own bit
+A172-key-wind: KILLED [share-codec-016 share-codec-017] The layer wind keeps its own bit
+A307-true: KILLED [share-codec-025] The camera uses the sphere at latitude 0 longitude 0
+A307-false: KILLED [share-codec-025] The camera uses the sphere at latitude 0 longitude 0
+A308-true: KILLED [share-codec-025] The camera uses the sphere at latitude 0 longitude 0
+A308-false: KILLED [share-codec-025] The camera uses the sphere at latitude 0 longitude 0
+A309-true: KILLED [share-codec-025] The camera uses the sphere at latitude 0 longitude 0
+A309-false: KILLED [share-codec-025] The camera uses the sphere at latitude 0 longitude 0
+A310-true: KILLED [share-codec-022 share-codec-039] The tracking slot for military_aircraft moves both ways
+A310-false: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+A311-direct: KILLED [share-codec-043] The legacy converter copies composite state fields
+A311-absent: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+A312-direct: KILLED [share-codec-058] The style initializer uses distinct source values
+A312-absent: KILLED [share-codec-058] The style initializer uses distinct source values
+A313-direct: KILLED [share-codec-058] The style initializer uses distinct source values
+A313-absent: KILLED [share-codec-058] The style initializer uses distinct source values
+A314-direct: KILLED src/share/backfill.test.mjs
+A314-absent: KILLED [share-codec-058] The style initializer uses distinct source values
+A315-direct: KILLED src/share/backfill.test.mjs
+A315-absent: KILLED [share-codec-058] The style initializer uses distinct source values
+A316-direct: KILLED [share-codec-058] The style initializer uses distinct source values
+A316-absent: KILLED [share-codec-010 share-codec-014] The style retro keeps its defaults
+A317-direct: KILLED src/share/backfill.test.mjs
+A317-absent: KILLED [share-codec-010 share-codec-014] The style retro keeps its defaults
+A318-direct: KILLED [share-codec-058] The style initializer uses distinct source values
+A318-absent: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A319-direct: KILLED [share-codec-058] The style initializer uses distinct source values
+A319-absent: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A320-direct: KILLED [share-codec-058] The style initializer uses distinct source values
+A320-absent: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A321-direct: KILLED src/share/backfill.test.mjs
+A321-absent: KILLED [share-codec-058] The style initializer uses distinct source values
+A322-direct: KILLED src/share/backfill.test.mjs
+A322-absent: KILLED [share-codec-058] The style initializer uses distinct source values
+A323-direct: KILLED src/share/backfill.test.mjs
+A323-absent: KILLED [share-codec-058] The style initializer uses distinct source values
+A324-direct: KILLED src/share/backfill.test.mjs
+A324-absent: KILLED [share-codec-058] The style initializer uses distinct source values
+A325-direct: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A325-absent: KILLED [share-codec-020] The follow offset heading uses its own field
+A326-direct: KILLED [share-codec-021] The numeric entity id and absent entity use separate paths
+A326-absent: KILLED [share-codec-020] The follow offset heading uses its own field
+A327-direct: KILLED [share-codec-021] The entity getter can remove its value before id access
+A327-absent: KILLED [share-codec-020] The follow offset heading uses its own field
+A328-direct: KILLED [share-codec-020] The follow offset heading uses its own field
+A328-absent: KILLED [share-codec-023] The absent fix time takes the share time
+A329-true: KILLED [share-codec-012] The scalar sharedAtMs uses its own field
+A329-false: KILLED [share-codec-012] The scalar sharedAtMs uses its own field
+A330-direct: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A330-absent: KILLED [share-codec-023] The fix time uses absent time
+A331-true: SURVIVED 
+A331-false: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A332-direct: KILLED [share-codec-050] The layer option handles unknown owner
+A332-absent: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A333-direct: KILLED [share-codec-050] The layer option handles unknown owner
+A333-absent: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A334-direct: KILLED [share-codec-050] The layer option handles unknown owner
+A334-absent: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A335-true: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A335-false: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A336-always: KILLED [share-codec-018] The option decoder keeps all values within each owner
+A336-absent: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A337-always: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A337-absent: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A338-true: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A338-false: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A339-direct: KILLED [share-codec-023] The fix time uses current fix
+A339-absent: KILLED [share-codec-020] The follow offset heading uses its own field
+A340-direct: KILLED [share-codec-020] The follow offset heading uses its own field
+A340-absent: KILLED [share-codec-020] The follow offset range uses its own field
+A341-always: KILLED [share-codec-012] The scalar lat uses its own field
+A341-absent: SURVIVED 
+A342-direct: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A342-absent: KILLED [share-codec-012] The flag bloom uses its own bit
+A343-direct: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A343-absent: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A344-direct: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A344-absent: KILLED [share-codec-031] The unknown entity uses a fix with default altitude
+A345-direct: KILLED [share-codec-030] The view kind uses the text thing path
+A345-absent: KILLED [share-codec-020] The follow offset heading uses its own field
+A346-direct: KILLED [share-codec-030] The view kind uses the text thing path
+A346-absent: KILLED [share-codec-030] The view kind uses the empty entity path
+A347-true: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A110-empty: SURVIVED 
+A160-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A169-empty: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A170-empty: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A173-empty: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+A185-empty: KILLED [share-codec-019] The absent panel pin differs from a false pin
+A198-empty: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A267-empty: KILLED [share-codec-001] The encoder does not read byte 1 beyond the length
+A279-empty: KILLED [share-codec-011] The default result excludes optional report properties
+A284-empty: KILLED [share-codec-005] The writer checks each numeric bound
+A289-empty: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+A293-empty: KILLED [share-codec-005] The writer checks each numeric bound
+S001: KILLED [share-codec-001] The encoder does not read byte 1 beyond the length
+S002: KILLED [share-codec-002] base64url rejects padding, foreign characters, bad lengths and stray bits
+S003: KILLED [share-codec-003] zigzag maps small magnitudes of either sign to small codes
+S004: KILLED [share-codec-004] varints round-trip up to the largest safe integer
+S005: KILLED [share-codec-005] The writer checks each numeric bound
+S006: KILLED [share-codec-006] the reader rejects truncated, overlong and overflowing varints
+S007: KILLED [share-codec-007] the reader bounds lengths and rejects group and reserved wire types
+S008: KILLED [share-codec-008] skip steps over each wire type and stops at a truncated value
+S009: KILLED [share-codec-009] crc8 is CRC-8/SMBUS and catches every burst of up to 8 bits
+S010: KILLED [share-codec-010] the field registry is well formed and permanent
+S011: KILLED [share-codec-011] The default result excludes optional report properties
+S012: KILLED [share-codec-012] The scalar lat uses its own field
+S013: KILLED [share-codec-013] precision: coordinates 1e-4 degrees, angles and lengths whole units
+S014: KILLED [share-codec-010 share-codec-014] The style anime keeps its defaults
+S015: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+S016: KILLED [share-codec-016 share-codec-017] The layer planet-scenes keeps its own bit
+S017: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+S018: KILLED [share-codec-018] The option cctv autoHop keeps its own value
+S019: KILLED [share-codec-019] The absent panel pin differs from a false pin
+S020: KILLED [share-codec-020] The follow offset heading uses its own field
+S021: KILLED [share-codec-021] The entity aircraft keeps text ~ab1234
+S022: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+S023: KILLED [share-codec-023] The fix time uses relative age
+S024: KILLED [share-codec-024] The local geometry uses each axis with its sign
+S025: KILLED [share-codec-025] The camera uses the sphere at latitude 0 longitude 0
+S026: KILLED [share-codec-026] the check byte rejects every single-character typo
+S027: KILLED [share-codec-027] a created-at time in the future is dropped, like the long form’s `at`
+S028: KILLED [share-codec-028] unknown top-level fields of every wire type are skipped and reported
+S029: KILLED [share-codec-029] unknown fields inside a thing view, codes and bits are skipped too
+S030: KILLED [share-codec-030] The unknown numeric view kind reports one value
+S031: KILLED [share-codec-031] an unknown or invalid entity falls back to the camera its fix implies
+S032: KILLED [share-codec-032] enum names outside the code tables travel as text
+S033: KILLED [share-codec-033] unknown detection names fall back to their defaults and are reported
+S034: KILLED [share-codec-034] The decoder rejects the style duplicate
+S035: KILLED [share-codec-035] every truncation and single-byte corruption of real payloads is handled
+S036: KILLED [share-codec-036] generated states round-trip exactly and encode canonically
+S037: KILLED [share-codec-037] the HAL example survives the round trip and shrinks to 39 characters
+S038: KILLED [share-codec-038] links from earlier long-form versions keep their historical meaning
+S039: KILLED [share-codec-022 share-codec-039] The tracking slot for satellite moves both ways
+S040: KILLED [share-codec-040] thing views the long form cannot express convert without one
+S041: KILLED [share-codec-041] a thing view turns its layer on, with or without a layer set
+S042: KILLED [share-codec-042] links written by the long-form generator survive the compact form
+S043: KILLED [share-codec-043] The legacy converter copies composite state fields
+S044: KILLED [share-codec-044] the converter knows every key of the long form’s parsed state
+S045: KILLED [share-codec-045] The path parser keeps invalid escapes for the decoder
+S046: KILLED [share-codec-046] The root uses both share paths and page directories
+S047: KILLED [share-codec-047] a share link sits under the app root without the sender ?lang
+S048: KILLED [share-codec-048] The numeric bound for lat accepts -95
+S049: KILLED [share-codec-049] The style parameter without a style reports Normal
+S050: KILLED [share-codec-050] The mirror layer rejects a valid owner option
+S051: KILLED [share-codec-051] The fix and offset reject invalid source values
+S052: KILLED [share-codec-052] The time decoder checks each bound
+S053: KILLED [share-codec-053] The ASCII helpers check both bounds
+S054: KILLED [share-codec-054] The decoder reports an internal exception
+S055: KILLED [share-codec-055] The zero offset keeps the fix and supplied angles
+S056: KILLED [share-codec-032 share-codec-056] The open name hudVariant checks bad name
+S057: KILLED [share-codec-057] The decoder uses Normal after a custom style getter changes
+S058: KILLED [share-codec-058] The style initializer uses distinct source values
+SURVIVORS: [('A010-right', 'SURVIVED'), ('A011-left', 'SURVIVED'), ('A012-false', 'SURVIVED'), ('A017-true', 'SURVIVED'), ('A018-left', 'SURVIVED'), ('A018-right', 'SURVIVED'), ('A040-left', 'SURVIVED'), ('A040-right', 'SURVIVED'), ('A042-left', 'SURVIVED'), ('A057-true', 'SURVIVED'), ('A083-true', 'SURVIVED'), ('A099-right', 'SURVIVED'), ('A101-right', 'SURVIVED'), ('A113-left', 'SURVIVED'), ('A114-left', 'SURVIVED'), ('A114-right', 'SURVIVED'), ('A128-false', 'SURVIVED'), ('A137-left', 'SURVIVED'), ('A145-false', 'SURVIVED'), ('A165-false', 'SURVIVED'), ('A179-true', 'SURVIVED'), ('A181-right', 'SURVIVED'), ('A182-empty', 'SURVIVED'), ('A183-empty', 'SURVIVED'), ('A184-false', 'SURVIVED'), ('A195-left', 'SURVIVED'), ('A196-true', 'SURVIVED'), ('A202-false', 'SURVIVED'), ('A207-right', 'SURVIVED'), ('A208-true', 'SURVIVED'), ('A226-right', 'SURVIVED'), ('A227-right', 'SURVIVED'), ('A231-true', 'SURVIVED'), ('A236-true', 'SURVIVED'), ('A238-left', 'SURVIVED'), ('A239-right', 'SURVIVED'), ('A241-right', 'SURVIVED'), ('A248-right', 'SURVIVED'), ('A277-left', 'SURVIVED'), ('A004-key-layerStateInvalid', 'SURVIVED'), ('A013-key-layerState', 'SURVIVED'), ('A013-key-layerStateInvalid', 'SURVIVED'), ('A022-key-view', 'SURVIVED'), ('A022-key-flags', 'SURVIVED'), ('A022-key-layerOptions', 'SURVIVED'), ('A022-key-thing', 'SURVIVED'), ('A082-key-vessel', 'SURVIVED'), ('A112-key-flights-selectedFlightsTrackingId', 'SURVIVED'), ('A112-key-flights-selectedMilitaryTrackingId', 'SURVIVED'), ('A112-key-satellites-selectedSatTrackingId', 'SURVIVED'), ('A142-key-view', 'SURVIVED'), ('A142-key-layerOptions', 'SURVIVED'), ('A182-key-traffic', 'SURVIVED'), ('A182-key-weather-lightning', 'SURVIVED'), ('A182-key-weather-radar', 'SURVIVED'), ('A182-key-weather-satellite', 'SURVIVED'), ('A182-key-wind', 'SURVIVED'), ('A182-key-flights', 'SURVIVED'), ('A182-key-satellites', 'SURVIVED'), ('A182-key-cctv', 'SURVIVED'), ('A182-key-recent-imagery', 'SURVIVED'), ('A182-key-street-level', 'SURVIVED'), ('A182-key-radio', 'SURVIVED'), ('A183-key-traffic-roadMode', 'SURVIVED'), ('A183-key-weather-lightning-opacity', 'SURVIVED'), ('A183-key-weather-radar-opacity', 'SURVIVED'), ('A183-key-weather-satellite-infrared', 'SURVIVED'), ('A183-key-weather-satellite-opacity', 'SURVIVED'), ('A183-key-weather-satellite-product', 'SURVIVED'), ('A183-key-wind-model', 'SURVIVED'), ('A183-key-wind-overlay', 'SURVIVED'), ('A183-key-wind-units', 'SURVIVED'), ('A183-key-wind-paused', 'SURVIVED'), ('A183-key-flights-models3d', 'SURVIVED'), ('A183-key-flights-models3dMode', 'SURVIVED'), ('A183-key-flights-selectedFlightsTrackingId', 'SURVIVED'), ('A183-key-flights-selectedMilitaryTrackingId', 'SURVIVED'), ('A183-key-satellites-catalog', 'SURVIVED'), ('A183-key-satellites-selectedSatTrackingId', 'SURVIVED'), ('A183-key-cctv-coverageMode', 'SURVIVED'), ('A183-key-cctv-showProjection', 'SURVIVED'), ('A183-key-cctv-autoHop', 'SURVIVED'), ('A183-key-recent-imagery-west', 'SURVIVED'), ('A183-key-recent-imagery-south', 'SURVIVED'), ('A183-key-recent-imagery-east', 'SURVIVED'), ('A183-key-recent-imagery-north', 'SURVIVED'), ('A183-key-recent-imagery-a', 'SURVIVED'), ('A183-key-recent-imagery-b', 'SURVIVED'), ('A183-key-recent-imagery-mode', 'SURVIVED'), ('A183-key-recent-imagery-split', 'SURVIVED'), ('A183-key-recent-imagery-viirs', 'SURVIVED'), ('A183-key-street-level-mapillary', 'SURVIVED'), ('A183-key-street-level-providerSwitches', 'SURVIVED'), ('A183-key-street-level-pano', 'SURVIVED'), ('A183-key-street-level-sinceDays', 'SURVIVED'), ('A183-key-radio-filter', 'SURVIVED'), ('A183-key-radio-volume', 'SURVIVED'), ('A224-key-view', 'SURVIVED'), ('A224-key-sharedAtMs', 'SURVIVED'), ('A224-key-flags', 'SURVIVED'), ('A224-key-layerState', 'SURVIVED'), ('A224-key-layerOptions', 'SURVIVED'), ('A224-key-panelState', 'SURVIVED'), ('A224-key-thing', 'SURVIVED'), ('A224-key-styleParams', 'SURVIVED'), ('A331-true', 'SURVIVED'), ('A341-absent', 'SURVIVED'), ('A110-empty', 'SURVIVED')]
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/sharecodec/node-cache python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/sharecodec /home/ianblenke/docker/gev-tools/sharecodec/muts.json B001 B002 B003 B004
+B001: KILLED [share-codec-056] The open name hudVariant rejects excess width
+B002: KILLED [share-codec-032] The open name hudVariant accepts its full width
+B003: KILLED [share-codec-034] The text limit accepts its exact bound before version validation
+B004: KILLED [share-codec-034] The invalid payload reports unsafe varint
+SURVIVORS: []
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/sharecodec/node-cache python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/sharecodec /home/ianblenke/docker/gev-tools/sharecodec/muts.json A005-left A042-right A044-left A069-right A109-false A141-false A327-direct
+A005-left: KILLED [share-codec-043] The legacy converter does not read metadata getters
+A042-right: KILLED [share-codec-021] The invalid identifier type does not reach the grammar
+A044-left: KILLED [share-codec-021] The invalid identifier type does not reach the grammar
+A069-right: KILLED [share-codec-019] The unknown panel does not supply a collapse value
+A109-false: KILLED [share-codec-017] The implied layer for aircraft uses no entity bit
+A141-false: KILLED [share-codec-017] The implied layer for aircraft uses no entity bit
+A327-direct: KILLED [share-codec-021] The entity getter can remove its value before id access
+SURVIVORS: []
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/sharecodec/node-cache PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/sharecodec /home/ianblenke/docker/gev-tools/sharecodec/muts.json A004-key-lat A004-key-lon A004-key-alt A004-key-heading A004-key-pitch A004-key-roll A004-key-style A004-key-styleParams A004-key-bloom A004-key-sharpen A004-key-bloomIntensity A004-key-bloomVersion A004-key-sharpenIntensity A004-key-hudVariant A004-key-hudVisible A004-key-detectionMode A004-key-detectionDensity A004-key-detectionAllocation A004-key-detectionFadePct A004-key-detectionOutsideOpacityPct A004-key-celestialRing A004-key-scopeEnabled A004-key-scopeFeatherPct A004-key-scopeTerminusPct A004-key-mapStack A004-key-layerState A004-key-layerStateInvalid A004-key-panelState A004-key-sharedAtMs A013-key-lat A013-key-lon A013-key-alt A013-key-heading A013-key-pitch A013-key-roll A013-key-style A013-key-styleParams A013-key-bloom A013-key-sharpen A013-key-bloomIntensity A013-key-bloomVersion A013-key-sharpenIntensity A013-key-hudVariant A013-key-hudVisible A013-key-detectionMode A013-key-detectionDensity A013-key-detectionAllocation A013-key-detectionFadePct A013-key-detectionOutsideOpacityPct A013-key-celestialRing A013-key-scopeEnabled A013-key-scopeFeatherPct A013-key-scopeTerminusPct A013-key-mapStack A013-key-layerState A013-key-layerStateInvalid A013-key-panelState A013-key-sharedAtMs A022-key-view A022-key-lat A022-key-lon A022-key-alt A022-key-heading A022-key-pitch A022-key-roll A022-key-sharedAtMs A022-key-flags A022-key-layerState A022-key-layerOptions A022-key-panelState A022-key-thing A022-key-style A022-key-mapStack A022-key-hudVariant A022-key-bloomIntensity A022-key-bloomVersion A022-key-sharpenIntensity A022-key-detectionMode A022-key-detectionDensity A022-key-detectionAllocation A022-key-detectionFadePct A022-key-detectionOutsideOpacityPct A022-key-scopeFeatherPct A022-key-scopeTerminusPct A022-key-styleParams A026-key-bloom A026-key-sharpen A026-key-hudVisible A026-key-celestialRing A026-key-scopeEnabled A048-key-retro-pixelation A048-key-retro-distortion A048-key-retro-instability A048-key-surveillance-gain A048-key-surveillance-bloom A048-key-surveillance-scanlineStr A048-key-surveillance-pixelation A048-key-thermal-sensitivity A048-key-thermal-bloom A048-key-thermal-mode A048-key-thermal-pixelation A048-key-thermal-palette A048-key-anime-saturation A048-key-anime-edgeThick A048-key-noir-contrastAmt A048-key-noir-grainAmt A048-key-noir-vignetteAmt A048-key-snow-density A048-key-snow-wind A054-key-retro-pixelation A054-key-retro-distortion A054-key-retro-instability A054-key-surveillance-gain A054-key-surveillance-bloom A054-key-surveillance-scanlineStr A054-key-surveillance-pixelation A054-key-thermal-sensitivity A054-key-thermal-bloom A054-key-thermal-mode A054-key-thermal-pixelation A054-key-thermal-palette A054-key-anime-saturation A054-key-anime-edgeThick A054-key-noir-contrastAmt A054-key-noir-grainAmt A054-key-noir-vignetteAmt A054-key-snow-density A054-key-snow-wind A070-key-control-panel A070-key-location-bar A070-key-data-panel A070-key-cctv-panel A070-key-recent-imagery-panel A070-key-street-level-panel A070-key-radio-panel A070-key-scene-panel A070-key-global-context-panel A070-key-pp-toggles A070-key-param-slider-panel A082-key-aircraft A082-key-military_aircraft A082-key-vessel A082-key-satellite A089-key-bloom A089-key-sharpen A089-key-hudVisible A089-key-celestialRing A089-key-scopeEnabled A111-key-traffic A111-key-weather-lightning A111-key-weather-radar A111-key-weather-satellite A111-key-wind A111-key-flights A111-key-satellites A111-key-cctv A111-key-recent-imagery A111-key-street-level A111-key-radio A112-key-traffic-roadMode A112-key-weather-lightning-opacity A112-key-weather-radar-opacity A112-key-weather-satellite-infrared A112-key-weather-satellite-opacity A112-key-weather-satellite-product A112-key-wind-model A112-key-wind-overlay A112-key-wind-units A112-key-wind-paused A112-key-flights-models3d A112-key-flights-models3dMode A112-key-flights-selectedFlightsTrackingId A112-key-flights-selectedMilitaryTrackingId A112-key-satellites-catalog A112-key-satellites-selectedSatTrackingId A112-key-cctv-coverageMode A112-key-cctv-showProjection A112-key-cctv-autoHop A112-key-recent-imagery-west A112-key-recent-imagery-south A112-key-recent-imagery-east A112-key-recent-imagery-north A112-key-recent-imagery-a A112-key-recent-imagery-b A112-key-recent-imagery-mode A112-key-recent-imagery-split A112-key-recent-imagery-viirs A112-key-street-level-mapillary A112-key-street-level-providerSwitches A112-key-street-level-pano A112-key-street-level-sinceDays A112-key-radio-filter A112-key-radio-volume A120-key-control-panel A120-key-location-bar A120-key-data-panel A120-key-cctv-panel A120-key-recent-imagery-panel A120-key-street-level-panel A120-key-radio-panel A120-key-scene-panel A120-key-global-context-panel A120-key-pp-toggles A120-key-param-slider-panel A127-key-retro-pixelation A127-key-retro-distortion A127-key-retro-instability A127-key-surveillance-gain A127-key-surveillance-bloom A127-key-surveillance-scanlineStr A127-key-surveillance-pixelation A127-key-thermal-sensitivity A127-key-thermal-bloom A127-key-thermal-mode A127-key-thermal-pixelation A127-key-thermal-palette A127-key-anime-saturation A127-key-anime-edgeThick A127-key-noir-contrastAmt A127-key-noir-grainAmt A127-key-noir-vignetteAmt A127-key-snow-density A127-key-snow-wind A142-key-view A142-key-lat A142-key-lon A142-key-alt A142-key-heading A142-key-pitch A142-key-roll A142-key-sharedAtMs A142-key-flags A142-key-layerState A142-key-layerOptions A142-key-panelState A142-key-thing A142-key-style A142-key-mapStack A142-key-hudVariant A142-key-bloomIntensity A142-key-bloomVersion A142-key-sharpenIntensity A142-key-detectionMode A142-key-detectionDensity A142-key-detectionAllocation A142-key-detectionFadePct A142-key-detectionOutsideOpacityPct A142-key-scopeFeatherPct A142-key-scopeTerminusPct A142-key-styleParams A150-key-bloom A150-key-sharpen A150-key-hudVisible A150-key-celestialRing A150-key-scopeEnabled A182-key-traffic A182-key-weather-lightning A182-key-weather-radar A182-key-weather-satellite A182-key-wind A182-key-flights A182-key-satellites A182-key-cctv A182-key-recent-imagery A182-key-street-level A182-key-radio A183-key-traffic-roadMode A183-key-weather-lightning-opacity A183-key-weather-radar-opacity A183-key-weather-satellite-infrared A183-key-weather-satellite-opacity A183-key-weather-satellite-product A183-key-wind-model A183-key-wind-overlay A183-key-wind-units A183-key-wind-paused A183-key-flights-models3d A183-key-flights-models3dMode A183-key-flights-selectedFlightsTrackingId A183-key-flights-selectedMilitaryTrackingId A183-key-satellites-catalog A183-key-satellites-selectedSatTrackingId A183-key-cctv-coverageMode A183-key-cctv-showProjection A183-key-cctv-autoHop A183-key-recent-imagery-west A183-key-recent-imagery-south A183-key-recent-imagery-east A183-key-recent-imagery-north A183-key-recent-imagery-a A183-key-recent-imagery-b A183-key-recent-imagery-mode A183-key-recent-imagery-split A183-key-recent-imagery-viirs A183-key-street-level-mapillary A183-key-street-level-providerSwitches A183-key-street-level-pano A183-key-street-level-sinceDays A183-key-radio-filter A183-key-radio-volume A190-key-control-panel A190-key-location-bar A190-key-data-panel A190-key-cctv-panel A190-key-recent-imagery-panel A190-key-street-level-panel A190-key-radio-panel A190-key-scene-panel A190-key-global-context-panel A190-key-pp-toggles A190-key-param-slider-panel A224-key-view A224-key-lat A224-key-lon A224-key-alt A224-key-heading A224-key-pitch A224-key-roll A224-key-sharedAtMs A224-key-flags A224-key-layerState A224-key-layerOptions A224-key-panelState A224-key-thing A224-key-style A224-key-mapStack A224-key-hudVariant A224-key-bloomIntensity A224-key-bloomVersion A224-key-sharpenIntensity A224-key-detectionMode A224-key-detectionDensity A224-key-detectionAllocation A224-key-detectionFadePct A224-key-detectionOutsideOpacityPct A224-key-scopeFeatherPct A224-key-scopeTerminusPct A224-key-styleParams A232-key-lat A232-key-lon A237-key-hudVariant A237-key-mapStack A240-key-bloom A240-key-sharpen A240-key-hudVisible A240-key-celestialRing A240-key-scopeEnabled A108-key-air-quality A172-key-air-quality A108-key-ais-live-vessels A172-key-ais-live-vessels A108-key-alpr-cameras A172-key-alpr-cameras A108-key-beemaps A172-key-beemaps A108-key-beemaps-bursts A172-key-beemaps-bursts A108-key-bhote-koshi-2026 A172-key-bhote-koshi-2026 A108-key-bhote-koshi-locator A172-key-bhote-koshi-locator A108-key-bikeshare A172-key-bikeshare A108-key-cctv A172-key-cctv A108-key-directions A172-key-directions A108-key-earthquakes A172-key-earthquakes A108-key-fire-perimeters A172-key-fire-perimeters A108-key-flights A172-key-flights A108-key-gdacs A172-key-gdacs A108-key-gnss-integrity A172-key-gnss-integrity A108-key-local-dams A172-key-local-dams A108-key-local-datacenters A172-key-local-datacenters A108-key-local-firms A172-key-local-firms A108-key-military A172-key-military A108-key-military-awareness A172-key-military-awareness A108-key-military-installations A172-key-military-installations A108-key-osh-systems A172-key-osh-systems A108-key-planet-scenes A172-key-planet-scenes A108-key-radio A172-key-radio A108-key-recent-imagery A172-key-recent-imagery A108-key-reticulum A172-key-reticulum A108-key-rocket-launches A172-key-rocket-launches A108-key-s2-ghostmaps A172-key-s2-ghostmaps A108-key-satellites A172-key-satellites A108-key-skyfi-scenes A172-key-skyfi-scenes A108-key-skywatch-scenes A172-key-skywatch-scenes A108-key-street-level A172-key-street-level A108-key-telegeography-submarine-cables A172-key-telegeography-submarine-cables A108-key-traffic A172-key-traffic A108-key-transit A172-key-transit A108-key-weather-cyclones A172-key-weather-cyclones A108-key-weather-lightning A172-key-weather-lightning A108-key-weather-radar A172-key-weather-radar A108-key-weather-satellite A172-key-weather-satellite A108-key-wind A172-key-wind
+A004-key-lat: KILLED [share-codec-043] The legacy field lat copies its own value
+A004-key-lon: KILLED [share-codec-043] The legacy field lon copies its own value
+A004-key-alt: KILLED [share-codec-043] The legacy field alt copies its own value
+A004-key-heading: KILLED [share-codec-043] The legacy field heading copies its own value
+A004-key-pitch: KILLED [share-codec-043] The legacy field pitch copies its own value
+A004-key-roll: KILLED [share-codec-043] The legacy field roll copies its own value
+A004-key-style: KILLED [share-codec-043] The legacy field style copies its own value
+A004-key-styleParams: KILLED [share-codec-043] The legacy converter copies composite state fields
+A004-key-bloom: KILLED [share-codec-043] The legacy flag bloom copies its own value
+A004-key-sharpen: KILLED [share-codec-043] The legacy flag sharpen copies its own value
+A004-key-bloomIntensity: KILLED [share-codec-043] The legacy field bloomIntensity copies its own value
+A004-key-bloomVersion: KILLED [share-codec-043] The legacy field bloomVersion copies its own value
+A004-key-sharpenIntensity: KILLED [share-codec-043] The legacy field sharpenIntensity copies its own value
+A004-key-hudVariant: KILLED [share-codec-043] The legacy field hudVariant copies its own value
+A004-key-hudVisible: KILLED [share-codec-043] The legacy flag hudVisible copies its own value
+A004-key-detectionMode: KILLED [share-codec-043] The legacy field detectionMode copies its own value
+A004-key-detectionDensity: KILLED [share-codec-043] The legacy field detectionDensity copies its own value
+A004-key-detectionAllocation: KILLED [share-codec-043] The legacy field detectionAllocation copies its own value
+A004-key-detectionFadePct: KILLED [share-codec-043] The legacy field detectionFadePct copies its own value
+A004-key-detectionOutsideOpacityPct: KILLED [share-codec-043] The legacy field detectionOutsideOpacityPct copies its own value
+A004-key-celestialRing: KILLED [share-codec-043] The legacy flag celestialRing copies its own value
+A004-key-scopeEnabled: KILLED [share-codec-043] The legacy flag scopeEnabled copies its own value
+A004-key-scopeFeatherPct: KILLED [share-codec-043] The legacy field scopeFeatherPct copies its own value
+A004-key-scopeTerminusPct: KILLED [share-codec-043] The legacy field scopeTerminusPct copies its own value
+A004-key-mapStack: KILLED [share-codec-043] The legacy field mapStack copies its own value
+A004-key-layerState: KILLED [share-codec-043] The legacy converter copies composite state fields
+A004-key-layerStateInvalid: SURVIVED 
+A004-key-panelState: KILLED [share-codec-043] The legacy converter copies composite state fields
+A004-key-sharedAtMs: KILLED [share-codec-043] The legacy field sharedAtMs copies its own value
+A013-key-lat: KILLED [share-codec-043] The legacy field lat copies its own value
+A013-key-lon: KILLED [share-codec-043] The legacy field lon copies its own value
+A013-key-alt: KILLED [share-codec-043] The legacy field alt copies its own value
+A013-key-heading: KILLED [share-codec-043] The legacy field heading copies its own value
+A013-key-pitch: KILLED [share-codec-043] The legacy field pitch copies its own value
+A013-key-roll: KILLED [share-codec-043] The legacy field roll copies its own value
+A013-key-style: KILLED [share-codec-043] The legacy field style copies its own value
+A013-key-styleParams: KILLED [share-codec-043] The legacy converter copies composite state fields
+A013-key-bloom: KILLED [share-codec-043] The legacy flag bloom copies its own value
+A013-key-sharpen: KILLED [share-codec-043] The legacy flag sharpen copies its own value
+A013-key-bloomIntensity: KILLED [share-codec-043] The legacy field bloomIntensity copies its own value
+A013-key-bloomVersion: KILLED [share-codec-043] The legacy field bloomVersion copies its own value
+A013-key-sharpenIntensity: KILLED [share-codec-043] The legacy field sharpenIntensity copies its own value
+A013-key-hudVariant: KILLED [share-codec-043] The legacy field hudVariant copies its own value
+A013-key-hudVisible: KILLED [share-codec-043] The legacy flag hudVisible copies its own value
+A013-key-detectionMode: KILLED [share-codec-043] The legacy field detectionMode copies its own value
+A013-key-detectionDensity: KILLED [share-codec-043] The legacy field detectionDensity copies its own value
+A013-key-detectionAllocation: KILLED [share-codec-043] The legacy field detectionAllocation copies its own value
+A013-key-detectionFadePct: KILLED [share-codec-043] The legacy field detectionFadePct copies its own value
+A013-key-detectionOutsideOpacityPct: KILLED [share-codec-043] The legacy field detectionOutsideOpacityPct copies its own value
+A013-key-celestialRing: KILLED [share-codec-043] The legacy flag celestialRing copies its own value
+A013-key-scopeEnabled: KILLED [share-codec-043] The legacy flag scopeEnabled copies its own value
+A013-key-scopeFeatherPct: KILLED [share-codec-043] The legacy field scopeFeatherPct copies its own value
+A013-key-scopeTerminusPct: KILLED [share-codec-043] The legacy field scopeTerminusPct copies its own value
+A013-key-mapStack: KILLED [share-codec-043] The legacy field mapStack copies its own value
+A013-key-layerState: SURVIVED 
+A013-key-layerStateInvalid: SURVIVED 
+A013-key-panelState: KILLED [share-codec-043] The legacy converter copies composite state fields
+A013-key-sharedAtMs: KILLED [share-codec-043] The legacy field sharedAtMs copies its own value
+A022-key-view: SURVIVED 
+A022-key-lat: KILLED [share-codec-010] The default state sets the field lat
+A022-key-lon: KILLED [share-codec-010] The default state sets the field lon
+A022-key-alt: KILLED [share-codec-010] The default state sets the field alt
+A022-key-heading: KILLED [share-codec-010] The default state sets the field heading
+A022-key-pitch: KILLED [share-codec-010] The default state sets the field pitch
+A022-key-roll: KILLED [share-codec-010] The default state sets the field roll
+A022-key-sharedAtMs: KILLED [share-codec-010] The default state sets the field sharedAtMs
+A022-key-flags: SURVIVED 
+A022-key-layerState: KILLED [share-codec-010] The default state sets the field layerState
+A022-key-layerOptions: SURVIVED 
+A022-key-panelState: KILLED [share-codec-010] The default state sets the field panelState
+A022-key-thing: SURVIVED 
+A022-key-style: KILLED [share-codec-010] The default state sets the field style
+A022-key-mapStack: KILLED [share-codec-010] The default state sets the field mapStack
+A022-key-hudVariant: KILLED [share-codec-010] The default state sets the field hudVariant
+A022-key-bloomIntensity: KILLED [share-codec-010] The default state sets the field bloomIntensity
+A022-key-bloomVersion: KILLED [share-codec-010] The default state sets the field bloomVersion
+A022-key-sharpenIntensity: KILLED [share-codec-010] The default state sets the field sharpenIntensity
+A022-key-detectionMode: KILLED [share-codec-010] The default state sets the field detectionMode
+A022-key-detectionDensity: KILLED [share-codec-010] The default state sets the field detectionDensity
+A022-key-detectionAllocation: KILLED [share-codec-010] The default state sets the field detectionAllocation
+A022-key-detectionFadePct: KILLED [share-codec-010] The default state sets the field detectionFadePct
+A022-key-detectionOutsideOpacityPct: KILLED [share-codec-010] The default state sets the field detectionOutsideOpacityPct
+A022-key-scopeFeatherPct: KILLED [share-codec-010] The default state sets the field scopeFeatherPct
+A022-key-scopeTerminusPct: KILLED [share-codec-010] The default state sets the field scopeTerminusPct
+A022-key-styleParams: KILLED [share-codec-010] The default state sets the field styleParams
+A026-key-bloom: KILLED [share-codec-010] The default state sets the field bloom
+A026-key-sharpen: KILLED [share-codec-010] The default state sets the field sharpen
+A026-key-hudVisible: KILLED [share-codec-010] The default state sets the field hudVisible
+A026-key-celestialRing: KILLED [share-codec-010] The default state sets the field celestialRing
+A026-key-scopeEnabled: KILLED [share-codec-010] The default state sets the field scopeEnabled
+A048-key-retro-pixelation: KILLED [share-codec-015] The parameter retro pixelation uses its own token
+A048-key-retro-distortion: KILLED [share-codec-015] The parameter retro distortion uses its own token
+A048-key-retro-instability: KILLED [share-codec-015] The parameter retro instability uses its own token
+A048-key-surveillance-gain: KILLED [share-codec-015] The parameter surveillance gain uses its own token
+A048-key-surveillance-bloom: KILLED [share-codec-015] The parameter surveillance bloom uses its own token
+A048-key-surveillance-scanlineStr: KILLED [share-codec-015] The parameter surveillance scanlineStr uses its own token
+A048-key-surveillance-pixelation: KILLED [share-codec-015] The parameter surveillance pixelation uses its own token
+A048-key-thermal-sensitivity: KILLED [share-codec-015] The parameter thermal sensitivity uses its own token
+A048-key-thermal-bloom: KILLED [share-codec-015] The parameter thermal bloom uses its own token
+A048-key-thermal-mode: KILLED [share-codec-015] The parameter thermal mode uses its own token
+A048-key-thermal-pixelation: KILLED [share-codec-015] The parameter thermal pixelation uses its own token
+A048-key-thermal-palette: KILLED [share-codec-015] The parameter thermal palette uses its own token
+A048-key-anime-saturation: KILLED [share-codec-015] The parameter anime saturation uses its own token
+A048-key-anime-edgeThick: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A048-key-noir-contrastAmt: KILLED [share-codec-015] The parameter noir contrastAmt uses its own token
+A048-key-noir-grainAmt: KILLED [share-codec-015] The parameter noir grainAmt uses its own token
+A048-key-noir-vignetteAmt: KILLED [share-codec-015] The parameter noir vignetteAmt uses its own token
+A048-key-snow-density: KILLED [share-codec-015] The parameter snow density uses its own token
+A048-key-snow-wind: KILLED [share-codec-015] The parameter snow wind uses its own token
+A054-key-retro-pixelation: KILLED [share-codec-015] The parameter retro pixelation uses its own token
+A054-key-retro-distortion: KILLED [share-codec-015] The parameter retro distortion uses its own token
+A054-key-retro-instability: KILLED [share-codec-015] The parameter retro instability uses its own token
+A054-key-surveillance-gain: KILLED [share-codec-015] The parameter surveillance gain uses its own token
+A054-key-surveillance-bloom: KILLED [share-codec-015] The parameter surveillance bloom uses its own token
+A054-key-surveillance-scanlineStr: KILLED [share-codec-015] The parameter surveillance scanlineStr uses its own token
+A054-key-surveillance-pixelation: KILLED [share-codec-015] The parameter surveillance pixelation uses its own token
+A054-key-thermal-sensitivity: KILLED [share-codec-015] The parameter thermal sensitivity uses its own token
+A054-key-thermal-bloom: KILLED [share-codec-015] The parameter thermal bloom uses its own token
+A054-key-thermal-mode: KILLED [share-codec-015] The parameter thermal mode uses its own token
+A054-key-thermal-pixelation: KILLED [share-codec-015] The parameter thermal pixelation uses its own token
+A054-key-thermal-palette: KILLED [share-codec-015] The parameter thermal palette uses its own token
+A054-key-anime-saturation: KILLED [share-codec-015] The parameter anime saturation uses its own token
+A054-key-anime-edgeThick: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A054-key-noir-contrastAmt: KILLED [share-codec-015] The parameter noir contrastAmt uses its own token
+A054-key-noir-grainAmt: KILLED [share-codec-015] The parameter noir grainAmt uses its own token
+A054-key-noir-vignetteAmt: KILLED [share-codec-015] The parameter noir vignetteAmt uses its own token
+A054-key-snow-density: KILLED [share-codec-015] The parameter snow density uses its own token
+A054-key-snow-wind: KILLED [share-codec-015] The parameter snow wind uses its own token
+A070-key-control-panel: KILLED [share-codec-019] The panel control-panel uses its own entry
+A070-key-location-bar: KILLED [share-codec-019] The panel location-bar uses its own entry
+A070-key-data-panel: KILLED [share-codec-019] The panel data-panel uses its own entry
+A070-key-cctv-panel: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A070-key-recent-imagery-panel: KILLED [share-codec-019] The panel recent-imagery-panel uses its own entry
+A070-key-street-level-panel: KILLED [share-codec-019] The panel street-level-panel uses its own entry
+A070-key-radio-panel: KILLED [share-codec-019] The panel radio-panel uses its own entry
+A070-key-scene-panel: KILLED [share-codec-019] The panel scene-panel uses its own entry
+A070-key-global-context-panel: KILLED [share-codec-019] The panel global-context-panel uses its own entry
+A070-key-pp-toggles: KILLED [share-codec-019] The panel pp-toggles uses its own entry
+A070-key-param-slider-panel: KILLED [share-codec-019] The panel param-slider-panel uses its own entry
+A082-key-aircraft: KILLED [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways
+A082-key-military_aircraft: KILLED [share-codec-022 share-codec-039] The tracking slot for military_aircraft moves both ways
+A082-key-vessel: SURVIVED 
+A082-key-satellite: KILLED [share-codec-022 share-codec-039] The tracking slot for satellite moves both ways
+A089-key-bloom: KILLED [share-codec-012] The flag bloom uses its own bit
+A089-key-sharpen: KILLED [share-codec-012] The flag sharpen uses its own bit
+A089-key-hudVisible: KILLED [share-codec-012] The flag hudVisible uses its own bit
+A089-key-celestialRing: KILLED [share-codec-012] The flag celestialRing uses its own bit
+A089-key-scopeEnabled: KILLED [share-codec-012] The flag scopeEnabled uses its own bit
+A111-key-traffic: KILLED [share-codec-018] The option traffic roadMode uses one wire entry
+A111-key-weather-lightning: KILLED [share-codec-018] The option weather-lightning opacity uses one wire entry
+A111-key-weather-radar: KILLED [share-codec-018] The option weather-radar opacity uses one wire entry
+A111-key-weather-satellite: KILLED [share-codec-018] The option weather-satellite infrared uses one wire entry
+A111-key-wind: KILLED [share-codec-018] The option wind model uses one wire entry
+A111-key-flights: KILLED [share-codec-018] The option flights models3d uses one wire entry
+A111-key-satellites: KILLED [share-codec-018] The option satellites catalog uses one wire entry
+A111-key-cctv: KILLED [share-codec-018] The option cctv coverageMode uses one wire entry
+A111-key-recent-imagery: KILLED [share-codec-018] The option recent-imagery west uses one wire entry
+A111-key-street-level: KILLED [share-codec-018] The option street-level mapillary uses one wire entry
+A111-key-radio: KILLED [share-codec-018] The option radio filter uses one wire entry
+A112-key-traffic-roadMode: KILLED [share-codec-018] The option traffic roadMode uses one wire entry
+A112-key-weather-lightning-opacity: KILLED [share-codec-018] The option weather-lightning opacity uses one wire entry
+A112-key-weather-radar-opacity: KILLED [share-codec-018] The option weather-radar opacity uses one wire entry
+A112-key-weather-satellite-infrared: KILLED [share-codec-018] The option weather-satellite infrared uses one wire entry
+A112-key-weather-satellite-opacity: KILLED [share-codec-018] The option weather-satellite opacity uses one wire entry
+A112-key-weather-satellite-product: KILLED [share-codec-018] The option weather-satellite product uses one wire entry
+A112-key-wind-model: KILLED [share-codec-018] The option wind model uses one wire entry
+A112-key-wind-overlay: KILLED [share-codec-018] The option wind overlay uses one wire entry
+A112-key-wind-units: KILLED [share-codec-018] The option wind units uses one wire entry
+A112-key-wind-paused: KILLED [share-codec-018] The option wind paused uses one wire entry
+A112-key-flights-models3d: KILLED [share-codec-018] The option flights models3d uses one wire entry
+A112-key-flights-models3dMode: KILLED [share-codec-018] The option flights models3dMode uses one wire entry
+A112-key-flights-selectedFlightsTrackingId: SURVIVED 
+A112-key-flights-selectedMilitaryTrackingId: SURVIVED 
+A112-key-satellites-catalog: KILLED [share-codec-018] The option satellites catalog uses one wire entry
+A112-key-satellites-selectedSatTrackingId: SURVIVED 
+A112-key-cctv-coverageMode: KILLED [share-codec-018] The option cctv coverageMode uses one wire entry
+A112-key-cctv-showProjection: KILLED [share-codec-018] The option cctv showProjection uses one wire entry
+A112-key-cctv-autoHop: KILLED [share-codec-018] The option cctv autoHop uses one wire entry
+A112-key-recent-imagery-west: KILLED [share-codec-018] The option recent-imagery west uses one wire entry
+A112-key-recent-imagery-south: KILLED [share-codec-018] The option recent-imagery south uses one wire entry
+A112-key-recent-imagery-east: KILLED [share-codec-018] The option recent-imagery east uses one wire entry
+A112-key-recent-imagery-north: KILLED [share-codec-018] The option recent-imagery north uses one wire entry
+A112-key-recent-imagery-a: KILLED [share-codec-018] The option recent-imagery a uses one wire entry
+A112-key-recent-imagery-b: KILLED [share-codec-018] The option recent-imagery b uses one wire entry
+A112-key-recent-imagery-mode: KILLED [share-codec-018] The option recent-imagery mode uses one wire entry
+A112-key-recent-imagery-split: KILLED [share-codec-018] The option recent-imagery split uses one wire entry
+A112-key-recent-imagery-viirs: KILLED [share-codec-018] The option recent-imagery viirs uses one wire entry
+A112-key-street-level-mapillary: KILLED [share-codec-018] The option street-level mapillary uses one wire entry
+A112-key-street-level-providerSwitches: KILLED [share-codec-018] The option street-level providerSwitches uses one wire entry
+A112-key-street-level-pano: KILLED [share-codec-018] The option street-level pano uses one wire entry
+A112-key-street-level-sinceDays: KILLED [share-codec-018] The option street-level sinceDays uses one wire entry
+A112-key-radio-filter: KILLED [share-codec-018] The option radio filter uses one wire entry
+A112-key-radio-volume: KILLED [share-codec-018] The option radio volume uses one wire entry
+A120-key-control-panel: KILLED [share-codec-019] The panel control-panel uses its own entry
+A120-key-location-bar: KILLED [share-codec-019] The panel location-bar uses its own entry
+A120-key-data-panel: KILLED [share-codec-019] The panel data-panel uses its own entry
+A120-key-cctv-panel: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A120-key-recent-imagery-panel: KILLED [share-codec-019] The panel recent-imagery-panel uses its own entry
+A120-key-street-level-panel: KILLED [share-codec-019] The panel street-level-panel uses its own entry
+A120-key-radio-panel: KILLED [share-codec-019] The panel radio-panel uses its own entry
+A120-key-scene-panel: KILLED [share-codec-019] The panel scene-panel uses its own entry
+A120-key-global-context-panel: KILLED [share-codec-019] The panel global-context-panel uses its own entry
+A120-key-pp-toggles: KILLED [share-codec-019] The panel pp-toggles uses its own entry
+A120-key-param-slider-panel: KILLED [share-codec-019] The panel param-slider-panel uses its own entry
+A127-key-retro-pixelation: KILLED [share-codec-015] The parameter retro pixelation uses its own token
+A127-key-retro-distortion: KILLED [share-codec-015] The parameter retro distortion uses its own token
+A127-key-retro-instability: KILLED [share-codec-015] The parameter retro instability uses its own token
+A127-key-surveillance-gain: KILLED [share-codec-015] The parameter surveillance gain uses its own token
+A127-key-surveillance-bloom: KILLED [share-codec-015] The parameter surveillance bloom uses its own token
+A127-key-surveillance-scanlineStr: KILLED [share-codec-015] The parameter surveillance scanlineStr uses its own token
+A127-key-surveillance-pixelation: KILLED [share-codec-015] The parameter surveillance pixelation uses its own token
+A127-key-thermal-sensitivity: KILLED [share-codec-015] The parameter thermal sensitivity uses its own token
+A127-key-thermal-bloom: KILLED [share-codec-015] The parameter thermal bloom uses its own token
+A127-key-thermal-mode: KILLED [share-codec-015] The parameter thermal mode uses its own token
+A127-key-thermal-pixelation: KILLED [share-codec-015] The parameter thermal pixelation uses its own token
+A127-key-thermal-palette: KILLED [share-codec-015] The parameter thermal palette uses its own token
+A127-key-anime-saturation: KILLED [share-codec-015] The parameter anime saturation uses its own token
+A127-key-anime-edgeThick: KILLED [share-codec-015] The parameter anime edgeThick uses its own token
+A127-key-noir-contrastAmt: KILLED [share-codec-015] The parameter noir contrastAmt uses its own token
+A127-key-noir-grainAmt: KILLED [share-codec-015] The parameter noir grainAmt uses its own token
+A127-key-noir-vignetteAmt: KILLED [share-codec-015] The parameter noir vignetteAmt uses its own token
+A127-key-snow-density: KILLED [share-codec-015] The parameter snow density uses its own token
+A127-key-snow-wind: KILLED [share-codec-015] The parameter snow wind uses its own token
+A142-key-view: SURVIVED 
+A142-key-lat: KILLED [share-codec-012] The scalar lat uses its own field
+A142-key-lon: KILLED [share-codec-012] The scalar lon uses its own field
+A142-key-alt: KILLED [share-codec-012] The scalar alt uses its own field
+A142-key-heading: KILLED [share-codec-012] The scalar heading uses its own field
+A142-key-pitch: KILLED [share-codec-012] The scalar pitch uses its own field
+A142-key-roll: KILLED [share-codec-012] The scalar roll uses its own field
+A142-key-sharedAtMs: KILLED [share-codec-012] The scalar sharedAtMs uses its own field
+A142-key-flags: KILLED [share-codec-012] The flag bloom uses its own bit
+A142-key-layerState: KILLED [share-codec-016 share-codec-017] The layer flights keeps its own bit
+A142-key-layerOptions: SURVIVED 
+A142-key-panelState: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A142-key-thing: KILLED [share-codec-021] The entity aircraft uses its own numeric field
+A142-key-style: KILLED [share-codec-012] The scalar style uses its own field
+A142-key-mapStack: KILLED [share-codec-012] The scalar mapStack uses its own field
+A142-key-hudVariant: KILLED [share-codec-012] The scalar hudVariant uses its own field
+A142-key-bloomIntensity: KILLED [share-codec-012] The scalar bloomIntensity uses its own field
+A142-key-bloomVersion: KILLED [share-codec-012] The scalar bloomVersion uses its own field
+A142-key-sharpenIntensity: KILLED [share-codec-012] The scalar sharpenIntensity uses its own field
+A142-key-detectionMode: KILLED [share-codec-012] The scalar detectionMode uses its own field
+A142-key-detectionDensity: KILLED [share-codec-012] The scalar detectionDensity uses its own field
+A142-key-detectionAllocation: KILLED [share-codec-012] The scalar detectionAllocation uses its own field
+A142-key-detectionFadePct: KILLED [share-codec-012] The scalar detectionFadePct uses its own field
+A142-key-detectionOutsideOpacityPct: KILLED [share-codec-012] The scalar detectionOutsideOpacityPct uses its own field
+A142-key-scopeFeatherPct: KILLED [share-codec-012] The scalar scopeFeatherPct uses its own field
+A142-key-scopeTerminusPct: KILLED [share-codec-012] The scalar scopeTerminusPct uses its own field
+A142-key-styleParams: KILLED [share-codec-015] The parameter noir grainAmt uses its own token
+A150-key-bloom: KILLED [share-codec-012] The flag bloom uses its own bit
+A150-key-sharpen: KILLED [share-codec-012] The flag sharpen uses its own bit
+A150-key-hudVisible: KILLED [share-codec-012] The flag hudVisible uses its own bit
+A150-key-celestialRing: KILLED [share-codec-012] The flag celestialRing uses its own bit
+A150-key-scopeEnabled: KILLED [share-codec-012] The flag scopeEnabled uses its own bit
+A182-key-traffic: SURVIVED 
+A182-key-weather-lightning: SURVIVED 
+A182-key-weather-radar: SURVIVED 
+A182-key-weather-satellite: SURVIVED 
+A182-key-wind: SURVIVED 
+A182-key-flights: SURVIVED 
+A182-key-satellites: SURVIVED 
+A182-key-cctv: SURVIVED 
+A182-key-recent-imagery: SURVIVED 
+A182-key-street-level: SURVIVED 
+A182-key-radio: SURVIVED 
+A183-key-traffic-roadMode: SURVIVED 
+A183-key-weather-lightning-opacity: SURVIVED 
+A183-key-weather-radar-opacity: SURVIVED 
+A183-key-weather-satellite-infrared: SURVIVED 
+A183-key-weather-satellite-opacity: SURVIVED 
+A183-key-weather-satellite-product: SURVIVED 
+A183-key-wind-model: SURVIVED 
+A183-key-wind-overlay: SURVIVED 
+A183-key-wind-units: SURVIVED 
+A183-key-wind-paused: SURVIVED 
+A183-key-flights-models3d: SURVIVED 
+A183-key-flights-models3dMode: SURVIVED 
+A183-key-flights-selectedFlightsTrackingId: SURVIVED 
+A183-key-flights-selectedMilitaryTrackingId: SURVIVED 
+A183-key-satellites-catalog: SURVIVED 
+A183-key-satellites-selectedSatTrackingId: SURVIVED 
+A183-key-cctv-coverageMode: SURVIVED 
+A183-key-cctv-showProjection: SURVIVED 
+A183-key-cctv-autoHop: SURVIVED 
+A183-key-recent-imagery-west: SURVIVED 
+A183-key-recent-imagery-south: SURVIVED 
+A183-key-recent-imagery-east: SURVIVED 
+A183-key-recent-imagery-north: SURVIVED 
+A183-key-recent-imagery-a: SURVIVED 
+A183-key-recent-imagery-b: SURVIVED 
+A183-key-recent-imagery-mode: SURVIVED 
+A183-key-recent-imagery-split: SURVIVED 
+A183-key-recent-imagery-viirs: SURVIVED 
+A183-key-street-level-mapillary: SURVIVED 
+A183-key-street-level-providerSwitches: SURVIVED 
+A183-key-street-level-pano: SURVIVED 
+A183-key-street-level-sinceDays: SURVIVED 
+A183-key-radio-filter: SURVIVED 
+A183-key-radio-volume: SURVIVED 
+A190-key-control-panel: KILLED [share-codec-019] The panel control-panel uses its own entry
+A190-key-location-bar: KILLED [share-codec-019] The panel location-bar uses its own entry
+A190-key-data-panel: KILLED [share-codec-019] The panel data-panel uses its own entry
+A190-key-cctv-panel: KILLED [share-codec-019] The panel cctv-panel uses its own entry
+A190-key-recent-imagery-panel: KILLED [share-codec-019] The panel recent-imagery-panel uses its own entry
+A190-key-street-level-panel: KILLED [share-codec-019] The panel street-level-panel uses its own entry
+A190-key-radio-panel: KILLED [share-codec-019] The panel radio-panel uses its own entry
+A190-key-scene-panel: KILLED [share-codec-019] The panel scene-panel uses its own entry
+A190-key-global-context-panel: KILLED [share-codec-019] The panel global-context-panel uses its own entry
+A190-key-pp-toggles: KILLED [share-codec-019] The panel pp-toggles uses its own entry
+A190-key-param-slider-panel: KILLED [share-codec-019] The panel param-slider-panel uses its own entry
+A224-key-view: SURVIVED 
+A224-key-lat: KILLED [share-codec-012] The scalar lat uses its own field
+A224-key-lon: KILLED [share-codec-012] The scalar lon uses its own field
+A224-key-alt: KILLED [share-codec-012] The scalar alt uses its own field
+A224-key-heading: KILLED [share-codec-012] The scalar heading uses its own field
+A224-key-pitch: KILLED [share-codec-012] The scalar pitch uses its own field
+A224-key-roll: KILLED [share-codec-012] The scalar roll uses its own field
+A224-key-sharedAtMs: SURVIVED 
+A224-key-flags: SURVIVED 
+A224-key-layerState: SURVIVED 
+A224-key-layerOptions: SURVIVED 
+A224-key-panelState: SURVIVED 
+A224-key-thing: SURVIVED 
+A224-key-style: KILLED [share-codec-012] The scalar style uses its own field
+A224-key-mapStack: KILLED [share-codec-012] The scalar mapStack uses its own field
+A224-key-hudVariant: KILLED [share-codec-012] The scalar hudVariant uses its own field
+A224-key-bloomIntensity: KILLED [share-codec-012] The scalar bloomIntensity uses its own field
+A224-key-bloomVersion: KILLED [share-codec-012] The scalar bloomVersion uses its own field
+A224-key-sharpenIntensity: KILLED [share-codec-012] The scalar sharpenIntensity uses its own field
+A224-key-detectionMode: KILLED [share-codec-012] The scalar detectionMode uses its own field
+A224-key-detectionDensity: KILLED [share-codec-012] The scalar detectionDensity uses its own field
+A224-key-detectionAllocation: KILLED [share-codec-012] The scalar detectionAllocation uses its own field
+A224-key-detectionFadePct: KILLED [share-codec-012] The scalar detectionFadePct uses its own field
+A224-key-detectionOutsideOpacityPct: KILLED [share-codec-012] The scalar detectionOutsideOpacityPct uses its own field
+A224-key-scopeFeatherPct: KILLED [share-codec-012] The scalar scopeFeatherPct uses its own field
+A224-key-scopeTerminusPct: KILLED [share-codec-012] The scalar scopeTerminusPct uses its own field
+A224-key-styleParams: SURVIVED 
+A232-key-lat: KILLED [share-codec-034] The invalid payload reports latitude
+A232-key-lon: KILLED [share-codec-034] The decoder rejects the camera longitude
+A237-key-hudVariant: KILLED [share-codec-032 share-codec-056] The open name hudVariant checks bad name
+A237-key-mapStack: KILLED [share-codec-032 share-codec-056] The open name mapStack checks bad name
+A240-key-bloom: KILLED [share-codec-012] The flag bloom uses its own bit
+A240-key-sharpen: KILLED [share-codec-012] The flag sharpen uses its own bit
+A240-key-hudVisible: KILLED [share-codec-012] The flag hudVisible uses its own bit
+A240-key-celestialRing: KILLED [share-codec-012] The flag celestialRing uses its own bit
+A240-key-scopeEnabled: KILLED [share-codec-012] The flag scopeEnabled uses its own bit
+A108-key-air-quality: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A172-key-air-quality: KILLED [share-codec-016 share-codec-017] The layer air-quality keeps its own bit
+A108-key-ais-live-vessels: KILLED [share-codec-016 share-codec-017] The layer ais-live-vessels keeps its own bit
+A172-key-ais-live-vessels: KILLED [share-codec-016 share-codec-017] The layer ais-live-vessels keeps its own bit
+A108-key-alpr-cameras: KILLED [share-codec-016 share-codec-017] The layer alpr-cameras keeps its own bit
+A172-key-alpr-cameras: KILLED [share-codec-016 share-codec-017] The layer alpr-cameras keeps its own bit
+A108-key-beemaps: KILLED [share-codec-016 share-codec-017] The layer beemaps keeps its own bit
+A172-key-beemaps: KILLED [share-codec-016 share-codec-017] The layer beemaps keeps its own bit
+A108-key-beemaps-bursts: KILLED [share-codec-016 share-codec-017] The layer beemaps-bursts keeps its own bit
+A172-key-beemaps-bursts: KILLED [share-codec-016 share-codec-017] The layer beemaps-bursts keeps its own bit
+A108-key-bhote-koshi-2026: KILLED [share-codec-016 share-codec-017] The layer bhote-koshi-2026 keeps its own bit
+A172-key-bhote-koshi-2026: KILLED [share-codec-016 share-codec-017] The layer bhote-koshi-2026 keeps its own bit
+A108-key-bhote-koshi-locator: KILLED [share-codec-016 share-codec-017] The layer bhote-koshi-locator keeps its own bit
+A172-key-bhote-koshi-locator: KILLED [share-codec-016 share-codec-017] The layer bhote-koshi-locator keeps its own bit
+A108-key-bikeshare: KILLED [share-codec-016 share-codec-017] The layer bikeshare keeps its own bit
+A172-key-bikeshare: KILLED [share-codec-016 share-codec-017] The layer bikeshare keeps its own bit
+A108-key-cctv: KILLED [share-codec-016 share-codec-017] The layer cctv keeps its own bit
+A172-key-cctv: KILLED [share-codec-016 share-codec-017] The layer cctv keeps its own bit
+A108-key-directions: KILLED [share-codec-016 share-codec-017] The layer directions keeps its own bit
+A172-key-directions: KILLED [share-codec-016 share-codec-017] The layer directions keeps its own bit
+A108-key-earthquakes: KILLED [share-codec-016 share-codec-017] The layer earthquakes keeps its own bit
+A172-key-earthquakes: KILLED [share-codec-016 share-codec-017] The layer earthquakes keeps its own bit
+A108-key-fire-perimeters: KILLED [share-codec-016 share-codec-017] The layer fire-perimeters keeps its own bit
+A172-key-fire-perimeters: KILLED [share-codec-016 share-codec-017] The layer fire-perimeters keeps its own bit
+A108-key-flights: KILLED [share-codec-016 share-codec-017] The layer flights keeps its own bit
+A172-key-flights: KILLED [share-codec-016 share-codec-017] The layer flights keeps its own bit
+A108-key-gdacs: KILLED [share-codec-016 share-codec-017] The layer gdacs keeps its own bit
+A172-key-gdacs: KILLED [share-codec-016 share-codec-017] The layer gdacs keeps its own bit
+A108-key-gnss-integrity: KILLED [share-codec-016 share-codec-017] The layer gnss-integrity keeps its own bit
+A172-key-gnss-integrity: KILLED [share-codec-016 share-codec-017] The layer gnss-integrity keeps its own bit
+A108-key-local-dams: KILLED [share-codec-016 share-codec-017] The layer local-dams keeps its own bit
+A172-key-local-dams: KILLED [share-codec-016 share-codec-017] The layer local-dams keeps its own bit
+A108-key-local-datacenters: KILLED [share-codec-016 share-codec-017] The layer local-datacenters keeps its own bit
+A172-key-local-datacenters: KILLED [share-codec-016 share-codec-017] The layer local-datacenters keeps its own bit
+A108-key-local-firms: KILLED [share-codec-016 share-codec-017] The layer local-firms keeps its own bit
+A172-key-local-firms: KILLED [share-codec-016 share-codec-017] The layer local-firms keeps its own bit
+A108-key-military: KILLED [share-codec-016 share-codec-017] The layer military keeps its own bit
+A172-key-military: KILLED [share-codec-016 share-codec-017] The layer military keeps its own bit
+A108-key-military-awareness: KILLED [share-codec-016 share-codec-017] The layer military-awareness keeps its own bit
+A172-key-military-awareness: KILLED [share-codec-016 share-codec-017] The layer military-awareness keeps its own bit
+A108-key-military-installations: KILLED [share-codec-016 share-codec-017] The layer military-installations keeps its own bit
+A172-key-military-installations: KILLED [share-codec-016 share-codec-017] The layer military-installations keeps its own bit
+A108-key-osh-systems: KILLED [share-codec-016 share-codec-017] The layer osh-systems keeps its own bit
+A172-key-osh-systems: KILLED [share-codec-016 share-codec-017] The layer osh-systems keeps its own bit
+A108-key-planet-scenes: KILLED [share-codec-016 share-codec-017] The layer planet-scenes keeps its own bit
+A172-key-planet-scenes: KILLED [share-codec-016 share-codec-017] The layer planet-scenes keeps its own bit
+A108-key-radio: KILLED [share-codec-016 share-codec-017] The layer radio keeps its own bit
+A172-key-radio: KILLED [share-codec-016 share-codec-017] The layer radio keeps its own bit
+A108-key-recent-imagery: KILLED [share-codec-016 share-codec-017] The layer recent-imagery keeps its own bit
+A172-key-recent-imagery: KILLED [share-codec-016 share-codec-017] The layer recent-imagery keeps its own bit
+A108-key-reticulum: KILLED [share-codec-016 share-codec-017] The layer reticulum keeps its own bit
+A172-key-reticulum: KILLED [share-codec-016 share-codec-017] The layer reticulum keeps its own bit
+A108-key-rocket-launches: KILLED [share-codec-016 share-codec-017] The layer rocket-launches keeps its own bit
+A172-key-rocket-launches: KILLED [share-codec-016 share-codec-017] The layer rocket-launches keeps its own bit
+A108-key-s2-ghostmaps: KILLED [share-codec-016 share-codec-017] The layer s2-ghostmaps keeps its own bit
+A172-key-s2-ghostmaps: KILLED [share-codec-016 share-codec-017] The layer s2-ghostmaps keeps its own bit
+A108-key-satellites: KILLED [share-codec-016 share-codec-017] The layer satellites keeps its own bit
+A172-key-satellites: KILLED [share-codec-016 share-codec-017] The layer satellites keeps its own bit
+A108-key-skyfi-scenes: KILLED [share-codec-016 share-codec-017] The layer skyfi-scenes keeps its own bit
+A172-key-skyfi-scenes: KILLED [share-codec-016 share-codec-017] The layer skyfi-scenes keeps its own bit
+A108-key-skywatch-scenes: KILLED [share-codec-016 share-codec-017] The layer skywatch-scenes keeps its own bit
+A172-key-skywatch-scenes: KILLED [share-codec-016 share-codec-017] The layer skywatch-scenes keeps its own bit
+A108-key-street-level: KILLED [share-codec-016 share-codec-017] The layer street-level keeps its own bit
+A172-key-street-level: KILLED [share-codec-016 share-codec-017] The layer street-level keeps its own bit
+A108-key-telegeography-submarine-cables: KILLED [share-codec-016 share-codec-017] The layer telegeography-submarine-cables keeps its own bit
+A172-key-telegeography-submarine-cables: KILLED [share-codec-016 share-codec-017] The layer telegeography-submarine-cables keeps its own bit
+A108-key-traffic: KILLED [share-codec-016 share-codec-017] The layer traffic keeps its own bit
+A172-key-traffic: KILLED [share-codec-016 share-codec-017] The layer traffic keeps its own bit
+A108-key-transit: KILLED [share-codec-016 share-codec-017] The layer transit keeps its own bit
+A172-key-transit: KILLED [share-codec-016 share-codec-017] The layer transit keeps its own bit
+A108-key-weather-cyclones: KILLED [share-codec-016 share-codec-017] The layer weather-cyclones keeps its own bit
+A172-key-weather-cyclones: KILLED [share-codec-016 share-codec-017] The layer weather-cyclones keeps its own bit
+A108-key-weather-lightning: KILLED [share-codec-016 share-codec-017] The layer weather-lightning keeps its own bit
+A172-key-weather-lightning: KILLED [share-codec-016 share-codec-017] The layer weather-lightning keeps its own bit
+A108-key-weather-radar: KILLED [share-codec-016 share-codec-017] The layer weather-radar keeps its own bit
+A172-key-weather-radar: KILLED [share-codec-016 share-codec-017] The layer weather-radar keeps its own bit
+A108-key-weather-satellite: KILLED [share-codec-016 share-codec-017] The layer weather-satellite keeps its own bit
+A172-key-weather-satellite: KILLED [share-codec-016 share-codec-017] The layer weather-satellite keeps its own bit
+A108-key-wind: KILLED [share-codec-016 share-codec-017] The layer wind keeps its own bit
+A172-key-wind: KILLED [share-codec-016 share-codec-017] The layer wind keeps its own bit
+SURVIVORS: [('A004-key-layerStateInvalid', 'SURVIVED'), ('A013-key-layerState', 'SURVIVED'), ('A013-key-layerStateInvalid', 'SURVIVED'), ('A022-key-view', 'SURVIVED'), ('A022-key-flags', 'SURVIVED'), ('A022-key-layerOptions', 'SURVIVED'), ('A022-key-thing', 'SURVIVED'), ('A082-key-vessel', 'SURVIVED'), ('A112-key-flights-selectedFlightsTrackingId', 'SURVIVED'), ('A112-key-flights-selectedMilitaryTrackingId', 'SURVIVED'), ('A112-key-satellites-selectedSatTrackingId', 'SURVIVED'), ('A142-key-view', 'SURVIVED'), ('A142-key-layerOptions', 'SURVIVED'), ('A182-key-traffic', 'SURVIVED'), ('A182-key-weather-lightning', 'SURVIVED'), ('A182-key-weather-radar', 'SURVIVED'), ('A182-key-weather-satellite', 'SURVIVED'), ('A182-key-wind', 'SURVIVED'), ('A182-key-flights', 'SURVIVED'), ('A182-key-satellites', 'SURVIVED'), ('A182-key-cctv', 'SURVIVED'), ('A182-key-recent-imagery', 'SURVIVED'), ('A182-key-street-level', 'SURVIVED'), ('A182-key-radio', 'SURVIVED'), ('A183-key-traffic-roadMode', 'SURVIVED'), ('A183-key-weather-lightning-opacity', 'SURVIVED'), ('A183-key-weather-radar-opacity', 'SURVIVED'), ('A183-key-weather-satellite-infrared', 'SURVIVED'), ('A183-key-weather-satellite-opacity', 'SURVIVED'), ('A183-key-weather-satellite-product', 'SURVIVED'), ('A183-key-wind-model', 'SURVIVED'), ('A183-key-wind-overlay', 'SURVIVED'), ('A183-key-wind-units', 'SURVIVED'), ('A183-key-wind-paused', 'SURVIVED'), ('A183-key-flights-models3d', 'SURVIVED'), ('A183-key-flights-models3dMode', 'SURVIVED'), ('A183-key-flights-selectedFlightsTrackingId', 'SURVIVED'), ('A183-key-flights-selectedMilitaryTrackingId', 'SURVIVED'), ('A183-key-satellites-catalog', 'SURVIVED'), ('A183-key-satellites-selectedSatTrackingId', 'SURVIVED'), ('A183-key-cctv-coverageMode', 'SURVIVED'), ('A183-key-cctv-showProjection', 'SURVIVED'), ('A183-key-cctv-autoHop', 'SURVIVED'), ('A183-key-recent-imagery-west', 'SURVIVED'), ('A183-key-recent-imagery-south', 'SURVIVED'), ('A183-key-recent-imagery-east', 'SURVIVED'), ('A183-key-recent-imagery-north', 'SURVIVED'), ('A183-key-recent-imagery-a', 'SURVIVED'), ('A183-key-recent-imagery-b', 'SURVIVED'), ('A183-key-recent-imagery-mode', 'SURVIVED'), ('A183-key-recent-imagery-split', 'SURVIVED'), ('A183-key-recent-imagery-viirs', 'SURVIVED'), ('A183-key-street-level-mapillary', 'SURVIVED'), ('A183-key-street-level-providerSwitches', 'SURVIVED'), ('A183-key-street-level-pano', 'SURVIVED'), ('A183-key-street-level-sinceDays', 'SURVIVED'), ('A183-key-radio-filter', 'SURVIVED'), ('A183-key-radio-volume', 'SURVIVED'), ('A224-key-view', 'SURVIVED'), ('A224-key-sharedAtMs', 'SURVIVED'), ('A224-key-flags', 'SURVIVED'), ('A224-key-layerState', 'SURVIVED'), ('A224-key-layerOptions', 'SURVIVED'), ('A224-key-panelState', 'SURVIVED'), ('A224-key-thing', 'SURVIVED'), ('A224-key-styleParams', 'SURVIVED')]
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/sharecodec/node-cache PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/sharecodec /home/ianblenke/docker/gev-tools/sharecodec/muts.json T001 T002 T003 T004 T005 T006 T007 T008 T009 T010 T011 T012 T013 T014 T015 T016 T017 T018 T019 T020 T021 T022 T023 T024 T025 T026 T027 T028 T029 T030 T031 T032 T033 T034 T035 T036 T037 T038 T039 T040 T041 T042 T043 T044 T045 T046 T047 T048 T049 T050 T051 T052 T053 T054 T055 T056 T057 T058 T059 T060 T061 T062 T063 T064 T065
+T001: KILLED [share-codec-048] The numeric bound for alt accepts 1000000000000
+T002: KILLED [share-codec-048] The numeric bound for alt accepts -1000000000000
+T003: KILLED [share-codec-048] The numeric bound for pitch accepts 95
+T004: KILLED [share-codec-048] The numeric bound for pitch accepts -95
+T005: KILLED [share-codec-048] The numeric bound for roll accepts 721
+T006: KILLED [share-codec-048] The numeric bound for bloomIntensity accepts 10000000
+T007: KILLED [share-codec-048] The numeric bound for bloomIntensity accepts -5
+T008: KILLED [share-codec-048] The numeric bound for bloomVersion accepts 10000000
+T009: KILLED [share-codec-048] The numeric bound for sharpenIntensity accepts -5
+T010: KILLED [share-codec-048] The numeric bound for detectionFadePct accepts 50
+T011: KILLED [share-codec-048] The numeric bound for detectionOutsideOpacityPct accepts 101
+T012: KILLED [share-codec-048] The numeric bound for scopeTerminusPct accepts 3
+T013: KILLED [share-codec-048] The numeric bound for scopeTerminusPct accepts 101
+T014: KILLED [share-codec-048] The invalid number uses defaults for case null
+T015: KILLED [share-codec-048] The invalid number uses defaults for case undefined
+T016: KILLED [share-codec-048] The invalid number uses defaults for case false
+T017: KILLED [share-codec-048] The invalid number uses defaults for case [object Object]
+T018: KILLED [share-codec-048] The invalid number uses defaults for case NaN
+T019: KILLED [share-codec-048] The invalid number uses defaults for case Infinity
+T020: KILLED [share-codec-048] The invalid number uses defaults for case bad
+T021: KILLED [share-codec-021] The invalid entity id uses a place for null
+T022: KILLED [share-codec-050] The layer option handles excessive text
+T023: KILLED [share-codec-034] The invalid payload reports wire
+T024: KILLED [share-codec-034] The invalid payload reports truncated varint
+T025: KILLED [share-codec-034] The invalid payload reports overlong varint
+T026: KILLED [share-codec-034] The invalid payload reports wrong field type
+T027: KILLED [share-codec-005] The signed writer reports its own range error
+T028: KILLED [share-codec-057] The decoder uses Normal for an unknown style
+T029: KILLED [share-codec-048] The invalid detection mode uses the default for undefined
+T030: KILLED [share-codec-025] The state derives each camera field at latitude 0 longitude 90
+T031: KILLED [share-codec-025] The state derives each camera field at latitude 45 longitude -120
+T032: KILLED [share-codec-013] The angle heading at 181 uses the nearest signed turn
+T033: KILLED [share-codec-013] The angle roll at 359 uses the nearest signed turn
+T034: KILLED [share-codec-033] The unknown enum style uses its default
+T035: KILLED [share-codec-033] The unknown enum mapStack uses its default
+T036: KILLED [share-codec-010] The enum and panel tables match their permanent values
+T037: KILLED [share-codec-008] The wire cursor skips type 0 to its next field
+T038: KILLED [share-codec-008] The wire cursor skips type 2 to its next field
+T039: KILLED [share-codec-008] The wire cursor skips type 1 to its next field
+T040: KILLED [share-codec-008] The wire cursor skips type 5 to its next field
+T041: KILLED [share-codec-032] The open name mapStack accepts its full width
+T042: KILLED [share-codec-056] The open name mapStack rejects excess width
+T043: KILLED [share-codec-010] The default state sets the field view
+T044: KILLED [share-codec-010] The default state excludes the field flags
+T045: KILLED [share-codec-010] The default state excludes the field layerOptions
+T046: KILLED [share-codec-010] The default state excludes the field thing
+T047: KILLED [share-codec-022] The raw tracking option for aircraft becomes its entity
+T048: KILLED [share-codec-022] The raw tracking option for military_aircraft becomes its entity
+T049: KILLED [share-codec-022] The raw tracking option for satellite becomes its entity
+T050: KILLED [share-codec-043] the converter ignores non-objects and restore bookkeeping
+T051: KILLED [share-codec-014] a view just switched to any style costs its camera and style only
+T052: KILLED [share-codec-015] invalid style parameters keep the style’s own value
+T053: KILLED [share-codec-036] normalization is idempotent
+T054: KILLED [share-codec-010] defaults travel as frozen meanings that match today’s app defaults
+T055: SURVIVED 
+T056: KILLED [share-codec-015] the style parameter table agrees with the long form’s `sp` codec
+T057: KILLED [share-codec-017] layer sets: absent, explicitly empty and populated stay distinct
+T058: KILLED [share-codec-020] a place view opens at its camera; a thing view also names what to follow
+T059: KILLED [share-codec-021] thing ids use the compact numeric form when they can, text otherwise
+T060: KILLED [share-codec-022] tracking selections in layer options become a thing view
+T061: KILLED [share-codec-034] a code is the bare base64url payload; URL forms are not codes
+T062: KILLED [share-codec-013] size: a camera-only place view
+T063: KILLED [share-codec-025] the derived camera looks at the fix from the offset, even from orbit
+T064: KILLED [share-codec-049] future panel values and style tokens are skipped, not applied
+T065: KILLED [share-codec-050] a layer option filed under a mirror layer is ignored
+SURVIVORS: [('T055', 'SURVIVED')]
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/sharecodec/node-cache python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/sharecodec /home/ianblenke/docker/gev-tools/sharecodec/muts.json T055 S050 A020-right S057
+A020-right: KILLED [share-codec-057] The decoder uses Normal for an unknown style
+S050: KILLED [share-codec-050] The mirror layer rejects a valid owner option
+S057: KILLED [share-codec-057] The decoder uses Normal for an unknown style
+T055: KILLED [share-codec-019] the panel table agrees with the long form’s panel tokens
+SURVIVORS: []
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/sharecodec/node-cache python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/sharecodec /home/ianblenke/docker/gev-tools/sharecodec/muts.json Z001 Z002 Z003
+Z001: KILLED [share-codec-048] extreme and negative-zero numbers normalize to values the decoder returns
+Z002: KILLED [share-codec-048] extreme and negative-zero numbers normalize to values the decoder returns
+Z003: KILLED [share-codec-048] extreme and negative-zero numbers normalize to values the decoder returns
+SURVIVORS: []
+

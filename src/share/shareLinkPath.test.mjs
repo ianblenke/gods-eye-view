@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { appRootUrl, parseSharePath, shareLinkUrl } from './shareLinkPath.js';
 
-test('a share path names its code and the app base path', () => {
+test('[share-codec-045] a share path names its code and the app base path', () => {
   assert.deepEqual(parseSharePath('/share/AQc'), {
     code: 'AQc',
     basePath: '/',
@@ -18,7 +18,7 @@ test('a share path names its code and the app base path', () => {
   assert.equal(parseSharePath(undefined), null);
 });
 
-test('the app root drops a share path and the hash, and keeps the query', () => {
+test('[share-codec-046] the app root drops a share path and the hash, and keeps the query', () => {
   assert.equal(
     appRootUrl('https://gev.example/share/AQc?qa=1#v=2').href,
     'https://gev.example/?qa=1',
@@ -33,7 +33,7 @@ test('the app root drops a share path and the hash, and keeps the query', () => 
   );
 });
 
-test('a share link sits under the app root without the sender ?lang', () => {
+test('[share-codec-047] a share link sits under the app root without the sender ?lang', () => {
   assert.equal(
     shareLinkUrl('AQc', 'https://gev.example/?lang=ru#v=2&lat=1'),
     'https://gev.example/share/AQc',

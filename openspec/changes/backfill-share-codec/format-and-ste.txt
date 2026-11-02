@@ -1,0 +1,13 @@
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && node scripts/format.mjs --write
+Formatted 1673 source files.
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && node scripts/format.mjs --check
+Checked 1673 source files.
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && node ../node_modules/prettier/bin/prettier.cjs --check src/share/*.test.mjs
+Checking formatting...
+All matched files use Prettier code style!
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && node scripts/spec/gates.mjs lint --change backfill-share-codec 2>&1 | grep -E "^(ERROR|STE)"
+STE: 0 errors, 1265 warnings.
+
