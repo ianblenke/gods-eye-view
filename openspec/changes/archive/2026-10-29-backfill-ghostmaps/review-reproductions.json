@@ -1,0 +1,556 @@
+{
+  "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8",
+  "rounds": [
+    {
+      "commit": "03be515cbbc11ee27a7445b8c628cbc06a1289fb",
+      "command": "cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/ghostmaps /home/ianblenke/docker/gev-tools/ghostmaps/round1-reproductions.json",
+      "results": [
+        {
+          "id": "R1F01-id",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F01-version",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F02-line",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F02-point",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F02-polygon",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F02-hole",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F03-stop",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F04-read",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F04-event",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F05-state",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F06-cleanup",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F07-values",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F08-shared",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F09-disk",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F10-commit",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R1F11-file",
+          "status": "SURVIVED"
+        }
+      ]
+    },
+    {
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8",
+      "command": "cd /home/ianblenke/docker/gev-work/ghostmaps && NODE_OPTIONS=--test-isolation=none NODE_COMPILE_CACHE=/home/ianblenke/docker/gev-tools/ghostmaps/node-cache python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/ghostmaps /home/ianblenke/docker/gev-tools/ghostmaps/round3-reproductions.json",
+      "results": [
+        {
+          "id": "R2F01-events",
+          "file": "server/providers/ghostMaps.js",
+          "old": "if (url.pathname === '/events') return events(req, res);",
+          "new": "if (url.pathname === '/events') { await first; return events(req, res); }",
+          "test": [
+            "server/providers/ghostMaps.test.mjs"
+          ],
+          "pattern": "ghostmaps-021",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R2F02-chip",
+          "file": "src/layers/ghostMaps/index.js",
+          "old": "writeStoredSelection(storage, _selection);",
+          "new": "clearSelection();\n    writeStoredSelection(storage, _selection);",
+          "test": [
+            "src/layers/ghostMaps/lifecycle.test.mjs"
+          ],
+          "pattern": "ghostmaps-054|ghostmaps-055",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R2F03-activate",
+          "file": "src/layers/ghostMaps/index.js",
+          "old": "if (card.interactive) {",
+          "new": "if (card.interactive || !openExternal) {",
+          "test": [
+            "src/layers/ghostMaps/lifecycle.test.mjs"
+          ],
+          "pattern": "ghostmaps-047",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R2F04-tree",
+          "file": "server/providers/ghostMaps.js",
+          "old": "buildGhostMapsCatalog(tree.tree)",
+          "new": "buildGhostMapsCatalog(tree.truncated ? [] : tree.tree)",
+          "test": [
+            "server/providers/ghostMaps.test.mjs"
+          ],
+          "pattern": "ghostmaps-058",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R2F05-storage",
+          "file": "src/layers/ghostMaps/index.js",
+          "old": "value.map(String)",
+          "new": "value.map(() => 'cip')",
+          "test": [
+            "src/layers/ghostMaps/lifecycle.test.mjs"
+          ],
+          "pattern": "ghostmaps-045",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R2F06-id",
+          "file": "server/providers/ghostMaps.js",
+          "old": "watcher.file(match[1])",
+          "new": "watcher.file('cip')",
+          "test": [
+            "server/providers/ghostMaps.test.mjs"
+          ],
+          "pattern": "ghostmaps-036|ghostmaps-037",
+          "status": "SURVIVED"
+        },
+        {
+          "id": "R2F07-commit",
+          "file": "server/providers/ghostMaps.js",
+          "old": "get(`${api}/commits/${sha}`, apiHeaders())",
+          "new": "get(`${api}/commits/${sha}`)",
+          "test": [
+            "server/providers/ghostMaps.test.mjs"
+          ],
+          "pattern": "ghostmaps-052",
+          "status": "SURVIVED"
+        }
+      ]
+    }
+  ],
+  "sweepBefore": [
+    {
+      "id": "SW3-map-first",
+      "file": "src/layers/ghostMaps/kml.js",
+      "old": "for (const el of descendants(doc, 'StyleMap'))",
+      "new": "for (const el of descendants(doc, 'StyleMap').slice(0, 1))",
+      "test": [
+        "src/layers/ghostMaps/kml.test.mjs"
+      ],
+      "pattern": "ghostmaps-027",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-pair-first",
+      "file": "src/layers/ghostMaps/kml.js",
+      "old": "text(firstChild(pair, 'key')) === 'normal'",
+      "new": "true",
+      "test": [
+        "src/layers/ghostMaps/kml.test.mjs"
+      ],
+      "pattern": "ghostmaps-027",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-card-values",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "const line = label ? `${fieldLabel(label)}: ${value}` : value;",
+      "new": "const line = label ? `${fieldLabel(label)}: ${fields[1].value}` : value;",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The card caps fields and excludes the repeated feature name",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-window-url",
+      "file": "src/app/layers/ghostMaps.js",
+      "old": "window.open(url, '_blank', 'noopener,noreferrer')",
+      "new": "window.open('https://a.test/', '_blank', 'noopener,noreferrer')",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The application card opens the link through the window host",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-window-pick",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "  function pickedKey(picked) {\n    const pickId = picking.resolvePickId(picked);\n    if (typeof pickId !== 'string' || !pickId.startsWith(PICK_PREFIX))\n      return null;\n    const [productId, index] = pickId.slice(PICK_PREFIX.length).split(':');\n    return _loaded.get(productId)?.features[Number(index)]\n      ? `${productId}:${index}`\n      : null;\n  }\n",
+      "new": "  function pickedKey(picked) {\n    const pickId = picking.resolvePickId({id: 'ghostmaps:cip:0:0'});\n    if (typeof pickId !== 'string' || !pickId.startsWith(PICK_PREFIX))\n      return null;\n    const [productId, index] = pickId.slice(PICK_PREFIX.length).split(':');\n    return _loaded.get(productId)?.features[Number(index)]\n      ? `${productId}:${index}`\n      : null;\n  }\n",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The application card opens the link through the window host",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-pick-position",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "_viewer.scene.pick(click.position)",
+      "new": "_viewer.scene.pick({x:0,y:0})",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "A selected marker publishes a card",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-hit-x",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "click.position?.x",
+      "new": "0",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "A selected marker publishes a card",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-hit-y",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "click.position?.y",
+      "new": "0",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "A selected marker publishes a card",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-hit-source",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "{ sourceId: GHOSTMAPS_OVERLAY_SOURCE_ID }",
+      "new": "{ sourceId: 'wrong' }",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "A selected marker publishes a card",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-owner-id",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "picking.isOwnedByOtherLayer(GHOSTMAPS_LAYER_ID, pickId)",
+      "new": "picking.isOwnedByOtherLayer('wrong', pickId)",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The pointer owner and foreign picks keep the current card",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-card-source",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "overlayHost.setEntries(\n      GHOSTMAPS_OVERLAY_SOURCE_ID,\n      [card],",
+      "new": "overlayHost.setEntries(\n      'wrong',\n      [card],",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "A selected marker publishes a card",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-marker-tag",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "document.createElement('canvas')",
+      "new": "document.createElement('div')",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The layer uses a canvas marker and caches its image",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-marker-context",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "canvas.getContext('2d')",
+      "new": "canvas.getContext('webgl')",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The layer uses a canvas marker and caches its image",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-global-fetch-options",
+      "file": "src/layers/ghostMaps/source.js",
+      "old": "globalThis.fetch(...args)",
+      "new": "globalThis.fetch(args[0])",
+      "test": [
+        "src/layers/ghostMaps/source.test.mjs"
+      ],
+      "pattern": "The default source calls the global fetch helper",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-default-fetch-options",
+      "file": "server/providers/ghostMaps.js",
+      "old": "globalThis.fetch(...args)",
+      "new": "globalThis.fetch(args[0])",
+      "test": [
+        "server/providers/ghostMaps.test.mjs"
+      ],
+      "pattern": "The default helpers use fetch log and warning callbacks",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-factory-storage",
+      "file": "src/app/layers/ghostMaps.js",
+      "old": "    ...options,",
+      "new": "    ...options,\n    storage: null,",
+      "test": [
+        "src/app/layers/ghostMaps.test.mjs"
+      ],
+      "pattern": "The application factory accepts a source and host options",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-factory-pointer",
+      "file": "src/app/layers/ghostMaps.js",
+      "old": "    ...options,",
+      "new": "    ...options,\n    pointer: { isPointerFree },",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The application card opens the link through the window host",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-factory-external",
+      "file": "src/app/layers/ghostMaps.js",
+      "old": "    ...options,",
+      "new": "    ...options,\n    openExternal: (url) => window.open(url, '_blank', 'noopener,noreferrer'),",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The application card opens the link through the window host",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-owned-pick",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "if (pointer && !pointer.isPointerFree()) return;",
+      "new": "if (pointer && !pointer.isPointerFree()) { _viewer.scene.pick(click.position); return; }",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The pointer owner and foreign picks keep the current card",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-card-pick",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "if (_selectedLink && openExternal) openExternal(_selectedLink);\n        return;",
+      "new": "if (_selectedLink && openExternal) openExternal(_selectedLink);\n        _viewer.scene.pick(click.position);\n        return;",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "A selected marker publishes a card",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-aborted-request",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "if (!_enabled || signal?.aborted) return false;",
+      "new": "if (signal?.aborted) await source.getCatalog({ signal });\n      if (!_enabled || signal?.aborted) return false;",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "An aborted signal rejects the catalog update",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-catalog-signal",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "source.getCatalog({ signal })",
+      "new": "source.getCatalog({ signal: undefined })",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "ghostmaps-044",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-catalog-own-signal",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "source.getCatalog({ signal })",
+      "new": "source.getCatalog(Object.create({ signal }))",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "ghostmaps-044",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-raw-commit",
+      "file": "server/providers/ghostMaps.js",
+      "old": "const commit = state.commit;",
+      "new": "const commit = '1111111111111111111111111111111111111111';",
+      "test": [
+        "server/providers/ghostMaps.test.mjs"
+      ],
+      "pattern": "files download by commit",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-commit-edition",
+      "file": "server/providers/ghostMaps.js",
+      "old": "`${api}/commits/${sha}`",
+      "new": "`${api}/commits/1111111111111111111111111111111111111111`",
+      "test": [
+        "server/providers/ghostMaps.test.mjs"
+      ],
+      "pattern": "a new commit is announced once",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-allow-absent",
+      "file": "server/providers/ghostMaps.js",
+      "old": "...(status === 405 ? { Allow: 'GET' } : {}),",
+      "new": "...(status === 405 ? { Allow: 'GET' } : { Allow: undefined }),",
+      "test": [
+        "server/providers/ghostMaps.test.mjs"
+      ],
+      "pattern": "The proxy serves current file bytes and cache headers",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-reader-hole-first",
+      "file": "src/layers/ghostMaps/kml.js",
+      "old": ".filter((hole) => hole.length >= 3);",
+      "new": ".filter((hole) => hole.length >= 3).map((_, __, holes) => holes[0]);",
+      "test": [
+        "src/layers/ghostMaps/kml.test.mjs"
+      ],
+      "pattern": "The reader accepts Polygon",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-hole-minimum",
+      "file": "src/layers/ghostMaps/kml.js",
+      "old": "hole.length >= 3",
+      "new": "hole.length >= 2",
+      "test": [
+        "src/layers/ghostMaps/kml.test.mjs"
+      ],
+      "pattern": "The reader accepts Polygon",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-layer-hole-first",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "(hole) => new Cesium.PolygonHierarchy(ring(hole)),",
+      "new": "(hole) => new Cesium.PolygonHierarchy(ring(geometry.holes[0])), ",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The layer creates point line and polygon entities",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-point-first",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "...geometry.position,",
+      "new": "...feature.geometries[0].position,",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The layer uses a canvas marker and caches its image",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-visibility-default",
+      "file": "src/layers/ghostMaps/kml.js",
+      "old": "text(firstChild(placemark, 'visibility')) === '0'",
+      "new": "Boolean(text(firstChild(placemark, 'visibility')))",
+      "test": [
+        "src/layers/ghostMaps/kml.test.mjs"
+      ],
+      "pattern": "The reader excludes hidden placemarks",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-initial-horizon",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "_horizon.update(next.pins);",
+      "new": "/* no initial cull */",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "The horizon callback updates point visibility after a camera change",
+      "status": "KILLED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    },
+    {
+      "id": "SW3-cached-request",
+      "file": "src/layers/ghostMaps/index.js",
+      "old": "if (_loaded.get(product.id)?.version === product.version) continue;",
+      "new": "if (product.id === 'cip' && _loaded.get(product.id)?.version === product.version) continue;",
+      "test": [
+        "src/layers/ghostMaps/lifecycle.test.mjs"
+      ],
+      "pattern": "A chip change keeps the other product choices in storage",
+      "status": "SURVIVED",
+      "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8"
+    }
+  ]
+}

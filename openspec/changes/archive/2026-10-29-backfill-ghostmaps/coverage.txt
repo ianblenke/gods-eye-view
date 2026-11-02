@@ -1,0 +1,62 @@
+{
+  "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8",
+  "node": "v26.12.1",
+  "data": [
+    {
+      "file": "server/providers/ghostMaps.js",
+      "command": "node --test --test-force-exit --experimental-test-coverage --test-coverage-include=server/providers/ghostMaps.js --test-coverage-exclude=**/*.test.mjs server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/catalog.test.mjs src/layers/ghostMaps/records.test.mjs src/layers/ghostMaps/lifecycle.test.mjs src/layers/ghostMaps/kml.test.mjs src/layers/ghostMaps/source.test.mjs",
+      "line": "100.00",
+      "branch": "100.00",
+      "functions": "100.00",
+      "passed": true
+    },
+    {
+      "file": "src/app/layers/ghostMaps.js",
+      "command": "node --test --test-force-exit --experimental-test-coverage --test-coverage-include=src/app/layers/ghostMaps.js --test-coverage-exclude=**/*.test.mjs server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/catalog.test.mjs src/layers/ghostMaps/records.test.mjs src/layers/ghostMaps/lifecycle.test.mjs src/layers/ghostMaps/kml.test.mjs src/layers/ghostMaps/source.test.mjs",
+      "line": "100.00",
+      "branch": "100.00",
+      "functions": "100.00",
+      "passed": true
+    },
+    {
+      "file": "src/layers/ghostMaps/catalog.js",
+      "command": "node --test --test-force-exit --experimental-test-coverage --test-coverage-include=src/layers/ghostMaps/catalog.js --test-coverage-exclude=**/*.test.mjs server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/catalog.test.mjs src/layers/ghostMaps/records.test.mjs src/layers/ghostMaps/lifecycle.test.mjs src/layers/ghostMaps/kml.test.mjs src/layers/ghostMaps/source.test.mjs",
+      "line": "100.00",
+      "branch": "100.00",
+      "functions": "100.00",
+      "passed": true
+    },
+    {
+      "file": "src/layers/ghostMaps/index.js",
+      "command": "node --test --test-force-exit --experimental-test-coverage --test-coverage-include=src/layers/ghostMaps/index.js --test-coverage-exclude=**/*.test.mjs server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/catalog.test.mjs src/layers/ghostMaps/records.test.mjs src/layers/ghostMaps/lifecycle.test.mjs src/layers/ghostMaps/kml.test.mjs src/layers/ghostMaps/source.test.mjs",
+      "line": "100.00",
+      "branch": "99.30",
+      "functions": "100.00",
+      "passed": true
+    },
+    {
+      "file": "src/layers/ghostMaps/kml.js",
+      "command": "node --test --test-force-exit --experimental-test-coverage --test-coverage-include=src/layers/ghostMaps/kml.js --test-coverage-exclude=**/*.test.mjs server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/catalog.test.mjs src/layers/ghostMaps/records.test.mjs src/layers/ghostMaps/lifecycle.test.mjs src/layers/ghostMaps/kml.test.mjs src/layers/ghostMaps/source.test.mjs",
+      "line": "100.00",
+      "branch": "100.00",
+      "functions": "100.00",
+      "passed": true
+    },
+    {
+      "file": "src/layers/ghostMaps/records.js",
+      "command": "node --test --test-force-exit --experimental-test-coverage --test-coverage-include=src/layers/ghostMaps/records.js --test-coverage-exclude=**/*.test.mjs server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/catalog.test.mjs src/layers/ghostMaps/records.test.mjs src/layers/ghostMaps/lifecycle.test.mjs src/layers/ghostMaps/kml.test.mjs src/layers/ghostMaps/source.test.mjs",
+      "line": "100.00",
+      "branch": "100.00",
+      "functions": "100.00",
+      "passed": true
+    },
+    {
+      "file": "src/layers/ghostMaps/source.js",
+      "command": "node --test --test-force-exit --experimental-test-coverage --test-coverage-include=src/layers/ghostMaps/source.js --test-coverage-exclude=**/*.test.mjs server/providers/ghostMaps.test.mjs src/app/layers/ghostMaps.test.mjs src/layers/ghostMaps/catalog.test.mjs src/layers/ghostMaps/records.test.mjs src/layers/ghostMaps/lifecycle.test.mjs src/layers/ghostMaps/kml.test.mjs src/layers/ghostMaps/source.test.mjs",
+      "line": "100.00",
+      "branch": "100.00",
+      "functions": "100.00",
+      "passed": true
+    }
+  ]
+}

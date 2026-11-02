@@ -18,7 +18,7 @@ const blob = (path, size = 1000) => ({
   sha: (++n).toString(16).padStart(40, '0'),
 });
 
-test('editions read the date and export/version number written in the name', () => {
+test('[ghostmaps-001] editions read the date and export/version number written in the name', () => {
   assert.deepEqual(
     parseGhostMapsEdition(
       'S2Underground_Common_Intelligence_Picture_October_16_2026_Export_1.kmz',
@@ -56,7 +56,7 @@ test('editions read the date and export/version number written in the name', () 
   assert.equal(parseGhostMapsEdition('X_September_31_2026.kmz').dateMs, null);
 });
 
-test('each product keeps its newest edition by date, then edition number', () => {
+test('[ghostmaps-002] each product keeps its newest edition by date, then edition number', () => {
   const master = `${ARCGIS}Common Intelligence Picture/Master Database/`;
   const tree = [
     blob(
@@ -88,6 +88,7 @@ test('each product keeps its newest edition by date, then edition number', () =>
     blob(`${INCIDENTS}Yemen 2026/Yemen FLOT_October_10_2026.kmz`),
     { path: `${INCIDENTS}Yemen 2026`, type: 'tree', sha: 'f'.repeat(40) },
   ];
+  tree[1].sha = '0123456789abcdef0123456789abcdef01234567';
   const rows = buildGhostMapsCatalog(tree);
   const byId = Object.fromEntries(rows.map((row) => [row.id, row]));
   assert.deepEqual(
@@ -99,14 +100,14 @@ test('each product keeps its newest edition by date, then edition number', () =>
   assert.equal(byId['kinetic-30d'].defaultOn, true);
   assert.match(byId['border-crisis'].fileName, /Export_v2/);
   assert.equal(byId['yemen-flot'].fileName, 'Yemen FLOT_October_10_2026.kmz');
-  assert.equal(byId.cip.version, tree[1].sha);
+  assert.equal(byId.cip.version, '0123456789abcdef0123456789abcdef01234567');
   assert.equal(
     byId.cip.fileTitle,
     'Common Intelligence Picture October 16 2026 Export 1',
   );
 });
 
-test('latest drop is the newest dated incident file outside curated, archived and base data', () => {
+test('[ghostmaps-003] latest drop is the newest dated incident file outside curated, archived and base data', () => {
   const rows = buildGhostMapsCatalog([
     blob(`${INCIDENTS}Reno Wildfires August 24, 2026.kmz`),
     blob(
@@ -141,7 +142,7 @@ test('oversized, empty, non-KMZ and malformed entries are skipped', () => {
   assert.deepEqual(buildGhostMapsCatalog(undefined), []);
 });
 
-test('raw URLs are pinned to the commit and encode every path segment', () => {
+test('[ghostmaps-005] raw URLs are pinned to the commit and encode every path segment', () => {
   assert.equal(
     ghostMapsRawUrl('a'.repeat(40), 'Folder (KMZs)/Yemen FLOT.kmz'),
     `https://raw.githubusercontent.com/s2underground/GhostMaps/${'a'.repeat(40)}/Folder%20(KMZs)/Yemen%20FLOT.kmz`,
@@ -149,7 +150,7 @@ test('raw URLs are pinned to the commit and encode every path segment', () => {
   assert.equal(ghostMapsFileTitle('S2Underground_A__B.kmz'), 'A B');
 });
 
-test('the branch head comes from the smart-HTTP ref advertisement', () => {
+test('[ghostmaps-006] the branch head comes from the smart-HTTP ref advertisement', () => {
   const head = '142d7630bc8f1f2c4b96e16ee865ca50d1ab578d';
   const other = 'b'.repeat(40);
   const text = [
@@ -159,7 +160,157 @@ test('the branch head comes from the smart-HTTP ref advertisement', () => {
     `003d${head} refs/heads/main`,
     '0000',
   ].join('\n');
-  assert.equal(parseGitRefAdvertisement(text), head);
+  assert.equal(
+    parseGitRefAdvertisement(text),
+    '142d7630bc8f1f2c4b96e16ee865ca50d1ab578d',
+  );
   assert.equal(parseGitRefAdvertisement(text, 'dev'), null);
   assert.equal(parseGitRefAdvertisement(''), null);
+});
+
+for (const [name, entry] of [
+  ['tree', { type: 'tree' }],
+  ['path', { path: 7 }],
+  ['SHA', { sha: undefined }],
+  ['finite size', { size: NaN }],
+  ['positive size', { size: -1 }],
+  ['maximum size', { size: 52428801 }],
+  ['extension', { path: 'a.zip' }],
+]) {
+  test(`[ghostmaps-004] The catalog rejects an invalid ${name}`, () => {
+    const path = `${ARCGIS}Common Intelligence Picture/Master Database/A.kmz`;
+    assert.deepEqual(buildGhostMapsCatalog([{ ...blob(path), ...entry }]), []);
+  });
+}
+
+test('[ghostmaps-062] The edition parser accepts an absent name', () => {
+  assert.deepEqual(parseGhostMapsEdition(), { dateMs: null, edition: 0 });
+  assert.equal(ghostMapsFileTitle(), '');
+});
+
+for (const [name, names, expected] of [
+  ['path', ['B.kmz', 'A.kmz', 'C.kmz'], 'C.kmz'],
+  [
+    'date over an undated file',
+    ['A.kmz', 'A_June_1_2026.kmz'],
+    'A_June_1_2026.kmz',
+  ],
+  [
+    'date over a later undated file',
+    ['A_June_1_2026.kmz', 'Z.kmz'],
+    'A_June_1_2026.kmz',
+  ],
+  [
+    'edition',
+    ['A_June_1_2026_v2.kmz', 'A_June_1_2026_v1.kmz'],
+    'A_June_1_2026_v2.kmz',
+  ],
+]) {
+  test(`[ghostmaps-002] The catalog selects by ${name}`, () => {
+    const root = `${ARCGIS}Common Intelligence Picture/Master Database/`;
+    assert.equal(
+      buildGhostMapsCatalog(names.map((name) => blob(root + name)))[0].fileName,
+      expected,
+    );
+  });
+}
+
+for (const [id, path, title, active] of [
+  [
+    'cip',
+    `${ARCGIS}Common Intelligence Picture/Master Database/A.kmz`,
+    'Common Intelligence Picture',
+    true,
+  ],
+  [
+    'kinetic-30d',
+    `${ARCGIS}Common Intelligence Picture/30-Day Pulls/Kinetic_A.kmz`,
+    'Kinetic Activity (30 days)',
+    true,
+  ],
+  [
+    'border-crisis',
+    `${ARCGIS}Border Crisis Map/S2Underground_Border_Crisis_Map.kmz`,
+    'Border Crisis Map',
+    false,
+  ],
+  [
+    'iran-cip',
+    `${INCIDENTS}Iran 2026/Iran Common Intelligence Picture/A.kmz`,
+    'Iran Common Intelligence Picture',
+    false,
+  ],
+  [
+    'iran-kinetic',
+    `${INCIDENTS}Iran 2026/Iran Kinetic Events/A.kmz`,
+    'Iran Kinetic Events',
+    false,
+  ],
+  ['yemen-flot', `${INCIDENTS}Yemen 2026/Yemen FLOT.kmz`, 'Yemen FLOT', false],
+]) {
+  test(`[ghostmaps-002] The catalog selects the ${id} product`, () => {
+    const rows = buildGhostMapsCatalog([blob(path)]);
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].id, id);
+    assert.equal(rows[0].title, title);
+    assert.equal(rows[0].defaultOn, active);
+  });
+}
+
+for (const folder of ['0_Archive', 'Basedata', 'Reference Material']) {
+  test(`[ghostmaps-003] The incident catalog excludes ${folder}`, () => {
+    assert.deepEqual(
+      buildGhostMapsCatalog([blob(`${INCIDENTS}${folder}/A_June_1_2026.kmz`)]),
+      [],
+    );
+  });
+}
+
+for (const [name, paths] of [
+  ['root', ['Other/A_June_1_2026.kmz']],
+  ['date', [`${INCIDENTS}A.kmz`]],
+  [
+    'older date',
+    [`${INCIDENTS}A_June_2_2026.kmz`, `${INCIDENTS}A_June_1_2026.kmz`],
+  ],
+]) {
+  test(`[ghostmaps-003] The incident catalog checks the ${name}`, () => {
+    const rows = buildGhostMapsCatalog(paths.map((path) => blob(path)));
+    assert.deepEqual(
+      rows.map((row) => row.fileName),
+      name === 'older date' ? ['A_June_2_2026.kmz'] : [],
+    );
+  });
+}
+
+test('[ghostmaps-066] The ref parser accepts an absent advertisement', () => {
+  assert.equal(parseGitRefAdvertisement(), null);
+});
+
+test('[ghostmaps-002] The catalog rejects a lower path after an undated edition', () => {
+  const root = `${ARCGIS}Common Intelligence Picture/Master Database/`;
+  assert.equal(
+    buildGhostMapsCatalog([blob(root + 'B.kmz'), blob(root + 'A.kmz')])[0]
+      .fileName,
+    'B.kmz',
+  );
+});
+
+test('[ghostmaps-004] The catalog rejects a path object with a KMZ string value', () => {
+  const entry = blob(
+    `${ARCGIS}Common Intelligence Picture/Master Database/A.kmz`,
+  );
+  entry.path = { toString: () => 'A.kmz' };
+  assert.deepEqual(buildGhostMapsCatalog([entry]), []);
+});
+
+test('[ghostmaps-003] A newer incident replaces an older incident', () => {
+  const rows = buildGhostMapsCatalog([
+    blob(`${INCIDENTS}A_June_1_2026.kmz`),
+    blob(`${INCIDENTS}B_June_2_2026.kmz`),
+  ]);
+  assert.deepEqual(
+    rows.map((row) => row.fileName),
+    ['B_June_2_2026.kmz'],
+  );
 });

@@ -1,0 +1,59 @@
+{
+  "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8",
+  "tests": 284,
+  "tagged": 283,
+  "oldTests": 23,
+  "oldNamesChanged": [],
+  "untraced": [
+    {
+      "file": "src/layers/ghostMaps/catalog.test.mjs",
+      "name": "oversized, empty, non-KMZ and malformed entries are skipped"
+    }
+  ],
+  "scenarios": 68,
+  "titleErrors": [],
+  "mutations": 527,
+  "mutationStates": {
+    "KILLED": 507,
+    "SURVIVED": 20
+  },
+  "oldLedgerCommit": "b5a64127667c22af8c68b53706e9f27d866acac0",
+  "reviewedTests": 276,
+  "reviewedNamesChanged": [],
+  "audit": {
+    "rows": 170,
+    "tested": 151,
+    "equivalent": 19,
+    "defaultValue": 0,
+    "open": 0,
+    "classes": {
+      "LogicalExpression": 113,
+      "ConditionalExpression": 31,
+      "ForOfStatement": 25,
+      "SwitchStatement": 1
+    }
+  },
+  "systematicSweep": {
+    "commit": "9714441e9f3cc9fe4348d09a63ddba7f31f538f8",
+    "files": 7,
+    "tests": 284,
+    "checked": {
+      "a": 284,
+      "b": 284,
+      "c": 284,
+      "d": 284,
+      "e": 284,
+      "f": 284
+    },
+    "corrections": {
+      "a": 28,
+      "b": 22,
+      "c": 14,
+      "d": 8,
+      "e": 38,
+      "f": 5
+    },
+    "mutationCases": 97,
+    "open": 0
+  }
+}
