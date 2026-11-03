@@ -7412,13 +7412,7 @@
     "src/share/viewCodec.test.mjs › [share-codec-012] every registered field round-trips at once"
   ],
   "share-codec-013": [
-    "src/share/backfill.test.mjs › [share-codec-013] The angle heading at 10 uses the nearest signed turn",
-    "src/share/backfill.test.mjs › [share-codec-013] The angle heading at 180 uses the nearest signed turn",
-    "src/share/backfill.test.mjs › [share-codec-013] The angle heading at 181 uses the nearest signed turn",
-    "src/share/backfill.test.mjs › [share-codec-013] The angle roll at 359 uses the nearest signed turn",
-    "src/share/backfill.test.mjs › [share-codec-013] The angle roll at 50 uses the nearest signed turn",
-    "src/share/viewCodec.test.mjs › [share-codec-013] precision: coordinates 1e-4 degrees, angles and lengths whole units",
-    "src/share/viewCodec.test.mjs › [share-codec-013] size: a camera-only place view"
+    "src/share/viewCodec.test.mjs › [share-codec-013] precision: coordinates 1e-4 degrees, angles and lengths whole units"
   ],
   "share-codec-014": [
     "src/share/backfill.test.mjs › [share-codec-010 share-codec-014] The style anime keeps its defaults",
@@ -7619,7 +7613,7 @@
     "src/share/backfill.test.mjs › [share-codec-019] The panel global-context-panel uses its own entry",
     "src/share/backfill.test.mjs › [share-codec-019] The panel location-bar uses its own entry",
     "src/share/backfill.test.mjs › [share-codec-019] The panel param-slider-panel uses its own entry",
-    "src/share/backfill.test.mjs › [share-codec-019] The panel pin differs while its collapse value stays at default",
+    "src/share/backfill.test.mjs › [share-codec-019] The panel pin differs while its collapse value stays at its default",
     "src/share/backfill.test.mjs › [share-codec-019] The panel pp-toggles uses its own entry",
     "src/share/backfill.test.mjs › [share-codec-019] The panel radio-panel uses its own entry",
     "src/share/backfill.test.mjs › [share-codec-019] The panel recent-imagery-panel uses its own entry",
@@ -7665,7 +7659,7 @@
     "src/share/backfill.test.mjs › [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways",
     "src/share/backfill.test.mjs › [share-codec-022 share-codec-039] The tracking slot for military_aircraft moves both ways",
     "src/share/backfill.test.mjs › [share-codec-022 share-codec-039] The tracking slot for satellite moves both ways",
-    "src/share/backfill.test.mjs › [share-codec-022] The own view wins over a tracking slot",
+    "src/share/backfill.test.mjs › [share-codec-022] The codec selects the supplied view before a tracked entity",
     "src/share/backfill.test.mjs › [share-codec-022] The raw tracking option for aircraft becomes its entity",
     "src/share/backfill.test.mjs › [share-codec-022] The raw tracking option for military_aircraft becomes its entity",
     "src/share/backfill.test.mjs › [share-codec-022] The raw tracking option for satellite becomes its entity",
@@ -7676,8 +7670,8 @@
     "src/share/backfill.test.mjs › [share-codec-023] The fix ignores an age without a share time",
     "src/share/backfill.test.mjs › [share-codec-023] The fix time uses absent time",
     "src/share/backfill.test.mjs › [share-codec-023] The fix time uses absolute time",
-    "src/share/backfill.test.mjs › [share-codec-023] The fix time uses current fix",
     "src/share/backfill.test.mjs › [share-codec-023] The fix time uses relative age",
+    "src/share/backfill.test.mjs › [share-codec-023] The fix time uses the current fix",
     "src/share/viewCodec.test.mjs › [share-codec-023] a fix without its own time is as of the link",
     "src/share/viewCodec.test.mjs › [share-codec-023] last-known time is stored relative to the created-at time when there is one"
   ],
@@ -7699,6 +7693,7 @@
     "src/share/viewCodec.test.mjs › [share-codec-026] the check byte rejects every single-character typo"
   ],
   "share-codec-027": [
+    "src/share/backfill.test.mjs › [share-codec-027] The decoder drops the share time one millisecond after the clock",
     "src/share/viewCodec.test.mjs › [share-codec-027] a created-at time in the future is dropped, like the long form’s `at`"
   ],
   "share-codec-028": [
@@ -7710,10 +7705,7 @@
   ],
   "share-codec-030": [
     "src/share/backfill.test.mjs › [share-codec-030] The unknown numeric view kind reports one value",
-    "src/share/backfill.test.mjs › [share-codec-030] The view kind uses the empty entity path",
-    "src/share/backfill.test.mjs › [share-codec-030] The view kind uses the number place path",
     "src/share/backfill.test.mjs › [share-codec-030] The view kind uses the text future path",
-    "src/share/backfill.test.mjs › [share-codec-030] The view kind uses the text place path",
     "src/share/backfill.test.mjs › [share-codec-030] The view kind uses the text thing path",
     "src/share/viewCodec.test.mjs › [share-codec-030] an unknown view kind falls back to the stored camera"
   ],
@@ -7722,19 +7714,13 @@
     "src/share/viewCodec.test.mjs › [share-codec-031] an unknown or invalid entity falls back to the camera its fix implies"
   ],
   "share-codec-032": [
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name hudVariant checks bad name",
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name hudVariant checks empty",
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name hudVariant checks future_name-2",
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name mapStack checks bad name",
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name mapStack checks empty",
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name mapStack checks future_name-2",
     "src/share/backfill.test.mjs › [share-codec-032] The open name hudVariant accepts its full width",
+    "src/share/backfill.test.mjs › [share-codec-032] The open name hudVariant checks future_name-2",
     "src/share/backfill.test.mjs › [share-codec-032] The open name mapStack accepts its full width",
+    "src/share/backfill.test.mjs › [share-codec-032] The open name mapStack checks future_name-2",
     "src/share/viewCodec.test.mjs › [share-codec-032] enum names outside the code tables travel as text"
   ],
   "share-codec-033": [
-    "src/share/backfill.test.mjs › [share-codec-033] The closed name detectionAllocation accepts known text",
-    "src/share/backfill.test.mjs › [share-codec-033] The closed name detectionMode accepts known text",
     "src/share/backfill.test.mjs › [share-codec-033] The unknown enum detectionAllocation uses its default",
     "src/share/backfill.test.mjs › [share-codec-033] The unknown enum detectionMode uses its default",
     "src/share/backfill.test.mjs › [share-codec-033] The unknown enum hudVariant uses its default",
@@ -7773,6 +7759,8 @@
     "src/share/viewCodec.test.mjs › [share-codec-035] every truncation and single-byte corruption of real payloads is handled"
   ],
   "share-codec-036": [
+    "src/share/backfill.test.mjs › [share-codec-036] The canonical state keeps the share time at clock 1767225617000",
+    "src/share/backfill.test.mjs › [share-codec-036] The canonical state keeps the share time at clock 1767225617001",
     "src/share/viewCodec.test.mjs › [share-codec-036] generated states round-trip exactly and encode canonically",
     "src/share/viewCodec.test.mjs › [share-codec-036] normalization is idempotent"
   ],
@@ -7786,12 +7774,15 @@
     "src/share/backfill.test.mjs › [share-codec-022 share-codec-039] The tracking slot for aircraft moves both ways",
     "src/share/backfill.test.mjs › [share-codec-022 share-codec-039] The tracking slot for military_aircraft moves both ways",
     "src/share/backfill.test.mjs › [share-codec-022 share-codec-039] The tracking slot for satellite moves both ways",
+    "src/share/backfill.test.mjs › [share-codec-039 share-codec-040 share-codec-041] The legacy view without layers supplies the entity layer",
     "src/share/legacyShareState.test.mjs › [share-codec-039] a tracking selection becomes a thing view and back"
   ],
   "share-codec-040": [
+    "src/share/backfill.test.mjs › [share-codec-039 share-codec-040 share-codec-041] The legacy view without layers supplies the entity layer",
     "src/share/legacyShareState.test.mjs › [share-codec-040] thing views the long form cannot express convert without one"
   ],
   "share-codec-041": [
+    "src/share/backfill.test.mjs › [share-codec-039 share-codec-040 share-codec-041] The legacy view without layers supplies the entity layer",
     "src/share/backfill.test.mjs › [share-codec-041] The supplied layer set keeps other layers and options",
     "src/share/legacyShareState.test.mjs › [share-codec-041] a thing view turns its layer on, with or without a layer set"
   ],
@@ -7827,7 +7818,6 @@
     "src/share/backfill.test.mjs › [share-codec-043] The legacy flag hudVisible copies its own value",
     "src/share/backfill.test.mjs › [share-codec-043] The legacy flag scopeEnabled copies its own value",
     "src/share/backfill.test.mjs › [share-codec-043] The legacy flag sharpen copies its own value",
-    "src/share/backfill.test.mjs › [share-codec-043] The legacy view without layers supplies the entity layer",
     "src/share/legacyShareState.test.mjs › [share-codec-043] the converter ignores non-objects and restore bookkeeping"
   ],
   "share-codec-044": [
@@ -7895,20 +7885,19 @@
     "src/share/viewCodec.test.mjs › [share-codec-049] future panel values and style tokens are skipped, not applied"
   ],
   "share-codec-050": [
+    "src/share/backfill.test.mjs › [share-codec-050] The decoder checks the option length cap before the available byte count",
     "src/share/backfill.test.mjs › [share-codec-050] The layer option handles absent text",
+    "src/share/backfill.test.mjs › [share-codec-050] The layer option handles an invalid value",
+    "src/share/backfill.test.mjs › [share-codec-050] The layer option handles an unknown key",
+    "src/share/backfill.test.mjs › [share-codec-050] The layer option handles an unknown owner",
     "src/share/backfill.test.mjs › [share-codec-050] The layer option handles bad ASCII text",
     "src/share/backfill.test.mjs › [share-codec-050] The layer option handles duplicate",
     "src/share/backfill.test.mjs › [share-codec-050] The layer option handles excessive text",
-    "src/share/backfill.test.mjs › [share-codec-050] The layer option handles invalid value",
-    "src/share/backfill.test.mjs › [share-codec-050] The layer option handles unknown key",
-    "src/share/backfill.test.mjs › [share-codec-050] The layer option handles unknown owner",
     "src/share/backfill.test.mjs › [share-codec-050] The mirror layer rejects a valid owner option",
-    "src/share/backfill.test.mjs › [share-codec-050] The option length checks the cap before its remaining bytes",
     "src/share/backfill.test.mjs › [share-codec-050] The option without layers reports its scope",
     "src/share/viewCodec.test.mjs › [share-codec-050] a layer option filed under a mirror layer is ignored"
   ],
   "share-codec-051": [
-    "src/share/backfill.test.mjs › [share-codec-051] The complete fix supplies every coordinate and altitude",
     "src/share/backfill.test.mjs › [share-codec-051] The fix and offset reject function objects",
     "src/share/backfill.test.mjs › [share-codec-051] The fix and offset reject invalid source values"
   ],
@@ -7927,13 +7916,11 @@
     "src/share/backfill.test.mjs › [share-codec-055] The zero offset keeps the fix and supplied angles"
   ],
   "share-codec-056": [
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name hudVariant checks bad name",
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name hudVariant checks empty",
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name hudVariant checks future_name-2",
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name mapStack checks bad name",
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name mapStack checks empty",
-    "src/share/backfill.test.mjs › [share-codec-032 share-codec-056] The open name mapStack checks future_name-2",
+    "src/share/backfill.test.mjs › [share-codec-056] The open name hudVariant checks bad name",
+    "src/share/backfill.test.mjs › [share-codec-056] The open name hudVariant checks empty",
     "src/share/backfill.test.mjs › [share-codec-056] The open name hudVariant rejects excess width",
+    "src/share/backfill.test.mjs › [share-codec-056] The open name mapStack checks bad name",
+    "src/share/backfill.test.mjs › [share-codec-056] The open name mapStack checks empty",
     "src/share/backfill.test.mjs › [share-codec-056] The open name mapStack rejects excess width"
   ],
   "share-codec-057": [
@@ -7941,6 +7928,30 @@
   ],
   "share-codec-058": [
     "src/share/backfill.test.mjs › [share-codec-058] The style initializer uses distinct source values"
+  ],
+  "share-codec-059": [
+    "src/share/backfill.test.mjs › [share-codec-059] The closed name detectionAllocation accepts known text",
+    "src/share/backfill.test.mjs › [share-codec-059] The closed name detectionMode accepts known text"
+  ],
+  "share-codec-060": [
+    "src/share/viewCodec.test.mjs › [share-codec-060] size: a camera-only place view"
+  ],
+  "share-codec-061": [
+    "src/share/backfill.test.mjs › [share-codec-061] The angle heading at 10 uses the nearest signed turn",
+    "src/share/backfill.test.mjs › [share-codec-061] The angle heading at 180 uses the nearest signed turn",
+    "src/share/backfill.test.mjs › [share-codec-061] The angle heading at 181 uses the nearest signed turn",
+    "src/share/backfill.test.mjs › [share-codec-061] The angle roll at 359 uses the nearest signed turn",
+    "src/share/backfill.test.mjs › [share-codec-061] The angle roll at 50 uses the nearest signed turn"
+  ],
+  "share-codec-062": [
+    "src/share/backfill.test.mjs › [share-codec-062] The view kind uses the number place path",
+    "src/share/backfill.test.mjs › [share-codec-062] The view kind uses the text place path"
+  ],
+  "share-codec-063": [
+    "src/share/backfill.test.mjs › [share-codec-063] The complete fix supplies every coordinate and altitude"
+  ],
+  "share-codec-064": [
+    "src/share/backfill.test.mjs › [share-codec-064] The view kind uses the empty entity path"
   ],
   "skyfi-source-001": [
     "src/data/skyfiProxy.test.mjs › [skyfi-source-001] localProviderPlugins holds the scenes plugin once",
