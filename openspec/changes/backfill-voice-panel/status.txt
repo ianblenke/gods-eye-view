@@ -1,0 +1,8 @@
+ M src/voice/panel/actionObserver.test.mjs
+ M src/voice/panel/host.test.mjs
+ M src/voice/panel/inactivity.test.mjs
+ M src/voice/panel/manualPanel.test.mjs
+ M src/voice/panel/nativeActivity.test.mjs
+ M src/voice/panel/preferences.test.mjs
+?? openspec/changes/backfill-voice-panel/
+?? src/voice/panel/backfill.test.mjs

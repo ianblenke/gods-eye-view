@@ -1,0 +1,40 @@
+{
+  "sourceCommit": "89fe216472d408b6ac9a0d9b53f65ef20434d917",
+  "changed": [
+    "src/voice/panel/actionObserver.test.mjs",
+    "src/voice/panel/host.test.mjs",
+    "src/voice/panel/inactivity.test.mjs",
+    "src/voice/panel/manualPanel.test.mjs",
+    "src/voice/panel/nativeActivity.test.mjs",
+    "src/voice/panel/preferences.test.mjs"
+  ],
+  "new": [
+    "openspec/changes/backfill-voice-panel/.openspec.yaml",
+    "openspec/changes/backfill-voice-panel/audit.json",
+    "openspec/changes/backfill-voice-panel/audit.md",
+    "openspec/changes/backfill-voice-panel/baseline.json",
+    "openspec/changes/backfill-voice-panel/coverage-commands.json",
+    "openspec/changes/backfill-voice-panel/coverage.txt",
+    "openspec/changes/backfill-voice-panel/design.md",
+    "openspec/changes/backfill-voice-panel/evidence.md",
+    "openspec/changes/backfill-voice-panel/format-and-ste.txt",
+    "openspec/changes/backfill-voice-panel/known-limits.txt",
+    "openspec/changes/backfill-voice-panel/measurement.json",
+    "openspec/changes/backfill-voice-panel/mutation-commands.json",
+    "openspec/changes/backfill-voice-panel/mutation-results.json",
+    "openspec/changes/backfill-voice-panel/mutation-run.txt",
+    "openspec/changes/backfill-voice-panel/mutations.json",
+    "openspec/changes/backfill-voice-panel/old-untagged.json",
+    "openspec/changes/backfill-voice-panel/proposal.md",
+    "openspec/changes/backfill-voice-panel/qa-headers.json",
+    "openspec/changes/backfill-voice-panel/scope-check.json",
+    "openspec/changes/backfill-voice-panel/specs/voice-panel/spec.md",
+    "openspec/changes/backfill-voice-panel/status.txt",
+    "openspec/changes/backfill-voice-panel/tasks.md",
+    "openspec/changes/backfill-voice-panel/test-audit.json",
+    "openspec/changes/backfill-voice-panel/test-links.json",
+    "openspec/changes/backfill-voice-panel/tests.jsonl",
+    "src/voice/panel/backfill.test.mjs"
+  ],
+  "productionDiff": ""
+}

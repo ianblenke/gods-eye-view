@@ -3,8 +3,6 @@ import assert from 'node:assert/strict';
 import {
   createVoicePreferences,
   bindPreferenceControls,
-  VOICE_PREVIEW_STORAGE_KEY as P,
-  VOICE_TIMEOUT_STORAGE_KEY as T,
 } from './preferences.js';
 
 function storage(entries = {}, mode = 'normal') {
@@ -67,12 +65,19 @@ function bind(ui, preferences, onChange) {
   return bindPreferenceControls({ ui, preferences, copy, onChange });
 }
 
-test('defaults and restore are passive; legacy None and stored custom restore', () => {
+test('[voice-panel-021] defaults and restore are passive; legacy None and stored custom restore', () => {
   for (const [entries, minutes, previewEnabled] of [
     [{}, 5, true],
-    [{ [P]: 'false', [T]: 'none' }, 0, false],
-    [{ [T]: '17' }, 17, true],
-    [{ [T]: 'broken' }, 5, true],
+    [
+      {
+        ['godsEyeView.voice.previewEnabled']: 'false',
+        ['godsEyeView.voice.inactivityMinutes']: 'none',
+      },
+      0,
+      false,
+    ],
+    [{ ['godsEyeView.voice.inactivityMinutes']: '17' }, 17, true],
+    [{ ['godsEyeView.voice.inactivityMinutes']: 'broken' }, 5, true],
   ]) {
     const disk = storage(entries);
     const prefs = createVoicePreferences({ storage: disk });
@@ -88,7 +93,7 @@ test('defaults and restore are passive; legacy None and stored custom restore', 
   }
 });
 
-test('exact valid values, presets, None and serialized readback', () => {
+test('[voice-panel-022] exact valid values, presets, None and serialized readback', () => {
   const disk = storage();
   const prefs = createVoicePreferences({ storage: disk });
   for (const value of [3, 5, 10, 15, '1', '60', 0]) {
@@ -96,14 +101,17 @@ test('exact valid values, presets, None and serialized readback', () => {
     assert.equal(result.ok, true);
     assert.equal(result.applied, true);
     assert.equal(result.persisted, true);
-    assert.equal(result.minutes, Number(value));
+    assert.equal(result.minutes === Number(value), true);
     assert.deepEqual(disk.writes.at(-1), [
-      T,
+      'godsEyeView.voice.inactivityMinutes',
       Number(value) === 0 ? 'none' : String(Number(value)),
     ]);
   }
   assert.equal(prefs.setPreviewEnabled(false).previewEnabled, false);
-  assert.deepEqual(disk.writes.at(-1), [P, 'false']);
+  assert.deepEqual(disk.writes.at(-1), [
+    'godsEyeView.voice.previewEnabled',
+    'false',
+  ]);
 });
 
 test('fractional, malformed, coercible and out-of-range inputs never write or notify', () => {
@@ -167,7 +175,7 @@ for (const mode of ['throw', 'noop', 'mismatch', 'readthrow', 'missing']) {
     assert.equal(b.voiceTimeoutInput.value, '19');
     assert.match(b.voicePreviewNote.textContent, /Not saved/);
     assert.match(b.voiceTimeoutNote.textContent, /Not saved/);
-    assert.equal(disk?.writes.length, writeCount);
+    assert.equal(disk?.writes.length === writeCount, true);
     a.voicePreviewInput.change(true);
     a.voiceTimeoutSelect.change('3');
     assert.equal(prefs.snapshot().minutes, 19);
@@ -176,7 +184,7 @@ for (const mode of ['throw', 'noop', 'mismatch', 'readthrow', 'missing']) {
   });
 }
 
-test('same-value retry really writes and clears warnings after storage recovers', () => {
+test('[voice-panel-025] same-value retry really writes and clears warnings after storage recovers', () => {
   const disk = storage();
   const original = disk.setItem;
   disk.setItem = () => {
@@ -196,14 +204,14 @@ test('same-value retry really writes and clears warnings after storage recovers'
   assert.equal(timeout.persisted, true);
   assert.equal(preview.persisted, true);
   assert.deepEqual(disk.writes, [
-    [T, '12'],
-    [P, 'false'],
+    ['godsEyeView.voice.inactivityMinutes', '12'],
+    ['godsEyeView.voice.previewEnabled', 'false'],
   ]);
-  assert.equal(ui.voiceTimeoutNote.textContent, copy.timeoutNote);
-  assert.equal(ui.voicePreviewNote.textContent, copy.previewNote);
+  assert.equal(ui.voiceTimeoutNote.textContent, 'Provider limits still apply');
+  assert.equal(ui.voicePreviewNote.textContent, 'Preview local');
 });
 
-test('Custom commits displayed valid value immediately, even when equal to preset', () => {
+test('[voice-panel-026] Custom commits displayed valid value immediately, even when equal to preset', () => {
   const disk = storage();
   const prefs = createVoicePreferences({ storage: disk });
   const ui = controls('10');
@@ -213,7 +221,9 @@ test('Custom commits displayed valid value immediately, even when equal to prese
   assert.equal(prefs.snapshot().minutes, 10);
   assert.equal(ui.voiceTimeoutSelect.value, 'custom');
   assert.equal(ui.voiceTimeoutInput.hidden, false);
-  assert.deepEqual(disk.writes, [[T, '10']]);
+  assert.deepEqual(disk.writes, [
+    ['godsEyeView.voice.inactivityMinutes', '10'],
+  ]);
   ui.voiceTimeoutInput.change('23');
   ui.voiceTimeoutSelect.change('5');
   assert.equal(ui.voiceTimeoutInput.value, '23');
@@ -223,8 +233,8 @@ test('Custom commits displayed valid value immediately, even when equal to prese
   assert.equal(ui.voiceTimeoutInput.value, '23');
 });
 
-test('invalid control edits restore valid state without writes; None remains distinct', () => {
-  const disk = storage({ [T]: '17' });
+test('[voice-panel-027] invalid control edits restore valid state without writes; None remains distinct', () => {
+  const disk = storage({ ['godsEyeView.voice.inactivityMinutes']: '17' });
   const prefs = createVoicePreferences({ storage: disk });
   const ui = controls();
   bind(ui, prefs);
@@ -244,10 +254,12 @@ test('invalid control edits restore valid state without writes; None remains dis
   ui.voiceTimeoutSelect.change('custom');
   assert.equal(ui.voiceTimeoutSelect.value, '0');
   assert.equal(prefs.snapshot().minutes, 0);
-  assert.deepEqual(disk.writes, [[T, 'none']]);
+  assert.deepEqual(disk.writes, [
+    ['godsEyeView.voice.inactivityMinutes', 'none'],
+  ]);
 });
 
-test('model snapshots cannot mutate state; unsubscribe and binder disposal release ownership', () => {
+test('[voice-panel-028] model snapshots cannot mutate state; unsubscribe and binder disposal release ownership', () => {
   const prefs = createVoicePreferences({ storage: storage() });
   const ui = controls();
   let calls = 0;

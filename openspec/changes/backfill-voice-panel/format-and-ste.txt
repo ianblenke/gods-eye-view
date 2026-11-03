@@ -1,0 +1,13 @@
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && node scripts/format.mjs --check
+Checked 1673 source files.
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && node ../node_modules/prettier/bin/prettier.cjs --check src/voice/panel/*.test.mjs openspec/changes/backfill-voice-panel/*.md openspec/changes/backfill-voice-panel/specs/voice-panel/spec.md
+Checking formatting...
+All matched files use Prettier code style!
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && node scripts/spec/gates.mjs lint --change backfill-voice-panel 2>&1 | grep -E '^(ERROR|STE)'
+STE: 0 errors, 1295 warnings.
+
+The broad write command stopped in the sandbox and automatic approval review rejected its later requests.

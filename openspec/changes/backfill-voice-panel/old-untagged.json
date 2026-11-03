@@ -1,0 +1,181 @@
+{
+  "sourceCommit": "89fe216472d408b6ac9a0d9b53f65ef20434d917",
+  "tests": [
+    {
+      "file": "src/voice/panel/actionObserver.test.mjs",
+      "line": 59,
+      "name": "native Promise identity, fulfillment object and rejection object are preserved",
+      "kind": "test",
+      "tags": [],
+      "title": "native Promise identity, fulfillment object and rejection object are preserved"
+    },
+    {
+      "file": "src/voice/panel/actionObserver.test.mjs",
+      "line": 487,
+      "name": "omitted and explicit undefined options keep original arity and values",
+      "kind": "test",
+      "tags": [],
+      "title": "omitted and explicit undefined options keep original arity and values"
+    },
+    {
+      "file": "src/voice/panel/actionObserver.test.mjs",
+      "line": 110,
+      "name": "progress preserves public-before-original-before-private order, receiver and option references",
+      "kind": "test",
+      "tags": [],
+      "title": "progress preserves public-before-original-before-private order, receiver and option references"
+    },
+    {
+      "file": "src/voice/panel/actionObserver.test.mjs",
+      "line": 314,
+      "name": "reentrant start retirement retains only fresh ownership and never skips execution",
+      "kind": "test",
+      "tags": [],
+      "title": "reentrant start retirement retains only fresh ownership and never skips execution"
+    },
+    {
+      "file": "src/voice/panel/host.test.mjs",
+      "line": 270,
+      "name": "explicit successful mic Stop closes; failed Stop idle and startup error do not",
+      "kind": "test",
+      "tags": [],
+      "title": "explicit successful mic Stop closes; failed Stop idle and startup error do not"
+    },
+    {
+      "file": "src/voice/panel/host.test.mjs",
+      "line": 385,
+      "name": "native connecting phases retain output observation; idle starts before first speech and waits for drain",
+      "kind": "test",
+      "tags": [],
+      "title": "native connecting phases retain output observation; idle starts before first speech and waits for drain"
+    },
+    {
+      "file": "src/voice/panel/host.test.mjs",
+      "line": 578,
+      "name": "voice timeout change preserves a pending voice reveal",
+      "kind": "test",
+      "tags": [],
+      "title": "voice timeout change preserves a pending voice reveal"
+    },
+    {
+      "file": "src/voice/panel/inactivity.test.mjs",
+      "line": 65,
+      "name": "None cancels; invalid values cannot replace setting; explicit retry rearms",
+      "kind": "test",
+      "tags": [],
+      "title": "None cancels; invalid values cannot replace setting; explicit retry rearms"
+    },
+    {
+      "file": "src/voice/panel/manualPanel.test.mjs",
+      "line": 109,
+      "name": "tab keyboard navigation and Escape preserve focus and accessibility state",
+      "kind": "test",
+      "tags": [],
+      "title": "tab keyboard navigation and Escape preserve focus and accessibility state"
+    },
+    {
+      "file": "src/voice/panel/nativeActivity.test.mjs",
+      "line": 388,
+      "name": "actual Gemini startup phases keep playback observation and permit quiet open-mic expiry",
+      "kind": "test",
+      "tags": [],
+      "title": "actual Gemini startup phases keep playback observation and permit quiet open-mic expiry"
+    },
+    {
+      "file": "src/voice/panel/nativeActivity.test.mjs",
+      "line": 674,
+      "name": "actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge",
+      "kind": "test",
+      "tags": [],
+      "title": "actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge"
+    },
+    {
+      "file": "src/voice/panel/nativeActivity.test.mjs",
+      "line": 475,
+      "name": "explicit silent OpenAI completion rearms expiry, including cancelled and failed responses",
+      "kind": "test",
+      "tags": [],
+      "title": "explicit silent OpenAI completion rearms expiry, including cancelled and failed responses"
+    },
+    {
+      "file": "src/voice/panel/nativeActivity.test.mjs",
+      "line": 445,
+      "name": "native typed input observation preserves receiver/result, refuses failed submissions and retires old wrapper",
+      "kind": "test",
+      "tags": [],
+      "title": "native typed input observation preserves receiver/result, refuses failed submissions and retires old wrapper"
+    },
+    {
+      "file": "src/voice/panel/nativeActivity.test.mjs",
+      "line": 226,
+      "name": "options-method callback receiver maps to original options, explicit receiver is preserved",
+      "kind": "test",
+      "tags": [],
+      "title": "options-method callback receiver maps to original options, explicit receiver is preserved"
+    },
+    {
+      "file": "src/voice/panel/nativeActivity.test.mjs",
+      "line": 137,
+      "name": "reentrant Stop in original callback suppresses stale post-callback observation; teardown preserves newer replacement",
+      "kind": "test",
+      "tags": [],
+      "title": "reentrant Stop in original callback suppresses stale post-callback observation; teardown preserves newer replacement"
+    },
+    {
+      "file": "src/voice/panel/nativeActivity.test.mjs",
+      "line": 261,
+      "name": "verified clean native mount can arm initial idle, eventless response invalidates it",
+      "kind": "test",
+      "tags": [],
+      "title": "verified clean native mount can arm initial idle, eventless response invalidates it"
+    },
+    {
+      "file": "src/voice/panel/preferences.test.mjs",
+      "line": 117,
+      "name": "fractional, malformed, coercible and out-of-range inputs never write or notify",
+      "kind": "test",
+      "tags": [],
+      "title": "fractional, malformed, coercible and out-of-range inputs never write or notify"
+    },
+    {
+      "file": "src/voice/panel/preferences.test.mjs",
+      "line": 156,
+      "name": "storage mismatch preserves live value and exposes unsaved state across A \u2192 B",
+      "kind": "test",
+      "tags": [],
+      "title": "storage mismatch preserves live value and exposes unsaved state across A \u2192 B"
+    },
+    {
+      "file": "src/voice/panel/preferences.test.mjs",
+      "line": 156,
+      "name": "storage missing preserves live value and exposes unsaved state across A \u2192 B",
+      "kind": "test",
+      "tags": [],
+      "title": "storage missing preserves live value and exposes unsaved state across A \u2192 B"
+    },
+    {
+      "file": "src/voice/panel/preferences.test.mjs",
+      "line": 156,
+      "name": "storage noop preserves live value and exposes unsaved state across A \u2192 B",
+      "kind": "test",
+      "tags": [],
+      "title": "storage noop preserves live value and exposes unsaved state across A \u2192 B"
+    },
+    {
+      "file": "src/voice/panel/preferences.test.mjs",
+      "line": 156,
+      "name": "storage readthrow preserves live value and exposes unsaved state across A \u2192 B",
+      "kind": "test",
+      "tags": [],
+      "title": "storage readthrow preserves live value and exposes unsaved state across A \u2192 B"
+    },
+    {
+      "file": "src/voice/panel/preferences.test.mjs",
+      "line": 156,
+      "name": "storage throw preserves live value and exposes unsaved state across A \u2192 B",
+      "kind": "test",
+      "tags": [],
+      "title": "storage throw preserves live value and exposes unsaved state across A \u2192 B"
+    }
+  ]
+}

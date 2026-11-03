@@ -13,7 +13,7 @@ function deferred() {
   return { promise, resolve, reject };
 }
 
-test('sync value/throw, receiver, arguments and opaque unsupported result stay exact', () => {
+test('[voice-panel-002] sync value/throw, receiver, arguments and opaque unsupported result stay exact', () => {
   const receiver = {},
     args = {},
     options = { extra: 7 };
@@ -23,8 +23,8 @@ test('sync value/throw, receiver, arguments and opaque unsupported result stay e
   const observer = createPanelActionObserver({
     onObservation: (event) => events.push(event),
     runAction(name, received, opts, tail) {
-      assert.equal(this, receiver);
-      assert.equal(received, args);
+      assert.equal(this === receiver, true);
+      assert.equal(received === args, true);
       assert.equal(opts.extra, 7);
       assert.equal(tail, 'tail');
       calls++;
@@ -52,7 +52,7 @@ test('sync value/throw, receiver, arguments and opaque unsupported result stay e
     },
   });
   const another = createPanelActionObserver({ runAction: () => opaque });
-  assert.equal(another.runAction('opaque'), opaque);
+  assert.equal(another.runAction('opaque') === opaque, true);
   assert.equal(another.pendingCount, 0);
 });
 
@@ -66,23 +66,26 @@ test('native Promise identity, fulfillment object and rejection object are prese
       onObservation: (e) => events.push(e),
     });
     const returned = observer.runAction('promise');
-    assert.equal(returned, d.promise);
+    assert.equal(returned === d.promise, true);
     assert.equal(observer.pendingCount, 1);
     if (reject) {
       d.reject(value);
       await assert.rejects(returned, (e) => e === value);
     } else {
       d.resolve(value);
-      assert.equal(await returned, value);
+      assert.equal((await returned) === value, true);
     }
     assert.equal(observer.pendingCount, 0);
-    assert.equal(events.at(-1).outcome, reject ? 'rejected' : 'fulfilled');
+    assert.equal(
+      events.at(-1).outcome === (reject ? 'rejected' : 'fulfilled'),
+      true,
+    );
     assert.equal('result' in events.at(-1), false);
     assert.equal('error' in events.at(-1), false);
   }
 });
 
-test('null/reused callIds have independent keys and settlement cannot retire a sibling', async () => {
+test('[voice-panel-004] null/reused callIds have independent keys and settlement cannot retire a sibling', async () => {
   const a = deferred(),
     b = deferred(),
     events = [];
@@ -98,7 +101,7 @@ test('null/reused callIds have independent keys and settlement cannot retire a s
   b.resolve('b');
   await pb;
   assert.equal(observer.pendingCount, 1);
-  assert.equal(events.at(-1).key, starts[1].key);
+  assert.equal(events.at(-1).key === starts[1].key, true);
   a.resolve('a');
   await pa;
   assert.equal(observer.pendingCount, 0);
@@ -117,7 +120,7 @@ test('progress preserves public-before-original-before-private order, receiver a
     signal,
     isCurrent,
     progress(update) {
-      assert.equal(this, options);
+      assert.equal(this === options, true);
       order.push('original');
       return update;
     },
@@ -130,8 +133,8 @@ test('progress preserves public-before-original-before-private order, receiver a
       if (e.type === 'progress') order.push('private');
     },
     runAction(name, args, received) {
-      assert.equal(received.signal, signal);
-      assert.equal(received.isCurrent, isCurrent);
+      assert.equal(received.signal === signal, true);
+      assert.equal(received.isCurrent === isCurrent, true);
       assert.equal(received.hidden, 8);
       assert.equal(received[symbol], 9);
       assert.equal(
@@ -162,10 +165,10 @@ test('progress preserves public-before-original-before-private order, receiver a
       },
     },
   );
-  assert.equal(originalReceiver, custom);
+  assert.equal(originalReceiver === custom, true);
 });
 
-test('observer faults and private metadata faults cannot replace original callback errors', async () => {
+test('[voice-panel-010] observer faults and private metadata faults cannot replace original callback errors', async () => {
   const originalError = Error('callback');
   const observer = createPanelActionObserver({
     onObservation() {
@@ -210,7 +213,7 @@ test('observer faults and private metadata faults cannot replace original callba
   assert.equal(await safe.runAction('safe', {}, {}), 'unchanged');
 });
 
-test('accessor/custom options are forwarded untouched without extra getter/currentness probes', async () => {
+test('[voice-panel-006] accessor/custom options are forwarded untouched without extra getter/currentness probes', async () => {
   let reads = 0,
     predicates = 0;
   const options = Object.defineProperty(
@@ -230,7 +233,7 @@ test('accessor/custom options are forwarded untouched without extra getter/curre
   );
   const observer = createPanelActionObserver({
     runAction(name, args, received) {
-      assert.equal(received, options);
+      assert.equal(received === options, true);
       received.progress({});
       received.isCurrent();
       return Promise.resolve();
@@ -242,7 +245,7 @@ test('accessor/custom options are forwarded untouched without extra getter/curre
   assert.equal(observer.pendingCount, 0);
 });
 
-test('real caller abort retires ownership only; late A cannot release or report over B', async () => {
+test('[voice-panel-007] real caller abort retires ownership only; late A cannot release or report over B', async () => {
   const a = deferred(),
     b = deferred(),
     caller = new AbortController(),
@@ -274,7 +277,7 @@ test('real caller abort retires ownership only; late A cannot release or report 
   a.resolve('a');
   await pa;
   assert.deepEqual(callbacks, ['original']);
-  assert.equal(events.length, count);
+  assert.equal(events.length === count, true);
   assert.equal(observer.pendingCount, 1);
   b.resolve('b');
   await pb;
@@ -282,7 +285,7 @@ test('real caller abort retires ownership only; late A cannot release or report 
   assert.equal(getEventListeners(caller.signal, 'abort').length, 0);
 });
 
-test('already-aborted caller and disposed mount still invoke original exactly once', async () => {
+test('[voice-panel-008] already-aborted caller and disposed mount still invoke original exactly once', async () => {
   const caller = new AbortController(),
     mount = new AbortController();
   caller.abort();
@@ -336,7 +339,7 @@ test('reentrant start retirement retains only fresh ownership and never skips ex
   assert.equal(observer.pendingCount, 0);
 });
 
-test('actual pinned-main common session: private invocation stream is separate from public events', async (t) => {
+test('[voice-panel-005] actual pinned-main common session: private invocation stream is separate from public events', async (t) => {
   const publicEvents = [],
     privateEvents = [],
     order = [];
@@ -375,7 +378,7 @@ test('actual pinned-main common session: private invocation stream is separate f
   });
   await session.start();
   assert.equal(
-    await observer.runAction(
+    (await observer.runAction(
       'actual',
       {},
       {
@@ -383,8 +386,8 @@ test('actual pinned-main common session: private invocation stream is separate f
           order.push('caller');
         },
       },
-    ),
-    result,
+    )) === result,
+    true,
   );
   assert.deepEqual(order, ['public', 'caller', 'private']);
   const call = publicEvents.find((e) => e.type === 'action-call');
@@ -403,7 +406,7 @@ test('actual pinned-main common session: private invocation stream is separate f
   assert.equal(hooks.signal.aborted, false);
 });
 
-test('actual common interruption aborts resources; injected real-lifecycle observation retires uncooperative A', async (t) => {
+test('[voice-panel-007] actual common interruption aborts resources; injected real-lifecycle observation retires uncooperative A', async (t) => {
   const a = deferred(),
     b = deferred(),
     events = [];
@@ -443,14 +446,14 @@ test('actual common interruption aborts resources; injected real-lifecycle obser
   const count = events.length;
   a.resolve({ ok: true });
   await rejection;
-  assert.equal(events.length, count);
+  assert.equal(events.length === count, true);
   assert.equal(observer.pendingCount, 1);
   b.resolve({ ok: true });
   await pb;
   assert.equal(observer.pendingCount, 0);
 });
 
-test('null-prototype option descriptors survive instrumentation; mount abort does not fabricate settlement', async () => {
+test('[voice-panel-008] null-prototype option descriptors survive instrumentation; mount abort does not fabricate settlement', async () => {
   const mount = new AbortController(),
     d = deferred(),
     events = [],
@@ -477,7 +480,7 @@ test('null-prototype option descriptors survive instrumentation; mount abort doe
   d.resolve('done');
   assert.equal(await promise, 'done');
   assert.deepEqual(originalProgress, ['original']);
-  assert.equal(events.length, count);
+  assert.equal(events.length === count, true);
   assert.equal(getEventListeners(mount.signal, 'abort').length, 0);
 });
 
@@ -493,6 +496,6 @@ test('omitted and explicit undefined options keep original arity and values', ()
   assert.equal(observer.runAction('explicit', {}, undefined), 1);
   assert.equal(calls[0].length, 2);
   assert.equal(calls[1].length, 3);
-  assert.equal(calls[0][2], undefined);
-  assert.equal(calls[1][2], undefined);
+  assert.equal(calls[0][2] === undefined, true);
+  assert.equal(calls[1][2] === undefined, true);
 });

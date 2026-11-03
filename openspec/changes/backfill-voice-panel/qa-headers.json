@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "89fe216472d408b6ac9a0d9b53f65ef20434d917",
+  "headers": [
+    {
+      "file": "scripts/qa-voice-auth-focus.mjs",
+      "header": "/**\n * Check auth-mode keyboard focus with the real settings template and controls.\n * Run: node --test --test-reporter=spec scripts/qa-voice-auth-focus.mjs\n * Sign-in responses are fixtures. No credentials or live login are used.\n */"
+    },
+    {
+      "file": "scripts/qa-voice-auth.mjs",
+      "header": "/**\n * Live Realtime auth acceptance with a prerecorded Chromium microphone.\n * Run against the local dev server after configuring the selected credential:\n * node scripts/qa-voice-auth.mjs http://127.0.0.1:4189 oauth microphone.wav\n * Use a short spoken reply request with three seconds of leading silence.\n * Saves only usage, transport metadata, and screenshots; never credentials.\n */"
+    },
+    {
+      "file": "scripts/qa-voice-bench.mjs",
+      "header": "/**\n * @purpose Compare voice tool choices across providers with the same phrases.\n * @covers pending:voice\n * @run node scripts/qa-voice-bench.mjs --provider ollama --model <id>\n * @needs A local Ollama server with the model, or credentials for the other selected providers.\n */"
+    },
+    {
+      "file": "scripts/qa-voice-routing.mjs",
+      "header": "/**\n * @purpose Prove that voice text selects the intended app action.\n * @covers pending:voice\n * @run node scripts/qa-voice-routing.mjs\n * @needs A browser and an app server that runs.\n */"
+    },
+    {
+      "file": "scripts/qa-voice-wav.mjs",
+      "header": "/**\n * @purpose Prove that microphone input drives voice controls.\n * @covers pending:voice\n * @run node scripts/qa-voice-wav.mjs\n * @needs A browser, an app server and the voice WAV fixture.\n */"
+    }
+  ]
+}

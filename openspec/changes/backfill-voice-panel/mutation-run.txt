@@ -1,0 +1,697 @@
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+A002-yes: KILLED [voice-panel-008] The owner supplies a string retirement reason for each action
+A002-no: KILLED [voice-panel-008] The observer retires each key with the default reason
+A003-yes: KILLED [voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata; reentrant start retirement retains only fresh ownership and never skips execution
+A003-no: KILLED [voice-panel-011] The progress metadata uses data fields in case 0; [voice-panel-011] The progress metadata uses data fields in case 1; [voice-panel-011] The progress metadata uses data fields in case 2; [voice-panel-011] The progress metadata uses data fields in case 3; [voice-panel-011] The progre
+A004-yes: SURVIVED 
+A004-no: KILLED [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 1; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2; [voice-panel-006] The custom options st
+A005-yes: SURVIVED 
+A005-no: KILLED [voice-panel-002] sync value/throw, receiver, arguments and opaque unsupported result stay exact; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2; [voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata; [voice-panel-005] T
+A006-left: KILLED [voice-panel-006] The accessor options keep their own getter and object identity; [voice-panel-006] The custom options stay unchanged in case 0; [voice-panel-006] accessor/custom options are forwarded untouched without extra getter/currentness p; [voice-panel-009] An action without options keeps its
+A006-right: KILLED [voice-panel-006] The custom options stay unchanged in case 1
+A007-left: KILLED [voice-panel-006] The custom options stay unchanged in case 0; [voice-panel-009] An action without options keeps its argument length; [voice-panel-009] The absent options keep their value in case 0; [voice-panel-009] The absent options keep their value in case 1; omitted and explicit undefined optio
+A007-right: KILLED [voice-panel-006] The accessor options keep their own getter and object identity; [voice-panel-006] accessor/custom options are forwarded untouched without extra getter/currentness p
+A008-left: KILLED [voice-panel-009] An action without options keeps its argument length; [voice-panel-009] The absent options keep their value in case 0; [voice-panel-009] The absent options keep their value in case 1; omitted and explicit undefined options keep original arity and values
+A008-right: KILLED [voice-panel-006] The custom options stay unchanged in case 0
+A009-left: KILLED [voice-panel-009] An action without options keeps its argument length; [voice-panel-009] The absent options keep their value in case 1; omitted and explicit undefined options keep original arity and values
+A009-right: KILLED [voice-panel-009] The absent options keep their value in case 0
+A010-left: KILLED [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 1; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2; [voice-panel-005 voice-panel-011] The p
+A010-right: KILLED [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 3
+A011-left: KILLED [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 3; [voice-panel-010] observer faults and private metadata faults cannot replace original callback error; [voice-panel-011] The pr
+A011-right: KILLED [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 1; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2; [voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata; [voice-panel-005] The progress
+A012-left: KILLED [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2; [voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata
+A012-right: KILLED [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 3
+A013-yes: KILLED [voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata; progress preserves public-before-original-before-private order, receiver and option references
+A013-no: KILLED [voice-panel-005] The progress callback keeps its order and custom receiver; progress preserves public-before-original-before-private order, receiver and option references
+A014-yes: KILLED [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 3; [voice-panel-010] observer faults and private metadata faults cannot replace original callback error; [voice-panel-011] The pr
+A014-no: KILLED [voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata; [voice-panel-005] The progress callback keeps its order and custom receiver; [voice-panel-005] actual pinned-main common session: private invocation stream is separate from publ; [voice-panel-007] real ca
+A015-left: KILLED [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 1; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2; [voice-panel-005 voice-panel-011] The p
+A015-right: SURVIVED 
+A016-left: KILLED [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 1; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2; [voice-panel-005 voice-panel-011] The p
+A016-right: SURVIVED 
+A017-yes: KILLED [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 1; [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2; [voice-panel-005 voice-panel-011] The p
+A017-no: KILLED [voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata; [voice-panel-011] The progress metadata uses data fields in case 3
+A018-left: KILLED [voice-panel-002] The action return kind stays exact in case 0
+A018-right: KILLED [voice-panel-002] The action return kind stays exact in case 1; [voice-panel-002] The action return kind stays exact in case 2; [voice-panel-002] The action return kind stays exact in case 3; [voice-panel-002] The action return kind stays exact in case 4; [voice-panel-002] sync value/throw, receiver
+A019-left: KILLED [voice-panel-052] The host rejects an incomplete mount in case 0; [voice-panel-052] The host rejects an incomplete mount in case 1; [voice-panel-052] The host rejects an incomplete mount in case 4
+A019-right: KILLED [voice-panel-052] The host rejects an incomplete mount in case 2
+A020-left: KILLED [voice-panel-052] The host rejects an incomplete mount in case 0; [voice-panel-052] The host rejects an incomplete mount in case 4
+A020-right: KILLED [voice-panel-052] The host rejects an incomplete mount in case 1
+A021-left: KILLED [voice-panel-052] The host rejects an incomplete mount in case 4
+A021-right: KILLED [voice-panel-052] The host rejects an incomplete mount in case 0
+A022-left: KILLED [voice-panel-054 voice-panel-058] A disposed session cannot rearm through native text
+A022-right: KILLED [voice-panel-054] The native input edge rearms automatic preview once
+A023-left: KILLED [voice-panel-058] A reentrant mount cannot own a disposed host; [voice-panel-058] A retired mount cannot change the current panel; [voice-panel-058] A teardown callback cannot use the retired operation; [voice-panel-058] The host destroys a mount with an aborted session signal
+A023-right: KILLED [voice-panel-050] A stop ticket cannot close a disposed session panel; [voice-panel-054 voice-panel-058] A disposed session cannot rearm through native text; [voice-panel-058] A disposed session cannot rearm or edit presentation; [voice-panel-058] The host ignores a preference notice after ownership
+A024-left: KILLED [voice-panel-058] A reentrant mount cannot own a disposed host; [voice-panel-058] A teardown callback cannot use the retired operation
+A024-right: SURVIVED 
+A025-left: KILLED [voice-panel-058] A teardown callback cannot use the retired operation
+A025-right: KILLED [voice-panel-058] A reentrant mount cannot own a disposed host
+A026-yes: KILLED [voice-panel-068] The host reports inactivity support in case 0; [voice-panel-068] The host reports inactivity support in case 1
+A026-no: KILLED [voice-panel-068] The host reports inactivity support in case 2
+A027-left: KILLED [voice-panel-068] The host reports inactivity support in case 0
+A027-right: KILLED [voice-panel-068] The host reports inactivity support in case 1
+A028-left: KILLED [voice-panel-054] The native input edge rearms automatic preview once
+A028-right: KILLED [voice-panel-054] The native input edge rearms automatic preview once
+A029-left: KILLED [voice-panel-050] A stop ticket cannot close a disposed session panel; [voice-panel-050] The stop ticket checks the current state in case 0
+A029-right: KILLED [voice-panel-050] The stop ticket checks the current state in case 1
+A030-left: KILLED [voice-panel-050] A stop ticket cannot close a disposed session panel
+A030-right: KILLED [voice-panel-050] The stop ticket checks the current state in case 0
+A031-left: KILLED [voice-panel-053] The operation keeps its epoch after its own preference write; [voice-panel-058] A disposed session cannot rearm or edit presentation; [voice-panel-058] A reentrant mount cannot own a disposed host; [voice-panel-058] A retired mount cannot change the current panel; [voice-panel-058]
+A031-right: KILLED [voice-panel-053] The session boundary cancels an operation in case 0; [voice-panel-053] The session boundary cancels an operation in case 1; [voice-panel-053] The session boundary cancels an operation in case 2; [voice-panel-053] The session boundary cancels an operation in case 3
+A032-left: KILLED [voice-panel-058] A disposed session cannot rearm or edit presentation; [voice-panel-058] A reentrant mount cannot own a disposed host; [voice-panel-058] A retired mount cannot change the current panel; [voice-panel-058] A teardown callback cannot use the retired operation; [voice-panel-058] The hos
+A032-right: KILLED [voice-panel-053] The operation keeps its epoch after its own preference write
+A033-left: SURVIVED 
+A033-right: SURVIVED 
+A034-yes: KILLED [voice-panel-053] The operation rejects invalid minutes in case 2; [voice-panel-053] The operation rejects invalid minutes in case 3
+A034-no: KILLED [voice-panel-053] The operation keeps its epoch after its own preference write
+A035-yes: KILLED [voice-panel-053] The operation keeps its epoch after its own preference write
+A035-no: KILLED [voice-panel-053] The operation keeps its epoch after its own preference write
+A036-left: KILLED [voice-panel-054] An inactive state event reaches the card
+A036-right: KILLED [voice-panel-053] The session boundary cancels an operation in case 0; [voice-panel-054] A normal state event keeps automatic preview enabled; [voice-panel-054] A state field on another event cannot disable automatic preview; [voice-panel-054] The host checks session activity in case 0; [voice-panel
+A037-left: KILLED [voice-panel-054] A state field on another event cannot disable automatic preview
+A037-right: KILLED [voice-panel-054] A normal state event keeps automatic preview enabled
+A038-left: KILLED [voice-panel-054] A reason on another event cannot rearm automatic preview; [voice-panel-057] The advisory interruption keeps the card and manual choice
+A038-right: KILLED [voice-panel-054] The input reason controls automatic preview in case 3
+A039-left: KILLED [voice-panel-054] A reason on another event cannot rearm automatic preview
+A039-right: KILLED [voice-panel-057] The advisory interruption keeps the card and manual choice
+A040-left: KILLED [voice-panel-054] The host rejects automatic preview input in case 0; [voice-panel-054] The host rejects automatic preview input in case 2
+A040-right: KILLED [voice-panel-054] The host rejects automatic preview input in case 1
+A041-left: KILLED [voice-panel-054] The host rejects automatic preview input in case 2
+A041-right: KILLED [voice-panel-054] The host rejects automatic preview input in case 0
+A042-left: KILLED [voice-panel-055] The host compares reply identifiers in case 0; [voice-panel-055] The host compares reply identifiers in case 1; [voice-panel-055] The host selects the response id before the item id; [voice-panel-055] The same text with a new id reaches the card
+A042-right: SURVIVED 
+A043-left: KILLED [voice-panel-055] The host compares reply identifiers in case 0; [voice-panel-055] The host selects the response id before the item id; [voice-panel-055] The same text with a new id reaches the card
+A043-right: KILLED [voice-panel-055] The host compares reply identifiers in case 1
+A044-left: KILLED [voice-panel-054] A normal state event keeps automatic preview enabled; [voice-panel-054] A reason on another event cannot rearm automatic preview; [voice-panel-054] A state field on another event cannot disable automatic preview; [voice-panel-054] The host checks session activity in case 0; [voice-
+A044-right: KILLED [voice-panel-055] A new final text or a different id reaches the card; [voice-panel-055] The host compares reply identifiers in case 2; [voice-panel-055] The same text with a new id reaches the card; [voice-panel-056] The default Cockpit reader suppresses automatic preview
+A045-left: KILLED [voice-panel-054] A normal state event keeps automatic preview enabled; [voice-panel-054] A reason on another event cannot rearm automatic preview; [voice-panel-054] A state field on another event cannot disable automatic preview; [voice-panel-054] The host checks session activity in case 0; [voice-
+A045-right: KILLED [voice-panel-055] The same text with a new id reaches the card
+A046-yes: KILLED [voice-panel-055] The host compares reply identifiers in case 0; [voice-panel-055] The host compares reply identifiers in case 1; [voice-panel-055] The host selects the response id before the item id
+A046-no: SURVIVED 
+A047-left: KILLED [voice-panel-055] The host compares reply identifiers in case 0; [voice-panel-055] The host compares reply identifiers in case 1; [voice-panel-055] The host selects the response id before the item id
+A047-right: KILLED [voice-panel-055] The host compares reply identifiers in case 0; [voice-panel-055] The host compares reply identifiers in case 1; [voice-panel-055] The host compares reply identifiers in case 2
+A048-left: KILLED [voice-panel-055] A new final text or a different id reaches the card
+A048-right: KILLED [voice-panel-055] The host compares reply identifiers in case 2; [voice-panel-055] The same text with a new id reaches the card
+A049-left: KILLED [voice-panel-055] The same text with a new id reaches the card
+A049-right: KILLED [voice-panel-055] A new final text or a different id reaches the card; [voice-panel-056] The default Cockpit reader suppresses automatic preview
+A050-left: KILLED [voice-panel-054] A reason on another event cannot rearm automatic preview; [voice-panel-054] The input reason controls automatic preview in case 0; [voice-panel-054] The input reason controls automatic preview in case 1; [voice-panel-054] The input reason controls automatic preview in case 2; [voic
+A050-right: KILLED [voice-panel-056] The default Cockpit reader suppresses automatic preview
+A051-left: KILLED [voice-panel-054] A reason on another event cannot rearm automatic preview; [voice-panel-054] The input reason controls automatic preview in case 0; [voice-panel-054] The input reason controls automatic preview in case 1; [voice-panel-054] The input reason controls automatic preview in case 2; [voic
+A051-right: KILLED [voice-panel-056] A disabled preference alone prevents automatic preview
+A052-left: KILLED [voice-panel-069] The advisory flag on another event does not hide it from the card
+A052-right: KILLED [voice-panel-069] The advisory flag on another event does not hide it from the card
+A053-left: KILLED [voice-panel-053] The session boundary cancels an operation in case 0
+A053-right: KILLED [voice-panel-053] The session boundary cancels an operation in case 1; [voice-panel-053] The session boundary cancels an operation in case 2; [voice-panel-053] The session boundary cancels an operation in case 3; [voice-panel-054] An inactive state event reaches the card
+A054-left: KILLED [voice-panel-054] A state field on another event cannot disable automatic preview
+A054-right: KILLED [voice-panel-054] A normal state event keeps automatic preview enabled
+A055-left: KILLED [voice-panel-032] The timer rejects invalid initial minutes in case 0; [voice-panel-032] The timer rejects invalid initial minutes in case 2; [voice-panel-032] The timer rejects invalid initial minutes in case 3
+A055-right: KILLED [voice-panel-032] The timer rejects invalid initial minutes in case 1
+A056-left: KILLED [voice-panel-032] The timer rejects invalid initial minutes in case 2; [voice-panel-032] The timer rejects invalid initial minutes in case 3
+A056-right: KILLED [voice-panel-032] The timer rejects invalid initial minutes in case 0
+A057-left: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0; [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1; [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 2; [voice-panel-030 voice-panel-033] The idle timer checks one blo
+A057-right: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 6; [voice-panel-033] expiry rereads held, unknown and pending counts despite missing update; [voice-panel-034] pending siblings and held-before-connect forbid timer; stale callback cannot expir
+A058-left: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0; [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1; [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 2; [voice-panel-030 voice-panel-033] The idle timer checks one blo
+A058-right: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 5
+A059-left: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0; [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1; [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 2; [voice-panel-030 voice-panel-033] The idle timer checks one blo
+A059-right: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 4; [voice-panel-030] one clock; quiet arms default five minutes; busy blocks and quiescence rearms
+A060-left: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0; [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1; [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 2; [voice-panel-033] expiry rereads held, unknown and pending coun
+A060-right: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 3
+A061-left: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0; [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1; [voice-panel-033] expiry rereads held, unknown and pending counts despite missing update
+A061-right: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 2; [voice-panel-033] expiry rereads held, unknown and pending counts despite missing update; [voice-panel-034] pending siblings and held-before-connect forbid timer; stale callback cannot expir
+A062-left: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0; [voice-panel-033] expiry rereads held, unknown and pending counts despite missing update
+A062-right: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1
+A063-left: KILLED None cancels; invalid values cannot replace setting; explicit retry rearms; [voice-panel-032 voice-panel-065] The timer accepts both minute bounds
+A063-right: KILLED [voice-panel-034] An activity reader can destroy the timer before it arms again
+A064-left: SURVIVED 
+A064-right: SURVIVED 
+A065-left: KILLED None cancels; invalid values cannot replace setting; explicit retry rearms; [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0; [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1; [voice-panel-030 voice-panel-033] The idle timer checks one blocke
+A065-right: KILLED [voice-panel-031] actual activity resets but silent unchanged snapshots do not
+A066-left: KILLED None cancels; invalid values cannot replace setting; explicit retry rearms; [voice-panel-032] The timer rejects invalid initial minutes in case 0; [voice-panel-032] The timer rejects invalid initial minutes in case 2; [voice-panel-032] The timer rejects invalid initial minutes in case 3
+A066-right: KILLED None cancels; invalid values cannot replace setting; explicit retry rearms; [voice-panel-032] The timer rejects invalid initial minutes in case 1
+A067-left: KILLED None cancels; invalid values cannot replace setting; explicit retry rearms; [voice-panel-032] The timer rejects invalid initial minutes in case 2; [voice-panel-032] The timer rejects invalid initial minutes in case 3
+A067-right: KILLED None cancels; invalid values cannot replace setting; explicit retry rearms; [voice-panel-032] The timer rejects invalid initial minutes in case 0
+A068-left: SURVIVED 
+A068-right: KILLED [voice-panel-019] The panel rejects invalid input in case 2
+A069-left: SURVIVED 
+A069-right: KILLED [voice-panel-019] The panel rejects invalid input in case 4
+A070-left: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 2
+A070-right: KILLED [voice-panel-015] manual switching transfers hidden-panel focus without stealing unrelated focus; [voice-panel-016] manual Preview selection never enables a disabled preference and uses injected cop; [voice-panel-020] The preview snapshot checks each visibility condition in case 2; [voice-panel-020]
+A071-left: KILLED [voice-panel-020] A panel without tabs accepts a focus request; [voice-panel-020] The panel accepts absent optional controls
+A071-right: KILLED [voice-panel-020] The panel rejects a focus target in case 2; [voice-panel-020] The preview snapshot checks each visibility condition in case 6
+A072-left: KILLED [voice-panel-020] A panel without tabs accepts a focus request; [voice-panel-020] The panel accepts absent optional controls
+A072-right: SURVIVED 
+A073-left: KILLED [voice-panel-020] A panel without tabs accepts a focus request; [voice-panel-020] The panel accepts absent optional controls
+A073-right: SURVIVED 
+A074-left: SURVIVED 
+A074-right: KILLED [voice-panel-013] Settings launcher toggles while tab and programmatic selection remain idempotent; [voice-panel-014] Escape closes an open panel and keeps a closed panel unchanged; [voice-panel-017] The close control ends the current presentation; [voice-panel-020] The preview snapshot checks each 
+A075-left: SURVIVED 
+A075-right: KILLED [voice-panel-020] The panel accepts absent optional controls; [voice-panel-020] The preview snapshot checks each visibility condition in case 2; [voice-panel-020] The preview snapshot checks each visibility condition in case 3; [voice-panel-020] The preview snapshot checks each visibility condition 
+A076-left: SURVIVED 
+A076-right: SURVIVED 
+A077-left: KILLED [voice-panel-016] The preview reader accepts only true in case 0; [voice-panel-016] The preview reader accepts only true in case 1; [voice-panel-016] The preview reader accepts only true in case 2; [voice-panel-016] The preview reader accepts only true in case 3; [voice-panel-020] The preview snapsh
+A077-right: KILLED [voice-panel-020] The panel accepts absent optional controls; [voice-panel-020] The preview snapshot checks each visibility condition in case 4; [voice-panel-020] The preview snapshot checks each visibility condition in case 5; [voice-panel-020] The preview snapshot checks each visibility condition 
+A078-left: SURVIVED 
+A078-right: KILLED [voice-panel-016] The preview reader accepts only true in case 0; [voice-panel-016] The preview reader accepts only true in case 1; [voice-panel-016] The preview reader accepts only true in case 2; [voice-panel-016] The preview reader accepts only true in case 3; [voice-panel-020] The preview snapsh
+A079-left: SURVIVED 
+A079-right: SURVIVED 
+A080-left: SURVIVED 
+A080-right: SURVIVED 
+A081-left: SURVIVED 
+A081-right: SURVIVED 
+A082-left: KILLED [voice-panel-014] Escape closes an open panel and keeps a closed panel unchanged; [voice-panel-017] disposal hides owned presentation and removes listeners without destroying the car; tab keyboard navigation and Escape preserve focus and accessibility state
+A082-right: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 2
+A083-left: SURVIVED 
+A083-right: SURVIVED 
+A084-left: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 2
+A084-right: SURVIVED 
+A085-left: SURVIVED 
+A085-right: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 2
+A086-left: SURVIVED 
+A086-right: SURVIVED 
+A087-left: SURVIVED 
+A087-right: SURVIVED 
+A088-yes: KILLED [voice-panel-014] The tab key selects its target in case 0; [voice-panel-014] The tab key selects its target in case 1; [voice-panel-014] The tab key selects its target in case 2; [voice-panel-014] The tab key selects its target in case 3; [voice-panel-014] The tab key selects its target in case 4; 
+A088-no: KILLED [voice-panel-014] The tab key selects its target in case 0; [voice-panel-014] The tab key selects its target in case 1; [voice-panel-014] The tab key selects its target in case 2; [voice-panel-014] The tab key selects its target in case 3; [voice-panel-014] The tab key selects its target in case 4; 
+A089-yes: KILLED [voice-panel-014] The tab key selects its target in case 0; [voice-panel-014] The tab key selects its target in case 1; [voice-panel-014] The tab key selects its target in case 2; [voice-panel-014] The tab key selects its target in case 3; [voice-panel-014] The tab key selects its target in case 4; 
+A089-no: KILLED [voice-panel-014] The tab key selects its target in case 0; [voice-panel-014] The tab key selects its target in case 1; [voice-panel-014] The tab key selects its target in case 2; [voice-panel-014] The tab key selects its target in case 3; [voice-panel-014] The tab key selects its target in case 4; 
+A090-left: KILLED [voice-panel-017] disposal hides owned presentation and removes listeners without destroying the car
+A090-right: SURVIVED 
+A091-left: SURVIVED 
+A091-right: SURVIVED 
+A092-left: SURVIVED 
+A092-right: KILLED [voice-panel-016] manual Preview selection never enables a disabled preference and uses injected cop
+A093-yes: KILLED [voice-panel-016] manual Preview selection never enables a disabled preference and uses injected cop
+A093-no: KILLED [voice-panel-016] The preview reader accepts only true in case 0; [voice-panel-016] The preview reader accepts only true in case 1; [voice-panel-016] The preview reader accepts only true in case 2; [voice-panel-016] The preview reader accepts only true in case 3; [voice-panel-016] manual Preview sel
+A094-left: KILLED [voice-panel-020] The panel accepts absent optional controls
+A094-right: KILLED [voice-panel-015] manual switching transfers hidden-panel focus without stealing unrelated focus
+A095-yes: SURVIVED 
+A095-no: KILLED [voice-panel-015] manual switching transfers hidden-panel focus without stealing unrelated focus
+A096-left: SURVIVED 
+A096-right: KILLED [voice-panel-015] manual switching transfers hidden-panel focus without stealing unrelated focus
+A097-yes: KILLED [voice-panel-015] manual switching transfers hidden-panel focus without stealing unrelated focus; tab keyboard navigation and Escape preserve focus and accessibility state
+A097-no: KILLED [voice-panel-013] Settings launcher toggles while tab and programmatic selection remain idempotent; [voice-panel-020] A missing visibility method does not prevent focus; [voice-panel-020] The panel rejects a focus target in case 0; [voice-panel-020] The panel rejects a focus target in case 1; [voice
+A098-left: KILLED [voice-panel-015] manual switching transfers hidden-panel focus without stealing unrelated focus
+A098-right: KILLED [voice-panel-020] A panel without tabs accepts a focus request; [voice-panel-020] The panel rejects a focus target in case 0; [voice-panel-020] The panel rejects a focus target in case 1; [voice-panel-020] The panel rejects a focus target in case 2
+A099-left: KILLED [voice-panel-015] manual switching transfers hidden-panel focus without stealing unrelated focus
+A099-right: SURVIVED 
+A100-left: KILLED [voice-panel-013] Settings launcher toggles while tab and programmatic selection remain idempotent; [voice-panel-020] A missing visibility method does not prevent focus; tab keyboard navigation and Escape preserve focus and accessibility state
+A100-right: KILLED [voice-panel-015] manual switching transfers hidden-panel focus without stealing unrelated focus
+A101-left: KILLED [voice-panel-014] Escape closes an open panel and keeps a closed panel unchanged; [voice-panel-017] The close control ends the current presentation; tab keyboard navigation and Escape preserve focus and accessibility state
+A101-right: KILLED [voice-panel-013] Settings launcher toggles while tab and programmatic selection remain idempotent
+A102-left: KILLED [voice-panel-014] Escape closes an open panel and keeps a closed panel unchanged; [voice-panel-017] The close control ends the current presentation; tab keyboard navigation and Escape preserve focus and accessibility state
+A102-right: KILLED [voice-panel-013] Settings launcher toggles while tab and programmatic selection remain idempotent
+A103-yes: KILLED [voice-panel-013] Settings launcher toggles while tab and programmatic selection remain idempotent
+A103-no: KILLED [voice-panel-013] Settings launcher toggles while tab and programmatic selection remain idempotent
+A104-left: SURVIVED 
+A104-right: SURVIVED 
+A105-yes: KILLED [voice-panel-014] Escape closes an open panel and keeps a closed panel unchanged
+A105-no: KILLED [voice-panel-013] Settings launcher toggles while tab and programmatic selection remain idempotent
+A106-yes: KILLED [voice-panel-014] The tab key selects its target in case 0; tab keyboard navigation and Escape preserve focus and accessibility state
+A106-no: KILLED [voice-panel-014] The tab key selects its target in case 1; [voice-panel-014] The tab key selects its target in case 3; [voice-panel-014] The tab key selects its target in case 4; tab keyboard navigation and Escape preserve focus and accessibility state
+A107-yes: KILLED [voice-panel-014] The tab key selects its target in case 1; tab keyboard navigation and Escape preserve focus and accessibility state
+A107-no: KILLED [voice-panel-014] The tab key selects its target in case 2; [voice-panel-014] The tab key selects its target in case 4; tab keyboard navigation and Escape preserve focus and accessibility state
+A108-yes: KILLED [voice-panel-014] The tab key selects its target in case 2; [voice-panel-014] The tab key selects its target in case 3; tab keyboard navigation and Escape preserve focus and accessibility state
+A108-no: KILLED [voice-panel-014] The tab key selects its target in case 4
+A109-yes: KILLED [voice-panel-014] The tab key selects its target in case 0; [voice-panel-014] The tab key selects its target in case 2; tab keyboard navigation and Escape preserve focus and accessibility state
+A109-no: KILLED [voice-panel-014] The tab key selects its target in case 1; [voice-panel-014] The tab key selects its target in case 3; tab keyboard navigation and Escape preserve focus and accessibility state
+A110-left: KILLED [voice-panel-014] Escape closes an open panel and keeps a closed panel unchanged
+A110-right: KILLED [voice-panel-014] Escape closes an open panel and keeps a closed panel unchanged; tab keyboard navigation and Escape preserve focus and accessibility state
+A111-left: KILLED [voice-panel-036] The OpenAI speech edges change the input state; [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-041] The audio evidence blocks a silent result in case 0; [voice-panel-041] The audio evidence blocks a silent result in case
+A111-right: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech; [voice-panel-036] The Gemini activity field reports local input; [voice-panel-036] The audio start checks admission in case 0; [voice-panel-036] The audio start checks admission in case 1; [voice-pan
+A112-yes: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech; [voice-panel-036] The Gemini activity field reports local input; [voice-panel-036] The OpenAI speech edges change the input state; [voice-panel-036] The audio start checks admission in case 0; [voice
+A112-no: KILLED [voice-panel-035] custom host never inspected, including hostile controller getter
+A113-yes: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech; [voice-panel-040 voice-panel-047] The input method keeps its call in case 0; [voice-panel-040 voice-panel-047] The input method keeps its call in case 1; [voice-panel-040 voice-panel-047] The input m
+A113-no: KILLED [voice-panel-035] custom host never inspected, including hostile controller getter
+A114-yes: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech
+A114-no: SURVIVED 
+A115-left: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-041] silent completion cannot establish output knowledge when observer attached mid-ses; [voice-panel-042] A data channel prevents clean initial output knowledge; [voice-panel-042] The initia
+A115-right: KILLED [voice-panel-042] The initial output rejects a busy field in case 5
+A116-left: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-041] silent completion cannot establish output knowledge when observer attached mid-ses; [voice-panel-042] A data channel prevents clean initial output knowledge; [voice-panel-042] The initia
+A116-right: KILLED [voice-panel-042] The initial output rejects a busy field in case 4
+A117-left: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-041] silent completion cannot establish output knowledge when observer attached mid-ses; [voice-panel-042] A data channel prevents clean initial output knowledge; [voice-panel-042] The initia
+A117-right: KILLED [voice-panel-042] The initial output rejects a busy field in case 3
+A118-left: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-041] silent completion cannot establish output knowledge when observer attached mid-ses; [voice-panel-042] A data channel prevents clean initial output knowledge; [voice-panel-042] The initia
+A118-right: KILLED [voice-panel-042] The initial output rejects a busy field in case 2
+A119-left: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-041] silent completion cannot establish output knowledge when observer attached mid-ses; [voice-panel-042] A data channel prevents clean initial output knowledge; [voice-panel-042] The initia
+A119-right: KILLED [voice-panel-042] The initial output rejects a busy field in case 1; [voice-panel-042] attaching to already active native transport never assumes empty playback
+A120-left: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-041] silent completion cannot establish output knowledge when observer attached mid-ses; [voice-panel-042] A data channel prevents clean initial output knowledge; [voice-panel-042] The initia
+A120-right: KILLED [voice-panel-042] The initial output rejects a busy field in case 0
+A121-left: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-042] The initial native status controls output knowledge in case 3
+A121-right: KILLED [voice-panel-042] A data channel prevents clean initial output knowledge; [voice-panel-042] attaching to already active native transport never assumes empty playback
+A123-left: KILLED [voice-panel-041] actual native RealtimeTurns output lifecycle remains busy beyond generation; [voice-panel-041] silent completion cannot establish output knowledge when observer attached mid-ses; [voice-panel-046] The response limit keeps unknown output until playback clears it; verified clean nati
+A123-right: KILLED [voice-panel-041] The audio evidence blocks a silent result in case 0; [voice-panel-041] The audio evidence blocks a silent result in case 1; [voice-panel-041] The audio evidence blocks a silent result in case 2; [voice-panel-041] The audio evidence blocks a silent result in case 3; [voice-panel-045
+A124-left: KILLED [voice-panel-045] The silent response checks its status in case 4
+A124-right: KILLED [voice-panel-045] The response checks every output part in case 1; [voice-panel-045] The response checks every output part in case 2; [voice-panel-045] The response checks every output part in case 3; [voice-panel-045] The response checks every output part in case 4; [voice-panel-045] The response c
+A125-left: KILLED [voice-panel-045] The silent response checks its status in case 4
+A125-right: SURVIVED 
+A126-left: KILLED [voice-panel-045] The response checks every output part in case 0; explicit silent OpenAI completion rearms expiry, including cancelled and failed responses
+A126-right: KILLED [voice-panel-045] The response checks every output part in case 0; [voice-panel-045] The silent output accepts one part type in case 0; [voice-panel-045] The silent output accepts one part type in case 1; [voice-panel-045] The silent output accepts one part type in case 2; [voice-panel-045] overlapp
+A127-left: SURVIVED 
+A127-right: KILLED [voice-panel-045] The response checks every output part in case 3; [voice-panel-045] The response checks every output part in case 4; [voice-panel-045] The response checks every output part in case 7; [voice-panel-045] overlapping silent replies resolve independently and audio output items remain un
+A128-left: SURVIVED 
+A128-right: SURVIVED 
+A129-yes: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-041] actual native RealtimeTurns output lifecycle remains busy beyond generation; [voice-panel-043] The native work field decides activity in case 0; [voice-panel-043] The native work field d
+A129-no: KILLED [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still ; [voice-panel-043] Gemini queue-only work blocks idle, queue drain rearms, expiry rereads delayed que; [voice-panel-043] The native work field decides activity in case 10; [voice-panel-043] The nativ
+A130-left: KILLED [voice-panel-035] custom host never inspected, including hostile controller getter; [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-041] The audio evidence blocks a silent result in case 0; [voice-panel-041] The audio evidence blocks a sil
+A130-right: KILLED [voice-panel-040] method receiver/args/result and throw are exact; abort restores wrappers; [voice-panel-047] An aborted observer restores native methods at construction
+A131-left: SURVIVED 
+A131-right: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-041] The audio evidence blocks a silent result in case 0; [voice-panel-041] The audio evidence blocks a silent result in case 1; [voice-panel-041] The audio evidence blocks a silent result in
+A132-left: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech; [voice-panel-048] The live transport keeps response evidence through recovery in case 0; [voice-panel-048] The live transport keeps response evidence through recovery in case 1; [voice-panel-048] The
+A132-right: SURVIVED 
+A133-left: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech; [voice-panel-036] The OpenAI speech edges change the input state; [voice-panel-036] The audio start checks admission in case 0; [voice-panel-038] same-mount restart old callbacks cannot clear new adm
+A133-right: KILLED [voice-panel-036] The Gemini activity field reports local input
+A134-left: SURVIVED 
+A134-right: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech; [voice-panel-036] The Gemini activity field reports local input; [voice-panel-036] The audio start checks admission in case 0; [voice-panel-036] The audio start checks admission in case 1; [voice-pan
+A135-yes: KILLED [voice-panel-037 voice-panel-047] The audio method updates output in case 0; [voice-panel-037 voice-panel-047] The audio method updates output in case 1; [voice-panel-037 voice-panel-047] The audio method updates output in case 2; [voice-panel-037] queue-to-drain, clear and close use current instanc
+A135-no: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-041] actual native RealtimeTurns output lifecycle remains busy beyond generation; [voice-panel-046] silent OpenAI replies cannot clear unresolved older audio or incomplete output met
+A136-left: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech; [voice-panel-036] The Gemini activity field reports local input; [voice-panel-037 voice-panel-047] The audio method updates output in case 2; [voice-panel-037] queue-to-drain, clear and close use cur
+A136-right: KILLED [voice-panel-037 voice-panel-047] The audio method updates output in case 0; [voice-panel-037 voice-panel-047] The audio method updates output in case 1; [voice-panel-037 voice-panel-047] The audio method updates output in case 2; [voice-panel-037] queue-to-drain, clear and close use current instanc
+A137-left: KILLED actual Gemini startup phases keep playback observation and permit quiet open-mic expiry
+A137-right: SURVIVED 
+A138-left: KILLED [voice-panel-043] The native work field decides activity in case 0; [voice-panel-043] The native work field decides activity in case 1; [voice-panel-043] The native work field decides activity in case 2; [voice-panel-043] The native work field decides activity in case 3; [voice-panel-043] The native
+A138-right: KILLED [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still ; [voice-panel-043] Gemini queue-only work blocks idle, queue drain rearms, expiry rereads delayed que; [voice-panel-043] The native work field decides activity in case 10; [voice-panel-043] The nativ
+A139-left: KILLED [voice-panel-043] The native work field decides activity in case 0; [voice-panel-043] The native work field decides activity in case 1; [voice-panel-043] The native work field decides activity in case 3; [voice-panel-043] The native work field decides activity in case 4; explicit silent OpenAI compl
+A139-right: KILLED [voice-panel-043] The native work field decides activity in case 2
+A140-left: KILLED [voice-panel-043] The native work field decides activity in case 0; [voice-panel-043] The native work field decides activity in case 3; explicit silent OpenAI completion rearms expiry, including cancelled and failed responses
+A140-right: KILLED [voice-panel-043] The native work field decides activity in case 1; [voice-panel-043] The native work field decides activity in case 4
+A141-left: KILLED [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still ; [voice-panel-043] The Gemini user turn flag does not report generation work; actual Gemini startup phases keep playback observation and permit quiet open-mic expiry
+A141-right: KILLED [voice-panel-043] The native work field decides activity in case 0; [voice-panel-043] The native work field decides activity in case 1; [voice-panel-043] The native work field decides activity in case 2; actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge;
+A142-left: SURVIVED 
+A142-right: KILLED [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still ; [voice-panel-043] Gemini queue-only work blocks idle, queue drain rearms, expiry rereads delayed que; [voice-panel-043] The Gemini user turn flag does not report generation work; [voice-panel-043] T
+A143-left: KILLED [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still ; [voice-panel-043] The native work field decides activity in case 5; [voice-panel-043] The native work field decides activity in case 6; [voice-panel-043] The native work field decides activity in ca
+A143-right: KILLED [voice-panel-043] Gemini queue-only work blocks idle, queue drain rearms, expiry rereads delayed que; [voice-panel-043] The native work field decides activity in case 10
+A144-left: KILLED [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still ; [voice-panel-043] The native work field decides activity in case 5; [voice-panel-043] The native work field decides activity in case 6; [voice-panel-043] The native work field decides activity in ca
+A144-right: KILLED [voice-panel-043] The native work field decides activity in case 9
+A145-left: KILLED [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still ; [voice-panel-043] The native work field decides activity in case 5; [voice-panel-043] The native work field decides activity in case 6; [voice-panel-043] The native work field decides activity in ca
+A145-right: KILLED [voice-panel-043] The native work field decides activity in case 8
+A146-left: KILLED [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still ; [voice-panel-043] The native work field decides activity in case 5; [voice-panel-043] The native work field decides activity in case 6
+A146-right: KILLED [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still ; [voice-panel-043] The native work field decides activity in case 7
+A147-left: KILLED [voice-panel-043] The native work field decides activity in case 5
+A147-right: KILLED [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still ; [voice-panel-043] The native work field decides activity in case 6
+A148-left: KILLED native typed input observation preserves receiver/result, refuses failed submissions and retires old
+A148-right: SURVIVED 
+A149-left: SURVIVED 
+A149-right: SURVIVED 
+A150-left: SURVIVED 
+A150-right: SURVIVED 
+A151-left: SURVIVED 
+A151-right: SURVIVED 
+A152-left: SURVIVED 
+A152-right: KILLED actual Gemini startup phases keep playback observation and permit quiet open-mic expiry
+A153-left: KILLED [voice-panel-047] Gemini restores each retired audio immediately across repeated same-mount restarts; reentrant Stop in original callback suppresses stale post-callback observation; teardown preserves n; verified clean native mount can arm initial idle, eventless response invalidates it
+A153-right: KILLED [voice-panel-048] The live transport keeps response evidence through recovery in case 1; [voice-panel-048] The live transport keeps response evidence through recovery in case 2; actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge
+A154-left: KILLED reentrant Stop in original callback suppresses stale post-callback observation; teardown preserves n; verified clean native mount can arm initial idle, eventless response invalidates it
+A154-right: KILLED [voice-panel-047] Gemini restores each retired audio immediately across repeated same-mount restarts
+A155-left: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech; [voice-panel-037] queue-to-drain, clear and close use current instance, without an acoustic claim; [voice-panel-038] same-mount restart old callbacks cannot clear new admitted capture/output; [voice-
+A155-right: KILLED [voice-panel-048] The live transport keeps response evidence through recovery in case 0; actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge
+A156-left: KILLED [voice-panel-048] The live transport keeps response evidence through recovery in case 0; actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge
+A156-right: KILLED actual Gemini startup phases keep playback observation and permit quiet open-mic expiry
+A157-left: SURVIVED 
+A157-right: KILLED [voice-panel-048] The live transport keeps response evidence through recovery in case 1; [voice-panel-048] The live transport keeps response evidence through recovery in case 2; actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge
+A158-left: KILLED [voice-panel-044] The text wrapper checks its input in case 0; [voice-panel-044] The text wrapper checks its input in case 1; [voice-panel-044] The text wrapper checks its input in case 2; native typed input observation preserves receiver/result, refuses failed submissions and retires old
+A158-right: KILLED [voice-panel-044] The text wrapper checks its input in case 3; native typed input observation preserves receiver/result, refuses failed submissions and retires old
+A159-left: KILLED [voice-panel-044] The text wrapper checks its input in case 4; native typed input observation preserves receiver/result, refuses failed submissions and retires old
+A159-right: KILLED [voice-panel-044] The text wrapper checks its input in case 1
+A161-left: KILLED [voice-panel-045] The silent output accepts one part type in case 0; [voice-panel-045] The silent output accepts one part type in case 1; [voice-panel-045] The silent output accepts one part type in case 2; [voice-panel-045] The silent response checks its status in case 0; [voice-panel-045] The sile
+A161-right: KILLED [voice-panel-045] The response checks every output part in case 0; [voice-panel-045] overlapping silent replies resolve independently and audio output items remain unk; actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge; explicit silent OpenAI completion 
+A162-left: SURVIVED 
+A162-right: KILLED [voice-panel-046] The response limit keeps unknown output until playback clears it
+A163-left: SURVIVED 
+A163-right: KILLED [voice-panel-045] The response checks every output part in case 0; [voice-panel-045] The silent output accepts one part type in case 0; [voice-panel-045] The silent output accepts one part type in case 1; [voice-panel-045] The silent output accepts one part type in case 2; [voice-panel-045] The sile
+A164-left: KILLED [voice-panel-041] The audio evidence blocks a silent result in case 0; [voice-panel-041] The audio evidence blocks a silent result in case 1; [voice-panel-046] silent OpenAI replies cannot clear unresolved older audio or incomplete output met
+A164-right: KILLED [voice-panel-041] The audio evidence blocks a silent result in case 2; [voice-panel-041] The audio evidence blocks a silent result in case 3
+A165-left: KILLED [voice-panel-041] The audio evidence blocks a silent result in case 0; [voice-panel-046] silent OpenAI replies cannot clear unresolved older audio or incomplete output met
+A165-right: KILLED [voice-panel-041] The audio evidence blocks a silent result in case 1
+A166-left: KILLED [voice-panel-041] The audio evidence blocks a silent result in case 0; [voice-panel-041] The audio evidence blocks a silent result in case 1; [voice-panel-041] The audio evidence blocks a silent result in case 2; [voice-panel-041] The audio evidence blocks a silent result in case 3; [voice-panel-046
+A166-right: KILLED [voice-panel-045] The response checks every output part in case 1; [voice-panel-045] The response checks every output part in case 2; [voice-panel-045] The response checks every output part in case 3; [voice-panel-045] The response checks every output part in case 4; [voice-panel-045] The response c
+A167-left: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown; [voice-panel-046] The response limit keeps unknown output until playback clears it; verified clean native mount can arm initial idle, eventless response invalidates it
+A167-right: KILLED [voice-panel-041] The audio evidence blocks a silent result in case 0; [voice-panel-041] The audio evidence blocks a silent result in case 1; [voice-panel-041] The audio evidence blocks a silent result in case 2; [voice-panel-041] The audio evidence blocks a silent result in case 3; [voice-panel-046
+A168-left: SURVIVED 
+A168-right: SURVIVED 
+A169-left: KILLED [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown
+A169-right: KILLED [voice-panel-041] The audio evidence blocks a silent result in case 0; [voice-panel-041] The audio evidence blocks a silent result in case 1; [voice-panel-041] The audio evidence blocks a silent result in case 2; [voice-panel-041] The audio evidence blocks a silent result in case 3; [voice-panel-046
+A171-yes: KILLED [voice-panel-039] The audio callback keeps its own values in case 0; [voice-panel-039] The audio callback keeps its own values in case 1; [voice-panel-039] The audio callback keeps its own values in case 2; [voice-panel-039] The audio callback keeps its own values in case 3; [voice-panel-039] native
+A171-no: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech; [voice-panel-036] The audio start checks admission in case 0; [voice-panel-036] The audio start checks admission in case 1; [voice-panel-036] The audio start checks admission in case 2; [voice-panel-
+A172-yes: KILLED [voice-panel-039] The audio callback keeps its own values in case 0; [voice-panel-039] The audio callback keeps its own values in case 1; [voice-panel-039] The audio callback keeps its own values in case 2; [voice-panel-039] The audio callback keeps its own values in case 3; options-method callback 
+A172-no: KILLED [voice-panel-039] The audio callback keeps its own values in case 0; [voice-panel-039] The audio callback keeps its own values in case 1; [voice-panel-039] The audio callback keeps its own values in case 2; [voice-panel-039] The audio callback keeps its own values in case 3; [voice-panel-039] native
+A173-left: KILLED reentrant Stop in original callback suppresses stale post-callback observation; teardown preserves n
+A173-right: SURVIVED 
+A174-left: SURVIVED 
+A174-right: SURVIVED 
+A175-left: SURVIVED 
+A175-right: SURVIVED 
+A176-left: KILLED [voice-panel-036] The audio start checks admission in case 1
+A176-right: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech; [voice-panel-036] The audio start checks admission in case 2
+A177-left: SURVIVED 
+A177-right: KILLED [voice-panel-036] The audio start checks admission in case 1
+A178-left: KILLED [voice-panel-036] The audio start checks admission in case 0
+A178-right: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech
+A179-left: SURVIVED 
+A179-right: SURVIVED 
+A182-left: KILLED [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent; [voice-panel-022] The preference saves valid minutes in case 0; [voice-panel-022] The preference saves valid minutes in case 1; [voice-panel-022] The preference saves valid minutes in case 2; [voice-p
+A182-right: KILLED [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent; [voice-panel-021] defaults and restore are passive; legacy None and stored custom restore; [voice-panel-022] The preference saves valid minutes in case 3; [voice-panel-022] exact valid values, presets
+A183-left: SURVIVED 
+A183-right: KILLED [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent; [voice-panel-021] defaults and restore are passive; legacy None and stored custom restore; [voice-panel-022] The preference saves valid minutes in case 3; [voice-panel-022] exact valid values, presets
+A184-yes: KILLED [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent; [voice-panel-021] defaults and restore are passive; legacy None and stored custom restore; [voice-panel-022] The preference saves valid minutes in case 0; [voice-panel-022] The preference saves valid 
+A184-no: KILLED [voice-panel-023] The preference rejects an invalid value in case 10; [voice-panel-023] The preference rejects an invalid value in case 11; [voice-panel-023] The preference rejects an invalid value in case 12; [voice-panel-023] The preference rejects an invalid value in case 8; [voice-panel-023] The
+A185-left: KILLED [voice-panel-023] The preference rejects an invalid value in case 10; [voice-panel-023] The preference rejects an invalid value in case 8; fractional, malformed, coercible and out-of-range inputs never write or notify
+A185-right: KILLED [voice-panel-023] The preference rejects an invalid value in case 9; [voice-panel-027] invalid control edits restore valid state without writes; None remains distinct; fractional, malformed, coercible and out-of-range inputs never write or notify
+A186-left: KILLED [voice-panel-023] The preference rejects an invalid value in case 10; fractional, malformed, coercible and out-of-range inputs never write or notify
+A186-right: KILLED [voice-panel-023] The preference rejects an invalid value in case 8; fractional, malformed, coercible and out-of-range inputs never write or notify
+A187-yes: KILLED [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent
+A187-no: KILLED [voice-panel-021] defaults and restore are passive; legacy None and stored custom restore; [voice-panel-022] The preference saves valid minutes in case 0; [voice-panel-022] The preference saves valid minutes in case 1; [voice-panel-022] The preference saves valid minutes in case 2; [voice-panel-022]
+A188-yes: KILLED [voice-panel-021] defaults and restore are passive; legacy None and stored custom restore
+A188-no: KILLED [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent; [voice-panel-021] defaults and restore are passive; legacy None and stored custom restore; [voice-panel-022] The preference saves valid minutes in case 0; [voice-panel-022] The preference saves valid 
+A189-left: KILLED [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent; [voice-panel-021] defaults and restore are passive; legacy None and stored custom restore; [voice-panel-023] The preference rejects an invalid value in case 0; [voice-panel-023] The preference rejects
+A189-right: KILLED [voice-panel-021] defaults and restore are passive; legacy None and stored custom restore; [voice-panel-022] The preference saves valid minutes in case 0; [voice-panel-022] The preference saves valid minutes in case 1; [voice-panel-022] The preference saves valid minutes in case 2; [voice-panel-022]
+A190-left: SURVIVED 
+A190-right: SURVIVED 
+A192-yes: KILLED [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent; [voice-panel-022] exact valid values, presets, None and serialized readback; [voice-panel-024] The incomplete storage keeps live values in case 0; [voice-panel-024] The incomplete storage keeps live v
+A192-no: KILLED [voice-panel-023] The model rejects a nonboolean preview value in case 0; [voice-panel-023] The model rejects a nonboolean preview value in case 1; [voice-panel-023] The model rejects a nonboolean preview value in case 2; [voice-panel-029] The preview control restores a rejected value and ignores a 
+A193-yes: KILLED [voice-panel-023] The preference rejects an invalid value in case 0; [voice-panel-023] The preference rejects an invalid value in case 1; [voice-panel-023] The preference rejects an invalid value in case 10; [voice-panel-023] The preference rejects an invalid value in case 11; [voice-panel-023] The 
+A193-no: KILLED [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent; [voice-panel-022] The preference saves valid minutes in case 0; [voice-panel-022] The preference saves valid minutes in case 1; [voice-panel-022] The preference saves valid minutes in case 2; [voice-p
+A194-yes: KILLED [voice-panel-022] The preference saves valid minutes in case 0; [voice-panel-022] exact valid values, presets, None and serialized readback; [voice-panel-027] invalid control edits restore valid state without writes; None remains distinct
+A194-no: KILLED [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent; [voice-panel-022] The preference saves valid minutes in case 1; [voice-panel-022] The preference saves valid minutes in case 2; [voice-panel-022] The preference saves valid minutes in case 3; [voice-p
+A195-yes: SURVIVED 
+A195-no: KILLED [voice-panel-026] Custom commits displayed valid value immediately, even when equal to preset; [voice-panel-029] The partial controls use a valid custom value in case 2
+A196-left: KILLED [voice-panel-026] Custom commits displayed valid value immediately, even when equal to preset; [voice-panel-029] The partial controls use a valid custom value in case 2
+A196-right: SURVIVED 
+A197-yes: KILLED [voice-panel-026] Custom commits displayed valid value immediately, even when equal to preset; [voice-panel-029] The partial controls use a valid custom value in case 2
+A197-no: KILLED [voice-panel-029] The partial controls use a valid custom value in case 0; [voice-panel-029] The partial controls use a valid custom value in case 1
+A198-yes: KILLED [voice-panel-024] The storage failure keeps live values across controls in case 0; [voice-panel-024] The storage failure keeps live values across controls in case 1; [voice-panel-024] The storage failure keeps live values across controls in case 2; [voice-panel-024] The storage failure keeps live va
+A198-no: KILLED [voice-panel-024] The storage failure keeps live values across controls in case 0; [voice-panel-024] The storage failure keeps live values across controls in case 1; [voice-panel-024] The storage failure keeps live values across controls in case 2; [voice-panel-024] The storage failure keeps live va
+A199-yes: KILLED [voice-panel-024] The storage failure keeps live values across controls in case 0; [voice-panel-024] The storage failure keeps live values across controls in case 1; [voice-panel-024] The storage failure keeps live values across controls in case 2; [voice-panel-024] The storage failure keeps live va
+A199-no: KILLED [voice-panel-024] The storage failure keeps live values across controls in case 0; [voice-panel-024] The storage failure keeps live values across controls in case 1; [voice-panel-024] The storage failure keeps live values across controls in case 2; [voice-panel-024] The storage failure keeps live va
+A200-left: KILLED [voice-panel-027] invalid control edits restore valid state without writes; None remains distinct
+A200-right: KILLED [voice-panel-026] Custom commits displayed valid value immediately, even when equal to preset; [voice-panel-029] The partial controls use a valid custom value in case 2; [voice-panel-029] The select works without a custom editor
+A201-yes: SURVIVED 
+A201-no: KILLED [voice-panel-027] invalid control edits restore valid state without writes; None remains distinct; [voice-panel-029] The select works without a custom editor
+A202-yes: KILLED [voice-panel-027] invalid control edits restore valid state without writes; None remains distinct
+A202-no: KILLED [voice-panel-029] The select works without a custom editor
+A203-left: KILLED [voice-panel-029] The preview control restores a rejected value and ignores a retired callback
+A203-right: SURVIVED 
+A204-left: KILLED [voice-panel-027] invalid control edits restore valid state without writes; None remains distinct; [voice-panel-029] The select works without a custom editor
+A204-right: SURVIVED 
+A205-left: KILLED [voice-panel-027] invalid control edits restore valid state without writes; None remains distinct
+A205-right: KILLED [voice-panel-026] Custom commits displayed valid value immediately, even when equal to preset
+A206-left: KILLED [voice-panel-027] invalid control edits restore valid state without writes; None remains distinct
+A206-right: KILLED [voice-panel-027] invalid control edits restore valid state without writes; None remains distinct
+A209-left: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A209-right: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A210-left: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A210-right: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A211-left: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A211-right: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A214-left: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A214-right: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A215-left: SURVIVED 
+A215-right: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A216-yes: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A216-no: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A218-left: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A218-right: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A219-yes: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A219-no: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A220-left: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A220-right: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A221-left: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A221-right: KILLED [voice-panel-059] The DOM fixture models attributes and child order; [voice-panel-059] The DOM fixture updates every class, child and listener
+A222-left: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A222-right: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A223-left: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A223-right: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+A225-left: KILLED [voice-panel-059] The DOM fixture models listener lifetime and event data; [voice-panel-059] The DOM fixture updates every class, child and listener
+A225-right: KILLED [voice-panel-059] The DOM fixture models listener lifetime and event data
+A227-left: KILLED [voice-panel-060] The clock runs due tasks once and cancels named tasks
+A227-right: KILLED [voice-panel-060] The clock checks all due tasks and a cancelled sibling; [voice-panel-060] The clock runs due tasks once and cancels named tasks
+K-input-0: KILLED [voice-panel-040 voice-panel-047] The input method keeps its call in case 0
+K-input-1: KILLED [voice-panel-040 voice-panel-047] The input method keeps its call in case 1
+K-input-2: KILLED [voice-panel-040 voice-panel-047] The input method keeps its call in case 2
+K-callback-0: KILLED [voice-panel-039] The audio callback keeps its own values in case 0
+K-callback-1: KILLED [voice-panel-039] The audio callback keeps its own values in case 1
+K-callback-2: KILLED [voice-panel-039] The audio callback keeps its own values in case 2
+K-callback-3: KILLED [voice-panel-039] The audio callback keeps its own values in case 3
+K-audio-0: KILLED [voice-panel-037 voice-panel-047] The audio method updates output in case 0
+K-audio-1: KILLED [voice-panel-037 voice-panel-047] The audio method updates output in case 1
+K-audio-2: KILLED [voice-panel-037 voice-panel-047] The audio method updates output in case 2
+K-openai-work-0: KILLED [voice-panel-043] The native work field decides activity in case 0
+K-openai-work-1: KILLED [voice-panel-043] The native work field decides activity in case 1
+K-openai-work-2: KILLED [voice-panel-043] The native work field decides activity in case 2
+K-gemini-work-0: KILLED [voice-panel-043] The native work field decides activity in case 5
+K-gemini-work-1: KILLED [voice-panel-043] The native work field decides activity in case 6
+K-gemini-work-2: KILLED [voice-panel-043] The native work field decides activity in case 7
+K-gemini-work-3: KILLED [voice-panel-043] The native work field decides activity in case 8
+K-gemini-work-4: KILLED [voice-panel-043] The native work field decides activity in case 9
+K-gemini-work-5: KILLED [voice-panel-043] The native work field decides activity in case 10
+K-idle-0: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0
+K-idle-1: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1
+K-idle-2: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 2
+K-idle-3: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 3
+K-idle-4: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 4
+K-idle-5: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 5
+K-idle-6: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 6
+K-clean-0: KILLED [voice-panel-042] The initial output rejects a busy field in case 0
+K-clean-1: KILLED [voice-panel-042] The initial output rejects a busy field in case 1
+K-clean-2: KILLED [voice-panel-042] The initial output rejects a busy field in case 2
+K-clean-3: KILLED [voice-panel-042] The initial output rejects a busy field in case 3
+K-clean-4: KILLED [voice-panel-042] The initial output rejects a busy field in case 4
+K-clean-5: KILLED [voice-panel-042] The initial output rejects a busy field in case 5
+K-silent-0: KILLED [voice-panel-045] The silent output accepts one part type in case 0
+K-silent-1: KILLED [voice-panel-045] The silent output accepts one part type in case 1
+K-silent-2: KILLED [voice-panel-045] The silent output accepts one part type in case 2
+K-loop-retire: KILLED [voice-panel-008] The observer retires each key with the default reason
+K-loop-listeners: KILLED [voice-panel-028] Each listener receives a separate complete snapshot
+K-loop-children: KILLED [voice-panel-059] The DOM fixture updates every class, child and listener
+K-loop-events: KILLED [voice-panel-059] The DOM fixture updates every class, child and listener
+K-loop-tasks: KILLED [voice-panel-060] The clock checks all due tasks and a cancelled sibling
+SURVIVORS: [('A004-yes', 'SURVIVED'), ('A005-yes', 'SURVIVED'), ('A015-right', 'SURVIVED'), ('A016-right', 'SURVIVED'), ('A024-right', 'SURVIVED'), ('A033-left', 'SURVIVED'), ('A033-right', 'SURVIVED'), ('A042-right', 'SURVIVED'), ('A046-no', 'SURVIVED'), ('A064-left', 'SURVIVED'), ('A064-right', 'SURVIVED'), ('A068-left', 'SURVIVED'), ('A069-left', 'SURVIVED'), ('A072-right', 'SURVIVED'), ('A073-right', 'SURVIVED'), ('A074-left', 'SURVIVED'), ('A075-left', 'SURVIVED'), ('A076-left', 'SURVIVED'), ('A076-right', 'SURVIVED'), ('A078-left', 'SURVIVED'), ('A079-left', 'SURVIVED'), ('A079-right', 'SURVIVED'), ('A080-left', 'SURVIVED'), ('A080-right', 'SURVIVED'), ('A081-left', 'SURVIVED'), ('A081-right', 'SURVIVED'), ('A083-left', 'SURVIVED'), ('A083-right', 'SURVIVED'), ('A084-right', 'SURVIVED'), ('A085-left', 'SURVIVED'), ('A086-left', 'SURVIVED'), ('A086-right', 'SURVIVED'), ('A087-left', 'SURVIVED'), ('A087-right', 'SURVIVED'), ('A090-right', 'SURVIVED'), ('A091-left', 'SURVIVED'), ('A091-right', 'SURVIVED'), ('A092-left', 'SURVIVED'), ('A095-yes', 'SURVIVED'), ('A096-left', 'SURVIVED'), ('A099-right', 'SURVIVED'), ('A104-left', 'SURVIVED'), ('A104-right', 'SURVIVED'), ('A114-no', 'SURVIVED'), ('A125-right', 'SURVIVED'), ('A127-left', 'SURVIVED'), ('A128-left', 'SURVIVED'), ('A128-right', 'SURVIVED'), ('A131-left', 'SURVIVED'), ('A132-right', 'SURVIVED'), ('A134-left', 'SURVIVED'), ('A137-right', 'SURVIVED'), ('A142-left', 'SURVIVED'), ('A148-right', 'SURVIVED'), ('A149-left', 'SURVIVED'), ('A149-right', 'SURVIVED'), ('A150-left', 'SURVIVED'), ('A150-right', 'SURVIVED'), ('A151-left', 'SURVIVED'), ('A151-right', 'SURVIVED'), ('A152-left', 'SURVIVED'), ('A157-left', 'SURVIVED'), ('A162-left', 'SURVIVED'), ('A163-left', 'SURVIVED'), ('A168-left', 'SURVIVED'), ('A168-right', 'SURVIVED'), ('A173-right', 'SURVIVED'), ('A174-left', 'SURVIVED'), ('A174-right', 'SURVIVED'), ('A175-left', 'SURVIVED'), ('A175-right', 'SURVIVED'), ('A177-left', 'SURVIVED'), ('A179-left', 'SURVIVED'), ('A179-right', 'SURVIVED'), ('A183-left', 'SURVIVED'), ('A190-left', 'SURVIVED'), ('A190-right', 'SURVIVED'), ('A195-yes', 'SURVIVED'), ('A196-right', 'SURVIVED'), ('A201-yes', 'SURVIVED'), ('A203-right', 'SURVIVED'), ('A204-right', 'SURVIVED'), ('A215-left', 'SURVIVED')]
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json A004-yes A005-yes A015-right A016-right A024-right A033-left A033-right A042-right A046-no A064-left A064-right A068-left A069-left A072-right A073-right A074-left A075-left A076-left A076-right A078-left A079-left A079-right A080-left A080-right A081-left A081-right A083-left A083-right A084-right A085-left A086-left A086-right A087-left A087-right A090-right A091-left A091-right A092-left A095-yes A096-left A099-right A104-left A104-right A114-no A125-right A127-left A128-left A128-right A131-left A132-right A134-left A137-right A142-left A148-right A149-left A149-right A150-left A150-right A151-left A151-right A152-left A157-left A162-left A163-left A168-left A168-right A173-right A174-left A174-right A175-left A175-right A177-left A179-left A179-right A183-left A190-left A190-right A195-yes A196-right A201-yes A203-right A204-right A215-left K-loop-audio-restores K-loop-native-restores K-bind-add-0 K-bind-remove-0 K-bind-add-1 K-bind-remove-1 K-bind-add-2 K-bind-remove-2 K-loop-html K-loop-attributes S001 S003 S004 S012 S018 S021 S028 S030 S040 S061 S062 S063 S064 S065 S066 K-text-trim K-silent-status-0 K-silent-status-1 K-silent-status-2 K-silent-status-3 K-clean-status-0 K-clean-status-1 K-clean-status-2 K-limit-low K-limit-high
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+A004-yes: SURVIVED 
+A005-yes: SURVIVED 
+A015-right: SURVIVED 
+A016-right: SURVIVED 
+A024-right: SURVIVED 
+A033-left: SURVIVED 
+A033-right: SURVIVED 
+A042-right: SURVIVED 
+A046-no: SURVIVED 
+A064-left: SURVIVED 
+A064-right: KILLED [voice-panel-034] An old timer cannot expire after a quiet successor starts
+A068-left: SURVIVED 
+A069-left: SURVIVED 
+A072-right: SURVIVED 
+A073-right: SURVIVED 
+A074-left: KILLED [voice-panel-017] A reentrant card cannot reopen a disposed snapshot in case 0; [voice-panel-017] A reentrant card cannot reopen a disposed snapshot in case 1
+A075-left: KILLED [voice-panel-017] A reentrant card cannot reopen a disposed snapshot in case 1
+A076-left: KILLED [voice-panel-017] A reentrant card cannot reopen a disposed snapshot in case 1
+A076-right: SURVIVED 
+A078-left: KILLED [voice-panel-017] A reentrant card cannot reopen a disposed snapshot in case 0; [voice-panel-020] The preview snapshot checks each visibility condition in case 0; [voice-panel-020] The preview snapshot checks each visibility condition in case 1; [voice-panel-020] The preview snapshot checks each vis
+A079-left: KILLED [voice-panel-017] A reentrant card cannot reopen a disposed snapshot in case 0; [voice-panel-020] The preview snapshot checks each visibility condition in case 0; [voice-panel-020] The preview snapshot checks each visibility condition in case 1
+A079-right: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 2
+A080-left: KILLED [voice-panel-017] A reentrant card cannot reopen a disposed snapshot in case 0; [voice-panel-020] The preview snapshot checks each visibility condition in case 0
+A080-right: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 1
+A081-left: KILLED [voice-panel-017] A reentrant card cannot reopen a disposed snapshot in case 0
+A081-right: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 0
+A083-left: KILLED [voice-panel-015] A view change transfers only the outgoing focus in case 0; [voice-panel-015] A view change transfers only the outgoing focus in case 1; [voice-panel-015] A visible sync and a close keep unrelated focus unchanged
+A083-right: KILLED [voice-panel-015] A visible sync and a close keep unrelated focus unchanged; [voice-panel-020] A hidden panel cannot focus an independently visible tab
+A084-right: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 2
+A085-left: KILLED [voice-panel-013] A closed view hides both panes in case 0; [voice-panel-020] The preview snapshot checks each visibility condition in case 0
+A086-left: KILLED [voice-panel-013] A closed view hides both panes in case 1
+A086-right: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 2; [voice-panel-020] The preview snapshot checks each visibility condition in case 3; [voice-panel-020] The preview snapshot checks each visibility condition in case 4; [voice-panel-020] The preview snapshot checks each 
+A087-left: KILLED [voice-panel-013] A closed view hides both panes in case 1
+A087-right: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 2; [voice-panel-020] The preview snapshot checks each visibility condition in case 3; [voice-panel-020] The preview snapshot checks each visibility condition in case 4; [voice-panel-020] The preview snapshot checks each 
+A090-right: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 2
+A091-left: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 0
+A091-right: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 1
+A092-left: KILLED [voice-panel-020] An absent card keeps the empty preview visible
+A095-yes: KILLED [voice-panel-015] A view change transfers only the outgoing focus in case 0
+A096-left: KILLED [voice-panel-015] A view change transfers only the outgoing focus in case 0; [voice-panel-015] A view change transfers only the outgoing focus in case 1
+A099-right: KILLED [voice-panel-020] A hidden panel cannot focus an independently visible tab
+A104-left: KILLED [voice-panel-013] The settings button toggles a closed settings view and replaces Preview
+A104-right: KILLED [voice-panel-013] The settings button toggles a closed settings view and replaces Preview
+A114-no: KILLED [voice-panel-036] The native input owner uses a distinct held flag in case 0
+A125-right: KILLED [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 0; [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 1; [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 2
+A127-left: KILLED [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 3; [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 4
+A128-left: KILLED [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 3
+A128-right: KILLED [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 4
+A131-left: SURVIVED 
+A132-right: KILLED [voice-panel-047] A retired observer does not inspect native state events
+A134-left: KILLED [voice-panel-043] The OpenAI input state ignores the Gemini input field
+A137-right: KILLED [voice-panel-037] The output state checks ownership of the audio object
+A142-left: KILLED [voice-panel-043] The OpenAI work state ignores a Gemini field in case 0; [voice-panel-043] The OpenAI work state ignores a Gemini field in case 1; [voice-panel-043] The OpenAI work state ignores a Gemini field in case 2; [voice-panel-043] The OpenAI work state ignores a Gemini field in case 3; [voi
+A148-right: KILLED [voice-panel-070] A state boundary retires the method callback
+A149-left: KILLED [voice-panel-047] A retired observer does not inspect native state events
+A149-right: KILLED [voice-panel-035] A custom observer ignores state changes and sends no notice
+A150-left: KILLED [voice-panel-047] A session boundary retires current audio in case 0; [voice-panel-048] Repeated start phases cannot erase an unresolved response
+A150-right: SURVIVED 
+A151-left: KILLED [voice-panel-048] Repeated start phases cannot erase an unresolved response
+A151-right: KILLED [voice-panel-047] A session boundary retires current audio in case 0
+A152-left: SURVIVED 
+A157-left: KILLED [voice-panel-038] An old callback stays retired when the factory reuses its audio object; [voice-panel-047] A session boundary retires current audio in case 1
+A162-left: KILLED [voice-panel-046] A response without an id cannot establish silent output
+A163-left: KILLED [voice-panel-070] An untracked event still sends an activity notice in case 0
+A168-left: KILLED [voice-panel-046] An event without completion cannot settle a pending response
+A168-right: KILLED [voice-panel-070] An untracked event still sends an activity notice in case 1; [voice-panel-070] An untracked event still sends an activity notice in case 2
+A173-right: KILLED [voice-panel-038] An audio callback cannot act through a different controller owner
+A174-left: KILLED [voice-panel-038] A retired factory callback cannot act through a null audio result; [voice-panel-038] An old callback stays retired when the factory reuses its audio object
+A174-right: KILLED [voice-panel-038] A closed audio callback cannot restore input activity
+A175-left: KILLED [voice-panel-038] A retired factory callback cannot act through a null audio result
+A175-right: KILLED [voice-panel-038] An old callback stays retired when the factory reuses its audio object
+A177-left: KILLED [voice-panel-037] A drain event cannot admit input capture
+A179-left: KILLED [voice-panel-047] A retired factory does not wrap its new audio result
+A179-right: KILLED [voice-panel-047] A boundary inside the factory prevents a stale audio wrapper
+A183-left: SURVIVED 
+A190-left: KILLED [voice-panel-024] An incomplete store cannot receive a write or a new read
+A190-right: KILLED [voice-panel-024] An incomplete store cannot receive a write or a new read
+A195-yes: KILLED [voice-panel-029] The custom value precedes a synchronous source notice
+A196-right: KILLED [voice-panel-026] The initial None value keeps a positive custom editor value
+A201-yes: KILLED [voice-panel-029] The zero branch uses the current minute value from a custom source
+A203-right: KILLED [voice-panel-029] The preview checkbox applies both boolean values through its listener
+A204-right: KILLED [voice-panel-027] A custom select rejects zero without a preference write
+A215-left: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+K-loop-audio-restores: KILLED [voice-panel-047] Gemini restores each retired audio immediately across repeated same-mount restarts
+K-loop-native-restores: KILLED [voice-panel-040 voice-panel-047] The input method keeps its call in case 0
+K-bind-add-0: KILLED [voice-panel-029] The preview control restores a rejected value and ignores a retired callback
+K-bind-remove-0: KILLED [voice-panel-029] The binder removes its control listener in case 0
+K-bind-add-1: KILLED [voice-panel-029] The select works without a custom editor
+K-bind-remove-1: KILLED [voice-panel-029] The binder removes its control listener in case 1
+K-bind-add-2: KILLED [voice-panel-029] The partial controls use a valid custom value in case 2
+K-bind-remove-2: KILLED [voice-panel-029] The binder removes its control listener in case 2
+K-loop-html: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+K-loop-attributes: KILLED [voice-panel-059] The DOM fixture models attributes and child order
+S001: KILLED [voice-panel-001] The observer rejects an invalid action
+S003: KILLED [voice-panel-003] The native promise keeps identity and each final outcome
+S004: KILLED [voice-panel-004] null/reused callIds have independent keys and settlement cannot retire a sibling
+S012: KILLED [voice-panel-012] actual control default remains opt-out; panel markup has unique controlled panes a
+S018: KILLED [voice-panel-018] pointer grace expires, resets on reentry, ignores touch and clears on disposal
+S021: KILLED [voice-panel-021] defaults and restore are passive; legacy None and stored custom restore
+S028: KILLED [voice-panel-028] model snapshots cannot mutate state; unsubscribe and binder disposal release owner
+S030: KILLED [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0
+S040: KILLED [voice-panel-040 voice-panel-047] The input method keeps its call in case 0
+S061: KILLED [voice-panel-061] actual runner applies exact timeout directly and reports live-unsaved truth, inval
+S062: KILLED [voice-panel-062] unavailable host refuses direct voice operations before Cockpit or preference effe
+S063: KILLED [voice-panel-063] canonical exit reveals requested voice UI; newer manual choice or Stop defeats pen
+S064: KILLED [voice-panel-064] Provider Settings uses its ready dialog handlers and refuses unavailable or cancel
+S065: KILLED [voice-panel-065 voice-panel-066] None cancels integrated app timer and unknown custom hosts never g
+S066: KILLED [voice-panel-065 voice-panel-066] None cancels integrated app timer and unknown custom hosts never g
+K-text-trim: KILLED [voice-panel-044] The text wrapper checks its input in case 2
+K-silent-status-0: KILLED [voice-panel-045] The silent response checks its status in case 0
+K-silent-status-1: KILLED [voice-panel-045] The silent response checks its status in case 1
+K-silent-status-2: KILLED [voice-panel-045] The silent response checks its status in case 2
+K-silent-status-3: KILLED [voice-panel-045] The silent response checks its status in case 3
+K-clean-status-0: KILLED [voice-panel-042] The initial native status controls output knowledge in case 0
+K-clean-status-1: KILLED [voice-panel-042] The initial native status controls output knowledge in case 1
+K-clean-status-2: KILLED [voice-panel-042] The initial native status controls output knowledge in case 2
+K-limit-low: KILLED [voice-panel-046] The response table accepts exactly 64 silent replies
+K-limit-high: KILLED [voice-panel-046] The response limit keeps unknown output until playback clears it
+SURVIVORS: [('A004-yes', 'SURVIVED'), ('A005-yes', 'SURVIVED'), ('A015-right', 'SURVIVED'), ('A016-right', 'SURVIVED'), ('A024-right', 'SURVIVED'), ('A033-left', 'SURVIVED'), ('A033-right', 'SURVIVED'), ('A042-right', 'SURVIVED'), ('A046-no', 'SURVIVED'), ('A064-left', 'SURVIVED'), ('A068-left', 'SURVIVED'), ('A069-left', 'SURVIVED'), ('A072-right', 'SURVIVED'), ('A073-right', 'SURVIVED'), ('A076-right', 'SURVIVED'), ('A131-left', 'SURVIVED'), ('A150-right', 'SURVIVED'), ('A152-left', 'SURVIVED'), ('A183-left', 'SURVIVED')]
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json A004-yes A005-yes A015-right A016-right A024-right A033-left A033-right A042-right A046-no A064-left A068-left A069-left A072-right A073-right A076-right A131-left A150-right A152-left A183-left S006 S007 S008
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+A004-yes: SURVIVED 
+A005-yes: SURVIVED 
+A015-right: SURVIVED 
+A016-right: SURVIVED 
+A024-right: SURVIVED 
+A033-left: SURVIVED 
+A033-right: SURVIVED 
+A042-right: SURVIVED 
+A046-no: SURVIVED 
+A064-left: SURVIVED 
+A068-left: KILLED [voice-panel-019] A valid reader cannot replace an absent panel in case 0; [voice-panel-019] A valid reader cannot replace an absent panel in case 1
+A069-left: KILLED [voice-panel-019] A valid disabled message cannot replace an invalid empty message
+A072-right: KILLED [voice-panel-020] A visibility method cannot replace a target guard in case 1
+A073-right: KILLED [voice-panel-020] A visibility method cannot replace a target guard in case 0
+A076-right: KILLED [voice-panel-013] A closed view hides both panes in case 1
+A131-left: SURVIVED 
+A150-right: KILLED [voice-panel-046] A closed transport error retires unresolved output evidence
+A152-left: SURVIVED 
+A183-left: SURVIVED 
+S006: KILLED [voice-panel-006] An inherited signal cannot retire an action key
+S007: KILLED [voice-panel-007] real caller abort retires ownership only; late A cannot release or report over B
+S008: KILLED [voice-panel-008] A disposed observer forwards the receiver and each argument unchanged
+SURVIVORS: [('A004-yes', 'SURVIVED'), ('A005-yes', 'SURVIVED'), ('A015-right', 'SURVIVED'), ('A016-right', 'SURVIVED'), ('A024-right', 'SURVIVED'), ('A033-left', 'SURVIVED'), ('A033-right', 'SURVIVED'), ('A042-right', 'SURVIVED'), ('A046-no', 'SURVIVED'), ('A064-left', 'SURVIVED'), ('A131-left', 'SURVIVED'), ('A152-left', 'SURVIVED'), ('A183-left', 'SURVIVED')]
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json A150-left A151-left A152-right
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+A150-left: KILLED [voice-panel-046] Repeated start phases cannot erase an unresolved response; [voice-panel-047] A session boundary retires current audio in case 0
+A151-left: KILLED [voice-panel-046] Repeated start phases cannot erase an unresolved response
+A152-right: KILLED [voice-panel-046] Repeated start phases cannot erase an unresolved response; actual Gemini startup phases keep playback observation and permit quiet open-mic expiry
+SURVIVORS: []
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json A083-left A095-yes A096-left A168-left
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+A083-left: KILLED [voice-panel-015] A view change transfers focus from the old pane in case 0; [voice-panel-015] A view change transfers focus from the old pane in case 1; [voice-panel-015] A visible sync and a close keep unrelated focus unchanged
+A095-yes: KILLED [voice-panel-015] A view change transfers focus from the old pane in case 0
+A096-left: KILLED [voice-panel-015] A view change transfers focus from the old pane in case 0; [voice-panel-015] A view change transfers focus from the old pane in case 1
+A168-left: KILLED [voice-panel-046] An event without completion cannot settle an unresolved response
+SURVIVORS: []
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json S055 S055-timer S057
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+S055: KILLED [voice-panel-055] The host compares reply identifiers in case 0
+S055-timer: KILLED [voice-panel-054 voice-panel-055 voice-panel-057] active provider output reveals Preview after done;
+S057: KILLED [voice-panel-054 voice-panel-055 voice-panel-057] active provider output reveals Preview after done;
+SURVIVORS: []
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json K-preset-0 K-preset-1 K-preset-2 K-preset-3 K-final-state-0 K-final-state-1 K-final-state-2 K-boundary-state-0 K-boundary-state-1 K-boundary-state-2
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+K-preset-0: KILLED [voice-panel-022] The preset control applies its own value in case 0
+K-preset-1: KILLED [voice-panel-022] The preset control applies its own value in case 1
+K-preset-2: KILLED [voice-panel-022] The preset control applies its own value in case 2
+K-preset-3: KILLED [voice-panel-022] The preset control applies its own value in case 3
+K-final-state-0: KILLED [voice-panel-055] The session state resets the final reply in case 0
+K-final-state-1: KILLED [voice-panel-055] The session state resets the final reply in case 1
+K-final-state-2: KILLED [voice-panel-055] The session state resets the final reply in case 2
+K-boundary-state-0: KILLED [voice-panel-053] The session boundary cancels an operation in case 1
+K-boundary-state-1: KILLED [voice-panel-053] The session boundary cancels an operation in case 2
+K-boundary-state-2: KILLED [voice-panel-053] The session boundary cancels an operation in case 3
+SURVIVORS: []
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json A024-right
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+A024-right: KILLED [voice-panel-058] A replaced destroy method cannot keep the old mount current
+SURVIVORS: []
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json A034-yes A135-yes A136-left A136-right K-audio-0 K-audio-1 K-audio-2 S053-minutes K-audio-args-0 K-audio-args-1 K-audio-args-2
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+A034-yes: KILLED [voice-panel-053] The operation rejects invalid minutes in case 2; [voice-panel-053] The operation rejects invalid minutes in case 3
+A135-yes: KILLED [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 0; [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 1; [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 2; [voice-panel-037] The
+A136-left: KILLED [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech; [voice-panel-036] The Gemini activity field reports local input; [voice-panel-036] The native input owner uses a distinct held flag in case 1; [voice-panel-037 voice-panel-040 voice-panel-047] The au
+A136-right: KILLED [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 0; [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 1; [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 2; [voice-panel-037] A d
+K-audio-0: KILLED [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 0
+K-audio-1: KILLED [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 1
+K-audio-2: KILLED [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 2
+S053-minutes: KILLED [voice-panel-053] The operation rejects invalid minutes in case 1
+K-audio-args-0: KILLED [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 0
+K-audio-args-1: KILLED [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 1
+K-audio-args-2: KILLED [voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 2
+SURVIVORS: []
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json S020-default-view S032-initial
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+S020-default-view: SURVIVED 
+S032-initial: KILLED [voice-panel-032] The initial timer uses the supplied minutes in case 1
+SURVIVORS: [('S020-default-view', 'SURVIVED')]
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json S020-default-view
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+S020-default-view: KILLED [voice-panel-020] The preview snapshot checks each visibility condition in case 0
+SURVIVORS: []
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json K-output-items K-output-parts K-option-descriptors
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+K-output-items: KILLED [voice-panel-045] The response checks every output part in case 6
+K-output-parts: KILLED [voice-panel-045] The response checks every output part in case 3
+K-option-descriptors: KILLED [voice-panel-006] accessor/custom options are forwarded untouched without extra getter/currentness p
+SURVIVORS: []
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/voicepanel /home/ianblenke/docker/gev-tools/voicepanel/muts.json S061-collapse S061-choice
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+S061-collapse: KILLED [voice-panel-061] named voice settings exits Cockpit directly; Preview stays disabled and visual pre
+S061-choice: KILLED [voice-panel-061] named voice settings exits Cockpit directly; Preview stays disabled and visual pre
+SURVIVORS: []

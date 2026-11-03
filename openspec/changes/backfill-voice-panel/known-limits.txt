@@ -1,0 +1,20 @@
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none node --test --test-force-exit /home/ianblenke/docker/gev-tools/voicepanel/known-limits.test.mjs
+Source commit: 89fe216472d408b6ac9a0d9b53f65ef20434d917
+✔ The host can allocate a successor during teardown (60.713064ms)
+ℹ {"successorDisposed":false,"operationCurrent":false}
+✔ The custom preference source can send a late notice (2.92077ms)
+ℹ {"notices":1,"editor":"18"}
+✔ An audio delta without a response record keeps the initial knowledge flag (2.314589ms)
+ℹ {"known":true}
+✔ The descriptor check excludes a symbol accessor (5.25253ms)
+ℹ {"sameOptions":false,"getterCopied":true,"accessorReads":0}
+✔ The method restore keeps the function but changes its property owner (1.709533ms)
+ℹ {"before":false,"after":true,"sameFunction":true,"enumerable":true}
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 233.53604
