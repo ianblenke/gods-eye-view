@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "5fd416b9ed4a80c9a1ceeded81836aa69f3ebc0c",
+  "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
   "branch": "backfill-share-codec",
   "productionFiles": 5,
   "productionSHA256": {
@@ -10,20 +10,20 @@
     "src/share/wire.js": "8e10a887bd961211c40f3d126339e88ae71bd2f984351986762bc419288b64ef"
   },
   "testSHA256": {
-    "src/share/backfill.test.mjs": "732baf4105fa840dd18ec21af42b44ef984feb1c8a6121aa81f83bc8205513cf",
+    "src/share/backfill.test.mjs": "4870a0d3024da517a856e898471c63951c994de1b2b098ccf4dd004d7d7e519f",
     "src/share/legacyShareState.test.mjs": "e7269d7705aa54b397ecc66be15ef9818598f47b2fbb9290d915bf66817619b6",
     "src/share/shareLinkPath.test.mjs": "d00fb439071fe5eca907052e9b2c6077379e11987461bf590d96fa9980fdc623",
-    "src/share/viewCodec.test.mjs": "325efd626ffcd16a3130f3889af27f734309b66ab01b0c922f6c67b73bd3b935",
+    "src/share/viewCodec.test.mjs": "3492c714c438828debc7d9553072e6718913c4558de40498d48eb88b80948a16",
     "src/share/wire.test.mjs": "017b567ed0a1e455a606a9eed8c97315acfa7549706f65fde6eb0acfdedae825"
   },
   "oldTests": 59,
   "oldTagged": 58,
   "testFiles": 5,
-  "tests": 473,
-  "taggedTests": 472,
-  "scenarios": 58,
-  "mutations": 1219,
-  "killed": 1111,
+  "tests": 476,
+  "taggedTests": 475,
+  "scenarios": 64,
+  "mutations": 1259,
+  "killed": 1151,
   "equivalent": 108,
   "keyMutations": 427,
   "auditRows": 347,
@@ -32,8 +32,7 @@
   "auditDefaultValue": 2,
   "auditOpen": 0,
   "titleErrors": 0,
-  "titleWarnings": 30,
-  "missingMutationWitnesses": 0,
+  "titleWarnings": 28,
   "coverage": {
     "src/share/follow.js": {
       "line": 100.0,
@@ -133,40 +132,33 @@
       "status": "pass",
       "tags": [],
       "tagError": null,
-      "line": 993,
+      "line": 1012,
       "column": 1,
       "fullName": "malformed input is rejected with a reason, never thrown",
       "leaf": true
     }
   ],
   "changedTracked": [
-    "src/share/legacyShareState.test.mjs",
-    "src/share/shareLinkPath.test.mjs",
-    "src/share/viewCodec.test.mjs",
-    "src/share/wire.test.mjs"
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/audit.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/coverage.txt",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/design.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/evidence.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/measurement.json",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/mutation-results.json",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/specs/share-codec/spec.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/tasks.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/test-audit.json",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/test-links.json",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/test-run.txt",
+    "openspec/specs/share-codec/spec.md",
+    "src/share/backfill.test.mjs",
+    "src/share/viewCodec.test.mjs"
   ],
   "untracked": [
-    "openspec/changes/backfill-share-codec/.openspec.yaml",
-    "openspec/changes/backfill-share-codec/audit.json",
-    "openspec/changes/backfill-share-codec/audit.md",
-    "openspec/changes/backfill-share-codec/baseline.json",
-    "openspec/changes/backfill-share-codec/coverage-union.json",
-    "openspec/changes/backfill-share-codec/coverage.txt",
-    "openspec/changes/backfill-share-codec/design.md",
-    "openspec/changes/backfill-share-codec/evidence.md",
-    "openspec/changes/backfill-share-codec/format-and-ste.txt",
-    "openspec/changes/backfill-share-codec/measurement.json",
-    "openspec/changes/backfill-share-codec/mutation-results.json",
-    "openspec/changes/backfill-share-codec/mutation-run.txt",
-    "openspec/changes/backfill-share-codec/probes.json",
-    "openspec/changes/backfill-share-codec/proposal.md",
-    "openspec/changes/backfill-share-codec/specs/share-codec/spec.md",
-    "openspec/changes/backfill-share-codec/tasks.md",
-    "openspec/changes/backfill-share-codec/test-audit.json",
-    "openspec/changes/backfill-share-codec/test-links.json",
-    "openspec/changes/backfill-share-codec/test-run.txt",
-    "openspec/changes/backfill-share-codec/worker-coverage.json",
-    "src/share/backfill.test.mjs"
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/corrections.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/review-mutation-run.txt",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/review-mutations.json",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/review-validation.txt"
   ],
   "importers": [
     {
@@ -264,5 +256,17 @@
       "module": "src/share/viewCodec.js",
       "specifier": "../share/viewCodec.js"
     }
-  ]
+  ],
+  "originalSourceCommit": "5fd416b9ed4a80c9a1ceeded81836aa69f3ebc0c",
+  "reviewMutations": 40,
+  "reviewKilled": 40,
+  "historicalMissingMutationWitnesses": 0,
+  "reviewSources": {
+    "tests": "/home/ianblenke/docker/gev-tools/sharecodec/final-records.jsonl",
+    "mutations": "/home/ianblenke/docker/gev-tools/sharecodec/review-muts.json",
+    "mutationLog": "/home/ianblenke/docker/gev-tools/sharecodec/review-muts.json.log",
+    "wordList": "openspec/ste/words.json",
+    "command": "python3 /home/ianblenke/docker/gev-tools/sharecodec/review-measure.py"
+  },
+  "nodeVersion": "v26.13.0"
 }

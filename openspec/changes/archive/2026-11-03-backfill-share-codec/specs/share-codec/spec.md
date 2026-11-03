@@ -71,9 +71,14 @@ Origin: backfill
 
 #### Scenario: Open names `share-codec-032`
 
-- **WHEN** the caller supplies a valid open map or HUD name
+- **WHEN** the caller supplies a valid map or HUD name outside its code table
 - **THEN** the codec keeps the name as text without an unknown-field report
 - **AND** the name uses letters, digits, hyphens or underscores within the character limit
+
+#### Scenario: Known detection names `share-codec-059`
+
+- **WHEN** a payload names detection mode SPARSE or allocation WEIGHTED as text
+- **THEN** the decoder returns that name without an unknown-field report
 
 #### Scenario: Closed names `share-codec-033`
 
@@ -118,9 +123,22 @@ Origin: backfill
 
 #### Scenario: Canonical state `share-codec-036`
 
-- **WHEN** the caller encodes normalized state
+- **WHEN** the caller encodes normalized state with an absent share time or a share time at or before the decoder clock
 - **THEN** the decoder returns the same state and the encoder returns the same code
 - **AND** repeated normalization does not change the state
+
+#### Scenario: Camera example size `share-codec-060`
+
+- **WHEN** the caller encodes a default view with coordinates 48.8584 and 2.2945, altitude 1200, heading 120 and pitch -25
+- **THEN** the code contains 24 characters without a share time
+- **AND** the code contains 31 characters with share time 1793016000000
+
+#### Scenario: Signed angle fields `share-codec-061`
+
+- **WHEN** the caller encodes a place view with a normalized nondefault integer heading or roll
+- **THEN** the wire stores the nearest signed turn through zigzag
+- **AND** headings 10, 180 and 181 use unsigned values 20, 360 and 357
+- **AND** rolls 50 and 359 use unsigned values 100 and 1
 
 #### Scenario: Numeric limits `share-codec-048`
 
@@ -200,6 +218,16 @@ Origin: backfill
 - **WHEN** the caller supplies a valid layer tracking selection
 - **THEN** the codec selects the valid entity and clears all tracking slots
 
+#### Scenario: Known place kind `share-codec-062`
+
+- **WHEN** a payload names the place kind as text or code zero
+- **THEN** the decoder keeps the camera without a fallback or unknown-field report
+
+#### Scenario: Empty thing message `share-codec-064`
+
+- **WHEN** a payload contains an empty thing message without a fix
+- **THEN** the decoder keeps the camera and reports `missing-entity-kind`
+
 #### Scenario: Unknown view kind `share-codec-030`
 
 - **WHEN** a payload asks for an unknown view kind or a thing without its message
@@ -222,6 +250,16 @@ Origin: backfill
 - **THEN** the codec uses relative age with a share time and absolute time without one
 - **AND** the decoder ignores an age without a share time
 - **AND** a fix takes the share time when its own time is absent
+
+#### Scenario: Fix wire data `share-codec-063`
+
+- **WHEN** the caller encodes a valid fix without a share time
+- **THEN** the wire stores both coordinate integers
+- **AND** the wire stores a present absolute time as an epoch offset
+- **AND** the decoder returns the normalized fix values
+- **AND** coordinates 12.3456 and -23.4567 use integers 123456 and -234567
+- **AND** altitude 1234 uses integer 1234 and time 1767225617000 uses epoch offset 17
+- **AND** a zero fix writes both coordinates without an altitude field
 
 #### Scenario: Local offset `share-codec-024`
 

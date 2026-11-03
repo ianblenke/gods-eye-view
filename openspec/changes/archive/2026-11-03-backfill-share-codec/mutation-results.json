@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "5fd416b9ed4a80c9a1ceeded81836aa69f3ebc0c",
+  "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
   "cases": [
     {
       "id": "A001-true",
@@ -15333,6 +15333,667 @@
       "pattern": "extreme and negative-zero numbers normalize to values the decoder returns",
       "status": "KILLED",
       "failedTests": "[share-codec-048] extreme and negative-zero numbers normalize to values the decoder returns"
+    },
+    {
+      "id": "R001",
+      "file": "src/share/viewCodec.js",
+      "old": "typeof value === 'string' && NAME_GRAMMAR.test(value)",
+      "new": "false",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The open name .* checks future_name-2",
+      "status": "KILLED",
+      "failedTests": "[share-codec-032] The open name hudVariant checks future_name-2; [share-codec-032] The open name mapStack checks future_name-2",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-032] The open name hudVariant checks future_name-2",
+        "[share-codec-032] The open name mapStack checks future_name-2"
+      ]
+    },
+    {
+      "id": "R002",
+      "file": "src/share/viewCodec.js",
+      "old": "if (raw[key] !== undefined && !NAME_GRAMMAR.test(raw[key]))",
+      "new": "if (raw[key] !== undefined)",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The open name .* checks future_name-2",
+      "status": "KILLED",
+      "failedTests": "[share-codec-032] The open name hudVariant checks future_name-2; [share-codec-032] The open name mapStack checks future_name-2",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-032] The open name hudVariant checks future_name-2",
+        "[share-codec-032] The open name mapStack checks future_name-2"
+      ]
+    },
+    {
+      "id": "R003",
+      "file": "src/share/viewCodec.js",
+      "old": "typeof value === 'string' && NAME_GRAMMAR.test(value)",
+      "new": "typeof value === 'string'",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The open name .* checks (bad name|empty)",
+      "status": "KILLED",
+      "failedTests": "[share-codec-056] The open name hudVariant checks bad name; [share-codec-056] The open name hudVariant checks empty; [share-codec-056] The open name mapStack checks bad name; [share-codec-056] The open name mapStack checks empty",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-056] The open name hudVariant checks bad name",
+        "[share-codec-056] The open name hudVariant checks empty",
+        "[share-codec-056] The open name mapStack checks bad name",
+        "[share-codec-056] The open name mapStack checks empty"
+      ]
+    },
+    {
+      "id": "R004",
+      "file": "src/share/viewCodec.js",
+      "old": "if (raw[key] !== undefined && !NAME_GRAMMAR.test(raw[key]))",
+      "new": "if (false)",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The open name .* checks (bad name|empty)",
+      "status": "KILLED",
+      "failedTests": "[share-codec-056] The open name hudVariant checks bad name; [share-codec-056] The open name hudVariant checks empty; [share-codec-056] The open name mapStack checks bad name; [share-codec-056] The open name mapStack checks empty",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-056] The open name hudVariant checks bad name",
+        "[share-codec-056] The open name hudVariant checks empty",
+        "[share-codec-056] The open name mapStack checks bad name",
+        "[share-codec-056] The open name mapStack checks empty"
+      ]
+    },
+    {
+      "id": "R005",
+      "file": "src/share/viewCodec.js",
+      "old": "!SHARE_VIEW_ENUMS[field.enum].includes(text)",
+      "new": "true",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-059\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-059] The closed name detectionAllocation accepts known text; [share-codec-059] The closed name detectionMode accepts known text",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-059] The closed name detectionMode accepts known text",
+        "[share-codec-059] The closed name detectionAllocation accepts known text"
+      ]
+    },
+    {
+      "id": "R006",
+      "file": "src/share/viewCodec.js",
+      "old": "    return text;\n  }\n  const name = SHARE_VIEW_ENUMS",
+      "new": "    return undefined;\n  }\n  const name = SHARE_VIEW_ENUMS",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-059\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-059] The closed name detectionAllocation accepts known text; [share-codec-059] The closed name detectionMode accepts known text",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-059] The closed name detectionMode accepts known text",
+        "[share-codec-059] The closed name detectionAllocation accepts known text"
+      ]
+    },
+    {
+      "id": "R007",
+      "file": "src/share/viewCodec.js",
+      "old": "writer.bytes.push(SHARE_VIEW_FORMAT_VERSION);",
+      "new": "writer.bytes.push(SHARE_VIEW_FORMAT_VERSION); writer.uintField(14, 0);",
+      "test": [
+        "src/share/viewCodec.test.mjs"
+      ],
+      "pattern": "\\[share-codec-060\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-060] size: a camera-only place view",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-060] size: a camera-only place view"
+      ]
+    },
+    {
+      "id": "R008",
+      "file": "src/share/viewCodec.js",
+      "old": "degrees > 180 ? degrees - 360 : degrees",
+      "new": "degrees",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-061\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-061] The angle heading at 181 uses the nearest signed turn; [share-codec-061] The angle roll at 359 uses the nearest signed turn",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-061] The angle heading at 181 uses the nearest signed turn",
+        "[share-codec-061] The angle roll at 359 uses the nearest signed turn"
+      ]
+    },
+    {
+      "id": "R009",
+      "file": "src/share/viewCodec.js",
+      "old": "degrees > 180 ? degrees - 360 : degrees",
+      "new": "degrees >= 180 ? degrees - 360 : degrees",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-061\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-061] The angle heading at 180 uses the nearest signed turn",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-061] The angle heading at 180 uses the nearest signed turn"
+      ]
+    },
+    {
+      "id": "R010",
+      "file": "src/share/viewCodec.js",
+      "old": "return { ok: false, reason: error.reason };",
+      "new": "return { ok: false, reason: 'bad-text' };",
+      "test": [
+        "src/share/viewCodec.test.mjs"
+      ],
+      "pattern": "a code is the bare base64url payload",
+      "status": "KILLED",
+      "failedTests": "[share-codec-034] a code is the bare base64url payload; URL forms are not codes",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-034] a code is the bare base64url payload; URL forms are not codes"
+      ]
+    },
+    {
+      "id": "R011",
+      "file": "src/share/viewCodec.js",
+      "old": "ms <= nowMs",
+      "new": "ms < nowMs",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The canonical state keeps the share time at clock 1767225617000",
+      "status": "KILLED",
+      "failedTests": "[share-codec-036] The canonical state keeps the share time at clock 1767225617000",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-036] The canonical state keeps the share time at clock 1767225617000"
+      ]
+    },
+    {
+      "id": "R012",
+      "file": "src/share/viewCodec.js",
+      "old": "ms <= nowMs",
+      "new": "ms <= Number(nowMs) + 1",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The decoder drops the share time one millisecond after the clock",
+      "status": "KILLED",
+      "failedTests": "[share-codec-027] The decoder drops the share time one millisecond after the clock",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-027] The decoder drops the share time one millisecond after the clock"
+      ]
+    },
+    {
+      "id": "R013",
+      "file": "src/share/viewCodec.js",
+      "old": "ms <= nowMs",
+      "new": "ms < Number(nowMs) - 1",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The canonical state keeps the share time at clock 1767225617001",
+      "status": "KILLED",
+      "failedTests": "[share-codec-036] The canonical state keeps the share time at clock 1767225617001",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-036] The canonical state keeps the share time at clock 1767225617001"
+      ]
+    },
+    {
+      "id": "R014",
+      "file": "src/share/viewCodec.js",
+      "old": "} else if (viewKind !== 'place') {",
+      "new": "} else if (true) {",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-062\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-062] The view kind uses the number place path; [share-codec-062] The view kind uses the text place path",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-062] The view kind uses the text place path",
+        "[share-codec-062] The view kind uses the number place path"
+      ]
+    },
+    {
+      "id": "R015",
+      "file": "src/share/viewCodec.js",
+      "old": "raw[field.key] = unz(entry.varint) / COORDINATE_SCALE;",
+      "new": "raw[field.key] = 0;",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-062\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-062] The view kind uses the number place path; [share-codec-062] The view kind uses the text place path",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-062] The view kind uses the text place path",
+        "[share-codec-062] The view kind uses the number place path"
+      ]
+    },
+    {
+      "id": "R016",
+      "file": "src/share/viewCodec.js",
+      "old": "else fallback = thing?.fallback ?? 'missing-thing';",
+      "new": "else fallback = 'missing-thing';",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-064\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-064] The view kind uses the empty entity path",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-064] The view kind uses the empty entity path"
+      ]
+    },
+    {
+      "id": "R017",
+      "file": "src/share/viewCodec.js",
+      "old": "thing.sintField(f.lat, coordinateInt(fix.lat));",
+      "new": "thing.sintField(f.lat, 0);",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-063\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-063] The complete fix supplies every coordinate and altitude",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-063] The complete fix supplies every coordinate and altitude"
+      ]
+    },
+    {
+      "id": "R018",
+      "file": "src/share/viewCodec.js",
+      "old": "thing.sintField(f.lon, coordinateInt(fix.lon));",
+      "new": "thing.sintField(f.lon, 0);",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-063\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-063] The complete fix supplies every coordinate and altitude",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-063] The complete fix supplies every coordinate and altitude"
+      ]
+    },
+    {
+      "id": "R019",
+      "file": "src/share/viewCodec.js",
+      "old": "if (fix.alt) thing.sintField(f.alt, fix.alt);",
+      "new": "if (fix.alt) thing.sintField(f.alt, fix.alt + 1);",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-063\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-063] The complete fix supplies every coordinate and altitude",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-063] The complete fix supplies every coordinate and altitude"
+      ]
+    },
+    {
+      "id": "R020",
+      "file": "src/share/viewCodec.js",
+      "old": "thing.sintField(f.observedAt, epochSeconds(observed));",
+      "new": "thing.sintField(f.observedAt, epochSeconds(observed) + 1);",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-063\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-063] The complete fix supplies every coordinate and altitude",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-063] The complete fix supplies every coordinate and altitude"
+      ]
+    },
+    {
+      "id": "R021",
+      "file": "src/share/viewCodec.js",
+      "old": "if (fix.alt) thing.sintField(f.alt, fix.alt);",
+      "new": "if (true) thing.sintField(f.alt, fix.alt);",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-063\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-063] The complete fix supplies every coordinate and altitude",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-063] The complete fix supplies every coordinate and altitude"
+      ]
+    },
+    {
+      "id": "R022",
+      "file": "src/share/viewCodec.js",
+      "old": "if (view.lastKnown)\n      setCamera(state, followCameraFor(view.lastKnown, view.offset));",
+      "new": "if (!view.lastKnown) state.lat = 0;\n    if (view.lastKnown)\n      setCamera(state, followCameraFor(view.lastKnown, view.offset));",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The follow offset .* uses its own field",
+      "status": "KILLED",
+      "failedTests": "[share-codec-020] The follow offset heading uses its own field; [share-codec-020] The follow offset pitch uses its own field; [share-codec-020] The follow offset range uses its own field",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-020] The follow offset range uses its own field",
+        "[share-codec-020] The follow offset heading uses its own field",
+        "[share-codec-020] The follow offset pitch uses its own field"
+      ]
+    },
+    {
+      "id": "R023",
+      "file": "src/share/viewCodec.js",
+      "old": "return normalizeLayerState({ enabledLayerIds, options });",
+      "new": "options.flights.models3d = false; return normalizeLayerState({ enabledLayerIds, options });",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The layer option handles an (unknown|invalid)",
+      "status": "KILLED",
+      "failedTests": "[share-codec-050] The layer option handles an invalid value; [share-codec-050] The layer option handles an unknown key; [share-codec-050] The layer option handles an unknown owner",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-050] The layer option handles an unknown owner",
+        "[share-codec-050] The layer option handles an unknown key",
+        "[share-codec-050] The layer option handles an invalid value"
+      ]
+    },
+    {
+      "id": "R024",
+      "file": "src/share/viewCodec.js",
+      "old": "if (thing?.camera) Object.assign(raw, thing.camera);",
+      "new": "if (thing?.camera) Object.assign(raw, thing.camera, { lat: 0 });",
+      "test": [
+        "src/share/viewCodec.test.mjs"
+      ],
+      "pattern": "an unknown or invalid entity falls back",
+      "status": "KILLED",
+      "failedTests": "[share-codec-031] an unknown or invalid entity falls back to the camera its fix implies",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-031] an unknown or invalid entity falls back to the camera its fix implies"
+      ]
+    },
+    {
+      "id": "R025",
+      "file": "src/share/viewCodec.js",
+      "old": "else fallback = thing?.fallback ?? 'missing-thing';",
+      "new": "else { fallback = thing?.fallback ?? 'missing-thing'; raw.lat = 0; }",
+      "test": [
+        "src/share/viewCodec.test.mjs"
+      ],
+      "pattern": "an unknown view kind falls back",
+      "status": "KILLED",
+      "failedTests": "[share-codec-030] an unknown view kind falls back to the stored camera",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-030] an unknown view kind falls back to the stored camera"
+      ]
+    },
+    {
+      "id": "R026",
+      "file": "src/share/viewCodec.js",
+      "old": "...d.styleParams,",
+      "new": "...d.styleParams, contrastAmt: 1.3,",
+      "test": [
+        "src/share/viewCodec.test.mjs"
+      ],
+      "pattern": "invalid style parameters keep",
+      "status": "KILLED",
+      "failedTests": "[share-codec-015] invalid style parameters keep the style\u2019s own value",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-015] invalid style parameters keep the style\u2019s own value"
+      ]
+    },
+    {
+      "id": "R027",
+      "file": "src/share/viewCodec.js",
+      "old": "if (length > MAX_OPTION_VALUE_CHARS || length > reader.end - reader.pos)",
+      "new": "if (length > reader.end - reader.pos)",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The decoder checks the option length cap",
+      "status": "KILLED",
+      "failedTests": "[share-codec-050] The decoder checks the option length cap before the available byte count",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-050] The decoder checks the option length cap before the available byte count"
+      ]
+    },
+    {
+      "id": "R028",
+      "file": "src/share/viewCodec.js",
+      "old": "if (id && lifted.kind === 'place') lifted = thingView(entry.kind, id);",
+      "new": "if (id) lifted = thingView(entry.kind, id);",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The codec selects the supplied view",
+      "status": "KILLED",
+      "failedTests": "[share-codec-022] The codec selects the supplied view before a tracked entity",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-022] The codec selects the supplied view before a tracked entity"
+      ]
+    },
+    {
+      "id": "R029",
+      "file": "src/share/viewCodec.js",
+      "old": "if (observed !== state.sharedAtMs)",
+      "new": "if (true)",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The fix time uses the current fix",
+      "status": "KILLED",
+      "failedTests": "[share-codec-023] The fix time uses the current fix",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-023] The fix time uses the current fix"
+      ]
+    },
+    {
+      "id": "R030",
+      "file": "src/share/viewCodec.js",
+      "old": "spec.pinned === defaultPinned",
+      "new": "true",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The panel pin differs while its collapse value stays at its default",
+      "status": "KILLED",
+      "failedTests": "[share-codec-019] The panel pin differs while its collapse value stays at its default",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-019] The panel pin differs while its collapse value stays at its default"
+      ]
+    },
+    {
+      "id": "R031",
+      "file": "src/share/viewCodec.js",
+      "old": "else writer.textField(field.number, value);",
+      "new": "else writer.uintField(field.number, 99);",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The open name .* checks future_name-2",
+      "status": "KILLED",
+      "failedTests": "[share-codec-032] The open name hudVariant checks future_name-2; [share-codec-032] The open name mapStack checks future_name-2",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-032] The open name hudVariant checks future_name-2",
+        "[share-codec-032] The open name mapStack checks future_name-2"
+      ]
+    },
+    {
+      "id": "R032",
+      "file": "src/share/viewCodec.js",
+      "old": "unknown.code('panel', number);",
+      "new": "unknown.code('panel', number + 1);",
+      "test": [
+        "src/share/viewCodec.test.mjs"
+      ],
+      "pattern": "future panel values and style tokens",
+      "status": "KILLED",
+      "failedTests": "[share-codec-049] future panel values and style tokens are skipped, not applied",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-049] future panel values and style tokens are skipped, not applied"
+      ]
+    },
+    {
+      "id": "R033",
+      "file": "src/share/viewCodec.js",
+      "old": "unknown.code('style-param', `${style}.${token ?? '?'}`);",
+      "new": "unknown.code('style-param', `${style}.wrong`);",
+      "test": [
+        "src/share/viewCodec.test.mjs"
+      ],
+      "pattern": "future panel values and style tokens",
+      "status": "KILLED",
+      "failedTests": "[share-codec-049] future panel values and style tokens are skipped, not applied",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-049] future panel values and style tokens are skipped, not applied"
+      ]
+    },
+    {
+      "id": "R034",
+      "file": "src/share/viewCodec.js",
+      "old": "const entry = entries.get(panel.number);",
+      "new": "if (panel.id === 'radio-panel') continue; const entry = entries.get(panel.number);",
+      "test": [
+        "src/share/viewCodec.test.mjs"
+      ],
+      "pattern": "future panel values and style tokens",
+      "status": "KILLED",
+      "failedTests": "[share-codec-049] future panel values and style tokens are skipped, not applied",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-049] future panel values and style tokens are skipped, not applied"
+      ]
+    },
+    {
+      "id": "R035",
+      "file": "src/share/viewCodec.js",
+      "old": "raw[field.key] = unz(entry.varint);",
+      "new": "raw[field.key] = 0;",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-062\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-062] The view kind uses the number place path; [share-codec-062] The view kind uses the text place path",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-062] The view kind uses the text place path",
+        "[share-codec-062] The view kind uses the number place path"
+      ]
+    },
+    {
+      "id": "R036",
+      "file": "src/share/viewCodec.js",
+      "old": "if (unknown.entries.length) result.unknownFields = unknown.entries;",
+      "new": "result.unknownFields = unknown.entries.length ? unknown.entries : undefined;",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The open name .* checks future_name-2",
+      "status": "KILLED",
+      "failedTests": "[share-codec-032] The open name hudVariant checks future_name-2; [share-codec-032] The open name mapStack checks future_name-2",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-032] The open name hudVariant checks future_name-2",
+        "[share-codec-032] The open name mapStack checks future_name-2"
+      ]
+    },
+    {
+      "id": "R037",
+      "file": "src/share/viewCodec.js",
+      "old": "Math.round(degrees * COORDINATE_SCALE);",
+      "new": "Math.round(degrees * COORDINATE_SCALE) || 1;",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "\\[share-codec-063\\]",
+      "status": "KILLED",
+      "failedTests": "[share-codec-063] The complete fix supplies every coordinate and altitude",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-063] The complete fix supplies every coordinate and altitude"
+      ]
+    },
+    {
+      "id": "R038",
+      "file": "src/share/legacyShareState.js",
+      "old": "entry && !state.layerState",
+      "new": "false",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The legacy view without layers supplies the entity layer",
+      "status": "KILLED",
+      "failedTests": "[share-codec-039 share-codec-040 share-codec-041] The legacy view without layers supplies the entity",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-039 share-codec-040 share-codec-041] The legacy view without layers supplies the entity layer"
+      ]
+    },
+    {
+      "id": "R039",
+      "file": "src/share/viewCodec.js",
+      "old": "fallback = 'unknown-view-kind';",
+      "new": "fallback = 'unknown-view-kind'; raw.alt = 0;",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The unknown numeric view kind reports one value",
+      "status": "KILLED",
+      "failedTests": "[share-codec-030] The unknown numeric view kind reports one value",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-030] The unknown numeric view kind reports one value"
+      ]
+    },
+    {
+      "id": "R040",
+      "file": "src/share/legacyShareState.js",
+      "old": "return legacy;",
+      "new": "if (state.view.entity?.kind === 'vessel') legacy.layerState.options.flights.selectedMilitaryTrackingId = 'ab1234'; return legacy;",
+      "test": [
+        "src/share/backfill.test.mjs"
+      ],
+      "pattern": "The legacy view without layers supplies the entity layer",
+      "status": "KILLED",
+      "failedTests": "[share-codec-039 share-codec-040 share-codec-041] The legacy view without layers supplies the entity",
+      "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+      "failedTestNames": [
+        "[share-codec-039 share-codec-040 share-codec-041] The legacy view without layers supplies the entity layer"
+      ]
     }
-  ]
+  ],
+  "originalSourceCommit": "5fd416b9ed4a80c9a1ceeded81836aa69f3ebc0c"
 }

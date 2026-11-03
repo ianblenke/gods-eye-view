@@ -73,8 +73,8 @@ function assertRoundTrip(state) {
   const hash = encodeShareView(state);
   const result = decodeOk(hash);
   assert.deepEqual(result.state, normalizeShareViewState(state));
-  assert.equal(result.unknownFields, undefined);
-  assert.equal(result.fallback, undefined);
+  assert.equal(Object.hasOwn(result, 'unknownFields'), false);
+  assert.equal(Object.hasOwn(result, 'fallback'), false);
   assert.equal(encodeShareView(result.state), hash, 'encoding is canonical');
   return hash;
 }
@@ -264,8 +264,17 @@ test('[share-codec-014] a view just switched to any style costs its camera and s
 });
 
 test('[share-codec-015] invalid style parameters keep the style’s own value', () => {
-  for (const bad of [undefined, NaN, 'x', null])
-    assertRoundTrip({ style: 'noir', styleParams: { contrastAmt: bad } });
+  for (const bad of [undefined, NaN, 'x', null]) {
+    const code = assertRoundTrip({
+      style: 'noir',
+      styleParams: { contrastAmt: bad },
+    });
+    assert.deepEqual(decodeOk(code).state.styleParams, {
+      contrastAmt: 1.2,
+      grainAmt: 0.5,
+      vignetteAmt: 0.5,
+    });
+  }
   assert.equal(
     normalizeShareViewState({ style: 'noir', styleParams: { grainAmt: NaN } })
       .styleParams.grainAmt,
@@ -824,7 +833,7 @@ test('[share-codec-034] a code is the bare base64url payload; URL forms are not 
   const code = encodeShareView({ lat: 51.5, lon: -0.12 });
   assert.match(code, /^[A-Za-z0-9_-]+$/);
   for (const form of [`#${code}`, `s=${code}`, `/share/${code}`])
-    assert.equal(decode(form).ok, false, form);
+    assert.deepEqual(decode(form), { ok: false, reason: 'bad-base64' }, form);
 });
 
 /* ---------------- forward compatibility ---------------- */
@@ -912,7 +921,7 @@ test('[share-codec-030] an unknown view kind falls back to the stored camera', (
     pitch: -20,
   };
   const base = payloadBytes(encodeShareView(camera));
-  const expected = decodeOk(encodeShareView(camera)).state;
+  const expected = { ...createDefaultShareViewState(), ...camera };
 
   const futureKind = new WireWriter();
   futureKind.bytes.push(...base);
@@ -925,7 +934,9 @@ test('[share-codec-030] an unknown view kind falls back to the stored camera', (
   const missing = new WireWriter();
   missing.bytes.push(...base);
   missing.uintField(1, 1);
-  assert.equal(decodeOk(hashOf(missing.finish())).fallback, 'missing-thing');
+  const missingResult = decodeOk(hashOf(missing.finish()));
+  assert.equal(missingResult.fallback, 'missing-thing');
+  assert.deepEqual(missingResult.state, expected);
 });
 
 test('[share-codec-031] an unknown or invalid entity falls back to the camera its fix implies', () => {
@@ -946,7 +957,15 @@ test('[share-codec-031] an unknown or invalid entity falls back to the camera it
     writer.bytesField(13, thing.finish());
     return decodeOk(hashOf(writer.finish()));
   };
-  const expected = normalizeShareViewState(followCameraFor(fix, offset));
+  const expected = {
+    ...createDefaultShareViewState(),
+    lat: 35.6762,
+    lon: 139.6249,
+    alt: 2829,
+    heading: 90,
+    pitch: -40,
+    roll: 0,
+  };
 
   // A newer app's entity kind: its id field is unknown here.
   const future = thingOf((thing) => thing.textField(30, 'cam-77'));
@@ -1071,7 +1090,7 @@ test('[share-codec-035] every truncation and single-byte corruption of real payl
 
 /* ---------------- sizes ---------------- */
 
-test('[share-codec-013] size: a camera-only place view', () => {
+test('[share-codec-060] size: a camera-only place view', () => {
   const hash = assertRoundTrip({
     lat: 48.8584,
     lon: 2.2945,
@@ -1080,6 +1099,19 @@ test('[share-codec-013] size: a camera-only place view', () => {
     pitch: -25,
   });
   assert.equal(hash.length, 24);
+  const state = decodeOk(hash).state;
+  assert.deepEqual(
+    [
+      state.lat,
+      state.lon,
+      state.alt,
+      state.heading,
+      state.pitch,
+      state.roll,
+      state.sharedAtMs,
+    ],
+    [48.8584, 2.2945, 1200, 120, -25, 0, null],
+  );
   const copied = assertRoundTrip({
     lat: 48.8584,
     lon: 2.2945,
@@ -1089,6 +1121,19 @@ test('[share-codec-013] size: a camera-only place view', () => {
     sharedAtMs: NOW_MS,
   });
   assert.equal(copied.length, 31);
+  const copy = decodeOk(copied).state;
+  assert.deepEqual(
+    [
+      copy.lat,
+      copy.lon,
+      copy.alt,
+      copy.heading,
+      copy.pitch,
+      copy.roll,
+      copy.sharedAtMs,
+    ],
+    [48.8584, 2.2945, 1200, 120, -25, 0, 1793016000000],
+  );
 });
 
 test('[share-codec-025] size: following an aircraft', () => {
@@ -1290,7 +1335,21 @@ test('[share-codec-049] future panel values and style tokens are skipped, not ap
   const ids = panelResult.state.panelState.specs.map((spec) => spec.id);
   assert.equal(ids.includes('cctv-panel'), false);
   assert.equal(ids.includes('control-panel'), false);
-  assert.equal(panelResult.unknownFields.length, 2);
+  assert.deepEqual(panelResult.unknownFields, [
+    { scope: 'panel', code: 3 },
+    { scope: 'panel', code: 0 },
+  ]);
+  assert.deepEqual(panelResult.state.panelState.specs, [
+    { id: 'location-bar', collapsed: true, pinned: false },
+    { id: 'data-panel', collapsed: true, pinned: null },
+    { id: 'recent-imagery-panel', collapsed: false, pinned: null },
+    { id: 'street-level-panel', collapsed: true, pinned: null },
+    { id: 'radio-panel', collapsed: true, pinned: null },
+    { id: 'scene-panel', collapsed: true, pinned: null },
+    { id: 'global-context-panel', collapsed: true, pinned: null },
+    { id: 'pp-toggles', collapsed: true, pinned: null },
+    { id: 'param-slider-panel', collapsed: false, pinned: null },
+  ]);
 
   const style = new WireWriter();
   style.bytes.push(1);
@@ -1308,7 +1367,10 @@ test('[share-codec-049] future panel values and style tokens are skipped, not ap
     pixelation: 1,
     palette: 0,
   });
-  assert.equal(styleResult.unknownFields.length, 2);
+  assert.deepEqual(styleResult.unknownFields, [
+    { scope: 'style-param', code: 'thermal.?' },
+    { scope: 'style-param', code: 'thermal.?' },
+  ]);
 });
 
 test('[share-codec-050] a layer option filed under a mirror layer is ignored', () => {

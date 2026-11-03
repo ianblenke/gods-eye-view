@@ -466,6 +466,54 @@
   {"old": "preset.bloom?.intensity ?? g.bloom.intensity", "new": "g.bloom.intensity"}
   ```
 
+- [x] 1.60 Add tests for `share-codec-059`.
+
+  Mutation: `R005` changes `src/share/viewCodec.js` below. The test must fail.
+
+  ```json
+  {"old": "!SHARE_VIEW_ENUMS[field.enum].includes(text)", "new": "true"}
+  ```
+
+- [x] 1.61 Add tests for `share-codec-060`.
+
+  Mutation: `R007` changes `src/share/viewCodec.js` below. The test must fail.
+
+  ```json
+  {"old": "writer.bytes.push(SHARE_VIEW_FORMAT_VERSION);", "new": "writer.bytes.push(SHARE_VIEW_FORMAT_VERSION); writer.uintField(14, 0);"}
+  ```
+
+- [x] 1.62 Add tests for `share-codec-061`.
+
+  Mutation: `R008` changes `src/share/viewCodec.js` below. The test must fail.
+
+  ```json
+  {"old": "degrees > 180 ? degrees - 360 : degrees", "new": "degrees"}
+  ```
+
+- [x] 1.63 Add tests for `share-codec-062`.
+
+  Mutation: `R014` changes `src/share/viewCodec.js` below. The test must fail.
+
+  ```json
+  {"old": "} else if (viewKind !== 'place') {", "new": "} else if (true) {"}
+  ```
+
+- [x] 1.64 Add tests for `share-codec-063`.
+
+  Mutation: `R017` changes `src/share/viewCodec.js` below. The test must fail.
+
+  ```json
+  {"old": "thing.sintField(f.lat, coordinateInt(fix.lat));", "new": "thing.sintField(f.lat, 0);"}
+  ```
+
+- [x] 1.65 Add tests for `share-codec-064`.
+
+  Mutation: `R016` changes `src/share/viewCodec.js` below. The test must fail.
+
+  ```json
+  {"old": "else fallback = thing?.fallback ?? 'missing-thing';", "new": "else fallback = 'missing-thing';"}
+  ```
+
 ## 2. Host checks
 
 - [x] 2.1 Check each decision in the audit.

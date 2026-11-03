@@ -293,8 +293,15 @@ for (const [key, number, defaultName] of [
   ['mapStack', 15, 'photoreal'],
 ]) {
   for (const name of ['future_name-2', 'bad name', ''])
-    test(`[share-codec-032 share-codec-056] The open name ${key} checks ${name || 'empty'}`, () => {
+    test(`[${name === 'future_name-2' ? 'share-codec-032' : 'share-codec-056'}] The open name ${key} checks ${name || 'empty'}`, () => {
       const out = read(message((b) => b.textField(number, name)));
+      if (name === 'future_name-2') {
+        assert.deepEqual(
+          fields(c.encodeShareView({ [key]: name })).get(number),
+          [102, 117, 116, 117, 114, 101, 95, 110, 97, 109, 101, 45, 50],
+        );
+        assert.equal(Object.hasOwn(out, 'unknownFields'), false);
+      }
       assert.equal(
         out.state[key],
         name === 'future_name-2' ? 'future_name-2' : defaultName,
@@ -312,10 +319,10 @@ for (const [number, key, name] of [
   [20, 'detectionMode', 'SPARSE'],
   [22, 'detectionAllocation', 'WEIGHTED'],
 ])
-  test(`[share-codec-033] The closed name ${key} accepts known text`, () => {
+  test(`[share-codec-059] The closed name ${key} accepts known text`, () => {
     const out = read(message((b) => b.textField(number, name)));
     assert.equal(out.state[key], name);
-    assert.equal(out.unknownFields, undefined);
+    assert.equal(Object.hasOwn(out, 'unknownFields'), false);
   });
 
 for (const [kind, id, field, encoded] of [
@@ -426,7 +433,16 @@ for (const [kind, owner, key, id, other] of [
 ])
   test(`[share-codec-022 share-codec-039] The tracking slot for ${kind} moves both ways`, () => {
     const layerState = createDefaultLayerState();
+    assert.deepEqual(
+      [
+        layerState.options.flights.selectedFlightsTrackingId,
+        layerState.options.flights.selectedMilitaryTrackingId,
+        layerState.options.satellites.selectedSatTrackingId,
+      ],
+      [null, null, null],
+    );
     layerState.options[owner][key] = id;
+    assert.equal(layerState.options[owner][key], id);
     assert.deepEqual(layerState.enabledLayerIds, []);
     layerState.enabledLayerIds = [other];
     const out = c.normalizeShareViewState({ layerState });
@@ -441,7 +457,7 @@ for (const [kind, owner, key, id, other] of [
     const legacy = toLegacyShareState(out);
     assert.equal(legacy.layerState.options[owner][key], id);
   });
-test('[share-codec-022] The own view wins over a tracking slot', () => {
+test('[share-codec-022] The codec selects the supplied view before a tracked entity', () => {
   const layerState = createDefaultLayerState();
   layerState.enabledLayerIds = ['flights', 'military', 'satellites'];
   layerState.options.flights.selectedFlightsTrackingId = 'ab1234';
@@ -515,10 +531,34 @@ for (const [name, write, fallback] of [
   ['number place', (b) => b.uintField(1, 0), undefined],
   ['empty entity', (b) => b.bytesField(13, []), 'missing-entity-kind'],
 ])
-  test(`[share-codec-030] The view kind uses the ${name} path`, () => {
-    const out = read(message(write));
+  test(`[${name.endsWith('place') ? 'share-codec-062' : name === 'empty entity' ? 'share-codec-064' : 'share-codec-030'}] The view kind uses the ${name} path`, () => {
+    const out = read(
+      message((b) => {
+        b.sintField(2, 120000)
+          .sintField(3, 230000)
+          .sintField(4, 901)
+          .sintField(5, 37)
+          .sintField(6, -17)
+          .sintField(7, 13);
+        write(b);
+      }),
+    );
+    assert.deepEqual(
+      [
+        out.state.lat,
+        out.state.lon,
+        out.state.alt,
+        out.state.heading,
+        out.state.pitch,
+        out.state.roll,
+      ],
+      [12, 23, 901, 37, -17, 13],
+    );
     assert.deepEqual(out.state.view, { kind: 'place' });
     assert.equal(out.fallback, fallback);
+    assert.equal(Object.hasOwn(out, 'fallback'), fallback !== undefined);
+    if (name.endsWith('place'))
+      assert.equal(Object.hasOwn(out, 'unknownFields'), false);
   });
 
 const pinnedDefaults = {
@@ -989,7 +1029,7 @@ for (const [owner, values] of Object.entries(optionValues))
       assert.ok(body?.length > 0);
       const out = read(code);
       assert.equal(out.state.layerState.options[owner][key], value);
-      assert.equal(out.unknownFields, undefined);
+      assert.equal(Object.hasOwn(out, 'unknownFields'), false);
       assert.equal(
         read(message((b) => b.bytesField(10, []))).state.layerState.options[
           owner
@@ -1111,19 +1151,19 @@ for (const [name, build, reason, unknown] of [
     'truncated',
   ],
   [
-    'unknown owner',
+    'an unknown owner',
     () => new w.WireWriter().varint(1500).varint(0).varint(0).finish(),
     null,
     [{ scope: 'layer-option', code: '1500.0' }],
   ],
   [
-    'unknown key',
+    'an unknown key',
     () => new w.WireWriter().varint(15).varint(200).varint(0).finish(),
     null,
     [{ scope: 'layer-option', code: '15.100' }],
   ],
   [
-    'invalid value',
+    'an invalid value',
     () => new w.WireWriter().varint(15).varint(28).varint(4).finish(),
     null,
     [{ scope: 'layer-option', code: '15.14' }],
@@ -1139,6 +1179,8 @@ for (const [name, build, reason, unknown] of [
     else {
       assert.equal(out.ok, true);
       if (unknown) assert.deepEqual(out.unknownFields, unknown);
+      assert.deepEqual(out.state.layerState.options, absentOptions);
+      assert.deepEqual(out.state.layerState.enabledLayerIds, []);
     }
   });
 test('[share-codec-050] The option without layers reports its scope', () => {
@@ -1179,7 +1221,7 @@ test('[share-codec-019] The panel source checks every entry before use', () => {
   });
 });
 
-test('[share-codec-043] The legacy view without layers supplies the entity layer', () => {
+test('[share-codec-039 share-codec-040 share-codec-041] The legacy view without layers supplies the entity layer', () => {
   for (const [kind, id, layer, key, owner, expected] of [
     [
       'aircraft',
@@ -1212,6 +1254,10 @@ test('[share-codec-043] The legacy view without layers supplies the entity layer
     assert.equal(out.layerStateInvalid, false);
     if (key) assert.equal(out.layerState.options[owner][key], expected);
     else {
+      assert.equal(
+        out.layerState.options.flights.selectedMilitaryTrackingId,
+        null,
+      );
       assert.equal(
         out.layerState.options.flights.selectedFlightsTrackingId,
         null,
@@ -1325,7 +1371,7 @@ for (const [name, extra, expected] of [
     [96, 34],
   ],
   [
-    'current fix',
+    'the current fix',
     {
       sharedAtMs: 1767225700000,
       lastKnown: { lat: 12, lon: 23, alt: 45, observedAtMs: 1767225700000 },
@@ -1385,6 +1431,12 @@ for (const [key, number, value, raw] of [
 ])
   test(`[share-codec-020] The follow offset ${key} uses its own field`, () => {
     const code = c.encodeShareView({
+      lat: 11,
+      lon: 22,
+      alt: 333,
+      heading: 44,
+      pitch: -55,
+      roll: 66,
       view: entity('aircraft', 'ab1234', { offset: { [key]: value } }),
     });
     const r = new w.WireReader(Uint8Array.from(fields(code).get(13)));
@@ -1395,7 +1447,19 @@ for (const [key, number, value, raw] of [
     }
     assert.equal(values.get(number), raw);
     assert.equal(values.size, 2);
-    assert.deepEqual(read(code).state.view.offset, {
+    const camera = read(code).state;
+    assert.deepEqual(
+      [
+        camera.lat,
+        camera.lon,
+        camera.alt,
+        camera.heading,
+        camera.pitch,
+        camera.roll,
+      ],
+      [11, 22, 333, 44, -55, 66],
+    );
+    assert.deepEqual(camera.view.offset, {
       range: 2000,
       heading: 0,
       pitch: -35,
@@ -1420,7 +1484,7 @@ for (const [key, number, value, raw] of [
     });
   });
 
-test('[share-codec-051] The complete fix supplies every coordinate and altitude', () => {
+test('[share-codec-063] The complete fix supplies every coordinate and altitude', () => {
   const view = entity('aircraft', 'ab1234', {
     lastKnown: {
       lat: 12.3456,
@@ -1456,15 +1520,16 @@ test('[share-codec-051] The complete fix supplies every coordinate and altitude'
     }),
   });
   const z = new w.WireReader(Uint8Array.from(fields(zero).get(13)));
-  const keys = [];
-  while (!z.done) {
-    keys.push(z.tag().field);
-    z.varint();
-  }
-  assert.deepEqual(keys, [3, 8, 9]);
+  const zeroValues = [];
+  while (!z.done) zeroValues.push([z.tag().field, z.varint()]);
+  assert.deepEqual(zeroValues, [
+    [3, 366999712],
+    [8, 0],
+    [9, 0],
+  ]);
 });
 
-test('[share-codec-050] The option length checks the cap before its remaining bytes', () => {
+test('[share-codec-050] The decoder checks the option length cap before the available byte count', () => {
   const packed = new w.WireWriter().varint(15).varint(29).varint(257);
   packed.bytes.push(...Array(257).fill(97));
   assert.deepEqual(
@@ -1478,7 +1543,7 @@ test('[share-codec-050] The option length checks the cap before its remaining by
   );
 });
 
-test('[share-codec-019] The panel pin differs while its collapse value stays at default', () => {
+test('[share-codec-019] The panel pin differs while its collapse value stays at its default', () => {
   for (const id of ['control-panel', 'location-bar']) {
     const specs = panelCases.map((p) => ({
       id: p.id,
@@ -1891,10 +1956,10 @@ for (const { id, token, number, bytes } of layerCases)
     assert.deepEqual(fields(code).get(10), bytes);
     const out = read(code);
     assert.deepEqual(out.state.layerState.enabledLayerIds, [id]);
-    assert.equal(out.unknownFields, undefined);
+    assert.equal(Object.hasOwn(out, 'unknownFields'), false);
     const raw = read(message((b) => b.bytesField(10, bytes)));
     assert.deepEqual(raw.state.layerState.enabledLayerIds, [id]);
-    assert.equal(raw.unknownFields, undefined);
+    assert.equal(Object.hasOwn(raw, 'unknownFields'), false);
   });
 
 test('[share-codec-057] The decoder uses Normal for an unknown style', () => {
@@ -2027,6 +2092,18 @@ test('[share-codec-030] The unknown numeric view kind reports one value', () => 
   const out = read(message((b) => b.uintField(1, 7)));
   assert.deepEqual(out.unknownFields, [{ scope: 'enum:view', code: 7 }]);
   assert.equal(out.fallback, 'unknown-view-kind');
+  assert.deepEqual(out.state.view, { kind: 'place' });
+  assert.deepEqual(
+    [
+      out.state.lat,
+      out.state.lon,
+      out.state.alt,
+      out.state.heading,
+      out.state.pitch,
+      out.state.roll,
+    ],
+    [0, 0, 800, 0, -35, 0],
+  );
 });
 test('[share-codec-049] The style parameter without a style reports Normal', () => {
   const out = read(
@@ -2055,7 +2132,7 @@ test('[share-codec-018] The option decoder keeps all values within each owner', 
   for (const [owner, values] of Object.entries(optionValues))
     for (const [key, value] of Object.entries(values))
       assert.deepEqual(out.state.layerState.options[owner][key], value);
-  assert.equal(out.unknownFields, undefined);
+  assert.equal(Object.hasOwn(out, 'unknownFields'), false);
 });
 
 const optionBytes = {
@@ -2110,7 +2187,7 @@ for (const [owner, values] of Object.entries(optionValues))
         }),
       );
       assert.deepEqual(raw.state.layerState.options[owner][key], value);
-      assert.equal(raw.unknownFields, undefined);
+      assert.equal(Object.hasOwn(raw, 'unknownFields'), false);
     });
 
 test('[share-codec-041] The supplied layer set keeps other layers and options', () => {
@@ -2219,7 +2296,7 @@ for (const [key, number, value, raw] of [
   ['roll', 7, 50, 100],
   ['roll', 7, 359, 1],
 ])
-  test(`[share-codec-013] The angle ${key} at ${value} uses the nearest signed turn`, () => {
+  test(`[share-codec-061] The angle ${key} at ${value} uses the nearest signed turn`, () => {
     const code = c.encodeShareView({ [key]: value });
     assert.equal(fields(code).get(number), raw);
     assert.equal(read(code).state[key], value);
@@ -2461,7 +2538,7 @@ for (const [key, number, fallback] of [
     const name = 'A'.repeat(32);
     const out = read(c.encodeShareView({ [key]: name }));
     assert.equal(out.state[key], name);
-    assert.equal(out.unknownFields, undefined);
+    assert.equal(Object.hasOwn(out, 'unknownFields'), false);
   });
   test(`[share-codec-056] The open name ${key} rejects excess width`, () => {
     const name = 'A'.repeat(33);
@@ -2555,7 +2632,46 @@ for (const [kind, owner, key, id, bits, packed] of [
       }),
     );
     assert.deepEqual(out.state.view.entity, { kind, id });
-    assert.equal(out.state.layerState.options[owner][key], null);
-    assert.equal(out.unknownFields, undefined);
+    assert.deepEqual(
+      [
+        out.state.layerState.options.flights.selectedFlightsTrackingId,
+        out.state.layerState.options.flights.selectedMilitaryTrackingId,
+        out.state.layerState.options.satellites.selectedSatTrackingId,
+      ],
+      [null, null, null],
+    );
+    assert.equal(Object.hasOwn(out, 'unknownFields'), false);
     assert.equal(Object.hasOwn(out, 'fallback'), false);
   });
+
+for (const nowMs of [1767225617000, 1767225617001])
+  test(`[share-codec-036] The canonical state keeps the share time at clock ${nowMs}`, () => {
+    const expected = {
+      ...Object.fromEntries(
+        defaultFieldCases
+          .filter(([, own]) => own)
+          .map(([key, , value]) => [key, value]),
+      ),
+      lat: 12.3456,
+      sharedAtMs: 1767225617000,
+    };
+    const state = c.normalizeShareViewState({
+      lat: 12.3456,
+      sharedAtMs: 1767225617000,
+    });
+    assert.deepEqual(state, expected);
+    assert.deepEqual(c.normalizeShareViewState(state), expected);
+    assert.equal(c.encodeShareView(state), 'ARCAiQ9AIrM');
+    const out = c.decodeShareView('ARCAiQ9AIrM', { nowMs });
+    assert.deepEqual(out, { ok: true, state: expected });
+    assert.equal(c.encodeShareView(out.state), 'ARCAiQ9AIrM');
+  });
+
+test('[share-codec-027] The decoder drops the share time one millisecond after the clock', () => {
+  const out = c.decodeShareView('ARCAiQ9AIrM', { nowMs: 1767225616999 });
+  assert.equal(out.ok, true);
+  assert.equal(out.state.sharedAtMs, null);
+  assert.equal(out.state.lat, 12.3456);
+  assert.equal(Object.hasOwn(out, 'fallback'), false);
+  assert.equal(Object.hasOwn(out, 'unknownFields'), false);
+});

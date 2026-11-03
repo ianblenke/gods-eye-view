@@ -99,7 +99,7 @@ No scenario states this behavior.
 
 The host cannot supply the QA purpose lines from the full gates.
 The lead runs the ratchet and gates in the calibrated container.
-The lead obtains both formal reviews before merge.
+The lead gets both formal reviews before the merge.
 
 ### Known limit `share-codec-old-title`
 
@@ -128,3 +128,8 @@ cd /home/ianblenke/docker/gev-work/sharecodec && python3 /home/ianblenke/docker/
 The lead sets this Purpose at archive time:
 
 Describe how the share codec writes a view of the globe as a short code, reads that code back, and reads the old link form.
+
+## Correction source
+
+The correction check reads commit `4cf8e3706060658bf303d3d6e49643d0a4cb6a9f`.
+The earlier tables keep their source commit.

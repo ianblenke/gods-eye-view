@@ -1608,7 +1608,7 @@ The witness table names every operand and key case.
 | A082-key-vessel | EQUIVALENT | The vessel entry carries a null tracking key. The loop guard at viewCodec.js:639 already skips it. A public state cannot replace that frozen entry. |
 | A083-true | EQUIVALENT | The vessel entry uses a null tracking key. The policy lookup returns undefined instead of null. The guard at viewCodec.js:639 treats both values alike. |
 | A099-right | DEFAULT-VALUE | The only extra assignment writes null over the own null time property. normalizeLastKnown creates that property at viewCodec.js:598. Custom fix accessors cannot survive that copy. |
-| A101-right | EQUIVALENT | The extra layer id duplicates an existing id. normalizeLayerState uses a Set and fixed registry order at layerState.js:937. It returns private arrays and normalized primitive options, so custom array methods cannot survive. |
+| A101-right | EQUIVALENT | The extra layer id duplicates an id that is already in the set. normalizeLayerState uses a Set and fixed registry order at layerState.js:937. It returns private arrays and normalized primitive options, so custom array methods cannot survive. |
 | A110-empty | EQUIVALENT | The bit assignment extends the private array to the same length. Array holes yield undefined during the byte iteration. Uint8Array.from converts each hole to zero at wire.js:finish. Public inputs cannot access this private array. |
 | A112-key-flights-selectedFlightsTrackingId | EQUIVALENT | liftTrackedEntity clears every tracking slot at viewCodec.js:642 before encodeLayers runs. A specified view also clears those slots. Public option getters cannot survive normalization. |
 | A112-key-flights-selectedMilitaryTrackingId | EQUIVALENT | liftTrackedEntity clears every tracking slot at viewCodec.js:642 before encodeLayers runs. A specified view also clears those slots. Public option getters cannot survive normalization. |
@@ -1694,5 +1694,10 @@ The witness table names every operand and key case.
 | A241-right | EQUIVALENT | defaultOf uses the Normal table for undefined at viewCodec.js:404. The worker gives Normal distinct values and still selects that same table. A primitive name cannot supply another lookup source. |
 | A248-right | DEFAULT-VALUE | The options loop at viewCodec.js:1097 stops for null and undefined. The private reader has no observable method call on either value. |
 | A277-left | EQUIVALENT | When bits equals zero, the mask at wire.js:73 equals zero. The other operand is therefore false. decodeBase64Url accepts only primitive strings, so custom iterators cannot alter that arithmetic. |
-| A331-true | EQUIVALENT | Every field currently lacks a retired flag. The field array and each row are frozen. A public code or state object cannot add a retired registry entry. |
+| A331-true | EQUIVALENT | Every field currently lacks a retired flag. The module freezes the field array and each row. A public code or state object cannot add a retired registry entry. |
 | A341-absent | DEFAULT-VALUE | An absent camera coordinate still takes zero in normalizeShareViewState at viewCodec.js:662. Present coordinates keep their values. A derived camera replaces both versions before that step. |
+
+## Correction source
+
+The correction check reads commit `4cf8e3706060658bf303d3d6e49643d0a4cb6a9f`.
+The earlier tables keep their source commit.
