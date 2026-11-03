@@ -33,7 +33,7 @@ The test links point to the source lines at this snapshot.
 
 ## Host coverage
 
-The command list in [coverage commands](coverage-commands.json) gives each exact invocation.
+The command list in [coverage commands](coverage-commands.txt) gives each exact invocation.
 The [coverage output](coverage.txt) contains each command and its completed report.
 Each invocation includes one source file and excludes test files from the coverage table.
 
