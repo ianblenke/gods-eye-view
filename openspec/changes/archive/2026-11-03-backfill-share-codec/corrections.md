@@ -2,7 +2,7 @@
 
 Source commit: `4cf8e3706060658bf303d3d6e49643d0a4cb6a9f`.
 Branch: `backfill-share-codec`.
-The correction leaves all changes without a commit.
+At the correction host snapshot, the worker left the changes uncommitted. The lead later committed the corrections in `27e7a909`.
 
 ## Findings
 
@@ -229,9 +229,10 @@ The measurement data records the source hashes.
 
 The live and archived requirement bodies match byte for byte.
 The Purpose paragraph keeps its original bytes.
-Production files, QA scripts and trace files match commit `4cf8e370`.
+At the correction host snapshot, production files, QA scripts and trace files matched commit `4cf8e370`. The lead later changed the trace files in `af2b614e`.
+
 The correction does not run make, Docker, the ratchet or the full gates.
-The correction does not create a commit or push.
+The worker did not create a commit and did not push.
 The lead owns the final gates and formal review records.
 
 No reviewer finding needs a different correction from its stated purpose.

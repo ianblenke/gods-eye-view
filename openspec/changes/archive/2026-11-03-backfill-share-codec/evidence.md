@@ -277,4 +277,4 @@ The [check output](review-validation.txt) records the commands and results.
 The [correction report](corrections.md) gives each file, line and proof.
 The live and archived requirement bodies match.
 The Purpose paragraph keeps its original bytes.
-Production files, QA scripts and trace files match the source commit.
+At the correction host snapshot, production files, QA scripts and trace files matched commit `4cf8e370`. The lead later changed the trace files in `af2b614e`.
