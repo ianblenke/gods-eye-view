@@ -477,7 +477,7 @@
 
 ## 3. Gates and review
 
-- [ ] 3.1 Run `make ratchet CHANGE=backfill-share-codec`.
+- [x] 3.1 Run `make ratchet CHANGE=backfill-share-codec`.
 - [ ] 3.2 Run `make gates CHANGE=backfill-share-codec`.
 - [ ] 3.3 Get both formal review agent reports.
 - [ ] 3.4 Record both reviews in `review.md`.

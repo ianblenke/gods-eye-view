@@ -122,3 +122,9 @@ cd /home/ianblenke/docker/gev-work/sharecodec && python3 /home/ianblenke/docker/
 cd /home/ianblenke/docker/gev-work/sharecodec && node /home/ianblenke/docker/gev-tools/sharecodec/worker-coverage.mjs
 cd /home/ianblenke/docker/gev-work/sharecodec && python3 /home/ianblenke/docker/gev-tools/sharecodec/coverage-merge.py
 ```
+
+## Purpose at archive time
+
+The lead sets this Purpose at archive time:
+
+Describe how the share codec writes a view of the globe as a short code, reads that code back, and reads the old link form.
