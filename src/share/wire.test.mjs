@@ -25,7 +25,7 @@ const reasonOf = (fn) => {
   assert.fail('expected a ShareWireError');
 };
 
-test('base64url round-trips every length and byte value without padding', () => {
+test('[share-codec-001] base64url round-trips every length and byte value without padding', () => {
   for (let length = 0; length < 70; length += 1) {
     const bytes = Uint8Array.from(
       { length },
@@ -40,7 +40,7 @@ test('base64url round-trips every length and byte value without padding', () => 
   assert.equal(encodeBase64Url(Uint8Array.of(0xfb, 0xff)), '-_8');
 });
 
-test('base64url rejects padding, foreign characters, bad lengths and stray bits', () => {
+test('[share-codec-002] base64url rejects padding, foreign characters, bad lengths and stray bits', () => {
   for (const text of ['', 'AQ==', 'A+Q', 'A/Q', 'A Q', 'AQ%', 'A', 'AQAAA']) {
     assert.ok(
       ['empty', 'bad-base64'].includes(reasonOf(() => decodeBase64Url(text))),
@@ -55,14 +55,14 @@ test('base64url rejects padding, foreign characters, bad lengths and stray bits'
   assert.deepEqual(decodeBase64Url('AQ'), Uint8Array.of(1));
 });
 
-test('zigzag maps small magnitudes of either sign to small codes', () => {
+test('[share-codec-003] zigzag maps small magnitudes of either sign to small codes', () => {
   assert.deepEqual([0, -1, 1, -2, 2].map(zigzag), [0, 1, 2, 3, 4]);
   for (const value of [0, 1, -1, 63, -64, 1e9, -1e9, 2 ** 51, -(2 ** 51)]) {
     assert.equal(unzigzag(zigzag(value)), value);
   }
 });
 
-test('varints round-trip up to the largest safe integer', () => {
+test('[share-codec-004] varints round-trip up to the largest safe integer', () => {
   const values = [
     0,
     1,
@@ -85,7 +85,7 @@ test('varints round-trip up to the largest safe integer', () => {
   );
 });
 
-test('the writer refuses values the format cannot carry', () => {
+test('[share-codec-005] the writer refuses values the format cannot carry', () => {
   assert.throws(() => new WireWriter().varint(-1), RangeError);
   assert.throws(() => new WireWriter().varint(1.5), RangeError);
   assert.throws(() => new WireWriter().varint(2 ** 53), RangeError);
@@ -93,7 +93,7 @@ test('the writer refuses values the format cannot carry', () => {
   assert.throws(() => new WireWriter().textField(1, 'é'), RangeError);
 });
 
-test('the reader rejects truncated, overlong and overflowing varints', () => {
+test('[share-codec-006] the reader rejects truncated, overlong and overflowing varints', () => {
   assert.equal(
     reasonOf(() => new WireReader(Uint8Array.of(0x80)).varint()),
     'truncated',
@@ -123,7 +123,7 @@ test('the reader rejects truncated, overlong and overflowing varints', () => {
   );
 });
 
-test('the reader bounds lengths and rejects group and reserved wire types', () => {
+test('[share-codec-007] the reader bounds lengths and rejects group and reserved wire types', () => {
   const absurd = new WireWriter().tag(3, WIRE_LEN).varint(1_000_000).finish();
   const reader = new WireReader(absurd);
   reader.tag();
@@ -144,7 +144,7 @@ test('the reader bounds lengths and rejects group and reserved wire types', () =
   );
 });
 
-test('skip steps over each wire type and stops at a truncated value', () => {
+test('[share-codec-008] skip steps over each wire type and stops at a truncated value', () => {
   const writer = new WireWriter()
     .uintField(1, 300)
     .bytesField(2, [1, 2, 3])
@@ -156,7 +156,7 @@ test('skip steps over each wire type and stops at a truncated value', () => {
   const reader = new WireReader(writer.finish());
   for (let field = 1; field <= 4; field += 1)
     reader.skip(reader.tag().wireType);
-  assert.deepEqual(reader.tag(), { field: 5, wireType: WIRE_VARINT });
+  assert.deepEqual(reader.tag(), { field: 5, wireType: 0 });
   assert.equal(reader.varint(), 9);
   const short = new WireWriter().tag(1, WIRE_FIXED64).finish();
   const shortReader = new WireReader(Uint8Array.of(...short, 1, 2));
@@ -166,7 +166,7 @@ test('skip steps over each wire type and stops at a truncated value', () => {
   );
 });
 
-test('crc8 is CRC-8/SMBUS and catches every burst of up to 8 bits', () => {
+test('[share-codec-009] crc8 is CRC-8/SMBUS and catches every burst of up to 8 bits', () => {
   // The catalogued check value for the ASCII digits 1–9.
   assert.equal(crc8(new TextEncoder().encode('123456789')), 0xf4);
   assert.equal(crc8([]), 0);

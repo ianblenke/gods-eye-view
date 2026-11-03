@@ -1,0 +1,24 @@
+Source commit: 4cf8e3706060658bf303d3d6e49643d0a4cb6a9f.
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && node scripts/format.mjs --write
+Formatted 1673 source files.
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && node scripts/format.mjs --check
+Checked 1673 source files.
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && node ../node_modules/prettier/bin/prettier.cjs --check src/share/*.test.mjs
+Checking formatting...
+All matched files use Prettier code style!
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && node scripts/spec/gates.mjs lint 2>&1 | grep -E "^ERROR"
+No ERROR line.
+STE: 0 errors, 1275 warnings.
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && node /home/ianblenke/docker/gev-tools/sharecodec/test-audit.mjs
+Tests: 476. Tagged: 475. Assertion callback gaps: 0. Title errors: 0. Title warnings: 28.
+
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && python3 /home/ianblenke/docker/gev-tools/sharecodec/review-final.py
+Test hashes match the completed suite.
+The requirement bodies match. The Purpose paragraph keeps its bytes.
+Production files, QA scripts and trace files match HEAD.
+Mutation cases: 1259. Historical cases: 1219. New cases: 40. New KILLED results: 40.

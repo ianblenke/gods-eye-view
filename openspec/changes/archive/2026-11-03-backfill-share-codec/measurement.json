@@ -1,0 +1,272 @@
+{
+  "sourceCommit": "4cf8e3706060658bf303d3d6e49643d0a4cb6a9f",
+  "branch": "backfill-share-codec",
+  "productionFiles": 5,
+  "productionSHA256": {
+    "src/share/follow.js": "6d6cd0141ac0817403c379623e098fd24b31071b3de0f87f0a14a93aefe78c0b",
+    "src/share/legacyShareState.js": "43bf051add4f235502f5500de36ebf2a45747c18eea46b26c94acdc844df88af",
+    "src/share/shareLinkPath.js": "fa8b286748f305d856aad1ec805a7df44c6213c9a31805b6a9ec9d85d7dd3664",
+    "src/share/viewCodec.js": "44c3ef2d72d09f997d638c5685bf548f0e453500db250178b85f245aaf9beda6",
+    "src/share/wire.js": "8e10a887bd961211c40f3d126339e88ae71bd2f984351986762bc419288b64ef"
+  },
+  "testSHA256": {
+    "src/share/backfill.test.mjs": "4870a0d3024da517a856e898471c63951c994de1b2b098ccf4dd004d7d7e519f",
+    "src/share/legacyShareState.test.mjs": "e7269d7705aa54b397ecc66be15ef9818598f47b2fbb9290d915bf66817619b6",
+    "src/share/shareLinkPath.test.mjs": "d00fb439071fe5eca907052e9b2c6077379e11987461bf590d96fa9980fdc623",
+    "src/share/viewCodec.test.mjs": "3492c714c438828debc7d9553072e6718913c4558de40498d48eb88b80948a16",
+    "src/share/wire.test.mjs": "017b567ed0a1e455a606a9eed8c97315acfa7549706f65fde6eb0acfdedae825"
+  },
+  "oldTests": 59,
+  "oldTagged": 58,
+  "testFiles": 5,
+  "tests": 476,
+  "taggedTests": 475,
+  "scenarios": 64,
+  "mutations": 1259,
+  "killed": 1151,
+  "equivalent": 108,
+  "keyMutations": 427,
+  "auditRows": 347,
+  "auditTested": 341,
+  "auditEquivalent": 4,
+  "auditDefaultValue": 2,
+  "auditOpen": 0,
+  "titleErrors": 0,
+  "titleWarnings": 28,
+  "coverage": {
+    "src/share/follow.js": {
+      "line": 100.0,
+      "branch": 100.0,
+      "function": 100.0
+    },
+    "src/share/legacyShareState.js": {
+      "line": 100.0,
+      "branch": 100.0,
+      "function": 100.0
+    },
+    "src/share/shareLinkPath.js": {
+      "line": 100.0,
+      "branch": 100.0,
+      "function": 100.0
+    },
+    "src/share/viewCodec.js": {
+      "line": 100.0,
+      "branch": 98.68,
+      "function": 100.0
+    },
+    "src/share/wire.js": {
+      "line": 100.0,
+      "branch": 100.0,
+      "function": 100.0
+    }
+  },
+  "baselineCoverage": {
+    "src/share/follow.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 155,
+        "branches": 14,
+        "functions": 10
+      },
+      "sha": "6d6cd0141ac0817403c379623e098fd24b31071b3de0f87f0a14a93aefe78c0b",
+      "untrue": false,
+      "origin": "upstream-sync-9",
+      "since": "2026-10-27"
+    },
+    "src/share/legacyShareState.js": null,
+    "src/share/shareLinkPath.js": {
+      "loaded": true,
+      "lines": 2,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 56,
+        "branches": 12,
+        "functions": 3
+      },
+      "sha": "fa8b286748f305d856aad1ec805a7df44c6213c9a31805b6a9ec9d85d7dd3664",
+      "untrue": false,
+      "origin": "upstream-sync-9",
+      "since": "2026-10-27"
+    },
+    "src/share/viewCodec.js": {
+      "loaded": true,
+      "lines": 2,
+      "branches": 17,
+      "functions": 0,
+      "totals": {
+        "lines": 1399,
+        "branches": 530,
+        "functions": 67
+      },
+      "sha": "44c3ef2d72d09f997d638c5685bf548f0e453500db250178b85f245aaf9beda6",
+      "untrue": false,
+      "origin": "upstream-sync-9",
+      "since": "2026-10-27"
+    },
+    "src/share/wire.js": {
+      "loaded": true,
+      "lines": 2,
+      "branches": 1,
+      "functions": 1,
+      "totals": {
+        "lines": 259,
+        "branches": 100,
+        "functions": 25
+      },
+      "sha": "8e10a887bd961211c40f3d126339e88ae71bd2f984351986762bc419288b64ef",
+      "untrue": false,
+      "origin": "upstream-sync-9",
+      "since": "2026-10-27"
+    }
+  },
+  "untaggedTests": [
+    {
+      "file": "src/share/viewCodec.test.mjs",
+      "name": "malformed input is rejected with a reason, never thrown",
+      "title": "malformed input is rejected with a reason, never thrown",
+      "kind": "test",
+      "status": "pass",
+      "tags": [],
+      "tagError": null,
+      "line": 1012,
+      "column": 1,
+      "fullName": "malformed input is rejected with a reason, never thrown",
+      "leaf": true
+    }
+  ],
+  "changedTracked": [
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/audit.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/coverage.txt",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/design.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/evidence.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/measurement.json",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/mutation-results.json",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/specs/share-codec/spec.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/tasks.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/test-audit.json",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/test-links.json",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/test-run.txt",
+    "openspec/specs/share-codec/spec.md",
+    "src/share/backfill.test.mjs",
+    "src/share/viewCodec.test.mjs"
+  ],
+  "untracked": [
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/corrections.md",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/review-mutation-run.txt",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/review-mutations.json",
+    "openspec/changes/archive/2026-11-03-backfill-share-codec/review-validation.txt"
+  ],
+  "importers": [
+    {
+      "test": "src/sharelink.celestial.test.mjs",
+      "module": "src/share/shareLinkPath.js",
+      "specifier": "./share/shareLinkPath.js"
+    },
+    {
+      "test": "src/sharelink.celestial.test.mjs",
+      "module": "src/share/viewCodec.js",
+      "specifier": "./share/viewCodec.js"
+    },
+    {
+      "test": "src/share/legacyShareState.test.mjs",
+      "module": "src/share/viewCodec.js",
+      "specifier": "./viewCodec.js"
+    },
+    {
+      "test": "src/share/legacyShareState.test.mjs",
+      "module": "src/share/viewCodec.js",
+      "specifier": "./viewCodec.js"
+    },
+    {
+      "test": "src/share/legacyShareState.test.mjs",
+      "module": "src/share/legacyShareState.js",
+      "specifier": "./legacyShareState.js"
+    },
+    {
+      "test": "src/share/shareLinkPath.test.mjs",
+      "module": "src/share/shareLinkPath.js",
+      "specifier": "./shareLinkPath.js"
+    },
+    {
+      "test": "src/share/viewCodec.test.mjs",
+      "module": "src/share/wire.js",
+      "specifier": "./wire.js"
+    },
+    {
+      "test": "src/share/viewCodec.test.mjs",
+      "module": "src/share/viewCodec.js",
+      "specifier": "./viewCodec.js"
+    },
+    {
+      "test": "src/share/wire.test.mjs",
+      "module": "src/share/wire.js",
+      "specifier": "./wire.js"
+    },
+    {
+      "test": "src/share/backfill.test.mjs",
+      "module": "src/share/viewCodec.js",
+      "specifier": "./viewCodec.js"
+    },
+    {
+      "test": "src/share/backfill.test.mjs",
+      "module": "src/share/wire.js",
+      "specifier": "./wire.js"
+    },
+    {
+      "test": "src/share/backfill.test.mjs",
+      "module": "src/share/follow.js",
+      "specifier": "./follow.js"
+    },
+    {
+      "test": "src/share/backfill.test.mjs",
+      "module": "src/share/legacyShareState.js",
+      "specifier": "./legacyShareState.js"
+    },
+    {
+      "test": "src/share/backfill.test.mjs",
+      "module": "src/share/shareLinkPath.js",
+      "specifier": "./shareLinkPath.js"
+    },
+    {
+      "test": "src/share/backfill.test.mjs",
+      "module": "src/share/shareLinkPath.js",
+      "specifier": "./shareLinkPath.js"
+    },
+    {
+      "test": "src/ui/shareButton.test.mjs",
+      "module": "src/share/shareLinkPath.js",
+      "specifier": "../share/shareLinkPath.js"
+    },
+    {
+      "test": "src/ui/shareButton.test.mjs",
+      "module": "src/share/viewCodec.js",
+      "specifier": "../share/viewCodec.js"
+    },
+    {
+      "test": "src/ui/shareLinks.test.mjs",
+      "module": "src/share/shareLinkPath.js",
+      "specifier": "../share/shareLinkPath.js"
+    },
+    {
+      "test": "src/ui/shareLinks.test.mjs",
+      "module": "src/share/viewCodec.js",
+      "specifier": "../share/viewCodec.js"
+    }
+  ],
+  "originalSourceCommit": "5fd416b9ed4a80c9a1ceeded81836aa69f3ebc0c",
+  "reviewMutations": 40,
+  "reviewKilled": 40,
+  "historicalMissingMutationWitnesses": 0,
+  "reviewSources": {
+    "tests": "/home/ianblenke/docker/gev-tools/sharecodec/final-records.jsonl",
+    "mutations": "/home/ianblenke/docker/gev-tools/sharecodec/review-muts.json",
+    "mutationLog": "/home/ianblenke/docker/gev-tools/sharecodec/review-muts.json.log",
+    "wordList": "openspec/ste/words.json",
+    "command": "python3 /home/ianblenke/docker/gev-tools/sharecodec/review-measure.py"
+  },
+  "nodeVersion": "v26.13.0"
+}

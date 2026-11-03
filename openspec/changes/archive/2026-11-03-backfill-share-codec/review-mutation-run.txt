@@ -1,0 +1,46 @@
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && NODE_OPTIONS=--test-isolation=none python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/sharecodec /home/ianblenke/docker/gev-tools/sharecodec/review-muts.json
+R001: KILLED [share-codec-032] The open name hudVariant checks future_name-2; [share-codec-032] The open name mapStack checks future_name-2
+R002: KILLED [share-codec-032] The open name hudVariant checks future_name-2; [share-codec-032] The open name mapStack checks future_name-2
+R003: KILLED [share-codec-056] The open name hudVariant checks bad name; [share-codec-056] The open name hudVariant checks empty; [share-codec-056] The open name mapStack checks bad name; [share-codec-056] The open name mapStack checks empty
+R004: KILLED [share-codec-056] The open name hudVariant checks bad name; [share-codec-056] The open name hudVariant checks empty; [share-codec-056] The open name mapStack checks bad name; [share-codec-056] The open name mapStack checks empty
+R005: KILLED [share-codec-059] The closed name detectionAllocation accepts known text; [share-codec-059] The closed name detectionMode accepts known text
+R006: KILLED [share-codec-059] The closed name detectionAllocation accepts known text; [share-codec-059] The closed name detectionMode accepts known text
+R007: KILLED [share-codec-060] size: a camera-only place view
+R008: KILLED [share-codec-061] The angle heading at 181 uses the nearest signed turn; [share-codec-061] The angle roll at 359 uses the nearest signed turn
+R009: KILLED [share-codec-061] The angle heading at 180 uses the nearest signed turn
+R010: KILLED [share-codec-034] a code is the bare base64url payload; URL forms are not codes
+R011: KILLED [share-codec-036] The canonical state keeps the share time at clock 1767225617000
+R012: KILLED [share-codec-027] The decoder drops the share time one millisecond after the clock
+R013: KILLED [share-codec-036] The canonical state keeps the share time at clock 1767225617001
+R014: KILLED [share-codec-062] The view kind uses the number place path; [share-codec-062] The view kind uses the text place path
+R015: KILLED [share-codec-062] The view kind uses the number place path; [share-codec-062] The view kind uses the text place path
+R016: KILLED [share-codec-064] The view kind uses the empty entity path
+R017: KILLED [share-codec-063] The complete fix supplies every coordinate and altitude
+R018: KILLED [share-codec-063] The complete fix supplies every coordinate and altitude
+R019: KILLED [share-codec-063] The complete fix supplies every coordinate and altitude
+R020: KILLED [share-codec-063] The complete fix supplies every coordinate and altitude
+R021: KILLED [share-codec-063] The complete fix supplies every coordinate and altitude
+R022: KILLED [share-codec-020] The follow offset heading uses its own field; [share-codec-020] The follow offset pitch uses its own field; [share-codec-020] The follow offset range uses its own field
+R023: KILLED [share-codec-050] The layer option handles an invalid value; [share-codec-050] The layer option handles an unknown key; [share-codec-050] The layer option handles an unknown owner
+R024: KILLED [share-codec-031] an unknown or invalid entity falls back to the camera its fix implies
+R025: KILLED [share-codec-030] an unknown view kind falls back to the stored camera
+R026: KILLED [share-codec-015] invalid style parameters keep the style’s own value
+R027: KILLED [share-codec-050] The decoder checks the option length cap before the available byte count
+R028: KILLED [share-codec-022] The codec selects the supplied view before a tracked entity
+R029: KILLED [share-codec-023] The fix time uses the current fix
+R030: KILLED [share-codec-019] The panel pin differs while its collapse value stays at its default
+R031: KILLED [share-codec-032] The open name hudVariant checks future_name-2; [share-codec-032] The open name mapStack checks future_name-2
+R032: KILLED [share-codec-049] future panel values and style tokens are skipped, not applied
+R033: KILLED [share-codec-049] future panel values and style tokens are skipped, not applied
+R034: KILLED [share-codec-049] future panel values and style tokens are skipped, not applied
+R035: KILLED [share-codec-062] The view kind uses the number place path; [share-codec-062] The view kind uses the text place path
+R036: KILLED [share-codec-032] The open name hudVariant checks future_name-2; [share-codec-032] The open name mapStack checks future_name-2
+SURVIVORS: []
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && NODE_OPTIONS=--test-isolation=none python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/sharecodec /home/ianblenke/docker/gev-tools/sharecodec/review-muts.json R037
+R037: KILLED [share-codec-063] The complete fix supplies every coordinate and altitude
+SURVIVORS: []
+COMMAND: cd /home/ianblenke/docker/gev-work/sharecodec && NODE_OPTIONS=--test-isolation=none python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/sharecodec /home/ianblenke/docker/gev-tools/sharecodec/review-muts.json R038 R039 R040
+R038: KILLED [share-codec-039 share-codec-040 share-codec-041] The legacy view without layers supplies the entity
+R039: KILLED [share-codec-030] The unknown numeric view kind reports one value
+R040: KILLED [share-codec-039 share-codec-040 share-codec-041] The legacy view without layers supplies the entity
+SURVIVORS: []

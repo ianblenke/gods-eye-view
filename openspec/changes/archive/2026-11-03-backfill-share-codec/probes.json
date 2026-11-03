@@ -1,0 +1,32 @@
+{
+  "partialLatitude": {
+    "ok": true,
+    "lastKnown": {
+      "lat": 12,
+      "lon": 0,
+      "alt": 0,
+      "observedAtMs": null
+    }
+  },
+  "partialLongitude": {
+    "ok": true,
+    "lastKnown": {
+      "lat": 0,
+      "lon": 23,
+      "alt": 0,
+      "observedAtMs": null
+    }
+  },
+  "styleGetter": {
+    "reads": 2,
+    "normalizedStyle": "future",
+    "encodedReads": 2,
+    "decodedStyle": "normal",
+    "unknownFields": [
+      {
+        "scope": "enum:style",
+        "code": "future"
+      }
+    ]
+  }
+}

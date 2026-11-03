@@ -9271,62 +9271,17 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/share/follow.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 155,
-        "branches": 14,
-        "functions": 10
-      },
-      "sha": "6d6cd0141ac0817403c379623e098fd24b31071b3de0f87f0a14a93aefe78c0b",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/share/shareLinkPath.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 56,
-        "branches": 12,
-        "functions": 3
-      },
-      "sha": "fa8b286748f305d856aad1ec805a7df44c6213c9a31805b6a9ec9d85d7dd3664",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
     "src/share/viewCodec.js": {
       "loaded": true,
-      "lines": 2,
-      "branches": 17,
+      "lines": 0,
+      "branches": 4,
       "functions": 0,
       "totals": {
         "lines": 1399,
-        "branches": 530,
+        "branches": 558,
         "functions": 67
       },
       "sha": "44c3ef2d72d09f997d638c5685bf548f0e453500db250178b85f245aaf9beda6",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/share/wire.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 1,
-      "functions": 1,
-      "totals": {
-        "lines": 259,
-        "branches": 100,
-        "functions": 25
-      },
-      "sha": "8e10a887bd961211c40f3d126339e88ae71bd2f984351986762bc419288b64ef",
       "untrue": false,
       "origin": "upstream-sync-9",
       "since": "2026-10-27"
@@ -21852,85 +21807,9 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/share/legacyShareState.test.mjs": {
-      "names": {
-        "a thing view turns its layer on, with or without a layer set": 1,
-        "a tracking selection becomes a thing view and back": 1,
-        "links from earlier long-form versions keep their historical meaning": 1,
-        "links written by the long-form generator survive the compact form": 1,
-        "the HAL example survives the round trip and shrinks to 39 characters": 1,
-        "the converter ignores non-objects and restore bookkeeping": 1,
-        "the converter knows every key of the long form’s parsed state": 1,
-        "thing views the long form cannot express convert without one": 1
-      },
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/share/shareLinkPath.test.mjs": {
-      "names": {
-        "a share link sits under the app root without the sender ?lang": 1,
-        "a share path names its code and the app base path": 1,
-        "the app root drops a share path and the hash, and keeps the query": 1
-      },
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
     "src/share/viewCodec.test.mjs": {
       "names": {
-        "a code is the bare base64url payload; URL forms are not codes": 1,
-        "a created-at time in the future is dropped, like the long form’s `at`": 1,
-        "a fix without its own time is as of the link": 1,
-        "a layer option filed under a mirror layer is ignored": 1,
-        "a place view opens at its camera; a thing view also names what to follow": 1,
-        "a view just switched to any style costs its camera and style only": 1,
-        "an all-default view is the version byte and its check byte": 1,
-        "an unknown or invalid entity falls back to the camera its fix implies": 1,
-        "an unknown view kind falls back to the stored camera": 1,
-        "defaults travel as frozen meanings that match today’s app defaults": 1,
-        "each setting costs bytes only when it differs from its default": 1,
-        "enum names outside the code tables travel as text": 1,
-        "every layer option has a frozen absent meaning": 1,
-        "every registered field round-trips at once": 1,
-        "every truncation and single-byte corruption of real payloads is handled": 1,
-        "extreme and negative-zero numbers normalize to values the decoder returns": 1,
-        "future panel values and style tokens are skipped, not applied": 1,
-        "generated states round-trip exactly and encode canonically": 1,
-        "invalid style parameters keep the style’s own value": 1,
-        "last-known time is stored relative to the created-at time when there is one": 1,
-        "layer sets: absent, explicitly empty and populated stay distinct": 1,
-        "layer tokens map to permanent numbers covering the whole ledger": 1,
-        "malformed input is rejected with a reason, never thrown": 1,
-        "normalization is idempotent": 1,
-        "panels: only differences from the frozen layout are written": 1,
-        "precision: coordinates 1e-4 degrees, angles and lengths whole units": 1,
-        "size: a camera-only place view": 1,
-        "size: following an aircraft": 1,
-        "the check byte rejects every single-character typo": 1,
-        "the derived camera looks at the fix from the offset, even from orbit": 1,
-        "the field registry is well formed and permanent": 1,
-        "the follow offset converts to and from east/north/up metres": 1,
-        "the panel table agrees with the long form’s panel tokens": 1,
-        "the style parameter table agrees with the long form’s `sp` codec": 1,
-        "thing ids use the compact numeric form when they can, text otherwise": 1,
-        "tracking selections in layer options become a thing view": 1,
-        "unknown detection names fall back to their defaults and are reported": 1,
-        "unknown fields inside a thing view, codes and bits are skipped too": 1,
-        "unknown top-level fields of every wire type are skipped and reported": 1
-      },
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/share/wire.test.mjs": {
-      "names": {
-        "base64url rejects padding, foreign characters, bad lengths and stray bits": 1,
-        "base64url round-trips every length and byte value without padding": 1,
-        "crc8 is CRC-8/SMBUS and catches every burst of up to 8 bits": 1,
-        "skip steps over each wire type and stops at a truncated value": 1,
-        "the reader bounds lengths and rejects group and reserved wire types": 1,
-        "the reader rejects truncated, overlong and overflowing varints": 1,
-        "the writer refuses values the format cannot carry": 1,
-        "varints round-trip up to the largest safe integer": 1,
-        "zigzag maps small magnitudes of either sign to small codes": 1
+        "malformed input is rejected with a reason, never thrown": 1
       },
       "origin": "upstream-sync-9",
       "since": "2026-10-27"

@@ -1,0 +1,2 @@
+Verdict: FAIL
+- [ ] F5 major openspec/changes/archive/2026-11-03-backfill-share-codec/review.md:1 At commit `af2b614e`, this file is still absent. The supplied document gate completed with `ERROR REVIEW-MISSING` and “Gates failed with 1 errors.” It ran no tests. Record both review reports in `review.md`, then get a completed final gate result.
