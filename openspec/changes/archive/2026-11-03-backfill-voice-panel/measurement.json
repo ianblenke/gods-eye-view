@@ -1,0 +1,82 @@
+{
+  "sourceCommit": "74ec10e054a88935c7fcfce96300ea660f7c7747",
+  "treeState": "review corrections",
+  "branch": "backfill-voice-panel",
+  "node": "v26.13.0",
+  "summary": {
+    "success": true,
+    "counts": {
+      "tests": 405,
+      "failed": 0,
+      "passed": 405,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "topLevel": 405,
+      "suites": 0
+    },
+    "duration_ms": 6381.999232
+  },
+  "scenarioCount": 72,
+  "tests": 405,
+  "oldTests": 76,
+  "oldTagged": 54,
+  "oldUntagged": 22,
+  "newTests": 329,
+  "taggedTests": 383,
+  "mutations": 566,
+  "killed": 554,
+  "equivalent": 12,
+  "coverage": [
+    {
+      "file": "src/voice/panel/actionObserver.js",
+      "line": 100.0,
+      "branch": 100.0,
+      "function": 100.0
+    },
+    {
+      "file": "src/voice/panel/host.js",
+      "line": 100.0,
+      "branch": 100.0,
+      "function": 100.0
+    },
+    {
+      "file": "src/voice/panel/inactivity.js",
+      "line": 100.0,
+      "branch": 100.0,
+      "function": 100.0
+    },
+    {
+      "file": "src/voice/panel/manualPanel.js",
+      "line": 100.0,
+      "branch": 100.0,
+      "function": 100.0
+    },
+    {
+      "file": "src/voice/panel/nativeActivity.js",
+      "line": 100.0,
+      "branch": 100.0,
+      "function": 100.0
+    },
+    {
+      "file": "src/voice/panel/preferences.js",
+      "line": 100.0,
+      "branch": 100.0,
+      "function": 100.0
+    },
+    {
+      "file": "src/voice/panel/testDom.mjs",
+      "line": 100.0,
+      "branch": 100.0,
+      "function": 100.0
+    }
+  ],
+  "mutationSources": {
+    "A": 426,
+    "K": 76,
+    "S": 26,
+    "R": 38
+  },
+  "invalidFailureLinks": 0,
+  "failureEventMismatches": 0
+}

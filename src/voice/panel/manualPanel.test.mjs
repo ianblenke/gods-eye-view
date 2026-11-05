@@ -88,12 +88,12 @@ function key(element, value) {
   return event;
 }
 
-test('Settings launcher toggles while tab and programmatic selection remain idempotent', (t) => {
+test('[voice-panel-013] Settings launcher toggles while tab and programmatic selection remain idempotent', (t) => {
   const f = fixture(t);
   assert.equal(f.panel.snapshot().panelOpen, false);
   click(f.ui.voiceSettingsButton);
   assert.equal(f.panel.snapshot().settingsOpen, true);
-  assert.equal(f.doc.activeElement, f.ui.settingsTab);
+  assert.equal(f.doc.activeElement === f.ui.settingsTab, true);
   assert.equal(f.ui.voiceSettingsButton.attributes['aria-expanded'], 'true');
   click(f.ui.voiceSettingsButton);
   assert.equal(f.panel.snapshot().panelOpen, false);
@@ -111,9 +111,9 @@ test('tab keyboard navigation and Escape preserve focus and accessibility state'
   click(f.ui.voiceSettingsButton);
   assert.equal(key(f.ui.settingsTab, 'ArrowLeft').defaultPrevented, true);
   assert.equal(f.panel.snapshot().view, 'preview');
-  assert.equal(f.doc.activeElement, f.ui.previewTab);
+  assert.equal(f.doc.activeElement === f.ui.previewTab, true);
   assert.equal(f.ui.previewTab.tabIndex, 0);
-  assert.equal(f.ui.settingsTab.tabIndex, -1);
+  assert.equal(f.ui.settingsTab.tabIndex === -1, true);
   assert.equal(f.ui.previewTab.attributes['aria-selected'], 'true');
   key(f.ui.previewTab, 'End');
   assert.equal(f.panel.snapshot().view, 'settings');
@@ -121,40 +121,40 @@ test('tab keyboard navigation and Escape preserve focus and accessibility state'
   assert.equal(f.panel.snapshot().view, 'preview');
   assert.equal(key(f.ui.voicePanel, 'Escape').defaultPrevented, true);
   assert.equal(f.panel.snapshot().panelOpen, false);
-  assert.equal(f.doc.activeElement, f.ui.voiceSettingsButton);
+  assert.equal(f.doc.activeElement === f.ui.voiceSettingsButton, true);
   assert.equal(key(f.ui.voicePanel, 'Escape').defaultPrevented, false);
 });
 
-test('manual switching transfers hidden-panel focus without stealing unrelated focus', (t) => {
+test('[voice-panel-015] manual switching transfers hidden-panel focus without stealing unrelated focus', (t) => {
   const f = fixture(t);
   f.panel.select('settings');
   f.ui.voiceSettingsPanel.focus();
   f.panel.select('preview');
-  assert.equal(f.doc.activeElement, f.ui.previewTab);
+  assert.equal(f.doc.activeElement === f.ui.previewTab, true);
   const unrelated = (f.doc.activeElement = {});
   f.panel.select('settings');
-  assert.equal(f.doc.activeElement, unrelated);
+  assert.equal(f.doc.activeElement === unrelated, true);
   assert.equal(f.panel.close('preview').changed, false);
   assert.equal(f.panel.snapshot().settingsOpen, true);
 });
 
-test('manual Preview selection never enables a disabled preference and uses injected copy', (t) => {
+test('[voice-panel-016] manual Preview selection never enables a disabled preference and uses injected copy', (t) => {
   const f = fixture(t);
   f.enabled(false);
   f.content(true);
   f.panel.select('preview');
   assert.equal(f.panel.snapshot().previewEnabled, false);
   assert.equal(f.panel.snapshot().previewVisible, false);
-  assert.equal(f.ui.previewEmpty.textContent, f.copy.previewDisabled);
+  assert.equal(f.ui.previewEmpty.textContent, 'Vista previa desactivada.');
   assert.equal(f.ui.previewEmpty.hidden, false);
   f.enabled(true);
   assert.equal(f.panel.snapshot().previewVisible, true);
   assert.equal(f.ui.previewEmpty.hidden, true);
   f.content(false);
-  assert.equal(f.ui.previewEmpty.textContent, f.copy.previewEmpty);
+  assert.equal(f.ui.previewEmpty.textContent, 'Habla para ver resultados.');
 });
 
-test('disposal hides owned presentation and removes listeners without destroying the card', (t) => {
+test('[voice-panel-017] disposal hides owned presentation and removes listeners without destroying the card', (t) => {
   const f = fixture(t);
   f.panel.select('settings');
   const count = f.intents();
@@ -162,14 +162,14 @@ test('disposal hides owned presentation and removes listeners without destroying
   f.panel.destroy();
   click(f.ui.voiceSettingsButton);
   click(f.ui.settingsTab);
-  assert.equal(f.intents(), count);
+  assert.equal(f.intents() === count, true);
   assert.equal(f.ui.voicePanel.hidden, true);
   assert.equal(f.card.presented, false);
   assert.equal(f.panel.select('preview').reason, 'disposed');
   assert.equal(f.panel.close().reason, 'disposed');
 });
 
-test('pointer grace expires, resets on reentry, ignores touch and clears on disposal', (t) => {
+test('[voice-panel-018] pointer grace expires, resets on reentry, ignores touch and clears on disposal', (t) => {
   t.mock.timers.enable({ apis: ['setTimeout'] });
   const f = fixture(t);
   const pointer = (type, pointerType = 'mouse') => {
@@ -177,22 +177,23 @@ test('pointer grace expires, resets on reentry, ignores touch and clears on disp
     Object.defineProperty(event, 'pointerType', { value: pointerType });
     f.ui.root.dispatchEvent(event);
   };
+  assert.equal(f.ui.root.dataset.rowGrace === undefined, true);
   pointer('pointerleave');
   t.mock.timers.tick(699);
   assert.equal(f.ui.root.dataset.rowGrace, 'true');
   pointer('pointerenter');
-  assert.equal(f.ui.root.dataset.rowGrace, undefined);
+  assert.equal(f.ui.root.dataset.rowGrace === undefined, true);
   pointer('pointerleave');
   t.mock.timers.tick(699);
   assert.equal(f.ui.root.dataset.rowGrace, 'true');
   t.mock.timers.tick(1);
-  assert.equal(f.ui.root.dataset.rowGrace, undefined);
+  assert.equal(f.ui.root.dataset.rowGrace === undefined, true);
   pointer('pointerleave', 'touch');
-  assert.equal(f.ui.root.dataset.rowGrace, undefined);
+  assert.equal(f.ui.root.dataset.rowGrace === undefined, true);
   pointer('pointerleave');
   f.panel.destroy();
-  assert.equal(f.ui.root.dataset.rowGrace, undefined);
+  assert.equal(f.ui.root.dataset.rowGrace === undefined, true);
   pointer('pointerleave');
   t.mock.timers.tick(700);
-  assert.equal(f.ui.root.dataset.rowGrace, undefined);
+  assert.equal(f.ui.root.dataset.rowGrace === undefined, true);
 });

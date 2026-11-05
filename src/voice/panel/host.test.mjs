@@ -105,20 +105,23 @@ function mounted(t, options = {}) {
   return { doc, clock, host, instances, commands, ui: commands.ui };
 }
 
-test('actual control default remains opt-out; panel markup has unique controlled panes and an outside alert', (t) => {
+test('[voice-panel-012] actual control default remains opt-out; panel markup has unique controlled panes and an outside alert', (t) => {
   const doc = installPanelDom(t);
   const baseline = createVoiceControl();
   assert.equal(baseline.voicePanel, null);
   const ui = createVoiceControl({ reset: true, panel: true });
-  assert.equal(doc.getElementById('gev-voice-panel'), ui.voicePanel);
+  assert.equal(doc.getElementById('gev-voice-panel') === ui.voicePanel, true);
   assert.equal(
     ui.voiceSettingsButton.getAttribute('aria-controls'),
-    ui.voicePanel.id,
+    'gev-voice-panel',
   );
-  assert.equal(ui.previewTab.getAttribute('aria-controls'), ui.previewPanel.id);
+  assert.equal(
+    ui.previewTab.getAttribute('aria-controls'),
+    'gev-voice-preview-panel',
+  );
   assert.equal(
     ui.settingsTab.getAttribute('aria-controls'),
-    ui.voiceSettingsPanel.id,
+    'gev-voice-settings-panel',
   );
   assert.equal(ui.previewPanel.contains(ui.card), true);
   assert.equal(
@@ -128,7 +131,7 @@ test('actual control default remains opt-out; panel markup has unique controlled
   assert.equal(ui.root.querySelectorAll('#gev-voice-card').length, 1);
 });
 
-test('actual binder/card has launcher toggle, idempotent tabs, focus and disabled Preview', (t) => {
+test('[voice-panel-013] actual binder/card has launcher toggle, idempotent tabs, focus and disabled Preview', (t) => {
   const { ui, commands, doc } = mounted(t);
   ui.voiceSettingsButton.fire('click');
   assert.equal(commands.voicePanel.snapshot().settingsOpen, true);
@@ -151,7 +154,7 @@ test('actual binder/card has launcher toggle, idempotent tabs, focus and disable
   dismiss.fire('click');
   assert.equal(ui.card.hidden, true);
   assert.equal(commands.voicePanel.snapshot().panelOpen, true);
-  assert.equal(doc.activeElement?.id, ui.previewTab.id);
+  assert.equal(doc.activeElement?.id === ui.previewTab.id, true);
   ui.voicePanel.fire('keydown', { key: 'Escape', target: doc.activeElement });
   assert.equal(commands.voicePanel.snapshot().panelOpen, false);
   commands.voicePanel.select('settings');
@@ -168,7 +171,7 @@ test('actual binder/card has launcher toggle, idempotent tabs, focus and disable
   assert.equal(ui.previewEmpty.textContent, 'Preview is off.');
   ui.previewTab.focus();
   ui.voicePanel.fire('keydown', { key: 'Escape' });
-  assert.equal(doc.activeElement, ui.voiceSettingsButton);
+  assert.equal(doc.activeElement === ui.voiceSettingsButton, true);
   commands.voiceCard.handle({
     type: 'transcript',
     role: 'assistant',
@@ -178,7 +181,7 @@ test('actual binder/card has launcher toggle, idempotent tabs, focus and disable
   assert.equal(commands.voicePanel.snapshot().panelOpen, false);
 });
 
-test('actual facade remount keeps failed-save live preferences/view and manual close, with no restore writes or focus theft', async (t) => {
+test('[voice-panel-049] actual facade remount keeps failed-save live preferences/view and manual close, with no restore writes or focus theft', async (t) => {
   const doc = installPanelDom(t);
   const writes = [];
   const storage = {
@@ -230,7 +233,7 @@ test('actual facade remount keeps failed-save live preferences/view and manual c
   assert.equal(commands.ui.voicePreviewInput.checked, false);
   assert.match(commands.ui.voiceTimeoutNote.textContent, /could not be saved/);
   assert.equal(preferenceWrites(), 2);
-  assert.equal(doc.activeElement, commands.ui.providerSelect);
+  assert.equal(doc.activeElement === commands.ui.providerSelect, true);
   commands.ui.voicePreviewInput.checked = true;
   commands.ui.voicePreviewInput.fire('change');
   commands.voicePanel.close();
@@ -288,7 +291,7 @@ test('explicit successful mic Stop closes; failed Stop idle and startup error do
   assert.equal(bad.commands.voicePanel.snapshot().settingsOpen, true);
 });
 
-test('reentrant manual choice/new start during Stop cannot close the successor choice', async (t) => {
+test('[voice-panel-050] reentrant manual choice/new start during Stop cannot close the successor choice', async (t) => {
   const f = mounted(t);
   await f.commands.session.start();
   f.commands.voicePanel.select('settings');
@@ -302,13 +305,15 @@ test('reentrant manual choice/new start during Stop cannot close the successor c
   unsubscribe();
 });
 
-test('integrated inactivity rechecks held PTT at expiry, then normal stop closes on later quiet expiry', async (t) => {
+test('[voice-panel-051] integrated inactivity rechecks held PTT at expiry, then normal stop closes on later quiet expiry', async (t) => {
   const f = mounted(t, { native: true });
   await f.commands.session.start();
   f.commands.voicePanel.select('settings');
   f.ui.voiceTimeoutInput.value = '1';
   f.ui.voiceTimeoutSelect.value = 'custom';
   f.ui.voiceTimeoutSelect.fire('change');
+  assert.equal(f.commands.session.isActive(), true);
+  assert.equal(f.commands.getVoicePanelState().inactivity.deadline, 60000);
   f.instances[0].input.pushToTalkKeyHeld = true;
   f.clock.advance(60000);
   assert.equal(f.instances[0].stops, 0);
@@ -318,7 +323,7 @@ test('integrated inactivity rechecks held PTT at expiry, then normal stop closes
   assert.equal(f.commands.voicePanel.snapshot().panelOpen, false);
 });
 
-test('None cancels integrated app timer and unknown custom hosts never guess expiry', async (t) => {
+test('[voice-panel-065 voice-panel-066] None cancels integrated app timer and unknown custom hosts never guess expiry', async (t) => {
   const native = mounted(t, { native: true });
   await native.commands.session.start();
   native.ui.voiceTimeoutSelect.value = '0';
@@ -333,7 +338,7 @@ test('None cancels integrated app timer and unknown custom hosts never guess exp
   assert.match(unknown.ui.voiceTimeoutStatus.textContent, /unavailable/);
 });
 
-test('transient native OpenAI response activity does not announce connection unavailability', async (t) => {
+test('[voice-panel-051] transient native OpenAI response activity does not announce connection unavailability', async (t) => {
   const f = mounted(t, { native: true, nativeProvider: 'openai' });
   await f.commands.session.start();
   f.ui.voiceTimeoutInput.value = '1';
@@ -350,7 +355,7 @@ test('transient native OpenAI response activity does not announce connection una
   assert.equal(f.instances[0].stops, 1, 'known quiet output permits expiry');
 });
 
-test('native factory with custom controller remains uninstrumented despite panel opt-in', (t) => {
+test('[voice-panel-035] native factory with custom controller remains uninstrumented despite panel opt-in', (t) => {
   installPanelDom(t);
   let inspected = 0;
   const commands = compose({
@@ -446,7 +451,7 @@ async function directActions(
   };
 }
 
-test('actual runner applies exact timeout directly and reports live-unsaved truth, invalid/cancelled attempts stay inert', async (t) => {
+test('[voice-panel-061] actual runner applies exact timeout directly and reports live-unsaved truth, invalid/cancelled attempts stay inert', async (t) => {
   const f = await directActions(t);
   const result = await f.run('set_voice_inactivity_timeout', { minutes: 7 });
   assert.equal(result.applied, true);
@@ -471,7 +476,7 @@ test('actual runner applies exact timeout directly and reports live-unsaved trut
   assert.equal(operation.setMinutes(2).cancelled, true);
 });
 
-test('named voice settings exits Cockpit directly; Preview stays disabled and visual presets stay separate from Scenes', async (t) => {
+test('[voice-panel-061] named voice settings exits Cockpit directly; Preview stays disabled and visual presets stay separate from Scenes', async (t) => {
   const f = await directActions(t);
   const result = await f.run('set_panel_open', {
     panelId: 'voice-settings',
@@ -488,18 +493,31 @@ test('named voice settings exits Cockpit directly; Preview stays disabled and vi
   assert.equal(preview.view, 'preview');
   assert.equal(preview.previewEnabled, false);
   assert.equal(f.commands.getVoicePreferences().previewEnabled, false);
-  for (const panelId of [
-    'visual styles',
-    'visual preset',
-    'visual presets',
-    'scenes',
-  ])
-    await f.run('set_panel_open', { panelId, open: true });
+  assert.deepEqual(f.state.visual, []);
+  for (const [panelId, open, target] of [
+    ['visual styles', true, 'control-panel'],
+    ['visual preset', false, 'control-panel'],
+    ['visual presets', true, 'control-panel'],
+    ['scenes', false, 'scene-panel'],
+  ]) {
+    const result = await f.run('set_panel_open', { panelId, open });
+    assert.deepEqual(
+      {
+        ok: result.ok,
+        action: result.action,
+        panelId: result.panelId,
+        open: result.open,
+      },
+      { ok: true, action: 'set_panel_open', panelId: target, open },
+    );
+  }
   assert.equal(f.state.exits, 1);
-  assert.deepEqual(
-    f.state.visual.map(([id]) => id),
-    ['control-panel', 'control-panel', 'control-panel', 'scene-panel'],
-  );
+  assert.deepEqual(f.state.visual, [
+    ['control-panel', false, { explicit: true }],
+    ['control-panel', true, { explicit: true }],
+    ['control-panel', false, { explicit: true }],
+    ['scene-panel', true, { explicit: true }],
+  ]);
   await assert.rejects(
     () => f.run('set_panel_open', { panelId: 'settings', open: true }),
     /Unknown panel: settings/,
@@ -511,7 +529,7 @@ test('named voice settings exits Cockpit directly; Preview stays disabled and vi
   );
 });
 
-test('canonical exit reveals requested voice UI; newer manual choice or Stop defeats pending reveal', async (t) => {
+test('[voice-panel-063] canonical exit reveals requested voice UI; newer manual choice or Stop defeats pending reveal', async (t) => {
   const f = await directActions(t, { delayExit: true });
   const pending = f.run('control_cockpit', {
     action: 'exit',
@@ -545,7 +563,7 @@ test('canonical exit reveals requested voice UI; newer manual choice or Stop def
   assert.equal(f.commands.voicePanel.snapshot().view, 'preview');
 });
 
-test('unavailable host refuses direct voice operations before Cockpit or preference effects', async (t) => {
+test('[voice-panel-062] unavailable host refuses direct voice operations before Cockpit or preference effects', async (t) => {
   const f = await directActions(t, { exposePanel: false });
   const timeout = await f.run('set_voice_inactivity_timeout', { minutes: 1 });
   assert.equal(timeout.unavailable, true);
@@ -574,7 +592,7 @@ test('voice timeout change preserves a pending voice reveal', async (t) => {
   assert.equal(f.commands.getVoicePreferences().minutes, 0);
 });
 
-test('active provider output reveals Preview after done; manual choice wins until genuine input, replays do not reset idle', async (t) => {
+test('[voice-panel-054 voice-panel-055 voice-panel-057] active provider output reveals Preview after done; manual choice wins until genuine input, replays do not reset idle', async (t) => {
   const f = mounted(t, { native: true, nativeProvider: 'openai' });
   await f.commands.session.start();
   const emit = f.instances[0].hooks.emit;
@@ -591,9 +609,10 @@ test('active provider output reveals Preview after done; manual choice wins unti
   reply('Late answer');
   assert.equal(f.commands.voicePanel.snapshot().panelOpen, true);
   const timer = f.commands.voiceCard.hideTimer;
+  assert.notEqual(timer, null);
   reply('Late answer');
   reply('Late', 'r1', { final: false });
-  assert.equal(f.commands.voiceCard.hideTimer, timer);
+  assert.equal(f.commands.voiceCard.hideTimer === timer, true);
   assert.equal(f.commands.voiceCard.state.assistant, 'Late answer');
   f.commands.voicePanel.close();
   emit({
@@ -603,14 +622,14 @@ test('active provider output reveals Preview after done; manual choice wins unti
     final: false,
   });
   f.commands.voiceCard.handle({ type: 'dismiss' });
-  const advisory = f.commands.voiceCard.state.user;
+  assert.equal(f.commands.voiceCard.state.user, 'advisory caption');
   emit({
     type: 'interruption',
     reason: 'user-speech',
     preserveAdvisoryCaption: true,
   });
   assert.equal(f.commands.voiceCard.state.dismissed, true);
-  assert.equal(f.commands.voiceCard.state.user, advisory);
+  assert.equal(f.commands.voiceCard.state.user, 'advisory caption');
   reply('Older reply', 'r2');
   assert.equal(f.commands.voicePanel.snapshot().panelOpen, false);
   emit({ type: 'interruption', reason: 'user-speech' });
@@ -634,7 +653,7 @@ test('active provider output reveals Preview after done; manual choice wins unti
   assert.equal(f.commands.voicePanel.snapshot().panelOpen, false);
 });
 
-test('Preview off and actual Cockpit state suppress automatic presentation without enabling preference', async (t) => {
+test('[voice-panel-056] Preview off and actual Cockpit state suppress automatic presentation without enabling preference', async (t) => {
   let cockpit = false;
   const f = mounted(t, {
     native: true,
@@ -649,16 +668,16 @@ test('Preview off and actual Cockpit state suppress automatic presentation witho
   cockpit = true;
   window.dispatchEvent(new Event('gev:cockpit-mode-changed'));
   assert.equal(f.ui.voicePanel.hidden, true);
-  assert.equal(f.doc.activeElement, f.ui.voiceSettingsButton);
+  assert.equal(f.doc.activeElement === f.ui.voiceSettingsButton, true);
   f.commands.voicePanel.select('settings', { focus: true });
-  assert.equal(f.doc.activeElement, f.ui.settingsTab);
+  assert.equal(f.doc.activeElement === f.ui.settingsTab, true);
   f.commands.voicePanel.select('preview', { focus: true });
-  assert.equal(f.doc.activeElement, f.ui.voiceSettingsButton);
+  assert.equal(f.doc.activeElement === f.ui.voiceSettingsButton, true);
   const outside = f.doc.createElement('button');
   f.doc.body.appendChild(outside);
   outside.focus();
   window.dispatchEvent(new Event('gev:cockpit-mode-changed'));
-  assert.equal(f.doc.activeElement, outside);
+  assert.equal(f.doc.activeElement === outside, true);
   assert.equal(f.commands.voicePanel.snapshot().previewVisible, false);
   reply('Suppressed in Cockpit');
   assert.equal(f.ui.voicePanel.hidden, true);
@@ -674,7 +693,7 @@ test('Preview off and actual Cockpit state suppress automatic presentation witho
   assert.equal(f.commands.getVoicePreferences().previewEnabled, false);
 });
 
-test('Provider Settings uses its ready dialog handlers and refuses unavailable or cancelled requests', async (t) => {
+test('[voice-panel-064] Provider Settings uses its ready dialog handlers and refuses unavailable or cancelled requests', async (t) => {
   const f = await directActions(t);
   t.mock.timers.enable({ apis: ['setTimeout'] });
   const request = (open, options) =>

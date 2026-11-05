@@ -1,0 +1,24 @@
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && NODE_OPTIONS=--test-isolation=none node --test --test-force-exit /home/ianblenke/docker/gev-tools/voicepanel/known-limits.test.mjs
+Source commit: 74ec10e054a88935c7fcfce96300ea660f7c7747 with review corrections
+✔ The host can allocate a successor during teardown (58.732715ms)
+ℹ {"successorDisposed":false,"operationCurrent":false}
+✔ The custom preference source can send a late notice (3.288982ms)
+ℹ {"notices":1,"editor":"18"}
+✔ An audio delta without a response record keeps the initial knowledge flag (2.338468ms)
+ℹ {"known":true}
+✔ The descriptor check excludes a symbol accessor (10.163009ms)
+ℹ {"sameOptions":false,"getterCopied":true,"accessorReads":0}
+✔ The method restore keeps the function but changes its property owner (1.749138ms)
+ℹ {"before":false,"after":true,"sameFunction":true,"enumerable":true}
+✔ The card can select a view during panel teardown in case 0 (11.836991ms)
+ℹ {"view":"preview","panelHidden":false,"previewHidden":false,"settingsHidden":true,"snapshot":{"view":"preview","panelOpen":false,"settingsOpen":false,"previewEnabled":true,"previewVisible":false}}
+✔ The card can select a view during panel teardown in case 1 (10.79951ms)
+ℹ {"view":"settings","panelHidden":false,"previewHidden":true,"settingsHidden":false,"snapshot":{"view":"settings","panelOpen":false,"settingsOpen":false,"previewEnabled":true,"previewVisible":false}}
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 263.193555

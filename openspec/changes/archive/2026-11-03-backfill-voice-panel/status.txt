@@ -1,0 +1,31 @@
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && git status --short
+Source commit: 74ec10e054a88935c7fcfce96300ea660f7c7747 with review corrections
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/audit.json
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/audit.md
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/coverage-commands.txt
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/coverage.txt
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/design.md
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/evidence.md
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/format-and-ste.txt
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/known-limits.txt
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/measurement.json
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/mutation-commands.json
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/mutation-results.json
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/mutation-run.txt
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/mutations.json
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/old-untagged.json
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/proposal.md
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/scope-check.json
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/specs/voice-panel/spec.md
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/status.txt
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/tasks.md
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/test-audit.json
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/test-links.json
+ M openspec/changes/archive/2026-11-03-backfill-voice-panel/tests.jsonl
+ M openspec/specs/voice-panel/spec.md
+ M src/voice/panel/backfill.test.mjs
+ M src/voice/panel/host.test.mjs
+ M src/voice/panel/preferences.test.mjs
+?? openspec/changes/archive/2026-11-03-backfill-voice-panel/mutation-events.jsonl
+?? openspec/changes/archive/2026-11-03-backfill-voice-panel/review-corrections.md
+?? openspec/changes/archive/2026-11-03-backfill-voice-panel/weak-shape-sweep.json

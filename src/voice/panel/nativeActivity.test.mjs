@@ -50,7 +50,7 @@ function gemini(onChange = () => {}) {
   };
   return { c, input, observer, callbacks, start };
 }
-test('custom host never inspected, including hostile controller getter', () => {
+test('[voice-panel-035] custom host never inspected, including hostile controller getter', () => {
   const adapter = {
     get controller() {
       throw Error('must not inspect');
@@ -61,7 +61,7 @@ test('custom host never inspected, including hostile controller getter', () => {
   o.handle({ type: 'state', state: 'listening' });
   o.destroy();
 });
-test('PTT hold is direct before connect; silent automatic stream is not admitted speech', () => {
+test('[voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech', () => {
   const f = gemini();
   f.input.pushToTalkKeyHeld = true;
   assert.equal(f.observer.snapshot().held, true);
@@ -77,7 +77,7 @@ test('PTT hold is direct before connect; silent automatic stream is not admitted
   assert.equal(f.observer.snapshot().inputBusy, false);
   assert.equal(f.observer.snapshot().held, false);
 });
-test('queue-to-drain, clear and close use current instance, without an acoustic claim', () => {
+test('[voice-panel-037] queue-to-drain, clear and close use current instance, without an acoustic claim', () => {
   const f = gemini();
   const a = f.start();
   assert.equal(a.play(), 42);
@@ -92,7 +92,7 @@ test('queue-to-drain, clear and close use current instance, without an acoustic 
   f.callbacks[0].onDrain();
   assert.equal(f.observer.snapshot().outputBusy, false);
 });
-test('same-mount restart old callbacks cannot clear new admitted capture/output', () => {
+test('[voice-panel-038] same-mount restart old callbacks cannot clear new admitted capture/output', () => {
   const f = gemini();
   f.start();
   const old = f.callbacks[0];
@@ -105,7 +105,7 @@ test('same-mount restart old callbacks cannot clear new admitted capture/output'
   assert.equal(f.observer.snapshot().inputBusy, true);
   assert.equal(f.observer.snapshot().outputBusy, true);
 });
-test('native callbacks original first with receiver, arguments, return and thrown identity; observation failure isolated', () => {
+test('[voice-panel-039] native callbacks original first with receiver, arguments, return and thrown identity; observation failure isolated', () => {
   const f = gemini(() => {
     throw Error('observer');
   });
@@ -120,9 +120,9 @@ test('native callbacks original first with receiver, arguments, return and throw
     },
   });
   const cb = f.callbacks[0];
-  assert.equal(cb.onAudioEnd.call(receiver, argument), argument);
-  assert.equal(seen[0], receiver);
-  assert.equal(seen[1][0], argument);
+  assert.equal(cb.onAudioEnd.call(receiver, argument) === argument, true);
+  assert.equal(seen[0] === receiver, true);
+  assert.equal(seen[1][0] === argument, true);
   const error = Error('same');
   f.c.audio = f.c.createAudio({
     onDrain() {
@@ -144,14 +144,14 @@ test('reentrant Stop in original callback suppresses stale post-callback observa
   });
   const before = count;
   f.callbacks[0].onDrain();
-  assert.equal(count, before + 1);
+  assert.equal(count === before + 1, true);
   assert.equal(f.observer.snapshot().connected, false);
   const newer = () => {};
   f.input.releasePushToTalkKey = newer;
   f.observer.destroy();
-  assert.equal(f.input.releasePushToTalkKey, newer);
+  assert.equal(f.input.releasePushToTalkKey === newer, true);
 });
-test('OpenAI response.done does not drain output; absent lifecycle remains unknown', () => {
+test('[voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown', () => {
   const turns = {
     assistantAudioPlaying: false,
     responseActive: false,
@@ -181,9 +181,9 @@ test('OpenAI response.done does not drain output; absent lifecycle remains unkno
   turns.observeSpeech({ type: 'output_audio_buffer.cleared' });
   assert.equal(o.snapshot().outputBusy, false);
   o.destroy();
-  assert.equal(turns.observeSpeech, original);
+  assert.equal(turns.observeSpeech === original, true);
 });
-test('method receiver/args/result and throw are exact; abort restores wrappers', () => {
+test('[voice-panel-040] method receiver/args/result and throw are exact; abort restores wrappers', () => {
   const abort = new AbortController();
   const result = Promise.resolve();
   let seen;
@@ -211,15 +211,15 @@ test('method receiver/args/result and throw are exact; abort restores wrappers',
       throw Error('observe');
     },
   });
-  assert.equal(input.setMicrophoneEnabled(1, 2), result);
-  assert.equal(seen[0], input);
+  assert.equal(input.setMicrophoneEnabled(1, 2) === result, true);
+  assert.equal(seen[0] === input, true);
   assert.deepEqual(seen[1], [1, 2]);
   assert.throws(
     () => input.setMicrophoneEnabled('throw'),
     (e) => e === error,
   );
   abort.abort();
-  assert.equal(input.setMicrophoneEnabled, original);
+  assert.equal(input.setMicrophoneEnabled === original, true);
   assert.equal(o.snapshot().known, false);
 });
 
@@ -234,12 +234,12 @@ test('options-method callback receiver maps to original options, explicit receiv
   };
   f.c.audio = f.c.createAudio(options);
   assert.equal(f.callbacks[0].onDrain(), 17);
-  assert.equal(receiver, options);
+  assert.equal(receiver === options, true);
   const explicit = {};
   f.callbacks[0].onDrain.call(explicit);
-  assert.equal(receiver, explicit);
+  assert.equal(receiver === explicit, true);
 });
-test('actual native RealtimeTurns output lifecycle remains busy beyond generation', () => {
+test('[voice-panel-041] actual native RealtimeTurns output lifecycle remains busy beyond generation', () => {
   const turns = new RealtimeTurns({});
   const observer = observeNativeActivity({
     adapter: { controller: { _turns: turns, _input: {} } },
@@ -302,7 +302,7 @@ test('verified clean native mount can arm initial idle, eventless response inval
   idle.destroy();
   observer.destroy();
 });
-test('attaching to already active native transport never assumes empty playback', () => {
+test('[voice-panel-042] attaching to already active native transport never assumes empty playback', () => {
   const turns = new RealtimeTurns({});
   for (const controller of [
     { status: 'listening', dc: {}, _turns: turns, _input: {} },
@@ -326,7 +326,7 @@ test('attaching to already active native transport never assumes empty playback'
   observer.destroy();
 });
 
-test('Gemini queue-only work blocks idle, queue drain rearms, expiry rereads delayed queue', () => {
+test('[voice-panel-043] Gemini queue-only work blocks idle, queue drain rearms, expiry rereads delayed queue', () => {
   const f = gemini();
   f.start();
   f.c.controlQueue = [];
@@ -370,7 +370,7 @@ test('Gemini queue-only work blocks idle, queue drain rearms, expiry rereads del
   f.observer.destroy();
 });
 
-test('Gemini presentation-only pending does not block idle; retired/deferred work still does', () => {
+test('[voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still does', () => {
   const f = gemini();
   f.start();
   f.c.userTurnPending = true;
@@ -449,7 +449,7 @@ test('native typed input observation preserves receiver/result, refuses failed s
     handleMessage() {},
     createAudio() {},
     sendTextCommand(text) {
-      assert.equal(this, controller);
+      assert.equal(this === controller, true);
       if (text === 'throw') throw new Error('rejected');
       return text === 'reject' ? false : undefined;
     },
@@ -461,13 +461,13 @@ test('native typed input observation preserves receiver/result, refuses failed s
     onInput: () => inputs++,
   });
   const old = controller.sendTextCommand;
-  assert.equal(controller.sendTextCommand('typed request'), undefined);
+  assert.equal(controller.sendTextCommand('typed request') === undefined, true);
   controller.sendTextCommand('reject');
   controller.sendTextCommand('');
   assert.throws(() => controller.sendTextCommand('throw'), /rejected/);
   assert.equal(inputs, 1);
   observer.destroy();
-  assert.equal(controller.sendTextCommand, original);
+  assert.equal(controller.sendTextCommand === original, true);
   old.call(controller, 'late');
   assert.equal(inputs, 1);
 });
@@ -530,7 +530,7 @@ test('explicit silent OpenAI completion rearms expiry, including cancelled and f
   }
 });
 
-test('silent OpenAI replies cannot clear unresolved older audio or incomplete output metadata', () => {
+test('[voice-panel-046] silent OpenAI replies cannot clear unresolved older audio or incomplete output metadata', () => {
   const turns = new RealtimeTurns({});
   const observer = observeNativeActivity({
     adapter: {
@@ -575,7 +575,7 @@ test('silent OpenAI replies cannot clear unresolved older audio or incomplete ou
   observer.destroy();
 });
 
-test('overlapping silent replies resolve independently and audio output items remain unknown until playback', () => {
+test('[voice-panel-045] overlapping silent replies resolve independently and audio output items remain unknown until playback', () => {
   const turns = new RealtimeTurns({});
   const observer = observeNativeActivity({
     adapter: {
@@ -596,7 +596,7 @@ test('overlapping silent replies resolve independently and audio output items re
         ],
       },
     });
-    assert.equal(observer.snapshot().known, id === 'b');
+    assert.equal(observer.snapshot().known === (id === 'b'), true);
   }
   turns.observeSpeech({ type: 'response.created', response: { id: 'audio' } });
   turns.observeSpeech({
@@ -611,7 +611,7 @@ test('overlapping silent replies resolve independently and audio output items re
   observer.destroy();
 });
 
-test('silent completion cannot establish output knowledge when observer attached mid-session', () => {
+test('[voice-panel-041] silent completion cannot establish output knowledge when observer attached mid-session', () => {
   const turns = new RealtimeTurns({});
   const observer = observeNativeActivity({
     adapter: {
@@ -628,7 +628,7 @@ test('silent completion cannot establish output knowledge when observer attached
   observer.destroy();
 });
 
-test('Gemini restores each retired audio immediately across repeated same-mount restarts', () => {
+test('[voice-panel-047] Gemini restores each retired audio immediately across repeated same-mount restarts', () => {
   const originals = new Map();
   const controller = {
     input: {},
@@ -645,7 +645,7 @@ test('Gemini restores each retired audio immediately across repeated same-mount 
   });
   const assertRestored = (audio) => {
     for (const key of ['play', 'clearPlayback', 'close'])
-      assert.equal(audio[key], originals.get(audio)[key]);
+      assert.equal(audio[key] === originals.get(audio)[key], true);
   };
   for (let i = 0; i < 5; i++) {
     observer.handle({ type: 'state', state: 'connecting' });
@@ -666,8 +666,8 @@ test('Gemini restores each retired audio immediately across repeated same-mount 
   const replacement = () => {};
   current.play = replacement;
   observer.handle({ type: 'state', state: 'error' });
-  assert.equal(current.play, replacement);
-  assert.equal(current.close, originals.get(current).close);
+  assert.equal(current.play === replacement, true);
+  assert.equal(current.close === originals.get(current).close, true);
   observer.destroy();
 });
 
@@ -745,8 +745,8 @@ test('actual OpenAI failed-response error/listening recovery preserves only prov
       });
       assert.deepEqual(states.slice(-2), ['error', 'listening']);
       assert.equal(controller.dc.readyState, 'open');
-      assert.equal(observer.snapshot().known, known);
-      assert.equal(idle.snapshot().eligible, known);
+      assert.equal(observer.snapshot().known === known, true);
+      assert.equal(idle.snapshot().eligible === known, true);
       if (known) {
         timer();
         assert.equal(expired, 1);

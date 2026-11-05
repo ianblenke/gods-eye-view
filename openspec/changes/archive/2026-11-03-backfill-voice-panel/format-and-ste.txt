@@ -1,0 +1,15 @@
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && node ../node_modules/prettier/bin/prettier.cjs --write src/voice/panel/*.test.mjs
+Result: All seven test files stay unchanged.
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && node scripts/format.mjs --check
+First attempt: spawnSync git EPERM. The command stops before its verdict.
+Second attempt with process permission: Checked 1673 source files.
+Exit status: 0.
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && node scripts/spec/gates.mjs lint 2>&1 | grep -E "^ERROR"
+Output: none.
+ERROR lines: 0.
+The grep exit status is 1 because no line matches.
+
+Command: cd /home/ianblenke/docker/gev-work/voicepanel && node /home/ianblenke/docker/gev-tools/voicepanel/test-audit.mjs
+{"tests": 405, "tagged": 383, "duplicates": 0, "invalid": 0, "wordFailures": 0, "STEerrors": 0}

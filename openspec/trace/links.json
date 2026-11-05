@@ -8925,6 +8925,562 @@
   "ste-lint-045": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-045] gives a clear error for invalid registry JSON"
   ],
+  "voice-panel-001": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-001] The observer rejects an invalid action"
+  ],
+  "voice-panel-002": [
+    "src/voice/panel/actionObserver.test.mjs › [voice-panel-002] sync value/throw, receiver, arguments and opaque unsupported result stay exact",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-002] The action return kind stays exact in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-002] The action return kind stays exact in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-002] The action return kind stays exact in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-002] The action return kind stays exact in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-002] The action return kind stays exact in case 4"
+  ],
+  "voice-panel-003": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-003] The native promise keeps identity and each final outcome"
+  ],
+  "voice-panel-004": [
+    "src/voice/panel/actionObserver.test.mjs › [voice-panel-004] null/reused callIds have independent keys and settlement cannot retire a sibling"
+  ],
+  "voice-panel-005": [
+    "src/voice/panel/actionObserver.test.mjs › [voice-panel-005] actual pinned-main common session: private invocation stream is separate from public events",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-005] The progress callback keeps its order and custom receiver"
+  ],
+  "voice-panel-006": [
+    "src/voice/panel/actionObserver.test.mjs › [voice-panel-006] accessor/custom options are forwarded untouched without extra getter/currentness probes",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-006] An inherited signal cannot retire an action key",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-006] The accessor options keep their own getter and object identity",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-006] The custom options stay unchanged in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-006] The custom options stay unchanged in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-006] The custom options stay unchanged in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-006] The custom options stay unchanged in case 3"
+  ],
+  "voice-panel-007": [
+    "src/voice/panel/actionObserver.test.mjs › [voice-panel-007] actual common interruption aborts resources; injected real-lifecycle observation retires uncooperative A",
+    "src/voice/panel/actionObserver.test.mjs › [voice-panel-007] real caller abort retires ownership only; late A cannot release or report over B",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-007] The observer handles signal listener errors"
+  ],
+  "voice-panel-008": [
+    "src/voice/panel/actionObserver.test.mjs › [voice-panel-008] already-aborted caller and disposed mount still invoke original exactly once",
+    "src/voice/panel/actionObserver.test.mjs › [voice-panel-008] null-prototype option descriptors survive instrumentation; mount abort does not fabricate settlement",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-008] A disposed observer forwards the receiver and each argument unchanged",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-008] The observer retires each key with the default reason",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-008] The owner supplies a string retirement reason for each action"
+  ],
+  "voice-panel-009": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-009] An action without options keeps its argument length",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-009] The absent options keep their value in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-009] The absent options keep their value in case 1"
+  ],
+  "voice-panel-010": [
+    "src/voice/panel/actionObserver.test.mjs › [voice-panel-010] observer faults and private metadata faults cannot replace original callback errors",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-010] A hostile promise check cannot change the returned object"
+  ],
+  "voice-panel-011": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-011] The progress metadata uses data fields in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-011] The progress metadata uses data fields in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-011] The progress metadata uses data fields in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-011] The progress metadata uses data fields in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-011] The progress metadata uses data fields in case 4"
+  ],
+  "voice-panel-012": [
+    "src/voice/panel/host.test.mjs › [voice-panel-012] actual control default remains opt-out; panel markup has unique controlled panes and an outside alert"
+  ],
+  "voice-panel-013": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-013] A closed view hides both panes in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-013] A closed view hides both panes in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-013] The settings button toggles a closed settings view and replaces Preview",
+    "src/voice/panel/host.test.mjs › [voice-panel-013] actual binder/card has launcher toggle, idempotent tabs, focus and disabled Preview",
+    "src/voice/panel/manualPanel.test.mjs › [voice-panel-013] Settings launcher toggles while tab and programmatic selection remain idempotent"
+  ],
+  "voice-panel-014": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-014] Escape closes an open panel and keeps a closed panel unchanged",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-014] The tab key selects its target in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-014] The tab key selects its target in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-014] The tab key selects its target in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-014] The tab key selects its target in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-014] The tab key selects its target in case 4"
+  ],
+  "voice-panel-015": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-015] A view change transfers focus from the old pane in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-015] A view change transfers focus from the old pane in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-015] A visible sync and a close keep unrelated focus unchanged",
+    "src/voice/panel/manualPanel.test.mjs › [voice-panel-015] manual switching transfers hidden-panel focus without stealing unrelated focus"
+  ],
+  "voice-panel-016": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-016] The preview reader accepts only true in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-016] The preview reader accepts only true in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-016] The preview reader accepts only true in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-016] The preview reader accepts only true in case 3",
+    "src/voice/panel/manualPanel.test.mjs › [voice-panel-016] manual Preview selection never enables a disabled preference and uses injected copy"
+  ],
+  "voice-panel-017": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-017] The owner destroys an open panel in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-017] The owner destroys an open panel in case 1",
+    "src/voice/panel/manualPanel.test.mjs › [voice-panel-017] disposal hides owned presentation and removes listeners without destroying the card"
+  ],
+  "voice-panel-018": [
+    "src/voice/panel/manualPanel.test.mjs › [voice-panel-018] pointer grace expires, resets on reentry, ignores touch and clears on disposal"
+  ],
+  "voice-panel-019": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-019] A listener error cancels the partial panel lifetime",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-019] A valid disabled message cannot replace an invalid empty message",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-019] A valid reader cannot replace an absent panel in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-019] A valid reader cannot replace an absent panel in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-019] The panel rejects invalid input in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-019] The panel rejects invalid input in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-019] The panel rejects invalid input in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-019] The panel rejects invalid input in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-019] The panel rejects invalid input in case 4"
+  ],
+  "voice-panel-020": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] A hidden panel cannot focus an independently visible tab",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] A panel without tabs accepts a focus request",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] A visibility method cannot replace a target guard in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] A visibility method cannot replace a target guard in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] An absent card keeps the empty preview visible",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] An absent visibility method does not prevent focus",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The panel accepts absent optional controls",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The panel rejects a focus target in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The panel rejects a focus target in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The panel rejects a focus target in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The panel rejects a focus target in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The preview snapshot checks each visibility condition in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The preview snapshot checks each visibility condition in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The preview snapshot checks each visibility condition in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The preview snapshot checks each visibility condition in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The preview snapshot checks each visibility condition in case 4",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The preview snapshot checks each visibility condition in case 5",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The preview snapshot checks each visibility condition in case 6",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-020] The preview snapshot checks each visibility condition in case 7"
+  ],
+  "voice-panel-021": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent",
+    "src/voice/panel/preferences.test.mjs › [voice-panel-021] defaults and restore are passive; legacy None and stored custom restore"
+  ],
+  "voice-panel-022": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-022] The preference saves valid minutes in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-022] The preference saves valid minutes in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-022] The preference saves valid minutes in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-022] The preference saves valid minutes in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-022] The preset control applies its own value in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-022] The preset control applies its own value in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-022] The preset control applies its own value in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-022] The preset control applies its own value in case 3",
+    "src/voice/panel/preferences.test.mjs › [voice-panel-022] exact valid values, presets, None and serialized readback"
+  ],
+  "voice-panel-023": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The model rejects a nonboolean preview value in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The model rejects a nonboolean preview value in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The model rejects a nonboolean preview value in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 10",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 11",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 12",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 4",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 5",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 6",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 7",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 8",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-023] The preference rejects an invalid value in case 9"
+  ],
+  "voice-panel-024": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-024] An incomplete store cannot receive a write or a new read",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-024] The incomplete storage keeps live values in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-024] The incomplete storage keeps live values in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-024] The incomplete storage keeps live values in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-024] The incomplete storage keeps live values in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-024] The storage failure keeps live values across controls in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-024] The storage failure keeps live values across controls in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-024] The storage failure keeps live values across controls in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-024] The storage failure keeps live values across controls in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-024] The storage failure keeps live values across controls in case 4"
+  ],
+  "voice-panel-025": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-025] A recovered store saves unchanged values and removes both warnings",
+    "src/voice/panel/preferences.test.mjs › [voice-panel-025] same-value retry really writes and clears warnings after storage recovers"
+  ],
+  "voice-panel-026": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-026] The initial None value keeps a positive custom editor value",
+    "src/voice/panel/preferences.test.mjs › [voice-panel-026] Custom commits displayed valid value immediately, even when equal to preset"
+  ],
+  "voice-panel-027": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-027] A custom select rejects zero without a preference write",
+    "src/voice/panel/preferences.test.mjs › [voice-panel-027] invalid control edits restore valid state without writes; None remains distinct"
+  ],
+  "voice-panel-028": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-028] Each listener receives a separate complete snapshot",
+    "src/voice/panel/preferences.test.mjs › [voice-panel-028] model snapshots cannot mutate state; unsubscribe and binder disposal release ownership"
+  ],
+  "voice-panel-029": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] A custom preference source can call its listener after disposal",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] The binder removes its control listener in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] The binder removes its control listener in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] The binder removes its control listener in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] The custom value precedes a synchronous source notice",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] The partial controls use a valid custom value in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] The partial controls use a valid custom value in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] The partial controls use a valid custom value in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] The preview checkbox applies both boolean values through its listener",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] The preview control restores a rejected value and ignores a retired callback",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] The select works without a custom editor",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-029] The zero branch uses the current minute value from a custom source"
+  ],
+  "voice-panel-030": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 4",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 5",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 6",
+    "src/voice/panel/inactivity.test.mjs › [voice-panel-030] one clock; quiet arms default five minutes; busy blocks and quiescence rearms"
+  ],
+  "voice-panel-031": [
+    "src/voice/panel/inactivity.test.mjs › [voice-panel-031] actual activity resets but silent unchanged snapshots do not"
+  ],
+  "voice-panel-032": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-032 voice-panel-065] The timer accepts both minute bounds",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-032] The initial timer uses the supplied minutes in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-032] The initial timer uses the supplied minutes in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-032] The initial timer uses the supplied minutes in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-032] The timer rejects invalid initial minutes in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-032] The timer rejects invalid initial minutes in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-032] The timer rejects invalid initial minutes in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-032] The timer rejects invalid initial minutes in case 3"
+  ],
+  "voice-panel-033": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 4",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 5",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 6",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-033] A quiet timer can expire without a callback",
+    "src/voice/panel/inactivity.test.mjs › [voice-panel-033] expiry rereads held, unknown and pending counts despite missing update"
+  ],
+  "voice-panel-034": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-034] An activity reader can destroy the timer before it arms again",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-034] An old timer cannot expire after a quiet successor starts",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-034] The timer cancels its task and ignores all retired calls",
+    "src/voice/panel/inactivity.test.mjs › [voice-panel-034] pending siblings and held-before-connect forbid timer; stale callback cannot expire"
+  ],
+  "voice-panel-035": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-035] A custom observer ignores state changes and sends no notice",
+    "src/voice/panel/host.test.mjs › [voice-panel-035] native factory with custom controller remains uninstrumented despite panel opt-in",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-035] custom host never inspected, including hostile controller getter"
+  ],
+  "voice-panel-036": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-036] The Gemini activity field reports local input",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-036] The OpenAI speech edges change the input state",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-036] The audio start checks admission in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-036] The audio start checks admission in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-036] The audio start checks admission in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-036] The native input owner uses a distinct held flag in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-036] The native input owner uses a distinct held flag in case 1",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech"
+  ],
+  "voice-panel-037": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-037 voice-panel-040] The audio method updates output in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-037 voice-panel-040] The audio method updates output in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-037 voice-panel-040] The audio method updates output in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-037] A drain event cannot admit input capture",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-037] A null audio owner reports no output",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-037] The output state checks ownership of the audio object",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-037] queue-to-drain, clear and close use current instance, without an acoustic claim"
+  ],
+  "voice-panel-038": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-038] A closed audio callback cannot restore input activity",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-038] A detached audio wrapper cannot notify the current mount",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-038] A retired factory callback cannot act through a null audio result",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-038] An audio callback cannot act through a different controller owner",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-038] An old callback stays retired when the factory reuses its audio object",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-038] same-mount restart old callbacks cannot clear new admitted capture/output"
+  ],
+  "voice-panel-039": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-039] The audio callback keeps its own values in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-039] The audio callback keeps its own values in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-039] The audio callback keeps its own values in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-039] The audio callback keeps its own values in case 3",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-039] native callbacks original first with receiver, arguments, return and thrown identity; observation failure isolated"
+  ],
+  "voice-panel-040": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-037 voice-panel-040] The audio method updates output in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-037 voice-panel-040] The audio method updates output in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-037 voice-panel-040] The audio method updates output in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-040 voice-panel-047] The input method keeps its call in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-040 voice-panel-047] The input method keeps its call in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-040 voice-panel-047] The input method keeps its call in case 2",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-040] method receiver/args/result and throw are exact; abort restores wrappers"
+  ],
+  "voice-panel-041": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-041] The audio evidence blocks a silent result in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-041] The audio evidence blocks a silent result in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-041] The audio evidence blocks a silent result in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-041] The audio evidence blocks a silent result in case 3",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-041] actual native RealtimeTurns output lifecycle remains busy beyond generation",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-041] silent completion cannot establish output knowledge when observer attached mid-session"
+  ],
+  "voice-panel-042": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-042] A data channel prevents clean initial output knowledge",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-042] The initial native status controls output knowledge in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-042] The initial native status controls output knowledge in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-042] The initial native status controls output knowledge in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-042] The initial native status controls output knowledge in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-042] The initial output rejects a busy field in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-042] The initial output rejects a busy field in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-042] The initial output rejects a busy field in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-042] The initial output rejects a busy field in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-042] The initial output rejects a busy field in case 4",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-042] The initial output rejects a busy field in case 5",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-042] attaching to already active native transport never assumes empty playback"
+  ],
+  "voice-panel-043": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The Gemini user turn flag does not report generation work",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The OpenAI input state ignores the Gemini input field",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The OpenAI work state ignores a Gemini field in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The OpenAI work state ignores a Gemini field in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The OpenAI work state ignores a Gemini field in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The OpenAI work state ignores a Gemini field in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The OpenAI work state ignores a Gemini field in case 4",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The OpenAI work state ignores a Gemini field in case 5",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The native work field decides activity in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The native work field decides activity in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The native work field decides activity in case 10",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The native work field decides activity in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The native work field decides activity in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The native work field decides activity in case 4",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The native work field decides activity in case 5",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The native work field decides activity in case 6",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The native work field decides activity in case 7",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The native work field decides activity in case 8",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-043] The native work field decides activity in case 9",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still does",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-043] Gemini queue-only work blocks idle, queue drain rearms, expiry rereads delayed queue"
+  ],
+  "voice-panel-044": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-044] The text wrapper checks its input in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-044] The text wrapper checks its input in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-044] The text wrapper checks its input in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-044] The text wrapper checks its input in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-044] The text wrapper checks its input in case 4",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-044] The text wrapper isolates a failed input observer"
+  ],
+  "voice-panel-045": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 4",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The response checks every output part in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The response checks every output part in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The response checks every output part in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The response checks every output part in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The response checks every output part in case 4",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The response checks every output part in case 5",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The response checks every output part in case 6",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The response checks every output part in case 7",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The silent output accepts one part type in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The silent output accepts one part type in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The silent output accepts one part type in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The silent response checks its status in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The silent response checks its status in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The silent response checks its status in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The silent response checks its status in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045] The silent response checks its status in case 4",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-045] overlapping silent replies resolve independently and audio output items remain unknown until playback"
+  ],
+  "voice-panel-046": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-046] A closed transport error retires unresolved output evidence",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-046] A response without an id cannot establish silent output",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-046] An event without completion cannot settle an unresolved response",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-046] Repeated start phases cannot erase an unresolved response",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-046] The response limit keeps unknown output until playback clears it",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-046] The response table accepts exactly 64 silent replies",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-046] silent OpenAI replies cannot clear unresolved older audio or incomplete output metadata"
+  ],
+  "voice-panel-047": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-040 voice-panel-047] The input method keeps its call in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-040 voice-panel-047] The input method keeps its call in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-040 voice-panel-047] The input method keeps its call in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-047] A boundary inside the factory prevents a stale audio wrapper",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-047] A retired factory does not wrap its new audio result",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-047] A retired observer does not inspect native state events",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-047] A session boundary retires current audio in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-047] A session boundary retires current audio in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-047] An aborted observer restores native methods at construction",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-047] The observer keeps a newer audio factory",
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-047] Gemini restores each retired audio immediately across repeated same-mount restarts"
+  ],
+  "voice-panel-048": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-048] The live transport keeps response evidence through recovery in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-048] The live transport keeps response evidence through recovery in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-048] The live transport keeps response evidence through recovery in case 2"
+  ],
+  "voice-panel-049": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-049] The host retires a previous mount before its replacement",
+    "src/voice/panel/host.test.mjs › [voice-panel-049] actual facade remount keeps failed-save live preferences/view and manual close, with no restore writes or focus theft"
+  ],
+  "voice-panel-050": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-050] A stop ticket cannot close a disposed session panel",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-050] The stop ticket checks the current state in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-050] The stop ticket checks the current state in case 1",
+    "src/voice/panel/host.test.mjs › [voice-panel-050] reentrant manual choice/new start during Stop cannot close the successor choice"
+  ],
+  "voice-panel-051": [
+    "src/voice/panel/host.test.mjs › [voice-panel-051] integrated inactivity rechecks held PTT at expiry, then normal stop closes on later quiet expiry",
+    "src/voice/panel/host.test.mjs › [voice-panel-051] transient native OpenAI response activity does not announce connection unavailability"
+  ],
+  "voice-panel-052": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-052] The host rejects an incomplete mount in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-052] The host rejects an incomplete mount in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-052] The host rejects an incomplete mount in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-052] The host rejects an incomplete mount in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-052] The host rejects an incomplete mount in case 4"
+  ],
+  "voice-panel-053": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-053] The operation cannot coerce a custom numeric object",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-053] The operation keeps its epoch after its own preference write",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-053] The operation rejects invalid minutes in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-053] The operation rejects invalid minutes in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-053] The operation rejects invalid minutes in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-053] The operation rejects invalid minutes in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-053] The session boundary cancels an operation in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-053] The session boundary cancels an operation in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-053] The session boundary cancels an operation in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-053] The session boundary cancels an operation in case 3"
+  ],
+  "voice-panel-054": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054 voice-panel-058] A disposed session cannot rearm through native text",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] A normal state event keeps automatic preview enabled",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] A reason on another event cannot rearm automatic preview",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] A state field on another event cannot disable automatic preview",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] The host checks session activity in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] The host checks session activity in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] The host rejects automatic preview input in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] The host rejects automatic preview input in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] The host rejects automatic preview input in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] The input reason controls automatic preview in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] The input reason controls automatic preview in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] The input reason controls automatic preview in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] The input reason controls automatic preview in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054] The native input edge rearms automatic preview once",
+    "src/voice/panel/host.test.mjs › [voice-panel-054 voice-panel-055 voice-panel-057] active provider output reveals Preview after done; manual choice wins until genuine input, replays do not reset idle"
+  ],
+  "voice-panel-055": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-055] A new final text or a different id reaches the card",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-055] The host compares reply identifiers in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-055] The host compares reply identifiers in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-055] The host compares reply identifiers in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-055] The host selects the response id before the item id",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-055] The same text with a new id reaches the card",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-055] The session state resets the final reply in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-055] The session state resets the final reply in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-055] The session state resets the final reply in case 2",
+    "src/voice/panel/host.test.mjs › [voice-panel-054 voice-panel-055 voice-panel-057] active provider output reveals Preview after done; manual choice wins until genuine input, replays do not reset idle"
+  ],
+  "voice-panel-056": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-056] A disabled preference alone prevents automatic preview",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-056] The default Cockpit reader suppresses automatic preview",
+    "src/voice/panel/host.test.mjs › [voice-panel-056] Preview off and actual Cockpit state suppress automatic presentation without enabling preference"
+  ],
+  "voice-panel-057": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-057] The advisory interruption keeps the card and manual choice",
+    "src/voice/panel/host.test.mjs › [voice-panel-054 voice-panel-055 voice-panel-057] active provider output reveals Preview after done; manual choice wins until genuine input, replays do not reset idle"
+  ],
+  "voice-panel-058": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-054 voice-panel-058] A disposed session cannot rearm through native text",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-058] A disposed session cannot rearm or edit presentation",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-058] A reentrant mount cannot own a disposed host",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-058] A replaced destroy method cannot keep the old mount current",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-058] A retired mount cannot change the current panel",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-058] A teardown callback cannot use the retired operation",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-058] The host destroys a mount with an aborted session signal",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-058] The host ignores a preference notice after ownership ends",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-058] The inactivity callback cannot stop a disposed session"
+  ],
+  "voice-panel-059": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-059] The DOM fixture models attributes and child order",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-059] The DOM fixture models listener lifetime and event data",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-059] The DOM fixture updates every class, child and listener"
+  ],
+  "voice-panel-060": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-060] The clock checks all due tasks and a cancelled sibling",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-060] The clock runs due tasks once and cancels named tasks"
+  ],
+  "voice-panel-061": [
+    "src/voice/panel/host.test.mjs › [voice-panel-061] actual runner applies exact timeout directly and reports live-unsaved truth, invalid/cancelled attempts stay inert",
+    "src/voice/panel/host.test.mjs › [voice-panel-061] named voice settings exits Cockpit directly; Preview stays disabled and visual presets stay separate from Scenes"
+  ],
+  "voice-panel-062": [
+    "src/voice/panel/host.test.mjs › [voice-panel-062] unavailable host refuses direct voice operations before Cockpit or preference effects"
+  ],
+  "voice-panel-063": [
+    "src/voice/panel/host.test.mjs › [voice-panel-063] canonical exit reveals requested voice UI; newer manual choice or Stop defeats pending reveal"
+  ],
+  "voice-panel-064": [
+    "src/voice/panel/host.test.mjs › [voice-panel-064] Provider Settings uses its ready dialog handlers and refuses unavailable or cancelled requests"
+  ],
+  "voice-panel-065": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-032 voice-panel-065] The timer accepts both minute bounds",
+    "src/voice/panel/host.test.mjs › [voice-panel-065 voice-panel-066] None cancels integrated app timer and unknown custom hosts never guess expiry"
+  ],
+  "voice-panel-066": [
+    "src/voice/panel/host.test.mjs › [voice-panel-065 voice-panel-066] None cancels integrated app timer and unknown custom hosts never guess expiry"
+  ],
+  "voice-panel-067": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-067] The action return kind stays exact in case 5",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-067] The action return kind stays exact in case 6"
+  ],
+  "voice-panel-068": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-068] The host reports inactivity support in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-068] The host reports inactivity support in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-068] The host reports inactivity support in case 2"
+  ],
+  "voice-panel-069": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-069] An inactive state event reaches the card",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-069] The advisory flag on another event does not hide it from the card"
+  ],
+  "voice-panel-070": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 4",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-070] A state boundary retires the method callback",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-070] An untracked event still sends an activity notice in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-070] An untracked event still sends an activity notice in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-070] An untracked event still sends an activity notice in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-070] The Gemini callback reports input and playback changes",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-070] The OpenAI callback reports each activity value across changes"
+  ],
+  "voice-panel-071": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-071] The close control ends the current presentation in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-071] The close control ends the current presentation in case 1"
+  ],
+  "voice-panel-072": [
+    "src/voice/panel/backfill.test.mjs › [voice-panel-072] The model rejects an invalid listener in case 0",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-072] The model rejects an invalid listener in case 1",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-072] The model rejects an invalid listener in case 2",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-072] The model rejects an invalid listener in case 3",
+    "src/voice/panel/backfill.test.mjs › [voice-panel-072] The model rejects an invalid listener in case 4"
+  ],
   "wind-001": [
     "src/layers/wind/fields.test.mjs › [wind-001] scalar read rejects absent and invalid data",
     "src/layers/wind/fields.test.mjs › [wind-001] scalar samples preserve normalized units, geometry, poles and the date-line seam"

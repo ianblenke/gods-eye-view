@@ -1,0 +1,412 @@
+{
+  "commit": "89fe216472d408b6ac9a0d9b53f65ef20434d917",
+  "coverage": {
+    "src/voice/panel/actionObserver.js": {
+      "loaded": true,
+      "lines": 10,
+      "branches": 11,
+      "functions": 0,
+      "totals": {
+        "lines": 178,
+        "branches": 82,
+        "functions": 14
+      },
+      "sha": "dc32364395acc7af3c8cb4deb11d6aab7ca49d750a37ae0c40eef7ec77adce2d",
+      "untrue": false,
+      "origin": "upstream-sync-9",
+      "since": "2026-10-27"
+    },
+    "src/voice/panel/host.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 15,
+      "functions": 0,
+      "totals": {
+        "lines": 304,
+        "branches": 105,
+        "functions": 31
+      },
+      "sha": "6d22c7dda5ef85d1d51862949fb72139f9e67949c2d4c8f62b9369f3fbb77533",
+      "untrue": false,
+      "origin": "upstream-sync-9",
+      "since": "2026-10-27"
+    },
+    "src/voice/panel/inactivity.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 4,
+      "functions": 0,
+      "totals": {
+        "lines": 77,
+        "branches": 37,
+        "functions": 9
+      },
+      "sha": "de1178226bb97a80cc643e9decebf1e936fdbc672e429a783de4a8e9cd7ac7a6",
+      "untrue": false,
+      "origin": "upstream-sync-9",
+      "since": "2026-10-27"
+    },
+    "src/voice/panel/manualPanel.js": {
+      "loaded": true,
+      "lines": 5,
+      "branches": 8,
+      "functions": 1,
+      "totals": {
+        "lines": 182,
+        "branches": 100,
+        "functions": 21
+      },
+      "sha": "8deb85f76af5a8464611c1a63af5736d2388eeeffe4b21b20177e73cbb28a63c",
+      "untrue": false,
+      "origin": "upstream-sync-9",
+      "since": "2026-10-27"
+    },
+    "src/voice/panel/nativeActivity.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 6,
+      "functions": 0,
+      "totals": {
+        "lines": 292,
+        "branches": 147,
+        "functions": 20
+      },
+      "sha": "6f358fcc2b15d2b2c2994344b40f6ce0698e658116d5d1e030f79028921353a4",
+      "untrue": false,
+      "origin": "upstream-sync-9",
+      "since": "2026-10-27"
+    },
+    "src/voice/panel/preferences.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 6,
+      "functions": 0,
+      "totals": {
+        "lines": 194,
+        "branches": 84,
+        "functions": 18
+      },
+      "sha": "b394b7241607aca411f6d3a7ec4f0066043b2038d77052ba85590c47f19f0c5b",
+      "untrue": false,
+      "origin": "upstream-sync-9",
+      "since": "2026-10-27"
+    },
+    "src/voice/panel/testDom.mjs": {
+      "loaded": true,
+      "lines": 9,
+      "branches": 3,
+      "functions": 7,
+      "totals": {
+        "lines": 204,
+        "branches": 84,
+        "functions": 50
+      },
+      "sha": "1dcb08a3d2075c38fae9c2daf4c1e26bc861f9e3751a2f01fd5dc15183a761f0",
+      "untrue": false,
+      "origin": "upstream-sync-9",
+      "since": "2026-10-27"
+    }
+  },
+  "old": {
+    "src/voice/panel/actionObserver.test.mjs": [
+      [
+        "'",
+        "sync value/throw, receiver, arguments and opaque unsupported result stay exact"
+      ],
+      [
+        "'",
+        "native Promise identity, fulfillment object and rejection object are preserved"
+      ],
+      [
+        "'",
+        "null/reused callIds have independent keys and settlement cannot retire a sibling"
+      ],
+      [
+        "'",
+        "progress preserves public-before-original-before-private order, receiver and option references"
+      ],
+      [
+        "'",
+        "observer faults and private metadata faults cannot replace original callback errors"
+      ],
+      [
+        "'",
+        "accessor/custom options are forwarded untouched without extra getter/currentness probes"
+      ],
+      [
+        "'",
+        "real caller abort retires ownership only; late A cannot release or report over B"
+      ],
+      [
+        "'",
+        "already-aborted caller and disposed mount still invoke original exactly once"
+      ],
+      [
+        "'",
+        "reentrant start retirement retains only fresh ownership and never skips execution"
+      ],
+      [
+        "'",
+        "actual pinned-main common session: private invocation stream is separate from public events"
+      ],
+      [
+        "'",
+        "actual common interruption aborts resources; injected real-lifecycle observation retires uncooperative A"
+      ],
+      [
+        "'",
+        "null-prototype option descriptors survive instrumentation; mount abort does not fabricate settlement"
+      ],
+      [
+        "'",
+        "omitted and explicit undefined options keep original arity and values"
+      ]
+    ],
+    "src/voice/panel/host.test.mjs": [
+      [
+        "'",
+        "actual control default remains opt-out; panel markup has unique controlled panes and an outside alert"
+      ],
+      [
+        "'",
+        "actual binder/card has launcher toggle, idempotent tabs, focus and disabled Preview"
+      ],
+      [
+        "'",
+        "actual facade remount keeps failed-save live preferences/view and manual close, with no restore writes or focus theft"
+      ],
+      [
+        "'",
+        "explicit successful mic Stop closes; failed Stop idle and startup error do not"
+      ],
+      [
+        "'",
+        "reentrant manual choice/new start during Stop cannot close the successor choice"
+      ],
+      [
+        "'",
+        "integrated inactivity rechecks held PTT at expiry, then normal stop closes on later quiet expiry"
+      ],
+      [
+        "'",
+        "None cancels integrated app timer and unknown custom hosts never guess expiry"
+      ],
+      [
+        "'",
+        "transient native OpenAI response activity does not announce connection unavailability"
+      ],
+      [
+        "'",
+        "native factory with custom controller remains uninstrumented despite panel opt-in"
+      ],
+      [
+        "'",
+        "native connecting phases retain output observation; idle starts before first speech and waits for drain"
+      ],
+      [
+        "'",
+        "actual runner applies exact timeout directly and reports live-unsaved truth, invalid/cancelled attempts stay inert"
+      ],
+      [
+        "'",
+        "named voice settings exits Cockpit directly; Preview stays disabled and visual presets stay separate from Scenes"
+      ],
+      [
+        "'",
+        "canonical exit reveals requested voice UI; newer manual choice or Stop defeats pending reveal"
+      ],
+      [
+        "'",
+        "unavailable host refuses direct voice operations before Cockpit or preference effects"
+      ],
+      [
+        "'",
+        "voice timeout change preserves a pending voice reveal"
+      ],
+      [
+        "'",
+        "active provider output reveals Preview after done; manual choice wins until genuine input, replays do not reset idle"
+      ],
+      [
+        "'",
+        "Preview off and actual Cockpit state suppress automatic presentation without enabling preference"
+      ],
+      [
+        "'",
+        "Provider Settings uses its ready dialog handlers and refuses unavailable or cancelled requests"
+      ]
+    ],
+    "src/voice/panel/inactivity.test.mjs": [
+      [
+        "'",
+        "one clock; quiet arms default five minutes; busy blocks and quiescence rearms"
+      ],
+      [
+        "'",
+        "actual activity resets but silent unchanged snapshots do not"
+      ],
+      [
+        "'",
+        "None cancels; invalid values cannot replace setting; explicit retry rearms"
+      ],
+      [
+        "'",
+        "expiry rereads held, unknown and pending counts despite missing update"
+      ],
+      [
+        "'",
+        "pending siblings and held-before-connect forbid timer; stale callback cannot expire"
+      ]
+    ],
+    "src/voice/panel/manualPanel.test.mjs": [
+      [
+        "'",
+        "Settings launcher toggles while tab and programmatic selection remain idempotent"
+      ],
+      [
+        "'",
+        "tab keyboard navigation and Escape preserve focus and accessibility state"
+      ],
+      [
+        "'",
+        "manual switching transfers hidden-panel focus without stealing unrelated focus"
+      ],
+      [
+        "'",
+        "manual Preview selection never enables a disabled preference and uses injected copy"
+      ],
+      [
+        "'",
+        "disposal hides owned presentation and removes listeners without destroying the card"
+      ],
+      [
+        "'",
+        "pointer grace expires, resets on reentry, ignores touch and clears on disposal"
+      ]
+    ],
+    "src/voice/panel/nativeActivity.test.mjs": [
+      [
+        "'",
+        "custom host never inspected, including hostile controller getter"
+      ],
+      [
+        "'",
+        "PTT hold is direct before connect; silent automatic stream is not admitted speech"
+      ],
+      [
+        "'",
+        "queue-to-drain, clear and close use current instance, without an acoustic claim"
+      ],
+      [
+        "'",
+        "same-mount restart old callbacks cannot clear new admitted capture/output"
+      ],
+      [
+        "'",
+        "native callbacks original first with receiver, arguments, return and thrown identity; observation failure isolated"
+      ],
+      [
+        "'",
+        "reentrant Stop in original callback suppresses stale post-callback observation; teardown preserves newer replacement"
+      ],
+      [
+        "'",
+        "OpenAI response.done does not drain output; absent lifecycle remains unknown"
+      ],
+      [
+        "'",
+        "method receiver/args/result and throw are exact; abort restores wrappers"
+      ],
+      [
+        "'",
+        "options-method callback receiver maps to original options, explicit receiver is preserved"
+      ],
+      [
+        "'",
+        "actual native RealtimeTurns output lifecycle remains busy beyond generation"
+      ],
+      [
+        "'",
+        "verified clean native mount can arm initial idle, eventless response invalidates it"
+      ],
+      [
+        "'",
+        "attaching to already active native transport never assumes empty playback"
+      ],
+      [
+        "'",
+        "Gemini queue-only work blocks idle, queue drain rearms, expiry rereads delayed queue"
+      ],
+      [
+        "'",
+        "Gemini presentation-only pending does not block idle; retired/deferred work still does"
+      ],
+      [
+        "'",
+        "actual Gemini startup phases keep playback observation and permit quiet open-mic expiry"
+      ],
+      [
+        "'",
+        "native typed input observation preserves receiver/result, refuses failed submissions and retires old wrapper"
+      ],
+      [
+        "'",
+        "explicit silent OpenAI completion rearms expiry, including cancelled and failed responses"
+      ],
+      [
+        "'",
+        "silent OpenAI replies cannot clear unresolved older audio or incomplete output metadata"
+      ],
+      [
+        "'",
+        "overlapping silent replies resolve independently and audio output items remain unknown until playback"
+      ],
+      [
+        "'",
+        "silent completion cannot establish output knowledge when observer attached mid-session"
+      ],
+      [
+        "'",
+        "Gemini restores each retired audio immediately across repeated same-mount restarts"
+      ],
+      [
+        "'",
+        "actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge"
+      ]
+    ],
+    "src/voice/panel/preferences.test.mjs": [
+      [
+        "'",
+        "defaults and restore are passive; legacy None and stored custom restore"
+      ],
+      [
+        "'",
+        "exact valid values, presets, None and serialized readback"
+      ],
+      [
+        "'",
+        "fractional, malformed, coercible and out-of-range inputs never write or notify"
+      ],
+      [
+        "`",
+        "storage ${mode} preserves live value and exposes unsaved state across A \u2192 B"
+      ],
+      [
+        "'",
+        "same-value retry really writes and clears warnings after storage recovers"
+      ],
+      [
+        "'",
+        "Custom commits displayed valid value immediately, even when equal to preset"
+      ],
+      [
+        "'",
+        "invalid control edits restore valid state without writes; None remains distinct"
+      ],
+      [
+        "'",
+        "model snapshots cannot mutate state; unsubscribe and binder disposal release ownership"
+      ]
+    ]
+  }
+}

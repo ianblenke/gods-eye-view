@@ -40,7 +40,7 @@ function fixture() {
     tick: (n) => (time += n),
   };
 }
-test('one clock; quiet arms default five minutes; busy blocks and quiescence rearms', () => {
+test('[voice-panel-030] one clock; quiet arms default five minutes; busy blocks and quiescence rearms', () => {
   const f = fixture();
   assert.equal([...f.timers.values()][0].delay, 300000);
   assert.equal(f.idle.snapshot().deadline, 300100);
@@ -54,14 +54,13 @@ test('one clock; quiet arms default five minutes; busy blocks and quiescence rea
   f.fire();
   assert.equal(f.expired(), 1);
 });
-test('actual activity resets but silent unchanged snapshots do not', () => {
+test('[voice-panel-031] actual activity resets but silent unchanged snapshots do not', () => {
   const f = fixture();
-  const deadline = f.idle.snapshot().deadline;
   f.tick(1000);
   f.idle.update();
-  assert.equal(f.idle.snapshot().deadline, deadline);
+  assert.equal(f.idle.snapshot().deadline, 300100);
   f.idle.update({ activity: true });
-  assert.equal(f.idle.snapshot().deadline, deadline + 1000);
+  assert.equal(f.idle.snapshot().deadline, 301100);
 });
 test('None cancels; invalid values cannot replace setting; explicit retry rearms', () => {
   const f = fixture();
@@ -72,7 +71,7 @@ test('None cancels; invalid values cannot replace setting; explicit retry rearms
   assert.equal(f.idle.setMinutes(1), true);
   assert.equal([...f.timers.values()][0].delay, 60000);
 });
-test('expiry rereads held, unknown and pending counts despite missing update', () => {
+test('[voice-panel-033] expiry rereads held, unknown and pending counts despite missing update', () => {
   for (const kind of ['held', 'unknown', 'pending']) {
     const f = fixture();
     if (kind === 'held') f.activity.held = true;
@@ -82,7 +81,7 @@ test('expiry rereads held, unknown and pending counts despite missing update', (
     assert.equal(f.expired(), 0);
   }
 });
-test('pending siblings and held-before-connect forbid timer; stale callback cannot expire', () => {
+test('[voice-panel-034] pending siblings and held-before-connect forbid timer; stale callback cannot expire', () => {
   const f = fixture();
   const stale = [...f.timers.values()][0].fn;
   f.setPending(2);
