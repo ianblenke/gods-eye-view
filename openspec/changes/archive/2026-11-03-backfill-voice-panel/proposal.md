@@ -46,5 +46,13 @@ The measurement command checks each entry against the baseline.
 | src/voice/panel/testDom.mjs       |     9 |        3 |         7 |
 
 ```bash
-cd /home/ianblenke/docker/gev-work/voicepanel && python3 /home/ianblenke/docker/gev-tools/voicepanel/measure.py
+cd /home/ianblenke/docker/gev-work/voicepanel && python3 /home/ianblenke/docker/gev-tools/voicepanel/review-recount.py
 ```
+
+## The review corrections
+
+Source commit: `74ec10e054a88935c7fcfce96300ea660f7c7747`.
+The correction report names the spec and test changes.
+The host checks use the current worktree.
+The baseline table records the earlier ledger state.
+The change adds no production behavior.

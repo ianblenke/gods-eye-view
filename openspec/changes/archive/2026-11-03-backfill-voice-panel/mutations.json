@@ -1518,9 +1518,10 @@
     "new": " (open),",
     "test": [
       "src/voice/panel/backfill.test.mjs",
-      "src/voice/panel/manualPanel.test.mjs"
+      "src/voice/panel/manualPanel.test.mjs",
+      "/home/ianblenke/docker/gev-tools/voicepanel/known-limits.test.mjs"
     ],
-    "pattern": "voice-panel-0(?:1[3-9]|20)|Settings\\ launcher\\ toggles\\ while\\ tab\\ and\\ programmatic\\ selection\\ remain\\ idempotent|tab\\ keyboard\\ navigation\\ and\\ Escape\\ preserve\\ focus\\ and\\ accessibility\\ state|manual\\ switching\\ transfers\\ hidden\\-panel\\ focus\\ without\\ stealing\\ unrelated\\ focus|manual\\ Preview\\ selection\\ never\\ enables\\ a\\ disabled\\ preference\\ and\\ uses\\ injected\\ copy|disposal\\ hides\\ owned\\ presentation\\ and\\ removes\\ listeners\\ without\\ destroying\\ the\\ card|pointer\\ grace\\ expires,\\ resets\\ on\\ reentry,\\ ignores\\ touch\\ and\\ clears\\ on\\ disposal"
+    "pattern": "voice-panel-0(?:1[3-9]|20)|Settings\\ launcher\\ toggles\\ while\\ tab\\ and\\ programmatic\\ selection\\ remain\\ idempotent|tab\\ keyboard\\ navigation\\ and\\ Escape\\ preserve\\ focus\\ and\\ accessibility\\ state|manual\\ switching\\ transfers\\ hidden\\-panel\\ focus\\ without\\ stealing\\ unrelated\\ focus|manual\\ Preview\\ selection\\ never\\ enables\\ a\\ disabled\\ preference\\ and\\ uses\\ injected\\ copy|disposal\\ hides\\ owned\\ presentation\\ and\\ removes\\ listeners\\ without\\ destroying\\ the\\ card|pointer\\ grace\\ expires,\\ resets\\ on\\ reentry,\\ ignores\\ touch\\ and\\ clears\\ on\\ disposal|The card can select a view during panel teardown"
   },
   {
     "id": "A074-right",
@@ -1540,9 +1541,10 @@
     "new": "(view === 'settings')",
     "test": [
       "src/voice/panel/backfill.test.mjs",
-      "src/voice/panel/manualPanel.test.mjs"
+      "src/voice/panel/manualPanel.test.mjs",
+      "/home/ianblenke/docker/gev-tools/voicepanel/known-limits.test.mjs"
     ],
-    "pattern": "voice-panel-0(?:1[3-9]|20)|Settings\\ launcher\\ toggles\\ while\\ tab\\ and\\ programmatic\\ selection\\ remain\\ idempotent|tab\\ keyboard\\ navigation\\ and\\ Escape\\ preserve\\ focus\\ and\\ accessibility\\ state|manual\\ switching\\ transfers\\ hidden\\-panel\\ focus\\ without\\ stealing\\ unrelated\\ focus|manual\\ Preview\\ selection\\ never\\ enables\\ a\\ disabled\\ preference\\ and\\ uses\\ injected\\ copy|disposal\\ hides\\ owned\\ presentation\\ and\\ removes\\ listeners\\ without\\ destroying\\ the\\ card|pointer\\ grace\\ expires,\\ resets\\ on\\ reentry,\\ ignores\\ touch\\ and\\ clears\\ on\\ disposal"
+    "pattern": "voice-panel-0(?:1[3-9]|20)|Settings\\ launcher\\ toggles\\ while\\ tab\\ and\\ programmatic\\ selection\\ remain\\ idempotent|tab\\ keyboard\\ navigation\\ and\\ Escape\\ preserve\\ focus\\ and\\ accessibility\\ state|manual\\ switching\\ transfers\\ hidden\\-panel\\ focus\\ without\\ stealing\\ unrelated\\ focus|manual\\ Preview\\ selection\\ never\\ enables\\ a\\ disabled\\ preference\\ and\\ uses\\ injected\\ copy|disposal\\ hides\\ owned\\ presentation\\ and\\ removes\\ listeners\\ without\\ destroying\\ the\\ card|pointer\\ grace\\ expires,\\ resets\\ on\\ reentry,\\ ignores\\ touch\\ and\\ clears\\ on\\ disposal|The card can select a view during panel teardown"
   },
   {
     "id": "A075-right",
@@ -1562,9 +1564,10 @@
     "new": " (open) ",
     "test": [
       "src/voice/panel/backfill.test.mjs",
-      "src/voice/panel/manualPanel.test.mjs"
+      "src/voice/panel/manualPanel.test.mjs",
+      "/home/ianblenke/docker/gev-tools/voicepanel/known-limits.test.mjs"
     ],
-    "pattern": "voice-panel-0(?:1[3-9]|20)|Settings\\ launcher\\ toggles\\ while\\ tab\\ and\\ programmatic\\ selection\\ remain\\ idempotent|tab\\ keyboard\\ navigation\\ and\\ Escape\\ preserve\\ focus\\ and\\ accessibility\\ state|manual\\ switching\\ transfers\\ hidden\\-panel\\ focus\\ without\\ stealing\\ unrelated\\ focus|manual\\ Preview\\ selection\\ never\\ enables\\ a\\ disabled\\ preference\\ and\\ uses\\ injected\\ copy|disposal\\ hides\\ owned\\ presentation\\ and\\ removes\\ listeners\\ without\\ destroying\\ the\\ card|pointer\\ grace\\ expires,\\ resets\\ on\\ reentry,\\ ignores\\ touch\\ and\\ clears\\ on\\ disposal"
+    "pattern": "voice-panel-0(?:1[3-9]|20)|Settings\\ launcher\\ toggles\\ while\\ tab\\ and\\ programmatic\\ selection\\ remain\\ idempotent|tab\\ keyboard\\ navigation\\ and\\ Escape\\ preserve\\ focus\\ and\\ accessibility\\ state|manual\\ switching\\ transfers\\ hidden\\-panel\\ focus\\ without\\ stealing\\ unrelated\\ focus|manual\\ Preview\\ selection\\ never\\ enables\\ a\\ disabled\\ preference\\ and\\ uses\\ injected\\ copy|disposal\\ hides\\ owned\\ presentation\\ and\\ removes\\ listeners\\ without\\ destroying\\ the\\ card|pointer\\ grace\\ expires,\\ resets\\ on\\ reentry,\\ ignores\\ touch\\ and\\ clears\\ on\\ disposal|The card can select a view during panel teardown"
   },
   {
     "id": "A076-right",
@@ -1672,9 +1675,10 @@
     "new": "(open)",
     "test": [
       "src/voice/panel/backfill.test.mjs",
-      "src/voice/panel/manualPanel.test.mjs"
+      "src/voice/panel/manualPanel.test.mjs",
+      "/home/ianblenke/docker/gev-tools/voicepanel/known-limits.test.mjs"
     ],
-    "pattern": "voice-panel-0(?:1[3-9]|20)|Settings\\ launcher\\ toggles\\ while\\ tab\\ and\\ programmatic\\ selection\\ remain\\ idempotent|tab\\ keyboard\\ navigation\\ and\\ Escape\\ preserve\\ focus\\ and\\ accessibility\\ state|manual\\ switching\\ transfers\\ hidden\\-panel\\ focus\\ without\\ stealing\\ unrelated\\ focus|manual\\ Preview\\ selection\\ never\\ enables\\ a\\ disabled\\ preference\\ and\\ uses\\ injected\\ copy|disposal\\ hides\\ owned\\ presentation\\ and\\ removes\\ listeners\\ without\\ destroying\\ the\\ card|pointer\\ grace\\ expires,\\ resets\\ on\\ reentry,\\ ignores\\ touch\\ and\\ clears\\ on\\ disposal"
+    "pattern": "voice-panel-0(?:1[3-9]|20)|Settings\\ launcher\\ toggles\\ while\\ tab\\ and\\ programmatic\\ selection\\ remain\\ idempotent|tab\\ keyboard\\ navigation\\ and\\ Escape\\ preserve\\ focus\\ and\\ accessibility\\ state|manual\\ switching\\ transfers\\ hidden\\-panel\\ focus\\ without\\ stealing\\ unrelated\\ focus|manual\\ Preview\\ selection\\ never\\ enables\\ a\\ disabled\\ preference\\ and\\ uses\\ injected\\ copy|disposal\\ hides\\ owned\\ presentation\\ and\\ removes\\ listeners\\ without\\ destroying\\ the\\ card|pointer\\ grace\\ expires,\\ resets\\ on\\ reentry,\\ ignores\\ touch\\ and\\ clears\\ on\\ disposal|The card can select a view during panel teardown"
   },
   {
     "id": "A081-right",
@@ -5604,5 +5608,385 @@
       "src/voice/panel/host.test.mjs"
     ],
     "pattern": "named voice settings exits Cockpit directly"
+  },
+  {
+    "id": "R070-all-false",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ known: false, connected: false, held: false, inputBusy: false, outputBusy: false, generationBusy: false });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-known-false",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), known: false });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-known-true",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), known: true });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-connected-false",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), connected: false });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-connected-true",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), connected: true });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-held-false",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), held: false });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-held-true",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), held: true });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-inputBusy-false",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), inputBusy: false });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-inputBusy-true",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), inputBusy: true });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-outputBusy-false",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), outputBusy: false });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-outputBusy-true",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), outputBusy: true });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-generationBusy-false",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), generationBusy: false });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R070-generationBusy-true",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "onChange?.(snapshot());",
+    "new": "onChange?.({ ...snapshot(), generationBusy: true });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-070"
+  },
+  {
+    "id": "R017-sync",
+    "file": "src/voice/panel/manualPanel.js",
+    "old": "open = false;\n      sync();\n      disposed = true;",
+    "new": "open = false;\n      disposed = true;",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-017"
+  },
+  {
+    "id": "R017-listeners",
+    "file": "src/voice/panel/manualPanel.js",
+    "old": "disposed = true;\n      lifetime.abort();",
+    "new": "disposed = true;",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-017"
+  },
+  {
+    "id": "R017-select",
+    "file": "src/voice/panel/manualPanel.js",
+    "old": "const select = (next, { focus = false, automatic = false } = {}) => {\n    if (disposed)",
+    "new": "const select = (next, { focus = false, automatic = false } = {}) => {\n    if (false)",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-017"
+  },
+  {
+    "id": "R017-close",
+    "file": "src/voice/panel/manualPanel.js",
+    "old": "const close = (onlyView) => {\n    if (disposed)",
+    "new": "const close = (onlyView) => {\n    if (false)",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-017"
+  },
+  {
+    "id": "R-limit-dom",
+    "file": "src/voice/panel/manualPanel.js",
+    "old": "sync();\n      disposed = true;",
+    "new": "sync();\n      panel.hidden = true;\n      disposed = true;",
+    "test": [
+      "/home/ianblenke/docker/gev-tools/voicepanel/known-limits.test.mjs"
+    ],
+    "pattern": "The card can select a view during panel teardown"
+  },
+  {
+    "id": "R071-close",
+    "file": "src/voice/panel/manualPanel.js",
+    "old": "listen(ui.voiceSettingsClose, 'click', () => close());",
+    "new": "listen(ui.voiceSettingsClose, 'click', () => {});",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-071"
+  },
+  {
+    "id": "R072-type",
+    "file": "src/voice/panel/preferences.js",
+    "old": "throw new TypeError('Preference listener required');",
+    "new": "throw new Error('Preference listener required');",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-072"
+  },
+  {
+    "id": "R072-message",
+    "file": "src/voice/panel/preferences.js",
+    "old": "throw new TypeError('Preference listener required');",
+    "new": "throw new TypeError('Wrong listener');",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-072"
+  },
+  {
+    "id": "R068-source",
+    "file": "src/voice/panel/host.js",
+    "old": "? ''\n            : t('Automatic stop is unavailable for this voice connection.')",
+    "new": "? ui.voiceTimeoutStatus.textContent\n            : t('Automatic stop is unavailable for this voice connection.')",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-068"
+  },
+  {
+    "id": "R-input-result",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "return result;\n    }\n    object[key] = wrapped;",
+    "new": "return undefined;\n    }\n    object[key] = wrapped;",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "The input method keeps its call"
+  },
+  {
+    "id": "R-audio-result",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "return result;\n    }\n    object[key] = wrapped;",
+    "new": "return undefined;\n    }\n    object[key] = wrapped;",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "The audio method updates output"
+  },
+  {
+    "id": "R-callback-values",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "callback,\n                    this === decorated ? options : this,\n                    values,",
+    "new": "callback,\n                    this === decorated ? options : this,\n                    [],",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "The audio callback keeps its own values"
+  },
+  {
+    "id": "R-action-scalar",
+    "file": "src/voice/panel/actionObserver.js",
+    "old": "    return result;\n  }\n  return {",
+    "new": "    return typeof result === \"object\" || typeof result === \"function\" ? result : undefined;\n  }\n  return {",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "The action return kind stays exact"
+  },
+  {
+    "id": "R-host-payload",
+    "file": "src/voice/panel/host.js",
+    "old": "card.handle(event);",
+    "new": "card.handle({ ...event, text: 'Wrong' });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "The host checks session activity|The host rejects automatic preview input|An inactive state event reaches the card|The advisory flag on another event"
+  },
+  {
+    "id": "R055-values",
+    "file": "src/voice/panel/host.js",
+    "old": "card.handle(event);",
+    "new": "card.handle({ ...event, text: 'Wrong' });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "The host compares reply identifiers"
+  },
+  {
+    "id": "R029-value-0",
+    "file": "src/voice/panel/preferences.js",
+    "old": "[preview, previewChange],",
+    "new": "",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "The binder removes its control listener in case 0$"
+  },
+  {
+    "id": "R029-value-1",
+    "file": "src/voice/panel/preferences.js",
+    "old": "[select, selectChange],",
+    "new": "",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "The binder removes its control listener in case 1$"
+  },
+  {
+    "id": "R029-value-2",
+    "file": "src/voice/panel/preferences.js",
+    "old": "[input, inputChange],",
+    "new": "",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "The binder removes its control listener in case 2$"
+  },
+  {
+    "id": "R051-held",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "held: Boolean(input?.pushToTalkKeyHeld),",
+    "new": "held: false,",
+    "test": [
+      "src/voice/panel/host.test.mjs"
+    ],
+    "pattern": "integrated inactivity rechecks held PTT at expiry"
+  },
+  {
+    "id": "R051-start",
+    "file": "src/voice/panel/inactivity.js",
+    "old": "deadline = now() + minutes * 60000;",
+    "new": "deadline = now() + minutes * 60000 + 1;",
+    "test": [
+      "src/voice/panel/host.test.mjs"
+    ],
+    "pattern": "integrated inactivity rechecks held PTT at expiry"
+  },
+  {
+    "id": "R020-method",
+    "file": "src/voice/panel/manualPanel.js",
+    "old": "element.checkVisibility?.({",
+    "new": "element.checkVisibility({",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "An absent visibility method does not prevent focus"
+  },
+  {
+    "id": "R047-exact",
+    "file": "src/voice/panel/nativeActivity.js",
+    "old": "if (object[key] === wrapped) object[key] = original;",
+    "new": "if (object[key] === wrapped) object[key] = () => 99;",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "The input method keeps its call"
+  },
+  {
+    "id": "R022-literal",
+    "file": "src/voice/panel/preferences.js",
+    "old": "const number = Number(value);",
+    "new": "const number = 3;",
+    "test": [
+      "src/voice/panel/preferences.test.mjs"
+    ],
+    "pattern": "exact valid values, presets, None and serialized readback"
+  },
+  {
+    "id": "R049-view",
+    "file": "src/voice/panel/host.js",
+    "old": "if (saved.panelOpen) panel.select(saved.view, { automatic: true });",
+    "new": "if (saved.panelOpen) panel.select('preview', { automatic: true });",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-049"
+  },
+  {
+    "id": "R067-kind",
+    "file": "src/voice/panel/actionObserver.js",
+    "old": "else retireOne(record, 'unobserved-return-kind');",
+    "new": "else settle('synchronous-return');",
+    "test": [
+      "src/voice/panel/backfill.test.mjs"
+    ],
+    "pattern": "voice-panel-067"
   }
 ]

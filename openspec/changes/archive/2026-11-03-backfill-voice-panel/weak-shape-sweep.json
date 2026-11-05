@@ -1,0 +1,412 @@
+{
+  "sourceCommit": "74ec10e054a88935c7fcfce96300ea660f7c7747",
+  "testDefinitions": 226,
+  "candidates": [
+    {
+      "file": "src/voice/panel/actionObserver.test.mjs",
+      "line": 248,
+      "name": "'[voice-panel-007] real caller abort retires ownership only; late A cannot release or report over B'",
+      "assertions": 8,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/actionObserver.test.mjs",
+      "line": 288,
+      "name": "'[voice-panel-008] already-aborted caller and disposed mount still invoke original exactly once'",
+      "assertions": 6,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/actionObserver.test.mjs",
+      "line": 409,
+      "name": "'[voice-panel-007] actual common interruption aborts resources; injected real-lifecycle observation retires uncooperative A'",
+      "assertions": 6,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/actionObserver.test.mjs",
+      "line": 456,
+      "name": "'[voice-panel-008] null-prototype option descriptors survive instrumentation; mount abort does not fabricate settlement'",
+      "assertions": 7,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/actionObserver.test.mjs",
+      "line": 487,
+      "name": "'omitted and explicit undefined options keep original arity and values'",
+      "assertions": 6,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 259,
+      "name": "'[voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata'",
+      "assertions": 13,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 343,
+      "name": "`[voice-panel-011] The progress metadata uses data fields in case ${index}`",
+      "assertions": 7,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 385,
+      "name": "'[voice-panel-008] The observer retires each key with the default reason'",
+      "assertions": 8,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 558,
+      "name": "'[voice-panel-019] A listener error cancels the partial panel lifetime'",
+      "assertions": 3,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 781,
+      "name": "`[voice-panel-029] The partial controls use a valid custom value in case ${index}`",
+      "assertions": 5,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 902,
+      "name": "`[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case ${index}`",
+      "assertions": 7,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 936,
+      "name": "'[voice-panel-034] The timer cancels its task and ignores all retired calls'",
+      "assertions": 7,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 1019,
+      "name": "`[voice-panel-040 voice-panel-047] The input method keeps its call in case ${index}`",
+      "assertions": 8,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 1062,
+      "name": "`[voice-panel-039] The audio callback keeps its own values in case ${index}`",
+      "assertions": 8,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 1098,
+      "name": "`[voice-panel-037 voice-panel-040] The audio method updates output in case ${index}`",
+      "assertions": 10,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 1302,
+      "name": "'[voice-panel-047] An aborted observer restores native methods at construction'",
+      "assertions": 6,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 1331,
+      "name": "'[voice-panel-038] A detached audio wrapper cannot notify the current mount'",
+      "assertions": 3,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 1519,
+      "name": "`[voice-panel-055] The host compares reply identifiers in case ${index}`",
+      "assertions": 5,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 1666,
+      "name": "'[voice-panel-058] A retired mount cannot change the current panel'",
+      "assertions": 3,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 1763,
+      "name": "'[voice-panel-059] The DOM fixture models listener lifetime and event data'",
+      "assertions": 5,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 1958,
+      "name": "'[voice-panel-049] The host retires a previous mount before its replacement'",
+      "assertions": 4,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 1987,
+      "name": "'[voice-panel-058] The host ignores a preference notice after ownership ends'",
+      "assertions": 3,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 2359,
+      "name": "'[voice-panel-032 voice-panel-065] The timer accepts both minute bounds'",
+      "assertions": 6,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 2479,
+      "name": "'[voice-panel-055] The host selects the response id before the item id'",
+      "assertions": 2,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 2643,
+      "name": "'[voice-panel-034] An activity reader can destroy the timer before it arms again'",
+      "assertions": 3,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 2758,
+      "name": "`[voice-panel-029] The binder removes its control listener in case ${index}`",
+      "assertions": 4,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 2805,
+      "name": "'[voice-panel-034] An old timer cannot expire after a quiet successor starts'",
+      "assertions": 5,
+      "countOrKeyAssertions": 3,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 2821,
+      "name": "`[voice-panel-017] The owner destroys an open panel in case ${index}`",
+      "assertions": 20,
+      "countOrKeyAssertions": 2,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 3003,
+      "name": "`[voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case ${index}`",
+      "assertions": 3,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 3034,
+      "name": "`[voice-panel-070] An untracked event still sends an activity notice in case ${index}`",
+      "assertions": 2,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 3209,
+      "name": "'[voice-panel-038] An audio callback cannot act through a different controller owner'",
+      "assertions": 2,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 3219,
+      "name": "'[voice-panel-038] A closed audio callback cannot restore input activity'",
+      "assertions": 2,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 3444,
+      "name": "'[voice-panel-008] A disposed observer forwards the receiver and each argument unchanged'",
+      "assertions": 8,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 3582,
+      "name": "`[voice-panel-055] The session state resets the final reply in case ${index}`",
+      "assertions": 4,
+      "countOrKeyAssertions": 3,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/backfill.test.mjs",
+      "line": 3639,
+      "name": "`[voice-panel-032] The initial timer uses the supplied minutes in case ${index}`",
+      "assertions": 4,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/host.test.mjs",
+      "line": 108,
+      "name": "'[voice-panel-012] actual control default remains opt-out; panel markup has unique controlled panes and an outside alert'",
+      "assertions": 8,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/host.test.mjs",
+      "line": 479,
+      "name": "'[voice-panel-061] named voice settings exits Cockpit directly; Preview stays disabled and visual presets stay separate from Scenes'",
+      "assertions": 11,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/host.test.mjs",
+      "line": 696,
+      "name": "'[voice-panel-064] Provider Settings uses its ready dialog handlers and refuses unavailable or cancelled requests'",
+      "assertions": 16,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/inactivity.test.mjs",
+      "line": 43,
+      "name": "'[voice-panel-030] one clock; quiet arms default five minutes; busy blocks and quiescence rearms'",
+      "assertions": 5,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/inactivity.test.mjs",
+      "line": 65,
+      "name": "'None cancels; invalid values cannot replace setting; explicit retry rearms'",
+      "assertions": 5,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/inactivity.test.mjs",
+      "line": 84,
+      "name": "'[voice-panel-034] pending siblings and held-before-connect forbid timer; stale callback cannot expire'",
+      "assertions": 6,
+      "countOrKeyAssertions": 5,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/preferences.test.mjs",
+      "line": 164,
+      "name": "`storage ${mode} preserves live value and exposes unsaved state across A → B`",
+      "assertions": 8,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/preferences.test.mjs",
+      "line": 222,
+      "name": "'[voice-panel-026] Custom commits displayed valid value immediately, even when equal to preset'",
+      "assertions": 9,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/preferences.test.mjs",
+      "line": 244,
+      "name": "'[voice-panel-027] invalid control edits restore valid state without writes; None remains distinct'",
+      "assertions": 10,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    },
+    {
+      "file": "src/voice/panel/preferences.test.mjs",
+      "line": 270,
+      "name": "'[voice-panel-028] model snapshots cannot mutate state; unsubscribe and binder disposal release ownership'",
+      "assertions": 6,
+      "countOrKeyAssertions": 1,
+      "onlyCountOrKeyAssertions": false,
+      "identicalOperands": 0
+    }
+  ],
+  "identicalOperands": 0
+}

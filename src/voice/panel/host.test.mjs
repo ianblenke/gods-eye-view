@@ -312,6 +312,8 @@ test('[voice-panel-051] integrated inactivity rechecks held PTT at expiry, then 
   f.ui.voiceTimeoutInput.value = '1';
   f.ui.voiceTimeoutSelect.value = 'custom';
   f.ui.voiceTimeoutSelect.fire('change');
+  assert.equal(f.commands.session.isActive(), true);
+  assert.equal(f.commands.getVoicePanelState().inactivity.deadline, 60000);
   f.instances[0].input.pushToTalkKeyHeld = true;
   f.clock.advance(60000);
   assert.equal(f.instances[0].stops, 0);

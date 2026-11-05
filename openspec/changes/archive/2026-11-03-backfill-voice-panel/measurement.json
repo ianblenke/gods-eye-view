@@ -1,29 +1,31 @@
 {
-  "sourceCommit": "89fe216472d408b6ac9a0d9b53f65ef20434d917",
+  "sourceCommit": "74ec10e054a88935c7fcfce96300ea660f7c7747",
+  "treeState": "review corrections",
   "branch": "backfill-voice-panel",
   "node": "v26.13.0",
   "summary": {
     "success": true,
     "counts": {
-      "tests": 398,
+      "tests": 405,
       "failed": 0,
-      "passed": 398,
+      "passed": 405,
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "topLevel": 398,
+      "topLevel": 405,
       "suites": 0
     },
-    "duration_ms": 6364.069916
+    "duration_ms": 6381.999232
   },
+  "scenarioCount": 72,
+  "tests": 405,
   "oldTests": 76,
   "oldTagged": 54,
   "oldUntagged": 22,
-  "newTests": 322,
-  "scenarioCount": 70,
-  "taggedTests": 376,
-  "mutations": 528,
-  "killed": 516,
+  "newTests": 329,
+  "taggedTests": 383,
+  "mutations": 566,
+  "killed": 554,
   "equivalent": 12,
   "coverage": [
     {
@@ -69,203 +71,12 @@
       "function": 100.0
     }
   ],
-  "baselineGaps": {
-    "src/voice/panel/actionObserver.js": {
-      "loaded": true,
-      "lines": 10,
-      "branches": 11,
-      "functions": 0,
-      "totals": {
-        "lines": 178,
-        "branches": 82,
-        "functions": 14
-      },
-      "sha": "dc32364395acc7af3c8cb4deb11d6aab7ca49d750a37ae0c40eef7ec77adce2d",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/voice/panel/host.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 15,
-      "functions": 0,
-      "totals": {
-        "lines": 304,
-        "branches": 105,
-        "functions": 31
-      },
-      "sha": "6d22c7dda5ef85d1d51862949fb72139f9e67949c2d4c8f62b9369f3fbb77533",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/voice/panel/inactivity.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 4,
-      "functions": 0,
-      "totals": {
-        "lines": 77,
-        "branches": 37,
-        "functions": 9
-      },
-      "sha": "de1178226bb97a80cc643e9decebf1e936fdbc672e429a783de4a8e9cd7ac7a6",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/voice/panel/manualPanel.js": {
-      "loaded": true,
-      "lines": 5,
-      "branches": 8,
-      "functions": 1,
-      "totals": {
-        "lines": 182,
-        "branches": 100,
-        "functions": 21
-      },
-      "sha": "8deb85f76af5a8464611c1a63af5736d2388eeeffe4b21b20177e73cbb28a63c",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/voice/panel/nativeActivity.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 6,
-      "functions": 0,
-      "totals": {
-        "lines": 292,
-        "branches": 147,
-        "functions": 20
-      },
-      "sha": "6f358fcc2b15d2b2c2994344b40f6ce0698e658116d5d1e030f79028921353a4",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/voice/panel/preferences.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 6,
-      "functions": 0,
-      "totals": {
-        "lines": 194,
-        "branches": 84,
-        "functions": 18
-      },
-      "sha": "b394b7241607aca411f6d3a7ec4f0066043b2038d77052ba85590c47f19f0c5b",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
-    "src/voice/panel/testDom.mjs": {
-      "loaded": true,
-      "lines": 9,
-      "branches": 3,
-      "functions": 7,
-      "totals": {
-        "lines": 204,
-        "branches": 84,
-        "functions": 50
-      },
-      "sha": "1dcb08a3d2075c38fae9c2daf4c1e26bc861f9e3751a2f01fd5dc15183a761f0",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    }
+  "mutationSources": {
+    "A": 426,
+    "K": 76,
+    "S": 26,
+    "R": 38
   },
-  "imports": [
-    {
-      "test": "src/voice/realtimeCostPanel.test.mjs",
-      "module": "src/voice/panel/testDom.mjs",
-      "line": 6
-    },
-    {
-      "test": "src/voice/voiceCard.test.mjs",
-      "module": "src/voice/panel/manualPanel.js",
-      "line": 582
-    },
-    {
-      "test": "src/voice/voiceCard.test.mjs",
-      "module": "src/voice/panel/preferences.js",
-      "line": 584
-    },
-    {
-      "test": "src/voice/panel/actionObserver.test.mjs",
-      "module": "src/voice/panel/actionObserver.js",
-      "line": 4
-    },
-    {
-      "test": "src/voice/panel/host.test.mjs",
-      "module": "src/voice/panel/host.js",
-      "line": 8
-    },
-    {
-      "test": "src/voice/panel/host.test.mjs",
-      "module": "src/voice/panel/testDom.mjs",
-      "line": 9
-    },
-    {
-      "test": "src/voice/panel/inactivity.test.mjs",
-      "module": "src/voice/panel/inactivity.js",
-      "line": 3
-    },
-    {
-      "test": "src/voice/panel/manualPanel.test.mjs",
-      "module": "src/voice/panel/manualPanel.js",
-      "line": 3
-    },
-    {
-      "test": "src/voice/panel/nativeActivity.test.mjs",
-      "module": "src/voice/panel/inactivity.js",
-      "line": 3
-    },
-    {
-      "test": "src/voice/panel/nativeActivity.test.mjs",
-      "module": "src/voice/panel/nativeActivity.js",
-      "line": 5
-    },
-    {
-      "test": "src/voice/panel/preferences.test.mjs",
-      "module": "src/voice/panel/preferences.js",
-      "line": 6
-    },
-    {
-      "test": "src/voice/panel/backfill.test.mjs",
-      "module": "src/voice/panel/actionObserver.js",
-      "line": 4
-    },
-    {
-      "test": "src/voice/panel/backfill.test.mjs",
-      "module": "src/voice/panel/manualPanel.js",
-      "line": 5
-    },
-    {
-      "test": "src/voice/panel/backfill.test.mjs",
-      "module": "src/voice/panel/preferences.js",
-      "line": 9
-    },
-    {
-      "test": "src/voice/panel/backfill.test.mjs",
-      "module": "src/voice/panel/inactivity.js",
-      "line": 10
-    },
-    {
-      "test": "src/voice/panel/backfill.test.mjs",
-      "module": "src/voice/panel/nativeActivity.js",
-      "line": 11
-    },
-    {
-      "test": "src/voice/panel/backfill.test.mjs",
-      "module": "src/voice/panel/host.js",
-      "line": 12
-    },
-    {
-      "test": "src/voice/panel/backfill.test.mjs",
-      "module": "src/voice/panel/testDom.mjs",
-      "line": 14
-    }
-  ]
+  "invalidFailureLinks": 0,
+  "failureEventMismatches": 0
 }

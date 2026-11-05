@@ -99,6 +99,12 @@ function nativeFixture(t, provider = 'openai', overrides = {}, options = {}) {
     },
     ...overrides,
   };
+  const originals = {
+    input: { ...input },
+    createAudio: controller.createAudio,
+    handleMessage: controller.handleMessage,
+    observeSpeech: turns.observeSpeech,
+  };
   const changes = [];
   const observer = observeNativeActivity({
     adapter: { controller },
@@ -107,7 +113,16 @@ function nativeFixture(t, provider = 'openai', overrides = {}, options = {}) {
     ...options,
   });
   t.after(() => observer.destroy());
-  return { observer, controller, turns, input, callbacks, changes, calls };
+  return {
+    observer,
+    controller,
+    turns,
+    input,
+    callbacks,
+    changes,
+    calls,
+    originals,
+  };
 }
 function hostFixture(t, options = {}) {
   const doc = installPanelDom(t);
@@ -155,6 +170,7 @@ function hostFixture(t, options = {}) {
       rearms++;
     },
   };
+  ui.voiceTimeoutStatus.textContent = 'Stale status';
   const binding = host.mount({
     ui,
     card,
@@ -443,7 +459,10 @@ for (const [index, value] of [
       runAction: () => value,
       onObservation: (e) => events.push(e),
     });
-    assert.equal(o.runAction('kind') === value, true);
+    const actual = o.runAction('kind');
+    if (index < 5)
+      assert.equal(actual, [null, undefined, false, 0, 'text'][index]);
+    else assert.equal(actual, value);
     assert.equal(o.pendingCount, 0);
     assert.equal(
       events.at(-1).type ===
@@ -544,6 +563,7 @@ test('[voice-panel-019] A listener error cancels the partial panel lifetime', (t
   node.addEventListener = () => {
     throw error;
   };
+  assert.equal(button.listeners.has('click'), false);
   assert.throws(
     () =>
       createManualVoicePanel({
@@ -593,13 +613,26 @@ for (const [index, key, from, to] of [
   });
 }
 
-test('[voice-panel-017] The close control ends the current presentation', (t) => {
-  const f = panelFixture(t);
-  f.panel.select('preview');
-  assert.equal(f.panel.snapshot().panelOpen, true);
-  f.ui.voiceSettingsClose.fire('click');
-  assert.equal(f.panel.snapshot().panelOpen, false);
-});
+for (const [index, view] of ['preview', 'settings'].entries()) {
+  test(`[voice-panel-071] The close control ends the current presentation in case ${index}`, (t) => {
+    const f = panelFixture(t);
+    f.panel.select(view);
+    assert.equal(f.ui.voicePanel.hidden, false);
+    assert.equal(f.ui.previewPanel.hidden, index === 1);
+    assert.equal(f.ui.voiceSettingsPanel.hidden, index === 0);
+    assert.equal(f.panel.snapshot().panelOpen, true);
+    f.ui.voiceSettingsClose.fire('click');
+    assert.equal(f.panel.snapshot().panelOpen, false);
+    assert.equal(f.ui.voicePanel.hidden, true);
+    assert.equal(f.ui.previewPanel.hidden, true);
+    assert.equal(f.ui.voiceSettingsPanel.hidden, true);
+    assert.equal(f.ui.card.hidden, true);
+    assert.equal(
+      f.ui.voiceSettingsButton.getAttribute('aria-expanded'),
+      'false',
+    );
+  });
+}
 
 function memoryStore(entries = {}) {
   const data = new Map(Object.entries(entries)),
@@ -728,13 +761,21 @@ for (const [index, minutes, serialized] of [
   });
 }
 
-test('[voice-panel-028] The model rejects an invalid listener', () => {
-  const p = createVoicePreferences({ storage: null });
-  assert.throws(() => p.subscribe(3), {
-    name: 'TypeError',
-    message: 'Preference listener required',
+for (const [index, listener] of [
+  undefined,
+  null,
+  3,
+  {},
+  'listener',
+].entries()) {
+  test(`[voice-panel-072] The model rejects an invalid listener in case ${index}`, () => {
+    const p = createVoicePreferences({ storage: null });
+    assert.throws(() => p.subscribe(listener), {
+      name: 'TypeError',
+      message: 'Preference listener required',
+    });
   });
-});
+}
 
 for (const [index, displayed] of ['', '0', '8'].entries()) {
   test(`[voice-panel-029] The partial controls use a valid custom value in case ${index}`, (t) => {
@@ -979,14 +1020,35 @@ for (const [index, key] of [
     const f = nativeFixture(t, 'gemini'),
       receiver = {},
       args = [31 + index, 47 - index];
-    assert.equal(f.input[key].apply(receiver, args) === 21 + index, true);
-    assert.deepEqual(f.calls, [[key, receiver, args]]);
-    assert.equal(f.changes.length, 1);
+    assert.equal(f.input[key].apply(receiver, args), [21, 22, 23][index]);
+    assert.deepEqual(f.calls, [
+      [
+        key,
+        receiver,
+        [
+          [31, 47],
+          [32, 46],
+          [33, 45],
+        ][index],
+      ],
+    ]);
+    assert.deepEqual(f.changes, [
+      {
+        known: true,
+        connected: false,
+        held: false,
+        inputBusy: false,
+        outputBusy: false,
+        generationBusy: false,
+      },
+    ]);
     const old = f.input[key];
     f.observer.destroy();
+    assert.equal(f.input[key], f.originals.input[key]);
     assert.notEqual(f.input[key], old);
     const n = f.changes.length;
-    old.call(receiver, 'late');
+    assert.equal(old.call(receiver, 'late'), [21, 22, 23][index]);
+    assert.deepEqual(f.calls.at(-1), [key, receiver, ['late']]);
     assert.equal(f.changes.length === n, true);
   });
 }
@@ -1011,11 +1073,19 @@ for (const [index, key] of [
     assert.equal(f.calls[0][1] === f.controller, true);
     assert.equal(f.calls[0][2][1], 'tail');
     assert.equal(
-      f.callbacks[0][key](61 + index, 71 - index) === 51 + index,
+      f.callbacks[0][key](61 + index, 71 - index) === [51, 52, 53, 54][index],
       true,
     );
     assert.equal(receiver === options, true);
-    assert.deepEqual(args, [61 + index, 71 - index]);
+    assert.deepEqual(
+      args,
+      [
+        [61, 71],
+        [62, 70],
+        [63, 69],
+        [64, 68],
+      ][index],
+    );
     const explicit = {};
     f.callbacks[0][key].call(explicit, 'custom');
     assert.equal(receiver === explicit, true);
@@ -1025,7 +1095,7 @@ for (const [index, key] of [
 }
 
 for (const [index, key] of ['play', 'clearPlayback', 'close'].entries()) {
-  test(`[voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case ${index}`, (t) => {
+  test(`[voice-panel-037 voice-panel-040] The audio method updates output in case ${index}`, (t) => {
     const f = nativeFixture(t, 'gemini');
     f.controller.audio = f.controller.createAudio({});
     assert.equal(f.observer.snapshot().outputBusy, false);
@@ -1033,14 +1103,29 @@ for (const [index, key] of ['play', 'clearPlayback', 'close'].entries()) {
     assert.equal(f.observer.snapshot().outputBusy, true);
     const before = f.changes.length;
     assert.equal(
-      f.controller.audio[key](1, `tail-${index}`) === 31 + index,
+      f.controller.audio[key](1, `tail-${index}`) === [31, 32, 33][index],
       true,
     );
     const last = f.calls.at(-1);
     assert.equal(last[0] === key, true);
     assert.equal(last[1] === f.controller.audio, true);
-    assert.deepEqual(last[2], [1, `tail-${index}`]);
+    assert.deepEqual(
+      last[2],
+      [
+        [1, 'tail-0'],
+        [1, 'tail-1'],
+        [1, 'tail-2'],
+      ][index],
+    );
     assert.equal(f.changes.length === before + 1, true);
+    assert.deepEqual(f.changes.at(-1), {
+      known: true,
+      connected: false,
+      held: false,
+      inputBusy: false,
+      outputBusy: index === 0,
+      generationBusy: false,
+    });
     assert.equal(f.observer.snapshot().outputBusy === (index === 0), true);
   });
 }
@@ -1175,7 +1260,9 @@ for (const [index, status] of [
 ].entries()) {
   test(`[voice-panel-045] The silent response checks its status in case ${index}`, (t) => {
     const f = nativeFixture(t);
+    assert.equal(f.observer.snapshot().known, true);
     f.turns.observeSpeech({ type: 'response.created', response_id: 'one' });
+    assert.equal(f.observer.snapshot().known, false);
     f.turns.observeSpeech({
       type: 'response.done',
       response_id: 'one',
@@ -1221,6 +1308,14 @@ test('[voice-panel-047] An aborted observer restores native methods at construct
   f.observer.handle(null);
   f.observer.destroy();
   assert.equal(f.changes.length === before, true);
+  assert.equal(f.controller.createAudio, f.originals.createAudio);
+  assert.equal(f.controller.handleMessage, f.originals.handleMessage);
+  for (const key of [
+    'setMicrophoneEnabled',
+    'releasePushToTalkKey',
+    'resetSession',
+  ])
+    assert.equal(f.input[key], f.originals.input[key]);
   assert.equal(f.observer.snapshot().known, false);
   assert.equal(getEventListeners(lifetime.signal, 'abort').length, 0);
 });
@@ -1404,7 +1499,19 @@ for (const [index, inactive] of [false, true].entries()) {
       final: true,
     });
     assert.equal(f.binding.panel.snapshot().panelOpen === !inactive, true);
-    assert.equal(f.cards.length === (inactive ? 0 : 1), true);
+    assert.deepEqual(
+      f.cards,
+      inactive
+        ? []
+        : [
+            {
+              type: 'transcript',
+              role: 'assistant',
+              text: 'Answer',
+              final: true,
+            },
+          ],
+    );
   });
 }
 
@@ -1420,17 +1527,79 @@ for (const [index, field] of ['responseId', 'itemId', 'absent'].entries()) {
       ...id,
     };
     f.binding.handle(reply);
-    assert.equal(f.cards.length, 1);
+    assert.deepEqual(
+      f.cards,
+      [
+        [
+          {
+            type: 'transcript',
+            role: 'assistant',
+            text: 'Final',
+            final: true,
+            responseId: 'one',
+          },
+        ],
+        [
+          {
+            type: 'transcript',
+            role: 'assistant',
+            text: 'Final',
+            final: true,
+            itemId: 'one',
+          },
+        ],
+        [{ type: 'transcript', role: 'assistant', text: 'Final', final: true }],
+      ][index],
+    );
     f.binding.handle({ ...reply });
     assert.equal(f.cards.length, 1);
     if (index < 2) {
       f.binding.handle({ ...reply, text: 'Part', final: false });
       assert.equal(f.cards.length, 1);
       f.binding.handle({ ...reply, [field]: 'two', text: 'Next' });
-      assert.equal(f.cards.length, 2);
+      assert.deepEqual(
+        f.cards,
+        [
+          [
+            {
+              type: 'transcript',
+              role: 'assistant',
+              text: 'Final',
+              final: true,
+              responseId: 'one',
+            },
+            {
+              type: 'transcript',
+              role: 'assistant',
+              text: 'Next',
+              final: true,
+              responseId: 'two',
+            },
+          ],
+          [
+            {
+              type: 'transcript',
+              role: 'assistant',
+              text: 'Final',
+              final: true,
+              itemId: 'one',
+            },
+            {
+              type: 'transcript',
+              role: 'assistant',
+              text: 'Next',
+              final: true,
+              itemId: 'two',
+            },
+          ],
+        ][index],
+      );
     } else {
       f.binding.handle({ ...reply, text: 'Part', final: false });
-      assert.equal(f.cards.length, 2);
+      assert.deepEqual(f.cards, [
+        { type: 'transcript', role: 'assistant', text: 'Final', final: true },
+        { type: 'transcript', role: 'assistant', text: 'Part', final: false },
+      ]);
     }
   });
 }
@@ -1483,7 +1652,14 @@ for (const [index, event] of [
     const f = hostFixture(t);
     f.binding.handle(event);
     assert.equal(f.binding.panel.snapshot().panelOpen, false);
-    assert.deepEqual(f.cards, [event]);
+    assert.deepEqual(
+      f.cards,
+      [
+        [{ type: 'transcript', role: 'user', text: 'User' }],
+        [{ type: 'transcript', role: 'assistant', text: '' }],
+        [{ type: 'other', role: 'assistant', text: 'Other' }],
+      ][index],
+    );
   });
 }
 
@@ -1960,7 +2136,9 @@ for (const [index, output, known] of [
 for (const [index, part] of ['text', 'output_text', 'refusal'].entries()) {
   test(`[voice-panel-045] The silent output accepts one part type in case ${index}`, (t) => {
     const f = nativeFixture(t);
+    assert.equal(f.observer.snapshot().known, true);
     f.turns.observeSpeech({ type: 'response.created', response_id: 'one' });
+    assert.equal(f.observer.snapshot().known, false);
     f.turns.observeSpeech({
       type: 'response.done',
       response_id: 'one',
@@ -2259,12 +2437,12 @@ test('[voice-panel-050] A stop ticket cannot close a disposed session panel', (t
   assert.equal(f.binding.panel.snapshot().settingsOpen, true);
 });
 
-test('[voice-panel-054] An inactive state event reaches the card', (t) => {
+test('[voice-panel-069] An inactive state event reaches the card', (t) => {
   const f = hostFixture(t);
   f.setActive(false);
   const event = { type: 'state', state: 'idle' };
   f.binding.handle(event);
-  assert.deepEqual(f.cards, [event]);
+  assert.deepEqual(f.cards, [{ type: 'state', state: 'idle' }]);
   assert.deepEqual(f.retires, ['session-boundary']);
 });
 
@@ -2449,14 +2627,17 @@ test('[voice-panel-069] The advisory flag on another event does not hide it from
   const f = hostFixture(t),
     event = { type: 'other', preserveAdvisoryCaption: true };
   f.binding.handle(event);
-  assert.deepEqual(f.cards, [event]);
+  assert.deepEqual(f.cards, [{ type: 'other', preserveAdvisoryCaption: true }]);
   const ordinary = {
     type: 'interruption',
     reason: 'other',
     preserveAdvisoryCaption: false,
   };
   f.binding.handle(ordinary);
-  assert.deepEqual(f.cards, [event, ordinary]);
+  assert.deepEqual(f.cards, [
+    { type: 'other', preserveAdvisoryCaption: true },
+    { type: 'interruption', reason: 'other', preserveAdvisoryCaption: false },
+  ]);
 });
 
 test('[voice-panel-034] An activity reader can destroy the timer before it arms again', (t) => {
@@ -2547,7 +2728,7 @@ for (const [index, mode] of [
   });
 }
 
-test('[voice-panel-020] A missing visibility method does not prevent focus', (t) => {
+test('[voice-panel-020] An absent visibility method does not prevent focus', (t) => {
   const f = panelFixture(t);
   Object.defineProperty(f.ui.settingsTab, 'isConnected', { value: undefined });
   f.ui.settingsTab.checkVisibility = undefined;
@@ -2584,6 +2765,38 @@ for (const [index, key] of [
       copy: controlCopy,
     });
     assert.equal(element.listeners.get('change').size, 1);
+    assert.deepEqual(p.snapshot(), {
+      previewEnabled: true,
+      minutes: 5,
+      previewPersisted: null,
+      timeoutPersisted: null,
+    });
+    if (index === 0) element.checked = false;
+    else element.value = index === 1 ? '15' : '19';
+    element.fire('change');
+    assert.deepEqual(
+      p.snapshot(),
+      [
+        {
+          previewEnabled: false,
+          minutes: 5,
+          previewPersisted: false,
+          timeoutPersisted: null,
+        },
+        {
+          previewEnabled: true,
+          minutes: 15,
+          previewPersisted: null,
+          timeoutPersisted: false,
+        },
+        {
+          previewEnabled: true,
+          minutes: 19,
+          previewPersisted: null,
+          timeoutPersisted: false,
+        },
+      ][index],
+    );
     b.dispose();
     assert.equal(element.listeners.get('change').size, 0);
   });
@@ -2605,18 +2818,44 @@ test('[voice-panel-034] An old timer cannot expire after a quiet successor start
 });
 
 for (const [index, view] of ['preview', 'settings'].entries()) {
-  test(`[voice-panel-017] A reentrant card cannot reopen a disposed snapshot in case ${index}`, (t) => {
-    const f = panelFixture(t),
-      original = f.card.setPresented;
-    let reenter = true;
-    f.card.setPresented = (value) => {
-      original(value);
-      if (!value && reenter) {
-        reenter = false;
-        f.panel.select(view);
-      }
-    };
+  test(`[voice-panel-017] The owner destroys an open panel in case ${index}`, (t) => {
+    const f = panelFixture(t);
+    f.panel.select(view);
+    assert.equal(f.ui.voicePanel.hidden, false);
+    assert.equal(f.ui.previewPanel.hidden, index === 1);
+    assert.equal(f.ui.voiceSettingsPanel.hidden, index === 0);
+    assert.equal(f.ui.card.hidden, index === 1);
+    const targets = [
+      [f.ui.voiceSettingsButton, 'click'],
+      [f.ui.previewTab, 'click'],
+      [f.ui.previewTab, 'keydown'],
+      [f.ui.settingsTab, 'click'],
+      [f.ui.settingsTab, 'keydown'],
+      [f.ui.voiceSettingsClose, 'click'],
+      [f.ui.voicePanel, 'keydown'],
+      [f.ui.root, 'pointerleave'],
+      [f.ui.root, 'pointerenter'],
+    ];
+    for (const [element, type] of targets)
+      assert.equal(element.listeners.get(type).size, 1);
     f.panel.destroy();
+    assert.equal(f.ui.voicePanel.hidden, true);
+    assert.equal(f.ui.previewPanel.hidden, true);
+    assert.equal(f.ui.voiceSettingsPanel.hidden, true);
+    assert.equal(f.ui.card.hidden, true);
+    assert.equal(
+      f.ui.voiceSettingsButton.getAttribute('aria-expanded'),
+      'false',
+    );
+    for (const [element, type] of targets)
+      assert.equal(element.listeners.get(type).size, 0);
+    assert.equal(f.panel.select('preview').reason, 'disposed');
+    assert.equal(f.panel.select('settings').reason, 'disposed');
+    assert.equal(f.panel.close().reason, 'disposed');
+    f.panel.sync();
+    assert.equal(f.ui.voicePanel.hidden, true);
+    assert.equal(f.ui.previewPanel.hidden, true);
+    assert.equal(f.ui.voiceSettingsPanel.hidden, true);
     assert.equal(f.panel.snapshot().panelOpen, false);
     assert.equal(f.panel.snapshot().settingsOpen, false);
     assert.equal(f.panel.snapshot().previewVisible, false);
@@ -2771,6 +3010,14 @@ for (const [index, output] of [
       response: { status: 'completed', output },
     });
     assert.equal(f.changes.length, before + 1);
+    assert.deepEqual(f.changes.at(-1), {
+      known: false,
+      connected: false,
+      held: false,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    });
     assert.equal(f.observer.snapshot().known, false);
   });
 }
@@ -2789,14 +3036,14 @@ for (const [index, event] of [
       before = f.changes.length;
     f.turns.observeSpeech(event);
     assert.equal(f.changes.length, before + 1);
-    assert.deepEqual(Object.keys(f.changes.at(-1)), [
-      'known',
-      'connected',
-      'held',
-      'inputBusy',
-      'outputBusy',
-      'generationBusy',
-    ]);
+    assert.deepEqual(f.changes.at(-1), {
+      known: true,
+      connected: false,
+      held: false,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    });
   });
 }
 
@@ -2901,7 +3148,16 @@ test('[voice-panel-070] A state boundary retires the method callback', (t) => {
   });
   observer = f.observer;
   assert.equal(f.controller.input.setMicrophoneEnabled(17), 39);
-  assert.equal(f.changes.length, 1);
+  assert.deepEqual(f.changes, [
+    {
+      known: true,
+      connected: false,
+      held: false,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    },
+  ]);
 });
 
 for (const [index, state] of ['error', 'connecting'].entries()) {
@@ -3389,3 +3645,190 @@ for (const [index, minutes, deadline, delay] of [
       assert.equal([...f.timers.values()][0].delay === delay, true);
   });
 }
+
+test('[voice-panel-070] The OpenAI callback reports each activity value across changes', (t) => {
+  const f = nativeFixture(t);
+  assert.deepEqual(f.changes, []);
+  assert.deepEqual(f.observer.snapshot(), {
+    known: true,
+    connected: false,
+    held: false,
+    inputBusy: false,
+    outputBusy: false,
+    generationBusy: false,
+  });
+  f.observer.handle({ type: 'state', state: 'listening' });
+  f.input.pushToTalkKeyHeld = true;
+  f.input.setMicrophoneEnabled(true);
+  f.turns.responseActive = true;
+  f.turns.assistantAudioPlaying = true;
+  f.turns.observeSpeech({ type: 'response.created', response_id: 'one' });
+  f.turns.observeSpeech({ type: 'input_audio_buffer.speech_started' });
+  f.input.pushToTalkKeyHeld = false;
+  f.input.releasePushToTalkKey();
+  f.turns.responseActive = false;
+  f.turns.assistantAudioPlaying = false;
+  f.turns.observeSpeech({ type: 'input_audio_buffer.speech_stopped' });
+  f.turns.observeSpeech({ type: 'output_audio_buffer.cleared' });
+  f.observer.handle({ type: 'state', state: 'idle' });
+  assert.deepEqual(f.changes, [
+    {
+      known: true,
+      connected: true,
+      held: false,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    },
+    {
+      known: true,
+      connected: true,
+      held: true,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    },
+    {
+      known: false,
+      connected: true,
+      held: true,
+      inputBusy: false,
+      outputBusy: true,
+      generationBusy: true,
+    },
+    {
+      known: false,
+      connected: true,
+      held: true,
+      inputBusy: true,
+      outputBusy: true,
+      generationBusy: true,
+    },
+    {
+      known: false,
+      connected: true,
+      held: false,
+      inputBusy: true,
+      outputBusy: true,
+      generationBusy: true,
+    },
+    {
+      known: false,
+      connected: true,
+      held: false,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    },
+    {
+      known: true,
+      connected: true,
+      held: false,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    },
+    {
+      known: true,
+      connected: false,
+      held: false,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    },
+  ]);
+});
+
+test('[voice-panel-070] The Gemini callback reports input and playback changes', (t) => {
+  const f = nativeFixture(t, 'gemini', { captureOwner: { admitted: true } });
+  assert.deepEqual(f.changes, []);
+  assert.deepEqual(f.observer.snapshot(), {
+    known: true,
+    connected: false,
+    held: false,
+    inputBusy: false,
+    outputBusy: false,
+    generationBusy: false,
+  });
+  f.observer.handle({ type: 'state', state: 'listening' });
+  f.controller.audio = f.controller.createAudio({ pushToTalk: true });
+  f.input.pushToTalkKeyHeld = true;
+  f.controller.replyPending = true;
+  f.callbacks[0].onAudioStart();
+  f.controller.audio.play(2);
+  f.input.pushToTalkKeyHeld = false;
+  f.controller.replyPending = false;
+  f.callbacks[0].onAudioEnd();
+  f.controller.audio.clearPlayback();
+  f.controller.userActivityOpen = true;
+  f.controller.handleMessage({});
+  f.controller.userActivityOpen = false;
+  f.callbacks[0].onDrain();
+  f.observer.handle({ type: 'state', state: 'idle' });
+  assert.deepEqual(f.changes, [
+    {
+      known: true,
+      connected: true,
+      held: false,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    },
+    {
+      known: true,
+      connected: true,
+      held: true,
+      inputBusy: true,
+      outputBusy: false,
+      generationBusy: true,
+    },
+    {
+      known: true,
+      connected: true,
+      held: true,
+      inputBusy: true,
+      outputBusy: true,
+      generationBusy: true,
+    },
+    {
+      known: true,
+      connected: true,
+      held: false,
+      inputBusy: false,
+      outputBusy: true,
+      generationBusy: false,
+    },
+    {
+      known: true,
+      connected: true,
+      held: false,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    },
+    {
+      known: true,
+      connected: true,
+      held: false,
+      inputBusy: true,
+      outputBusy: false,
+      generationBusy: false,
+    },
+    {
+      known: true,
+      connected: true,
+      held: false,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    },
+    {
+      known: true,
+      connected: false,
+      held: false,
+      inputBusy: false,
+      outputBusy: false,
+      generationBusy: false,
+    },
+  ]);
+});

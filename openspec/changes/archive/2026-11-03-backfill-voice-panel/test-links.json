@@ -1,5 +1,6 @@
 {
-  "sourceCommit": "89fe216472d408b6ac9a0d9b53f65ef20434d917",
+  "sourceCommit": "74ec10e054a88935c7fcfce96300ea660f7c7747",
+  "treeState": "review corrections",
   "scenarios": [
     {
       "id": "voice-panel-001",
@@ -7,7 +8,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 187,
+          "line": 203,
           "name": "[voice-panel-001] The observer rejects an invalid action",
           "kind": "test",
           "tags": [
@@ -33,7 +34,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 440,
+          "line": 456,
           "name": "[voice-panel-002] The action return kind stays exact in case 0",
           "kind": "test",
           "tags": [
@@ -43,7 +44,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 440,
+          "line": 456,
           "name": "[voice-panel-002] The action return kind stays exact in case 1",
           "kind": "test",
           "tags": [
@@ -53,7 +54,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 440,
+          "line": 456,
           "name": "[voice-panel-002] The action return kind stays exact in case 2",
           "kind": "test",
           "tags": [
@@ -63,7 +64,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 440,
+          "line": 456,
           "name": "[voice-panel-002] The action return kind stays exact in case 3",
           "kind": "test",
           "tags": [
@@ -73,7 +74,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 440,
+          "line": 456,
           "name": "[voice-panel-002] The action return kind stays exact in case 4",
           "kind": "test",
           "tags": [
@@ -89,7 +90,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1633,
+          "line": 1809,
           "name": "[voice-panel-003] The native promise keeps identity and each final outcome",
           "kind": "test",
           "tags": [
@@ -131,7 +132,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 243,
+          "line": 259,
           "name": "[voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata",
           "kind": "test",
           "tags": [
@@ -142,7 +143,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1891,
+          "line": 2067,
           "name": "[voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0",
           "kind": "test",
           "tags": [
@@ -153,7 +154,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1891,
+          "line": 2067,
           "name": "[voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 1",
           "kind": "test",
           "tags": [
@@ -164,7 +165,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1891,
+          "line": 2067,
           "name": "[voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2",
           "kind": "test",
           "tags": [
@@ -175,7 +176,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1891,
+          "line": 2067,
           "name": "[voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 3",
           "kind": "test",
           "tags": [
@@ -186,7 +187,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1994,
+          "line": 2172,
           "name": "[voice-panel-005] The progress callback keeps its order and custom receiver",
           "kind": "test",
           "tags": [
@@ -212,7 +213,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 230,
+          "line": 246,
           "name": "[voice-panel-006] The custom options stay unchanged in case 0",
           "kind": "test",
           "tags": [
@@ -222,7 +223,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 230,
+          "line": 246,
           "name": "[voice-panel-006] The custom options stay unchanged in case 1",
           "kind": "test",
           "tags": [
@@ -232,7 +233,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 230,
+          "line": 246,
           "name": "[voice-panel-006] The custom options stay unchanged in case 2",
           "kind": "test",
           "tags": [
@@ -242,7 +243,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 230,
+          "line": 246,
           "name": "[voice-panel-006] The custom options stay unchanged in case 3",
           "kind": "test",
           "tags": [
@@ -252,7 +253,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2354,
+          "line": 2532,
           "name": "[voice-panel-006] The accessor options keep their own getter and object identity",
           "kind": "test",
           "tags": [
@@ -262,7 +263,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3213,
+          "line": 3469,
           "name": "[voice-panel-006] An inherited signal cannot retire an action key",
           "kind": "test",
           "tags": [
@@ -298,7 +299,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 348,
+          "line": 364,
           "name": "[voice-panel-007] The observer handles signal listener errors",
           "kind": "test",
           "tags": [
@@ -334,7 +335,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 369,
+          "line": 385,
           "name": "[voice-panel-008] The observer retires each key with the default reason",
           "kind": "test",
           "tags": [
@@ -344,7 +345,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1867,
+          "line": 2043,
           "name": "[voice-panel-008] The owner supplies a string retirement reason for each action",
           "kind": "test",
           "tags": [
@@ -354,7 +355,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3188,
+          "line": 3444,
           "name": "[voice-panel-008] A disposed observer forwards the receiver and each argument unchanged",
           "kind": "test",
           "tags": [
@@ -370,7 +371,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 196,
+          "line": 212,
           "name": "[voice-panel-009] The absent options keep their value in case 0",
           "kind": "test",
           "tags": [
@@ -380,7 +381,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 196,
+          "line": 212,
           "name": "[voice-panel-009] The absent options keep their value in case 1",
           "kind": "test",
           "tags": [
@@ -390,7 +391,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2110,
+          "line": 2288,
           "name": "[voice-panel-009] An action without options keeps its argument length",
           "kind": "test",
           "tags": [
@@ -416,7 +417,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 412,
+          "line": 428,
           "name": "[voice-panel-010] A hostile promise check cannot change the returned object",
           "kind": "test",
           "tags": [
@@ -432,7 +433,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 243,
+          "line": 259,
           "name": "[voice-panel-005 voice-panel-011] The progress wrapper copies descriptors and filters metadata",
           "kind": "test",
           "tags": [
@@ -443,7 +444,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 327,
+          "line": 343,
           "name": "[voice-panel-011] The progress metadata uses data fields in case 0",
           "kind": "test",
           "tags": [
@@ -453,7 +454,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 327,
+          "line": 343,
           "name": "[voice-panel-011] The progress metadata uses data fields in case 1",
           "kind": "test",
           "tags": [
@@ -463,7 +464,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 327,
+          "line": 343,
           "name": "[voice-panel-011] The progress metadata uses data fields in case 2",
           "kind": "test",
           "tags": [
@@ -473,7 +474,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 327,
+          "line": 343,
           "name": "[voice-panel-011] The progress metadata uses data fields in case 3",
           "kind": "test",
           "tags": [
@@ -483,7 +484,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 327,
+          "line": 343,
           "name": "[voice-panel-011] The progress metadata uses data fields in case 4",
           "kind": "test",
           "tags": [
@@ -493,7 +494,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1891,
+          "line": 2067,
           "name": "[voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 0",
           "kind": "test",
           "tags": [
@@ -504,7 +505,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1891,
+          "line": 2067,
           "name": "[voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 1",
           "kind": "test",
           "tags": [
@@ -515,7 +516,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1891,
+          "line": 2067,
           "name": "[voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 2",
           "kind": "test",
           "tags": [
@@ -526,7 +527,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1891,
+          "line": 2067,
           "name": "[voice-panel-005 voice-panel-011] The progress descriptor uses its own flag in case 3",
           "kind": "test",
           "tags": [
@@ -543,7 +544,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 440,
+          "line": 456,
           "name": "[voice-panel-067] The action return kind stays exact in case 5",
           "kind": "test",
           "tags": [
@@ -553,7 +554,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 440,
+          "line": 456,
           "name": "[voice-panel-067] The action return kind stays exact in case 6",
           "kind": "test",
           "tags": [
@@ -585,7 +586,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2673,
+          "line": 2912,
           "name": "[voice-panel-013] A closed view hides both panes in case 0",
           "kind": "test",
           "tags": [
@@ -595,7 +596,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2673,
+          "line": 2912,
           "name": "[voice-panel-013] A closed view hides both panes in case 1",
           "kind": "test",
           "tags": [
@@ -605,7 +606,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2713,
+          "line": 2952,
           "name": "[voice-panel-013] The settings button toggles a closed settings view and replaces Preview",
           "kind": "test",
           "tags": [
@@ -641,7 +642,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 566,
+          "line": 586,
           "name": "[voice-panel-014] The tab key selects its target in case 0",
           "kind": "test",
           "tags": [
@@ -651,7 +652,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 566,
+          "line": 586,
           "name": "[voice-panel-014] The tab key selects its target in case 1",
           "kind": "test",
           "tags": [
@@ -661,7 +662,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 566,
+          "line": 586,
           "name": "[voice-panel-014] The tab key selects its target in case 2",
           "kind": "test",
           "tags": [
@@ -671,7 +672,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 566,
+          "line": 586,
           "name": "[voice-panel-014] The tab key selects its target in case 3",
           "kind": "test",
           "tags": [
@@ -681,7 +682,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 566,
+          "line": 586,
           "name": "[voice-panel-014] The tab key selects its target in case 4",
           "kind": "test",
           "tags": [
@@ -691,7 +692,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1658,
+          "line": 1834,
           "name": "[voice-panel-014] Escape closes an open panel and keeps a closed panel unchanged",
           "kind": "test",
           "tags": [
@@ -707,7 +708,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2646,
+          "line": 2885,
           "name": "[voice-panel-015] A visible sync and a close keep unrelated focus unchanged",
           "kind": "test",
           "tags": [
@@ -717,7 +718,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2658,
+          "line": 2897,
           "name": "[voice-panel-015] A view change transfers focus from the old pane in case 0",
           "kind": "test",
           "tags": [
@@ -727,7 +728,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2658,
+          "line": 2897,
           "name": "[voice-panel-015] A view change transfers focus from the old pane in case 1",
           "kind": "test",
           "tags": [
@@ -753,7 +754,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2345,
+          "line": 2523,
           "name": "[voice-panel-016] The preview reader accepts only true in case 0",
           "kind": "test",
           "tags": [
@@ -763,7 +764,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2345,
+          "line": 2523,
           "name": "[voice-panel-016] The preview reader accepts only true in case 1",
           "kind": "test",
           "tags": [
@@ -773,7 +774,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2345,
+          "line": 2523,
           "name": "[voice-panel-016] The preview reader accepts only true in case 2",
           "kind": "test",
           "tags": [
@@ -783,7 +784,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2345,
+          "line": 2523,
           "name": "[voice-panel-016] The preview reader accepts only true in case 3",
           "kind": "test",
           "tags": [
@@ -809,33 +810,23 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 596,
-          "name": "[voice-panel-017] The close control ends the current presentation",
+          "line": 2821,
+          "name": "[voice-panel-017] The owner destroys an open panel in case 0",
           "kind": "test",
           "tags": [
             "voice-panel-017"
           ],
-          "title": "The close control ends the current presentation"
+          "title": "The owner destroys an open panel in case 0"
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2608,
-          "name": "[voice-panel-017] A reentrant card cannot reopen a disposed snapshot in case 0",
+          "line": 2821,
+          "name": "[voice-panel-017] The owner destroys an open panel in case 1",
           "kind": "test",
           "tags": [
             "voice-panel-017"
           ],
-          "title": "A reentrant card cannot reopen a disposed snapshot in case 0"
-        },
-        {
-          "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2608,
-          "name": "[voice-panel-017] A reentrant card cannot reopen a disposed snapshot in case 1",
-          "kind": "test",
-          "tags": [
-            "voice-panel-017"
-          ],
-          "title": "A reentrant card cannot reopen a disposed snapshot in case 1"
+          "title": "The owner destroys an open panel in case 1"
         },
         {
           "file": "src/voice/panel/manualPanel.test.mjs",
@@ -846,6 +837,32 @@
             "voice-panel-017"
           ],
           "title": "disposal hides owned presentation and removes listeners without destroying the card"
+        }
+      ]
+    },
+    {
+      "id": "voice-panel-071",
+      "title": "Use the Close control",
+      "tests": [
+        {
+          "file": "src/voice/panel/backfill.test.mjs",
+          "line": 617,
+          "name": "[voice-panel-071] The close control ends the current presentation in case 0",
+          "kind": "test",
+          "tags": [
+            "voice-panel-071"
+          ],
+          "title": "The close control ends the current presentation in case 0"
+        },
+        {
+          "file": "src/voice/panel/backfill.test.mjs",
+          "line": 617,
+          "name": "[voice-panel-071] The close control ends the current presentation in case 1",
+          "kind": "test",
+          "tags": [
+            "voice-panel-071"
+          ],
+          "title": "The close control ends the current presentation in case 1"
         }
       ]
     },
@@ -871,7 +888,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 476,
+          "line": 495,
           "name": "[voice-panel-019] The panel rejects invalid input in case 0",
           "kind": "test",
           "tags": [
@@ -881,7 +898,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 476,
+          "line": 495,
           "name": "[voice-panel-019] The panel rejects invalid input in case 1",
           "kind": "test",
           "tags": [
@@ -891,7 +908,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 476,
+          "line": 495,
           "name": "[voice-panel-019] The panel rejects invalid input in case 2",
           "kind": "test",
           "tags": [
@@ -901,7 +918,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 476,
+          "line": 495,
           "name": "[voice-panel-019] The panel rejects invalid input in case 3",
           "kind": "test",
           "tags": [
@@ -911,7 +928,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 476,
+          "line": 495,
           "name": "[voice-panel-019] The panel rejects invalid input in case 4",
           "kind": "test",
           "tags": [
@@ -921,7 +938,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 539,
+          "line": 558,
           "name": "[voice-panel-019] A listener error cancels the partial panel lifetime",
           "kind": "test",
           "tags": [
@@ -931,7 +948,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3235,
+          "line": 3491,
           "name": "[voice-panel-019] A valid reader cannot replace an absent panel in case 0",
           "kind": "test",
           "tags": [
@@ -941,7 +958,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3235,
+          "line": 3491,
           "name": "[voice-panel-019] A valid reader cannot replace an absent panel in case 1",
           "kind": "test",
           "tags": [
@@ -951,7 +968,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3251,
+          "line": 3507,
           "name": "[voice-panel-019] A valid disabled message cannot replace an invalid empty message",
           "kind": "test",
           "tags": [
@@ -967,7 +984,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 487,
+          "line": 506,
           "name": "[voice-panel-020] The panel accepts absent optional controls",
           "kind": "test",
           "tags": [
@@ -977,7 +994,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 517,
+          "line": 536,
           "name": "[voice-panel-020] The panel rejects a focus target in case 0",
           "kind": "test",
           "tags": [
@@ -987,7 +1004,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 517,
+          "line": 536,
           "name": "[voice-panel-020] The panel rejects a focus target in case 1",
           "kind": "test",
           "tags": [
@@ -997,7 +1014,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 517,
+          "line": 536,
           "name": "[voice-panel-020] The panel rejects a focus target in case 2",
           "kind": "test",
           "tags": [
@@ -1007,7 +1024,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 517,
+          "line": 536,
           "name": "[voice-panel-020] The panel rejects a focus target in case 3",
           "kind": "test",
           "tags": [
@@ -1017,7 +1034,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2488,
+          "line": 2669,
           "name": "[voice-panel-020] The preview snapshot checks each visibility condition in case 0",
           "kind": "test",
           "tags": [
@@ -1027,7 +1044,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2488,
+          "line": 2669,
           "name": "[voice-panel-020] The preview snapshot checks each visibility condition in case 1",
           "kind": "test",
           "tags": [
@@ -1037,7 +1054,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2488,
+          "line": 2669,
           "name": "[voice-panel-020] The preview snapshot checks each visibility condition in case 2",
           "kind": "test",
           "tags": [
@@ -1047,7 +1064,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2488,
+          "line": 2669,
           "name": "[voice-panel-020] The preview snapshot checks each visibility condition in case 3",
           "kind": "test",
           "tags": [
@@ -1057,7 +1074,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2488,
+          "line": 2669,
           "name": "[voice-panel-020] The preview snapshot checks each visibility condition in case 4",
           "kind": "test",
           "tags": [
@@ -1067,7 +1084,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2488,
+          "line": 2669,
           "name": "[voice-panel-020] The preview snapshot checks each visibility condition in case 5",
           "kind": "test",
           "tags": [
@@ -1077,7 +1094,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2488,
+          "line": 2669,
           "name": "[voice-panel-020] The preview snapshot checks each visibility condition in case 6",
           "kind": "test",
           "tags": [
@@ -1087,7 +1104,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2488,
+          "line": 2669,
           "name": "[voice-panel-020] The preview snapshot checks each visibility condition in case 7",
           "kind": "test",
           "tags": [
@@ -1097,17 +1114,17 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2550,
-          "name": "[voice-panel-020] A missing visibility method does not prevent focus",
+          "line": 2731,
+          "name": "[voice-panel-020] An absent visibility method does not prevent focus",
           "kind": "test",
           "tags": [
             "voice-panel-020"
           ],
-          "title": "A missing visibility method does not prevent focus"
+          "title": "An absent visibility method does not prevent focus"
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2558,
+          "line": 2739,
           "name": "[voice-panel-020] A panel without tabs accepts a focus request",
           "kind": "test",
           "tags": [
@@ -1117,7 +1134,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2688,
+          "line": 2927,
           "name": "[voice-panel-020] A hidden panel cannot focus an independently visible tab",
           "kind": "test",
           "tags": [
@@ -1127,7 +1144,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2696,
+          "line": 2935,
           "name": "[voice-panel-020] An absent card keeps the empty preview visible",
           "kind": "test",
           "tags": [
@@ -1137,7 +1154,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3269,
+          "line": 3525,
           "name": "[voice-panel-020] A visibility method cannot replace a target guard in case 0",
           "kind": "test",
           "tags": [
@@ -1147,7 +1164,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3269,
+          "line": 3525,
           "name": "[voice-panel-020] A visibility method cannot replace a target guard in case 1",
           "kind": "test",
           "tags": [
@@ -1163,7 +1180,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 638,
+          "line": 671,
           "name": "[voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent",
           "kind": "test",
           "tags": [
@@ -1190,7 +1207,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 638,
+          "line": 671,
           "name": "[voice-panel-021 voice-panel-022] The model uses browser storage when the storage option is absent",
           "kind": "test",
           "tags": [
@@ -1201,7 +1218,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 710,
+          "line": 743,
           "name": "[voice-panel-022] The preference saves valid minutes in case 0",
           "kind": "test",
           "tags": [
@@ -1211,7 +1228,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 710,
+          "line": 743,
           "name": "[voice-panel-022] The preference saves valid minutes in case 1",
           "kind": "test",
           "tags": [
@@ -1221,7 +1238,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 710,
+          "line": 743,
           "name": "[voice-panel-022] The preference saves valid minutes in case 2",
           "kind": "test",
           "tags": [
@@ -1231,7 +1248,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 710,
+          "line": 743,
           "name": "[voice-panel-022] The preference saves valid minutes in case 3",
           "kind": "test",
           "tags": [
@@ -1241,7 +1258,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3295,
+          "line": 3551,
           "name": "[voice-panel-022] The preset control applies its own value in case 0",
           "kind": "test",
           "tags": [
@@ -1251,7 +1268,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3295,
+          "line": 3551,
           "name": "[voice-panel-022] The preset control applies its own value in case 1",
           "kind": "test",
           "tags": [
@@ -1261,7 +1278,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3295,
+          "line": 3551,
           "name": "[voice-panel-022] The preset control applies its own value in case 2",
           "kind": "test",
           "tags": [
@@ -1271,7 +1288,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3295,
+          "line": 3551,
           "name": "[voice-panel-022] The preset control applies its own value in case 3",
           "kind": "test",
           "tags": [
@@ -1297,7 +1314,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 0",
           "kind": "test",
           "tags": [
@@ -1307,7 +1324,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 1",
           "kind": "test",
           "tags": [
@@ -1317,7 +1334,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 2",
           "kind": "test",
           "tags": [
@@ -1327,7 +1344,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 3",
           "kind": "test",
           "tags": [
@@ -1337,7 +1354,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 4",
           "kind": "test",
           "tags": [
@@ -1347,7 +1364,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 5",
           "kind": "test",
           "tags": [
@@ -1357,7 +1374,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 6",
           "kind": "test",
           "tags": [
@@ -1367,7 +1384,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 7",
           "kind": "test",
           "tags": [
@@ -1377,7 +1394,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 8",
           "kind": "test",
           "tags": [
@@ -1387,7 +1404,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 9",
           "kind": "test",
           "tags": [
@@ -1397,7 +1414,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 10",
           "kind": "test",
           "tags": [
@@ -1407,7 +1424,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 11",
           "kind": "test",
           "tags": [
@@ -1417,7 +1434,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 683,
+          "line": 716,
           "name": "[voice-panel-023] The preference rejects an invalid value in case 12",
           "kind": "test",
           "tags": [
@@ -1427,7 +1444,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2127,
+          "line": 2305,
           "name": "[voice-panel-023] The model rejects a nonboolean preview value in case 0",
           "kind": "test",
           "tags": [
@@ -1437,7 +1454,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2127,
+          "line": 2305,
           "name": "[voice-panel-023] The model rejects a nonboolean preview value in case 1",
           "kind": "test",
           "tags": [
@@ -1447,7 +1464,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2127,
+          "line": 2305,
           "name": "[voice-panel-023] The model rejects a nonboolean preview value in case 2",
           "kind": "test",
           "tags": [
@@ -1463,7 +1480,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 628,
+          "line": 661,
           "name": "[voice-panel-024] The incomplete storage keeps live values in case 0",
           "kind": "test",
           "tags": [
@@ -1473,7 +1490,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 628,
+          "line": 661,
           "name": "[voice-panel-024] The incomplete storage keeps live values in case 1",
           "kind": "test",
           "tags": [
@@ -1483,7 +1500,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 628,
+          "line": 661,
           "name": "[voice-panel-024] The incomplete storage keeps live values in case 2",
           "kind": "test",
           "tags": [
@@ -1493,7 +1510,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 628,
+          "line": 661,
           "name": "[voice-panel-024] The incomplete storage keeps live values in case 3",
           "kind": "test",
           "tags": [
@@ -1503,7 +1520,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1691,
+          "line": 1867,
           "name": "[voice-panel-024] The storage failure keeps live values across controls in case 0",
           "kind": "test",
           "tags": [
@@ -1513,7 +1530,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1691,
+          "line": 1867,
           "name": "[voice-panel-024] The storage failure keeps live values across controls in case 1",
           "kind": "test",
           "tags": [
@@ -1523,7 +1540,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1691,
+          "line": 1867,
           "name": "[voice-panel-024] The storage failure keeps live values across controls in case 2",
           "kind": "test",
           "tags": [
@@ -1533,7 +1550,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1691,
+          "line": 1867,
           "name": "[voice-panel-024] The storage failure keeps live values across controls in case 3",
           "kind": "test",
           "tags": [
@@ -1543,7 +1560,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1691,
+          "line": 1867,
           "name": "[voice-panel-024] The storage failure keeps live values across controls in case 4",
           "kind": "test",
           "tags": [
@@ -1553,7 +1570,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3049,
+          "line": 3305,
           "name": "[voice-panel-024] An incomplete store cannot receive a write or a new read",
           "kind": "test",
           "tags": [
@@ -1569,7 +1586,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2148,
+          "line": 2326,
           "name": "[voice-panel-025] A recovered store saves unchanged values and removes both warnings",
           "kind": "test",
           "tags": [
@@ -1579,7 +1596,7 @@
         },
         {
           "file": "src/voice/panel/preferences.test.mjs",
-          "line": 187,
+          "line": 195,
           "name": "[voice-panel-025] same-value retry really writes and clears warnings after storage recovers",
           "kind": "test",
           "tags": [
@@ -1595,7 +1612,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3095,
+          "line": 3351,
           "name": "[voice-panel-026] The initial None value keeps a positive custom editor value",
           "kind": "test",
           "tags": [
@@ -1605,7 +1622,7 @@
         },
         {
           "file": "src/voice/panel/preferences.test.mjs",
-          "line": 214,
+          "line": 222,
           "name": "[voice-panel-026] Custom commits displayed valid value immediately, even when equal to preset",
           "kind": "test",
           "tags": [
@@ -1621,7 +1638,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3168,
+          "line": 3424,
           "name": "[voice-panel-027] A custom select rejects zero without a preference write",
           "kind": "test",
           "tags": [
@@ -1631,7 +1648,7 @@
         },
         {
           "file": "src/voice/panel/preferences.test.mjs",
-          "line": 236,
+          "line": 244,
           "name": "[voice-panel-027] invalid control edits restore valid state without writes; None remains distinct",
           "kind": "test",
           "tags": [
@@ -1647,17 +1664,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 731,
-          "name": "[voice-panel-028] The model rejects an invalid listener",
-          "kind": "test",
-          "tags": [
-            "voice-panel-028"
-          ],
-          "title": "The model rejects an invalid listener"
-        },
-        {
-          "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2020,
+          "line": 2198,
           "name": "[voice-panel-028] Each listener receives a separate complete snapshot",
           "kind": "test",
           "tags": [
@@ -1667,7 +1674,7 @@
         },
         {
           "file": "src/voice/panel/preferences.test.mjs",
-          "line": 262,
+          "line": 270,
           "name": "[voice-panel-028] model snapshots cannot mutate state; unsubscribe and binder disposal release ownership",
           "kind": "test",
           "tags": [
@@ -1678,12 +1685,68 @@
       ]
     },
     {
+      "id": "voice-panel-072",
+      "title": "Reject an invalid preference listener",
+      "tests": [
+        {
+          "file": "src/voice/panel/backfill.test.mjs",
+          "line": 771,
+          "name": "[voice-panel-072] The model rejects an invalid listener in case 0",
+          "kind": "test",
+          "tags": [
+            "voice-panel-072"
+          ],
+          "title": "The model rejects an invalid listener in case 0"
+        },
+        {
+          "file": "src/voice/panel/backfill.test.mjs",
+          "line": 771,
+          "name": "[voice-panel-072] The model rejects an invalid listener in case 1",
+          "kind": "test",
+          "tags": [
+            "voice-panel-072"
+          ],
+          "title": "The model rejects an invalid listener in case 1"
+        },
+        {
+          "file": "src/voice/panel/backfill.test.mjs",
+          "line": 771,
+          "name": "[voice-panel-072] The model rejects an invalid listener in case 2",
+          "kind": "test",
+          "tags": [
+            "voice-panel-072"
+          ],
+          "title": "The model rejects an invalid listener in case 2"
+        },
+        {
+          "file": "src/voice/panel/backfill.test.mjs",
+          "line": 771,
+          "name": "[voice-panel-072] The model rejects an invalid listener in case 3",
+          "kind": "test",
+          "tags": [
+            "voice-panel-072"
+          ],
+          "title": "The model rejects an invalid listener in case 3"
+        },
+        {
+          "file": "src/voice/panel/backfill.test.mjs",
+          "line": 771,
+          "name": "[voice-panel-072] The model rejects an invalid listener in case 4",
+          "kind": "test",
+          "tags": [
+            "voice-panel-072"
+          ],
+          "title": "The model rejects an invalid listener in case 4"
+        }
+      ]
+    },
+    {
       "id": "voice-panel-029",
       "title": "Bind optional preference controls",
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 740,
+          "line": 781,
           "name": "[voice-panel-029] The partial controls use a valid custom value in case 0",
           "kind": "test",
           "tags": [
@@ -1693,7 +1756,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 740,
+          "line": 781,
           "name": "[voice-panel-029] The partial controls use a valid custom value in case 1",
           "kind": "test",
           "tags": [
@@ -1703,7 +1766,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 740,
+          "line": 781,
           "name": "[voice-panel-029] The partial controls use a valid custom value in case 2",
           "kind": "test",
           "tags": [
@@ -1713,7 +1776,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 763,
+          "line": 804,
           "name": "[voice-panel-029] The select works without a custom editor",
           "kind": "test",
           "tags": [
@@ -1723,7 +1786,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 784,
+          "line": 825,
           "name": "[voice-panel-029] The preview control restores a rejected value and ignores a retired callback",
           "kind": "test",
           "tags": [
@@ -1733,7 +1796,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1746,
+          "line": 1922,
           "name": "[voice-panel-029] A custom preference source can call its listener after disposal",
           "kind": "test",
           "tags": [
@@ -1743,7 +1806,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2577,
+          "line": 2758,
           "name": "[voice-panel-029] The binder removes its control listener in case 0",
           "kind": "test",
           "tags": [
@@ -1753,7 +1816,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2577,
+          "line": 2758,
           "name": "[voice-panel-029] The binder removes its control listener in case 1",
           "kind": "test",
           "tags": [
@@ -1763,7 +1826,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2577,
+          "line": 2758,
           "name": "[voice-panel-029] The binder removes its control listener in case 2",
           "kind": "test",
           "tags": [
@@ -1773,7 +1836,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3072,
+          "line": 3328,
           "name": "[voice-panel-029] The custom value precedes a synchronous source notice",
           "kind": "test",
           "tags": [
@@ -1783,7 +1846,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3118,
+          "line": 3374,
           "name": "[voice-panel-029] The zero branch uses the current minute value from a custom source",
           "kind": "test",
           "tags": [
@@ -1793,7 +1856,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3146,
+          "line": 3402,
           "name": "[voice-panel-029] The preview checkbox applies both boolean values through its listener",
           "kind": "test",
           "tags": [
@@ -1809,7 +1872,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0",
           "kind": "test",
           "tags": [
@@ -1820,7 +1883,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1",
           "kind": "test",
           "tags": [
@@ -1831,7 +1894,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 2",
           "kind": "test",
           "tags": [
@@ -1842,7 +1905,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 3",
           "kind": "test",
           "tags": [
@@ -1853,7 +1916,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 4",
           "kind": "test",
           "tags": [
@@ -1864,7 +1927,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 5",
           "kind": "test",
           "tags": [
@@ -1875,7 +1938,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 6",
           "kind": "test",
           "tags": [
@@ -1918,7 +1981,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 887,
+          "line": 928,
           "name": "[voice-panel-032] The timer rejects invalid initial minutes in case 0",
           "kind": "test",
           "tags": [
@@ -1928,7 +1991,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 887,
+          "line": 928,
           "name": "[voice-panel-032] The timer rejects invalid initial minutes in case 1",
           "kind": "test",
           "tags": [
@@ -1938,7 +2001,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 887,
+          "line": 928,
           "name": "[voice-panel-032] The timer rejects invalid initial minutes in case 2",
           "kind": "test",
           "tags": [
@@ -1948,7 +2011,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 887,
+          "line": 928,
           "name": "[voice-panel-032] The timer rejects invalid initial minutes in case 3",
           "kind": "test",
           "tags": [
@@ -1958,7 +2021,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2181,
+          "line": 2359,
           "name": "[voice-panel-032 voice-panel-065] The timer accepts both minute bounds",
           "kind": "test",
           "tags": [
@@ -1969,7 +2032,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3383,
+          "line": 3639,
           "name": "[voice-panel-032] The initial timer uses the supplied minutes in case 0",
           "kind": "test",
           "tags": [
@@ -1979,7 +2042,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3383,
+          "line": 3639,
           "name": "[voice-panel-032] The initial timer uses the supplied minutes in case 1",
           "kind": "test",
           "tags": [
@@ -1989,7 +2052,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3383,
+          "line": 3639,
           "name": "[voice-panel-032] The initial timer uses the supplied minutes in case 2",
           "kind": "test",
           "tags": [
@@ -2005,7 +2068,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 0",
           "kind": "test",
           "tags": [
@@ -2016,7 +2079,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 1",
           "kind": "test",
           "tags": [
@@ -2027,7 +2090,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 2",
           "kind": "test",
           "tags": [
@@ -2038,7 +2101,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 3",
           "kind": "test",
           "tags": [
@@ -2049,7 +2112,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 4",
           "kind": "test",
           "tags": [
@@ -2060,7 +2123,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 5",
           "kind": "test",
           "tags": [
@@ -2071,7 +2134,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 861,
+          "line": 902,
           "name": "[voice-panel-030 voice-panel-033] The idle timer checks one blocker in case 6",
           "kind": "test",
           "tags": [
@@ -2082,7 +2145,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 920,
+          "line": 961,
           "name": "[voice-panel-033] A quiet timer can expire without a callback",
           "kind": "test",
           "tags": [
@@ -2108,7 +2171,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 895,
+          "line": 936,
           "name": "[voice-panel-034] The timer cancels its task and ignores all retired calls",
           "kind": "test",
           "tags": [
@@ -2118,7 +2181,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2462,
+          "line": 2643,
           "name": "[voice-panel-034] An activity reader can destroy the timer before it arms again",
           "kind": "test",
           "tags": [
@@ -2128,7 +2191,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2592,
+          "line": 2805,
           "name": "[voice-panel-034] An old timer cannot expire after a quiet successor starts",
           "kind": "test",
           "tags": [
@@ -2154,7 +2217,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2181,
+          "line": 2359,
           "name": "[voice-panel-032 voice-panel-065] The timer accepts both minute bounds",
           "kind": "test",
           "tags": [
@@ -2165,7 +2228,7 @@
         },
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 324,
+          "line": 326,
           "name": "[voice-panel-065 voice-panel-066] None cancels integrated app timer and unknown custom hosts never guess expiry",
           "kind": "test",
           "tags": [
@@ -2182,7 +2245,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2814,
+          "line": 3061,
           "name": "[voice-panel-035] A custom observer ignores state changes and sends no notice",
           "kind": "test",
           "tags": [
@@ -2192,7 +2255,7 @@
         },
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 356,
+          "line": 358,
           "name": "[voice-panel-035] native factory with custom controller remains uninstrumented despite panel opt-in",
           "kind": "test",
           "tags": [
@@ -2218,7 +2281,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1053,
+          "line": 1138,
           "name": "[voice-panel-036] The audio start checks admission in case 0",
           "kind": "test",
           "tags": [
@@ -2228,7 +2291,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1053,
+          "line": 1138,
           "name": "[voice-panel-036] The audio start checks admission in case 1",
           "kind": "test",
           "tags": [
@@ -2238,7 +2301,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1053,
+          "line": 1138,
           "name": "[voice-panel-036] The audio start checks admission in case 2",
           "kind": "test",
           "tags": [
@@ -2248,7 +2311,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1064,
+          "line": 1149,
           "name": "[voice-panel-036] The Gemini activity field reports local input",
           "kind": "test",
           "tags": [
@@ -2258,7 +2321,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1203,
+          "line": 1290,
           "name": "[voice-panel-036] The OpenAI speech edges change the input state",
           "kind": "test",
           "tags": [
@@ -2268,7 +2331,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2727,
+          "line": 2966,
           "name": "[voice-panel-036] The native input owner uses a distinct held flag in case 0",
           "kind": "test",
           "tags": [
@@ -2278,7 +2341,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2727,
+          "line": 2966,
           "name": "[voice-panel-036] The native input owner uses a distinct held flag in case 1",
           "kind": "test",
           "tags": [
@@ -2304,43 +2367,40 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1028,
-          "name": "[voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 0",
+          "line": 1098,
+          "name": "[voice-panel-037 voice-panel-040] The audio method updates output in case 0",
           "kind": "test",
           "tags": [
             "voice-panel-037",
-            "voice-panel-040",
-            "voice-panel-047"
+            "voice-panel-040"
           ],
           "title": "The audio method updates output in case 0"
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1028,
-          "name": "[voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 1",
+          "line": 1098,
+          "name": "[voice-panel-037 voice-panel-040] The audio method updates output in case 1",
           "kind": "test",
           "tags": [
             "voice-panel-037",
-            "voice-panel-040",
-            "voice-panel-047"
+            "voice-panel-040"
           ],
           "title": "The audio method updates output in case 1"
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1028,
-          "name": "[voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 2",
+          "line": 1098,
+          "name": "[voice-panel-037 voice-panel-040] The audio method updates output in case 2",
           "kind": "test",
           "tags": [
             "voice-panel-037",
-            "voice-panel-040",
-            "voice-panel-047"
+            "voice-panel-040"
           ],
           "title": "The audio method updates output in case 2"
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2874,
+          "line": 3121,
           "name": "[voice-panel-037] The output state checks ownership of the audio object",
           "kind": "test",
           "tags": [
@@ -2350,7 +2410,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2886,
+          "line": 3133,
           "name": "[voice-panel-037] A null audio owner reports no output",
           "kind": "test",
           "tags": [
@@ -2360,7 +2420,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3039,
+          "line": 3295,
           "name": "[voice-panel-037] A drain event cannot admit input capture",
           "kind": "test",
           "tags": [
@@ -2386,7 +2446,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1236,
+          "line": 1331,
           "name": "[voice-panel-038] A detached audio wrapper cannot notify the current mount",
           "kind": "test",
           "tags": [
@@ -2396,7 +2456,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2953,
+          "line": 3209,
           "name": "[voice-panel-038] An audio callback cannot act through a different controller owner",
           "kind": "test",
           "tags": [
@@ -2406,7 +2466,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2963,
+          "line": 3219,
           "name": "[voice-panel-038] A closed audio callback cannot restore input activity",
           "kind": "test",
           "tags": [
@@ -2416,7 +2476,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2973,
+          "line": 3229,
           "name": "[voice-panel-038] An old callback stays retired when the factory reuses its audio object",
           "kind": "test",
           "tags": [
@@ -2426,7 +2486,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2993,
+          "line": 3249,
           "name": "[voice-panel-038] A retired factory callback cannot act through a null audio result",
           "kind": "test",
           "tags": [
@@ -2452,7 +2512,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1000,
+          "line": 1062,
           "name": "[voice-panel-039] The audio callback keeps its own values in case 0",
           "kind": "test",
           "tags": [
@@ -2462,7 +2522,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1000,
+          "line": 1062,
           "name": "[voice-panel-039] The audio callback keeps its own values in case 1",
           "kind": "test",
           "tags": [
@@ -2472,7 +2532,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1000,
+          "line": 1062,
           "name": "[voice-panel-039] The audio callback keeps its own values in case 2",
           "kind": "test",
           "tags": [
@@ -2482,7 +2542,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1000,
+          "line": 1062,
           "name": "[voice-panel-039] The audio callback keeps its own values in case 3",
           "kind": "test",
           "tags": [
@@ -2508,7 +2568,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 978,
+          "line": 1019,
           "name": "[voice-panel-040 voice-panel-047] The input method keeps its call in case 0",
           "kind": "test",
           "tags": [
@@ -2519,7 +2579,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 978,
+          "line": 1019,
           "name": "[voice-panel-040 voice-panel-047] The input method keeps its call in case 1",
           "kind": "test",
           "tags": [
@@ -2530,7 +2590,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 978,
+          "line": 1019,
           "name": "[voice-panel-040 voice-panel-047] The input method keeps its call in case 2",
           "kind": "test",
           "tags": [
@@ -2541,37 +2601,34 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1028,
-          "name": "[voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 0",
+          "line": 1098,
+          "name": "[voice-panel-037 voice-panel-040] The audio method updates output in case 0",
           "kind": "test",
           "tags": [
             "voice-panel-037",
-            "voice-panel-040",
-            "voice-panel-047"
+            "voice-panel-040"
           ],
           "title": "The audio method updates output in case 0"
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1028,
-          "name": "[voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 1",
+          "line": 1098,
+          "name": "[voice-panel-037 voice-panel-040] The audio method updates output in case 1",
           "kind": "test",
           "tags": [
             "voice-panel-037",
-            "voice-panel-040",
-            "voice-panel-047"
+            "voice-panel-040"
           ],
           "title": "The audio method updates output in case 1"
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1028,
-          "name": "[voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 2",
+          "line": 1098,
+          "name": "[voice-panel-037 voice-panel-040] The audio method updates output in case 2",
           "kind": "test",
           "tags": [
             "voice-panel-037",
-            "voice-panel-040",
-            "voice-panel-047"
+            "voice-panel-040"
           ],
           "title": "The audio method updates output in case 2"
         },
@@ -2593,7 +2650,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1151,
+          "line": 1236,
           "name": "[voice-panel-041] The audio evidence blocks a silent result in case 0",
           "kind": "test",
           "tags": [
@@ -2603,7 +2660,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1151,
+          "line": 1236,
           "name": "[voice-panel-041] The audio evidence blocks a silent result in case 1",
           "kind": "test",
           "tags": [
@@ -2613,7 +2670,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1151,
+          "line": 1236,
           "name": "[voice-panel-041] The audio evidence blocks a silent result in case 2",
           "kind": "test",
           "tags": [
@@ -2623,7 +2680,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1151,
+          "line": 1236,
           "name": "[voice-panel-041] The audio evidence blocks a silent result in case 3",
           "kind": "test",
           "tags": [
@@ -2669,7 +2726,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 959,
+          "line": 1000,
           "name": "[voice-panel-042] The initial output rejects a busy field in case 0",
           "kind": "test",
           "tags": [
@@ -2679,7 +2736,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 959,
+          "line": 1000,
           "name": "[voice-panel-042] The initial output rejects a busy field in case 1",
           "kind": "test",
           "tags": [
@@ -2689,7 +2746,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 959,
+          "line": 1000,
           "name": "[voice-panel-042] The initial output rejects a busy field in case 2",
           "kind": "test",
           "tags": [
@@ -2699,7 +2756,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 959,
+          "line": 1000,
           "name": "[voice-panel-042] The initial output rejects a busy field in case 3",
           "kind": "test",
           "tags": [
@@ -2709,7 +2766,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 959,
+          "line": 1000,
           "name": "[voice-panel-042] The initial output rejects a busy field in case 4",
           "kind": "test",
           "tags": [
@@ -2719,7 +2776,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 959,
+          "line": 1000,
           "name": "[voice-panel-042] The initial output rejects a busy field in case 5",
           "kind": "test",
           "tags": [
@@ -2729,7 +2786,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1982,
+          "line": 2160,
           "name": "[voice-panel-042] The initial native status controls output knowledge in case 0",
           "kind": "test",
           "tags": [
@@ -2739,7 +2796,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1982,
+          "line": 2160,
           "name": "[voice-panel-042] The initial native status controls output knowledge in case 1",
           "kind": "test",
           "tags": [
@@ -2749,7 +2806,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1982,
+          "line": 2160,
           "name": "[voice-panel-042] The initial native status controls output knowledge in case 2",
           "kind": "test",
           "tags": [
@@ -2759,7 +2816,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1982,
+          "line": 2160,
           "name": "[voice-panel-042] The initial native status controls output knowledge in case 3",
           "kind": "test",
           "tags": [
@@ -2769,7 +2826,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2191,
+          "line": 2369,
           "name": "[voice-panel-042] A data channel prevents clean initial output knowledge",
           "kind": "test",
           "tags": [
@@ -2795,7 +2852,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 940,
+          "line": 981,
           "name": "[voice-panel-043] The native work field decides activity in case 0",
           "kind": "test",
           "tags": [
@@ -2805,7 +2862,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 940,
+          "line": 981,
           "name": "[voice-panel-043] The native work field decides activity in case 1",
           "kind": "test",
           "tags": [
@@ -2815,7 +2872,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 940,
+          "line": 981,
           "name": "[voice-panel-043] The native work field decides activity in case 2",
           "kind": "test",
           "tags": [
@@ -2825,7 +2882,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 940,
+          "line": 981,
           "name": "[voice-panel-043] The native work field decides activity in case 3",
           "kind": "test",
           "tags": [
@@ -2835,7 +2892,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 940,
+          "line": 981,
           "name": "[voice-panel-043] The native work field decides activity in case 4",
           "kind": "test",
           "tags": [
@@ -2845,7 +2902,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 940,
+          "line": 981,
           "name": "[voice-panel-043] The native work field decides activity in case 5",
           "kind": "test",
           "tags": [
@@ -2855,7 +2912,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 940,
+          "line": 981,
           "name": "[voice-panel-043] The native work field decides activity in case 6",
           "kind": "test",
           "tags": [
@@ -2865,7 +2922,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 940,
+          "line": 981,
           "name": "[voice-panel-043] The native work field decides activity in case 7",
           "kind": "test",
           "tags": [
@@ -2875,7 +2932,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 940,
+          "line": 981,
           "name": "[voice-panel-043] The native work field decides activity in case 8",
           "kind": "test",
           "tags": [
@@ -2885,7 +2942,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 940,
+          "line": 981,
           "name": "[voice-panel-043] The native work field decides activity in case 9",
           "kind": "test",
           "tags": [
@@ -2895,7 +2952,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 940,
+          "line": 981,
           "name": "[voice-panel-043] The native work field decides activity in case 10",
           "kind": "test",
           "tags": [
@@ -2905,7 +2962,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1988,
+          "line": 2166,
           "name": "[voice-panel-043] The Gemini user turn flag does not report generation work",
           "kind": "test",
           "tags": [
@@ -2915,7 +2972,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2854,
+          "line": 3101,
           "name": "[voice-panel-043] The OpenAI input state ignores the Gemini input field",
           "kind": "test",
           "tags": [
@@ -2925,7 +2982,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2867,
+          "line": 3114,
           "name": "[voice-panel-043] The OpenAI work state ignores a Gemini field in case 0",
           "kind": "test",
           "tags": [
@@ -2935,7 +2992,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2867,
+          "line": 3114,
           "name": "[voice-panel-043] The OpenAI work state ignores a Gemini field in case 1",
           "kind": "test",
           "tags": [
@@ -2945,7 +3002,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2867,
+          "line": 3114,
           "name": "[voice-panel-043] The OpenAI work state ignores a Gemini field in case 2",
           "kind": "test",
           "tags": [
@@ -2955,7 +3012,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2867,
+          "line": 3114,
           "name": "[voice-panel-043] The OpenAI work state ignores a Gemini field in case 3",
           "kind": "test",
           "tags": [
@@ -2965,7 +3022,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2867,
+          "line": 3114,
           "name": "[voice-panel-043] The OpenAI work state ignores a Gemini field in case 4",
           "kind": "test",
           "tags": [
@@ -2975,7 +3032,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2867,
+          "line": 3114,
           "name": "[voice-panel-043] The OpenAI work state ignores a Gemini field in case 5",
           "kind": "test",
           "tags": [
@@ -3011,7 +3068,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1080,
+          "line": 1165,
           "name": "[voice-panel-044] The text wrapper checks its input in case 0",
           "kind": "test",
           "tags": [
@@ -3021,7 +3078,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1080,
+          "line": 1165,
           "name": "[voice-panel-044] The text wrapper checks its input in case 1",
           "kind": "test",
           "tags": [
@@ -3031,7 +3088,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1080,
+          "line": 1165,
           "name": "[voice-panel-044] The text wrapper checks its input in case 2",
           "kind": "test",
           "tags": [
@@ -3041,7 +3098,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1080,
+          "line": 1165,
           "name": "[voice-panel-044] The text wrapper checks its input in case 3",
           "kind": "test",
           "tags": [
@@ -3051,7 +3108,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1080,
+          "line": 1165,
           "name": "[voice-panel-044] The text wrapper checks its input in case 4",
           "kind": "test",
           "tags": [
@@ -3061,7 +3118,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1768,
+          "line": 1944,
           "name": "[voice-panel-044] The text wrapper isolates a failed input observer",
           "kind": "test",
           "tags": [
@@ -3077,7 +3134,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1129,
+          "line": 1214,
           "name": "[voice-panel-045] The response checks every output part in case 0",
           "kind": "test",
           "tags": [
@@ -3087,7 +3144,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1129,
+          "line": 1214,
           "name": "[voice-panel-045] The response checks every output part in case 1",
           "kind": "test",
           "tags": [
@@ -3097,7 +3154,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1129,
+          "line": 1214,
           "name": "[voice-panel-045] The response checks every output part in case 2",
           "kind": "test",
           "tags": [
@@ -3107,7 +3164,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1129,
+          "line": 1214,
           "name": "[voice-panel-045] The response checks every output part in case 3",
           "kind": "test",
           "tags": [
@@ -3117,7 +3174,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1129,
+          "line": 1214,
           "name": "[voice-panel-045] The response checks every output part in case 4",
           "kind": "test",
           "tags": [
@@ -3127,7 +3184,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1129,
+          "line": 1214,
           "name": "[voice-panel-045] The response checks every output part in case 5",
           "kind": "test",
           "tags": [
@@ -3137,7 +3194,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1129,
+          "line": 1214,
           "name": "[voice-panel-045] The response checks every output part in case 6",
           "kind": "test",
           "tags": [
@@ -3147,7 +3204,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1129,
+          "line": 1214,
           "name": "[voice-panel-045] The response checks every output part in case 7",
           "kind": "test",
           "tags": [
@@ -3157,7 +3214,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1176,
+          "line": 1261,
           "name": "[voice-panel-045] The silent response checks its status in case 0",
           "kind": "test",
           "tags": [
@@ -3167,7 +3224,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1176,
+          "line": 1261,
           "name": "[voice-panel-045] The silent response checks its status in case 1",
           "kind": "test",
           "tags": [
@@ -3177,7 +3234,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1176,
+          "line": 1261,
           "name": "[voice-panel-045] The silent response checks its status in case 2",
           "kind": "test",
           "tags": [
@@ -3187,7 +3244,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1176,
+          "line": 1261,
           "name": "[voice-panel-045] The silent response checks its status in case 3",
           "kind": "test",
           "tags": [
@@ -3197,7 +3254,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1176,
+          "line": 1261,
           "name": "[voice-panel-045] The silent response checks its status in case 4",
           "kind": "test",
           "tags": [
@@ -3207,7 +3264,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1961,
+          "line": 2137,
           "name": "[voice-panel-045] The silent output accepts one part type in case 0",
           "kind": "test",
           "tags": [
@@ -3217,7 +3274,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1961,
+          "line": 2137,
           "name": "[voice-panel-045] The silent output accepts one part type in case 1",
           "kind": "test",
           "tags": [
@@ -3227,7 +3284,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1961,
+          "line": 2137,
           "name": "[voice-panel-045] The silent output accepts one part type in case 2",
           "kind": "test",
           "tags": [
@@ -3237,7 +3294,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2764,
+          "line": 3003,
           "name": "[voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 0",
           "kind": "test",
           "tags": [
@@ -3248,7 +3305,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2764,
+          "line": 3003,
           "name": "[voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 1",
           "kind": "test",
           "tags": [
@@ -3259,7 +3316,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2764,
+          "line": 3003,
           "name": "[voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 2",
           "kind": "test",
           "tags": [
@@ -3270,7 +3327,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2764,
+          "line": 3003,
           "name": "[voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 3",
           "kind": "test",
           "tags": [
@@ -3281,7 +3338,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2764,
+          "line": 3003,
           "name": "[voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 4",
           "kind": "test",
           "tags": [
@@ -3308,7 +3365,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1188,
+          "line": 1275,
           "name": "[voice-panel-046] The response limit keeps unknown output until playback clears it",
           "kind": "test",
           "tags": [
@@ -3318,7 +3375,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2196,
+          "line": 2374,
           "name": "[voice-panel-046] The response table accepts exactly 64 silent replies",
           "kind": "test",
           "tags": [
@@ -3328,7 +3385,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2803,
+          "line": 3050,
           "name": "[voice-panel-046] An event without completion cannot settle an unresolved response",
           "kind": "test",
           "tags": [
@@ -3338,7 +3395,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2928,
+          "line": 3184,
           "name": "[voice-panel-046] Repeated start phases cannot erase an unresolved response",
           "kind": "test",
           "tags": [
@@ -3348,7 +3405,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2943,
+          "line": 3199,
           "name": "[voice-panel-046] A response without an id cannot establish silent output",
           "kind": "test",
           "tags": [
@@ -3358,7 +3415,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3280,
+          "line": 3536,
           "name": "[voice-panel-046] A closed transport error retires unresolved output evidence",
           "kind": "test",
           "tags": [
@@ -3384,7 +3441,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 978,
+          "line": 1019,
           "name": "[voice-panel-040 voice-panel-047] The input method keeps its call in case 0",
           "kind": "test",
           "tags": [
@@ -3395,7 +3452,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 978,
+          "line": 1019,
           "name": "[voice-panel-040 voice-panel-047] The input method keeps its call in case 1",
           "kind": "test",
           "tags": [
@@ -3406,7 +3463,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 978,
+          "line": 1019,
           "name": "[voice-panel-040 voice-panel-047] The input method keeps its call in case 2",
           "kind": "test",
           "tags": [
@@ -3417,43 +3474,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1028,
-          "name": "[voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 0",
-          "kind": "test",
-          "tags": [
-            "voice-panel-037",
-            "voice-panel-040",
-            "voice-panel-047"
-          ],
-          "title": "The audio method updates output in case 0"
-        },
-        {
-          "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1028,
-          "name": "[voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 1",
-          "kind": "test",
-          "tags": [
-            "voice-panel-037",
-            "voice-panel-040",
-            "voice-panel-047"
-          ],
-          "title": "The audio method updates output in case 1"
-        },
-        {
-          "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1028,
-          "name": "[voice-panel-037 voice-panel-040 voice-panel-047] The audio method updates output in case 2",
-          "kind": "test",
-          "tags": [
-            "voice-panel-037",
-            "voice-panel-040",
-            "voice-panel-047"
-          ],
-          "title": "The audio method updates output in case 2"
-        },
-        {
-          "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1215,
+          "line": 1302,
           "name": "[voice-panel-047] An aborted observer restores native methods at construction",
           "kind": "test",
           "tags": [
@@ -3463,7 +3484,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1228,
+          "line": 1323,
           "name": "[voice-panel-047] The observer keeps a newer audio factory",
           "kind": "test",
           "tags": [
@@ -3473,7 +3494,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2838,
+          "line": 3085,
           "name": "[voice-panel-047] A retired observer does not inspect native state events",
           "kind": "test",
           "tags": [
@@ -3483,7 +3504,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2908,
+          "line": 3164,
           "name": "[voice-panel-047] A session boundary retires current audio in case 0",
           "kind": "test",
           "tags": [
@@ -3493,7 +3514,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2908,
+          "line": 3164,
           "name": "[voice-panel-047] A session boundary retires current audio in case 1",
           "kind": "test",
           "tags": [
@@ -3503,7 +3524,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3010,
+          "line": 3266,
           "name": "[voice-panel-047] A retired factory does not wrap its new audio result",
           "kind": "test",
           "tags": [
@@ -3513,7 +3534,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3024,
+          "line": 3280,
           "name": "[voice-panel-047] A boundary inside the factory prevents a stale audio wrapper",
           "kind": "test",
           "tags": [
@@ -3539,7 +3560,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1933,
+          "line": 2109,
           "name": "[voice-panel-048] The live transport keeps response evidence through recovery in case 0",
           "kind": "test",
           "tags": [
@@ -3549,7 +3570,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1933,
+          "line": 2109,
           "name": "[voice-panel-048] The live transport keeps response evidence through recovery in case 1",
           "kind": "test",
           "tags": [
@@ -3559,7 +3580,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1933,
+          "line": 2109,
           "name": "[voice-panel-048] The live transport keeps response evidence through recovery in case 2",
           "kind": "test",
           "tags": [
@@ -3575,7 +3596,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1782,
+          "line": 1958,
           "name": "[voice-panel-049] The host retires a previous mount before its replacement",
           "kind": "test",
           "tags": [
@@ -3601,7 +3622,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1252,
+          "line": 1347,
           "name": "[voice-panel-050] The stop ticket checks the current state in case 0",
           "kind": "test",
           "tags": [
@@ -3611,7 +3632,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1252,
+          "line": 1347,
           "name": "[voice-panel-050] The stop ticket checks the current state in case 1",
           "kind": "test",
           "tags": [
@@ -3621,7 +3642,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2253,
+          "line": 2431,
           "name": "[voice-panel-050] A stop ticket cannot close a disposed session panel",
           "kind": "test",
           "tags": [
@@ -3657,7 +3678,7 @@
         },
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 339,
+          "line": 341,
           "name": "[voice-panel-051] transient native OpenAI response activity does not announce connection unavailability",
           "kind": "test",
           "tags": [
@@ -3673,7 +3694,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1274,
+          "line": 1369,
           "name": "[voice-panel-052] The host rejects an incomplete mount in case 0",
           "kind": "test",
           "tags": [
@@ -3683,7 +3704,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1274,
+          "line": 1369,
           "name": "[voice-panel-052] The host rejects an incomplete mount in case 1",
           "kind": "test",
           "tags": [
@@ -3693,7 +3714,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1274,
+          "line": 1369,
           "name": "[voice-panel-052] The host rejects an incomplete mount in case 2",
           "kind": "test",
           "tags": [
@@ -3703,7 +3724,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1274,
+          "line": 1369,
           "name": "[voice-panel-052] The host rejects an incomplete mount in case 3",
           "kind": "test",
           "tags": [
@@ -3713,7 +3734,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1274,
+          "line": 1369,
           "name": "[voice-panel-052] The host rejects an incomplete mount in case 4",
           "kind": "test",
           "tags": [
@@ -3729,7 +3750,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1295,
+          "line": 1390,
           "name": "[voice-panel-053] The operation rejects invalid minutes in case 0",
           "kind": "test",
           "tags": [
@@ -3739,7 +3760,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1295,
+          "line": 1390,
           "name": "[voice-panel-053] The operation rejects invalid minutes in case 1",
           "kind": "test",
           "tags": [
@@ -3749,7 +3770,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1295,
+          "line": 1390,
           "name": "[voice-panel-053] The operation rejects invalid minutes in case 2",
           "kind": "test",
           "tags": [
@@ -3759,7 +3780,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1295,
+          "line": 1390,
           "name": "[voice-panel-053] The operation rejects invalid minutes in case 3",
           "kind": "test",
           "tags": [
@@ -3769,7 +3790,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1314,
+          "line": 1409,
           "name": "[voice-panel-053] The operation keeps its epoch after its own preference write",
           "kind": "test",
           "tags": [
@@ -3779,7 +3800,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1354,
+          "line": 1449,
           "name": "[voice-panel-053] The session boundary cancels an operation in case 0",
           "kind": "test",
           "tags": [
@@ -3789,7 +3810,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1354,
+          "line": 1449,
           "name": "[voice-panel-053] The session boundary cancels an operation in case 1",
           "kind": "test",
           "tags": [
@@ -3799,7 +3820,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1354,
+          "line": 1449,
           "name": "[voice-panel-053] The session boundary cancels an operation in case 2",
           "kind": "test",
           "tags": [
@@ -3809,7 +3830,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1354,
+          "line": 1449,
           "name": "[voice-panel-053] The session boundary cancels an operation in case 3",
           "kind": "test",
           "tags": [
@@ -3819,7 +3840,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2626,
+          "line": 2865,
           "name": "[voice-panel-053] The operation cannot coerce a custom numeric object",
           "kind": "test",
           "tags": [
@@ -3835,7 +3856,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1374,
+          "line": 1469,
           "name": "[voice-panel-054] The input reason controls automatic preview in case 0",
           "kind": "test",
           "tags": [
@@ -3845,7 +3866,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1374,
+          "line": 1469,
           "name": "[voice-panel-054] The input reason controls automatic preview in case 1",
           "kind": "test",
           "tags": [
@@ -3855,7 +3876,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1374,
+          "line": 1469,
           "name": "[voice-panel-054] The input reason controls automatic preview in case 2",
           "kind": "test",
           "tags": [
@@ -3865,7 +3886,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1374,
+          "line": 1469,
           "name": "[voice-panel-054] The input reason controls automatic preview in case 3",
           "kind": "test",
           "tags": [
@@ -3875,7 +3896,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1397,
+          "line": 1492,
           "name": "[voice-panel-054] The host checks session activity in case 0",
           "kind": "test",
           "tags": [
@@ -3885,7 +3906,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1397,
+          "line": 1492,
           "name": "[voice-panel-054] The host checks session activity in case 1",
           "kind": "test",
           "tags": [
@@ -3895,7 +3916,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1482,
+          "line": 1651,
           "name": "[voice-panel-054] The host rejects automatic preview input in case 0",
           "kind": "test",
           "tags": [
@@ -3905,7 +3926,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1482,
+          "line": 1651,
           "name": "[voice-panel-054] The host rejects automatic preview input in case 1",
           "kind": "test",
           "tags": [
@@ -3915,7 +3936,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1482,
+          "line": 1651,
           "name": "[voice-panel-054] The host rejects automatic preview input in case 2",
           "kind": "test",
           "tags": [
@@ -3925,7 +3946,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1841,
+          "line": 2017,
           "name": "[voice-panel-054] The native input edge rearms automatic preview once",
           "kind": "test",
           "tags": [
@@ -3935,7 +3956,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2210,
+          "line": 2388,
           "name": "[voice-panel-054 voice-panel-058] A disposed session cannot rearm through native text",
           "kind": "test",
           "tags": [
@@ -3946,17 +3967,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2262,
-          "name": "[voice-panel-054] An inactive state event reaches the card",
-          "kind": "test",
-          "tags": [
-            "voice-panel-054"
-          ],
-          "title": "An inactive state event reaches the card"
-        },
-        {
-          "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2271,
+          "line": 2449,
           "name": "[voice-panel-054] A state field on another event cannot disable automatic preview",
           "kind": "test",
           "tags": [
@@ -3966,7 +3977,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2286,
+          "line": 2464,
           "name": "[voice-panel-054] A normal state event keeps automatic preview enabled",
           "kind": "test",
           "tags": [
@@ -3976,7 +3987,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2395,
+          "line": 2573,
           "name": "[voice-panel-054] A reason on another event cannot rearm automatic preview",
           "kind": "test",
           "tags": [
@@ -3986,7 +3997,7 @@
         },
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 593,
+          "line": 595,
           "name": "[voice-panel-054 voice-panel-055 voice-panel-057] active provider output reveals Preview after done; manual choice wins until genuine input, replays do not reset idle",
           "kind": "test",
           "tags": [
@@ -4004,7 +4015,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1412,
+          "line": 1519,
           "name": "[voice-panel-055] The host compares reply identifiers in case 0",
           "kind": "test",
           "tags": [
@@ -4014,7 +4025,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1412,
+          "line": 1519,
           "name": "[voice-panel-055] The host compares reply identifiers in case 1",
           "kind": "test",
           "tags": [
@@ -4024,7 +4035,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1412,
+          "line": 1519,
           "name": "[voice-panel-055] The host compares reply identifiers in case 2",
           "kind": "test",
           "tags": [
@@ -4034,7 +4045,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2301,
+          "line": 2479,
           "name": "[voice-panel-055] The host selects the response id before the item id",
           "kind": "test",
           "tags": [
@@ -4044,7 +4055,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2323,
+          "line": 2501,
           "name": "[voice-panel-055] A new final text or a different id reaches the card",
           "kind": "test",
           "tags": [
@@ -4054,7 +4065,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2409,
+          "line": 2587,
           "name": "[voice-panel-055] The same text with a new id reaches the card",
           "kind": "test",
           "tags": [
@@ -4064,7 +4075,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3326,
+          "line": 3582,
           "name": "[voice-panel-055] The session state resets the final reply in case 0",
           "kind": "test",
           "tags": [
@@ -4074,7 +4085,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3326,
+          "line": 3582,
           "name": "[voice-panel-055] The session state resets the final reply in case 1",
           "kind": "test",
           "tags": [
@@ -4084,7 +4095,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3326,
+          "line": 3582,
           "name": "[voice-panel-055] The session state resets the final reply in case 2",
           "kind": "test",
           "tags": [
@@ -4094,7 +4105,7 @@
         },
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 593,
+          "line": 595,
           "name": "[voice-panel-054 voice-panel-055 voice-panel-057] active provider output reveals Preview after done; manual choice wins until genuine input, replays do not reset idle",
           "kind": "test",
           "tags": [
@@ -4112,7 +4123,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1457,
+          "line": 1626,
           "name": "[voice-panel-056] The default Cockpit reader suppresses automatic preview",
           "kind": "test",
           "tags": [
@@ -4122,7 +4133,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2434,
+          "line": 2612,
           "name": "[voice-panel-056] A disabled preference alone prevents automatic preview",
           "kind": "test",
           "tags": [
@@ -4132,7 +4143,7 @@
         },
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 654,
+          "line": 656,
           "name": "[voice-panel-056] Preview off and actual Cockpit state suppress automatic presentation without enabling preference",
           "kind": "test",
           "tags": [
@@ -4148,7 +4159,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1438,
+          "line": 1607,
           "name": "[voice-panel-057] The advisory interruption keeps the card and manual choice",
           "kind": "test",
           "tags": [
@@ -4158,7 +4169,7 @@
         },
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 593,
+          "line": 595,
           "name": "[voice-panel-054 voice-panel-055 voice-panel-057] active provider output reveals Preview after done; manual choice wins until genuine input, replays do not reset idle",
           "kind": "test",
           "tags": [
@@ -4176,7 +4187,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1490,
+          "line": 1666,
           "name": "[voice-panel-058] A retired mount cannot change the current panel",
           "kind": "test",
           "tags": [
@@ -4186,7 +4197,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1505,
+          "line": 1681,
           "name": "[voice-panel-058] A disposed session cannot rearm or edit presentation",
           "kind": "test",
           "tags": [
@@ -4196,7 +4207,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1797,
+          "line": 1973,
           "name": "[voice-panel-058] The host destroys a mount with an aborted session signal",
           "kind": "test",
           "tags": [
@@ -4206,7 +4217,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1811,
+          "line": 1987,
           "name": "[voice-panel-058] The host ignores a preference notice after ownership ends",
           "kind": "test",
           "tags": [
@@ -4216,7 +4227,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1829,
+          "line": 2005,
           "name": "[voice-panel-058] The inactivity callback cannot stop a disposed session",
           "kind": "test",
           "tags": [
@@ -4226,7 +4237,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2210,
+          "line": 2388,
           "name": "[voice-panel-054 voice-panel-058] A disposed session cannot rearm through native text",
           "kind": "test",
           "tags": [
@@ -4237,7 +4248,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2221,
+          "line": 2399,
           "name": "[voice-panel-058] A teardown callback cannot use the retired operation",
           "kind": "test",
           "tags": [
@@ -4247,7 +4258,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2234,
+          "line": 2412,
           "name": "[voice-panel-058] A reentrant mount cannot own a disposed host",
           "kind": "test",
           "tags": [
@@ -4257,7 +4268,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 3348,
+          "line": 3604,
           "name": "[voice-panel-058] A replaced destroy method cannot keep the old mount current",
           "kind": "test",
           "tags": [
@@ -4273,7 +4284,7 @@
       "tests": [
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 324,
+          "line": 326,
           "name": "[voice-panel-065 voice-panel-066] None cancels integrated app timer and unknown custom hosts never guess expiry",
           "kind": "test",
           "tags": [
@@ -4290,7 +4301,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1516,
+          "line": 1692,
           "name": "[voice-panel-059] The DOM fixture models attributes and child order",
           "kind": "test",
           "tags": [
@@ -4300,7 +4311,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1587,
+          "line": 1763,
           "name": "[voice-panel-059] The DOM fixture models listener lifetime and event data",
           "kind": "test",
           "tags": [
@@ -4310,7 +4321,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2069,
+          "line": 2247,
           "name": "[voice-panel-059] The DOM fixture updates every class, child and listener",
           "kind": "test",
           "tags": [
@@ -4326,7 +4337,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 1614,
+          "line": 1790,
           "name": "[voice-panel-060] The clock runs due tasks once and cancels named tasks",
           "kind": "test",
           "tags": [
@@ -4336,7 +4347,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2093,
+          "line": 2271,
           "name": "[voice-panel-060] The clock checks all due tasks and a cancelled sibling",
           "kind": "test",
           "tags": [
@@ -4352,7 +4363,7 @@
       "tests": [
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 452,
+          "line": 454,
           "name": "[voice-panel-061] actual runner applies exact timeout directly and reports live-unsaved truth, invalid/cancelled attempts stay inert",
           "kind": "test",
           "tags": [
@@ -4362,7 +4373,7 @@
         },
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 477,
+          "line": 479,
           "name": "[voice-panel-061] named voice settings exits Cockpit directly; Preview stays disabled and visual presets stay separate from Scenes",
           "kind": "test",
           "tags": [
@@ -4378,7 +4389,7 @@
       "tests": [
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 564,
+          "line": 566,
           "name": "[voice-panel-062] unavailable host refuses direct voice operations before Cockpit or preference effects",
           "kind": "test",
           "tags": [
@@ -4394,7 +4405,7 @@
       "tests": [
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 530,
+          "line": 532,
           "name": "[voice-panel-063] canonical exit reveals requested voice UI; newer manual choice or Stop defeats pending reveal",
           "kind": "test",
           "tags": [
@@ -4410,7 +4421,7 @@
       "tests": [
         {
           "file": "src/voice/panel/host.test.mjs",
-          "line": 694,
+          "line": 696,
           "name": "[voice-panel-064] Provider Settings uses its ready dialog handlers and refuses unavailable or cancelled requests",
           "kind": "test",
           "tags": [
@@ -4426,7 +4437,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2374,
+          "line": 2552,
           "name": "[voice-panel-068] The host reports inactivity support in case 0",
           "kind": "test",
           "tags": [
@@ -4436,7 +4447,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2374,
+          "line": 2552,
           "name": "[voice-panel-068] The host reports inactivity support in case 1",
           "kind": "test",
           "tags": [
@@ -4446,7 +4457,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2374,
+          "line": 2552,
           "name": "[voice-panel-068] The host reports inactivity support in case 2",
           "kind": "test",
           "tags": [
@@ -4462,7 +4473,17 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2448,
+          "line": 2440,
+          "name": "[voice-panel-069] An inactive state event reaches the card",
+          "kind": "test",
+          "tags": [
+            "voice-panel-069"
+          ],
+          "title": "An inactive state event reaches the card"
+        },
+        {
+          "file": "src/voice/panel/backfill.test.mjs",
+          "line": 2626,
           "name": "[voice-panel-069] The advisory flag on another event does not hide it from the card",
           "kind": "test",
           "tags": [
@@ -4478,7 +4499,7 @@
       "tests": [
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2764,
+          "line": 3003,
           "name": "[voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 0",
           "kind": "test",
           "tags": [
@@ -4489,7 +4510,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2764,
+          "line": 3003,
           "name": "[voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 1",
           "kind": "test",
           "tags": [
@@ -4500,7 +4521,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2764,
+          "line": 3003,
           "name": "[voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 2",
           "kind": "test",
           "tags": [
@@ -4511,7 +4532,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2764,
+          "line": 3003,
           "name": "[voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 3",
           "kind": "test",
           "tags": [
@@ -4522,7 +4543,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2764,
+          "line": 3003,
           "name": "[voice-panel-045 voice-panel-070] The output guard still sends an activity notice in case 4",
           "kind": "test",
           "tags": [
@@ -4533,7 +4554,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2787,
+          "line": 3034,
           "name": "[voice-panel-070] An untracked event still sends an activity notice in case 0",
           "kind": "test",
           "tags": [
@@ -4543,7 +4564,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2787,
+          "line": 3034,
           "name": "[voice-panel-070] An untracked event still sends an activity notice in case 1",
           "kind": "test",
           "tags": [
@@ -4553,7 +4574,7 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2787,
+          "line": 3034,
           "name": "[voice-panel-070] An untracked event still sends an activity notice in case 2",
           "kind": "test",
           "tags": [
@@ -4563,13 +4584,33 @@
         },
         {
           "file": "src/voice/panel/backfill.test.mjs",
-          "line": 2891,
+          "line": 3138,
           "name": "[voice-panel-070] A state boundary retires the method callback",
           "kind": "test",
           "tags": [
             "voice-panel-070"
           ],
           "title": "A state boundary retires the method callback"
+        },
+        {
+          "file": "src/voice/panel/backfill.test.mjs",
+          "line": 3649,
+          "name": "[voice-panel-070] The OpenAI callback reports each activity value across changes",
+          "kind": "test",
+          "tags": [
+            "voice-panel-070"
+          ],
+          "title": "The OpenAI callback reports each activity value across changes"
+        },
+        {
+          "file": "src/voice/panel/backfill.test.mjs",
+          "line": 3742,
+          "name": "[voice-panel-070] The Gemini callback reports input and playback changes",
+          "kind": "test",
+          "tags": [
+            "voice-panel-070"
+          ],
+          "title": "The Gemini callback reports input and playback changes"
         }
       ]
     }

@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "89fe216472d408b6ac9a0d9b53f65ef20434d917",
+  "sourceCommit": "74ec10e054a88935c7fcfce96300ea660f7c7747",
   "tests": [
     {
       "file": "src/voice/panel/actionObserver.test.mjs",
@@ -8,14 +8,6 @@
       "kind": "test",
       "tags": [],
       "title": "native Promise identity, fulfillment object and rejection object are preserved"
-    },
-    {
-      "file": "src/voice/panel/actionObserver.test.mjs",
-      "line": 487,
-      "name": "omitted and explicit undefined options keep original arity and values",
-      "kind": "test",
-      "tags": [],
-      "title": "omitted and explicit undefined options keep original arity and values"
     },
     {
       "file": "src/voice/panel/actionObserver.test.mjs",
@@ -34,6 +26,14 @@
       "title": "reentrant start retirement retains only fresh ownership and never skips execution"
     },
     {
+      "file": "src/voice/panel/actionObserver.test.mjs",
+      "line": 487,
+      "name": "omitted and explicit undefined options keep original arity and values",
+      "kind": "test",
+      "tags": [],
+      "title": "omitted and explicit undefined options keep original arity and values"
+    },
+    {
       "file": "src/voice/panel/host.test.mjs",
       "line": 270,
       "name": "explicit successful mic Stop closes; failed Stop idle and startup error do not",
@@ -43,7 +43,7 @@
     },
     {
       "file": "src/voice/panel/host.test.mjs",
-      "line": 385,
+      "line": 387,
       "name": "native connecting phases retain output observation; idle starts before first speech and waits for drain",
       "kind": "test",
       "tags": [],
@@ -51,7 +51,7 @@
     },
     {
       "file": "src/voice/panel/host.test.mjs",
-      "line": 578,
+      "line": 580,
       "name": "voice timeout change preserves a pending voice reveal",
       "kind": "test",
       "tags": [],
@@ -75,35 +75,11 @@
     },
     {
       "file": "src/voice/panel/nativeActivity.test.mjs",
-      "line": 388,
-      "name": "actual Gemini startup phases keep playback observation and permit quiet open-mic expiry",
+      "line": 137,
+      "name": "reentrant Stop in original callback suppresses stale post-callback observation; teardown preserves newer replacement",
       "kind": "test",
       "tags": [],
-      "title": "actual Gemini startup phases keep playback observation and permit quiet open-mic expiry"
-    },
-    {
-      "file": "src/voice/panel/nativeActivity.test.mjs",
-      "line": 674,
-      "name": "actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge",
-      "kind": "test",
-      "tags": [],
-      "title": "actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge"
-    },
-    {
-      "file": "src/voice/panel/nativeActivity.test.mjs",
-      "line": 475,
-      "name": "explicit silent OpenAI completion rearms expiry, including cancelled and failed responses",
-      "kind": "test",
-      "tags": [],
-      "title": "explicit silent OpenAI completion rearms expiry, including cancelled and failed responses"
-    },
-    {
-      "file": "src/voice/panel/nativeActivity.test.mjs",
-      "line": 445,
-      "name": "native typed input observation preserves receiver/result, refuses failed submissions and retires old wrapper",
-      "kind": "test",
-      "tags": [],
-      "title": "native typed input observation preserves receiver/result, refuses failed submissions and retires old wrapper"
+      "title": "reentrant Stop in original callback suppresses stale post-callback observation; teardown preserves newer replacement"
     },
     {
       "file": "src/voice/panel/nativeActivity.test.mjs",
@@ -115,14 +91,6 @@
     },
     {
       "file": "src/voice/panel/nativeActivity.test.mjs",
-      "line": 137,
-      "name": "reentrant Stop in original callback suppresses stale post-callback observation; teardown preserves newer replacement",
-      "kind": "test",
-      "tags": [],
-      "title": "reentrant Stop in original callback suppresses stale post-callback observation; teardown preserves newer replacement"
-    },
-    {
-      "file": "src/voice/panel/nativeActivity.test.mjs",
       "line": 261,
       "name": "verified clean native mount can arm initial idle, eventless response invalidates it",
       "kind": "test",
@@ -130,8 +98,40 @@
       "title": "verified clean native mount can arm initial idle, eventless response invalidates it"
     },
     {
+      "file": "src/voice/panel/nativeActivity.test.mjs",
+      "line": 388,
+      "name": "actual Gemini startup phases keep playback observation and permit quiet open-mic expiry",
+      "kind": "test",
+      "tags": [],
+      "title": "actual Gemini startup phases keep playback observation and permit quiet open-mic expiry"
+    },
+    {
+      "file": "src/voice/panel/nativeActivity.test.mjs",
+      "line": 445,
+      "name": "native typed input observation preserves receiver/result, refuses failed submissions and retires old wrapper",
+      "kind": "test",
+      "tags": [],
+      "title": "native typed input observation preserves receiver/result, refuses failed submissions and retires old wrapper"
+    },
+    {
+      "file": "src/voice/panel/nativeActivity.test.mjs",
+      "line": 475,
+      "name": "explicit silent OpenAI completion rearms expiry, including cancelled and failed responses",
+      "kind": "test",
+      "tags": [],
+      "title": "explicit silent OpenAI completion rearms expiry, including cancelled and failed responses"
+    },
+    {
+      "file": "src/voice/panel/nativeActivity.test.mjs",
+      "line": 674,
+      "name": "actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge",
+      "kind": "test",
+      "tags": [],
+      "title": "actual OpenAI failed-response error/listening recovery preserves only proven no-audio knowledge"
+    },
+    {
       "file": "src/voice/panel/preferences.test.mjs",
-      "line": 117,
+      "line": 125,
       "name": "fractional, malformed, coercible and out-of-range inputs never write or notify",
       "kind": "test",
       "tags": [],
@@ -139,23 +139,15 @@
     },
     {
       "file": "src/voice/panel/preferences.test.mjs",
-      "line": 156,
-      "name": "storage mismatch preserves live value and exposes unsaved state across A \u2192 B",
+      "line": 164,
+      "name": "storage throw preserves live value and exposes unsaved state across A \u2192 B",
       "kind": "test",
       "tags": [],
-      "title": "storage mismatch preserves live value and exposes unsaved state across A \u2192 B"
+      "title": "storage throw preserves live value and exposes unsaved state across A \u2192 B"
     },
     {
       "file": "src/voice/panel/preferences.test.mjs",
-      "line": 156,
-      "name": "storage missing preserves live value and exposes unsaved state across A \u2192 B",
-      "kind": "test",
-      "tags": [],
-      "title": "storage missing preserves live value and exposes unsaved state across A \u2192 B"
-    },
-    {
-      "file": "src/voice/panel/preferences.test.mjs",
-      "line": 156,
+      "line": 164,
       "name": "storage noop preserves live value and exposes unsaved state across A \u2192 B",
       "kind": "test",
       "tags": [],
@@ -163,7 +155,15 @@
     },
     {
       "file": "src/voice/panel/preferences.test.mjs",
-      "line": 156,
+      "line": 164,
+      "name": "storage mismatch preserves live value and exposes unsaved state across A \u2192 B",
+      "kind": "test",
+      "tags": [],
+      "title": "storage mismatch preserves live value and exposes unsaved state across A \u2192 B"
+    },
+    {
+      "file": "src/voice/panel/preferences.test.mjs",
+      "line": 164,
       "name": "storage readthrow preserves live value and exposes unsaved state across A \u2192 B",
       "kind": "test",
       "tags": [],
@@ -171,11 +171,11 @@
     },
     {
       "file": "src/voice/panel/preferences.test.mjs",
-      "line": 156,
-      "name": "storage throw preserves live value and exposes unsaved state across A \u2192 B",
+      "line": 164,
+      "name": "storage missing preserves live value and exposes unsaved state across A \u2192 B",
       "kind": "test",
       "tags": [],
-      "title": "storage throw preserves live value and exposes unsaved state across A \u2192 B"
+      "title": "storage missing preserves live value and exposes unsaved state across A \u2192 B"
     }
   ]
 }

@@ -1,5 +1,8 @@
-## ADDED Requirements
+# voice-panel Specification
 
+## Purpose
+Describe how the voice panel shows Preview and Voice Settings, stores local preferences, and uses local activity to stop a quiet session.
+## Requirements
 ### Requirement: Action input
 
 The action input helpers MUST report their current state and keep their local resources.
@@ -106,7 +109,14 @@ Origin: backfill
 #### Scenario: Dispose panel controls `voice-panel-017`
 
 - **WHEN** the owner destroys the panel
+- **AND** no card callback selects a view during teardown
 - **THEN** the panel hides its presentation, removes its listeners and rejects later view changes
+
+#### Scenario: Use the Close control `voice-panel-071`
+
+- **WHEN** the person clicks Close in an open panel
+- **THEN** the panel hides both panes and the card
+- **AND** the settings button reports aria-expanded as false
 
 #### Scenario: Delay row closure `voice-panel-018`
 
@@ -172,6 +182,11 @@ Origin: backfill
 
 - **WHEN** a caller changes a snapshot or removes a listener
 - **THEN** the model keeps its private state and stops notices to that listener
+
+#### Scenario: Reject an invalid preference listener `voice-panel-072`
+
+- **WHEN** the caller supplies a listener that is not a function
+- **THEN** the model throws a TypeError with message Preference listener required
 
 #### Scenario: Bind optional preference controls `voice-panel-029`
 
@@ -282,7 +297,7 @@ Origin: backfill
 
 #### Scenario: Restore owned methods `voice-panel-047`
 
-- **WHEN** the native observer retires audio or the owner destroys it
+- **WHEN** the native observer retires audio or the owner destroys the observer
 - **THEN** the observer restores the original method functions that it still owns and keeps newer replacements
 
 #### Scenario: Keep recovery evidence `voice-panel-048`
@@ -330,7 +345,7 @@ Origin: backfill
 #### Scenario: Ignore transcript replays `voice-panel-055`
 
 - **WHEN** a current mount receives a transcript or a state event
-- **THEN** the host ignores a matching final replay and partial text for the current final reply's known id
+- **THEN** the host ignores a final replay with the same text and id and partial text for the current final reply's known id
 - **AND** an ignored replay keeps the card text and timer
 - **AND** an active mount accepts a different id or changed final text
 - **AND** a connecting, idle or error state clears the stored final reply
@@ -425,3 +440,7 @@ Origin: backfill
 
 - **WHEN** a current observer receives an event or its speech method returns
 - **THEN** the observer sends its current activity snapshot unless a session boundary retires that method call
+- **AND** the snapshot reports known, connected, held, inputBusy, outputBusy and generationBusy as booleans
+- **AND** a clean idle observer starts with known true and all other flags false
+- **AND** each notice reports changes to connection, input, output and generation activity
+

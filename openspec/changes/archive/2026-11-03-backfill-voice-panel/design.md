@@ -90,10 +90,22 @@ The calibrated gate result remains a task for the lead.
 
 ## Format scope
 
-The broad read-only format check passes.
-Automatic approval review rejects the broad write command because it can change production files.
-The narrow formatter changes only the allowed test files.
+The scoped formatter writes only the panel test files.
+The broad read-only check checks the repository format scope.
+The evidence records the final output.
 
 ## Purpose at archive time
 
 Describe how the voice panel shows Preview and Voice Settings, stores local preferences, and uses local activity to stop a quiet session.
+
+## Known limit `voice-panel-card-teardown`
+
+Source commit: `74ec10e054a88935c7fcfce96300ea660f7c7747`.
+At `src/voice/panel/manualPanel.js:177`, destroy calls sync before it sets disposed.
+A card callback can select Preview or Settings during that sync.
+The panel and selected pane then stay visible after destroy.
+
+The disposed snapshot reports false for panelOpen, settingsOpen and previewVisible.
+The scratch probe checks both DOM panes and snapshot flags for each view.
+Scenario `voice-panel-017` excludes this callback case.
+No scenario states this behavior.

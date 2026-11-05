@@ -96,15 +96,23 @@ test('[voice-panel-021] defaults and restore are passive; legacy None and stored
 test('[voice-panel-022] exact valid values, presets, None and serialized readback', () => {
   const disk = storage();
   const prefs = createVoicePreferences({ storage: disk });
-  for (const value of [3, 5, 10, 15, '1', '60', 0]) {
+  for (const [value, expected, text] of [
+    [3, 3, '3'],
+    [5, 5, '5'],
+    [10, 10, '10'],
+    [15, 15, '15'],
+    ['1', 1, '1'],
+    ['60', 60, '60'],
+    [0, 0, 'none'],
+  ]) {
     const result = prefs.setMinutes(value);
     assert.equal(result.ok, true);
     assert.equal(result.applied, true);
     assert.equal(result.persisted, true);
-    assert.equal(result.minutes === Number(value), true);
+    assert.equal(result.minutes, expected);
     assert.deepEqual(disk.writes.at(-1), [
       'godsEyeView.voice.inactivityMinutes',
-      Number(value) === 0 ? 'none' : String(Number(value)),
+      text,
     ]);
   }
   assert.equal(prefs.setPreviewEnabled(false).previewEnabled, false);
