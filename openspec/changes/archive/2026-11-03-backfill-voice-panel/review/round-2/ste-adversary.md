@@ -1,0 +1,3 @@
+Verdict: FAIL
+- [ ] F1 major openspec/changes/archive/2026-11-03-backfill-voice-panel/review-corrections.md:46,47 Commit `cc3ba51e`. “Those probes check visible DOM nodes and false snapshot flags separately” refers to the invalid listener tests in the preceding sentence. Those tests check only a TypeError at `src/voice/panel/backfill.test.mjs:771`. Write: “The panel teardown probes check visible DOM nodes and false snapshot flags separately.”
+- [ ] F2 minor openspec/changes/archive/2026-11-03-backfill-voice-panel/specs/voice-panel/spec.md:189 Commit `cc3ba51e`. “with message” needs an article. Write: “with the message `Preference listener required`”.

@@ -1,0 +1,4 @@
+Verdict: FAIL
+- [ ] F1 major openspec/changes/archive/2026-11-03-backfill-voice-panel/specs/voice-panel/spec.md:285 Commit `74ec10e0`. “the owner destroys it” has two meanings: the owner destroys the audio instance, or the owner destroys the observer. These are different destruction events. Write: “the owner destroys the observer”.
+- [ ] F2 minor openspec/changes/archive/2026-11-03-backfill-voice-panel/specs/voice-panel/spec.md:333 Commit `74ec10e0`. “a matching final replay” uses an -ing adjective that is not a technical name. Write: “a final replay with the same text and id”.
+- [ ] F3 minor src/voice/panel/backfill.test.mjs:2550 Commit `74ec10e0`. “A missing visibility method does not prevent focus” uses an -ing adjective that is not a technical name. Write: “An absent visibility method does not prevent focus”.
