@@ -44,8 +44,8 @@ The [known limit](design.md) describes card callbacks that select a view during 
 The [probe output](known-limits.txt) gives the DOM values for both views.
 
 The invalid listener tests start at `src/voice/panel/backfill.test.mjs:771`.
-Those probes check visible DOM nodes and false snapshot flags separately.
-No production change corrects that behavior.
+The teardown probes in `known-limits.txt` check visible DOM nodes and false snapshot flags separately.
+No production change corrects the teardown behavior.
 
 ## The full sweep
 
