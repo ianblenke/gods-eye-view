@@ -37,14 +37,14 @@
 ## 3. Check on the host
 
 - [x] 3.1 Run the four test files with fake fetch functions.
-- [ ] 3.2 Measure full coverage for each new code file.
+- [x] 3.2 Measure full coverage for each new code file.
 - [x] 3.3 Run each named fault and record its failed test.
 - [x] 3.4 Run the STE lint and check each test title.
 - [x] 3.5 Record the host evidence with the source commit.
 
 ## 4. Lead work in the image
 
-- [ ] 4.1 Run `make ratchet CHANGE=up42-source`.
+- [x] 4.1 Run `make ratchet CHANGE=up42-source`.
 - [ ] 4.2 Run the two review agents.
 - [ ] 4.3 Write `review.md`.
 - [ ] 4.4 Run `make gates CHANGE=up42-source` on the final tree.
