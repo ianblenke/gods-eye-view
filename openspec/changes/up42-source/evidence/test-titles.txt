@@ -1,0 +1,211 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && python3 - (concrete title check).
+At the host snapshot, HEAD is 69d3e674df2775b372e6f6d2a9c9ae71a8729046.
+UTC: 2026-11-06T21:50:17.009377+00:00
+The source and tests have changes after HEAD.
+Titles: 203. Unique: 203. Scenario IDs: 24.
+Word and phrase errors: 0.
+The check used openspec/ste/words.json.
+
+[up42-source-006] reads at most 4096 bytes and handles a broken stream
+[up42-source-006] refuses body case 0
+[up42-source-006] refuses body case 1
+[up42-source-006] refuses body case 2
+[up42-source-006] refuses body case 3
+[up42-source-006] refuses body case 4
+[up42-source-006] refuses body case 5
+[up42-source-006] refuses body case 6
+[up42-source-006] refuses body case 7
+[up42-source-007] accepts the box limits and keeps its own values
+[up42-source-007] refuses box case 0
+[up42-source-007] refuses box case 1
+[up42-source-007] refuses box case 2
+[up42-source-007] refuses box case 3
+[up42-source-007] refuses box case 4
+[up42-source-007] refuses box case 5
+[up42-source-007] refuses box case 6
+[up42-source-007] refuses box case 7
+[up42-source-007] refuses box case 8
+[up42-source-007] refuses box case 9
+[up42-source-007] refuses box case 10
+[up42-source-007] refuses box case 11
+[up42-source-007] refuses box case 12
+[up42-source-007] refuses box case 13
+[up42-source-007] refuses box case 14
+[up42-source-007] refuses box case 15
+[up42-source-007] refuses box case 16
+[up42-source-008] checks the area before the dates
+[up42-source-009] accepts 92 days and the current UTC date
+[up42-source-009] refuses date case 0
+[up42-source-009] refuses date case 1
+[up42-source-009] refuses date case 2
+[up42-source-009] refuses date case 3
+[up42-source-009] refuses date case 4
+[up42-source-009] refuses date case 5
+[up42-source-009] refuses date case 6
+[up42-source-009] refuses date case 7
+[up42-source-009] refuses date case 8
+[up42-source-009] refuses date case 9
+[up42-source-009] refuses date case 10
+[up42-source-009] refuses date case 11
+[up42-source-010] keeps the optional values and their absence
+[up42-source-010] refuses option case 0
+[up42-source-010] refuses option case 1
+[up42-source-010] refuses option case 2
+[up42-source-010] refuses option case 3
+[up42-source-010] refuses option case 4
+[up42-source-010] refuses option case 5
+[up42-source-010] refuses option case 6
+[up42-source-010] refuses option case 7
+[up42-source-010] refuses option case 8
+[up42-source-010] refuses option case 9
+[up42-source-010] refuses option case 10
+[up42-source-010] refuses option case 11
+[up42-source-009] refuses a date with a final line break
+[up42-source-001] installs both exact routes in both Vite hooks
+[up42-source-002] gives only the credential state with no upstream call
+[up42-source-003] checks the method before other scenes checks
+[up42-source-004] refuses each failed same-site or content check
+[up42-source-005] counts bad bodies and kept answers and resets at 60000 ms
+[up42-source-003] refuses other origins before the rate limit
+[up42-source-006] gives body failures before the credential check
+[up42-source-011] checks both credentials before the store
+[up42-source-012] gives the route failure case 0
+[up42-source-012] gives the route failure case 1
+[up42-source-012] gives the route failure case 2
+[up42-source-012] gives the route failure case 3
+[up42-source-010] gives the collection refusal from the fetched list
+[up42-source-017] gives 504 when all host calls time out
+[up42-source-019] gives the complete answer and the response headers
+[up42-source-021] keeps good answers until the exact store boundary
+[up42-source-021] uses each filter in the store key
+[up42-source-021] removes the oldest answer after 32 entries
+[up42-source-021] shares a search with success true
+[up42-source-021] shares a search with success false
+[up42-source-021] keeps no failure in the store
+[up42-source-022] checks the store before the daily count and counts failures
+[up42-source-022] reserves the count before the first upstream call
+[up42-source-022] sets the daily limit case 0
+[up42-source-022] sets the daily limit case 1
+[up42-source-022] sets the daily limit case 2
+[up42-source-022] sets the daily limit case 3
+[up42-source-022] sets the daily limit case 4
+[up42-source-022] sets the daily limit case 5
+[up42-source-022] sets the daily limit case 6
+[up42-source-022] sets the daily limit case 7
+[up42-source-022] sets the daily limit case 8
+[up42-source-022] sets the daily limit case 9
+[up42-source-022] sets the daily limit case 10
+[up42-source-022] sets the daily limit case 11
+[up42-source-022] sets the daily limit case 12
+[up42-source-023] keeps fake secrets out of every answer and console line
+[up42-source-023] uses fake process credentials and the default console function
+[up42-source-018] gives a fixed route failure for a public list 401
+[up42-source-022] uses the default for a daily limit with a line break
+[up42-source-019] sets only the named scene fields from their sources
+[up42-source-020] drops each invalid feature and counts all drops
+[up42-source-020] clears number case 0
+[up42-source-020] clears number case 1
+[up42-source-020] clears number case 2
+[up42-source-020] clears number case 3
+[up42-source-020] clears number case 4
+[up42-source-020] clears number case 5
+[up42-source-020] clears number case 6
+[up42-source-020] clears number case 7
+[up42-source-020] clears number case 8
+[up42-source-020] keeps the number limits
+[up42-source-020] drops polygon case 0
+[up42-source-020] drops polygon case 1
+[up42-source-020] drops polygon case 2
+[up42-source-020] drops polygon case 3
+[up42-source-020] drops polygon case 4
+[up42-source-020] drops polygon case 5
+[up42-source-020] drops polygon case 6
+[up42-source-020] drops polygon case 7
+[up42-source-020] drops polygon case 8
+[up42-source-020] drops polygon case 9
+[up42-source-020] drops polygon case 10
+[up42-source-020] drops position case 0
+[up42-source-020] drops position case 1
+[up42-source-020] drops position case 2
+[up42-source-020] drops position case 3
+[up42-source-020] drops position case 4
+[up42-source-020] drops position case 5
+[up42-source-020] drops position case 6
+[up42-source-020] drops position case 7
+[up42-source-020] drops position case 8
+[up42-source-020] drops position case 9
+[up42-source-020] drops position case 10
+[up42-source-020] keeps valid rings and removes altitude
+[up42-source-020] drops an id with a final line break
+[up42-source-012] sends the password form only to the fixed token host
+[up42-source-012] names token refusal 400
+[up42-source-012] names token refusal 401
+[up42-source-013] reuses one token until the exact time boundary
+[up42-source-013] shares one login across concurrent requests
+[up42-source-013] retries one API refusal case 0
+[up42-source-013] retries one API refusal case 1
+[up42-source-013] retries one API refusal case 2
+[up42-source-013] shares a new login after concurrent API refusals
+[up42-source-014] reads the public list without credentials and caches the map for six hours
+[up42-source-014] shares a public list request that is in flight
+[up42-source-014] refuses collection list case 0
+[up42-source-014] refuses collection list case 1
+[up42-source-014] refuses collection list case 2
+[up42-source-014] refuses collection list case 3
+[up42-source-014] refuses collection list case 4
+[up42-source-014] refuses collection list case 5
+[up42-source-014] refuses collection list case 6
+[up42-source-014] refuses collection list case 7
+[up42-source-014] refuses collection list case 8
+[up42-source-014] refuses collection list case 9
+[up42-source-014] refuses collection list case 10
+[up42-source-014] refuses collection list case 11
+[up42-source-014] skips bad rows and checks each host at the path boundary
+[up42-source-010] refuses an unknown collection before a host search
+[up42-source-015] groups collections and sets each body field with no extra field
+[up42-source-015] allows at most four host calls at one time
+[up42-source-016] marks the page limit case 0
+[up42-source-016] marks the page limit case 1
+[up42-source-016] marks the page limit case 2
+[up42-source-016] marks the page limit case 3
+[up42-source-016] marks the page limit case 4
+[up42-source-017] keeps good hosts and lists all failed hosts by name
+[up42-source-017] refuses host document case 0
+[up42-source-017] refuses host document case 1
+[up42-source-017] refuses host document case 2
+[up42-source-017] refuses host document case 3
+[up42-source-017] refuses host document case 4
+[up42-source-018] keeps the timer through the body and clears it at the end
+[up42-source-018] stops the call during headers
+[up42-source-018] stops the call during body
+[up42-source-018] gives a fixed failure for transport case 0
+[up42-source-018] gives a fixed failure for transport case 1
+[up42-source-018] gives a fixed failure for transport case 2
+[up42-source-018] gives a fixed failure for transport case 3
+[up42-source-018] gives a fixed failure for transport case 4
+[up42-source-018] gives a fixed failure for transport case 5
+[up42-source-018] gives a fixed failure for transport case 6
+[up42-source-018] accepts exactly 4194304 response bytes
+[up42-source-018] refuses token document case 0
+[up42-source-018] refuses token document case 1
+[up42-source-018] refuses token document case 2
+[up42-source-018] refuses token document case 3
+[up42-source-018] refuses token document case 4
+[up42-source-018] refuses token document case 5
+[up42-source-018] refuses token document case 6
+[up42-source-018] refuses token document case 7
+[up42-source-024] records only the literal allowed request forms
+[up42-source-024] excludes all forbidden source literals
+[up42-source-013] stops after a refused new login
+[up42-source-012] encodes absent credentials as empty form values
+[up42-source-023] refuses a password in a scene field
+[up42-source-018] refuses a public list 401 without a login
+[up42-source-015] uses distinct box and date values from the request
+[up42-source-017] keeps all scenes from distinct good hosts beside failures
+[up42-source-014] refuses a host with a final line break
+[up42-source-018] refuses a token with a final line break
+[up42-source-023] checks secrets after JSON has encoded them
+[up42-source-014] removes bad hosts before it calls the client
+[up42-source-018] refuses a valid JSON body of 4194305 bytes
+[up42-source-012] keeps spaces at both ends of the password
+[up42-source-013] uses the token lifetime from the answer

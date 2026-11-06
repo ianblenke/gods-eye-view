@@ -1,0 +1,299 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && python3 - (sequential fault runner).
+At the host snapshot, HEAD is 69d3e674df2775b372e6f6d2a9c9ae71a8729046.
+UTC: 2026-11-06T21:43:51.468946+00:00
+The source and tests have changes after HEAD. Each record gives its source SHA-256.
+Each command below runs after one source replacement. The runner restores the file in a finally block.
+
+M01 [up42-source-004] server/providers/up42.js
+SHA-256: a5ef67c3221878bc2dbbeb71b9030e71f2ee3de0ce8c82bef4ffffaa8e1ceb48
+Replace: '!isSameSite(req) ||'
+With: 'false ||'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=refuses each failed same-site' 'src/data/up42Proxy.test.mjs'
+Exit: 1
+✖ [up42-source-004] refuses each failed same-site or content check (81.084979ms)
+Result: KILLED
+
+M02 [up42-source-007] server/providers/up42/validate.js
+SHA-256: 274a1b440db1d3ab95098b63940b513bcc7d3ea41475555202b25f877a77e66b
+Replace: 'west >= -180'
+With: 'west >= -181'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=refuses box case 13' 'src/data/up42Input.test.mjs'
+Exit: 1
+✖ [up42-source-007] refuses box case 13 (20.55867ms)
+Result: KILLED
+
+M03 [up42-source-008] server/providers/up42/validate.js
+SHA-256: 274a1b440db1d3ab95098b63940b513bcc7d3ea41475555202b25f877a77e66b
+Replace: 'boxAreaKm2(body.box) > MAX_AREA_KM2'
+With: 'false'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=checks the area before' 'src/data/up42Input.test.mjs'
+Exit: 1
+✖ [up42-source-008] checks the area before the dates (23.234889ms)
+Result: KILLED
+
+M04 [up42-source-009] server/providers/up42/validate.js
+SHA-256: 274a1b440db1d3ab95098b63940b513bcc7d3ea41475555202b25f877a77e66b
+Replace: 'MAX_WINDOW_DAYS = 91'
+With: 'MAX_WINDOW_DAYS = 92'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=accepts 92 days' 'src/data/up42Input.test.mjs'
+Exit: 1
+✖ [up42-source-009] accepts 92 days and the current UTC date (21.84889ms)
+Result: KILLED
+
+M05 [up42-source-014] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: '!HOST.test(host)'
+With: "!HOST.test('oneatlas')"
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=skips bad rows and checks each host' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-014] skips bad rows and checks each host at the path boundary (202.624513ms)
+Result: KILLED
+
+M06 [up42-source-014] server/providers/up42/upstream.js
+SHA-256: a78f0dc3782ef4b5d94c051d0b0456ced2d7149ef786e9de19f265e93847ff89
+Replace: '!HOST.test(provider.name)'
+With: "!HOST.test('oneatlas')"
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=removes bad hosts before' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-014] removes bad hosts before it calls the client (23.856146ms)
+Result: KILLED
+
+M07 [up42-source-024] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: "'https://auth.up42.com/realms/public/protocol/openid-connect/token'"
+With: "'https://other.invalid/token'"
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=records only the literal' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-024] records only the literal allowed request forms (230.416724ms)
+Result: KILLED
+
+M08 [up42-source-024] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: "method: 'POST'"
+With: "method: 'GET'"
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=records only the literal' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-024] records only the literal allowed request forms (231.312955ms)
+Result: KILLED
+
+M09 [up42-source-013] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: 'cached !== null &&'
+With: 'false &&'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=reuses one token until' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-013] reuses one token until the exact time boundary (183.550916ms)
+Result: KILLED
+
+M10 [up42-source-013] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: 'value.expires_in - 60'
+With: 'value.expires_in - 0'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=reuses one token until' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-013] reuses one token until the exact time boundary (184.088017ms)
+Result: KILLED
+
+M11 [up42-source-013] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: 'if (inFlight !== null) return inFlight;'
+With: 'if (false) return inFlight;'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=shares one login across' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-013] shares one login across concurrent requests (34.345126ms)
+Result: KILLED
+
+M12 [up42-source-013] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: "if (!result.ok && result.kind === 'unauthorized')"
+With: "if (!result.ok && result.kind === 'never')"
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=retries one API refusal case 0' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-013] retries one API refusal case 0 (182.434122ms)
+Result: KILLED
+
+M13 [up42-source-016] server/providers/up42/upstream.js
+SHA-256: a78f0dc3782ef4b5d94c051d0b0456ced2d7149ef786e9de19f265e93847ff89
+Replace: 'slice(0, 10)'
+With: 'slice(0, 11)'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=marks the page limit case 0' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-016] marks the page limit case 0 (202.250921ms)
+Result: KILLED
+
+M14 [up42-source-016] server/providers/up42/upstream.js
+SHA-256: a78f0dc3782ef4b5d94c051d0b0456ced2d7149ef786e9de19f265e93847ff89
+Replace: 'let truncated = groups.size > 10;'
+With: 'let truncated = false;'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=marks the page limit case 0' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-016] marks the page limit case 0 (198.737791ms)
+Result: KILLED
+
+M15 [up42-source-016] server/providers/up42/upstream.js
+SHA-256: a78f0dc3782ef4b5d94c051d0b0456ced2d7149ef786e9de19f265e93847ff89
+Replace: "link.rel === 'next'"
+With: "link.rel === 'never'"
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=marks the page limit case 2' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-016] marks the page limit case 2 (186.214672ms)
+Result: KILLED
+
+M16 [up42-source-020] server/providers/up42/normalize.js
+SHA-256: 0568c869571cd73ea3c31ed36755af04dad2baa7f985f2afea75ef36227e706c
+Replace: 'if (scene === null) dropped++;'
+With: 'if (scene === null) dropped += 0;'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=drops each invalid feature' 'src/data/up42Scenes.test.mjs'
+Exit: 1
+✖ [up42-source-020] drops each invalid feature and counts all drops (18.25693ms)
+Result: KILLED
+
+M17 [up42-source-023] server/providers/up42.js
+SHA-256: a5ef67c3221878bc2dbbeb71b9030e71f2ee3de0ce8c82bef4ffffaa8e1ceb48
+Replace: 'if (!client.isSafe(result))'
+With: 'if (false)'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=keeps fake secrets out' 'src/data/up42Proxy.test.mjs'
+Exit: 1
+✖ [up42-source-023] keeps fake secrets out of every answer and console line (123.40556ms)
+Result: KILLED
+
+M18 [up42-source-023] server/providers/up42.js
+SHA-256: a5ef67c3221878bc2dbbeb71b9030e71f2ee3de0ce8c82bef4ffffaa8e1ceb48
+Replace: "log(result.ok ? '[up42] ok' : '[up42] failed');"
+With: 'log(env.UP42_PASSWORD);'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=keeps fake secrets out' 'src/data/up42Proxy.test.mjs'
+Exit: 1
+✖ [up42-source-023] keeps fake secrets out of every answer and console line (86.664712ms)
+Result: KILLED
+
+M19 [up42-source-018] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: "redirect: 'error'"
+With: "redirect: 'follow'"
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=sends the password form' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-012] sends the password form only to the fixed token host (193.587979ms)
+Result: KILLED
+
+M20 [up42-source-018] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: 'controller.abort(), 15000'
+With: 'controller.abort(), 30000'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=keeps the timer through' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-018] keeps the timer through the body and clears it at the end (197.554793ms)
+Result: KILLED
+
+M21 [up42-source-018] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: 'const value = await readResponseJsonCapped('
+With: 'clearTimer(timer);\n      const value = await readResponseJsonCapped('
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=keeps the timer through' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-018] keeps the timer through the body and clears it at the end (198.50815ms)
+Result: KILLED
+
+M22 [up42-source-018] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: '4194304,'
+With: '8388608,'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=refuses a valid JSON body' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-018] refuses a valid JSON body of 4194305 bytes (232.491194ms)
+Result: KILLED
+
+M23 [up42-source-015] server/providers/up42/upstream.js
+SHA-256: a78f0dc3782ef4b5d94c051d0b0456ced2d7149ef786e9de19f265e93847ff89
+Replace: 'Math.min(4, hosts.length)'
+With: 'Math.min(5, hosts.length)'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=allows at most four host' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-015] allows at most four host calls at one time (198.763581ms)
+Result: KILLED
+
+M24 [up42-source-015] server/providers/up42/upstream.js
+SHA-256: a78f0dc3782ef4b5d94c051d0b0456ced2d7149ef786e9de19f265e93847ff89
+Replace: 'LTE: maxCloud'
+With: 'LTE: 0'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=groups collections and sets' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-015] groups collections and sets each body field with no extra field (206.010173ms)
+Result: KILLED
+
+M25 [up42-source-005] server/providers/up42.js
+SHA-256: a5ef67c3221878bc2dbbeb71b9030e71f2ee3de0ce8c82bef4ffffaa8e1ceb48
+Replace: 'windowMs: 60000, max: 6'
+With: 'windowMs: 60000, max: 7'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=counts bad bodies and kept answers' 'src/data/up42Proxy.test.mjs'
+Exit: 1
+✖ [up42-source-005] counts bad bodies and kept answers and resets at 60000 ms (95.910841ms)
+Result: KILLED
+
+M26 [up42-source-024] server/providers/up42.js
+SHA-256: a5ef67c3221878bc2dbbeb71b9030e71f2ee3de0ce8c82bef4ffffaa8e1ceb48
+Replace: '/** Read-only UP42'
+With: '/** /v2/orders Read-only UP42'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=excludes all forbidden source' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-024] excludes all forbidden source literals (24.849405ms)
+Result: KILLED
+
+M27 [up42-source-021] server/providers/up42.js
+SHA-256: a5ef67c3221878bc2dbbeb71b9030e71f2ee3de0ce8c82bef4ffffaa8e1ceb48
+Replace: 'now() - kept.at < 600000'
+With: 'now() - kept.at <= 600000'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=keeps good answers until' 'src/data/up42Proxy.test.mjs'
+Exit: 1
+✖ [up42-source-021] keeps good answers until the exact store boundary (91.367259ms)
+Result: KILLED
+
+M28 [up42-source-017] server/providers/up42/upstream.js
+SHA-256: a78f0dc3782ef4b5d94c051d0b0456ced2d7149ef786e9de19f265e93847ff89
+Replace: 'failedHosts.push(host);'
+With: 'failedHosts.push("wrong-host");'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=keeps good hosts and lists' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-017] keeps good hosts and lists all failed hosts by name (196.293544ms)
+Result: KILLED
+
+M29 [up42-source-019] server/providers/up42/normalize.js
+SHA-256: 0568c869571cd73ea3c31ed36755af04dad2baa7f985f2afea75ef36227e706c
+Replace: 'thumbnail: collection.thumbnail'
+With: 'thumbnail: true'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=sets only the named scene fields' 'src/data/up42Scenes.test.mjs'
+Exit: 1
+✖ [up42-source-019] sets only the named scene fields from their sources (25.272811ms)
+Result: KILLED
+
+M30 [up42-source-023] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: 'JSON.stringify(secret).slice(1, -1)'
+With: 'secret'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=checks secrets after JSON' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-023] checks secrets after JSON has encoded them (15.841319ms)
+Result: KILLED
+
+Later host snapshot, UTC 2026-11-06T21:50:17.009377+00:00.
+HEAD: 69d3e674df2775b372e6f6d2a9c9ae71a8729046.
+The last two faults use the tests of source-snapshot.txt.
+
+M31 [up42-source-012] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: "const password = env.UP42_PASSWORD ?? '';"
+With: "const password = (env.UP42_PASSWORD ?? '').trim();"
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=keeps spaces at both ends' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-012] keeps spaces at both ends of the password (177.867894ms)
+Result: KILLED
+
+M32 [up42-source-013] server/providers/up42/auth.js
+SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+Replace: 'value.expires_in - 60'
+With: '300 - 60'
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-name-pattern=uses the token lifetime from' 'src/data/up42Upstream.test.mjs'
+Exit: 1
+✖ [up42-source-013] uses the token lifetime from the answer (188.456331ms)
+Result: KILLED
+
+Faults: 32. Killed: 32. Survived or stopped: 0.

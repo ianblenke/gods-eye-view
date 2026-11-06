@@ -1,0 +1,19 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && NODE_V8_COVERAGE=openspec/changes/up42-source/v8-tmp node --test --test-force-exit --test-isolation=none src/data/up42Input.test.mjs src/data/up42Proxy.test.mjs src/data/up42Scenes.test.mjs src/data/up42Upstream.test.mjs
+At the host snapshot, HEAD is 69d3e674df2775b372e6f6d2a9c9ae71a8729046.
+UTC: 2026-11-06T21:47:47.734226+00:00
+The source and tests have changes after HEAD.
+Exit: 0
+auth.js SHA-256: c7151f21916d7f9c2b7d5017d0442cd43f4028284a837dd59701fe52b8b6db95
+
+Function: send
+Range: [1530, 1531). Count: 0.
+Line: 42
+Text: ' '
+Context: "oller.signal.aborted ? 'search_timeout' : 'upstream_failed',\n      );\n    } finally {\n      clearTimer(timer);\n    }\n  }\n\n  async function login(userna"
+
+The range is one space before finally. It names no statement or expression.
+The host report gives 98.41 percent branch coverage for auth.js.
+The five other new code files give 100 percent for each measure.
+The lead must check this result with the calibrated Node image.
+No source change hides this range. No coverage rule changes.
+No gate comparison ran.
