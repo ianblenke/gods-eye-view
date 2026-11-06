@@ -32,8 +32,7 @@ Each new file has an entry in `openspec/ownership.json`.
 The change edits `server/providers/local.js`, `.env.example` and `DATA_SOURCES.md`, and adds a changelog fragment.
 
 The change closes no old gap in `openspec/trace/`.
-At the host snapshot, `auth.js` has one branch gap at a space before `finally`.
-The lead must check the gap with the calibrated Node image.
+At the host snapshot after the correction, each new code file has full coverage.
 The change does not edit the gap ledger.
 The host checks measure only this change. The lead must run the full gates with the calibrated Node image.
 

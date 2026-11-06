@@ -17,7 +17,7 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
   async function send(url, init, login = false) {
     const controller = new AbortController();
     const timer = setTimer(() => controller.abort(), 15000);
-    try {
+    const exchange = async () => {
       const response = await fetchImpl(url, {
         ...init,
         redirect: 'error',
@@ -35,13 +35,17 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
         controller.signal,
       );
       return { ok: true, value };
+    };
+    let result;
+    try {
+      result = await exchange();
     } catch {
-      return failed(
+      result = failed(
         controller.signal.aborted ? 'search_timeout' : 'upstream_failed',
       );
-    } finally {
-      clearTimer(timer);
     }
+    clearTimer(timer);
+    return result;
   }
 
   async function login(username, password, credentials) {

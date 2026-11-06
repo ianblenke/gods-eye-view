@@ -9,10 +9,8 @@ No code existed yet for those imports.
 The final host command and its output are in host-run.txt.
 At that snapshot, 203 new tests pass with no failed test.
 The report has 24 scenario IDs and 203 unique test titles.
-Five new code files have 100 percent line, branch and function coverage.
-auth.js has 100 percent line and function coverage, and 98.41 percent branch coverage.
-instrument.txt records the uncovered one-space range from V8.
-The full coverage target stays open.
+After the ratchet run 1 correction, the six new code files have 100 percent line, branch and function coverage at the host snapshot.
+instrument.txt records the earlier one-space range from V8, which the correction of auth.js removed.
 
 faults.txt records 32 named faults. A named test fails for each fault. No fault survives.
 Each fault changes one source file. The runner restores that file after the command.
