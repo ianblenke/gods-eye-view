@@ -1,0 +1,3 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-11-07-up42-thumbnails/design.md:26 At commit `71cb2d103395bb821f5a4a3ee22a625b0928e44f`, “the existing host regex” uses “existing” as an adjective. Write: “the source host regex”.
+- [ ] F2 minor openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md:130 At commit `71cb2d103395bb821f5a4a3ee22a625b0928e44f`, “without reading it” uses an -ing form that is not a technical name. Write: “before it reads the body”.
