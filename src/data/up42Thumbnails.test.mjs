@@ -1137,7 +1137,7 @@ for (const [key, previous, next] of [
 for (const status of [404, 200])
   for (const completion of ['never', 'after-abort'])
     test(
-      `[up42-thumbnails-012] limits cancel at status ${status} with end ${completion}`,
+      `[up42-thumbnails-012] limits the wait at status ${status} when the cancel operation ${completion === 'never' ? 'never ends' : 'ends after the signal aborts'}`,
       { timeout: 2000 },
       async (t) => {
         const timers = new Map();
@@ -1216,3 +1216,163 @@ test('[up42-thumbnails-019] keeps dots inside the literal destination', async (t
     'https://api.up42.com/catalog/oneatlas/image/scene.1/thumbnail',
   );
 });
+
+for (const size of ['declared', 'streamed'])
+  for (const completes of [false, true])
+    test(
+      `[up42-thumbnails-012] limits an image with ${size} excess size when the cancel operation ${completes ? 'ends' : 'never ends'}`,
+      { timeout: 2000 },
+      async (t) => {
+        const timers = new Map();
+        let serial = 0;
+        let cancels = 0;
+        let answer;
+        const s = install(t, {
+          standalone: true,
+          lookup: () => 'oneatlas',
+          timers: {
+            setTimer: (fn, ms) => {
+              assert.equal(ms, 15000);
+              timers.set(++serial, fn);
+              return serial;
+            },
+            clearTimer: (id) => timers.delete(id),
+          },
+          respond: (url) =>
+            url === TOKEN
+              ? good(url)
+              : new Response(
+                  new ReadableStream({
+                    start(controller) {
+                      controller.enqueue(
+                        size === 'declared'
+                          ? Uint8Array.from(PNG)
+                          : new Uint8Array(1048577),
+                      );
+                    },
+                    cancel() {
+                      cancels++;
+                      return completes
+                        ? Promise.resolve()
+                        : new Promise(() => {});
+                    },
+                  }),
+                  {
+                    headers: {
+                      'content-type': 'image/png',
+                      ...(size === 'declared'
+                        ? { 'content-length': '1048577' }
+                        : {}),
+                    },
+                  },
+                ),
+        });
+        const run = s.get().then((value) => {
+          answer = value;
+        });
+        await settle();
+        assert.equal(cancels, 1);
+        if (completes) {
+          await run;
+          errorOf(answer, 502, 'bad_upstream');
+        } else {
+          assert.equal(answer, undefined);
+          assert.equal(timers.size, 1);
+          for (const fire of timers.values()) fire();
+          await settle();
+          assert.equal(answer?.status, 504);
+          errorOf(answer, 504, 'search_timeout');
+          await run;
+        }
+        assert.equal(timers.size, 0);
+      },
+    );
+
+for (const size of ['declared', 'streamed'])
+  test(`[up42-thumbnails-012] refuses JSON with ${size} excess size when the cancel operation never ends`, async (t) => {
+    let cancels = 0;
+    let active = 0;
+    const s = install(t, {
+      standalone: true,
+      lookup: () => 'oneatlas',
+      timers: {
+        setTimer: () => ++active,
+        clearTimer: () => active--,
+      },
+      respond: () =>
+        new Response(
+          new ReadableStream({
+            start(controller) {
+              controller.enqueue(
+                size === 'declared'
+                  ? new TextEncoder().encode('{}')
+                  : new Uint8Array(4194305),
+              );
+            },
+            cancel() {
+              cancels++;
+              return new Promise(() => {});
+            },
+          }),
+          {
+            headers: {
+              'content-type': 'application/json',
+              ...(size === 'declared' ? { 'content-length': '4194305' } : {}),
+            },
+          },
+        ),
+    });
+    errorOf(await s.get(), 502, 'upstream_failed');
+    assert.equal(cancels, 1);
+    assert.equal(active, 0);
+  });
+
+test(
+  '[up42-thumbnails-012] limits a JSON read when the cancel operation never ends',
+  { timeout: 2000 },
+  async (t) => {
+    let fire;
+    let active = 0;
+    let cancels = 0;
+    let answer;
+    const s = install(t, {
+      standalone: true,
+      lookup: () => 'oneatlas',
+      timers: {
+        setTimer: (fn, ms) => {
+          assert.equal(ms, 15000);
+          fire = fn;
+          return ++active;
+        },
+        clearTimer: () => active--,
+      },
+      respond: () => ({
+        status: 200,
+        headers: new Headers({ 'content-type': 'application/json' }),
+        body: {
+          getReader: () => ({
+            read: () => new Promise(() => {}),
+            cancel() {
+              cancels++;
+              return new Promise(() => {});
+            },
+          }),
+        },
+      }),
+    });
+    const run = s.get().then((value) => {
+      answer = value;
+    });
+    await settle();
+    assert.equal(answer, undefined);
+    assert.equal(cancels, 0);
+    assert.equal(active, 1);
+    fire();
+    await settle();
+    assert.equal(cancels, 1);
+    assert.equal(answer?.status, 504);
+    errorOf(answer, 504, 'search_timeout');
+    await run;
+    assert.equal(active, 0);
+  },
+);

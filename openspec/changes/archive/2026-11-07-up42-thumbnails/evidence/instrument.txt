@@ -25,3 +25,9 @@ All 16 current mutation commands exited with status 1 and named failed tests.
 Each mutation ran alone. The source file was restored after each command.
 UPT-M077 sends an Error object through console.dir and selects the no-secret test.
 The full host command ran after restoration and passed all 410 tests.
+
+At the round two host snapshot, commit ade36a5c42d31ace0459d657d2cd436880786533 has worktree edits.
+UPT-M078 removes the image read race. Both excess image timeout tests fail.
+UPT-M079 removes the JSON read race. The JSON read timeout test fails.
+Both commands exit with status 1. The source file has its original hash after both commands.
+faults.txt records the exact commands and failed test titles.

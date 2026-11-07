@@ -33,6 +33,23 @@ async function cancelBody(response, signal) {
   signal.throwIfAborted();
 }
 
+async function readUntilAbort(read, signal) {
+  let onAbort;
+  const aborted = new Promise((_resolve, reject) => {
+    onAbort = () => reject(signal.reason);
+    signal.addEventListener('abort', onAbort, { once: true });
+  });
+  let value;
+  try {
+    value = await Promise.race([read(), aborted]);
+  } catch (error) {
+    signal.removeEventListener('abort', onAbort);
+    throw error;
+  }
+  signal.removeEventListener('abort', onAbort);
+  return value;
+}
+
 /** Fixed destinations, a private token cache and fixed failure names. */
 export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
   let cached = null;
@@ -64,9 +81,13 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
           await cancelBody(response, controller.signal);
           return failed('bad_upstream');
         }
-        const bytes = await readResponseBytesCapped(
-          response,
-          MAX_IMAGE_BYTES,
+        const bytes = await readUntilAbort(
+          () =>
+            readResponseBytesCapped(
+              response,
+              MAX_IMAGE_BYTES,
+              controller.signal,
+            ),
           controller.signal,
         );
         if (
@@ -76,9 +97,8 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
           return failed('bad_upstream');
         return { ok: true, type, bytes };
       }
-      const value = await readResponseJsonCapped(
-        response,
-        4194304,
+      const value = await readUntilAbort(
+        () => readResponseJsonCapped(response, 4194304, controller.signal),
         controller.signal,
       );
       return { ok: true, value };

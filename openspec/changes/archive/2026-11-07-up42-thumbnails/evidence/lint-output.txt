@@ -1,5 +1,5 @@
 Command: cd /home/ianblenke/docker/gev-work/up42 && node scripts/spec/gates.mjs lint --change archive/2026-11-07-up42-thumbnails
-At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
+Commit: ade36a5c42d31ace0459d657d2cd436880786533 with worktree edits.
 WARN STE-NOUN openspec/changes/archive/2026-09-16-establish-spec-governance/specs/coverage-gate/spec.md:244 Check for a verb used as a noun: "skip"
 WARN STE-NOUN openspec/changes/archive/2026-09-16-establish-spec-governance/specs/coverage-gate/spec.md:245 Check for a verb used as a noun: "skip"
 WARN STE-NOUN openspec/changes/archive/2026-09-16-establish-spec-governance/specs/coverage-gate/spec.md:246 Check for a verb used as a noun: "skip"
@@ -1048,6 +1048,7 @@ WARN STE-PASSIVE openspec/changes/archive/2026-11-03-backfill-voice-panel/specs/
 WARN STE-PASSIVE openspec/changes/archive/2026-11-03-backfill-voice-panel/specs/voice-panel/spec.md:343 Check for passive voice: "is enabled"
 WARN STE-ING openspec/changes/archive/2026-11-03-backfill-voice-panel/specs/voice-panel/spec.md:351 Check the -ing word "connecting"
 WARN STE-NOUN openspec/changes/archive/2026-11-07-up42-thumbnails/design.md:32 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md:163 Check for a verb used as a noun: "read"
 WARN STE-ING openspec/specs/app-container/spec.md:15 Check the -ing word "setting"
 WARN STE-PASSIVE openspec/specs/beemaps-burst-control/spec.md:67 Check for passive voice: "is checked"
 WARN STE-PASSIVE openspec/specs/beemaps-burst-control/spec.md:126 Check for passive voice: "is rounded"
@@ -1280,6 +1281,7 @@ WARN STE-PASSIVE openspec/specs/skywatch-scenes-layer/spec.md:306 Check for pass
 WARN STE-PASSIVE openspec/specs/skywatch-scenes-layer/spec.md:328 Check for passive voice: "is hidden"
 WARN STE-ING openspec/specs/skywatch-scenes-layer/spec.md:370 Check the -ing word "Loading"
 WARN STE-NOUN openspec/specs/skywatch-scenes-layer/spec.md:397 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/up42-thumbnails/spec.md:166 Check for a verb used as a noun: "read"
 WARN STE-ING openspec/specs/voice-panel/spec.md:52 Check the -ing word "pending"
 WARN STE-PASSIVE openspec/specs/voice-panel/spec.md:331 Check for passive voice: "is disposed"
 WARN STE-PASSIVE openspec/specs/voice-panel/spec.md:343 Check for passive voice: "is enabled"
@@ -1287,6 +1289,5 @@ WARN STE-ING openspec/specs/voice-panel/spec.md:351 Check the -ing word "connect
 WARN STE-ING openspec/specs/wind/spec.md:4 Check the -ing word "archiving"
 WARN STE-WORD-OLD openspec/specs/wind/spec.md:72 Use "closes", not "dismisses"
 WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
-STE: 0 errors, 1287 warnings.
-
+STE: 0 errors, 1289 warnings.
 Exit: 0

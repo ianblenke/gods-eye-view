@@ -1,46 +1,40 @@
-At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
+At the host snapshot, commit ade36a5c42d31ace0459d657d2cd436880786533 has worktree edits.
 
-Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n -o 'source host regex|abort signal|ids of dots only' openspec/changes/archive/2026-11-07-up42-thumbnails/design.md
-26:source host regex
-32:abort signal
-33:ids of dots only
-
+Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n -o readUntilAbort|Promise.race|removeEventListener server/providers/up42/auth.js
+28:Promise.race
+32:removeEventListener
+36:readUntilAbort
+44:Promise.race
+46:removeEventListener
+49:removeEventListener
+84:readUntilAbort
+100:readUntilAbort
 Exit: 0
-Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n -o 'up42-thumbnails-018|up42-thumbnails-019|before it reads the body' openspec/specs/up42-thumbnails/spec.md openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md openspec/changes/archive/2026-11-07-up42-thumbnails/tasks.md
-openspec/changes/archive/2026-11-07-up42-thumbnails/tasks.md:21:up42-thumbnails-018
-openspec/changes/archive/2026-11-07-up42-thumbnails/tasks.md:22:up42-thumbnails-019
-openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md:104:up42-thumbnails-019
-openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md:136:before it reads the body
-openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md:191:up42-thumbnails-018
-openspec/specs/up42-thumbnails/spec.md:107:up42-thumbnails-019
-openspec/specs/up42-thumbnails/spec.md:139:before it reads the body
-openspec/specs/up42-thumbnails/spec.md:194:up42-thumbnails-018
 
+Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n -o limits the wait at status|the cancel operation|excess size|limits a JSON read src/data/up42Thumbnails.test.mjs
+1140:limits the wait at status
+1140:the cancel operation
+1223:excess size
+1223:the cancel operation
+1292:excess size
+1292:the cancel operation
+1331:limits a JSON read
+1331:the cancel operation
 Exit: 0
-Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n -o 'cancelBody|throwIfAborted|encodeURIComponent' server/providers/up42/auth.js
-21:cancelBody
-33:throwIfAborted
-51:throwIfAborted
-53:cancelBody
-64:cancelBody
-200:encodeURIComponent
 
+Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n -o this limit includes|an excess image gives openspec/specs/up42-thumbnails/spec.md openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md
+openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md:163:this limit includes
+openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md:164:an excess image gives
+openspec/specs/up42-thumbnails/spec.md:166:this limit includes
+openspec/specs/up42-thumbnails/spec.md:167:an excess image gives
 Exit: 0
-Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n -o 'Object.keys\(console\)|inspect\(args|up42-thumbnails-018|up42-thumbnails-019' src/data/up42Thumbnails.test.mjs
-916:Object.keys(console)
-920:inspect(args
-1086:up42-thumbnails-018
-1191:up42-thumbnails-019
-1207:up42-thumbnails-019
 
+Command: cd /home/ianblenke/docker/gev-work/up42 && git diff --stat -- src/data/up42Input.test.mjs src/data/up42Scenes.test.mjs src/data/up42Upstream.test.mjs src/data/up42Proxy.test.mjs openspec/specs/up42-source openspec/changes/archive/2026-11-06-up42-source src/sources/httpBody.js
 Exit: 0
-Command: cd /home/ianblenke/docker/gev-work/up42 && git diff --stat -- src/data/up42Proxy.test.mjs src/data/up42Scenes.test.mjs src/data/up42Upstream.test.mjs src/data/up42Input.test.mjs openspec/specs/up42-source openspec/changes/archive/2026-11-06-up42-source server/providers/up42/normalize.js
 
-Exit: 0
+Both spec bodies are identical from the first requirement to the end.
+Each requirement text line equals the line in HEAD.
+All 19 scenario ids have a test task. No scenario id is new in round two.
+The protected file diff is empty. All changed paths belong to this correction.
 Command: cd /home/ianblenke/docker/gev-work/up42 && git diff --check
-
 Exit: 0
-The two spec bodies are identical from the first requirement through the end.
-Both spec copies keep every requirement text line from HEAD.
-The protected source tests, source specs and scene id rule have an empty diff.
-The old instrument file has prose only. The evidence has no executable runner.

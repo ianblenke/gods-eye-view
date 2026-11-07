@@ -160,6 +160,8 @@ Origin: spec-first
 - **THEN** a timeout gives 504 with search_timeout and clears the timer
 - **AND** a non-200 body receives cancel before the timer clears; a cancel error keeps the fixed failure
 - **AND** a cancel that never ends cannot extend the limit; a cancel that ends after abort keeps search_timeout
+- **AND** this limit includes an image with declared or streamed excess size and a JSON body with a read that never ends
+- **AND** an excess image gives 502 with bad_upstream when cancel ends before the limit
 
 ### Requirement: Answer
 

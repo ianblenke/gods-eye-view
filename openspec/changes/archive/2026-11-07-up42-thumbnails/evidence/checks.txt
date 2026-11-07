@@ -1,23 +1,25 @@
 Command: Python count of the final host log, scenario headings and mutation records.
-At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
+At the host snapshot, commit ade36a5c42d31ace0459d657d2cd436880786533 has worktree edits.
 
 Host Node: v26.13.0.
-The change has 19 scenarios. New scenario ids are up42-thumbnails-018 and up42-thumbnails-019.
-Both spec bodies are identical. Every requirement text line stays unchanged.
-Each new scenario has a test task and tagged tests.
+The change has 19 scenarios. No scenario id is new in round two.
+All 19 scenario ids have a test task. Both spec bodies are identical.
+Each requirement text line equals the line in HEAD.
 
-At this snapshot, all 410 tests passed. Failures, cancellations and skips are zero.
-The required UP42 and SkyWatch suites have 406 tests.
+At this snapshot, all 417 tests passed. Failures, cancellations and skips are zero.
+The required UP42 and SkyWatch suites have 413 tests.
 The command also runs four Gemini composition tests for local.js coverage.
-The thumbnail suite has 70 tests, nine more than the previous snapshot.
-The source suite has 216 tests. The SkyWatch suite has 120 tests.
-All unchanged up42-source-026 tests pass.
+The thumbnail suite has 77 tests, seven more than the round one snapshot.
+The source suite has 216 tests. The SkyWatch suites have 120 tests.
+All 9 unchanged up42-source-026 tests pass.
 host-run.txt gives the full command, completed result and coverage report.
-The first sandbox run failed at the local HTTP listener. sandbox-run.txt records that separate result.
-The final run had permission for that local listener and used fake upstream fetches.
+The first sandbox run failed because the local HTTP listener had no permission.
+sandbox-run.txt records that completed command and its one failure.
+The permitted final run completed with fake upstream fetches.
 
 All nine measured provider files have 100 percent line, branch and function coverage.
 # file               | line % | branch % | funcs % | uncovered lines
+# -------------------------------------------------------------------
 # server             |        |          |         |
 #  providers         |        |          |         |
 #   local.js         | 100.00 |   100.00 |  100.00 |
@@ -31,28 +33,30 @@ All nine measured provider files have 100 percent line, branch and function cove
 #    same-site.js    | 100.00 |   100.00 |  100.00 |
 #    upstream.js     | 100.00 |   100.00 |  100.00 |
 #    validate.js     | 100.00 |   100.00 |  100.00 |
+# -------------------------------------------------------------------
 # all files          | 100.00 |   100.00 |  100.00 |
+# -------------------------------------------------------------------
 
-At this snapshot, 16 new mutation commands failed their named tests.
-There are 22 distinct failed test titles in those commands.
-faults.txt keeps 61 historical records and 16 current records, with 77 unique ids.
+At this snapshot, both new mutation commands failed their named tests.
+UPT-M078 removes the image read race. The declared and streamed excess image timeout tests fail.
+UPT-M079 removes the JSON read race. The JSON read timeout test fails.
+There are three distinct failed test titles in those commands.
+faults.txt has 79 unique ids: 77 historical and 2 current.
 The historical mutations did not run again in this correction.
-instrument.txt is prose that names the mutation commands and their results.
-No evidence file contains an executable runner. Historical source replacement text was removed from faults.txt.
-The error excerpts in red-test.txt and correction-search.txt were replaced by prose and search matches.
-The source hashes, commands, test names and results stay in the evidence.
+Both current commands completed. No current test reached its time limit.
+The source file has its original hash after both commands.
 
-STE: 0 errors, 1287 warnings.
-lint-output.txt records the completed command.
-No QA line appears in its output. The full QA gate did not run.
-The expanded test-title check has 70 unique titles and zero STE findings.
-Each thumbnail title has a named failed mutation in the combined record.
+STE: 0 errors, 1289 warnings.
+lint-output.txt records the completed command. No QA line appears in its output.
+The full QA gate did not run.
+The word list check has 77 unique expanded titles and zero STE findings.
+All four status titles now name the cancel operation with an article.
 The formatter check passes. format-validation.txt gives its output.
-correction-search.txt records the corrected text and an empty protected-file diff.
-The source specs, source tests and normalize.js stay unchanged.
+correction-search.txt records the search matches and the empty protected-file diff.
 source-snapshot.txt records the final source hashes.
+The source tests, source specs and upstream files have no change.
 
 No Make command, Docker command, commit, push or external network request ran.
 This correction did not read .env or change a trace ledger.
-F8 stays lead work. review.md and the calibrated final gates remain unverified.
+SPEC F2 stays lead work. review.md and the calibrated final gates remain unverified.
 The live UP42 behavior and the published display terms remain unverified.

@@ -1,8 +1,7 @@
-Command: node --input-type=module with the project STE test-name lint and final host titles.
-At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
-Expanded titles: 70. Unique titles: 70.
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --input-type=module with lintTestNames and openspec/ste/words.json
+At the host snapshot, commit ade36a5c42d31ace0459d657d2cd436880786533 has worktree edits.
+Expanded titles: 77. Unique titles: 77.
 STE errors: 0. Warnings: 0.
-Titles without a named failed mutation in the combined record: 0.
 [up42-thumbnails-001] checks the path in both hooks
 [up42-thumbnails-002] shares scenes through the local provider list
 [up42-thumbnails-003] checks the site before the method and rate
@@ -67,9 +66,16 @@ Titles without a named failed mutation in the combined record: 0.
 [up42-thumbnails-018] sends literal bytes and headers from the store
 [up42-thumbnails-016] refuses the previous secret after UP42_USERNAME changes
 [up42-thumbnails-016] refuses the previous secret after UP42_PASSWORD changes
-[up42-thumbnails-012] limits cancel at status 404 with end never
-[up42-thumbnails-012] limits cancel at status 404 with end after-abort
-[up42-thumbnails-012] limits cancel at status 200 with end never
-[up42-thumbnails-012] limits cancel at status 200 with end after-abort
+[up42-thumbnails-012] limits the wait at status 404 when the cancel operation never ends
+[up42-thumbnails-012] limits the wait at status 404 when the cancel operation ends after the signal aborts
+[up42-thumbnails-012] limits the wait at status 200 when the cancel operation never ends
+[up42-thumbnails-012] limits the wait at status 200 when the cancel operation ends after the signal aborts
 [up42-thumbnails-019] refuses ids of dots only before login
 [up42-thumbnails-019] keeps dots inside the literal destination
+[up42-thumbnails-012] limits an image with declared excess size when the cancel operation never ends
+[up42-thumbnails-012] limits an image with declared excess size when the cancel operation ends
+[up42-thumbnails-012] limits an image with streamed excess size when the cancel operation never ends
+[up42-thumbnails-012] limits an image with streamed excess size when the cancel operation ends
+[up42-thumbnails-012] refuses JSON with declared excess size when the cancel operation never ends
+[up42-thumbnails-012] refuses JSON with streamed excess size when the cancel operation never ends
+[up42-thumbnails-012] limits a JSON read when the cancel operation never ends

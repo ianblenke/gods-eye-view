@@ -86,3 +86,28 @@ Failed test: [up42-thumbnails-001] checks the path in both hooks
 UPT-M077: Send the password in an Error object through console.dir.
 Failed test: [up42-thumbnails-016] keeps all fake secrets out of output
 
+
+Review round two
+
+SPEC F1 at commit ade36a5c42d31ace0459d657d2cd436880786533 with worktree edits: Fixed.
+The image read races the abort signal. The helper removes its listener after success or failure.
+Declared and streamed excess images give 504 with search_timeout when cancel never ends.
+They give 502 with bad_upstream when cancel ends before the limit.
+The JSON read also races the abort signal. A read that never ends gives 504 with search_timeout.
+JSON excess size still gives 502 with upstream_failed when cancel never ends.
+All nine unchanged up42-source-026 tests pass.
+UPT-M078 fails both new image timeout tests. UPT-M079 fails the new JSON timeout test.
+The seven new tests use scenario up42-thumbnails-012. No new scenario id needs a task.
+Both spec bodies have the same added scenario lines. Requirement text stays unchanged.
+
+STE F1 at commit ade36a5c42d31ace0459d657d2cd436880786533 with worktree edits: Fixed.
+All four titles include an article before cancel operation. All 77 expanded titles are unique and pass the word list check.
+
+SPEC F2 at commit ade36a5c42d31ace0459d657d2cd436880786533: Lead work.
+This correction does not write review.md or run final gates.
+
+The first test command failed because the sandbox refused the local HTTP listener.
+The permitted command completed with 417 passed tests and zero failures.
+All nine measured provider files have full line, branch and function coverage.
+The new tests fail assertions before the fix. No test reaches its time limit.
+The source tests, source specs and upstream files have no change.

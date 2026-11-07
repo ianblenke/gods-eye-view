@@ -810,8 +810,37 @@ Exit: 1
 Failed test: [up42-thumbnails-016] keeps all fake secrets out of output
 Result: KILLED
 
-At the current host snapshot, new mutations: 16. Killed: 16. Survived or stopped: 0.
+At the round one host snapshot, new mutations: 16. Killed: 16. Survived or stopped: 0.
 Current unique failed test titles: 22.
 The combined record has 77 unique mutation ids: 61 historical and 16 current.
 UPT-M068 and UPT-M069 each include one test that reaches its 2000 ms test limit.
 Those tests expose the unbounded cancel. Their other tests complete with a wrong result and fail assertions.
+
+Review round two
+
+UPT-M078: Remove the image read race.
+Commit: ade36a5c42d31ace0459d657d2cd436880786533 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 9c117f97594efcc8b5995874aaf50519ad8e10f2d4cf9f2d69219b867668019f
+Fault SHA-256: 78b23bf9557ae8bf1a32485767dd86dfeae33ec5208e3afbb4f8c2134bb0896b
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=limits an image with (declared|streamed) excess size' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-012] limits an image with declared excess size when the cancel operation never ends
+Failed test: [up42-thumbnails-012] limits an image with streamed excess size when the cancel operation never ends
+Result: KILLED
+
+UPT-M079: Remove the JSON read race.
+Commit: ade36a5c42d31ace0459d657d2cd436880786533 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 9c117f97594efcc8b5995874aaf50519ad8e10f2d4cf9f2d69219b867668019f
+Fault SHA-256: 645b90cc73bad351c69962941c9a4eec63685abbdf244d71aeb34888a36dd132
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=limits a JSON read when the cancel operation never ends' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-012] limits a JSON read when the cancel operation never ends
+Result: KILLED
+
+At the round two host snapshot, new mutations: 2. Killed: 2. Survived or stopped: 0.
+Current unique failed test titles: 3.
+The combined record has 79 unique mutation ids: 77 historical and 2 current.
+Both current commands completed. No current test reached its time limit.
+The source file has its original SHA-256 after both commands.
