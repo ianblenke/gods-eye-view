@@ -59,8 +59,8 @@
 
 ## 4. Lead work
 
-- [ ] 4.1 Run `make ratchet CHANGE=up42-quotes`.
-- [ ] 4.2 Archive the change with identical spec copies.
+- [x] 4.1 Run `make ratchet CHANGE=up42-quotes`.
+- [x] 4.2 Archive the change with identical spec copies.
 - [ ] 4.3 Run the two review agents.
 - [ ] 4.4 Write `review.md`.
 - [ ] 4.5 Run `make gates CHANGE=up42-quotes` on the final tree.
