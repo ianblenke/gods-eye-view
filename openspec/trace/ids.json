@@ -7280,7 +7280,7 @@
     "change": "up42-scenes-layer"
   },
   "up42-scenes-layer-007": {
-    "hash": "90372a3d24cf1f7628f33549e7edee9e43dfda3550c85885e37cdced01605964",
+    "hash": "3a484af8733d6a096d092ce67214fc65454b3b6c28f633c958bf7697d4841a36",
     "since": "2026-11-07",
     "change": "up42-scenes-layer"
   },
@@ -7390,7 +7390,7 @@
     "change": "up42-scenes-layer"
   },
   "up42-scenes-layer-029": {
-    "hash": "b7302902ac43223121fe96d036dc3241fa13e3ed740373555eaa0fd646e9359d",
+    "hash": "bb153e11d31ebdca1d435d12c8c5d2467c12639757b84c78be56920e5c7f87ed",
     "since": "2026-11-07",
     "change": "up42-scenes-layer"
   },
@@ -7446,6 +7446,11 @@
   },
   "up42-scenes-layer-040": {
     "hash": "d34e5b92c24b5f21f5eec840b1bc8d4a254422a442c9c4b2471bc8654d6a6329",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-041": {
+    "hash": "0290676514ef0cdc7d655ef57bb2ed4cd59033024111f8889c491c7733fe47c7",
     "since": "2026-11-07",
     "change": "up42-scenes-layer"
   },

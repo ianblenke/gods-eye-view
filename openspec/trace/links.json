@@ -9319,7 +9319,7 @@
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-003] has one chip with an onClick function and no params, and one click gives one search"
   ],
   "up42-scenes-layer-004": [
-    "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-004] sends one search for two presses and shows Searching… while it runs"
+    "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-004] sends one search for two presses and shows the search message while the search runs"
   ],
   "up42-scenes-layer-005": [
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-005] sends no search after an error while the fake clock and the mocked timers move 10 minutes, and sends one search at the next press"
@@ -9357,7 +9357,7 @@
     "src/layers/up42Scenes/box.test.mjs › [up42-scenes-layer-011] gives the last 92 days as the window, from the samples of the spec",
     "src/layers/up42Scenes/box.test.mjs › [up42-scenes-layer-011] gives the same window when the time zone of the machine is America/New_York",
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-011] sends the window of the time of the clock at the press",
-    "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-011] uses Date.now as the clock when no option now is given"
+    "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-011] uses Date.now as the clock when the caller gives no option now"
   ],
   "up42-scenes-layer-012": [
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-012] gives ok false for another body, for a status that is not 2xx and for a rejection",
@@ -9366,7 +9366,7 @@
   "up42-scenes-layer-013": [
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-013] gives the result of the answer records for a good answer",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-013] sends one POST with one header and the box and the dates as the body",
-    "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-013] uses the fetch function of the page when none is given"
+    "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-013] uses the fetch function of the page when the caller gives no fetch function"
   ],
   "up42-scenes-layer-014": [
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-014] aborts a search that does not end in 60 seconds and clears the timer",
@@ -9396,7 +9396,7 @@
     "src/layers/up42Scenes/records.test.mjs › [up42-scenes-layer-016] drops a scene whose footprint is not a polygon with exactly one ring",
     "src/layers/up42Scenes/records.test.mjs › [up42-scenes-layer-016] drops a scene whose id does not have 1 to 128 letters, digits, hyphens, underscores or dots",
     "src/layers/up42Scenes/records.test.mjs › [up42-scenes-layer-016] drops a scene whose start is not a text that Date.parse reads",
-    "src/layers/up42Scenes/records.test.mjs › [up42-scenes-layer-016] drops a scene with a position that is not two finite numbers in range",
+    "src/layers/up42Scenes/records.test.mjs › [up42-scenes-layer-016] drops a scene with a position that is not two finite numbers in the valid range",
     "src/layers/up42Scenes/records.test.mjs › [up42-scenes-layer-016] drops an item that is not an object and a repeated id, and keeps the order of the answer",
     "src/layers/up42Scenes/records.test.mjs › [up42-scenes-layer-016] keeps a resolution of 0 or more, a cloud cover from 0 to 100, a provider text and only a true thumbnail",
     "src/layers/up42Scenes/records.test.mjs › [up42-scenes-layer-016] keeps a ring of 4 to 2000 positions, and drops a shorter or longer ring",
@@ -9411,7 +9411,7 @@
   "up42-scenes-layer-018": [
     "src/layers/up42Scenes/messages.test.mjs › [up42-scenes-layer-018] names both daily counts and refuses other counts",
     "src/layers/up42Scenes/messages.test.mjs › [up42-scenes-layer-018] names each failure of a search with the text of its sample",
-    "src/layers/up42Scenes/messages.test.mjs › [up42-scenes-layer-018] names the wait of UP42 with its seconds, in the singular for 1"
+    "src/layers/up42Scenes/messages.test.mjs › [up42-scenes-layer-018] states how many seconds UP42 asks the user to wait, with the singular form for 1"
   ],
   "up42-scenes-layer-019": [
     "src/layers/up42Scenes/messages.test.mjs › [up42-scenes-layer-019] names credential and time failures of a thumbnail",
@@ -9430,7 +9430,7 @@
     "src/layers/up42Scenes/model.test.mjs › [up42-scenes-layer-022] gives null for no answer and for an answer with no scene",
     "src/layers/up42Scenes/model.test.mjs › [up42-scenes-layer-022] gives one item for each scene, in the order of the answer",
     "src/layers/up42Scenes/model.test.mjs › [up42-scenes-layer-022] writes the UTC date as the lead when the time zone of the machine is not UTC",
-    "src/layers/up42Scenes/model.test.mjs › [up42-scenes-layer-022] writes the resolution, the cloud cover and the parts that are null"
+    "src/layers/up42Scenes/model.test.mjs › [up42-scenes-layer-022] writes the resolution and the cloud cover and omits null parts"
   ],
   "up42-scenes-layer-023": [
     "src/layers/up42Scenes/model.test.mjs › [up42-scenes-layer-023] fits the image in a square of 192 pixels and keeps its ratio",
@@ -9464,7 +9464,7 @@
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint"
   ],
   "up42-scenes-layer-030": [
-    "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-030] decodes the blob with createImageBitmap of the page when no decodeImage is given",
+    "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-030] decodes the blob with createImageBitmap of the page when the caller gives no decodeImage function",
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-030] gets the thumbnail of the selected scene and shows it as one card",
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-030] sends no thumbnail request for a scene that has no thumbnail",
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-030] writes the date and the provider as the title of the card",
@@ -9515,8 +9515,13 @@
   "up42-scenes-layer-040": [
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-040] builds the local source error without source text",
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-040] shows local texts for source errors and uses no object URL",
-    "src/layers/up42Scenes/messages.test.mjs › [up42-scenes-layer-040] gives local messages for unknown errors and a missing thumbnail route",
+    "src/layers/up42Scenes/messages.test.mjs › [up42-scenes-layer-040] gives local messages for unknown errors and a thumbnail route that is absent",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-040] drops extra error text and sends only the box and dates"
+  ],
+  "up42-scenes-layer-041": [
+    "src/layers/up42Scenes/registration.test.mjs › [up42-scenes-layer-041] keeps 41 registry and ledger entries and refuses the free token 05",
+    "src/layers/up42Scenes/registration.test.mjs › [up42-scenes-layer-041] keeps 42 catalog layers with full, absent and changed sources",
+    "src/layers/up42Scenes/registration.test.mjs › [up42-scenes-layer-041] keeps all 13 reference source keys in order"
   ],
   "up42-source-001": [
     "src/data/up42Proxy.test.mjs › [up42-source-001] installs both exact routes in both Vite hooks"
