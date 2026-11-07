@@ -60,6 +60,7 @@ export function up42ThumbnailProxy({
       return sendJson(res, 404, 'thumbnails_off');
     if (!allow('thumbnails'))
       return sendJson(res, 429, 'rate_limited', {}, { 'Retry-After': '60' });
+    if (/^\.+$/.test(id)) return sendJson(res, 404, 'unknown_scene');
     const host = thumbnailHostOf(id);
     if (host === null) return sendJson(res, 404, 'unknown_scene');
     const key = JSON.stringify([host, id]);

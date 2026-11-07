@@ -1,15 +1,12 @@
-Command: cd /home/ianblenke/docker/gev-work/up42 && python3 openspec/changes/up42-thumbnails/evidence/instrument.txt
-At the host snapshot, HEAD is 7d4d1643b92767344587435ebf12116d2949a25e.
-UTC: 2026-11-07T10:52:13.442422+00:00
-The source and tests have changes after HEAD.
-Each fault runs alone. The runner restores each file after the command.
+Historical snapshot: commit 7d4d1643b92767344587435ebf12116d2949a25e with worktree edits.
+The removed Python artifact ran UPT-M001 through UPT-M061 before archive.
+The records below keep the original commands, source hashes, changes and results.
+These 61 historical mutations did not run again in review round one.
 
 UPT-M001: accept each invalid id
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: 'if (!isSearchId(id)) return next();'
-With: 'if (false) return next();'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=checks the path' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-001] checks the path in both hooks
@@ -19,8 +16,6 @@ UPT-M002: disconnect the scene lookup
 File: server/providers/up42-thumbnails/plugins.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 85dc68058b609e1d98a209a8dcdf5829038c340ea30f564ed37602b521c283eb
-Replace: 'thumbnailHostOf: scenes.thumbnailHostOf'
-With: 'thumbnailHostOf: () => null'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=shares scenes through the local' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-002] shares scenes through the local provider list
@@ -30,8 +25,6 @@ UPT-M003: ignore the process variable
 File: server/providers/up42-thumbnails/plugins.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 85dc68058b609e1d98a209a8dcdf5829038c340ea30f564ed37602b521c283eb
-Replace: '      ...options,\n      client,'
-With: '      ...options,\n      env: {},\n      client,'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=shares scenes through the local' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-002] shares scenes through the local provider list
@@ -41,8 +34,6 @@ UPT-M004: give thumbnails a separate token cache
 File: server/providers/up42-thumbnails/plugins.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 85dc68058b609e1d98a209a8dcdf5829038c340ea30f564ed37602b521c283eb
-Replace: '      client,\n      thumbnailHostOf:'
-With: '      client: createClient({ env: process.env, fetchImpl: fetch, now: Date.now, setTimer: setTimeout, clearTimer: clearTimeout, ...options }),\n      thumbnailHostOf:'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=shares scenes through the local' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-002] shares scenes through the local provider list
@@ -52,8 +43,6 @@ UPT-M005: omit the site check
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: 'if (!isSameSite(req))'
-With: 'if (false)'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=checks the site before' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-003] checks the site before the method and rate
@@ -63,8 +52,6 @@ UPT-M006: omit the method check
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: "if (req.method !== 'GET')"
-With: 'if (false)'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=accepts only GET' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-004] accepts only GET
@@ -74,8 +61,6 @@ UPT-M007: omit the variable check
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: "if (env.UP42_THUMBNAILS !== 'true')"
-With: 'if (false)'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=keeps each other variable' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-005] keeps each other variable value off before the rate
@@ -85,8 +70,6 @@ UPT-M008: allow request 31
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: 'windowMs: 60000, max: 30'
-With: 'windowMs: 60000, max: 31'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=counts kept images' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-006] counts kept images and both socket addresses
@@ -96,8 +79,6 @@ UPT-M009: hold the rate window too long
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: 'windowMs: 60000, max: 30'
-With: 'windowMs: 60001, max: 30'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=counts kept images' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-006] counts kept images and both socket addresses
@@ -107,8 +88,6 @@ UPT-M010: read the oldest answer first
 File: server/providers/up42.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 4227ecabacca8f178e2024bc6be510baa69e843511b8824ea3b5799cab0fd544
-Replace: '[...store.values()].reverse()'
-With: '[...store.values()]'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=selects the newest answer' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-007] selects the newest answer with the id
@@ -118,8 +97,6 @@ UPT-M011: fall back past a false flag
 File: server/providers/up42.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 4227ecabacca8f178e2024bc6be510baa69e843511b8824ea3b5799cab0fd544
-Replace: 'if (scene !== undefined)'
-With: 'if (scene !== undefined && scene.thumbnail === true)'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=selects the newest answer' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-007] selects the newest answer with the id
@@ -129,8 +106,6 @@ UPT-M012: use the last duplicate scene
 File: server/providers/up42.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 4227ecabacca8f178e2024bc6be510baa69e843511b8824ea3b5799cab0fd544
-Replace: 'kept.entry.scenes.find((row) => row.id === id)'
-With: 'kept.entry.scenes.findLast((row) => row.id === id)'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=uses the first scene' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-007] uses the first scene and isolates plugin lists
@@ -140,8 +115,6 @@ UPT-M013: accept an answer at expiry
 File: server/providers/up42.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 4227ecabacca8f178e2024bc6be510baa69e843511b8824ea3b5799cab0fd544
-Replace: 'now() - kept.at >= 600000'
-With: 'now() - kept.at > 600000'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=rejects expired and evicted' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-007] rejects expired and evicted scenes before image bytes
@@ -151,8 +124,6 @@ UPT-M014: keep 33 scene answers
 File: server/providers/up42.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 4227ecabacca8f178e2024bc6be510baa69e843511b8824ea3b5799cab0fd544
-Replace: 'if (store.size >= 32)'
-With: 'if (store.size >= 33)'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=rejects expired and evicted' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-007] rejects expired and evicted scenes before image bytes
@@ -162,8 +133,6 @@ UPT-M015: guess a host without a lookup
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: 'thumbnailHostOf = () => null'
-With: "thumbnailHostOf = () => 'oneatlas'"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=uses the first scene' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-007] uses the first scene and isolates plugin lists
@@ -173,8 +142,6 @@ UPT-M016: use POST for the thumbnail
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "method: 'GET',\n          headers:"
-With: "method: 'POST',\n          headers:"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=sets the exact authenticated GET' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-008] sets the exact authenticated GET fields
@@ -184,8 +151,6 @@ UPT-M017: follow redirects
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "redirect: 'error'"
-With: "redirect: 'follow'"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=sets the exact authenticated GET' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-008] sets the exact authenticated GET fields
@@ -195,8 +160,6 @@ UPT-M018: request JSON
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "Accept: 'image/png, image/jpeg, image/webp'"
-With: "Accept: 'application/json'"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=sets the exact authenticated GET' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-008] sets the exact authenticated GET fields
@@ -206,8 +169,6 @@ UPT-M019: omit the host regex
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "typeof host !== 'string' || !HOST.test(host) || !isSearchId(id)"
-With: "typeof host !== 'string' || !isSearchId(id)"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=rejects invalid path parts' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-008] rejects invalid path parts before login
@@ -217,8 +178,6 @@ UPT-M020: omit the id check
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "typeof host !== 'string' || !HOST.test(host) || !isSearchId(id)"
-With: "typeof host !== 'string' || !HOST.test(host)"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=rejects invalid path parts' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-008] rejects invalid path parts before login
@@ -228,8 +187,6 @@ UPT-M021: omit login single flight
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: 'if (inFlight !== null) return inFlight;'
-With: 'if (false) return inFlight;'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=shares one login and uses' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-009] shares one login and uses the token expiry
@@ -239,8 +196,6 @@ UPT-M022: reuse a token at its boundary
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: 'value.expires_in - 60'
-With: 'value.expires_in - 59'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=shares one login and uses' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-009] shares one login and uses the token expiry
@@ -250,8 +205,6 @@ UPT-M023: omit the 401 retry
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "if (!result.ok && result.kind === 'unauthorized')"
-With: 'if (false)'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=retries one API refusal case' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-009] retries one API refusal case 0
@@ -263,8 +216,6 @@ UPT-M024: misname the second 401
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "? failed('credentials_rejected')"
-With: "? failed('upstream_failed')"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=retries one API refusal case 1' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-009] retries one API refusal case 1
@@ -274,8 +225,6 @@ UPT-M025: misname a refused login
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: 'if (!token.ok) return token;'
-With: "if (!token.ok) return failed('upstream_failed');"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=stops after a refused' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-009] stops after a refused first login
@@ -286,8 +235,6 @@ UPT-M026: refuse each good image
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: 'return { ok: true, type, bytes };'
-With: "return failed('bad_upstream');"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=accepts image case|accepts exactly 1048576' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-010] accepts image case 0
@@ -301,8 +248,6 @@ UPT-M027: omit the signature check
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: '!hasImageSignature(type, bytes)'
-With: 'false'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=refuses bad image case [34569]' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-010] refuses bad image case 3
@@ -316,8 +261,6 @@ UPT-M028: accept one excess byte
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: 'MAX_IMAGE_BYTES,\n          controller.signal'
-With: 'MAX_IMAGE_BYTES + 1,\n          controller.signal'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=refuses bad image case [78]' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-010] refuses bad image case 7
@@ -328,8 +271,6 @@ UPT-M029: misname an invalid media type
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "return failed('bad_upstream');"
-With: "return failed('upstream_failed');"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=refuses bad image case [012]|cancels a non-image|refuses a non-image' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-010] refuses bad image case 0
@@ -344,8 +285,6 @@ UPT-M030: misname 404
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "if (image && response.status === 404) return failed('not_found');"
-With: "if (false) return failed('not_found');"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=names status case 3' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-011] names status case 3
@@ -355,8 +294,6 @@ UPT-M031: misname the credential refusal answer
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: 'return sendJson(res, 403, result.kind, { keyRejected: true });'
-With: 'return sendJson(res, 502, result.kind);'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=names status case 4' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-011] names status case 4
@@ -366,8 +303,6 @@ UPT-M032: misname other statuses
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "return failed('upstream_failed');\n      }\n      if (image)"
-With: "return failed('bad_upstream');\n      }\n      if (image)"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=names status case [012567]' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-011] names status case 0
@@ -382,8 +317,6 @@ UPT-M033: misname a transport failure
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: ": 'upstream_failed',\n      );"
-With: ": 'bad_upstream',\n      );"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=names transport case' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-011] names transport case 0
@@ -394,8 +327,6 @@ UPT-M034: set the wrong timeout
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: 'controller.abort(), 15000'
-With: 'controller.abort(), 15001'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=stops during the' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-012] stops during the headers phase
@@ -406,8 +337,6 @@ UPT-M035: misname a timeout
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "? 'search_timeout'"
-With: "? 'upstream_failed'"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=stops during the' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-012] stops during the headers phase
@@ -418,8 +347,6 @@ UPT-M036: leave error bodies open
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: 'await response.body?.cancel();'
-With: 'void response.body;'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=discards error bodies' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-012] discards error bodies with cancel failure false
@@ -430,8 +357,6 @@ UPT-M037: change the failure after a cancel error
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: '// A cancel error must not change the fixed failure.'
-With: "throw new Error('test cancel error');"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=discards error bodies with cancel failure true|refuses a non-image with body case cancel-error' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-012] discards error bodies with cancel failure true
@@ -442,8 +367,6 @@ UPT-M038: clear the image timer before the body
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: 'const bytes = await readResponseBytesCapped('
-With: 'clearTimer(timer);\n        const bytes = await readResponseBytesCapped('
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=keeps the timer through all image' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-012] keeps the timer through all image bytes
@@ -453,8 +376,6 @@ UPT-M039: send the wrong image headers
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: "'X-Content-Type-Options': 'nosniff'"
-With: "'X-Content-Type-Options': 'sniff'"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=sends bytes with only its own' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-013] sends bytes with only its own headers
@@ -464,8 +385,6 @@ UPT-M040: accept an image at expiry
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: 'now() - kept.at < 600000'
-With: 'now() - kept.at <= 600000'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=uses the image age' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-014] uses the image age and no daily count
@@ -475,8 +394,6 @@ UPT-M041: omit the host from the image key
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: 'JSON.stringify([host, id])'
-With: 'JSON.stringify([id])'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=keys images by both' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-014] keys images by both host and id
@@ -486,8 +403,6 @@ UPT-M042: keep 33 images
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: 'if (store.size >= 32)'
-With: 'if (store.size >= 33)'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=removes the oldest of 33' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-014] removes the oldest of 33 images
@@ -497,8 +412,6 @@ UPT-M043: do not refresh image order
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: '      store.delete(key);'
-With: '      void key;'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=makes an expired image newest' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-014] makes an expired image newest after a refresh
@@ -508,8 +421,6 @@ UPT-M044: yield before the image claim
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: 'let result = fromStore(key);'
-With: 'let result = await fromStore(key);'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=claims simultaneous requests' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-015] claims simultaneous requests with success true
@@ -520,8 +431,6 @@ UPT-M045: cache a failed image
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: '    if (result.ok) {'
-With: '    if (true) {'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=claims simultaneous requests with success false' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-015] claims simultaneous requests with success false
@@ -531,8 +440,6 @@ UPT-M046: send secrets in image bytes
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: "!isSafe(Buffer.from(bytes).toString('utf8'))"
-With: 'false'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=keeps all fake secrets|refuses a previous secret' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-016] keeps all fake secrets out of output
@@ -543,8 +450,6 @@ UPT-M047: forget previous bearer tokens
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: '    secrets.add(value.access_token);'
-With: '    void value.access_token;'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=refuses a previous secret' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-016] refuses a previous secret in image bytes
@@ -554,8 +459,6 @@ UPT-M048: use a different image endpoint
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: '`${API}/catalog/${host}/image/${id}/thumbnail`'
-With: '`${API}/catalog/${host}/image/${id}/quicklook`'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=allows only the four literal' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-017] allows only the four literal request forms
@@ -565,8 +468,6 @@ UPT-M049: add a forbidden source literal
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: '/** Checked thumbnails'
-With: '/** /v2/orders Checked thumbnails'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=allows only the four literal' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-017] allows only the four literal request forms
@@ -576,8 +477,6 @@ UPT-M050: accept an expired scene with fresh image bytes
 File: server/providers/up42.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 4227ecabacca8f178e2024bc6be510baa69e843511b8824ea3b5799cab0fd544
-Replace: 'now() - kept.at >= 600000'
-With: 'now() - kept.at > 600000'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=refuses an expired scene with a fresh image' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-007] refuses an expired scene with a fresh image
@@ -587,8 +486,6 @@ UPT-M051: count each thumbnail as a daily search
 File: server/providers/up42.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 4227ecabacca8f178e2024bc6be510baa69e843511b8824ea3b5799cab0fd544
-Replace: '  function thumbnailHostOf(id) {'
-With: '  function thumbnailHostOf(id) {\n    count.used++;'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=uses the image age and no daily count' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-014] uses the image age and no daily count
@@ -598,8 +495,6 @@ UPT-M052: write a password to the console
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: 'return { ok: true, type, bytes };'
-With: 'console.log(env.UP42_PASSWORD); return { ok: true, type, bytes };'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=keeps all fake secrets out of output' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-016] keeps all fake secrets out of output
@@ -609,8 +504,6 @@ UPT-M053: misname the second refused login
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: 'if (!token.ok) return token;'
-With: "if (!token.ok) return failed('upstream_failed');"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=stops after a refused second login' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-009] stops after a refused second login
@@ -620,8 +513,6 @@ UPT-M054: leave a non-image body open
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: 'await response.body?.cancel();'
-With: 'void response.body;'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=cancels a non-image body before it reads bytes' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-010] cancels a non-image body before it reads bytes
@@ -631,8 +522,6 @@ UPT-M055: use a different image endpoint after the title correction
 File: server/providers/up42/auth.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230
-Replace: '`${API}/catalog/${host}/image/${id}/thumbnail`'
-With: '`${API}/catalog/${host}/image/${id}/quicklook`'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=allows only the four literal' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-017] allows only the four literal request forms
@@ -642,8 +531,6 @@ UPT-M056: add a forbidden literal after the title correction
 File: server/providers/up42-thumbnails/thumbnails.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0
-Replace: '/** Checked thumbnails'
-With: '/** /v2/orders Checked thumbnails'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=allows only the four literal' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-017] allows only the four literal request forms
@@ -653,8 +540,6 @@ UPT-M057: keep 33 scene answers with fresh image bytes
 File: server/providers/up42.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 4227ecabacca8f178e2024bc6be510baa69e843511b8824ea3b5799cab0fd544
-Replace: 'if (store.size >= 32)'
-With: 'if (store.size >= 33)'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=rejects expired and evicted' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-007] rejects expired and evicted scenes before image bytes
@@ -664,8 +549,6 @@ UPT-M058: remove thumbnails from the local list
 File: server/providers/local.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: d5ede7c2dea8c4bf7b5ee80685d97021cf690b734e5275b61c66aa02cbbaa108
-Replace: '...up42SourcePlugins(),'
-With: '...up42SourcePlugins().slice(0, 1),'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=shares scenes through the local' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-002] shares scenes through the local provider list
@@ -675,8 +558,6 @@ UPT-M059: return a second source plugin
 File: server/providers/up42.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 4227ecabacca8f178e2024bc6be510baa69e843511b8824ea3b5799cab0fd544
-Replace: "    {\n      name: 'up42-proxy',"
-With: "    { name: 'extra', configureServer: install, configurePreviewServer: install },\n    {\n      name: 'up42-proxy',"
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=installs both exact routes' 'src/data/up42Proxy.test.mjs'
 Exit: 1
 Failed test: [up42-source-001] installs both exact routes in both Vite hooks
@@ -686,8 +567,6 @@ UPT-M060: reverse the combined plugin order
 File: server/providers/up42-thumbnails/plugins.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: 85dc68058b609e1d98a209a8dcdf5829038c340ea30f564ed37602b521c283eb
-Replace: '  ];'
-With: '  ].reverse();'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=shares scenes through the local' 'src/data/up42Thumbnails.test.mjs'
 Exit: 1
 Failed test: [up42-thumbnails-002] shares scenes through the local provider list
@@ -697,8 +576,6 @@ UPT-M061: add a seventh source file
 File: server/providers/up42/extra.js
 HEAD: 7d4d1643b92767344587435ebf12116d2949a25e
 SHA-256: absent
-Replace: None
-With: '// Test fault.\n'
 Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--test-reporter=tap' '--test-name-pattern=excludes all forbidden source literals' 'src/data/up42Upstream.test.mjs'
 Exit: 1
 Failed test: [up42-source-024] excludes all forbidden source literals
@@ -769,3 +646,172 @@ Failed title: [up42-thumbnails-015] claims simultaneous requests with success tr
 Failed title: [up42-thumbnails-016] keeps all fake secrets out of output
 Failed title: [up42-thumbnails-016] refuses a previous secret in image bytes
 Failed title: [up42-thumbnails-017] allows only the four literal request forms
+
+Review round one
+
+At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
+Each mutation ran alone. Each source file was restored after its command.
+
+UPT-M062: Register a preview handler that gives no answer.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42-thumbnails/thumbnails.js
+Source SHA-256: 1b909e854c069ccf8a3a8f8efb8d9cacbf3bcdd944aa526dd6c605a0f5cf73ff
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=checks the path in both hooks' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-001] checks the path in both hooks
+Result: KILLED
+
+UPT-M063: Corrupt only the bytes in the image store.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42-thumbnails/thumbnails.js
+Source SHA-256: 1b909e854c069ccf8a3a8f8efb8d9cacbf3bcdd944aa526dd6c605a0f5cf73ff
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=sends literal bytes and headers from the store' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-018] sends literal bytes and headers from the store
+Result: KILLED
+
+UPT-M064: Send the password through console.trace.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=keeps all fake secrets out of output' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-016] keeps all fake secrets out of output
+Result: KILLED
+
+UPT-M065: Send the user name through console.dir.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=keeps all fake secrets out of output' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-016] keeps all fake secrets out of output
+Result: KILLED
+
+UPT-M066: Remove the previous user name from the secret set.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=refuses the previous secret after UP42_USERNAME changes' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-016] refuses the previous secret after UP42_USERNAME changes
+Result: KILLED
+
+UPT-M067: Remove the previous password from the secret set.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=refuses the previous secret after UP42_PASSWORD changes' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-016] refuses the previous secret after UP42_PASSWORD changes
+Result: KILLED
+
+UPT-M068: Remove the abort bound from non-200 body cancel.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=limits cancel at status 404' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-012] limits cancel at status 404 with end never
+Failed test: [up42-thumbnails-012] limits cancel at status 404 with end after-abort
+Result: KILLED
+
+UPT-M069: Remove the abort bound from non-image body cancel.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=limits cancel at status 200' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-012] limits cancel at status 200 with end never
+Failed test: [up42-thumbnails-012] limits cancel at status 200 with end after-abort
+Result: KILLED
+
+UPT-M070: Keep the non-timeout result after abort.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=limits cancel at status' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-012] limits cancel at status 404 with end never
+Failed test: [up42-thumbnails-012] limits cancel at status 404 with end after-abort
+Failed test: [up42-thumbnails-012] limits cancel at status 200 with end never
+Failed test: [up42-thumbnails-012] limits cancel at status 200 with end after-abort
+Result: KILLED
+
+UPT-M071: Remove the route check for ids of dots only.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42-thumbnails/thumbnails.js
+Source SHA-256: 1b909e854c069ccf8a3a8f8efb8d9cacbf3bcdd944aa526dd6c605a0f5cf73ff
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=refuses ids of dots only before login' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-019] refuses ids of dots only before login
+Result: KILLED
+
+UPT-M072: Remove the client check for ids of dots only.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=refuses ids of dots only before login' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-019] refuses ids of dots only before login
+Result: KILLED
+
+UPT-M073: Remove dots inside the destination id.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=keeps dots inside the literal destination' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-019] keeps dots inside the literal destination
+Result: KILLED
+
+UPT-M074: Remove the client id rule.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=rejects invalid path parts before login' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-008] rejects invalid path parts before login
+Result: KILLED
+
+UPT-M075: Do not cancel non-200 bodies.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=discards error bodies|up42-source-026' src/data/up42Thumbnails.test.mjs src/data/up42Upstream.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-012] discards error bodies with cancel failure false
+Failed test: [up42-thumbnails-012] discards error bodies with cancel failure true
+Failed test: [up42-source-026] discards an error body case 0 with cancel failure false
+Failed test: [up42-source-026] discards an error body case 0 with cancel failure true
+Failed test: [up42-source-026] discards an error body case 1 with cancel failure false
+Failed test: [up42-source-026] discards an error body case 1 with cancel failure true
+Failed test: [up42-source-026] discards an error body case 2 with cancel failure false
+Failed test: [up42-source-026] discards an error body case 2 with cancel failure true
+Failed test: [up42-source-026] discards an error body case 3 with cancel failure false
+Failed test: [up42-source-026] discards an error body case 3 with cancel failure true
+Result: KILLED
+
+UPT-M076: Register no preview handler.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42-thumbnails/thumbnails.js
+Source SHA-256: 1b909e854c069ccf8a3a8f8efb8d9cacbf3bcdd944aa526dd6c605a0f5cf73ff
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=checks the path in both hooks' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-001] checks the path in both hooks
+Result: KILLED
+
+UPT-M077: Send the password in an Error object through console.dir.
+Commit: 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=keeps all fake secrets out of output' src/data/up42Thumbnails.test.mjs
+Exit: 1
+Failed test: [up42-thumbnails-016] keeps all fake secrets out of output
+Result: KILLED
+
+At the current host snapshot, new mutations: 16. Killed: 16. Survived or stopped: 0.
+Current unique failed test titles: 22.
+The combined record has 77 unique mutation ids: 61 historical and 16 current.
+UPT-M068 and UPT-M069 each include one test that reaches its 2000 ms test limit.
+Those tests expose the unbounded cancel. Their other tests complete with a wrong result and fail assertions.

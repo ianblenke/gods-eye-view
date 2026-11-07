@@ -1,115 +1,58 @@
-Command: cd /home/ianblenke/docker/gev-work/up42 && python3 - (host evidence record).
+Command: Python count of the final host log, scenario headings and mutation records.
+At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
 
-At the host snapshot, HEAD is 7d4d1643b92767344587435ebf12116d2949a25e.
+Host Node: v26.13.0.
+The change has 19 scenarios. New scenario ids are up42-thumbnails-018 and up42-thumbnails-019.
+Both spec bodies are identical. Every requirement text line stays unchanged.
+Each new scenario has a test task and tagged tests.
 
-UTC record time: 2026-11-07T10:55:34.269235+00:00
+At this snapshot, all 410 tests passed. Failures, cancellations and skips are zero.
+The required UP42 and SkyWatch suites have 406 tests.
+The command also runs four Gemini composition tests for local.js coverage.
+The thumbnail suite has 70 tests, nine more than the previous snapshot.
+The source suite has 216 tests. The SkyWatch suite has 120 tests.
+All unchanged up42-source-026 tests pass.
+host-run.txt gives the full command, completed result and coverage report.
+The first sandbox run failed at the local HTTP listener. sandbox-run.txt records that separate result.
+The final run had permission for that local listener and used fake upstream fetches.
 
-The source and tests have changes after HEAD. The branch is up42-thumbnails.
+All nine measured provider files have 100 percent line, branch and function coverage.
+# file               | line % | branch % | funcs % | uncovered lines
+# server             |        |          |         |
+#  providers         |        |          |         |
+#   local.js         | 100.00 |   100.00 |  100.00 |
+#   up42-thumbnails  |        |          |         |
+#    plugins.js      | 100.00 |   100.00 |  100.00 |
+#    thumbnails.js   | 100.00 |   100.00 |  100.00 |
+#   up42.js          | 100.00 |   100.00 |  100.00 |
+#   up42             |        |          |         |
+#    auth.js         | 100.00 |   100.00 |  100.00 |
+#    normalize.js    | 100.00 |   100.00 |  100.00 |
+#    same-site.js    | 100.00 |   100.00 |  100.00 |
+#    upstream.js     | 100.00 |   100.00 |  100.00 |
+#    validate.js     | 100.00 |   100.00 |  100.00 |
+# all files          | 100.00 |   100.00 |  100.00 |
 
-Host Node is v26.13.0. The calibrated Node image did not run.
+At this snapshot, 16 new mutation commands failed their named tests.
+There are 22 distinct failed test titles in those commands.
+faults.txt keeps 61 historical records and 16 current records, with 77 unique ids.
+The historical mutations did not run again in this correction.
+instrument.txt is prose that names the mutation commands and their results.
+No evidence file contains an executable runner. Historical source replacement text was removed from faults.txt.
+The error excerpts in red-test.txt and correction-search.txt were replaced by prose and search matches.
+The source hashes, commands, test names and results stay in the evidence.
 
-At this snapshot, the delta spec has 17 scenarios with Origin spec-first.
+STE: 0 errors, 1287 warnings.
+lint-output.txt records the completed command.
+No QA line appears in its output. The full QA gate did not run.
+The expanded test-title check has 70 unique titles and zero STE findings.
+Each thumbnail title has a named failed mutation in the combined record.
+The formatter check passes. format-validation.txt gives its output.
+correction-search.txt records the corrected text and an empty protected-file diff.
+The source specs, source tests and normalize.js stay unchanged.
+source-snapshot.txt records the final source hashes.
 
-The correction changes the new requirement text before the test imports and code. It changes no scenario text.
-
-The first correction test run stopped at the absent new module. red-test.txt records that command and its failure.
-
-At the final host snapshot, host-run.txt records 401 tests: 400 passed, one failed, zero cancelled and zero skipped.
-
-That command runs every UP42 and SkyWatch test file. It also runs the four existing Gemini composition tests for local.js coverage.
-
-All 120 SkyWatch tests and all 61 thumbnail tests pass. The source tests have 215 passes and one host refusal.
-
-The unchanged source tests up42-source-001 and up42-source-024 pass.
-
-The source test up42-source-027 fails when the sandbox refuses its localhost listener with EPERM.
-
-Its HTTP body check did not run. There is no HTTP behavior verdict for that test on this host.
-
-The host command completed. It gives no passed full-suite verdict.
-
-The separate thumbnail-tests.txt command records 61 passed tests, zero failed, zero cancelled and zero skipped.
-
-Coverage at the host snapshot:
-
-server/providers/local.js: 100 percent line, branch and function.
-server/providers/up42.js: 100 percent line, branch and function.
-server/providers/up42/auth.js: 100 percent line, branch and function.
-server/providers/up42/normalize.js: 100 percent line, branch and function.
-server/providers/up42-thumbnails/plugins.js: 100 percent line, branch and function.
-server/providers/up42-thumbnails/thumbnails.js: 100 percent line, branch and function.
-
-The other three source helpers also have full coverage. The host report measures nine code files.
-
-The function up42Plugins returns one scenes plugin. It installs only the status and scenes routes.
-
-The new function up42SourcePlugins returns both plugins with one client and the scenes lookup.
-
-The local provider list uses the new function. The thumbnail plugin directly follows the one up42-proxy entry.
-
-The source guard still scans six files. The separate thumbnail folder has two files in the ownership manifest.
-
-The correction search records the six source paths and no forbidden literal match.
-
-faults.txt records 61 distinct faults with named failed tests. Every one of the 61 thumbnail test titles has a failed fault.
-
-UPT-M002 through UPT-M004 now target the shared client and lookup in plugins.js.
-
-The runner repeats all prior faults at their current paths and with the current test commands.
-
-UPT-M058 removes local thumbnails. UPT-M059 adds a second source plugin with valid hooks.
-
-UPT-M060 reverses the combined list. UPT-M061 adds a seventh source file.
-
-Each of those four faults fails its named test. The runner restores every file after each command.
-
-The final host and thumbnail commands ran after the runner restored all source files.
-
-The expanded title check finds 61 unique titles, no word-list finding and no title without a failed fault.
-
-OpenSpec validation and the cached formatter check pass. format-validation.txt records both commands.
-
-The STE lint reports zero errors and 1288 warnings. lint-output.txt records the command output.
-
-No QA line appears in the lint output. The full QA purpose gate did not run.
-
-The correction search records an empty protected-file diff and an empty Git whitespace check.
-
-The protected files are the four merged UP42 test files and all files under openspec/specs/.
-
-The source scenarios, source tests, SkyWatch code and SkyWatch tests stay unchanged.
-
-source-snapshot.txt records the final SHA-256 values. instrument.txt contains the fault runner and its QA purpose header.
-
-Changed files at this snapshot:
-
-.env.example
-DATA_SOURCES.md
-openspec/ownership.json
-server/providers/local.js
-server/providers/up42.js
-server/providers/up42/auth.js
-server/providers/up42/normalize.js
-server/providers/up42-thumbnails/plugins.js
-server/providers/up42-thumbnails/thumbnails.js
-src/data/up42Thumbnails.test.mjs
-changelog.d/1431-up42-thumbnails.md
-openspec/changes/up42-thumbnails/proposal.md
-openspec/changes/up42-thumbnails/design.md
-openspec/changes/up42-thumbnails/tasks.md
-openspec/changes/up42-thumbnails/specs/up42-thumbnails/spec.md
-openspec/changes/up42-thumbnails/evidence/
-
-Known limits:
-
-No live call confirms the body format, absent-image status, host names or display terms. Thumbnails stay off by default.
-
-The proposal records no-live-check, display-terms, key-host, lan-access, dns-names, count-in-ram, not-all-hosts and no-retry-on-429.
-
-The sandbox blocks the one localhost HTTP test. Its body logic did not run.
-
-The calibrated ratchet, two review agents, review.md and final gates remain lead work before merge.
-
-No Make command, Docker command, commit, push or external network request ran. The tests use fake fetch.
-
-This work did not read .env. No trace ledger changed.
+No Make command, Docker command, commit, push or external network request ran.
+This correction did not read .env or change a trace ledger.
+F8 stays lead work. review.md and the calibrated final gates remain unverified.
+The live UP42 behavior and the published display terms remain unverified.

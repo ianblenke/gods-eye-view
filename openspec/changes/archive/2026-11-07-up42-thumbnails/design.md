@@ -23,11 +23,15 @@ The cache key includes host and id, so a newer host cannot use bytes from the ol
 The store removes its oldest entry above 32 and rejects entries at 600000 ms.
 It stores no failure and changes no daily search count.
 
-The client checks the existing host regex and shared scene id rule before it requests a token.
+The client checks the source host regex and shared scene id rule before it requests a token.
 It builds the path from constants and these checked parts.
 It reuses the source token cache and retry machinery without a finally block around the new returns.
 A second thumbnail 401 gives credentials_rejected; source search behavior stays unchanged.
 Each non-200 body receives cancel before the timer clears.
+
+The abort signal limits the wait for each cancel.
+The thumbnail route and client refuse ids of dots only before login.
+The client encodes the checked id in the fixed URL.
 
 The client imports generic image checks from `server/providers/skywatch/image.js` without an edit to that file.
 The common byte reader enforces 1048576 bytes while it reads the stream.

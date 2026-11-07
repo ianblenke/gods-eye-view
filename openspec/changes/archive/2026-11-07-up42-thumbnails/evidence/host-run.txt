@@ -1,2433 +1,2475 @@
-Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap --experimental-test-coverage --test-coverage-include=server/providers/up42.js '--test-coverage-include=server/providers/up42/*.js' '--test-coverage-include=server/providers/up42-thumbnails/*.js' --test-coverage-include=server/providers/local.js src/data/up42Input.test.mjs src/data/up42Proxy.test.mjs src/data/up42Scenes.test.mjs src/data/up42Thumbnails.test.mjs src/data/up42Upstream.test.mjs src/data/skywatchImage.test.mjs src/data/skywatchInput.test.mjs src/data/skywatchProxy.test.mjs src/data/skywatchScenes.test.mjs src/data/skywatchThumbnails.test.mjs src/data/skywatchUpstream.test.mjs src/geminiComposition.test.mjs
-At the host snapshot, HEAD is 7d4d1643b92767344587435ebf12116d2949a25e.
-UTC: 2026-11-07T10:54:11.025776+00:00
-The source and tests have changes after HEAD.
-Exit: 1
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap --experimental-test-coverage --test-coverage-include=server/providers/up42.js '--test-coverage-include=server/providers/up42/*.js' '--test-coverage-include=server/providers/up42-thumbnails/*.js' --test-coverage-include=server/providers/local.js src/data/up42*.test.mjs src/data/skywatch*.test.mjs src/geminiComposition.test.mjs
+At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
 TAP version 13
 # Subtest: [skywatch-thumbnails-007] accepts an https URL with a host name and no user name, password or port
 ok 1 - [skywatch-thumbnails-007] accepts an https URL with a host name and no user name, password or port
   ---
-  duration_ms: 23.132864
+  duration_ms: 23.77577
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-007] refuses a text that is not an absolute URL, another scheme, a user name, a password and a port
 ok 2 - [skywatch-thumbnails-007] refuses a text that is not an absolute URL, another scheme, a user name, a password and a port
   ---
-  duration_ms: 1.505479
+  duration_ms: 1.445176
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-007] refuses an IP address, localhost and a name that ends with .localhost
 ok 3 - [skywatch-thumbnails-007] refuses an IP address, localhost and a name that ends with .localhost
   ---
-  duration_ms: 1.009637
+  duration_ms: 0.909121
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-009] reads the media type before the first semicolon, trimmed and in lower case
 ok 4 - [skywatch-thumbnails-009] reads the media type before the first semicolon, trimmed and in lower case
   ---
-  duration_ms: 0.906927
+  duration_ms: 0.771379
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-009] accepts only the media types image/png, image/jpeg and image/webp
 ok 5 - [skywatch-thumbnails-009] accepts only the media types image/png, image/jpeg and image/webp
   ---
-  duration_ms: 0.951547
+  duration_ms: 0.712114
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-009] checks the first bytes of each type
 ok 6 - [skywatch-thumbnails-009] checks the first bytes of each type
   ---
-  duration_ms: 1.518228
+  duration_ms: 1.301493
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-009] checks RIFF in the first 4 bytes and WEBP in the 9th to the 12th byte
 ok 7 - [skywatch-thumbnails-009] checks RIFF in the first 4 bytes and WEBP in the 9th to the 12th byte
   ---
-  duration_ms: 0.876762
+  duration_ms: 0.758957
   type: 'test'
   ...
 # Subtest: [skywatch-source-005] reads a body of exactly 4096 bytes and refuses a body of 4097 bytes
 ok 8 - [skywatch-source-005] reads a body of exactly 4096 bytes and refuses a body of 4097 bytes
   ---
-  duration_ms: 27.668657
+  duration_ms: 26.192113
   type: 'test'
   ...
 # Subtest: [skywatch-source-005] counts bytes and not characters, and counts all chunks
 ok 9 - [skywatch-source-005] counts bytes and not characters, and counts all chunks
   ---
-  duration_ms: 7.332406
+  duration_ms: 6.893217
   type: 'test'
   ...
 # Subtest: [skywatch-source-005] gives null when the request body fails while readBodyText reads it
 ok 10 - [skywatch-source-005] gives null when the request body fails while readBodyText reads it
   ---
-  duration_ms: 3.114318
+  duration_ms: 3.277464
   type: 'test'
   ...
 # Subtest: [skywatch-source-005] refuses a body that is not JSON, not an object or has another field
 ok 11 - [skywatch-source-005] refuses a body that is not JSON, not an object or has another field
   ---
-  duration_ms: 7.08248
+  duration_ms: 7.092834
   type: 'test'
   ...
 # Subtest: [skywatch-source-006] accepts a box of four finite numbers in the order west, south, east and north
 ok 12 - [skywatch-source-006] accepts a box of four finite numbers in the order west, south, east and north
   ---
-  duration_ms: 1.188764
+  duration_ms: 1.314774
   type: 'test'
   ...
 # Subtest: [skywatch-source-006] refuses each other value of bbox, and a body without bbox
 ok 13 - [skywatch-source-006] refuses each other value of bbox, and a body without bbox
   ---
-  duration_ms: 1.675585
+  duration_ms: 1.852227
   type: 'test'
   ...
 # Subtest: [skywatch-source-007] refuses a box of more than 2500 km² and accepts a box of 2500 km² or less
 ok 14 - [skywatch-source-007] refuses a box of more than 2500 km² and accepts a box of 2500 km² or less
   ---
-  duration_ms: 1.498172
+  duration_ms: 1.611524
   type: 'test'
   ...
 # Subtest: [skywatch-source-007] uses a sphere with a radius of 6371008.8 m for the area
 ok 15 - [skywatch-source-007] uses a sphere with a radius of 6371008.8 m for the area
   ---
-  duration_ms: 0.563947
+  duration_ms: 0.619076
   type: 'test'
   ...
 # Subtest: [skywatch-source-008] accepts a window of 92 calendar days and refuses a window of 93
 ok 16 - [skywatch-source-008] accepts a window of 92 calendar days and refuses a window of 93
   ---
-  duration_ms: 0.704024
+  duration_ms: 0.741952
   type: 'test'
   ...
 # Subtest: [skywatch-source-008] accepts an end on the UTC date of the server clock, and refuses the next day
 ok 17 - [skywatch-source-008] accepts an end on the UTC date of the server clock, and refuses the next day
   ---
-  duration_ms: 0.690513
+  duration_ms: 0.786816
   type: 'test'
   ...
 # Subtest: [skywatch-source-008] refuses a start after the end, a body without a date and each other form
 ok 18 - [skywatch-source-008] refuses a start after the end, a body without a date and each other form
   ---
-  duration_ms: 2.390366
+  duration_ms: 2.713856
   type: 'test'
   ...
 # Subtest: [skywatch-source-018] checks the body, the box, the area and then the dates
 ok 19 - [skywatch-source-018] checks the body, the box, the area and then the dates
   ---
-  duration_ms: 0.644088
+  duration_ms: 0.708301
   type: 'test'
   ...
 # Subtest: [skywatch-source-001] mounts the two routes and passes other paths to next
 ok 20 - [skywatch-source-001] mounts the two routes and passes other paths to next
   ---
-  duration_ms: 63.742743
+  duration_ms: 64.134216
   type: 'test'
   ...
 # Subtest: [skywatch-source-001] localProviderPlugins holds the plugin once
 ok 21 - [skywatch-source-001] localProviderPlugins holds the plugin once
   ---
-  duration_ms: 50.251029
+  duration_ms: 43.245433
   type: 'test'
   ...
 # Subtest: [skywatch-source-002] reports the status of the key, refuses another method and a cross-site request
 ok 22 - [skywatch-source-002] reports the status of the key, refuses another method and a cross-site request
   ---
-  duration_ms: 7.031846
+  duration_ms: 6.301949
   type: 'test'
   ...
 # Subtest: [skywatch-source-003] refuses GET, PUT, PATCH and DELETE on the scenes route
 ok 23 - [skywatch-source-003] refuses GET, PUT, PATCH and DELETE on the scenes route
   ---
-  duration_ms: 2.038035
+  duration_ms: 1.745526
   type: 'test'
   ...
 # Subtest: [skywatch-source-004] refuses a scenes request that fails a check of admitSameSiteRequest or has another Content-Type
 ok 24 - [skywatch-source-004] refuses a scenes request that fails a check of admitSameSiteRequest or has another Content-Type
   ---
-  duration_ms: 2.980099
+  duration_ms: 2.691607
   type: 'test'
   ...
 # Subtest: [skywatch-source-023] accepts a request through the reverse proxy and a request from this machine
 ok 25 - [skywatch-source-023] accepts a request through the reverse proxy and a request from this machine
   ---
-  duration_ms: 18.604726
+  duration_ms: 16.078471
   type: 'test'
   ...
 # Subtest: [skywatch-source-009] refuses a valid request when the key is not set or holds only white space
 ok 26 - [skywatch-source-009] refuses a valid request when the key is not set or holds only white space
   ---
-  duration_ms: 8.448747
+  duration_ms: 8.06346
   type: 'test'
   ...
 # Subtest: [skywatch-source-010] keeps the key out of each answer and sends the trimmed key in x-api-key
 ok 27 - [skywatch-source-010] keeps the key out of each answer and sends the trimmed key in x-api-key
   ---
-  duration_ms: 18.353346
+  duration_ms: 17.854873
   type: 'test'
   ...
 # Subtest: [skywatch-source-013] sends only the search request and the result requests for each answer of the fake fetch
 ok 28 - [skywatch-source-013] sends only the search request and the result requests for each answer of the fake fetch
   ---
-  duration_ms: 105.438862
+  duration_ms: 103.309136
   type: 'test'
   ...
 # Subtest: [skywatch-source-014] counts each new search against the daily limit and refuses at the limit
 ok 29 - [skywatch-source-014] counts each new search against the daily limit and refuses at the limit
   ---
-  duration_ms: 11.148483
+  duration_ms: 10.32783
   type: 'test'
   ...
 # Subtest: [skywatch-source-014] counts a failed search against the daily limit
 ok 30 - [skywatch-source-014] counts a failed search against the daily limit
   ---
-  duration_ms: 4.82806
+  duration_ms: 4.713525
   type: 'test'
   ...
 # Subtest: [skywatch-source-014] reads the daily limit from SKYWATCH_DAILY_SEARCHES, and uses 20 for each other value
 ok 31 - [skywatch-source-014] reads the daily limit from SKYWATCH_DAILY_SEARCHES, and uses 20 for each other value
   ---
-  duration_ms: 57.584537
+  duration_ms: 56.668169
   type: 'test'
   ...
 # Subtest: [skywatch-source-014] starts the count again at 0 on the next UTC day
 ok 32 - [skywatch-source-014] starts the count again at 0 on the next UTC day
   ---
-  duration_ms: 10.069196
+  duration_ms: 9.971636
   type: 'test'
   ...
 # Subtest: [skywatch-source-015] answers a repeated request from the store for 599999 ms, with the budget of the new request
 ok 33 - [skywatch-source-015] answers a repeated request from the store for 599999 ms, with the budget of the new request
   ---
-  duration_ms: 16.409427
+  duration_ms: 14.827013
   type: 'test'
   ...
 # Subtest: [skywatch-source-015] keeps at most 32 answers and removes the oldest answer first
 ok 34 - [skywatch-source-015] keeps at most 32 answers and removes the oldest answer first
   ---
-  duration_ms: 148.748604
+  duration_ms: 117.900239
   type: 'test'
   ...
 # Subtest: [skywatch-source-015 skywatch-source-019] keeps no failure in the store
 ok 35 - [skywatch-source-015 skywatch-source-019] keeps no failure in the store
   ---
-  duration_ms: 8.153046
+  duration_ms: 39.21102
   type: 'test'
   ...
 # Subtest: [skywatch-source-016] shares an upstream search that is in flight
 ok 36 - [skywatch-source-016] shares an upstream search that is in flight
   ---
-  duration_ms: 65.401469
+  duration_ms: 47.71641
   type: 'test'
   ...
 # Subtest: [skywatch-source-016] gives the failure of a shared search to each request that waits
 ok 37 - [skywatch-source-016] gives the failure of a shared search to each request that waits
   ---
-  duration_ms: 7.984974
+  duration_ms: 6.341267
   type: 'test'
   ...
 # Subtest: [skywatch-source-017] refuses the 7th request in 60000 ms, and a stored answer counts
 ok 38 - [skywatch-source-017] refuses the 7th request in 60000 ms, and a stored answer counts
   ---
-  duration_ms: 14.246584
+  duration_ms: 13.588107
   type: 'test'
   ...
 # Subtest: [skywatch-source-018] answers with the first step that fails
 ok 39 - [skywatch-source-018] answers with the first step that fails
   ---
-  duration_ms: 5.630846
+  duration_ms: 8.081055
   type: 'test'
   ...
 # Subtest: [skywatch-source-018] checks the rate limit before the body, and the store before the daily count
 ok 40 - [skywatch-source-018] checks the rate limit before the body, and the store before the daily count
   ---
-  duration_ms: 8.505958
+  duration_ms: 10.2764
   type: 'test'
   ...
 # Subtest: [skywatch-source-019] gives the named failure of the scenes route for each upstream failure
 ok 41 - [skywatch-source-019] gives the named failure of the scenes route for each upstream failure
   ---
-  duration_ms: 15.622703
+  duration_ms: 15.98624
   type: 'test'
   ...
 # Subtest: [skywatch-source-021] gives the shape of a good answer and the headers of each answer
 ok 42 - [skywatch-source-021] gives the shape of a good answer and the headers of each answer
   ---
-  duration_ms: 6.632983
+  duration_ms: 6.726171
   type: 'test'
   ...
 # Subtest: [skywatch-source-022] writes one line for a good search, with the count of the answer, the number of result requests and the time
 ok 43 - [skywatch-source-022] writes one line for a good search, with the count of the answer, the number of result requests and the time
   ---
-  duration_ms: 6.625573
+  duration_ms: 6.709745
   type: 'test'
   ...
 # Subtest: [skywatch-source-022] writes one line for each failure, with the number of result requests
 ok 44 - [skywatch-source-022] writes one line for each failure, with the number of result requests
   ---
-  duration_ms: 15.970138
+  duration_ms: 16.569409
   type: 'test'
   ...
 # Subtest: [skywatch-source-022] writes no key, search id, URL or host name, and no line for a request with no search
 ok 45 - [skywatch-source-022] writes no key, search id, URL or host name, and no line for a request with no search
   ---
-  duration_ms: 16.909117
+  duration_ms: 16.340658
   type: 'test'
   ...
 # Subtest: [skywatch-source-005] refuses a body of more than 4096 bytes on the route
 ok 46 - [skywatch-source-005] refuses a body of more than 4096 bytes on the route
   ---
-  duration_ms: 6.314673
+  duration_ms: 6.361325
   type: 'test'
   ...
 # Subtest: [skywatch-source-012 skywatch-source-022] waits with setTimeout and logs with console.log when the test gives no options
 ok 47 - [skywatch-source-012 skywatch-source-022] waits with setTimeout and logs with console.log when the test gives no options
   ---
-  duration_ms: 13.539281
+  duration_ms: 13.833609
   type: 'test'
   ...
 # Subtest: [skywatch-source-014] counts a search while it is in flight, so a second box gets the budget refusal
 ok 48 - [skywatch-source-014] counts a search while it is in flight, so a second box gets the budget refusal
   ---
-  duration_ms: 8.308767
+  duration_ms: 8.839252
   type: 'test'
   ...
 # Subtest: [skywatch-source-017] counts a request that the body step refuses
 ok 49 - [skywatch-source-017] counts a request that the body step refuses
   ---
-  duration_ms: 5.32826
+  duration_ms: 5.307308
   type: 'test'
   ...
 # Subtest: [skywatch-source-018] refuses a request from another site, or with another Content-Type, before the rate limit
 ok 50 - [skywatch-source-018] refuses a request from another site, or with another Content-Type, before the rate limit
   ---
-  duration_ms: 7.119608
+  duration_ms: 7.059021
   type: 'test'
   ...
 # Subtest: [skywatch-source-018] checks the key before the store
 ok 51 - [skywatch-source-018] checks the key before the store
   ---
-  duration_ms: 5.948978
+  duration_ms: 5.748756
   type: 'test'
   ...
 # Subtest: [skywatch-source-020] keeps only the allowed fields, from the named upstream fields
 ok 52 - [skywatch-source-020] keeps only the allowed fields, from the named upstream fields
   ---
-  duration_ms: 2.306407
+  duration_ms: 2.431742
   type: 'test'
   ...
 # Subtest: [skywatch-source-020] maps each number field from its own upstream field
 ok 53 - [skywatch-source-020] maps each number field from its own upstream field
   ---
-  duration_ms: 1.21967
+  duration_ms: 1.208432
   type: 'test'
   ...
 # Subtest: [skywatch-source-020] gives null for each number value that does not meet its rule
 ok 54 - [skywatch-source-020] gives null for each number value that does not meet its rule
   ---
-  duration_ms: 8.052316
+  duration_ms: 8.259154
   type: 'test'
   ...
 # Subtest: [skywatch-source-020] removes control characters and the white space at the ends, then keeps 120 code points
 ok 55 - [skywatch-source-020] removes control characters and the white space at the ends, then keeps 120 code points
   ---
-  duration_ms: 2.834438
+  duration_ms: 2.853448
   type: 'test'
   ...
 # Subtest: [skywatch-source-020] sets thumbnail from an absolute HTTPS thumbnail_uri only
 ok 56 - [skywatch-source-020] sets thumbnail from an absolute HTTPS thumbnail_uri only
   ---
-  duration_ms: 2.149191
+  duration_ms: 2.147911
   type: 'test'
   ...
 # Subtest: [skywatch-source-020] gives the ISO text of a valid time, and null for an end_time that is not valid
 ok 57 - [skywatch-source-020] gives the ISO text of a valid time, and null for an end_time that is not valid
   ---
-  duration_ms: 1.347183
+  duration_ms: 1.328499
   type: 'test'
   ...
 # Subtest: [skywatch-source-020] removes an item that is not an object, or a scene with a bad id, start_time or location
 ok 58 - [skywatch-source-020] removes an item that is not an object, or a scene with a bad id, start_time or location
   ---
-  duration_ms: 1.412788
+  duration_ms: 1.424365
   type: 'test'
   ...
 # Subtest: [skywatch-source-020] accepts only a polygon with exactly one closed ring of 4 to 2000 positions
 ok 59 - [skywatch-source-020] accepts only a polygon with exactly one closed ring of 4 to 2000 positions
   ---
-  duration_ms: 13.025657
+  duration_ms: 12.95737
   type: 'test'
   ...
 # Subtest: [skywatch-source-021] sorts all kept scenes, newest start first and then by id, and keeps the first 50
 ok 60 - [skywatch-source-021] sorts all kept scenes, newest start first and then by id, and keeps the first 50
   ---
-  duration_ms: 5.883453
+  duration_ms: 5.813353
   type: 'test'
   ...
 # Subtest: [skywatch-source-021] gives total from pagination.total when it is a whole number not less than the data length
 ok 61 - [skywatch-source-021] gives total from pagination.total when it is a whole number not less than the data length
   ---
-  duration_ms: 2.706439
+  duration_ms: 2.733915
   type: 'test'
   ...
 # Subtest: [skywatch-source-021] gives one order for each input order, also for two scenes with the same start and id
 ok 62 - [skywatch-source-021] gives one order for each input order, also for two scenes with the same start and id
   ---
-  duration_ms: 2.711888
+  duration_ms: 2.627153
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-001] answers a path with an id and passes other paths to next
 ok 63 - [skywatch-thumbnails-001] answers a path with an id and passes other paths to next
   ---
-  duration_ms: 8.339922
+  duration_ms: 8.328113
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-001] is once in localProviderPlugins, directly after skywatch-proxy
 ok 64 - [skywatch-thumbnails-001] is once in localProviderPlugins, directly after skywatch-proxy
   ---
-  duration_ms: 2.929578
+  duration_ms: 2.872223
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-002] refuses a request that fails a check of admitSameSiteRequest
 ok 65 - [skywatch-thumbnails-002] refuses a request that fails a check of admitSameSiteRequest
   ---
-  duration_ms: 2.644665
+  duration_ms: 2.619653
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-002] accepts a request through the reverse proxy
 ok 66 - [skywatch-thumbnails-002] accepts a request through the reverse proxy
   ---
-  duration_ms: 8.042771
+  duration_ms: 7.568662
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-003] refuses POST, PUT, DELETE and HEAD
 ok 67 - [skywatch-thumbnails-003] refuses POST, PUT, DELETE and HEAD
   ---
-  duration_ms: 1.965366
+  duration_ms: 1.847337
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-004] answers thumbnails_off when SKYWATCH_THUMBNAILS is not the text true
 ok 68 - [skywatch-thumbnails-004] answers thumbnails_off when SKYWATCH_THUMBNAILS is not the text true
   ---
-  duration_ms: 3.387513
+  duration_ms: 3.294195
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-005] lets the 30th request pass at 59999 ms after 29 requests at 0 ms
 ok 69 - [skywatch-thumbnails-005] lets the 30th request pass at 59999 ms after 29 requests at 0 ms
   ---
-  duration_ms: 4.557531
+  duration_ms: 4.46472
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-005] refuses the 31st request at 59999 ms after 30 requests at 0 ms, and lets it pass at 60000 ms
 ok 70 - [skywatch-thumbnails-005] refuses the 31st request at 59999 ms after 30 requests at 0 ms, and lets it pass at 60000 ms
   ---
-  duration_ms: 4.257781
+  duration_ms: 4.096944
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-005] has one count for all socket addresses, and an answer of the image store counts
 ok 71 - [skywatch-thumbnails-005] has one count for all socket addresses, and an answer of the image store counts
   ---
-  duration_ms: 6.131079
+  duration_ms: 5.88754
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-001] reads process.env in localProviderPlugins, and finds a scene of the skywatch-proxy plugin of the same list
 ok 72 - [skywatch-thumbnails-001] reads process.env in localProviderPlugins, and finds a scene of the skywatch-proxy plugin of the same list
   ---
-  duration_ms: 15.788261
+  duration_ms: 16.044868
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-006] gives the thumbnail of a scene of a kept answer of skywatchPlugins
 ok 73 - [skywatch-thumbnails-006] gives the thumbnail of a scene of a kept answer of skywatchPlugins
   ---
-  duration_ms: 9.443727
+  duration_ms: 9.662185
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-006] uses the newest kept answer, and the first scene with thumbnail true in scenes
 ok 74 - [skywatch-thumbnails-006] uses the newest kept answer, and the first scene with thumbnail true in scenes
   ---
-  duration_ms: 12.18642
+  duration_ms: 10.958749
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-006] finds no scene of another call of skywatchPlugins
 ok 75 - [skywatch-thumbnails-006] finds no scene of another call of skywatchPlugins
   ---
-  duration_ms: 6.480019
+  duration_ms: 5.983556
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-006] gives the URL of an answer that is 599999 ms old, and not of one that is 600000 ms old
 ok 76 - [skywatch-thumbnails-006] gives the URL of an answer that is 599999 ms old, and not of one that is 600000 ms old
   ---
-  duration_ms: 6.719188
+  duration_ms: 6.304205
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-006] knows no scene after the first 50 scenes and no scene with thumbnail false
 ok 77 - [skywatch-thumbnails-006] knows no scene after the first 50 scenes and no scene with thumbnail false
   ---
-  duration_ms: 32.324225
+  duration_ms: 12.225082
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-006] knows no scene without the option thumbnailUrlOf
 ok 78 - [skywatch-thumbnails-006] knows no scene without the option thumbnailUrlOf
   ---
-  duration_ms: 2.394605
+  duration_ms: 2.382764
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-007] refuses each URL that fails the URL check, with no upstream request
 ok 79 - [skywatch-thumbnails-007] refuses each URL that fails the URL check, with no upstream request
   ---
-  duration_ms: 5.035458
+  duration_ms: 21.998922
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-007] accepts the port 443, because the URL parser removes it
 ok 80 - [skywatch-thumbnails-007] accepts the port 443, because the URL parser removes it
   ---
-  duration_ms: 2.428249
+  duration_ms: 2.554297
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-008] sends one GET request with Accept, no redirect and no other header
 ok 81 - [skywatch-thumbnails-008] sends one GET request with Accept, no redirect and no other header
   ---
-  duration_ms: 4.27352
+  duration_ms: 3.303763
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-008] sends the trimmed key only to api.skywatch.co
 ok 82 - [skywatch-thumbnails-008] sends the trimmed key only to api.skywatch.co
   ---
-  duration_ms: 13.500682
+  duration_ms: 12.192638
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-008] sets a time limit of 15000 ms, and does not clear it before it reads all of the body
 ok 83 - [skywatch-thumbnails-008] sets a time limit of 15000 ms, and does not clear it before it reads all of the body
   ---
-  duration_ms: 29.631603
+  duration_ms: 28.808751
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-008 skywatch-thumbnails-009] clears the timer at once and reads no body for a status that is not 200 or another media type
 ok 84 - [skywatch-thumbnails-008 skywatch-thumbnails-009] clears the timer at once and reads no body for a status that is not 200 or another media type
   ---
-  duration_ms: 6.157153
+  duration_ms: 5.898403
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-009] gives bad_upstream for a media type, a size or first bytes that fail the check
 ok 85 - [skywatch-thumbnails-009] gives bad_upstream for a media type, a size or first bytes that fail the check
   ---
-  duration_ms: 19.746591
+  duration_ms: 24.587197
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-009] passes a body of 1048576 bytes and reads the media type of a header with parameters
 ok 86 - [skywatch-thumbnails-009] passes a body of 1048576 bytes and reads the media type of a header with parameters
   ---
-  duration_ms: 25.031633
+  duration_ms: 29.87725
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-009 skywatch-thumbnails-010] gives upstream_failed when the time limit ends during the body
 ok 87 - [skywatch-thumbnails-009 skywatch-thumbnails-010] gives upstream_failed when the time limit ends during the body
   ---
-  duration_ms: 6.734627
+  duration_ms: 6.845672
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-010] gives upstream_failed for a status that is not 200, a fetch error, a redirect and the time limit
 ok 88 - [skywatch-thumbnails-010] gives upstream_failed for a status that is not 200, a fetch error, a redirect and the time limit
   ---
-  duration_ms: 9.798656
+  duration_ms: 10.81172
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-010] gives the error of the image check for a failure of the image check
 ok 89 - [skywatch-thumbnails-010] gives the error of the image check for a failure of the image check
   ---
-  duration_ms: 5.009319
+  duration_ms: 5.337417
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-010] holds no URL, host name or key text in a failure answer or a header
 ok 90 - [skywatch-thumbnails-010] holds no URL, host name or key text in a failure answer or a header
   ---
-  duration_ms: 6.630463
+  duration_ms: 7.085606
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-011] sends the bytes with only its own headers
 ok 91 - [skywatch-thumbnails-011] sends the bytes with only its own headers
   ---
-  duration_ms: 2.890261
+  duration_ms: 2.85112
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-011] gives each JSON answer after the path step Content-Type and Cache-Control
 ok 92 - [skywatch-thumbnails-011] gives each JSON answer after the path step Content-Type and Cache-Control
   ---
-  duration_ms: 6.271313
+  duration_ms: 6.302117
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-012] answers a repeated URL from the image store, found by the href text
 ok 93 - [skywatch-thumbnails-012] answers a repeated URL from the image store, found by the href text
   ---
-  duration_ms: 3.557661
+  duration_ms: 3.96709
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-012] keeps an image for 599999 ms and not for 600000 ms
 ok 94 - [skywatch-thumbnails-012] keeps an image for 599999 ms and not for 600000 ms
   ---
-  duration_ms: 2.895332
+  duration_ms: 2.86247
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-012] keeps at most 32 images and removes the oldest image first
 ok 95 - [skywatch-thumbnails-012] keeps at most 32 images and removes the oldest image first
   ---
-  duration_ms: 20.597618
+  duration_ms: 22.229629
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-012] makes an image that it fetches again after 600000 ms the newest image
 ok 96 - [skywatch-thumbnails-012] makes an image that it fetches again after 600000 ms the newest image
   ---
-  duration_ms: 20.752232
+  duration_ms: 20.596366
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-012] keeps no failure
 ok 97 - [skywatch-thumbnails-012] keeps no failure
   ---
-  duration_ms: 2.715957
+  duration_ms: 3.097104
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-013] shares an upstream request that is in flight, with its image or its failure
 ok 98 - [skywatch-thumbnails-013] shares an upstream request that is in flight, with its image or its failure
   ---
-  duration_ms: 10.890556
+  duration_ms: 10.9912
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-014] answers with the first step that fails
 ok 99 - [skywatch-thumbnails-014] answers with the first step that fails
   ---
-  duration_ms: 10.209023
+  duration_ms: 8.665866
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-014] checks the rate limit before the scene, and the image store before the upstream request
 ok 100 - [skywatch-thumbnails-014] checks the rate limit before the scene, and the image store before the upstream request
   ---
-  duration_ms: 5.207686
+  duration_ms: 5.088999
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-015] writes one line for a good image and for each failure, with the time
 ok 101 - [skywatch-thumbnails-015] writes one line for a good image and for each failure, with the time
   ---
-  duration_ms: 5.709978
+  duration_ms: 5.816973
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-015] writes no line for an answer of the image store or of a step before the upstream request
 ok 102 - [skywatch-thumbnails-015] writes no line for an answer of the image store or of a step before the upstream request
   ---
-  duration_ms: 6.155274
+  duration_ms: 6.408638
   type: 'test'
   ...
 # Subtest: [skywatch-thumbnails-015] logs with console.log when the test gives no log option
 ok 103 - [skywatch-thumbnails-015] logs with console.log when the test gives no log option
   ---
-  duration_ms: 3.605406
+  duration_ms: 3.565877
   type: 'test'
   ...
 # Subtest: [skywatch-source-011] starts the search with one POST request of the fixed body to the fixed URL
 ok 104 - [skywatch-source-011] starts the search with one POST request of the fixed body to the fixed URL
   ---
-  duration_ms: 4.13767
+  duration_ms: 4.216292
   type: 'test'
   ...
 # Subtest: [skywatch-source-011] uses the start and the end of the request, and the corners of the box in order
 ok 105 - [skywatch-source-011] uses the start and the end of the request, and the corners of the box in order
   ---
-  duration_ms: 2.095483
+  duration_ms: 2.293714
   type: 'test'
   ...
 # Subtest: [skywatch-source-012] reads the results with GET requests and the same headers, with no body
 ok 106 - [skywatch-source-012] reads the results with GET requests and the same headers, with no body
   ---
-  duration_ms: 2.401845
+  duration_ms: 2.728496
   type: 'test'
   ...
 # Subtest: [skywatch-source-012] waits 2000 ms after each of the first nine answers 202 and stops after the tenth
 ok 107 - [skywatch-source-012] waits 2000 ms after each of the first nine answers 202 and stops after the tenth
   ---
-  duration_ms: 7.386911
+  duration_ms: 7.639459
   type: 'test'
   ...
 # Subtest: [skywatch-source-012] sends the next result request only after the wait ends
 ok 108 - [skywatch-source-012] sends the next result request only after the wait ends
   ---
-  duration_ms: 9.793025
+  duration_ms: 9.920157
   type: 'test'
   ...
 # Subtest: [skywatch-source-012] refuses a search id of another form and sends no result request
 ok 109 - [skywatch-source-012] refuses a search id of another form and sends no result request
   ---
-  duration_ms: 6.825152
+  duration_ms: 7.462186
   type: 'test'
   ...
 # Subtest: [skywatch-source-012 skywatch-source-019] refuses a search document that is not an object or has no object data
 ok 110 - [skywatch-source-012 skywatch-source-019] refuses a search document that is not an object or has no object data
   ---
-  duration_ms: 4.107372
+  duration_ms: 4.266315
   type: 'test'
   ...
 # Subtest: [skywatch-source-019] refuses a results document that is not an object, or whose data is not an array
 ok 111 - [skywatch-source-019] refuses a results document that is not an object, or whose data is not an array
   ---
-  duration_ms: 6.134493
+  duration_ms: 8.054783
   type: 'test'
   ...
 # Subtest: [skywatch-source-019] names the failure of each status of the search request
 ok 112 - [skywatch-source-019] names the failure of each status of the search request
   ---
-  duration_ms: 2.843836
+  duration_ms: 2.94485
   type: 'test'
   ...
 # Subtest: [skywatch-source-019] names the failure of each status of a result request
 ok 113 - [skywatch-source-019] names the failure of each status of a result request
   ---
-  duration_ms: 4.906713
+  duration_ms: 4.992345
   type: 'test'
   ...
 # Subtest: [skywatch-source-019] gives the seconds of Retry-After for an answer 429
 ok 114 - [skywatch-source-019] gives the seconds of Retry-After for an answer 429
   ---
-  duration_ms: 8.864949
+  duration_ms: 9.293475
   type: 'test'
   ...
 # Subtest: [skywatch-source-019] reads the body only of an answer 200
 ok 115 - [skywatch-source-019] reads the body only of an answer 200
   ---
-  duration_ms: 2.881436
+  duration_ms: 3.243887
   type: 'test'
   ...
 # Subtest: [skywatch-source-019] gives upstream_failed for a network error and a redirect
 ok 116 - [skywatch-source-019] gives upstream_failed for a network error and a redirect
   ---
-  duration_ms: 2.280484
+  duration_ms: 2.417322
   type: 'test'
   ...
 # Subtest: [skywatch-source-019] starts a timer of 15000 ms before each request and clears it after the body
 ok 117 - [skywatch-source-019] starts a timer of 15000 ms before each request and clears it after the body
   ---
-  duration_ms: 3.967762
+  duration_ms: 2.300389
   type: 'test'
   ...
 # Subtest: [skywatch-source-019] stops a request when its time limit ends, also while it reads the body
 ok 118 - [skywatch-source-019] stops a request when its time limit ends, also while it reads the body
   ---
-  duration_ms: 18.127506
+  duration_ms: 12.217756
   type: 'test'
   ...
 # Subtest: [skywatch-source-019] gives bad_upstream for a body that is not JSON or is too large, and reads a body of 4194304 bytes
 ok 119 - [skywatch-source-019] gives bad_upstream for a body that is not JSON or is too large, and reads a body of 4194304 bytes
   ---
-  duration_ms: 66.434736
+  duration_ms: 67.710125
   type: 'test'
   ...
 # Subtest: [skywatch-source-019] clears the timer only after it reads the body
 ok 120 - [skywatch-source-019] clears the timer only after it reads the body
   ---
-  duration_ms: 4.225481
+  duration_ms: 4.106844
   type: 'test'
   ...
 # Subtest: [up42-source-006] reads at most 4096 bytes and handles a broken stream
 ok 121 - [up42-source-006] reads at most 4096 bytes and handles a broken stream
   ---
-  duration_ms: 8.188058
+  duration_ms: 8.390311
   type: 'test'
   ...
 # Subtest: [up42-source-006] refuses body case 0
 ok 122 - [up42-source-006] refuses body case 0
   ---
-  duration_ms: 1.003455
+  duration_ms: 1.032435
   type: 'test'
   ...
 # Subtest: [up42-source-006] refuses body case 1
 ok 123 - [up42-source-006] refuses body case 1
   ---
-  duration_ms: 0.364928
+  duration_ms: 0.386441
   type: 'test'
   ...
 # Subtest: [up42-source-006] refuses body case 2
 ok 124 - [up42-source-006] refuses body case 2
   ---
-  duration_ms: 0.206941
+  duration_ms: 0.19661
   type: 'test'
   ...
 # Subtest: [up42-source-006] refuses body case 3
 ok 125 - [up42-source-006] refuses body case 3
   ---
-  duration_ms: 0.196564
+  duration_ms: 0.184943
   type: 'test'
   ...
 # Subtest: [up42-source-006] refuses body case 4
 ok 126 - [up42-source-006] refuses body case 4
   ---
-  duration_ms: 0.305876
+  duration_ms: 0.320831
   type: 'test'
   ...
 # Subtest: [up42-source-006] refuses body case 5
 ok 127 - [up42-source-006] refuses body case 5
   ---
-  duration_ms: 0.1631
+  duration_ms: 0.168479
   type: 'test'
   ...
 # Subtest: [up42-source-006] refuses body case 6
 ok 128 - [up42-source-006] refuses body case 6
   ---
-  duration_ms: 0.178051
+  duration_ms: 0.166173
   type: 'test'
   ...
 # Subtest: [up42-source-006] refuses body case 7
 ok 129 - [up42-source-006] refuses body case 7
   ---
-  duration_ms: 0.35806
+  duration_ms: 0.244809
   type: 'test'
   ...
 # Subtest: [up42-source-007] accepts the box limits and keeps its own values
 ok 130 - [up42-source-007] accepts the box limits and keeps its own values
   ---
-  duration_ms: 1.177821
+  duration_ms: 1.306898
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 0
 ok 131 - [up42-source-007] refuses box case 0
   ---
-  duration_ms: 0.635515
+  duration_ms: 0.663613
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 1
 ok 132 - [up42-source-007] refuses box case 1
   ---
-  duration_ms: 0.239416
+  duration_ms: 0.242586
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 2
 ok 133 - [up42-source-007] refuses box case 2
   ---
-  duration_ms: 0.206447
+  duration_ms: 0.250347
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 3
 ok 134 - [up42-source-007] refuses box case 3
   ---
-  duration_ms: 0.249781
+  duration_ms: 0.245558
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 4
 ok 135 - [up42-source-007] refuses box case 4
   ---
-  duration_ms: 0.199288
+  duration_ms: 0.202606
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 5
 ok 136 - [up42-source-007] refuses box case 5
   ---
-  duration_ms: 0.173732
+  duration_ms: 0.19225
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 6
 ok 137 - [up42-source-007] refuses box case 6
   ---
-  duration_ms: 0.196527
+  duration_ms: 0.170588
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 7
 ok 138 - [up42-source-007] refuses box case 7
   ---
-  duration_ms: 0.206825
+  duration_ms: 0.200872
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 8
 ok 139 - [up42-source-007] refuses box case 8
   ---
-  duration_ms: 0.184315
+  duration_ms: 0.181216
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 9
 ok 140 - [up42-source-007] refuses box case 9
   ---
-  duration_ms: 0.233401
+  duration_ms: 0.201222
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 10
 ok 141 - [up42-source-007] refuses box case 10
   ---
-  duration_ms: 0.1806
+  duration_ms: 0.249652
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 11
 ok 142 - [up42-source-007] refuses box case 11
   ---
-  duration_ms: 0.253668
+  duration_ms: 0.278592
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 12
 ok 143 - [up42-source-007] refuses box case 12
   ---
-  duration_ms: 0.230236
+  duration_ms: 0.171509
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 13
 ok 144 - [up42-source-007] refuses box case 13
   ---
-  duration_ms: 0.176824
+  duration_ms: 0.168764
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 14
 ok 145 - [up42-source-007] refuses box case 14
   ---
-  duration_ms: 0.215118
+  duration_ms: 0.206399
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 15
 ok 146 - [up42-source-007] refuses box case 15
   ---
-  duration_ms: 0.183533
+  duration_ms: 0.205476
   type: 'test'
   ...
 # Subtest: [up42-source-007] refuses box case 16
 ok 147 - [up42-source-007] refuses box case 16
   ---
-  duration_ms: 0.165379
+  duration_ms: 0.18126
   type: 'test'
   ...
 # Subtest: [up42-source-008] checks the area before the dates
 ok 148 - [up42-source-008] checks the area before the dates
   ---
-  duration_ms: 0.821444
+  duration_ms: 0.885061
   type: 'test'
   ...
 # Subtest: [up42-source-009] accepts 92 days and the current UTC date
 ok 149 - [up42-source-009] accepts 92 days and the current UTC date
   ---
-  duration_ms: 0.838745
+  duration_ms: 0.912766
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 0
 ok 150 - [up42-source-009] refuses date case 0
   ---
-  duration_ms: 0.582426
+  duration_ms: 0.707001
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 1
 ok 151 - [up42-source-009] refuses date case 1
   ---
-  duration_ms: 0.295754
+  duration_ms: 0.301753
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 2
 ok 152 - [up42-source-009] refuses date case 2
   ---
-  duration_ms: 0.275445
+  duration_ms: 0.351408
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 3
 ok 153 - [up42-source-009] refuses date case 3
   ---
-  duration_ms: 0.278585
+  duration_ms: 0.275276
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 4
 ok 154 - [up42-source-009] refuses date case 4
   ---
-  duration_ms: 0.245262
+  duration_ms: 0.373223
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 5
 ok 155 - [up42-source-009] refuses date case 5
   ---
-  duration_ms: 0.254659
+  duration_ms: 0.291622
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 6
 ok 156 - [up42-source-009] refuses date case 6
   ---
-  duration_ms: 0.276258
+  duration_ms: 0.250409
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 7
 ok 157 - [up42-source-009] refuses date case 7
   ---
-  duration_ms: 0.235933
+  duration_ms: 0.293269
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 8
 ok 158 - [up42-source-009] refuses date case 8
   ---
-  duration_ms: 0.298465
+  duration_ms: 0.263352
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 9
 ok 159 - [up42-source-009] refuses date case 9
   ---
-  duration_ms: 0.247135
+  duration_ms: 0.253251
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 10
 ok 160 - [up42-source-009] refuses date case 10
   ---
-  duration_ms: 0.23536
+  duration_ms: 0.290795
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses date case 11
 ok 161 - [up42-source-009] refuses date case 11
   ---
-  duration_ms: 0.260178
+  duration_ms: 0.239816
   type: 'test'
   ...
 # Subtest: [up42-source-010] keeps the optional values and their absence
 ok 162 - [up42-source-010] keeps the optional values and their absence
   ---
-  duration_ms: 1.463303
+  duration_ms: 1.528172
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 0
 ok 163 - [up42-source-010] refuses option case 0
   ---
-  duration_ms: 0.396066
+  duration_ms: 0.392931
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 1
 ok 164 - [up42-source-010] refuses option case 1
   ---
-  duration_ms: 0.289266
+  duration_ms: 0.309137
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 2
 ok 165 - [up42-source-010] refuses option case 2
   ---
-  duration_ms: 0.385852
+  duration_ms: 0.279149
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 3
 ok 166 - [up42-source-010] refuses option case 3
   ---
-  duration_ms: 0.283257
+  duration_ms: 0.318006
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 4
 ok 167 - [up42-source-010] refuses option case 4
   ---
-  duration_ms: 0.204136
+  duration_ms: 0.207644
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 5
 ok 168 - [up42-source-010] refuses option case 5
   ---
-  duration_ms: 0.27702
+  duration_ms: 0.252592
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 6
 ok 169 - [up42-source-010] refuses option case 6
   ---
-  duration_ms: 0.209435
+  duration_ms: 0.227491
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 7
 ok 170 - [up42-source-010] refuses option case 7
   ---
-  duration_ms: 0.202808
+  duration_ms: 0.218642
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 8
 ok 171 - [up42-source-010] refuses option case 8
   ---
-  duration_ms: 0.22624
+  duration_ms: 0.219452
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 9
 ok 172 - [up42-source-010] refuses option case 9
   ---
-  duration_ms: 0.211446
+  duration_ms: 0.237996
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 10
 ok 173 - [up42-source-010] refuses option case 10
   ---
-  duration_ms: 0.194848
+  duration_ms: 0.205668
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses option case 11
 ok 174 - [up42-source-010] refuses option case 11
   ---
-  duration_ms: 0.22994
+  duration_ms: 0.253231
   type: 'test'
   ...
 # Subtest: [up42-source-009] refuses a date with a final line break
 ok 175 - [up42-source-009] refuses a date with a final line break
   ---
-  duration_ms: 0.4143
+  duration_ms: 0.546928
   type: 'test'
   ...
 # Subtest: [up42-source-027] discards bytes through 65536 and stops above that size
 ok 176 - [up42-source-027] discards bytes through 65536 and stops above that size
   ---
-  duration_ms: 2.957104
+  duration_ms: 3.06391
   type: 'test'
   ...
 # Subtest: [up42-source-001] installs both exact routes in both Vite hooks
 ok 177 - [up42-source-001] installs both exact routes in both Vite hooks
   ---
-  duration_ms: 9.742687
+  duration_ms: 10.223422
   type: 'test'
   ...
 # Subtest: [up42-source-002] gives only the credential state with no upstream call
 ok 178 - [up42-source-002] gives only the credential state with no upstream call
   ---
-  duration_ms: 6.622653
+  duration_ms: 6.843603
   type: 'test'
   ...
 # Subtest: [up42-source-003] checks the method before other scenes checks
 ok 179 - [up42-source-003] checks the method before other scenes checks
   ---
-  duration_ms: 1.90558
+  duration_ms: 1.797437
   type: 'test'
   ...
 # Subtest: [up42-source-004] refuses each failed same-site or content check
 ok 180 - [up42-source-004] refuses each failed same-site or content check
   ---
-  duration_ms: 25.010832
+  duration_ms: 25.322485
   type: 'test'
   ...
 # Subtest: [up42-source-005] counts bad bodies and kept answers and resets at 60000 ms
 ok 181 - [up42-source-005] counts bad bodies and kept answers and resets at 60000 ms
   ---
-  duration_ms: 12.509
+  duration_ms: 13.005733
   type: 'test'
   ...
 # Subtest: [up42-source-003] refuses other origins before the rate limit
 ok 182 - [up42-source-003] refuses other origins before the rate limit
   ---
-  duration_ms: 6.666861
+  duration_ms: 6.619228
   type: 'test'
   ...
 # Subtest: [up42-source-006] gives body failures before the credential check
 ok 183 - [up42-source-006] gives body failures before the credential check
   ---
-  duration_ms: 7.802086
+  duration_ms: 7.551859
   type: 'test'
   ...
 # Subtest: [up42-source-011] checks both credentials before the store
 ok 184 - [up42-source-011] checks both credentials before the store
   ---
-  duration_ms: 13.117555
+  duration_ms: 13.252616
   type: 'test'
   ...
 # Subtest: [up42-source-012] gives the route failure case 0
 ok 185 - [up42-source-012] gives the route failure case 0
   ---
-  duration_ms: 4.978372
+  duration_ms: 5.445419
   type: 'test'
   ...
 # Subtest: [up42-source-012] gives the route failure case 1
 ok 186 - [up42-source-012] gives the route failure case 1
   ---
-  duration_ms: 3.465766
+  duration_ms: 3.636891
   type: 'test'
   ...
 # Subtest: [up42-source-017] gives 502 when the host fails
 ok 187 - [up42-source-017] gives 502 when the host fails
   ---
-  duration_ms: 5.022489
+  duration_ms: 5.558154
   type: 'test'
   ...
 # Subtest: [up42-source-013] uses one new login after an API 401 then stops
 ok 188 - [up42-source-013] uses one new login after an API 401 then stops
   ---
-  duration_ms: 6.472925
+  duration_ms: 6.575962
   type: 'test'
   ...
 # Subtest: [up42-source-010] gives the collection refusal from the fetched list
 ok 189 - [up42-source-010] gives the collection refusal from the fetched list
   ---
-  duration_ms: 4.841648
+  duration_ms: 4.69566
   type: 'test'
   ...
 # Subtest: [up42-source-017] gives 504 when all host calls time out
 ok 190 - [up42-source-017] gives 504 when all host calls time out
   ---
-  duration_ms: 69.474423
+  duration_ms: 84.058054
   type: 'test'
   ...
 # Subtest: [up42-source-019] gives the complete answer and the response headers
 ok 191 - [up42-source-019] gives the complete answer and the response headers
   ---
-  duration_ms: 10.012186
+  duration_ms: 9.485175
   type: 'test'
   ...
 # Subtest: [up42-source-021] keeps good answers until the exact store boundary
 ok 192 - [up42-source-021] keeps good answers until the exact store boundary
   ---
-  duration_ms: 11.864406
+  duration_ms: 11.128512
   type: 'test'
   ...
 # Subtest: [up42-source-021] uses each filter in the store key
 ok 193 - [up42-source-021] uses each filter in the store key
   ---
-  duration_ms: 26.835536
+  duration_ms: 26.999244
   type: 'test'
   ...
 # Subtest: [up42-source-021] starts a new search when only the end date changes
 ok 194 - [up42-source-021] starts a new search when only the end date changes
   ---
-  duration_ms: 31.39616
+  duration_ms: 27.572009
   type: 'test'
   ...
 # Subtest: [up42-source-025] starts one search for two simultaneous store misses
 ok 195 - [up42-source-025] starts one search for two simultaneous store misses
   ---
-  duration_ms: 9.491241
+  duration_ms: 10.247088
   type: 'test'
   ...
 # Subtest: [up42-source-021] removes the oldest answer after 32 entries
 ok 196 - [up42-source-021] removes the oldest answer after 32 entries
   ---
-  duration_ms: 57.335062
+  duration_ms: 65.199954
   type: 'test'
   ...
 # Subtest: [up42-source-021] shares a search with success true
 ok 197 - [up42-source-021] shares a search with success true
   ---
-  duration_ms: 8.926605
+  duration_ms: 9.229509
   type: 'test'
   ...
 # Subtest: [up42-source-021] shares a search with success false
 ok 198 - [up42-source-021] shares a search with success false
   ---
-  duration_ms: 5.803237
+  duration_ms: 6.081554
   type: 'test'
   ...
 # Subtest: [up42-source-021] keeps no failure in the store
 ok 199 - [up42-source-021] keeps no failure in the store
   ---
-  duration_ms: 7.003883
+  duration_ms: 7.627308
   type: 'test'
   ...
 # Subtest: [up42-source-022] checks the store before the daily count and counts failures
 ok 200 - [up42-source-022] checks the store before the daily count and counts failures
   ---
-  duration_ms: 11.895343
+  duration_ms: 12.512409
   type: 'test'
   ...
 # Subtest: [up42-source-022] reserves the count before the first upstream call
 ok 201 - [up42-source-022] reserves the count before the first upstream call
   ---
-  duration_ms: 7.237886
+  duration_ms: 7.683001
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 0
 ok 202 - [up42-source-022] sets the daily limit case 0
   ---
-  duration_ms: 4.998483
+  duration_ms: 4.954762
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 1
 ok 203 - [up42-source-022] sets the daily limit case 1
   ---
-  duration_ms: 3.760775
+  duration_ms: 3.833038
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 2
 ok 204 - [up42-source-022] sets the daily limit case 2
   ---
-  duration_ms: 4.033429
+  duration_ms: 4.112908
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 3
 ok 205 - [up42-source-022] sets the daily limit case 3
   ---
-  duration_ms: 3.929549
+  duration_ms: 3.928195
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 4
 ok 206 - [up42-source-022] sets the daily limit case 4
   ---
-  duration_ms: 4.445485
+  duration_ms: 4.236581
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 5
 ok 207 - [up42-source-022] sets the daily limit case 5
   ---
-  duration_ms: 3.931679
+  duration_ms: 3.959265
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 6
 ok 208 - [up42-source-022] sets the daily limit case 6
   ---
-  duration_ms: 3.868673
+  duration_ms: 4.02072
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 7
 ok 209 - [up42-source-022] sets the daily limit case 7
   ---
-  duration_ms: 3.431808
+  duration_ms: 3.669261
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 8
 ok 210 - [up42-source-022] sets the daily limit case 8
   ---
-  duration_ms: 4.624971
+  duration_ms: 4.402165
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 9
 ok 211 - [up42-source-022] sets the daily limit case 9
   ---
-  duration_ms: 3.656818
+  duration_ms: 3.714916
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 10
 ok 212 - [up42-source-022] sets the daily limit case 10
   ---
-  duration_ms: 4.372472
+  duration_ms: 4.407748
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 11
 ok 213 - [up42-source-022] sets the daily limit case 11
   ---
-  duration_ms: 3.818672
+  duration_ms: 3.662739
   type: 'test'
   ...
 # Subtest: [up42-source-022] sets the daily limit case 12
 ok 214 - [up42-source-022] sets the daily limit case 12
   ---
-  duration_ms: 4.241852
+  duration_ms: 4.024699
   type: 'test'
   ...
 # Subtest: [up42-source-023] keeps fake secrets out of every answer and console line
 ok 215 - [up42-source-023] keeps fake secrets out of every answer and console line
   ---
-  duration_ms: 27.354562
+  duration_ms: 28.092492
   type: 'test'
   ...
 # Subtest: [up42-source-023] uses fake process credentials and the default console function
 ok 216 - [up42-source-023] uses fake process credentials and the default console function
   ---
-  duration_ms: 8.805545
+  duration_ms: 8.545162
   type: 'test'
   ...
 # Subtest: [up42-source-018] gives a fixed route failure for a public list 401
 ok 217 - [up42-source-018] gives a fixed route failure for a public list 401
   ---
-  duration_ms: 3.417576
+  duration_ms: 3.54089
   type: 'test'
   ...
 # Subtest: [up42-source-022] uses the default for a daily limit with a line break
 ok 218 - [up42-source-022] uses the default for a daily limit with a line break
   ---
-  duration_ms: 4.484111
+  duration_ms: 4.331947
   type: 'test'
   ...
 # Subtest: [up42-source-027] gives an HTTP client 400 for a body above the cap
-not ok 219 - [up42-source-027] gives an HTTP client 400 for a body above the cap
+ok 219 - [up42-source-027] gives an HTTP client 400 for a body above the cap
   ---
-  duration_ms: 25.937739
+  duration_ms: 95.327821
   type: 'test'
-  location: '/home/ianblenke/docker/gev-work/up42/src/data/up42Proxy.test.mjs:808:1'
-  failureType: 'testCodeFailure'
-  error: 'listen EPERM: operation not permitted 127.0.0.1'
-  code: 'EPERM'
-  stack: |-
-    Server.setupListenHandle [as _listen2] (node:net:2368:21)
-    listenInCluster (node:net:2499:12)
-    node:net:2728:7
-    process.processTicksAndRejections (node:internal/process/task_queues:90:21)
   ...
 # Subtest: [up42-source-019] sets only the named scene fields from their sources
 ok 220 - [up42-source-019] sets only the named scene fields from their sources
   ---
-  duration_ms: 2.507315
+  duration_ms: 2.679929
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops each invalid feature and counts all drops
 ok 221 - [up42-source-020] drops each invalid feature and counts all drops
   ---
-  duration_ms: 2.047853
+  duration_ms: 2.035147
   type: 'test'
   ...
 # Subtest: [up42-source-020] clears number case 0
 ok 222 - [up42-source-020] clears number case 0
   ---
-  duration_ms: 0.664781
+  duration_ms: 0.599388
   type: 'test'
   ...
 # Subtest: [up42-source-020] clears number case 1
 ok 223 - [up42-source-020] clears number case 1
   ---
-  duration_ms: 0.286783
+  duration_ms: 0.269311
   type: 'test'
   ...
 # Subtest: [up42-source-020] clears number case 2
 ok 224 - [up42-source-020] clears number case 2
   ---
-  duration_ms: 0.238372
+  duration_ms: 0.230453
   type: 'test'
   ...
 # Subtest: [up42-source-020] clears number case 3
 ok 225 - [up42-source-020] clears number case 3
   ---
-  duration_ms: 0.203057
+  duration_ms: 0.245121
   type: 'test'
   ...
 # Subtest: [up42-source-020] clears number case 4
 ok 226 - [up42-source-020] clears number case 4
   ---
-  duration_ms: 0.209845
+  duration_ms: 0.224533
   type: 'test'
   ...
 # Subtest: [up42-source-020] clears number case 5
 ok 227 - [up42-source-020] clears number case 5
   ---
-  duration_ms: 0.312721
+  duration_ms: 0.193308
   type: 'test'
   ...
 # Subtest: [up42-source-020] clears number case 6
 ok 228 - [up42-source-020] clears number case 6
   ---
-  duration_ms: 0.190428
+  duration_ms: 0.205901
   type: 'test'
   ...
 # Subtest: [up42-source-020] clears number case 7
 ok 229 - [up42-source-020] clears number case 7
   ---
-  duration_ms: 0.355523
+  duration_ms: 0.184792
   type: 'test'
   ...
 # Subtest: [up42-source-020] clears number case 8
 ok 230 - [up42-source-020] clears number case 8
   ---
-  duration_ms: 0.217241
+  duration_ms: 0.194151
   type: 'test'
   ...
 # Subtest: [up42-source-020] keeps the number limits
 ok 231 - [up42-source-020] keeps the number limits
   ---
-  duration_ms: 0.741556
+  duration_ms: 0.716246
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops polygon case 0
 ok 232 - [up42-source-020] drops polygon case 0
   ---
-  duration_ms: 0.499372
+  duration_ms: 0.520483
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops polygon case 1
 ok 233 - [up42-source-020] drops polygon case 1
   ---
-  duration_ms: 0.25883
+  duration_ms: 0.219866
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops polygon case 2
 ok 234 - [up42-source-020] drops polygon case 2
   ---
-  duration_ms: 0.187095
+  duration_ms: 0.195557
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops polygon case 3
 ok 235 - [up42-source-020] drops polygon case 3
   ---
-  duration_ms: 0.177657
+  duration_ms: 0.201648
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops polygon case 4
 ok 236 - [up42-source-020] drops polygon case 4
   ---
-  duration_ms: 0.237883
+  duration_ms: 0.192429
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops polygon case 5
 ok 237 - [up42-source-020] drops polygon case 5
   ---
-  duration_ms: 0.189676
+  duration_ms: 0.188328
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops polygon case 6
 ok 238 - [up42-source-020] drops polygon case 6
   ---
-  duration_ms: 0.211908
+  duration_ms: 0.201158
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops polygon case 7
 ok 239 - [up42-source-020] drops polygon case 7
   ---
-  duration_ms: 0.196277
+  duration_ms: 0.180363
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops polygon case 8
 ok 240 - [up42-source-020] drops polygon case 8
   ---
-  duration_ms: 0.308092
+  duration_ms: 0.190626
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops polygon case 9
 ok 241 - [up42-source-020] drops polygon case 9
   ---
-  duration_ms: 0.216477
+  duration_ms: 0.208558
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops polygon case 10
 ok 242 - [up42-source-020] drops polygon case 10
   ---
-  duration_ms: 0.283798
+  duration_ms: 0.244439
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops position case 0
 ok 243 - [up42-source-020] drops position case 0
   ---
-  duration_ms: 0.649504
+  duration_ms: 0.802511
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops position case 1
 ok 244 - [up42-source-020] drops position case 1
   ---
-  duration_ms: 0.305898
+  duration_ms: 0.266649
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops position case 2
 ok 245 - [up42-source-020] drops position case 2
   ---
-  duration_ms: 0.218765
+  duration_ms: 0.217794
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops position case 3
 ok 246 - [up42-source-020] drops position case 3
   ---
-  duration_ms: 0.199516
+  duration_ms: 0.204403
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops position case 4
 ok 247 - [up42-source-020] drops position case 4
   ---
-  duration_ms: 0.198329
+  duration_ms: 0.207736
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops position case 5
 ok 248 - [up42-source-020] drops position case 5
   ---
-  duration_ms: 0.217927
+  duration_ms: 0.232307
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops position case 6
 ok 249 - [up42-source-020] drops position case 6
   ---
-  duration_ms: 0.228986
+  duration_ms: 0.223062
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops position case 7
 ok 250 - [up42-source-020] drops position case 7
   ---
-  duration_ms: 0.198158
+  duration_ms: 0.203172
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops position case 8
 ok 251 - [up42-source-020] drops position case 8
   ---
-  duration_ms: 0.20148
+  duration_ms: 0.195664
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops position case 9
 ok 252 - [up42-source-020] drops position case 9
   ---
-  duration_ms: 0.229259
+  duration_ms: 0.245224
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops position case 10
 ok 253 - [up42-source-020] drops position case 10
   ---
-  duration_ms: 0.205164
+  duration_ms: 0.203397
   type: 'test'
   ...
 # Subtest: [up42-source-020] keeps valid rings and removes altitude
 ok 254 - [up42-source-020] keeps valid rings and removes altitude
   ---
-  duration_ms: 10.585826
+  duration_ms: 10.351105
   type: 'test'
   ...
 # Subtest: [up42-source-020] drops an id with a final line break
 ok 255 - [up42-source-020] drops an id with a final line break
   ---
-  duration_ms: 0.633462
+  duration_ms: 0.5196
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-001] checks the path in both hooks
 ok 256 - [up42-thumbnails-001] checks the path in both hooks
   ---
-  duration_ms: 8.28287
+  duration_ms: 10.617244
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-002] shares scenes through the local provider list
 ok 257 - [up42-thumbnails-002] shares scenes through the local provider list
   ---
-  duration_ms: 15.159768
+  duration_ms: 16.49694
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-003] checks the site before the method and rate
 ok 258 - [up42-thumbnails-003] checks the site before the method and rate
   ---
-  duration_ms: 5.484234
+  duration_ms: 5.342056
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-004] accepts only GET
 ok 259 - [up42-thumbnails-004] accepts only GET
   ---
-  duration_ms: 2.396898
+  duration_ms: 1.77625
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-005] keeps each other variable value off before the rate
 ok 260 - [up42-thumbnails-005] keeps each other variable value off before the rate
   ---
-  duration_ms: 4.808686
+  duration_ms: 4.979858
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-006] counts kept images and both socket addresses
 ok 261 - [up42-thumbnails-006] counts kept images and both socket addresses
   ---
-  duration_ms: 11.541175
+  duration_ms: 11.492965
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-007] selects the newest answer with the id
 ok 262 - [up42-thumbnails-007] selects the newest answer with the id
   ---
-  duration_ms: 14.284646
+  duration_ms: 16.471574
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-007] uses the first scene and isolates plugin lists
 ok 263 - [up42-thumbnails-007] uses the first scene and isolates plugin lists
   ---
-  duration_ms: 6.825474
+  duration_ms: 7.716699
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-007] rejects expired and evicted scenes before image bytes
 ok 264 - [up42-thumbnails-007] rejects expired and evicted scenes before image bytes
   ---
-  duration_ms: 78.699554
+  duration_ms: 86.966785
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-008] sets the exact authenticated GET fields
 ok 265 - [up42-thumbnails-008] sets the exact authenticated GET fields
   ---
-  duration_ms: 6.60421
+  duration_ms: 6.022729
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-008] rejects invalid path parts before login
 ok 266 - [up42-thumbnails-008] rejects invalid path parts before login
   ---
-  duration_ms: 4.832065
+  duration_ms: 5.458225
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-009] shares one login and uses the token expiry
 ok 267 - [up42-thumbnails-009] shares one login and uses the token expiry
   ---
-  duration_ms: 18.282807
+  duration_ms: 20.319174
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-009] retries one API refusal case 0
 ok 268 - [up42-thumbnails-009] retries one API refusal case 0
   ---
-  duration_ms: 3.797865
+  duration_ms: 4.457543
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-009] retries one API refusal case 1
 ok 269 - [up42-thumbnails-009] retries one API refusal case 1
   ---
-  duration_ms: 2.203667
+  duration_ms: 2.389072
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-009] retries one API refusal case 2
 ok 270 - [up42-thumbnails-009] retries one API refusal case 2
   ---
-  duration_ms: 2.281689
+  duration_ms: 2.28856
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-009] stops after a refused first login
 ok 271 - [up42-thumbnails-009] stops after a refused first login
   ---
-  duration_ms: 1.777281
+  duration_ms: 1.793808
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-009] stops after a refused second login
 ok 272 - [up42-thumbnails-009] stops after a refused second login
   ---
-  duration_ms: 1.527745
+  duration_ms: 1.701303
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] accepts image case 0
 ok 273 - [up42-thumbnails-010] accepts image case 0
   ---
-  duration_ms: 2.869047
+  duration_ms: 2.961937
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] accepts image case 1
 ok 274 - [up42-thumbnails-010] accepts image case 1
   ---
-  duration_ms: 2.014597
+  duration_ms: 2.118185
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] accepts image case 2
 ok 275 - [up42-thumbnails-010] accepts image case 2
   ---
-  duration_ms: 1.878596
+  duration_ms: 2.047549
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] accepts image case 3
 ok 276 - [up42-thumbnails-010] accepts image case 3
   ---
-  duration_ms: 1.870977
+  duration_ms: 1.846262
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses bad image case 0
 ok 277 - [up42-thumbnails-010] refuses bad image case 0
   ---
-  duration_ms: 2.746816
+  duration_ms: 3.034025
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses bad image case 1
 ok 278 - [up42-thumbnails-010] refuses bad image case 1
   ---
-  duration_ms: 1.925821
+  duration_ms: 1.899003
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses bad image case 2
 ok 279 - [up42-thumbnails-010] refuses bad image case 2
   ---
-  duration_ms: 1.724533
+  duration_ms: 1.847345
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses bad image case 3
 ok 280 - [up42-thumbnails-010] refuses bad image case 3
   ---
-  duration_ms: 1.789997
+  duration_ms: 2.157879
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses bad image case 4
 ok 281 - [up42-thumbnails-010] refuses bad image case 4
   ---
-  duration_ms: 1.723528
+  duration_ms: 1.955629
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses bad image case 5
 ok 282 - [up42-thumbnails-010] refuses bad image case 5
   ---
-  duration_ms: 1.863256
+  duration_ms: 1.884928
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses bad image case 6
 ok 283 - [up42-thumbnails-010] refuses bad image case 6
   ---
-  duration_ms: 1.934808
+  duration_ms: 1.926425
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses bad image case 7
 ok 284 - [up42-thumbnails-010] refuses bad image case 7
   ---
-  duration_ms: 417.150701
+  duration_ms: 410.462034
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses bad image case 8
 ok 285 - [up42-thumbnails-010] refuses bad image case 8
   ---
-  duration_ms: 3.326596
+  duration_ms: 3.081873
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses bad image case 9
 ok 286 - [up42-thumbnails-010] refuses bad image case 9
   ---
-  duration_ms: 3.496691
+  duration_ms: 3.563722
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] accepts exactly 1048576 bytes
 ok 287 - [up42-thumbnails-010] accepts exactly 1048576 bytes
   ---
-  duration_ms: 1179.560764
+  duration_ms: 1170.087642
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] cancels a non-image body before it reads bytes
 ok 288 - [up42-thumbnails-010] cancels a non-image body before it reads bytes
   ---
-  duration_ms: 3.510392
+  duration_ms: 3.537915
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-011] names status case 0
 ok 289 - [up42-thumbnails-011] names status case 0
   ---
-  duration_ms: 2.83553
+  duration_ms: 3.001081
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-011] names status case 1
 ok 290 - [up42-thumbnails-011] names status case 1
   ---
-  duration_ms: 1.799309
+  duration_ms: 2.013764
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-011] names status case 2
 ok 291 - [up42-thumbnails-011] names status case 2
   ---
-  duration_ms: 1.727679
+  duration_ms: 1.672823
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-011] names status case 3
 ok 292 - [up42-thumbnails-011] names status case 3
   ---
-  duration_ms: 1.598501
+  duration_ms: 1.566145
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-011] names status case 4
 ok 293 - [up42-thumbnails-011] names status case 4
   ---
-  duration_ms: 1.970509
+  duration_ms: 2.432844
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-011] names status case 5
 ok 294 - [up42-thumbnails-011] names status case 5
   ---
-  duration_ms: 1.383187
+  duration_ms: 1.521801
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-011] names status case 6
 ok 295 - [up42-thumbnails-011] names status case 6
   ---
-  duration_ms: 1.276273
+  duration_ms: 1.407978
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-011] names status case 7
 ok 296 - [up42-thumbnails-011] names status case 7
   ---
-  duration_ms: 1.64425
+  duration_ms: 1.349957
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-011] names transport case 0
 ok 297 - [up42-thumbnails-011] names transport case 0
   ---
-  duration_ms: 2.648549
+  duration_ms: 2.473181
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-011] names transport case 1
 ok 298 - [up42-thumbnails-011] names transport case 1
   ---
-  duration_ms: 2.828379
+  duration_ms: 2.863775
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-012] stops during the headers phase
 ok 299 - [up42-thumbnails-012] stops during the headers phase
   ---
-  duration_ms: 34.030977
+  duration_ms: 35.783653
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-012] stops during the body phase
 ok 300 - [up42-thumbnails-012] stops during the body phase
   ---
-  duration_ms: 4.606146
+  duration_ms: 4.617343
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-012] discards error bodies with cancel failure false
 ok 301 - [up42-thumbnails-012] discards error bodies with cancel failure false
   ---
-  duration_ms: 4.496558
+  duration_ms: 4.496508
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-012] discards error bodies with cancel failure true
 ok 302 - [up42-thumbnails-012] discards error bodies with cancel failure true
   ---
-  duration_ms: 2.974431
+  duration_ms: 3.009643
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-012] keeps the timer through all image bytes
 ok 303 - [up42-thumbnails-012] keeps the timer through all image bytes
   ---
-  duration_ms: 4.685745
+  duration_ms: 4.561661
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-013] sends bytes with only its own headers
 ok 304 - [up42-thumbnails-013] sends bytes with only its own headers
   ---
-  duration_ms: 9.379337
+  duration_ms: 7.20136
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-014] uses the image age and no daily count
 ok 305 - [up42-thumbnails-014] uses the image age and no daily count
   ---
-  duration_ms: 14.440309
+  duration_ms: 11.268308
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-014] keys images by both host and id
 ok 306 - [up42-thumbnails-014] keys images by both host and id
   ---
-  duration_ms: 4.325026
+  duration_ms: 4.246285
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-014] removes the oldest of 33 images
 ok 307 - [up42-thumbnails-014] removes the oldest of 33 images
   ---
-  duration_ms: 19.178424
+  duration_ms: 19.567925
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-014] makes an expired image newest after a refresh
 ok 308 - [up42-thumbnails-014] makes an expired image newest after a refresh
   ---
-  duration_ms: 28.874234
+  duration_ms: 19.639944
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-015] claims simultaneous requests with success true
 ok 309 - [up42-thumbnails-015] claims simultaneous requests with success true
   ---
-  duration_ms: 10.105155
+  duration_ms: 9.767449
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-015] claims simultaneous requests with success false
 ok 310 - [up42-thumbnails-015] claims simultaneous requests with success false
   ---
-  duration_ms: 6.233793
+  duration_ms: 6.305726
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-016] keeps all fake secrets out of output
 ok 311 - [up42-thumbnails-016] keeps all fake secrets out of output
   ---
-  duration_ms: 17.428597
+  duration_ms: 22.223652
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-016] refuses a previous secret in image bytes
 ok 312 - [up42-thumbnails-016] refuses a previous secret in image bytes
   ---
-  duration_ms: 3.560117
+  duration_ms: 3.713423
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-017] allows only the four literal request forms
 ok 313 - [up42-thumbnails-017] allows only the four literal request forms
   ---
-  duration_ms: 46.263356
+  duration_ms: 45.943826
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses a non-image with body case absent
 ok 314 - [up42-thumbnails-010] refuses a non-image with body case absent
   ---
-  duration_ms: 3.082617
+  duration_ms: 2.795436
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-010] refuses a non-image with body case cancel-error
 ok 315 - [up42-thumbnails-010] refuses a non-image with body case cancel-error
   ---
-  duration_ms: 1.93531
+  duration_ms: 1.874023
   type: 'test'
   ...
 # Subtest: [up42-thumbnails-007] refuses an expired scene with a fresh image
 ok 316 - [up42-thumbnails-007] refuses an expired scene with a fresh image
   ---
-  duration_ms: 7.112622
+  duration_ms: 6.702933
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-018] sends literal bytes and headers from the store
+ok 317 - [up42-thumbnails-018] sends literal bytes and headers from the store
+  ---
+  duration_ms: 6.002228
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-016] refuses the previous secret after UP42_USERNAME changes
+ok 318 - [up42-thumbnails-016] refuses the previous secret after UP42_USERNAME changes
+  ---
+  duration_ms: 4.24373
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-016] refuses the previous secret after UP42_PASSWORD changes
+ok 319 - [up42-thumbnails-016] refuses the previous secret after UP42_PASSWORD changes
+  ---
+  duration_ms: 2.751041
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-012] limits cancel at status 404 with end never
+ok 320 - [up42-thumbnails-012] limits cancel at status 404 with end never
+  ---
+  duration_ms: 7.765814
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-012] limits cancel at status 404 with end after-abort
+ok 321 - [up42-thumbnails-012] limits cancel at status 404 with end after-abort
+  ---
+  duration_ms: 3.292028
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-012] limits cancel at status 200 with end never
+ok 322 - [up42-thumbnails-012] limits cancel at status 200 with end never
+  ---
+  duration_ms: 3.141604
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-012] limits cancel at status 200 with end after-abort
+ok 323 - [up42-thumbnails-012] limits cancel at status 200 with end after-abort
+  ---
+  duration_ms: 3.843961
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-019] refuses ids of dots only before login
+ok 324 - [up42-thumbnails-019] refuses ids of dots only before login
+  ---
+  duration_ms: 2.94692
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-019] keeps dots inside the literal destination
+ok 325 - [up42-thumbnails-019] keeps dots inside the literal destination
+  ---
+  duration_ms: 2.632804
   type: 'test'
   ...
 # Subtest: [up42-source-012] sends the password form only to the fixed token host
-ok 317 - [up42-source-012] sends the password form only to the fixed token host
+ok 326 - [up42-source-012] sends the password form only to the fixed token host
   ---
-  duration_ms: 4.947196
+  duration_ms: 4.289794
   type: 'test'
   ...
 # Subtest: [up42-source-012] names token refusal 400
-ok 318 - [up42-source-012] names token refusal 400
+ok 327 - [up42-source-012] names token refusal 400
   ---
-  duration_ms: 1.397053
+  duration_ms: 1.331087
   type: 'test'
   ...
 # Subtest: [up42-source-012] names token refusal 401
-ok 319 - [up42-source-012] names token refusal 401
+ok 328 - [up42-source-012] names token refusal 401
   ---
-  duration_ms: 0.657036
+  duration_ms: 0.607253
   type: 'test'
   ...
 # Subtest: [up42-source-013] reuses one token until the exact time boundary
-ok 320 - [up42-source-013] reuses one token until the exact time boundary
+ok 329 - [up42-source-013] reuses one token until the exact time boundary
   ---
-  duration_ms: 2.87392
+  duration_ms: 2.581736
   type: 'test'
   ...
 # Subtest: [up42-source-013] shares one login across concurrent requests
-ok 321 - [up42-source-013] shares one login across concurrent requests
+ok 330 - [up42-source-013] shares one login across concurrent requests
   ---
-  duration_ms: 7.039445
+  duration_ms: 7.582187
   type: 'test'
   ...
 # Subtest: [up42-source-013] retries one API refusal case 0
-ok 322 - [up42-source-013] retries one API refusal case 0
+ok 331 - [up42-source-013] retries one API refusal case 0
   ---
-  duration_ms: 3.047443
+  duration_ms: 3.228182
   type: 'test'
   ...
 # Subtest: [up42-source-013] retries one API refusal case 1
-ok 323 - [up42-source-013] retries one API refusal case 1
+ok 332 - [up42-source-013] retries one API refusal case 1
   ---
-  duration_ms: 1.736201
+  duration_ms: 1.566645
   type: 'test'
   ...
 # Subtest: [up42-source-013] retries one API refusal case 2
-ok 324 - [up42-source-013] retries one API refusal case 2
+ok 333 - [up42-source-013] retries one API refusal case 2
   ---
-  duration_ms: 1.291982
+  duration_ms: 1.453317
   type: 'test'
   ...
 # Subtest: [up42-source-013] shares a new login after concurrent API refusals
-ok 325 - [up42-source-013] shares a new login after concurrent API refusals
+ok 334 - [up42-source-013] shares a new login after concurrent API refusals
   ---
-  duration_ms: 4.653027
+  duration_ms: 4.206148
   type: 'test'
   ...
 # Subtest: [up42-source-014] reads the public list without credentials and caches the map for six hours
-ok 326 - [up42-source-014] reads the public list without credentials and caches the map for six hours
+ok 335 - [up42-source-014] reads the public list without credentials and caches the map for six hours
   ---
-  duration_ms: 5.623327
+  duration_ms: 4.827099
   type: 'test'
   ...
 # Subtest: [up42-source-014] shares a public list request that is in flight
-ok 327 - [up42-source-014] shares a public list request that is in flight
+ok 336 - [up42-source-014] shares a public list request that is in flight
   ---
-  duration_ms: 6.044794
+  duration_ms: 6.340163
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 0
-ok 328 - [up42-source-014] refuses collection list case 0
+ok 337 - [up42-source-014] refuses collection list case 0
   ---
-  duration_ms: 1.229858
+  duration_ms: 1.221079
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 1
-ok 329 - [up42-source-014] refuses collection list case 1
+ok 338 - [up42-source-014] refuses collection list case 1
   ---
-  duration_ms: 0.658803
+  duration_ms: 0.631061
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 2
-ok 330 - [up42-source-014] refuses collection list case 2
+ok 339 - [up42-source-014] refuses collection list case 2
   ---
-  duration_ms: 0.545055
+  duration_ms: 0.539747
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 3
-ok 331 - [up42-source-014] refuses collection list case 3
+ok 340 - [up42-source-014] refuses collection list case 3
   ---
-  duration_ms: 0.558289
+  duration_ms: 0.532701
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 4
-ok 332 - [up42-source-014] refuses collection list case 4
+ok 341 - [up42-source-014] refuses collection list case 4
   ---
-  duration_ms: 0.596437
+  duration_ms: 0.571588
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 5
-ok 333 - [up42-source-014] refuses collection list case 5
+ok 342 - [up42-source-014] refuses collection list case 5
   ---
-  duration_ms: 0.517436
+  duration_ms: 0.685447
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 6
-ok 334 - [up42-source-014] refuses collection list case 6
+ok 343 - [up42-source-014] refuses collection list case 6
   ---
-  duration_ms: 0.519598
+  duration_ms: 0.538823
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 7
-ok 335 - [up42-source-014] refuses collection list case 7
+ok 344 - [up42-source-014] refuses collection list case 7
   ---
-  duration_ms: 0.53682
+  duration_ms: 0.721468
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 8
-ok 336 - [up42-source-014] refuses collection list case 8
+ok 345 - [up42-source-014] refuses collection list case 8
   ---
-  duration_ms: 0.539837
+  duration_ms: 0.615456
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 9
-ok 337 - [up42-source-014] refuses collection list case 9
+ok 346 - [up42-source-014] refuses collection list case 9
   ---
-  duration_ms: 0.5053
+  duration_ms: 0.531853
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 10
-ok 338 - [up42-source-014] refuses collection list case 10
+ok 347 - [up42-source-014] refuses collection list case 10
   ---
-  duration_ms: 0.471285
+  duration_ms: 0.486811
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses collection list case 11
-ok 339 - [up42-source-014] refuses collection list case 11
+ok 348 - [up42-source-014] refuses collection list case 11
   ---
-  duration_ms: 0.649197
+  duration_ms: 0.510513
   type: 'test'
   ...
 # Subtest: [up42-source-014] skips bad rows and checks each host at the path boundary
-ok 340 - [up42-source-014] skips bad rows and checks each host at the path boundary
+ok 349 - [up42-source-014] skips bad rows and checks each host at the path boundary
   ---
-  duration_ms: 3.827225
+  duration_ms: 3.583207
   type: 'test'
   ...
 # Subtest: [up42-source-010] refuses an unknown collection before a host search
-ok 341 - [up42-source-010] refuses an unknown collection before a host search
+ok 350 - [up42-source-010] refuses an unknown collection before a host search
   ---
-  duration_ms: 1.332943
+  duration_ms: 1.189878
   type: 'test'
   ...
 # Subtest: [up42-source-015] groups collections and sets each body field with no extra field
-ok 342 - [up42-source-015] groups collections and sets each body field with no extra field
+ok 351 - [up42-source-015] groups collections and sets each body field with no extra field
   ---
-  duration_ms: 5.746736
+  duration_ms: 5.362495
   type: 'test'
   ...
 # Subtest: [up42-source-015] allows at most four host calls at one time
-ok 343 - [up42-source-015] allows at most four host calls at one time
+ok 352 - [up42-source-015] allows at most four host calls at one time
   ---
-  duration_ms: 11.778728
+  duration_ms: 12.60795
   type: 'test'
   ...
 # Subtest: [up42-source-016] marks the page limit case 0
-ok 344 - [up42-source-016] marks the page limit case 0
+ok 353 - [up42-source-016] marks the page limit case 0
   ---
-  duration_ms: 5.273185
+  duration_ms: 5.590413
   type: 'test'
   ...
 # Subtest: [up42-source-016] marks the page limit case 1
-ok 345 - [up42-source-016] marks the page limit case 1
+ok 354 - [up42-source-016] marks the page limit case 1
   ---
-  duration_ms: 3.894955
+  duration_ms: 3.983265
   type: 'test'
   ...
 # Subtest: [up42-source-016] marks the page limit case 2
-ok 346 - [up42-source-016] marks the page limit case 2
+ok 355 - [up42-source-016] marks the page limit case 2
   ---
-  duration_ms: 1.661033
+  duration_ms: 1.608761
   type: 'test'
   ...
 # Subtest: [up42-source-016] marks the page limit case 3
-ok 347 - [up42-source-016] marks the page limit case 3
+ok 356 - [up42-source-016] marks the page limit case 3
   ---
-  duration_ms: 1.41213
+  duration_ms: 1.35202
   type: 'test'
   ...
 # Subtest: [up42-source-016] marks the page limit case 4
-ok 348 - [up42-source-016] marks the page limit case 4
+ok 357 - [up42-source-016] marks the page limit case 4
   ---
-  duration_ms: 1.401624
+  duration_ms: 1.201415
   type: 'test'
   ...
 # Subtest: [up42-source-017] keeps good hosts and lists all failed hosts by name
-ok 349 - [up42-source-017] keeps good hosts and lists all failed hosts by name
+ok 358 - [up42-source-017] keeps good hosts and lists all failed hosts by name
   ---
-  duration_ms: 2.92264
+  duration_ms: 2.957126
   type: 'test'
   ...
 # Subtest: [up42-source-017] refuses host document case 0
-ok 350 - [up42-source-017] refuses host document case 0
+ok 359 - [up42-source-017] refuses host document case 0
   ---
-  duration_ms: 2.183983
+  duration_ms: 2.130525
   type: 'test'
   ...
 # Subtest: [up42-source-017] refuses host document case 1
-ok 351 - [up42-source-017] refuses host document case 1
+ok 360 - [up42-source-017] refuses host document case 1
   ---
-  duration_ms: 1.424529
+  duration_ms: 1.329977
   type: 'test'
   ...
 # Subtest: [up42-source-017] refuses host document case 2
-ok 352 - [up42-source-017] refuses host document case 2
+ok 361 - [up42-source-017] refuses host document case 2
   ---
-  duration_ms: 1.206623
+  duration_ms: 1.193093
   type: 'test'
   ...
 # Subtest: [up42-source-017] refuses host document case 3
-ok 353 - [up42-source-017] refuses host document case 3
+ok 362 - [up42-source-017] refuses host document case 3
   ---
-  duration_ms: 1.176037
+  duration_ms: 1.125581
   type: 'test'
   ...
 # Subtest: [up42-source-017] refuses host document case 4
-ok 354 - [up42-source-017] refuses host document case 4
+ok 363 - [up42-source-017] refuses host document case 4
   ---
-  duration_ms: 1.122818
+  duration_ms: 1.127042
   type: 'test'
   ...
 # Subtest: [up42-source-018] keeps the timer through the body and clears it at the end
-ok 355 - [up42-source-018] keeps the timer through the body and clears it at the end
+ok 364 - [up42-source-018] keeps the timer through the body and clears it at the end
   ---
-  duration_ms: 9.654349
+  duration_ms: 7.123058
   type: 'test'
   ...
 # Subtest: [up42-source-018] stops the call during the headers phase
-ok 356 - [up42-source-018] stops the call during the headers phase
+ok 365 - [up42-source-018] stops the call during the headers phase
   ---
-  duration_ms: 2.843291
+  duration_ms: 2.593127
   type: 'test'
   ...
 # Subtest: [up42-source-018] stops the call during the body phase
-ok 357 - [up42-source-018] stops the call during the body phase
+ok 366 - [up42-source-018] stops the call during the body phase
   ---
-  duration_ms: 2.338115
+  duration_ms: 2.037629
   type: 'test'
   ...
 # Subtest: [up42-source-018] gives a fixed failure for transport case 0
-ok 358 - [up42-source-018] gives a fixed failure for transport case 0
+ok 367 - [up42-source-018] gives a fixed failure for transport case 0
   ---
-  duration_ms: 1.522557
+  duration_ms: 1.348226
   type: 'test'
   ...
 # Subtest: [up42-source-018] gives a fixed failure for transport case 1
-ok 359 - [up42-source-018] gives a fixed failure for transport case 1
+ok 368 - [up42-source-018] gives a fixed failure for transport case 1
   ---
-  duration_ms: 0.691197
+  duration_ms: 0.658155
   type: 'test'
   ...
 # Subtest: [up42-source-018] gives a fixed failure for transport case 2
-ok 360 - [up42-source-018] gives a fixed failure for transport case 2
+ok 369 - [up42-source-018] gives a fixed failure for transport case 2
   ---
-  duration_ms: 0.492487
+  duration_ms: 0.50016
   type: 'test'
   ...
 # Subtest: [up42-source-018] gives a fixed failure for transport case 3
-ok 361 - [up42-source-018] gives a fixed failure for transport case 3
+ok 370 - [up42-source-018] gives a fixed failure for transport case 3
   ---
-  duration_ms: 0.384389
+  duration_ms: 0.414867
   type: 'test'
   ...
 # Subtest: [up42-source-018] gives a fixed failure for transport case 4
-ok 362 - [up42-source-018] gives a fixed failure for transport case 4
+ok 371 - [up42-source-018] gives a fixed failure for transport case 4
   ---
-  duration_ms: 0.514671
+  duration_ms: 0.494228
   type: 'test'
   ...
 # Subtest: [up42-source-018] gives a fixed failure for transport case 5
-ok 363 - [up42-source-018] gives a fixed failure for transport case 5
+ok 372 - [up42-source-018] gives a fixed failure for transport case 5
   ---
-  duration_ms: 7.165968
+  duration_ms: 6.924376
   type: 'test'
   ...
 # Subtest: [up42-source-018] gives a fixed failure for transport case 6
-ok 364 - [up42-source-018] gives a fixed failure for transport case 6
+ok 373 - [up42-source-018] gives a fixed failure for transport case 6
   ---
-  duration_ms: 1.287848
+  duration_ms: 1.198237
   type: 'test'
   ...
 # Subtest: [up42-source-018] accepts exactly 4194304 response bytes
-ok 365 - [up42-source-018] accepts exactly 4194304 response bytes
+ok 374 - [up42-source-018] accepts exactly 4194304 response bytes
   ---
-  duration_ms: 25.065742
+  duration_ms: 25.435442
   type: 'test'
   ...
 # Subtest: [up42-source-018] refuses token document case 0
-ok 366 - [up42-source-018] refuses token document case 0
+ok 375 - [up42-source-018] refuses token document case 0
   ---
-  duration_ms: 1.511257
+  duration_ms: 1.510149
   type: 'test'
   ...
 # Subtest: [up42-source-018] refuses token document case 1
-ok 367 - [up42-source-018] refuses token document case 1
+ok 376 - [up42-source-018] refuses token document case 1
   ---
-  duration_ms: 0.70466
+  duration_ms: 0.663155
   type: 'test'
   ...
 # Subtest: [up42-source-018] refuses token document case 2
-ok 368 - [up42-source-018] refuses token document case 2
+ok 377 - [up42-source-018] refuses token document case 2
   ---
-  duration_ms: 0.581618
+  duration_ms: 0.681234
   type: 'test'
   ...
 # Subtest: [up42-source-018] refuses token document case 3
-ok 369 - [up42-source-018] refuses token document case 3
+ok 378 - [up42-source-018] refuses token document case 3
   ---
-  duration_ms: 0.574081
+  duration_ms: 0.594216
   type: 'test'
   ...
 # Subtest: [up42-source-018] refuses token document case 4
-ok 370 - [up42-source-018] refuses token document case 4
+ok 379 - [up42-source-018] refuses token document case 4
   ---
-  duration_ms: 0.545088
+  duration_ms: 0.532337
   type: 'test'
   ...
 # Subtest: [up42-source-018] refuses token document case 5
-ok 371 - [up42-source-018] refuses token document case 5
+ok 380 - [up42-source-018] refuses token document case 5
   ---
-  duration_ms: 0.511843
+  duration_ms: 0.596124
   type: 'test'
   ...
 # Subtest: [up42-source-018] refuses token document case 6
-ok 372 - [up42-source-018] refuses token document case 6
+ok 381 - [up42-source-018] refuses token document case 6
   ---
-  duration_ms: 0.520596
+  duration_ms: 0.527822
   type: 'test'
   ...
 # Subtest: [up42-source-018] refuses token document case 7
-ok 373 - [up42-source-018] refuses token document case 7
+ok 382 - [up42-source-018] refuses token document case 7
   ---
-  duration_ms: 0.47946
+  duration_ms: 0.522891
   type: 'test'
   ...
 # Subtest: [up42-source-024] records only the literal allowed request forms
-ok 374 - [up42-source-024] records only the literal allowed request forms
+ok 383 - [up42-source-024] records only the literal allowed request forms
   ---
-  duration_ms: 9.853995
+  duration_ms: 9.497209
   type: 'test'
   ...
 # Subtest: [up42-source-024] excludes all forbidden source literals
-ok 375 - [up42-source-024] excludes all forbidden source literals
+ok 384 - [up42-source-024] excludes all forbidden source literals
   ---
-  duration_ms: 11.973799
+  duration_ms: 10.257815
   type: 'test'
   ...
 # Subtest: [up42-source-013] stops after a refused new login
-ok 376 - [up42-source-013] stops after a refused new login
+ok 385 - [up42-source-013] stops after a refused new login
   ---
-  duration_ms: 3.558077
+  duration_ms: 2.15675
   type: 'test'
   ...
 # Subtest: [up42-source-012] encodes absent credentials as empty form values
-ok 377 - [up42-source-012] encodes absent credentials as empty form values
+ok 386 - [up42-source-012] encodes absent credentials as empty form values
   ---
-  duration_ms: 2.404701
+  duration_ms: 1.475661
   type: 'test'
   ...
 # Subtest: [up42-source-023] refuses a password in a scene field
-ok 378 - [up42-source-023] refuses a password in a scene field
+ok 387 - [up42-source-023] refuses a password in a scene field
   ---
-  duration_ms: 2.407838
+  duration_ms: 1.357447
   type: 'test'
   ...
 # Subtest: [up42-source-018] refuses a public list 401 without a login
-ok 379 - [up42-source-018] refuses a public list 401 without a login
+ok 388 - [up42-source-018] refuses a public list 401 without a login
   ---
-  duration_ms: 1.434405
+  duration_ms: 1.224565
   type: 'test'
   ...
 # Subtest: [up42-source-015] uses distinct box and date values from the request
-ok 380 - [up42-source-015] uses distinct box and date values from the request
+ok 389 - [up42-source-015] uses distinct box and date values from the request
   ---
-  duration_ms: 2.51463
+  duration_ms: 2.44462
   type: 'test'
   ...
 # Subtest: [up42-source-017] keeps all scenes from distinct good hosts beside failures
-ok 381 - [up42-source-017] keeps all scenes from distinct good hosts beside failures
+ok 390 - [up42-source-017] keeps all scenes from distinct good hosts beside failures
   ---
-  duration_ms: 4.646684
+  duration_ms: 4.50217
   type: 'test'
   ...
 # Subtest: [up42-source-014] refuses a host with a final line break
-ok 382 - [up42-source-014] refuses a host with a final line break
+ok 391 - [up42-source-014] refuses a host with a final line break
   ---
-  duration_ms: 1.563217
+  duration_ms: 1.561449
   type: 'test'
   ...
 # Subtest: [up42-source-018] refuses a token with a final line break
-ok 383 - [up42-source-018] refuses a token with a final line break
+ok 392 - [up42-source-018] refuses a token with a final line break
   ---
-  duration_ms: 1.206262
+  duration_ms: 1.200633
   type: 'test'
   ...
 # Subtest: [up42-source-023] checks secrets in JSON text
-ok 384 - [up42-source-023] checks secrets in JSON text
+ok 393 - [up42-source-023] checks secrets in JSON text
   ---
-  duration_ms: 0.503936
+  duration_ms: 0.475639
   type: 'test'
   ...
 # Subtest: [up42-source-014] removes bad hosts before it calls the client
-ok 385 - [up42-source-014] removes bad hosts before it calls the client
+ok 394 - [up42-source-014] removes bad hosts before it calls the client
   ---
-  duration_ms: 1.581873
+  duration_ms: 1.474789
   type: 'test'
   ...
 # Subtest: [up42-source-018] refuses a valid JSON body of 4194305 bytes
-ok 386 - [up42-source-018] refuses a valid JSON body of 4194305 bytes
+ok 395 - [up42-source-018] refuses a valid JSON body of 4194305 bytes
   ---
-  duration_ms: 20.465898
+  duration_ms: 18.460995
   type: 'test'
   ...
 # Subtest: [up42-source-012] keeps spaces at both ends of the password
-ok 387 - [up42-source-012] keeps spaces at both ends of the password
+ok 396 - [up42-source-012] keeps spaces at both ends of the password
   ---
-  duration_ms: 2.313075
+  duration_ms: 1.936211
   type: 'test'
   ...
 # Subtest: [up42-source-013] uses the token lifetime from the answer
-ok 388 - [up42-source-013] uses the token lifetime from the answer
+ok 397 - [up42-source-013] uses the token lifetime from the answer
   ---
-  duration_ms: 3.070881
+  duration_ms: 3.355648
   type: 'test'
   ...
 # Subtest: [up42-source-026] discards an error body case 0 with cancel failure false
-ok 389 - [up42-source-026] discards an error body case 0 with cancel failure false
+ok 398 - [up42-source-026] discards an error body case 0 with cancel failure false
   ---
-  duration_ms: 8.48352
+  duration_ms: 8.627578
   type: 'test'
   ...
 # Subtest: [up42-source-026] discards an error body case 0 with cancel failure true
-ok 390 - [up42-source-026] discards an error body case 0 with cancel failure true
+ok 399 - [up42-source-026] discards an error body case 0 with cancel failure true
   ---
-  duration_ms: 2.151619
+  duration_ms: 2.260232
   type: 'test'
   ...
 # Subtest: [up42-source-026] discards an error body case 1 with cancel failure false
-ok 391 - [up42-source-026] discards an error body case 1 with cancel failure false
+ok 400 - [up42-source-026] discards an error body case 1 with cancel failure false
   ---
-  duration_ms: 1.781292
+  duration_ms: 3.684732
   type: 'test'
   ...
 # Subtest: [up42-source-026] discards an error body case 1 with cancel failure true
-ok 392 - [up42-source-026] discards an error body case 1 with cancel failure true
+ok 401 - [up42-source-026] discards an error body case 1 with cancel failure true
   ---
-  duration_ms: 1.676288
+  duration_ms: 1.600656
   type: 'test'
   ...
 # Subtest: [up42-source-026] discards an error body case 2 with cancel failure false
-ok 393 - [up42-source-026] discards an error body case 2 with cancel failure false
+ok 402 - [up42-source-026] discards an error body case 2 with cancel failure false
   ---
-  duration_ms: 3.276299
+  duration_ms: 2.899007
   type: 'test'
   ...
 # Subtest: [up42-source-026] discards an error body case 2 with cancel failure true
-ok 394 - [up42-source-026] discards an error body case 2 with cancel failure true
+ok 403 - [up42-source-026] discards an error body case 2 with cancel failure true
   ---
-  duration_ms: 2.896563
+  duration_ms: 2.864544
   type: 'test'
   ...
 # Subtest: [up42-source-026] discards an error body case 3 with cancel failure false
-ok 395 - [up42-source-026] discards an error body case 3 with cancel failure false
+ok 404 - [up42-source-026] discards an error body case 3 with cancel failure false
   ---
-  duration_ms: 1.413028
+  duration_ms: 1.301271
   type: 'test'
   ...
 # Subtest: [up42-source-026] discards an error body case 3 with cancel failure true
-ok 396 - [up42-source-026] discards an error body case 3 with cancel failure true
+ok 405 - [up42-source-026] discards an error body case 3 with cancel failure true
   ---
-  duration_ms: 1.362625
+  duration_ms: 1.277402
   type: 'test'
   ...
 # Subtest: [up42-source-026] accepts an error response with no body
-ok 397 - [up42-source-026] accepts an error response with no body
+ok 406 - [up42-source-026] accepts an error response with no body
   ---
-  duration_ms: 0.958493
+  duration_ms: 1.274413
   type: 'test'
   ...
 # Subtest: local hosts opt into Gemini explicitly and retain the default plugin order
-ok 398 - local hosts opt into Gemini explicitly and retain the default plugin order
+ok 407 - local hosts opt into Gemini explicitly and retain the default plugin order
   ---
-  duration_ms: 3.84516
+  duration_ms: 4.014607
   type: 'test'
   ...
 # Subtest: opted-in configureServer locks the standalone catalog into the Gemini token
-ok 399 - opted-in configureServer locks the standalone catalog into the Gemini token
+ok 408 - opted-in configureServer locks the standalone catalog into the Gemini token
   ---
-  duration_ms: 63.264917
+  duration_ms: 55.559251
   type: 'test'
   ...
 # Subtest: opted-in configurePreviewServer locks the standalone catalog into the Gemini token
-ok 400 - opted-in configurePreviewServer locks the standalone catalog into the Gemini token
+ok 409 - opted-in configurePreviewServer locks the standalone catalog into the Gemini token
   ---
-  duration_ms: 42.704025
+  duration_ms: 33.06788
   type: 'test'
   ...
 # Subtest: Gemini key setup uses the existing server-only status and save contract
-ok 401 - Gemini key setup uses the existing server-only status and save contract
+ok 410 - Gemini key setup uses the existing server-only status and save contract
   ---
-  duration_ms: 9.205559
+  duration_ms: 6.398663
   type: 'test'
   ...
-1..401
-# tests 401
+1..410
+# tests 410
 # suites 0
-# pass 400
-# fail 1
+# pass 410
+# fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 5946.369747
+# duration_ms 5982.157166
 # start of coverage report
 # -------------------------------------------------------------------
 # file               | line % | branch % | funcs % | uncovered lines
@@ -2449,3 +2491,5 @@ ok 401 - Gemini key setup uses the existing server-only status and save contract
 # all files          | 100.00 |   100.00 |  100.00 | 
 # -------------------------------------------------------------------
 # end of coverage report
+
+Exit: 0

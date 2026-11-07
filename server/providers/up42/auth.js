@@ -18,6 +18,21 @@ const COLLECTIONS_PATH =
 const HOST = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const failed = (kind) => ({ ok: false, kind });
 
+async function cancelBody(response, signal) {
+  let onAbort;
+  const aborted = new Promise((_resolve, reject) => {
+    onAbort = () => reject(signal.reason);
+    signal.addEventListener('abort', onAbort, { once: true });
+  });
+  try {
+    await Promise.race([response.body?.cancel(), aborted]);
+  } catch {
+    // A cancel error must not change the fixed failure.
+  }
+  signal.removeEventListener('abort', onAbort);
+  signal.throwIfAborted();
+}
+
 /** Fixed destinations, a private token cache and fixed failure names. */
 export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
   let cached = null;
@@ -35,11 +50,7 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
       });
       controller.signal.throwIfAborted();
       if (response.status !== 200) {
-        try {
-          await response.body?.cancel();
-        } catch {
-          // A cancel error must not change the fixed failure.
-        }
+        await cancelBody(response, controller.signal);
         if (login && (response.status === 400 || response.status === 401))
           return failed('credentials_rejected');
         if (init.headers.Authorization !== undefined && response.status === 401)
@@ -50,11 +61,7 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
       if (image) {
         const type = mediaTypeOf(response.headers.get('content-type'));
         if (!isImageType(type)) {
-          try {
-            await response.body?.cancel();
-          } catch {
-            // A cancel error must not change the fixed failure.
-          }
+          await cancelBody(response, controller.signal);
           return failed('bad_upstream');
         }
         const bytes = await readResponseBytesCapped(
@@ -181,11 +188,16 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
   }
 
   async function thumbnail(host, id) {
-    if (typeof host !== 'string' || !HOST.test(host) || !isSearchId(id))
+    if (
+      typeof host !== 'string' ||
+      !HOST.test(host) ||
+      !isSearchId(id) ||
+      /^\.+$/.test(id)
+    )
       return failed('bad_upstream');
     let token = await getToken();
     if (!token.ok) return token;
-    const url = `${API}/catalog/${host}/image/${id}/thumbnail`;
+    const url = `${API}/catalog/${host}/image/${encodeURIComponent(id)}/thumbnail`;
     const request = (value) =>
       send(
         url,

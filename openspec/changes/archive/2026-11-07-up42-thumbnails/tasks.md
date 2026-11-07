@@ -18,6 +18,9 @@
 - [x] 1.16 Write the test for `up42-thumbnails-016`.
 - [x] 1.17 Write the test for `up42-thumbnails-017`.
 
+- [x] 1.18 Write the test for `up42-thumbnails-018`.
+- [x] 1.19 Write the test for `up42-thumbnails-019`.
+
 ## 2. Write the code
 
 - [x] 2.1 Export the scene id check.

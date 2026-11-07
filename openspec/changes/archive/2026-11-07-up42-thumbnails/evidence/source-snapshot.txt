@@ -1,19 +1,12 @@
-Command: cd /home/ianblenke/docker/gev-work/up42 && python3 - (SHA-256 record).
-At the host snapshot, HEAD is 7d4d1643b92767344587435ebf12116d2949a25e.
-UTC: 2026-11-07T10:55:34.269235+00:00
-The source and tests have changes after HEAD.
+Command: Python SHA-256 calculation for each named file.
+At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
 d5ede7c2dea8c4bf7b5ee80685d97021cf690b734e5275b61c66aa02cbbaa108  server/providers/local.js
 4227ecabacca8f178e2024bc6be510baa69e843511b8824ea3b5799cab0fd544  server/providers/up42.js
-e9427b990bf879a6803cef1544be6f4bc5e6cd572e9f719b64439ba107da3230  server/providers/up42/auth.js
+f48b2bf28b18f817d031b2c2bd13cc5fdcca5bd2198ec305fda88da295d64992  server/providers/up42/auth.js
 1b607be11d5d083fed45f6b01df4a1a075de410565cb4866fa6768e5d7959611  server/providers/up42/normalize.js
+75ba01fec5efc14080b403288098dc075bace670bf27bf0a5374c335cf24227b  server/providers/up42/same-site.js
+a78f0dc3782ef4b5d94c051d0b0456ced2d7149ef786e9de19f265e93847ff89  server/providers/up42/upstream.js
+dc04f1675e5d9c040e5db7d5fe33d5d835c07b464c89da223b2fcefb40bd2ab6  server/providers/up42/validate.js
 85dc68058b609e1d98a209a8dcdf5829038c340ea30f564ed37602b521c283eb  server/providers/up42-thumbnails/plugins.js
-241aba449c6b50b3cda0b05ab4b9023477f3c2f815a0c8ddba83055d85a43ad0  server/providers/up42-thumbnails/thumbnails.js
-7f81aef8d72a9b5c47bd6448c230cb21dd4b93d5a9b94fce76a25f7e07f07149  src/data/up42Thumbnails.test.mjs
-95c5d47dfab60fe9365cfc3783fd284a2cc7f075888d539a9ee2a63f5980404a  openspec/ownership.json
-3338e8a4d2866221f7d4d97c4bf44113d0d5e1dbad89d65227b7d8f5bd5a7d97  .env.example
-3f9454089c49330c2a2cd2456ec784951eb68e36ca6e3d174880f169e7498642  DATA_SOURCES.md
-d8a0dfd07586940a2b35449a08edc68a9ebafa1646bb84e3058153750b67caed  changelog.d/1431-up42-thumbnails.md
-a122d9f12587b779d4f3674a97a9a7e9f7cb5b85ed328bacb41f6562d87970ad  openspec/changes/up42-thumbnails/design.md
-88ad10e53a8a39f85b4ff32ce577edcc47359388f9a816d9d31222626b7a883d  openspec/changes/up42-thumbnails/proposal.md
-66e9ff9ef3eed956c05423b75cf7b1e61b118999af002df3d6cc764e712489f9  openspec/changes/up42-thumbnails/specs/up42-thumbnails/spec.md
-7a4c0e5f4e39a5a3d0309872b3cb945c8ddda8dd18cdb93e77932b99819e3f53  openspec/changes/up42-thumbnails/tasks.md
+1b909e854c069ccf8a3a8f8efb8d9cacbf3bcdd944aa526dd6c605a0f5cf73ff  server/providers/up42-thumbnails/thumbnails.js
+ae036057210f834b6a4af64bd525380d5225356b0d8f2a87a27a1273e019087e  src/data/up42Thumbnails.test.mjs

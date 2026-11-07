@@ -12,7 +12,7 @@ Origin: spec-first
 #### Scenario: Mount the route `up42-thumbnails-001`
 
 - **WHEN** install both hooks and send paths with and without query text
-- **THEN** valid ids of 1 through 128 ASCII letters, digits, underscores, hyphens or dots receive an answer
+- **THEN** valid ids of 1 through 128 ASCII letters, digits, underscores, hyphens or dots receive an answer, except ids of dots only
 - **AND** empty ids, excess ids, encoded ids, line breaks and child paths go to next without an answer
 - **AND** the scenes plugin still passes child paths of its own routes to next
 
@@ -104,6 +104,12 @@ Origin: spec-first
 - **AND** the request sets only Authorization with the bearer token and Accept with image/png, image/jpeg, image/webp
 - **AND** the request explicitly refuses redirects and has no body; client query text cannot set a host or URL
 
+#### Scenario: Refuse ids of dots only `up42-thumbnails-019`
+
+- **WHEN** request an id of dots only
+- **THEN** the route gives the same answer as an unknown id and no upstream call or login occurs
+- **AND** the client refuses ids of dots only before login; an id with dots inside keeps the exact fixed URL
+
 ### Requirement: Token
 
 The thumbnail client MUST use the scenes token cache, share a login and retry a 401 once.
@@ -130,7 +136,7 @@ Origin: spec-first
 - **AND** PNG starts with 89 50 4E 47 0D 0A 1A 0A; JPEG starts with FF D8 FF
 - **AND** WebP starts with RIFF and has WEBP at bytes 9 through 12
 - **AND** a non-image type, empty body, null body, wrong signature or excess size gives bad_upstream with 502
-- **AND** exactly 1048576 bytes pass; the client cancels a non-image body without reading it
+- **AND** exactly 1048576 bytes pass; the client cancels a non-image body before it reads the body
 
 ### Requirement: Failure
 
@@ -156,6 +162,7 @@ Origin: spec-first
 - **WHEN** expire the timer during headers or the body, or send a non-200 body
 - **THEN** a timeout gives 504 with search_timeout and clears the timer
 - **AND** a non-200 body receives cancel before the timer clears; a cancel error keeps the fixed failure
+- **AND** a cancel that never ends cannot extend the limit; a cancel that ends after abort keeps search_timeout
 
 ### Requirement: Answer
 
@@ -183,6 +190,12 @@ Origin: spec-first
 - **THEN** a kept image sends no upstream request at 599999 ms, and a request at 600000 ms starts new work
 - **AND** the oldest image leaves at entry 33; a refreshed image becomes newest; failures never enter the store
 - **AND** a thumbnail request adds no daily search count
+
+#### Scenario: Send the kept image `up42-thumbnails-018`
+
+- **WHEN** request the same image twice before its expiry
+- **THEN** the second answer has bytes FF D8 FF 07, media type image/jpeg and Content-Length 4
+- **AND** only one upstream image call occurs
 
 ### Requirement: Concurrent requests
 

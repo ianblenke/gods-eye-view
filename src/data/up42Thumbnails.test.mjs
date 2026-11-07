@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Readable } from 'node:stream';
+import { inspect } from 'node:util';
 import { readFile, readdir } from 'node:fs/promises';
 import { up42SourcePlugins } from '../../server/providers/up42-thumbnails/plugins.js';
 import { up42ThumbnailProxy } from '../../server/providers/up42-thumbnails/thumbnails.js';
@@ -69,10 +70,10 @@ const settle = async () => {
     await new Promise((resolve) => setImmediate(resolve));
 };
 
-function harness(plugins) {
+function harness(plugins, hook = 'configureServer') {
   const routes = new Map();
   for (const plugin of plugins)
-    plugin.configureServer({
+    plugin[hook]({
       middlewares: { use: (path, fn) => routes.set(path, fn) },
     });
   async function request(
@@ -184,23 +185,26 @@ const errorOf = (answer, status, error, extra = {}) => {
 test('[up42-thumbnails-001] checks the path in both hooks', async (t) => {
   const s = install(t);
   for (const hook of ['configureServer', 'configurePreviewServer']) {
-    let path;
-    s.plugins[1][hook]({
-      middlewares: {
-        use: (p) => {
-          path = p;
-        },
-      },
-    });
-    assert.equal(path, '/api/up42/thumbnail');
+    const hooked = harness([s.plugins[1]], hook);
+    assert.deepEqual([...hooked.routes.keys()], ['/api/up42/thumbnail']);
+    assert.equal(typeof hooked.routes.get('/api/up42/thumbnail'), 'function');
+    for (const id of ['a', 'A_z-9.', 'a'.repeat(128), 'abc?x=1'])
+      errorOf(await hooked.get(id), 404, 'unknown_scene');
+    for (const id of [
+      '',
+      'a/b',
+      'a\\b',
+      'a#b',
+      '%41',
+      'a'.repeat(129),
+      'a\n',
+      'a b',
+    ]) {
+      assert.deepEqual(await hooked.get(id), { next: true });
+      assert.equal(isSearchId(id), false);
+    }
   }
   assert.equal(s.plugins[1].name, 'up42-thumbnail-proxy');
-  for (const id of ['a', 'A_z-9.', 'a'.repeat(128), 'abc?x=1'])
-    errorOf(await s.get(id), 404, 'unknown_scene');
-  for (const id of ['', 'a/b', '%41', 'a'.repeat(129), 'a\n', 'a b']) {
-    assert.deepEqual(await s.get(id), { next: true });
-    assert.equal(isSearchId(id), false);
-  }
   assert.equal(isSearchId(undefined), false);
   assert.equal(isSearchId(1), false);
   for (const path of ['/api/up42/status', '/api/up42/scenes'])
@@ -453,6 +457,9 @@ test('[up42-thumbnails-008] rejects invalid path parts before login', async (t) 
     3,
     '',
     '../bad/path',
+    'a\\b',
+    'a?b',
+    'a#b',
     '%41',
     'a'.repeat(129),
     'a\n',
@@ -906,8 +913,17 @@ for (const success of [true, false])
 
 test('[up42-thumbnails-016] keeps all fake secrets out of output', async (t) => {
   const output = [];
-  for (const method of ['log', 'warn', 'error', 'info', 'debug'])
-    t.mock.method(console, method, (...args) => output.push(args.join(' ')));
+  for (const method of Object.keys(console))
+    if (typeof console[method] === 'function')
+      t.mock.method(console, method, (...args) =>
+        output.push(
+          inspect(args, {
+            depth: null,
+            maxArrayLength: null,
+            maxStringLength: null,
+          }),
+        ),
+      );
   const answers = [];
   for (const secret of [
     'fake-user-private',
@@ -1065,4 +1081,138 @@ test('[up42-thumbnails-007] refuses an expired scene with a fresh image', async 
   s.advance(1);
   errorOf(await s.get(), 404, 'unknown_scene');
   assert.equal(s.images().length, 1);
+});
+
+test('[up42-thumbnails-018] sends literal bytes and headers from the store', async (t) => {
+  const s = install(t, {
+    respond: (url) =>
+      url.endsWith('/thumbnail')
+        ? image([255, 216, 255, 7], 'image/jpeg')
+        : good(url),
+  });
+  assert.equal((await s.scenes()).status, 200);
+  assert.equal((await s.get()).status, 200);
+  const second = await s.get();
+  assert.equal(second.status, 200);
+  assert.deepEqual([...second.bytes], [255, 216, 255, 7]);
+  assert.equal(second.headers['content-type'], 'image/jpeg');
+  assert.equal(second.headers['content-length'], '4');
+  assert.equal(s.images().length, 1);
+});
+
+for (const [key, previous, next] of [
+  ['UP42_USERNAME', 'fake-user-private', 'fake-next-user'],
+  ['UP42_PASSWORD', 'fake-pass-private', 'fake-next-pass'],
+])
+  test(`[up42-thumbnails-016] refuses the previous secret after ${key} changes`, async (t) => {
+    const credentials = [];
+    const s = install(t, {
+      respond: (url, init) => {
+        if (url === TOKEN) {
+          const form = new URLSearchParams(init.body);
+          credentials.push([form.get('username'), form.get('password')]);
+          return good(url);
+        }
+        return image([...PNG, ...Buffer.from(previous)]);
+      },
+    });
+    assert.deepEqual(await s.client.thumbnail('oneatlas', 'scene.1'), {
+      ok: false,
+      kind: 'bad_upstream',
+    });
+    s.env[key] = next;
+    assert.deepEqual(await s.client.thumbnail('oneatlas', 'scene.1'), {
+      ok: false,
+      kind: 'bad_upstream',
+    });
+    assert.deepEqual(credentials, [
+      ['fake-user-private', 'fake-pass-private'],
+      key === 'UP42_USERNAME'
+        ? ['fake-next-user', 'fake-pass-private']
+        : ['fake-user-private', 'fake-next-pass'],
+    ]);
+    assert.equal(s.images().length, 2);
+  });
+
+for (const status of [404, 200])
+  for (const completion of ['never', 'after-abort'])
+    test(
+      `[up42-thumbnails-012] limits cancel at status ${status} with end ${completion}`,
+      { timeout: 2000 },
+      async (t) => {
+        const timers = new Map();
+        let serial = 0;
+        let finish;
+        let cancelled = false;
+        let finished = false;
+        const s = install(t, {
+          standalone: true,
+          lookup: () => 'oneatlas',
+          timers: {
+            setTimer: (fn, ms) => {
+              assert.equal(ms, 15000);
+              timers.set(++serial, fn);
+              return serial;
+            },
+            clearTimer: (id) => timers.delete(id),
+          },
+          respond: (url) =>
+            url === TOKEN
+              ? good(url)
+              : {
+                  status,
+                  headers: new Headers({ 'content-type': 'text/plain' }),
+                  body: {
+                    cancel() {
+                      cancelled = true;
+                      return new Promise((resolve) => {
+                        finish = resolve;
+                      });
+                    },
+                  },
+                },
+        });
+        const run = s.get().then((answer) => {
+          finished = true;
+          return answer;
+        });
+        await settle();
+        assert.equal(cancelled, true);
+        assert.equal(finished, false);
+        assert.equal(timers.size, 1);
+        for (const fire of timers.values()) fire();
+        await settle();
+        if (completion === 'after-abort') finish();
+        errorOf(await run, 504, 'search_timeout');
+        assert.equal(timers.size, 0);
+      },
+    );
+
+test('[up42-thumbnails-019] refuses ids of dots only before login', async (t) => {
+  const s = install(t, { standalone: true, lookup: () => 'oneatlas' });
+  const unknown = install(t);
+  const expected = await unknown.get('unknown');
+  errorOf(expected, 404, 'unknown_scene');
+  for (const id of ['.', '..', '...', '.'.repeat(128)]) {
+    assert.deepEqual(await s.get(id), expected);
+    assert.deepEqual(await s.client.thumbnail('oneatlas', id), {
+      ok: false,
+      kind: 'bad_upstream',
+    });
+  }
+  assert.equal(s.calls.length, 0);
+  assert.equal(unknown.calls.length, 0);
+});
+
+test('[up42-thumbnails-019] keeps dots inside the literal destination', async (t) => {
+  const s = install(t, { standalone: true, lookup: () => 'oneatlas' });
+  assert.equal((await s.get('scene.1')).status, 200);
+  assert.equal(
+    s.images()[0].url,
+    'https://api.up42.com/catalog/oneatlas/image/scene.1/thumbnail',
+  );
+  assert.equal(
+    new URL(s.images()[0].url).href,
+    'https://api.up42.com/catalog/oneatlas/image/scene.1/thumbnail',
+  );
 });

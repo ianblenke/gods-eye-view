@@ -1,0 +1,5 @@
+At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
+The first full host command ended with 410 tests: 409 passed and one failed.
+The source HTTP test up42-source-027 failed because listen on 127.0.0.1 received EPERM.
+The command completed but had no passed suite verdict.
+The same command later ran with local listener permission. host-run.txt records its passed result.
