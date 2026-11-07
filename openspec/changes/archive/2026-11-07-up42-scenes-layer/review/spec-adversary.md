@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-11-07-up42-scenes-layer/tasks.md:97 At commit 2ecfeb3009c2d248ad0589406f832ce9b3934b57, the supplied document gate reports `ERROR REVIEW-MISSING` and ends with one error. No tests ran. After both reviews, write `review.md` and run the final gates.

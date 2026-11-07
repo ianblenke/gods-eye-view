@@ -1,11 +1,2 @@
-Tree read: base commit `f589cc58480d8239302b70c2b5ce32ea1bc8325d`, with the work tree changes.
-Scope: round one corrections and the Chinese catalog texts.
-Verdict: PASS for this scope.
-
-All four findings are closed. Scenario 005 agrees with the test counts.
-The thumbnail errors have local texts. The status error uses the local layer id.
-Scenario 029 says "no key". The Chinese texts match the test literals.
-The reviewer runs the messages, layer and registration tests on host Node.
-Result: 67 passed, 0 failed. The reviewer finds no new fault in this scope.
-
-This review does not approve the host evidence, browser check or calibrated gates.
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-11-07-up42-scenes-layer/tasks.md:97 At commit 2ecfeb3009c2d248ad0589406f832ce9b3934b57, the supplied document gate reports `ERROR REVIEW-MISSING` and ends with one error. No tests ran. After both reviews, write `review.md` and run the final gates.

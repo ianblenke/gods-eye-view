@@ -1,10 +1,4 @@
-Tree read: base commit `f589cc58480d8239302b70c2b5ce32ea1bc8325d`, with the work tree changes.
-Scope: full code and specs before the host evidence.
-Verdict: FAIL.
-
-- [ ] FINDING major Base `f589cc58480d8239302b70c2b5ce32ea1bc8325d`. Scenario 005 gives one search after the test sends its second search.
-- [ ] FINDING major Base `f589cc58480d8239302b70c2b5ce32ea1bc8325d`. Thumbnail messages omit credential and time failures that the route can return.
-- [ ] FINDING major Base `f589cc58480d8239302b70c2b5ce32ea1bc8325d`. The status error can copy source text into the stats through a local error prefix.
-- [ ] FINDING minor Base `f589cc58480d8239302b70c2b5ce32ea1bc8325d`. Scenario 029 says "no credentials" where it needs "no key".
-
-The reviewer changes no file. The reviewer runs host probes for the two message faults.
+Verdict: FAIL
+- [ ] F1 critical src/layers/up42Scenes/layer.test.mjs:888 At commit 0009961f8fc083f5bfea77153d34f7ffef414cfa, scenario `up42-scenes-layer-029` requires the selected polygon to match the scene ring. The test checks only its vertex count. Four wrong coordinates satisfy this assertion. Compare every polygon vertex with the specified ring. Have the lead verify that a coordinate mutation fails this test.
+- [ ] F2 major src/app/constructCatalog.test.mjs:43 At commit 0009961f8fc083f5bfea77153d34f7ffef414cfa, changed assertions retain old untraced test names and unchanged debt entries. This also occurs in `sourceComposition.test.mjs`, `reference.test.mjs`, `layerState.test.mjs` and `layerStateTokenLedger.test.mjs`. The gates accept these edits as old debt. Preserve the names as the owner requires, add scenario-linked tests for the changed checks, and record the trace exception.
+- [ ] F3 minor openspec/changes/archive/2026-11-07-up42-scenes-layer/tasks.md:95 At commit 0009961f8fc083f5bfea77153d34f7ffef414cfa, the supplied gate log reports `ERROR REVIEW-MISSING` and ends with one error. It is a document check with no test run. After the reviews, write `review.md` and run the final gates.
