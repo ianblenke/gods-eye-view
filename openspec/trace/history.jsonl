@@ -4426,3 +4426,4 @@
 {"date":"2026-11-06","change":"up42-source","commit":"bb03d14f007e747f65dcea308df041a5de38adfd","kind":"measurement","measurement":"f2ee9a15ffc5356453a160ed162d448e2157bada0a97a8a771caaa703a9b1827"}
 {"date":"2026-11-07","change":"up42-source","commit":"ef5d0f2386e12267fb2f0bf50a478615fec3a784","kind":"measurement","measurement":"eba7bce54c69c5da04de901348c89f8e7fffb6ddfec4f932d4d78b71de0e4506"}
 {"date":"2026-11-07","change":"up42-source","commit":"d47b033a381a7199429ac838b1a7ef7785168ecb","kind":"measurement","measurement":"d5700ad7a6b8dd58fe76f4d1d77939ce3d29e1f6ea17c3f9435edd84d753c758"}
+{"date":"2026-11-07","change":"up42-thumbnails","commit":"ea9b2ff35ca9fcfeec2e9acec5ca34cf47938e82","kind":"measurement","measurement":"e7e7190aef64dc24761337affa9ae651a1d2c9dacb5684339c59c5328b87d98c"}
