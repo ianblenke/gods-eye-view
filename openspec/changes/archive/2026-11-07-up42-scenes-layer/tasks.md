@@ -83,14 +83,14 @@
 - [x] 4.5 Write the evidence and stored browser plan.
 - [ ] 4.6 The lead checks the layer in the sandboxed browser with a stored answer.
 - [x] 4.7 Record the failed test of each fault.
-- [ ] 4.8 Close the coverage gaps of each edited code file.
+- [x] 4.8 Check that each added line of an edited code file has coverage.
 
 - [x] 4.9 Run the two host review agents.
 
 ## 5. Lead gates and archive
 
-- [ ] 5.1 Run `make ratchet CHANGE=up42-scenes-layer`.
-- [ ] 5.2 Archive the change with identical spec copies.
+- [x] 5.1 Run `make ratchet CHANGE=up42-scenes-layer`.
+- [x] 5.2 Archive the change with identical spec copies.
 - [ ] 5.3 Run the two review agents.
 - [ ] 5.4 Write `review.md`.
 - [ ] 5.5 Run `make gates CHANGE=up42-scenes-layer` on the final tree.
