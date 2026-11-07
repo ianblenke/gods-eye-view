@@ -1260,5 +1260,221 @@ Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 207
 Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case redirect
 Result: KILLED
 
-At this host snapshot, records: 76. Killed: 71. Historical survivors: 4. Historical stopped runs: 1.
+At the first host snapshot, records: 76. Killed: 71. Historical survivors: 4. Historical stopped runs: 1.
 The four survivors and the stopped run have the follow-up records named above.
+
+Round 1 correction snapshot
+At the host snapshot, commit 73923c26eff3935df843da3a955311b6070cc313 has worktree edits.
+
+UPQ-M077: Remove the final product safety check.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: 563091a8b78061898f99223c0150bd4db70235e2d7f14f4f0bc60c1fa84cbe21
+Fault SHA-256: 6a3b7a6083297d96a41ce77faded732198f1d815e662f7bdc133d5241f7183f1
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=refuses the final (title|collection)|case conversion' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 7
+# pass 0
+# fail 7
+# cancelled 0
+Failed test: [up42-quotes-032] refuses the final title with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final collection with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final title with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final collection with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final title with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final collection with fake-token-quote
+Failed test: [up42-quotes-032] checks the product id after case conversion
+Result: KILLED
+
+UPQ-M078: Remove the final check result safety check.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: 563091a8b78061898f99223c0150bd4db70235e2d7f14f4f0bc60c1fa84cbe21
+Fault SHA-256: 2b0f1a976e565ea1fdc0fc98686fc706e9020ba4ebe75e37f33c86b02c442ab3
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=refuses the final' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 27
+# pass 6
+# fail 21
+# cancelled 0
+Failed test: [up42-quotes-032] refuses the final errorReason with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final unavailabilityReason with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final message with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final comment with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final id with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final start_datetime with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final end_datetime with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final errorReason with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final unavailabilityReason with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final message with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final comment with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final id with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final start_datetime with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final end_datetime with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final errorReason with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final unavailabilityReason with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final message with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final comment with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final id with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final start_datetime with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final end_datetime with fake-token-quote
+Result: KILLED
+
+UPQ-M079: Remove the race from the header wait.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 1feee570ca46f429f0876676618a51502b78f3243b4b6e5c600f1a6eb0e814f6
+Fault SHA-256: 394a9eea70559bff71700b095fb8de61f774e449ffd059b95b96810feeb18a1e
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=bounds .* headers' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 30
+# pass 0
+# fail 30
+# cancelled 0
+Failed test: [up42-quotes-027] bounds post headers in the pending case
+Failed test: [up42-quotes-027] bounds post headers in the late-pending case
+Failed test: [up42-quotes-027] bounds post headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds post headers in the late-reject case
+Failed test: [up42-quotes-027] bounds post headers in the late-no-body case
+Failed test: [up42-quotes-027] bounds getPublic headers in the pending case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-pending case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-reject case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-no-body case
+Failed test: [up42-quotes-027] bounds search headers in the pending case
+Failed test: [up42-quotes-027] bounds search headers in the late-pending case
+Failed test: [up42-quotes-027] bounds search headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds search headers in the late-reject case
+Failed test: [up42-quotes-027] bounds search headers in the late-no-body case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the pending case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-pending case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-reject case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-no-body case
+Failed test: [up42-quotes-027] bounds collections headers in the pending case
+Failed test: [up42-quotes-027] bounds collections headers in the late-pending case
+Failed test: [up42-quotes-027] bounds collections headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds collections headers in the late-reject case
+Failed test: [up42-quotes-027] bounds collections headers in the late-no-body case
+Failed test: [up42-quotes-027] bounds login headers in the pending case
+Failed test: [up42-quotes-027] bounds login headers in the late-pending case
+Failed test: [up42-quotes-027] bounds login headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds login headers in the late-reject case
+Failed test: [up42-quotes-027] bounds login headers in the late-no-body case
+Result: KILLED
+
+UPQ-M080: Do not cancel a late response body.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 1feee570ca46f429f0876676618a51502b78f3243b4b6e5c600f1a6eb0e814f6
+Fault SHA-256: 3adfa68a421d113d274856477f306994a78af8a117432e8ce8a2ecd88f9ba7ec
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=bounds .* headers' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 30
+# pass 12
+# fail 18
+# cancelled 0
+Failed test: [up42-quotes-027] bounds post headers in the late-pending case
+Failed test: [up42-quotes-027] bounds post headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds post headers in the late-reject case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-pending case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-reject case
+Failed test: [up42-quotes-027] bounds search headers in the late-pending case
+Failed test: [up42-quotes-027] bounds search headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds search headers in the late-reject case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-pending case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-reject case
+Failed test: [up42-quotes-027] bounds collections headers in the late-pending case
+Failed test: [up42-quotes-027] bounds collections headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds collections headers in the late-reject case
+Failed test: [up42-quotes-027] bounds login headers in the late-pending case
+Failed test: [up42-quotes-027] bounds login headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds login headers in the late-reject case
+Result: KILLED
+
+UPQ-M081: Let a late body cancel operation wait after abort.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 1feee570ca46f429f0876676618a51502b78f3243b4b6e5c600f1a6eb0e814f6
+Fault SHA-256: 536a29f9bfc903fc196527942172e355e27724b8a8121438edbf9ac38b44986e
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=bounds .* headers' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 30
+# pass 24
+# fail 6
+# cancelled 0
+Failed test: [up42-quotes-027] bounds post headers in the late-pending case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-pending case
+Failed test: [up42-quotes-027] bounds search headers in the late-pending case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-pending case
+Failed test: [up42-quotes-027] bounds collections headers in the late-pending case
+Failed test: [up42-quotes-027] bounds login headers in the late-pending case
+Result: KILLED
+
+UPQ-M082: Use a rolling 24-hour budget window.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: 0208d310b30356eb01a36f770dab19a7df6f2f3f5a92477af2d29601def4e124
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=resets the day' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 1
+# pass 0
+# fail 1
+# cancelled 0
+Failed test: [up42-quotes-031] checks the store before the budget and resets the day
+Result: KILLED
+
+UPQ-M083: Scan only the root folder.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: src/data/up42Quotes.test.mjs
+Source SHA-256: 732002541da9c49d5efbba840eb69325182be66b3b5891ae0c399b46968698e0
+Fault SHA-256: c3a3016064405f288d3ec308a4d18e49384529b779fecf6caebd74b952778a51
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 9
+# pass 1
+# fail 8
+# cancelled 0
+Failed test: [up42-quotes-035] refuses an extra nested js file
+Failed test: [up42-quotes-035] refuses an extra nested mjs file
+Failed test: [up42-quotes-035] refuses an extra nested cjs file
+Failed test: [up42-quotes-035] refuses an extra nested ts file
+Failed test: [up42-quotes-035] refuses an extra nested json file
+Failed test: [up42-quotes-035] refuses an extra nested html file
+Failed test: [up42-quotes-035] refuses an extra nested sh file
+Failed test: [up42-quotes-035] refuses an extra nested txt file
+Result: KILLED
+
+UPQ-M084: Remove the exact file list check.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: src/data/up42Quotes.test.mjs
+Source SHA-256: 732002541da9c49d5efbba840eb69325182be66b3b5891ae0c399b46968698e0
+Fault SHA-256: d7ab31c516741021b7c8a8f98fd47196422e23733f3c39127596c138785d8a7b
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 9
+# pass 8
+# fail 1
+# cancelled 0
+Failed test: [up42-quotes-035] refuses an extra nested txt file
+Result: KILLED
+
+UPQ-M085: Add an extra URL literal to the quote folder.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: 563091a8b78061898f99223c0150bd4db70235e2d7f14f4f0bc60c1fa84cbe21
+Fault SHA-256: 9fe49a356b087c81e596cd645df2d0ec2883430c162134135bac2f7775682df2
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=scans all quote source text' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 1
+# pass 0
+# fail 1
+# cancelled 0
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+At this host snapshot, records: 85. Killed: 80. Historical survivors: 4. Historical stopped runs: 1.
+The nine new records each name a failed test. Each changed file has its original hash after restoration.

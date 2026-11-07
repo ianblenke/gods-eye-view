@@ -1,13 +1,22 @@
-At the host snapshot, commit 0da2dc27655330708ef443829b0f00dc369d4a42 has worktree edits.
 Command: node scripts/spec/gates.mjs lint --change up42-quotes
-This file keeps the summary and the warnings for this change.
+At the host snapshot, commit 73923c26eff3935df843da3a955311b6070cc313 has worktree edits.
+This file contains the summary and warnings for this change.
 
-WARN STE-ING openspec/changes/up42-quotes/proposal.md:3 Check the -ing word "tasking"
-WARN STE-ING openspec/changes/up42-quotes/proposal.md:10 Check the -ing word "TASKING"
-WARN STE-ING openspec/changes/up42-quotes/proposal.md:45 Check the -ing word "binding"
-WARN STE-ING openspec/changes/up42-quotes/specs/up42-quotes/spec.md:119 Check the -ing word "radiometricProcessing"
-WARN STE-ING openspec/changes/up42-quotes/specs/up42-quotes/spec.md:119 Check the -ing word "geometricProcessing"
-WARN STE-ING openspec/changes/up42-quotes/specs/up42-quotes/spec.md:119 Check the -ing word "pixelCoding"
-WARN STE-ING openspec/changes/up42-quotes/specs/up42-quotes/spec.md:153 Check the -ing word "TASKING"
-WARN STE-ING openspec/changes/up42-quotes/specs/up42-quotes/spec.md:175 Check the -ing word "TASKING"
-STE: 0 errors, 1297 warnings.
+WARN STE-ING openspec/changes/archive/2026-11-07-up42-quotes/design.md:14 Check the -ing word "including"
+WARN STE-ING openspec/changes/archive/2026-11-07-up42-quotes/proposal.md:3 Check the -ing word "tasking"
+WARN STE-ING openspec/changes/archive/2026-11-07-up42-quotes/proposal.md:10 Check the -ing word "TASKING"
+WARN STE-ING openspec/changes/archive/2026-11-07-up42-quotes/proposal.md:45 Check the -ing word "binding"
+WARN STE-ING openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md:120 Check the -ing word "radiometricProcessing"
+WARN STE-ING openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md:120 Check the -ing word "geometricProcessing"
+WARN STE-ING openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md:120 Check the -ing word "pixelCoding"
+WARN STE-ING openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md:154 Check the -ing word "TASKING"
+WARN STE-ING openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md:176 Check the -ing word "TASKING"
+WARN STE-PASSIVE openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md:306 Check for passive voice: "is discarded"
+WARN STE-ING openspec/specs/up42-quotes/spec.md:120 Check the -ing word "radiometricProcessing"
+WARN STE-ING openspec/specs/up42-quotes/spec.md:120 Check the -ing word "geometricProcessing"
+WARN STE-ING openspec/specs/up42-quotes/spec.md:120 Check the -ing word "pixelCoding"
+WARN STE-ING openspec/specs/up42-quotes/spec.md:154 Check the -ing word "TASKING"
+WARN STE-ING openspec/specs/up42-quotes/spec.md:176 Check the -ing word "TASKING"
+WARN STE-PASSIVE openspec/specs/up42-quotes/spec.md:306 Check for passive voice: "is discarded"
+STE: 0 errors, 1305 warnings.
+Exit: 0.

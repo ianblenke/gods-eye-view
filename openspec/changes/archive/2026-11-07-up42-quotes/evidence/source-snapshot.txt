@@ -1,12 +1,12 @@
-At the host snapshot, commit 0da2dc27655330708ef443829b0f00dc369d4a42 has worktree edits.
+At the host snapshot, commit 73923c26eff3935df843da3a955311b6070cc313 has worktree edits.
 Host Node: v26.13.0.
-Scenarios: 36. New test titles: 241. Duplicate titles: 0.
+Scenarios: 36. Quote titles: 307. Duplicate titles: 0.
 
 server/providers/local.js
 SHA-256: 7a85bba5b4fd8bce860214a727c317b1c6e6be15337b215c720cbed440876d7e
 
 server/providers/up42/auth.js
-SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+SHA-256: 1feee570ca46f429f0876676618a51502b78f3243b4b6e5c600f1a6eb0e814f6
 
 server/providers/up42-thumbnails/plugins.js
 SHA-256: be822eabd94d682f07f9343a10127b6bb06bfe06fd1c2ebafa5068e8238354b7
@@ -21,14 +21,16 @@ server/providers/up42-quotes/quotes.js
 SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
 
 server/providers/up42-quotes/upstream.js
-SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+SHA-256: 563091a8b78061898f99223c0150bd4db70235e2d7f14f4f0bc60c1fa84cbe21
 
 server/providers/up42-quotes/validate.js
 SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
 
 src/data/up42Quotes.test.mjs
-SHA-256: fe9884ba22e7df99d5ebd82679492c229acc940c2c4bd2c9292516c298e3f348
+SHA-256: 732002541da9c49d5efbba840eb69325182be66b3b5891ae0c399b46968698e0
 
-openspec/changes/up42-quotes/specs/up42-quotes/spec.md
-SHA-256: b2bdef125d7853f2310c4f31a56a5e864e8e3a623b7562d9b79ee540ef6a8426
+openspec/specs/up42-quotes/spec.md
+SHA-256: f989b8c798362d9e07c655a3d292321cc7fe546c6f0040978bc5ed057f556135
 
+openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md
+SHA-256: f989b8c798362d9e07c655a3d292321cc7fe546c6f0040978bc5ed057f556135

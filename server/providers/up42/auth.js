@@ -19,17 +19,11 @@ const HOST = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const failed = (kind) => ({ ok: false, kind });
 
 async function cancelBody(response, signal) {
-  let onAbort;
-  const aborted = new Promise((_resolve, reject) => {
-    onAbort = () => reject(signal.reason);
-    signal.addEventListener('abort', onAbort, { once: true });
-  });
   try {
-    await Promise.race([response.body?.cancel(), aborted]);
+    await readUntilAbort(() => response.body?.cancel(), signal);
   } catch {
     // A cancel error must not change the fixed failure.
   }
-  signal.removeEventListener('abort', onAbort);
   signal.throwIfAborted();
 }
 
@@ -38,6 +32,7 @@ async function readUntilAbort(read, signal) {
   const aborted = new Promise((_resolve, reject) => {
     onAbort = () => reject(signal.reason);
     signal.addEventListener('abort', onAbort, { once: true });
+    if (signal.aborted) onAbort();
   });
   let value;
   try {
@@ -60,11 +55,21 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
     const controller = new AbortController();
     const timer = setTimer(() => controller.abort(), 15000);
     const exchange = async () => {
-      const response = await fetchImpl(url, {
-        ...init,
-        redirect: 'error',
-        signal: controller.signal,
-      });
+      const response = await readUntilAbort(
+        () =>
+          Promise.resolve(
+            fetchImpl(url, {
+              ...init,
+              redirect: 'error',
+              signal: controller.signal,
+            }),
+          ).then(async (response) => {
+            if (controller.signal.aborted)
+              await cancelBody(response, controller.signal);
+            return response;
+          }),
+        controller.signal,
+      );
       controller.signal.throwIfAborted();
       if (response.status !== 200 && !(multi && response.status === 207)) {
         await cancelBody(response, controller.signal);

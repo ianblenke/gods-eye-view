@@ -10,7 +10,8 @@ The new folder holds complete URL constants and the only quote allow-list.
 The generic client checks the HTTPS API origin before login and uses the source token cache.
 Only quote POST calls accept status 207. The source response rules stay unchanged.
 
-The shared capped JSON reader races the signal. The signal also bounds error cancellation.
+The shared client races headers and the capped JSON reader against the signal.
+The signal also bounds error cancellation, including cancellation of a late response.
 No new return uses a finally block.
 
 The route checks path, method, site, switch, rate, body, validation, credentials, store and daily count in that order.
@@ -32,6 +33,7 @@ Estimate reads summary.totalCredits and summary.totalSize. Feasibility reads res
 
 Opportunities reads results, opportunities.features and the named STAC properties.
 The normalizer builds fresh output objects and caps strings at 160 characters.
+The secret check reads raw responses and final output strings before storage or return.
 Geometry errors never pass as an empty success merely because the status is 207.
 
 The route claims each new promise before its first wait.
@@ -49,7 +51,8 @@ The thumbnail list accepts that client through one minimal hook.
 The proposal lists the changed paths.
 Tests use assert methods, a fake fetch that records requests, fake timers and literal expected facts.
 The request guard covers every non-empty check subset and each failure class.
-The source scan checks every forbidden path occurrence and every URL literal in the new folder.
+The source scan checks every file and subfolder against an exact file list.
+It reads all seven specified code file types and checks forbidden text and URL literals.
 Mutations change destinations, methods, input checks, store identity, secrets and transport bounds.
 
 Each mutation must fail a named test. Evidence contains prose records only.

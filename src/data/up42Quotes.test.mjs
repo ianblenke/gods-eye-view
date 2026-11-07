@@ -7,8 +7,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Readable } from 'node:stream';
-import { readFile, readdir } from 'node:fs/promises';
+import {
+  readFile,
+  readdir,
+  mkdtemp,
+  mkdir,
+  writeFile,
+  rm,
+} from 'node:fs/promises';
 import { inspect } from 'node:util';
+import { getEventListeners } from 'node:events';
 import { up42AllPlugins } from '../../server/providers/up42-quotes/plugins.js';
 import { up42QuoteProxy } from '../../server/providers/up42-quotes/quotes.js';
 import { validateQuote } from '../../server/providers/up42-quotes/validate.js';
@@ -1160,12 +1168,7 @@ for (const phase of ['headers', 'body', 'cancel', 'after-abort'])
         },
         respond: (url, init) => {
           if (url === TOKEN || url === PRODUCTS) return good(url);
-          if (phase === 'headers')
-            return new Promise((_r, reject) =>
-              init.signal.addEventListener('abort', () =>
-                reject(Error('fake-pass-quote')),
-              ),
-            );
+          if (phase === 'headers') return new Promise(() => {});
           return new Response(
             new ReadableStream({
               start(c) {
@@ -1358,6 +1361,8 @@ for (const success of [true, false])
   });
 test('[up42-quotes-031] checks the store before the budget and resets the day', async (t) => {
   const s = setup(t, { env: { UP42_DAILY_QUOTES: '1' } });
+  s.advance(43199000);
+  assert.equal(new Date().toISOString(), '2026-11-07T23:59:59.000Z');
   assert.equal((await s.request({ products: true })).status, 200);
   assert.deepEqual((await s.request()).body.budget, { used: 1, limit: 1 });
   assert.equal((await s.request()).body.cached, true);
@@ -1367,8 +1372,14 @@ test('[up42-quotes-031] checks the store before the budget and resets the day', 
     'budget',
     { used: 1, limit: 1 },
   );
-  s.advance(86400000);
-  assert.deepEqual((await s.request()).body.budget, { used: 1, limit: 1 });
+  assert.equal(s.api().length, 4);
+  s.advance(1001);
+  assert.equal(new Date().toISOString(), '2026-11-08T00:00:00.001Z');
+  const next = await s.request({ value: input({ dataProduct: OTHER }) });
+  assert.equal(next.status, 200);
+  assert.equal(next.body.cached, false);
+  assert.deepEqual(next.body.budget, { used: 1, limit: 1 });
+  assert.equal(s.api().length, 8);
   const q = setup(t, {
     env: { UP42_DAILY_QUOTES: '1' },
     respond: () => json({}, 542),
@@ -1580,12 +1591,30 @@ for (let mask = 1; mask < 16; mask++)
         );
       }
     });
-test('[up42-quotes-035] scans all quote source text for forbidden forms', async () => {
-  const root = new URL('../../server/providers/up42-quotes/', import.meta.url);
-  const names = (await readdir(root)).filter((n) => n.endsWith('.js'));
-  assert.ok(names.length >= 4);
+async function scanQuoteSource(root) {
+  const names = [];
   let text = '';
-  for (const name of names) text += await readFile(new URL(name, root), 'utf8');
+  async function visit(prefix = '') {
+    for (const entry of await readdir(new URL(prefix, root), {
+      withFileTypes: true,
+    })) {
+      const name = prefix + entry.name;
+      if (entry.isDirectory()) await visit(name + '/');
+      else {
+        names.push(name);
+        if (/\.(?:js|mjs|cjs|ts|json|html|sh)$/.test(name))
+          text += await readFile(new URL(name, root), 'utf8');
+      }
+    }
+  }
+  await visit();
+  assert.deepEqual(names.sort(), [
+    'normalize.js',
+    'plugins.js',
+    'quotes.js',
+    'upstream.js',
+    'validate.js',
+  ]);
   const occurrences = [...text.matchAll(/\/v2\/orders[^\s'"`)]*/g)].map(
     (m) => m[0],
   );
@@ -1606,9 +1635,47 @@ test('[up42-quotes-035] scans all quote source text for forbidden forms', async 
     assert.equal(text.includes(forbidden), false, forbidden);
   assert.equal(/method\s*:\s*['"](?:DELETE|PUT)['"]/.test(text), false);
   const urls = [...text.matchAll(/https?:[^\s'"`]+/g)].map((m) => m[0]).sort();
-  assert.deepEqual(urls, [PRODUCTS, ...Object.values(URLS)].sort());
+  assert.deepEqual(urls, [
+    'https://api.up42.com/v2/data-products?type=TASKING&size=100',
+    'https://api.up42.com/v2/orders/estimate',
+    'https://api.up42.com/v2/orders/validation',
+    'https://api.up42.com/v2/tasking/orders/feasibility',
+    'https://api.up42.com/v2/tasking/orders/opportunities',
+  ]);
   assert.equal(/(?:new URL|fetch(?:Impl)?\s*\()/.test(text), false);
+}
+test('[up42-quotes-035] scans all quote source text for forbidden forms', async () => {
+  await scanQuoteSource(
+    new URL('../../server/providers/up42-quotes/', import.meta.url),
+  );
 });
+for (const extension of ['js', 'mjs', 'cjs', 'ts', 'json', 'html', 'sh', 'txt'])
+  test(`[up42-quotes-035] refuses an extra nested ${extension} file`, async (t) => {
+    const path = await mkdtemp('/home/ianblenke/docker/gev-tools/up42/qguard-');
+    t.after(() => rm(path, { recursive: true, force: true }));
+    const root = new URL('file://' + path + '/');
+    const source = new URL(
+      '../../server/providers/up42-quotes/',
+      import.meta.url,
+    );
+    for (const name of [
+      'normalize.js',
+      'plugins.js',
+      'quotes.js',
+      'upstream.js',
+      'validate.js',
+    ])
+      await writeFile(
+        new URL(name, root),
+        await readFile(new URL(name, source)),
+      );
+    await scanQuoteSource(root);
+    await mkdir(new URL('nested/', root));
+    await writeFile(new URL(`nested/extra.${extension}`, root), 'PATCH');
+    await assert.rejects(() => scanQuoteSource(root), {
+      code: 'ERR_ASSERTION',
+    });
+  });
 test('[up42-quotes-036] refuses other origins before login', async (t) => {
   const s = setup(t);
   for (const url of [
@@ -1672,12 +1739,7 @@ for (const phase of ['headers', 'body', 'cancel', 'after-abort'])
         },
         respond: (url, init) => {
           if (url === TOKEN) return good(url);
-          if (phase === 'headers')
-            return new Promise((_r, reject) =>
-              init.signal.addEventListener('abort', () =>
-                reject(Error('fake-pass-quote')),
-              ),
-            );
+          if (phase === 'headers') return new Promise(() => {});
           if (phase === 'body')
             return {
               status: 207,
@@ -1757,6 +1819,194 @@ test('[up42-quotes-011] refuses a twelfth parameter', () => {
   );
   assert.deepEqual(check(input({ params })), { ok: false, error: 'bad_body' });
 });
+for (const [secret, separator] of [
+  ['fake-pass-quote', '\u0000'],
+  ['fake-user-quote', '\u007f'],
+  ['fake-token-quote', '\u0085'],
+])
+  for (const field of [
+    'title',
+    'collection',
+    'errorReason',
+    'unavailabilityReason',
+    'message',
+    'comment',
+    'id',
+    'start_datetime',
+    'end_datetime',
+  ])
+    test(`[up42-quotes-032] refuses the final ${field} with ${secret}`, async (t) => {
+      const split = secret.slice(0, 10) + separator + secret.slice(10);
+      const product = field === 'title' || field === 'collection';
+      const name = product
+        ? null
+        : ['errorReason', 'unavailabilityReason'].includes(field)
+          ? 'validation'
+          : field === 'message'
+            ? 'estimate'
+            : field === 'comment'
+              ? 'feasibility'
+              : 'opportunities';
+      let echo = false;
+      const s = setup(t, {
+        respond: (url) => {
+          if (!echo || url === TOKEN) return good(url);
+          if (product && url === PRODUCTS)
+            return json({
+              content: [{ id: ID, title: 'Product A', [field]: split }],
+            });
+          if (url !== URLS[name]) return good(url);
+          const v = facts(name);
+          if (field === 'errorReason')
+            v['gev-quote'].errors[0].errorReason = split;
+          else if (field === 'unavailabilityReason')
+            v['gev-quote'].unavailabilityReason = split;
+          else if (field === 'message') v.errors[0].message = split;
+          else if (field === 'comment') v.results[0].comment = split;
+          else {
+            const feature = v.results[0].opportunities.features[0];
+            if (field === 'id') feature.id = split;
+            else feature.properties[field] = split;
+          }
+          return json(v);
+        },
+      });
+      assert.equal((await s.client.post(URLS.validation, {})).ok, true);
+      echo = true;
+      for (let i = 0; i < 2; i++) {
+        const a = await s.request({ products: product });
+        if (product) errorOf(a, 502, 'bad_upstream');
+        else {
+          assert.equal(a.status, 200);
+          assert.deepEqual(a.body.results, {
+            ...expected,
+            [name]: { ok: false, error: 'bad_upstream' },
+          });
+          assert.equal(a.body.cached, i === 1);
+        }
+        assert.equal(JSON.stringify(a).includes(secret), false);
+      }
+      if (product)
+        assert.equal(s.calls.filter((c) => c.url === PRODUCTS).length, 2);
+    });
+
+test('[up42-quotes-032] checks the product id after case conversion', async (t) => {
+  const s = setup(t, {
+    env: { UP42_PASSWORD: '12345678-abcd-1234-abcd-123456789abc' },
+    respond: (url) =>
+      url === PRODUCTS
+        ? json({
+            content: [
+              {
+                id: '12345678-ABCD-1234-ABCD-123456789ABC',
+                title: 'Product A',
+              },
+            ],
+          })
+        : good(url),
+  });
+  errorOf(await s.request({ products: true }), 502, 'bad_upstream');
+  errorOf(await s.request({ products: true }), 502, 'bad_upstream');
+  assert.equal(s.calls.length, 2);
+});
+
+for (const path of [
+  'post',
+  'getPublic',
+  'search',
+  'thumbnail',
+  'collections',
+  'login',
+])
+  for (const phase of [
+    'pending',
+    'late-pending',
+    'late-resolve',
+    'late-reject',
+    'late-no-body',
+  ])
+    test(
+      `[up42-quotes-027] bounds ${path} headers in the ${phase} case`,
+      { timeout: 2000 },
+      async () => {
+        const timers = new Map();
+        let serial = 0;
+        let release;
+        let cancelled = 0;
+        let reads = 0;
+        let signal;
+        const client = createClient({
+          env: envOf(),
+          now: () => 0,
+          setTimer: (fn, ms) => {
+            assert.equal(ms, 15000);
+            timers.set(++serial, fn);
+            return serial;
+          },
+          clearTimer: (id) => timers.delete(id),
+          fetchImpl: (url, init) => {
+            if (url === TOKEN && path !== 'login') return good(url);
+            signal = init.signal;
+            return new Promise((resolve) => {
+              release = resolve;
+            });
+          },
+        });
+        let answer;
+        const run = (
+          path === 'getPublic'
+            ? client.getPublic(PRODUCTS)
+            : path === 'search'
+              ? client.search('host-a', {})
+              : path === 'thumbnail'
+                ? client.thumbnail('host-a', 'scene.1')
+                : path === 'collections'
+                  ? client.collections()
+                  : client.post(URLS.estimate, {})
+        ).then((v) => {
+          answer = v;
+        });
+        await settle();
+        assert.equal(timers.size, 1);
+        assert.equal(answer, undefined);
+        for (const fire of timers.values()) fire();
+        await settle();
+        assert.equal(signal.aborted, true);
+        assert.deepEqual(answer, { ok: false, kind: 'search_timeout' });
+        assert.equal(timers.size, 0);
+        assert.equal(getEventListeners(signal, 'abort').length, 0);
+        if (phase !== 'pending') {
+          release({
+            status: 200,
+            headers: new Headers({ 'content-type': 'image/png' }),
+            body:
+              phase === 'late-no-body'
+                ? null
+                : {
+                    getReader() {
+                      reads++;
+                      throw Error('Body must not be read');
+                    },
+                    cancel() {
+                      cancelled++;
+                      if (phase === 'late-reject')
+                        return Promise.reject(Error('Cancel failed'));
+                      if (phase === 'late-resolve') return Promise.resolve();
+                      return new Promise(() => {});
+                    },
+                  },
+          });
+          await settle();
+          assert.equal(cancelled, phase === 'late-no-body' ? 0 : 1);
+          assert.equal(reads, 0);
+          assert.deepEqual(answer, { ok: false, kind: 'search_timeout' });
+          assert.equal(timers.size, 0);
+          assert.equal(getEventListeners(signal, 'abort').length, 0);
+        }
+        await run;
+      },
+    );
+
 test('[up42-quotes-032] checks public facts against changed credentials', async (t) => {
   const s = setup(t);
   assert.equal((await s.request({ products: true })).status, 200);

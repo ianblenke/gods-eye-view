@@ -1,7 +1,8 @@
 # up42-quotes Specification
 
-## ADDED Requirements
-
+## Purpose
+Describe how the server gives UP42 quote facts without an order while it keeps credentials private.
+## Requirements
 ### Requirement: Routes
 
 The plugin MUST provide both Vite hooks and answer only the two exact quote paths.
@@ -249,7 +250,7 @@ Origin: spec-first
 
 ### Requirement: Response shapes
 
-Each check MUST refuse invalid required facts and drop oddly typed optional facts.
+Each check MUST refuse invalid required facts and drop optional facts of an invalid type.
 
 Origin: spec-first
 
@@ -302,6 +303,7 @@ Origin: spec-first
 
 - **WHEN** headers, JSON data or a cancel operation never ends or ends after abort
 - **THEN** the check gives search_timeout; the timer clears after completion; a cancel error keeps the fixed failure
+- **AND** a late response is discarded; its body cancel operation cannot extend the time limit
 
 ### Requirement: Answer store
 
@@ -344,8 +346,9 @@ Origin: spec-first
 
 #### Scenario: Count quote rounds `up42-quotes-031`
 
-- **WHEN** a quote reaches UP42, fails, hits the store or reaches the next day
+- **WHEN** a quote reaches UP42, fails, hits the store or crosses UTC midnight
 - **THEN** new rounds count once for discovery and failures; store hits do not count; budget gives 429 with used and limit; invalid limits use 20
+- **AND** the budget refuses excess work just before UTC midnight and admits new work just after UTC midnight
 
 ### Requirement: Secret output
 
@@ -356,7 +359,9 @@ Origin: spec-first
 #### Scenario: Keep secrets private `up42-quotes-032`
 
 - **WHEN** upstream returns or throws fake secrets and tests capture all console methods
+- **AND** control characters split secrets in product fields, reasons, comments or pass fields
 - **THEN** no output contains a fake secret; a check that echoes a secret gives a fixed failure; the route checks a stored answer again
+- **AND** the provider checks final output strings after normalization and before it stores or returns them
 
 ### Requirement: Previous secrets
 
@@ -391,8 +396,10 @@ Origin: spec-first
 
 #### Scenario: Scan the source `up42-quotes-035`
 
-- **WHEN** the test scans every quote source file
-- **THEN** every /v2/orders occurrence is exactly the validation or estimate path; forbidden words and PUT or DELETE methods are absent; only five URL literals exist
+- **WHEN** the test scans the quote folder and all its subfolders
+- **THEN** only normalize.js, plugins.js, quotes.js, upstream.js and validate.js exist
+- **AND** the scan reads .js, .mjs, .cjs, .ts, .json, .html and .sh files
+- **AND** every /v2/orders occurrence is exactly the validation or estimate path; forbidden words and PUT or DELETE methods are absent; only five URL literals exist
 
 ### Requirement: Client origin
 
@@ -402,6 +409,6 @@ Origin: spec-first
 
 #### Scenario: Check the client origin `up42-quotes-036`
 
-- **WHEN** a hook receives a invalid URL, HTTP URL, other origin or deceptive host
+- **WHEN** a hook receives an invalid URL, HTTP URL, other origin or deceptive host
 - **THEN** it gives bad_upstream without fetch; valid public calls have no bearer and valid POST calls use the shared token
 

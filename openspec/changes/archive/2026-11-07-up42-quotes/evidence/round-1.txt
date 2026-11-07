@@ -1,0 +1,28 @@
+At the host snapshot, commit 73923c26eff3935df843da3a955311b6070cc313 has worktree edits.
+Each finding below refers to this commit with worktree edits.
+
+- [x] FINDING critical SPEC F1 at commit 73923c26eff3935df843da3a955311b6070cc313: Fixed. Final product and check strings pass the secret check before storage or return.
+  Tests split the password with NUL, the user name with DEL and the token with a C1 control character.
+  They check product fields, reason fields, comments and pass fields. A case conversion test checks the product id.
+  UPQ-M077 fails seven tests. UPQ-M078 fails twenty-one tests.
+- [x] FINDING critical SPEC F2 at commit 73923c26eff3935df843da3a955311b6070cc313: Fixed. The shared header wait races the abort signal.
+  Pending and late fixtures cover quote POST, public products, search, thumbnail, collections and login calls.
+  The tests assert search_timeout, no body read, a body cancel attempt, no timer and no abort listener.
+  Late cancel fixtures never end, resolve or reject. A null body also passes.
+  UPQ-M079 fails thirty tests. UPQ-M080 fails eighteen tests. UPQ-M081 fails six tests.
+- [x] FINDING critical SPEC F3 at commit 73923c26eff3935df843da3a955311b6070cc313: Fixed. The fake clock starts the daily test at 23:59:59 UTC.
+  The budget refuses excess work before midnight and admits new work at 00:00:00.001 UTC.
+  UPQ-M082 uses a rolling 24-hour window and fails the daily reset test.
+- [x] FINDING major SPEC F4 at commit 73923c26eff3935df843da3a955311b6070cc313: Fixed. The scan reads every specified code type through all subfolders.
+  The file list and five URL literals have exact expected values.
+  Temporary nested files test all seven code extensions and an unexpected text file.
+  UPQ-M083 fails eight tests. UPQ-M084 fails one test. UPQ-M085 fails the URL literal check.
+- [ ] FINDING minor SPEC F5 at commit 73923c26eff3935df843da3a955311b6070cc313: Deferred as instructed. The lead must complete review.md and final gates.
+- [x] FINDING major STE F1 at commit 73923c26eff3935df843da3a955311b6070cc313: Fixed. The proposal states that no old gap closes and the ratchet updates trace records.
+  The trace history has a measurement record for this change, without an old-gap closure record.
+- [x] FINDING minor STE F2 at commit 73923c26eff3935df843da3a955311b6070cc313: Fixed in both copies. Response shapes now uses optional facts of an invalid type.
+  This requirement text change affects up42-quotes-023. The lead must ratchet again.
+- [x] FINDING minor STE F3 at commit 73923c26eff3935df843da3a955311b6070cc313: Fixed in both copies. The client origin scenario uses an invalid URL.
+
+checks.txt gives the test counts, coverage, lint output, scope checks and unverified work.
+faults.txt maps each mutation ID to every failed test. Evidence contains no program text.

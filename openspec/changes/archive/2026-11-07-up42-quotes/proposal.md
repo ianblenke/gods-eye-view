@@ -32,7 +32,7 @@ Minimal hooks change `server/providers/up42/auth.js` and `server/providers/up42-
 
 The change connects the new list in `server/providers/local.js`.
 It edits `.env.example` and `DATA_SOURCES.md` and adds `changelog.d/1432-up42-quotes.md`.
-It closes no old gap and does not edit the trace ledger.
+The change closes no old gap. The ratchet command updates the trace records.
 
 Each new or edited code file needs full host coverage.
 

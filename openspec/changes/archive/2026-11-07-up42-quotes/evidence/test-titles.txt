@@ -1,5 +1,5 @@
-At the host snapshot, commit 0da2dc27655330708ef443829b0f00dc369d4a42 has worktree edits.
-Expanded new titles: 241. Unique titles: 241.
+At the host snapshot, commit 73923c26eff3935df843da3a955311b6070cc313 has worktree edits.
+Expanded quote titles: 307. Unique titles: 307. Word-list matches: 0.
 
 [up42-quotes-001] serves both paths in both hooks
 [up42-quotes-002] shares one token through the local list
@@ -231,6 +231,14 @@ Expanded new titles: 241. Unique titles: 241.
 [up42-quotes-034] allows only fixed requests for subset 15 case 207
 [up42-quotes-034] allows only fixed requests for subset 15 case redirect
 [up42-quotes-035] scans all quote source text for forbidden forms
+[up42-quotes-035] refuses an extra nested js file
+[up42-quotes-035] refuses an extra nested mjs file
+[up42-quotes-035] refuses an extra nested cjs file
+[up42-quotes-035] refuses an extra nested ts file
+[up42-quotes-035] refuses an extra nested json file
+[up42-quotes-035] refuses an extra nested html file
+[up42-quotes-035] refuses an extra nested sh file
+[up42-quotes-035] refuses an extra nested txt file
 [up42-quotes-036] refuses other origins before login
 [up42-quotes-026] stops after the retry login fails
 [up42-quotes-027] gives the exact client timeout during the headers phase
@@ -239,8 +247,64 @@ Expanded new titles: 241. Unique titles: 241.
 [up42-quotes-027] gives the exact client timeout during the after-abort phase
 [up42-quotes-020] keeps distinct feasible and low facts
 [up42-quotes-011] refuses a twelfth parameter
+[up42-quotes-032] refuses the final title with fake-pass-quote
+[up42-quotes-032] refuses the final collection with fake-pass-quote
+[up42-quotes-032] refuses the final errorReason with fake-pass-quote
+[up42-quotes-032] refuses the final unavailabilityReason with fake-pass-quote
+[up42-quotes-032] refuses the final message with fake-pass-quote
+[up42-quotes-032] refuses the final comment with fake-pass-quote
+[up42-quotes-032] refuses the final id with fake-pass-quote
+[up42-quotes-032] refuses the final start_datetime with fake-pass-quote
+[up42-quotes-032] refuses the final end_datetime with fake-pass-quote
+[up42-quotes-032] refuses the final title with fake-user-quote
+[up42-quotes-032] refuses the final collection with fake-user-quote
+[up42-quotes-032] refuses the final errorReason with fake-user-quote
+[up42-quotes-032] refuses the final unavailabilityReason with fake-user-quote
+[up42-quotes-032] refuses the final message with fake-user-quote
+[up42-quotes-032] refuses the final comment with fake-user-quote
+[up42-quotes-032] refuses the final id with fake-user-quote
+[up42-quotes-032] refuses the final start_datetime with fake-user-quote
+[up42-quotes-032] refuses the final end_datetime with fake-user-quote
+[up42-quotes-032] refuses the final title with fake-token-quote
+[up42-quotes-032] refuses the final collection with fake-token-quote
+[up42-quotes-032] refuses the final errorReason with fake-token-quote
+[up42-quotes-032] refuses the final unavailabilityReason with fake-token-quote
+[up42-quotes-032] refuses the final message with fake-token-quote
+[up42-quotes-032] refuses the final comment with fake-token-quote
+[up42-quotes-032] refuses the final id with fake-token-quote
+[up42-quotes-032] refuses the final start_datetime with fake-token-quote
+[up42-quotes-032] refuses the final end_datetime with fake-token-quote
+[up42-quotes-032] checks the product id after case conversion
+[up42-quotes-027] bounds post headers in the pending case
+[up42-quotes-027] bounds post headers in the late-pending case
+[up42-quotes-027] bounds post headers in the late-resolve case
+[up42-quotes-027] bounds post headers in the late-reject case
+[up42-quotes-027] bounds post headers in the late-no-body case
+[up42-quotes-027] bounds getPublic headers in the pending case
+[up42-quotes-027] bounds getPublic headers in the late-pending case
+[up42-quotes-027] bounds getPublic headers in the late-resolve case
+[up42-quotes-027] bounds getPublic headers in the late-reject case
+[up42-quotes-027] bounds getPublic headers in the late-no-body case
+[up42-quotes-027] bounds search headers in the pending case
+[up42-quotes-027] bounds search headers in the late-pending case
+[up42-quotes-027] bounds search headers in the late-resolve case
+[up42-quotes-027] bounds search headers in the late-reject case
+[up42-quotes-027] bounds search headers in the late-no-body case
+[up42-quotes-027] bounds thumbnail headers in the pending case
+[up42-quotes-027] bounds thumbnail headers in the late-pending case
+[up42-quotes-027] bounds thumbnail headers in the late-resolve case
+[up42-quotes-027] bounds thumbnail headers in the late-reject case
+[up42-quotes-027] bounds thumbnail headers in the late-no-body case
+[up42-quotes-027] bounds collections headers in the pending case
+[up42-quotes-027] bounds collections headers in the late-pending case
+[up42-quotes-027] bounds collections headers in the late-resolve case
+[up42-quotes-027] bounds collections headers in the late-reject case
+[up42-quotes-027] bounds collections headers in the late-no-body case
+[up42-quotes-027] bounds login headers in the pending case
+[up42-quotes-027] bounds login headers in the late-pending case
+[up42-quotes-027] bounds login headers in the late-resolve case
+[up42-quotes-027] bounds login headers in the late-reject case
+[up42-quotes-027] bounds login headers in the late-no-body case
 [up42-quotes-032] checks public facts against changed credentials
 [up42-quotes-026] refuses valid excess JSON bytes
 [up42-quotes-026] accepts the exact JSON byte cap
-
-At the host snapshot, the project title lint reports zero findings for all 241 titles.

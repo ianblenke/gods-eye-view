@@ -45,7 +45,11 @@ export function createQuotes(client, now) {
     const answer = await client.getPublic(PRODUCTS);
     if (!answer.ok) return failed(answer.kind);
     const products = normalizeProducts(answer.value);
-    if (products === null || !client.isSafe(answer.value))
+    if (
+      products === null ||
+      !client.isSafe(answer.value) ||
+      !client.isSafe(products)
+    )
       return failed('bad_upstream');
     cached = { products, at: now() };
     return { ok: true, products };
@@ -75,11 +79,14 @@ export function createQuotes(client, now) {
     const body = bodyOf(input);
     for (const name of input.checks) {
       const answer = await client.post(URLS[name], body);
-      results[name] = !answer.ok
-        ? failed(answer.kind)
-        : !client.isSafe(answer.value)
-          ? failed('bad_upstream')
-          : normalizeCheck(name, answer.value);
+      if (!answer.ok) results[name] = failed(answer.kind);
+      else {
+        const result = normalizeCheck(name, answer.value);
+        results[name] =
+          !client.isSafe(answer.value) || !client.isSafe(result)
+            ? failed('bad_upstream')
+            : result;
+      }
     }
     const values = Object.values(results);
     if (values.every((v) => !v.ok))

@@ -1,10 +1,11 @@
-At the host snapshot, commit 0da2dc27655330708ef443829b0f00dc369d4a42 has worktree edits.
+At the host snapshot, commit 73923c26eff3935df843da3a955311b6070cc313 has worktree edits.
 Host Node is v26.13.0. This report gives no calibrated gate verdict.
 
 Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --experimental-test-coverage src/data/up42*.test.mjs src/data/skywatch*.test.mjs
-The command completed. Tests: 654. Passed: 654. Failed: 0.
-New quote tests: 241. Unique titles: 241. Scenario IDs: 36.
-Each scenario has a test tag and a task line.
+The command completed. Tests: 720. Passed: 720. Failed: 0. Cancelled: 0.
+Quote tests: 307. Unique titles: 307. Scenario IDs: 36.
+The correction adds 66 tests and no scenario ID.
+Each scenario has a test tag and a task line. The title word-list check has zero matches.
 
 At this host snapshot, the coverage columns are lines, branches and functions.
 server/providers/local.js | 100.00 | 100.00 | 100.00
@@ -16,46 +17,37 @@ server/providers/up42-quotes/quotes.js | 100.00 | 100.00 | 100.00
 server/providers/up42-quotes/upstream.js | 100.00 | 100.00 | 100.00
 server/providers/up42-quotes/validate.js | 100.00 | 100.00 | 100.00
 
-At the host snapshot, faults.txt has 76 unique mutation records.
-Seventy-one records name failed tests. Four initial mutations survived. One initial runner stopped.
-UPQ-M003 changed the archive method by mistake. UPQ-M068 changes the quote hook and fails its request guard.
-UPQ-M025 left another box defense active. UPQ-M072 removes both defenses and fails the box test.
-UPQ-M047 used invalid JSON. UPQ-M069 uses valid excess JSON and fails the cap test.
-UPQ-M048 used a stream that could end after cancel. UPQ-M070 uses a body operation that never ends and fails.
-UPQ-M058 stopped before completion. UPQ-M071 completes and fails the daily count test.
-UPQ-M073 through UPQ-M075 repeat the secret faults after the test setup correction.
-UPQ-M076 appends a request parameter on the API origin and fails the request guard.
-Each runtime source hash matches its hash before the mutations.
-
-The first red run stopped at module import because the quote code did not exist.
-The first host regression could not bind the loopback socket in the sandbox.
-The final host run permits that old local HTTP test. All provider requests use fake fetch.
-No external network request tests the UP42 service.
+At this host snapshot, faults.txt has 85 unique mutation records.
+Killed: 80. Historical survivors: 4. Historical stopped runs: 1.
+UPQ-M077 through UPQ-M085 each fail a named test. faults.txt gives all failed test names.
+The commands complete. No new mutation run stops before its result.
+Each changed file has its original hash after restoration.
 
 Command: node scripts/spec/gates.mjs lint --change up42-quotes
-STE: 0 errors, 1297 warnings.
-The warnings include old prose and technical names. The evidence does not treat them as a passed review.
+STE: 0 errors, 1305 warnings.
+The command completed with exit 0. Warnings do not constitute a passed review.
 
-Command: openspec validate up42-quotes --strict
-Output: Change 'up42-quotes' is valid.
-
-Command: node scripts/check-import-directions.mjs
-Output: 1145 modules and 87 portable entries. The command completed with exit 0.
-Command: node scripts/check-package-boundaries.mjs
-The command completed with exit 0 for all listed packages.
-Command: node scripts/check-layer-state-tokens.mjs --base-ref 0da2dc27655330708ef443829b0f00dc369d4a42
-Output: 40 published, 0 new. The command completed with exit 0.
-An earlier layer command had no base-ref and stopped with usage text. It gave no check verdict.
-
-Prettier checked the eight runtime files and the new test file. Each file passed.
-The Git whitespace check completed without output.
-The new data source text also has zero STE errors; its warnings concern technical names and the word including.
+Command: node /home/ianblenke/docker/gev-tools/up42/qfix-qa.mjs
 QA: no script covers the capabilities of this change.
-The new test header has a purpose, covers item, run command and needs item.
-No repository QA script changed.
+QA header errors: 0.
+The QA advice also lists twenty upstream scripts with synthetic headers.
+No repository QA script changes. No listed purpose conflicts with this correction.
 
-The source and thumbnail tests and specs have no diff from the base commit.
-The active change is not archived. It has only its delta spec.
-The lead must keep both spec copies identical after archive.
-No commit, Make command, Docker run, ratchet, full gates, archive or review agent ran for this change.
-The lead must complete those steps before merge.
+Command: diff -u openspec/specs/up42-quotes/spec.md openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md
+The command has no output. Both spec copies are identical, including the Purpose section.
+The archive uses the same Requirements header as the main spec.
+The Response shapes requirement text changes for STE F2. Its scenario is up42-quotes-023.
+The correction also changes scenarios up42-quotes-027, up42-quotes-031, up42-quotes-032, up42-quotes-035 and up42-quotes-036.
+The lead must run the ratchet again for these hash changes.
+
+The Git diff names no existing source or thumbnail test or spec.
+The final status contains only quote change files, its test and up42/auth.js.
+The Git whitespace check has no output.
+Prettier checks the two edited code files and the quote test.
+
+The first full run completes with 718 passes and one loopback bind failure in an unchanged test.
+The final run permits that local HTTP test. Every provider request uses fake fetch.
+An initial isolated test run fails at file level. It gives no individual test result.
+No external service call checks UP42. The known limits in the proposal still apply.
+No commit, Make command, Docker run, ratchet, full gate or review agent runs in this correction.
+SPEC F5 remains lead work, as instructed. The lead must complete review.md and the final gates before merge.
