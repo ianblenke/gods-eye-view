@@ -7204,6 +7204,101 @@
     "since": "2026-11-07",
     "change": "up42-source"
   },
+  "up42-thumbnails-001": {
+    "hash": "d99421f58b0a6cc791e3d66c98b581752bf5caf97579f029cdd6b2836a8a4688",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-002": {
+    "hash": "236275cf95a3d4a33d13b255e4df0256ea4fc618d28ebf176983bf240114f2ed",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-003": {
+    "hash": "5f4f55ed1b41fdf1b73569aae2cf48bf23c45d43efbb42ea1b299cf8cd4022c7",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-004": {
+    "hash": "8a41a2a5c494b87a1c8508710add6b74690f4858d6d9703b3db6bade140da8eb",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-005": {
+    "hash": "61b04748a44f13a6ccbff41242ccb5af5b01d4cb05bf76020292f761a3ef0574",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-006": {
+    "hash": "256b02c24c8ccf140a26c807415a0d78a925344a50ff3854038abaef517a2abf",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-007": {
+    "hash": "1f8aba56a7e2a4381d0067908317a232ef0b0d2af141154f5948a81a6aa15555",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-008": {
+    "hash": "cd653bd30a27f092e2aff957f2de72f62d5c879d26dfa60dc6934a7b7aff595e",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-009": {
+    "hash": "aed6ac21b82f2535ba7153882c769c02adceb1d41dc316613622e16d11ad8c8c",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-010": {
+    "hash": "bf92564f9b65f8832102956759252392d37ea3db9793bbcd97b12964fdd15d1b",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-011": {
+    "hash": "2ab9e1cf5dc18b4bd35855182ad73a7ea6ad20a5b6caab725ae201fc944611c6",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-012": {
+    "hash": "ebcff00d9ccda9a56f4f0d3d38908c4eea6ca7b1f11c1756831e04287ecb3c2a",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-013": {
+    "hash": "212185cb00271f0b1038447cabe79a73f8286f759d20418cf2c7e4cbff3af9a8",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-014": {
+    "hash": "75760439f17256992b5e603d25d656f90f6ba7d6ea00756ec5eb17bb494e1d22",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-015": {
+    "hash": "057515891a2c21aad350d04cb3276d0829d1cf5ef47cf1a9fdfbe4921fac8724",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-016": {
+    "hash": "74d3676b8d69eab1f1b10337cdd10e2f3612714650c10856e4d33fe70990e648",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-017": {
+    "hash": "2c5f75a4e2320306fa9a1a2ebaa57d743b59d29eb49426d94d88dfdc3e8fff17",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-018": {
+    "hash": "dc0d317d6e4363442d2fc230f60c4d528e3972c6bf95c285ebb694e48d10fca8",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
+  "up42-thumbnails-019": {
+    "hash": "11e7ef14d966203c5ebd4e3bfc7e2d53b2a018ba745774882595fdb17d68d68d",
+    "since": "2026-11-07",
+    "change": "up42-thumbnails"
+  },
   "voice-panel-001": {
     "hash": "2eb2588f778ffb138e969decbd7e1810ff8678ca8fdd0b440d2785c40f0605c6",
     "since": "2026-11-05",

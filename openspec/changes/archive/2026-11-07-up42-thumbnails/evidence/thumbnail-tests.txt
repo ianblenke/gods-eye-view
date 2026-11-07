@@ -1,0 +1,4 @@
+Source command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --experimental-test-coverage --test-coverage-include=server/providers/up42.js '--test-coverage-include=server/providers/up42/*.js' '--test-coverage-include=server/providers/up42-thumbnails/*.js' --test-coverage-include=server/providers/local.js src/data/up42*.test.mjs src/data/skywatch*.test.mjs src/geminiComposition.test.mjs
+At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
+At this snapshot, the full host log contains 70 passed thumbnail tests and no failed thumbnail test.
+These counts come from host-run.txt.

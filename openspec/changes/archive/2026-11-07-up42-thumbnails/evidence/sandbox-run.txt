@@ -1,0 +1,11 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap --experimental-test-coverage --test-coverage-include=server/providers/up42.js '--test-coverage-include=server/providers/up42/*.js' '--test-coverage-include=server/providers/up42-thumbnails/*.js' --test-coverage-include=server/providers/local.js src/data/up42*.test.mjs src/data/skywatch*.test.mjs src/geminiComposition.test.mjs
+Commit: ade36a5c42d31ace0459d657d2cd436880786533 with worktree edits.
+The command completed with exit status 1.
+# tests 417
+# pass 416
+# fail 1
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-027] gives an HTTP client 400 for a body above the cap
+Error: listen EPERM: operation not permitted 127.0.0.1
+The sandbox refused the local HTTP listener. The permitted run passed all 417 tests.

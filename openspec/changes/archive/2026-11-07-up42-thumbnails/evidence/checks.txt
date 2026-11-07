@@ -1,0 +1,62 @@
+Command: Python count of the final host log, scenario headings and mutation records.
+At the host snapshot, commit ade36a5c42d31ace0459d657d2cd436880786533 has worktree edits.
+
+Host Node: v26.13.0.
+The change has 19 scenarios. No scenario id is new in round two.
+All 19 scenario ids have a test task. Both spec bodies are identical.
+Each requirement text line equals the line in HEAD.
+
+At this snapshot, all 417 tests passed. Failures, cancellations and skips are zero.
+The required UP42 and SkyWatch suites have 413 tests.
+The command also runs four Gemini composition tests for local.js coverage.
+The thumbnail suite has 77 tests, seven more than the round one snapshot.
+The source suite has 216 tests. The SkyWatch suites have 120 tests.
+All 9 unchanged up42-source-026 tests pass.
+host-run.txt gives the full command, completed result and coverage report.
+The first sandbox run failed because the local HTTP listener had no permission.
+sandbox-run.txt records that completed command and its one failure.
+The permitted final run completed with fake upstream fetches.
+
+All nine measured provider files have 100 percent line, branch and function coverage.
+# file               | line % | branch % | funcs % | uncovered lines
+# -------------------------------------------------------------------
+# server             |        |          |         |
+#  providers         |        |          |         |
+#   local.js         | 100.00 |   100.00 |  100.00 |
+#   up42-thumbnails  |        |          |         |
+#    plugins.js      | 100.00 |   100.00 |  100.00 |
+#    thumbnails.js   | 100.00 |   100.00 |  100.00 |
+#   up42.js          | 100.00 |   100.00 |  100.00 |
+#   up42             |        |          |         |
+#    auth.js         | 100.00 |   100.00 |  100.00 |
+#    normalize.js    | 100.00 |   100.00 |  100.00 |
+#    same-site.js    | 100.00 |   100.00 |  100.00 |
+#    upstream.js     | 100.00 |   100.00 |  100.00 |
+#    validate.js     | 100.00 |   100.00 |  100.00 |
+# -------------------------------------------------------------------
+# all files          | 100.00 |   100.00 |  100.00 |
+# -------------------------------------------------------------------
+
+At this snapshot, both new mutation commands failed their named tests.
+UPT-M078 removes the image read race. The declared and streamed excess image timeout tests fail.
+UPT-M079 removes the JSON read race. The JSON read timeout test fails.
+There are three distinct failed test titles in those commands.
+faults.txt has 79 unique ids: 77 historical and 2 current.
+The historical mutations did not run again in this correction.
+Both current commands completed. No current test reached its time limit.
+The source file has its original hash after both commands.
+
+STE: 0 errors, 1289 warnings.
+lint-output.txt records the completed command. No QA line appears in its output.
+The full QA gate did not run.
+The word list check has 77 unique expanded titles and zero STE findings.
+All four status titles now name the cancel operation with an article.
+The formatter check passes. format-validation.txt gives its output.
+correction-search.txt records the search matches and the empty protected-file diff.
+source-snapshot.txt records the final source hashes.
+The source tests, source specs and upstream files have no change.
+
+No Make command, Docker command, commit, push or external network request ran.
+This correction did not read .env or change a trace ledger.
+SPEC F2 stays lead work. review.md and the calibrated final gates remain unverified.
+The live UP42 behavior and the published display terms remain unverified.

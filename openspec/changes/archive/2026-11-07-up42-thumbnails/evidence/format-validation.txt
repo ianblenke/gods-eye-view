@@ -1,0 +1,5 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && node /home/ianblenke/.npm/_npx/b388654678d519d9/node_modules/prettier/bin/prettier.cjs --check server/providers/up42/auth.js src/data/up42Thumbnails.test.mjs
+Commit: ade36a5c42d31ace0459d657d2cd436880786533 with worktree edits.
+Checking formatting...
+All matched files use Prettier code style!
+Exit: 0

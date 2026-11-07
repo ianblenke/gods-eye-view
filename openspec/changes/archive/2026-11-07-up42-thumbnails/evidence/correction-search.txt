@@ -1,0 +1,40 @@
+At the host snapshot, commit ade36a5c42d31ace0459d657d2cd436880786533 has worktree edits.
+
+Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n -o readUntilAbort|Promise.race|removeEventListener server/providers/up42/auth.js
+28:Promise.race
+32:removeEventListener
+36:readUntilAbort
+44:Promise.race
+46:removeEventListener
+49:removeEventListener
+84:readUntilAbort
+100:readUntilAbort
+Exit: 0
+
+Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n -o limits the wait at status|the cancel operation|excess size|limits a JSON read src/data/up42Thumbnails.test.mjs
+1140:limits the wait at status
+1140:the cancel operation
+1223:excess size
+1223:the cancel operation
+1292:excess size
+1292:the cancel operation
+1331:limits a JSON read
+1331:the cancel operation
+Exit: 0
+
+Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n -o this limit includes|an excess image gives openspec/specs/up42-thumbnails/spec.md openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md
+openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md:163:this limit includes
+openspec/changes/archive/2026-11-07-up42-thumbnails/specs/up42-thumbnails/spec.md:164:an excess image gives
+openspec/specs/up42-thumbnails/spec.md:166:this limit includes
+openspec/specs/up42-thumbnails/spec.md:167:an excess image gives
+Exit: 0
+
+Command: cd /home/ianblenke/docker/gev-work/up42 && git diff --stat -- src/data/up42Input.test.mjs src/data/up42Scenes.test.mjs src/data/up42Upstream.test.mjs src/data/up42Proxy.test.mjs openspec/specs/up42-source openspec/changes/archive/2026-11-06-up42-source src/sources/httpBody.js
+Exit: 0
+
+Both spec bodies are identical from the first requirement to the end.
+Each requirement text line equals the line in HEAD.
+All 19 scenario ids have a test task. No scenario id is new in round two.
+The protected file diff is empty. All changed paths belong to this correction.
+Command: cd /home/ianblenke/docker/gev-work/up42 && git diff --check
+Exit: 0

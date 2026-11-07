@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-11-07-up42-thumbnails/evidence/checks.txt:61 Commit `1731b55604cf1597b07c44baaf9a8f4b37ab0242`: The supplied document gate completed with REVIEW-MISSING and one error. Complete review.md after both reviews, then run the final gates and record their output.

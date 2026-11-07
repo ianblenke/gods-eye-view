@@ -1,0 +1,11 @@
+Historical command: node --test --test-force-exit --test-reporter=tap src/data/up42Thumbnails.test.mjs
+At commit 7d4d1643b92767344587435ebf12116d2949a25e with worktree edits, the initial test process could not import the absent new module.
+The process exited with status 1 before the scenario tests ran. It gave no scenario verdict.
+
+At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
+Correction command: node --test --test-force-exit --test-isolation=none --test-reporter=tap src/data/up42Thumbnails.test.mjs
+Before the code correction, the command recorded 70 tests: 65 passed, three failed and two were cancelled.
+The four cancel tests and the dot-only-id test had not-ok records.
+The two never-settled cancel cases reached their test limit.
+The after-abort cases and dot-only-id case failed their assertions.
+The later host-run.txt command records the passed result after the code correction.

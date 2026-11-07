@@ -1,5 +1,7 @@
 /** Scene facts only. This file sends no request. */
 const ID = /^[A-Za-z0-9_.-]{1,128}$/;
+export const isSearchId = (value) =>
+  typeof value === 'string' && ID.test(value);
 const CONTROL = /[\u0000-\u001f\u007f-\u009f]/g;
 const object = (value) =>
   value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -43,7 +45,7 @@ function footprintOf(geometry) {
 function sceneOf(feature, host, collections) {
   if (!object(feature) || !object(feature.properties)) return null;
   const p = feature.properties;
-  if (typeof p.id !== 'string' || !ID.test(p.id)) return null;
+  if (!isSearchId(p.id)) return null;
   const collection = collections.get(p.collection);
   if (collection === undefined || collection.host !== host) return null;
   const start = timeOf(p.start_datetime ?? p.datetime);

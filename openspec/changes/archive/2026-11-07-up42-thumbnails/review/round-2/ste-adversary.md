@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor src/data/up42Thumbnails.test.mjs:1140 At commit `ade36a5c42d31ace0459d657d2cd436880786533`, “with end never” and “with end after-abort” omit an article before “end”. Articles and nouns. Write: “limits the wait at status 404 when the cancel operation never ends” or “limits the wait at status 404 when the cancel operation ends after the signal aborts”. Use the same forms for status 200.

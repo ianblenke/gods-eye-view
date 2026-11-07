@@ -1,4 +1,14 @@
-import { readResponseJsonCapped } from '../common/http.js';
+import {
+  readResponseBytesCapped,
+  readResponseJsonCapped,
+} from '../common/http.js';
+import {
+  MAX_IMAGE_BYTES,
+  hasImageSignature,
+  isImageType,
+  mediaTypeOf,
+} from '../skywatch/image.js';
+import { isSearchId } from './normalize.js';
 
 const TOKEN_URL =
   'https://auth.up42.com/realms/public/protocol/openid-connect/token';
@@ -8,13 +18,45 @@ const COLLECTIONS_PATH =
 const HOST = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const failed = (kind) => ({ ok: false, kind });
 
+async function cancelBody(response, signal) {
+  let onAbort;
+  const aborted = new Promise((_resolve, reject) => {
+    onAbort = () => reject(signal.reason);
+    signal.addEventListener('abort', onAbort, { once: true });
+  });
+  try {
+    await Promise.race([response.body?.cancel(), aborted]);
+  } catch {
+    // A cancel error must not change the fixed failure.
+  }
+  signal.removeEventListener('abort', onAbort);
+  signal.throwIfAborted();
+}
+
+async function readUntilAbort(read, signal) {
+  let onAbort;
+  const aborted = new Promise((_resolve, reject) => {
+    onAbort = () => reject(signal.reason);
+    signal.addEventListener('abort', onAbort, { once: true });
+  });
+  let value;
+  try {
+    value = await Promise.race([read(), aborted]);
+  } catch (error) {
+    signal.removeEventListener('abort', onAbort);
+    throw error;
+  }
+  signal.removeEventListener('abort', onAbort);
+  return value;
+}
+
 /** Fixed destinations, a private token cache and fixed failure names. */
 export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
   let cached = null;
   let inFlight = null;
   const secrets = new Set();
 
-  async function send(url, init, login = false) {
+  async function send(url, init, login = false, image = false) {
     const controller = new AbortController();
     const timer = setTimer(() => controller.abort(), 15000);
     const exchange = async () => {
@@ -25,20 +67,38 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
       });
       controller.signal.throwIfAborted();
       if (response.status !== 200) {
-        try {
-          await response.body?.cancel();
-        } catch {
-          // A cancel error must not change the fixed failure.
-        }
+        await cancelBody(response, controller.signal);
         if (login && (response.status === 400 || response.status === 401))
           return failed('credentials_rejected');
         if (init.headers.Authorization !== undefined && response.status === 401)
           return failed('unauthorized');
+        if (image && response.status === 404) return failed('not_found');
         return failed('upstream_failed');
       }
-      const value = await readResponseJsonCapped(
-        response,
-        4194304,
+      if (image) {
+        const type = mediaTypeOf(response.headers.get('content-type'));
+        if (!isImageType(type)) {
+          await cancelBody(response, controller.signal);
+          return failed('bad_upstream');
+        }
+        const bytes = await readUntilAbort(
+          () =>
+            readResponseBytesCapped(
+              response,
+              MAX_IMAGE_BYTES,
+              controller.signal,
+            ),
+          controller.signal,
+        );
+        if (
+          !hasImageSignature(type, bytes) ||
+          !isSafe(Buffer.from(bytes).toString('utf8'))
+        )
+          return failed('bad_upstream');
+        return { ok: true, type, bytes };
+      }
+      const value = await readUntilAbort(
+        () => readResponseJsonCapped(response, 4194304, controller.signal),
         controller.signal,
       );
       return { ok: true, value };
@@ -46,9 +106,13 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
     let result;
     try {
       result = await exchange();
-    } catch {
+    } catch (error) {
       result = failed(
-        controller.signal.aborted ? 'search_timeout' : 'upstream_failed',
+        controller.signal.aborted
+          ? 'search_timeout'
+          : image && error?.code === 'RESPONSE_TOO_LARGE'
+            ? 'bad_upstream'
+            : 'upstream_failed',
       );
     }
     clearTimer(timer);
@@ -56,6 +120,7 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
   }
 
   async function login(username, password, credentials) {
+    secrets.add(username);
     secrets.add(password);
     const result = await send(
       TOKEN_URL,
@@ -142,9 +207,44 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
       : result;
   }
 
+  async function thumbnail(host, id) {
+    if (
+      typeof host !== 'string' ||
+      !HOST.test(host) ||
+      !isSearchId(id) ||
+      /^\.+$/.test(id)
+    )
+      return failed('bad_upstream');
+    let token = await getToken();
+    if (!token.ok) return token;
+    const url = `${API}/catalog/${host}/image/${encodeURIComponent(id)}/thumbnail`;
+    const request = (value) =>
+      send(
+        url,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${value}`,
+            Accept: 'image/png, image/jpeg, image/webp',
+          },
+        },
+        false,
+        true,
+      );
+    let result = await request(token.value);
+    if (!result.ok && result.kind === 'unauthorized') {
+      token = await getToken(token.value);
+      if (!token.ok) return token;
+      result = await request(token.value);
+    }
+    return !result.ok && result.kind === 'unauthorized'
+      ? failed('credentials_rejected')
+      : result;
+  }
+
   function isSafe(value) {
     const text = JSON.stringify(value);
-    for (const secret of [env.UP42_PASSWORD, ...secrets]) {
+    for (const secret of [env.UP42_USERNAME, env.UP42_PASSWORD, ...secrets]) {
       if (typeof secret !== 'string' || secret === '') continue;
       if (text.includes(JSON.stringify(secret).slice(1, -1))) return false;
     }
@@ -158,6 +258,7 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
         headers: { Accept: 'application/json' },
       }),
     search,
+    thumbnail,
     isSafe,
   };
 }

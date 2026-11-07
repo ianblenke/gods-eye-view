@@ -1,0 +1,113 @@
+At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
+
+F1 at commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits: Fixed. Both hook handlers receive valid and invalid paths. UPT-M062 and UPT-M076 fail the hook test.
+
+F2 at commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits: Fixed. Scenario 018 checks the second answer against literal bytes, type and length. UPT-M063 fails that test.
+
+F3 at commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits: Fixed. The test captures all console functions and inspects their arguments. UPT-M064, UPT-M065 and UPT-M077 fail it.
+
+F4 at commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits: Fixed. Separate tests change the user name and password. UPT-M066 and UPT-M067 fail their respective tests.
+
+F5 at commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits: Fixed. The evidence has prose records instead of an executable runner. It keeps the historical commands and results.
+
+F6 at commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits: Fixed. The abort signal bounds both cancel paths. The timeout result stays search_timeout after cancel ends. UPT-M068 through UPT-M070 fail the timeout tests.
+
+F7 at commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits: Fixed. The route and client refuse ids of dots only before login. The client encodes valid ids. UPT-M071 through UPT-M074 fail the destination tests.
+
+F8 at commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits: Deferred as requested. review.md and final gates stay lead work.
+
+STE F1 at commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits: Fixed. design.md uses the source host regex.
+
+STE F2 at commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f with worktree edits: Fixed. Both spec copies use before it reads the body.
+
+host-run.txt records all 410 tests passed and full coverage for all nine provider files.
+The protected source tests, source specs and normalize.js have an empty diff.
+
+Current mutation results:
+UPT-M062: Register a preview handler that gives no answer.
+Failed test: [up42-thumbnails-001] checks the path in both hooks
+
+UPT-M063: Corrupt only the bytes in the image store.
+Failed test: [up42-thumbnails-018] sends literal bytes and headers from the store
+
+UPT-M064: Send the password through console.trace.
+Failed test: [up42-thumbnails-016] keeps all fake secrets out of output
+
+UPT-M065: Send the user name through console.dir.
+Failed test: [up42-thumbnails-016] keeps all fake secrets out of output
+
+UPT-M066: Remove the previous user name from the secret set.
+Failed test: [up42-thumbnails-016] refuses the previous secret after UP42_USERNAME changes
+
+UPT-M067: Remove the previous password from the secret set.
+Failed test: [up42-thumbnails-016] refuses the previous secret after UP42_PASSWORD changes
+
+UPT-M068: Remove the abort bound from non-200 body cancel.
+Failed test: [up42-thumbnails-012] limits cancel at status 404 with end never
+Failed test: [up42-thumbnails-012] limits cancel at status 404 with end after-abort
+
+UPT-M069: Remove the abort bound from non-image body cancel.
+Failed test: [up42-thumbnails-012] limits cancel at status 200 with end never
+Failed test: [up42-thumbnails-012] limits cancel at status 200 with end after-abort
+
+UPT-M070: Keep the non-timeout result after abort.
+Failed test: [up42-thumbnails-012] limits cancel at status 404 with end never
+Failed test: [up42-thumbnails-012] limits cancel at status 404 with end after-abort
+Failed test: [up42-thumbnails-012] limits cancel at status 200 with end never
+Failed test: [up42-thumbnails-012] limits cancel at status 200 with end after-abort
+
+UPT-M071: Remove the route check for ids of dots only.
+Failed test: [up42-thumbnails-019] refuses ids of dots only before login
+
+UPT-M072: Remove the client check for ids of dots only.
+Failed test: [up42-thumbnails-019] refuses ids of dots only before login
+
+UPT-M073: Remove dots inside the destination id.
+Failed test: [up42-thumbnails-019] keeps dots inside the literal destination
+
+UPT-M074: Remove the client id rule.
+Failed test: [up42-thumbnails-008] rejects invalid path parts before login
+
+UPT-M075: Do not cancel non-200 bodies.
+Failed test: [up42-thumbnails-012] discards error bodies with cancel failure false
+Failed test: [up42-thumbnails-012] discards error bodies with cancel failure true
+Failed test: [up42-source-026] discards an error body case 0 with cancel failure false
+Failed test: [up42-source-026] discards an error body case 0 with cancel failure true
+Failed test: [up42-source-026] discards an error body case 1 with cancel failure false
+Failed test: [up42-source-026] discards an error body case 1 with cancel failure true
+Failed test: [up42-source-026] discards an error body case 2 with cancel failure false
+Failed test: [up42-source-026] discards an error body case 2 with cancel failure true
+Failed test: [up42-source-026] discards an error body case 3 with cancel failure false
+Failed test: [up42-source-026] discards an error body case 3 with cancel failure true
+
+UPT-M076: Register no preview handler.
+Failed test: [up42-thumbnails-001] checks the path in both hooks
+
+UPT-M077: Send the password in an Error object through console.dir.
+Failed test: [up42-thumbnails-016] keeps all fake secrets out of output
+
+
+Review round two
+
+SPEC F1 at commit ade36a5c42d31ace0459d657d2cd436880786533 with worktree edits: Fixed.
+The image read races the abort signal. The helper removes its listener after success or failure.
+Declared and streamed excess images give 504 with search_timeout when cancel never ends.
+They give 502 with bad_upstream when cancel ends before the limit.
+The JSON read also races the abort signal. A read that never ends gives 504 with search_timeout.
+JSON excess size still gives 502 with upstream_failed when cancel never ends.
+All nine unchanged up42-source-026 tests pass.
+UPT-M078 fails both new image timeout tests. UPT-M079 fails the new JSON timeout test.
+The seven new tests use scenario up42-thumbnails-012. No new scenario id needs a task.
+Both spec bodies have the same added scenario lines. Requirement text stays unchanged.
+
+STE F1 at commit ade36a5c42d31ace0459d657d2cd436880786533 with worktree edits: Fixed.
+All four titles include an article before cancel operation. All 77 expanded titles are unique and pass the word list check.
+
+SPEC F2 at commit ade36a5c42d31ace0459d657d2cd436880786533: Lead work.
+This correction does not write review.md or run final gates.
+
+The first test command failed because the sandbox refused the local HTTP listener.
+The permitted command completed with 417 passed tests and zero failures.
+All nine measured provider files have full line, branch and function coverage.
+The new tests fail assertions before the fix. No test reaches its time limit.
+The source tests, source specs and upstream files have no change.

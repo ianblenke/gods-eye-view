@@ -1,0 +1,33 @@
+Mutation command record
+
+At the host snapshot, commit 71cb2d103395bb821f5a4a3ee22a625b0928e44f has worktree edits.
+This file is a prose record. It has no executable runner.
+
+The original Python runner ran UPT-M001 through UPT-M061 at commit 7d4d1643b92767344587435ebf12116d2949a25e with worktree edits.
+All 61 mutations failed their named tests at that snapshot.
+faults.txt keeps their commands, source hashes and results.
+
+The current host used Node with --test, --test-force-exit, --test-isolation=none and --test-reporter=tap.
+Each mutation command selected its tests with --test-name-pattern.
+faults.txt names each full Node command and its failed tests.
+
+UPT-M062 and UPT-M076 select the test that checks the path in both hooks.
+UPT-M063 selects the test that sends literal bytes and headers from the store.
+UPT-M064 and UPT-M065 select the test that keeps all fake secrets out of output.
+UPT-M066 and UPT-M067 select the tests that refuse previous credentials after a change.
+UPT-M068 through UPT-M070 select the tests that limit cancel at each status.
+UPT-M071 and UPT-M072 select the test that refuses ids of dots only before login.
+UPT-M073 selects the test that keeps dots inside the literal destination.
+UPT-M074 selects the test that rejects invalid path parts before login.
+UPT-M075 selects the error body tests from both thumbnail and source suites.
+
+All 16 current mutation commands exited with status 1 and named failed tests.
+Each mutation ran alone. The source file was restored after each command.
+UPT-M077 sends an Error object through console.dir and selects the no-secret test.
+The full host command ran after restoration and passed all 410 tests.
+
+At the round two host snapshot, commit ade36a5c42d31ace0459d657d2cd436880786533 has worktree edits.
+UPT-M078 removes the image read race. Both excess image timeout tests fail.
+UPT-M079 removes the JSON read race. The JSON read timeout test fails.
+Both commands exit with status 1. The source file has its original hash after both commands.
+faults.txt records the exact commands and failed test titles.
