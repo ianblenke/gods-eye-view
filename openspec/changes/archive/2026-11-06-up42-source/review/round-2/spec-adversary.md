@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-11-06-up42-source/tasks.md:54 At commit `feb483b46ef3a669c36ded46797906533fe55be2`, the supplied gate check completes with `ERROR REVIEW-MISSING`. It uses a trusted snapshot and runs no tests. Write `review.md` after both reviews, then obtain a passed gate result on the final tree.

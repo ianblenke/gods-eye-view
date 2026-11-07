@@ -1,0 +1,2 @@
+Verdict: FAIL
+- [ ] F1 major openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:65,77,78,79 Commit `feb483b46ef3a669c36ded46797906533fe55be2`. The texts disagree. “The route MUST read at most 4096 bytes” conflicts with the new scenario, which consumes excess bytes through 65536 bytes. The code also reads these excess bytes. Write: “The route MUST keep at most 4096 request bytes and accept only an object with the named request keys.”
