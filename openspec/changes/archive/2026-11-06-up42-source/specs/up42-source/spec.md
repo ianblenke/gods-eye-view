@@ -62,7 +62,7 @@ Origin: spec-first
 
 ### Requirement: Body
 
-The route MUST read at most 4096 bytes and accept only an object with the named request keys.
+The route MUST keep at most 4096 request bytes and accept only an object with the named request keys.
 
 Origin: spec-first
 
