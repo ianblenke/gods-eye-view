@@ -7085,47 +7085,47 @@
     "change": "up42-source"
   },
   "up42-source-004": {
-    "hash": "fe47e71aa734450112b906958430a3790db94c2bd4d5efecfe4345a2c863cac2",
+    "hash": "947bf809a6cd70479b90712ff39ad07e9d2a78af183200bb75b02c0a5f58ec22",
     "since": "2026-11-06",
     "change": "up42-source"
   },
   "up42-source-005": {
-    "hash": "d981984edbeb403e8e16791b014dc525896adcd56f8c70c993c019998d467220",
+    "hash": "b76c0acbc7d5aa51892c320fb011ec70480da6c97c091d2adf2392154ef1854c",
     "since": "2026-11-06",
     "change": "up42-source"
   },
   "up42-source-006": {
-    "hash": "12dba95c278b6a0b041dafb657917bdcfdc9a3b43004ebbe6ebef5bc4572c853",
+    "hash": "4a582e7fccbd6e377fc1a61b4ae0b90a99e61b65bcea7d30260c0d1edd0be5c2",
     "since": "2026-11-06",
     "change": "up42-source"
   },
   "up42-source-007": {
-    "hash": "e7477b14ab37537100b3fa00b860d4698e160f05aac888baa766832742ebe5f5",
+    "hash": "ce72197ad51bb77b119371627d0b803f6fe55a03dc5ee5a7640dddeb3a3660dc",
     "since": "2026-11-06",
     "change": "up42-source"
   },
   "up42-source-008": {
-    "hash": "08b410e46749cfe1103ffc5c4739a80abac6f5e1f68252424412f2c9ba099c3c",
+    "hash": "1e0ba11a007d534126e6f34eda9a644aab9451f234164e10073c9a268656c15b",
     "since": "2026-11-06",
     "change": "up42-source"
   },
   "up42-source-009": {
-    "hash": "db98d5987ffb99078e6f2acf5f094bd3f470d047efd829817df3dffdbd47b402",
+    "hash": "c124e860fb9841ad3fe1dbc19ebf17f24a928f786623d25a77146c133ed43731",
     "since": "2026-11-06",
     "change": "up42-source"
   },
   "up42-source-010": {
-    "hash": "18cd8b5a766df084f5b2cc2e4a94f452534e6355e0a3806b092ba225b3f1a201",
+    "hash": "92b047c4e17fa8178c577bab4f053398148b422a28bc234e3a41d998950ae6af",
     "since": "2026-11-06",
     "change": "up42-source"
   },
   "up42-source-011": {
-    "hash": "8bff58f32f1bde71d7080bef36937e0c7c40b5a33d350375b57f3f795fe5b14a",
+    "hash": "836eeb2d9d80a64338dd74a4ff1d2adb1dc003abb508927e7f86b69ffcf89851",
     "since": "2026-11-06",
     "change": "up42-source"
   },
   "up42-source-012": {
-    "hash": "c1943cd67b903a20a74813a99fb4c1371a5151f3aa54d4c93c37fc13aa843ddd",
+    "hash": "ce53b0ce79b41d0708a3cf556512c018226f8c6ca7d9dc6beb03d79aa36a4729",
     "since": "2026-11-06",
     "change": "up42-source"
   },
@@ -7135,7 +7135,7 @@
     "change": "up42-source"
   },
   "up42-source-014": {
-    "hash": "1654c2c1ffb74beeb732ab1db666aca2ac95611981937a1180fdb1c0a51580ca",
+    "hash": "e777adee06c65c68d131b6383d3c7874844a5961e9dfb749c21439e377e613a6",
     "since": "2026-11-06",
     "change": "up42-source"
   },
@@ -7175,7 +7175,7 @@
     "change": "up42-source"
   },
   "up42-source-022": {
-    "hash": "0b34be46d342ab9ffc53a5509909d1d953aa8b59851097a3b8f6abb05f9006b0",
+    "hash": "cbbdc95f5396c3f87fb0e8cab4a0b5bcf4773d407845a78eb03b79f72f44b0f9",
     "since": "2026-11-06",
     "change": "up42-source"
   },
@@ -7187,6 +7187,21 @@
   "up42-source-024": {
     "hash": "ef3e76f2c77a652de3bc23e331b2ea54dda9f86355965a47a93baa1b6f7ac116",
     "since": "2026-11-06",
+    "change": "up42-source"
+  },
+  "up42-source-025": {
+    "hash": "8c7f2ebed849895206ed58503976192221d1fe8cbdad2a0ae8c39c2906c3a8fa",
+    "since": "2026-11-07",
+    "change": "up42-source"
+  },
+  "up42-source-026": {
+    "hash": "61b65dd81782bbf0d1409766826130256754752bee0ebb021172c8fdf080ad58",
+    "since": "2026-11-07",
+    "change": "up42-source"
+  },
+  "up42-source-027": {
+    "hash": "42abb49dc58b51ad5a2e0464129c926e6068365db35d2650a8a61b940b537cc2",
+    "since": "2026-11-07",
     "change": "up42-source"
   },
   "voice-panel-001": {

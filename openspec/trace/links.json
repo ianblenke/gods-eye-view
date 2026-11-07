@@ -9015,8 +9015,6 @@
   "up42-source-012": [
     "src/data/up42Proxy.test.mjs › [up42-source-012] gives the route failure case 0",
     "src/data/up42Proxy.test.mjs › [up42-source-012] gives the route failure case 1",
-    "src/data/up42Proxy.test.mjs › [up42-source-012] gives the route failure case 2",
-    "src/data/up42Proxy.test.mjs › [up42-source-012] gives the route failure case 3",
     "src/data/up42Upstream.test.mjs › [up42-source-012] encodes absent credentials as empty form values",
     "src/data/up42Upstream.test.mjs › [up42-source-012] keeps spaces at both ends of the password",
     "src/data/up42Upstream.test.mjs › [up42-source-012] names token refusal 400",
@@ -9024,6 +9022,7 @@
     "src/data/up42Upstream.test.mjs › [up42-source-012] sends the password form only to the fixed token host"
   ],
   "up42-source-013": [
+    "src/data/up42Proxy.test.mjs › [up42-source-013] uses one new login after an API 401 then stops",
     "src/data/up42Upstream.test.mjs › [up42-source-013] retries one API refusal case 0",
     "src/data/up42Upstream.test.mjs › [up42-source-013] retries one API refusal case 1",
     "src/data/up42Upstream.test.mjs › [up42-source-013] retries one API refusal case 2",
@@ -9065,6 +9064,7 @@
     "src/data/up42Upstream.test.mjs › [up42-source-016] marks the page limit case 4"
   ],
   "up42-source-017": [
+    "src/data/up42Proxy.test.mjs › [up42-source-017] gives 502 when the host fails",
     "src/data/up42Proxy.test.mjs › [up42-source-017] gives 504 when all host calls time out",
     "src/data/up42Upstream.test.mjs › [up42-source-017] keeps all scenes from distinct good hosts beside failures",
     "src/data/up42Upstream.test.mjs › [up42-source-017] keeps good hosts and lists all failed hosts by name",
@@ -9096,8 +9096,8 @@
     "src/data/up42Upstream.test.mjs › [up42-source-018] refuses token document case 5",
     "src/data/up42Upstream.test.mjs › [up42-source-018] refuses token document case 6",
     "src/data/up42Upstream.test.mjs › [up42-source-018] refuses token document case 7",
-    "src/data/up42Upstream.test.mjs › [up42-source-018] stops the call during body",
-    "src/data/up42Upstream.test.mjs › [up42-source-018] stops the call during headers"
+    "src/data/up42Upstream.test.mjs › [up42-source-018] stops the call during the body phase",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] stops the call during the headers phase"
   ],
   "up42-source-019": [
     "src/data/up42Proxy.test.mjs › [up42-source-019] gives the complete answer and the response headers",
@@ -9146,6 +9146,7 @@
     "src/data/up42Proxy.test.mjs › [up42-source-021] removes the oldest answer after 32 entries",
     "src/data/up42Proxy.test.mjs › [up42-source-021] shares a search with success false",
     "src/data/up42Proxy.test.mjs › [up42-source-021] shares a search with success true",
+    "src/data/up42Proxy.test.mjs › [up42-source-021] starts a new search when only the end date changes",
     "src/data/up42Proxy.test.mjs › [up42-source-021] uses each filter in the store key"
   ],
   "up42-source-022": [
@@ -9169,12 +9170,30 @@
   "up42-source-023": [
     "src/data/up42Proxy.test.mjs › [up42-source-023] keeps fake secrets out of every answer and console line",
     "src/data/up42Proxy.test.mjs › [up42-source-023] uses fake process credentials and the default console function",
-    "src/data/up42Upstream.test.mjs › [up42-source-023] checks secrets after JSON has encoded them",
+    "src/data/up42Upstream.test.mjs › [up42-source-023] checks secrets in JSON text",
     "src/data/up42Upstream.test.mjs › [up42-source-023] refuses a password in a scene field"
   ],
   "up42-source-024": [
     "src/data/up42Upstream.test.mjs › [up42-source-024] excludes all forbidden source literals",
     "src/data/up42Upstream.test.mjs › [up42-source-024] records only the literal allowed request forms"
+  ],
+  "up42-source-025": [
+    "src/data/up42Proxy.test.mjs › [up42-source-025] starts one search for two simultaneous store misses"
+  ],
+  "up42-source-026": [
+    "src/data/up42Upstream.test.mjs › [up42-source-026] accepts an error response with no body",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 0 with cancel failure false",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 0 with cancel failure true",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 1 with cancel failure false",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 1 with cancel failure true",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 2 with cancel failure false",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 2 with cancel failure true",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 3 with cancel failure false",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 3 with cancel failure true"
+  ],
+  "up42-source-027": [
+    "src/data/up42Input.test.mjs › [up42-source-027] discards bytes through 65536 and stops above that size",
+    "src/data/up42Proxy.test.mjs › [up42-source-027] gives an HTTP client 400 for a body above the cap"
   ],
   "voice-panel-001": [
     "src/voice/panel/backfill.test.mjs › [voice-panel-001] The observer rejects an invalid action"
