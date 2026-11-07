@@ -7069,6 +7069,186 @@
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
+  "up42-quotes-001": {
+    "hash": "50ee8c8c2de69575616f29468a69a9b1119cab4f33bd9fe16af439c7a911fc23",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-002": {
+    "hash": "08621b4832cbbfc5a97b088ac33f4196e24a6ec2f339ff05789797fcaf5c8e91",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-003": {
+    "hash": "09c3752489cbf62da485c616624f03bccf5088443d4ee13cfcee0779e6d1e657",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-004": {
+    "hash": "7c00df0f6cf9d6a47b4fb59e6116acb568573ceb98b71ed665d3673bd7680d55",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-005": {
+    "hash": "569bc430a0b0eb949e2886f8c3ce94fafaae7c501965a15cb6549e0336eb83de",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-006": {
+    "hash": "5acd4376610360433d95aff37ee878f67f4096171ba54d89b21000f2619b939c",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-007": {
+    "hash": "eaad25103ca81e33882787fc6d7b67a4ee857d9d918320e05a62223e4269df1d",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-008": {
+    "hash": "2c2c5f1712db841565786ca0a10fffd78e85c98ab3b391bb6895403af60fac06",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-009": {
+    "hash": "dac61c1ecb0543c6cb7c42ce17868400efaf99409321621052313bfe934a1d45",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-010": {
+    "hash": "d32222b4dad41a7006c4600086477415eeff6ba8946e5e529d7c2bbab9c332f0",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-011": {
+    "hash": "45fd377c6967ae9459a43b107c3827c4f4a83e0ab7f2547dace6cdf13e23e579",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-012": {
+    "hash": "24e7ad93222647ee2741be2d6d6c0be937a62e583ee2eb48c2bce6ac2ae2a287",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-013": {
+    "hash": "3315f19cfde7df3a9e92da249b828ddea1092599a4ad909546d8be0f76f9ea71",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-014": {
+    "hash": "bf9bc8d985c74d2af4a60892d91d91621fecb924378a589fda23612e3c61e084",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-015": {
+    "hash": "0a0e44373ef6bcfcf4211c872843148f12c8e20dfe7822cde58772d2a63fa0c9",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-016": {
+    "hash": "321c77b06da5b7fc576ae66fcb62faa203f9dfa13193f310f69e2d15fa5035ef",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-017": {
+    "hash": "c4d556e9d3a7a8912b0e738813c77ed58e93d6a37d5ef1a7813a390ebf8ca846",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-018": {
+    "hash": "3c243da23000d29e7d912eb418dfbbca1cc9c17c89f5268fe1874c4b92e461cd",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-019": {
+    "hash": "8ac128460ca3c893a0fe4611a0f1c3df985f5e2ebb4d5cf7eecdf93bc6bfd799",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-020": {
+    "hash": "1d78527eb062a8c29ba7cb269161712883502a2911295ef11079a4f3ac3d78e6",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-021": {
+    "hash": "e3243f7ae1ecf0124df84ddb16d171b5f04029e418044f97605c407e4147291c",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-022": {
+    "hash": "2db205b794c7a032b2535f4e899379e2af3ac5c9fa50cd90a5b5cd8081f0a55c",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-023": {
+    "hash": "a62dd2793d136bb8a7a9ec7e5fc8c6383e16851d47bf57e889fa03fb4b9d4ed3",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-024": {
+    "hash": "451be893e5cab727f7aa3111d7be63de9555a486cdae21033185231281c46c09",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-025": {
+    "hash": "bcfad4eaf4d68aa81d8f61e49a8f53fcd6c561e6aed72e2abce42c77351a9b44",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-026": {
+    "hash": "b190f1916a7de259ffaf0524dd6a9902aae10bf7589ffb189499c36c58be0145",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-027": {
+    "hash": "4fe4d667e072de567c5b2b8dfcafd5a6e59be6faf71059deaf49416333108664",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-028": {
+    "hash": "96843e0e1cb6d24bba3aa56d71c3acf4c2b9c1e650317012419ced5ed1146572",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-029": {
+    "hash": "5e7dfb69052e50c1846bea84120970840114ae07a1e38f8a5471599f5bcfcd98",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-030": {
+    "hash": "85c7e4965afde7e4f97a7bd36a6b46a6a8959a33432d910cbcd71e69b02dcf8a",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-031": {
+    "hash": "3a00ed38b511a636da1998fcf54a09f169cba292d281d09bfb1ddd78eb3ff21a",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-032": {
+    "hash": "6a643a4162bbf77fe3917536b57e2331fdd6a81552bd07b6bf7dff9b52f96c44",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-033": {
+    "hash": "d73d55cdc9131d136e8045335c59ef1969e9ee8ed9b11bcd0112750c34132ab5",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-034": {
+    "hash": "279b3225381b733a3430bf2eccf5c9c8c717730a8a8f98ea975ad4088fb88265",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-035": {
+    "hash": "fea959201a4582e8c61232b042124ce2035152319e5c5d622d872a2abea64dba",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
+  "up42-quotes-036": {
+    "hash": "5c8f396ff1ae56ba63eaec638caec61552f895d5ecd0d67cd0a871759796dde1",
+    "since": "2026-11-07",
+    "change": "up42-quotes"
+  },
   "up42-source-001": {
     "hash": "7c178370034e966d4501f2b5eecf6990228102beb7356368855e05d5b9f72e54",
     "since": "2026-11-06",
