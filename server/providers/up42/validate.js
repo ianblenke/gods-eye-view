@@ -17,13 +17,13 @@ export async function readBodyText(req) {
   try {
     for await (const chunk of req) {
       total += chunk.length;
-      if (total > MAX_BODY_BYTES) return null;
-      chunks.push(chunk);
+      if (total > MAX_BODY_BYTES * 16) return null;
+      if (total <= MAX_BODY_BYTES) chunks.push(chunk);
     }
   } catch {
     return null;
   }
-  return Buffer.concat(chunks).toString('utf8');
+  return total > MAX_BODY_BYTES ? null : Buffer.concat(chunks).toString('utf8');
 }
 
 const refuse = (error, extra = {}) => ({

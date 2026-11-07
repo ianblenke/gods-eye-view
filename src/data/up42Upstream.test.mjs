@@ -580,7 +580,7 @@ test('[up42-source-018] keeps the timer through the body and clears it at the en
 });
 for (const phase of ['headers', 'body']) {
   test(
-    `[up42-source-018] stops the call during ${phase}`,
+    `[up42-source-018] stops the call during the ${phase} phase`,
     { timeout: 3000 },
     async () => {
       let fire;
@@ -929,7 +929,7 @@ test('[up42-source-018] refuses a token with a final line break', async () => {
   assert.equal(s.calls.length, 1);
 });
 
-test('[up42-source-023] checks secrets after JSON has encoded them', async () => {
+test('[up42-source-023] checks secrets in JSON text', async () => {
   const s = setup({ env: { UP42_PASSWORD: 'fake-quote"pass' } });
   assert.equal(s.client.isSafe({ provider: 'fake-quote"pass' }), false);
   assert.equal(s.client.isSafe({ provider: 'public' }), true);
@@ -994,4 +994,72 @@ test('[up42-source-013] uses the token lifetime from the answer', async () => {
   s.clock.value += 1;
   assert.equal((await s.client.search('oneatlas', {})).ok, true);
   assert.equal(s.calls.filter((c) => c.url === TOKEN).length, 2);
+});
+
+for (const [index, [point, status, kind]] of [
+  ['token', 400, 'credentials_rejected'],
+  ['token', 401, 'credentials_rejected'],
+  ['api', 401, 'upstream_failed'],
+  ['collections', 503, 'upstream_failed'],
+].entries()) {
+  for (const cancelFails of [false, true]) {
+    test(
+      `[up42-source-026] discards an error body case ${index} with cancel failure ${cancelFails}`,
+      { timeout: 3000 },
+      async () => {
+        const timers = new Set();
+        const errorTimers = new Set();
+        const events = [];
+        let next = 0;
+        const s = setup({
+          setTimer: (_fn, ms) => {
+            assert.equal(ms, 15000);
+            timers.add(++next);
+            return next;
+          },
+          clearTimer: (id) => {
+            timers.delete(id);
+            if (errorTimers.has(id)) events.push('clear');
+          },
+          respond: (url) => {
+            if (url === TOKEN && point !== 'token') return token();
+            errorTimers.add(next);
+            return new Response(
+              new ReadableStream({
+                async cancel() {
+                  events.push(['cancel', timers.size]);
+                  await settle();
+                  events.push('discard');
+                  if (cancelFails) throw new Error('fake-pass &+');
+                },
+              }),
+              { status },
+            );
+          },
+        });
+        const result =
+          point === 'collections'
+            ? await s.client.collections()
+            : await s.client.search('oneatlas', {});
+        assert.deepEqual(result, { ok: false, kind });
+        const attempts = point === 'api' ? 2 : 1;
+        assert.equal(events.filter((e) => Array.isArray(e)).length, attempts);
+        for (let i = 0; i < attempts; i++)
+          assert.deepEqual(events.slice(-3 * (i + 1), events.length - 3 * i), [
+            ['cancel', 1],
+            'discard',
+            'clear',
+          ]);
+        assert.equal(timers.size, 0);
+      },
+    );
+  }
+}
+
+test('[up42-source-026] accepts an error response with no body', async () => {
+  const s = setup({ respond: () => new Response(null, { status: 503 }) });
+  assert.deepEqual(await s.client.collections(), {
+    ok: false,
+    kind: 'upstream_failed',
+  });
 });

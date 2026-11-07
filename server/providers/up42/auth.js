@@ -24,11 +24,18 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
         signal: controller.signal,
       });
       controller.signal.throwIfAborted();
-      if (login && (response.status === 400 || response.status === 401))
-        return failed('credentials_rejected');
-      if (init.headers.Authorization !== undefined && response.status === 401)
-        return failed('unauthorized');
-      if (response.status !== 200) return failed('upstream_failed');
+      if (response.status !== 200) {
+        try {
+          await response.body?.cancel();
+        } catch {
+          // A cancel error must not change the fixed failure.
+        }
+        if (login && (response.status === 400 || response.status === 401))
+          return failed('credentials_rejected');
+        if (init.headers.Authorization !== undefined && response.status === 401)
+          return failed('unauthorized');
+        return failed('upstream_failed');
+      }
       const value = await readResponseJsonCapped(
         response,
         4194304,

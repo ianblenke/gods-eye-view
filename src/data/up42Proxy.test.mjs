@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Readable } from 'node:stream';
+import { createServer, request as httpRequest } from 'node:http';
 import { up42Plugins } from '../../server/providers/up42.js';
 import { localProviderPlugins } from '../../server/providers/local.js';
 
@@ -342,17 +343,14 @@ test('[up42-source-011] checks both credentials before the store', async (t) => 
   }
 });
 
-for (const [index, [point, status, expected]] of [
-  ['token', 400, [403, { error: 'credentials_rejected', keyRejected: true }]],
-  ['token', 401, [403, { error: 'credentials_rejected', keyRejected: true }]],
-  ['api', 500, [502, { error: 'upstream_failed' }]],
-  ['api', 401, [502, { error: 'upstream_failed' }]],
+for (const [index, [status, expected]] of [
+  [400, [403, { error: 'credentials_rejected', keyRejected: true }]],
+  [401, [403, { error: 'credentials_rejected', keyRejected: true }]],
 ].entries()) {
   test(`[up42-source-012] gives the route failure case ${index}`, async (t) => {
     const s = install(t, {
       respond: (url) =>
-        (point === 'token' && url === TOKEN) ||
-        (point === 'api' && url === SEARCH)
+        url === TOKEN
           ? json({ message: 'fake-pass-secret fake-token-secret' }, status)
           : respondGood(url),
     });
@@ -361,6 +359,26 @@ for (const [index, [point, status, expected]] of [
     assert.deepEqual(a.body, expected[1]);
   });
 }
+
+test('[up42-source-017] gives 502 when the host fails', async (t) => {
+  const s = install(t, {
+    respond: (url) => (url === SEARCH ? json({}, 500) : respondGood(url)),
+  });
+  const answer = await s.scenes();
+  assert.equal(answer.status, 502);
+  assert.deepEqual(answer.body, { error: 'upstream_failed' });
+});
+
+test('[up42-source-013] uses one new login after an API 401 then stops', async (t) => {
+  const s = install(t, {
+    respond: (url) => (url === SEARCH ? json({}, 401) : respondGood(url)),
+  });
+  const answer = await s.scenes();
+  assert.equal(answer.status, 502);
+  assert.deepEqual(answer.body, { error: 'upstream_failed' });
+  assert.equal(s.calls.filter((c) => c.url === TOKEN).length, 2);
+  assert.equal(s.calls.filter((c) => c.url === SEARCH).length, 2);
+});
 
 test('[up42-source-010] gives the collection refusal from the fetched list', async (t) => {
   const s = install(t);
@@ -495,6 +513,48 @@ test('[up42-source-021] uses each filter in the store key', async (t) => {
     { start: '2026-10-02' },
   ])
     assert.equal((await s.scenes(body(extra))).body.cached, true);
+});
+
+test('[up42-source-021] starts a new search when only the end date changes', async (t) => {
+  const s = install(t);
+  const first = await s.scenes();
+  assert.equal(first.body.cached, false);
+  assert.deepEqual(first.body.budget, { used: 1, limit: 20 });
+  assert.equal(s.calls.filter((c) => c.url === SEARCH).length, 1);
+  const changed = await s.scenes(body({ end: '2026-10-21' }));
+  assert.equal(changed.status, 200);
+  assert.equal(changed.body.cached, false);
+  assert.deepEqual(changed.body.budget, { used: 2, limit: 20 });
+  assert.equal(s.calls.filter((c) => c.url === SEARCH).length, 2);
+});
+
+test('[up42-source-025] starts one search for two simultaneous store misses', async (t) => {
+  let release;
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  const s = install(t, {
+    respond: async (url) => {
+      if (url === SEARCH) await gate;
+      return respondGood(url);
+    },
+  });
+  assert.equal(s.calls.length, 0);
+  const first = s.scenes();
+  const second = s.scenes();
+  await settle();
+  const started = s.calls.filter((c) => c.url === SEARCH).length;
+  release();
+  const [a, b] = await Promise.all([first, second]);
+  assert.equal(started, 1);
+  assert.equal(s.calls.filter((c) => c.url === SEARCH).length, 1);
+  assert.equal(a.status, 200);
+  assert.equal(b.status, 200);
+  assert.equal(a.body.cached, false);
+  assert.equal(b.body.cached, true);
+  assert.deepEqual(a.body.scenes, b.body.scenes);
+  assert.deepEqual(a.body.budget, { used: 1, limit: 20 });
+  assert.deepEqual(b.body.budget, { used: 1, limit: 20 });
 });
 
 test('[up42-source-021] removes the oldest answer after 32 entries', async (t) => {
@@ -744,3 +804,65 @@ test('[up42-source-022] uses the default for a daily limit with a line break', a
   const s = install(t, { env: { UP42_DAILY_SEARCHES: '7\n' } });
   assert.deepEqual((await s.scenes()).body.budget, { used: 1, limit: 20 });
 });
+
+test(
+  '[up42-source-027] gives an HTTP client 400 for a body above the cap',
+  { timeout: 3000 },
+  async (t) => {
+    const s = install(t);
+    let client;
+    let bodyEnded = false;
+    const server = createServer((req, res) => {
+      req.once('end', () => {
+        bodyEnded = true;
+      });
+      req.once('data', () => setImmediate(() => client.end('x')));
+      void s.routes.get('/api/up42/scenes')(req, res, () =>
+        assert.fail('unexpected next'),
+      );
+    });
+    t.after(
+      () =>
+        new Promise((resolve) => {
+          server.closeAllConnections();
+          server.close(resolve);
+        }),
+    );
+    await new Promise((resolve, reject) => {
+      server.once('error', reject);
+      server.listen(0, '127.0.0.1', resolve);
+    });
+    const port = server.address().port;
+    const answer = await new Promise((resolve, reject) => {
+      client = httpRequest(
+        {
+          host: '127.0.0.1',
+          port,
+          path: '/',
+          method: 'POST',
+          headers: {
+            origin: `http://127.0.0.1:${port}`,
+            'content-type': 'application/json',
+          },
+        },
+        (res) => {
+          let text = '';
+          res.on('data', (chunk) => {
+            text += chunk;
+          });
+          res.on('error', reject);
+          res.on('end', () =>
+            resolve({ status: res.statusCode, body: JSON.parse(text) }),
+          );
+        },
+      );
+      client.on('error', reject);
+      t.after(() => client.destroy());
+      client.write('x'.repeat(4097));
+    });
+    assert.equal(answer.status, 400);
+    assert.deepEqual(answer.body, { error: 'bad_body' });
+    assert.equal(bodyEnded, true);
+    assert.equal(s.calls.length, 0);
+  },
+);

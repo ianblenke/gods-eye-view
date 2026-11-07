@@ -38,9 +38,11 @@
 
 - [x] 3.1 Run the four test files with fake fetch functions.
 - [x] 3.2 Measure full coverage for each new code file.
-- [x] 3.3 Run each named fault and record its failed test.
-- [x] 3.4 Run the STE lint and check each test title.
-- [x] 3.5 Record the host evidence with the source commit.
+- [x] 3.3 Run each named fault.
+- [x] 3.4 Record the failed test for each fault.
+- [x] 3.5 Run the STE lint.
+- [x] 3.6 Check each test title.
+- [x] 3.7 Record the host evidence with the source commit.
 
 ## 4. Lead work in the image
 
@@ -48,3 +50,15 @@
 - [ ] 4.2 Run the two review agents.
 - [ ] 4.3 Write `review.md`.
 - [ ] 4.4 Run `make gates CHANGE=up42-source` on the final tree.
+
+## 5. Correct round one faults
+
+- [x] 5.1 Write tests for scenarios 025, 026 and 027.
+- [x] 5.2 Add the end date test for scenario 021.
+- [x] 5.3 Correct the tags and token count test.
+- [x] 5.4 Correct the search claim, error body and request body code.
+- [x] 5.5 Run the tests and coverage check.
+- [x] 5.6 Run each new fault.
+- [x] 5.7 Record each failed test.
+- [x] 5.8 Run the STE lint.
+- [x] 5.9 Check the new test titles.

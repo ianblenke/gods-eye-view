@@ -11,6 +11,7 @@ The change adds no image display.
 - Keep the console password and bearer tokens on the server.
 - Limit each search to ten hosts, with four requests at one time.
 - Keep good answers for ten minutes and collection facts for six hours.
+- Claim identical searches before a wait, cancel error bodies and discard excess request bytes up to the hard stop.
 - Count new searches against a daily limit of 20 by default, with a maximum of 1000.
 
 ## Capabilities
@@ -40,7 +41,7 @@ The host checks measure only this change. The lead must run the full gates with 
 
 - Known limit `no-live-check`: Tests use made-up values in the response shapes of the scout report dated 2026-11-05. No live call checks these assumptions.
 - Known limit `password-grant`: The server holds a console password. A dedicated Viewer-role user must supply it. MFA can break this grant.
-- Known limit `local-only`: The same-site gate refuses proxy headers. A reverse proxy must remove them and supply a matching origin.
+- Known limit `local-only`: The same-site gate refuses proxy headers. A reverse proxy must remove them and supply an origin that matches the server origin.
 - Known limit `count-in-ram`: A server restart sets the daily count to zero.
 - Known limit `first-page`: Each host gives only its first page of at most 50 scenes.
 - Known limit `display-terms`: UP42 terms do not address footprint display or its cache. This change shows no image.

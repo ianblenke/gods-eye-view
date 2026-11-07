@@ -1,11 +1,6 @@
-Command: cd /home/ianblenke/docker/gev-work/up42 && node scripts/spec/gates.mjs lint --change up42-source 2>&1
-At the host snapshot, HEAD is 69d3e674df2775b372e6f6d2a9c9ae71a8729046.
+Command: cd /home/ianblenke/docker/gev-work/up42 && node scripts/spec/gates.mjs lint --change archive/2026-11-06-up42-source
+At the host snapshot, HEAD is 15458d852bfd0f78f80fc45e604f15c86b89a326.
 Exit: 0
-The record keeps ERROR, STE and change-local WARN lines from the command output.
+The record keeps ERROR, STE, QA and change-local WARN lines from the command output.
 
-WARN STE-ING openspec/changes/up42-source/design.md:65 Check the -ing word "missing"
-WARN STE-ING openspec/changes/up42-source/proposal.md:41 Check the -ing word "matching"
-WARN STE-ING openspec/changes/up42-source/specs/up42-source/spec.md:49 Check the -ing word "matching"
-WARN STE-ING openspec/changes/up42-source/specs/up42-source/spec.md:49 Check the -ing word "corresponding"
-WARN STE-PASSIVE openspec/changes/up42-source/specs/up42-source/spec.md:169 Check for passive voice: "are skipped"
-STE: 0 errors, 1291 warnings.
+STE: 0 errors, 1286 warnings.

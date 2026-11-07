@@ -77,11 +77,9 @@ export function up42Plugins({
   async function startSearch(id, input) {
     const run = search(id, input);
     inFlight.set(id, run);
-    try {
-      return await run;
-    } finally {
-      inFlight.delete(id);
-    }
+    const result = await run;
+    inFlight.delete(id);
+    return result;
   }
   function handleStatus(req, res, next) {
     if (!onOwnPath(req)) return next();
@@ -111,14 +109,15 @@ export function up42Plugins({
       input.maxCloud,
       input.collections,
     ]);
-    let result = await fromStore(id);
+    let result = fromStore(id);
     if (result === null) {
       const today = budget();
       if (today.used >= today.limit)
         return send(res, 429, { error: 'budget', ...today });
       count.used++;
-      result = await startSearch(id, input);
+      result = startSearch(id, input);
     }
+    result = await result;
     if (!result.ok) {
       const refusal = FAILURES[result.kind];
       return send(res, refusal.status, refusal.payload);

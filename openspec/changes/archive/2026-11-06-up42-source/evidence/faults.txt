@@ -297,3 +297,92 @@ Exit: 1
 Result: KILLED
 
 Faults: 32. Killed: 32. Survived or stopped: 0.
+
+Round one corrections
+Command: cd /home/ianblenke/docker/gev-work/up42 && python3 /home/ianblenke/docker/gev-tools/up42/round-1/correction-mutations.py
+At the host snapshot, HEAD is 15458d852bfd0f78f80fc45e604f15c86b89a326.
+The source and tests have changes after HEAD. Each fault runs alone. The runner restores the source after each run.
+
+M33 server/providers/up42.js
+HEAD: 15458d852bfd0f78f80fc45e604f15c86b89a326
+SHA-256 before the fault: b4c3ca9d316fa3bec3b7da8f49383437a4748e33981bffae90a798c214690a26
+Replace: '      input.end,\n'
+With: ''
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none src/data/up42Proxy.test.mjs
+Exit: 1
+Failed tests: 1
+[up42-source-021] starts a new search when only the end date changes
+Result: KILLED
+
+M34 server/providers/up42.js
+HEAD: 15458d852bfd0f78f80fc45e604f15c86b89a326
+SHA-256 before the fault: b4c3ca9d316fa3bec3b7da8f49383437a4748e33981bffae90a798c214690a26
+Replace: '    let result = fromStore(id);'
+With: '    let result = await fromStore(id);'
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none src/data/up42Proxy.test.mjs
+Exit: 1
+Failed tests: 1
+[up42-source-025] starts one search for two simultaneous store misses
+Result: KILLED
+
+M35 server/providers/up42/auth.js
+HEAD: 15458d852bfd0f78f80fc45e604f15c86b89a326
+SHA-256 before the fault: 1536cda1a3f71561303a5e9e382359fa31693afe178f6b10ff1b4ce541f74bb1
+Replace: '          await response.body?.cancel();'
+With: '          void response.body;'
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none '--test-name-pattern=\[up42-source-026\] discards an error body' src/data/up42Upstream.test.mjs
+Exit: 1
+Failed tests: 8
+[up42-source-026] discards an error body case 0 with cancel failure false
+[up42-source-026] discards an error body case 0 with cancel failure true
+[up42-source-026] discards an error body case 1 with cancel failure false
+[up42-source-026] discards an error body case 1 with cancel failure true
+[up42-source-026] discards an error body case 2 with cancel failure false
+[up42-source-026] discards an error body case 2 with cancel failure true
+[up42-source-026] discards an error body case 3 with cancel failure false
+[up42-source-026] discards an error body case 3 with cancel failure true
+Result: KILLED
+
+M36 server/providers/up42/validate.js
+HEAD: 15458d852bfd0f78f80fc45e604f15c86b89a326
+SHA-256 before the fault: dc04f1675e5d9c040e5db7d5fe33d5d835c07b464c89da223b2fcefb40bd2ab6
+Replace: '      if (total > MAX_BODY_BYTES * 16) return null;'
+With: '      if (total > MAX_BODY_BYTES) return null;'
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none '--test-name-pattern=\[up42-source-027\] gives an HTTP client' src/data/up42Proxy.test.mjs
+Exit: 1
+Failed tests: 1
+[up42-source-027] gives an HTTP client 400 for a body above the cap
+Result: KILLED
+
+M37 server/providers/up42/auth.js
+HEAD: 15458d852bfd0f78f80fc45e604f15c86b89a326
+SHA-256 before the fault: 1536cda1a3f71561303a5e9e382359fa31693afe178f6b10ff1b4ce541f74bb1
+Replace: "    if (!result.ok && result.kind === 'unauthorized') {"
+With: '    if (false) {'
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none '--test-name-pattern=\[up42-source-013\] uses one new login' src/data/up42Proxy.test.mjs
+Exit: 1
+Failed tests: 1
+[up42-source-013] uses one new login after an API 401 then stops
+Result: KILLED
+
+M38 server/providers/up42/auth.js
+HEAD: 15458d852bfd0f78f80fc45e604f15c86b89a326
+SHA-256 before the fault: 1536cda1a3f71561303a5e9e382359fa31693afe178f6b10ff1b4ce541f74bb1
+Replace: '        } catch {\n          // A cancel error must not change the fixed failure.\n        }'
+With: "        } catch {\n          throw new Error('test cancel failure');\n        }"
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none '--test-name-pattern=\[up42-source-026\] discards an error body case 0 with cancel failure true' src/data/up42Upstream.test.mjs
+Exit: 1
+Failed tests: 1
+[up42-source-026] discards an error body case 0 with cancel failure true
+Result: KILLED
+
+M39 server/providers/up42/validate.js
+HEAD: 15458d852bfd0f78f80fc45e604f15c86b89a326
+SHA-256 before the fault: dc04f1675e5d9c040e5db7d5fe33d5d835c07b464c89da223b2fcefb40bd2ab6
+Replace: '      if (total > MAX_BODY_BYTES * 16) return null;'
+With: '      if (total > MAX_BODY_BYTES * 17) return null;'
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none '--test-name-pattern=\[up42-source-027\] discards bytes' src/data/up42Input.test.mjs
+Exit: 1
+Failed tests: 1
+[up42-source-027] discards bytes through 65536 and stops above that size
+Result: KILLED

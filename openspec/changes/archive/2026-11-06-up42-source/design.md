@@ -24,11 +24,15 @@ The date window includes both dates, so 92 days means a difference of at most 91
 The steps are method, same site, rate limit, body, box, area, dates, options, credentials, store and daily count.
 Collection membership needs the fetched list and occurs within the counted search.
 
+After the body exceeds 4096 bytes, the reader discards bytes through the end or until the total exceeds 65536 bytes.
+This lets the route send 400 for a body above the cap but below the hard stop.
+
 ### D2: Credentials and transport
 
 `auth.js` builds only fixed UP42 URLs and sends no redirect.
 It reads at most 4194304 bytes and keeps each timer active through the response body.
 Each call has a time limit of 15000 ms.
+The client cancels each error body before it clears the timer. It ignores errors from cancel.
 
 The token cache expires 60 seconds before the token lifetime ends.
 Concurrent requests share one login. A refused API token allows one new login and one retry.
@@ -61,8 +65,10 @@ The route gives no raw upstream document or URL.
 The store keeps at most 32 good answers for less than 600000 ms.
 Its key includes box, dates, cloud limit and collection names.
 Identical requests share one search that is in flight. Failures do not enter the store.
+
+The route checks the store and claims a new search in the same tick, before it waits.
 The daily count increases before the upstream work starts and resets on the next UTC day.
-The credential check precedes the store, so missing credentials cannot use a kept answer.
+The route checks the credentials before it reads the store. A request without credentials cannot use a kept answer.
 
 ## Files and measures
 

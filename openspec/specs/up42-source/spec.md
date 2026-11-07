@@ -48,8 +48,8 @@ Origin: spec-first
 #### Scenario: Same site `up42-source-004`
 
 - **WHEN** send a POST from another origin or with proxy headers or another content type
-- **THEN** the route gives 403 with error cross_origin and makes no upstream call
-- **AND** matching HTTP and HTTPS origins pass with their corresponding socket protocol
+- **THEN** the route gives 403 with the error cross_origin and makes no upstream call
+- **AND** HTTP and HTTPS origins pass when each origin matches the request host and socket protocol
 
 ### Requirement: Rate limit
 
@@ -60,7 +60,7 @@ Origin: spec-first
 #### Scenario: Rate limit `up42-source-005`
 
 - **WHEN** send seven admitted requests in one minute
-- **THEN** the seventh gives 429 with error rate_limited and Retry-After 60
+- **THEN** the seventh gives 429 with the error rate_limited and Retry-After 60
 - **AND** bad bodies and kept answers consume the limit, and refused origins do not
 
 ### Requirement: Body
@@ -72,8 +72,14 @@ Origin: spec-first
 #### Scenario: Body `up42-source-006`
 
 - **WHEN** send invalid JSON, another body type, an unknown key, excess bytes or a broken body stream
-- **THEN** the route gives 400 with error bad_body
+- **THEN** the route gives 400 with the error bad_body
 - **AND** a body of exactly 4096 bytes passes this step
+
+#### Scenario: Excess body response `up42-source-027`
+
+- **WHEN** an HTTP client sends more than 4096 bytes but no more than 65536 bytes
+- **THEN** the route discards the excess bytes and gives 400 with the error bad_body
+- **AND** the reader returns null when the total exceeds 65536 bytes
 
 ### Requirement: Box
 
@@ -84,7 +90,7 @@ Origin: spec-first
 #### Scenario: Box `up42-source-007`
 
 - **WHEN** check the box
-- **THEN** invalid boxes give 400 with error bad_bbox
+- **THEN** invalid boxes give 400 with the error bad_bbox
 - **AND** the limits include longitude -180 and 180 and latitude -90 and 90
 
 ### Requirement: Area
@@ -96,7 +102,7 @@ Origin: spec-first
 #### Scenario: Area `up42-source-008`
 
 - **WHEN** send a box above the area limit
-- **THEN** the route gives 400 with error area_too_large and maxKm2 2500 before the date check
+- **THEN** the route gives 400 with the error area_too_large and maxKm2 2500 before the date check
 - **AND** a smaller box passes
 
 ### Requirement: Dates
@@ -108,7 +114,7 @@ Origin: spec-first
 #### Scenario: Dates `up42-source-009`
 
 - **WHEN** check the date window
-- **THEN** invalid dates give 400 with error bad_dates
+- **THEN** invalid dates give 400 with the error bad_dates
 - **AND** 92 inclusive days, one day and an end on the current UTC date pass
 
 ### Requirement: Options
@@ -120,7 +126,7 @@ Origin: spec-first
 #### Scenario: Options `up42-source-010`
 
 - **WHEN** send optional filters
-- **THEN** bad forms give 400 with error bad_options
+- **THEN** bad forms give 400 with the error bad_options
 - **AND** absent filters stay absent and each selected collection must exist in the fetched map or give bad_collections with 400
 
 ### Requirement: Credential gate
@@ -132,7 +138,7 @@ Origin: spec-first
 #### Scenario: Credential gate `up42-source-011`
 
 - **WHEN** remove either credential from a server with a kept answer
-- **THEN** the route gives 503 with error no_credentials and keyRequired true
+- **THEN** the route gives 503 with the error no_credentials and keyRequired true
 - **AND** the route makes no upstream call
 
 ### Requirement: Password grant
@@ -145,7 +151,7 @@ Origin: spec-first
 
 - **WHEN** request a token with fake credentials
 - **THEN** the body sets grant_type to password and client_id to up42-api with the form content type
-- **AND** token status 400 or 401 gives 403 with error credentials_rejected and keyRejected true
+- **AND** token status 400 or 401 gives 403 with the error credentials_rejected and keyRejected true
 
 ### Requirement: Token cache
 
@@ -169,7 +175,7 @@ Origin: spec-first
 
 - **WHEN** read the collection list
 - **THEN** the map selects the HOST role and the THUMBNAIL_AVAILABLE integration
-- **AND** invalid rows are skipped, host names must match ^[a-z0-9][a-z0-9-]{0,63}$ and an empty or invalid list gives upstream_failed
+- **AND** the client skips invalid rows, host names must match ^[a-z0-9][a-z0-9-]{0,63}$ and an empty or invalid list gives upstream_failed
 
 ### Requirement: Host search
 
@@ -219,6 +225,12 @@ Origin: spec-first
 - **THEN** the client gives fixed failure names without the upstream error text
 - **AND** the timer clears only after the body ends and an invalid token document gives upstream_failed
 
+#### Scenario: Error body discard `up42-source-026`
+
+- **WHEN** a non-200 response has a body that does not end
+- **THEN** the client cancels the body before it clears the timer and the call ends with the fixed failure
+- **AND** a cancel error does not change the fixed failure
+
 ### Requirement: Scene fields
 
 The route MUST give only the specified scene fields from the named upstream fields.
@@ -255,6 +267,12 @@ Origin: spec-first
 - **THEN** only identical current answers use cached true and no new daily count
 - **AND** expired answers and changed filters start new work, the oldest excess answer leaves the store, and failures do not enter it
 
+#### Scenario: Concurrent identical requests `up42-source-025`
+
+- **WHEN** two identical requests miss the store at the same time
+- **THEN** the route starts one upstream search and adds one daily count
+- **AND** both requests receive the same scenes and the second answer has cached true
+
 ### Requirement: Daily count
 
 The route MUST count each new search before its first upstream call against a UTC daily limit from 1 to 1000.
@@ -264,7 +282,7 @@ Origin: spec-first
 #### Scenario: Daily count `up42-source-022`
 
 - **WHEN** reach the daily limit with good or failed searches
-- **THEN** a new search gives 429 with error budget, used and limit, while a kept answer still passes
+- **THEN** a new search gives 429 with the error budget and the fields used and limit, while a kept answer still passes
 - **AND** the default is 20 for invalid settings and the next UTC day starts a new count
 
 ### Requirement: Secret output

@@ -184,3 +184,20 @@ test('[up42-source-009] refuses a date with a final line break', () => {
   refuse(good({ start: '2026-10-01\n' }), 'bad_dates');
   refuse(good({ end: '2026-10-20\n' }), 'bad_dates');
 });
+
+test('[up42-source-027] discards bytes through 65536 and stops above that size', async () => {
+  const exact = Readable.from([Buffer.alloc(4096), Buffer.alloc(61440)]);
+  assert.equal(await readBodyText(exact), null);
+  assert.equal(exact.readableEnded, true);
+  const reads = [];
+  const excess = (async function* () {
+    reads.push(65536);
+    yield Buffer.alloc(65536);
+    reads.push(1);
+    yield Buffer.alloc(1);
+    reads.push('unwanted');
+    yield Buffer.alloc(1);
+  })();
+  assert.equal(await readBodyText(excess), null);
+  assert.deepEqual(reads, [65536, 1]);
+});

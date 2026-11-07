@@ -1,45 +1,47 @@
 Command: cd /home/ianblenke/docker/gev-work/up42 && python3 - (host check record).
-At the host snapshot, HEAD is 69d3e674df2775b372e6f6d2a9c9ae71a8729046.
+At the host snapshot, HEAD is 15458d852bfd0f78f80fc45e604f15c86b89a326.
 The source and tests have changes after HEAD.
 
-The first test command ran before the new provider files existed.
-It gave four failed test files with ERR_MODULE_NOT_FOUND.
-No code existed yet for those imports.
+host-run.txt records the final host test command and its output.
+At that snapshot, 216 tests pass, 0 fail, 0 cancel and 0 skip.
+There are 27 scenario IDs and 216 unique expanded test titles.
+The change adds 13 tests after the 203 tests at HEAD.
+All six provider code files have 100 percent line, branch and function coverage.
+The host uses Node v26.13.0. This is not the calibrated Node image.
 
-The final host command and its output are in host-run.txt.
-At that snapshot, 203 new tests pass with no failed test.
-The report has 24 scenario IDs and 203 unique test titles.
-After the ratchet run 1 correction, the six new code files have 100 percent line, branch and function coverage at the host snapshot.
-instrument.txt records the earlier one-space range from V8, which the correction of auth.js removed.
+faults.txt keeps the 32 earlier fault records with their original snapshot.
+It adds seven new fault records, M33 through M39, for this correction.
+Each new fault fails its named test. M35 fails all eight error body tests.
+M33 removes input.end from the store key and fails only the end date test in the complete proxy suite.
+M34 adds a wait before the search claim and fails only scenario 025 in the complete proxy suite.
+Each fault runs alone. The runner restores the source after each test command.
+source-snapshot.txt records the SHA-256 of the final source and test files.
 
-faults.txt records 32 named faults. A named test fails for each fault. No fault survives.
-Each fault changes one source file. The runner restores that file after the command.
-source-snapshot.txt gives the SHA-256 of each source and test file after the run.
-changed-lines.txt records a hit for each of the two added lines in local.js.
+The first correction test command used process isolation and showed only file failures.
+The next command used --test-isolation=none and showed each test result.
+The sandbox blocked the first HTTP listener with EPERM. That run gives no HTTP behavior verdict.
+The later host run had permission for a local socket and passed the HTTP test on 127.0.0.1.
+The old reader gave 400 on this host but did not consume the full request body.
+The HTTP test checks both the body end and the client response.
 
-provider-regression.txt records 309 passed tests for SkyWatch, Planet and SkyFi.
-The command uses only fake fetch functions.
+spec-diff.txt records the comparison of both spec copies.
+Their requirement and scenario sections are identical. The original document headers differ.
+No requirement text line changes from HEAD. The Purpose text stays as it was.
+test-titles.txt records the expanded titles and the word list check.
+The check finds no forbidden word, phrase or -ing form and no title above 25 words.
+correction-search.txt records a final search of the corrected files.
+correction-report.txt records the result for each review item.
+lint-output.txt records the final STE lint command and its output.
+The command exits with status 0 and reports STE: 0 errors, 1286 warnings.
+No change-local warning or QA line appears. The host output copy removes trailing space.
+The cached formatter check passes for all six code files and all four test files.
+Its version is 3.9.10. The repository names version 3.9.6.
 
-Command: node /home/ianblenke/.npm/_npx/b388654678d519d9/node_modules/prettier/bin/prettier.cjs --single-quote --check server/providers/up42.js server/providers/up42/*.js src/data/up42*.test.mjs
-Output: All matched files use Prettier code style!
-The cached formatter is version 3.9.10. The repository names version 3.9.6.
+The older provider-regression.txt and changed-lines.txt records describe their earlier snapshots.
+This correction does not repeat those checks. It does not edit local.js or the other providers.
+The same early body exit exists in server/providers/skywatch/validate.js. That file stays as it was, as requested.
 
-Command: OPENSPEC_TELEMETRY=0 DO_NOT_TRACK=1 openspec validate up42-source
-Output: Change 'up42-source' is valid
-
-Command: node scripts/check-import-directions.mjs
-Output: spawnSync git EPERM
-The command stopped before the end and gave no import verdict.
-The next chained command for layer tokens did not run.
-The package boundary check did not run.
-
-No make command, container, commit, push or live network request ran.
-The calibrated gates, ratchet and two review agents did not run.
-The lead must run these checks before a merge.
-The changelog fragment uses number 0 until the lead has a pull request number.
-
-The diagnostic pipeline to head did not preserve the end of the lint output.
-That pipeline gives no lint verdict.
-The later lint command writes directly to a file and ends with exit status 0.
-Its output states: STE: 0 errors, 1291 warnings.
-The filtered record is in lint-output.txt.
+No make command, container, commit, push or external network request ran in this correction.
+The tests use fake upstream fetch. The HTTP test uses only 127.0.0.1.
+This correction does not read .env.
+No new review agents ran. review.md and the calibrated final gates remain lead work, as requested for SPEC F6.
