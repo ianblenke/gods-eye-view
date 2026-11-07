@@ -24,6 +24,9 @@
 - [x] 1.22 Write the test for `up42-source-022`.
 - [x] 1.23 Write the test for `up42-source-023`.
 - [x] 1.24 Write the test for `up42-source-024`.
+- [x] 1.25 Write the test for `up42-source-025`.
+- [x] 1.26 Write the test for `up42-source-026`.
+- [x] 1.27 Write the test for `up42-source-027`.
 
 ## 2. Write the files
 
