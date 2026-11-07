@@ -2122,11 +2122,11 @@
       "branches": 3,
       "functions": 1,
       "totals": {
-        "lines": 218,
+        "lines": 220,
         "branches": 13,
         "functions": 3
       },
-      "sha": "94415524a8d5e115fe7ca120d7b403a053859a8e1e295a0cf8c3a9791b3208d3",
+      "sha": "e8ca3258b146693e34527fe2c04666bf244e74ab48a337987df9ecce57e63224",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -2392,11 +2392,11 @@
       "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 135,
+        "lines": 139,
         "branches": 25,
         "functions": 10
       },
-      "sha": "e09132ead3fc31c191ba12393505409339a6905887fc2589e841c68f8d92d5cf",
+      "sha": "5e3327218fc3f25bdf968b5d4a1b45ad88713754c9dfee275daffcde7ad3de95",
       "untrue": false,
       "origin": "upstream-sync-5",
       "since": "2026-10-10"
@@ -3142,11 +3142,11 @@
       "branches": 1,
       "functions": 2,
       "totals": {
-        "lines": 664,
+        "lines": 670,
         "branches": 23,
         "functions": 6
       },
-      "sha": "5cc2e9699daad7f52cafa191df62f220a50c2d9228ba375a7257dabab123bbed",
+      "sha": "194c5a32ea2600f044ebd537464f5b509a722c8b7e9f61284baa41d1bffcfac8",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3457,11 +3457,11 @@
       "branches": 26,
       "functions": 0,
       "totals": {
-        "lines": 1126,
+        "lines": 1131,
         "branches": 312,
         "functions": 75
       },
-      "sha": "b84032b85b6786a35a65ad1e1defc4048d93dce22bf46b76cb4bc7412cafb1f6",
+      "sha": "3b5a333a6a354eddb05e971349bbf2fbf743b38baf0995b4e4aa8c1f9397553c",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -11017,11 +11017,11 @@
       "branches": 6,
       "functions": 0,
       "totals": {
-        "lines": 147,
+        "lines": 148,
         "branches": 29,
         "functions": 6
       },
-      "sha": "de064d182f5b6cf4d32c41f170d74207c2d4e0d04a8f2bb7754ef816c01225ae",
+      "sha": "76cca40235756f04da522aade3aa808e32e34af35a896769113b865e0c2a622d",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -11032,11 +11032,11 @@
       "branches": 17,
       "functions": 2,
       "totals": {
-        "lines": 844,
+        "lines": 845,
         "branches": 291,
         "functions": 47
       },
-      "sha": "eda0a8fb347d8c691190170cfd41a7b436942f05669ebee185b1a01279acb2ec",
+      "sha": "1af7c6c070b6ecd4d614a58149f27e76c89cec3e8024d0d44edd6e94b9aa869d",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -11932,11 +11932,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 586,
+        "lines": 587,
         "branches": 45,
         "functions": 21
       },
-      "sha": "bd3516908924174d8b42eecb5c5618dc7ea2a5207cd1d6603c6158ea6dd8347f",
+      "sha": "1f3349e29f81dd9aba43b53b350971ae2a316398a584ba5e27ce18e381a89c9d",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
