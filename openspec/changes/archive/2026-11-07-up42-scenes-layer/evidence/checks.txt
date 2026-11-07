@@ -47,7 +47,7 @@ The PNG has 1 by 1 pixels and 70 bytes. All chunk checksums pass.
 
 Its image data expands to 5 bytes. The first PNG fixture has a bad checksum; the current fixture corrects it.
 
-No browser check runs. The plan and the current fixture are in browser-plan.txt.
+At the worker snapshot, no browser check ran. The lead ran the plan later. The file browser.txt gives the result.
 
 No commit, merge, push, make command, container, Chrome run or live UP42 check runs for this change.
 
@@ -55,4 +55,4 @@ No real .env file is read.
 
 The change stays unarchived. The lead must keep both spec copies identical when the lead archives it.
 
-The browser, archive, calibrated gates and final archive review tasks stay open.
+At the worker snapshot, the browser, archive, calibrated gates and final archive review tasks were open.

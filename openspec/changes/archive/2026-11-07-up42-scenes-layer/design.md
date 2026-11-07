@@ -70,7 +70,7 @@ Measure each new or edited code file with host Node coverage. Record each named 
 
 Run the layer, source, token, UI, app, voice, translation and share test files on host Node.
 
-The lead runs the stored browser plan, calibrated gates, archive and final review steps.
+The lead ran the stored browser plan. The lead also runs the calibrated gates, the archive and the final review steps.
 
 
 ## Purpose at archive time

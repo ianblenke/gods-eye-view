@@ -81,7 +81,7 @@
 - [x] 4.3 Run each named fault.
 - [x] 4.4 Run the host format, import, package, token and STE checks.
 - [x] 4.5 Write the evidence and stored browser plan.
-- [ ] 4.6 The lead checks the layer in the sandboxed browser with a stored answer.
+- [x] 4.6 The lead checks the layer in the sandboxed browser with a stored answer.
 - [x] 4.7 Record the failed test of each fault.
 - [x] 4.8 Check that each added line of an edited code file has coverage.
 

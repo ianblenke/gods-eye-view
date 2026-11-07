@@ -34,11 +34,11 @@ The format, import, package, token and OpenSpec checks pass. STE reports 0 error
 
 The host code review finds no new functional defect. Its final result is FAIL because the coverage target stays open.
 
-The lead browser task, full-file coverage task, archive, ratchet and final gates stay open.
+At the worker snapshot, the lead browser task, the coverage task, the archive, the ratchet and the final gates were open.
 
 The browser-plan.txt record gives three scenes, one dot id, one false thumbnail flag and a valid tiny PNG.
 
-No browser or real-service result is claimed. The change stays uncommitted and unarchived.
+At the worker snapshot, no browser or real-service result existed. The change was uncommitted and unarchived.
 
 Known limits from the proposal:
 

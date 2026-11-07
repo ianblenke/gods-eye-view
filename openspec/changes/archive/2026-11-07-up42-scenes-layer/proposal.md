@@ -56,5 +56,5 @@ It opens no intended coverage gap. The lead must run the calibrated gates before
 - Known limit `image-size`: The byte cap is 1 MiB. The layer does not cap the decoded pixel count.
 - Known limit `ui-texts`: The inherited labels "Searching…" and "Loading the thumbnail…" have words with the suffix -ing.
 - Known limit `untested-settings`: No scenario names the secondary card fields that follow. They are `paintLane`, `details`, `priority`, `protected`, `active`, `interactive`, `collisionGroup`, `zIndex`, `minDistance`, `horizonCull` and `terrainOcclusion`. The limit also applies to the options of `setEntries` and the initial call of `setVisible` with false. It also applies to the 1 MiB cap of the status body.
-- Known limit `visual`: The lead must check the browser with the stored answer.
-- Known limit `qa-twochar-time`: The browser QA script has no run in this change.
+- Known limit `visual`: The lead checked the browser with a stored answer. The file evidence/browser.txt gives the result. No check used the real service.
+- Known limit `qa-twochar-time`: The browser QA script printed two PASS lines and then stopped at its page-load time limit on the machine of the lead. The file evidence/browser.txt gives the run.
