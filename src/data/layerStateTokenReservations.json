@@ -38,5 +38,6 @@
   ["weather-lightning", "l"],
   ["weather-radar", "v"],
   ["weather-satellite", "o"],
+  ["up42-scenes", "04"],
   ["wind", "k"]
 ]

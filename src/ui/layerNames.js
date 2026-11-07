@@ -49,6 +49,7 @@ export const LAYER_NAME_KEYS = Object.freeze({
   'skywatch-scenes': msg('SkyWatch Scenes'),
   'planet-scenes': msg('Planet Scenes'),
   'skyfi-scenes': msg('SkyFi Scenes'),
+  'up42-scenes': msg('UP42 Scenes'),
   beemaps: msg('Bee Maps Frames'),
   'beemaps-bursts': msg('Bee Maps Bursts'),
 });

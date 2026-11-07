@@ -1,0 +1,26 @@
+At the host snapshot of base commit f589cc58480d8239302b70c2b5ce32ea1bc8325d, each changed line below has line coverage in the merged records.
+The six new code files have full coverage in the direct host run.
+The QA script has no changed executable line.
+
+src/app/constructCatalog.js:35
+src/app/constructCatalog.js:151
+src/app/sourceComposition.js:62
+src/app/sourceComposition.js:63
+src/app/sourceComposition.js:64
+src/app/sourceComposition.js:65
+src/data/dataCredits.js:200
+src/data/dataCredits.js:201
+src/data/dataCredits.js:202
+src/data/dataCredits.js:203
+src/data/dataCredits.js:204
+src/data/dataCredits.js:205
+src/data/layerState.js:723
+src/data/layerState.js:724
+src/data/layerState.js:725
+src/data/layerState.js:726
+src/data/layerState.js:727
+src/sources/reference.js:11
+src/sources/reference.js:29
+src/ui/layerNames.js:52
+src/ui/layerPanel.js:62
+src/voice/layerManifest.js:431

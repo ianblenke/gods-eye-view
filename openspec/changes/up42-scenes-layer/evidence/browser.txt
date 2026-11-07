@@ -1,0 +1,3 @@
+At the host snapshot of base commit f589cc58480d8239302b70c2b5ce32ea1bc8325d, no browser check ran.
+The user reserves this check for the lead. Task 4.6 stays open.
+The stored answer, PNG and steps are in browser-plan.txt.

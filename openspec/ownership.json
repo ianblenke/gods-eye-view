@@ -134,6 +134,8 @@
     "src/layers/beemapsBursts/",
     "src/layers/gdacs/",
     "src/layers/skywatchScenes/",
+    "src/layers/up42Scenes/",
+    "src/app/layers/up42Scenes.js",
     "src/layers/sceneLayer/",
     "src/layers/osh/",
     "src/layers/oshControl/",

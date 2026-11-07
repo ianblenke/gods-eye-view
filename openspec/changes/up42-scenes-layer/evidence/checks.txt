@@ -1,0 +1,58 @@
+At the host snapshot of base commit f589cc58480d8239302b70c2b5ce32ea1bc8325d, the branch is up42-scenes-layer.
+
+The work tree has no commit for this change.
+
+The specs precede tests. The first test run fails because the new implementation files do not exist.
+
+The review correction tests also fail before the code corrections.
+
+The new Chinese catalog test fails before the translation keys exist.
+
+
+Host checks:
+
+node scripts/format.mjs --check: exit 0. Checked 1699 source files.
+
+node scripts/check-import-directions.mjs: exit 0. Modules 1151; portable entries 88.
+
+node scripts/check-package-boundaries.mjs: exit 0. Every listed package check completes.
+
+node scripts/check-layer-state-tokens.mjs --base-ref origin/main: exit 0. 40 published, 1 new.
+
+openspec validate up42-scenes-layer --strict: exit 0. The change is valid.
+
+node scripts/spec/gates.mjs lint --change up42-scenes-layer: STE: 0 errors, 1321 warnings.
+
+The warnings include existing prose and the inherited UI labels that the proposal names.
+
+The review agent checks all 133 new test titles against the project word list: no banned word; all titles are unique.
+
+The new delta has 40 scenarios. All 49 IDs in both delta files have task lines.
+
+The osh delta equals the whole current Systems layer requirement, with only count 40 changed to 41.
+
+
+The ledger report lists one existing owned gap: scripts/spec/lib/test-guard.mjs.
+
+It also lists 835 upstream code gaps. This report reads the ledger and does not run tests.
+
+The change does not edit that guard or the ledger. It has no zero-owned-gap verdict.
+
+
+The stored browser answer parses as JSON and keeps three distinct valid scenes.
+
+It keeps the dot id, the false thumbnail flag, both partial flags and the budget 3 of 20.
+
+The PNG has 1 by 1 pixels and 70 bytes. All chunk checksums pass.
+
+Its image data expands to 5 bytes. The first PNG fixture has a bad checksum; the current fixture corrects it.
+
+No browser check runs. The plan and the current fixture are in browser-plan.txt.
+
+No commit, merge, push, make command, container, Chrome run or live UP42 check runs for this change.
+
+No real .env file is read.
+
+The change stays unarchived. The lead must keep both spec copies identical when the lead archives it.
+
+The browser, archive, calibrated gates and final archive review tasks stay open.

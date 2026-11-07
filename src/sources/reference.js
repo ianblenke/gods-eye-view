@@ -8,6 +8,7 @@ import { createBundledCableSource } from '../layers/submarineCables/bundledSourc
 import { createAdsbGnssSource } from '../layers/gnss/source.js';
 import { createGdacsSource } from '../layers/gdacs/source.js';
 import { createSkywatchSource } from '../layers/skywatchScenes/source.js';
+import { createUp42Source } from '../layers/up42Scenes/source.js';
 import { createSceneSource } from '../layers/sceneLayer/source.js';
 
 /** Construct the existing reference feeds independently of application setup. */
@@ -25,5 +26,6 @@ export function createReferenceSources() {
     'skywatch-scenes': createSkywatchSource(),
     'planet-scenes': createSceneSource('planet'),
     'skyfi-scenes': createSceneSource('skyfi'),
+    'up42-scenes': createUp42Source(),
   };
 }

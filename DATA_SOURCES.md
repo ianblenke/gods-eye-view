@@ -198,6 +198,10 @@ The route does not retry 429. Only collections with THUMBNAIL_AVAILABLE give a t
 A LAN client can reach this server without proxy authentication, as with SkyWatch.
 Tests use fake responses from the scout report shapes, with no live call.
 
+The layer "UP42 Scenes" uses the local UP42 routes. A press searches a 48 km box for the last 92 days. The row lists at most 50 scenes with their ids, collections and providers. A selection shows a thumbnail only when the scene permits it.
+
+Partial results have a short note. UP42 terms do not address the display of previews. Use the data for yourself only.
+
 ### UP42 quote facts
 
 Both quote routes stay off until `UP42_QUOTES=true`.
@@ -358,6 +362,8 @@ The layers call only the routes of this app. The credit of "Planet Scenes" has t
 - **Dynamic weather presentation.** While cockpit mode is active, `/api/weather-effects` requests current Open-Meteo observations for the aircraft/camera location, rounds coordinates into 0.1° cache cells, caches results for five minutes, and may retain a stale observation for up to 30 minutes during a transient outage. WMO condition code selects the visual family; observed cloud cover, precipitation, visibility, wind speed, and wind direction bound its strength and motion. Missing or expired weather renders no synthetic atmospheric effect, and normal globe view never renders the weather overlay.
 
 ---
+
+
 
 ## Bundled snapshots
 

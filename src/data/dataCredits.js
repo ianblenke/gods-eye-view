@@ -198,6 +198,12 @@ export const DATA_CREDITS = [
       '<a href="https://skyfi.com/" target="_blank" rel="noopener">skyfi.com</a>',
   },
   {
+    key: 'up42-scenes',
+    html:
+      'Satellite scenes: UP42, through the server of this app. UP42 terms do not address the display of previews. Use the data for yourself only. · ' +
+      '<a href="https://up42.com/" target="_blank" rel="noopener">up42.com</a>',
+  },
+  {
     key: 'beemaps',
     html:
       'Street-level frames: contributor dashcams, through the Bee Maps API · ' +

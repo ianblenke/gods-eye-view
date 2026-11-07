@@ -1,0 +1,47 @@
+At the host snapshot of base commit f589cc58480d8239302b70c2b5ce32ea1bc8325d, coverage uses host Node v26.13.0.
+
+The final direct run uses --experimental-test-coverage and includes only the six new code files.
+
+Its result is 100% lines, 100% branches and 100% functions for each new file.
+
+The table below also merges the completed broad-run V8 records with the repository merge helper.
+
+New code uses only the new layer test records after the review corrections.
+
+These are host measurements. No calibrated coverage gate runs here.
+
+
+File | Lines | Branches | Functions | Line % | Branch % | Function %
+src/app/constructCatalog.js | 220/220 | 10/13 | 2/3 | 100.00 | 76.92 | 66.67
+src/app/layers/up42Scenes.js | 12/12 | 2/2 | 1/1 | 100.00 | 100.00 | 100.00
+src/app/sourceComposition.js | 139/139 | 22/25 | 10/10 | 100.00 | 88.00 | 100.00
+src/data/dataCredits.js | 647/670 | 32/33 | 4/6 | 96.57 | 96.97 | 66.67
+src/data/layerState.js | 1107/1131 | 295/321 | 75/75 | 97.88 | 91.90 | 100.00
+src/layers/up42Scenes/index.js | 406/406 | 132/132 | 24/24 | 100.00 | 100.00 | 100.00
+src/layers/up42Scenes/messages.js | 87/87 | 27/27 | 5/5 | 100.00 | 100.00 | 100.00
+src/layers/up42Scenes/model.js | 116/116 | 38/38 | 12/12 | 100.00 | 100.00 | 100.00
+src/layers/up42Scenes/records.js | 102/102 | 74/74 | 8/8 | 100.00 | 100.00 | 100.00
+src/layers/up42Scenes/source.js | 182/182 | 61/61 | 16/16 | 100.00 | 100.00 | 100.00
+src/sources/reference.js | 31/31 | 2/2 | 1/1 | 100.00 | 100.00 | 100.00
+src/ui/layerNames.js | 148/148 | 23/29 | 6/6 | 100.00 | 79.31 | 100.00
+src/ui/layerPanel.js | 819/845 | 274/291 | 45/47 | 96.92 | 94.16 | 95.74
+src/voice/layerManifest.js | 587/587 | 43/45 | 21/21 | 100.00 | 95.56 | 100.00
+
+The requested full-file target is not met for seven existing registration modules.
+
+Their gaps include Local ADS-B, transit credits, general registry guards, other panel controls and voice queries.
+
+The change does not add false UP42 records to reach those paths.
+
+Task 4.8 stays open. No coverage ignore, adopt record or ledger change hides these gaps.
+
+The QA script has only a comment change. Its executable text stays the same, and no browser run measures it.
+
+
+Uncovered lines of the existing registration modules:
+
+src/data/dataCredits.js: 598, 599, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 661, 662, 663, 664, 665, 666, 667, 668, 669, 670
+
+src/data/layerState.js: 517, 518, 532, 533, 794, 795, 862, 863, 869, 870, 886, 887, 903, 904, 906, 907, 912, 913, 916, 917, 919, 920, 1122, 1123
+
+src/ui/layerPanel.js: 367, 423, 424, 425, 426, 427, 428, 429, 529, 530, 531, 532, 611, 612, 613, 736, 737, 738, 739, 740, 741, 742, 831, 832, 833, 834

@@ -1,0 +1,83 @@
+Browser plan. Base commit f589cc58480d8239302b70c2b5ce32ea1bc8325d with the UP42 Scenes change.
+
+No browser check ran at this host snapshot. The lead must record the result in browser.txt.
+
+The lead checks the layer in the sandboxed browser with a stored answer.
+
+Use a new profile and a sandboxed browser. Keep all routes on the local test server.
+
+Do not contact UP42. Do not use real credentials. Give the status route the stored answer {"configured":true}.
+
+Keep counters for status, search and thumbnail requests. Record the browser version and sandbox state.
+
+Use the date 2026-11-07 on the test clock and a view centre at longitude 10, latitude 60.
+
+Open a share link with v=2 and l=04. Check that UP42 Scenes is enabled in Cameras after SkyFi Scenes.
+
+Check the hint and the enabled chip Search scenes here. Expect one status request and no search or thumbnail request.
+
+Move the view and wait. Expect no search.
+
+Press once. Expect exactly one POST to /api/up42/scenes.
+
+The body has only box, start and end. Expect the box [9.568326,59.784163,10.431674,60.215837].
+
+Expect start 2026-08-08 and end 2026-11-07. Give the search the stored scenes answer below.
+
+Check three footprints and three distinct list items. Check ids, collections, providers, dates, cloud percentages and resolutions.
+
+Check the note UP42 results are partial and the budget text searches today 3 of 20.
+
+Select fixture.a-1. Expect one GET to /api/up42/thumbnail/fixture.a-1.
+
+Give that request the PNG below with media type image/png. Check one card and a selected footprint with fill.
+
+Select fixture-b. Expect no thumbnail request and the message UP42 has no thumbnail for this scene.
+
+Check that the old card disappears. Select fixture-c with a delayed image response, then select fixture.a-1.
+
+Let the delayed response arrive. Check that no old card replaces the selected card.
+
+Give a new thumbnail request status 404 with {"error":"thumbnails_off"}. Check the local message and no card.
+
+Give a new search status 429 with {"error":"budget","used":20,"limit":20}. Check both counts and keep the old footprints.
+
+Change the status answer to {"configured":false}. Check the disabled chip and both credential variable names.
+
+Disable the layer. Check that footprints and cards disappear and token 04 leaves the share link.
+
+Open the first share link in a new page. Check the enabled layer, the hint, no list and no search.
+
+Run the two-character QA plan with fixture token 05. Record every step that does not finish.
+
+Write observations and request counts in browser.txt. Do not mark task 4.6 complete before this check ends.
+
+Stored scenes answer, JSON data:
+{
+  "source": "UP42",
+  "scenes": [
+    {
+      "id": "fixture.a-1", "host": "host-a", "collection": "optical-a",
+      "start": "2026-11-06T08:03:00.000Z", "end": "2026-11-06T08:03:05.000Z",
+      "footprint": {"type":"Polygon","coordinates":[[[9.9,59.9],[10.1,59.9],[10.1,60.1],[9.9,60.1],[9.9,59.9]]]},
+      "resolutionM": 0.5, "provider": "Airbus", "cloudPercent": 3, "thumbnail": true
+    },
+    {
+      "id": "fixture-b", "host": "host-b", "collection": "optical-b",
+      "start": "2026-10-12T10:00:00.000Z", "end": "2026-10-12T10:01:00.000Z",
+      "footprint": {"type":"Polygon","coordinates":[[[10,60],[10.2,60],[10.2,60.15],[10,60.15],[10,60]]]},
+      "resolutionM": 3, "provider": "Planet", "cloudPercent": 12, "thumbnail": false
+    },
+    {
+      "id": "fixture-c", "host": "host-c", "collection": "radar-c",
+      "start": "2026-09-02T14:00:00.000Z", "end": "2026-09-02T14:02:00.000Z",
+      "footprint": {"type":"Polygon","coordinates":[[[9.8,59.85],[10.05,59.85],[10.05,60.05],[9.8,60.05],[9.8,59.85]]]},
+      "resolutionM": 1, "provider": "Capella", "cloudPercent": null, "thumbnail": true
+    }
+  ],
+  "truncated": true, "failedHosts": ["host-d"], "dropped": 2,
+  "count": 3, "cached": false, "budget": {"used":3,"limit":20}
+}
+
+Stored PNG, base64 data:
+iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGNgqP//HwAEfwJ+n8GAKAAAAABJRU5ErkJggg==

@@ -2680,7 +2680,13 @@
       "src/voice/geminiCaptureWorklet.js",
       "src/ui/statusBadge.js",
       "src/sceneCommandRelease.js",
-      "src/scopeMaskPolicy.js"
+      "src/scopeMaskPolicy.js",
+      "src/app/layers/up42Scenes.js",
+      "src/layers/up42Scenes/index.js",
+      "src/layers/up42Scenes/source.js",
+      "src/layers/up42Scenes/records.js",
+      "src/layers/up42Scenes/model.js",
+      "src/layers/up42Scenes/messages.js"
     ],
     "external": [
       "hls.js",
@@ -3308,7 +3314,13 @@
       "src/layers/streetLevel/providers/mapillary/policy.js",
       "src/data/geoImportImages.js",
       "src/data/geoImportPins.js",
-      "src/data/geoFileImport.js"
+      "src/data/geoFileImport.js",
+      "src/app/layers/up42Scenes.js",
+      "src/layers/up42Scenes/index.js",
+      "src/layers/up42Scenes/source.js",
+      "src/layers/up42Scenes/records.js",
+      "src/layers/up42Scenes/model.js",
+      "src/layers/up42Scenes/messages.js"
     ],
     "external": [
       "hls.js",
@@ -3769,7 +3781,9 @@
       "src/layers/submarineCables/bundledSource.js",
       "src/layers/gnss/source.js",
       "src/layers/airQuality/model.js",
-      "src/layers/airQuality/source.js"
+      "src/layers/airQuality/source.js",
+      "src/layers/up42Scenes/source.js",
+      "src/layers/up42Scenes/records.js"
     ],
     "external": []
   },

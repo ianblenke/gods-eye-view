@@ -59,6 +59,7 @@ const PANEL_GROUPS = [
       'skywatch-scenes',
       'planet-scenes',
       'skyfi-scenes',
+      'up42-scenes',
       'street-level',
       'beemaps',
       'beemaps-bursts',
