@@ -1,0 +1,72 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n 'thumbnailHostOf|up42SourcePlugins|up42ThumbnailProxy|isSearchId|MAX_IMAGE_BYTES|UP42_THUMBNAILS|up42-thumbnails/|up42Thumbnails.test.mjs' server/providers/up42.js server/providers/up42/auth.js server/providers/up42/normalize.js server/providers/local.js server/providers/up42-thumbnails openspec/ownership.json src/data/up42Thumbnails.test.mjs
+At the host snapshot, HEAD is 7d4d1643b92767344587435ebf12116d2949a25e.
+Exit: 0
+src/data/up42Thumbnails.test.mjs:5:import { up42SourcePlugins } from '../../server/providers/up42-thumbnails/plugins.js';
+src/data/up42Thumbnails.test.mjs:6:import { up42ThumbnailProxy } from '../../server/providers/up42-thumbnails/thumbnails.js';
+src/data/up42Thumbnails.test.mjs:8:import { isSearchId } from '../../server/providers/up42/normalize.js';
+src/data/up42Thumbnails.test.mjs:24:  UP42_THUMBNAILS: 'true',
+src/data/up42Thumbnails.test.mjs:156:        up42ThumbnailProxy({
+src/data/up42Thumbnails.test.mjs:160:          thumbnailHostOf: lookup,
+src/data/up42Thumbnails.test.mjs:163:    : up42SourcePlugins(options);
+src/data/up42Thumbnails.test.mjs:202:    assert.equal(isSearchId(id), false);
+src/data/up42Thumbnails.test.mjs:204:  assert.equal(isSearchId(undefined), false);
+src/data/up42Thumbnails.test.mjs:205:  assert.equal(isSearchId(1), false);
+src/data/up42Thumbnails.test.mjs:243:  process.env.UP42_THUMBNAILS = 'false';
+src/data/up42Thumbnails.test.mjs:289:    s.env.UP42_THUMBNAILS = value;
+src/data/up42Thumbnails.test.mjs:292:  s.env.UP42_THUMBNAILS = 'true';
+src/data/up42Thumbnails.test.mjs:337:  assert.equal(s.plugins[0].thumbnailHostOf('scene.1'), null);
+src/data/up42Thumbnails.test.mjs:339:  assert.equal(s.plugins[0].thumbnailHostOf('scene.1'), 'oneatlas');
+src/data/up42Thumbnails.test.mjs:342:  assert.equal(s.plugins[0].thumbnailHostOf('scene.1'), 'planet');
+src/data/up42Thumbnails.test.mjs:350:  assert.equal(s.plugins[0].thumbnailHostOf('scene.1'), 'planet');
+src/data/up42Thumbnails.test.mjs:353:  assert.equal(s.plugins[0].thumbnailHostOf('scene.1'), null);
+src/data/up42Thumbnails.test.mjs:373:  const bare = harness([up42ThumbnailProxy()]);
+src/data/up42Thumbnails.test.mjs:376:    up42ThumbnailProxy({ env: { UP42_THUMBNAILS: 'true' } }),
+src/data/up42Thumbnails.test.mjs:395:  assert.equal(s.plugins[0].thumbnailHostOf('i0'), 'oneatlas');
+src/data/up42Thumbnails.test.mjs:397:  assert.equal(s.plugins[0].thumbnailHostOf('i0'), null);
+src/data/up42Thumbnails.test.mjs:404:  assert.equal(s.plugins[0].thumbnailHostOf('i0'), null);
+src/data/up42Thumbnails.test.mjs:405:  assert.equal(s.plugins[0].thumbnailHostOf('i1'), 'oneatlas');
+src/data/up42Thumbnails.test.mjs:1011:    ...(await readdir(new URL('up42-thumbnails/', root)))
+src/data/up42Thumbnails.test.mjs:1013:      .map((name) => `up42-thumbnails/${name}`),
+src/data/up42Thumbnails.test.mjs:1015:  assert.equal(paths.includes('up42-thumbnails/thumbnails.js'), true);
+src/data/up42Thumbnails.test.mjs:1016:  assert.equal(paths.includes('up42-thumbnails/plugins.js'), true);
+server/providers/local.js:39:import { up42SourcePlugins } from './up42-thumbnails/plugins.js';
+server/providers/local.js:71:    ...up42SourcePlugins(),
+server/providers/up42/normalize.js:3:export const isSearchId = (value) =>
+server/providers/up42/normalize.js:48:  if (!isSearchId(p.id)) return null;
+server/providers/up42/auth.js:6:  MAX_IMAGE_BYTES,
+server/providers/up42/auth.js:11:import { isSearchId } from './normalize.js';
+server/providers/up42/auth.js:62:          MAX_IMAGE_BYTES,
+server/providers/up42/auth.js:184:    if (typeof host !== 'string' || !HOST.test(host) || !isSearchId(id))
+server/providers/up42.js:84:  function thumbnailHostOf(id) {
+server/providers/up42.js:149:      thumbnailHostOf,
+openspec/ownership.json:29:    "server/providers/up42-thumbnails/",
+openspec/ownership.json:91:    "src/data/up42Thumbnails.test.mjs",
+server/providers/up42-thumbnails/plugins.js:3:import { up42ThumbnailProxy } from './thumbnails.js';
+server/providers/up42-thumbnails/plugins.js:6:export function up42SourcePlugins(options = {}) {
+server/providers/up42-thumbnails/plugins.js:18:    up42ThumbnailProxy({
+server/providers/up42-thumbnails/plugins.js:21:      thumbnailHostOf: scenes.thumbnailHostOf,
+server/providers/up42-thumbnails/thumbnails.js:2:import { isSearchId } from '../up42/normalize.js';
+server/providers/up42-thumbnails/thumbnails.js:25:export function up42ThumbnailProxy({
+server/providers/up42-thumbnails/thumbnails.js:29:  thumbnailHostOf = () => null,
+server/providers/up42-thumbnails/thumbnails.js:56:    if (!isSearchId(id)) return next();
+server/providers/up42-thumbnails/thumbnails.js:59:    if (env.UP42_THUMBNAILS !== 'true')
+server/providers/up42-thumbnails/thumbnails.js:63:    const host = thumbnailHostOf(id);
+
+Command: cd /home/ianblenke/docker/gev-work/up42 && git diff --stat -- src/data/up42Proxy.test.mjs src/data/up42Scenes.test.mjs src/data/up42Upstream.test.mjs src/data/up42Input.test.mjs openspec/specs
+At the host snapshot, HEAD is 7d4d1643b92767344587435ebf12116d2949a25e.
+Exit: 0
+Output: empty.
+Command: cd /home/ianblenke/docker/gev-work/up42 && git diff --check
+At the host snapshot, HEAD is 7d4d1643b92767344587435ebf12116d2949a25e.
+Exit: 0
+Output: empty.
+Source files: 6.
+server/providers/up42.js
+server/providers/up42/auth.js
+server/providers/up42/normalize.js
+server/providers/up42/same-site.js
+server/providers/up42/upstream.js
+server/providers/up42/validate.js
+Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n '/v2/orders|quotation|PATCH|download-url|eulas|execution' server/providers/up42.js server/providers/up42/auth.js server/providers/up42/normalize.js server/providers/up42/same-site.js server/providers/up42/upstream.js server/providers/up42/validate.js
+Exit: 1
+Output: empty.

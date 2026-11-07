@@ -1,0 +1,103 @@
+# @purpose Check the UP42 thumbnail faults.
+# @covers pending:up42-thumbnails
+# @run python3 openspec/changes/up42-thumbnails/evidence/instrument.txt
+# @needs Host Node and the UP42 source tests.
+from pathlib import Path
+import subprocess,hashlib,re,datetime,json
+root=Path('/home/ianblenke/docker/gev-work/up42')
+evidence=root/'openspec/changes/up42-thumbnails/evidence'
+code='server/providers/'
+T=code+'up42-thumbnails/thumbnails.js'; A=code+'up42/auth.js'; P=code+'up42.js'; N=code+'up42/normalize.js'; G=code+'up42-thumbnails/plugins.js'; L=code+'local.js'
+faults=[]
+def add(path,old,new,pattern,label): faults.append((path,old,new,pattern,label))
+add(T,'if (!isSearchId(id)) return next();','if (false) return next();','checks the path','accept each invalid id')
+add(G, 'thumbnailHostOf: scenes.thumbnailHostOf', 'thumbnailHostOf: () => null', 'shares scenes through the local', 'disconnect the scene lookup')
+add(G, '      ...options,\n      client,', '      ...options,\n      env: {},\n      client,', 'shares scenes through the local', 'ignore the process variable')
+add(G, '      client,\n      thumbnailHostOf:', '      client: createClient({ env: process.env, fetchImpl: fetch, now: Date.now, setTimer: setTimeout, clearTimer: clearTimeout, ...options }),\n      thumbnailHostOf:', 'shares scenes through the local', 'give thumbnails a separate token cache')
+add(T,"if (!isSameSite(req))",'if (false)','checks the site before','omit the site check')
+add(T,"if (req.method !== 'GET')",'if (false)','accepts only GET','omit the method check')
+add(T,"if (env.UP42_THUMBNAILS !== 'true')",'if (false)','keeps each other variable','omit the variable check')
+add(T,'windowMs: 60000, max: 30','windowMs: 60000, max: 31','counts kept images','allow request 31')
+add(T,'windowMs: 60000, max: 30','windowMs: 60001, max: 30','counts kept images','hold the rate window too long')
+add(P,'[...store.values()].reverse()','[...store.values()]','selects the newest answer','read the oldest answer first')
+add(P,'if (scene !== undefined)','if (scene !== undefined && scene.thumbnail === true)','selects the newest answer','fall back past a false flag')
+add(P,'kept.entry.scenes.find((row) => row.id === id)','kept.entry.scenes.findLast((row) => row.id === id)','uses the first scene','use the last duplicate scene')
+add(P,'now() - kept.at >= 600000','now() - kept.at > 600000','rejects expired and evicted','accept an answer at expiry')
+add(P,'if (store.size >= 32)','if (store.size >= 33)','rejects expired and evicted','keep 33 scene answers')
+add(T,'thumbnailHostOf = () => null',"thumbnailHostOf = () => 'oneatlas'",'uses the first scene','guess a host without a lookup')
+add(A,"method: 'GET',\n          headers:","method: 'POST',\n          headers:",'sets the exact authenticated GET','use POST for the thumbnail')
+add(A,"redirect: 'error'","redirect: 'follow'",'sets the exact authenticated GET','follow redirects')
+add(A,"Accept: 'image/png, image/jpeg, image/webp'","Accept: 'application/json'",'sets the exact authenticated GET','request JSON')
+add(A,'typeof host !== \'string\' || !HOST.test(host) || !isSearchId(id)','typeof host !== \'string\' || !isSearchId(id)','rejects invalid path parts','omit the host regex')
+add(A,'typeof host !== \'string\' || !HOST.test(host) || !isSearchId(id)','typeof host !== \'string\' || !HOST.test(host)','rejects invalid path parts','omit the id check')
+add(A,'if (inFlight !== null) return inFlight;','if (false) return inFlight;','shares one login and uses','omit login single flight')
+add(A,'value.expires_in - 60','value.expires_in - 59','shares one login and uses','reuse a token at its boundary')
+add(A,"if (!result.ok && result.kind === 'unauthorized')",'if (false)','retries one API refusal case','omit the 401 retry')
+add(A,"? failed('credentials_rejected')","? failed('upstream_failed')",'retries one API refusal case 1','misname the second 401')
+add(A,'if (!token.ok) return token;',"if (!token.ok) return failed('upstream_failed');",'stops after a refused','misname a refused login')
+add(A,'return { ok: true, type, bytes };',"return failed('bad_upstream');",'accepts image case|accepts exactly 1048576','refuse each good image')
+add(A,'!hasImageSignature(type, bytes)','false','refuses bad image case [34569]','omit the signature check')
+add(A,'MAX_IMAGE_BYTES,\n          controller.signal','MAX_IMAGE_BYTES + 1,\n          controller.signal','refuses bad image case [78]','accept one excess byte')
+add(A,"return failed('bad_upstream');","return failed('upstream_failed');",'refuses bad image case [012]|cancels a non-image|refuses a non-image','misname an invalid media type')
+add(A,"if (image && response.status === 404) return failed('not_found');","if (false) return failed('not_found');",'names status case 3','misname 404')
+add(T,"return sendJson(res, 403, result.kind, { keyRejected: true });","return sendJson(res, 502, result.kind);",'names status case 4','misname the credential refusal answer')
+add(A,"return failed('upstream_failed');\n      }\n      if (image)","return failed('bad_upstream');\n      }\n      if (image)",'names status case [012567]','misname other statuses')
+add(A,": 'upstream_failed',\n      );",": 'bad_upstream',\n      );",'names transport case','misname a transport failure')
+add(A,'controller.abort(), 15000','controller.abort(), 15001','stops during the','set the wrong timeout')
+add(A,"? 'search_timeout'","? 'upstream_failed'",'stops during the','misname a timeout')
+add(A,'await response.body?.cancel();','void response.body;','discards error bodies','leave error bodies open')
+add(A,"// A cancel error must not change the fixed failure.","throw new Error('test cancel error');",'discards error bodies with cancel failure true|refuses a non-image with body case cancel-error','change the failure after a cancel error')
+add(A,'const bytes = await readResponseBytesCapped(','clearTimer(timer);\n        const bytes = await readResponseBytesCapped(','keeps the timer through all image','clear the image timer before the body')
+add(T,"'X-Content-Type-Options': 'nosniff'","'X-Content-Type-Options': 'sniff'",'sends bytes with only its own','send the wrong image headers')
+add(T,'now() - kept.at < 600000','now() - kept.at <= 600000','uses the image age','accept an image at expiry')
+add(T,'JSON.stringify([host, id])','JSON.stringify([id])','keys images by both','omit the host from the image key')
+add(T,'if (store.size >= 32)','if (store.size >= 33)','removes the oldest of 33','keep 33 images')
+add(T,'      store.delete(key);','      void key;','makes an expired image newest','do not refresh image order')
+add(T,'let result = fromStore(key);','let result = await fromStore(key);','claims simultaneous requests','yield before the image claim')
+add(T,'    if (result.ok) {','    if (true) {','claims simultaneous requests with success false','cache a failed image')
+add(A,"!isSafe(Buffer.from(bytes).toString('utf8'))",'false','keeps all fake secrets|refuses a previous secret','send secrets in image bytes')
+add(A,'    secrets.add(value.access_token);','    void value.access_token;','refuses a previous secret','forget previous bearer tokens')
+add(A,'`${API}/catalog/${host}/image/${id}/thumbnail`','`${API}/catalog/${host}/image/${id}/quicklook`','allows only the four literal','use a different image endpoint')
+add(T,'/** Checked thumbnails','/** /v2/orders Checked thumbnails','allows only the four literal','add a forbidden source literal')
+add(P,'now() - kept.at >= 600000','now() - kept.at > 600000','refuses an expired scene with a fresh image','accept an expired scene with fresh image bytes')
+add(P,'  function thumbnailHostOf(id) {','  function thumbnailHostOf(id) {\n    count.used++;','uses the image age and no daily count','count each thumbnail as a daily search')
+add(A,'return { ok: true, type, bytes };',"console.log(env.UP42_PASSWORD); return { ok: true, type, bytes };",'keeps all fake secrets out of output','write a password to the console')
+add(A,'if (!token.ok) return token;',"if (!token.ok) return failed('upstream_failed');",'stops after a refused second login','misname the second refused login')
+add(A,'await response.body?.cancel();','void response.body;','cancels a non-image body before it reads bytes','leave a non-image body open')
+add(A,'`${API}/catalog/${host}/image/${id}/thumbnail`','`${API}/catalog/${host}/image/${id}/quicklook`','allows only the four literal','use a different image endpoint after the title correction')
+add(T,'/** Checked thumbnails','/** /v2/orders Checked thumbnails','allows only the four literal','add a forbidden literal after the title correction')
+add(P,'if (store.size >= 32)','if (store.size >= 33)','rejects expired and evicted','keep 33 scene answers with fresh image bytes')
+
+add(L, '...up42SourcePlugins(),', '...up42SourcePlugins().slice(0, 1),', 'shares scenes through the local', 'remove thumbnails from the local list')
+add(P, "    {\n      name: 'up42-proxy',", "    { name: 'extra', configureServer: install, configurePreviewServer: install },\n    {\n      name: 'up42-proxy',", 'installs both exact routes', 'return a second source plugin')
+add(G, '  ];', '  ].reverse();', 'shares scenes through the local', 'reverse the combined plugin order')
+add(code+'up42/extra.js', None, '// Test fault.\n', 'excludes all forbidden source literals', 'add a seventh source file')
+
+head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
+log=[f'Command: cd {root} && python3 openspec/changes/up42-thumbnails/evidence/instrument.txt',f'At the host snapshot, HEAD is {head}.',f'UTC: {datetime.datetime.now(datetime.timezone.utc).isoformat()}', 'The source and tests have changes after HEAD.', 'Each fault runs alone. The runner restores each file after the command.', '']
+failed_titles=set(); killed=0
+for i,(rel,old,new,pattern,label) in enumerate(faults,1):
+ path=root/rel; original=path.read_text() if path.exists() else None; ident=f'UPT-M{i:03}'
+ if old is not None and (original is None or old not in original): raise RuntimeError(f'{ident}: absent target {old!r}')
+ if old is None and original is not None: raise RuntimeError(f'{ident}: file exists')
+ path.write_text(new if old is None else original.replace(old,new))
+ testfile='src/data/up42Proxy.test.mjs' if i==59 else 'src/data/up42Upstream.test.mjs' if i==61 else 'src/data/up42Thumbnails.test.mjs'
+ cmd=['node','--test','--test-force-exit','--test-isolation=none','--test-reporter=tap',f'--test-name-pattern={pattern}',testfile]
+ try:
+  run=subprocess.run(cmd,cwd=root,capture_output=True,text=True,timeout=30)
+ finally:
+  if original is None: path.unlink()
+  else: path.write_text(original)
+ names=re.findall(r'^not ok \d+ - (.+)$',run.stdout,re.M)
+ status='KILLED' if run.returncode==1 and names and all(n.startswith(('[up42-thumbnails-', '[up42-source-')) for n in names) else 'SURVIVED OR STOPPED'
+ if status=='KILLED': killed+=1;failed_titles.update(names)
+ digest='absent' if original is None else hashlib.sha256(original.encode()).hexdigest()
+ log.extend([f'{ident}: {label}',f'File: {rel}',f'HEAD: {head}',f'SHA-256: {digest}',f'Replace: {old!r}',f'With: {new!r}',f'Command: cd {root} && '+ ' '.join(repr(s) for s in cmd),f'Exit: {run.returncode}',*('Failed test: '+n for n in names),f'Result: {status}',''])
+ print(f'{ident} {status} {len(names)}',flush=True)
+ (evidence/'faults.txt').write_text('\n'.join(log)+'\n')
+ if status != 'KILLED':
+  (evidence/'fault-stop.txt').write_text(run.stdout+run.stderr)
+  raise RuntimeError(f'{ident}: {status}')
+log.extend([f'Faults: {len(faults)}. Killed: {killed}. Survived or stopped: {len(faults)-killed}.',f'Unique failed test titles: {len(failed_titles)}.',*('Failed title: '+n for n in sorted(failed_titles))])
+(evidence/'faults.txt').write_text('\n'.join(log)+'\n')
+print(f'Faults: {len(faults)}. Killed: {killed}. Survived or stopped: {len(faults)-killed}.',flush=True)

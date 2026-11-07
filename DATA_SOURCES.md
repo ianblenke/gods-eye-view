@@ -182,7 +182,20 @@ The server allows six requests each minute and keeps good answers for ten minute
 The daily count stays in RAM and starts at zero after a restart.
 
 The scout did not confirm the search cost or access for a Viewer-role user.
-UP42 terms do not address footprint display or its cache. This change shows no image.
+UP42 terms do not address footprint display or its cache.
+
+The route `GET /api/up42/thumbnail/<id>` sends a thumbnail only for a scene in an answer that the server still keeps.
+The newest kept answer with that id must have the thumbnail flag true.
+The route is off by default. Set `UP42_THUMBNAILS=true` only after you confirm the display terms.
+The server sends the bearer token only to `api.up42.com` and refuses redirects.
+It accepts only PNG, JPEG or WebP with at most 1 MiB and checks the first bytes.
+It keeps at most 32 images in RAM, each for less than ten minutes, and allows 30 requests per minute.
+Thumbnail requests add no daily search count.
+
+No live call confirms the image format, absent-image status or host names.
+A real response can contain base64 or null. A non-image content type fails.
+The route does not retry 429. Only collections with THUMBNAIL_AVAILABLE give a true flag.
+A LAN client can reach this server without proxy authentication, as with SkyWatch.
 Tests use fake responses from the scout report shapes, with no live call.
 
 ### SkyWatch archive scenes (key in `.env`)

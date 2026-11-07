@@ -1,0 +1,381 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --test --test-force-exit --test-isolation=none --test-reporter=tap src/data/up42Thumbnails.test.mjs
+At the host snapshot, HEAD is 7d4d1643b92767344587435ebf12116d2949a25e.
+UTC: 2026-11-07T10:54:14.326997+00:00
+The source and tests have changes after HEAD.
+Exit: 0
+TAP version 13
+# Subtest: [up42-thumbnails-001] checks the path in both hooks
+ok 1 - [up42-thumbnails-001] checks the path in both hooks
+  ---
+  duration_ms: 28.681561
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-002] shares scenes through the local provider list
+ok 2 - [up42-thumbnails-002] shares scenes through the local provider list
+  ---
+  duration_ms: 121.624026
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-003] checks the site before the method and rate
+ok 3 - [up42-thumbnails-003] checks the site before the method and rate
+  ---
+  duration_ms: 8.443273
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-004] accepts only GET
+ok 4 - [up42-thumbnails-004] accepts only GET
+  ---
+  duration_ms: 2.545032
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-005] keeps each other variable value off before the rate
+ok 5 - [up42-thumbnails-005] keeps each other variable value off before the rate
+  ---
+  duration_ms: 8.790719
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-006] counts kept images and both socket addresses
+ok 6 - [up42-thumbnails-006] counts kept images and both socket addresses
+  ---
+  duration_ms: 19.926253
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-007] selects the newest answer with the id
+ok 7 - [up42-thumbnails-007] selects the newest answer with the id
+  ---
+  duration_ms: 24.409507
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-007] uses the first scene and isolates plugin lists
+ok 8 - [up42-thumbnails-007] uses the first scene and isolates plugin lists
+  ---
+  duration_ms: 9.237421
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-007] rejects expired and evicted scenes before image bytes
+ok 9 - [up42-thumbnails-007] rejects expired and evicted scenes before image bytes
+  ---
+  duration_ms: 100.007189
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-008] sets the exact authenticated GET fields
+ok 10 - [up42-thumbnails-008] sets the exact authenticated GET fields
+  ---
+  duration_ms: 7.953899
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-008] rejects invalid path parts before login
+ok 11 - [up42-thumbnails-008] rejects invalid path parts before login
+  ---
+  duration_ms: 6.703015
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-009] shares one login and uses the token expiry
+ok 12 - [up42-thumbnails-009] shares one login and uses the token expiry
+  ---
+  duration_ms: 26.216385
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-009] retries one API refusal case 0
+ok 13 - [up42-thumbnails-009] retries one API refusal case 0
+  ---
+  duration_ms: 11.43908
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-009] retries one API refusal case 1
+ok 14 - [up42-thumbnails-009] retries one API refusal case 1
+  ---
+  duration_ms: 6.031638
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-009] retries one API refusal case 2
+ok 15 - [up42-thumbnails-009] retries one API refusal case 2
+  ---
+  duration_ms: 5.260366
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-009] stops after a refused first login
+ok 16 - [up42-thumbnails-009] stops after a refused first login
+  ---
+  duration_ms: 3.785417
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-009] stops after a refused second login
+ok 17 - [up42-thumbnails-009] stops after a refused second login
+  ---
+  duration_ms: 3.109879
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] accepts image case 0
+ok 18 - [up42-thumbnails-010] accepts image case 0
+  ---
+  duration_ms: 4.404786
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] accepts image case 1
+ok 19 - [up42-thumbnails-010] accepts image case 1
+  ---
+  duration_ms: 23.76277
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] accepts image case 2
+ok 20 - [up42-thumbnails-010] accepts image case 2
+  ---
+  duration_ms: 2.749772
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] accepts image case 3
+ok 21 - [up42-thumbnails-010] accepts image case 3
+  ---
+  duration_ms: 2.302181
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses bad image case 0
+ok 22 - [up42-thumbnails-010] refuses bad image case 0
+  ---
+  duration_ms: 2.766052
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses bad image case 1
+ok 23 - [up42-thumbnails-010] refuses bad image case 1
+  ---
+  duration_ms: 2.169672
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses bad image case 2
+ok 24 - [up42-thumbnails-010] refuses bad image case 2
+  ---
+  duration_ms: 1.832144
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses bad image case 3
+ok 25 - [up42-thumbnails-010] refuses bad image case 3
+  ---
+  duration_ms: 2.056554
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses bad image case 4
+ok 26 - [up42-thumbnails-010] refuses bad image case 4
+  ---
+  duration_ms: 3.386983
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses bad image case 5
+ok 27 - [up42-thumbnails-010] refuses bad image case 5
+  ---
+  duration_ms: 3.963575
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses bad image case 6
+ok 28 - [up42-thumbnails-010] refuses bad image case 6
+  ---
+  duration_ms: 3.950614
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses bad image case 7
+ok 29 - [up42-thumbnails-010] refuses bad image case 7
+  ---
+  duration_ms: 383.627611
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses bad image case 8
+ok 30 - [up42-thumbnails-010] refuses bad image case 8
+  ---
+  duration_ms: 3.075432
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses bad image case 9
+ok 31 - [up42-thumbnails-010] refuses bad image case 9
+  ---
+  duration_ms: 3.054457
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] accepts exactly 1048576 bytes
+ok 32 - [up42-thumbnails-010] accepts exactly 1048576 bytes
+  ---
+  duration_ms: 795.439314
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] cancels a non-image body before it reads bytes
+ok 33 - [up42-thumbnails-010] cancels a non-image body before it reads bytes
+  ---
+  duration_ms: 3.217477
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-011] names status case 0
+ok 34 - [up42-thumbnails-011] names status case 0
+  ---
+  duration_ms: 2.629966
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-011] names status case 1
+ok 35 - [up42-thumbnails-011] names status case 1
+  ---
+  duration_ms: 2.026336
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-011] names status case 2
+ok 36 - [up42-thumbnails-011] names status case 2
+  ---
+  duration_ms: 1.588594
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-011] names status case 3
+ok 37 - [up42-thumbnails-011] names status case 3
+  ---
+  duration_ms: 1.609412
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-011] names status case 4
+ok 38 - [up42-thumbnails-011] names status case 4
+  ---
+  duration_ms: 4.146322
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-011] names status case 5
+ok 39 - [up42-thumbnails-011] names status case 5
+  ---
+  duration_ms: 3.032107
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-011] names status case 6
+ok 40 - [up42-thumbnails-011] names status case 6
+  ---
+  duration_ms: 2.912235
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-011] names status case 7
+ok 41 - [up42-thumbnails-011] names status case 7
+  ---
+  duration_ms: 1.977201
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-011] names transport case 0
+ok 42 - [up42-thumbnails-011] names transport case 0
+  ---
+  duration_ms: 2.610864
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-011] names transport case 1
+ok 43 - [up42-thumbnails-011] names transport case 1
+  ---
+  duration_ms: 4.65476
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-012] stops during the headers phase
+ok 44 - [up42-thumbnails-012] stops during the headers phase
+  ---
+  duration_ms: 27.470427
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-012] stops during the body phase
+ok 45 - [up42-thumbnails-012] stops during the body phase
+  ---
+  duration_ms: 10.710388
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-012] discards error bodies with cancel failure false
+ok 46 - [up42-thumbnails-012] discards error bodies with cancel failure false
+  ---
+  duration_ms: 25.941608
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-012] discards error bodies with cancel failure true
+ok 47 - [up42-thumbnails-012] discards error bodies with cancel failure true
+  ---
+  duration_ms: 3.683255
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-012] keeps the timer through all image bytes
+ok 48 - [up42-thumbnails-012] keeps the timer through all image bytes
+  ---
+  duration_ms: 5.30573
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-013] sends bytes with only its own headers
+ok 49 - [up42-thumbnails-013] sends bytes with only its own headers
+  ---
+  duration_ms: 7.486209
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-014] uses the image age and no daily count
+ok 50 - [up42-thumbnails-014] uses the image age and no daily count
+  ---
+  duration_ms: 10.339348
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-014] keys images by both host and id
+ok 51 - [up42-thumbnails-014] keys images by both host and id
+  ---
+  duration_ms: 3.851672
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-014] removes the oldest of 33 images
+ok 52 - [up42-thumbnails-014] removes the oldest of 33 images
+  ---
+  duration_ms: 22.312748
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-014] makes an expired image newest after a refresh
+ok 53 - [up42-thumbnails-014] makes an expired image newest after a refresh
+  ---
+  duration_ms: 20.729937
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-015] claims simultaneous requests with success true
+ok 54 - [up42-thumbnails-015] claims simultaneous requests with success true
+  ---
+  duration_ms: 9.676871
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-015] claims simultaneous requests with success false
+ok 55 - [up42-thumbnails-015] claims simultaneous requests with success false
+  ---
+  duration_ms: 6.14271
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-016] keeps all fake secrets out of output
+ok 56 - [up42-thumbnails-016] keeps all fake secrets out of output
+  ---
+  duration_ms: 18.489041
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-016] refuses a previous secret in image bytes
+ok 57 - [up42-thumbnails-016] refuses a previous secret in image bytes
+  ---
+  duration_ms: 3.425848
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-017] allows only the four literal request forms
+ok 58 - [up42-thumbnails-017] allows only the four literal request forms
+  ---
+  duration_ms: 47.441305
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses a non-image with body case absent
+ok 59 - [up42-thumbnails-010] refuses a non-image with body case absent
+  ---
+  duration_ms: 2.673286
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-010] refuses a non-image with body case cancel-error
+ok 60 - [up42-thumbnails-010] refuses a non-image with body case cancel-error
+  ---
+  duration_ms: 1.857415
+  type: 'test'
+  ...
+# Subtest: [up42-thumbnails-007] refuses an expired scene with a fresh image
+ok 61 - [up42-thumbnails-007] refuses an expired scene with a fresh image
+  ---
+  duration_ms: 6.014328
+  type: 'test'
+  ...
+1..61
+# tests 61
+# suites 0
+# pass 61
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3022.303586

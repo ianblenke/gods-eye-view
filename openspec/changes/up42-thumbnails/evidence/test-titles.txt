@@ -1,0 +1,67 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && node --input-type=module (expanded title check).
+At the host snapshot, HEAD is 7d4d1643b92767344587435ebf12116d2949a25e.
+The source and tests have changes after HEAD.
+Expanded titles: 61. Unique titles: 61.
+Word list findings: 0.
+Titles with no failed fault: 0.
+[up42-thumbnails-001] checks the path in both hooks
+[up42-thumbnails-002] shares scenes through the local provider list
+[up42-thumbnails-003] checks the site before the method and rate
+[up42-thumbnails-004] accepts only GET
+[up42-thumbnails-005] keeps each other variable value off before the rate
+[up42-thumbnails-006] counts kept images and both socket addresses
+[up42-thumbnails-007] selects the newest answer with the id
+[up42-thumbnails-007] uses the first scene and isolates plugin lists
+[up42-thumbnails-007] rejects expired and evicted scenes before image bytes
+[up42-thumbnails-008] sets the exact authenticated GET fields
+[up42-thumbnails-008] rejects invalid path parts before login
+[up42-thumbnails-009] shares one login and uses the token expiry
+[up42-thumbnails-009] retries one API refusal case 0
+[up42-thumbnails-009] retries one API refusal case 1
+[up42-thumbnails-009] retries one API refusal case 2
+[up42-thumbnails-009] stops after a refused first login
+[up42-thumbnails-009] stops after a refused second login
+[up42-thumbnails-010] accepts image case 0
+[up42-thumbnails-010] accepts image case 1
+[up42-thumbnails-010] accepts image case 2
+[up42-thumbnails-010] accepts image case 3
+[up42-thumbnails-010] refuses bad image case 0
+[up42-thumbnails-010] refuses bad image case 1
+[up42-thumbnails-010] refuses bad image case 2
+[up42-thumbnails-010] refuses bad image case 3
+[up42-thumbnails-010] refuses bad image case 4
+[up42-thumbnails-010] refuses bad image case 5
+[up42-thumbnails-010] refuses bad image case 6
+[up42-thumbnails-010] refuses bad image case 7
+[up42-thumbnails-010] refuses bad image case 8
+[up42-thumbnails-010] refuses bad image case 9
+[up42-thumbnails-010] accepts exactly 1048576 bytes
+[up42-thumbnails-010] cancels a non-image body before it reads bytes
+[up42-thumbnails-011] names status case 0
+[up42-thumbnails-011] names status case 1
+[up42-thumbnails-011] names status case 2
+[up42-thumbnails-011] names status case 3
+[up42-thumbnails-011] names status case 4
+[up42-thumbnails-011] names status case 5
+[up42-thumbnails-011] names status case 6
+[up42-thumbnails-011] names status case 7
+[up42-thumbnails-011] names transport case 0
+[up42-thumbnails-011] names transport case 1
+[up42-thumbnails-012] stops during the headers phase
+[up42-thumbnails-012] stops during the body phase
+[up42-thumbnails-012] discards error bodies with cancel failure false
+[up42-thumbnails-012] discards error bodies with cancel failure true
+[up42-thumbnails-012] keeps the timer through all image bytes
+[up42-thumbnails-013] sends bytes with only its own headers
+[up42-thumbnails-014] uses the image age and no daily count
+[up42-thumbnails-014] keys images by both host and id
+[up42-thumbnails-014] removes the oldest of 33 images
+[up42-thumbnails-014] makes an expired image newest after a refresh
+[up42-thumbnails-015] claims simultaneous requests with success true
+[up42-thumbnails-015] claims simultaneous requests with success false
+[up42-thumbnails-016] keeps all fake secrets out of output
+[up42-thumbnails-016] refuses a previous secret in image bytes
+[up42-thumbnails-017] allows only the four literal request forms
+[up42-thumbnails-010] refuses a non-image with body case absent
+[up42-thumbnails-010] refuses a non-image with body case cancel-error
+[up42-thumbnails-007] refuses an expired scene with a fresh image

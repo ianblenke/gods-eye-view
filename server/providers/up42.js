@@ -37,8 +37,8 @@ export function up42Plugins({
   setTimer = setTimeout,
   clearTimer = clearTimeout,
   log = (line) => console.log(line),
+  client = createClient({ env, fetchImpl, now, setTimer, clearTimer }),
 } = {}) {
-  const client = createClient({ env, fetchImpl, now, setTimer, clearTimer });
   const runSearch = createSearch(client, now);
   const allow = makeRateLimiter({ windowMs: 60000, max: 6 });
   const store = new Map();
@@ -80,6 +80,15 @@ export function up42Plugins({
     const result = await run;
     inFlight.delete(id);
     return result;
+  }
+  function thumbnailHostOf(id) {
+    for (const kept of [...store.values()].reverse()) {
+      if (now() - kept.at >= 600000) continue;
+      const scene = kept.entry.scenes.find((row) => row.id === id);
+      if (scene !== undefined)
+        return scene.thumbnail === true ? scene.host : null;
+    }
+    return null;
   }
   function handleStatus(req, res, next) {
     if (!onOwnPath(req)) return next();
@@ -137,6 +146,7 @@ export function up42Plugins({
   return [
     {
       name: 'up42-proxy',
+      thumbnailHostOf,
       configureServer: install,
       configurePreviewServer: install,
     },

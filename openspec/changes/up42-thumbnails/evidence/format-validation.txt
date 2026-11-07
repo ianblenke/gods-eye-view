@@ -1,0 +1,9 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && node /home/ianblenke/.npm/_npx/b388654678d519d9/node_modules/prettier/bin/prettier.cjs --check server/providers/up42.js server/providers/up42/auth.js server/providers/up42/normalize.js server/providers/local.js server/providers/up42-thumbnails/*.js src/data/up42Thumbnails.test.mjs
+At the host snapshot, HEAD is 7d4d1643b92767344587435ebf12116d2949a25e.
+Exit: 0
+Checking formatting...
+All matched files use Prettier code style!
+
+Command: cd /home/ianblenke/docker/gev-work/up42 && openspec validate up42-thumbnails --strict
+Exit: 0
+Change 'up42-thumbnails' is valid
