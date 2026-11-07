@@ -1,0 +1,4 @@
+Verdict: FAIL
+- [ ] F1 major openspec/changes/archive/2026-11-07-up42-quotes/proposal.md:35 At commit `73923c26eff3935df843da3a955311b6070cc313`, “does not edit the trace ledger” conflicts with the tree. The change updates `openspec/trace/history.jsonl`, `ids.json` and `links.json`. The history records this change at line 4433. Write: “It closes no old gap. The ratchet command updates the trace records.”
+- [ ] F2 minor openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md:252 At commit `73923c26eff3935df843da3a955311b6070cc313`, “oddly typed optional facts” uses the unapproved adverb “oddly.” Write: “Each check MUST refuse invalid required facts and drop optional facts of an invalid type.”
+- [ ] F3 minor openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md:405 At commit `73923c26eff3935df843da3a955311b6070cc313`, “a invalid URL” has an incorrect article. Write: “an invalid URL.”

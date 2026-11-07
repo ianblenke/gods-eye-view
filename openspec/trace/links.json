@@ -8925,6 +8925,385 @@
   "ste-lint-045": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-045] gives a clear error for invalid registry JSON"
   ],
+  "up42-quotes-001": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-001] serves both paths in both hooks"
+  ],
+  "up42-quotes-002": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-002] shares one token through the local list"
+  ],
+  "up42-quotes-003": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-003] checks each method before the site"
+  ],
+  "up42-quotes-004": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-004] checks the site before the switch and rate"
+  ],
+  "up42-quotes-005": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-005] keeps both routes off before the rate"
+  ],
+  "up42-quotes-006": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-006] counts both routes and resets at the boundary"
+  ],
+  "up42-quotes-007": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-007] refuses body case 0",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-007] refuses body case 1",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-007] refuses body case 2",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-007] refuses body case 3",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-007] refuses body case 4",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-007] refuses body case 5",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-007] refuses body case 6",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-007] refuses body case 7",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-007] refuses excess bytes and a broken stream"
+  ],
+  "up42-quotes-008": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-008] refuses product id case 0",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-008] refuses product id case 1",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-008] refuses product id case 2",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-008] refuses product id case 3",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-008] refuses product id case 4",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-008] refuses product id case 5",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-008] refuses product id case 6",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-008] refuses product id case 7",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-008] refuses product id case 8",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-008] refuses product id case 9"
+  ],
+  "up42-quotes-009": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] accepts the coordinate limits",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 0",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 1",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 10",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 11",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 12",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 13",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 14",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 2",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 3",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 4",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 5",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 6",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 7",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 8",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-009] refuses box case 9"
+  ],
+  "up42-quotes-010": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-010] refuses excess and zero area"
+  ],
+  "up42-quotes-011": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] keeps each allowed parameter type",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses a twelfth parameter",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses parameter case 0",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses parameter case 1",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses parameter case 10",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses parameter case 2",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses parameter case 3",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses parameter case 4",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses parameter case 5",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses parameter case 6",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses parameter case 7",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses parameter case 8",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-011] refuses parameter case 9"
+  ],
+  "up42-quotes-012": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-012] refuses checks case 0",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-012] refuses checks case 1",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-012] refuses checks case 2",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-012] refuses checks case 3",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-012] refuses checks case 4",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-012] refuses checks case 5",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-012] refuses checks case 6",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-012] selects the default checks and a subset"
+  ],
+  "up42-quotes-013": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-013] checks either credential before the store"
+  ],
+  "up42-quotes-014": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-014] gives only public product facts without credentials"
+  ],
+  "up42-quotes-015": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 0",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 1",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 2",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 3",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 4",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 5",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 6",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 7",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] shares the public list and uses its exact expiry"
+  ],
+  "up42-quotes-016": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-016] refuses an unknown product before login"
+  ],
+  "up42-quotes-017": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-017] sets the exact body for every check"
+  ],
+  "up42-quotes-018": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-018] gives literal validation facts",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-018] reads each validation state and empty errors"
+  ],
+  "up42-quotes-019": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-019] accepts null and scene units",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-019] gives literal estimate facts"
+  ],
+  "up42-quotes-020": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-020] drops optional facts with invalid types",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-020] gives literal feasibility facts",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-020] keeps distinct feasible and low facts"
+  ],
+  "up42-quotes-021": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-021] caps pass facts and marks truncation",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-021] gives literal opportunities facts"
+  ],
+  "up42-quotes-022": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-022] reads geometry errors at status 200",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-022] reads geometry errors at status 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-022] refuses error shape case 0",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-022] refuses error shape case 1",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-022] refuses error shape case 2",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-022] refuses error shape case 3",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-022] refuses error shape case 4"
+  ],
+  "up42-quotes-023": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-023] checks required facts and caps product text",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-023] refuses result shape case 0",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-023] refuses result shape case 1",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-023] refuses result shape case 2",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-023] refuses result shape case 3",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-023] refuses result shape case 4",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-023] refuses result shape case 5",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-023] refuses result shape case 6"
+  ],
+  "up42-quotes-024": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-024] runs later checks after an independent failure"
+  ],
+  "up42-quotes-025": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-025] names the total failure case api",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-025] names the total failure case credentials",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-025] names the total failure case login",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-025] names the total failure case mixed"
+  ],
+  "up42-quotes-026": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-026] accepts the exact JSON byte cap",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-026] refuses transport case 0",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-026] refuses transport case 1",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-026] refuses transport case 2",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-026] refuses transport case 3",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-026] refuses transport case 4",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-026] refuses transport case 5",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-026] refuses transport case 6",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-026] refuses valid excess JSON bytes",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-026] retries each API 401 once with a fresh token",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-026] stops after the retry login fails"
+  ],
+  "up42-quotes-027": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds collections headers in the late-no-body case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds collections headers in the late-pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds collections headers in the late-reject case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds collections headers in the late-resolve case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds collections headers in the pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds getPublic headers in the late-no-body case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds getPublic headers in the late-pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds getPublic headers in the late-reject case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds getPublic headers in the late-resolve case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds getPublic headers in the pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds login headers in the late-no-body case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds login headers in the late-pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds login headers in the late-reject case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds login headers in the late-resolve case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds login headers in the pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds post headers in the late-no-body case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds post headers in the late-pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds post headers in the late-reject case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds post headers in the late-resolve case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds post headers in the pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds search headers in the late-no-body case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds search headers in the late-pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds search headers in the late-reject case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds search headers in the late-resolve case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds search headers in the pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds thumbnail headers in the late-no-body case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds thumbnail headers in the late-pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds thumbnail headers in the late-reject case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds thumbnail headers in the late-resolve case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] bounds thumbnail headers in the pending case",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] discards error bodies before the timer clears",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] gives the exact client timeout during the after-abort phase",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] gives the exact client timeout during the body phase",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] gives the exact client timeout during the cancel phase",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] gives the exact client timeout during the headers phase",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] keeps a timeout as a separate check result",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] limits the wait during the after-abort phase",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] limits the wait during the body phase",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] limits the wait during the cancel phase",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-027] limits the wait during the headers phase"
+  ],
+  "up42-quotes-028": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-028] removes the oldest of sixteen answers",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-028] sends literal facts from the store until expiry"
+  ],
+  "up42-quotes-029": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-029] uses every input value in the store key"
+  ],
+  "up42-quotes-030": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-030] shares simultaneous work with success false",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-030] shares simultaneous work with success true"
+  ],
+  "up42-quotes-031": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] checks the store before the budget and resets the day",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] reserves the count before public discovery",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] sets the daily limit case 0",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] sets the daily limit case 1",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] sets the daily limit case 2",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] sets the daily limit case 3",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] sets the daily limit case 4",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] sets the daily limit case 5",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] sets the daily limit case 6",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] sets the daily limit case 7",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] sets the daily limit case 8",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-031] sets the daily limit case 9"
+  ],
+  "up42-quotes-032": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] checks a kept answer against new credentials",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] checks public facts against changed credentials",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] checks the product id after case conversion",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] keeps all fake secrets out of all output",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final collection with fake-pass-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final collection with fake-token-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final collection with fake-user-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final comment with fake-pass-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final comment with fake-token-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final comment with fake-user-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final end_datetime with fake-pass-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final end_datetime with fake-token-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final end_datetime with fake-user-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final errorReason with fake-pass-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final errorReason with fake-token-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final errorReason with fake-user-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final id with fake-pass-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final id with fake-token-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final id with fake-user-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final message with fake-pass-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final message with fake-token-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final message with fake-user-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final start_datetime with fake-pass-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final start_datetime with fake-token-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final start_datetime with fake-user-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final title with fake-pass-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final title with fake-token-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final title with fake-user-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final unavailabilityReason with fake-pass-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final unavailabilityReason with fake-token-quote",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-032] refuses the final unavailabilityReason with fake-user-quote"
+  ],
+  "up42-quotes-033": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-033] refuses the previous secret after UP42_PASSWORD changes",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-033] refuses the previous secret after UP42_USERNAME changes",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-033] refuses the previous secret after token changes"
+  ],
+  "up42-quotes-034": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 1 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 1 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 1 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 1 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 1 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 1 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 10 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 10 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 10 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 10 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 10 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 10 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 11 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 11 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 11 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 11 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 11 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 11 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 12 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 12 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 12 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 12 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 12 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 12 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 13 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 13 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 13 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 13 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 13 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 13 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 14 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 14 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 14 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 14 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 14 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 14 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 15 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 15 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 15 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 15 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 15 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 15 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 2 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 2 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 2 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 2 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 2 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 2 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 3 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 3 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 3 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 3 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 3 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 3 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 4 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 4 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 4 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 4 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 4 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 4 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 5 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 5 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 5 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 5 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 5 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 5 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 6 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 6 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 6 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 6 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 6 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 6 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 7 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 7 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 7 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 7 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 7 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 7 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 8 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 8 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 8 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 8 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 8 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 8 case redirect",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 9 case 207",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 9 case 401",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 9 case 429",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 9 case 542",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 9 case good",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-034] allows only fixed requests for subset 9 case redirect"
+  ],
+  "up42-quotes-035": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-035] refuses an extra nested cjs file",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-035] refuses an extra nested html file",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-035] refuses an extra nested js file",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-035] refuses an extra nested json file",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-035] refuses an extra nested mjs file",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-035] refuses an extra nested sh file",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-035] refuses an extra nested ts file",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-035] refuses an extra nested txt file",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-035] scans all quote source text for forbidden forms"
+  ],
+  "up42-quotes-036": [
+    "src/data/up42Quotes.test.mjs › [up42-quotes-036] refuses other origins before login"
+  ],
   "up42-source-001": [
     "src/data/up42Proxy.test.mjs › [up42-source-001] installs both exact routes in both Vite hooks"
   ],

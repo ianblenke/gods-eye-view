@@ -1,0 +1,1480 @@
+At the host snapshot, commit 0da2dc27655330708ef443829b0f00dc369d4a42 has worktree edits.
+Each source file was restored after each command.
+
+The first runner stopped during UPQ-M058. It gave no complete mutation verdict.
+
+UPQ-M003 changed the archive search method by mistake. It did not test the quote hook. UPQ-M068 corrects the target.
+
+UPQ-M025 keeps the box refusal because the area sign check also refuses reverse longitude order. UPQ-M072 changes both defenses.
+
+UPQ-M047 and UPQ-M048 exposed weak fixtures. UPQ-M069 and UPQ-M070 use the corrected tests.
+
+UPQ-M071 repeats UPQ-M058 after the test no longer waits for a refused request before it releases the gate.
+
+UPQ-M001: Change the estimate destination to the order root.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 5659bd0af9c5a121687eab5a0af4a35e456c029880481246a16baf75ec1faf8a
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=up42-quotes-034|up42-quotes-035' src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case redirect
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M002: Add workspaceId query text to the estimate destination.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 632d14607014c2f6cacaf0cbc55e81302b66432d07e576716f7303ee173b992c
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=up42-quotes-034|up42-quotes-035' src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case redirect
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M003: Change the authenticated method to PATCH.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: 76556e9ae5a67bb434aa535e2a4a27bb1bfee1cfee91ff34fa1876a96e2a7cd0
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-034 src/data/up42Quotes.test.mjs
+Exit: 0
+Result: SURVIVED
+
+UPQ-M004: Build a destination from the request product.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: fb2c16abe1e6149459dfc607b01314f376cce721e297a9becd5f1547f8012691
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-034 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case redirect
+Result: KILLED
+
+UPQ-M005: Add the forbidden source word quotation.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: d1e0e983d4ade414075d43bfb4c5a68a073db0607e0e9fc1c2fc39912abb081a
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M006: Add the forbidden source word PATCH.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 5e5cf7983d912cd95b4f51eeb84749158465ecf84fde8723aff9e9dbeee01cbd
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M007: Add the forbidden source word ACCEPTED.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 23ea4d19101138243473b7470f24d9f4c5319b9d95f129415ec072f6f84e2519
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M008: Add the forbidden source word download-url.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 86ba70c16a127d637be7ae1a438a4fcdea7f9e3582645c2bd245581e5ee8c16a
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M009: Add the forbidden source word eulas.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: e568ce718c363bbada78f95343bfe8c4cf746a72f047586fa55e57f7395f98ae
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M010: Add the forbidden source word execution.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 086410fb198dbed977857a0be069ddd7718223def4be4cf79544af5d8ade3178
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M011: Add the forbidden source word cancellation.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 78c067dc351856ee43e953eef35c4a45422ddcbf7c15cb71f6cdf05d40dc2e1e
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M012: Add the forbidden source word extensions.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 1807737957604ffd1d6094cb0ff73e2ee882f00e75180c0d45aaa3e4598db60d
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M013: Add a forbidden DELETE method.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 1190cfc1b488a952c7f0f163777454ed65b5721896b401865faabc274b797467
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M014: Add a forbidden PUT method.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 29c04439c754a4f35d7efdf6b7d631fe23361822ee9417297d1b51bbd729a01f
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M015: Add a second forbidden order path occurrence.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 81c6bea44e6f80a4da5b56373db0410544224c15949c9119bbd72e93122c609a
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+UPQ-M016: Remove the same-site test.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: 3f864ff05d1829d767a7f2d94cae9d6a248147ff10e062aa9439ad98642b4b3f
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-004 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-004] checks the site before the switch and rate
+Result: KILLED
+
+UPQ-M017: Remove the JSON content-type test.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: 250bc0ffb1679476b78120c393b0801ab0feaed045b891d8ef5fd3655a84ed64
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-004 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-004] checks the site before the switch and rate
+Result: KILLED
+
+UPQ-M018: Enable both routes without the switch.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: 81887d91d091da9785313244cf552e1b2583ce1b5fc0d4b1f8eaa00631cab272
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-005 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-005] keeps both routes off before the rate
+Result: KILLED
+
+UPQ-M019: Allow a seventh request per minute.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: 34a532c4a7345c66169c13df120f6438a7d0852ca4f3ddaa85068cf4410e4aae
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-006 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-006] counts both routes and resets at the boundary
+Result: KILLED
+
+UPQ-M020: Remove the exact path test.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: ed5a93fb1c2ce04a7bab7b5f238a33f1445ac404490da4f5a945dcd7151090d7
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-001 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-001] serves both paths in both hooks
+Result: KILLED
+
+UPQ-M021: Register a preview hook with no handler.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: dc03b7d1c49c60bb992ef37c7a3cab86992af3ccf99ada9761d29882b031e378
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-001 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-001] serves both paths in both hooks
+Result: KILLED
+
+UPQ-M022: Ignore unknown body keys.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/validate.js
+Source SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
+Fault SHA-256: 16b61109987cf05239ae4043509144ad05163545471cc8023de0a4afa87e0cdf
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-007 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-007] refuses body case 6
+Failed test: [up42-quotes-007] refuses body case 7
+Result: KILLED
+
+UPQ-M023: Ignore the product UUID rule.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/validate.js
+Source SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
+Fault SHA-256: 80301811a479641efc8c0b026ce06b4e3f1be5b1c732c0c9894f8a31f00f6edb
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-008 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-008] refuses product id case 0
+Failed test: [up42-quotes-008] refuses product id case 1
+Failed test: [up42-quotes-008] refuses product id case 2
+Failed test: [up42-quotes-008] refuses product id case 3
+Failed test: [up42-quotes-008] refuses product id case 4
+Failed test: [up42-quotes-008] refuses product id case 5
+Failed test: [up42-quotes-008] refuses product id case 6
+Failed test: [up42-quotes-008] refuses product id case 7
+Failed test: [up42-quotes-008] refuses product id case 8
+Failed test: [up42-quotes-008] refuses product id case 9
+Result: KILLED
+
+UPQ-M024: Remove the west longitude boundary.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/validate.js
+Source SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
+Fault SHA-256: f74e5daf74b4f71a4bede40eef0c7c6f189db90abb5dc14527f56552817ae0c8
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-009 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-009] refuses box case 7
+Result: KILLED
+
+UPQ-M025: Allow reverse longitude order.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/validate.js
+Source SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
+Fault SHA-256: 1082b32b73a166c01bc0f950566a890fe83751f43b143cf532798ec57a3c6faf
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-009 src/data/up42Quotes.test.mjs
+Exit: 0
+Result: SURVIVED
+
+UPQ-M026: Remove the area cap.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/validate.js
+Source SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
+Fault SHA-256: 7df1798c74182618471bbd3e3a412bde3716807af491c8e65a7876380c2c25eb
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-010 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-010] refuses excess and zero area
+Result: KILLED
+
+UPQ-M027: Accept zero area.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/validate.js
+Source SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
+Fault SHA-256: 8a42729adc854d4ce7f82a07c5eed617ace30e289c3736b814594a05311feddd
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-010 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-010] refuses excess and zero area
+Result: KILLED
+
+UPQ-M028: Accept unknown parameter names.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/validate.js
+Source SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
+Fault SHA-256: e539c00f48dd177db184b8d9e74ffc3fd6d1f1795d12adbbddfbdcfa3289fdbe
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-011 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-011] refuses parameter case 3
+Result: KILLED
+
+UPQ-M029: Accept an excess parameter string.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/validate.js
+Source SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
+Fault SHA-256: a18a0fc9d1106f5b67031939becd852f0303655e9fe27ae4e04e123d0b8edc89
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-011 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-011] refuses parameter case 7
+Result: KILLED
+
+UPQ-M030: Accept parameter path characters.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/validate.js
+Source SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
+Fault SHA-256: c1c16d05a83efd0e636e6d3e75b0978ddb50dc0f8de655a41d333152977b1f9d
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-011 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-011] refuses parameter case 8
+Failed test: [up42-quotes-011] refuses parameter case 9
+Failed test: [up42-quotes-011] refuses parameter case 10
+Result: KILLED
+
+UPQ-M031: Accept duplicate checks.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/validate.js
+Source SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
+Fault SHA-256: a51359d553fa7ef80e407c8c00d4c3bd812e3ae68950e015c6bad35f0e0fdb22
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-012 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-012] refuses checks case 5
+Result: KILLED
+
+UPQ-M032: Ignore the product membership test.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: b804fc5aa9697fb67a40dc77e128e8ae747e00a73148f2de292b98a5bef71ae2
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-016 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-016] refuses an unknown product before login
+Result: KILLED
+
+UPQ-M033: Skip the credential gate.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: 76e8de4164e2efa15e8df37d96f7e88a1768f575282755afc309d7a5852ca4db
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-013 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-013] checks either credential before the store
+Result: KILLED
+
+UPQ-M034: Expire the public list one millisecond late.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 99bea511cce7a79d9cb3678ed58bc94063354656ee0521b13e4cf5bb41679d16
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-015 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-015] shares the public list and uses its exact expiry
+Result: KILLED
+
+UPQ-M035: Send the wrong public product field.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/normalize.js
+Source SHA-256: 6b7fa7c0e0aabf6930e7d802db77dc1a6e55b96e58a481dc63525ae515641061
+Fault SHA-256: f75671c4fc83d17ac2697d68ff3cb473729c3e36af5874c76747e5e29a38be82
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-014 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-014] gives only public product facts without credentials
+Result: KILLED
+
+UPQ-M036: Send a wrong polygon coordinate.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: c424b64752b2f99bcdb35b12c10e3cdedb15768ae7c8b7a4a95c74bd91cf868d
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-017 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-017] sets the exact body for every check
+Result: KILLED
+
+UPQ-M037: Use the wrong validation reason field.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/normalize.js
+Source SHA-256: 6b7fa7c0e0aabf6930e7d802db77dc1a6e55b96e58a481dc63525ae515641061
+Fault SHA-256: cb4ac81740e7802a41bd11bd1533a06786903c477d83089fbb3eb17dcd40ffd3
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-018 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-018] gives literal validation facts
+Result: KILLED
+
+UPQ-M038: Use a row credit price instead of summary credits.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/normalize.js
+Source SHA-256: 6b7fa7c0e0aabf6930e7d802db77dc1a6e55b96e58a481dc63525ae515641061
+Fault SHA-256: 962cdd1b4750d0bd3a1467bd381aa5557681abb6aec07383b4210aa7d7196684
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-019 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-019] gives literal estimate facts
+Failed test: [up42-quotes-019] accepts null and scene units
+Result: KILLED
+
+UPQ-M039: Invert the feasibility study flag.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/normalize.js
+Source SHA-256: 6b7fa7c0e0aabf6930e7d802db77dc1a6e55b96e58a481dc63525ae515641061
+Fault SHA-256: 8ac637f7c283233c701c0ce5f1f6db731a93ca4a71a9169e6d4e29e15dafee87
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-020 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-020] gives literal feasibility facts
+Failed test: [up42-quotes-020] drops optional facts with invalid types
+Failed test: [up42-quotes-020] keeps distinct feasible and low facts
+Result: KILLED
+
+UPQ-M040: Swap the two pass angle sources.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/normalize.js
+Source SHA-256: 6b7fa7c0e0aabf6930e7d802db77dc1a6e55b96e58a481dc63525ae515641061
+Fault SHA-256: 0aa115a866e0d853eaf0987cf34316373ddd670cb72c5114c2adac3abf3256aa
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-021 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-021] gives literal opportunities facts
+Result: KILLED
+
+UPQ-M041: Keep a fifty-first opportunity.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/normalize.js
+Source SHA-256: 6b7fa7c0e0aabf6930e7d802db77dc1a6e55b96e58a481dc63525ae515641061
+Fault SHA-256: d065ee014a7137f34ba621be938f33438e5a7107613f32f421d2a19b18c8965b
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-021 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-021] caps pass facts and marks truncation
+Result: KILLED
+
+UPQ-M042: Discard geometry errors.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/normalize.js
+Source SHA-256: 6b7fa7c0e0aabf6930e7d802db77dc1a6e55b96e58a481dc63525ae515641061
+Fault SHA-256: e7c5d4e1cfb370df794cedb479234e3244183306f8d941a78e7d899ac5a72df5
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-022 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-022] reads geometry errors at status 200
+Failed test: [up42-quotes-022] reads geometry errors at status 207
+Failed test: [up42-quotes-022] refuses error shape case 0
+Failed test: [up42-quotes-022] refuses error shape case 1
+Failed test: [up42-quotes-022] refuses error shape case 2
+Failed test: [up42-quotes-022] refuses error shape case 3
+Failed test: [up42-quotes-022] refuses error shape case 4
+Result: KILLED
+
+UPQ-M043: Do not accept a 207 quote body.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: c02a09b23dff99938b6d0f904641ed0806669e6bf0a2b9b49ba168353aa5745c
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=up42-quotes-020|up42-quotes-021|up42-quotes-022' src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-020] gives literal feasibility facts
+Failed test: [up42-quotes-021] gives literal opportunities facts
+Failed test: [up42-quotes-022] reads geometry errors at status 207
+Result: KILLED
+
+UPQ-M044: Let one failed check fail the whole quote.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: da3ebbea348ec477eeb7ce0904c1be2be3d46f34634b45500518bdb1c6a8b9d5
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-024 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-024] runs later checks after an independent failure
+Result: KILLED
+
+UPQ-M045: Treat mixed failures as credential failures.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 910ec416a52c3549122af826e112696f68f86d69abcdc24a84bba40a9fe1bb61
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-025 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-025] names the total failure case mixed
+Result: KILLED
+
+UPQ-M046: Allow redirects.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: e2fa6237f131749aca81b8f0b95bd417754f054a6cb9812cb27d7330377c906c
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-034 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case redirect
+Result: KILLED
+
+UPQ-M047: Increase the JSON response byte cap.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: 36a39c24243f7b5020274dc6966f370f3f3b2d884ecac6575c3bd0b32000837a
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-026 src/data/up42Quotes.test.mjs
+Exit: 0
+Result: SURVIVED
+
+UPQ-M048: Remove the JSON abort race.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: ebb0e21a8ef8dbf1bf36292dc7461c4323574ea62439ecf57cea62009e0cb6aa
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=gives the exact client timeout during the body' src/data/up42Quotes.test.mjs
+Exit: 0
+Result: SURVIVED
+
+UPQ-M049: Remove the error cancel abort race.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: 23971cfb4388ee6d62fcfdb57119ad8eccb533436e9f50fd431b7a25afaa1b00
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=gives the exact client timeout during the cancel' src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-027] gives the exact client timeout during the cancel phase
+Result: KILLED
+
+UPQ-M050: Corrupt only the facts that enter the store.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: 4bb7667914cd60d35c9b7fc860c10d750c765508653e2bd03435385170afd87a
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-028 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-028] sends literal facts from the store until expiry
+Result: KILLED
+
+UPQ-M051: Keep quote answers at the expiry boundary.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: ef3406bf8c0b089547dfd642f1f9c2f03d94995997e22424074b30ab1ad876ee
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-028 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-028] sends literal facts from the store until expiry
+Result: KILLED
+
+UPQ-M052: Allow seventeen quote entries.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: d7017dc69fab34e1351306f51c5f70ccd3fba526817db3cc0895df3398ff9ee1
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-028 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-028] removes the oldest of sixteen answers
+Result: KILLED
+
+UPQ-M053: Omit dataProduct from the store key.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: b7c41da394067196aa9edfd03a3fb3ec49fc17acf54529d3cb1226c3152dd204
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-029 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-029] uses every input value in the store key
+Result: KILLED
+
+UPQ-M054: Omit box from the store key.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: 07d23fc46e41b2b32b57efa8ac26b17307a57f0d30153eded19555b65065de9e
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-029 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-029] uses every input value in the store key
+Result: KILLED
+
+UPQ-M055: Omit params from the store key.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: bafc384cc1d5c1e947f1e0e498397f352d9a4fa83fcd7467ff4c0998809728c6
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-029 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-029] uses every input value in the store key
+Result: KILLED
+
+UPQ-M056: Omit checks from the store key.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: 87686cf33fb52769acb4a9551af9411aedc74b67ee9bedd41d5168b679b5ac74
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-029 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-029] uses every input value in the store key
+Result: KILLED
+
+UPQ-M057: Yield before the in-flight claim.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: 675cf0a1b9203bed88d5430b1327f526b0f2a783ea28f6db38ecbf5d0e9501b2
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-030 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-030] shares simultaneous work with success true
+Failed test: [up42-quotes-030] shares simultaneous work with success false
+Result: KILLED
+
+UPQ-M058: Do not count a quote round.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: cee88c5360e7ce5b5175966885d6786f8b0b1505cd2bc79388c02bce71634190
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-031 src/data/up42Quotes.test.mjs
+Exit: No exit status. The runner reached its 18-second limit.
+Result: STOPPED
+
+UPQ-M059: Remove the daily budget refusal.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: e04841eff18b5e1ad574196985513a75b303765d6a0fee5636e34d2171c838db
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-031 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-031] checks the store before the budget and resets the day
+Failed test: [up42-quotes-031] reserves the count before public discovery
+Result: KILLED
+
+UPQ-M060: Send the password through console.trace.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: eb345690ec6ae21628e820d8604473a9b61583008f3bcc1b8f4a4797cbab9af2
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-032 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-032] keeps all fake secrets out of all output
+Result: KILLED
+
+UPQ-M061: Send a secret Error through console.dir.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: 868e06cfd07620ac0cce18b000f5414a32e3a0ad71da294800821d7087b86e9e
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-032 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-032] keeps all fake secrets out of all output
+Result: KILLED
+
+UPQ-M062: Do not keep previous user names.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: fcb202f539db95c312eec706bb59900cc10ea194d5e2830ef484b3ece90a65ef
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-033 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-033] refuses the previous secret after UP42_USERNAME changes
+Result: KILLED
+
+UPQ-M063: Do not keep previous passwords.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: 79c63b6560a15dcd04b75c01c92a3188c55dbdeec4f1d87069ce41b94cea366a
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-033 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-033] refuses the previous secret after UP42_PASSWORD changes
+Result: KILLED
+
+UPQ-M064: Do not keep previous tokens.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: 1fddc85b390fb28835462e9292ac2c67f1223b0bc5239f06193f5ea5e770e430
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-033 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-033] refuses the previous secret after token changes
+Result: KILLED
+
+UPQ-M065: Skip raw quote secret checks.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 4d09ac87634ea285ce8751fe24216e9ab7c36d79b036f254dab1da5ba71b5f3d
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-032 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-032] keeps all fake secrets out of all output
+Result: KILLED
+
+UPQ-M066: Allow an HTTP API origin.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: 96d93d4c627d575eadf752de88010f97d229037ed3c81bc8940b6325390a0a18
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-036 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-036] refuses other origins before login
+Result: KILLED
+
+UPQ-M067: Do not share the source client.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/plugins.js
+Source SHA-256: 54b862b6401031d027154d79fb7b08fc0dc1018309ee7ccd22df4d8180d49d00
+Fault SHA-256: 23131c4c2137b87340b9ddcc187a7c0ff307d371ee9e2d294563c5a19d0f8729
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-002 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-002] shares one token through the local list
+Result: KILLED
+
+UPQ-M068: Change the quote hook method to PATCH.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: 6e3a2fea0a87b244a316389577a01f9774bcab2e3e20d9661791604adf0cbb04
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-034 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case redirect
+Result: KILLED
+
+UPQ-M069: Increase the JSON response byte cap.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: 36a39c24243f7b5020274dc6966f370f3f3b2d884ecac6575c3bd0b32000837a
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-026 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-026] refuses valid excess JSON bytes
+Result: KILLED
+
+UPQ-M070: Remove the JSON abort race.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: ebb0e21a8ef8dbf1bf36292dc7461c4323574ea62439ecf57cea62009e0cb6aa
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=gives the exact client timeout during the body' src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-027] gives the exact client timeout during the body phase
+Result: KILLED
+
+UPQ-M071: Do not count a quote round.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: cee88c5360e7ce5b5175966885d6786f8b0b1505cd2bc79388c02bce71634190
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-031 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-031] checks the store before the budget and resets the day
+Failed test: [up42-quotes-031] sets the daily limit case 0
+Failed test: [up42-quotes-031] sets the daily limit case 1
+Failed test: [up42-quotes-031] sets the daily limit case 2
+Failed test: [up42-quotes-031] sets the daily limit case 3
+Failed test: [up42-quotes-031] sets the daily limit case 4
+Failed test: [up42-quotes-031] sets the daily limit case 5
+Failed test: [up42-quotes-031] sets the daily limit case 6
+Failed test: [up42-quotes-031] sets the daily limit case 7
+Failed test: [up42-quotes-031] sets the daily limit case 8
+Failed test: [up42-quotes-031] sets the daily limit case 9
+Failed test: [up42-quotes-031] reserves the count before public discovery
+Result: KILLED
+
+The first final regression found a test setup fault in the secret test.
+A public response used a fake token before the client knew that token.
+The test now obtains the token before it checks a public response with that token.
+UPQ-M073 through UPQ-M075 repeat the console and raw-output faults after this correction.
+
+UPQ-M072: Remove both longitude order defenses.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/validate.js
+Source SHA-256: 2998b64213ce626de79781256af4eda8bd9856de17be94c31006636677c7c71b
+Fault SHA-256: 9d5303debf5fac4262b92558eb3b361306b3c02f817ac4a125c09f4d2e64b003
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-009 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-009] refuses box case 11
+Failed test: [up42-quotes-009] refuses box case 13
+Result: KILLED
+
+UPQ-M073: Send the password through console.trace.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: eb345690ec6ae21628e820d8604473a9b61583008f3bcc1b8f4a4797cbab9af2
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-032 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-032] keeps all fake secrets out of all output
+Result: KILLED
+
+UPQ-M074: Send a secret Error through console.dir.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 8feae86650bd1134677b4d9d31ef5f0f7a658ae17e7c21282f78a3350da12d03
+Fault SHA-256: 868e06cfd07620ac0cce18b000f5414a32e3a0ad71da294800821d7087b86e9e
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-032 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-032] keeps all fake secrets out of all output
+Result: KILLED
+
+UPQ-M075: Skip raw quote secret checks.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: 4d09ac87634ea285ce8751fe24216e9ab7c36d79b036f254dab1da5ba71b5f3d
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-032 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-032] keeps all fake secrets out of all output
+Result: KILLED
+
+UPQ-M076: Append a request parameter to the destination on the API origin.
+Commit: 0da2dc27655330708ef443829b0f00dc369d4a42 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: c799c423a369299b007ac67d14e4f86a0f146684665aff0839702134359e9b9e
+Fault SHA-256: c3e0025246d503bb4d419848dcf1ddab246a42279073ff87fe4d4dd734779b5d
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-034 src/data/up42Quotes.test.mjs
+Exit: 1
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 1 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 2 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 3 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 4 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 5 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 6 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 7 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 8 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 9 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 10 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 11 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 12 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 13 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 14 case redirect
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case good
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 401
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 429
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 542
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case 207
+Failed test: [up42-quotes-034] allows only fixed requests for subset 15 case redirect
+Result: KILLED
+
+At the first host snapshot, records: 76. Killed: 71. Historical survivors: 4. Historical stopped runs: 1.
+The four survivors and the stopped run have the follow-up records named above.
+
+Round 1 correction snapshot
+At the host snapshot, commit 73923c26eff3935df843da3a955311b6070cc313 has worktree edits.
+
+UPQ-M077: Remove the final product safety check.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: 563091a8b78061898f99223c0150bd4db70235e2d7f14f4f0bc60c1fa84cbe21
+Fault SHA-256: 6a3b7a6083297d96a41ce77faded732198f1d815e662f7bdc133d5241f7183f1
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=refuses the final (title|collection)|case conversion' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 7
+# pass 0
+# fail 7
+# cancelled 0
+Failed test: [up42-quotes-032] refuses the final title with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final collection with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final title with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final collection with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final title with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final collection with fake-token-quote
+Failed test: [up42-quotes-032] checks the product id after case conversion
+Result: KILLED
+
+UPQ-M078: Remove the final check result safety check.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: 563091a8b78061898f99223c0150bd4db70235e2d7f14f4f0bc60c1fa84cbe21
+Fault SHA-256: 2b0f1a976e565ea1fdc0fc98686fc706e9020ba4ebe75e37f33c86b02c442ab3
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=refuses the final' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 27
+# pass 6
+# fail 21
+# cancelled 0
+Failed test: [up42-quotes-032] refuses the final errorReason with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final unavailabilityReason with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final message with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final comment with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final id with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final start_datetime with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final end_datetime with fake-pass-quote
+Failed test: [up42-quotes-032] refuses the final errorReason with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final unavailabilityReason with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final message with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final comment with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final id with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final start_datetime with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final end_datetime with fake-user-quote
+Failed test: [up42-quotes-032] refuses the final errorReason with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final unavailabilityReason with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final message with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final comment with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final id with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final start_datetime with fake-token-quote
+Failed test: [up42-quotes-032] refuses the final end_datetime with fake-token-quote
+Result: KILLED
+
+UPQ-M079: Remove the race from the header wait.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 1feee570ca46f429f0876676618a51502b78f3243b4b6e5c600f1a6eb0e814f6
+Fault SHA-256: 394a9eea70559bff71700b095fb8de61f774e449ffd059b95b96810feeb18a1e
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=bounds .* headers' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 30
+# pass 0
+# fail 30
+# cancelled 0
+Failed test: [up42-quotes-027] bounds post headers in the pending case
+Failed test: [up42-quotes-027] bounds post headers in the late-pending case
+Failed test: [up42-quotes-027] bounds post headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds post headers in the late-reject case
+Failed test: [up42-quotes-027] bounds post headers in the late-no-body case
+Failed test: [up42-quotes-027] bounds getPublic headers in the pending case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-pending case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-reject case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-no-body case
+Failed test: [up42-quotes-027] bounds search headers in the pending case
+Failed test: [up42-quotes-027] bounds search headers in the late-pending case
+Failed test: [up42-quotes-027] bounds search headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds search headers in the late-reject case
+Failed test: [up42-quotes-027] bounds search headers in the late-no-body case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the pending case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-pending case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-reject case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-no-body case
+Failed test: [up42-quotes-027] bounds collections headers in the pending case
+Failed test: [up42-quotes-027] bounds collections headers in the late-pending case
+Failed test: [up42-quotes-027] bounds collections headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds collections headers in the late-reject case
+Failed test: [up42-quotes-027] bounds collections headers in the late-no-body case
+Failed test: [up42-quotes-027] bounds login headers in the pending case
+Failed test: [up42-quotes-027] bounds login headers in the late-pending case
+Failed test: [up42-quotes-027] bounds login headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds login headers in the late-reject case
+Failed test: [up42-quotes-027] bounds login headers in the late-no-body case
+Result: KILLED
+
+UPQ-M080: Do not cancel a late response body.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 1feee570ca46f429f0876676618a51502b78f3243b4b6e5c600f1a6eb0e814f6
+Fault SHA-256: 3adfa68a421d113d274856477f306994a78af8a117432e8ce8a2ecd88f9ba7ec
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=bounds .* headers' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 30
+# pass 12
+# fail 18
+# cancelled 0
+Failed test: [up42-quotes-027] bounds post headers in the late-pending case
+Failed test: [up42-quotes-027] bounds post headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds post headers in the late-reject case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-pending case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-reject case
+Failed test: [up42-quotes-027] bounds search headers in the late-pending case
+Failed test: [up42-quotes-027] bounds search headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds search headers in the late-reject case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-pending case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-reject case
+Failed test: [up42-quotes-027] bounds collections headers in the late-pending case
+Failed test: [up42-quotes-027] bounds collections headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds collections headers in the late-reject case
+Failed test: [up42-quotes-027] bounds login headers in the late-pending case
+Failed test: [up42-quotes-027] bounds login headers in the late-resolve case
+Failed test: [up42-quotes-027] bounds login headers in the late-reject case
+Result: KILLED
+
+UPQ-M081: Let a late body cancel operation wait after abort.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42/auth.js
+Source SHA-256: 1feee570ca46f429f0876676618a51502b78f3243b4b6e5c600f1a6eb0e814f6
+Fault SHA-256: 536a29f9bfc903fc196527942172e355e27724b8a8121438edbf9ac38b44986e
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=bounds .* headers' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 30
+# pass 24
+# fail 6
+# cancelled 0
+Failed test: [up42-quotes-027] bounds post headers in the late-pending case
+Failed test: [up42-quotes-027] bounds getPublic headers in the late-pending case
+Failed test: [up42-quotes-027] bounds search headers in the late-pending case
+Failed test: [up42-quotes-027] bounds thumbnail headers in the late-pending case
+Failed test: [up42-quotes-027] bounds collections headers in the late-pending case
+Failed test: [up42-quotes-027] bounds login headers in the late-pending case
+Result: KILLED
+
+UPQ-M082: Use a rolling 24-hour budget window.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42-quotes/quotes.js
+Source SHA-256: f60c8b6b9931aa3bfc32538555857c99e4b1a61cec4abf806fef65c071cc6a16
+Fault SHA-256: 0208d310b30356eb01a36f770dab19a7df6f2f3f5a92477af2d29601def4e124
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=resets the day' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 1
+# pass 0
+# fail 1
+# cancelled 0
+Failed test: [up42-quotes-031] checks the store before the budget and resets the day
+Result: KILLED
+
+UPQ-M083: Scan only the root folder.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: src/data/up42Quotes.test.mjs
+Source SHA-256: 732002541da9c49d5efbba840eb69325182be66b3b5891ae0c399b46968698e0
+Fault SHA-256: c3a3016064405f288d3ec308a4d18e49384529b779fecf6caebd74b952778a51
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 9
+# pass 1
+# fail 8
+# cancelled 0
+Failed test: [up42-quotes-035] refuses an extra nested js file
+Failed test: [up42-quotes-035] refuses an extra nested mjs file
+Failed test: [up42-quotes-035] refuses an extra nested cjs file
+Failed test: [up42-quotes-035] refuses an extra nested ts file
+Failed test: [up42-quotes-035] refuses an extra nested json file
+Failed test: [up42-quotes-035] refuses an extra nested html file
+Failed test: [up42-quotes-035] refuses an extra nested sh file
+Failed test: [up42-quotes-035] refuses an extra nested txt file
+Result: KILLED
+
+UPQ-M084: Remove the exact file list check.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: src/data/up42Quotes.test.mjs
+Source SHA-256: 732002541da9c49d5efbba840eb69325182be66b3b5891ae0c399b46968698e0
+Fault SHA-256: d7ab31c516741021b7c8a8f98fd47196422e23733f3c39127596c138785d8a7b
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-quotes-035 src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 9
+# pass 8
+# fail 1
+# cancelled 0
+Failed test: [up42-quotes-035] refuses an extra nested txt file
+Result: KILLED
+
+UPQ-M085: Add an extra URL literal to the quote folder.
+Commit: 73923c26eff3935df843da3a955311b6070cc313 with worktree edits.
+File: server/providers/up42-quotes/upstream.js
+Source SHA-256: 563091a8b78061898f99223c0150bd4db70235e2d7f14f4f0bc60c1fa84cbe21
+Fault SHA-256: 9fe49a356b087c81e596cd645df2d0ec2883430c162134135bac2f7775682df2
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=scans all quote source text' src/data/up42Quotes.test.mjs
+Exit: 1
+# tests 1
+# pass 0
+# fail 1
+# cancelled 0
+Failed test: [up42-quotes-035] scans all quote source text for forbidden forms
+Result: KILLED
+
+At this host snapshot, records: 85. Killed: 80. Historical survivors: 4. Historical stopped runs: 1.
+The nine new records each name a failed test. Each changed file has its original hash after restoration.

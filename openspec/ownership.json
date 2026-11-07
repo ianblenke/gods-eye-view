@@ -27,6 +27,8 @@
     "server/providers/up42/normalize.js",
     "server/providers/up42/same-site.js",
     "server/providers/up42-thumbnails/",
+    "server/providers/up42-quotes/",
+    "src/data/up42Quotes.test.mjs",
     "server/providers/up42/upstream.js",
     "server/providers/up42/validate.js",
     "server/providers/planet.js",

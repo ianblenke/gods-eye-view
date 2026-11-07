@@ -36,7 +36,7 @@ import { gdacsProxy } from './gdacs.js';
 import { beemapsProxy } from './beemaps.js';
 import { beemapsBurstProxy } from './beemaps-burst.js';
 import { skywatchPlugins } from './skywatch.js';
-import { up42SourcePlugins } from './up42-thumbnails/plugins.js';
+import { up42AllPlugins } from './up42-quotes/plugins.js';
 import { planetPlugins } from './planet.js';
 import { skyfiPlugins } from './skyfi.js';
 import { windProxy } from './wind.js';
@@ -68,7 +68,7 @@ function localProviderPlugins({ realtime, gemini } = {}) {
     beemapsProxy(),
     beemapsBurstProxy(),
     ...skywatchPlugins(),
-    ...up42SourcePlugins(),
+    ...up42AllPlugins(),
     ...planetPlugins(),
     ...skyfiPlugins(),
     transitProxy(),

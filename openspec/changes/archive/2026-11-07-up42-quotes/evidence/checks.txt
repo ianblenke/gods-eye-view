@@ -1,0 +1,53 @@
+At the host snapshot, commit 73923c26eff3935df843da3a955311b6070cc313 has worktree edits.
+Host Node is v26.13.0. This report gives no calibrated gate verdict.
+
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --experimental-test-coverage src/data/up42*.test.mjs src/data/skywatch*.test.mjs
+The command completed. Tests: 720. Passed: 720. Failed: 0. Cancelled: 0.
+Quote tests: 307. Unique titles: 307. Scenario IDs: 36.
+The correction adds 66 tests and no scenario ID.
+Each scenario has a test tag and a task line. The title word-list check has zero matches.
+
+At this host snapshot, the coverage columns are lines, branches and functions.
+server/providers/local.js | 100.00 | 100.00 | 100.00
+server/providers/up42/auth.js | 100.00 | 100.00 | 100.00
+server/providers/up42-thumbnails/plugins.js | 100.00 | 100.00 | 100.00
+server/providers/up42-quotes/normalize.js | 100.00 | 100.00 | 100.00
+server/providers/up42-quotes/plugins.js | 100.00 | 100.00 | 100.00
+server/providers/up42-quotes/quotes.js | 100.00 | 100.00 | 100.00
+server/providers/up42-quotes/upstream.js | 100.00 | 100.00 | 100.00
+server/providers/up42-quotes/validate.js | 100.00 | 100.00 | 100.00
+
+At this host snapshot, faults.txt has 85 unique mutation records.
+Killed: 80. Historical survivors: 4. Historical stopped runs: 1.
+UPQ-M077 through UPQ-M085 each fail a named test. faults.txt gives all failed test names.
+The commands complete. No new mutation run stops before its result.
+Each changed file has its original hash after restoration.
+
+Command: node scripts/spec/gates.mjs lint --change up42-quotes
+STE: 0 errors, 1305 warnings.
+The command completed with exit 0. Warnings do not constitute a passed review.
+
+Command: a QA check script outside the repository
+QA: no script covers the capabilities of this change.
+QA header errors: 0.
+The QA advice also lists twenty upstream scripts with synthetic headers.
+No repository QA script changes. No listed purpose conflicts with this correction.
+
+Command: diff -u openspec/specs/up42-quotes/spec.md openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md
+The command has no output. Both spec copies are identical, including the Purpose section.
+The archive uses the same Requirements header as the main spec.
+The Response shapes requirement text changes for STE F2. Its scenario is up42-quotes-023.
+The correction also changes scenarios up42-quotes-027, up42-quotes-031, up42-quotes-032, up42-quotes-035 and up42-quotes-036.
+The lead must run the ratchet again for these hash changes.
+
+The Git diff names no existing source or thumbnail test or spec.
+The final status contains only quote change files, its test and up42/auth.js.
+The Git whitespace check has no output.
+Prettier checks the two edited code files and the quote test.
+
+The first full run completes with 718 passes and one loopback bind failure in an unchanged test.
+The final run permits that local HTTP test. Every provider request uses fake fetch.
+An initial isolated test run fails at file level. It gives no individual test result.
+No external service call checks UP42. The known limits in the proposal still apply.
+No commit, Make command, Docker run, ratchet, full gate or review agent runs in this correction.
+SPEC F5 remains lead work, as instructed. The lead must complete review.md and the final gates before merge.

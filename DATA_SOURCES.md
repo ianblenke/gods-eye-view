@@ -198,6 +198,34 @@ The route does not retry 429. Only collections with THUMBNAIL_AVAILABLE give a t
 A LAN client can reach this server without proxy authentication, as with SkyWatch.
 Tests use fake responses from the scout report shapes, with no live call.
 
+### UP42 quote facts
+
+Both quote routes stay off until `UP42_QUOTES=true`.
+`GET /api/up42/quote/products` gives the public TASKING products with id, title and optional collection.
+The server keeps this public list for six hours. The route needs no credentials.
+
+`POST /api/up42/quote` accepts same-site JSON with dataProduct, box, optional params and optional checks.
+The product must be a UUID in that list. The box has west, south, east and north coordinates.
+Its area must be above zero and at most 2500 km².
+Checks select validation, estimate, feasibility and opportunities. The default selects all four.
+
+Params accept only the eleven documented keys. Each value is a short restricted string, finite number or boolean.
+
+The route gives separate results for each check. Price uses credits only, with no currency conversion.
+The server never places an order, accepts terms or spends credits.
+This estimate is not a binding quote. A binding quote needs an order, which this route never creates.
+
+Both routes share six requests per minute. `UP42_DAILY_QUOTES` limits new quote rounds from 1 to 200 each UTC day.
+The default is 20. A round counts once, including public discovery and failures.
+The server keeps at most sixteen good answers for ten minutes and shares identical concurrent requests.
+
+The count and stores stay in RAM. A restart clears them.
+
+No live call confirms response field names, product list shape, plan access or Viewer-role access.
+The documentation does not state the cost of feasibility or opportunities. Default checks include both.
+A LAN client can reach this server without proxy authentication. The same-site and rate gates still apply.
+Display terms do not apply because this route shows no image.
+
 ### SkyWatch archive scenes (key in `.env`)
 
 SkyWatch EarthCache gives one API for the satellite images of many operators. The route `/api/skywatch/scenes` searches its archive for the scenes of one box of at most 2500 km² and a window of at most 92 days. It accepts only a JSON request from the same site. A request through a reverse proxy passes only when the proxy removes the proxy headers, such as `X-Forwarded-For`. When the request of the proxy to this server has the header `Origin`, that origin must have the protocol and the `Host` of that request.
