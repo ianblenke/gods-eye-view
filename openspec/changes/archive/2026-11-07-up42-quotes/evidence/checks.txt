@@ -27,7 +27,7 @@ Command: node scripts/spec/gates.mjs lint --change up42-quotes
 STE: 0 errors, 1305 warnings.
 The command completed with exit 0. Warnings do not constitute a passed review.
 
-Command: node /home/ianblenke/docker/gev-tools/up42/qfix-qa.mjs
+Command: a QA check script outside the repository
 QA: no script covers the capabilities of this change.
 QA header errors: 0.
 The QA advice also lists twenty upstream scripts with synthetic headers.

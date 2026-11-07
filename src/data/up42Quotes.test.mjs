@@ -17,6 +17,8 @@ import {
 } from 'node:fs/promises';
 import { inspect } from 'node:util';
 import { getEventListeners } from 'node:events';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { up42AllPlugins } from '../../server/providers/up42-quotes/plugins.js';
 import { up42QuoteProxy } from '../../server/providers/up42-quotes/quotes.js';
 import { validateQuote } from '../../server/providers/up42-quotes/validate.js';
@@ -1651,7 +1653,7 @@ test('[up42-quotes-035] scans all quote source text for forbidden forms', async 
 });
 for (const extension of ['js', 'mjs', 'cjs', 'ts', 'json', 'html', 'sh', 'txt'])
   test(`[up42-quotes-035] refuses an extra nested ${extension} file`, async (t) => {
-    const path = await mkdtemp('/home/ianblenke/docker/gev-tools/up42/qguard-');
+    const path = await mkdtemp(join(tmpdir(), 'gev-up42-quotes-guard-'));
     t.after(() => rm(path, { recursive: true, force: true }));
     const root = new URL('file://' + path + '/');
     const source = new URL(
