@@ -42,7 +42,7 @@
 
 ## 4. Lead work
 
-- [ ] 4.1 Run `make ratchet CHANGE=up42-thumbnails`.
+- [x] 4.1 Run `make ratchet CHANGE=up42-thumbnails`.
 - [ ] 4.2 Run the two review agents.
 - [ ] 4.3 Write `review.md`.
 - [ ] 4.4 Run `make gates CHANGE=up42-thumbnails` on the final tree.
