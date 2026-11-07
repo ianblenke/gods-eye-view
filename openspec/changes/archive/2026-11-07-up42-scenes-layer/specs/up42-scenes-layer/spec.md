@@ -60,7 +60,7 @@ Origin: spec-first
 - **WHEN** `getStatus` rejects, or gives `ok` false
 - **THEN** `update` returns true, and the info text is "The server did not give the status of the credentials."
 - **AND** the stats have `error` "The server did not give the status of the credentials." for another rejection
-- **AND** a missing local source gives the stats error "Data source not configured: up42-scenes" from the local layer id
+- **AND** a local source that is absent gives the stats error "Data source not configured: up42-scenes" from the local layer id
 - **AND** they have `error` "The server did not give the status of the credentials." when the rejection has no message
 - **AND** they have `error` "The server did not give the status of the credentials." when the result is `ok` false and has no `error`
 - **AND** the chip has `disabled` false, also after an earlier status with no credentials
@@ -356,6 +356,7 @@ Origin: spec-first
 - **THEN** the call returns true, and the entity of that scene has the style of a selected footprint
 - **AND** each other entity has the style of a footprint that is not selected
 - **AND** the entity of the selected scene has a polygon of its ring with the fill alpha of that style
+- **AND** each vertex keeps the longitude, latitude and order of its scene ring, also for each footprint that is not selected
 - **AND** the list item of that scene has `active` true
 - **AND** `setParams({scene:null})` returns true and removes the selection
 - **AND** `setParams` with the `id` of the selected scene returns true and sends no new thumbnail request
@@ -415,6 +416,15 @@ Origin: spec-first
 - **AND** after a search, the method `setLayerParams` of the manager selects a scene with `{scene:<id>}` and the origin "user", and returns true
 - **AND** the layer of `createApplicationUp42Scenes` calls the function `requestRender` of the Cesium scene of the render governor after a search
 - **AND** an option `requestRender` of `createApplicationUp42Scenes` replaces the render governor
+
+#### Scenario: Keep the registry counts and the next free token `up42-scenes-layer-041`
+- **WHEN** a test reads the catalog, reference sources, share registry and token ledger
+- **THEN** the catalog has 42 layers with all sources, without Mapillary, with another street provider, and without any source
+- **AND** the share registry has 41 distinct ids, and the token ledger has 41 entries
+- **AND** the token ledger gives "04" to "up42-scenes", and the registry source has that entry once
+- **AND** the next free token is "05", and the decoder refuses both "05" and "c.05"
+- **AND** the reference source keys are "earthquakes", "air-quality", "fire-perimeters", "cables", "reticulum", "beemaps" and "beemaps-bursts"
+- **AND** the other keys are "gnss-integrity", "gdacs", "skywatch-scenes", "planet-scenes", "skyfi-scenes" and "up42-scenes", in that order
 
 #### Scenario: Put the layer in the Cameras group `up42-scenes-layer-034`
 - **WHEN** a test reads the groups of the layer panel

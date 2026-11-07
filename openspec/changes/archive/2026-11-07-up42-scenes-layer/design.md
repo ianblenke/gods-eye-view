@@ -66,7 +66,7 @@ The new files enter `openspec/ownership.json`, `scripts/format-scope.json` and `
 
 Tests use fake sources, clocks, streams, viewer objects and image decoders. Each item has distinct fixture values.
 
-Measure each new or edited code file with host Node coverage. Record each named fault and its failing test.
+Measure each new or edited code file with host Node coverage. Record each named fault and the test that failed.
 
 Run the layer, source, token, UI, app, voice, translation and share test files on host Node.
 

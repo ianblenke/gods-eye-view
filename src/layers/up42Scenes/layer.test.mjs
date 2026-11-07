@@ -328,7 +328,7 @@ test('[up42-scenes-layer-003] has no chip after disable, and an old onClick send
   assert.deepEqual(fresh.layer.getRowControls().chips, []);
 });
 
-test('[up42-scenes-layer-004] sends one search for two presses and shows Searching… while it runs', async () => {
+test('[up42-scenes-layer-004] sends one search for two presses and shows the search message while the search runs', async () => {
   const pending = deferred();
   const h = harness({ scenes: () => pending.promise });
   await h.ready();
@@ -515,7 +515,7 @@ test('[up42-scenes-layer-011] sends the window of the time of the clock at the p
   ]);
 });
 
-test('[up42-scenes-layer-011] uses Date.now as the clock when no option now is given', async (t) => {
+test('[up42-scenes-layer-011] uses Date.now as the clock when the caller gives no option now', async (t) => {
   const time = Date.parse('2024-03-01T00:00:00.000Z');
   t.mock.method(Date, 'now', () => time);
   const h = harness({ withNow: false });
@@ -877,7 +877,40 @@ test('[up42-scenes-layer-028] calls the listener for a search, an update, a pres
 });
 
 test('[up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint', async () => {
-  const h = harness();
+  const h = harness({
+    scenes: async () => ({
+      ok: true,
+      answer: answerOf([
+        scene('a', {
+          ring: [
+            [10, 60],
+            [12, 61],
+            [11, 63],
+            [9, 62],
+            [10, 60],
+          ],
+        }),
+        scene('b', {
+          ring: [
+            [21, 31],
+            [23, 32],
+            [24, 35],
+            [21, 31],
+          ],
+        }),
+        scene('c', {
+          ring: [
+            [-15, 40],
+            [-12, 41],
+            [-13, 44],
+            [-16, 43],
+            [-15, 40],
+          ],
+          thumbnail: false,
+        }),
+      ]),
+    }),
+  });
   await h.searched();
   assert.equal(h.layer.setParams({ scene: 'b' }), true);
   const selected = h.entity('b');
@@ -885,7 +918,40 @@ test('[up42-scenes-layer-029] selects a scene and gives it the style of a select
   expectColor(colorOf(selected.polyline), '#facc15', 1);
   expectColor(colorOf(selected.polygon), '#facc15', 0.25);
   const hierarchy = selected.polygon.hierarchy.getValue();
-  assert.equal(hierarchy.positions.length, 4);
+  const coordinates = (positions) =>
+    positions.map((position) => {
+      const point = Cesium.Cartographic.fromCartesian(position);
+      return [
+        Number(Cesium.Math.toDegrees(point.longitude).toFixed(8)),
+        Number(Cesium.Math.toDegrees(point.latitude).toFixed(8)),
+      ];
+    });
+  assert.deepEqual(coordinates(hierarchy.positions), [
+    [21, 31],
+    [23, 32],
+    [24, 35],
+    [21, 31],
+  ]);
+  assert.deepEqual(coordinates(selected.polyline.positions.getValue()), [
+    [21, 31],
+    [23, 32],
+    [24, 35],
+    [21, 31],
+  ]);
+  assert.deepEqual(coordinates(h.entity('a').polyline.positions.getValue()), [
+    [10, 60],
+    [12, 61],
+    [11, 63],
+    [9, 62],
+    [10, 60],
+  ]);
+  assert.deepEqual(coordinates(h.entity('c').polyline.positions.getValue()), [
+    [-15, 40],
+    [-12, 41],
+    [-13, 44],
+    [-16, 43],
+    [-15, 40],
+  ]);
   for (const id of ['a', 'c']) {
     const other = h.entity(id);
     assert.equal(other.polyline.width.getValue(), 2);
@@ -1037,7 +1103,7 @@ test('[up42-scenes-layer-030] sends no thumbnail request for a scene that has no
   assert.equal(h.cards().length, 0);
 });
 
-test('[up42-scenes-layer-030] decodes the blob with createImageBitmap of the page when no decodeImage is given', async (t) => {
+test('[up42-scenes-layer-030] decodes the blob with createImageBitmap of the page when the caller gives no decodeImage function', async (t) => {
   const image = fakeImage(100, 100);
   const blobs = [];
   const before = Object.getOwnPropertyDescriptor(

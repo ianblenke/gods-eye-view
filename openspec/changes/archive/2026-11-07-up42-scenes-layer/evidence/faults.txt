@@ -1,3 +1,5 @@
+Original host snapshot.
+
 At the host snapshot of base commit f589cc58480d8239302b70c2b5ce32ea1bc8325d, the mutation copy has the same layer code and tests as the work clone.
 
 The branch is up42-scenes-layer. The tree has no commit for this change.
@@ -20,9 +22,9 @@ For M079, the registry and ledger both use the wrong token, so the test can read
 
 The next pass also measures M093 through M105 and extends the tests of M054 and M075.
 
-Final result: 105 distinct faults, 105 killed, 0 survivors, 0 stopped tests.
+Original result: 105 distinct faults, 105 killed, 0 survivors, 0 stopped tests.
 
-All 133 tests of this change fail for at least one fault in this record.
+At that snapshot, all 133 tests of this change fail for at least one fault in this record.
 
 The image path uses bitmaps. It creates no object URL. M088 proves that an added object URL fails a test.
 
@@ -135,3 +137,30 @@ UPL-M102 | Leave the chip enabled during a search | src/layers/up42Scenes/index.
 UPL-M103 | Drop the failed search message | src/layers/up42Scenes/index.js | [up42-scenes-layer-005] sends no search after an error while the fake clock and the mocked timers move 10 minutes, and sends one search at the next press
 UPL-M104 | Keep the credential refusal after reset | src/layers/up42Scenes/index.js | [up42-scenes-layer-007] reports a status that fails and keeps the chip enabled
 UPL-M105 | Change the centre grid | src/layers/skywatchScenes/box.js | [up42-scenes-layer-008] builds the box from the samples of the spec
+
+
+Review round 1 correction snapshot.
+
+Base commit: 0009961f8fc083f5bfea77153d34f7ffef414cfa.
+Branch: up42-scenes-layer. The snapshot includes the uncommitted review corrections.
+
+Host Node: v26.13.0.
+
+The command uses node --test --test-force-exit --test-isolation=none --test-reporter=tap.
+The test name pattern selects the test in each row. Each command returns exit 1.
+Each command completes with exactly one failed test. No command stops before its result.
+Each source file returns to its original content after each fault.
+
+This snapshot runs 8 new faults: 8 killed, 0 survivors, 0 stopped runs.
+The 105 original fault records remain historical evidence. This snapshot does not repeat those commands.
+The record now has 113 distinct ids. It has no duplicate id.
+
+ID | Fault | File | Failed test
+UPL-M106 | Change the first longitude | src/layers/up42Scenes/index.js | [up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint
+UPL-M107 | Change the first latitude | src/layers/up42Scenes/index.js | [up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint
+UPL-M108 | Reverse the scene ring | src/layers/up42Scenes/index.js | [up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint
+UPL-M109 | Exchange longitude and latitude | src/layers/up42Scenes/index.js | [up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint
+UPL-M110 | Reverse only rings that are not selected | src/layers/up42Scenes/index.js | [up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint
+UPL-M111 | Remove the layer from the catalog | src/app/constructCatalog.js | [up42-scenes-layer-041] keeps 42 catalog layers with full, absent and changed sources
+UPL-M112 | Remove the reference source key | src/sources/reference.js | [up42-scenes-layer-041] keeps all 13 reference source keys in order
+UPL-M113 | Skip the next free token | src/data/layerState.js | [up42-scenes-layer-041] keeps 41 registry and ledger entries and refuses the free token 05

@@ -150,7 +150,7 @@ test('[up42-scenes-layer-016] keeps a ring of 4 to 2000 positions, and drops a s
   assert.equal(result.scenes[1].ring.length, 2000);
 });
 
-test('[up42-scenes-layer-016] drops a scene with a position that is not two finite numbers in range', () => {
+test('[up42-scenes-layer-016] drops a scene with a position that is not two finite numbers in the valid range', () => {
   const withPosition = (position) => [RING[0], position, ...RING.slice(2)];
   const positions = [
     [10, 60],

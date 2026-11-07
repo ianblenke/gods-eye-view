@@ -89,7 +89,7 @@ test('[up42-scenes-layer-018] names both daily counts and refuses other counts',
   }
 });
 
-test('[up42-scenes-layer-018] names the wait of UP42 with its seconds, in the singular for 1', () => {
+test('[up42-scenes-layer-018] states how many seconds UP42 asks the user to wait, with the singular form for 1', () => {
   const wait = (retryAfter) =>
     describeFailure({ status: 429, error: 'upstream_rate_limit', retryAfter });
   assert.equal(wait(30), 'UP42 asks you to wait 30 seconds.');
@@ -189,7 +189,7 @@ test('[up42-scenes-layer-007 up42-scenes-layer-030] gives the fixed texts of the
   assert.equal(NO_THUMBNAIL, 'UP42 has no thumbnail for this scene.');
 });
 
-test('[up42-scenes-layer-040] gives local messages for unknown errors and a missing thumbnail route', () => {
+test('[up42-scenes-layer-040] gives local messages for unknown errors and a thumbnail route that is absent', () => {
   assert.equal(
     describeFailure({ status: 502, error: 'SECRET_UPSTREAM' }),
     'The server answered with an unknown error (502).',

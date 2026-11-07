@@ -425,7 +425,7 @@ test('[up42-scenes-layer-014] rejects with the AbortError when the signal of the
   await assert.rejects(waiting, { name: 'AbortError' });
 });
 
-test('[up42-scenes-layer-013] uses the fetch function of the page when none is given', async (t) => {
+test('[up42-scenes-layer-013] uses the fetch function of the page when the caller gives no fetch function', async (t) => {
   const urls = [];
   t.mock.method(globalThis, 'fetch', async (url) => {
     urls.push(url);

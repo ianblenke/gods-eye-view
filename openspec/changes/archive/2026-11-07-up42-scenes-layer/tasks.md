@@ -61,6 +61,8 @@
 - [x] 2.44 Change the catalog count in `src/app/sourceComposition.test.mjs`.
 - [x] 2.45 Add the source name in `src/sources/reference.test.mjs`.
 
+- [x] 2.46 Write the test for `up42-scenes-layer-041`.
+
 ## 3. Code
 
 - [x] 3.1 Write the records, source, messages, model and layer files.
@@ -81,7 +83,7 @@
 - [x] 4.3 Run each named fault.
 - [x] 4.4 Run the host format, import, package, token and STE checks.
 - [x] 4.5 Write the evidence and stored browser plan.
-- [x] 4.6 The lead checks the layer in the sandboxed browser with a stored answer.
+- [x] 4.6 Check the layer in the sandboxed browser with a stored answer.
 - [x] 4.7 Record the failed test of each fault.
 - [x] 4.8 Check that each added line of an edited code file has coverage.
 

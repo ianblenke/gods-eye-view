@@ -209,7 +209,7 @@ test('[up42-scenes-layer-022] gives one item for each scene, in the order of the
   );
 });
 
-test('[up42-scenes-layer-022] writes the resolution, the cloud cover and the parts that are null', () => {
+test('[up42-scenes-layer-022] writes the resolution and the cloud cover and omits null parts', () => {
   const textOf = (overrides) =>
     sceneList({
       answer: answer([scene('x', '2026-10-14T08:03:00.000Z', overrides)]),

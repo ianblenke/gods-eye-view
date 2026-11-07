@@ -7,7 +7,7 @@ A person needs one search at the view centre and a list that selects a preview.
 
 - Add `src/layers/up42Scenes/` and `src/app/layers/up42Scenes.js` from the SkyWatch pattern.
 - Import the SkyWatch box and date helpers without a change to those helpers.
-- Add 40 scenarios for `up42-scenes-layer` with `Origin: spec-first`.
+- Add 41 scenarios for `up42-scenes-layer` with `Origin: spec-first`.
 - Register the layer in the catalog, source contracts, reference sources, panel, names, credits, voice list and translations.
 - Add the two Chinese texts that the current catalog check needs.
 - Reserve token "04" for `up42-scenes`; the next free QA fixture token becomes "05".
