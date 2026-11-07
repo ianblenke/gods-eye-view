@@ -1,0 +1,61 @@
+At the host snapshot, commit 0da2dc27655330708ef443829b0f00dc369d4a42 has worktree edits.
+Host Node is v26.13.0. This report gives no calibrated gate verdict.
+
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --experimental-test-coverage src/data/up42*.test.mjs src/data/skywatch*.test.mjs
+The command completed. Tests: 654. Passed: 654. Failed: 0.
+New quote tests: 241. Unique titles: 241. Scenario IDs: 36.
+Each scenario has a test tag and a task line.
+
+At this host snapshot, the coverage columns are lines, branches and functions.
+server/providers/local.js | 100.00 | 100.00 | 100.00
+server/providers/up42/auth.js | 100.00 | 100.00 | 100.00
+server/providers/up42-thumbnails/plugins.js | 100.00 | 100.00 | 100.00
+server/providers/up42-quotes/normalize.js | 100.00 | 100.00 | 100.00
+server/providers/up42-quotes/plugins.js | 100.00 | 100.00 | 100.00
+server/providers/up42-quotes/quotes.js | 100.00 | 100.00 | 100.00
+server/providers/up42-quotes/upstream.js | 100.00 | 100.00 | 100.00
+server/providers/up42-quotes/validate.js | 100.00 | 100.00 | 100.00
+
+At the host snapshot, faults.txt has 76 unique mutation records.
+Seventy-one records name failed tests. Four initial mutations survived. One initial runner stopped.
+UPQ-M003 changed the archive method by mistake. UPQ-M068 changes the quote hook and fails its request guard.
+UPQ-M025 left another box defense active. UPQ-M072 removes both defenses and fails the box test.
+UPQ-M047 used invalid JSON. UPQ-M069 uses valid excess JSON and fails the cap test.
+UPQ-M048 used a stream that could end after cancel. UPQ-M070 uses a body operation that never ends and fails.
+UPQ-M058 stopped before completion. UPQ-M071 completes and fails the daily count test.
+UPQ-M073 through UPQ-M075 repeat the secret faults after the test setup correction.
+UPQ-M076 appends a request parameter on the API origin and fails the request guard.
+Each runtime source hash matches its hash before the mutations.
+
+The first red run stopped at module import because the quote code did not exist.
+The first host regression could not bind the loopback socket in the sandbox.
+The final host run permits that old local HTTP test. All provider requests use fake fetch.
+No external network request tests the UP42 service.
+
+Command: node scripts/spec/gates.mjs lint --change up42-quotes
+STE: 0 errors, 1297 warnings.
+The warnings include old prose and technical names. The evidence does not treat them as a passed review.
+
+Command: openspec validate up42-quotes --strict
+Output: Change 'up42-quotes' is valid.
+
+Command: node scripts/check-import-directions.mjs
+Output: 1145 modules and 87 portable entries. The command completed with exit 0.
+Command: node scripts/check-package-boundaries.mjs
+The command completed with exit 0 for all listed packages.
+Command: node scripts/check-layer-state-tokens.mjs --base-ref 0da2dc27655330708ef443829b0f00dc369d4a42
+Output: 40 published, 0 new. The command completed with exit 0.
+An earlier layer command had no base-ref and stopped with usage text. It gave no check verdict.
+
+Prettier checked the eight runtime files and the new test file. Each file passed.
+The Git whitespace check completed without output.
+The new data source text also has zero STE errors; its warnings concern technical names and the word including.
+QA: no script covers the capabilities of this change.
+The new test header has a purpose, covers item, run command and needs item.
+No repository QA script changed.
+
+The source and thumbnail tests and specs have no diff from the base commit.
+The active change is not archived. It has only its delta spec.
+The lead must keep both spec copies identical after archive.
+No commit, Make command, Docker run, ratchet, full gates, archive or review agent ran for this change.
+The lead must complete those steps before merge.

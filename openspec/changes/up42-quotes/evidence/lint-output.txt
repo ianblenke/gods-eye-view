@@ -1,0 +1,13 @@
+At the host snapshot, commit 0da2dc27655330708ef443829b0f00dc369d4a42 has worktree edits.
+Command: node scripts/spec/gates.mjs lint --change up42-quotes
+This file keeps the summary and the warnings for this change.
+
+WARN STE-ING openspec/changes/up42-quotes/proposal.md:3 Check the -ing word "tasking"
+WARN STE-ING openspec/changes/up42-quotes/proposal.md:10 Check the -ing word "TASKING"
+WARN STE-ING openspec/changes/up42-quotes/proposal.md:45 Check the -ing word "binding"
+WARN STE-ING openspec/changes/up42-quotes/specs/up42-quotes/spec.md:119 Check the -ing word "radiometricProcessing"
+WARN STE-ING openspec/changes/up42-quotes/specs/up42-quotes/spec.md:119 Check the -ing word "geometricProcessing"
+WARN STE-ING openspec/changes/up42-quotes/specs/up42-quotes/spec.md:119 Check the -ing word "pixelCoding"
+WARN STE-ING openspec/changes/up42-quotes/specs/up42-quotes/spec.md:153 Check the -ing word "TASKING"
+WARN STE-ING openspec/changes/up42-quotes/specs/up42-quotes/spec.md:175 Check the -ing word "TASKING"
+STE: 0 errors, 1297 warnings.
