@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F5 minor openspec/changes/archive/2026-11-07-up42-quotes/evidence/checks.txt:53 Commit `8838b80ff35212a31835bfe4fe3ff7175cdfb0de`: The supplied document gate completed with `ERROR REVIEW-MISSING`. Complete both reviews, write `review.md`, and obtain a passed final gate before merge.

@@ -11,7 +11,7 @@ The generic client checks the HTTPS API origin before login and uses the source 
 Only quote POST calls accept status 207. The source response rules stay unchanged.
 
 The shared client races headers and the capped JSON reader against the signal.
-The signal also bounds error cancellation, including cancellation of a late response.
+The signal also bounds error cancellation. This limit applies to cancellation of a late response.
 No new return uses a finally block.
 
 The route checks path, method, site, switch, rate, body, validation, credentials, store and daily count in that order.

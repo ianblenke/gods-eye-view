@@ -1,0 +1,3 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-11-07-up42-quotes/design.md:14 At commit 8838b80ff35212a31835bfe4fe3ff7175cdfb0de, “including cancellation of a late response” uses an -ing word that is not a technical name. Write: “The signal also bounds error cancellation. This limit applies to cancellation of a late response.”
+- [ ] F2 minor openspec/changes/archive/2026-11-07-up42-quotes/specs/up42-quotes/spec.md:306 At commit 8838b80ff35212a31835bfe4fe3ff7175cdfb0de, “a late response is discarded” uses passive voice where active voice is possible. Write: “the client discards a late response”.
