@@ -1,0 +1,52 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && python3 - (review correction record).
+At the host snapshot, HEAD is 15458d852bfd0f78f80fc45e604f15c86b89a326.
+The source and tests have changes after HEAD.
+
+- [x] FINDING critical SPEC F1 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  Only token status 400 and 401 use scenario 012 in the route cases.
+  Host status 500 uses 017. API status 401 uses 013 and asserts two token calls and two search calls.
+  The final host run passes these tests. M37 removes the retry and fails the API 401 test.
+- [x] FINDING critical SPEC F2 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  The end date test changes only end to 2026-10-21. It asserts two searches and a daily count of two.
+  M33 omits input.end and fails exactly that test in the full proxy suite.
+- [x] FINDING major SPEC F3 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  The route checks fromStore without a wait. startSearch records its promise before the route waits.
+  Scenario 025 sends two requests without a wait between them and asserts one search and one daily count.
+  M34 restores the wait and fails exactly that test in the full proxy suite.
+- [x] FINDING major SPEC F4 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  Each non-200 branch cancels its body before clearTimer. The client ignores a cancel error.
+  Scenario 026 uses bodies that never end and fake timers. It checks discard before timer clear.
+  The eight cases cover token 400, token 401, API 401 and public list 503, with both cancel results.
+  M35 removes cancel and fails all eight tests. M38 exposes a cancel error and fails its token test.
+- [x] FINDING major SPEC F5 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  The reader keeps at most 4096 bytes. It discards excess bytes until the end or a total above 65536 bytes.
+  Scenario 027 uses a real HTTP server on 127.0.0.1 and asserts 400, bad_body and complete body consumption.
+  M36 restores the early exit and fails that test. M39 changes the hard stop and fails the boundary test.
+  On this host, the old reader gave 400 but did not consume the complete body. The status failure did not occur here.
+  The same early exit exists in server/providers/skywatch/validate.js. This correction does not edit that file.
+- [ ] FINDING minor SPEC F6 remains lead work at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  This is not a code fault. The user requests no action for this item. review.md comes after the next reviews.
+  No final gate pass or new review pass is claimed.
+- [x] FINDING major STE F1 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  Tasks 3.3 through 3.6 now give four separate instructions. Each has fewer than 20 words.
+- [x] FINDING minor STE F2 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  The design says the route checks credentials before it reads the store. It no longer uses missing as an adjective.
+- [x] FINDING minor STE F3 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  The proposal says an origin that matches the server origin. The same-site code checks this relation.
+- [x] FINDING minor STE F4 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  Both scenario copies say each origin matches the request host and socket protocol. The HTTP and HTTPS tests pass.
+- [x] FINDING minor STE F5 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  Both scenario copies say the client skips invalid rows. The collection map tests pass.
+- [x] FINDING minor STE F6 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  Both scenario copies use with the error at all listed lines. The budget result names the fields used and limit.
+- [x] FINDING minor STE F7 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  The test title says checks secrets in JSON text. Its assertions stay as they were and pass.
+- [x] FINDING minor STE F8 fixed at commit 15458d852bfd0f78f80fc45e604f15c86b89a326 plus this work tree.
+  Both expanded timeout titles say during the headers phase or during the body phase. Both tests pass.
+
+host-run.txt records 216 passed tests and full coverage for all six code files.
+faults.txt records the commands and failed tests for M33 through M39.
+The final STE lint result is in lint-output.txt: STE: 0 errors, 1286 warnings. The command exits with status 0. The expanded title check is in test-titles.txt.
+No hashed requirement text line changes. Both spec copies have identical requirement and scenario sections.
+The full spec diff retains the original archive and master headers. spec-diff.txt shows these headers and the Purpose block.
+The calibrated gates, final review and merge checks remain unverified.

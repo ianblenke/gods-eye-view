@@ -1,0 +1,18 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && python3 - (spec copy check).
+At the host snapshot, HEAD is 15458d852bfd0f78f80fc45e604f15c86b89a326.
+All requirement and scenario sections are identical. Requirement text lines are unchanged from HEAD.
+The full diff contains only the original document headers and Purpose text.
+
+--- openspec/specs/up42-source/spec.md
++++ openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md
+@@ -1,8 +1,5 @@
+-# up42-source Specification
+-
+-## Purpose
+-Describe how the server searches the UP42 archive for scene facts while it keeps credentials on the server.
+-## Requirements
++## ADDED Requirements
++
+ ### Requirement: Provider routes
+ 
+ The plugin MUST install the status and scenes routes in both Vite hooks and pass other paths to the next handler.

@@ -1,0 +1,59 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && rg -n 'up42-source-02[567]|uses one new login|only the end date|during the.*phase|checks secrets in JSON|let result = fromStore|inFlight.set|await response.body|MAX_BODY_BYTES \* 16|total <= MAX_BODY_BYTES|3\.[3-6] |credentials before|origin that matches|HTTP and HTTPS origins|client skips|with the error' server/providers/up42.js server/providers/up42/auth.js server/providers/up42/validate.js src/data/up42Input.test.mjs src/data/up42Proxy.test.mjs src/data/up42Upstream.test.mjs openspec/changes/archive/2026-11-06-up42-source/tasks.md openspec/changes/archive/2026-11-06-up42-source/design.md openspec/changes/archive/2026-11-06-up42-source/proposal.md openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md openspec/specs/up42-source/spec.md
+At the host snapshot, HEAD is 15458d852bfd0f78f80fc45e604f15c86b89a326.
+Exit: 0
+
+openspec/specs/up42-source/spec.md:51:- **THEN** the route gives 403 with the error cross_origin and makes no upstream call
+openspec/specs/up42-source/spec.md:52:- **AND** HTTP and HTTPS origins pass when each origin matches the request host and socket protocol
+openspec/specs/up42-source/spec.md:63:- **THEN** the seventh gives 429 with the error rate_limited and Retry-After 60
+openspec/specs/up42-source/spec.md:75:- **THEN** the route gives 400 with the error bad_body
+openspec/specs/up42-source/spec.md:78:#### Scenario: Excess body response `up42-source-027`
+openspec/specs/up42-source/spec.md:81:- **THEN** the route discards the excess bytes and gives 400 with the error bad_body
+openspec/specs/up42-source/spec.md:93:- **THEN** invalid boxes give 400 with the error bad_bbox
+openspec/specs/up42-source/spec.md:105:- **THEN** the route gives 400 with the error area_too_large and maxKm2 2500 before the date check
+openspec/specs/up42-source/spec.md:117:- **THEN** invalid dates give 400 with the error bad_dates
+openspec/specs/up42-source/spec.md:129:- **THEN** bad forms give 400 with the error bad_options
+openspec/specs/up42-source/spec.md:134:The route MUST refuse a valid search without both credentials before it reads the store.
+openspec/specs/up42-source/spec.md:141:- **THEN** the route gives 503 with the error no_credentials and keyRequired true
+openspec/specs/up42-source/spec.md:154:- **AND** token status 400 or 401 gives 403 with the error credentials_rejected and keyRejected true
+openspec/specs/up42-source/spec.md:178:- **AND** the client skips invalid rows, host names must match ^[a-z0-9][a-z0-9-]{0,63}$ and an empty or invalid list gives upstream_failed
+openspec/specs/up42-source/spec.md:228:#### Scenario: Error body discard `up42-source-026`
+openspec/specs/up42-source/spec.md:270:#### Scenario: Concurrent identical requests `up42-source-025`
+openspec/specs/up42-source/spec.md:285:- **THEN** a new search gives 429 with the error budget and the fields used and limit, while a kept answer still passes
+src/data/up42Proxy.test.mjs:333:test('[up42-source-011] checks both credentials before the store', async (t) => {
+src/data/up42Proxy.test.mjs:372:test('[up42-source-013] uses one new login after an API 401 then stops', async (t) => {
+src/data/up42Proxy.test.mjs:518:test('[up42-source-021] starts a new search when only the end date changes', async (t) => {
+src/data/up42Proxy.test.mjs:531:test('[up42-source-025] starts one search for two simultaneous store misses', async (t) => {
+src/data/up42Proxy.test.mjs:809:  '[up42-source-027] gives an HTTP client 400 for a body above the cap',
+src/data/up42Input.test.mjs:188:test('[up42-source-027] discards bytes through 65536 and stops above that size', async () => {
+server/providers/up42/validate.js:20:      if (total > MAX_BODY_BYTES * 16) return null;
+server/providers/up42/validate.js:21:      if (total <= MAX_BODY_BYTES) chunks.push(chunk);
+server/providers/up42/auth.js:29:          await response.body?.cancel();
+server/providers/up42.js:79:    inFlight.set(id, run);
+server/providers/up42.js:112:    let result = fromStore(id);
+openspec/changes/archive/2026-11-06-up42-source/tasks.md:41:- [x] 3.3 Run each named fault.
+openspec/changes/archive/2026-11-06-up42-source/tasks.md:42:- [x] 3.4 Record the failed test for each fault.
+openspec/changes/archive/2026-11-06-up42-source/tasks.md:43:- [x] 3.5 Run the STE lint.
+openspec/changes/archive/2026-11-06-up42-source/tasks.md:44:- [x] 3.6 Check each test title.
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:48:- **THEN** the route gives 403 with the error cross_origin and makes no upstream call
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:49:- **AND** HTTP and HTTPS origins pass when each origin matches the request host and socket protocol
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:60:- **THEN** the seventh gives 429 with the error rate_limited and Retry-After 60
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:72:- **THEN** the route gives 400 with the error bad_body
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:75:#### Scenario: Excess body response `up42-source-027`
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:78:- **THEN** the route discards the excess bytes and gives 400 with the error bad_body
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:90:- **THEN** invalid boxes give 400 with the error bad_bbox
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:102:- **THEN** the route gives 400 with the error area_too_large and maxKm2 2500 before the date check
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:114:- **THEN** invalid dates give 400 with the error bad_dates
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:126:- **THEN** bad forms give 400 with the error bad_options
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:131:The route MUST refuse a valid search without both credentials before it reads the store.
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:138:- **THEN** the route gives 503 with the error no_credentials and keyRequired true
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:151:- **AND** token status 400 or 401 gives 403 with the error credentials_rejected and keyRejected true
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:175:- **AND** the client skips invalid rows, host names must match ^[a-z0-9][a-z0-9-]{0,63}$ and an empty or invalid list gives upstream_failed
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:225:#### Scenario: Error body discard `up42-source-026`
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:267:#### Scenario: Concurrent identical requests `up42-source-025`
+openspec/changes/archive/2026-11-06-up42-source/specs/up42-source/spec.md:282:- **THEN** a new search gives 429 with the error budget and the fields used and limit, while a kept answer still passes
+src/data/up42Upstream.test.mjs:583:    `[up42-source-018] stops the call during the ${phase} phase`,
+src/data/up42Upstream.test.mjs:932:test('[up42-source-023] checks secrets in JSON text', async () => {
+src/data/up42Upstream.test.mjs:1007:      `[up42-source-026] discards an error body case ${index} with cancel failure ${cancelFails}`,
+src/data/up42Upstream.test.mjs:1059:test('[up42-source-026] accepts an error response with no body', async () => {
+openspec/changes/archive/2026-11-06-up42-source/proposal.md:44:- Known limit `local-only`: The same-site gate refuses proxy headers. A reverse proxy must remove them and supply an origin that matches the server origin.
+openspec/changes/archive/2026-11-06-up42-source/design.md:71:The route checks the credentials before it reads the store. A request without credentials cannot use a kept answer.

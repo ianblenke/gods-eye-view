@@ -1,0 +1,8 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && 'node' '--test' '--test-force-exit' '--test-isolation=none' '--experimental-test-coverage' '--test-coverage-include=server/providers/local.js' '--test-reporter=lcov' '--test-reporter-destination=/home/ianblenke/docker/gev-work/up42/openspec/changes/up42-source/evidence/local-lines.lcov' '--test-name-pattern=installs both exact routes' 'src/data/up42Proxy.test.mjs'
+At the host snapshot, HEAD is 69d3e674df2775b372e6f6d2a9c9ae71a8729046.
+The local provider list has changes after HEAD.
+UTC: 2026-11-06T21:50:56.332010+00:00
+Exit: 0
+
+Line 39: hits 1: import { up42Plugins } from './up42.js';
+Line 71: hits 1: ...up42Plugins(),

@@ -1,0 +1,47 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && python3 - (host check record).
+At the host snapshot, HEAD is 15458d852bfd0f78f80fc45e604f15c86b89a326.
+The source and tests have changes after HEAD.
+
+host-run.txt records the final host test command and its output.
+At that snapshot, 216 tests pass, 0 fail, 0 cancel and 0 skip.
+There are 27 scenario IDs and 216 unique expanded test titles.
+The change adds 13 tests after the 203 tests at HEAD.
+All six provider code files have 100 percent line, branch and function coverage.
+The host uses Node v26.13.0. This is not the calibrated Node image.
+
+faults.txt keeps the 32 earlier fault records with their original snapshot.
+It adds seven new fault records, M33 through M39, for this correction.
+Each new fault fails its named test. M35 fails all eight error body tests.
+M33 removes input.end from the store key and fails only the end date test in the complete proxy suite.
+M34 adds a wait before the search claim and fails only scenario 025 in the complete proxy suite.
+Each fault runs alone. The runner restores the source after each test command.
+source-snapshot.txt records the SHA-256 of the final source and test files.
+
+The first correction test command used process isolation and showed only file failures.
+The next command used --test-isolation=none and showed each test result.
+The sandbox blocked the first HTTP listener with EPERM. That run gives no HTTP behavior verdict.
+The later host run had permission for a local socket and passed the HTTP test on 127.0.0.1.
+The old reader gave 400 on this host but did not consume the full request body.
+The HTTP test checks both the body end and the client response.
+
+spec-diff.txt records the comparison of both spec copies.
+Their requirement and scenario sections are identical. The original document headers differ.
+No requirement text line changes from HEAD. The Purpose text stays as it was.
+test-titles.txt records the expanded titles and the word list check.
+The check finds no forbidden word, phrase or -ing form and no title above 25 words.
+correction-search.txt records a final search of the corrected files.
+correction-report.txt records the result for each review item.
+lint-output.txt records the final STE lint command and its output.
+The command exits with status 0 and reports STE: 0 errors, 1286 warnings.
+No change-local warning or QA line appears. The host output copy removes trailing space.
+The cached formatter check passes for all six code files and all four test files.
+Its version is 3.9.10. The repository names version 3.9.6.
+
+The older provider-regression.txt and changed-lines.txt records describe their earlier snapshots.
+This correction does not repeat those checks. It does not edit local.js or the other providers.
+The same early body exit exists in server/providers/skywatch/validate.js. That file stays as it was, as requested.
+
+No make command, container, commit, push or external network request ran in this correction.
+The tests use fake upstream fetch. The HTTP test uses only 127.0.0.1.
+This correction does not read .env.
+No new review agents ran. review.md and the calibrated final gates remain lead work, as requested for SPEC F6.

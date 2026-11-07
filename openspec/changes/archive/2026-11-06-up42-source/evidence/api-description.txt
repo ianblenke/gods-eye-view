@@ -1,0 +1,14 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && python3 - (scout SHA-256).
+At the host snapshot, HEAD is 69d3e674df2775b372e6f6d2a9c9ae71a8729046.
+UTC: 2026-11-06T21:45:12.263363+00:00
+The source and tests have changes after HEAD.
+
+Source: /home/ianblenke/docker/gev-tools/imagery-scout/up42.md
+SHA-256: ecca3afe318b9110c7535cece5b220dce3d61fafe8e0acde55b256cc187f62d7
+Scout date: 2026-11-05.
+Sections read: 1, 2, 5, 7, 9 and 10.
+The report names the token endpoint and the password form.
+The collection fixture uses a Spring page with content, integrations and providers with roles.
+The scene fixture uses properties and a GeoJSON Polygon.
+The fixtures use made-up values in these shapes. No live request checks them.
+Known limit: no-live-check.

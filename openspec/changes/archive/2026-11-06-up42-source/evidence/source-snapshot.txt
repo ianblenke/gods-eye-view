@@ -1,0 +1,14 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && python3 - (SHA-256 snapshot).
+At the host snapshot, HEAD is 15458d852bfd0f78f80fc45e604f15c86b89a326.
+The source and tests have changes after HEAD.
+
+b4c3ca9d316fa3bec3b7da8f49383437a4748e33981bffae90a798c214690a26  server/providers/up42.js
+1536cda1a3f71561303a5e9e382359fa31693afe178f6b10ff1b4ce541f74bb1  server/providers/up42/auth.js
+0568c869571cd73ea3c31ed36755af04dad2baa7f985f2afea75ef36227e706c  server/providers/up42/normalize.js
+75ba01fec5efc14080b403288098dc075bace670bf27bf0a5374c335cf24227b  server/providers/up42/same-site.js
+a78f0dc3782ef4b5d94c051d0b0456ced2d7149ef786e9de19f265e93847ff89  server/providers/up42/upstream.js
+dc04f1675e5d9c040e5db7d5fe33d5d835c07b464c89da223b2fcefb40bd2ab6  server/providers/up42/validate.js
+f702fe54f955d01207792b10d122a631ad54e2287636879acd91d2dd560c0d1f  src/data/up42Input.test.mjs
+2951dab3798c1ecbe226192d32641107217b04c05048d6f8d10d1d6b90b9dde5  src/data/up42Proxy.test.mjs
+a862243c2404969966846d8260da3fc506142238db9b431bf31d3984797e7c7c  src/data/up42Scenes.test.mjs
+13ad63cfe9ba3063b491f850cf3ca367eb7eaf5838165f08e181662250eeddc9  src/data/up42Upstream.test.mjs

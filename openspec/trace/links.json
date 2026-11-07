@@ -8925,6 +8925,276 @@
   "ste-lint-045": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-045] gives a clear error for invalid registry JSON"
   ],
+  "up42-source-001": [
+    "src/data/up42Proxy.test.mjs › [up42-source-001] installs both exact routes in both Vite hooks"
+  ],
+  "up42-source-002": [
+    "src/data/up42Proxy.test.mjs › [up42-source-002] gives only the credential state with no upstream call"
+  ],
+  "up42-source-003": [
+    "src/data/up42Proxy.test.mjs › [up42-source-003] checks the method before other scenes checks",
+    "src/data/up42Proxy.test.mjs › [up42-source-003] refuses other origins before the rate limit"
+  ],
+  "up42-source-004": [
+    "src/data/up42Proxy.test.mjs › [up42-source-004] refuses each failed same-site or content check"
+  ],
+  "up42-source-005": [
+    "src/data/up42Proxy.test.mjs › [up42-source-005] counts bad bodies and kept answers and resets at 60000 ms"
+  ],
+  "up42-source-006": [
+    "src/data/up42Input.test.mjs › [up42-source-006] reads at most 4096 bytes and handles a broken stream",
+    "src/data/up42Input.test.mjs › [up42-source-006] refuses body case 0",
+    "src/data/up42Input.test.mjs › [up42-source-006] refuses body case 1",
+    "src/data/up42Input.test.mjs › [up42-source-006] refuses body case 2",
+    "src/data/up42Input.test.mjs › [up42-source-006] refuses body case 3",
+    "src/data/up42Input.test.mjs › [up42-source-006] refuses body case 4",
+    "src/data/up42Input.test.mjs › [up42-source-006] refuses body case 5",
+    "src/data/up42Input.test.mjs › [up42-source-006] refuses body case 6",
+    "src/data/up42Input.test.mjs › [up42-source-006] refuses body case 7",
+    "src/data/up42Proxy.test.mjs › [up42-source-006] gives body failures before the credential check"
+  ],
+  "up42-source-007": [
+    "src/data/up42Input.test.mjs › [up42-source-007] accepts the box limits and keeps its own values",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 0",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 1",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 10",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 11",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 12",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 13",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 14",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 15",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 16",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 2",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 3",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 4",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 5",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 6",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 7",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 8",
+    "src/data/up42Input.test.mjs › [up42-source-007] refuses box case 9"
+  ],
+  "up42-source-008": [
+    "src/data/up42Input.test.mjs › [up42-source-008] checks the area before the dates"
+  ],
+  "up42-source-009": [
+    "src/data/up42Input.test.mjs › [up42-source-009] accepts 92 days and the current UTC date",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses a date with a final line break",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 0",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 1",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 10",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 11",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 2",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 3",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 4",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 5",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 6",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 7",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 8",
+    "src/data/up42Input.test.mjs › [up42-source-009] refuses date case 9"
+  ],
+  "up42-source-010": [
+    "src/data/up42Input.test.mjs › [up42-source-010] keeps the optional values and their absence",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 0",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 1",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 10",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 11",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 2",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 3",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 4",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 5",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 6",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 7",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 8",
+    "src/data/up42Input.test.mjs › [up42-source-010] refuses option case 9",
+    "src/data/up42Proxy.test.mjs › [up42-source-010] gives the collection refusal from the fetched list",
+    "src/data/up42Upstream.test.mjs › [up42-source-010] refuses an unknown collection before a host search"
+  ],
+  "up42-source-011": [
+    "src/data/up42Proxy.test.mjs › [up42-source-011] checks both credentials before the store"
+  ],
+  "up42-source-012": [
+    "src/data/up42Proxy.test.mjs › [up42-source-012] gives the route failure case 0",
+    "src/data/up42Proxy.test.mjs › [up42-source-012] gives the route failure case 1",
+    "src/data/up42Upstream.test.mjs › [up42-source-012] encodes absent credentials as empty form values",
+    "src/data/up42Upstream.test.mjs › [up42-source-012] keeps spaces at both ends of the password",
+    "src/data/up42Upstream.test.mjs › [up42-source-012] names token refusal 400",
+    "src/data/up42Upstream.test.mjs › [up42-source-012] names token refusal 401",
+    "src/data/up42Upstream.test.mjs › [up42-source-012] sends the password form only to the fixed token host"
+  ],
+  "up42-source-013": [
+    "src/data/up42Proxy.test.mjs › [up42-source-013] uses one new login after an API 401 then stops",
+    "src/data/up42Upstream.test.mjs › [up42-source-013] retries one API refusal case 0",
+    "src/data/up42Upstream.test.mjs › [up42-source-013] retries one API refusal case 1",
+    "src/data/up42Upstream.test.mjs › [up42-source-013] retries one API refusal case 2",
+    "src/data/up42Upstream.test.mjs › [up42-source-013] reuses one token until the exact time boundary",
+    "src/data/up42Upstream.test.mjs › [up42-source-013] shares a new login after concurrent API refusals",
+    "src/data/up42Upstream.test.mjs › [up42-source-013] shares one login across concurrent requests",
+    "src/data/up42Upstream.test.mjs › [up42-source-013] stops after a refused new login",
+    "src/data/up42Upstream.test.mjs › [up42-source-013] uses the token lifetime from the answer"
+  ],
+  "up42-source-014": [
+    "src/data/up42Upstream.test.mjs › [up42-source-014] reads the public list without credentials and caches the map for six hours",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses a host with a final line break",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 0",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 1",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 10",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 11",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 2",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 3",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 4",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 5",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 6",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 7",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 8",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] refuses collection list case 9",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] removes bad hosts before it calls the client",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] shares a public list request that is in flight",
+    "src/data/up42Upstream.test.mjs › [up42-source-014] skips bad rows and checks each host at the path boundary"
+  ],
+  "up42-source-015": [
+    "src/data/up42Upstream.test.mjs › [up42-source-015] allows at most four host calls at one time",
+    "src/data/up42Upstream.test.mjs › [up42-source-015] groups collections and sets each body field with no extra field",
+    "src/data/up42Upstream.test.mjs › [up42-source-015] uses distinct box and date values from the request"
+  ],
+  "up42-source-016": [
+    "src/data/up42Upstream.test.mjs › [up42-source-016] marks the page limit case 0",
+    "src/data/up42Upstream.test.mjs › [up42-source-016] marks the page limit case 1",
+    "src/data/up42Upstream.test.mjs › [up42-source-016] marks the page limit case 2",
+    "src/data/up42Upstream.test.mjs › [up42-source-016] marks the page limit case 3",
+    "src/data/up42Upstream.test.mjs › [up42-source-016] marks the page limit case 4"
+  ],
+  "up42-source-017": [
+    "src/data/up42Proxy.test.mjs › [up42-source-017] gives 502 when the host fails",
+    "src/data/up42Proxy.test.mjs › [up42-source-017] gives 504 when all host calls time out",
+    "src/data/up42Upstream.test.mjs › [up42-source-017] keeps all scenes from distinct good hosts beside failures",
+    "src/data/up42Upstream.test.mjs › [up42-source-017] keeps good hosts and lists all failed hosts by name",
+    "src/data/up42Upstream.test.mjs › [up42-source-017] refuses host document case 0",
+    "src/data/up42Upstream.test.mjs › [up42-source-017] refuses host document case 1",
+    "src/data/up42Upstream.test.mjs › [up42-source-017] refuses host document case 2",
+    "src/data/up42Upstream.test.mjs › [up42-source-017] refuses host document case 3",
+    "src/data/up42Upstream.test.mjs › [up42-source-017] refuses host document case 4"
+  ],
+  "up42-source-018": [
+    "src/data/up42Proxy.test.mjs › [up42-source-018] gives a fixed route failure for a public list 401",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] accepts exactly 4194304 response bytes",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] gives a fixed failure for transport case 0",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] gives a fixed failure for transport case 1",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] gives a fixed failure for transport case 2",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] gives a fixed failure for transport case 3",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] gives a fixed failure for transport case 4",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] gives a fixed failure for transport case 5",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] gives a fixed failure for transport case 6",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] keeps the timer through the body and clears it at the end",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] refuses a public list 401 without a login",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] refuses a token with a final line break",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] refuses a valid JSON body of 4194305 bytes",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] refuses token document case 0",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] refuses token document case 1",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] refuses token document case 2",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] refuses token document case 3",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] refuses token document case 4",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] refuses token document case 5",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] refuses token document case 6",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] refuses token document case 7",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] stops the call during the body phase",
+    "src/data/up42Upstream.test.mjs › [up42-source-018] stops the call during the headers phase"
+  ],
+  "up42-source-019": [
+    "src/data/up42Proxy.test.mjs › [up42-source-019] gives the complete answer and the response headers",
+    "src/data/up42Scenes.test.mjs › [up42-source-019] sets only the named scene fields from their sources"
+  ],
+  "up42-source-020": [
+    "src/data/up42Scenes.test.mjs › [up42-source-020] clears number case 0",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] clears number case 1",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] clears number case 2",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] clears number case 3",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] clears number case 4",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] clears number case 5",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] clears number case 6",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] clears number case 7",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] clears number case 8",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops an id with a final line break",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops each invalid feature and counts all drops",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops polygon case 0",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops polygon case 1",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops polygon case 10",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops polygon case 2",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops polygon case 3",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops polygon case 4",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops polygon case 5",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops polygon case 6",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops polygon case 7",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops polygon case 8",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops polygon case 9",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops position case 0",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops position case 1",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops position case 10",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops position case 2",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops position case 3",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops position case 4",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops position case 5",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops position case 6",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops position case 7",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops position case 8",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] drops position case 9",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] keeps the number limits",
+    "src/data/up42Scenes.test.mjs › [up42-source-020] keeps valid rings and removes altitude"
+  ],
+  "up42-source-021": [
+    "src/data/up42Proxy.test.mjs › [up42-source-021] keeps good answers until the exact store boundary",
+    "src/data/up42Proxy.test.mjs › [up42-source-021] keeps no failure in the store",
+    "src/data/up42Proxy.test.mjs › [up42-source-021] removes the oldest answer after 32 entries",
+    "src/data/up42Proxy.test.mjs › [up42-source-021] shares a search with success false",
+    "src/data/up42Proxy.test.mjs › [up42-source-021] shares a search with success true",
+    "src/data/up42Proxy.test.mjs › [up42-source-021] starts a new search when only the end date changes",
+    "src/data/up42Proxy.test.mjs › [up42-source-021] uses each filter in the store key"
+  ],
+  "up42-source-022": [
+    "src/data/up42Proxy.test.mjs › [up42-source-022] checks the store before the daily count and counts failures",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] reserves the count before the first upstream call",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 0",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 1",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 10",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 11",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 12",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 2",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 3",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 4",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 5",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 6",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 7",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 8",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] sets the daily limit case 9",
+    "src/data/up42Proxy.test.mjs › [up42-source-022] uses the default for a daily limit with a line break"
+  ],
+  "up42-source-023": [
+    "src/data/up42Proxy.test.mjs › [up42-source-023] keeps fake secrets out of every answer and console line",
+    "src/data/up42Proxy.test.mjs › [up42-source-023] uses fake process credentials and the default console function",
+    "src/data/up42Upstream.test.mjs › [up42-source-023] checks secrets in JSON text",
+    "src/data/up42Upstream.test.mjs › [up42-source-023] refuses a password in a scene field"
+  ],
+  "up42-source-024": [
+    "src/data/up42Upstream.test.mjs › [up42-source-024] excludes all forbidden source literals",
+    "src/data/up42Upstream.test.mjs › [up42-source-024] records only the literal allowed request forms"
+  ],
+  "up42-source-025": [
+    "src/data/up42Proxy.test.mjs › [up42-source-025] starts one search for two simultaneous store misses"
+  ],
+  "up42-source-026": [
+    "src/data/up42Upstream.test.mjs › [up42-source-026] accepts an error response with no body",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 0 with cancel failure false",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 0 with cancel failure true",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 1 with cancel failure false",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 1 with cancel failure true",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 2 with cancel failure false",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 2 with cancel failure true",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 3 with cancel failure false",
+    "src/data/up42Upstream.test.mjs › [up42-source-026] discards an error body case 3 with cancel failure true"
+  ],
+  "up42-source-027": [
+    "src/data/up42Input.test.mjs › [up42-source-027] discards bytes through 65536 and stops above that size",
+    "src/data/up42Proxy.test.mjs › [up42-source-027] gives an HTTP client 400 for a body above the cap"
+  ],
   "voice-panel-001": [
     "src/voice/panel/backfill.test.mjs › [voice-panel-001] The observer rejects an invalid action"
   ],

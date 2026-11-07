@@ -158,6 +158,33 @@ The layer "Bee Maps Bursts" in the group Cameras uses the burst routes. The chip
 
 After an unknown answer, the layer warns that a burst can exist and disables the chip "Quote burst here" until "Check my bursts" gets a fresh list answer. The chip "Check my bursts" asks for the bursts of the account and draws their boxes. A burst has a hit when the list says so. This version cannot draw an area, cancel a burst or fetch the frames of a burst.
 
+### UP42 archive scenes
+
+UP42 gives access to satellite scenes from many operators.
+`GET /api/up42/status` reports whether both server credentials exist.
+`POST /api/up42/scenes` accepts JSON from the same site, with the shared origin checks.
+A reverse proxy must remove proxy headers and give an origin that matches its request to the server.
+
+Set `UP42_USERNAME` and `UP42_PASSWORD` for a dedicated Viewer-role console user.
+The server uses a password grant. MFA can break this grant.
+The password goes only to `auth.up42.com`, and the bearer token goes only to `api.up42.com`.
+The server refuses redirects and keeps these secrets out of answers and logs.
+
+The body has `box`, `start` and `end`. The box has west, south, east and north in that order.
+The area limit is 2500 km², and the date limit is 92 inclusive days.
+Optional `maxCloud` is an integer from 0 to 100. Optional `collections` selects names from the public archive list.
+The route searches at most ten hosts, with four calls at one time and one page of 50 scenes for each host.
+
+The answer has scene facts, a count of drops, failed host names and an incomplete flag.
+It gives no price, coverage, upstream URL or image.
+`UP42_DAILY_SEARCHES` sets 1 to 1000 new searches for each UTC day. The default is 20.
+The server allows six requests each minute and keeps good answers for ten minutes.
+The daily count stays in RAM and starts at zero after a restart.
+
+The scout did not confirm the search cost or access for a Viewer-role user.
+UP42 terms do not address footprint display or its cache. This change shows no image.
+Tests use fake responses from the scout report shapes, with no live call.
+
 ### SkyWatch archive scenes (key in `.env`)
 
 SkyWatch EarthCache gives one API for the satellite images of many operators. The route `/api/skywatch/scenes` searches its archive for the scenes of one box of at most 2500 km² and a window of at most 92 days. It accepts only a JSON request from the same site. A request through a reverse proxy passes only when the proxy removes the proxy headers, such as `X-Forwarded-For`. When the request of the proxy to this server has the header `Origin`, that origin must have the protocol and the `Host` of that request.

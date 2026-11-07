@@ -1,0 +1,6 @@
+Command: cd /home/ianblenke/docker/gev-work/up42 && node scripts/spec/gates.mjs lint --change archive/2026-11-06-up42-source
+At the host snapshot, HEAD is 15458d852bfd0f78f80fc45e604f15c86b89a326.
+Exit: 0
+The record keeps ERROR, STE, QA and change-local WARN lines from the command output.
+
+STE: 0 errors, 1286 warnings.
