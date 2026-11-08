@@ -9304,6 +9304,71 @@
   "up42-quotes-036": [
     "src/data/up42Quotes.test.mjs › [up42-quotes-036] refuses other origins before login"
   ],
+  "up42-scene-overlay-001": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-001] starts with no image and keeps the card path"
+  ],
+  "up42-scene-overlay-002": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-002] gives the image chip its labels and handler"
+  ],
+  "up42-scene-overlay-003": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-003] omits the image chip without an answer or available thumbnails",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-003] supplies the image chip when the status is unknown"
+  ],
+  "up42-scene-overlay-004": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-004] requests only the 24 newest thumbnails in literal order"
+  ],
+  "up42-scene-overlay-005": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-005] orders equal times by id and puts greater time values first"
+  ],
+  "up42-scene-overlay-006": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-006] runs at most four requests and starts the next after an end"
+  ],
+  "up42-scene-overlay-007": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-007] keeps two images after one failure and sends no retry"
+  ],
+  "up42-scene-overlay-008": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-008] counts a rejected thumbnail with a fixed message",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-008] counts an image error and releases its URL",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-008] counts an object URL error"
+  ],
+  "up42-scene-overlay-009": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-009] draws every footprint vertex with the specified image material"
+  ],
+  "up42-scene-overlay-010": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-010] gives ground polygons literal ranks with the newest highest"
+  ],
+  "up42-scene-overlay-011": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-011] keeps each outline above images and keeps the selected style"
+  ],
+  "up42-scene-overlay-012": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-012] selects without a card and keeps each image unchanged"
+  ],
+  "up42-scene-overlay-013": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-013] aborts and releases images after a new answer",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-013] switches the option off after an answer with no thumbnails"
+  ],
+  "up42-scene-overlay-014": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-014] aborts and releases images after a second press"
+  ],
+  "up42-scene-overlay-015": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-015] aborts and releases images after disable"
+  ],
+  "up42-scene-overlay-016": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-016] aborts and releases images after destroy"
+  ],
+  "up42-scene-overlay-017": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-017] ignores late success and failure and does not drain an old queue"
+  ],
+  "up42-scene-overlay-018": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-018] aborts the old card and closes a late bitmap",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-018] closes the old card before the image queue starts"
+  ],
+  "up42-scene-overlay-019": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-019] keeps images and selection after a failed search"
+  ],
+  "up42-scene-overlay-020": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-020] keeps the original public scene fields"
+  ],
   "up42-scenes-layer-001": [
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-001] describes the layer and has a method setParams",
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-001] refuses a second init",

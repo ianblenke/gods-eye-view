@@ -253,3 +253,13 @@ Final lint output: STE: 0 errors, 1333 warnings.
 The command completes with exit 0.
 Git diff --check completes with exit 0.
 The final status contains only the change files in evidence/files.txt.
+
+Browser check (snapshot of run 4 on the code commit ca54c451, in the sandboxed Chrome for Testing with a temporary profile and a fake upstream with six scenes):
+The run shows 23 PASS and 0 FAIL. Earlier runs failed only because of timing faults in the driver, and no run failed because of this change.
+Fake scenes: four nested footprints with one solid colour each (newest blue, then green, red, yellow), one scene whose thumbnail answer is 404, and one scene with no thumbnail.
+Only the search chip exists before a search. After a search the chip Show images exists and no thumbnail request has been sent.
+A press on Show images sends five requests, newest first, and shows four images with one failure. The readout says that four images show and one failed.
+The pixel at the centre of the four footprints is blue. The pixels outside the newest, the two newest and the three newest footprints are green, red and yellow.
+The outlines of the six scenes stay on top. A selection of a scene with images on opens no card and sends no request. With images off the card opens as before.
+Hide images, a new answer and a disabled layer remove every image entity.
+The thumbnails of the fake upstream are synthetic images. No real UP42 image was shown, so the fit to a real footprint is not checked (known limit approximate-fit).
