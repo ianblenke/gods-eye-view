@@ -135,6 +135,7 @@
     "src/layers/gdacs/",
     "src/layers/skywatchScenes/",
     "src/layers/up42Scenes/",
+    "src/layers/up42Scenes/images.js",
     "src/app/layers/up42Scenes.js",
     "src/layers/sceneLayer/",
     "src/layers/osh/",

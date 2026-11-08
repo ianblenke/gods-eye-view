@@ -1,0 +1,274 @@
+At the host snapshot of base commit c0d02493f66de4c0fc435aa70070ec5579d3b50b, the work tree includes C1 and C2.
+
+Records UPO-M001 through UPO-M031 belong to the earlier tree and no longer supply current evidence.
+Current records use distinct ids from UPO-M032.
+
+Command per fault: node --test --test-force-exit --test-isolation=none --test-reporter=tap src/layers/up42Scenes/images.test.mjs
+
+UPO-M063: Add a public field during image creation.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-020] keeps the original public scene fields
+The file after restoration equals the file before the fault.
+
+UPO-M064: Omit the image chip until a successful status answer.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-003] supplies the image chip when the status is unknown
+The file after restoration equals the file before the fault.
+
+UPO-M032: Always supply the image chip.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-003] omits the image chip without an answer or available thumbnails
+Failed test: [up42-scene-overlay-015] aborts and releases images after disable
+Failed test: [up42-scene-overlay-013] switches the option off after an answer with no thumbnails
+The file after restoration equals the file before the fault.
+
+UPO-M033: Supply the chip without a thumbnail scene.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-003] omits the image chip without an answer or available thumbnails
+Failed test: [up42-scene-overlay-013] switches the option off after an answer with no thumbnails
+The file after restoration equals the file before the fault.
+
+UPO-M034: Sort times from least to greatest.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-004] requests only the 24 newest thumbnails in literal order
+Failed test: [up42-scene-overlay-005] orders equal times by id and puts greater time values first
+Failed test: [up42-scene-overlay-007] keeps two images after one failure and sends no retry
+Failed test: [up42-scene-overlay-009] draws every footprint vertex with the specified image material
+Failed test: [up42-scene-overlay-010] gives ground polygons literal ranks with the newest highest
+The file after restoration equals the file before the fault.
+
+UPO-M035: Reverse the order of equal-time ids.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-005] orders equal times by id and puts greater time values first
+Failed test: [up42-scene-overlay-006] runs at most four requests and starts the next after an end
+Failed test: [up42-scene-overlay-013] aborts and releases images after a new answer
+The file after restoration equals the file before the fault.
+
+UPO-M036: Allow 25 scenes.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-004] requests only the 24 newest thumbnails in literal order
+The file after restoration equals the file before the fault.
+
+UPO-M037: Allow five active requests.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-006] runs at most four requests and starts the next after an end
+Failed test: [up42-scene-overlay-017] ignores late success and failure and does not drain an old queue
+The file after restoration equals the file before the fault.
+
+UPO-M038: Reverse the polygon ranks.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-010] gives ground polygons literal ranks with the newest highest
+The file after restoration equals the file before the fault.
+
+UPO-M039: Keep old images after a new answer.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-013] switches the option off after an answer with no thumbnails
+The file after restoration equals the file before the fault.
+
+UPO-M040: Open the card while images show.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-007] keeps two images after one failure and sends no retry
+Failed test: [up42-scene-overlay-012] selects without a card and keeps each image unchanged
+The file after restoration equals the file before the fault.
+
+UPO-M041: Retry a failed thumbnail.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-007] keeps two images after one failure and sends no retry
+The file after restoration equals the file before the fault.
+
+UPO-M042: Remove outlines while images show.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-011] keeps each outline above images and keeps the selected style
+The file after restoration equals the file before the fault.
+
+UPO-M043: Do not abort image requests.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-013] aborts and releases images after a new answer
+Failed test: [up42-scene-overlay-014] aborts and releases images after a second press
+Failed test: [up42-scene-overlay-015] aborts and releases images after disable
+Failed test: [up42-scene-overlay-016] aborts and releases images after destroy
+Failed test: [up42-scene-overlay-017] ignores late success and failure and does not drain an old queue
+Failed test: [up42-scene-overlay-013] switches the option off after an answer with no thumbnails
+The file after restoration equals the file before the fault.
+
+UPO-M044: Do not revoke kept image URLs.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-008] counts an image error and releases its URL
+Failed test: [up42-scene-overlay-013] aborts and releases images after a new answer
+Failed test: [up42-scene-overlay-014] aborts and releases images after a second press
+Failed test: [up42-scene-overlay-015] aborts and releases images after disable
+Failed test: [up42-scene-overlay-016] aborts and releases images after destroy
+Failed test: [up42-scene-overlay-013] switches the option off after an answer with no thumbnails
+The file after restoration equals the file before the fault.
+
+UPO-M045: Use full image alpha.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-009] draws every footprint vertex with the specified image material
+The file after restoration equals the file before the fault.
+
+UPO-M046: Displace every image vertex.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-009] draws every footprint vertex with the specified image material
+The file after restoration equals the file before the fault.
+
+UPO-M047: Keep the card when images start.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-018] closes the old card before the image queue starts
+Failed test: [up42-scene-overlay-018] aborts the old card and closes a late bitmap
+The file after restoration equals the file before the fault.
+
+UPO-M048: Keep the off label while images show.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-002] gives the image chip its labels and handler
+Failed test: [up42-scene-overlay-003] supplies the image chip when the status is unknown
+Failed test: [up42-scene-overlay-013] aborts and releases images after a new answer
+The file after restoration equals the file before the fault.
+
+UPO-M049: Start the option on.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-001] starts with no image and keeps the card path
+Failed test: [up42-scene-overlay-002] gives the image chip its labels and handler
+Failed test: [up42-scene-overlay-003] omits the image chip without an answer or available thumbnails
+Failed test: [up42-scene-overlay-003] supplies the image chip when the status is unknown
+Failed test: [up42-scene-overlay-004] requests only the 24 newest thumbnails in literal order
+Failed test: [up42-scene-overlay-005] orders equal times by id and puts greater time values first
+Failed test: [up42-scene-overlay-006] runs at most four requests and starts the next after an end
+Failed test: [up42-scene-overlay-007] keeps two images after one failure and sends no retry
+Failed test: [up42-scene-overlay-008] counts a rejected thumbnail with a fixed message
+Failed test: [up42-scene-overlay-008] counts an image error and releases its URL
+Failed test: [up42-scene-overlay-008] counts an object URL error
+Failed test: [up42-scene-overlay-009] draws every footprint vertex with the specified image material
+Failed test: [up42-scene-overlay-010] gives ground polygons literal ranks with the newest highest
+Failed test: [up42-scene-overlay-011] keeps each outline above images and keeps the selected style
+Failed test: [up42-scene-overlay-012] selects without a card and keeps each image unchanged
+Failed test: [up42-scene-overlay-013] aborts and releases images after a new answer
+Failed test: [up42-scene-overlay-014] aborts and releases images after a second press
+Failed test: [up42-scene-overlay-015] aborts and releases images after disable
+Failed test: [up42-scene-overlay-016] aborts and releases images after destroy
+Failed test: [up42-scene-overlay-017] ignores late success and failure and does not drain an old queue
+Failed test: [up42-scene-overlay-018] closes the old card before the image queue starts
+Failed test: [up42-scene-overlay-018] aborts the old card and closes a late bitmap
+Failed test: [up42-scene-overlay-019] keeps images and selection after a failed search
+Failed test: [up42-scene-overlay-020] keeps the original public scene fields
+Failed test: [up42-scene-overlay-013] switches the option off after an answer with no thumbnails
+The file after restoration equals the file before the fault.
+
+UPO-M050: Ignore the old image handler guards.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-003] omits the image chip without an answer or available thumbnails
+Failed test: [up42-scene-overlay-013] switches the option off after an answer with no thumbnails
+The file after restoration equals the file before the fault.
+
+UPO-M051: Do not count image failures.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-007] keeps two images after one failure and sends no retry
+Failed test: [up42-scene-overlay-008] counts a rejected thumbnail with a fixed message
+Failed test: [up42-scene-overlay-008] counts an image error and releases its URL
+Failed test: [up42-scene-overlay-008] counts an object URL error
+The file after restoration equals the file before the fault.
+
+UPO-M052: Remove images after a search failure.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-019] keeps images and selection after a failed search
+The file after restoration equals the file before the fault.
+
+UPO-M053: Keep image entities after release.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-013] aborts and releases images after a new answer
+Failed test: [up42-scene-overlay-014] aborts and releases images after a second press
+Failed test: [up42-scene-overlay-016] aborts and releases images after destroy
+Failed test: [up42-scene-overlay-013] switches the option off after an answer with no thumbnails
+The file after restoration equals the file before the fault.
+
+UPO-M054: Skip the card while the option is off.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-001] starts with no image and keeps the card path
+Failed test: [up42-scene-overlay-014] aborts and releases images after a second press
+Failed test: [up42-scene-overlay-018] closes the old card before the image queue starts
+Failed test: [up42-scene-overlay-018] aborts the old card and closes a late bitmap
+The file after restoration equals the file before the fault.
+
+UPO-M055: Keep an image URL after entity creation fails.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-008] counts an image error and releases its URL
+The file after restoration equals the file before the fault.
+
+UPO-M056: Remove image transparency.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-009] draws every footprint vertex with the specified image material
+The file after restoration equals the file before the fault.
+
+UPO-M057: Remove the ground clamp.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-010] gives ground polygons literal ranks with the newest highest
+The file after restoration equals the file before the fault.
+
+UPO-M058: Request scenes with no thumbnail.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-004] requests only the 24 newest thumbnails in literal order
+Failed test: [up42-scene-overlay-012] selects without a card and keeps each image unchanged
+The file after restoration equals the file before the fault.
+
+UPO-M059: Remove images on selection.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-007] keeps two images after one failure and sends no retry
+Failed test: [up42-scene-overlay-011] keeps each outline above images and keeps the selected style
+Failed test: [up42-scene-overlay-012] selects without a card and keeps each image unchanged
+Failed test: [up42-scene-overlay-019] keeps images and selection after a failed search
+The file after restoration equals the file before the fault.
+
+UPO-M060: Keep the option on after reset.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-015] aborts and releases images after disable
+The file after restoration equals the file before the fault.
+
+UPO-M061: Accept answers after abort.
+File: src/layers/up42Scenes/images.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-013] aborts and releases images after a new answer
+Failed test: [up42-scene-overlay-014] aborts and releases images after a second press
+Failed test: [up42-scene-overlay-015] aborts and releases images after disable
+Failed test: [up42-scene-overlay-016] aborts and releases images after destroy
+Failed test: [up42-scene-overlay-017] ignores late success and failure and does not drain an old queue
+The file after restoration equals the file before the fault.
+
+UPO-M062: Keep the option on for an answer with no thumbnails.
+File: src/layers/up42Scenes/index.js.
+Exit: 1.
+Failed test: [up42-scene-overlay-013] switches the option off after an answer with no thumbnails
+The file after restoration equals the file before the fault.
+
+Restored file hashes, SHA-256:
+src/layers/up42Scenes/images.js 3169a53969af14bd0323200a7674aae59db51349d4a05eae3de5cd51fa6efb65
+src/layers/up42Scenes/index.js dfb0805c3f44861f55bad930b541290a6f1918231516a16464c324af0bb65b3c

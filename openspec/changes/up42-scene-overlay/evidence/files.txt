@@ -1,0 +1,19 @@
+Command: git status --short --untracked-files=all
+At the host snapshot of base commit c0d02493f66de4c0fc435aa70070ec5579d3b50b, these files have changes.
+
+ M openspec/ownership.json
+ M scripts/format-scope.json
+ M scripts/package-boundaries.json
+ M src/layers/up42Scenes/index.js
+?? changelog.d/1434-up42-scene-overlay.md
+?? openspec/changes/up42-scene-overlay/.openspec.yaml
+?? openspec/changes/up42-scene-overlay/design.md
+?? openspec/changes/up42-scene-overlay/evidence/checks.txt
+?? openspec/changes/up42-scene-overlay/evidence/faults.txt
+?? openspec/changes/up42-scene-overlay/evidence/files.txt
+?? openspec/changes/up42-scene-overlay/proposal.md
+?? openspec/changes/up42-scene-overlay/report.md
+?? openspec/changes/up42-scene-overlay/specs/up42-scene-overlay/spec.md
+?? openspec/changes/up42-scene-overlay/tasks.md
+?? src/layers/up42Scenes/images.js
+?? src/layers/up42Scenes/images.test.mjs
