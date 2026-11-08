@@ -38,4 +38,4 @@ No findings from either reviewer.
 
 ## Known limits
 
-The proposal names these limits: single-collection-hosts (the set of two hosts comes from a live probe on 2026-11-08; a new host with the same rule fails as a normal host failure until the set is edited), no-live-check for any host that the probe did not search, and the cost of one search of up to 24 UP42 calls. The collection list removes the in-flight entry after the load without a `finally` block; the load returns a result object and does not throw.
+The proposal names these limits: single-collection-hosts, call-cap, first-page, count-in-ram, display-terms and probe-snapshot.
