@@ -428,6 +428,7 @@ export const VOICE_OFF_LAYERS = Object.freeze({
   'skywatch-scenes': 'The SkyWatch layer has no voice tools.',
   'planet-scenes': 'The Planet layer has no voice tools.',
   'skyfi-scenes': 'The SkyFi layer has no voice tools.',
+  'up42-scenes': 'The UP42 layer has no voice tools.',
   beemaps: 'The Bee Maps layer has no voice tools.',
   'beemaps-bursts': 'The Bee Maps bursts layer has no voice tools.',
   'bhote-koshi-2026': 'scene-driven event layer (control_scene)',

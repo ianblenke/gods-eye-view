@@ -1,0 +1,166 @@
+Original host snapshot.
+
+At the host snapshot of base commit f589cc58480d8239302b70c2b5ce32ea1bc8325d, the mutation copy has the same layer code and tests as the work clone.
+
+The branch is up42-scenes-layer. The tree has no commit for this change.
+
+Host Node is v26.13.0. The tests use fake sources and images.
+
+Each fault changes the stated behavior, runs the named test file, then restores the source.
+
+Command form: node --test --test-force-exit --test-isolation=none, then the affected test files.
+
+The first pass has 92 fault entries. It kills 89 faults.
+
+The bitmap edit in M019 does not compile. The first M032 anchor does not match.
+
+The first M079 changes only the registry, so module validation stops before a named test runs.
+
+Those three attempts give no scenario verdict. The next pass corrects their targets.
+
+For M079, the registry and ledger both use the wrong token, so the test can read a valid registry.
+
+The next pass also measures M093 through M105 and extends the tests of M054 and M075.
+
+Original result: 105 distinct faults, 105 killed, 0 survivors, 0 stopped tests.
+
+At that snapshot, all 133 tests of this change fail for at least one fault in this record.
+
+The image path uses bitmaps. It creates no object URL. M088 proves that an added object URL fails a test.
+
+
+Mutation table. Each row names the first failed test of that fault.
+
+ID | Fault | File | Failed test
+UPL-M001 | Search during an update without a press | src/layers/up42Scenes/index.js | [up42-scenes-layer-002] asks only for the status and adds no listener to the camera or the scene
+UPL-M002 | Add a forbidden body field | src/layers/up42Scenes/source.js | [up42-scenes-layer-013] sends one POST with one header and the box and the dates as the body
+UPL-M003 | Bypass the id encoder | src/layers/up42Scenes/source.js | [up42-scenes-layer-038] encodes a dot id before it builds the thumbnail path
+UPL-M004 | Refuse real ids with dots | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] drops a scene whose id does not have 1 to 128 letters, digits, hyphens, underscores or dots
+UPL-M005 | Accept ids of dots only | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] drops a scene whose id does not have 1 to 128 letters, digits, hyphens, underscores or dots
+UPL-M006 | Request a thumbnail despite a false flag | src/layers/up42Scenes/index.js | [up42-scenes-layer-029] removes the selection with scene null and sends no new request for the selected id
+UPL-M007 | Replace the credential error text | src/layers/up42Scenes/messages.js | [up42-scenes-layer-018] names each failure of a search with the text of its sample
+UPL-M008 | Replace the upstream failure text | src/layers/up42Scenes/messages.js | [up42-scenes-layer-018] names each failure of a search with the text of its sample
+UPL-M009 | Bypass the budget message | src/layers/up42Scenes/messages.js | [up42-scenes-layer-018] names both daily counts and refuses other counts
+UPL-M010 | Replace the thumbnail credential text | src/layers/up42Scenes/messages.js | [up42-scenes-layer-019] names credential and time failures of a thumbnail
+UPL-M011 | Replace the thumbnail time error | src/layers/up42Scenes/messages.js | [up42-scenes-layer-019] names credential and time failures of a thumbnail
+UPL-M012 | Drop a nonempty failed host flag | src/layers/up42Scenes/records.js | [up42-scenes-layer-039] reads partial results without host text
+UPL-M013 | Drop the host failure note | src/layers/up42Scenes/model.js | [up42-scenes-layer-039] gives one partial note for either route flag
+UPL-M014 | Drop the truncation note | src/layers/up42Scenes/model.js | [up42-scenes-layer-021] writes the count, the newest date and the searches of the day
+UPL-M015 | Accept a late thumbnail response | src/layers/up42Scenes/index.js | [up42-scenes-layer-026] aborts each request on disable and ignores the answers that arrive afterwards
+UPL-M016 | Accept a late decoded bitmap | src/layers/up42Scenes/index.js | [up42-scenes-layer-032] closes an image that arrives after the layer aborts the request of that image
+UPL-M017 | Keep the old thumbnail request active | src/layers/up42Scenes/index.js | [up42-scenes-layer-026] aborts each request on disable and ignores the answers that arrive afterwards
+UPL-M018 | Leak the old card image | src/layers/up42Scenes/index.js | [up42-scenes-layer-032] replaces the card and closes the old image once
+UPL-M019 | Leak a late or invalid bitmap | src/layers/up42Scenes/index.js | [up42-scenes-layer-031] closes an image whose size gives no card and names it bad_image
+UPL-M020 | Keep the old search active | src/layers/up42Scenes/index.js | [up42-scenes-layer-026] aborts each request on disable and ignores the answers that arrive afterwards
+UPL-M021 | Keep the old status request active | src/layers/up42Scenes/index.js | [up42-scenes-layer-026] aborts each request on disable and ignores the answers that arrive afterwards
+UPL-M022 | Accept an old search response | src/layers/up42Scenes/index.js | [up42-scenes-layer-026] aborts each request on disable and ignores the answers that arrive afterwards
+UPL-M023 | Accept an old status response | src/layers/up42Scenes/index.js | [up42-scenes-layer-026] aborts each request on disable and ignores the answers that arrive afterwards
+UPL-M024 | Keep a failed search busy | src/layers/up42Scenes/index.js | [up42-scenes-layer-005] sends no search after an error while the fake clock and the mocked timers move 10 minutes, and sends one search at the next press
+UPL-M025 | Refuse a press directly after an error | src/layers/up42Scenes/index.js | [up42-scenes-layer-005] sends no search after an error while the fake clock and the mocked timers move 10 minutes, and sends one search at the next press
+UPL-M026 | Retry a failed search on a timer | src/layers/up42Scenes/index.js | [up42-scenes-layer-005] sends no search after an error while the fake clock and the mocked timers move 10 minutes, and sends one search at the next press
+UPL-M027 | Use the default ellipsoid | src/layers/up42Scenes/index.js | [up42-scenes-layer-008] picks the middle of the canvas on the ellipsoid of the globe and sends its box
+UPL-M028 | Drop every scene of a good answer | src/layers/up42Scenes/index.js | [up42-scenes-layer-006] keeps the text for no credentials when a good answer arrives after a status with no credentials
+UPL-M029 | Change the layer identity | src/layers/up42Scenes/index.js | [up42-scenes-layer-001] describes the layer and has a method setParams
+UPL-M030 | Accept a source without status | src/layers/up42Scenes/index.js | [up42-scenes-layer-001] refuses a source without getStatus, searchScenes or getThumbnail
+UPL-M031 | Accept an incomplete overlay host | src/layers/up42Scenes/index.js | [up42-scenes-layer-001] refuses an overlay host without setEntries, clearSource or setVisible
+UPL-M032 | Accept a second initialization | src/layers/up42Scenes/index.js | [up42-scenes-layer-001] refuses a second init
+UPL-M033 | Do not tell the panel about a change | src/layers/up42Scenes/index.js | [up42-scenes-layer-028] calls the listener for a search, an update, a press with no box, a selection and the end of a thumbnail request
+UPL-M034 | Show source text in the stats | src/layers/up42Scenes/index.js | [up42-scenes-layer-007] reports a status that fails and keeps the chip enabled
+UPL-M035 | Use the wrong status route | src/layers/up42Scenes/source.js | [up42-scenes-layer-012] sends one GET for the status route with the signal and reads configured
+UPL-M036 | Use the wrong scenes route | src/layers/up42Scenes/source.js | [up42-scenes-layer-013] sends one POST with one header and the box and the dates as the body
+UPL-M037 | Use the wrong thumbnail route | src/layers/up42Scenes/source.js | [up42-scenes-layer-013] uses the fetch function of the page when none is given
+UPL-M038 | Accept a search body over the byte cap | src/layers/up42Scenes/source.js | [up42-scenes-layer-014] reads a body of 8388608 bytes and gives bad_answer for one byte more
+UPL-M039 | Accept an image body over the byte cap | src/layers/up42Scenes/source.js | [up42-scenes-layer-015] reads a body of 1048576 bytes and gives bad_answer for one byte more
+UPL-M040 | Change the search time limit | src/layers/up42Scenes/source.js | [up42-scenes-layer-014] aborts a search that does not end in 60 seconds and clears the timer
+UPL-M041 | Change the thumbnail time limit | src/layers/up42Scenes/source.js | [up42-scenes-layer-015] gives unreachable for a rejection and for a call that does not end in 20 seconds
+UPL-M042 | Keep the request timer | src/layers/up42Scenes/source.js | [up42-scenes-layer-014] gives the status 0 and the error unreachable for a rejection
+UPL-M043 | Keep the caller signal listener | src/layers/up42Scenes/source.js | [up42-scenes-layer-014] removes its listener from the signal of the call when the search ends
+UPL-M044 | Swallow the caller AbortError | src/layers/up42Scenes/source.js | [up42-scenes-layer-014] gives the fetch function a signal of its own that follows the call and the 60 seconds
+UPL-M045 | Drop the route error code | src/layers/up42Scenes/source.js | [up42-scenes-layer-014] gives the status, the error and the whole numbers of an error body
+UPL-M046 | Corrupt error counts | src/layers/up42Scenes/source.js | [up42-scenes-layer-014] gives the status, the error and the whole numbers of an error body
+UPL-M047 | Accept a nonimage body | src/layers/up42Scenes/source.js | [up42-scenes-layer-015] gives bad_answer for another media type or no Content-Type
+UPL-M048 | Corrupt image bytes | src/layers/up42Scenes/source.js | [up42-scenes-layer-015] gives a blob with the bytes and the media type of a good answer
+UPL-M049 | Accept a failed status response | src/layers/up42Scenes/source.js | [up42-scenes-layer-012] gives ok false for another body, for a status that is not 2xx and for a rejection
+UPL-M050 | Send a bad thumbnail id | src/layers/up42Scenes/source.js | [up42-scenes-layer-038] refuses each bad thumbnail id before a request
+UPL-M051 | Accept an answer without scenes | src/layers/up42Scenes/records.js | [up42-scenes-layer-017] gives null for an answer that is not an object or has no list of scenes
+UPL-M052 | Keep a fifty-first scene | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] keeps at most the first 50 valid scenes
+UPL-M053 | Drop the scene collection field | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] keeps exactly the eight fields of a valid scene
+UPL-M054 | Drop the scene provider field | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] keeps exactly the eight fields of a valid scene
+UPL-M055 | Accept a false thumbnail flag | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] keeps a resolution of 0 or more, a cloud cover from 0 to 100, a provider text and only a true thumbnail
+UPL-M056 | Keep a repeated scene id | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] drops an item that is not an object and a repeated id, and keeps the order of the answer
+UPL-M057 | Accept a nontext start value | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] drops a scene whose start is not a text that Date.parse reads
+UPL-M058 | Accept the wrong geometry type | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] keeps exactly the eight fields of a valid scene
+UPL-M059 | Accept a short ring | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] keeps a ring of 4 to 2000 positions, and drops a shorter or longer ring
+UPL-M060 | Accept a long ring | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] keeps a ring of 4 to 2000 positions, and drops a shorter or longer ring
+UPL-M061 | Accept a position with extra coordinates | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] drops a scene with a position that is not two finite numbers in range
+UPL-M062 | Accept an open ring | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] drops a scene whose first and last positions are not equal
+UPL-M063 | Drop the route count | src/layers/up42Scenes/records.js | [up42-scenes-layer-016] reads count, truncated, used and limit, and gives null or false for each other value
+UPL-M064 | Change the card size | src/layers/up42Scenes/model.js | [up42-scenes-layer-023] fits the image in a square of 192 pixels and keeps its ratio
+UPL-M065 | Change the unselected style | src/layers/up42Scenes/model.js | [up42-scenes-layer-020] styles a footprint that is not selected and a selected footprint
+UPL-M066 | Show the wrong collection | src/layers/up42Scenes/model.js | [up42-scenes-layer-038] lists each id and collection with distinct scene values
+UPL-M067 | Show the wrong list date | src/layers/up42Scenes/model.js | [up42-scenes-layer-022] gives one item for each scene, in the order of the answer
+UPL-M068 | Change the hint and no-answer message | src/layers/up42Scenes/model.js | [up42-scenes-layer-021] gives the hint with no answer and no message
+UPL-M069 | Keep absent text parts | src/layers/up42Scenes/model.js | [up42-scenes-layer-021] writes the count, the newest date and the searches of the day
+UPL-M070 | Use the closed position twice in the card centre | src/layers/up42Scenes/model.js | [up42-scenes-layer-023] gives the mean position of a ring without its last position
+UPL-M071 | Do not identify a missing thumbnail route | src/layers/up42Scenes/messages.js | [up42-scenes-layer-040] gives local messages for unknown errors and a missing thumbnail route
+UPL-M072 | Show the wrong box refusal reason | src/layers/up42Scenes/messages.js | [up42-scenes-layer-009] names each reason of a view that has no box
+UPL-M073 | Change the search half side | src/layers/skywatchScenes/box.js | [up42-scenes-layer-008] builds the box from the samples of the spec
+UPL-M074 | Change the date window | src/layers/skywatchScenes/box.js | [up42-scenes-layer-010] builds a box that the server accepts at 33 latitudes and 35 longitudes
+UPL-M075 | Change the sky refusal reason | src/layers/skywatchScenes/box.js | [up42-scenes-layer-009] gives the reason sky for a centre that is null or has a value that is not a finite number
+UPL-M076 | Change the latitude refusal reason | src/layers/skywatchScenes/box.js | [up42-scenes-layer-009] refuses a centre above 80 or below -80 degrees after the rounding
+UPL-M077 | Change the meridian refusal reason | src/layers/skywatchScenes/box.js | [up42-scenes-layer-009] refuses a box that goes past longitude 180 or -180
+UPL-M078 | Refuse a box exactly at the meridian | src/layers/skywatchScenes/box.js | [up42-scenes-layer-009] gives a box that ends exactly at longitude 180 or -180
+UPL-M079 | Change the reserved layer token | src/data/layerState.js,src/data/layerStateTokenReservations.json | [up42-scenes-layer-033] registers the layer in the catalog, the source contract, the reference sources and the share link
+UPL-M080 | Drop the panel registration | src/ui/layerPanel.js | [up42-scenes-layer-034] puts the layer in the Cameras group right after skyfi-scenes
+UPL-M081 | Change the voice exclusion text | src/voice/layerManifest.js | [up42-scenes-layer-035] keeps the layer out of voice
+UPL-M082 | Drop the preview terms credit | src/data/dataCredits.js | [up42-scenes-layer-036] names UP42, links to up42.com and gives the sentence about the terms
+UPL-M083 | Change the translated layer name | src/ui/layerNames.js | [up42-scenes-layer-037] gives the Spanish and the Russian name of the layer
+UPL-M084 | Change the Russian list label | src/i18n/locales/ru.json | [up42-scenes-layer-037] gives the Spanish and the Russian label of the list
+UPL-M085 | Drop render governor wiring | src/app/layers/up42Scenes.js | [up42-scenes-layer-033] gives the layer of the application the render governor, and an option requestRender replaces it
+UPL-M086 | Drop the reference source methods | src/sources/reference.js | [up42-scenes-layer-033] registers the layer in the catalog, the source contract, the reference sources and the share link
+UPL-M087 | Change the source consumer | src/app/sourceComposition.js | [up42-scenes-layer-033] registers the layer in the catalog, the source contract, the reference sources and the share link
+UPL-M088 | Create an unwanted object URL | src/layers/up42Scenes/index.js | [up42-scenes-layer-040] shows local texts for source errors and uses no object URL
+UPL-M089 | Change the status failure text | src/layers/up42Scenes/messages.js | [up42-scenes-layer-007 up42-scenes-layer-030] gives the fixed texts of the status and the thumbnail
+UPL-M090 | Replace the page clock | src/layers/up42Scenes/index.js | [up42-scenes-layer-011] uses Date.now as the clock when no option now is given
+UPL-M091 | Drop the missing credential message | src/layers/up42Scenes/index.js | [up42-scenes-layer-006] disables the chip and shows the text for no credentials when the status has no credentials
+UPL-M092 | Change the Chinese layer name | src/i18n/locales/zh-CN.json | [up42-scenes-layer-037] gives both Chinese names for the shipped catalogs
+UPL-M093 | Change the unreadable answer error | src/layers/up42Scenes/source.js | [up42-scenes-layer-014] gives the error bad_answer for a body that is not JSON
+UPL-M094 | Change the missing error code result | src/layers/up42Scenes/source.js | [up42-scenes-layer-014] gives the error unknown for a JSON body without a text error
+UPL-M095 | Hide a time limit during a body read | src/layers/up42Scenes/source.js | [up42-scenes-layer-014] gives unreachable when the 60 seconds end while it reads the body
+UPL-M096 | Create an extra request timer | src/layers/up42Scenes/source.js | [up42-scenes-layer-014] sends one request for each search that fails, also after the timers of the call run
+UPL-M097 | Drop the upstream wait message | src/layers/up42Scenes/messages.js | [up42-scenes-layer-018] names the wait of UP42 with its seconds, in the singular for 1
+UPL-M098 | Change the missing scene message | src/layers/up42Scenes/messages.js | [up42-scenes-layer-019] names each failure of a thumbnail with the text of its sample
+UPL-M099 | Return a list with no scenes | src/layers/up42Scenes/model.js | [up42-scenes-layer-022] gives null for no answer and for an answer with no scene
+UPL-M100 | Round the resolution to the wrong precision | src/layers/up42Scenes/model.js | [up42-scenes-layer-022] writes the resolution, the cloud cover and the parts that are null
+UPL-M101 | Report a disabled update as active | src/layers/up42Scenes/index.js | [up42-scenes-layer-002] reads the status only while it is enabled
+UPL-M102 | Leave the chip enabled during a search | src/layers/up42Scenes/index.js | [up42-scenes-layer-004] sends one search for two presses and shows Searching… while it runs
+UPL-M103 | Drop the failed search message | src/layers/up42Scenes/index.js | [up42-scenes-layer-005] sends no search after an error while the fake clock and the mocked timers move 10 minutes, and sends one search at the next press
+UPL-M104 | Keep the credential refusal after reset | src/layers/up42Scenes/index.js | [up42-scenes-layer-007] reports a status that fails and keeps the chip enabled
+UPL-M105 | Change the centre grid | src/layers/skywatchScenes/box.js | [up42-scenes-layer-008] builds the box from the samples of the spec
+
+
+Review round 1 correction snapshot.
+
+Base commit: 0009961f8fc083f5bfea77153d34f7ffef414cfa.
+Branch: up42-scenes-layer. The snapshot includes the uncommitted review corrections.
+
+Host Node: v26.13.0.
+
+The command uses node --test --test-force-exit --test-isolation=none --test-reporter=tap.
+The test name pattern selects the test in each row. Each command returns exit 1.
+Each command completes with exactly one failed test. No command stops before its result.
+Each source file returns to its original content after each fault.
+
+This snapshot runs 8 new faults: 8 killed, 0 survivors, 0 stopped runs.
+The 105 original fault records remain historical evidence. This snapshot does not repeat those commands.
+The record now has 113 distinct ids. It has no duplicate id.
+
+ID | Fault | File | Failed test
+UPL-M106 | Change the first longitude | src/layers/up42Scenes/index.js | [up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint
+UPL-M107 | Change the first latitude | src/layers/up42Scenes/index.js | [up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint
+UPL-M108 | Reverse the scene ring | src/layers/up42Scenes/index.js | [up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint
+UPL-M109 | Exchange longitude and latitude | src/layers/up42Scenes/index.js | [up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint
+UPL-M110 | Reverse only rings that are not selected | src/layers/up42Scenes/index.js | [up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint
+UPL-M111 | Remove the layer from the catalog | src/app/constructCatalog.js | [up42-scenes-layer-041] keeps 42 catalog layers with full, absent and changed sources
+UPL-M112 | Remove the reference source key | src/sources/reference.js | [up42-scenes-layer-041] keeps all 13 reference source keys in order
+UPL-M113 | Skip the next free token | src/data/layerState.js | [up42-scenes-layer-041] keeps 41 registry and ledger entries and refuses the free token 05

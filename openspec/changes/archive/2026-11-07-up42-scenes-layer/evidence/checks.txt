@@ -1,0 +1,163 @@
+At the host snapshot of commit 0009961f8fc083f5bfea77153d34f7ffef414cfa, the branch is up42-scenes-layer.
+This snapshot includes the uncommitted review round 1 corrections.
+Host Node is v26.13.0. Project HEAD stays at the stated commit.
+
+SPEC F1: fixed at this snapshot.
+The test of scenario 029 compares every longitude and latitude, in ring order, with literal numbers.
+The three scene rings have distinct coordinates. The selected polygon and all three polylines keep their own rings.
+Faults UPL-M106 through UPL-M110 each fail the scene selection test.
+
+SPEC F2: fixed at this snapshot. The trace exception below names the old tests and their new checks.
+The template test commits are d0f30b13 and abb81118. Both update counts, lists and fixtures without a change to old test names.
+The correction follows that pattern. It changes none of the five old test files or their debt entries.
+Scenario 041 has three new tagged tests and a completed task line.
+
+SPEC F3: no correction, as the owner directs. The final review record and gates remain with the lead.
+
+STE findings at this snapshot:
+F1: fixed. The scenario 022 title says that it omits null parts. The assertions exclude each null field.
+F2: fixed. The design says "the test that failed".
+F3: fixed. Task 4.6 starts with "Check the layer". Its completed state comes from the stored browser evidence of the lead.
+F4: not a fault of new prose. A diff of the whole Systems layer block against openspec/specs/osh/spec.md returns exit 0.
+The diff has no differences. The four quoted phrases come from that verbatim block. No line in that block changes.
+F5: partly fixed. The new prose now says "a local source that is absent" in both spec copies.
+The error text starts after that phrase. Thus, the phrase is not quoted error text.
+The two UI labels are not faults of new prose. They are quoted code labels, shared with the templates.
+Known limit ui-texts already names both labels. The labels stay as they are.
+F6: fixed. Both layer test titles say that the caller gives no option or function.
+F7: fixed. The title says "shows the search message while the search runs".
+F8: fixed. The source test title says "when the caller gives no fetch function".
+F9: fixed. The message test title says "a thumbnail route that is absent".
+F10: fixed. The title states how many seconds UP42 asks the user to wait, with the singular form for 1.
+F11: fixed. The records test title says "two finite numbers in the valid range".
+
+All 136 layer test titles are unique. The check against openspec/ste/words.json reports 0 errors and 2 warnings.
+The warnings name the old titles with "rounding" and "is enabled". No corrected title has a word-list error.
+
+Trace exception:
+
+Each name below stays because the test exists on main. The owner forbids a change to those names.
+The two template changes use the same rule. All five files keep their full test name lists from base f589cc58.
+Each named new test is in src/layers/up42Scenes/registration.test.mjs.
+
+File: src/app/constructCatalog.test.mjs
+Old test: catalogs construct distinct layers and classification from their supplied source
+Changed fact: 42 catalog layers.
+Tagged test: [up42-scenes-layer-041] keeps 42 catalog layers with full, absent and changed sources
+
+File: src/app/constructCatalog.test.mjs
+Old test: Mapillary can be omitted or replaced without changing catalog membership
+Changed fact: 42 layers without Mapillary. The tagged test also checks another street provider.
+Tagged test: [up42-scenes-layer-041] keeps 42 catalog layers with full, absent and changed sources
+
+File: src/app/sourceComposition.test.mjs
+Old test: all acquisition sources may be absent, and enable fails before initializing or fetching
+Changed fact: 42 catalog layers without any source.
+Tagged test: [up42-scenes-layer-041] keeps 42 catalog layers with full, absent and changed sources
+
+File: src/sources/reference.test.mjs
+Old test: reference factories retain compatibility without starting acquisition or sharing instances
+Changed fact: the full ordered reference source list now includes up42-scenes.
+Tagged test: [up42-scenes-layer-041] keeps all 13 reference source keys in order
+
+File: src/data/layerState.test.mjs
+Old test: production registry is exact, canonical, and rejects incomplete contracts
+Changed facts: 41 registered ids, 41 distinct ids, and next free token 05.
+Tagged test: [up42-scenes-layer-041] keeps 41 registry and ledger entries and refuses the free token 05
+The fixture also omits the new reservation to keep its free digit. That fixture assertion keeps its old value.
+
+File: src/data/layerState.test.mjs
+Old test: malformed enabled-layer lists reject the entire payload
+Changed fact: the free token samples become 05 and c.05. Both must decode to null.
+Tagged test: [up42-scenes-layer-041] keeps 41 registry and ledger entries and refuses the free token 05
+
+File: src/data/layerState.test.mjs
+Old tagged test: [osh-033] registers the OSH systems layer with token 3
+Changed fact: 41 registered ids. This test already has a scenario tag and keeps its name.
+Tagged test: [up42-scenes-layer-041] keeps 41 registry and ledger entries and refuses the free token 05
+
+File: src/data/layerState.test.mjs
+Old test: Clear All cancels a saved restore still waiting to start
+The original change only formats one assertion across several lines. Its expected value stays false.
+No fact or trace link changes. No new tagged test is necessary for that format change.
+
+File: src/data/layerStateTokenLedger.test.mjs
+Old test: reservation ledger is complete, pinned, and rejects duplicate or malformed rows
+Changed facts: 41 reservation entries and the pair up42-scenes with token 04.
+Tagged test: [up42-scenes-layer-041] keeps 41 registry and ledger entries and refuses the free token 05
+
+File: src/data/layerStateTokenLedger.test.mjs
+Old test: PR B manually replaces provisional 9 with 00 after PR A publishes 9
+Old test: an isolated valid two-character fixture round-trips an l field beyond the old 64-character cap
+The shared fixture helper adds a check that the exact new registry entry occurs once before it removes that entry.
+Both old test names stay. Their fixture rows omit the new layer to keep the same free tokens.
+Tagged test: [up42-scenes-layer-041] keeps 41 registry and ledger entries and refuses the free token 05
+That test checks the same literal entry and its single occurrence in the registry source.
+
+Host tests:
+
+Command form for each file: node --test --test-force-exit --test-isolation=none --test-reporter=tap, then the file name.
+The file set includes all UP42 layer tests, both layerState test files and reference.test.mjs.
+It also includes all app and i18n test files, plus each direct ui, voice and share test file.
+Four host processes run at most four test files at once. Each file has a 180 second limit.
+
+The first sandbox run completes 165 files with 2442 tests, 2433 passes and 9 failures in six files.
+Each failure reports spawnSync git EPERM. A direct Node child-process check has the same error after Git returns the correct commit.
+The same direct check outside the sandbox returns exit 0 and the correct commit.
+All six affected test files pass outside the sandbox with no code edit. Their complete results replace the sandbox results below.
+
+Final snapshot: 165 files, 2525 tests, 2525 passes, 0 failures.
+There are 0 cancelled tests, 0 skipped tests, 0 todo tests and 0 stopped runs.
+
+Group | Files | Tests | Passes | Failures
+app | 16 | 91 | 91 | 0
+data | 2 | 80 | 80 | 0
+i18n | 10 | 122 | 122 | 0
+layers | 7 | 136 | 136 | 0
+share | 5 | 476 | 476 | 0
+sources | 1 | 1 | 1 | 0
+ui | 76 | 727 | 727 | 0
+voice | 48 | 892 | 892 | 0
+
+Coverage:
+
+The direct command uses the seven UP42 layer test files with experimental test coverage.
+It includes only src/layers/up42Scenes/*.js and src/app/layers/up42Scenes.js.
+The line, branch and function thresholds are each 100. The command returns exit 0.
+It completes 136 tests with 136 passes, 0 failures and no uncovered line.
+
+File | Line % | Branch % | Function %
+src/app/layers/up42Scenes.js | 100.00 | 100.00 | 100.00
+src/layers/up42Scenes/index.js | 100.00 | 100.00 | 100.00
+src/layers/up42Scenes/messages.js | 100.00 | 100.00 | 100.00
+src/layers/up42Scenes/model.js | 100.00 | 100.00 | 100.00
+src/layers/up42Scenes/records.js | 100.00 | 100.00 | 100.00
+src/layers/up42Scenes/source.js | 100.00 | 100.00 | 100.00
+
+Mutations:
+
+At this snapshot, 8 new mutation commands complete. All 8 fail the intended test, each with exit 1.
+The ids continue from UPL-M105 and end at UPL-M113. The faults.txt table names each failed test.
+The file has 113 distinct mutation ids with no duplicate. The first 105 records are historical; this snapshot does not repeat them.
+No production file has a correction diff after the source returns to its original content.
+
+Documents and lint:
+
+node scripts/format.mjs --check returns exit 0. Its output is "Checked 1699 source files."
+The check runs outside the sandbox because it reads the tracked file list through Git.
+
+node scripts/spec/gates.mjs lint --change up42-scenes-layer returns exit 0.
+Its final line is STE: 0 errors, 1329 warnings.
+The command runs after each prose correction group. The warnings include old prose and the shared UI labels.
+
+The two UP42 spec bodies are identical from the first requirement to the end.
+Their standard document headers differ: the main spec has Purpose and Requirements; the delta has ADDED Requirements.
+The correction adds identical text to both bodies. All requirement text lines remain identical to the stated commit.
+There are 41 UP42 scenarios and 9 carried OSH scenarios. Each of the 50 ids has a task line.
+
+Unverified at this snapshot:
+
+No browser check or live service check runs. The browser.txt record remains the earlier check of the lead.
+No calibrated gate, ratchet command, final review or merge runs. The owner excludes those actions from this correction.
+The other evidence files remain records of their earlier snapshots. These checks and the new faults section describe this correction.
+No project commit, network request, container or Chrome run occurs. No real .env file is read.

@@ -1,0 +1,64 @@
+At the host snapshot of base commit f589cc58480d8239302b70c2b5ce32ea1bc8325d, this change is on branch up42-scenes-layer.
+
+The browser layer uses id up42-scenes, name UP42 Scenes, icon 🔭 and share token 04.
+
+The source sends one search after a press, with only box, start and end.
+
+The row shows valid scene facts and a partial results note. Selection uses the blob and bitmap path.
+
+The change is functional, but it is not ready for a merge. Seven edited registration modules miss the full-file coverage target.
+
+The new capability has 40 scenarios. The osh delta changes one count and carries eight other scenarios unchanged.
+
+All 49 delta IDs have task lines. Both delta specs need the normal archive step from the lead.
+
+The change adds six code files and seven test files. The files.txt record lists every path.
+
+The final focused run passes 240 tests, including all 133 new tests.
+
+The six new code files each have 100% line, branch and function coverage.
+
+The coverage.txt table gives each measured file and every remaining line gap.
+
+The faults.txt table gives all 105 mutations and a failed test for each.
+
+The test-faults.txt table gives a failed fault for each of the 133 new tests.
+
+The broad run completes 905 of 906 files. The tooling gate test file stops at 300 seconds and has no verdict.
+
+The two initial Chinese catalog failures pass after their spec-first correction.
+
+The required test scopes have zero failures after that correction. The host-run.txt table gives their counts.
+
+The format, import, package, token and OpenSpec checks pass. STE reports 0 errors and 1321 warnings.
+
+The host code review finds no new functional defect. Its final result is FAIL because the coverage target stays open.
+
+At the worker snapshot, the lead browser task, the coverage task, the archive, the ratchet and the final gates were open.
+
+The browser-plan.txt record gives three scenes, one dot id, one false thumbnail flag and a valid tiny PNG.
+
+At the worker snapshot, no browser or real-service result existed. The change was uncommitted and unarchived.
+
+Known limits from the proposal:
+
+
+- Known limit `no-live-check`: The shapes come from documentation fixtures.
+- Known limit `display-terms`: UP42 terms do not address the display of previews. Use the data for yourself only.
+- Known limit `no-pick`: Select a scene in the row. A footprint click does nothing.
+- Known limit `clock-skew`: The browser clock supplies the dates. A clock ahead of the server can cause refusal.
+- Known limit `search-time`: The browser stops after 60 seconds. The server can continue and store the answer.
+- Known limit `view-moves`: Footprints stay at the search position until the next press.
+- Known limit `antimeridian`: A footprint across the meridian can have a wrong polygon or card position.
+- Known limit `list-length`: The row lists at most 50 scenes.
+- Known limit `thumbnails-off`: The route stays off until `UP42_THUMBNAILS=true` in `.env`.
+- Known limit `partial-results-note`: The layer shows a note, with no retry for each host.
+- Known limit `no-filter-controls`: The request sends no cloud or collection filters.
+- Known limit `real-service`: No check sends a request to UP42.
+- Known limit `token`: An upstream use of token "04" can cause a share link conflict.
+- Known limit `osh-count`: Each new layer needs a delta for the count in `osh-033`.
+- Known limit `image-size`: The byte cap is 1 MiB. The layer does not cap the decoded pixel count.
+- Known limit `ui-texts`: The inherited labels "Searching…" and "Loading the thumbnail…" have words with the suffix -ing.
+- Known limit `untested-settings`: No scenario names the secondary card fields that follow. They are `paintLane`, `details`, `priority`, `protected`, `active`, `interactive`, `collisionGroup`, `zIndex`, `minDistance`, `horizonCull` and `terrainOcclusion`. The limit also applies to the options of `setEntries` and the initial call of `setVisible` with false. It also applies to the 1 MiB cap of the status body.
+- Known limit `visual`: The lead must check the browser with the stored answer.
+- Known limit `qa-twochar-time`: The browser QA script has no run in this change.

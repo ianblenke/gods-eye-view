@@ -3670,7 +3670,7 @@
     "change": "osh-fusion"
   },
   "osh-033": {
-    "hash": "a6b0723ee79418c8bd47ffc92574dc04e9dbff07a9b3623bd14339824cf40cc8",
+    "hash": "381abdc4aa262b7bb205c26e998d24e8af02d8f7faffd2481bdc91fcbe45770b",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -7248,6 +7248,211 @@
     "hash": "376d4d7a4e4343e92f611bff927fddf3a78eae32a57eb0874d4098bff1f0aab3",
     "since": "2026-11-07",
     "change": "up42-quotes"
+  },
+  "up42-scenes-layer-001": {
+    "hash": "c179a86cd351fe8ee337d5a48709660b08d105f1855153405b952a4c0e898af8",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-002": {
+    "hash": "54a775ca3d017e137c099bf1de1d4247f3cd793931547a77fbe6482a62971be0",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-003": {
+    "hash": "126f7a6f0a90b5fdf9a14806d08ffb43035b38369cf3414fd32bd6c9fec85f17",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-004": {
+    "hash": "556bfc36dbae1a0a468e4b74f832758239c44e4517acda3dc42f061a1d1260d2",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-005": {
+    "hash": "802ceff9dfec70e852b3cc627509c2acb57241ea704b0f5be5a740ad1a34c952",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-006": {
+    "hash": "89ae6a3feb1c7e91985b23b7e5984b5a0e4a1fbdf7d1ec590863fc4cf1f3a1e3",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-007": {
+    "hash": "3a484af8733d6a096d092ce67214fc65454b3b6c28f633c958bf7697d4841a36",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-008": {
+    "hash": "4295051d0697fc8012c3a4cc9310c455c8d2b8a8fee1732b4056d76804046b47",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-009": {
+    "hash": "50fa4d002047ba19c1db9b01e6743992431d8fa3a063e2decf76a3ba4729012a",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-010": {
+    "hash": "080892d1405bdbe7e352c7c3163e62fed9232b43bef0bfa33fbc27d7668fa73f",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-011": {
+    "hash": "dfd33defe4185b70b6ea40819f957754b5edda184cdc07e612a995818b2ea2af",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-012": {
+    "hash": "cc1dd3c8a5abf6e4d1acdacc3f33c9f2ff7c8d01492d48b90c25fe6b63bf6571",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-013": {
+    "hash": "5120862d4698e43eb3051cea6bd2ba40b2f8b41946b91ca0c7e05ff2637996a1",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-014": {
+    "hash": "01b65b4b6abd8eccc5c2febe0bf17a66c5b9383d97b941339d982f099c96e313",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-015": {
+    "hash": "b43e2cf106da3c0d3c21ab9f6f6d4980996a13f0fa37b2ea28f50a5c5856d076",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-016": {
+    "hash": "fb6a1b42531e3a85fa95129d6c284cfa19e7fa7030611294f897315a168bc6f2",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-017": {
+    "hash": "b194850d51822d740b5e72e09bf77c3a7e9f47e52c7fc4decf09ade94402f721",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-018": {
+    "hash": "52cd671901490e7c8a1cee348260c6e444f0965dc7af82f865099685e1cd0c5c",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-019": {
+    "hash": "784bc6e62645a7862b63c16edd19fcbed4f5cb77d228723fd3080fea2f22c87d",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-020": {
+    "hash": "a09b6d855013765a58122b4f4aae4327e559dd0a1824bc79d80849128a735d6f",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-021": {
+    "hash": "df154e7cec4449f65ac9efc6b0af57acd0e69c115d8f2aa49802739b30b74935",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-022": {
+    "hash": "fa77f50bc05567f0d0db6b6d4dabe406854343d7289906654fda356951611adf",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-023": {
+    "hash": "731b8139d56a78f4a9d58ef451dae6eeab750488f070c290b18f8d6f86b30864",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-024": {
+    "hash": "229773c9e77d36b6752c7d1b647896de78e679270165f73d97004521d611c149",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-025": {
+    "hash": "50918f0e96846c9f8c2634d80915402e075c8beb17be31f7cf1ec76fc64b01fb",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-026": {
+    "hash": "dcee4bd134bedadf6fdf1bd314e1d1b8966a7b39713b16ca228e36c4467a292a",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-027": {
+    "hash": "42d1ef4ea8af81bb88e780412566b203dda3d0d58c7f9369ab0970924ccb777f",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-028": {
+    "hash": "c6a63d75d50b34b2c3ed56cf3f512aa7236bf619c70431a9e277be7ddc4f249e",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-029": {
+    "hash": "bb153e11d31ebdca1d435d12c8c5d2467c12639757b84c78be56920e5c7f87ed",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-030": {
+    "hash": "f3e9599d10d28243b65be0d6695bb9d3284c6ab2e1cd5b71e2d644d07d19460c",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-031": {
+    "hash": "62bca28b6e98982a082a84d3de6a30084983e3742c154f1b023c2b6a706a22b4",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-032": {
+    "hash": "68f665dd4a15e550b50d417c70991f478599bc7afc2aa63868cba008dad4065b",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-033": {
+    "hash": "a06e03bfc502a36d2b39ae6e2d3849a9319cff8d23dc65b7344a17309a1f4087",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-034": {
+    "hash": "8d6d85b74bc13159df97b8bf35001343ce96db6c8553a282cf134411c1929dca",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-035": {
+    "hash": "3148c2aeecd7267df8f6ad96a052b7c825ac7f6843ef26c384462b7373c362a0",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-036": {
+    "hash": "c350844e6b8028196ed0a58afbce2ef205aef46fd45c6a794ede6805c1bbf4aa",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-037": {
+    "hash": "faa9d58c1e0edf58a4e9b6df1280645a21f6f41893eca1dade0bb0ecd0648b31",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-038": {
+    "hash": "14e858eb581c378111ed6bbaa0e75abf255780bd1364ab0006aadc9fee0d4819",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-039": {
+    "hash": "9805aa05d2cc51658ede4e4deafd5864affa3d4af5086a1b2fc5b2c1fa7fbc70",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-040": {
+    "hash": "d34e5b92c24b5f21f5eec840b1bc8d4a254422a442c9c4b2471bc8654d6a6329",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
+  },
+  "up42-scenes-layer-041": {
+    "hash": "0290676514ef0cdc7d655ef57bb2ed4cd59033024111f8889c491c7733fe47c7",
+    "since": "2026-11-07",
+    "change": "up42-scenes-layer"
   },
   "up42-source-001": {
     "hash": "7c178370034e966d4501f2b5eecf6990228102beb7356368855e05d5b9f72e54",

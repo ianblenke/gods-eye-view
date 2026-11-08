@@ -5078,8 +5078,9 @@ and unreachable upstream (502/504) separately from road geometry.
 - `scripts/qa-layer-token-twochar.mjs` simulates exhaustion of the earlier
   digit slots and injects a no-network layer with the next free two-character
   token only into isolated dev-browser responses. The layers `skywatch-scenes`,
-  `planet-scenes` and `skyfi-scenes` own `00`, `01` and `02`, so that fixture
-  token is `03`. The script checks encoding, a
+  `planet-scenes` and `skyfi-scenes` own `00`, `01` and `02`. The layer
+  `s2-ghostmaps` owns `03`, and `up42-scenes` owns `04`, so that fixture
+  token is `05`. The script checks encoding, a
   cold-recipient reload, restoration, an OFF action of the user, and
   legacy-token compatibility. This is synthetic end-to-end evidence. The real layer
   `skywatch-scenes` got `00` through the normal allocation process, and its

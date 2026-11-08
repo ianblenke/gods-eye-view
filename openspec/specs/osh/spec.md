@@ -345,7 +345,7 @@ Origin: spec-first
 #### Scenario: Register the layer with a stable token `osh-033`
 - **WHEN** the test reads the production layer registry
 - **THEN** it has an entry `{id:'osh-systems', token:'3', disposition:'enabled-only'}`
-- **AND** the registry has 40 entries, sorted by id
+- **AND** the registry has 41 entries, sorted by id
 
 #### Scenario: Read the three lists per refresh, and stay correct when the features or the locations are unavailable `osh-046`
 - **WHEN** the layer updates and the features getter or the locations getter throws

@@ -32,6 +32,7 @@ import { createApplicationFirePerimeters } from './layers/perimeters.js';
 import { createApplicationGnssIntegrity } from './layers/gnss.js';
 import { createApplicationGdacs } from './layers/gdacs.js';
 import { createApplicationSkywatchScenes } from './layers/skywatchScenes.js';
+import { createApplicationUp42Scenes } from './layers/up42Scenes.js';
 import { createApplicationSceneLayer } from './layers/sceneLayers.js';
 import { createApplicationGhostMaps } from './layers/ghostMaps.js';
 import { createApplicationCables } from './layers/submarineCables.js';
@@ -147,6 +148,7 @@ export function createApplicationCatalog({
         createApplicationSceneLayer('skyfi', {
           source: sources['skyfi-scenes'],
         }),
+        createApplicationUp42Scenes({ source: sources['up42-scenes'] }),
         createApplicationGhostMaps({ source: sources['s2-ghostmaps'] }),
         createApplicationAlpr({ surface, source: sources.alpr }),
         createApplicationStreetLevel({

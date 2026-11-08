@@ -1,0 +1,75 @@
+Browser check of the layer "UP42 Scenes" on the commit 497339d0, run on 2026-11-07 (UTC).
+
+The browser is a Chrome for Testing (the Playwright build) with its sandbox and a new temporary profile. It is not the system Chrome and not a profile of the owner. The run opens chrome://sandbox first and refuses to go on unless the page says "You are adequately sandboxed."
+
+The app runs in a Vite server of the lead outside the repository. The server uses the real plugins of UP42 (scenes, thumbnails and quotes) with a fake upstream function: the token, the collection list, the host searches and the thumbnails come from stored answers. A proxy of the driver blocks each external request, and the run records no external request. The credentials are the fixed fake values test-user and test-pass.
+
+The run follows evidence/browser-plan.txt. Run 13 passed all 45 checks. The checks cover the share link with token 04, the placement after SkyFi Scenes, the hint, the exact search request with only box, start and end, the exact box and dates, the stored answer, the list, the footprints, the partial results note, the thumbnail card, a scene with no thumbnail, a delayed thumbnail that cannot replace a newer card, the thumbnails_off answer, the budget answer, the credential text, the disabled layer and a fresh page load.
+
+Runs 1 to 12 ended with failures of the driver and not of the layer. The causes were the start page of Chrome (runs 1 to 3), a proxy flag that sent the local page to the blocking proxy (run 4), expected messages that the plan stated too strongly (runs 5 to 7: the layer shows the credential text only when no press message shows, and the data manager warns once about a forced budget answer), a card that fades out a few seconds after its removal, and time limits that were too short on a machine with a load average of 17 to 26 from other containers (runs 8 to 12, including a press before the camera reached the view of the link). The driver now waits for each condition. No run showed a defect of the layer.
+
+The two-character QA script scripts/qa-layer-token-twochar.mjs ran once against the same Vite server with the fixture token 05, through a wrapper that removes the flag --no-sandbox. It printed two PASS lines (the fixture exhausts the earlier digits before it allocates 05, and a user enable encodes 05 in a full share URL). It then stopped with a navigation timeout of 60000 ms on the page load, as the run of the SkyWatch layer did on this machine. The other checks of that script did not run in a browser.
+
+Output of run 13 follows. Local paths are replaced.
+
+commit: 497339d0a74f8c146e57cde656137d4bf9bad8fd (committed scratch app <temporary folder>)
+browser: Chrome/156.0.8078.4 (<browser cache>/chromium-1248/chrome-linux64/chrome)
+PASS safety Chrome reports adequately sandboxed with a fresh /tmp profile | <temporary folder>
+--- step 1 share link, placement, clock, hint and request counts
+PASS 1 share link enables UP42 Scenes in Cameras after SkyFi Scenes | {"name":"UP42 Scenes","enabled":true,"toggle":{"x":272,"y":449.5},"group":"Cameras","predecessor":"skyfi-scenes","chip":{"text":"Search scenes here","disabled":false,"x":167,"y":488.5},"info":"A press searches 92 days of the UP42 archive in a 48 km b
+PASS 1 test clock is 2026-11-07
+PASS 1 enabled Search scenes here chip and exact hint | A press searches 92 days of the UP42 archive in a 48 km box at the view centre.
+PASS 1 exactly one status and no search, thumbnail or upstream request | {"serverPid":2706432,"status":1,"scenes":0,"thumbnails":0,"requests":[{"kind":"status","path":"/api/up42/status","method":"GET","body":null}],"answers":[{"kind":"status","path":"/api/up42/status","method":"GET","status":200,"type":"application/jso
+PASS 1 share hash keeps token 04
+--- step 2 move the view without searching
+PASS 2 the view moved
+PASS 2 moving and waiting sends no search or thumbnail
+--- step 3 one press, exact request and stored scenes answer
+PASS 3 exactly one POST /api/up42/scenes answered 200
+PASS 3 body has only box, start and end | {"box":[9.568326,59.784163,10.431674,60.215837],"start":"2026-08-08","end":"2026-11-07"}
+PASS 3 exact 48 km box at longitude 10 latitude 60 | [9.568326,59.784163,10.431674,60.215837]
+PASS 3 exact date window 2026-08-08 through 2026-11-07
+PASS 3 real normalizer matches all stored scene fields and footprints | {"source":"UP42","scenes":[{"id":"fixture.a-1","host":"host-a","collection":"optical-a","start":"2026-11-06T08:03:00.000Z","end":"2026-11-06T08:03:05.000Z","footprint":{"type":"Polygon","coordinates":[[[9.9,59.9],[10.1,59.9],[10.1,60.1],[9.9,60.1],
+PASS 3 complete delivered answer matches the stored answer
+PASS 3 fake upstream handles token, collection list and four authenticated host searches | [{"url":"https://api.up42.com/v2/collections?type=ARCHIVE&integrations=SEARCH_AVAILABLE&size=100","method":"GET","authenticated":false,"body":null},{"url":"https://auth.up42.com/realms/public/protocol/openid-connect/token","metho
+PASS 3 three distinct newest-first list ids
+PASS 3 list shows ids, collections, providers, dates, cloud and resolution | [{"id":"scene:fixture.a-1","text":"2026-11-06fixture.a-1 · optical-a · Airbus · 0.5 m · cloud 3%","pressed":"false","x":198,"y":570.5},{"id":"scene:fixture-b","text":"2026-10-12fixture-b · optical-b · Planet · 3 m · cloud 12% · no thumbnail","
+PASS 3 three visible footprint outlines with no selected fill | {"show":true,"ids":["up42-scenes:fixture.a-1","up42-scenes:fixture-b","up42-scenes:fixture-c"],"outlines":["up42-scenes:fixture.a-1","up42-scenes:fixture-b","up42-scenes:fixture-c"],"filled":[]}
+PASS 3 partial note and searches today 3 of 20 | 3 scenes · newest 2026-11-06 · UP42 results are partial · searches today 3 of 20
+--- step 4 select fixture.a-1: PNG, card and selected fill
+PASS 4 one GET /api/up42/thumbnail/fixture.a-1 answered image/png | {"kind":"thumbnails","path":"/api/up42/thumbnail/fixture.a-1","method":"GET","status":200,"type":"image/png","raw":null,"payload":null,"destroyed":false}
+PASS 4 fake upstream receives authenticated host-a thumbnail URL
+PASS 4 stored PNG is the served fixture
+PASS 4 one Airbus card and only fixture.a-1 selected and filled | {"c":{"entries":1,"painted":1,"title":"2026-11-06 Airbus"},"e":{"show":true,"ids":["up42-scenes:fixture.a-1","up42-scenes:fixture-b","up42-scenes:fixture-c"],"outlines":["up42-scenes:fixture.a-1","up42-scenes:fixture-b","up42-scenes:fixture-c"],"filled":
+--- step 5 fixture-b has no thumbnail and removes the old card
+PASS 5 no thumbnail request for fixture-b and exact local message | 3 scenes · newest 2026-11-06 · UP42 results are partial · searches today 3 of 20 · UP42 has no thumbnail for this scene.
+PASS 5 old card disappears | {"after1s":{"entries":0,"painted":1,"title":null},"after4s":{"entries":0,"painted":0,"title":null}}
+--- step 6 delayed fixture-c cannot replace the newly selected fixture.a-1 card
+PASS 6 delayed request is pending with no old card
+PASS 6 late response cannot replace the selected Airbus card | {"c":{"entries":1,"painted":1,"title":"2026-11-06 Airbus"},"e":{"show":true,"ids":["up42-scenes:fixture.a-1","up42-scenes:fixture-b","up42-scenes:fixture-c"],"outlines":["up42-scenes:fixture.a-1","up42-scenes:fixture-b","up42-scenes:fixture-c"],"filled":["u
+PASS 6 exactly two new thumbnail GETs including delayed fixture-c
+--- step 7 new thumbnail request returns thumbnails_off 404
+PASS 7 one new GET answered 404 with thumbnails_off
+PASS 7 local UP42_THUMBNAILS message and no card | 3 scenes · newest 2026-11-06 · UP42 results are partial · searches today 3 of 20 · Thumbnails are off. Set UP42_THUMBNAILS=true in .env and restart the app.
+--- step 8 budget 429 keeps old footprints and reports both counts
+PASS 8 new search answered 429 budget used 20 limit 20
+PASS 8 displays both budget counts | No more searches today. Searches today 20 of 20. · 3 scenes · newest 2026-11-06 · UP42 results are partial · searches today 3 of 20 · Thumbnails are off. Set UP42_THUMBNAILS=true in .env and restart the app.
+PASS 8 keeps three old footprints and list after failed search
+--- step 9 configured:false disables the chip and names both credentials
+PASS 9 real browser reads configured:false and disables search
+PASS 9 the earlier budget message of the press still shows | No more searches today. Searches today 20 of 20. · 3 scenes · newest 2026-11-06 · UP42 results are partial · searches today 3 of 20 · Thumbnails are off. Set UP42_THUMBNAILS=true in .env and restart the app.
+--- step 10 disabling clears footprints and cards and removes token 04
+PASS 10 footprints still exist before disabling
+PASS 10 footprints and cards disappear | {"show":false,"ids":[],"outlines":[],"filled":[]}
+PASS 10 token 04 leaves the share link | #v=2&lat=60.0000&lon=10.0000&alt=120000&heading=0&pitch=-90&roll=0&style=normal&bloom=0&sharpen=0&bi=100&bv=2&si=49&hud=tactical&hv=0&dm=OFF&dd=50&da=elastic&kf=16&ko=5&cr=0&sc=1&scf=35&map=osm&l=&ui=c.c.1_c.p.0_l.c.1_l.p.0_d.c.0_v.c.1_i.c.0_t.c.1_r.c.1_s.c.1_g.c.1_p.c.1_m.c.0
+--- step 11 original share link in a new page starts empty without searching
+PASS 11 new page enables UP42 Scenes with token 04
+PASS 11 new page shows exact hint, enabled chip and no list | A press searches 92 days of the UP42 archive in a 48 km box at the view centre.
+PASS 11 new page reads one status and sends no search or thumbnail | {"serverPid":2706432,"status":3,"scenes":2,"thumbnails":4,"requests":[{"kind":"status","path":"/api/up42/status","method":"GET","body":null},{"kind":"scenes","path":"/api/up42/scenes","method":"POST","body":{"box":[9.568326,59.784163,10.431674,60.2158
+PASS 11 new page has no footprints or cards
+--- step 12 a fresh page with configured:false shows the exact credential text
+PASS 12 chip is disabled and the info text is the exact credential text | No UP42 credentials. Set UP42_USERNAME and UP42_PASSWORD in .env and restart the app.
+PASS safety no unknown fake upstream request | []
+PASS no console error about UP42
+SKIPPED: qa-layer-token-twochar (run separately)
+RESULT: 45 passed, 0 failed

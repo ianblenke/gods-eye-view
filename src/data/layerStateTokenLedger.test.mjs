@@ -43,11 +43,8 @@ const ledgerRows = JSON.parse(
     'utf8',
   ),
 );
-// The layer gdacs took the last free digit "9", and the layers skywatch-scenes,
-// planet-scenes and skyfi-scenes took the next free tokens "00", "01" and "02".
-// The fixtures of these tests need a free digit and the free tokens "00" and
-// "01", so they use the rows and the registry without these four layers and
-// without the layer s2-ghostmaps, which took the token "03".
+// Isolated fixtures omit gdacs, the four scene layers and s2-ghostmaps.
+// Their rows and registry entries keep the digit "9" and tokens "00" through "04" free.
 const GDACS_REGISTRY_ENTRY =
   "  Object.freeze({ id: 'gdacs', token: '9', disposition: 'enabled-only' }),\n";
 const SKYWATCH_REGISTRY_ENTRY =
@@ -58,13 +55,16 @@ const SKYFI_REGISTRY_ENTRY =
   "  Object.freeze({\n    id: 'skyfi-scenes',\n    token: '02',\n    disposition: 'enabled-only',\n  }),\n";
 const S2_GHOSTMAPS_REGISTRY_ENTRY =
   "  Object.freeze({\n    id: 's2-ghostmaps',\n    token: '03',\n    disposition: 'enabled-only',\n  }),\n";
+const UP42_REGISTRY_ENTRY =
+  "  Object.freeze({\n    id: 'up42-scenes',\n    token: '04',\n    disposition: 'enabled-only',\n  }),\n";
 const reservationRows = ledgerRows.filter(
   ([id]) =>
     id !== 'gdacs' &&
     id !== 'skywatch-scenes' &&
     id !== 'planet-scenes' &&
     id !== 'skyfi-scenes' &&
-    id !== 's2-ghostmaps',
+    id !== 's2-ghostmaps' &&
+    id !== 'up42-scenes',
 );
 
 test('pre-ledger published ownership is independent of the candidate mapping', () => {
@@ -133,12 +133,14 @@ function writeCodecFixture(cwd, rows, entries) {
   assert.equal(fullSource.split(PLANET_REGISTRY_ENTRY).length, 2);
   assert.equal(fullSource.split(SKYFI_REGISTRY_ENTRY).length, 2);
   assert.equal(fullSource.split(S2_GHOSTMAPS_REGISTRY_ENTRY).length, 2);
+  assert.equal(fullSource.split(UP42_REGISTRY_ENTRY).length, 2);
   const source = fullSource
     .replace(GDACS_REGISTRY_ENTRY, '')
     .replace(SKYWATCH_REGISTRY_ENTRY, '')
     .replace(PLANET_REGISTRY_ENTRY, '')
     .replace(SKYFI_REGISTRY_ENTRY, '')
-    .replace(S2_GHOSTMAPS_REGISTRY_ENTRY, '');
+    .replace(S2_GHOSTMAPS_REGISTRY_ENTRY, '')
+    .replace(UP42_REGISTRY_ENTRY, '');
   const registryEnd = ']);\n\nexport const REGISTERED_LAYER_IDS';
   assert.equal(source.split(registryEnd).length, 2);
   const additions = entries
@@ -162,7 +164,7 @@ test('reservation ledger is complete, pinned, and rejects duplicate or malformed
     { ...parseLayerStateTokenReservations(ledgerRows) },
     { ...LAYER_STATE_TOKEN_RESERVATIONS },
   );
-  assert.equal(Object.keys(LAYER_STATE_TOKEN_RESERVATIONS).length, 40);
+  assert.equal(Object.keys(LAYER_STATE_TOKEN_RESERVATIONS).length, 41);
   assert.deepEqual(
     { ...LAYER_STATE_TOKEN_RESERVATIONS },
     {
@@ -179,6 +181,7 @@ test('reservation ledger is complete, pinned, and rejects duplicate or malformed
       'planet-scenes': '01',
       'skyfi-scenes': '02',
       's2-ghostmaps': '03',
+      'up42-scenes': '04',
     },
   );
   assert.throws(

@@ -1,0 +1,136 @@
+At the host snapshot of base commit f589cc58480d8239302b70c2b5ce32ea1bc8325d, each test below fails for the stated fault.
+
+Test | Fault
+[up42-scenes-layer-001] describes the layer and has a method setParams | UPL-M029
+[up42-scenes-layer-001] refuses a second init | UPL-M032
+[up42-scenes-layer-001] refuses a source without getStatus, searchScenes or getThumbnail | UPL-M030
+[up42-scenes-layer-001] refuses an overlay host without setEntries, clearSource or setVisible | UPL-M031
+[up42-scenes-layer-002] asks only for the status and adds no listener to the camera or the scene | UPL-M001
+[up42-scenes-layer-002] reads the status only while it is enabled | UPL-M101
+[up42-scenes-layer-003] has no chip after disable, and an old onClick sends no search | UPL-M001
+[up42-scenes-layer-003] has one chip with an onClick function and no params, and one click gives one search | UPL-M001
+[up42-scenes-layer-004] sends one search for two presses and shows Searching… while it runs | UPL-M102
+[up42-scenes-layer-005] sends no search after an error while the fake clock and the mocked timers move 10 minutes, and sends one search at the next press | UPL-M001
+[up42-scenes-layer-006] disables the chip and shows the text for no credentials when the status has no credentials | UPL-M001
+[up42-scenes-layer-006] keeps the text for no credentials when a good answer arrives after a status with no credentials | UPL-M028
+[up42-scenes-layer-007 up42-scenes-layer-030] gives the fixed texts of the status and the thumbnail | UPL-M089
+[up42-scenes-layer-007] enables the chip after a failed status that follows a status with no credentials | UPL-M001
+[up42-scenes-layer-007] removes the failed status after a good status or a good answer | UPL-M001
+[up42-scenes-layer-007] reports a status that fails and keeps the chip enabled | UPL-M001
+[up42-scenes-layer-007] shows the message and the error of a press that fails after a failed status | UPL-M103
+[up42-scenes-layer-008] builds the box from the samples of the spec | UPL-M073
+[up42-scenes-layer-008] keeps the same box height at every latitude and takes the width from the latitude of the centre | UPL-M073
+[up42-scenes-layer-008] picks the middle of the canvas on the ellipsoid of the globe and sends its box | UPL-M001
+[up42-scenes-layer-008] rounds a centre to the nearest multiple of 0.01 and a tie to the higher one | UPL-M105
+[up42-scenes-layer-009] gives a box that ends exactly at longitude 180 or -180 | UPL-M073
+[up42-scenes-layer-009] gives the first reason when two apply | UPL-M075
+[up42-scenes-layer-009] gives the reason sky for a centre that is null or has a value that is not a finite number | UPL-M075
+[up42-scenes-layer-009] names each reason of a view that has no box | UPL-M072
+[up42-scenes-layer-009] refuses a box that goes past longitude 180 or -180 | UPL-M073
+[up42-scenes-layer-009] refuses a centre above 80 or below -80 degrees after the rounding | UPL-M076
+[up42-scenes-layer-009] sends no search for a view that has no box and names the reason | UPL-M075
+[up42-scenes-layer-010] builds a box that the server accepts at 33 latitudes and 35 longitudes | UPL-M073
+[up42-scenes-layer-011] gives the last 92 days as the window, from the samples of the spec | UPL-M074
+[up42-scenes-layer-011] gives the same window when the time zone of the machine is America/New_York | UPL-M074
+[up42-scenes-layer-011] sends the window of the time of the clock at the press | UPL-M001
+[up42-scenes-layer-011] uses Date.now as the clock when no option now is given | UPL-M090
+[up42-scenes-layer-012] gives ok false for another body, for a status that is not 2xx and for a rejection | UPL-M049
+[up42-scenes-layer-012] sends one GET for the status route with the signal and reads configured | UPL-M035
+[up42-scenes-layer-013] gives the result of the answer records for a good answer | UPL-M054
+[up42-scenes-layer-013] sends one POST with one header and the box and the dates as the body | UPL-M002
+[up42-scenes-layer-013] uses the fetch function of the page when none is given | UPL-M035
+[up42-scenes-layer-014] aborts a search that does not end in 60 seconds and clears the timer | UPL-M040
+[up42-scenes-layer-014] gives the error bad_answer for a body that is not JSON | UPL-M093
+[up42-scenes-layer-014] gives the error unknown for a JSON body without a text error | UPL-M094
+[up42-scenes-layer-014] gives the fetch function a signal of its own that follows the call and the 60 seconds | UPL-M044
+[up42-scenes-layer-014] gives the status 0 and the error unreachable for a rejection | UPL-M042
+[up42-scenes-layer-014] gives the status, the error and the whole numbers of an error body | UPL-M045
+[up42-scenes-layer-014] gives unreachable when the 60 seconds end while it reads the body | UPL-M095
+[up42-scenes-layer-014] reads a body of 8388608 bytes and gives bad_answer for one byte more | UPL-M038
+[up42-scenes-layer-014] reads at most 8388608 bytes of the body of an answer that is not 2xx | UPL-M038
+[up42-scenes-layer-014] rejects with the AbortError when the signal of the call aborts | UPL-M042
+[up42-scenes-layer-014] removes its listener from the signal of the call when the search ends | UPL-M043
+[up42-scenes-layer-014] sends one request for each search that fails, also after the timers of the call run | UPL-M096
+[up42-scenes-layer-015] gives a blob with the bytes and the media type of a good answer | UPL-M048
+[up42-scenes-layer-015] gives bad_answer for another media type or no Content-Type | UPL-M047
+[up42-scenes-layer-015] gives the status and the error of an answer that is not 2xx | UPL-M045
+[up42-scenes-layer-015] gives unreachable for a rejection and for a call that does not end in 20 seconds | UPL-M041
+[up42-scenes-layer-015] reads a body of 1048576 bytes and gives bad_answer for one byte more | UPL-M039
+[up42-scenes-layer-015] removes its listener from the signal of the call and rejects when that signal aborts | UPL-M042
+[up42-scenes-layer-015] sends one GET for the thumbnail with a signal of its own and no other option | UPL-M037
+[up42-scenes-layer-016] drops a scene whose first and last positions are not equal | UPL-M058
+[up42-scenes-layer-016] drops a scene whose footprint is not a polygon with exactly one ring | UPL-M058
+[up42-scenes-layer-016] drops a scene whose id does not have 1 to 128 letters, digits, hyphens, underscores or dots | UPL-M004
+[up42-scenes-layer-016] drops a scene whose start is not a text that Date.parse reads | UPL-M057
+[up42-scenes-layer-016] drops a scene with a position that is not two finite numbers in range | UPL-M058
+[up42-scenes-layer-016] drops an item that is not an object and a repeated id, and keeps the order of the answer | UPL-M054
+[up42-scenes-layer-016] keeps a resolution of 0 or more, a cloud cover from 0 to 100, a provider text and only a true thumbnail | UPL-M054
+[up42-scenes-layer-016] keeps a ring of 4 to 2000 positions, and drops a shorter or longer ring | UPL-M058
+[up42-scenes-layer-016] keeps at most the first 50 valid scenes | UPL-M052
+[up42-scenes-layer-016] keeps exactly the eight fields of a valid scene | UPL-M053
+[up42-scenes-layer-016] reads count, truncated, used and limit, and gives null or false for each other value | UPL-M063
+[up42-scenes-layer-017] gives bad_answer with the status 200 for an answer without a list of scenes | UPL-M093
+[up42-scenes-layer-017] gives null for an answer that is not an object or has no list of scenes | UPL-M051
+[up42-scenes-layer-018] names both daily counts and refuses other counts | UPL-M009
+[up42-scenes-layer-018] names each failure of a search with the text of its sample | UPL-M007
+[up42-scenes-layer-018] names the wait of UP42 with its seconds, in the singular for 1 | UPL-M097
+[up42-scenes-layer-019] names credential and time failures of a thumbnail | UPL-M007
+[up42-scenes-layer-019] names each failure of a thumbnail with the text of its sample | UPL-M098
+[up42-scenes-layer-020] styles a footprint that is not selected and a selected footprint | UPL-M065
+[up42-scenes-layer-021] gives the hint with no answer and no message | UPL-M068
+[up42-scenes-layer-021] puts the message, the answer and the message of the thumbnail in that order | UPL-M069
+[up42-scenes-layer-021] writes the count, the newest date and the searches of the day | UPL-M014
+[up42-scenes-layer-021] writes the date of the newest scene in UTC when the time zone of the machine is not UTC | UPL-M069
+[up42-scenes-layer-022] gives null for no answer and for an answer with no scene | UPL-M099
+[up42-scenes-layer-022] gives one item for each scene, in the order of the answer | UPL-M067
+[up42-scenes-layer-022] writes the UTC date as the lead when the time zone of the machine is not UTC | UPL-M067
+[up42-scenes-layer-022] writes the resolution, the cloud cover and the parts that are null | UPL-M100
+[up42-scenes-layer-023] fits the image in a square of 192 pixels and keeps its ratio | UPL-M064
+[up42-scenes-layer-023] gives the mean position of a ring without its last position | UPL-M070
+[up42-scenes-layer-024] calls requestRender with up42-scenes after each change of the entities | UPL-M001
+[up42-scenes-layer-024] gives the list of the answer and replaces the footprints and the list with a second answer | UPL-M001
+[up42-scenes-layer-024] shows one polyline on the ground for each scene, with the style of a footprint that is not selected | UPL-M028
+[up42-scenes-layer-025] keeps the footprints for a press with no box, and a good answer removes the message | UPL-M001
+[up42-scenes-layer-025] keeps the footprints, the list and the selection when a press fails | UPL-M001
+[up42-scenes-layer-026] aborts each request on disable and ignores the answers that arrive afterwards | UPL-M015
+[up42-scenes-layer-026] aborts the status request of the update before, and not a status request that ended | UPL-M021
+[up42-scenes-layer-026] shows the hint and no list on the next enable, and forgets the status | UPL-M104
+[up42-scenes-layer-027] aborts a search and a status request in flight on destroy | UPL-M020
+[up42-scenes-layer-027] releases everything on destroy and can initialize again | UPL-M015
+[up42-scenes-layer-028] calls the listener for a search, an update, a press with no box, a selection and the end of a thumbnail request | UPL-M001
+[up42-scenes-layer-029] refuses each other parameter and changes nothing | UPL-M001
+[up42-scenes-layer-029] removes the selection with a new good answer | UPL-M028
+[up42-scenes-layer-029] removes the selection with scene null and sends no new request for the selected id | UPL-M006
+[up42-scenes-layer-029] selects a scene and gives it the style of a selected footprint | UPL-M028
+[up42-scenes-layer-030] decodes the blob with createImageBitmap of the page when no decodeImage is given | UPL-M028
+[up42-scenes-layer-030] gets the thumbnail of the selected scene and shows it as one card | UPL-M028
+[up42-scenes-layer-030] sends no thumbnail request for a scene that has no thumbnail | UPL-M006
+[up42-scenes-layer-030] writes the date and the provider as the title of the card | UPL-M028
+[up42-scenes-layer-031] closes an image whose size gives no card and names it bad_image | UPL-M019
+[up42-scenes-layer-031] keeps the error of the stats and sends a new request only on the next selection | UPL-M001
+[up42-scenes-layer-031] shows the failure of a thumbnail and no card | UPL-M028
+[up42-scenes-layer-032] aborts a thumbnail request that runs on scene null and on a new good answer, and closes a late image | UPL-M015
+[up42-scenes-layer-032] aborts the request of the first scene and closes the image that it gives | UPL-M015
+[up42-scenes-layer-032] closes an image that arrives after the layer aborts the request of that image | UPL-M016
+[up42-scenes-layer-032] closes the image of the card once on scene null, a new answer, disable and destroy | UPL-M018
+[up42-scenes-layer-032] replaces the card and closes the old image once | UPL-M018
+[up42-scenes-layer-033] gives the layer its supplied source, and the stats error of a catalog without the source | UPL-M087
+[up42-scenes-layer-033] gives the layer of the application the render governor, and an option requestRender replaces it | UPL-M085
+[up42-scenes-layer-033] registers the layer in the catalog, the source contract, the reference sources and the share link | UPL-M079
+[up42-scenes-layer-033] selects a scene through setLayerParams of the manager with the origin user | UPL-M087
+[up42-scenes-layer-034] puts the layer in the Cameras group right after skyfi-scenes | UPL-M080
+[up42-scenes-layer-035] keeps the layer out of voice | UPL-M081
+[up42-scenes-layer-036] names UP42, links to up42.com and gives the sentence about the terms | UPL-M082
+[up42-scenes-layer-037] gives both Chinese names for the shipped catalogs | UPL-M092
+[up42-scenes-layer-037] gives the Spanish and the Russian label of the list | UPL-M084
+[up42-scenes-layer-037] gives the Spanish and the Russian name of the layer | UPL-M083
+[up42-scenes-layer-038] encodes a dot id before it builds the thumbnail path | UPL-M003
+[up42-scenes-layer-038] keeps a dot id and reads each collection | UPL-M004
+[up42-scenes-layer-038] lists each id and collection with distinct scene values | UPL-M066
+[up42-scenes-layer-038] refuses each bad thumbnail id before a request | UPL-M050
+[up42-scenes-layer-039] gives one partial note for either route flag | UPL-M013
+[up42-scenes-layer-039] reads partial results without host text | UPL-M012
+[up42-scenes-layer-040] builds the local source error without source text | UPL-M001
+[up42-scenes-layer-040] drops extra error text and sends only the box and dates | UPL-M002
+[up42-scenes-layer-040] gives local messages for unknown errors and a missing thumbnail route | UPL-M071
+[up42-scenes-layer-040] shows local texts for source errors and uses no object URL | UPL-M001
