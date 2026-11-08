@@ -212,7 +212,8 @@ Origin: spec-first
 
 - **WHEN** search a mix of good and failed hosts
 - **THEN** the answer contains all good scenes and the names of hosts whose calls all failed
-- **AND** a credential rejection gives credentials_rejected with 403; otherwise, if all hosts fail, a timeout gives search_timeout with 504 and other failures give upstream_failed with 502
+- **AND** a credential rejection gives credentials_rejected with 403
+- **AND** if all hosts fail without a credential rejection, a timeout gives search_timeout with 504 and other failures give upstream_failed with 502
 
 ### Requirement: Transport failures
 
