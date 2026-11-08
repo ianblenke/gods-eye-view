@@ -34,7 +34,7 @@
 - [x] 4.4 Check all new test titles against the word list.
 - [x] 4.5 Run the STE lint.
 - [x] 4.6 Record the final file status.
-- [ ] 4.7 Have the lead run the ratchet command.
+- [x] 4.7 Have the lead run the ratchet command.
 - [ ] 4.8 Have the lead run both review agents.
 - [ ] 4.9 Have the lead write review.md.
 - [ ] 4.10 Have the lead run make gates.
