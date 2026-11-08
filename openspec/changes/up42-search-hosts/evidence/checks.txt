@@ -1,0 +1,86 @@
+Command: Python counts of the completed TAP output, delta specs and mutation records.
+At the host snapshot, the base tree is commit 990d28286da22b1c3063eb2a0ef0e18f79e730c6.
+The worktree has this change after that commit.
+
+At this snapshot, all 745 UP42 and SkyWatch data tests pass.
+Failures, cancellations and skipped tests are zero.
+The source tests have 235 cases, thumbnail tests have 83 cases and quote tests have 307 cases.
+The SkyWatch tests have 120 cases.
+
+The completed host command measures 100 percent line, branch and function coverage for all three edited code files.
+host-run.txt gives the command, counts and coverage table.
+source-snapshot.txt gives the final code and test hashes.
+The local HTTP test passes with permission for the 127.0.0.1 listener.
+
+The sandbox run completed with 742 passes and one failure because the listener returned EPERM.
+That failure gives no HTTP behavior verdict.
+The first test command used process isolation and gave only file-level failures.
+The later commands use --test-isolation=none and give individual test results.
+
+The initial spec and test edits precede the code change.
+The test-first run completed with 224 cases, 192 passes and 32 failures.
+One failure was the sandbox listener refusal. The other failures show the old behavior against the new tests.
+
+The complete final command passes after the code change.
+
+The delta changes requirements Host search, Incomplete answer and Host failures.
+It also changes scenario 023 under Secret output, whose requirement text stays unchanged.
+The changed scenario IDs are up42-source-015, up42-source-016, up42-source-017 and up42-source-023.
+The added source IDs are up42-source-028 through up42-source-034.
+
+The added thumbnail ID is up42-thumbnails-020.
+The delta has 12 scenario headings: four replacements and eight additions.
+Each added ID has a test task. The source capability previously ends at 027; thumbnails previously ends at 019.
+
+No old test title changes. The replaced scenario 016 has new cases with the same unique title template.
+The daily-count and answer-store requirements stay true. They need no requirement or scenario replacement.
+
+The new budget test sends 21 calls for one daily count and checks the kept answer and next refusal.
+
+The fixture with 15 probe hosts sends 21 calls and has truncated false.
+The 24-call and 25-call fixtures send 24 calls. Only the latter sets truncated true from the call cap.
+The tests check literal bodies for both restricted hosts and good scenes from each call.
+
+The partial-host cases keep scenes, set truncated true and omit that host from failedHosts.
+The all-failed cases list the host once. An unknown restricted host has a normal 422 host failure.
+Gate promises measure at most four active calls, also within one restricted host.
+
+faults.txt records 14 unique mutation ids with completed commands and failed test names.
+Each mutation fails its named test. Each source file returns to its original SHA-256.
+
+UPH-M013 ran again after the final two log tests. Its record gives that later result.
+UPH-M008 and UPH-M009 prove that console.trace and console.dir leaks fail the secret checks.
+All console methods enter both secret-output tests.
+
+test-titles.txt records 46 relevant expanded titles with zero word-list findings.
+All 745 expanded titles are unique.
+The formatter runs through a host Node test wrapper and uses the local package.
+
+It formats the three code files and three test files. It adds no repository helper.
+
+The facts below were observed on 2026-11-08, not a repeatable test.
+The archive list had 15 hosts in this order:
+vantor-hd, vantor, airbus-elevation, vantor-3d, vexcel-v2, vexcel-v2-oblique, 21at, oneatlas, planet, earthsearch-aws, oneatlas-advanced, intermap, hexagon, capellaspace, spectra.
+The old cap searched only the first ten and marked each answer as truncated.
+The omitted hosts were oneatlas-advanced, intermap, hexagon, capellaspace and spectra.
+
+The host vantor-3d had three collections. The host vexcel-v2 had five collections.
+Both returned HTTP 422 when a search named more than one collection.
+
+The other tried hosts accepted several collections. Their pages had features, links and type.
+Thumbnail calls for vantor, oneatlas and earthsearch-aws returned image/jpeg bodies.
+The thumbnail route worked; its failure log showed only [up42] failed.
+
+Fixture collection names are artificial. The probe supplies only the host names and collection counts used here.
+
+The host run does not use the calibrated Node image.
+No Make command, container, commit, push, external network request or Chrome run occurs in this change.
+The change does not read .env, change node_modules or change the trace ledger.
+The browser layer and all SkyWatch files stay unchanged.
+
+The final calibrated gates, ratchet, archive and both review agents remain lead work before merge.
+The STE lint completes with 0 errors and 1329 warnings, with no change-local warning or QA line.
+lint-output.txt records that completed command. The full QA gate did not run.
+
+The fixed single-collection host set needs an edit when another host has the same rule.
+The probe does not run again. Display terms remain outside this change.

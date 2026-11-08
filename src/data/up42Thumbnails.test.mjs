@@ -1376,3 +1376,61 @@ test(
     assert.equal(active, 0);
   },
 );
+
+for (const [index, status, expected] of [
+  [0, 404, '[up42] thumbnail failed kind=not_found'],
+  [1, 500, '[up42] thumbnail failed kind=upstream_failed'],
+  [2, 401, '[up42] thumbnail failed kind=credentials_rejected'],
+  [3, 200, '[up42] thumbnail failed kind=bad_upstream'],
+]) {
+  test(`[up42-thumbnails-020] names a fixed thumbnail failure case ${index}`, async (t) => {
+    const lines = [];
+    t.mock.method(console, 'log', (line) => lines.push(line));
+    const s = install(t, {
+      standalone: true,
+      lookup: () => 'oneatlas',
+      respond: (url) =>
+        url === TOKEN
+          ? good(url)
+          : json(
+              {
+                message:
+                  'fake-user-private fake-pass-private fake-token-private',
+              },
+              status,
+            ),
+    });
+    await s.get();
+    assert.deepEqual(lines, [expected]);
+    assert.equal(
+      lines.some((line) => /scene[.]1|oneatlas|https:|fake-/.test(line)),
+      false,
+    );
+  });
+}
+
+test('[up42-thumbnails-020] writes no failure line for a good or kept image', async (t) => {
+  const lines = [];
+  t.mock.method(console, 'log', (line) => lines.push(line));
+  const s = install(t, { standalone: true, lookup: () => 'oneatlas' });
+  assert.equal((await s.get()).status, 200);
+  assert.equal((await s.get()).status, 200);
+  assert.equal(s.images().length, 1);
+  assert.deepEqual(lines, []);
+});
+
+test('[up42-thumbnails-020] names a thumbnail timeout without request facts', async (t) => {
+  const lines = [];
+  t.mock.method(console, 'log', (line) => lines.push(line));
+  const s = harness([
+    up42ThumbnailProxy({
+      env: envOf(),
+      thumbnailHostOf: () => 'oneatlas',
+      client: {
+        thumbnail: async () => ({ ok: false, kind: 'search_timeout' }),
+      },
+    }),
+  ]);
+  errorOf(await s.get(), 504, 'search_timeout');
+  assert.deepEqual(lines, ['[up42] thumbnail failed kind=search_timeout']);
+});

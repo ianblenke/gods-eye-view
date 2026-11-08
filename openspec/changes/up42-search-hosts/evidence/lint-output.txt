@@ -1,0 +1,9 @@
+Command: node scripts/spec/gates.mjs lint --change up42-search-hosts
+At the host snapshot, the base tree is commit 990d28286da22b1c3063eb2a0ef0e18f79e730c6.
+Exit: 0.
+The command ran after the final spec text correction.
+The record keeps ERROR, STE, QA and change-local WARN lines from the completed output.
+
+STE: 0 errors, 1329 warnings.
+
+No QA line appears. The full QA gate did not run.

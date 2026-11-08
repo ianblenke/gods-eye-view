@@ -1,5 +1,8 @@
 import { normalizeScenes } from './normalize.js';
 
+// shortcut: Probe hosts from 2026-11-08; extend this set when another host needs one collection.
+const SINGLE_COLLECTION_HOSTS = new Set(['vantor-3d', 'vexcel-v2']);
+const MAX_SEARCH_CALLS = 24;
 const HOST = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const failed = (kind) => ({ ok: false, kind });
 const object = (value) =>
@@ -66,7 +69,7 @@ function validPage(value) {
   );
 }
 
-/** One page for each host, with a shared public collection cache. */
+/** One page for each call, with a shared public collection cache. */
 export function createSearch(client, now) {
   let cached = null;
   let inFlight = null;
@@ -83,11 +86,9 @@ export function createSearch(client, now) {
       return { ok: true, map: cached.map };
     if (inFlight !== null) return inFlight;
     inFlight = load();
-    try {
-      return await inFlight;
-    } finally {
-      inFlight = null;
-    }
+    const result = await inFlight;
+    inFlight = null;
+    return result;
   }
   return async function runSearch(input) {
     const list = await collections();
@@ -96,41 +97,46 @@ export function createSearch(client, now) {
     if (!wanted.every((name) => list.map.has(name)))
       return failed('bad_collections');
     const groups = new Map();
-    for (const name of wanted) {
-      const { host } = list.map.get(name);
+    for (const [name, { host }] of list.map) {
+      if (!wanted.includes(name)) continue;
       if (!groups.has(host)) groups.set(host, []);
       groups.get(host).push(name);
     }
-    const hosts = [...groups.keys()].slice(0, 10);
-    const answers = new Array(hosts.length);
+    const calls = [];
+    for (const [host, names] of groups) {
+      if (SINGLE_COLLECTION_HOSTS.has(host)) {
+        for (const name of names) calls.push({ host, names: [name] });
+      } else calls.push({ host, names });
+    }
+    const queued = calls.slice(0, MAX_SEARCH_CALLS);
+    const answers = new Array(queued.length);
     let index = 0;
     async function worker() {
-      while (index < hosts.length) {
+      while (index < queued.length) {
         const slot = index++;
-        const host = hosts[slot];
-        answers[slot] = await client.search(
-          host,
-          bodyOf(input, groups.get(host)),
-        );
+        const { host, names } = queued[slot];
+        answers[slot] = await client.search(host, bodyOf(input, names));
       }
     }
     await Promise.all(
-      Array.from({ length: Math.min(4, hosts.length) }, worker),
+      Array.from({ length: Math.min(4, queued.length) }, worker),
     );
     const scenes = [];
-    const failedHosts = [];
+    const failedCalls = new Set();
+    const goodHosts = new Set();
     let dropped = 0;
-    let truncated = groups.size > 10;
+    let truncated = calls.length > MAX_SEARCH_CALLS;
     let timeout = false;
     let rejected = false;
     for (const [slot, answer] of answers.entries()) {
-      const host = hosts[slot];
+      const { host } = queued[slot];
       if (!answer.ok || !validPage(answer.value)) {
-        failedHosts.push(host);
+        failedCalls.add(host);
         timeout ||= answer.kind === 'search_timeout';
         rejected ||= answer.kind === 'credentials_rejected';
         continue;
       }
+      goodHosts.add(host);
       const normalized = normalizeScenes(answer.value.features, host, list.map);
       scenes.push(...normalized.scenes);
       dropped += normalized.dropped;
@@ -138,9 +144,14 @@ export function createSearch(client, now) {
         (link) => link.rel === 'next',
       );
     }
-    if (rejected) return failed('credentials_rejected');
-    if (failedHosts.length === hosts.length)
-      return failed(timeout ? 'search_timeout' : 'upstream_failed');
+    const failedHosts = [...failedCalls].filter((host) => !goodHosts.has(host));
+    truncated ||= [...failedCalls].some((host) => goodHosts.has(host));
+    if (rejected) return { ...failed('credentials_rejected'), failedHosts };
+    if (goodHosts.size === 0)
+      return {
+        ...failed(timeout ? 'search_timeout' : 'upstream_failed'),
+        failedHosts,
+      };
     return { ok: true, scenes, dropped, truncated, failedHosts };
   };
 }

@@ -1,0 +1,11 @@
+Command: git status --short
+At the host snapshot, the base tree is commit 990d28286da22b1c3063eb2a0ef0e18f79e730c6.
+
+ M server/providers/up42-thumbnails/thumbnails.js
+ M server/providers/up42.js
+ M server/providers/up42/upstream.js
+ M src/data/up42Proxy.test.mjs
+ M src/data/up42Thumbnails.test.mjs
+ M src/data/up42Upstream.test.mjs
+?? changelog.d/1433-up42-search-hosts.md
+?? openspec/changes/up42-search-hosts/

@@ -56,7 +56,11 @@ export function up42Plugins({
   async function search(id, input) {
     let result = await runSearch(input);
     if (!client.isSafe(result)) result = { ok: false, kind: 'upstream_failed' };
-    log(result.ok ? '[up42] ok' : '[up42] failed');
+    log(result.ok ? '[up42] ok' : `[up42] failed kind=${result.kind}`);
+    if (result.failedHosts?.length > 0)
+      log(
+        `[up42] ${result.ok ? 'partial' : 'failed'} hosts=${result.failedHosts.join(',')}`,
+      );
     if (!result.ok) return result;
     const { ok, ...entry } = result;
     store.delete(id);
