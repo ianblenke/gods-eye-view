@@ -824,7 +824,7 @@ test('[up42-source-015] uses distinct box and date values from the request', asy
   });
 });
 
-test('[up42-source-017] keeps all scenes from distinct good hosts beside failures', async () => {
+test('[up42-source-017] keeps all scenes from distinct good hosts with failures', async () => {
   const feature = (id, collection, cloudCoverage) => ({
     properties: {
       id,
@@ -1307,7 +1307,7 @@ for (const [index, failure] of ['status', 'page', 'timeout'].entries()) {
   });
 }
 
-test('[up42-source-031] lists a failed restricted host once beside good scenes', async () => {
+test('[up42-source-031] lists a failed restricted host once in an answer with good scenes', async () => {
   const s = setup({
     respond: (url, init) => {
       if (url === COLLECTIONS)

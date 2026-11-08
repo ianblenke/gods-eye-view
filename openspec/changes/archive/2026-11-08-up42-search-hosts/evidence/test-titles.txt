@@ -38,14 +38,14 @@ The check covers both word lists, phrases, words that end in -ing and the 25-wor
 [up42-source-017] refuses host document case 4
 [up42-source-023] refuses a password in a scene field
 [up42-source-015] uses distinct box and date values from the request
-[up42-source-017] keeps all scenes from distinct good hosts beside failures
+[up42-source-017] keeps all scenes from distinct good hosts with failures
 [up42-source-023] checks secrets in JSON text
 [up42-source-028] splits both restricted hosts and merges their scenes
 [up42-source-029] searches all fifteen hosts with twenty-one calls
 [up42-source-030] keeps good scenes of a partial host case 0
 [up42-source-030] keeps good scenes of a partial host case 1
 [up42-source-030] keeps good scenes of a partial host case 2
-[up42-source-031] lists a failed restricted host once beside good scenes
+[up42-source-031] lists a failed restricted host once in an answer with good scenes
 [up42-source-031] returns one host name when all restricted calls fail
 [up42-source-017] keeps the fixed aggregate failure case 0
 [up42-source-017] keeps the fixed aggregate failure case 1

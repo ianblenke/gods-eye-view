@@ -212,7 +212,7 @@ Origin: spec-first
 
 - **WHEN** search a mix of good and failed hosts
 - **THEN** the answer contains all good scenes and the names of hosts whose calls all failed
-- **AND** all failed hosts give upstream_failed with 502, except that a timeout gives search_timeout with 504
+- **AND** all failed hosts give upstream_failed with 502, except that a timeout gives search_timeout with 504 and a credential rejection gives credentials_rejected with 403
 
 ### Requirement: Transport failures
 
@@ -318,7 +318,7 @@ Origin: spec-first
 
 #### Scenario: Split restricted hosts `up42-source-028`
 
-- **WHEN** select two collections of vantor-3d and two collections of vexcel-v2 beside a normal host
+- **WHEN** select two collections of vantor-3d and two collections of vexcel-v2 with a normal host
 - **THEN** each restricted call body has exactly one collection with its exact name
 - **AND** the normal host receives one call with both its collections
 - **AND** scenes from both calls of each restricted host remain in the answer
@@ -337,13 +337,13 @@ Origin: spec-first
 
 #### Scenario: List a failed host once `up42-source-031`
 
-- **WHEN** all calls of a restricted host fail beside a good host
+- **WHEN** all calls of a restricted host fail with a good host
 - **THEN** failedHosts contains the restricted host once and the answer keeps the good scenes
 - **AND** an unknown host with the same one-collection rule has a normal host failure
 
 #### Scenario: Count concurrent calls `up42-source-032`
 
-- **WHEN** a restricted host needs five calls beside another host
+- **WHEN** a restricted host needs five calls with another host
 - **THEN** four calls start before a gate opens and no fifth call starts
 - **AND** all six calls finish with at most four calls active at one time
 
