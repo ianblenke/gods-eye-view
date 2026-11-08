@@ -9667,7 +9667,7 @@
   "up42-source-017": [
     "src/data/up42Proxy.test.mjs › [up42-source-017] gives 502 when the host fails",
     "src/data/up42Proxy.test.mjs › [up42-source-017] gives 504 when all host calls time out",
-    "src/data/up42Upstream.test.mjs › [up42-source-017] keeps all scenes from distinct good hosts beside failures",
+    "src/data/up42Upstream.test.mjs › [up42-source-017] keeps all scenes from distinct good hosts with failures",
     "src/data/up42Upstream.test.mjs › [up42-source-017] keeps good hosts and lists all failed hosts by name",
     "src/data/up42Upstream.test.mjs › [up42-source-017] keeps the fixed aggregate failure case 0",
     "src/data/up42Upstream.test.mjs › [up42-source-017] keeps the fixed aggregate failure case 1",
@@ -9810,7 +9810,7 @@
     "src/data/up42Upstream.test.mjs › [up42-source-030] keeps good scenes of a partial host case 2"
   ],
   "up42-source-031": [
-    "src/data/up42Upstream.test.mjs › [up42-source-031] lists a failed restricted host once beside good scenes",
+    "src/data/up42Upstream.test.mjs › [up42-source-031] lists a failed restricted host once in an answer with good scenes",
     "src/data/up42Upstream.test.mjs › [up42-source-031] returns one host name when all restricted calls fail"
   ],
   "up42-source-032": [
