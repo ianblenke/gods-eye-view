@@ -37,4 +37,4 @@
 - [x] 4.7 Have the lead run the ratchet command.
 - [x] 4.8 Have the lead run both review agents.
 - [x] 4.9 Have the lead write review.md.
-- [ ] 4.10 Have the lead run make gates.
+- [x] 4.10 Have the lead run make gates.

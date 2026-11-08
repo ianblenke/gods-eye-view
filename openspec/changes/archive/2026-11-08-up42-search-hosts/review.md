@@ -3,10 +3,10 @@
 Verdict: PASS
 Reviewers: spec-adversary, ste-adversary
 Date: 2026-11-08
-Gates: make gates CHANGE=up42-search-hosts pending
+Gates: make gates CHANGE=up42-search-hosts passed
 Rounds: 4
 Scope: diff bff9adfb
-Reviewed-Tree: PENDING
+Reviewed-Tree: 31faab19218a376666c11ba9e967caf05c6a700dc674281bdd9d3ba68d8f93b5
 
 Resolved files: none
 
