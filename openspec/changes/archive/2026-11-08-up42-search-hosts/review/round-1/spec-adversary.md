@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-11-08-up42-search-hosts/tasks.md:39 At commit d8901d79e51b89787d99f84424835a611c840361, the completed document gate reports REVIEW-MISSING. Write review.md after both reviews, then run the final gates.
