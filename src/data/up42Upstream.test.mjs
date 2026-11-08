@@ -824,7 +824,7 @@ test('[up42-source-015] uses distinct box and date values from the request', asy
   });
 });
 
-test('[up42-source-017] keeps all scenes from distinct good hosts with failures', async () => {
+test('[up42-source-017] keeps all scenes from distinct good hosts beside failures', async () => {
   const feature = (id, collection, cloudCoverage) => ({
     properties: {
       id,

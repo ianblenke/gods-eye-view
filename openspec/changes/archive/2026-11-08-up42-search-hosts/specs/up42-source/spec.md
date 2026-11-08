@@ -35,7 +35,7 @@ Origin: spec-first
 
 - **WHEN** search a mix of good and failed hosts
 - **THEN** the answer contains all good scenes and the names of hosts whose calls all failed
-- **AND** all failed hosts give upstream_failed with 502, except that a timeout gives search_timeout with 504 and a credential rejection gives credentials_rejected with 403
+- **AND** a credential rejection gives credentials_rejected with 403; otherwise all failed hosts give upstream_failed with 502, except that a timeout gives search_timeout with 504
 
 ### Requirement: Secret output
 
