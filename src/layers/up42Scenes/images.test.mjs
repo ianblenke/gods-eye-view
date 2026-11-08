@@ -38,6 +38,15 @@ const three = () =>
     record('new', '2026-10-20T00:00:00Z'),
     record('middle', '2026-10-19T00:00:00Z'),
   ]);
+const fakeDecode = async () => ({ width: 2, height: 1, close() {} });
+const decodeFirst = (decode) => {
+  let first = true;
+  return (blob) => {
+    if (!first) return fakeDecode();
+    first = false;
+    return decode(blob);
+  };
+};
 const image = () => ({
   ok: true,
   blob: new Blob(['fake'], { type: 'image/png' }),
@@ -90,7 +99,7 @@ function harness(
       clearSource: (...args) => cleared.push(args),
       setVisible() {},
     },
-    decodeImage: decode ?? (async () => ({ width: 2, height: 1, close() {} })),
+    decodeImage: decode ?? fakeDecode,
     requestRender: (id) => renders.push(id),
   });
   let ds;
@@ -584,9 +593,36 @@ test('[up42-scene-overlay-012] selects without a card and keeps each image uncha
   const material = entity.polygon.material;
   assert.equal(h.layer.setParams({ scene: 'new' }), true);
   assert.equal(h.controls().list.items[0].active, true);
+  assert.equal(h.outline('new').polyline.width.getValue(), 3);
+  assert.deepEqual(
+    h.outline('new').polyline.material.color.getValue(),
+    new Cesium.Color(250 / 255, 204 / 255, 21 / 255, 1),
+  );
+  assert.equal(h.outline('none').polyline.width.getValue(), 2);
+  assert.deepEqual(
+    h.outline('none').polyline.material.color.getValue(),
+    new Cesium.Color(56 / 255, 189 / 255, 248 / 255, 0.9),
+  );
   assert.equal(h.layer.setParams({ scene: 'none' }), true);
   assert.equal(h.controls().list.items[1].active, true);
+  assert.equal(h.outline('none').polyline.width.getValue(), 3);
+  assert.deepEqual(
+    h.outline('none').polyline.material.color.getValue(),
+    new Cesium.Color(250 / 255, 204 / 255, 21 / 255, 1),
+  );
+  assert.equal(h.outline('new').polyline.width.getValue(), 2);
+  assert.deepEqual(
+    h.outline('new').polyline.material.color.getValue(),
+    new Cesium.Color(56 / 255, 189 / 255, 248 / 255, 0.9),
+  );
   assert.equal(h.layer.setParams({ scene: null }), true);
+  for (const id of ['new', 'none']) {
+    assert.equal(h.outline(id).polyline.width.getValue(), 2);
+    assert.deepEqual(
+      h.outline(id).polyline.material.color.getValue(),
+      new Cesium.Color(56 / 255, 189 / 255, 248 / 255, 0.9),
+    );
+  }
   await tick();
   assert.equal(h.images()[0], entity);
   assert.equal(h.images()[0].polygon.material, material);
@@ -726,7 +762,7 @@ test('[up42-scene-overlay-018] closes the old card before the image queue starts
 test('[up42-scene-overlay-018] aborts the old card and closes a late bitmap', async (t) => {
   const decoding = deferred();
   let closed = 0;
-  const h = harness(t, { decode: () => decoding.promise });
+  const h = harness(t, { decode: decodeFirst(() => decoding.promise) });
   await h.ready();
   h.layer.setParams({ scene: 'new' });
   await tick();
@@ -836,3 +872,118 @@ test('[up42-scene-overlay-013] switches the option off after an answer with no t
   assert.equal(h.images().length, 0);
   assert.equal(h.calls.length, 3);
 });
+
+for (const result of ['reject', 'null']) {
+  test(`[up42-scene-overlay-021] counts one failed image when decode returns ${result}`, async (t) => {
+    const corrupt = new Blob(
+      [new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10])],
+      {
+        type: 'image/png',
+      },
+    );
+    const decoded = [];
+    const h = harness(t, {
+      scenes: answer([record('corrupt')]),
+      thumbnail: async () => ({ ok: true, blob: corrupt }),
+      decode: async (blob) => {
+        decoded.push(blob);
+        if (result === 'reject') throw new Error('SECRET');
+        return null;
+      },
+    });
+    await h.ready();
+    h.chip().onClick();
+    await tick();
+    assert.equal(decoded.length, 1);
+    assert.equal(decoded[0].type, 'image/png');
+    assert.deepEqual(
+      [...new Uint8Array(await decoded[0].arrayBuffer())],
+      [137, 80, 78, 71, 13, 10, 26, 10],
+    );
+    assert.equal(
+      h.controls().info,
+      '1 scene · newest 2026-10-20 · Images shown: 0; failed: 1.',
+    );
+    assert.equal(h.images().length, 0);
+    assert.deepEqual(h.urls, []);
+    assert.deepEqual(h.revoked, []);
+    await h.layer.update();
+    assert.equal(h.calls.length, 1);
+  });
+}
+
+test('[up42-scene-overlay-021] closes the bitmap before it creates the blob URL', async (t) => {
+  const events = [];
+  const h = harness(t, {
+    scenes: answer([record('valid')]),
+    decode: async () => ({ close: () => events.push('close') }),
+  });
+  const create = URL.createObjectURL;
+  t.mock.method(URL, 'createObjectURL', (blob) => {
+    events.push('url');
+    return create(blob);
+  });
+  await h.ready();
+  h.chip().onClick();
+  await tick();
+  assert.deepEqual(events, ['close', 'url']);
+  assert.equal(h.images().length, 1);
+  assert.equal(
+    h.controls().info,
+    '1 scene · newest 2026-10-20 · Images shown: 1; failed: 0.',
+  );
+  h.chip().onClick();
+  assert.deepEqual(h.revoked, ['blob:preview-1']);
+  assert.deepEqual(events, ['close', 'url']);
+});
+
+for (const end of ['off', 'disable', 'destroy', 'answer']) {
+  for (const result of ['bitmap', 'reject', 'null']) {
+    test(`[up42-scene-overlay-021] ignores a late ${result} decode after ${end}`, async (t) => {
+      const decoding = deferred();
+      let closed = 0;
+      const h = harness(t, {
+        scenes: answer([record('late')]),
+        decode: decodeFirst(() => decoding.promise),
+      });
+      await h.ready();
+      h.chip().onClick();
+      await tick();
+      assert.equal(h.images().length, 0);
+      assert.equal(h.urls.length, 0);
+      if (end === 'off') h.chip().onClick();
+      if (end === 'disable') h.layer.disable();
+      if (end === 'destroy') h.layer.destroy();
+      if (end === 'answer') {
+        h.state.scenes = answer([record('fresh', '2026-10-21T00:00:00Z')]);
+        await h.search();
+        await tick();
+      }
+      assert.equal(h.calls[0].signal.aborted, true);
+      const info = h.controls().info;
+      const notices = h.notices.length;
+      if (result === 'reject') decoding.reject(new Error('SECRET'));
+      else
+        decoding.resolve(
+          result === 'null'
+            ? null
+            : {
+                close() {
+                  closed += 1;
+                },
+              },
+        );
+      await tick();
+      assert.equal(closed, result === 'bitmap' ? 1 : 0);
+      assert.equal(h.urls.length, end === 'answer' ? 1 : 0);
+      assert.deepEqual(
+        h.images().map(({ id }) => id),
+        end === 'answer' ? ['up42-scenes:image:fresh'] : [],
+      );
+      assert.equal(h.controls().info, info);
+      assert.equal(h.notices.length, notices);
+      assert.deepEqual(h.revoked, []);
+      assert.equal(h.cards.length, 0);
+    });
+  }
+}

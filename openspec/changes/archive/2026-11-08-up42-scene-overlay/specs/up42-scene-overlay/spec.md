@@ -10,15 +10,15 @@ Origin: spec-first
 - **AND** selection keeps the thumbnail card path
 
 #### Scenario: Control the image option `up42-scene-overlay-002`
-- **WHEN** the enabled layer has a thumbnail scene and credentials are not known to be absent
+- **WHEN** the enabled layer has a thumbnail scene and the credential status is configured or unknown
 - **THEN** the second chip has id "images" and label "Show images"
 - **AND** a press changes its label to "Hide images"; a second press restores "Show images"
 
 #### Scenario: Omit an unavailable option `up42-scene-overlay-003`
-- **WHEN** no answer exists, credentials are not configured, or no scene has a true thumbnail flag
+- **WHEN** no answer exists, the server reports no credentials, or no scene has a true thumbnail flag
 - **THEN** the enabled layer supplies only the search chip
-- **AND** the image chip appears only with a thumbnail scene and credentials not known to be absent
-- **AND** an old image handler does nothing when the option is unavailable or the layer is disabled
+- **AND** the image chip appears only with a thumbnail scene when the credential status is configured or unknown
+- **AND** an old image handler does nothing when the option is unavailable or the layer is off
 
 #### Scenario: Request the newest images first `up42-scene-overlay-004`
 - **WHEN** the option starts with 30 thumbnail scenes with distinct dates
@@ -64,6 +64,8 @@ Origin: spec-first
 - **WHEN** a person selects scenes while the option is on
 - **THEN** selection updates the outline and the list but creates no card entry
 - **AND** the image and its material stay unchanged, also for a scene with no thumbnail
+- **AND** each selected outline uses width 3 and yellow; each previous selection returns to width 2 and blue
+- **AND** a null selection returns all outlines to width 2 and blue
 
 #### Scenario: Release images after a new answer `up42-scene-overlay-013`
 - **WHEN** a new search answer arrives while the option is on
@@ -106,3 +108,10 @@ Origin: spec-first
 - **THEN** the public scene record keeps its current fields
 - **AND** the image queue uses the time value from the source
 
+#### Scenario: Reject a blob that cannot decode `up42-scene-overlay-021`
+- **WHEN** a thumbnail body passes the server checks but its decode rejects or returns null
+- **THEN** the readout ends with "Images shown: 0; failed: 1."
+- **AND** the scene has no image entity or object URL
+- **AND** each successful decode closes its bitmap before the layer creates the object URL
+- **AND** each decode result after release adds no image entity or object URL
+- **AND** each bitmap from a late decode closes

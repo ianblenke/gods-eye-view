@@ -28,6 +28,8 @@
 
 - [x] 2.21 Check that every old test stays unchanged.
 
+- [x] 2.22 Write the test for `up42-scene-overlay-021`.
+
 ## 3. Code
 
 - [x] 3.1 Use scene time for image order.
@@ -35,6 +37,8 @@
 - [x] 3.3 Connect the chip and lifecycle hooks.
 - [x] 3.4 Update the manifests.
 - [x] 3.5 Add the changelog fragment.
+
+- [x] 3.6 Check blob decode before image creation.
 
 ## 4. Host checks
 

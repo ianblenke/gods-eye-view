@@ -20,6 +20,11 @@ Late answers cannot change a new answer or a disabled layer.
 Each error increases the failed count without a retry.
 The fixed readout gives the shown count and the failed count.
 
+Pass the layer decoder to the image queue.
+Decode each blob before image creation and close the bitmap at once.
+Reject a null decode result and count each decode failure.
+Check the abort signal after decode; a late bitmap closes and creates no image.
+
 Use an object URL from each blob in an ImageMaterialProperty.
 Set transparent true and white with alpha 0.85.
 Use each footprint ring in a ground polygon with no fixed height.
@@ -29,7 +34,7 @@ Set the footprint outline and selected fill zIndex to 25 while images show.
 Selection changes only footprint entities; image entities keep their materials.
 The image fit can differ from the scene footprint.
 
-The index adds the image chip only when the enabled layer has a thumbnail scene and credentials are not known to be absent.
+The index adds the image chip only when the enabled layer has a thumbnail scene and the credential status is configured or unknown.
 Before a search or without thumbnail scenes, the row has only the search chip.
 The image chip has a usable handler whenever it appears.
 

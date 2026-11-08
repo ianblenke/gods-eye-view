@@ -1,7 +1,7 @@
 import * as Cesium from 'cesium';
 
 /** Own the image queue and object URLs of one answer. */
-export function createSceneImages({ source, entities, changed }) {
+export function createSceneImages({ source, entities, changed, decodeImage }) {
   let batch = null;
 
   function release() {
@@ -41,6 +41,10 @@ export function createSceneImages({ source, entities, changed }) {
           const result = await source.getThumbnail({ id: scene.id, signal });
           if (signal.aborted) return;
           if (!result.ok) throw new Error('Thumbnail request failed');
+          const bitmap = await decodeImage(result.blob);
+          if (bitmap !== null) bitmap.close();
+          if (signal.aborted) return;
+          if (bitmap === null) throw new Error('Thumbnail decode failed');
           url = URL.createObjectURL(result.blob);
           const entity = entities().add(
             new Cesium.Entity({

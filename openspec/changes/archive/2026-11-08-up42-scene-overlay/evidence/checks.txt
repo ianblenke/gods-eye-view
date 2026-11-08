@@ -1,32 +1,41 @@
-Command per file: node --test --test-force-exit --test-isolation=none --test-reporter=tap, then the file name.
-At the host snapshot of base commit c0d02493f66de4c0fc435aa70070ec5579d3b50b, the branch is up42-scene-overlay with uncommitted changes.
+Command per file: node --test --test-force-exit --test-isolation=none --test-reporter=tap <file>
+At the host snapshot of commit 54f953fa42d956ee820801dbed117682ec721c67, the branch is up42-scene-overlay with uncommitted corrections.
 Host Node is v26.13.0. The calibrated Node version is 24.22.1.
 
-The broad host run completes 172 files with exit 0 for each file.
-It records 3174 tests, 3174 passed, 0 failed, 0 skipped and 0 cancelled.
-The final layer run below includes one more test for unknown status.
-The latest file results total 3175 tests, 3175 passed, 0 failed, 0 skipped and 0 cancelled.
+The latest completed results cover 172 files and 3190 tests.
+All 3190 tests pass. No test fails, skips or cancels.
+The run includes every UP42 layer test and each registration test group from the brief.
 
-Scope | Files | Latest tests | Passed | Failed
-app | 16 | 91 | 91 | 0
+Scope | Files | Tests | Passed | Failed
 Layer state | 2 | 80 | 80 | 0
 UP42 data | 6 | 625 | 625 | 0
+UP42 layer | 8 | 176 | 176 | 0
+app | 16 | 91 | 91 | 0
 i18n | 10 | 122 | 122 | 0
-UP42 layer | 8 | 161 | 161 | 0
 share | 5 | 476 | 476 | 0
 sources | 1 | 1 | 1 | 0
 ui | 76 | 727 | 727 | 0
 voice | 48 | 892 | 892 | 0
 
-The broad run uses four host processes and no container.
-The existing tests use local test servers and Git child processes.
-No external service call runs.
+The first broad run stops after its output capture loses the test results.
+It gives no test verdict.
+The next broad run completes 172 files with 3107 tests: 3097 pass and 10 fail.
+The sandbox blocks Git child processes and the local HTTP server in seven files.
+Those seven files pass on host reruns outside the sandbox.
+
+The first rerun completes six files with 87 passed tests and exit 0.
+The second rerun completes one file with 64 passed tests and exit 0.
+The totals above use the latest completed result for each file.
+Each file command has a separate log with its command on the first line.
+The runner uses at most four host test processes.
+
+All upstream responses are fake. No external service call runs.
 
 Coverage command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --experimental-test-coverage
 The include pattern is src/layers/up42Scenes/*.js.
 The line, branch and function thresholds are each 100.
 The command uses all src/layers/up42Scenes/*.test.mjs files.
-It completes with exit 0: 161 tests, 161 passed and 0 failed.
+It completes with exit 0: 176 tests pass and 0 tests fail.
 
 File | Lines | Branches | Functions
 src/layers/up42Scenes/images.js | 100.00 | 100.00 | 100.00
@@ -36,39 +45,60 @@ src/layers/up42Scenes/model.js | 100.00 | 100.00 | 100.00
 src/layers/up42Scenes/records.js | 100.00 | 100.00 | 100.00
 src/layers/up42Scenes/source.js | 100.00 | 100.00 | 100.00
 
-C1: The image chip exists only with an enabled layer, a thumbnail scene and credentials not known to be absent.
-The new answer test checks release, aborted signals, chip absence and the off state after another good answer.
-The label test checks Show images, Hide images and the handler fields.
+Review correction status at this snapshot:
+SPEC F1: Fixed. The queue decodes each blob before entity creation.
+The queue closes each bitmap before URL creation and checks the abort signal after decode.
+Scenario up42-scene-overlay-021 has 15 tests for rejection, null, immediate close and late decode results.
+The initial run before the code change completes with 15 failed tests.
+Faults UPO-M065 through UPO-M068 each produce failed tests.
 
-C2: The image queue sorts normalized time values from greatest to least, then ids from least to greatest.
-The distinct-time fixture requests the literal order newest, a, b, c, oldest.
-The 30-scene fixture requests scene-01 through scene-24 in literal order.
+The test helper supplies fake decodes without a change to any old test from main.
 
-Command: git diff -- src/layers/up42Scenes/records.js src/layers/up42Scenes/layer.test.mjs
+SPEC F2: Fixed. Test up42-scene-overlay-012 checks literal outline widths and colours after each selection.
+It checks the scene with a thumbnail, the scene without one, and the null selection.
+Each previous outline returns to width 2 and blue.
+Faults UPO-M069 and UPO-M070 each fail this test.
+
+SPEC F3: Deferred by the lead. The review record and final gates come later.
+This correction gives no final gate verdict.
+
+STE F1: Fixed. The duplicate archive report and its file-list entry are removed.
+The browser check with synthetic images is complete: 23 PASS and 0 FAIL.
+This result comes from the stored browser evidence at code commit ca54c451.
+No browser check runs during this correction.
+No real UP42 image appears in that check.
+
+STE F2: Fixed. The proposal says that UP42 did not confirm thumbnail display terms.
+
+STE F3 and F4: Fixed. The proposal and design name the configured or unknown credential status.
+
+STE F5 and F7: Fixed by removal of the duplicate archive report.
+
+STE F6: Fixed in both spec copies.
+The phrase "the server reports no credentials" preserves the meaning of the false configured status.
+An unconfirmed status can include unknown status, which the code permits.
+The text also says that the layer is off.
+No requirement text line changes.
+
+The two spec bodies are identical. Their archive and Purpose headers differ.
+The spec has 21 distinct scenario IDs and no absent test task.
+The overlay tests have 40 distinct titles and zero project word-list errors.
+
+Command: git diff origin/main -- src/layers/up42Scenes/layer.test.mjs
 Output: empty.
-There is no edit of an old test. Both files equal main at the base commit.
-The old scenario up42-scenes-layer-003 keeps its one-chip assertion before a search.
-The merged layer spec stays unchanged.
+Command: git diff 54f953fa -- src/layers/up42Scenes/layer.test.mjs
+Output: empty.
+No old test from main changes.
+Command: git diff 54f953fa --stat
+The output lists only this correction's code, tests, specs and archive files.
+Command: git diff --check
+The command completes with exit 0.
+Command: git status --short
+The output lists only this change's files.
 
-The ownership diff adds only images.js.
-The format scope diff adds only images.js and images.test.mjs.
-Both package boundary lists add only images.js.
-No manifest diff adds records.js.
-
-The current fault run completes 33 commands with exit 1 and named failed tests.
-Every fault restores the source file and compares it with the original text.
-The four requested fault records are UPO-M032, UPO-M033, UPO-M034 and UPO-M035.
-The record for the no-thumbnail off state is UPO-M062.
-
-The initial isolated test command reports one file failure without test details.
-It gives no scenario verdict.
-The detailed run then completes 160 tests with 155 passed and 5 failed before the code corrections.
-The final coverage run above passes after the corrections.
-
-No commit, push, make, Docker or Chrome command runs.
+No commit, push, make, container or browser command runs during this correction.
 No real environment file is read.
-The lead must check synthetic images in the browser and run the calibrated gates before merge.
-The ratchet, archive and two review agents stay pending.
+The calibrated gates and the review record remain for the lead.
 
 Latest completed result for each selected file:
 src/app/application.test.mjs | tests 19 | passed 19 | failed 0 | exit 0
@@ -84,8 +114,8 @@ src/app/mapLifecycle.test.mjs | tests 2 | passed 2 | failed 0 | exit 0
 src/app/operations.test.mjs | tests 4 | passed 4 | failed 0 | exit 0
 src/app/sourceComposition.test.mjs | tests 8 | passed 8 | failed 0 | exit 0
 src/app/sourceSlot.test.mjs | tests 2 | passed 2 | failed 0 | exit 0
-src/app/startView.test.mjs | tests 5 | passed 5 | failed 0 | exit 0
 src/app/startupCamera.test.mjs | tests 1 | passed 1 | failed 0 | exit 0
+src/app/startView.test.mjs | tests 5 | passed 5 | failed 0 | exit 0
 src/app/stateChannel.test.mjs | tests 5 | passed 5 | failed 0 | exit 0
 src/data/layerState.test.mjs | tests 72 | passed 72 | failed 0 | exit 0
 src/data/layerStateTokenLedger.test.mjs | tests 8 | passed 8 | failed 0 | exit 0
@@ -106,7 +136,7 @@ src/i18n/stale-index.test.mjs | tests 1 | passed 1 | failed 0 | exit 0
 src/i18n/zh-CN-display.test.mjs | tests 5 | passed 5 | failed 0 | exit 0
 src/i18n/zh-Hant-display.test.mjs | tests 3 | passed 3 | failed 0 | exit 0
 src/layers/up42Scenes/box.test.mjs | tests 11 | passed 11 | failed 0 | exit 0
-src/layers/up42Scenes/images.test.mjs | tests 25 | passed 25 | failed 0 | exit 0
+src/layers/up42Scenes/images.test.mjs | tests 40 | passed 40 | failed 0 | exit 0
 src/layers/up42Scenes/layer.test.mjs | tests 49 | passed 49 | failed 0 | exit 0
 src/layers/up42Scenes/messages.test.mjs | tests 8 | passed 8 | failed 0 | exit 0
 src/layers/up42Scenes/model.test.mjs | tests 13 | passed 13 | failed 0 | exit 0
@@ -145,6 +175,8 @@ src/ui/layerNames.test.mjs | tests 4 | passed 4 | failed 0 | exit 0
 src/ui/layerPanel.test.mjs | tests 9 | passed 9 | failed 0 | exit 0
 src/ui/layerStatusLocale.test.mjs | tests 2 | passed 2 | failed 0 | exit 0
 src/ui/localAdsbGuidanceI18n.test.mjs | tests 1 | passed 1 | failed 0 | exit 0
+src/ui/localePicker.test.mjs | tests 11 | passed 11 | failed 0 | exit 0
+src/ui/localeSwitchReload.test.mjs | tests 5 | passed 5 | failed 0 | exit 0
 src/ui/localSdrAudioState.i18n.test.mjs | tests 2 | passed 2 | failed 0 | exit 0
 src/ui/localSdrControls.test.mjs | tests 4 | passed 4 | failed 0 | exit 0
 src/ui/localSdrFeedLine.i18n.test.mjs | tests 4 | passed 4 | failed 0 | exit 0
@@ -152,8 +184,6 @@ src/ui/localSdrFmStopMessage.i18n.test.mjs | tests 3 | passed 3 | failed 0 | exi
 src/ui/localSdrMarkup.test.mjs | tests 3 | passed 3 | failed 0 | exit 0
 src/ui/localSdrNumbers.i18n.test.mjs | tests 3 | passed 3 | failed 0 | exit 0
 src/ui/localSdrPresentation.test.mjs | tests 6 | passed 6 | failed 0 | exit 0
-src/ui/localePicker.test.mjs | tests 11 | passed 11 | failed 0 | exit 0
-src/ui/localeSwitchReload.test.mjs | tests 5 | passed 5 | failed 0 | exit 0
 src/ui/locationControls.test.mjs | tests 9 | passed 9 | failed 0 | exit 0
 src/ui/locationSearch.test.mjs | tests 8 | passed 8 | failed 0 | exit 0
 src/ui/locationSearchRecovery.test.mjs | tests 4 | passed 4 | failed 0 | exit 0
@@ -244,22 +274,6 @@ src/voice/voiceCardPlaceNames.i18n.test.mjs | tests 2 | passed 2 | failed 0 | ex
 src/voice/voiceCardPlanSteps.i18n.test.mjs | tests 14 | passed 14 | failed 0 | exit 0
 src/voice/voiceCost.test.mjs | tests 60 | passed 60 | failed 0 | exit 0
 
-The format check passes for all six changed code, test and manifest files.
-The new tests have 25 distinct titles and 0 word-list errors.
-The spec has 20 distinct scenario ids and no absent test task.
-
 Final lint command: node scripts/spec/gates.mjs lint --change up42-scene-overlay
-Final lint output: STE: 0 errors, 1333 warnings.
+Final lint output: STE: 0 errors, 1336 warnings.
 The command completes with exit 0.
-Git diff --check completes with exit 0.
-The final status contains only the change files in evidence/files.txt.
-
-Browser check (snapshot of run 4 on the code commit ca54c451, in the sandboxed Chrome for Testing with a temporary profile and a fake upstream with six scenes):
-The run shows 23 PASS and 0 FAIL. Earlier runs failed only because of timing faults in the driver, and no run failed because of this change.
-Fake scenes: four nested footprints with one solid colour each (newest blue, then green, red, yellow), one scene whose thumbnail answer is 404, and one scene with no thumbnail.
-Only the search chip exists before a search. After a search the chip Show images exists and no thumbnail request has been sent.
-A press on Show images sends five requests, newest first, and shows four images with one failure. The readout says that four images show and one failed.
-The pixel at the centre of the four footprints is blue. The pixels outside the newest, the two newest and the three newest footprints are green, red and yellow.
-The outlines of the six scenes stay on top. A selection of a scene with images on opens no card and sends no request. With images off the card opens as before.
-Hide images, a new answer and a disabled layer remove every image entity.
-The thumbnails of the fake upstream are synthetic images. No real UP42 image was shown, so the fit to a real footprint is not checked (known limit approximate-fit).

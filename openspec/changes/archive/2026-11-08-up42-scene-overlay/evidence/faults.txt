@@ -1,7 +1,8 @@
-At the host snapshot of base commit c0d02493f66de4c0fc435aa70070ec5579d3b50b, the work tree includes C1 and C2.
+Earlier host snapshot: base commit c0d02493f66de4c0fc435aa70070ec5579d3b50b.
+These records describe the tree before the review corrections.
 
 Records UPO-M001 through UPO-M031 belong to the earlier tree and no longer supply current evidence.
-Current records use distinct ids from UPO-M032.
+Records UPO-M032 through UPO-M064 describe that earlier tree.
 
 Command per fault: node --test --test-force-exit --test-isolation=none --test-reporter=tap src/layers/up42Scenes/images.test.mjs
 
@@ -269,6 +270,80 @@ Exit: 1.
 Failed test: [up42-scene-overlay-013] switches the option off after an answer with no thumbnails
 The file after restoration equals the file before the fault.
 
-Restored file hashes, SHA-256:
+Earlier restored file hashes, SHA-256:
 src/layers/up42Scenes/images.js 3169a53969af14bd0323200a7674aae59db51349d4a05eae3de5cd51fa6efb65
 src/layers/up42Scenes/index.js dfb0805c3f44861f55bad930b541290a6f1918231516a16464c324af0bb65b3c
+
+Review correction snapshot: commit 54f953fa42d956ee820801dbed117682ec721c67, with uncommitted changes.
+New records use UPO-M065 through UPO-M070.
+The earlier records above remain historical evidence.
+
+UPO-M065: Skip blob decode.
+File: src/layers/up42Scenes/images.js.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-scene-overlay-021 src/layers/up42Scenes/images.test.mjs
+Exit: 1.
+Failed test: [up42-scene-overlay-021] counts one failed image when decode returns reject
+Failed test: [up42-scene-overlay-021] counts one failed image when decode returns null
+Failed test: [up42-scene-overlay-021] closes the bitmap before it creates the blob URL
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after off
+Failed test: [up42-scene-overlay-021] ignores a late reject decode after off
+Failed test: [up42-scene-overlay-021] ignores a late null decode after off
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after disable
+Failed test: [up42-scene-overlay-021] ignores a late reject decode after disable
+Failed test: [up42-scene-overlay-021] ignores a late null decode after disable
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after destroy
+Failed test: [up42-scene-overlay-021] ignores a late reject decode after destroy
+Failed test: [up42-scene-overlay-021] ignores a late null decode after destroy
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after answer
+Failed test: [up42-scene-overlay-021] ignores a late reject decode after answer
+Failed test: [up42-scene-overlay-021] ignores a late null decode after answer
+The file after restoration equals the file before the fault.
+SHA-256: 9fc9132b6c9f5565b87cb523c5526e9ef9f6b8ef81cfa05498364db5b69c9c47
+
+UPO-M066: Do not count a decode failure.
+File: src/layers/up42Scenes/images.js.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-scene-overlay-021 src/layers/up42Scenes/images.test.mjs
+Exit: 1.
+Failed test: [up42-scene-overlay-021] counts one failed image when decode returns reject
+Failed test: [up42-scene-overlay-021] counts one failed image when decode returns null
+The file after restoration equals the file before the fault.
+SHA-256: 9fc9132b6c9f5565b87cb523c5526e9ef9f6b8ef81cfa05498364db5b69c9c47
+
+UPO-M067: Do not close the decoded bitmap.
+File: src/layers/up42Scenes/images.js.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-scene-overlay-021 src/layers/up42Scenes/images.test.mjs
+Exit: 1.
+Failed test: [up42-scene-overlay-021] closes the bitmap before it creates the blob URL
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after off
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after disable
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after destroy
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after answer
+The file after restoration equals the file before the fault.
+SHA-256: 9fc9132b6c9f5565b87cb523c5526e9ef9f6b8ef81cfa05498364db5b69c9c47
+
+UPO-M068: Add an entity after a late decode.
+File: src/layers/up42Scenes/images.js.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-scene-overlay-021 src/layers/up42Scenes/images.test.mjs
+Exit: 1.
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after off
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after disable
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after destroy
+Failed test: [up42-scene-overlay-021] ignores a late bitmap decode after answer
+The file after restoration equals the file before the fault.
+SHA-256: 9fc9132b6c9f5565b87cb523c5526e9ef9f6b8ef81cfa05498364db5b69c9c47
+
+UPO-M069: Select outlines only for scenes with thumbnails.
+File: src/layers/up42Scenes/index.js.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-scene-overlay-012 src/layers/up42Scenes/images.test.mjs
+Exit: 1.
+Failed test: [up42-scene-overlay-012] selects without a card and keeps each image unchanged
+The file after restoration equals the file before the fault.
+SHA-256: 548ed264ad8f7473c83a91bb2030d721abf50ef3bb5ee1cf769743c9156be99b
+
+UPO-M070: Keep the outline selected after a null selection.
+File: src/layers/up42Scenes/index.js.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-scene-overlay-012 src/layers/up42Scenes/images.test.mjs
+Exit: 1.
+Failed test: [up42-scene-overlay-012] selects without a card and keeps each image unchanged
+The file after restoration equals the file before the fault.
+SHA-256: 548ed264ad8f7473c83a91bb2030d721abf50ef3bb5ee1cf769743c9156be99b

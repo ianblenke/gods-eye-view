@@ -155,6 +155,7 @@ export function createUp42ScenesLayer({
   const notify = () => _listener?.();
   const sceneImages = createSceneImages({
     source,
+    decodeImage,
     entities: () => _dataSource.entities,
     changed: () => {
       requestRender(ID);

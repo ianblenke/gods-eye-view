@@ -5,7 +5,7 @@ A person needs an optional preview of several scenes on the globe.
 
 ## What Changes
 
-- Add an image chip when the enabled layer has a thumbnail scene and credentials are not known to be absent.
+- Add an image chip when the enabled layer has a thumbnail scene and the credential status is configured or unknown.
 - Request at most 24 thumbnails with four active requests.
 - Draw each image over its footprint with the newest image on top.
 - Keep outlines and selection above the images.
@@ -38,7 +38,7 @@ It opens no intended gap and closes no old ledger gap.
 ## Known limits
 
 - Known limit `approximate-fit`: A thumbnail is a preview. Its fit to the footprint is approximate and can skew for a rotated scene or an off-nadir scene.
-- Known limit `display-terms`: UP42 has not confirmed thumbnail display terms. The option starts off and needs `UP42_THUMBNAILS=true`.
+- Known limit `display-terms`: UP42 did not confirm thumbnail display terms. The option starts off and needs `UP42_THUMBNAILS=true`.
 - Known limit `image-cap`: Only the 24 newest scenes with a thumbnail get an image.
 - Known limit `rate-limit`: One answer requests at most 24 images, below the server limit of 30 per minute. The layer sends no retry.
 - Known limit `ui-texts`: The chip labels are "Show images" and "Hide images". The original card labels keep their original exception.
