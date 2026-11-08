@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Readable } from 'node:stream';
+import { inspect } from 'node:util';
 import { createServer, request as httpRequest } from 'node:http';
 import { up42Plugins } from '../../server/providers/up42.js';
 import { localProviderPlugins } from '../../server/providers/local.js';
@@ -688,8 +689,17 @@ for (const [index, [value, expected]] of [
 
 test('[up42-source-023] keeps fake secrets out of every answer and console line', async (t) => {
   const output = [];
-  for (const method of ['log', 'warn', 'error', 'info', 'debug'])
-    t.mock.method(console, method, (...args) => output.push(args.join(' ')));
+  for (const method of Object.keys(console))
+    if (typeof console[method] === 'function')
+      t.mock.method(console, method, (...args) =>
+        output.push(
+          inspect(args, {
+            depth: null,
+            maxArrayLength: null,
+            maxStringLength: null,
+          }),
+        ),
+      );
   const answers = [];
   const lines = [];
   for (const flow of ['good', 'login', 'api', 'throw', 'echo']) {
@@ -715,10 +725,32 @@ test('[up42-source-023] keeps fake secrets out of every answer and console line'
       await s.scenes(),
     );
     lines.push(...s.lines);
-    assert.equal(s.lines[0], flow === 'good' ? '[up42] ok' : '[up42] failed');
-    assert.equal(s.lines.length, flow === 'good' ? 1 : 2);
+    assert.deepEqual(
+      s.lines,
+      flow === 'good'
+        ? ['[up42] ok']
+        : flow === 'login'
+          ? [
+              '[up42] failed kind=credentials_rejected',
+              '[up42] failed hosts=oneatlas',
+              '[up42] failed kind=credentials_rejected',
+              '[up42] failed hosts=oneatlas',
+            ]
+          : flow === 'echo'
+            ? [
+                '[up42] failed kind=upstream_failed',
+                '[up42] failed kind=upstream_failed',
+              ]
+            : [
+                '[up42] failed kind=upstream_failed',
+                '[up42] failed hosts=oneatlas',
+                '[up42] failed kind=upstream_failed',
+                '[up42] failed hosts=oneatlas',
+              ],
+    );
   }
   const captured = JSON.stringify({ answers, lines, output });
+  assert.equal(captured.includes('test-user'), false);
   assert.equal(captured.includes('fake-pass-secret'), false);
   assert.equal(captured.includes('fake-token-secret'), false);
 });
@@ -866,3 +898,127 @@ test(
     assert.equal(s.calls.length, 0);
   },
 );
+
+const hostCollection = (name, host) => ({
+  name,
+  providers: [{ name: host, roles: ['HOST'] }],
+  integrations: ['SEARCH_AVAILABLE'],
+});
+
+test('[up42-source-033] counts one search for twenty-one calls and reuses its answer', async (t) => {
+  const s = install(t, {
+    env: { UP42_DAILY_SEARCHES: '1' },
+    respond: (url) => {
+      if (url === TOKEN) return respondGood(url);
+      if (url === COLLECTIONS)
+        return json({
+          content: [
+            hostCollection('hd', 'vantor-hd'),
+            hostCollection('v', 'vantor'),
+            hostCollection('elevation', 'airbus-elevation'),
+            hostCollection('3d-a', 'vantor-3d'),
+            hostCollection('3d-b', 'vantor-3d'),
+            hostCollection('3d-c', 'vantor-3d'),
+            hostCollection('vexcel-a', 'vexcel-v2'),
+            hostCollection('vexcel-b', 'vexcel-v2'),
+            hostCollection('vexcel-c', 'vexcel-v2'),
+            hostCollection('vexcel-d', 'vexcel-v2'),
+            hostCollection('vexcel-e', 'vexcel-v2'),
+            hostCollection('oblique', 'vexcel-v2-oblique'),
+            hostCollection('21', '21at'),
+            hostCollection('pneo', 'oneatlas'),
+            hostCollection('sky', 'planet'),
+            hostCollection('earth', 'earthsearch-aws'),
+            hostCollection('advanced', 'oneatlas-advanced'),
+            hostCollection('inter', 'intermap'),
+            hostCollection('hex', 'hexagon'),
+            hostCollection('capella', 'capellaspace'),
+            hostCollection('spectra', 'spectra'),
+          ],
+        });
+      return json({ type: 'FeatureCollection', features: [], links: [] });
+    },
+  });
+  assert.equal(s.calls.length, 0);
+  const answer = await s.scenes();
+  assert.equal(answer.status, 200);
+  assert.equal(answer.body.cached, false);
+  assert.equal(answer.body.truncated, false);
+  assert.deepEqual(answer.body.budget, { used: 1, limit: 1 });
+  assert.equal(s.calls.filter((c) => c.url.includes('/catalog/')).length, 21);
+  const kept = await s.scenes();
+  assert.equal(kept.status, 200);
+  assert.equal(kept.body.cached, true);
+  assert.deepEqual(kept.body.budget, { used: 1, limit: 1 });
+  assert.deepEqual(kept.body.scenes, []);
+  const refused = await s.scenes(body({ end: '2026-10-21' }));
+  assert.equal(refused.status, 429);
+  assert.deepEqual(refused.body, { error: 'budget', used: 1, limit: 1 });
+  assert.equal(s.calls.filter((c) => c.url.includes('/catalog/')).length, 21);
+});
+
+for (const [index, partial, expected] of [
+  [
+    0,
+    false,
+    [
+      '[up42] failed kind=upstream_failed',
+      '[up42] failed hosts=broken-a,broken-b',
+    ],
+  ],
+  [1, true, ['[up42] ok', '[up42] partial hosts=broken-a,broken-b']],
+]) {
+  test(`[up42-source-034] names search failures with checked hosts case ${index}`, async (t) => {
+    const s = install(t, {
+      respond: (url) => {
+        if (url === TOKEN) return respondGood(url);
+        if (url === COLLECTIONS)
+          return json({
+            content: [
+              ...(partial ? [hostCollection('pneo', 'oneatlas')] : []),
+              hostCollection('bad-a', 'broken-a'),
+              hostCollection('bad-b', 'broken-b'),
+              hostCollection('bad-path', '../fake-pass-secret'),
+            ],
+          });
+        return partial && url === SEARCH
+          ? respondGood(url)
+          : json({ message: 'fake-pass-secret fake-token-secret' }, 500);
+      },
+    });
+    assert.deepEqual(s.lines, []);
+    const answer = await s.scenes();
+    assert.equal(answer.status, partial ? 200 : 502);
+    assert.deepEqual(s.lines, expected);
+    if (partial) {
+      assert.deepEqual(answer.body.failedHosts, ['broken-a', 'broken-b']);
+      assert.equal((await s.scenes()).body.cached, true);
+      assert.deepEqual(s.lines, [
+        '[up42] ok',
+        '[up42] partial hosts=broken-a,broken-b',
+      ]);
+    } else assert.deepEqual(answer.body, { error: 'upstream_failed' });
+  });
+}
+
+for (const [index, kind, status, expected] of [
+  [0, 'credentials_rejected', 403, '[up42] failed kind=credentials_rejected'],
+  [1, 'search_timeout', 504, '[up42] failed kind=search_timeout'],
+  [2, 'bad_collections', 400, '[up42] failed kind=bad_collections'],
+]) {
+  test(`[up42-source-034] names a fixed search failure kind case ${index}`, async (t) => {
+    const s = install(t, {
+      respond: () => json({}, 500),
+      timers: {
+        client: {
+          collections: async () => ({ ok: false, kind }),
+          isSafe: () => true,
+        },
+      },
+    });
+    const answer = await s.scenes();
+    assert.equal(answer.status, status);
+    assert.deepEqual(s.lines, [expected]);
+    assert.equal(s.calls.length, 0);
+  });
+}

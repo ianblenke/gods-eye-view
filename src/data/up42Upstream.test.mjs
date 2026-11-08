@@ -379,7 +379,7 @@ test('[up42-source-015] groups collections and sets each body field with no extr
       [
         SEARCH,
         {
-          collections: ['phr', 'pneo'],
+          collections: ['pneo', 'phr'],
           datetime: '2026-10-01T00:00:00.000Z/2026-10-20T23:59:59.999Z',
           intersects: {
             type: 'Polygon',
@@ -465,12 +465,13 @@ test('[up42-source-015] allows at most four host calls at one time', async () =>
   assert.equal(s.calls.filter((c) => c.url.includes('/catalog/')).length, 7);
 });
 
-for (const [index, [hosts, links, expected]] of [
-  [11, [], true],
-  [10, [], false],
-  [1, [{ rel: 'next', href: 'https://untrusted.invalid/page' }], true],
-  [1, [{ rel: 'self' }], false],
-  [1, undefined, false],
+for (const [index, [hosts, links, expected, calls]] of [
+  [25, [], true, 24],
+  [24, [], false, 24],
+  [11, [], false, 11],
+  [1, [{ rel: 'next', href: 'https://untrusted.invalid/page' }], true, 1],
+  [1, [{ rel: 'self' }], false, 1],
+  [1, undefined, false, 1],
 ].entries()) {
   test(`[up42-source-016] marks the page limit case ${index}`, async () => {
     const s = setup({
@@ -489,7 +490,7 @@ for (const [index, [hosts, links, expected]] of [
     assert.equal(answer.truncated, expected);
     assert.equal(
       s.calls.filter((c) => c.url.includes('/catalog/')).length,
-      Math.min(hosts, 10),
+      calls,
     );
     assert.equal(
       s.calls.some((c) => c.url.includes('untrusted')),
@@ -542,6 +543,7 @@ for (const [index, document] of [
     assert.deepEqual(await s.search(input()), {
       ok: false,
       kind: 'upstream_failed',
+      failedHosts: ['oneatlas'],
     });
   });
 }
@@ -1063,3 +1065,412 @@ test('[up42-source-026] accepts an error response with no body', async () => {
     kind: 'upstream_failed',
   });
 });
+
+// The probe gives host names and counts; collection names below are test fixtures.
+const probeCollections = () => [
+  collection('hd', 'vantor-hd'),
+  collection('v', 'vantor'),
+  collection('elevation', 'airbus-elevation'),
+  collection('3d-a', 'vantor-3d'),
+  collection('3d-b', 'vantor-3d'),
+  collection('3d-c', 'vantor-3d'),
+  collection('vexcel-a', 'vexcel-v2'),
+  collection('vexcel-b', 'vexcel-v2'),
+  collection('vexcel-c', 'vexcel-v2'),
+  collection('vexcel-d', 'vexcel-v2'),
+  collection('vexcel-e', 'vexcel-v2'),
+  collection('oblique', 'vexcel-v2-oblique'),
+  collection('21', '21at'),
+  collection('pneo', 'oneatlas'),
+  collection('sky', 'planet'),
+  collection('earth', 'earthsearch-aws'),
+  collection('advanced', 'oneatlas-advanced'),
+  collection('inter', 'intermap'),
+  collection('hex', 'hexagon'),
+  collection('capella', 'capellaspace'),
+  collection('spectra', 'spectra'),
+];
+const sceneFeature = (id, name, resolution) => ({
+  properties: {
+    id,
+    collection: name,
+    datetime: '2026-10-01T00:00:00Z',
+    resolution,
+  },
+  geometry: {
+    type: 'Polygon',
+    coordinates: [
+      [
+        [1, 2],
+        [1.1, 2],
+        [1.1, 2.1],
+        [1, 2],
+      ],
+    ],
+  },
+});
+
+test('[up42-source-028] splits both restricted hosts and merges their scenes', async () => {
+  const s = setup({
+    respond: (url, init) => {
+      if (url === TOKEN) return token();
+      if (url === COLLECTIONS)
+        return json({
+          content: [
+            collection('3d-a', 'vantor-3d'),
+            collection('3d-b', 'vantor-3d'),
+            collection('vexcel-a', 'vexcel-v2'),
+            collection('vexcel-b', 'vexcel-v2'),
+            collection('pneo'),
+            collection('phr'),
+          ],
+        });
+      const names = JSON.parse(init.body).collections;
+      // A multi-collection request to these two hosts is refused, as in the probe.
+      if (!url.includes('/oneatlas/') && names.length !== 1)
+        return json({}, 422);
+      return json({
+        features: names.map((name) =>
+          sceneFeature(
+            name,
+            name,
+            name === '3d-a'
+              ? 1
+              : name === '3d-b'
+                ? 2
+                : name === 'vexcel-a'
+                  ? 3
+                  : name === 'vexcel-b'
+                    ? 4
+                    : name === 'pneo'
+                      ? 5
+                      : 6,
+          ),
+        ),
+      });
+    },
+  });
+  const answer = await s.search(
+    input({
+      collections: ['phr', 'vexcel-b', '3d-b', 'pneo', 'vexcel-a', '3d-a'],
+      maxCloud: 17,
+    }),
+  );
+  assert.equal(answer.ok, true);
+  assert.equal(answer.truncated, false);
+  assert.deepEqual(answer.failedHosts, []);
+  assert.equal(answer.dropped, 0);
+  assert.deepEqual(
+    answer.scenes.map(({ id, host, collection, resolutionM }) => [
+      id,
+      host,
+      collection,
+      resolutionM,
+    ]),
+    [
+      ['3d-a', 'vantor-3d', '3d-a', 1],
+      ['3d-b', 'vantor-3d', '3d-b', 2],
+      ['vexcel-a', 'vexcel-v2', 'vexcel-a', 3],
+      ['vexcel-b', 'vexcel-v2', 'vexcel-b', 4],
+      ['pneo', 'oneatlas', 'pneo', 5],
+      ['phr', 'oneatlas', 'phr', 6],
+    ],
+  );
+  const calls = s.calls.filter((c) => c.url.includes('/catalog/'));
+  assert.equal(calls.length, 5);
+  assert.deepEqual(
+    calls.map((c) => c.url),
+    [
+      'https://api.up42.com/catalog/hosts/vantor-3d/stac/search',
+      'https://api.up42.com/catalog/hosts/vantor-3d/stac/search',
+      'https://api.up42.com/catalog/hosts/vexcel-v2/stac/search',
+      'https://api.up42.com/catalog/hosts/vexcel-v2/stac/search',
+      'https://api.up42.com/catalog/hosts/oneatlas/stac/search',
+    ],
+  );
+  for (const [index, names] of [
+    ['3d-a'],
+    ['3d-b'],
+    ['vexcel-a'],
+    ['vexcel-b'],
+    ['pneo', 'phr'],
+  ].entries()) {
+    assert.equal(calls[index].init.method, 'POST');
+    assert.deepEqual(JSON.parse(calls[index].init.body), {
+      collections: names,
+      datetime: '2026-10-01T00:00:00.000Z/2026-10-20T23:59:59.999Z',
+      intersects: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [10, 60],
+            [10.02, 60],
+            [10.02, 60.01],
+            [10, 60.01],
+            [10, 60],
+          ],
+        ],
+      },
+      limit: 50,
+      query: { cloudCoverage: { LTE: 17 } },
+    });
+  }
+});
+
+test('[up42-source-029] searches all fifteen hosts with twenty-one calls', async () => {
+  const s = setup({
+    respond: (url) =>
+      url === COLLECTIONS
+        ? json({ content: probeCollections() })
+        : url === TOKEN
+          ? token()
+          : json({ type: 'FeatureCollection', features: [], links: [] }),
+  });
+  const answer = await s.search(input());
+  assert.deepEqual(answer, {
+    ok: true,
+    scenes: [],
+    dropped: 0,
+    truncated: false,
+    failedHosts: [],
+  });
+  const calls = s.calls.filter((c) => c.url.includes('/catalog/'));
+  assert.equal(calls.length, 21);
+  assert.deepEqual(
+    calls.map((c) => new URL(c.url).pathname.split('/')[3]),
+    [
+      'vantor-hd',
+      'vantor',
+      'airbus-elevation',
+      'vantor-3d',
+      'vantor-3d',
+      'vantor-3d',
+      'vexcel-v2',
+      'vexcel-v2',
+      'vexcel-v2',
+      'vexcel-v2',
+      'vexcel-v2',
+      'vexcel-v2-oblique',
+      '21at',
+      'oneatlas',
+      'planet',
+      'earthsearch-aws',
+      'oneatlas-advanced',
+      'intermap',
+      'hexagon',
+      'capellaspace',
+      'spectra',
+    ],
+  );
+});
+
+for (const [index, failure] of ['status', 'page', 'timeout'].entries()) {
+  test(`[up42-source-030] keeps good scenes of a partial host case ${index}`, async () => {
+    const client = {
+      collections: async () => ({
+        ok: true,
+        value: {
+          content: [
+            collection('3d-a', 'vantor-3d'),
+            collection('3d-b', 'vantor-3d'),
+          ],
+        },
+      }),
+      search: async (_host, body) =>
+        body.collections[0] === '3d-a'
+          ? failure === 'page'
+            ? { ok: true, value: null }
+            : {
+                ok: false,
+                kind:
+                  failure === 'timeout' ? 'search_timeout' : 'upstream_failed',
+              }
+          : {
+              ok: true,
+              value: { features: [sceneFeature('kept', '3d-b', 2), null] },
+            },
+    };
+    const answer = await createSearch(client, () => 0)(input());
+    assert.equal(answer.ok, true);
+    assert.deepEqual(
+      answer.scenes.map(({ id, collection, host, resolutionM }) => [
+        id,
+        collection,
+        host,
+        resolutionM,
+      ]),
+      [['kept', '3d-b', 'vantor-3d', 2]],
+    );
+    assert.equal(answer.truncated, true);
+    assert.equal(answer.dropped, 1);
+    assert.deepEqual(answer.failedHosts, []);
+  });
+}
+
+test('[up42-source-031] lists a failed restricted host once in an answer with good scenes', async () => {
+  const s = setup({
+    respond: (url, init) => {
+      if (url === COLLECTIONS)
+        return json({
+          content: [
+            collection('3d-a', 'vantor-3d'),
+            collection('3d-b', 'vantor-3d'),
+            collection('pneo'),
+            collection('new-a', 'new-host'),
+            collection('new-b', 'new-host'),
+          ],
+        });
+      if (url === TOKEN) return token();
+      if (url === SEARCH)
+        return json({ features: [sceneFeature('kept', 'pneo', 7)] });
+      if (url.includes('/new-host/'))
+        assert.deepEqual(JSON.parse(init.body).collections, ['new-a', 'new-b']);
+      return json({ message: 'Multiple collections are not allowed' }, 422);
+    },
+  });
+  const answer = await s.search(input());
+  assert.equal(answer.ok, true);
+  assert.deepEqual(answer.failedHosts, ['vantor-3d', 'new-host']);
+  assert.deepEqual(
+    answer.scenes.map((row) => row.id),
+    ['kept'],
+  );
+  assert.equal(answer.truncated, false);
+  assert.equal(s.calls.filter((c) => c.url.includes('/catalog/')).length, 4);
+});
+
+test('[up42-source-031] returns one host name when all restricted calls fail', async () => {
+  const client = {
+    collections: async () => ({
+      ok: true,
+      value: {
+        content: [
+          collection('3d-a', 'vantor-3d'),
+          collection('3d-b', 'vantor-3d'),
+        ],
+      },
+    }),
+    search: async () => ({ ok: false, kind: 'upstream_failed' }),
+  };
+  assert.deepEqual(await createSearch(client, () => 0)(input()), {
+    ok: false,
+    kind: 'upstream_failed',
+    failedHosts: ['vantor-3d'],
+  });
+});
+
+for (const [index, kind] of [
+  'credentials_rejected',
+  'search_timeout',
+].entries()) {
+  test(`[up42-source-017] keeps the fixed aggregate failure case ${index}`, async () => {
+    const client = {
+      collections: async () => ({
+        ok: true,
+        value: {
+          content: [
+            collection('3d-a', 'vantor-3d'),
+            collection('3d-b', 'vantor-3d'),
+            collection('pneo'),
+          ],
+        },
+      }),
+      search: async (host) =>
+        host === 'oneatlas'
+          ? { ok: false, kind: 'upstream_failed' }
+          : { ok: false, kind },
+    };
+    assert.deepEqual(await createSearch(client, () => 0)(input()), {
+      ok: false,
+      kind,
+      failedHosts: ['vantor-3d', 'oneatlas'],
+    });
+  });
+}
+
+test('[up42-source-032] counts each restricted call within the four-call limit', async () => {
+  let active = 0;
+  let maximum = 0;
+  const starts = [];
+  const releases = [];
+  const client = {
+    collections: async () => ({
+      ok: true,
+      value: {
+        content: [
+          collection('a', 'vexcel-v2'),
+          collection('b', 'vexcel-v2'),
+          collection('c', 'vexcel-v2'),
+          collection('d', 'vexcel-v2'),
+          collection('e', 'vexcel-v2'),
+          collection('pneo'),
+        ],
+      },
+    }),
+    search: async (host, body) => {
+      starts.push([host, body.collections]);
+      active++;
+      maximum = Math.max(maximum, active);
+      await new Promise((resolve) => releases.push(resolve));
+      active--;
+      return { ok: true, value: { features: [] } };
+    },
+  };
+  assert.deepEqual(starts, []);
+  const run = createSearch(client, () => 0)(input());
+  await settle();
+  const first = starts.slice();
+  const firstActive = active;
+  // Release before assertions, so a fault cannot leave the search pending.
+  for (let i = 0; i < 6; i++) {
+    releases.splice(0).forEach((release) => release());
+    await settle();
+  }
+  assert.equal((await run).ok, true);
+  assert.equal(firstActive, 4);
+  assert.deepEqual(first, [
+    ['vexcel-v2', ['a']],
+    ['vexcel-v2', ['b']],
+    ['vexcel-v2', ['c']],
+    ['vexcel-v2', ['d']],
+  ]);
+  assert.deepEqual(starts, [
+    ['vexcel-v2', ['a']],
+    ['vexcel-v2', ['b']],
+    ['vexcel-v2', ['c']],
+    ['vexcel-v2', ['d']],
+    ['vexcel-v2', ['e']],
+    ['oneatlas', ['pneo']],
+  ]);
+  assert.equal(maximum, 4);
+});
+
+for (const [index, count, expectedCalls, truncated] of [
+  [0, 24, 24, false],
+  [1, 25, 24, true],
+]) {
+  test(`[up42-source-016] caps restricted calls in map order case ${index}`, async () => {
+    const calls = [];
+    const client = {
+      collections: async () => ({
+        ok: true,
+        value: {
+          content: Array.from({ length: count }, (_, i) =>
+            collection(`c${i}`, 'vexcel-v2'),
+          ),
+        },
+      }),
+      search: async (host, body) => {
+        calls.push([host, body.collections]);
+        return { ok: true, value: { features: [] } };
+      },
+    };
+    const answer = await createSearch(client, () => 0)(input());
+    assert.equal(answer.ok, true);
+    assert.equal(answer.truncated, truncated);
+    assert.deepEqual(answer.failedHosts, []);
+    assert.equal(calls.length, expectedCalls);
+    assert.deepEqual(calls[0], ['vexcel-v2', ['c0']]);
+    assert.deepEqual(calls.at(-1), ['vexcel-v2', ['c23']]);
+  });
+}

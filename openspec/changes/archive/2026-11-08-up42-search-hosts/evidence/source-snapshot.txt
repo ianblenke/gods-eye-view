@@ -1,0 +1,10 @@
+At the host snapshot, the base tree is commit 990d28286da22b1c3063eb2a0ef0e18f79e730c6.
+Command: Python SHA-256 of each final code and test file.
+The worktree has the change after that commit.
+
+9dd91800ca2654e28fb8b4a8fc47abb57c95f9674f7c00236e390f5dec754612  server/providers/up42.js
+719661b24f760ad5cf68cf3e427a6ef455e2dfd527bc916af4080399e0c4c5b8  server/providers/up42/upstream.js
+698fd2f81c8101cdcde1736e0d62c9d0bd8920493545be087c16425006bdcd49  server/providers/up42-thumbnails/thumbnails.js
+dfe12275310c5c753ed8dc074e3ab38a076c3eac86414f1222f461b14693deaa  src/data/up42Proxy.test.mjs
+5578cc2c7cbc7bbe5a4dc40cc6b5411d4808854886c9db8e4a20e7f8b6a29bec  src/data/up42Upstream.test.mjs
+1a934fab97fe500bf602f4e46f920d749a63f598f601251c1693a38fe59d01f3  src/data/up42Thumbnails.test.mjs

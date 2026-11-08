@@ -1,0 +1,189 @@
+At the host snapshot, the base tree is commit 990d28286da22b1c3063eb2a0ef0e18f79e730c6.
+The source and tests have worktree changes after that commit.
+Each mutation ran alone. The source returned to its original SHA-256 after each command.
+All upstream requests used fake fetch. These commands used no local listener.
+The command results below come from their completed TAP output.
+
+UPH-M001
+Remove the single-collection host set.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-source-028 src/data/up42Upstream.test.mjs
+Exit: 1.
+# tests 1
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-028] splits both restricted hosts and merges their scenes
+Source SHA-256 restored: yes.
+
+UPH-M002
+Increase the call cap from 24 to 25.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-source-016 src/data/up42Upstream.test.mjs
+Exit: 1.
+# tests 8
+# pass 6
+# fail 2
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-016] marks the page limit case 0
+Failed test: [up42-source-016] caps restricted calls in map order case 1
+Source SHA-256 restored: yes.
+
+UPH-M003
+Decrease the call cap from 24 to 23.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-source-016 src/data/up42Upstream.test.mjs
+Exit: 1.
+# tests 8
+# pass 4
+# fail 4
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-016] marks the page limit case 0
+Failed test: [up42-source-016] marks the page limit case 1
+Failed test: [up42-source-016] caps restricted calls in map order case 0
+Failed test: [up42-source-016] caps restricted calls in map order case 1
+Source SHA-256 restored: yes.
+
+UPH-M004
+Restore the ten-host cap before the call queue.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-source-029 src/data/up42Upstream.test.mjs
+Exit: 1.
+# tests 1
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-029] searches all fifteen hosts with twenty-one calls
+Source SHA-256 restored: yes.
+
+UPH-M005
+Replace earlier scenes with the latest call scenes.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-source-028 src/data/up42Upstream.test.mjs
+Exit: 1.
+# tests 1
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-028] splits both restricted hosts and merges their scenes
+Source SHA-256 restored: yes.
+
+UPH-M006
+List a host with a partial failure in failedHosts.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-source-030 src/data/up42Upstream.test.mjs
+Exit: 1.
+# tests 3
+# pass 0
+# fail 3
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-030] keeps good scenes of a partial host case 0
+Failed test: [up42-source-030] keeps good scenes of a partial host case 1
+Failed test: [up42-source-030] keeps good scenes of a partial host case 2
+Source SHA-256 restored: yes.
+
+UPH-M007
+Count each upstream search call against the daily budget.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-source-033 src/data/up42Proxy.test.mjs
+Exit: 1.
+# tests 1
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-033] counts one search for twenty-one calls and reuses its answer
+Source SHA-256 restored: yes.
+
+UPH-M008
+Send the fake password through console.trace in a search.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=up42-source-023.*keeps fake secrets' src/data/up42Proxy.test.mjs
+Exit: 1.
+# tests 1
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-023] keeps fake secrets out of every answer and console line
+Source SHA-256 restored: yes.
+
+UPH-M009
+Send the fake user name through console.dir in a thumbnail failure.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap '--test-name-pattern=up42-thumbnails-016.*keeps all fake secrets' src/data/up42Thumbnails.test.mjs
+Exit: 1.
+# tests 1
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+Failed test: [up42-thumbnails-016] keeps all fake secrets out of output
+Source SHA-256 restored: yes.
+
+UPH-M010
+Increase concurrent calls from four to five.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-source-032 src/data/up42Upstream.test.mjs
+Exit: 1.
+# tests 1
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-032] counts each restricted call within the four-call limit
+Source SHA-256 restored: yes.
+
+UPH-M011
+Keep truncated false for a host with a partial failure.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-source-030 src/data/up42Upstream.test.mjs
+Exit: 1.
+# tests 3
+# pass 0
+# fail 3
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-030] keeps good scenes of a partial host case 0
+Failed test: [up42-source-030] keeps good scenes of a partial host case 1
+Failed test: [up42-source-030] keeps good scenes of a partial host case 2
+Source SHA-256 restored: yes.
+
+UPH-M012
+Replace the search failure kind line with the old fixed line.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-source-034 src/data/up42Proxy.test.mjs
+Exit: 1.
+# tests 5
+# pass 1
+# fail 4
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-034] names search failures with checked hosts case 0
+Failed test: [up42-source-034] names a fixed search failure kind case 0
+Failed test: [up42-source-034] names a fixed search failure kind case 1
+Failed test: [up42-source-034] names a fixed search failure kind case 2
+Source SHA-256 restored: yes.
+
+UPH-M013
+Omit the thumbnail failure kind line.
+This command ran again after the two final log tests.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-thumbnails-020 src/data/up42Thumbnails.test.mjs
+Exit: 1.
+# tests 6
+# pass 1
+# fail 5
+# cancelled 0
+# skipped 0
+Failed test: [up42-thumbnails-020] names a fixed thumbnail failure case 0
+Failed test: [up42-thumbnails-020] names a fixed thumbnail failure case 1
+Failed test: [up42-thumbnails-020] names a fixed thumbnail failure case 2
+Failed test: [up42-thumbnails-020] names a fixed thumbnail failure case 3
+Failed test: [up42-thumbnails-020] names a thumbnail timeout without request facts
+Source SHA-256 restored: yes.
+
+UPH-M014
+Use a partial label for all search host failure lines.
+Command: node --test --test-force-exit --test-isolation=none --test-reporter=tap --test-name-pattern=up42-source-034 src/data/up42Proxy.test.mjs
+Exit: 1.
+# tests 5
+# pass 4
+# fail 1
+# cancelled 0
+# skipped 0
+Failed test: [up42-source-034] names search failures with checked hosts case 0
+Source SHA-256 restored: yes.

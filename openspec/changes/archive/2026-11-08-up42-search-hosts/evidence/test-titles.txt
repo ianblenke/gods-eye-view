@@ -1,0 +1,54 @@
+At the host snapshot, the base tree is commit 990d28286da22b1c3063eb2a0ef0e18f79e730c6.
+Command: Python count of the completed TAP output and check against openspec/ste/words.json.
+The check reads titles for the changed and added scenarios.
+Expanded titles: 46.
+Duplicate titles across all 745 tests: 0.
+Word-list findings: 0.
+The check covers both word lists, phrases, words that end in -ing and the 25-word limit.
+
+[up42-source-017] gives 502 when the host fails
+[up42-source-017] gives 504 when all host calls time out
+[up42-source-023] keeps fake secrets out of every answer and console line
+[up42-source-023] uses fake process credentials and the default console function
+[up42-source-033] counts one search for twenty-one calls and reuses its answer
+[up42-source-034] names search failures with checked hosts case 0
+[up42-source-034] names search failures with checked hosts case 1
+[up42-source-034] names a fixed search failure kind case 0
+[up42-source-034] names a fixed search failure kind case 1
+[up42-source-034] names a fixed search failure kind case 2
+[up42-thumbnails-020] names a fixed thumbnail failure case 0
+[up42-thumbnails-020] names a fixed thumbnail failure case 1
+[up42-thumbnails-020] names a fixed thumbnail failure case 2
+[up42-thumbnails-020] names a fixed thumbnail failure case 3
+[up42-thumbnails-020] writes no failure line for a good or kept image
+[up42-thumbnails-020] names a thumbnail timeout without request facts
+[up42-source-015] groups collections and sets each body field with no extra field
+[up42-source-015] allows at most four host calls at one time
+[up42-source-016] marks the page limit case 0
+[up42-source-016] marks the page limit case 1
+[up42-source-016] marks the page limit case 2
+[up42-source-016] marks the page limit case 3
+[up42-source-016] marks the page limit case 4
+[up42-source-016] marks the page limit case 5
+[up42-source-017] keeps good hosts and lists all failed hosts by name
+[up42-source-017] refuses host document case 0
+[up42-source-017] refuses host document case 1
+[up42-source-017] refuses host document case 2
+[up42-source-017] refuses host document case 3
+[up42-source-017] refuses host document case 4
+[up42-source-023] refuses a password in a scene field
+[up42-source-015] uses distinct box and date values from the request
+[up42-source-017] keeps all scenes from distinct good hosts beside failures
+[up42-source-023] checks secrets in JSON text
+[up42-source-028] splits both restricted hosts and merges their scenes
+[up42-source-029] searches all fifteen hosts with twenty-one calls
+[up42-source-030] keeps good scenes of a partial host case 0
+[up42-source-030] keeps good scenes of a partial host case 1
+[up42-source-030] keeps good scenes of a partial host case 2
+[up42-source-031] lists a failed restricted host once in an answer with good scenes
+[up42-source-031] returns one host name when all restricted calls fail
+[up42-source-017] keeps the fixed aggregate failure case 0
+[up42-source-017] keeps the fixed aggregate failure case 1
+[up42-source-032] counts each restricted call within the four-call limit
+[up42-source-016] caps restricted calls in map order case 0
+[up42-source-016] caps restricted calls in map order case 1

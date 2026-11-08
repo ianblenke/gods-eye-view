@@ -1,0 +1,2 @@
+Verdict: FAIL
+- [ ] F1 major src/data/up42Upstream.test.mjs:827 At commit `da64265ae09cef625c651cae7e62b5063df51fbf`, this edit renames a test that exists on origin/main. The owner forbids such renames. Restore `[up42-source-017] keeps all scenes from distinct good hosts beside failures` and restore its matching trace and evidence titles.

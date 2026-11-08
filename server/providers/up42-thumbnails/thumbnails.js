@@ -68,6 +68,7 @@ export function up42ThumbnailProxy({
     if (result === null) result = startFetch(key, host, id);
     result = await result;
     if (!result.ok) {
+      console.log(`[up42] thumbnail failed kind=${result.kind}`);
       if (result.kind === 'credentials_rejected')
         return sendJson(res, 403, result.kind, { keyRejected: true });
       const status =
