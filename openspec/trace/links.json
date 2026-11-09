@@ -9371,8 +9371,8 @@
   ],
   "up42-scene-overlay-021": [
     "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] closes the bitmap before it creates the blob URL",
-    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] counts one failed image when decode returns null",
-    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] counts one failed image when decode returns reject",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] counts one failed image when the decoder rejects",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] counts one failed image when the decoder returns null",
     "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late bitmap decode after answer",
     "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late bitmap decode after destroy",
     "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late bitmap decode after disable",
