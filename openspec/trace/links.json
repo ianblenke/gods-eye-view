@@ -9369,6 +9369,23 @@
   "up42-scene-overlay-020": [
     "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-020] keeps the original public scene fields"
   ],
+  "up42-scene-overlay-021": [
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] closes the bitmap before it creates the blob URL",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] counts one failed image when decode returns null",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] counts one failed image when decode returns reject",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late bitmap decode after answer",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late bitmap decode after destroy",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late bitmap decode after disable",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late bitmap decode after off",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late null decode after answer",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late null decode after destroy",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late null decode after disable",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late null decode after off",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late reject decode after answer",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late reject decode after destroy",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late reject decode after disable",
+    "src/layers/up42Scenes/images.test.mjs › [up42-scene-overlay-021] ignores a late reject decode after off"
+  ],
   "up42-scenes-layer-001": [
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-001] describes the layer and has a method setParams",
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-001] refuses a second init",

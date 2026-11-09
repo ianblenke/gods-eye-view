@@ -7255,12 +7255,12 @@
     "change": "up42-scene-overlay"
   },
   "up42-scene-overlay-002": {
-    "hash": "f5d035e40830c7bface7a714ad84f24d6b94f881fa4e3d6a7259e3a20d24a6d8",
+    "hash": "310ccc4b8aff4ccd476b8e4a7a59b29bf32f86525d92cd5be469db2469efce5d",
     "since": "2026-11-08",
     "change": "up42-scene-overlay"
   },
   "up42-scene-overlay-003": {
-    "hash": "64d2dda4e7ee59bd9d47c106e54b5ca45f68feb438fd141068181fbe48279e97",
+    "hash": "898dcfa6d5c57cf0147d363a4c58b9d8e87925115a595ff4fa163177d412983e",
     "since": "2026-11-08",
     "change": "up42-scene-overlay"
   },
@@ -7305,7 +7305,7 @@
     "change": "up42-scene-overlay"
   },
   "up42-scene-overlay-012": {
-    "hash": "b4026c98e0ef3f5d4239cd300ab8dfb6b5309684b820a65ee7d8b972d4139116",
+    "hash": "e1d82bd33f5914744a4c29fe3889a7e27b9f445c0c3fedb8a4f0c32bb4e56e85",
     "since": "2026-11-08",
     "change": "up42-scene-overlay"
   },
@@ -7347,6 +7347,11 @@
   "up42-scene-overlay-020": {
     "hash": "8513b605e5cab5a0f131f7561c321b33c4e5c1b0b710350189354e3b7fbddaae",
     "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-021": {
+    "hash": "d5f55fa570acea527a85255bdf7a763faa66684839564033160840508113fc69",
+    "since": "2026-11-09",
     "change": "up42-scene-overlay"
   },
   "up42-scenes-layer-001": {

@@ -64,8 +64,8 @@ This correction gives no final gate verdict.
 
 STE F1: Fixed. The duplicate archive report and its file-list entry are removed.
 The browser check with synthetic images is complete: 23 PASS and 0 FAIL.
-This result comes from the stored browser evidence at code commit ca54c451.
-No browser check runs during this correction.
+This result comes from run 7 at code commit 4a3c2fe4, after the correction of round 1.
+Earlier runs failed only because of timing faults in the driver: a click before the panel was ready, a check before the images loaded and a pixel read before the globe drew again.
 No real UP42 image appears in that check.
 
 STE F2: Fixed. The proposal says that UP42 did not confirm thumbnail display terms.
