@@ -3,10 +3,10 @@
 Verdict: PASS
 Reviewers: spec-adversary, ste-adversary
 Date: 2026-11-08
-Gates: make gates CHANGE=up42-scene-overlay pending
+Gates: make gates CHANGE=up42-scene-overlay passed
 Rounds: 3
 Scope: diff 7341547c
-Reviewed-Tree: PENDING
+Reviewed-Tree: b26070e4a9a21905eb8afba60394c4cd254eeb9de263b470a0e94c8871b416f5
 
 Resolved files: none
 

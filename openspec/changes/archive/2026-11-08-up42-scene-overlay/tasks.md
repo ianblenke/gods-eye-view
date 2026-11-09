@@ -55,4 +55,4 @@
 - [x] 5.2 Run `make ratchet CHANGE=up42-scene-overlay`.
 - [x] 5.3 Run the two review agents.
 - [x] 5.4 Write `review.md`.
-- [ ] 5.5 Run `make gates CHANGE=up42-scene-overlay` on the final tree.
+- [x] 5.5 Run `make gates CHANGE=up42-scene-overlay` on the final tree.
