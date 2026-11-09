@@ -1,0 +1,15 @@
+Command: git status --short
+At the host snapshot of commit 54f953fa42d956ee820801dbed117682ec721c67, the work tree has these changes.
+The list omits the deleted duplicate.
+
+ M openspec/changes/archive/2026-11-08-up42-scene-overlay/design.md
+ M openspec/changes/archive/2026-11-08-up42-scene-overlay/evidence/checks.txt
+ M openspec/changes/archive/2026-11-08-up42-scene-overlay/evidence/faults.txt
+ M openspec/changes/archive/2026-11-08-up42-scene-overlay/evidence/files.txt
+ M openspec/changes/archive/2026-11-08-up42-scene-overlay/proposal.md
+ M openspec/changes/archive/2026-11-08-up42-scene-overlay/specs/up42-scene-overlay/spec.md
+ M openspec/changes/archive/2026-11-08-up42-scene-overlay/tasks.md
+ M openspec/specs/up42-scene-overlay/spec.md
+ M src/layers/up42Scenes/images.js
+ M src/layers/up42Scenes/images.test.mjs
+ M src/layers/up42Scenes/index.js

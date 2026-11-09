@@ -1,4 +1,5 @@
 import * as Cesium from 'cesium';
+import { createSceneImages } from './images.js';
 import { scenesBox, searchWindow } from '../skywatchScenes/box.js';
 import {
   LOADING_THUMBNAIL,
@@ -22,6 +23,8 @@ const ID = 'up42-scenes';
 const CARD_ID = 'selected';
 const SEARCH_LABEL = 'Search scenes here';
 const SEARCHING_LABEL = 'Searching…';
+const SHOW_IMAGES_LABEL = 'Show images';
+const HIDE_IMAGES_LABEL = 'Hide images';
 const NO_KEY = describeFailure({ status: 0, error: 'no_credentials' });
 
 /** The point under the middle of the screen, or null when it shows the sky. */
@@ -46,7 +49,7 @@ function viewCentre(viewer) {
 }
 
 /** The entity of the footprint of a scene, with the style of its selection. */
-function footprintEntity(scene, selected) {
+function footprintEntity(scene, selected, imagesOn) {
   const style = footprintStyle(selected);
   const color = Cesium.Color.fromCssColorString(style.color);
   const positions = Cesium.Cartesian3.fromDegreesArray(scene.ring.flat());
@@ -55,6 +58,7 @@ function footprintEntity(scene, selected) {
     polyline: {
       positions,
       clampToGround: true,
+      ...(imagesOn ? { zIndex: 25 } : {}),
       width: style.width,
       material: new Cesium.ColorMaterialProperty(
         color.withAlpha(style.outlineAlpha),
@@ -63,6 +67,7 @@ function footprintEntity(scene, selected) {
     ...(style.fillAlpha > 0
       ? {
           polygon: {
+            ...(imagesOn ? { zIndex: 25 } : {}),
             hierarchy: new Cesium.PolygonHierarchy(positions),
             material: new Cesium.ColorMaterialProperty(
               color.withAlpha(style.fillAlpha),
@@ -146,13 +151,41 @@ export function createUp42ScenesLayer({
   let _statusError = null;
   let _listener = null;
 
+  let _imagesOn = false;
   const notify = () => _listener?.();
+  const sceneImages = createSceneImages({
+    source,
+    decodeImage,
+    entities: () => _dataSource.entities,
+    changed: () => {
+      requestRender(ID);
+      notify();
+    },
+  });
+
+  function imagesUnavailable() {
+    return (
+      !_answer?.scenes.some((scene) => scene.thumbnail) || _configured === false
+    );
+  }
+
+  function toggleImages() {
+    if (!_enabled || imagesUnavailable()) return;
+    releaseCard();
+    _imagesOn = !_imagesOn;
+    if (_imagesOn) sceneImages.start(_answer.scenes);
+    else sceneImages.release();
+    showScenes();
+    notify();
+  }
 
   function showScenes() {
-    _dataSource.entities.removeAll();
+    for (const entity of _dataSource.entities.values.slice()) {
+      if (entity.polyline) _dataSource.entities.remove(entity);
+    }
     for (const scene of _answer.scenes) {
       _dataSource.entities.add(
-        footprintEntity(scene, scene.id === _selectedId),
+        footprintEntity(scene, scene.id === _selectedId, _imagesOn),
       );
     }
     requestRender(ID);
@@ -216,13 +249,17 @@ export function createUp42ScenesLayer({
     _selectedId = id;
     showScenes();
     const scene = _answer.scenes.find((item) => item.id === id);
-    if (scene?.thumbnail) void loadThumbnail(scene);
-    else if (scene) _thumbMessage = NO_THUMBNAIL;
+    if (!_imagesOn) {
+      if (scene?.thumbnail) void loadThumbnail(scene);
+      else if (scene) _thumbMessage = NO_THUMBNAIL;
+    }
     notify();
     return true;
   }
 
   function reset() {
+    sceneImages.release();
+    _imagesOn = false;
     _statusRequest?.abort();
     _statusRequest = null;
     _request?.abort();
@@ -275,6 +312,11 @@ export function createUp42ScenesLayer({
         _statusMessage = null;
       }
       _lastUpdate = now();
+      if (_imagesOn) {
+        sceneImages.release();
+        _imagesOn = _answer.scenes.some((scene) => scene.thumbnail);
+        if (_imagesOn) sceneImages.start(_answer.scenes);
+      }
       showScenes();
     } else {
       _pressMessage = describeFailure(result);
@@ -369,12 +411,21 @@ export function createUp42ScenesLayer({
                 disabled: Boolean(_request) || _configured === false,
                 onClick: press,
               },
+              ...(!imagesUnavailable()
+                ? [
+                    {
+                      id: 'images',
+                      label: _imagesOn ? HIDE_IMAGES_LABEL : SHOW_IMAGES_LABEL,
+                      onClick: toggleImages,
+                    },
+                  ]
+                : []),
             ]
           : [],
         info: readoutText({
           message: _pressMessage ?? _statusMessage,
           answer: _answer,
-          thumbMessage: _thumbMessage,
+          thumbMessage: _imagesOn ? sceneImages.text() : _thumbMessage,
         }),
         list: sceneList({ answer: _answer, selectedId: _selectedId }),
       };

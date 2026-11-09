@@ -1,6 +1,8 @@
 [
   "src/layers/up42Scenes/box.test.mjs",
   "src/layers/up42Scenes/index.js",
+  "src/layers/up42Scenes/images.js",
+  "src/layers/up42Scenes/images.test.mjs",
   "src/layers/up42Scenes/layer.test.mjs",
   "src/layers/up42Scenes/messages.js",
   "src/layers/up42Scenes/messages.test.mjs",

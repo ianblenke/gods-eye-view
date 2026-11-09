@@ -1,0 +1,2 @@
+Verdict: FAIL
+- [ ] F1 major src/layers/up42Scenes/images.test.mjs:877 At commit `7341547c35b1d103e06c555b819c525689fef0db`, “counts one failed image when decode returns reject” disagrees with line 890: the decoder throws an error; it does not return “reject”. Write separate titles: “counts one failed image when the decoder rejects” and “counts one failed image when the decoder returns null”.

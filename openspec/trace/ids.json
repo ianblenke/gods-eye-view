@@ -7249,6 +7249,111 @@
     "since": "2026-11-07",
     "change": "up42-quotes"
   },
+  "up42-scene-overlay-001": {
+    "hash": "1e2843dd6a3f52b683376129314449561614818de5d7161682432925186c3abd",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-002": {
+    "hash": "310ccc4b8aff4ccd476b8e4a7a59b29bf32f86525d92cd5be469db2469efce5d",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-003": {
+    "hash": "898dcfa6d5c57cf0147d363a4c58b9d8e87925115a595ff4fa163177d412983e",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-004": {
+    "hash": "0e69a47ae99e098ee34bfc61261a7a39b7b1493243d52bfe0ca6d8fe3aa0bdbd",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-005": {
+    "hash": "0a642d25b488999d041b290003220ba79fdc358ad7f953a881c3ff330e981344",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-006": {
+    "hash": "839d39afe7e1892b19a2bcb869a90cdb95db5fc73e159d184cd6099ad967eb4b",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-007": {
+    "hash": "481cdb39f25fba09105520b7f3fe2a8db28d13ec88f2b0b2d3e2e41a14fd1150",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-008": {
+    "hash": "2b231f3c143f02942ddda1b433ecb4ffc77d9f3ed5dbc22dc6e6397989b561bd",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-009": {
+    "hash": "4aa67b33b5930bdd556186585dec0d1b11ff2b94ad0ed14b01ace181261ca970",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-010": {
+    "hash": "ebfce02f04887346f745fcc773d833bdf5c4b139987e45c8c6f4a5288883d446",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-011": {
+    "hash": "dcb4538f3d59253d816f96269ad07bcdd6fb142bdb5ab8846ca0a14c9753ec02",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-012": {
+    "hash": "e1d82bd33f5914744a4c29fe3889a7e27b9f445c0c3fedb8a4f0c32bb4e56e85",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-013": {
+    "hash": "ad5cd11b2f78554a4a23f05ef80ca8411aa6dedf4159de9c91655c2989e08390",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-014": {
+    "hash": "7d0416a5efa472447eb60e979e98b4b7addea1a83e72cebc017a52d91d8036ce",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-015": {
+    "hash": "3fc795aa378592c034762f1b6d3909c12bdf48ec242d68894afa32adf20a7cc3",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-016": {
+    "hash": "44768b328700b0e7a1f89e9f5da140b5adfc50ad4c0fd4ad15dc476ecf071165",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-017": {
+    "hash": "14c221a87437b0c63f9e74867d26958315d208ad757eb7bdbfdc8f0b9bbe9dab",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-018": {
+    "hash": "687a802d7efc28b62f99c1387ca1e8bd5746c111df64023c55e631890efa84ad",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-019": {
+    "hash": "dc360af4072936e477dfd158817cb0f29a4053a68dec1b78c0490f9e469cee2b",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-020": {
+    "hash": "8513b605e5cab5a0f131f7561c321b33c4e5c1b0b710350189354e3b7fbddaae",
+    "since": "2026-11-08",
+    "change": "up42-scene-overlay"
+  },
+  "up42-scene-overlay-021": {
+    "hash": "d5f55fa570acea527a85255bdf7a763faa66684839564033160840508113fc69",
+    "since": "2026-11-09",
+    "change": "up42-scene-overlay"
+  },
   "up42-scenes-layer-001": {
     "hash": "c179a86cd351fe8ee337d5a48709660b08d105f1855153405b952a4c0e898af8",
     "since": "2026-11-07",
