@@ -873,8 +873,11 @@ test('[up42-scene-overlay-013] switches the option off after an answer with no t
   assert.equal(h.calls.length, 3);
 });
 
-for (const result of ['reject', 'null']) {
-  test(`[up42-scene-overlay-021] counts one failed image when decode returns ${result}`, async (t) => {
+for (const [result, phrase] of [
+  ['reject', 'the decoder rejects'],
+  ['null', 'the decoder returns null'],
+]) {
+  test(`[up42-scene-overlay-021] counts one failed image when ${phrase}`, async (t) => {
     const corrupt = new Blob(
       [new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10])],
       {
