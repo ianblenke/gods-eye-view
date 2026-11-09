@@ -53,6 +53,6 @@
 
 - [x] 5.1 Check the layer in the sandboxed browser with synthetic images.
 - [x] 5.2 Run `make ratchet CHANGE=up42-scene-overlay`.
-- [ ] 5.3 Run the two review agents.
-- [ ] 5.4 Write `review.md`.
+- [x] 5.3 Run the two review agents.
+- [x] 5.4 Write `review.md`.
 - [ ] 5.5 Run `make gates CHANGE=up42-scene-overlay` on the final tree.
