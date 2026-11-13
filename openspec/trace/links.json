@@ -8958,8 +8958,9 @@
     "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] gives the reason of a view that has no box and sends no quote",
     "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] sends one quote with the product and the box of the view and shows its facts",
     "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] shows the failure text of a quote that fails or rejects",
-    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] stops the quote after the caller disables the layer or starts a new search, and shows no result",
-    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] stops the quote when the layer is destroyed and shows no late result"
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] shows the reason of a search press that has no box and not the text of an earlier quote",
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] stops the quote after the caller destroys the layer and shows no late result",
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] stops the quote after the caller disables the layer or starts a new search, and shows no result"
   ],
   "up42-quote-panel-007": [
     "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-007] shows an estimate without a size or a unit, a failed check and a kept quote",
