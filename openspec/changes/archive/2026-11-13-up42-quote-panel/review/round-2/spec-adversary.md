@@ -1,0 +1,4 @@
+Verdict: FAIL
+- [ ] F1 major src/layers/up42Scenes/index.js:562 Commit `8b680ae5`: After a quote, point the view at the sky and press Search. The quote text hides the box error because `press` returns before `quoteReset`. This breaks scenario `up42-scenes-layer-009`. Show the search failure reason and add a test for this sequence.
+- [ ] F2 major src/layers/up42Scenes/source.test.mjs:852 Commit `8b680ae5`: Round-1 F5 remains partly open. The test now proves the byte limit, but no specification names that limit, contrary to rule 14. Add the 262144-byte limit and the 262145-byte failure result to scenario `up42-quote-panel-002` in both specs.
+- [ ] F3 minor openspec/changes/archive/2026-11-13-up42-quote-panel/tasks.md:28 Commit `8b680ae5`: The completed ratchet run reports `REVIEW-MISSING`. Write `review.md` after both reviews, then run the final gates.

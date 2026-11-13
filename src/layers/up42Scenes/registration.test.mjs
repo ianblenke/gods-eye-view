@@ -96,6 +96,8 @@ const fakeSource = (calls) => ({
     calls.getThumbnail += 1;
     return { ok: false, status: 404, error: 'thumbnails_off' };
   },
+  getProducts: async () => ({ ok: true, products: [] }),
+  getQuote: async () => ({ ok: false, status: 404, error: 'quotes_off' }),
 });
 
 test('[up42-scenes-layer-033] registers the layer in the catalog, the source contract, the reference sources and the share link', (t) => {
@@ -112,9 +114,17 @@ test('[up42-scenes-layer-033] registers the layer in the catalog, the source con
     'getStatus',
     'searchScenes',
     'getThumbnail',
+    'getProducts',
+    'getQuote',
   ]);
   const sources = createReferenceSources();
-  for (const method of ['getStatus', 'searchScenes', 'getThumbnail'])
+  for (const method of [
+    'getStatus',
+    'searchScenes',
+    'getThumbnail',
+    'getProducts',
+    'getQuote',
+  ])
     assert.equal(typeof sources['up42-scenes'][method], 'function');
   assert.notEqual(
     sources['up42-scenes'],
@@ -391,4 +401,17 @@ test('[up42-scenes-layer-041] keeps 41 registry and ledger entries and refuses t
     ).length,
     2,
   );
+});
+
+test('[up42-quote-panel-010] lists the five methods in the contract and in the reference source', () => {
+  const methods = [
+    'getStatus',
+    'searchScenes',
+    'getThumbnail',
+    'getProducts',
+    'getQuote',
+  ];
+  assert.deepEqual(CATALOG_SOURCE_CONTRACTS['up42-scenes'].methods, methods);
+  const source = createReferenceSources()['up42-scenes'];
+  for (const method of methods) assert.equal(typeof source[method], 'function');
 });

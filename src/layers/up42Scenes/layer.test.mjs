@@ -73,6 +73,25 @@ const fakeImage = (width = 256, height = 128) => {
   return value;
 };
 
+const PRODUCT_IDS = Array.from(
+  { length: 8 },
+  (_, i) => `00000000-0000-4000-8000-00000000000${i}`,
+);
+const PRODUCTS = PRODUCT_IDS.map((id, i) => ({ id, title: `Product ${i}` }));
+const QUOTE = {
+  results: {
+    validation: { ok: true, status: 'VALID' },
+    estimate: { ok: true, credits: 120, size: 4, unit: 'SQ_KM' },
+    feasibility: { ok: true, outcome: 'FEASIBLE' },
+    opportunities: { ok: true, count: 3 },
+  },
+  cached: false,
+  budget: { used: 2, limit: 20 },
+};
+const QUOTE_TEXT =
+  'Validation: VALID · Estimate: 120 credits for 4 SQ_KM · Feasibility: FEASIBLE · Passes: 3 · Quotes today: 2 of 20. No order was made.';
+const BOX = [9.568326, 59.784163, 10.431674, 60.215837];
+
 function harness({
   status = async () => ({ ok: true, configured: true }),
   scenes = async () => ({ ok: true, answer: THREE }),
@@ -83,11 +102,16 @@ function harness({
   withRender = true,
   withDecode = true,
   withNow = true,
+  withQuotes = false,
+  products = async () => ({ ok: true, products: PRODUCTS }),
+  quote = async () => ({ ok: true, ...QUOTE }),
 } = {}) {
   const calls = {
     getStatus: [],
     searchScenes: [],
     getThumbnail: [],
+    getProducts: [],
+    getQuote: [],
     decode: [],
   };
   const source = {
@@ -103,6 +127,18 @@ function harness({
       calls.getThumbnail.push(options);
       return thumbnail(options);
     },
+    ...(withQuotes
+      ? {
+          getProducts: (options) => {
+            calls.getProducts.push(options);
+            return products(options);
+          },
+          getQuote: (options) => {
+            calls.getQuote.push(options);
+            return quote(options);
+          },
+        }
+      : {}),
   };
   const overlay = [];
   const overlayHost = {
@@ -163,6 +199,9 @@ function harness({
       : {}),
   });
   const chip = () => layer.getRowControls().chips[0];
+  const chips = () => layer.getRowControls().chips;
+  const chipIds = () => chips().map((item) => item.id);
+  const byId = (id) => chips().find((item) => item.id === id);
   const info = () => layer.getRowControls().info;
   const list = () => layer.getRowControls().list;
   const entity = (id) => added[0]?.entities.getById(`up42-scenes:${id}`);
@@ -178,6 +217,9 @@ function harness({
     overlay,
     renders,
     chip,
+    chips,
+    chipIds,
+    byId,
     info,
     list,
     entity,
@@ -1419,4 +1461,369 @@ test('[up42-scenes-layer-040] builds the local source error without source text'
       false,
     );
   }
+});
+
+test('[up42-quote-panel-003] shows the quote chip only for a source with both methods, after an answer and while enabled', async () => {
+  const plain = harness();
+  await plain.searched();
+  assert.deepEqual(plain.chipIds(), ['search', 'images']);
+
+  const h = harness({ withQuotes: true });
+  h.layer.init(h.viewer);
+  assert.deepEqual(h.chipIds(), []);
+  h.layer.enable(h.viewer);
+  await h.layer.update();
+  assert.deepEqual(h.chipIds(), ['search']);
+  await h.chip().onClick();
+  assert.deepEqual(h.chipIds(), ['search', 'images', 'quote']);
+  assert.equal(h.byId('quote').label, 'Quote tasking here');
+  assert.equal(h.byId('quote').disabled, false);
+  h.layer.disable();
+  assert.deepEqual(h.chipIds(), []);
+});
+
+test('[up42-quote-panel-003] disables the quote chip while the status says that the server has no credentials', async () => {
+  let configured = true;
+  const h = harness({
+    withQuotes: true,
+    status: async () => ({ ok: true, configured }),
+  });
+  await h.searched();
+  configured = false;
+  await h.layer.update();
+  assert.equal(h.byId('quote').disabled, true);
+  await h.byId('quote').onClick();
+  assert.equal(h.calls.getProducts.length, 0);
+});
+
+test('[up42-quote-panel-004] reads the products once and shows a chip for each of the first six', async () => {
+  const wait = deferred();
+  const h = harness({ withQuotes: true, products: () => wait.promise });
+  await h.searched();
+  const press = h.byId('quote').onClick();
+  assert.equal(h.byId('quote').disabled, true);
+  assert.equal(h.info().startsWith('Reading the product list…'), true);
+  await h.byId('quote').onClick();
+  wait.resolve({ ok: true, products: PRODUCTS });
+  await press;
+  assert.equal(h.calls.getProducts.length, 1);
+  assert.equal(h.calls.getProducts[0].signal instanceof AbortSignal, true);
+  assert.equal(h.calls.getQuote.length, 0);
+  assert.deepEqual(h.chipIds().slice(2), [
+    'quote-product-0',
+    'quote-product-1',
+    'quote-product-2',
+    'quote-product-3',
+    'quote-product-4',
+    'quote-product-5',
+    'quote-cancel',
+  ]);
+  assert.deepEqual(
+    h
+      .chips()
+      .slice(2, 8)
+      .map((item) => item.label),
+    [
+      'Product 0',
+      'Product 1',
+      'Product 2',
+      'Product 3',
+      'Product 4',
+      'Product 5',
+    ],
+  );
+  assert.equal(h.byId('quote-cancel').label, 'Cancel');
+  assert.equal(h.info().startsWith('Choose a product.'), true);
+});
+
+test('[up42-quote-panel-004] shows the failure text and the quote chip again when the products fail', async () => {
+  for (const [products, text] of [
+    [
+      async () => ({ ok: false, status: 503, error: 'no_credentials' }),
+      'No UP42 credentials. Set UP42_USERNAME and UP42_PASSWORD in .env and restart the app.',
+    ],
+    [
+      async () => ({ ok: true, products: [] }),
+      'UP42 lists no tasking product.',
+    ],
+    [
+      async () => {
+        throw new Error('network');
+      },
+      'The server did not answer.',
+    ],
+  ]) {
+    const h = harness({ withQuotes: true, products });
+    await h.searched();
+    await h.byId('quote').onClick();
+    assert.equal(h.info().startsWith(text), true);
+    assert.deepEqual(h.chipIds(), ['search', 'images', 'quote']);
+    assert.equal(h.byId('quote').disabled, false);
+  }
+});
+
+test('[up42-quote-panel-004] stops the product call after the caller disables the layer', async () => {
+  const wait = deferred();
+  const h = harness({ withQuotes: true, products: () => wait.promise });
+  await h.searched();
+  const press = h.byId('quote').onClick();
+  const { signal } = h.calls.getProducts[0];
+  h.layer.disable();
+  assert.equal(signal.aborted, true);
+  wait.resolve({ ok: true, products: PRODUCTS });
+  await press;
+  h.layer.enable(h.viewer);
+  assert.deepEqual(h.chipIds(), ['search']);
+});
+
+test('[up42-quote-panel-005] asks the person to confirm and sends no quote before the person confirms', async () => {
+  const h = harness({ withQuotes: true });
+  await h.searched();
+  await h.byId('quote').onClick();
+  h.byId('quote-product-1').onClick();
+  assert.equal(
+    h
+      .info()
+      .startsWith(
+        'Quote Product 1 for this view? This gives no order and spends no credits.',
+      ),
+    true,
+  );
+  assert.deepEqual(h.chipIds().slice(2), ['quote-confirm', 'quote-cancel']);
+  assert.equal(h.byId('quote-confirm').label, 'Confirm quote');
+  assert.equal(h.calls.getQuote.length, 0);
+  h.byId('quote-cancel').onClick();
+  assert.deepEqual(h.chipIds(), ['search', 'images', 'quote']);
+  assert.equal(h.info().startsWith('Quote Product 1'), false);
+  assert.equal(h.calls.getQuote.length, 0);
+});
+
+test('[up42-quote-panel-005] ignores a stale chip press', async () => {
+  const h = harness({ withQuotes: true });
+  await h.searched();
+  await h.byId('quote').onClick();
+  const product = h.byId('quote-product-0');
+  const cancel = h.byId('quote-cancel');
+  cancel.onClick();
+  product.onClick();
+  cancel.onClick();
+  await h.byId('quote').onClick();
+  h.byId('quote-product-0').onClick();
+  const confirm = h.byId('quote-confirm');
+  h.byId('quote-cancel').onClick();
+  await confirm.onClick();
+  assert.equal(h.calls.getQuote.length, 0);
+  assert.deepEqual(h.chipIds(), ['search', 'images', 'quote']);
+});
+
+test('[up42-quote-panel-006] sends one quote with the product and the box of the view and shows its facts', async () => {
+  const wait = deferred();
+  const h = harness({
+    withQuotes: true,
+    pick: () => Cesium.Cartesian3.fromDegrees(10, 60),
+    quote: () => wait.promise,
+  });
+  await h.searched();
+  await h.byId('quote').onClick();
+  h.byId('quote-product-2').onClick();
+  const confirm = h.byId('quote-confirm');
+  const press = confirm.onClick();
+  await confirm.onClick();
+  assert.equal(h.calls.getQuote.length, 1);
+  const options = h.calls.getQuote[0];
+  assert.deepEqual(Object.keys(options).sort(), [
+    'box',
+    'dataProduct',
+    'signal',
+  ]);
+  assert.equal(options.dataProduct, '00000000-0000-4000-8000-000000000002');
+  assert.deepEqual(options.box, BOX);
+  assert.equal(h.info().startsWith('Asking for a quote…'), true);
+  assert.equal(h.byId('quote').disabled, true);
+  wait.resolve({ ok: true, ...QUOTE });
+  await press;
+  assert.equal(h.info().startsWith(QUOTE_TEXT), true);
+  assert.deepEqual(h.chipIds(), ['search', 'images', 'quote']);
+  assert.equal(h.byId('quote').disabled, false);
+});
+
+test('[up42-quote-panel-006] shows the failure text of a quote that fails or rejects', async () => {
+  for (const [quote, text] of [
+    [
+      async () => ({ ok: false, status: 429, error: 'budget' }),
+      'No more quotes today.',
+    ],
+    [
+      async () => {
+        throw new Error('network');
+      },
+      'The server did not answer.',
+    ],
+  ]) {
+    const h = harness({ withQuotes: true, quote });
+    await h.searched();
+    await h.byId('quote').onClick();
+    h.byId('quote-product-0').onClick();
+    await h.byId('quote-confirm').onClick();
+    assert.equal(h.info().startsWith(text), true);
+    assert.deepEqual(h.chipIds(), ['search', 'images', 'quote']);
+  }
+});
+
+test('[up42-quote-panel-006] stops the quote after the caller disables the layer or starts a new search, and shows no result', async () => {
+  for (const stop of ['disable', 'search']) {
+    const wait = deferred();
+    const h = harness({ withQuotes: true, quote: () => wait.promise });
+    await h.searched();
+    await h.byId('quote').onClick();
+    h.byId('quote-product-0').onClick();
+    const press = h.byId('quote-confirm').onClick();
+    const { signal } = h.calls.getQuote[0];
+    if (stop === 'disable') {
+      h.layer.disable();
+      h.layer.enable(h.viewer);
+      await h.layer.update();
+    } else {
+      await h.chip().onClick();
+    }
+    assert.equal(signal.aborted, true);
+    wait.resolve({ ok: true, ...QUOTE });
+    await press;
+    assert.equal(h.info().includes('No order was made'), false);
+    assert.equal(h.info().startsWith('Asking'), false);
+  }
+});
+
+test('[up42-quote-panel-006] gives the reason of a view that has no box and sends no quote', async () => {
+  let ground = true;
+  const h = harness({
+    withQuotes: true,
+    pick: () => (ground ? Cesium.Cartesian3.fromDegrees(10, 60) : undefined),
+  });
+  await h.searched();
+  await h.byId('quote').onClick();
+  h.byId('quote-product-0').onClick();
+  ground = false;
+  await h.byId('quote-confirm').onClick();
+  assert.equal(
+    h.info().startsWith('Point the view at the ground and press again.'),
+    true,
+  );
+  assert.equal(h.calls.getQuote.length, 0);
+  assert.deepEqual(h.chipIds().slice(2), ['quote-confirm', 'quote-cancel']);
+});
+
+test('[up42-quote-panel-009] calls only the two quote routes and keeps the word order in the text of the flow', async () => {
+  const { createUp42Source } = await import('./source.js');
+  const urls = [];
+  const real = createUp42Source({
+    fetchImpl: async (url, init = {}) => {
+      urls.push(`${init.method ?? 'GET'} ${url}`);
+      return new Response(
+        JSON.stringify(
+          url === '/api/up42/quote/products' ? { products: PRODUCTS } : QUOTE,
+        ),
+      );
+    },
+  });
+  const layer = createUp42ScenesLayer({
+    source: {
+      getStatus: async () => ({ ok: true, configured: true }),
+      searchScenes: async () => ({ ok: true, answer: THREE }),
+      getThumbnail: async () => ({ ok: false, status: 404, error: 'x' }),
+      getProducts: real.getProducts,
+      getQuote: real.getQuote,
+    },
+    overlayHost: { setEntries() {}, clearSource() {}, setVisible() {} },
+  });
+  layer.init(harness().viewer);
+  layer.enable();
+  await layer.update();
+  const texts = [];
+  const grab = (id) => {
+    const { chips, info } = layer.getRowControls();
+    texts.push(info, ...chips.map((chip) => chip.label));
+    return chips.find((chip) => chip.id === id);
+  };
+  await grab('search').onClick();
+  await grab('quote').onClick();
+  grab('quote-product-0').onClick();
+  await grab('quote-confirm').onClick();
+  grab('quote');
+  assert.deepEqual(urls, [
+    'GET /api/up42/quote/products',
+    'POST /api/up42/quote',
+  ]);
+  assert.equal(
+    texts.some((text) => text.includes('No order was made')),
+    true,
+  );
+  for (const text of texts)
+    assert.equal(
+      text
+        .replaceAll('no order', '')
+        .replaceAll('No order', '')
+        .match(/order/i),
+      null,
+    );
+});
+
+test('[up42-quote-panel-005] shows the confirm text after a failed search that follows a good search', async () => {
+  let count = 0;
+  const h = harness({
+    withQuotes: true,
+    scenes: async () =>
+      ++count === 1
+        ? { ok: true, answer: THREE }
+        : { ok: false, status: 502, error: 'upstream_failed' },
+  });
+  await h.searched();
+  await h.chip().onClick();
+  assert.equal(h.info().startsWith('UP42 did not answer correctly.'), true);
+  await h.byId('quote').onClick();
+  h.byId('quote-product-0').onClick();
+  assert.equal(
+    h
+      .info()
+      .startsWith(
+        'Quote Product 0 for this view? This gives no order and spends no credits.',
+      ),
+    true,
+  );
+});
+
+test('[up42-quote-panel-006] stops the quote after the caller destroys the layer and shows no late result', async () => {
+  const wait = deferred();
+  const h = harness({ withQuotes: true, quote: () => wait.promise });
+  await h.searched();
+  await h.byId('quote').onClick();
+  h.byId('quote-product-0').onClick();
+  const press = h.byId('quote-confirm').onClick();
+  const { signal } = h.calls.getQuote[0];
+  h.layer.destroy(h.viewer);
+  assert.equal(signal.aborted, true);
+  wait.resolve({ ok: true, ...QUOTE });
+  await press;
+  assert.equal(h.info().includes('No order was made'), false);
+});
+
+test('[up42-quote-panel-006] shows the reason of a search press that has no box and not the text of an earlier quote', async () => {
+  let ground = true;
+  const h = harness({
+    withQuotes: true,
+    pick: () => (ground ? Cesium.Cartesian3.fromDegrees(10, 60) : undefined),
+  });
+  await h.searched();
+  await h.byId('quote').onClick();
+  h.byId('quote-product-0').onClick();
+  await h.byId('quote-confirm').onClick();
+  assert.equal(h.info().startsWith(QUOTE_TEXT), true);
+  ground = false;
+  await h.chip().onClick();
+  assert.equal(
+    h.info().startsWith('Point the view at the ground and press again.'),
+    true,
+  );
+  assert.equal(h.info().includes('No order was made'), false);
+  assert.deepEqual(h.chipIds().slice(2), ['quote']);
 });

@@ -692,3 +692,192 @@ test('[up42-scenes-layer-040] drops extra error text and sends only the box and 
     'signal',
   ]);
 });
+
+const PRODUCT_ID = '11111111-2222-3333-4444-555555555555';
+const QUOTE_BODY = {
+  results: {
+    validation: { ok: true, status: 'VALID', errors: [] },
+    estimate: { ok: true, credits: 120, size: 4, unit: 'SQ_KM' },
+    feasibility: { ok: false, error: 'upstream_failed' },
+  },
+  cached: false,
+  budget: { used: 1, limit: 20 },
+};
+const quote = (made, extra = {}) =>
+  made.source.getQuote({ dataProduct: PRODUCT_ID, box: BBOX, ...extra });
+
+test('[up42-quote-panel-001] sends one GET for the product route and keeps the id and title', async () => {
+  const made = make(() =>
+    json({ products: [{ id: PRODUCT_ID, title: 'T', collection: 'c' }] }),
+  );
+  const signal = new AbortController().signal;
+  assert.deepEqual(await made.source.getProducts({ signal }), {
+    ok: true,
+    products: [{ id: PRODUCT_ID, title: 'T' }],
+  });
+  assert.equal(made.calls.length, 1);
+  assert.equal(made.calls[0].url, '/api/up42/quote/products');
+  assert.equal(made.calls[0].init.method ?? 'GET', 'GET');
+  assert.equal(made.calls[0].init.body, undefined);
+  assert.equal(made.calls[0].init.signal instanceof AbortSignal, true);
+  assert.notEqual(made.calls[0].init.signal, signal);
+  assert.equal(made.timers[0].ms, 20_000);
+  assert.deepEqual(made.cleared, [1]);
+  assert.deepEqual(
+    await make(() => json({ products: [] })).source.getProducts(),
+    {
+      ok: true,
+      products: [],
+    },
+  );
+});
+
+test('[up42-quote-panel-001] reports a product answer that fails', async () => {
+  for (const [respond, expected] of [
+    [() => json({}), { ok: false, status: 200, error: 'bad_answer' }],
+    [
+      () => json({ products: [{ id: 'x' }] }),
+      { ok: false, status: 200, error: 'bad_answer' },
+    ],
+    [
+      () => new Response('not json'),
+      { ok: false, status: 200, error: 'bad_answer' },
+    ],
+    [
+      () => json({ error: 'quotes_off', message: 'SECRET' }, 404),
+      { ok: false, status: 404, error: 'quotes_off' },
+    ],
+    [() => json({ x: 1 }, 502), { ok: false, status: 502, error: 'unknown' }],
+    [
+      () => {
+        throw new Error('network');
+      },
+      { ok: false, status: 0, error: 'unreachable' },
+    ],
+  ])
+    assert.deepEqual(await make(respond).source.getProducts(), expected);
+  const stall = make(stalled);
+  const pending = stall.source.getProducts();
+  await settle();
+  stall.timers[0].fn();
+  assert.deepEqual(await pending, {
+    ok: false,
+    status: 0,
+    error: 'unreachable',
+  });
+});
+
+test('[up42-quote-panel-002] posts the product and the box only and keeps the named facts', async () => {
+  const made = make(() => json(QUOTE_BODY));
+  const signal = new AbortController().signal;
+  const result = await quote(made, { signal });
+  assert.notEqual(made.calls[0].init.signal, signal);
+  assert.deepEqual(result, {
+    ok: true,
+    results: {
+      validation: { ok: true, status: 'VALID' },
+      estimate: { ok: true, credits: 120, size: 4, unit: 'SQ_KM' },
+      feasibility: { ok: false, error: 'upstream_failed' },
+    },
+    cached: false,
+    budget: { used: 1, limit: 20 },
+  });
+  assert.equal(made.calls.length, 1);
+  assert.equal(made.calls[0].url, '/api/up42/quote');
+  assert.equal(made.calls[0].init.method, 'POST');
+  assert.deepEqual(made.calls[0].init.headers, {
+    'Content-Type': 'application/json',
+  });
+  assert.equal(
+    made.calls[0].init.body,
+    '{"dataProduct":"11111111-2222-3333-4444-555555555555","box":[9.568326,59.784163,10.431674,60.215837]}',
+  );
+  assert.equal(made.timers[0].ms, 60_000);
+});
+
+test('[up42-quote-panel-002] reports a quote answer that fails', async () => {
+  for (const [respond, expected] of [
+    [
+      () => json({ results: {} }),
+      { ok: false, status: 200, error: 'bad_answer' },
+    ],
+    [
+      () => new Response('not json'),
+      { ok: false, status: 200, error: 'bad_answer' },
+    ],
+    [
+      () =>
+        json(
+          {
+            error: 'budget',
+            used: 20,
+            limit: 20,
+            retryAfter: 5,
+            host: 'SECRET',
+          },
+          429,
+        ),
+      {
+        ok: false,
+        status: 429,
+        error: 'budget',
+        retryAfter: 5,
+        used: 20,
+        limit: 20,
+      },
+    ],
+    [
+      () => json({ error: 'rate_limited', retryAfter: -1 }, 429),
+      { ok: false, status: 429, error: 'rate_limited' },
+    ],
+    [
+      () => {
+        throw new Error('network');
+      },
+      { ok: false, status: 0, error: 'unreachable' },
+    ],
+  ])
+    assert.deepEqual(await quote(make(respond)), expected);
+  const stall = make(stalled);
+  const pending = quote(stall);
+  await settle();
+  stall.timers[0].fn();
+  assert.deepEqual(await pending, {
+    ok: false,
+    status: 0,
+    error: 'unreachable',
+  });
+});
+
+test('[up42-quote-panel-002] reads a quote body of 262144 bytes, refuses one more byte, and rejects when the signal of the call aborts', async () => {
+  const sized = (bytes) => {
+    const base = JSON.stringify({ ...QUOTE_BODY, pad: '' });
+    return JSON.stringify({
+      ...QUOTE_BODY,
+      pad: 'x'.repeat(bytes - base.length),
+    });
+  };
+  assert.equal(sized(262_144).length, 262_144);
+  assert.equal(
+    (await quote(make(() => new Response(sized(262_144))))).ok,
+    true,
+  );
+  assert.deepEqual(await quote(make(() => new Response(sized(262_145)))), {
+    ok: false,
+    status: 200,
+    error: 'bad_answer',
+  });
+  const stop = new AbortController();
+  stop.abort();
+  await assert.rejects(
+    quote(
+      make(() => json(QUOTE_BODY)),
+      { signal: stop.signal },
+    ),
+  );
+  await assert.rejects(
+    make(() => json({ products: [] })).source.getProducts({
+      signal: stop.signal,
+    }),
+  );
+});
