@@ -25,7 +25,7 @@ const GOOD = {
   budget: { used: 2, limit: 20, extra: 1 },
 };
 
-test('[up42-quote-panel-001] keeps the id and title of each product and uses the id for a missing title', () => {
+test('[up42-quote-panel-001] keeps the id and title of each product and uses the id when the title is not valid', () => {
   assert.deepEqual(
     normalizeProducts({
       products: [
@@ -97,11 +97,12 @@ test('[up42-quote-panel-002] refuses a body with no results, a bad cached flag o
 });
 
 test('[up42-quote-panel-002] turns a check that is not valid into bad_answer and keeps the other checks', () => {
-  const bad = (check) =>
+  const resultsOf = (check) =>
     normalizeQuote({
       ...GOOD,
       results: { validation: { ok: true, status: 'VALID' }, estimate: check },
-    }).results.estimate;
+    }).results;
+  const VALID = { ok: true, status: 'VALID' };
   const BAD = { ok: false, error: 'bad_answer' };
   for (const check of [
     null,
@@ -117,14 +118,14 @@ test('[up42-quote-panel-002] turns a check that is not valid into bad_answer and
     { ok: false, error: 'x'.repeat(161) },
     { ok: false, error: 3 },
   ])
-    assert.deepEqual(bad(check), BAD);
-  assert.deepEqual(bad({ ok: false, error: 'upstream_failed' }), {
-    ok: false,
-    error: 'upstream_failed',
+    assert.deepEqual(resultsOf(check), { validation: VALID, estimate: BAD });
+  assert.deepEqual(resultsOf({ ok: false, error: 'upstream_failed' }), {
+    validation: VALID,
+    estimate: { ok: false, error: 'upstream_failed' },
   });
-  assert.deepEqual(bad({ ok: true, credits: 5, size: 'a', unit: 4 }), {
-    ok: true,
-    credits: 5,
+  assert.deepEqual(resultsOf({ ok: true, credits: 5, size: 'a', unit: 4 }), {
+    validation: VALID,
+    estimate: { ok: true, credits: 5 },
   });
 });
 

@@ -1562,7 +1562,7 @@ test('[up42-quote-panel-004] shows the failure text and the quote chip again whe
   }
 });
 
-test('[up42-quote-panel-004] stops the product call when the layer is disabled', async () => {
+test('[up42-quote-panel-004] stops the product call after the caller disables the layer', async () => {
   const wait = deferred();
   const h = harness({ withQuotes: true, products: () => wait.promise });
   await h.searched();
@@ -1576,7 +1576,7 @@ test('[up42-quote-panel-004] stops the product call when the layer is disabled',
   assert.deepEqual(h.chipIds(), ['search']);
 });
 
-test('[up42-quote-panel-005] asks for a confirm and sends no quote before it', async () => {
+test('[up42-quote-panel-005] asks the person to confirm and sends no quote before the person confirms', async () => {
   const h = harness({ withQuotes: true });
   await h.searched();
   await h.byId('quote').onClick();
@@ -1670,7 +1670,7 @@ test('[up42-quote-panel-006] shows the failure text of a quote that fails or rej
   }
 });
 
-test('[up42-quote-panel-006] stops the quote when the layer is disabled or a new search starts, and shows no result', async () => {
+test('[up42-quote-panel-006] stops the quote after the caller disables the layer or starts a new search, and shows no result', async () => {
   for (const stop of ['disable', 'search']) {
     const wait = deferred();
     const h = harness({ withQuotes: true, quote: () => wait.promise });
@@ -1766,4 +1766,43 @@ test('[up42-quote-panel-009] calls only the two quote routes and keeps the word 
         .match(/order/i),
       null,
     );
+});
+
+test('[up42-quote-panel-005] shows the confirm text after a failed search that follows a good search', async () => {
+  let count = 0;
+  const h = harness({
+    withQuotes: true,
+    scenes: async () =>
+      ++count === 1
+        ? { ok: true, answer: THREE }
+        : { ok: false, status: 502, error: 'upstream_failed' },
+  });
+  await h.searched();
+  await h.chip().onClick();
+  assert.equal(h.info().startsWith('UP42 did not answer correctly.'), true);
+  await h.byId('quote').onClick();
+  h.byId('quote-product-0').onClick();
+  assert.equal(
+    h
+      .info()
+      .startsWith(
+        'Quote Product 0 for this view? This gives no order and spends no credits.',
+      ),
+    true,
+  );
+});
+
+test('[up42-quote-panel-006] stops the quote when the layer is destroyed and shows no late result', async () => {
+  const wait = deferred();
+  const h = harness({ withQuotes: true, quote: () => wait.promise });
+  await h.searched();
+  await h.byId('quote').onClick();
+  h.byId('quote-product-0').onClick();
+  const press = h.byId('quote-confirm').onClick();
+  const { signal } = h.calls.getQuote[0];
+  h.layer.destroy(h.viewer);
+  assert.equal(signal.aborted, true);
+  wait.resolve({ ok: true, ...QUOTE });
+  await press;
+  assert.equal(h.info().includes('No order was made'), false);
 });

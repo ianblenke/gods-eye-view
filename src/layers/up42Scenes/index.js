@@ -559,7 +559,7 @@ export function createUp42ScenesLayer({
             ]
           : [],
         info: readoutText({
-          message: _pressMessage ?? _quoteMessage ?? _statusMessage,
+          message: _quoteMessage ?? _pressMessage ?? _statusMessage,
           answer: _answer,
           thumbMessage: _imagesOn ? sceneImages.text() : _thumbMessage,
         }),

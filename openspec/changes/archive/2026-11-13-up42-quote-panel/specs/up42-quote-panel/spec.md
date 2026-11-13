@@ -71,7 +71,7 @@ Origin: spec-first
 #### Scenario: Send one quote `up42-quote-panel-006`
 - **WHEN** a test presses "Confirm quote", and presses it again before the answer
 - **THEN** the source gets one `getQuote` call with the chosen id and the box of `scenesBox` for the view
-- **AND** while the request runs, the info text starts with "Asking for a quote…" and each chip has `disabled` true
+- **AND** while the request runs, the info text starts with "Asking for a quote…" and the quote chip has `disabled` true
 - **AND** `disable`, a new search and `destroy` abort the request and give no result text
 - **AND** a view that cannot give a box gives the text of the box reason and no `getQuote` call
 
@@ -84,7 +84,7 @@ Origin: spec-first
 - **WHEN** a test gives results with validation status "VALID", estimate credits 120 with size 4 and unit "SQ_KM", feasibility outcome "FEASIBLE" and 3 passes
 - **AND** the budget has `used` 2 and `limit` 20
 - **THEN** the info text starts with the parts "Validation: VALID", "Estimate: 120 credits for 4 SQ_KM", "Feasibility: FEASIBLE" and "Passes: 3", joined by " · "
-- **AND** the last part is "Quotes today: 2 of 20. No order was made."
+- **AND** the quote text ends with the part "Quotes today: 2 of 20. No order was made."
 - **AND** a failed check gives the part "<Name>: not available (<fixed text>)" and the other parts stay
 - **AND** an answer with `cached` true adds the part "This quote is kept from before."
 
@@ -100,7 +100,7 @@ Origin: spec-first
 - **AND** no text contains a string of the server answer
 
 ### Requirement: No order
-The page MUST call only the two quote routes for a quote, and never an order route or a quotation accept.
+The page MUST use only the two quote routes for a quote. The page MUST NOT send an order or accept a quotation.
 
 Origin: spec-first
 

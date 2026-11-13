@@ -720,6 +720,7 @@ test('[up42-quote-panel-001] sends one GET for the product route and keeps the i
   assert.equal(made.calls[0].init.method ?? 'GET', 'GET');
   assert.equal(made.calls[0].init.body, undefined);
   assert.equal(made.calls[0].init.signal instanceof AbortSignal, true);
+  assert.notEqual(made.calls[0].init.signal, signal);
   assert.equal(made.timers[0].ms, 20_000);
   assert.deepEqual(made.cleared, [1]);
   assert.deepEqual(
@@ -768,7 +769,9 @@ test('[up42-quote-panel-001] reports a product answer that fails', async () => {
 
 test('[up42-quote-panel-002] posts the product and the box only and keeps the named facts', async () => {
   const made = make(() => json(QUOTE_BODY));
-  const result = await quote(made);
+  const signal = new AbortController().signal;
+  const result = await quote(made, { signal });
+  assert.notEqual(made.calls[0].init.signal, signal);
   assert.deepEqual(result, {
     ok: true,
     results: {
@@ -846,9 +849,20 @@ test('[up42-quote-panel-002] reports a quote answer that fails', async () => {
   });
 });
 
-test('[up42-quote-panel-002] stops a body of more than 256 KiB and rejects when the signal of the call aborts', async () => {
-  const big = make(() => new Response('x'.repeat(256 * 1024 + 1)));
-  assert.deepEqual(await quote(big), {
+test('[up42-quote-panel-002] reads a quote body of 262144 bytes, refuses one more byte, and rejects when the signal of the call aborts', async () => {
+  const sized = (bytes) => {
+    const base = JSON.stringify({ ...QUOTE_BODY, pad: '' });
+    return JSON.stringify({
+      ...QUOTE_BODY,
+      pad: 'x'.repeat(bytes - base.length),
+    });
+  };
+  assert.equal(sized(262_144).length, 262_144);
+  assert.equal(
+    (await quote(make(() => new Response(sized(262_144))))).ok,
+    true,
+  );
+  assert.deepEqual(await quote(make(() => new Response(sized(262_145)))), {
     ok: false,
     status: 200,
     error: 'bad_answer',
