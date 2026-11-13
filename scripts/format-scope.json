@@ -8,6 +8,8 @@
   "src/layers/up42Scenes/messages.test.mjs",
   "src/layers/up42Scenes/model.js",
   "src/layers/up42Scenes/model.test.mjs",
+  "src/layers/up42Scenes/quotes.js",
+  "src/layers/up42Scenes/quotes.test.mjs",
   "src/layers/up42Scenes/records.js",
   "src/layers/up42Scenes/records.test.mjs",
   "src/layers/up42Scenes/registration.test.mjs",

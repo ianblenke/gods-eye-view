@@ -3,15 +3,21 @@ import {
   readResponseJsonCapped,
 } from '../../sources/httpBody.js';
 import { isSceneId, normalizeAnswer } from './records.js';
+import { normalizeProducts, normalizeQuote } from './quotes.js';
 
 export const MAX_SEARCH_BYTES = 8 * 1024 * 1024;
 export const MAX_THUMBNAIL_BYTES = 1024 * 1024;
 const MAX_STATUS_BYTES = 1024 * 1024;
 export const SEARCH_TIMEOUT_MS = 60_000;
+export const PRODUCTS_TIMEOUT_MS = 20_000;
+export const QUOTE_TIMEOUT_MS = 60_000;
+export const MAX_QUOTE_BYTES = 256 * 1024;
 export const THUMBNAIL_TIMEOUT_MS = 20_000;
 const STATUS_URL = '/api/up42/status';
 const SCENES_URL = '/api/up42/scenes';
 const THUMBNAIL_URL = '/api/up42/thumbnail/';
+const PRODUCTS_URL = '/api/up42/quote/products';
+const QUOTE_URL = '/api/up42/quote';
 const IMAGE_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp']);
 
 /** Keep the fields of an error body that are whole numbers of 0 or more. */
@@ -175,6 +181,66 @@ export function createUp42Source({
             own,
           );
           return { ok: true, blob: new Blob([bytes], { type }) };
+        },
+      });
+    },
+
+    /**
+     * @param {{signal?:AbortSignal}} options
+     * @returns {Promise<{ok:true, products:object[]}|{ok:false, status:number, error:string}>}
+     */
+    getProducts({ signal } = {}) {
+      return request({
+        url: PRODUCTS_URL,
+        timeoutMs: PRODUCTS_TIMEOUT_MS,
+        signal,
+        async read(response, own) {
+          if (!response.ok) return failureOf(response, MAX_QUOTE_BYTES, own);
+          const body = await readResponseJsonCapped(
+            response,
+            MAX_QUOTE_BYTES,
+            own,
+          );
+          const products = normalizeProducts(body);
+          return products === null
+            ? { ok: false, status: response.status, error: 'bad_answer' }
+            : { ok: true, products };
+        },
+      });
+    },
+
+    /**
+     * Ask for quote facts only. The route never makes an order.
+     * @param {{dataProduct:string, box:number[], signal?:AbortSignal}} options
+     * @returns {Promise<{ok:true, results:object, cached:boolean, budget:object}|{ok:false, status:number, error:string}>}
+     */
+    getQuote({ dataProduct, box, signal } = {}) {
+      return request({
+        url: QUOTE_URL,
+        init: {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dataProduct, box }),
+        },
+        timeoutMs: QUOTE_TIMEOUT_MS,
+        signal,
+        async read(response, own) {
+          if (!response.ok) {
+            return failureOf(response, MAX_QUOTE_BYTES, own, [
+              'retryAfter',
+              'used',
+              'limit',
+            ]);
+          }
+          const body = await readResponseJsonCapped(
+            response,
+            MAX_QUOTE_BYTES,
+            own,
+          );
+          const quote = normalizeQuote(body);
+          return quote === null
+            ? { ok: false, status: response.status, error: 'bad_answer' }
+            : { ok: true, ...quote };
         },
       });
     },

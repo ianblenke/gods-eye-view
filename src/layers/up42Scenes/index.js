@@ -17,6 +17,14 @@ import {
   sceneList,
   thumbnailSize,
 } from './model.js';
+import {
+  ASKING,
+  LOADING_PRODUCTS,
+  NO_PRODUCTS,
+  confirmText,
+  describeQuote,
+  describeQuoteFailure,
+} from './quotes.js';
 export { createUp42Source } from './source.js';
 
 const ID = 'up42-scenes';
@@ -25,6 +33,11 @@ const SEARCH_LABEL = 'Search scenes here';
 const SEARCHING_LABEL = 'Searching…';
 const SHOW_IMAGES_LABEL = 'Show images';
 const HIDE_IMAGES_LABEL = 'Hide images';
+const QUOTE_LABEL = 'Quote tasking here';
+const CONFIRM_LABEL = 'Confirm quote';
+const CANCEL_LABEL = 'Cancel';
+const CHOOSE_TEXT = 'Choose a product.';
+const MAX_PRODUCT_CHIPS = 6;
 const NO_KEY = describeFailure({ status: 0, error: 'no_credentials' });
 
 /** The point under the middle of the screen, or null when it shows the sky. */
@@ -150,6 +163,11 @@ export function createUp42ScenesLayer({
   let _lastError = null;
   let _statusError = null;
   let _listener = null;
+  let _quoteStep = 'idle';
+  let _products = [];
+  let _product = null;
+  let _quoteRequest = null;
+  let _quoteMessage = null;
 
   let _imagesOn = false;
   const notify = () => _listener?.();
@@ -257,7 +275,123 @@ export function createUp42ScenesLayer({
     return true;
   }
 
+  const hasQuotes =
+    typeof source.getProducts === 'function' &&
+    typeof source.getQuote === 'function';
+
+  function quoteReset() {
+    _quoteRequest?.abort();
+    _quoteRequest = null;
+    _quoteStep = 'idle';
+    _products = [];
+    _product = null;
+    _quoteMessage = null;
+  }
+
+  async function startQuote() {
+    if (!_enabled || _quoteStep !== 'idle' || _configured === false) return;
+    const request = new AbortController();
+    _quoteRequest = request;
+    _quoteStep = 'loading';
+    _quoteMessage = LOADING_PRODUCTS;
+    notify();
+    let result;
+    try {
+      result = await source.getProducts({ signal: request.signal });
+    } catch {
+      result = { ok: false, status: 0, error: 'unreachable' };
+    }
+    if (_quoteRequest !== request) return;
+    _quoteRequest = null;
+    if (result.ok && result.products.length > 0) {
+      _products = result.products;
+      _quoteStep = 'choose';
+      _quoteMessage = CHOOSE_TEXT;
+    } else {
+      _quoteStep = 'idle';
+      _quoteMessage = result.ok ? NO_PRODUCTS : describeQuoteFailure(result);
+    }
+    notify();
+  }
+
+  function chooseProduct(product) {
+    if (_quoteStep !== 'choose') return;
+    _product = product;
+    _quoteStep = 'confirm';
+    _quoteMessage = confirmText(product.title);
+    notify();
+  }
+
+  function cancelQuote() {
+    if (_quoteStep !== 'choose' && _quoteStep !== 'confirm') return;
+    quoteReset();
+    notify();
+  }
+
+  async function confirmQuote() {
+    if (!_enabled || _quoteStep !== 'confirm') return;
+    const box = scenesBox(viewCentre(_viewer));
+    if (!box.ok) {
+      _quoteMessage = describeReason(box.reason);
+      notify();
+      return;
+    }
+    const request = new AbortController();
+    _quoteRequest = request;
+    _quoteStep = 'asking';
+    _quoteMessage = ASKING;
+    notify();
+    let result;
+    try {
+      result = await source.getQuote({
+        dataProduct: _product.id,
+        box: box.bbox,
+        signal: request.signal,
+      });
+    } catch {
+      result = { ok: false, status: 0, error: 'unreachable' };
+    }
+    if (_quoteRequest !== request) return;
+    _quoteRequest = null;
+    _quoteStep = 'idle';
+    _products = [];
+    _product = null;
+    _quoteMessage = result.ok
+      ? describeQuote(result)
+      : describeQuoteFailure(result);
+    notify();
+  }
+
+  function quoteChips() {
+    if (!hasQuotes || !_enabled || _answer === null) return [];
+    if (_quoteStep === 'choose') {
+      return [
+        ..._products.slice(0, MAX_PRODUCT_CHIPS).map((product, index) => ({
+          id: `quote-product-${index}`,
+          label: product.title,
+          onClick: () => chooseProduct(product),
+        })),
+        { id: 'quote-cancel', label: CANCEL_LABEL, onClick: cancelQuote },
+      ];
+    }
+    if (_quoteStep === 'confirm') {
+      return [
+        { id: 'quote-confirm', label: CONFIRM_LABEL, onClick: confirmQuote },
+        { id: 'quote-cancel', label: CANCEL_LABEL, onClick: cancelQuote },
+      ];
+    }
+    return [
+      {
+        id: 'quote',
+        label: QUOTE_LABEL,
+        disabled: _quoteStep !== 'idle' || _configured === false,
+        onClick: startQuote,
+      },
+    ];
+  }
+
   function reset() {
+    quoteReset();
     sceneImages.release();
     _imagesOn = false;
     _statusRequest?.abort();
@@ -285,6 +419,7 @@ export function createUp42ScenesLayer({
       return;
     }
     const { start, end } = searchWindow(now());
+    quoteReset();
     const request = new AbortController();
     _request = request;
     notify();
@@ -420,10 +555,11 @@ export function createUp42ScenesLayer({
                     },
                   ]
                 : []),
+              ...quoteChips(),
             ]
           : [],
         info: readoutText({
-          message: _pressMessage ?? _statusMessage,
+          message: _pressMessage ?? _quoteMessage ?? _statusMessage,
           answer: _answer,
           thumbMessage: _imagesOn ? sceneImages.text() : _thumbMessage,
         }),
