@@ -45,3 +45,7 @@ The chip "Quote tasking here" starts the flow and loads the products. One chip f
 - The coverage gate needs 100% line, branch and function coverage for `quotes.js`, `source.js` and `index.js`.
 - Scenario `up42-quote-panel-009` records each URL and method that a fake fetch function receives. It fails if any call goes to another path.
 - Files that the change adds or changes: `src/layers/up42Scenes/quotes.js`, `quotes.test.mjs`, `source.js`, `index.js`, `src/app/sourceComposition.js`, `src/layers/up42Scenes/registration.test.mjs` and `src/sources/reference.test.mjs`.
+
+## Purpose at archive time
+
+Describe how the UP42 Scenes row asks for a quote of one tasking product and shows the quote facts without an order.

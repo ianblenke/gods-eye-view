@@ -20,7 +20,7 @@
 
 ## 4. Gates and review
 
-- [ ] 4.1 Commit the code files and the test files.
-- [ ] 4.2 Run `make ratchet CHANGE=up42-quote-panel` and read the verdict.
+- [x] 4.1 Commit the code files and the test files.
+- [x] 4.2 Run `make ratchet CHANGE=up42-quote-panel` and read the verdict.
 - [ ] 4.3 Run `/opsx:review up42-quote-panel`, and write `review.md` with the findings of the two review agents.
 - [ ] 4.4 Run `make gates CHANGE=up42-quote-panel` on the final tree.
