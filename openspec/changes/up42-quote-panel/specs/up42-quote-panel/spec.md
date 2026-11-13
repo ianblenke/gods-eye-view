@@ -23,7 +23,8 @@ Origin: spec-first
 - **THEN** the fake fetch function gets one `POST` request for "/api/up42/quote" with the only header `Content-Type` "application/json"
 - **AND** the body is the text `{"dataProduct":"11111111-2222-3333-4444-555555555555","box":[9.568326,59.784163,10.431674,60.215837]}`
 - **AND** a good answer gives `{ok:true, results, cached, budget}` where `results` has only the names validation, estimate, feasibility and opportunities
-- **AND** a result that is not an object, or a budget without whole numbers `used` and `limit`, gives the error "bad_answer"
+- **AND** a body with no results, a bad `cached` value or a budget without whole numbers `used` and `limit` gives the error "bad_answer"
+- **AND** a check that is not an object, or that lacks its main fact, becomes `{ok:false, error:"bad_answer"}` and the other checks stay
 - **AND** an HTTP status that is not `2xx` gives `{ok:false, status, error}` with `retryAfter`, `used` and `limit` when each is a whole number of 0 or more
 - **AND** a rejection and a stop after 60 seconds give the status 0 and the error "unreachable"
 
@@ -58,7 +59,7 @@ Origin: spec-first
 
 #### Scenario: Confirm before the quote `up42-quote-panel-005`
 - **WHEN** a test presses a product chip
-- **THEN** the info text is "Quote <title> for this view? This gives no order and spends no credits."
+- **THEN** the info text starts with "Quote <title> for this view? This gives no order and spends no credits."
 - **AND** the chips are "Confirm quote" and "Cancel", and the source gets no `getQuote` call
 - **AND** a press of "Cancel" returns the chip "Quote tasking here" and sends no quote
 
@@ -70,22 +71,22 @@ Origin: spec-first
 #### Scenario: Send one quote `up42-quote-panel-006`
 - **WHEN** a test presses "Confirm quote", and presses it again before the answer
 - **THEN** the source gets one `getQuote` call with the chosen id and the box of `scenesBox` for the view
-- **AND** while the request runs, the info text is "Asking for a quote…" and each chip has `disabled` true
+- **AND** while the request runs, the info text starts with "Asking for a quote…" and each chip has `disabled` true
 - **AND** `disable`, a new search and `destroy` abort the request and give no result text
 - **AND** a view that cannot give a box gives the text of the box reason and no `getQuote` call
 
 ### Requirement: Quote text
-The layer MUST show the facts of a quote as short lines and show a fixed text for each failed check.
+The layer MUST show the facts of a quote as short parts and show a fixed text for each failed check.
 
 Origin: spec-first
 
 #### Scenario: Show the facts `up42-quote-panel-007`
 - **WHEN** a test gives results with validation status "VALID", estimate credits 120 with size 4 and unit "SQ_KM", feasibility outcome "FEASIBLE" and 3 passes
 - **AND** the budget has `used` 2 and `limit` 20
-- **THEN** the info text has the lines "Validation: VALID", "Estimate: 120 credits for 4 SQ_KM", "Feasibility: FEASIBLE" and "Passes: 3"
-- **AND** the last line is "Quotes today: 2 of 20. No order was made."
-- **AND** a failed check gives the line "<Name>: not available (<fixed text>)" and the other lines stay
-- **AND** an answer with `cached` true adds the line "This quote is kept from before."
+- **THEN** the info text starts with the parts "Validation: VALID", "Estimate: 120 credits for 4 SQ_KM", "Feasibility: FEASIBLE" and "Passes: 3", joined by " · "
+- **AND** the last part is "Quotes today: 2 of 20. No order was made."
+- **AND** a failed check gives the part "<Name>: not available (<fixed text>)" and the other parts stay
+- **AND** an answer with `cached` true adds the part "This quote is kept from before."
 
 ### Requirement: Failure text
 The layer MUST turn each error name of the quote routes into a fixed text.
@@ -93,8 +94,8 @@ The layer MUST turn each error name of the quote routes into a fixed text.
 Origin: spec-first
 
 #### Scenario: Name each failure `up42-quote-panel-008`
-- **WHEN** a test gives the errors quotes_off, rate_limited, budget, no_credentials, credentials_rejected, area_too_large, bad_bbox, unknown_product and an unknown name
-- **THEN** each of the eight known names gives its own fixed text
+- **WHEN** a test gives the errors quotes_off, rate_limited, budget, no_credentials, credentials_rejected, area_too_large, bad_bbox, unknown_product, upstream_failed, unreachable, bad_answer and an unknown name
+- **THEN** each of the eleven known names gives its own fixed text
 - **AND** the unknown name gives the generic text "UP42 did not give a quote."
 - **AND** no text contains a string of the server answer
 
