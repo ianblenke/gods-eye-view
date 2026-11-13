@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor src/layers/up42Scenes/layer.test.mjs:1795 At commit `8b680ae5`, “when the layer is destroyed” uses passive voice. Write: “stops the quote after the caller destroys the layer and shows no late result”.
