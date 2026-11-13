@@ -8925,6 +8925,53 @@
   "ste-lint-045": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-045] gives a clear error for invalid registry JSON"
   ],
+  "up42-quote-panel-001": [
+    "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-001] keeps the id and title of each product and uses the id for a missing title",
+    "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-001] refuses an answer with no products array or with one invalid product",
+    "src/layers/up42Scenes/source.test.mjs › [up42-quote-panel-001] reports a product answer that fails",
+    "src/layers/up42Scenes/source.test.mjs › [up42-quote-panel-001] sends one GET for the product route and keeps the id and title"
+  ],
+  "up42-quote-panel-002": [
+    "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-002] keeps only the named checks, facts, cached flag and budget numbers",
+    "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-002] refuses a body with no results, a bad cached flag or a bad budget",
+    "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-002] turns a check that is not valid into bad_answer and keeps the other checks",
+    "src/layers/up42Scenes/source.test.mjs › [up42-quote-panel-002] posts the product and the box only and keeps the named facts",
+    "src/layers/up42Scenes/source.test.mjs › [up42-quote-panel-002] reports a quote answer that fails",
+    "src/layers/up42Scenes/source.test.mjs › [up42-quote-panel-002] stops a body of more than 256 KiB and rejects when the signal of the call aborts"
+  ],
+  "up42-quote-panel-003": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-003] disables the quote chip while the status says that the server has no credentials",
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-003] shows the quote chip only for a source with both methods, after an answer and while enabled"
+  ],
+  "up42-quote-panel-004": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-004] reads the products once and shows a chip for each of the first six",
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-004] shows the failure text and the quote chip again when the products fail",
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-004] stops the product call when the layer is disabled"
+  ],
+  "up42-quote-panel-005": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-005] asks for a confirm and sends no quote before it",
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-005] ignores a stale chip press",
+    "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-005] names the product in the confirm text and states that no order or credit follows"
+  ],
+  "up42-quote-panel-006": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] gives the reason of a view that has no box and sends no quote",
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] sends one quote with the product and the box of the view and shows its facts",
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] shows the failure text of a quote that fails or rejects",
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-006] stops the quote when the layer is disabled or a new search starts, and shows no result"
+  ],
+  "up42-quote-panel-007": [
+    "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-007] shows an estimate without a size or a unit, a failed check and a kept quote",
+    "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-007] shows the facts of each check and the budget"
+  ],
+  "up42-quote-panel-008": [
+    "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-008] gives a fixed text for each known error and a generic text for another name"
+  ],
+  "up42-quote-panel-009": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-quote-panel-009] calls only the two quote routes and keeps the word order in the text of the flow"
+  ],
+  "up42-quote-panel-010": [
+    "src/layers/up42Scenes/registration.test.mjs › [up42-quote-panel-010] lists the five methods in the contract and in the reference source"
+  ],
   "up42-quotes-001": [
     "src/data/up42Quotes.test.mjs › [up42-quotes-001] serves both paths in both hooks"
   ],

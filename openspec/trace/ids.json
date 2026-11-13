@@ -7069,6 +7069,56 @@
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
+  "up42-quote-panel-001": {
+    "hash": "dfc764d34ec4757ce2bd35bc80e46f5af8699e0a5f1b178b964f4ce5bd987059",
+    "since": "2026-11-13",
+    "change": "up42-quote-panel"
+  },
+  "up42-quote-panel-002": {
+    "hash": "8ca036f25d6606d5a7f00b54ab328c874fa2de74a118dd0c8e8ba64baefb05a7",
+    "since": "2026-11-13",
+    "change": "up42-quote-panel"
+  },
+  "up42-quote-panel-003": {
+    "hash": "3f2fb3b8477d404103cc21b9bb07bbb753d9e59a3718d24bcfe10457ef44bd3d",
+    "since": "2026-11-13",
+    "change": "up42-quote-panel"
+  },
+  "up42-quote-panel-004": {
+    "hash": "f40388528b683339fb230c4be81175faae383e56cce833b772ec1d099713a145",
+    "since": "2026-11-13",
+    "change": "up42-quote-panel"
+  },
+  "up42-quote-panel-005": {
+    "hash": "064fe63440889d48fa3cc582df26a2f24daa10570cc57a8b2c806ac88b9b5cfc",
+    "since": "2026-11-13",
+    "change": "up42-quote-panel"
+  },
+  "up42-quote-panel-006": {
+    "hash": "38d99b080d051b7d1a04811c35b05f98d206124ec27e7768acc098d42300e438",
+    "since": "2026-11-13",
+    "change": "up42-quote-panel"
+  },
+  "up42-quote-panel-007": {
+    "hash": "5e5351de10b162ab6db043e4922847cafaf7547e27ccbd9707248e9b61f81630",
+    "since": "2026-11-13",
+    "change": "up42-quote-panel"
+  },
+  "up42-quote-panel-008": {
+    "hash": "cf98a4b1f7ffce628a3f283e63fdcbd01064726ecb094f87e2af22dd88c8e0f4",
+    "since": "2026-11-13",
+    "change": "up42-quote-panel"
+  },
+  "up42-quote-panel-009": {
+    "hash": "93fea0bf6937a32b3fbb525a3fec61f02ec1bca41ee06efb423bc1e6b3529c61",
+    "since": "2026-11-13",
+    "change": "up42-quote-panel"
+  },
+  "up42-quote-panel-010": {
+    "hash": "8b91e202a5dcb689fe45099e3c5ef3225ca49faef03bcffdeaf89b8dd403fb19",
+    "since": "2026-11-13",
+    "change": "up42-quote-panel"
+  },
   "up42-quotes-001": {
     "hash": "50ee8c8c2de69575616f29468a69a9b1119cab4f33bd9fe16af439c7a911fc23",
     "since": "2026-11-07",
