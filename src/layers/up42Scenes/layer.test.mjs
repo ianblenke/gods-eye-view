@@ -1792,7 +1792,7 @@ test('[up42-quote-panel-005] shows the confirm text after a failed search that f
   );
 });
 
-test('[up42-quote-panel-006] stops the quote when the layer is destroyed and shows no late result', async () => {
+test('[up42-quote-panel-006] stops the quote after the caller destroys the layer and shows no late result', async () => {
   const wait = deferred();
   const h = harness({ withQuotes: true, quote: () => wait.promise });
   await h.searched();
@@ -1805,4 +1805,25 @@ test('[up42-quote-panel-006] stops the quote when the layer is destroyed and sho
   wait.resolve({ ok: true, ...QUOTE });
   await press;
   assert.equal(h.info().includes('No order was made'), false);
+});
+
+test('[up42-quote-panel-006] shows the reason of a search press that has no box and not the text of an earlier quote', async () => {
+  let ground = true;
+  const h = harness({
+    withQuotes: true,
+    pick: () => (ground ? Cesium.Cartesian3.fromDegrees(10, 60) : undefined),
+  });
+  await h.searched();
+  await h.byId('quote').onClick();
+  h.byId('quote-product-0').onClick();
+  await h.byId('quote-confirm').onClick();
+  assert.equal(h.info().startsWith(QUOTE_TEXT), true);
+  ground = false;
+  await h.chip().onClick();
+  assert.equal(
+    h.info().startsWith('Point the view at the ground and press again.'),
+    true,
+  );
+  assert.equal(h.info().includes('No order was made'), false);
+  assert.deepEqual(h.chipIds().slice(2), ['quote']);
 });

@@ -30,6 +30,7 @@ Origin: spec-first
 - **AND** a check that is not an object, or that lacks its main fact, becomes `{ok:false, error:"bad_answer"}` and the other checks stay
 - **AND** an HTTP status that is not `2xx` gives `{ok:false, status, error}` with `retryAfter`, `used` and `limit` when each is a whole number of 0 or more
 - **AND** a rejection and a stop after 60 seconds give the status 0 and the error "unreachable"
+- **AND** the source reads a body of 262144 bytes, and a body of 262145 bytes gives `{ok:false, status, error:"bad_answer"}`
 
 ### Requirement: Quote chip
 The layer MUST show the chip "Quote tasking here" only when the source has `getProducts` and `getQuote`. The layer must be on and must have an answer.
@@ -75,7 +76,7 @@ Origin: spec-first
 - **WHEN** a test presses "Confirm quote", and presses it again before the answer
 - **THEN** the source gets one `getQuote` call with the chosen id and the box of `scenesBox` for the view
 - **AND** while the request runs, the info text starts with "Asking for a quote…" and the quote chip has `disabled` true
-- **AND** `disable`, a new search and `destroy` abort the request and give no result text
+- **AND** `disable`, a press of the search chip and `destroy` abort the request and give no result text
 - **AND** a view that cannot give a box gives the text of the box reason and no `getQuote` call
 
 ### Requirement: Quote text

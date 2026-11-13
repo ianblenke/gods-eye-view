@@ -411,6 +411,7 @@ export function createUp42ScenesLayer({
 
   async function press() {
     if (!_enabled || _request || _configured === false) return;
+    quoteReset();
     const box = scenesBox(viewCentre(_viewer));
     if (!box.ok) {
       _pressMessage = describeReason(box.reason);
@@ -419,7 +420,6 @@ export function createUp42ScenesLayer({
       return;
     }
     const { start, end } = searchWindow(now());
-    quoteReset();
     const request = new AbortController();
     _request = request;
     notify();
