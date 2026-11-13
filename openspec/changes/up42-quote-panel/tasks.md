@@ -12,10 +12,11 @@
 
 ## 3. Layer
 
-- [x] 3.1 Write the layer tests for the chip, the choice, the confirm step and the request (`up42-quote-panel-003` to `up42-quote-panel-006`).
-- [x] 3.2 Write the test that records each URL and method of the flow (`up42-quote-panel-009`).
-- [x] 3.3 Add the quote flow to `src/layers/up42Scenes/index.js`.
-- [x] 3.4 Run the layer tests on the host and correct each error.
+- [x] 3.1 Write the layer tests for the chip and the product choice (`up42-quote-panel-003`, `up42-quote-panel-004`).
+- [x] 3.2 Write the layer tests for the confirm step and the request (`up42-quote-panel-005`, `up42-quote-panel-006`).
+- [x] 3.3 Write the test that records each URL and method of the flow (`up42-quote-panel-009`).
+- [x] 3.4 Add the quote flow to `src/layers/up42Scenes/index.js`.
+- [x] 3.5 Run the layer tests on the host and correct each error.
 
 ## 4. Gates and review
 
