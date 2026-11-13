@@ -6,7 +6,7 @@ Date: 2026-11-13
 Gates: make gates CHANGE=up42-quote-panel passed
 Rounds: 3
 Scope: diff 8b680ae5
-Reviewed-Tree: 0000000000000000000000000000000000000000000000000000000000000000
+Reviewed-Tree: 5ae9754ab5c2100991f15d72e5483c3ae572635accb2115f1e3838545b313cea
 
 Resolved files: none
 
