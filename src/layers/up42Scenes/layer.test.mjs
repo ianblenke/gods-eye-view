@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import * as Cesium from 'cesium';
-import { createUp42ScenesLayer } from './index.js';
+import { createUp42ScenesLayer, createUp42Source } from './index.js';
 
 const NOW = Date.parse('2026-10-21T12:00:00.000Z');
 const MINUTE = 60_000;
@@ -105,6 +105,10 @@ function harness({
   withQuotes = false,
   products = async () => ({ ok: true, products: PRODUCTS }),
   quote = async () => ({ ok: true, ...QUOTE }),
+  withOrders = false,
+  orders = {},
+  ordersOmit = [],
+  fetchImpl = null,
 } = {}) {
   const calls = {
     getStatus: [],
@@ -112,6 +116,10 @@ function harness({
     getThumbnail: [],
     getProducts: [],
     getQuote: [],
+    placeOrder: [],
+    getQuotation: [],
+    acceptQuotation: [],
+    rejectQuotation: [],
     decode: [],
   };
   const source = {
@@ -139,7 +147,33 @@ function harness({
           },
         }
       : {}),
+    ...(withOrders
+      ? Object.fromEntries(
+          ['placeOrder', 'getQuotation', 'acceptQuotation', 'rejectQuotation']
+            .filter((name) => !ordersOmit.includes(name))
+            .map((name) => [
+              name,
+              (options) => {
+                calls[name].push(options);
+                return orders[name](options);
+              },
+            ]),
+        )
+      : {}),
   };
+  // A real source for the quote and order calls reads each URL from a fake fetch.
+  if (fetchImpl !== null) {
+    const real = createUp42Source({ fetchImpl });
+    for (const name of [
+      'getProducts',
+      'getQuote',
+      'placeOrder',
+      'getQuotation',
+      'acceptQuotation',
+      'rejectQuotation',
+    ])
+      source[name] = real[name];
+  }
   const overlay = [];
   const overlayHost = {
     setEntries: (...args) => overlay.push(['setEntries', ...args]),
@@ -1826,4 +1860,521 @@ test('[up42-quote-panel-006] shows the reason of a search press that has no box 
   );
   assert.equal(h.info().includes('No order was made'), false);
   assert.deepEqual(h.chipIds().slice(2), ['quote']);
+});
+
+const head = (h) => h.info().split(' · 3 scenes')[0];
+const ORDER_ID = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee';
+const QUOTATION_ID = 'bbbbbbbb-bbbb-cccc-dddd-eeeeeeeeeeee';
+const PENDING = { id: QUOTATION_ID, credits: 90, decision: 'NOT_DECIDED' };
+const orderHooks = (extra = {}) => ({
+  placeOrder: async () => ({ ok: true, orderId: ORDER_ID, credits: 120 }),
+  getQuotation: async () => ({ ok: true, quotation: PENDING }),
+  acceptQuotation: async () => ({ ok: true, credits: 90 }),
+  rejectQuotation: async () => ({ ok: true }),
+  ...extra,
+});
+async function quoted(options = {}) {
+  const h = harness({
+    withQuotes: true,
+    withOrders: true,
+    pick: () => Cesium.Cartesian3.fromDegrees(10, 60),
+    ...options,
+    orders: orderHooks(options.orders),
+  });
+  await h.searched();
+  await h.byId('quote').onClick();
+  h.byId('quote-product-2').onClick();
+  await h.byId('quote-confirm').onClick();
+  return h;
+}
+
+test('[up42-order-panel-004] shows the order chip only after a quote with an estimate and a source with four methods', async () => {
+  const h = await quoted();
+  assert.deepEqual(h.chipIds(), ['search', 'images', 'quote', 'order']);
+  assert.equal(h.byId('order').label, 'Order this visit');
+  assert.equal(h.info().startsWith(QUOTE_TEXT), true);
+  const before = await (async () => {
+    const x = harness({
+      withQuotes: true,
+      withOrders: true,
+      orders: orderHooks(),
+    });
+    await x.searched();
+    return x.chipIds();
+  })();
+  assert.deepEqual(before, ['search', 'images', 'quote']);
+  const noEstimate = (estimate) => ({
+    quote: async () => ({
+      ok: true,
+      ...QUOTE,
+      results: { ...QUOTE.results, estimate },
+    }),
+  });
+  for (const options of [
+    noEstimate({ ok: false, error: 'bad_answer' }),
+    noEstimate({ ok: true, credits: 0 }),
+    { quote: async () => ({ ok: false, status: 429, error: 'budget' }) },
+    { withOrders: false },
+    { ordersOmit: ['rejectQuotation'] },
+    { ordersOmit: ['placeOrder'] },
+  ]) {
+    const x = await quoted(options);
+    assert.equal(x.chipIds().includes('order'), false);
+  }
+});
+
+test('[up42-order-panel-005 up42-order-panel-006] confirms the order, sends it once and names it', async () => {
+  const wait = deferred();
+  const h = await quoted({ orders: { placeOrder: () => wait.promise } });
+  h.byId('order').onClick();
+  assert.equal(
+    head(h),
+    'Order Product 2 for this view? The estimate is 120 credits. This spends no credits yet.',
+  );
+  assert.deepEqual(h.chipIds().slice(3), ['order-confirm', 'order-cancel']);
+  assert.equal(h.byId('order-confirm').label, 'Place order');
+  assert.equal(h.calls.placeOrder.length, 0);
+  h.byId('order-cancel').onClick();
+  assert.deepEqual(h.chipIds().slice(3), ['order']);
+  assert.equal(h.info().startsWith(QUOTE_TEXT), true);
+  h.byId('order').onClick();
+  const confirm = h.byId('order-confirm');
+  const press = confirm.onClick();
+  await confirm.onClick();
+  assert.equal(h.calls.placeOrder.length, 1);
+  const options = h.calls.placeOrder[0];
+  assert.deepEqual(Object.keys(options).sort(), [
+    'approvedCredits',
+    'box',
+    'dataProduct',
+    'signal',
+  ]);
+  assert.equal(options.dataProduct, PRODUCT_IDS[2]);
+  assert.deepEqual(options.box, BOX);
+  assert.equal(options.approvedCredits, 120);
+  assert.equal(head(h), 'Placing the order…');
+  assert.deepEqual(h.chipIds().slice(3), []);
+  wait.resolve({ ok: true, orderId: ORDER_ID, credits: 120 });
+  await press;
+  assert.equal(head(h), 'Order aaaaaaaa is placed. No credits are spent.');
+  assert.deepEqual(h.chipIds().slice(3), ['quotation']);
+});
+
+test('[up42-order-panel-007 up42-order-panel-008 up42-order-panel-009] reads the quotation and accepts it after a second confirm', async () => {
+  const answers = [
+    { ok: true, quotation: null },
+    { ok: true, quotation: PENDING },
+    { ok: true, quotation: PENDING },
+  ];
+  const h = await quoted({
+    orders: { getQuotation: async () => answers.shift() },
+  });
+  h.byId('order').onClick();
+  await h.byId('order-confirm').onClick();
+  await h.byId('quotation').onClick();
+  assert.equal(head(h), 'UP42 has no quotation yet.');
+  assert.deepEqual(h.chipIds().slice(3), ['quotation']);
+  await h.byId('quotation').onClick();
+  assert.deepEqual(
+    h.calls.getQuotation.map((o) => o.orderId),
+    [ORDER_ID, ORDER_ID],
+  );
+  assert.equal(head(h), 'Quotation: 90 credits.');
+  assert.deepEqual(h.chipIds().slice(3), ['accept', 'reject', 'quotation']);
+  await h.byId('quotation').onClick();
+  assert.equal(head(h), 'Quotation: 90 credits.');
+  assert.equal(h.calls.getQuotation.length, 3);
+  h.byId('accept').onClick();
+  assert.equal(
+    head(h),
+    'Accept the quotation of 90 credits? This spends 90 credits. UP42 cannot reverse it.',
+  );
+  assert.deepEqual(h.chipIds().slice(3), ['accept-confirm', 'order-cancel']);
+  assert.equal(h.byId('accept-confirm').label, 'Accept and spend 90 credits');
+  assert.equal(h.calls.acceptQuotation.length, 0);
+  h.byId('order-cancel').onClick();
+  assert.equal(head(h), 'Quotation: 90 credits.');
+  h.byId('accept').onClick();
+  await h.byId('accept-confirm').onClick();
+  assert.equal(h.calls.acceptQuotation.length, 1);
+  assert.deepEqual(Object.keys(h.calls.acceptQuotation[0]).sort(), [
+    'approvedCredits',
+    'quotationId',
+    'signal',
+  ]);
+  assert.equal(h.calls.acceptQuotation[0].quotationId, QUOTATION_ID);
+  assert.equal(h.calls.acceptQuotation[0].approvedCredits, 90);
+  assert.equal(head(h), 'The quotation is accepted. 90 credits are spent.');
+  assert.deepEqual(h.chipIds().slice(3), []);
+  const decided = await quoted({
+    orders: {
+      getQuotation: async () => ({
+        ok: true,
+        quotation: { ...PENDING, decision: 'ACCEPTED' },
+      }),
+    },
+  });
+  decided.byId('order').onClick();
+  await decided.byId('order-confirm').onClick();
+  await decided.byId('quotation').onClick();
+  assert.equal(head(decided), 'This quotation is accepted.');
+  assert.deepEqual(decided.chipIds().slice(3), []);
+});
+
+test('[up42-order-panel-014] rejects the quotation after a confirm that states no spend', async () => {
+  const h = await quoted();
+  h.byId('order').onClick();
+  await h.byId('order-confirm').onClick();
+  await h.byId('quotation').onClick();
+  h.byId('reject').onClick();
+  assert.equal(
+    head(h),
+    'Reject the quotation of 90 credits? The order stays unpaid and spends no credits.',
+  );
+  assert.deepEqual(h.chipIds().slice(3), ['reject-confirm', 'order-cancel']);
+  assert.equal(h.calls.rejectQuotation.length, 0);
+  h.byId('order-cancel').onClick();
+  h.byId('reject').onClick();
+  await h.byId('reject-confirm').onClick();
+  assert.equal(h.calls.rejectQuotation.length, 1);
+  assert.equal(h.calls.rejectQuotation[0].quotationId, QUOTATION_ID);
+  assert.equal(head(h), 'The quotation is rejected. No credits are spent.');
+  assert.deepEqual(h.chipIds().slice(3), []);
+  assert.equal(h.calls.acceptQuotation.length, 0);
+});
+
+test('[up42-order-panel-010] shows the failure text and allows no new try after an unclear answer', async () => {
+  const fail = (error) => async () => ({ ok: false, status: 502, error });
+  const place = await quoted({ orders: { placeOrder: fail('over_cap') } });
+  place.byId('order').onClick();
+  await place.byId('order-confirm').onClick();
+  assert.equal(
+    head(place),
+    'The price is above the credit cap of the server. Nothing is spent.',
+  );
+  assert.deepEqual(place.chipIds().slice(3), ['order']);
+  const unclear = await quoted({
+    orders: { placeOrder: fail('order_unclear') },
+  });
+  unclear.byId('order').onClick();
+  await unclear.byId('order-confirm').onClick();
+  assert.equal(
+    unclear.info().startsWith('UP42 gave no clear answer. An order can exist.'),
+    true,
+  );
+  assert.deepEqual(unclear.chipIds().slice(3), []);
+  const thrown = await quoted({
+    orders: {
+      placeOrder: async () => {
+        throw new Error('down');
+      },
+    },
+  });
+  thrown.byId('order').onClick();
+  await thrown.byId('order-confirm').onClick();
+  assert.equal(
+    head(thrown),
+    'UP42 gave no clear answer. An order can exist. Check UP42 before you try again.',
+  );
+  assert.deepEqual(thrown.chipIds().slice(3), []);
+  const check = await quoted({
+    orders: { getQuotation: fail('unknown_order') },
+  });
+  check.byId('order').onClick();
+  await check.byId('order-confirm').onClick();
+  await check.byId('quotation').onClick();
+  assert.equal(head(check), 'The server does not know this order.');
+  assert.deepEqual(check.chipIds().slice(3), ['quotation']);
+  for (const [name, error, chips, text] of [
+    [
+      'acceptQuotation',
+      'accept_unclear',
+      [],
+      'UP42 gave no clear answer. Credits can be spent. Check the order in UP42 before you try again.',
+    ],
+    [
+      'acceptQuotation',
+      'over_approved',
+      ['accept', 'reject', 'quotation'],
+      'The price is above the price that you saw. Nothing is spent. Quote again.',
+    ],
+    [
+      'rejectQuotation',
+      'reject_unclear',
+      [],
+      'UP42 gave no clear answer. Check the order in UP42 before you try again.',
+    ],
+    [
+      'rejectQuotation',
+      'decided',
+      ['accept', 'reject', 'quotation'],
+      'This quotation has its decision already.',
+    ],
+  ]) {
+    const x = await quoted({ orders: { [name]: fail(error) } });
+    x.byId('order').onClick();
+    await x.byId('order-confirm').onClick();
+    await x.byId('quotation').onClick();
+    const accept = name === 'acceptQuotation';
+    x.byId(accept ? 'accept' : 'reject').onClick();
+    await x.byId(accept ? 'accept-confirm' : 'reject-confirm').onClick();
+    assert.equal(head(x), text);
+    assert.deepEqual(x.chipIds().slice(3), chips);
+  }
+});
+
+test('[up42-order-panel-012] clears the order steps and ignores a late answer', async () => {
+  for (const clear of [(h) => h.chip().onClick(), (h) => h.layer.disable()]) {
+    const wait = deferred();
+    const h = await quoted({ orders: { placeOrder: () => wait.promise } });
+    h.byId('order').onClick();
+    const press = h.byId('order-confirm').onClick();
+    const signal = h.calls.placeOrder[0].signal;
+    await clear(h);
+    assert.equal(signal.aborted, true);
+    wait.resolve({ ok: true, orderId: ORDER_ID, credits: 120 });
+    await press;
+    assert.equal(h.chipIds().includes('quotation'), false);
+    assert.equal(h.info().includes('Order aaaaaaaa'), false);
+  }
+  const h = await quoted();
+  h.byId('order').onClick();
+  await h.chip().onClick();
+  assert.equal(h.chipIds().includes('order-confirm'), false);
+  assert.equal(h.chipIds().includes('order'), false);
+  // A search press ends a finished flow, so the next quote offers the order again.
+  const again = await quoted();
+  again.byId('order').onClick();
+  await again.byId('order-confirm').onClick();
+  assert.equal(again.byId('quote').disabled, true);
+  await again.chip().onClick();
+  assert.equal(again.byId('quote').disabled, false);
+  await again.byId('quote').onClick();
+  again.byId('quote-product-1').onClick();
+  await again.byId('quote-confirm').onClick();
+  assert.equal(again.chipIds().includes('quotation'), false);
+  assert.equal(again.chipIds().includes('order'), true);
+});
+
+test('[up42-order-panel-011] calls only the quote routes and the four order routes', async () => {
+  const seen = [];
+  const body = (value, status = 200) =>
+    new Response(JSON.stringify(value), { status });
+  const answers = {
+    'GET /api/up42/quote/products': () => body({ products: PRODUCTS }),
+    'POST /api/up42/quote': () => body(QUOTE),
+    'POST /api/up42/order': () =>
+      body({ orderId: ORDER_ID, credits: 120, spent: false }),
+    [`GET /api/up42/order/quotation?orderId=${ORDER_ID}`]: () =>
+      body({ quotation: PENDING }),
+    'POST /api/up42/order/accept': () => body({ accepted: true, credits: 90 }),
+    'POST /api/up42/order/reject': () => body({ rejected: true }),
+  };
+  const h = await quoted({
+    fetchImpl: async (url, init) => {
+      const key = `${init?.method ?? 'GET'} ${url}`;
+      seen.push(key);
+      return answers[key]();
+    },
+  });
+  h.byId('order').onClick();
+  await h.byId('order-confirm').onClick();
+  await h.byId('quotation').onClick();
+  h.byId('reject').onClick();
+  await h.byId('reject-confirm').onClick();
+  const second = await quoted({
+    fetchImpl: async (url, init) => {
+      const key = `${init?.method ?? 'GET'} ${url}`;
+      seen.push(key);
+      return answers[key]();
+    },
+  });
+  second.byId('order').onClick();
+  await second.byId('order-confirm').onClick();
+  await second.byId('quotation').onClick();
+  second.byId('accept').onClick();
+  await second.byId('accept-confirm').onClick();
+  assert.deepEqual([...new Set(seen)].sort(), Object.keys(answers).sort());
+  assert.equal(seen.length, 10);
+});
+
+test('[up42-order-panel-010] treats a lost answer of a call that can change UP42 as unclear', async () => {
+  const lost = (error) => async () => ({ ok: false, status: 0, error });
+  const texts = {
+    placeOrder:
+      'UP42 gave no clear answer. An order can exist. Check UP42 before you try again.',
+    acceptQuotation:
+      'UP42 gave no clear answer. Credits can be spent. Check the order in UP42 before you try again.',
+    rejectQuotation:
+      'UP42 gave no clear answer. Check the order in UP42 before you try again.',
+  };
+  for (const name of Object.keys(texts))
+    for (const error of ['unreachable', 'bad_answer']) {
+      const h = await quoted({ orders: { [name]: lost(error) } });
+      h.byId('order').onClick();
+      if (name !== 'placeOrder') {
+        await h.byId('order-confirm').onClick();
+        await h.byId('quotation').onClick();
+        h.byId(name === 'acceptQuotation' ? 'accept' : 'reject').onClick();
+        await h
+          .byId(
+            name === 'acceptQuotation' ? 'accept-confirm' : 'reject-confirm',
+          )
+          .onClick();
+      } else await h.byId('order-confirm').onClick();
+      assert.equal(head(h), texts[name]);
+      assert.deepEqual(h.chipIds().slice(3), []);
+    }
+  const read = await quoted({
+    orders: { getQuotation: lost('unreachable') },
+  });
+  read.byId('order').onClick();
+  await read.byId('order-confirm').onClick();
+  await read.byId('quotation').onClick();
+  assert.equal(head(read), 'The server did not answer.');
+  assert.deepEqual(read.chipIds().slice(3), ['quotation']);
+});
+
+test('[up42-order-panel-009] ignores a second press while the accept runs', async () => {
+  const wait = deferred();
+  const h = await quoted({ orders: { acceptQuotation: () => wait.promise } });
+  h.byId('order').onClick();
+  await h.byId('order-confirm').onClick();
+  await h.byId('quotation').onClick();
+  h.byId('accept').onClick();
+  const confirm = h.byId('accept-confirm');
+  const first = confirm.onClick();
+  await confirm.onClick();
+  assert.equal(h.calls.acceptQuotation.length, 1);
+  assert.deepEqual(h.chipIds().slice(3), []);
+  assert.equal(head(h), 'Accepting the quotation…');
+  wait.resolve({ ok: true, credits: 90 });
+  await first;
+  assert.equal(h.calls.acceptQuotation.length, 1);
+  assert.equal(head(h), 'The quotation is accepted. 90 credits are spent.');
+});
+
+async function assertBlocked(h) {
+  const chip = h.byId('quote');
+  const before = h.calls.getProducts.length;
+  const text = head(h);
+  assert.equal(chip.disabled, true);
+  await chip.onClick();
+  assert.equal(h.calls.getProducts.length, before);
+  assert.equal(head(h), text);
+}
+
+test('[up42-order-panel-016] blocks a new quote in each order step and frees it after a search press', async () => {
+  const wait = deferred();
+  const h = await quoted({ orders: { placeOrder: () => wait.promise } });
+  assert.equal(h.calls.getProducts.length, 1);
+  assert.equal(h.byId('quote').disabled, false);
+  h.byId('order').onClick();
+  await assertBlocked(h);
+  const placing = h.byId('order-confirm').onClick();
+  await assertBlocked(h);
+  wait.resolve({ ok: true, orderId: ORDER_ID, credits: 120 });
+  await placing;
+  await assertBlocked(h);
+  await h.byId('quotation').onClick();
+  await assertBlocked(h);
+  h.byId('accept').onClick();
+  await assertBlocked(h);
+  h.byId('order-cancel').onClick();
+  h.byId('reject').onClick();
+  await assertBlocked(h);
+  await h.byId('reject-confirm').onClick();
+  assert.equal(head(h), 'The quotation is rejected. No credits are spent.');
+  await assertBlocked(h);
+  await h.chip().onClick();
+  assert.equal(h.byId('quote').disabled, false);
+  assert.equal(h.chipIds().includes('order'), false);
+  const unclear = await quoted({
+    orders: {
+      placeOrder: async () => ({
+        ok: false,
+        status: 502,
+        error: 'order_unclear',
+      }),
+    },
+  });
+  unclear.byId('order').onClick();
+  await unclear.byId('order-confirm').onClick();
+  await assertBlocked(unclear);
+  assert.equal(head(unclear).startsWith('UP42 gave no clear answer.'), true);
+});
+
+test('[up42-order-panel-016] ends the old offer when a quote starts and refuses each chip of an older offer', async () => {
+  const offered = await quoted();
+  const old = offered.byId('order');
+  await offered.byId('quote').onClick();
+  assert.equal(offered.chipIds().includes('order'), false);
+  assert.equal(old.onClick(), false);
+  assert.equal(head(offered), 'Choose a product.');
+  offered.byId('quote-cancel').onClick();
+  assert.equal(offered.chipIds().includes('order'), false);
+  const again = await quoted();
+  const stale = again.byId('order');
+  await again.byId('quote').onClick();
+  again.byId('quote-product-1').onClick();
+  await again.byId('quote-confirm').onClick();
+  assert.equal(again.chipIds().includes('order'), true);
+  const text = head(again);
+  assert.equal(stale.onClick(), false);
+  assert.equal(head(again), text);
+  assert.deepEqual(again.chipIds().slice(3), ['order']);
+  again.byId('order').onClick();
+  assert.equal(head(again).startsWith('Order Product 1 for this view?'), true);
+  const same = await quoted();
+  const order = same.byId('order');
+  same.byId('order').onClick();
+  const cancel = same.byId('order-cancel');
+  await same.byId('order-confirm').onClick();
+  const placed = head(same);
+  assert.equal(placed, 'Order aaaaaaaa is placed. No credits are spent.');
+  order.onClick();
+  cancel.onClick();
+  assert.equal(head(same), placed);
+  assert.deepEqual(same.chipIds().slice(3), ['quotation']);
+  const sameEpoch = await quoted();
+  sameEpoch.byId('order').onClick();
+  await sameEpoch.byId('order-confirm').onClick();
+  const keep = sameEpoch.byId('quotation');
+  await keep.onClick();
+  const quotation = head(sameEpoch);
+  const sameOrder = sameEpoch.byId('accept');
+  sameOrder.onClick();
+  sameEpoch.byId('order-cancel').onClick();
+  assert.equal(head(sameEpoch), quotation);
+});
+
+test('[up42-order-panel-016] refuses a saved accept chip after an unclear answer and after UP42 accepts the quotation', async () => {
+  for (const result of [
+    { ok: false, status: 502, error: 'accept_unclear' },
+    { ok: true, credits: 90 },
+  ]) {
+    const h = await quoted({ orders: { acceptQuotation: async () => result } });
+    h.byId('order').onClick();
+    await h.byId('order-confirm').onClick();
+    await h.byId('quotation').onClick();
+    const accept = h.byId('accept');
+    const reject = h.byId('reject');
+    const check = h.byId('quotation');
+    accept.onClick();
+    const confirm = h.byId('accept-confirm');
+    const cancel = h.byId('order-cancel');
+    await confirm.onClick();
+    const text = head(h);
+    assert.equal(h.calls.acceptQuotation.length, 1);
+    assert.equal(accept.onClick(), false);
+    assert.equal(reject.onClick(), false);
+    assert.equal(cancel.onClick(), false);
+    assert.equal(await check.onClick(), false);
+    assert.equal(await confirm.onClick(), false);
+    assert.equal(h.calls.acceptQuotation.length, 1);
+    assert.equal(h.calls.rejectQuotation.length, 0);
+    assert.equal(h.calls.getQuotation.length, 1);
+    assert.equal(head(h), text);
+    assert.deepEqual(h.chipIds().slice(3), []);
+  }
 });

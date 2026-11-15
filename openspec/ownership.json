@@ -29,6 +29,8 @@
     "server/providers/up42-thumbnails/",
     "server/providers/up42-quotes/",
     "src/data/up42Quotes.test.mjs",
+    "server/providers/up42-orders/",
+    "src/data/up42Orders.test.mjs",
     "server/providers/up42/upstream.js",
     "server/providers/up42/validate.js",
     "server/providers/planet.js",

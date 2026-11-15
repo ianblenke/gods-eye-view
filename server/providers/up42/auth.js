@@ -51,7 +51,14 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
   let inFlight = null;
   const secrets = new Set();
 
-  async function send(url, init, login = false, image = false, multi = false) {
+  async function send(
+    url,
+    init,
+    login = false,
+    image = false,
+    multi = false,
+    spec = null,
+  ) {
     const controller = new AbortController();
     const timer = setTimer(() => controller.abort(), 15000);
     const exchange = async () => {
@@ -71,14 +78,24 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
         controller.signal,
       );
       controller.signal.throwIfAborted();
-      if (response.status !== 200 && !(multi && response.status === 207)) {
+      const good =
+        spec === null
+          ? response.status === 200 || (multi && response.status === 207)
+          : spec.statuses.includes(response.status);
+      if (!good) {
         await cancelBody(response, controller.signal);
         if (login && (response.status === 400 || response.status === 401))
           return failed('credentials_rejected');
         if (init.headers.Authorization !== undefined && response.status === 401)
           return failed('unauthorized');
         if (image && response.status === 404) return failed('not_found');
-        return failed('upstream_failed');
+        return spec === null
+          ? failed('upstream_failed')
+          : { ...failed('upstream_failed'), status: response.status };
+      }
+      if (spec?.discard) {
+        await cancelBody(response, controller.signal);
+        return { ok: true, value: null };
       }
       if (image) {
         const type = mediaTypeOf(response.headers.get('content-type'));
@@ -287,6 +304,49 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
       : result;
   }
 
+  // The orders folder holds the list of allowed calls. The client only refuses
+  // two methods and each name that is not in capital letters.
+  const REFUSED = new Set(['DELETE', 'PUT']);
+
+  /**
+   * One authenticated call. `statuses` names the
+   * good status codes. A refused status gives `status` in the failure.
+   */
+  async function call(method, url, { body, type, statuses, discard = false }) {
+    if (REFUSED.has(method) || !/^[A-Z]+$/.test(method) || !apiOrigin(url))
+      return failed('bad_upstream');
+    let token = await getToken();
+    if (!token.ok) return token;
+    const request = (value) =>
+      send(
+        url,
+        {
+          method,
+          headers: {
+            Authorization: `Bearer ${value}`,
+            Accept: 'application/json',
+            ...(body === undefined
+              ? {}
+              : { 'Content-Type': type ?? 'application/json' }),
+          },
+          ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+        },
+        false,
+        false,
+        false,
+        { statuses, discard },
+      );
+    let result = await request(token.value);
+    if (!result.ok && result.kind === 'unauthorized') {
+      token = await getToken(token.value);
+      if (!token.ok) return token;
+      result = await request(token.value);
+    }
+    return !result.ok && result.kind === 'unauthorized'
+      ? failed('credentials_rejected')
+      : result;
+  }
+
   function getPublic(url) {
     if (!apiOrigin(url)) return Promise.resolve(failed('bad_upstream'));
     return send(url, {
@@ -311,6 +371,7 @@ export function createClient({ env, fetchImpl, now, setTimer, clearTimer }) {
         headers: { Accept: 'application/json' },
       }),
     post,
+    call,
     getPublic,
     search,
     thumbnail,

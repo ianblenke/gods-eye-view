@@ -1,0 +1,5 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-11-15-up42-tasking-orders/specs/up42-orders/spec.md:337,340,346,348 At commit `4c5b55db`, “the read”, “the write” and “a failed save” use verbs as nouns. Write: “the server cannot read the file or cannot write a count”; “Failure to save an order”; “Keep the order when the server cannot save it”; and “WHEN the server cannot save the ledger file after the order call”.
+- [ ] F2 minor openspec/changes/archive/2026-11-15-up42-tasking-orders/specs/up42-orders/spec.md:331 At commit `4c5b55db`, “the ledger file cannot be read” uses passive voice. Write: “The routes MUST refuse requests when the server cannot read the ledger file or write a count.”
+- [ ] F3 minor openspec/changes/archive/2026-11-15-up42-tasking-orders/specs/up42-order-panel/spec.md:191 At commit `4c5b55db`, “the quote chip is disabled” uses passive voice. Write: “the layer disables the quote chip”.
+- [ ] F4 minor openspec/changes/archive/2026-11-15-up42-tasking-orders/specs/up42-order-panel/spec.md:193 At commit `4c5b55db`, “the order chip goes away” uses a phrasal verb. Write: “the layer removes the order chip”.

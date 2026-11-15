@@ -23,7 +23,7 @@ COPY --chown=node:node package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund && npm cache clean --force
 
 COPY --chown=node:node . .
-RUN mkdir -p .gev-cache .gev-logs
+RUN mkdir -p .gev-cache .gev-logs .gev-up42
 
 EXPOSE 4173
 

@@ -17,6 +17,7 @@ import {
   sceneList,
   thumbnailSize,
 } from './model.js';
+import { createOrderFlow } from './orderFlow.js';
 import {
   ASKING,
   LOADING_PRODUCTS,
@@ -278,6 +279,17 @@ export function createUp42ScenesLayer({
   const hasQuotes =
     typeof source.getProducts === 'function' &&
     typeof source.getQuote === 'function';
+  const hasOrders = [
+    'placeOrder',
+    'getQuotation',
+    'acceptQuotation',
+    'rejectQuotation',
+  ].every((name) => typeof source[name] === 'function');
+  const orderFlow = createOrderFlow({
+    source,
+    notify,
+    isEnabled: () => hasQuotes && hasOrders && _enabled && _answer !== null,
+  });
 
   function quoteReset() {
     _quoteRequest?.abort();
@@ -289,7 +301,15 @@ export function createUp42ScenesLayer({
   }
 
   async function startQuote() {
-    if (!_enabled || _quoteStep !== 'idle' || _configured === false) return;
+    if (
+      !_enabled ||
+      _quoteStep !== 'idle' ||
+      _configured === false ||
+      orderFlow.busy()
+    )
+      return;
+    // A new quote ends the offer of the old quote.
+    orderFlow.reset();
     const request = new AbortController();
     _quoteRequest = request;
     _quoteStep = 'loading';
@@ -337,6 +357,7 @@ export function createUp42ScenesLayer({
       return;
     }
     const request = new AbortController();
+    const product = _product;
     _quoteRequest = request;
     _quoteStep = 'asking';
     _quoteMessage = ASKING;
@@ -359,6 +380,14 @@ export function createUp42ScenesLayer({
     _quoteMessage = result.ok
       ? describeQuote(result)
       : describeQuoteFailure(result);
+    const estimate = result.ok ? result.results.estimate : undefined;
+    if (estimate?.ok && estimate.credits > 0) {
+      orderFlow.offer({
+        product,
+        box: box.bbox,
+        credits: estimate.credits,
+      });
+    }
     notify();
   }
 
@@ -384,7 +413,8 @@ export function createUp42ScenesLayer({
       {
         id: 'quote',
         label: QUOTE_LABEL,
-        disabled: _quoteStep !== 'idle' || _configured === false,
+        disabled:
+          _quoteStep !== 'idle' || _configured === false || orderFlow.busy(),
         onClick: startQuote,
       },
     ];
@@ -392,6 +422,7 @@ export function createUp42ScenesLayer({
 
   function reset() {
     quoteReset();
+    orderFlow.reset();
     sceneImages.release();
     _imagesOn = false;
     _statusRequest?.abort();
@@ -412,6 +443,7 @@ export function createUp42ScenesLayer({
   async function press() {
     if (!_enabled || _request || _configured === false) return;
     quoteReset();
+    orderFlow.reset();
     const box = scenesBox(viewCentre(_viewer));
     if (!box.ok) {
       _pressMessage = describeReason(box.reason);
@@ -556,10 +588,15 @@ export function createUp42ScenesLayer({
                   ]
                 : []),
               ...quoteChips(),
+              ...orderFlow.chips(),
             ]
           : [],
         info: readoutText({
-          message: _quoteMessage ?? _pressMessage ?? _statusMessage,
+          message:
+            orderFlow.message() ??
+            _quoteMessage ??
+            _pressMessage ??
+            _statusMessage,
           answer: _answer,
           thumbMessage: _imagesOn ? sceneImages.text() : _thumbMessage,
         }),
