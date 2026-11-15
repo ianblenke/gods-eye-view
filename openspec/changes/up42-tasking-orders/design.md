@@ -20,7 +20,9 @@ A call to `PATCH /v2/tasking/quotation/{id}` with the decision `ACCEPTED` deduct
 
 **D1. A new folder.** The code lives in `server/providers/up42-orders/`. The scan tests of `up42-source` and `up42-quotes` stay true because they read other folders.
 
-**D2. The client gets `call`.** The method refuses DELETE, PUT and a method name with no capital letters. It checks the origin `https://api.up42.com`, as `post` does. It names the good status codes and reports the status of a refused call. They keep no order literal. The allow-list lives in the orders folder. A `PATCH` sends the type `application/merge-patch+json`.
+**D2. The client gets `call`.** The method refuses DELETE, PUT and a method name with no capital letters. It checks the origin `https://api.up42.com`, as `post` does. It names the good status codes and reports the status of a refused call.
+
+The client keeps no order literal. The allow-list lives in the orders folder. A `PATCH` sends the type `application/merge-patch+json`.
 
 **D3. Four fixed destinations.** The orders folder holds these as constants: the estimate URL, the order URL, the quotation list URL and the quotation URL pattern. The pattern serves the accept and the reject. The pattern takes a validated lower-case UUID only. No other part of a URL comes from a request.
 

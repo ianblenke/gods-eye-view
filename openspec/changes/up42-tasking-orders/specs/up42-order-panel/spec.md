@@ -26,7 +26,7 @@ Origin: spec-first
 - **WHEN** a test calls `getQuotation` with the order id "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
 - **THEN** the fake fetch function gets one `GET` request for "/api/up42/order/quotation?orderId=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
 - **AND** a body with a null quotation gives `{ok:true, quotation:null}`
-- **AND** a body with a quotation id, a number of credits and a decision gives `{ok:true, quotation}` with those three facts
+- **AND** a body with a quotation id, credits as a number and a decision gives `{ok:true, quotation}` with those three facts
 - **AND** a body of another shape gives the error "bad_answer"
 
 ### Requirement: Accept source
