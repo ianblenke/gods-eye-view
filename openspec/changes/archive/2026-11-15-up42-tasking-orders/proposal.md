@@ -34,3 +34,14 @@ None. The quote routes and the quote panel keep their requirements. The orders r
 - The `.env.example` file gets `UP42_ORDERS`, `UP42_ORDER_MAX_CREDITS` (example 5000), `UP42_DAILY_ORDERS` (example 2), `UP42_WORKSPACE_ID` and `UP42_DATA_DIR`. The owner sets them.
 - The change opens no gap in `openspec/trace`. It must keep each owned file at full coverage.
 - Risk: no test calls the real UP42 order routes. The first real order needs the owner to say yes. The credit cap and the account balance are the last guards.
+
+## Known limits and later changes
+
+- No test calls the real UP42 order routes. The answer shapes of the order call and of the quotation list come from the UP42 documents. A different shape gives `order_unclear` or `unknown_quotation`.
+- The quotation list reads the first 100 entries only. A longer list can hide a quotation.
+- UP42 can need a workspace id on the order URL. `UP42_WORKSPACE_ID` is optional and untested against UP42.
+- The user needs a role that can create orders and accept quotations. The plan that gives this role is unknown.
+- If the server cannot save a placed order to the ledger file, it keeps the order in memory and gives success. A restart then loses the order.
+- The reject route has no count of its own. Its rate limit is the shared limit of six requests in one minute.
+- The scenario `up42-order-panel-015` is retired. The scenario `up42-order-panel-016` replaces it.
+- Minor findings of the STE adversary about -ing forms, nouns and passive forms stay open, for example "confirm" as a noun. The lead kept them. Round 3 listed four, and rounds 1 and 2 listed more of the same kind.
