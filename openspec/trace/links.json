@@ -8925,6 +8925,168 @@
   "ste-lint-045": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-045] gives a clear error for invalid registry JSON"
   ],
+  "up42-order-panel-001": [
+    "src/layers/up42Scenes/orderSource.test.mjs › [up42-order-panel-001] posts the product, the box and the credits for one order",
+    "src/layers/up42Scenes/orderSource.test.mjs › [up42-order-panel-001] reports an order answer that fails"
+  ],
+  "up42-order-panel-002": [
+    "src/layers/up42Scenes/orderSource.test.mjs › [up42-order-panel-002] reads the quotation of one order with one GET"
+  ],
+  "up42-order-panel-003": [
+    "src/layers/up42Scenes/orderSource.test.mjs › [up42-order-panel-003] posts the quotation and the credits for one accept"
+  ],
+  "up42-order-panel-004": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-004] shows the order chip only after a quote with an estimate and a source with four methods"
+  ],
+  "up42-order-panel-005": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-005 up42-order-panel-006] confirms the order, sends it once and names it",
+    "src/layers/up42Scenes/orders.test.mjs › [up42-order-panel-005] states the amount and no spend in the order confirm text"
+  ],
+  "up42-order-panel-006": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-005 up42-order-panel-006] confirms the order, sends it once and names it",
+    "src/layers/up42Scenes/orders.test.mjs › [up42-order-panel-006] names the order with its first eight characters"
+  ],
+  "up42-order-panel-007": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-007 up42-order-panel-008 up42-order-panel-009] reads the quotation and accepts it after a second confirm",
+    "src/layers/up42Scenes/orders.test.mjs › [up42-order-panel-007] gives the price of an undecided quotation and the decision of another"
+  ],
+  "up42-order-panel-008": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-007 up42-order-panel-008 up42-order-panel-009] reads the quotation and accepts it after a second confirm",
+    "src/layers/up42Scenes/orders.test.mjs › [up42-order-panel-008] states the spend and that it cannot be reversed in the accept text"
+  ],
+  "up42-order-panel-009": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-007 up42-order-panel-008 up42-order-panel-009] reads the quotation and accepts it after a second confirm",
+    "src/layers/up42Scenes/orders.test.mjs › [up42-order-panel-009] states the spent credits after an accept"
+  ],
+  "up42-order-panel-010": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-010] shows the failure text and allows no new try after an unclear answer",
+    "src/layers/up42Scenes/orders.test.mjs › [up42-order-panel-010] shows a fixed text for each known error and a generic text for another"
+  ],
+  "up42-order-panel-011": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-011] calls only the quote routes and the four order routes"
+  ],
+  "up42-order-panel-012": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-012] clears the order steps and ignores a late answer"
+  ],
+  "up42-order-panel-013": [
+    "src/layers/up42Scenes/orderSource.test.mjs › [up42-order-panel-013] posts the quotation for one reject"
+  ],
+  "up42-order-panel-014": [
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-014] rejects the quotation after a confirm that states no spend",
+    "src/layers/up42Scenes/orders.test.mjs › [up42-order-panel-014] states that a reject spends no credits"
+  ],
+  "up42-orders-001": [
+    "src/data/up42Orders.test.mjs › [up42-orders-001] serves the four paths in both hooks"
+  ],
+  "up42-orders-002": [
+    "src/data/up42Orders.test.mjs › [up42-orders-002] checks each method before the site"
+  ],
+  "up42-orders-003": [
+    "src/data/up42Orders.test.mjs › [up42-orders-003] checks the site before the switch and rate"
+  ],
+  "up42-orders-004": [
+    "src/data/up42Orders.test.mjs › [up42-orders-004] keeps all routes off and spends no rate count"
+  ],
+  "up42-orders-005": [
+    "src/data/up42Orders.test.mjs › [up42-orders-005] refuses each spending route with no valid cap"
+  ],
+  "up42-orders-006": [
+    "src/data/up42Orders.test.mjs › [up42-orders-006] limits all routes together to six a minute"
+  ],
+  "up42-orders-007": [
+    "src/data/up42Orders.test.mjs › [up42-orders-007] gives the box errors and keeps the facts",
+    "src/data/up42Orders.test.mjs › [up42-orders-007] refuses an order with a bad parameter",
+    "src/data/up42Orders.test.mjs › [up42-orders-007] refuses an order with a bad product",
+    "src/data/up42Orders.test.mjs › [up42-orders-007] refuses an order with an array",
+    "src/data/up42Orders.test.mjs › [up42-orders-007] refuses an order with an extra key",
+    "src/data/up42Orders.test.mjs › [up42-orders-007] refuses an order with credits above the cap",
+    "src/data/up42Orders.test.mjs › [up42-orders-007] refuses an order with negative credits",
+    "src/data/up42Orders.test.mjs › [up42-orders-007] refuses an order with no credits",
+    "src/data/up42Orders.test.mjs › [up42-orders-007] refuses an order with no product",
+    "src/data/up42Orders.test.mjs › [up42-orders-007] refuses an order with not JSON",
+    "src/data/up42Orders.test.mjs › [up42-orders-007] refuses an order with text credits",
+    "src/data/up42Orders.test.mjs › [up42-orders-007] refuses an order with zero credits"
+  ],
+  "up42-orders-008": [
+    "src/data/up42Orders.test.mjs › [up42-orders-008] refuses each route with no credentials"
+  ],
+  "up42-orders-009": [
+    "src/data/up42Orders.test.mjs › [up42-orders-009] checks the price before the order call"
+  ],
+  "up42-orders-010": [
+    "src/data/up42Orders.test.mjs › [up42-orders-010] places one order with the body of the quote"
+  ],
+  "up42-orders-011": [
+    "src/data/up42Orders.test.mjs › [up42-orders-011] reports a refused order and keeps the rest",
+    "src/data/up42Orders.test.mjs › [up42-orders-011] stops after an order with a 500 answer",
+    "src/data/up42Orders.test.mjs › [up42-orders-011] stops after an order with a 503 answer",
+    "src/data/up42Orders.test.mjs › [up42-orders-011] stops after an order with a bad id",
+    "src/data/up42Orders.test.mjs › [up42-orders-011] stops after an order with a fault",
+    "src/data/up42Orders.test.mjs › [up42-orders-011] stops after an order with a secret",
+    "src/data/up42Orders.test.mjs › [up42-orders-011] stops after an order with no id",
+    "src/data/up42Orders.test.mjs › [up42-orders-011] stops after an order with no results"
+  ],
+  "up42-orders-012": [
+    "src/data/up42Orders.test.mjs › [up42-orders-012] refuses a duplicate and a simultaneous order"
+  ],
+  "up42-orders-013": [
+    "src/data/up42Orders.test.mjs › [up42-orders-013] counts the orders and resets at the day change"
+  ],
+  "up42-orders-014": [
+    "src/data/up42Orders.test.mjs › [up42-orders-014] reads the quotation of an own order"
+  ],
+  "up42-orders-015": [
+    "src/data/up42Orders.test.mjs › [up42-orders-015] refuses an accept request with a bad body"
+  ],
+  "up42-orders-016": [
+    "src/data/up42Orders.test.mjs › [up42-orders-016] reads the list first and lets an equal price pass",
+    "src/data/up42Orders.test.mjs › [up42-orders-016] refuses to accept a price above the approval",
+    "src/data/up42Orders.test.mjs › [up42-orders-016] refuses to accept a price above the cap",
+    "src/data/up42Orders.test.mjs › [up42-orders-016] refuses to accept a rejected quotation",
+    "src/data/up42Orders.test.mjs › [up42-orders-016] refuses to accept an accepted quotation",
+    "src/data/up42Orders.test.mjs › [up42-orders-016] refuses to accept another order",
+    "src/data/up42Orders.test.mjs › [up42-orders-016] refuses to accept no quotation"
+  ],
+  "up42-orders-017": [
+    "src/data/up42Orders.test.mjs › [up42-orders-017] accepts one quotation with one PATCH"
+  ],
+  "up42-orders-018": [
+    "src/data/up42Orders.test.mjs › [up42-orders-018] stops after an unclear accept"
+  ],
+  "up42-orders-019": [
+    "src/data/up42Orders.test.mjs › [up42-orders-019] counts the accepts with an own count"
+  ],
+  "up42-orders-020": [
+    "src/data/up42Orders.test.mjs › [up42-orders-020] refuses a second accept while the first runs"
+  ],
+  "up42-orders-021": [
+    "src/data/up42Orders.test.mjs › [up42-orders-021] reports rejected credentials"
+  ],
+  "up42-orders-022": [
+    "src/data/up42Orders.test.mjs › [up42-orders-022] sends only the five listed calls"
+  ],
+  "up42-orders-023": [
+    "src/data/up42Orders.test.mjs › [up42-orders-023] keeps secrets out of the answers and the log"
+  ],
+  "up42-orders-024": [
+    "src/data/up42Orders.test.mjs › [up42-orders-024] shares one client in the local list"
+  ],
+  "up42-orders-025": [
+    "src/data/up42Orders.test.mjs › [up42-orders-025] rejects one quotation with one PATCH"
+  ],
+  "up42-orders-026": [
+    "src/data/up42Orders.test.mjs › [up42-orders-026] keeps the ledger over a restart"
+  ],
+  "up42-orders-027": [
+    "src/data/up42Orders.test.mjs › [up42-orders-027] stops when the ledger fails",
+    "src/data/up42Orders.test.mjs › [up42-orders-027] stops with no call when a count cannot be written"
+  ],
+  "up42-orders-028": [
+    "src/data/up42Orders.test.mjs › [up42-orders-028] mounts the volume for the ledger"
+  ],
+  "up42-orders-029": [
+    "src/data/up42Orders.test.mjs › [up42-orders-029] calls the API with a fixed origin"
+  ],
   "up42-quote-panel-001": [
     "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-001] keeps the id and title of each product and uses the id when the title is not valid",
     "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-001] refuses an answer with no products array or with one invalid product",

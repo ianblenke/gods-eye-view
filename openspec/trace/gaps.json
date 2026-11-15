@@ -52,11 +52,11 @@
       "branches": 5,
       "functions": 0,
       "totals": {
-        "lines": 223,
+        "lines": 224,
         "branches": 23,
         "functions": 8
       },
-      "sha": "b45baf413ee8d7c79fe19978e202c130bd0314e4025aad7805ce97f69a49e25a",
+      "sha": "bb8c6af2fe4bbfd566b2272b8044d220af3db37330edc38533bc4603d18d9123",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"

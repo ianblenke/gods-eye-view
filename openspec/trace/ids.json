@@ -7069,6 +7069,221 @@
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
+  "up42-order-panel-001": {
+    "hash": "574807123f61728682392f10b950d551db2fa5d2ab960589b7b2a06f82fce06f",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-002": {
+    "hash": "285fed13e5e0d0ba15e010268b5a33c62ed23629e4d8d789254673becf95a88d",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-003": {
+    "hash": "c63b3cc9a52b6b3d53e0d444883a07de58cbdf2079dd94fa31e971d933888165",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-004": {
+    "hash": "616431e4c785a0aa0bbd963b50959e443c9dba361d5a13d1b1d1b8d221e79f29",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-005": {
+    "hash": "866afbdd31fd0fbd22c1efc363d4c30e0e1805e92be9559eb2d2b3bb59119099",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-006": {
+    "hash": "700ea5a962ce91080e2e73d9d21109da49fdf8db0fa6e638ae965486604ed230",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-007": {
+    "hash": "bddfc11f3d4569d715cdcdffc45eecc4d6448864efbe48eed9ab1b721f6d739e",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-008": {
+    "hash": "2e6253835a6b09737c885c6a297bedfc9ccb4786f46cb523c225d76386747885",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-009": {
+    "hash": "8d66d511d2445931ec60eba8f15432774e72fcf1ec0a12df758b63caca6badb5",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-010": {
+    "hash": "4043e609454de99f6d0872616f6349a294a873a51bcff421474b94d33b786732",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-011": {
+    "hash": "18a14e1381ce5d4c61921b9a637232fc8d008fa4c6791745ec14ea995432c834",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-012": {
+    "hash": "0c4e1c4ec369a9a448d39f5aea4b928ef1c2f713232f5b9749658007c957ff40",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-013": {
+    "hash": "a5e1c95e6ec85dc380aca8a99c30dda7ece5bb67d6fe338f2c12711d911aaba0",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-order-panel-014": {
+    "hash": "e5ad5b4de36ab05b4f3864a5c1ceaf3d1eb6bc3a789d1cea05778179d994dd31",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-001": {
+    "hash": "b5d21c31a68b76c8d688a32befe2f8eeb5e3512408385d51112fbb7bfb73ab82",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-002": {
+    "hash": "a40dba92ff589555e2135ff6564885e73b56f25dd4ae50c4e0202671073e4536",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-003": {
+    "hash": "da97bdb6dd93360b23dcd5ad580ef1abb7a5b5b66cf92067538c52b87c2bfbd1",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-004": {
+    "hash": "08b2218e9a9a2f439f08851a270061fb9813e67a17509cfa01434ad15b4d0f52",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-005": {
+    "hash": "05bd0a4a502956678ea6f37e759816806497089520a1956535922212093b1dcd",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-006": {
+    "hash": "97805b05a5e3a9bd081a326035cffa87192ca6a1013bd279231c28fbb465c4af",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-007": {
+    "hash": "165cb77950eb381288b49e93b3e2b7169bf14826f0ff6e881541947b2c5a2a3c",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-008": {
+    "hash": "bc4566a1aea94b897508963b476df110399e30801250fd19156003a4d56ec31d",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-009": {
+    "hash": "c4e4500f6d3c0822c91f5932ef4f1d8bfc3eb7618209c4c04f77074dd0cc199b",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-010": {
+    "hash": "5d320850766b68d194c838b12978d1fff67ce1a49f2ec98ae836a28be27e7479",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-011": {
+    "hash": "6d830135faeda0c9dde59440c33ca884ceacba0d53659264328967880491dd05",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-012": {
+    "hash": "d005236c89302902819d8748f5564026586e7b7b25a683cb25a0e450e155bf7f",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-013": {
+    "hash": "92e985e4afd5f5107ef06ef90e11ddc3535b26a17b4588f23cb4541719e111ff",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-014": {
+    "hash": "d121e4c8bfc0aaaa2077d98a51cb0ddc571e69229374064ad0cb5f8083652241",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-015": {
+    "hash": "29111340a6455155831b10f198b7a1fb748caaa5da213e47301382d6f129802b",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-016": {
+    "hash": "af18893d1473428bd5bc55153b9495d6e519c077e2bba8e8aab300e96e812777",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-017": {
+    "hash": "b6a4c07c8af1ff29e55bc582b9b591902e1b9d2a27caaed7ef36442fdb408589",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-018": {
+    "hash": "726acaba393edba57df0a8c0903db0997d087dec74de5f05e8a8975aac2b4a08",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-019": {
+    "hash": "fd303e0515b599a48d7520ce3f8bc5d1a39b81227488726b450cb5090a594937",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-020": {
+    "hash": "986ed3dcc072c02fe2b0dbdddca840db85cf0fce230df804acec67620ef7fe46",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-021": {
+    "hash": "d2e9fdd6eeaa52a6dec59ce77e0952aae415787c6c96a7a62b593e037539ccd1",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-022": {
+    "hash": "13b2d12b613142b0b94792f76c91d954718bcb74b6a64eacb0406fc78641230d",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-023": {
+    "hash": "d82a7e363541b817acadad11f811fedee2d76bd7d081da107fca4c2051121a3e",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-024": {
+    "hash": "02d141635cb65216a52bc2163db5aff77afed0910a00aa0000fa2c77d269f6ce",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-025": {
+    "hash": "b2a9e029c07a691a9d8894637444177c31964dca611478b8a6cf410e20dfec3e",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-026": {
+    "hash": "69e99a3d732ea06cc3c4c101c95ce51309e54e68d5ad8c8bbc285f2484d01480",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-027": {
+    "hash": "596ed7d275094acb0ed11d539b59d9fa4d0861a0afd882a91715b06438486ce0",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-028": {
+    "hash": "37955ba280e06048c06dea7898ce9b248bacdb4db8e4f693d5565ef3714e5ad3",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
+  "up42-orders-029": {
+    "hash": "2dd93778f65959ee9ce407504ba856cea1d626dadd123c068f5034f05880d9f8",
+    "since": "2026-11-15",
+    "change": "up42-tasking-orders"
+  },
   "up42-quote-panel-001": {
     "hash": "dfc764d34ec4757ce2bd35bc80e46f5af8699e0a5f1b178b964f4ce5bd987059",
     "since": "2026-11-13",
