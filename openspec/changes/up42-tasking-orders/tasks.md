@@ -1,7 +1,7 @@
 ## 1. Server client
 
-- [ ] 1.1 Write the tests for `get` and `patch` of the client in the existing auth test file.
-- [ ] 1.2 Add `get` and `patch` to `server/providers/up42/auth.js`.
+- [ ] 1.1 Write the test for `up42-orders-029`.
+- [ ] 1.2 Add `call` to `server/providers/up42/auth.js`.
 
 ## 2. Server routes
 

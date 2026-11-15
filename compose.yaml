@@ -19,7 +19,9 @@ services:
     volumes:
       - gev-cache:/app/.gev-cache
       - gev-logs:/app/.gev-logs
+      - gev-up42:/app/.gev-up42
 
 volumes:
   gev-cache:
   gev-logs:
+  gev-up42:

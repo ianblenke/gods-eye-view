@@ -341,3 +341,18 @@ Origin: spec-first
 - **THEN** compose.yaml mounts the volume gev-up42 at /app/.gev-up42 and lists it under volumes
 - **AND** the Dockerfile makes the folder .gev-up42
 - **AND** the dev server ignores and denies the folder .gev-up42
+
+### Requirement: Client call
+
+The shared client MUST send a call only to the origin https://api.up42.com. It MUST refuse DELETE, PUT and each method name that has no capital letters. It MUST repeat a call once after a token refusal and MUST report the status of a refused call.
+
+Origin: spec-first
+
+#### Scenario: Call the API with a fixed origin `up42-orders-029`
+
+- **WHEN** a test calls the client with the methods DELETE, PUT and get, with an origin other than https://api.up42.com, and with a refused status
+- **THEN** DELETE, PUT, get and the other origin give bad_upstream and make no fetch call
+- **AND** a status 401 gets one new token and one repeat; a second 401 gives credentials_rejected
+- **AND** a status that the caller did not name gives upstream_failed with the status
+- **AND** a call with a body sends the given content type, or application/json when none is given
+- **AND** the option discard returns a null value without a read of the body
