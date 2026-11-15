@@ -2348,7 +2348,7 @@ test('[up42-order-panel-016] ends the old offer when a quote starts and refuses 
   assert.equal(head(sameEpoch), quotation);
 });
 
-test('[up42-order-panel-016] refuses a saved accept chip after an unclear answer and after the accept', async () => {
+test('[up42-order-panel-016] refuses a saved accept chip after an unclear answer and after UP42 accepts the quotation', async () => {
   for (const result of [
     { ok: false, status: 502, error: 'accept_unclear' },
     { ok: true, credits: 90 },

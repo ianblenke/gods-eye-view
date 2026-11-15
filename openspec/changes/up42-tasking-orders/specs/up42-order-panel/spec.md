@@ -194,4 +194,4 @@ This change retires `up42-order-panel-015`. An early draft of that scenario need
 - **AND** a press of a search chip ends the order steps, and the quote chip works again
 - **AND** a press of the quote chip while the layer only offers an order ends the offer, and the order chip goes away
 - **AND** a chip works only in the step that showed it, and only until the layer resets the order steps
-- **AND** a saved accept chip does nothing after an unclear answer or after the accept
+- **AND** a saved accept chip does nothing after an unclear answer or after UP42 accepts the quotation
