@@ -44,14 +44,14 @@ Origin: spec-first
 
 ### Requirement: Order chip
 
-The layer MUST show the chip "Order this visit" only after a quote with an estimate in credits. The source MUST have the three order methods.
+The layer MUST show the chip "Order this visit" only after a quote with an estimate in credits. The source MUST have the four order methods.
 
 Origin: spec-first
 
 #### Scenario: Show the order chip `up42-order-panel-004`
 
 - **WHEN** a quote answer has an estimate of 120 credits, has no estimate, or a source lacks one order method
-- **THEN** the chip appears only for the first case; the layer tests with three-method sources and quote-only sources show no order chip
+- **THEN** the chip appears only for the first case; the layer tests with sources of three methods and quote-only sources show no order chip
 
 ### Requirement: Order confirm
 
@@ -87,7 +87,7 @@ Origin: spec-first
 #### Scenario: Check the quotation `up42-order-panel-007`
 
 - **WHEN** the person presses "Check quotation" and the quotation is null, is undecided with 90 credits, or has the decision ACCEPTED
-- **THEN** the info text is "UP42 has no quotation yet.", "Quotation: 90 credits." with the chips "Accept quotation" and "Check quotation", or "This quotation is accepted."
+- **THEN** the info text is "UP42 has no quotation yet.", "Quotation: 90 credits." with the chips "Accept quotation", "Reject quotation" and "Check quotation", or "This quotation is accepted."
 
 ### Requirement: Accept confirm
 
@@ -129,14 +129,14 @@ Origin: spec-first
 
 ### Requirement: Fixed calls
 
-The layer MUST call only the quote routes and the three order routes.
+The layer MUST call only the quote routes and the four order routes.
 
 Origin: spec-first
 
 #### Scenario: Call only the listed routes `up42-order-panel-011`
 
 - **WHEN** a test runs every step of the flow with a recording fake fetch function
-- **THEN** the records hold only the paths of the two quote routes and the three order routes, each with its method
+- **THEN** the records hold only the paths of the two quote routes and the four order routes, each with its method
 
 ### Requirement: Clear the steps
 
@@ -148,3 +148,29 @@ Origin: spec-first
 
 - **WHEN** a search chip, `reset` or `disable` comes while a step shows or a call runs
 - **THEN** the signal of the call aborts, the order chips go away and the later answer changes nothing
+
+### Requirement: Reject source
+
+The browser source MUST send one POST request with the quotation id to "/api/up42/order/reject".
+
+Origin: spec-first
+
+#### Scenario: Post the reject request `up42-order-panel-013`
+
+- **WHEN** a test calls `rejectQuotation` with the quotation id "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+- **THEN** the fake fetch function gets one `POST` request for "/api/up42/order/reject" with the body `{"quotationId":"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"}`
+- **AND** a body `{"rejected":true}` gives `{ok:true}`; another body gives the error "bad_answer"
+- **AND** an HTTP status that is not `2xx` gives `{ok:false, status, error}`
+
+### Requirement: Reject step
+
+The press of "Reject quotation" MUST ask for a confirm. The confirm text MUST state that the step spends no credits.
+
+Origin: spec-first
+
+#### Scenario: Reject the quotation `up42-order-panel-014`
+
+- **WHEN** the person presses "Reject quotation" and then "Confirm reject"
+- **THEN** the info text first is "Reject the quotation of 90 credits? The order stays unpaid and spends no credits." with the chips "Confirm reject" and "Cancel"
+- **AND** the source gets no call before the second press, then one `rejectQuotation` call
+- **AND** the info text then is "The quotation is rejected. No credits are spent."

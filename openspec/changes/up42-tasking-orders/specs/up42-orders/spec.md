@@ -2,14 +2,14 @@
 
 ### Requirement: Routes
 
-The plugin MUST provide both Vite hooks and answer only the three exact order paths.
+The plugin MUST provide both Vite hooks and answer only the four exact order paths.
 
 Origin: spec-first
 
 #### Scenario: Use both hooks `up42-orders-001`
 
-- **WHEN** both hooks receive requests for POST /api/up42/order, GET /api/up42/order/quotation and POST /api/up42/order/accept, and for child paths
-- **THEN** both hooks answer the three exact paths; child paths and other paths go to next
+- **WHEN** both hooks receive requests for POST /api/up42/order, GET /api/up42/order/quotation, POST /api/up42/order/accept and POST /api/up42/order/reject, and for child paths
+- **THEN** both hooks answer the four exact paths; child paths and other paths go to next
 
 ### Requirement: Method
 
@@ -82,7 +82,7 @@ Origin: spec-first
 
 ### Requirement: Credentials
 
-The order and accept routes MUST refuse a request when the user name or the password is empty.
+The order, accept and reject routes MUST refuse a request when the user name or the password is empty.
 
 Origin: spec-first
 
@@ -143,7 +143,7 @@ Origin: spec-first
 
 ### Requirement: Order count
 
-The order route MUST count each request that reaches the order call and MUST refuse a request above UP42_DAILY_ORDERS. The default is 2 and the maximum is 20.
+The order route MUST count each request that reaches the order call. It MUST write the count to the ledger before the call. It MUST refuse a request above UP42_DAILY_ORDERS. The default is 2 and the maximum is 20.
 
 Origin: spec-first
 
@@ -152,16 +152,17 @@ Origin: spec-first
 - **WHEN** the count reaches the limit, the day changes, and UP42_DAILY_ORDERS is absent, 0, 21, fractional or 20
 - **THEN** a request above the limit gives 429 with the error budget and the numbers used and limit, and sends no estimate call
 - **AND** the limits are 2, 2, 2, 2 and 20, and a new day sets the count to 0
+- **AND** a new plugin that reads the same ledger file keeps the count
 
 ### Requirement: Quotation read
 
-The quotation route MUST accept only an orderId of an order that this server placed. It MUST read the quotation list with one GET request and return the quotation of that order.
+The quotation route MUST accept only an orderId of an order in the ledger. It MUST read the quotation list with one GET request and return the quotation of that order.
 
 Origin: spec-first
 
 #### Scenario: Read the quotation `up42-orders-014`
 
-- **WHEN** a request has an orderId that is not a UUID, an orderId that this server did not place, or a placed orderId
+- **WHEN** a request has an orderId that is not a UUID, an orderId that the ledger does not hold, or an orderId of the ledger
 - **THEN** the route gives 400 bad_body, 404 unknown_order, or one GET to "https://api.up42.com/v2/tasking/quotation?page=0&size=100"
 - **AND** a list item with the same orderId gives 200 with the quotation id, the credits and the decision
 - **AND** a list with no such item gives 200 with the quotation null
@@ -186,7 +187,7 @@ Origin: spec-first
 
 #### Scenario: Check the quotation first `up42-orders-016`
 
-- **WHEN** the quotation is not in the list, or belongs to an order that this server did not place
+- **WHEN** the quotation is not in the list, or belongs to an order that the ledger does not hold
 - **OR** the decision is ACCEPTED or REJECTED, the price is 101 with a cap of 100, or the price is 51 with approvedCredits 50
 - **THEN** the route gives 404 unknown_quotation, 409 not_ours, 409 decided, 409 over_cap or 409 over_approved, and sends no PATCH call
 - **AND** a price equal to the cap and to approvedCredits goes on to the PATCH call
@@ -219,7 +220,7 @@ Origin: spec-first
 
 ### Requirement: Accept count
 
-The accept route MUST count each request that reaches the PATCH call with its own count. It MUST refuse a request above UP42_DAILY_ORDERS.
+The accept route MUST count each request that reaches the PATCH call with its own count, written to the ledger before the call. It MUST refuse a request above UP42_DAILY_ORDERS.
 
 Origin: spec-first
 
@@ -242,7 +243,7 @@ Origin: spec-first
 
 ### Requirement: Rejected credentials
 
-The order and accept routes MUST report rejected credentials.
+The order, accept and reject routes MUST report rejected credentials.
 
 Origin: spec-first
 
@@ -253,15 +254,16 @@ Origin: spec-first
 
 ### Requirement: Allow-list
 
-The code of the orders folder MUST send only four calls. They are the estimate POST, the order POST, the quotation list GET and the quotation PATCH.
+The code of the orders folder MUST send only five calls. They are the estimate POST, the order POST, the quotation list GET and the quotation PATCH with ACCEPTED or with REJECTED.
 
 Origin: spec-first
 
 #### Scenario: Send only the listed calls `up42-orders-022`
 
 - **WHEN** a fake fetch function records each method and URL for every request shape and every failure kind
-- **THEN** the records hold only the four calls of the allow-list
-- **AND** a scan of the folder finds no extensions, cancellation, eulas, download-url, DELETE, PUT or REJECTED text
+- **THEN** the records hold only the five calls of the allow-list
+- **AND** a scan of the folder finds no extensions, cancellation, eulas, download-url, DELETE or PUT text
+- **AND** the text REJECTED and the text ACCEPTED each appear once, in one constant
 - **AND** the scan finds the text /v2/orders only in the estimate and order constants
 
 ### Requirement: No secret in output
@@ -285,3 +287,57 @@ Origin: spec-first
 
 - **WHEN** the local list serves scenes, thumbnails, quotes and orders
 - **THEN** one up42-orders plugin follows up42-quotes and all four share one client
+
+### Requirement: Reject the quotation
+
+The reject route MUST accept only the keys quotationId. It MUST read the quotation list first and MUST send one PATCH request that holds only the decision REJECTED.
+
+Origin: spec-first
+
+#### Scenario: Reject one quotation `up42-orders-025`
+
+- **WHEN** the quotation belongs to an order of the ledger and has the decision NOT_DECIDED
+- **THEN** the fake fetch function gets exactly one PATCH to the quotation URL with the type application/merge-patch+json and the body {"decision":"REJECTED"}
+- **AND** the route gives 200 with rejected true and no cap check and no count
+- **AND** a quotation of another order gives 409 not_ours, and a decided quotation gives 409 decided
+- **AND** a missing quotation gives 404 unknown_quotation, and each of the three sends no PATCH call
+- **AND** a time-out or a 5xx answer gives 502 reject_unclear and no second call
+
+### Requirement: Ledger file
+
+The orders folder MUST keep the orders, the duplicate keys and the two counts of the day in the file orders.json of the folder UP42_DATA_DIR. It MUST write each change before the call that the change allows.
+
+Origin: spec-first
+
+#### Scenario: Keep the ledger over a restart `up42-orders-026`
+
+- **WHEN** a new plugin starts with the file that an earlier plugin wrote
+- **THEN** the order ids, the duplicate keys and the counts of the day are the same
+- **AND** a day that changed sets the counts to 0
+- **AND** an order with the key of the file gives 409 duplicate, and a quotation of an order in the file passes the own-order check
+- **AND** a missing file gives an empty ledger
+- **AND** the file is written to a temporary file first and then renamed
+
+### Requirement: Ledger failure
+
+The routes MUST fail closed when the ledger file cannot be read or written.
+
+Origin: spec-first
+
+#### Scenario: Stop when the ledger fails `up42-orders-027`
+
+- **WHEN** the file has invalid content, the read fails or the write fails
+- **THEN** the route gives 503 with the error store_failed and sends no estimate, order or PATCH call
+
+### Requirement: Volume
+
+The compose file MUST mount a named volume at the folder of the ledger. The dev server MUST ignore that folder.
+
+Origin: spec-first
+
+#### Scenario: Mount the volume `up42-orders-028`
+
+- **WHEN** a test reads compose.yaml, the Dockerfile and the list of ignored folders
+- **THEN** compose.yaml mounts the volume gev-up42 at /app/.gev-up42 and lists it under volumes
+- **AND** the Dockerfile makes the folder .gev-up42
+- **AND** the dev server ignores and denies the folder .gev-up42

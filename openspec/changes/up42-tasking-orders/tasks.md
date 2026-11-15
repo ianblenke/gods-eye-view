@@ -4,6 +4,7 @@
 - [ ] 1.2 Add `get` and `patch` to `server/providers/up42/auth.js`.
 
 ## 2. Server routes
+
 - [ ] Write the test for `up42-orders-001`.
 - [ ] Write the test for `up42-orders-002`.
 - [ ] Write the test for `up42-orders-003`.
@@ -28,8 +29,13 @@
 - [ ] Write the test for `up42-orders-022`.
 - [ ] Write the test for `up42-orders-023`.
 - [ ] Write the test for `up42-orders-024`.
-- [ ] Write `server/providers/up42-orders/` with the validation, the upstream calls and the routes.
+- [ ] Write the test for `up42-orders-025`.
+- [ ] Write the test for `up42-orders-026`.
+- [ ] Write the test for `up42-orders-027`.
+- [ ] Write the test for `up42-orders-028`.
+- [ ] Write `server/providers/up42-orders/` with the validation, the ledger, the upstream calls and the routes.
 - [ ] Add the plugin to the local list.
+- [ ] Add the volume to `compose.yaml`, the folder to the `Dockerfile` and the ignore rules of the dev server.
 
 ## 3. Page
 
@@ -45,7 +51,9 @@
 - [ ] Write the test for `up42-order-panel-010`.
 - [ ] Write the test for `up42-order-panel-011`.
 - [ ] Write the test for `up42-order-panel-012`.
-- [ ] Write `src/layers/up42Scenes/orders.js` and the three source methods.
+- [ ] Write the test for `up42-order-panel-013`.
+- [ ] Write the test for `up42-order-panel-014`.
+- [ ] Write `src/layers/up42Scenes/orders.js` and the four source methods.
 - [ ] Add the order steps to `src/layers/up42Scenes/index.js`.
 - [ ] Add the new files to `scripts/package-boundaries.json`, `scripts/format-scope.json` and `openspec/ownership.json`.
 - [ ] Add the new variables to `.env.example` and a fragment to `changelog.d`.
