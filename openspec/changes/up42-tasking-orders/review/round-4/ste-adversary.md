@@ -1,0 +1,3 @@
+Verdict: FAIL
+- [ ] F1 major openspec/changes/archive/2026-11-15-up42-tasking-orders/specs/up42-order-panel/spec.md:194 At commit `a31db270`, “an ended offer or order” can mean steps that reach `done` or steps that the layer resets. These meanings give different results. In `orderFlow.js:182`, a saved acceptance chip can open confirmation after acceptance reaches `done`; the epoch guard changes only after a reset. Write: “After the layer resets the order steps, a press of an old chip has no effect.” If the broader rule is intended, correct the code.
+- [ ] F2 minor openspec/changes/archive/2026-11-15-up42-tasking-orders/specs/up42-order-panel/spec.md:194 At commit `a31db270`, “when pressed” uses passive voice. Write: “when the person presses the chip”.

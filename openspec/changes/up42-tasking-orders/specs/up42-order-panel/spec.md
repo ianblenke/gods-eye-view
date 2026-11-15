@@ -1,8 +1,5 @@
-# up42-order-panel Specification
+## ADDED Requirements
 
-## Purpose
-Describe how the server and the UP42 Scenes row place a tasking order and accept its quotation, each step with guards and a confirm.
-## Requirements
 ### Requirement: Order source
 
 The browser source MUST send one POST request with the product, the box and the approved credits to "/api/up42/order".
@@ -188,11 +185,13 @@ The quote chip MUST stay disabled while an order step shows or runs. A new quote
 
 Origin: spec-first
 
-#### Scenario: Keep the quote and order steps apart `up42-order-panel-015`
+This change retires `up42-order-panel-015`. An early draft of that scenario required a new quote during an order step. The final scenario forbids that quote, so it has a new ID.
+
+#### Scenario: Keep the quote and order steps apart `up42-order-panel-016`
 
 - **WHEN** the order step is confirm, working, ordered, quotation, accept-confirm, reject-confirm or done
 - **THEN** the quote chip is disabled, a press of it sends no call, and the info text keeps the order text
 - **AND** a press of a search chip ends the order steps, and the quote chip works again
 - **AND** a press of the quote chip while the layer only offers an order ends the offer, and the order chip goes away
-- **AND** a chip of an ended offer or order does nothing when pressed, also after a new quote gives a new offer
-
+- **AND** a chip works only in the step that showed it, and only until the layer resets the order steps
+- **AND** a saved accept chip does nothing after an unclear answer or after the accept

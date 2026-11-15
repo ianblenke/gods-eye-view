@@ -54,7 +54,7 @@
 - [x] Write the test for `up42-order-panel-012`.
 - [x] Write the test for `up42-order-panel-013`.
 - [x] Write the test for `up42-order-panel-014`.
-- [x] Write the test for `up42-order-panel-015`.
+- [x] Write the test for `up42-order-panel-016`.
 - [x] Write `src/layers/up42Scenes/orders.js` and the four source methods.
 - [x] Add the order steps to `src/layers/up42Scenes/index.js`.
 - [x] Add the new files to `scripts/package-boundaries.json`, `scripts/format-scope.json` and `openspec/ownership.json`.
