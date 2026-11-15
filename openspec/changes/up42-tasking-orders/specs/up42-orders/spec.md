@@ -1,8 +1,5 @@
-# up42-orders Specification
+## ADDED Requirements
 
-## Purpose
-Describe how the server and the UP42 Scenes row place a tasking order and accept its quotation, each step with guards and a confirm.
-## Requirements
 ### Requirement: Routes
 
 The plugin MUST provide both Vite hooks and answer only the four exact order paths.
@@ -325,20 +322,32 @@ Origin: spec-first
 - **AND** an order with the key of the file gives 409 duplicate, and a quotation of an order in the file passes the own-order check
 - **AND** a missing file gives an empty ledger
 - **AND** the server writes a temporary file first and then renames it, and it writes each count before the call that the count allows
-- **AND** two first requests at the same time load the file once and keep one count
+- **AND** two first requests at the same time load the file once and share one ledger state
+- **AND** each allowed request increases its count
 - **AND** the ledger keeps each order and deletes none
 
 ### Requirement: Ledger failure
 
-The routes MUST fail closed when the ledger file cannot be read or written.
+The routes MUST fail closed when the ledger file cannot be read, or when the server cannot write a count.
 
 Origin: spec-first
 
 #### Scenario: Stop when the ledger fails `up42-orders-027`
 
-- **WHEN** the file has invalid content, the read fails or the write fails
+- **WHEN** the file has invalid content, the read of the file fails or the write of a count fails
 - **THEN** the route gives 503 with the error store_failed and sends no estimate, order or PATCH call
-- **AND** a write that fails after a placed order keeps the order in memory, and the route gives 200
+
+### Requirement: Order save failure
+
+The order route MUST keep a placed order in memory when the server cannot save the order to the ledger file. It MUST then give the success answer.
+
+Origin: spec-first
+
+#### Scenario: Keep the order after a failed save `up42-orders-030`
+
+- **WHEN** the write of the ledger file fails after the order call
+- **THEN** the route gives 200 with the order id and the credits
+- **AND** a quotation request for that order works while the plugin runs
 
 ### Requirement: Volume
 
@@ -367,4 +376,3 @@ Origin: spec-first
 - **AND** a status that the caller did not name gives upstream_failed with the status
 - **AND** a call with a body sends the given content type, or application/json when none is given
 - **AND** the option discard returns a null value without a read of the body
-

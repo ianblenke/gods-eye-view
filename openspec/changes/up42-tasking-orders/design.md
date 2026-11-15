@@ -46,6 +46,8 @@ A count rises, and the ledger file holds it, before the call goes to UP42. A res
 
 A quotation with a price and the decision NOT_DECIDED shows the chip "Accept quotation". Each spending step has a confirm text with the amount. A press of a search chip, `reset` and `disable` clear the state.
 
+The quote chip stays disabled while an order step shows or runs. A new quote ends the offer of the old quote.
+
 **D10. A ledger file.** The ledger is `orders.json` in the folder `UP42_DATA_DIR`. The default is `.gev-up42` in the working folder. The file holds the orders, the duplicate keys and the two counts of the day.
 
 The server writes a temporary file and renames it, as the Bee Maps ledger does. A failed count write gives `store_failed` before the order call or the PATCH call. If the server cannot save a placed order, it keeps the order in memory and returns success.

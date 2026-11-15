@@ -179,14 +179,16 @@ Origin: spec-first
 - **AND** the source gets no call before the second press, then one `rejectQuotation` call
 - **AND** the info text then is "The quotation is rejected. No credits are spent."
 
-### Requirement: Quote text first
+### Requirement: Quote and order steps
 
-The info text MUST show the text of a quote step while that step runs. It MUST show the order text again when the quote step ends.
+The quote chip MUST stay disabled while an order step shows or runs. A new quote MUST end the offer of the old quote.
 
 Origin: spec-first
 
-#### Scenario: Show the quote text during an order step `up42-order-panel-015`
+#### Scenario: Keep the quote and order steps apart `up42-order-panel-015`
 
-- **WHEN** a person starts a new quote while an order text shows
-- **THEN** the info text shows the text of each quote step, for example "Choose a product." and the confirmation text of the quote
-- **AND** a press of "Cancel" shows the order text again
+- **WHEN** the order step is confirm, working, ordered, quotation, accept-confirm, reject-confirm or done
+- **THEN** the quote chip is disabled, a press of it sends no call, and the info text keeps the order text
+- **AND** a press of a search chip ends the order steps, and the quote chip works again
+- **AND** a press of the quote chip while the layer only offers an order ends the offer, and the order chip goes away
+- **AND** a press of an order chip that the layer showed before the quote started does nothing

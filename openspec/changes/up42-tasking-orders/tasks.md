@@ -1,6 +1,7 @@
 ## 1. Server client
 
 - [x] 1.1 Write the test for `up42-orders-029`.
+- [x] Write the test for `up42-orders-030`.
 - [x] 1.2 Add `call` to `server/providers/up42/auth.js`.
 
 ## 2. Server routes
