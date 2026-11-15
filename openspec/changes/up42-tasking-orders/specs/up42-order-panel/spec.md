@@ -191,4 +191,4 @@ Origin: spec-first
 - **THEN** the quote chip is disabled, a press of it sends no call, and the info text keeps the order text
 - **AND** a press of a search chip ends the order steps, and the quote chip works again
 - **AND** a press of the quote chip while the layer only offers an order ends the offer, and the order chip goes away
-- **AND** a press of an order chip that the layer showed before the quote started does nothing
+- **AND** a press of a chip that the layer showed for an offer or order that has ended does nothing, also after a new quote gives a new offer
