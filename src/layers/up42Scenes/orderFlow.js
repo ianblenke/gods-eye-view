@@ -40,8 +40,11 @@ export function createOrderFlow({ source, notify, isEnabled }) {
   let quotation = null;
   let request = null;
   let message = null;
+  // Each reset starts a new epoch. A chip of an older epoch does nothing.
+  let epoch = 0;
 
   function reset() {
+    epoch += 1;
     request?.abort();
     request = null;
     step = 'none';
@@ -153,7 +156,8 @@ export function createOrderFlow({ source, notify, isEnabled }) {
     );
   const cancel = () => {
     if (step === 'confirm') ask('offered', null);
-    else ask('quotation', quotationText(quotation));
+    else if (step === 'accept-confirm' || step === 'reject-confirm')
+      ask('quotation', quotationText(quotation));
   };
 
   const CHIPS = {
@@ -209,7 +213,12 @@ export function createOrderFlow({ source, notify, isEnabled }) {
       step = 'offered';
     },
     chips() {
-      return isEnabled() ? (CHIPS[step]?.() ?? []) : [];
+      if (!isEnabled()) return [];
+      const mine = epoch;
+      return (CHIPS[step]?.() ?? []).map((chip) => ({
+        ...chip,
+        onClick: () => epoch === mine && chip.onClick(),
+      }));
     },
     /** True while an order step shows or runs, so a new quote must wait. */
     busy: () => step !== 'none' && step !== 'offered',

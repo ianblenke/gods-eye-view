@@ -2254,36 +2254,41 @@ test('[up42-order-panel-009] ignores a second press while the accept runs', asyn
   assert.equal(head(h), 'The quotation is accepted. 90 credits are spent.');
 });
 
-test('[up42-order-panel-015] blocks a new quote while an order step shows and ends the old offer when a quote starts', async () => {
+async function assertBlocked(h) {
+  const chip = h.byId('quote');
+  const before = h.calls.getProducts.length;
+  const text = head(h);
+  assert.equal(chip.disabled, true);
+  await chip.onClick();
+  assert.equal(h.calls.getProducts.length, before);
+  assert.equal(head(h), text);
+}
+
+test('[up42-order-panel-015] blocks a new quote in each order step and frees it after a search press', async () => {
   const wait = deferred();
   const h = await quoted({ orders: { placeOrder: () => wait.promise } });
-  const products = () => h.calls.getProducts.length;
-  assert.equal(products(), 1);
-  const stale = h.byId('order');
+  assert.equal(h.calls.getProducts.length, 1);
   assert.equal(h.byId('quote').disabled, false);
   h.byId('order').onClick();
-  const confirm = h.byId('order-confirm');
-  assert.equal(h.byId('quote').disabled, true);
-  await h.byId('quote').onClick();
-  assert.equal(products(), 1);
-  assert.equal(head(h).startsWith('Order Product 2 for this view?'), true);
-  const placing = confirm.onClick();
-  assert.equal(h.byId('quote').disabled, true);
-  await h.byId('quote').onClick();
-  assert.equal(products(), 1);
+  await assertBlocked(h);
+  const placing = h.byId('order-confirm').onClick();
+  await assertBlocked(h);
   wait.resolve({ ok: true, orderId: ORDER_ID, credits: 120 });
   await placing;
-  assert.equal(h.byId('quote').disabled, true);
-  await h.byId('quote').onClick();
-  assert.equal(products(), 1);
-  assert.equal(head(h), 'Order aaaaaaaa is placed. No credits are spent.');
+  await assertBlocked(h);
   await h.byId('quotation').onClick();
+  await assertBlocked(h);
   h.byId('accept').onClick();
-  assert.equal(h.byId('quote').disabled, true);
-  await h.byId('quote').onClick();
-  assert.equal(products(), 1);
-  assert.equal(head(h).startsWith('Accept the quotation of 90 credits?'), true);
-  assert.equal(stale.onClick(), false);
+  await assertBlocked(h);
+  h.byId('order-cancel').onClick();
+  h.byId('reject').onClick();
+  await assertBlocked(h);
+  await h.byId('reject-confirm').onClick();
+  assert.equal(head(h), 'The quotation is rejected. No credits are spent.');
+  await assertBlocked(h);
+  await h.chip().onClick();
+  assert.equal(h.byId('quote').disabled, false);
+  assert.equal(h.chipIds().includes('order'), false);
   const unclear = await quoted({
     orders: {
       placeOrder: async () => ({
@@ -2295,10 +2300,11 @@ test('[up42-order-panel-015] blocks a new quote while an order step shows and en
   });
   unclear.byId('order').onClick();
   await unclear.byId('order-confirm').onClick();
-  assert.equal(unclear.byId('quote').disabled, true);
-  await unclear.byId('quote').onClick();
-  assert.equal(unclear.calls.getProducts.length, 1);
+  await assertBlocked(unclear);
   assert.equal(head(unclear).startsWith('UP42 gave no clear answer.'), true);
+});
+
+test('[up42-order-panel-015] ends the old offer when a quote starts and refuses each chip of an older offer', async () => {
   const offered = await quoted();
   const old = offered.byId('order');
   await offered.byId('quote').onClick();
@@ -2307,4 +2313,37 @@ test('[up42-order-panel-015] blocks a new quote while an order step shows and en
   assert.equal(head(offered), 'Choose a product.');
   offered.byId('quote-cancel').onClick();
   assert.equal(offered.chipIds().includes('order'), false);
+  const again = await quoted();
+  const stale = again.byId('order');
+  await again.byId('quote').onClick();
+  again.byId('quote-product-1').onClick();
+  await again.byId('quote-confirm').onClick();
+  assert.equal(again.chipIds().includes('order'), true);
+  const text = head(again);
+  assert.equal(stale.onClick(), false);
+  assert.equal(head(again), text);
+  assert.deepEqual(again.chipIds().slice(3), ['order']);
+  again.byId('order').onClick();
+  assert.equal(head(again).startsWith('Order Product 1 for this view?'), true);
+  const same = await quoted();
+  const order = same.byId('order');
+  same.byId('order').onClick();
+  const cancel = same.byId('order-cancel');
+  await same.byId('order-confirm').onClick();
+  const placed = head(same);
+  assert.equal(placed, 'Order aaaaaaaa is placed. No credits are spent.');
+  order.onClick();
+  cancel.onClick();
+  assert.equal(head(same), placed);
+  assert.deepEqual(same.chipIds().slice(3), ['quotation']);
+  const sameEpoch = await quoted();
+  sameEpoch.byId('order').onClick();
+  await sameEpoch.byId('order-confirm').onClick();
+  const keep = sameEpoch.byId('quotation');
+  await keep.onClick();
+  const quotation = head(sameEpoch);
+  const sameOrder = sameEpoch.byId('accept');
+  sameOrder.onClick();
+  sameEpoch.byId('order-cancel').onClick();
+  assert.equal(head(sameEpoch), quotation);
 });
