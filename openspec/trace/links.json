@@ -8982,7 +8982,8 @@
     "src/layers/up42Scenes/orders.test.mjs › [up42-order-panel-014] states that a reject spends no credits"
   ],
   "up42-order-panel-015": [
-    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-015] blocks a new quote while an order step shows and ends the old offer when a quote starts"
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-015] blocks a new quote in each order step and frees it after a search press",
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-015] ends the old offer when a quote starts and refuses each chip of an older offer"
   ],
   "up42-orders-001": [
     "src/data/up42Orders.test.mjs › [up42-orders-001] serves the four paths in both hooks"
