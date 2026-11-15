@@ -196,7 +196,7 @@ test('[up42-order-panel-013] posts the quotation for one reject', async () => {
   });
 });
 
-test('[up42-order-panel-001 up42-order-panel-002 up42-order-panel-003 up42-order-panel-013] stops each order call after 60 seconds with no repeat', async () => {
+test('[up42-order-panel-001 up42-order-panel-002 up42-order-panel-003] stops each order call after 60 seconds with no repeat', async () => {
   const calls = [];
   const timers = [];
   const source = createUp42Source({
@@ -220,8 +220,42 @@ test('[up42-order-panel-001 up42-order-panel-002 up42-order-panel-003 up42-order
     () => source.getQuotation({ orderId: ORDER }),
     () =>
       source.acceptQuotation({ quotationId: QUOTATION, approvedCredits: 1 }),
-    () => source.rejectQuotation({ quotationId: QUOTATION }),
   ];
+  for (const [index, run] of runs.entries()) {
+    const pending = run();
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(timers[index].ms, 60000);
+    assert.equal(calls.length, index + 1);
+    timers[index].fn();
+    assert.deepEqual(await pending, {
+      ok: false,
+      status: 0,
+      error: 'unreachable',
+    });
+    assert.equal(calls[index].init.signal.aborted, true);
+    assert.equal(calls.length, index + 1);
+  }
+});
+
+test('[up42-order-panel-013] stops the reject call after 60 seconds with no repeat', async () => {
+  const calls = [];
+  const timers = [];
+  const source = createUp42Source({
+    fetchImpl: (url, init) => {
+      calls.push({ url, init });
+      return new Promise((resolve, reject) =>
+        init.signal.addEventListener('abort', () =>
+          reject(new DOMException('aborted', 'AbortError')),
+        ),
+      );
+    },
+    setTimer: (fn, ms) => {
+      timers.push({ fn, ms });
+      return timers.length;
+    },
+    clearTimer: () => {},
+  });
+  const runs = [() => source.rejectQuotation({ quotationId: QUOTATION })];
   for (const [index, run] of runs.entries()) {
     const pending = run();
     await new Promise((resolve) => setImmediate(resolve));
