@@ -3,6 +3,13 @@ import {
   readResponseJsonCapped,
 } from '../../sources/httpBody.js';
 import { isSceneId, normalizeAnswer } from './records.js';
+import {
+  isUuid,
+  normalizeAccept,
+  normalizeOrder,
+  normalizeQuotation,
+  normalizeReject,
+} from './orders.js';
 import { normalizeProducts, normalizeQuote } from './quotes.js';
 
 export const MAX_SEARCH_BYTES = 8 * 1024 * 1024;
@@ -18,6 +25,12 @@ const SCENES_URL = '/api/up42/scenes';
 const THUMBNAIL_URL = '/api/up42/thumbnail/';
 const PRODUCTS_URL = '/api/up42/quote/products';
 const QUOTE_URL = '/api/up42/quote';
+const ORDER_URL = '/api/up42/order';
+const QUOTATION_URL = '/api/up42/order/quotation?orderId=';
+const ACCEPT_URL = '/api/up42/order/accept';
+const REJECT_URL = '/api/up42/order/reject';
+const ORDER_TIMEOUT_MS = 60_000;
+const MAX_ORDER_BYTES = 64 * 1024;
 const IMAGE_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp']);
 
 /** Keep the fields of an error body that are whole numbers of 0 or more. */
@@ -95,6 +108,34 @@ export function createUp42Source({
       error: typeof body?.error === 'string' ? body.error : 'unknown',
       ...countFields(body, names),
     };
+  }
+
+  /** One order route call: a POST with a body, or a GET with no body. */
+  function orderCall(url, body, signal, normalize) {
+    return request({
+      url,
+      init:
+        body === undefined
+          ? {}
+          : {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(body),
+            },
+      timeoutMs: ORDER_TIMEOUT_MS,
+      signal,
+      async read(response, own) {
+        if (!response.ok) {
+          return failureOf(response, MAX_ORDER_BYTES, own, ['used', 'limit']);
+        }
+        const answer = normalize(
+          await readResponseJsonCapped(response, MAX_ORDER_BYTES, own),
+        );
+        return answer === null
+          ? { ok: false, status: response.status, error: 'bad_answer' }
+          : { ok: true, ...answer };
+      },
+    });
   }
 
   return {
@@ -243,6 +284,41 @@ export function createUp42Source({
             : { ok: true, ...quote };
         },
       });
+    },
+
+    /**
+     * Place one tasking order. The server spends no credits for this call.
+     * @param {{dataProduct:string, box:number[], approvedCredits:number, signal?:AbortSignal}} options
+     */
+    placeOrder({ dataProduct, box, approvedCredits, signal } = {}) {
+      return orderCall(ORDER_URL, { dataProduct, box, approvedCredits }, signal, normalizeOrder);
+    },
+
+    /**
+     * Read the quotation of an order.
+     * @param {{orderId:string, signal?:AbortSignal}} options
+     */
+    getQuotation({ orderId, signal } = {}) {
+      if (!isUuid(orderId)) {
+        return Promise.resolve({ ok: false, status: 404, error: 'unknown_order' });
+      }
+      return orderCall(`${QUOTATION_URL}${orderId}`, undefined, signal, normalizeQuotation);
+    },
+
+    /**
+     * Accept a quotation. This call spends credits and UP42 cannot reverse it.
+     * @param {{quotationId:string, approvedCredits:number, signal?:AbortSignal}} options
+     */
+    acceptQuotation({ quotationId, approvedCredits, signal } = {}) {
+      return orderCall(ACCEPT_URL, { quotationId, approvedCredits }, signal, normalizeAccept);
+    },
+
+    /**
+     * Reject a quotation. This call spends no credits.
+     * @param {{quotationId:string, signal?:AbortSignal}} options
+     */
+    rejectQuotation({ quotationId, signal } = {}) {
+      return orderCall(REJECT_URL, { quotationId }, signal, normalizeReject);
     },
   };
 }

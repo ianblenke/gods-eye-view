@@ -27,8 +27,10 @@ None. The quote routes and the quote panel keep their requirements. The orders r
 - New server folder `server/providers/up42-orders/` with the routes, the validation, the ledger and the upstream calls.
 - Changed files `compose.yaml` and `Dockerfile`. They add the volume `gev-up42` at `/app/.gev-up42`. The dev server ignores the folder.
 - Changed file `server/providers/up42/auth.js`. It gets one generic method `call` for GET, POST and PATCH. The method checks only the origin, as `post` does.
-- Changed file `server/providers/local.js` or `server/providers/up42-quotes/plugins.js`. The plugin list gets one more plugin that shares the client.
-- New file `src/layers/up42Scenes/orders.js`. Changed files `src/layers/up42Scenes/source.js` and `src/layers/up42Scenes/index.js`.
+- Changed file `server/providers/local.js`. It uses the new `up42TaskingPlugins`, which adds one plugin that shares the client.
+- Changed files `server/standalone/unwatched-cache.js` and `build/vite.js`. They ignore and deny the folder `.gev-up42`.
+- Changed test `src/tooling/viteBuild.test.mjs`. The list of ignored folders has one more entry.
+- New files `src/layers/up42Scenes/orders.js` and `src/layers/up42Scenes/orderFlow.js`. Changed files `src/layers/up42Scenes/source.js` and `src/layers/up42Scenes/index.js`.
 - The `.env.example` file gets `UP42_ORDERS`, `UP42_ORDER_MAX_CREDITS` (example 5000), `UP42_DAILY_ORDERS` (example 2), `UP42_WORKSPACE_ID` and `UP42_DATA_DIR`. The owner sets them.
 - The change opens no gap in `openspec/trace`. It must keep each owned file at full coverage.
 - Risk: no test calls the real UP42 order routes. The first real order needs the owner to say yes. The credit cap and the account balance are the last guards.

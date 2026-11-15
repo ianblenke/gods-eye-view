@@ -12,7 +12,7 @@ Origin: spec-first
 - **THEN** the fake fetch function gets one `POST` request for "/api/up42/order" with the only header `Content-Type` "application/json"
 - **AND** the body is the text `{"dataProduct":"11111111-2222-3333-4444-555555555555","box":[9.568326,59.784163,10.431674,60.215837],"approvedCredits":120}`
 - **AND** a good answer gives `{ok:true, orderId, credits}`; a body with no order id gives the error "bad_answer"
-- **AND** an HTTP status that is not `2xx` gives `{ok:false, status, error}` with `maySpend` when the body states it
+- **AND** an HTTP status that is not `2xx` gives `{ok:false, status, error}` with the whole numbers `used` and `limit` when the body has them
 - **AND** a rejection and a stop after 60 seconds give the status 0 and the error "unreachable"
 
 ### Requirement: Quotation source
@@ -26,7 +26,7 @@ Origin: spec-first
 - **WHEN** a test calls `getQuotation` with the order id "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
 - **THEN** the fake fetch function gets one `GET` request for "/api/up42/order/quotation?orderId=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
 - **AND** a body with a null quotation gives `{ok:true, quotation:null}`
-- **AND** a body with a quotation id, a whole number of credits and a decision gives `{ok:true, quotation}` with those three facts
+- **AND** a body with a quotation id, a number of credits and a decision gives `{ok:true, quotation}` with those three facts
 - **AND** a body of another shape gives the error "bad_answer"
 
 ### Requirement: Accept source
@@ -40,7 +40,7 @@ Origin: spec-first
 - **WHEN** a test calls `acceptQuotation` with the quotation id "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee" and the credits 120
 - **THEN** the fake fetch function gets one `POST` request for "/api/up42/order/accept" with the body `{"quotationId":"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee","approvedCredits":120}`
 - **AND** a body `{"accepted":true,"credits":120}` gives `{ok:true, credits}`; another body gives the error "bad_answer"
-- **AND** an HTTP status that is not `2xx` gives `{ok:false, status, error, maySpend}` where `maySpend` is true only when the body states it
+- **AND** an HTTP status that is not `2xx` gives `{ok:false, status, error}`
 
 ### Requirement: Order chip
 

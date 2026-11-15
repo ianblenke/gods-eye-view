@@ -2688,7 +2688,9 @@
       "src/layers/up42Scenes/records.js",
       "src/layers/up42Scenes/model.js",
       "src/layers/up42Scenes/messages.js",
-      "src/layers/up42Scenes/quotes.js"
+      "src/layers/up42Scenes/quotes.js",
+      "src/layers/up42Scenes/orders.js",
+      "src/layers/up42Scenes/orderFlow.js"
     ],
     "external": [
       "hls.js",
@@ -3324,7 +3326,9 @@
       "src/layers/up42Scenes/records.js",
       "src/layers/up42Scenes/model.js",
       "src/layers/up42Scenes/messages.js",
-      "src/layers/up42Scenes/quotes.js"
+      "src/layers/up42Scenes/quotes.js",
+      "src/layers/up42Scenes/orders.js",
+      "src/layers/up42Scenes/orderFlow.js"
     ],
     "external": [
       "hls.js",
@@ -3788,7 +3792,8 @@
       "src/layers/airQuality/source.js",
       "src/layers/up42Scenes/source.js",
       "src/layers/up42Scenes/records.js",
-      "src/layers/up42Scenes/quotes.js"
+      "src/layers/up42Scenes/quotes.js",
+      "src/layers/up42Scenes/orders.js"
     ],
     "external": []
   },

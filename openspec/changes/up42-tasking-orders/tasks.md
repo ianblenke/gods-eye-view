@@ -56,6 +56,7 @@
 - [ ] Write `src/layers/up42Scenes/orders.js` and the four source methods.
 - [ ] Add the order steps to `src/layers/up42Scenes/index.js`.
 - [ ] Add the new files to `scripts/package-boundaries.json`, `scripts/format-scope.json` and `openspec/ownership.json`.
+- [ ] Add the new folder to the list of ignored folders in `src/tooling/viteBuild.test.mjs`.
 - [ ] Add the new variables to `.env.example` and a fragment to `changelog.d`.
 
 ## 4. Gates and review
