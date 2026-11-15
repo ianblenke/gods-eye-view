@@ -185,7 +185,7 @@ The quote chip MUST stay disabled while an order step shows or runs. A new quote
 
 Origin: spec-first
 
-This change retires `up42-order-panel-015`. An early draft of that scenario required a new quote during an order step. The final scenario forbids that quote, so it has a new ID.
+This change retires `up42-order-panel-015`. An early draft of that scenario needed a new quote during an order step. The final scenario forbids that quote, so it has a new ID.
 
 #### Scenario: Keep the quote and order steps apart `up42-order-panel-016`
 

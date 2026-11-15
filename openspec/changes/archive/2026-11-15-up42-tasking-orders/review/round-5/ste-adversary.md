@@ -1,0 +1,4 @@
+Verdict: FAIL
+- [ ] F1 major openspec/changes/archive/2026-11-15-up42-tasking-orders/specs/up42-order-panel/spec.md:188 At commit `63172787`, “required” is a form of the banned word “require” in the requirement text. The lint checks exact words and misses this form. Write: “An early draft of that scenario needed a new quote during an order step.”
+- [ ] F2 minor openspec/changes/archive/2026-11-15-up42-tasking-orders/specs/up42-order-panel/spec.md:197 At commit `63172787`, “after the accept” uses the verb “accept” as a noun. Write: “after UP42 accepts the quotation”.
+- [ ] F3 minor src/layers/up42Scenes/layer.test.mjs:2351 At commit `63172787`, “after the accept” uses the verb “accept” as a noun. Write: “refuses a saved accept chip after an unclear answer and after UP42 accepts the quotation”.
