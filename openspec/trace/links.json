@@ -8984,7 +8984,7 @@
   "up42-order-panel-016": [
     "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-016] blocks a new quote in each order step and frees it after a search press",
     "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-016] ends the old offer when a quote starts and refuses each chip of an older offer",
-    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-016] refuses a saved accept chip after an unclear answer and after the accept"
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-016] refuses a saved accept chip after an unclear answer and after UP42 accepts the quotation"
   ],
   "up42-orders-001": [
     "src/data/up42Orders.test.mjs › [up42-orders-001] serves the four paths in both hooks"
