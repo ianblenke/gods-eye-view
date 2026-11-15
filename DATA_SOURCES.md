@@ -221,6 +221,17 @@ This estimate is not a binding quote. A binding quote needs an order, which this
 
 Both routes share six requests per minute. `UP42_DAILY_QUOTES` limits new quote rounds from 1 to 200 each UTC day.
 
+The default is 20. A round counts once, including public discovery and failures.
+The server keeps at most sixteen good answers for ten minutes and shares identical concurrent requests.
+
+The count and stores stay in RAM. A restart clears them.
+
+No live call confirms response field names, product list shape, plan access or Viewer-role access.
+
+The documentation does not state the cost of feasibility or opportunities. Default checks include both.
+A LAN client can reach this server without proxy authentication. The same-site and rate gates still apply.
+Display terms do not apply because this route shows no image.
+
 ### UP42 tasking orders
 
 The four routes under `/api/up42/order` stay off until `UP42_ORDERS=true`. **They can spend credits.**
@@ -234,15 +245,6 @@ The ledger file `orders.json` in the volume `gev-up42` keeps the orders, the cou
 The server accepts or rejects only quotations of orders in the ledger.
 The server sends each spending call once. After an unclear answer the page asks the person to check in UP42.
 The user in `UP42_USERNAME` needs a role that can create orders and accept quotations. A Viewer user cannot order. A Member user cannot accept.
-The default is 20. A round counts once, including public discovery and failures.
-The server keeps at most sixteen good answers for ten minutes and shares identical concurrent requests.
-
-The count and stores stay in RAM. A restart clears them.
-
-No live call confirms response field names, product list shape, plan access or Viewer-role access.
-The documentation does not state the cost of feasibility or opportunities. Default checks include both.
-A LAN client can reach this server without proxy authentication. The same-site and rate gates still apply.
-Display terms do not apply because this route shows no image.
 
 ### SkyWatch archive scenes (key in `.env`)
 

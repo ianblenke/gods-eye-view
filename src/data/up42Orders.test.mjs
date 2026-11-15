@@ -88,6 +88,7 @@ function harness(plugins, hook = 'configureServer') {
     headers = {},
     encrypted = false,
     stream,
+    path: explicitPath,
   } = {}) {
     const req = Object.assign(
       stream ??
@@ -110,7 +111,8 @@ function harness(plugins, hook = 'configureServer') {
     );
     const answer = { next: false };
     const path =
-      route === 'order' ? '/api/up42/order' : `/api/up42/order/${route}`;
+      explicitPath ??
+      (route === 'order' ? '/api/up42/order' : `/api/up42/order/${route}`);
     await routes.get(path)(
       req,
       {
@@ -274,7 +276,7 @@ test('[up42-orders-004] keeps all routes off and spends no rate count', async (t
     assert.notEqual((await s.send({ value: '{' })).status, 429);
 });
 
-test('[up42-orders-005] refuses each spending route with no valid cap', async (t) => {
+test('[up42-orders-005] refuses the order and accept routes when the cap is invalid', async (t) => {
   for (const cap of [
     undefined,
     '',
@@ -287,7 +289,7 @@ test('[up42-orders-005] refuses each spending route with no valid cap', async (t
   ]) {
     const s = await setup(t, { env: { UP42_ORDER_MAX_CREDITS: cap } });
     if (cap === undefined) delete s.env.UP42_ORDER_MAX_CREDITS;
-    for (const route of ['order', 'accept', 'reject'])
+    for (const route of ['order', 'accept'])
       errorOf(await s.send({ route }), 503, 'no_cap');
     assert.equal(s.calls.length, 0);
   }
@@ -983,21 +985,37 @@ test('[up42-orders-022] sends only the five listed calls', async (t) => {
   );
 });
 
-test('[up42-orders-023] keeps secrets out of the answers and the log', async (t) => {
+test('[up42-orders-023] keeps each secret out of the answers and the log', async (t) => {
   const logs = [];
   for (const m of ['log', 'info', 'warn', 'error', 'debug', 'trace', 'dir'])
     t.mock.method(console, m, (...a) => logs.push(a.join(' ')));
-  const s = await setup(t, {
-    respond: (u, i) =>
-      u === ESTIMATE
-        ? json({ summary: { totalCredits: 1 }, x: 'fake-pass-ord' })
-        : good(u, i),
-  });
-  const a = await s.send();
-  errorOf(a, 502, 'bad_upstream');
-  const text = JSON.stringify(a) + logs.join('\n');
-  for (const secret of ['fake-user-ord', 'fake-pass-ord', 'fake-token-ord'])
-    assert.equal(text.includes(secret), false);
+  for (const secret of ['fake-user-ord', 'fake-pass-ord', 'fake-token-ord']) {
+    for (const [target, error, route, value] of [
+      [ESTIMATE, 'bad_upstream', 'order', request()],
+      [ORDER_URL, 'order_unclear', 'order', request()],
+      [LIST, 'bad_upstream', 'accept', ACCEPT],
+    ]) {
+      const s = await setup(t, {
+        respond: (u, i) => {
+          if (u !== target) return good(u, i);
+          if (u === ESTIMATE)
+            return json({ summary: { totalCredits: 1 }, x: secret });
+          if (u === ORDER_URL)
+            return json({ results: [{ id: ORDER }], x: secret }, 202);
+          return json({ content: [], x: secret });
+        },
+      });
+      if (route === 'accept') await placed(s);
+      const a = await s.send({ route, value });
+      errorOf(a, 502, error);
+      const text = JSON.stringify(a) + logs.join('\n');
+      assert.equal(text.includes(secret), false);
+      assert.equal(
+        s.api().some((c) => c.init.method === 'PATCH'),
+        false,
+      );
+    }
+  }
 });
 
 test('[up42-orders-024] shares one client in the local list', async (t) => {
@@ -1005,6 +1023,10 @@ test('[up42-orders-024] shares one client in the local list', async (t) => {
   Object.assign(
     process.env,
     envOf(await mkdtemp(join(tmpdir(), 'gev-up42-list-'))),
+    {
+      UP42_THUMBNAILS: 'true',
+      UP42_QUOTES: 'true',
+    },
   );
   t.after(() => {
     for (const k of Object.keys(process.env))
@@ -1014,6 +1036,47 @@ test('[up42-orders-024] shares one client in the local list', async (t) => {
   let logins = 0;
   t.mock.method(globalThis, 'fetch', async (url, init) => {
     if (url === TOKEN) logins++;
+    if (url.includes('/collections?'))
+      return json({
+        content: [
+          {
+            name: 'pneo',
+            providers: [{ name: 'oneatlas', roles: ['HOST'] }],
+            integrations: ['THUMBNAIL_AVAILABLE'],
+          },
+        ],
+      });
+    if (url.endsWith('/stac/search'))
+      return json({
+        features: [
+          {
+            properties: {
+              id: 'scene.1',
+              collection: 'pneo',
+              datetime: '2026-11-01',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [10, 60],
+                  [10.02, 60],
+                  [10.02, 60.01],
+                  [10, 60],
+                ],
+              ],
+            },
+          },
+        ],
+      });
+    if (url.endsWith('/thumbnail'))
+      return new Response(Uint8Array.from([255, 216, 255]), {
+        headers: { 'content-type': 'image/jpeg' },
+      });
+    if (url === 'https://api.up42.com/v2/data-products?type=TASKING&size=100')
+      return json({ content: [{ id: PRODUCT, title: 'Product A' }] });
+    if (url === 'https://api.up42.com/v2/orders/validation')
+      return json({ 'gev-quote': { status: 'VALID' } });
     return good(url, init);
   });
   t.mock.method(console, 'log', () => {});
@@ -1021,7 +1084,42 @@ test('[up42-orders-024] shares one client in the local list', async (t) => {
   assert.equal(names.filter((n) => n === 'up42-orders').length, 1);
   assert.equal(names.indexOf('up42-orders'), names.indexOf('up42-quotes') + 1);
   const plugins = up42TaskingPlugins();
-  const h = harness(plugins.filter((p) => p.name === 'up42-orders'));
+  const h = harness(plugins);
+  const scenes = await h.send({
+    path: '/api/up42/scenes',
+    value: {
+      box: [10, 60, 10.02, 60.01],
+      start: '2026-10-01',
+      end: '2026-10-02',
+    },
+  });
+  assert.equal(scenes.status, 200);
+  let bytes;
+  await h.routes.get('/api/up42/thumbnail')(
+    {
+      url: '/scene.1',
+      method: 'GET',
+      headers: { host: 'localhost:5173', origin: 'http://localhost:5173' },
+      socket: { encrypted: false },
+    },
+    {
+      writeHead() {},
+      end(v) {
+        bytes = [...v];
+      },
+    },
+    () => assert.fail(),
+  );
+  assert.deepEqual(bytes, [255, 216, 255]);
+  const quoted = await h.send({
+    path: '/api/up42/quote',
+    value: {
+      dataProduct: PRODUCT,
+      box: [10, 60, 10.02, 60.01],
+      checks: ['validation'],
+    },
+  });
+  assert.equal(quoted.status, 200);
   assert.equal((await h.send()).status, 200);
   assert.equal(logins, 1);
   const own = up42TaskingPlugins({
@@ -1133,7 +1231,7 @@ test('[up42-orders-026] keeps the ledger over a restart', async (t) => {
   assert.equal(
     (await readFile(join(first.folder, 'orders.json'), 'utf8')).split('"key"')
       .length - 1,
-    500,
+    503,
   );
 });
 
@@ -1374,4 +1472,138 @@ test('[up42-orders-029] calls the API with a fixed origin', async (t) => {
     ok: false,
     kind: 'credentials_rejected',
   });
+});
+
+const DAY = '2026-11-14';
+const ledgerFile = (
+  counts,
+  orders = [{ id: ORDER, key: 'k', credits: 50, time: 1 }],
+) => JSON.stringify({ day: DAY, counts, orders });
+async function seeded(t, counts, extra = {}) {
+  const dir = await mkdtemp(join(tmpdir(), 'gev-up42-seed-'));
+  await writeFile(join(dir, 'orders.json'), ledgerFile(counts));
+  return setup(t, { dir, ...extra });
+}
+
+test('[up42-orders-019] refuses an accept at a full accept count while an order still passes', async (t) => {
+  const s = await seeded(t, { orders: 0, accepts: 2 });
+  errorOf(await s.send({ route: 'accept', value: ACCEPT }), 429, 'budget', {
+    used: 2,
+    limit: 2,
+  });
+  assert.equal(
+    s.api().some((c) => c.init.method === 'PATCH'),
+    false,
+  );
+  const placedOrder = await s.send({
+    value: request({ box: [10, 60, 10.5, 60.01] }),
+  });
+  assert.equal(placedOrder.status, 200);
+  assert.deepEqual((await s.file()).counts, { orders: 1, accepts: 2 });
+});
+
+test('[up42-orders-019 up42-orders-026] shares one ledger load between two first requests', async (t) => {
+  const second = '99999999-1111-2222-3333-444444444444';
+  const s = await seeded(
+    t,
+    { orders: 0, accepts: 0 },
+    {
+      env: { UP42_DAILY_ORDERS: '1' },
+      respond: (u, i) =>
+        u === LIST
+          ? json({ content: [quote(), quote({ id: second })] })
+          : good(u, i),
+    },
+  );
+  const both = await Promise.all([
+    s.send({ route: 'accept', value: ACCEPT }),
+    s.send({ route: 'accept', value: { ...ACCEPT, quotationId: second } }),
+  ]);
+  assert.deepEqual(both.map((a) => a.status).sort(), [200, 429]);
+  assert.equal(s.api().filter((c) => c.init.method === 'PATCH').length, 1);
+  assert.deepEqual((await s.file()).counts, { orders: 0, accepts: 1 });
+});
+
+test('[up42-orders-013 up42-orders-026] writes a count with a temporary file and a rename before the call', async (t) => {
+  for (const route of ['order', 'accept']) {
+    const ops = [];
+    let release;
+    const hold = new Promise((r) => (release = r));
+    let saved = null;
+    const fs = {
+      readFile: async () =>
+        route === 'order'
+          ? Promise.reject(Object.assign(new Error('none'), { code: 'ENOENT' }))
+          : ledgerFile({ orders: 0, accepts: 0 }),
+      mkdir: async () => {
+        ops.push('mkdir');
+      },
+      writeFile: async (file, text) => {
+        ops.push(`write ${file.split('/').pop()}`);
+        saved = JSON.parse(text);
+      },
+      rename: async (from, to) => {
+        ops.push(`rename ${from.split('/').pop()} ${to.split('/').pop()}`);
+        await hold;
+      },
+    };
+    const s = await setup(t, { fs });
+    const pending =
+      route === 'order' ? s.send() : s.send({ route: 'accept', value: ACCEPT });
+    await settle();
+    assert.deepEqual(ops, [
+      'mkdir',
+      'write orders.json.tmp',
+      'rename orders.json.tmp orders.json',
+    ]);
+    assert.deepEqual(
+      saved.counts,
+      route === 'order' ? { orders: 1, accepts: 0 } : { orders: 0, accepts: 1 },
+    );
+    assert.equal(
+      s.api().filter((c) => c.url === ESTIMATE || c.init.method === 'PATCH')
+        .length,
+      0,
+    );
+    release();
+    assert.equal((await pending).status, 200);
+  }
+});
+
+test('[up42-orders-025] rejects with no cap and with a full accept count', async (t) => {
+  const s = await seeded(
+    t,
+    { orders: 2, accepts: 2 },
+    {
+      env: { UP42_ORDER_MAX_CREDITS: undefined },
+    },
+  );
+  delete s.env.UP42_ORDER_MAX_CREDITS;
+  const a = await s.send({ route: 'reject', value: { quotationId: QUOTE } });
+  assert.equal(a.status, 200);
+  assert.deepEqual(a.body, { rejected: true });
+  assert.equal(s.api().filter((c) => c.init.method === 'PATCH').length, 1);
+  assert.deepEqual((await s.file()).counts, { orders: 2, accepts: 2 });
+});
+
+test('[up42-orders-027] keeps a placed order in memory when its write fails', async (t) => {
+  let writes = 0;
+  const fs = {
+    readFile: async () =>
+      Promise.reject(Object.assign(new Error('none'), { code: 'ENOENT' })),
+    mkdir: async () => {},
+    writeFile: async () => {
+      writes += 1;
+      if (writes > 1) throw new Error('full');
+    },
+    rename: async () => {},
+  };
+  const s = await setup(t, { fs });
+  const a = await s.send();
+  assert.equal(a.status, 200);
+  assert.deepEqual(a.body, { orderId: ORDER, credits: 50, spent: false });
+  assert.equal(writes, 2);
+  const q = await s.send({ route: 'quotation', suffix: `/?orderId=${ORDER}` });
+  assert.equal(q.status, 200);
+  assert.equal(q.body.quotation.id, QUOTE);
 });

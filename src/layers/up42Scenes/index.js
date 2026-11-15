@@ -584,6 +584,7 @@ export function createUp42ScenesLayer({
           : [],
         info: readoutText({
           message:
+            (_quoteStep === 'idle' ? null : _quoteMessage) ??
             orderFlow.message() ??
             _quoteMessage ??
             _pressMessage ??

@@ -1,8 +1,5 @@
-# up42-order-panel Specification
+## ADDED Requirements
 
-## Purpose
-Describe how the server and the UP42 Scenes row place a tasking order and accept its quotation, each step with guards and a confirm.
-## Requirements
 ### Requirement: Order source
 
 The browser source MUST send one POST request with the product, the box and the approved credits to "/api/up42/order".
@@ -83,7 +80,7 @@ Origin: spec-first
 
 ### Requirement: Quotation step
 
-The chip "Check quotation" MUST read the quotation and MUST show its price. A price shows the chip "Accept quotation".
+The chip "Check quotation" MUST read the quotation and MUST show its price. A quotation with a price and the decision NOT_DECIDED shows the chip "Accept quotation".
 
 Origin: spec-first
 
@@ -129,6 +126,10 @@ Origin: spec-first
 - **OR** the source answers with an unknown error
 - **THEN** the info text is the fixed text of that error and the generic text for any other error
 - **AND** the text of accept_unclear states that credits can be spent and tells the person to check in UP42 before a new try
+- **AND** a lost answer of the order call gives the text of order_unclear, and no chip for a new try
+- **AND** a lost answer of the accept call gives the text of accept_unclear, and no chip for a new try
+- **AND** a lost answer of the reject call gives the text of reject_unclear, and no chip for a new try
+- **AND** a lost answer of the quotation call keeps the chip "Check quotation"
 
 ### Requirement: Fixed calls
 
@@ -178,3 +179,14 @@ Origin: spec-first
 - **AND** the source gets no call before the second press, then one `rejectQuotation` call
 - **AND** the info text then is "The quotation is rejected. No credits are spent."
 
+### Requirement: Quote text first
+
+The info text MUST show the text of a quote step while that step runs. It MUST show the order text again when the quote step ends.
+
+Origin: spec-first
+
+#### Scenario: Show the quote text during an order step `up42-order-panel-015`
+
+- **WHEN** a person starts a new quote while an order text shows
+- **THEN** the info text shows the text of each quote step, for example "Choose a product." and the confirmation text of the quote
+- **AND** a press of "Cancel" shows the order text again

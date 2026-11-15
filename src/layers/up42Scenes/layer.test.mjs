@@ -2072,7 +2072,11 @@ test('[up42-order-panel-010] shows the failure text and allows no new try after 
   });
   thrown.byId('order').onClick();
   await thrown.byId('order-confirm').onClick();
-  assert.equal(head(thrown), 'The server did not answer.');
+  assert.equal(
+    head(thrown),
+    'UP42 gave no clear answer. An order can exist. Check UP42 before you try again.',
+  );
+  assert.deepEqual(thrown.chipIds().slice(3), []);
   const check = await quoted({
     orders: { getQuotation: fail('unknown_order') },
   });
@@ -2189,4 +2193,77 @@ test('[up42-order-panel-011] calls only the quote routes and the four order rout
   await second.byId('accept-confirm').onClick();
   assert.deepEqual([...new Set(seen)].sort(), Object.keys(answers).sort());
   assert.equal(seen.length, 10);
+});
+
+test('[up42-order-panel-010] treats a lost answer of a call that can change UP42 as unclear', async () => {
+  const lost = (error) => async () => ({ ok: false, status: 0, error });
+  const texts = {
+    placeOrder:
+      'UP42 gave no clear answer. An order can exist. Check UP42 before you try again.',
+    acceptQuotation:
+      'UP42 gave no clear answer. Credits can be spent. Check the order in UP42 before you try again.',
+    rejectQuotation:
+      'UP42 gave no clear answer. Check the order in UP42 before you try again.',
+  };
+  for (const name of Object.keys(texts))
+    for (const error of ['unreachable', 'bad_answer']) {
+      const h = await quoted({ orders: { [name]: lost(error) } });
+      h.byId('order').onClick();
+      if (name !== 'placeOrder') {
+        await h.byId('order-confirm').onClick();
+        await h.byId('quotation').onClick();
+        h.byId(name === 'acceptQuotation' ? 'accept' : 'reject').onClick();
+        await h
+          .byId(
+            name === 'acceptQuotation' ? 'accept-confirm' : 'reject-confirm',
+          )
+          .onClick();
+      } else await h.byId('order-confirm').onClick();
+      assert.equal(head(h), texts[name]);
+      assert.deepEqual(h.chipIds().slice(3), []);
+    }
+  const read = await quoted({
+    orders: { getQuotation: lost('unreachable') },
+  });
+  read.byId('order').onClick();
+  await read.byId('order-confirm').onClick();
+  await read.byId('quotation').onClick();
+  assert.equal(head(read), 'The server did not answer.');
+  assert.deepEqual(read.chipIds().slice(3), ['quotation']);
+});
+
+test('[up42-order-panel-009] ignores a second press while the accept runs', async () => {
+  const wait = deferred();
+  const h = await quoted({ orders: { acceptQuotation: () => wait.promise } });
+  h.byId('order').onClick();
+  await h.byId('order-confirm').onClick();
+  await h.byId('quotation').onClick();
+  h.byId('accept').onClick();
+  const confirm = h.byId('accept-confirm');
+  const first = confirm.onClick();
+  await confirm.onClick();
+  assert.equal(h.calls.acceptQuotation.length, 1);
+  assert.deepEqual(h.chipIds().slice(3), []);
+  assert.equal(head(h), 'Accepting the quotation…');
+  wait.resolve({ ok: true, credits: 90 });
+  await first;
+  assert.equal(h.calls.acceptQuotation.length, 1);
+  assert.equal(head(h), 'The quotation is accepted. 90 credits are spent.');
+});
+
+test('[up42-order-panel-015] shows the quote text while a new quote step runs and the order text after it', async () => {
+  const h = await quoted();
+  h.byId('order').onClick();
+  await h.byId('order-confirm').onClick();
+  assert.equal(head(h), 'Order aaaaaaaa is placed. No credits are spent.');
+  await h.byId('quote').onClick();
+  assert.equal(head(h), 'Choose a product.');
+  h.byId('quote-product-1').onClick();
+  assert.equal(
+    head(h),
+    'Quote Product 1 for this view? This gives no order and spends no credits.',
+  );
+  h.byId('quote-cancel').onClick();
+  assert.equal(head(h), 'Order aaaaaaaa is placed. No credits are spent.');
+  assert.deepEqual(h.chipIds().slice(2), ['quote', 'quotation']);
 });

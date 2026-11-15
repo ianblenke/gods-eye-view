@@ -24,6 +24,8 @@ import {
 const CANCEL = 'Cancel';
 // A failure of these errors can leave an order or a spent price: no new try.
 const UNCLEAR = new Set(['order_unclear', 'accept_unclear', 'reject_unclear']);
+// The answer never came, or the page cannot read it.
+const LOST = new Set(['unreachable', 'bad_answer']);
 
 /**
  * The order steps after a quote. The steps are `none`, `offered`, `confirm`,
@@ -49,8 +51,12 @@ export function createOrderFlow({ source, notify, isEnabled }) {
     message = null;
   }
 
-  /** Run one source call. `back` is the step after a failure that is not unclear. */
-  async function run(text, back, call, done) {
+  /**
+   * Run one source call. `back` is the step after a failure that is not unclear.
+   * `unclear` names the error of a call that can have changed UP42: a lost
+   * answer of that call gives this error, because the server can have acted.
+   */
+  async function run(text, back, call, done, unclear = null) {
     const own = new AbortController();
     request = own;
     step = 'working';
@@ -64,6 +70,9 @@ export function createOrderFlow({ source, notify, isEnabled }) {
     }
     if (request !== own) return;
     request = null;
+    if (unclear !== null && LOST.has(result.error)) {
+      result = { ok: false, error: unclear };
+    }
     if (result.ok) done(result);
     else {
       step = UNCLEAR.has(result.error) ? 'done' : back;
@@ -94,6 +103,7 @@ export function createOrderFlow({ source, notify, isEnabled }) {
         step = 'ordered';
         message = orderedText(orderId);
       },
+      'order_unclear',
     );
   const check = () =>
     (step === 'ordered' || step === 'quotation') &&
@@ -127,6 +137,7 @@ export function createOrderFlow({ source, notify, isEnabled }) {
         step = 'done';
         message = acceptedText(result.credits);
       },
+      'accept_unclear',
     );
   const reject = () =>
     step === 'reject-confirm' &&
@@ -138,6 +149,7 @@ export function createOrderFlow({ source, notify, isEnabled }) {
         step = 'done';
         message = REJECTED;
       },
+      'reject_unclear',
     );
   const cancel = () => {
     if (step === 'confirm') ask('offered', null);

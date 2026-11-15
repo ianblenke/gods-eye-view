@@ -1,8 +1,5 @@
-# up42-orders Specification
+## ADDED Requirements
 
-## Purpose
-Describe how the server and the UP42 Scenes row place a tasking order and accept its quotation, each step with guards and a confirm.
-## Requirements
 ### Requirement: Routes
 
 The plugin MUST provide both Vite hooks and answer only the four exact order paths.
@@ -49,7 +46,7 @@ Origin: spec-first
 
 ### Requirement: Credit cap
 
-The POST routes MUST refuse each request when UP42_ORDER_MAX_CREDITS is not a whole number from 1 to 1000000.
+The order route and the accept route MUST refuse each request when UP42_ORDER_MAX_CREDITS is not a whole number from 1 to 1000000. The reject route needs no cap.
 
 Origin: spec-first
 
@@ -58,10 +55,11 @@ Origin: spec-first
 - **WHEN** the cap is absent, zero, negative, fractional, above 1000000 or not a number, and a valid request arrives
 - **THEN** the route gives 503 with the error no_cap and makes no upstream call
 - **AND** a cap of 1 and a cap of 1000000 pass this check
+- **AND** a reject request with no cap does not give no_cap
 
 ### Requirement: Rate limit
 
-The routes MUST allow at most 6 requests in one minute for all three routes together.
+The routes MUST allow at most 6 requests in one minute for all four routes together.
 
 Origin: spec-first
 
@@ -277,8 +275,10 @@ Origin: spec-first
 
 #### Scenario: Keep secrets private `up42-orders-023`
 
-- **WHEN** a fault puts the user name, the password or the token into an upstream body
-- **THEN** the route gives 502 upstream_failed and the log holds none of the three values
+- **WHEN** a fault puts the user name, the password or the token into an estimate response, an order response or a quotation list response
+- **THEN** the estimate response and the quotation list response give 502 bad_upstream
+- **AND** the order response gives 502 order_unclear
+- **AND** the answer and the log hold none of the three values, and no PATCH call goes out
 
 ### Requirement: Plugin list
 
@@ -301,9 +301,11 @@ Origin: spec-first
 
 - **WHEN** the quotation belongs to an order of the ledger and has the decision NOT_DECIDED
 - **THEN** the fake fetch function gets exactly one PATCH to the quotation URL with the type application/merge-patch+json and the body {"decision":"REJECTED"}
-- **AND** the route gives 200 with rejected true and no cap check and no count
+- **AND** the route gives 200 with rejected true, and the route makes no cap check and changes no count
+- **AND** a reject request with no cap, and a reject request at a full accept count, give 200
 - **AND** a quotation of another order gives 409 not_ours, and a decided quotation gives 409 decided
-- **AND** a missing quotation gives 404 unknown_quotation, and each of the three sends no PATCH call
+- **AND** a quotation that is not in the list gives 404 unknown_quotation
+- **AND** each of the three sends no PATCH call
 - **AND** a time-out or a 5xx answer gives 502 reject_unclear and no second call
 
 ### Requirement: Ledger file
@@ -319,7 +321,9 @@ Origin: spec-first
 - **AND** a day that changed sets the counts to 0
 - **AND** an order with the key of the file gives 409 duplicate, and a quotation of an order in the file passes the own-order check
 - **AND** a missing file gives an empty ledger
-- **AND** the file is written to a temporary file first and then renamed
+- **AND** the server writes a temporary file first and then renames it, and it writes each count before the call that the count allows
+- **AND** two first requests at the same time load the file once and keep one count
+- **AND** the ledger keeps each order and deletes none
 
 ### Requirement: Ledger failure
 
@@ -331,6 +335,7 @@ Origin: spec-first
 
 - **WHEN** the file has invalid content, the read fails or the write fails
 - **THEN** the route gives 503 with the error store_failed and sends no estimate, order or PATCH call
+- **AND** a write that fails after a placed order keeps the order in memory, and the route gives 200
 
 ### Requirement: Volume
 
@@ -359,4 +364,3 @@ Origin: spec-first
 - **AND** a status that the caller did not name gives upstream_failed with the status
 - **AND** a call with a body sends the given content type, or application/json when none is given
 - **AND** the option discard returns a null value without a read of the body
-

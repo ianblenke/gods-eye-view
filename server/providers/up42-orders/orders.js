@@ -188,7 +188,9 @@ export function up42OrderProxy({
     if (!allow('orders'))
       return send(res, 429, { error: 'rate_limited' }, { 'Retry-After': '60' });
     const cap = capOf(env.UP42_ORDER_MAX_CREDITS);
-    if (route !== 'quotation' && cap === null) return fail(res, 'no_cap');
+    // A reject spends nothing, so it needs no cap.
+    if ((route === 'order' || route === 'accept') && cap === null)
+      return fail(res, 'no_cap');
     let input;
     let orderId;
     if (route === 'quotation') {

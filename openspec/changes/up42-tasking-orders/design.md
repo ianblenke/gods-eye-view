@@ -32,7 +32,7 @@ Each step refuses a price above the cap or above `approvedCredits`. The cap is `
 
 **D5. Only own orders.** The ledger holds the id of each order that this server placed. The accept and reject routes refuse a quotation of another order.
 
-**D6. No repeat after an unclear answer.** A time-out, a 5xx answer or an unknown body after the order call gives `order_unclear`. The same after the accept call gives `accept_unclear`. The server sends each call once.
+**D6. No repeat after an unclear answer.** A time-out, a 5xx answer or an unknown body after the order call gives `order_unclear`. A time-out or a 5xx answer after the accept call gives `accept_unclear`. The client does not read the body of a good accept answer. The server sends each call once.
 
 The answer tells the person to check in UP42 before another try. A repeat of the accept is safe. The server reads the quotation first and refuses a decided one.
 
@@ -42,17 +42,17 @@ A count rises, and the ledger file holds it, before the call goes to UP42. A res
 
 **D8. Duplicate guard.** The ledger keeps the key of each placed order. The guard holds for 10 minutes. A second request with the same key gets `duplicate` and the first order id. A simultaneous second request gets `busy`.
 
-**D9. The page does the steps in order.** The states are `idle`, `order-confirm`, `ordering`, `ordered`, `quotation-confirm` and `accepting`. The chip "Order this visit" appears after a quote with an estimate. The chip "Check quotation" appears after an order.
+**D9. The page does the steps in order.** The states are `none`, `offered`, `confirm`, `ordered`, `quotation`, `accept-confirm`, `reject-confirm`, `working` and `done`. The chip "Order this visit" appears after a quote with an estimate. The chip "Check quotation" appears after an order.
 
-A quotation with a price shows the chip "Accept quotation". Each spending step has a confirm text with the amount. A press of a search chip, `reset` and `disable` clear the state.
+A quotation with a price and the decision NOT_DECIDED shows the chip "Accept quotation". Each spending step has a confirm text with the amount. A press of a search chip, `reset` and `disable` clear the state.
 
 **D10. A ledger file.** The ledger is `orders.json` in the folder `UP42_DATA_DIR`. The default is `.gev-up42` in the working folder. The file holds the orders, the duplicate keys and the two counts of the day.
 
-The server writes a temporary file and renames it, as the Bee Maps ledger does. A failed write gives `store_failed` and the server sends no call.
+The server writes a temporary file and renames it, as the Bee Maps ledger does. A failed count write gives `store_failed` before the order call or the PATCH call. If the server cannot save a placed order, it keeps the order in memory and returns success.
 
 **D11. A volume.** The file `compose.yaml` mounts the named volume `gev-up42` at `/app/.gev-up42`. The `Dockerfile` makes the folder. The dev server ignores it, as it ignores `.gev-cache`.
 
-**D12. A reject.** The reject route sends one PATCH with the decision `REJECTED`. It spends no credits and has no cap check and no count. It needs a quotation of an order in the ledger with the decision NOT_DECIDED.
+**D12. A reject.** The reject route sends one PATCH with the decision `REJECTED`. It spends no credits. It needs no cap, makes no cap check and changes no count. It needs a quotation of an order in the ledger with the decision NOT_DECIDED.
 
 **D13. The source contract stays.** The four order methods are optional. The order chips appear only when the source has all four methods. The contract table in `sourceComposition.js` stays the same.
 
@@ -61,7 +61,8 @@ The server writes a temporary file and renames it, as the Bee Maps ledger does. 
 - [No live check] → The shapes of the order answer and of the quotation list come from the UP42 documents. A shape that differs gives `order_unclear` or `unknown_quotation`. No credits are spent without a readable quotation price.
 - [The quotation list needs a page size] → The route reads the first 100 entries. A longer list can hide a quotation. This is a Known limit.
 - [The order can need a workspace id] → `UP42_WORKSPACE_ID` is optional. The server adds it to the order URL when it is a UUID.
-- [The ledger file fails] → The server sends no call and gives `store_failed`.
+- [The ledger file fails] → A failed count write gives `store_failed` and the server sends no call. A failed write after an order keeps the order in memory only.
+- [The page loses an answer] → After the order call, the accept call or the reject call, a lost answer gives the unclear text. The page offers no new try.
 - [An accept answer is lost] → The page tells the person that credits can be spent. The person checks in UP42.
 
 ## How the gates measure it

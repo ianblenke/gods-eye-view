@@ -9,7 +9,6 @@ import { promises as fsp } from 'node:fs';
  */
 
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
-const MAX_ORDERS = 500;
 export const HOLD_MS = 600_000;
 const whole = (v) => Number.isInteger(v) && v >= 0;
 
@@ -40,6 +39,7 @@ function isValid(saved) {
 export function createLedger({ dir, now, fs = fsp }) {
   const file = path.join(dir, 'orders.json');
   let state = null;
+  let loading = null;
   let writes = Promise.resolve();
 
   async function load() {
@@ -56,14 +56,21 @@ export function createLedger({ dir, now, fs = fsp }) {
     return saved;
   }
 
-  async function ready() {
-    if (state !== null) return true;
-    try {
-      state = await load();
-      return true;
-    } catch {
-      return false;
-    }
+  // One shared load: two first requests must not load two states.
+  function ready() {
+    if (state !== null) return Promise.resolve(true);
+    loading ??= load().then(
+      (loaded) => {
+        state = loaded;
+        loading = null;
+        return true;
+      },
+      () => {
+        loading = null;
+        return false;
+      },
+    );
+    return loading;
   }
 
   function persist() {
@@ -112,7 +119,6 @@ export function createLedger({ dir, now, fs = fsp }) {
     /** Add an order. The memory keeps it also when the write fails. */
     async add(order) {
       state.orders.push({ ...order, time: now() });
-      if (state.orders.length > MAX_ORDERS) state.orders.shift();
       return persist();
     },
   };
