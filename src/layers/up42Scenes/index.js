@@ -301,7 +301,15 @@ export function createUp42ScenesLayer({
   }
 
   async function startQuote() {
-    if (!_enabled || _quoteStep !== 'idle' || _configured === false) return;
+    if (
+      !_enabled ||
+      _quoteStep !== 'idle' ||
+      _configured === false ||
+      orderFlow.busy()
+    )
+      return;
+    // A new quote ends the offer of the old quote.
+    orderFlow.reset();
     const request = new AbortController();
     _quoteRequest = request;
     _quoteStep = 'loading';
@@ -405,7 +413,8 @@ export function createUp42ScenesLayer({
       {
         id: 'quote',
         label: QUOTE_LABEL,
-        disabled: _quoteStep !== 'idle' || _configured === false,
+        disabled:
+          _quoteStep !== 'idle' || _configured === false || orderFlow.busy(),
         onClick: startQuote,
       },
     ];
@@ -584,7 +593,6 @@ export function createUp42ScenesLayer({
           : [],
         info: readoutText({
           message:
-            (_quoteStep === 'idle' ? null : _quoteMessage) ??
             orderFlow.message() ??
             _quoteMessage ??
             _pressMessage ??

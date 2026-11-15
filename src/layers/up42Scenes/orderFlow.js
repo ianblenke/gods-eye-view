@@ -162,6 +162,7 @@ export function createOrderFlow({ source, notify, isEnabled }) {
         id: 'order',
         label: ORDER_LABEL,
         onClick: () =>
+          step === 'offered' &&
           ask('confirm', orderConfirmText(offer.product.title, offer.credits)),
       },
     ],
@@ -203,7 +204,6 @@ export function createOrderFlow({ source, notify, isEnabled }) {
     reset,
     /** Offer an order after a quote with an estimate of `credits`. */
     offer(next) {
-      if (step !== 'none' && step !== 'offered' && step !== 'done') return;
       reset();
       offer = next;
       step = 'offered';
@@ -211,6 +211,8 @@ export function createOrderFlow({ source, notify, isEnabled }) {
     chips() {
       return isEnabled() ? (CHIPS[step]?.() ?? []) : [];
     },
+    /** True while an order step shows or runs, so a new quote must wait. */
+    busy: () => step !== 'none' && step !== 'offered',
     message: () => message,
   };
 }

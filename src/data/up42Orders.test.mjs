@@ -1502,26 +1502,44 @@ test('[up42-orders-019] refuses an accept at a full accept count while an order 
   assert.deepEqual((await s.file()).counts, { orders: 1, accepts: 2 });
 });
 
-test('[up42-orders-019 up42-orders-026] shares one ledger load between two first requests', async (t) => {
+test('[up42-orders-019 up42-orders-026] loads the ledger once for two first requests', async (t) => {
   const second = '99999999-1111-2222-3333-444444444444';
-  const s = await seeded(
-    t,
-    { orders: 0, accepts: 0 },
-    {
-      env: { UP42_DAILY_ORDERS: '1' },
-      respond: (u, i) =>
-        u === LIST
-          ? json({ content: [quote(), quote({ id: second })] })
-          : good(u, i),
+  let reads = 0;
+  let release;
+  const gate = new Promise((r) => (release = r));
+  let saved = null;
+  const fs = {
+    readFile: async () => {
+      reads += 1;
+      await gate;
+      return ledgerFile({ orders: 0, accepts: 0 });
     },
-  );
-  const both = await Promise.all([
+    mkdir: async () => {},
+    writeFile: async (file, text) => {
+      saved = JSON.parse(text);
+    },
+    rename: async () => {},
+  };
+  const s = await setup(t, {
+    fs,
+    env: { UP42_DAILY_ORDERS: '1' },
+    respond: (u, i) =>
+      u === LIST
+        ? json({ content: [quote(), quote({ id: second })] })
+        : good(u, i),
+  });
+  const both = Promise.all([
     s.send({ route: 'accept', value: ACCEPT }),
     s.send({ route: 'accept', value: { ...ACCEPT, quotationId: second } }),
   ]);
-  assert.deepEqual(both.map((a) => a.status).sort(), [200, 429]);
+  await settle();
+  assert.equal(reads, 1);
+  release();
+  const answers = await both;
+  assert.deepEqual(answers.map((a) => a.status).sort(), [200, 429]);
+  assert.equal(reads, 1);
   assert.equal(s.api().filter((c) => c.init.method === 'PATCH').length, 1);
-  assert.deepEqual((await s.file()).counts, { orders: 0, accepts: 1 });
+  assert.deepEqual(saved.counts, { orders: 0, accepts: 1 });
 });
 
 test('[up42-orders-013 up42-orders-026] writes a count with a temporary file and a rename before the call', async (t) => {
@@ -1570,7 +1588,7 @@ test('[up42-orders-013 up42-orders-026] writes a count with a temporary file and
   }
 });
 
-test('[up42-orders-025] rejects with no cap and with a full accept count', async (t) => {
+test('[up42-orders-005 up42-orders-025] rejects with no cap and with a full accept count', async (t) => {
   const s = await seeded(
     t,
     { orders: 2, accepts: 2 },
@@ -1586,7 +1604,7 @@ test('[up42-orders-025] rejects with no cap and with a full accept count', async
   assert.deepEqual((await s.file()).counts, { orders: 2, accepts: 2 });
 });
 
-test('[up42-orders-027] keeps a placed order in memory when its write fails', async (t) => {
+test('[up42-orders-030] keeps a placed order in memory when the server cannot save the order', async (t) => {
   let writes = 0;
   const fs = {
     readFile: async () =>

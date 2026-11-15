@@ -2142,15 +2142,18 @@ test('[up42-order-panel-012] clears the order steps and ignores a late answer', 
   await h.chip().onClick();
   assert.equal(h.chipIds().includes('order-confirm'), false);
   assert.equal(h.chipIds().includes('order'), false);
-  // A new quote offers the order again, and a finished flow lets a new offer in.
+  // A search press ends a finished flow, so the next quote offers the order again.
   const again = await quoted();
   again.byId('order').onClick();
   await again.byId('order-confirm').onClick();
+  assert.equal(again.byId('quote').disabled, true);
+  await again.chip().onClick();
+  assert.equal(again.byId('quote').disabled, false);
   await again.byId('quote').onClick();
   again.byId('quote-product-1').onClick();
   await again.byId('quote-confirm').onClick();
-  assert.equal(again.chipIds().includes('quotation'), true);
-  assert.equal(again.chipIds().includes('order'), false);
+  assert.equal(again.chipIds().includes('quotation'), false);
+  assert.equal(again.chipIds().includes('order'), true);
 });
 
 test('[up42-order-panel-011] calls only the quote routes and the four order routes', async () => {
@@ -2251,19 +2254,57 @@ test('[up42-order-panel-009] ignores a second press while the accept runs', asyn
   assert.equal(head(h), 'The quotation is accepted. 90 credits are spent.');
 });
 
-test('[up42-order-panel-015] shows the quote text while a new quote step runs and the order text after it', async () => {
-  const h = await quoted();
+test('[up42-order-panel-015] blocks a new quote while an order step shows and ends the old offer when a quote starts', async () => {
+  const wait = deferred();
+  const h = await quoted({ orders: { placeOrder: () => wait.promise } });
+  const products = () => h.calls.getProducts.length;
+  assert.equal(products(), 1);
+  const stale = h.byId('order');
+  assert.equal(h.byId('quote').disabled, false);
   h.byId('order').onClick();
-  await h.byId('order-confirm').onClick();
-  assert.equal(head(h), 'Order aaaaaaaa is placed. No credits are spent.');
+  const confirm = h.byId('order-confirm');
+  assert.equal(h.byId('quote').disabled, true);
   await h.byId('quote').onClick();
-  assert.equal(head(h), 'Choose a product.');
-  h.byId('quote-product-1').onClick();
-  assert.equal(
-    head(h),
-    'Quote Product 1 for this view? This gives no order and spends no credits.',
-  );
-  h.byId('quote-cancel').onClick();
+  assert.equal(products(), 1);
+  assert.equal(head(h).startsWith('Order Product 2 for this view?'), true);
+  const placing = confirm.onClick();
+  assert.equal(h.byId('quote').disabled, true);
+  await h.byId('quote').onClick();
+  assert.equal(products(), 1);
+  wait.resolve({ ok: true, orderId: ORDER_ID, credits: 120 });
+  await placing;
+  assert.equal(h.byId('quote').disabled, true);
+  await h.byId('quote').onClick();
+  assert.equal(products(), 1);
   assert.equal(head(h), 'Order aaaaaaaa is placed. No credits are spent.');
-  assert.deepEqual(h.chipIds().slice(2), ['quote', 'quotation']);
+  await h.byId('quotation').onClick();
+  h.byId('accept').onClick();
+  assert.equal(h.byId('quote').disabled, true);
+  await h.byId('quote').onClick();
+  assert.equal(products(), 1);
+  assert.equal(head(h).startsWith('Accept the quotation of 90 credits?'), true);
+  assert.equal(stale.onClick(), false);
+  const unclear = await quoted({
+    orders: {
+      placeOrder: async () => ({
+        ok: false,
+        status: 502,
+        error: 'order_unclear',
+      }),
+    },
+  });
+  unclear.byId('order').onClick();
+  await unclear.byId('order-confirm').onClick();
+  assert.equal(unclear.byId('quote').disabled, true);
+  await unclear.byId('quote').onClick();
+  assert.equal(unclear.calls.getProducts.length, 1);
+  assert.equal(head(unclear).startsWith('UP42 gave no clear answer.'), true);
+  const offered = await quoted();
+  const old = offered.byId('order');
+  await offered.byId('quote').onClick();
+  assert.equal(offered.chipIds().includes('order'), false);
+  assert.equal(old.onClick(), false);
+  assert.equal(head(offered), 'Choose a product.');
+  offered.byId('quote-cancel').onClick();
+  assert.equal(offered.chipIds().includes('order'), false);
 });
