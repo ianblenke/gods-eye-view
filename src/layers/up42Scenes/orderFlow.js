@@ -40,7 +40,7 @@ export function createOrderFlow({ source, notify, isEnabled }) {
   let quotation = null;
   let request = null;
   let message = null;
-  // Each reset starts a new epoch. A chip of an older epoch does nothing.
+  // A chip works only in the step that showed it, and only until the next reset.
   let epoch = 0;
 
   function reset() {
@@ -215,9 +215,10 @@ export function createOrderFlow({ source, notify, isEnabled }) {
     chips() {
       if (!isEnabled()) return [];
       const mine = epoch;
+      const shown = step;
       return (CHIPS[step]?.() ?? []).map((chip) => ({
         ...chip,
-        onClick: () => epoch === mine && chip.onClick(),
+        onClick: () => epoch === mine && step === shown && chip.onClick(),
       }));
     },
     /** True while an order step shows or runs, so a new quote must wait. */

@@ -2264,7 +2264,7 @@ async function assertBlocked(h) {
   assert.equal(head(h), text);
 }
 
-test('[up42-order-panel-015] blocks a new quote in each order step and frees it after a search press', async () => {
+test('[up42-order-panel-016] blocks a new quote in each order step and frees it after a search press', async () => {
   const wait = deferred();
   const h = await quoted({ orders: { placeOrder: () => wait.promise } });
   assert.equal(h.calls.getProducts.length, 1);
@@ -2304,7 +2304,7 @@ test('[up42-order-panel-015] blocks a new quote in each order step and frees it 
   assert.equal(head(unclear).startsWith('UP42 gave no clear answer.'), true);
 });
 
-test('[up42-order-panel-015] ends the old offer when a quote starts and refuses each chip of an older offer', async () => {
+test('[up42-order-panel-016] ends the old offer when a quote starts and refuses each chip of an older offer', async () => {
   const offered = await quoted();
   const old = offered.byId('order');
   await offered.byId('quote').onClick();
@@ -2346,4 +2346,35 @@ test('[up42-order-panel-015] ends the old offer when a quote starts and refuses 
   sameOrder.onClick();
   sameEpoch.byId('order-cancel').onClick();
   assert.equal(head(sameEpoch), quotation);
+});
+
+test('[up42-order-panel-016] refuses a saved accept chip after an unclear answer and after the accept', async () => {
+  for (const result of [
+    { ok: false, status: 502, error: 'accept_unclear' },
+    { ok: true, credits: 90 },
+  ]) {
+    const h = await quoted({ orders: { acceptQuotation: async () => result } });
+    h.byId('order').onClick();
+    await h.byId('order-confirm').onClick();
+    await h.byId('quotation').onClick();
+    const accept = h.byId('accept');
+    const reject = h.byId('reject');
+    const check = h.byId('quotation');
+    accept.onClick();
+    const confirm = h.byId('accept-confirm');
+    const cancel = h.byId('order-cancel');
+    await confirm.onClick();
+    const text = head(h);
+    assert.equal(h.calls.acceptQuotation.length, 1);
+    assert.equal(accept.onClick(), false);
+    assert.equal(reject.onClick(), false);
+    assert.equal(cancel.onClick(), false);
+    assert.equal(await check.onClick(), false);
+    assert.equal(await confirm.onClick(), false);
+    assert.equal(h.calls.acceptQuotation.length, 1);
+    assert.equal(h.calls.rejectQuotation.length, 0);
+    assert.equal(h.calls.getQuotation.length, 1);
+    assert.equal(head(h), text);
+    assert.deepEqual(h.chipIds().slice(3), []);
+  }
 });
