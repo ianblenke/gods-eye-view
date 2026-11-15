@@ -1,10 +1,17 @@
 import {
+  ACCEPT_LABEL,
   ACCEPTING,
+  CHECK_LABEL,
   CHECKING,
   NO_QUOTATION,
   ORDERING,
+  ORDER_LABEL,
+  PLACE_LABEL,
   REJECTED,
   REJECTING,
+  REJECT_CONFIRM_LABEL,
+  REJECT_LABEL,
+  acceptConfirmLabel,
   acceptConfirmText,
   acceptedText,
   describeOrderFailure,
@@ -141,43 +148,41 @@ export function createOrderFlow({ source, notify, isEnabled }) {
     offered: () => [
       {
         id: 'order',
-        label: 'Order this visit',
+        label: ORDER_LABEL,
         onClick: () =>
           ask('confirm', orderConfirmText(offer.product.title, offer.credits)),
       },
     ],
     confirm: () => [
-      { id: 'order-confirm', label: 'Place order', onClick: place },
+      { id: 'order-confirm', label: PLACE_LABEL, onClick: place },
       { id: 'order-cancel', label: CANCEL, onClick: cancel },
     ],
-    ordered: () => [
-      { id: 'quotation', label: 'Check quotation', onClick: check },
-    ],
+    ordered: () => [{ id: 'quotation', label: CHECK_LABEL, onClick: check }],
     quotation: () => [
       {
         id: 'accept',
-        label: 'Accept quotation',
+        label: ACCEPT_LABEL,
         onClick: () =>
           ask('accept-confirm', acceptConfirmText(quotation.credits)),
       },
       {
         id: 'reject',
-        label: 'Reject quotation',
+        label: REJECT_LABEL,
         onClick: () =>
           ask('reject-confirm', rejectConfirmText(quotation.credits)),
       },
-      { id: 'quotation', label: 'Check quotation', onClick: check },
+      { id: 'quotation', label: CHECK_LABEL, onClick: check },
     ],
     'accept-confirm': () => [
       {
         id: 'accept-confirm',
-        label: `Accept and spend ${quotation.credits} credits`,
+        label: acceptConfirmLabel(quotation.credits),
         onClick: accept,
       },
       { id: 'order-cancel', label: CANCEL, onClick: cancel },
     ],
     'reject-confirm': () => [
-      { id: 'reject-confirm', label: 'Confirm reject', onClick: reject },
+      { id: 'reject-confirm', label: REJECT_CONFIRM_LABEL, onClick: reject },
       { id: 'order-cancel', label: CANCEL, onClick: cancel },
     ],
   };

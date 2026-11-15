@@ -103,3 +103,12 @@ export const acceptedText = (amount) =>
   `The quotation is accepted. ${amount} credits are spent.`;
 export const rejectConfirmText = (amount) =>
   `Reject the quotation of ${amount} credits? The order stays unpaid and spends no credits.`;
+
+export const ORDER_LABEL = 'Order this visit';
+export const PLACE_LABEL = 'Place order';
+export const CHECK_LABEL = 'Check quotation';
+export const ACCEPT_LABEL = 'Accept quotation';
+export const REJECT_LABEL = 'Reject quotation';
+export const REJECT_CONFIRM_LABEL = 'Confirm reject';
+export const acceptConfirmLabel = (amount) =>
+  `Accept and spend ${amount} credits`;
