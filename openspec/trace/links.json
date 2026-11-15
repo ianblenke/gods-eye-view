@@ -8982,7 +8982,7 @@
     "src/layers/up42Scenes/orders.test.mjs › [up42-order-panel-014] states that a reject spends no credits"
   ],
   "up42-order-panel-015": [
-    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-015] shows the quote text while a new quote step runs and the order text after it"
+    "src/layers/up42Scenes/layer.test.mjs › [up42-order-panel-015] blocks a new quote while an order step shows and ends the old offer when a quote starts"
   ],
   "up42-orders-001": [
     "src/data/up42Orders.test.mjs › [up42-orders-001] serves the four paths in both hooks"
@@ -8997,6 +8997,7 @@
     "src/data/up42Orders.test.mjs › [up42-orders-004] keeps all routes off and spends no rate count"
   ],
   "up42-orders-005": [
+    "src/data/up42Orders.test.mjs › [up42-orders-005 up42-orders-025] rejects with no cap and with a full accept count",
     "src/data/up42Orders.test.mjs › [up42-orders-005] refuses the order and accept routes when the cap is invalid"
   ],
   "up42-orders-006": [
@@ -9064,7 +9065,7 @@
     "src/data/up42Orders.test.mjs › [up42-orders-018] stops after an unclear accept"
   ],
   "up42-orders-019": [
-    "src/data/up42Orders.test.mjs › [up42-orders-019 up42-orders-026] shares one ledger load between two first requests",
+    "src/data/up42Orders.test.mjs › [up42-orders-019 up42-orders-026] loads the ledger once for two first requests",
     "src/data/up42Orders.test.mjs › [up42-orders-019] counts the accepts with an own count",
     "src/data/up42Orders.test.mjs › [up42-orders-019] refuses an accept at a full accept count while an order still passes"
   ],
@@ -9084,16 +9085,15 @@
     "src/data/up42Orders.test.mjs › [up42-orders-024] shares one client in the local list"
   ],
   "up42-orders-025": [
-    "src/data/up42Orders.test.mjs › [up42-orders-025] rejects one quotation with one PATCH",
-    "src/data/up42Orders.test.mjs › [up42-orders-025] rejects with no cap and with a full accept count"
+    "src/data/up42Orders.test.mjs › [up42-orders-005 up42-orders-025] rejects with no cap and with a full accept count",
+    "src/data/up42Orders.test.mjs › [up42-orders-025] rejects one quotation with one PATCH"
   ],
   "up42-orders-026": [
     "src/data/up42Orders.test.mjs › [up42-orders-013 up42-orders-026] writes a count with a temporary file and a rename before the call",
-    "src/data/up42Orders.test.mjs › [up42-orders-019 up42-orders-026] shares one ledger load between two first requests",
+    "src/data/up42Orders.test.mjs › [up42-orders-019 up42-orders-026] loads the ledger once for two first requests",
     "src/data/up42Orders.test.mjs › [up42-orders-026] keeps the ledger over a restart"
   ],
   "up42-orders-027": [
-    "src/data/up42Orders.test.mjs › [up42-orders-027] keeps a placed order in memory when its write fails",
     "src/data/up42Orders.test.mjs › [up42-orders-027] stops when the ledger fails",
     "src/data/up42Orders.test.mjs › [up42-orders-027] stops with no call when a count cannot be written"
   ],
@@ -9102,6 +9102,9 @@
   ],
   "up42-orders-029": [
     "src/data/up42Orders.test.mjs › [up42-orders-029] calls the API with a fixed origin"
+  ],
+  "up42-orders-030": [
+    "src/data/up42Orders.test.mjs › [up42-orders-030] keeps a placed order in memory when the server cannot save the order"
   ],
   "up42-quote-panel-001": [
     "src/layers/up42Scenes/quotes.test.mjs › [up42-quote-panel-001] keeps the id and title of each product and uses the id when the title is not valid",
