@@ -291,7 +291,12 @@ export function createUp42Source({
      * @param {{dataProduct:string, box:number[], approvedCredits:number, signal?:AbortSignal}} options
      */
     placeOrder({ dataProduct, box, approvedCredits, signal } = {}) {
-      return orderCall(ORDER_URL, { dataProduct, box, approvedCredits }, signal, normalizeOrder);
+      return orderCall(
+        ORDER_URL,
+        { dataProduct, box, approvedCredits },
+        signal,
+        normalizeOrder,
+      );
     },
 
     /**
@@ -300,9 +305,18 @@ export function createUp42Source({
      */
     getQuotation({ orderId, signal } = {}) {
       if (!isUuid(orderId)) {
-        return Promise.resolve({ ok: false, status: 404, error: 'unknown_order' });
+        return Promise.resolve({
+          ok: false,
+          status: 404,
+          error: 'unknown_order',
+        });
       }
-      return orderCall(`${QUOTATION_URL}${orderId}`, undefined, signal, normalizeQuotation);
+      return orderCall(
+        `${QUOTATION_URL}${orderId}`,
+        undefined,
+        signal,
+        normalizeQuotation,
+      );
     },
 
     /**
@@ -310,7 +324,12 @@ export function createUp42Source({
      * @param {{quotationId:string, approvedCredits:number, signal?:AbortSignal}} options
      */
     acceptQuotation({ quotationId, approvedCredits, signal } = {}) {
-      return orderCall(ACCEPT_URL, { quotationId, approvedCredits }, signal, normalizeAccept);
+      return orderCall(
+        ACCEPT_URL,
+        { quotationId, approvedCredits },
+        signal,
+        normalizeAccept,
+      );
     },
 
     /**

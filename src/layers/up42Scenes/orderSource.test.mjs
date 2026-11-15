@@ -21,12 +21,6 @@ function make(respond) {
   });
   return { source, calls };
 }
-const BAD_BODIES = [
-  new Response('{', { status: 200 }),
-  json([]),
-  json({}),
-];
-
 test('[up42-order-panel-001] posts the product, the box and the credits for one order', async () => {
   const { source, calls } = make(() =>
     json({ orderId: ORDER, credits: 120, spent: false }, 200),
@@ -40,7 +34,9 @@ test('[up42-order-panel-001] posts the product, the box and the credits for one 
   assert.equal(calls.length, 1);
   assert.equal(calls[0].url, '/api/up42/order');
   assert.equal(calls[0].init.method, 'POST');
-  assert.deepEqual(calls[0].init.headers, { 'Content-Type': 'application/json' });
+  assert.deepEqual(calls[0].init.headers, {
+    'Content-Type': 'application/json',
+  });
   assert.equal(
     calls[0].init.body,
     `{"dataProduct":"${PRODUCT}","box":[9.568326,59.784163,10.431674,60.215837],"approvedCredits":120}`,
@@ -68,7 +64,9 @@ test('[up42-order-panel-001] reports an order answer that fails', async () => {
     status: 409,
     error: 'over_cap',
   });
-  const budget = make(() => json({ error: 'budget', used: 2, limit: 2, x: 1 }, 429));
+  const budget = make(() =>
+    json({ error: 'budget', used: 2, limit: 2, x: 1 }, 429),
+  );
   assert.deepEqual(await budget.source.placeOrder({}), {
     ok: false,
     status: 429,
@@ -96,11 +94,15 @@ test('[up42-order-panel-001] reports an order answer that fails', async () => {
   });
   const stop = new AbortController();
   stop.abort();
-  await assert.rejects(() => refused.source.placeOrder({ signal: stop.signal }));
+  await assert.rejects(() =>
+    refused.source.placeOrder({ signal: stop.signal }),
+  );
 });
 
 test('[up42-order-panel-002] reads the quotation of one order with one GET', async () => {
-  const body = { quotation: { id: QUOTATION, credits: 90.5, decision: 'NOT_DECIDED' } };
+  const body = {
+    quotation: { id: QUOTATION, credits: 90.5, decision: 'NOT_DECIDED' },
+  };
   const { source, calls } = make(() => json(body));
   assert.deepEqual(await source.getQuotation({ orderId: ORDER }), {
     ok: true,
@@ -125,7 +127,10 @@ test('[up42-order-panel-002] reads the quotation of one order with one GET', asy
     json({ quotation: { id: QUOTATION, credits: 1, decision: 5 } }),
   ]) {
     const x = make(() => bad);
-    assert.equal((await x.source.getQuotation({ orderId: ORDER })).error, 'bad_answer');
+    assert.equal(
+      (await x.source.getQuotation({ orderId: ORDER })).error,
+      'bad_answer',
+    );
   }
   const unknown = make(() => assert.fail('no call'));
   for (const orderId of [undefined, 'x', `${ORDER}&a=1`])
@@ -140,7 +145,10 @@ test('[up42-order-panel-002] reads the quotation of one order with one GET', asy
 test('[up42-order-panel-003] posts the quotation and the credits for one accept', async () => {
   const { source, calls } = make(() => json({ accepted: true, credits: 90 }));
   assert.deepEqual(
-    await source.acceptQuotation({ quotationId: QUOTATION, approvedCredits: 90 }),
+    await source.acceptQuotation({
+      quotationId: QUOTATION,
+      approvedCredits: 90,
+    }),
     { ok: true, credits: 90 },
   );
   assert.equal(calls.length, 1);
@@ -150,11 +158,17 @@ test('[up42-order-panel-003] posts the quotation and the credits for one accept'
     calls[0].init.body,
     `{"quotationId":"${QUOTATION}","approvedCredits":90}`,
   );
-  for (const bad of [json({ accepted: false, credits: 1 }), json({ accepted: true }), json([])]) {
+  for (const bad of [
+    json({ accepted: false, credits: 1 }),
+    json({ accepted: true }),
+    json([]),
+  ]) {
     const x = make(() => bad);
     assert.equal((await x.source.acceptQuotation({})).error, 'bad_answer');
   }
-  const refused = make(() => json({ error: 'accept_unclear', maySpend: true }, 502));
+  const refused = make(() =>
+    json({ error: 'accept_unclear', maySpend: true }, 502),
+  );
   assert.deepEqual(await refused.source.acceptQuotation({}), {
     ok: false,
     status: 502,
@@ -180,5 +194,4 @@ test('[up42-order-panel-013] posts the quotation for one reject', async () => {
     status: 409,
     error: 'decided',
   });
-  assert.equal(BAD_BODIES.length, 3);
 });

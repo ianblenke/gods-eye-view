@@ -1894,7 +1894,11 @@ test('[up42-order-panel-004] shows the order chip only after a quote with an est
   assert.equal(h.byId('order').label, 'Order this visit');
   assert.equal(h.info().startsWith(QUOTE_TEXT), true);
   const before = await (async () => {
-    const x = harness({ withQuotes: true, withOrders: true, orders: orderHooks() });
+    const x = harness({
+      withQuotes: true,
+      withOrders: true,
+      orders: orderHooks(),
+    });
     await x.searched();
     return x.chipIds();
   })();
@@ -1962,14 +1966,19 @@ test('[up42-order-panel-007 up42-order-panel-008 up42-order-panel-009] reads the
     { ok: true, quotation: PENDING },
     { ok: true, quotation: PENDING },
   ];
-  const h = await quoted({ orders: { getQuotation: async () => answers.shift() } });
+  const h = await quoted({
+    orders: { getQuotation: async () => answers.shift() },
+  });
   h.byId('order').onClick();
   await h.byId('order-confirm').onClick();
   await h.byId('quotation').onClick();
   assert.equal(head(h), 'UP42 has no quotation yet.');
   assert.deepEqual(h.chipIds().slice(3), ['quotation']);
   await h.byId('quotation').onClick();
-  assert.deepEqual(h.calls.getQuotation.map((o) => o.orderId), [ORDER_ID, ORDER_ID]);
+  assert.deepEqual(
+    h.calls.getQuotation.map((o) => o.orderId),
+    [ORDER_ID, ORDER_ID],
+  );
   assert.equal(head(h), 'Quotation: 90 credits.');
   assert.deepEqual(h.chipIds().slice(3), ['accept', 'reject', 'quotation']);
   await h.byId('quotation').onClick();
@@ -2044,10 +2053,15 @@ test('[up42-order-panel-010] shows the failure text and allows no new try after 
     'The price is above the credit cap of the server. Nothing is spent.',
   );
   assert.deepEqual(place.chipIds().slice(3), ['order']);
-  const unclear = await quoted({ orders: { placeOrder: fail('order_unclear') } });
+  const unclear = await quoted({
+    orders: { placeOrder: fail('order_unclear') },
+  });
   unclear.byId('order').onClick();
   await unclear.byId('order-confirm').onClick();
-  assert.equal(unclear.info().startsWith('UP42 gave no clear answer. An order can exist.'), true);
+  assert.equal(
+    unclear.info().startsWith('UP42 gave no clear answer. An order can exist.'),
+    true,
+  );
   assert.deepEqual(unclear.chipIds().slice(3), []);
   const thrown = await quoted({
     orders: {
@@ -2059,17 +2073,39 @@ test('[up42-order-panel-010] shows the failure text and allows no new try after 
   thrown.byId('order').onClick();
   await thrown.byId('order-confirm').onClick();
   assert.equal(head(thrown), 'The server did not answer.');
-  const check = await quoted({ orders: { getQuotation: fail('unknown_order') } });
+  const check = await quoted({
+    orders: { getQuotation: fail('unknown_order') },
+  });
   check.byId('order').onClick();
   await check.byId('order-confirm').onClick();
   await check.byId('quotation').onClick();
   assert.equal(head(check), 'The server does not know this order.');
   assert.deepEqual(check.chipIds().slice(3), ['quotation']);
   for (const [name, error, chips, text] of [
-    ['acceptQuotation', 'accept_unclear', [], 'UP42 gave no clear answer. Credits can be spent. Check the order in UP42 before you try again.'],
-    ['acceptQuotation', 'over_approved', ['accept', 'reject', 'quotation'], 'The price is above the price that you saw. Nothing is spent. Quote again.'],
-    ['rejectQuotation', 'reject_unclear', [], 'UP42 gave no clear answer. Check the order in UP42 before you try again.'],
-    ['rejectQuotation', 'decided', ['accept', 'reject', 'quotation'], 'This quotation has its decision already.'],
+    [
+      'acceptQuotation',
+      'accept_unclear',
+      [],
+      'UP42 gave no clear answer. Credits can be spent. Check the order in UP42 before you try again.',
+    ],
+    [
+      'acceptQuotation',
+      'over_approved',
+      ['accept', 'reject', 'quotation'],
+      'The price is above the price that you saw. Nothing is spent. Quote again.',
+    ],
+    [
+      'rejectQuotation',
+      'reject_unclear',
+      [],
+      'UP42 gave no clear answer. Check the order in UP42 before you try again.',
+    ],
+    [
+      'rejectQuotation',
+      'decided',
+      ['accept', 'reject', 'quotation'],
+      'This quotation has its decision already.',
+    ],
   ]) {
     const x = await quoted({ orders: { [name]: fail(error) } });
     x.byId('order').onClick();
@@ -2084,10 +2120,7 @@ test('[up42-order-panel-010] shows the failure text and allows no new try after 
 });
 
 test('[up42-order-panel-012] clears the order steps and ignores a late answer', async () => {
-  for (const clear of [
-    (h) => h.chip().onClick(),
-    (h) => h.layer.disable(),
-  ]) {
+  for (const clear of [(h) => h.chip().onClick(), (h) => h.layer.disable()]) {
     const wait = deferred();
     const h = await quoted({ orders: { placeOrder: () => wait.promise } });
     h.byId('order').onClick();
@@ -2118,12 +2151,15 @@ test('[up42-order-panel-012] clears the order steps and ignores a late answer', 
 
 test('[up42-order-panel-011] calls only the quote routes and the four order routes', async () => {
   const seen = [];
-  const body = (value, status = 200) => new Response(JSON.stringify(value), { status });
+  const body = (value, status = 200) =>
+    new Response(JSON.stringify(value), { status });
   const answers = {
     'GET /api/up42/quote/products': () => body({ products: PRODUCTS }),
     'POST /api/up42/quote': () => body(QUOTE),
-    'POST /api/up42/order': () => body({ orderId: ORDER_ID, credits: 120, spent: false }),
-    [`GET /api/up42/order/quotation?orderId=${ORDER_ID}`]: () => body({ quotation: PENDING }),
+    'POST /api/up42/order': () =>
+      body({ orderId: ORDER_ID, credits: 120, spent: false }),
+    [`GET /api/up42/order/quotation?orderId=${ORDER_ID}`]: () =>
+      body({ quotation: PENDING }),
     'POST /api/up42/order/accept': () => body({ accepted: true, credits: 90 }),
     'POST /api/up42/order/reject': () => body({ rejected: true }),
   };

@@ -51,7 +51,8 @@ const FAILURES = Object.freeze({
   budget: 'No more orders today.',
   busy: 'The server is still working on this request.',
   duplicate: 'This order exists already. Check the quotation.',
-  over_cap: 'The price is above the credit cap of the server. Nothing is spent.',
+  over_cap:
+    'The price is above the credit cap of the server. Nothing is spent.',
   over_approved:
     'The price is above the price that you saw. Nothing is spent. Quote again.',
   insufficient_balance: 'The UP42 balance is too low. Nothing is spent.',
@@ -60,7 +61,8 @@ const FAILURES = Object.freeze({
   reject_refused: 'UP42 refused to reject the quotation.',
   unknown_order: 'The server does not know this order.',
   unknown_quotation: 'UP42 does not list this quotation.',
-  not_ours: 'This quotation belongs to an order that this server did not place.',
+  not_ours:
+    'This quotation belongs to an order that this server did not place.',
   decided: 'This quotation has its decision already.',
   area_too_large: 'The view is too large for an order. Zoom in and try again.',
   order_unclear:

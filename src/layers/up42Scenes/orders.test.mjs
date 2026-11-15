@@ -20,7 +20,10 @@ test('[up42-order-panel-005] states the amount and no spend in the order confirm
 });
 
 test('[up42-order-panel-006] names the order with its first eight characters', () => {
-  assert.equal(orderedText(ORDER), 'Order aaaaaaaa is placed. No credits are spent.');
+  assert.equal(
+    orderedText(ORDER),
+    'Order aaaaaaaa is placed. No credits are spent.',
+  );
 });
 
 test('[up42-order-panel-007] gives the price of an undecided quotation and the decision of another', () => {
@@ -60,19 +63,43 @@ test('[up42-order-panel-014] states that a reject spends no credits', () => {
 });
 
 const KNOWN = [
-  ['over_cap', 'The price is above the credit cap of the server. Nothing is spent.'],
-  ['over_approved', 'The price is above the price that you saw. Nothing is spent. Quote again.'],
+  [
+    'over_cap',
+    'The price is above the credit cap of the server. Nothing is spent.',
+  ],
+  [
+    'over_approved',
+    'The price is above the price that you saw. Nothing is spent. Quote again.',
+  ],
   ['duplicate', 'This order exists already. Check the quotation.'],
   ['busy', 'The server is still working on this request.'],
   ['budget', 'No more orders today.'],
   ['decided', 'This quotation has its decision already.'],
   ['insufficient_balance', 'The UP42 balance is too low. Nothing is spent.'],
-  ['order_unclear', 'UP42 gave no clear answer. An order can exist. Check UP42 before you try again.'],
-  ['accept_unclear', 'UP42 gave no clear answer. Credits can be spent. Check the order in UP42 before you try again.'],
-  ['reject_unclear', 'UP42 gave no clear answer. Check the order in UP42 before you try again.'],
-  ['orders_off', 'Orders are off. Set UP42_ORDERS=true in .env and restart the app.'],
-  ['no_cap', 'No credit cap. Set UP42_ORDER_MAX_CREDITS in .env and restart the app.'],
-  ['store_failed', 'The server cannot write its order file. Check the volume of the app.'],
+  [
+    'order_unclear',
+    'UP42 gave no clear answer. An order can exist. Check UP42 before you try again.',
+  ],
+  [
+    'accept_unclear',
+    'UP42 gave no clear answer. Credits can be spent. Check the order in UP42 before you try again.',
+  ],
+  [
+    'reject_unclear',
+    'UP42 gave no clear answer. Check the order in UP42 before you try again.',
+  ],
+  [
+    'orders_off',
+    'Orders are off. Set UP42_ORDERS=true in .env and restart the app.',
+  ],
+  [
+    'no_cap',
+    'No credit cap. Set UP42_ORDER_MAX_CREDITS in .env and restart the app.',
+  ],
+  [
+    'store_failed',
+    'The server cannot write its order file. Check the volume of the app.',
+  ],
   ['unreachable', 'The server did not answer.'],
 ];
 test('[up42-order-panel-010] shows a fixed text for each known error and a generic text for another', () => {
@@ -92,7 +119,16 @@ test('[up42-order-panel-010] shows a fixed text for each known error and a gener
     'upstream_failed',
     'bad_answer',
   ])
-    assert.notEqual(describeOrderFailure({ error }), 'UP42 did not complete the step.');
-  assert.equal(describeOrderFailure({ error: 'x' }), 'UP42 did not complete the step.');
-  assert.equal(describeOrderFailure({ error: 'toString' }), 'UP42 did not complete the step.');
+    assert.notEqual(
+      describeOrderFailure({ error }),
+      'UP42 did not complete the step.',
+    );
+  assert.equal(
+    describeOrderFailure({ error: 'x' }),
+    'UP42 did not complete the step.',
+  );
+  assert.equal(
+    describeOrderFailure({ error: 'toString' }),
+    'UP42 did not complete the step.',
+  );
 });

@@ -56,7 +56,8 @@ const quote = (extra = {}) => ({
   ...extra,
 });
 function good(url, init) {
-  if (url === TOKEN) return json({ access_token: 'fake-token-ord', expires_in: 180 });
+  if (url === TOKEN)
+    return json({ access_token: 'fake-token-ord', expires_in: 180 });
   if (url === ESTIMATE) return json({ summary: { totalCredits: 50 } });
   if (url.startsWith(ORDER_URL) && init.method === 'POST')
     return json({ results: [{ id: ORDER }] }, 202);
@@ -91,7 +92,9 @@ function harness(plugins, hook = 'configureServer') {
     const req = Object.assign(
       stream ??
         Readable.from([
-          Buffer.from(typeof value === 'string' ? value : JSON.stringify(value)),
+          Buffer.from(
+            typeof value === 'string' ? value : JSON.stringify(value),
+          ),
         ]),
       {
         url: suffix,
@@ -106,7 +109,8 @@ function harness(plugins, hook = 'configureServer') {
       },
     );
     const answer = { next: false };
-    const path = route === 'order' ? '/api/up42/order' : `/api/up42/order/${route}`;
+    const path =
+      route === 'order' ? '/api/up42/order' : `/api/up42/order/${route}`;
     await routes.get(path)(
       req,
       {
@@ -245,7 +249,14 @@ test('[up42-orders-003] checks the site before the switch and rate', async (t) =
     404,
     'orders_off',
   );
-  errorOf(await s.send({ encrypted: true, headers: { origin: 'https://localhost:5173' } }), 404, 'orders_off');
+  errorOf(
+    await s.send({
+      encrypted: true,
+      headers: { origin: 'https://localhost:5173' },
+    }),
+    404,
+    'orders_off',
+  );
 });
 
 test('[up42-orders-004] keeps all routes off and spends no rate count', async (t) => {
@@ -259,11 +270,21 @@ test('[up42-orders-004] keeps all routes off and spends no rate count', async (t
     assert.equal(s.calls.length, 0);
   }
   const s = await setup(t);
-  for (let i = 0; i < 6; i++) assert.notEqual((await s.send({ value: '{' })).status, 429);
+  for (let i = 0; i < 6; i++)
+    assert.notEqual((await s.send({ value: '{' })).status, 429);
 });
 
 test('[up42-orders-005] refuses each spending route with no valid cap', async (t) => {
-  for (const cap of [undefined, '', '0', '-1', '1.5', '1000001', 'abc', '10000000']) {
+  for (const cap of [
+    undefined,
+    '',
+    '0',
+    '-1',
+    '1.5',
+    '1000001',
+    'abc',
+    '10000000',
+  ]) {
     const s = await setup(t, { env: { UP42_ORDER_MAX_CREDITS: cap } });
     if (cap === undefined) delete s.env.UP42_ORDER_MAX_CREDITS;
     for (const route of ['order', 'accept', 'reject'])
@@ -280,9 +301,13 @@ test('[up42-orders-005] refuses each spending route with no valid cap', async (t
 
 test('[up42-orders-006] limits all routes together to six a minute', async (t) => {
   const s = await setup(t);
-  for (let i = 0; i < 3; i++) assert.equal((await s.send({ value: '{' })).status, 400);
   for (let i = 0; i < 3; i++)
-    assert.equal((await s.send({ route: 'quotation', suffix: '/?orderId=x' })).status, 400);
+    assert.equal((await s.send({ value: '{' })).status, 400);
+  for (let i = 0; i < 3; i++)
+    assert.equal(
+      (await s.send({ route: 'quotation', suffix: '/?orderId=x' })).status,
+      400,
+    );
   const last = await s.send({ value: '{' });
   errorOf(last, 429, 'rate_limited');
   assert.equal(last.headers['Retry-After'], '60');
@@ -311,7 +336,11 @@ for (const [name, value] of ORDER_CASES)
   });
 test('[up42-orders-007] gives the box errors and keeps the facts', async (t) => {
   const s = await setup(t);
-  errorOf(await s.send({ value: request({ box: [1, 1, 0, 0] }) }), 400, 'bad_bbox');
+  errorOf(
+    await s.send({ value: request({ box: [1, 1, 0, 0] }) }),
+    400,
+    'bad_bbox',
+  );
   errorOf(
     await s.send({ value: request({ box: [0, 0, 5, 5] }) }),
     400,
@@ -324,7 +353,12 @@ test('[up42-orders-007] gives the box errors and keeps the facts', async (t) => 
   );
   assert.equal(s.calls.length, 0);
   const ok = validateOrder(
-    JSON.stringify(request({ dataProduct: PRODUCT.toUpperCase(), params: { priority: 'HIGH', maxCloudCover: 10 } })),
+    JSON.stringify(
+      request({
+        dataProduct: PRODUCT.toUpperCase(),
+        params: { priority: 'HIGH', maxCloudCover: 10 },
+      }),
+    ),
     100,
   );
   assert.deepEqual(ok, {
@@ -334,7 +368,10 @@ test('[up42-orders-007] gives the box errors and keeps the facts', async (t) => 
     params: { maxCloudCover: 10, priority: 'HIGH' },
     approvedCredits: 50,
   });
-  assert.equal(validateOrder(JSON.stringify(request({ approvedCredits: 100 })), 100).ok, true);
+  assert.equal(
+    validateOrder(JSON.stringify(request({ approvedCredits: 100 })), 100).ok,
+    true,
+  );
 });
 
 test('[up42-orders-008] refuses each route with no credentials', async (t) => {
@@ -367,18 +404,33 @@ test('[up42-orders-009] checks the price before the order call', async (t) => {
     [{ summary: { totalCredits: 'x' } }, 50, 100, 502, 'bad_upstream'],
     [{ summary: { totalCredits: -1 } }, 50, 100, 502, 'bad_upstream'],
     [{}, 50, 100, 502, 'bad_upstream'],
-    [{ summary: { totalCredits: 5 }, note: 'fake-pass-ord' }, 50, 100, 502, 'bad_upstream'],
+    [
+      { summary: { totalCredits: 5 }, note: 'fake-pass-ord' },
+      50,
+      100,
+      502,
+      'bad_upstream',
+    ],
   ];
   for (const [body, approved, cap, status, error] of cases) {
     const s = await setup(t, {
       env: { UP42_ORDER_MAX_CREDITS: String(cap) },
       respond: (url, init) => (url === ESTIMATE ? json(body) : good(url, init)),
     });
-    errorOf(await s.send({ value: request({ approvedCredits: approved }) }), status, error);
-    assert.deepEqual(s.api().map((c) => c.url), [ESTIMATE]);
+    errorOf(
+      await s.send({ value: request({ approvedCredits: approved }) }),
+      status,
+      error,
+    );
+    assert.deepEqual(
+      s.api().map((c) => c.url),
+      [ESTIMATE],
+    );
   }
   for (const make of [() => json({}, 500), () => json({}, 404)]) {
-    const s = await setup(t, { respond: (u, i) => (u === ESTIMATE ? make() : good(u, i)) });
+    const s = await setup(t, {
+      respond: (u, i) => (u === ESTIMATE ? make() : good(u, i)),
+    });
     errorOf(await s.send(), 502, 'upstream_failed');
     assert.equal(s.api().length, 1);
   }
@@ -444,7 +496,10 @@ const UNCLEAR = [
   ['no id', () => json({ results: [{}] }, 202)],
   ['no results', () => json({}, 202)],
   ['a bad id', () => json({ results: [{ id: 'x' }] }, 202)],
-  ['a secret', () => json({ results: [{ id: ORDER }], n: 'fake-user-ord' }, 202)],
+  [
+    'a secret',
+    () => json({ results: [{ id: ORDER }], n: 'fake-user-ord' }, 202),
+  ],
 ];
 for (const [name, make] of UNCLEAR)
   test(`[up42-orders-011] stops after an order with ${name}`, async (t) => {
@@ -467,7 +522,11 @@ test('[up42-orders-011] reports a refused order and keeps the rest', async (t) =
     const s = await setup(t, {
       respond: (u, i) => (u === ORDER_URL ? json({}, status) : good(u, i)),
     });
-    errorOf(await s.send(), error === 'insufficient_balance' ? 402 : 502, error);
+    errorOf(
+      await s.send(),
+      error === 'insufficient_balance' ? 402 : 502,
+      error,
+    );
     assert.equal(s.api().filter((c) => c.url === ORDER_URL).length, 1);
   }
 });
@@ -552,7 +611,9 @@ test('[up42-orders-014] reads the quotation of an own order', async (t) => {
   await placed(s);
   const a = await s.send(url(ORDER.toUpperCase()));
   assert.equal(a.status, 200);
-  assert.deepEqual(a.body, { quotation: { id: QUOTE, credits: 40, decision: 'NOT_DECIDED' } });
+  assert.deepEqual(a.body, {
+    quotation: { id: QUOTE, credits: 40, decision: 'NOT_DECIDED' },
+  });
   const last = s.api().at(-1);
   assert.deepEqual([last.url, last.init.method], [LIST, 'GET']);
   assert.equal(last.init.body, undefined);
@@ -560,17 +621,32 @@ test('[up42-orders-014] reads the quotation of an own order', async (t) => {
   const none = await setup(t, {
     respond: (u, i) =>
       u === LIST
-        ? json({ content: [quote({ orderId: OTHER_ORDER }), { id: 'x' }, quote({ id: 'q' }), quote({ creditsPrice: -1 }), quote({ decision: 5 })] })
+        ? json({
+            content: [
+              quote({ orderId: OTHER_ORDER }),
+              { id: 'x' },
+              quote({ id: 'q' }),
+              quote({ creditsPrice: -1 }),
+              quote({ decision: 5 }),
+            ],
+          })
         : good(u, i),
   });
   await placed(none);
   assert.deepEqual((await none.send(url(ORDER))).body, { quotation: null });
-  for (const make of [() => json({}), () => json({ content: [], n: 'fake-pass-ord' })]) {
-    const bad = await setup(t, { respond: (u, i) => (u === LIST ? make() : good(u, i)) });
+  for (const make of [
+    () => json({}),
+    () => json({ content: [], n: 'fake-pass-ord' }),
+  ]) {
+    const bad = await setup(t, {
+      respond: (u, i) => (u === LIST ? make() : good(u, i)),
+    });
     await placed(bad);
     errorOf(await bad.send(url(ORDER)), 502, 'bad_upstream');
   }
-  const down = await setup(t, { respond: (u, i) => (u === LIST ? json({}, 500) : good(u, i)) });
+  const down = await setup(t, {
+    respond: (u, i) => (u === LIST ? json({}, 500) : good(u, i)),
+  });
   await placed(down);
   errorOf(await down.send(url(ORDER)), 502, 'upstream_failed');
 });
@@ -590,20 +666,36 @@ test('[up42-orders-015] refuses an accept request with a bad body', async (t) =>
     s.advance(60001);
     errorOf(await s.send({ route: 'accept', value }), 400, 'bad_body');
   }
-  for (const value of ['{', { quotationId: 'x' }, { quotationId: QUOTE, a: 1 }, {}]) {
+  for (const value of [
+    '{',
+    { quotationId: 'x' },
+    { quotationId: QUOTE, a: 1 },
+    {},
+  ]) {
     s.advance(60001);
     errorOf(await s.send({ route: 'reject', value }), 400, 'bad_body');
   }
   assert.equal(s.calls.length, 0);
-  assert.deepEqual(validateAccept(JSON.stringify({ quotationId: QUOTE.toUpperCase(), approvedCredits: 4.5 })), {
-    ok: true,
-    quotationId: QUOTE,
-    approvedCredits: 4.5,
-  });
-  assert.deepEqual(validateReject(JSON.stringify({ quotationId: QUOTE.toUpperCase() })), {
-    ok: true,
-    quotationId: QUOTE,
-  });
+  assert.deepEqual(
+    validateAccept(
+      JSON.stringify({
+        quotationId: QUOTE.toUpperCase(),
+        approvedCredits: 4.5,
+      }),
+    ),
+    {
+      ok: true,
+      quotationId: QUOTE,
+      approvedCredits: 4.5,
+    },
+  );
+  assert.deepEqual(
+    validateReject(JSON.stringify({ quotationId: QUOTE.toUpperCase() })),
+    {
+      ok: true,
+      quotationId: QUOTE,
+    },
+  );
 });
 
 const ACCEPT = { quotationId: QUOTE, approvedCredits: 40 };
@@ -613,7 +705,12 @@ const CHECKS = [
   ['an accepted quotation', [quote({ decision: 'ACCEPTED' })], 409, 'decided'],
   ['a rejected quotation', [quote({ decision: 'REJECTED' })], 409, 'decided'],
   ['a price above the cap', [quote({ creditsPrice: 101 })], 409, 'over_cap'],
-  ['a price above the approval', [quote({ creditsPrice: 40.5 })], 409, 'over_approved'],
+  [
+    'a price above the approval',
+    [quote({ creditsPrice: 40.5 })],
+    409,
+    'over_approved',
+  ],
 ];
 for (const [name, content, status, error] of CHECKS)
   test(`[up42-orders-016] refuses to accept ${name}`, async (t) => {
@@ -624,7 +721,10 @@ for (const [name, content, status, error] of CHECKS)
     // The order of this test uses the order id of the ledger.
     const answer = await s.send({ route: 'accept', value: ACCEPT });
     errorOf(answer, status, error);
-    assert.equal(s.api().some((c) => c.init.method === 'PATCH'), false);
+    assert.equal(
+      s.api().some((c) => c.init.method === 'PATCH'),
+      false,
+    );
   });
 test('[up42-orders-016] reads the list first and lets an equal price pass', async (t) => {
   const s = await setup(t, {
@@ -632,20 +732,32 @@ test('[up42-orders-016] reads the list first and lets an equal price pass', asyn
     respond: (u, i) =>
       u === ESTIMATE ? json({ summary: { totalCredits: 40 } }) : good(u, i),
   });
-  assert.equal((await s.send({ value: request({ approvedCredits: 40 }) })).status, 200);
+  assert.equal(
+    (await s.send({ value: request({ approvedCredits: 40 }) })).status,
+    200,
+  );
   const a = await s.send({ route: 'accept', value: ACCEPT });
   assert.equal(a.status, 200);
   const calls = s.api().map((c) => c.init.method);
   assert.deepEqual(calls.slice(-2), ['GET', 'PATCH']);
-  const down = await setup(t, { respond: (u, i) => (u === LIST ? json({}, 500) : good(u, i)) });
+  const down = await setup(t, {
+    respond: (u, i) => (u === LIST ? json({}, 500) : good(u, i)),
+  });
   await placed(down);
-  errorOf(await down.send({ route: 'accept', value: ACCEPT }), 502, 'upstream_failed');
+  errorOf(
+    await down.send({ route: 'accept', value: ACCEPT }),
+    502,
+    'upstream_failed',
+  );
 });
 
 test('[up42-orders-017] accepts one quotation with one PATCH', async (t) => {
   const s = await setup(t);
   await placed(s);
-  const a = await s.send({ route: 'accept', value: { quotationId: QUOTE.toUpperCase(), approvedCredits: 40 } });
+  const a = await s.send({
+    route: 'accept',
+    value: { quotationId: QUOTE.toUpperCase(), approvedCredits: 40 },
+  });
   assert.equal(a.status, 200);
   assert.deepEqual(a.body, { accepted: true, credits: 40 });
   const patches = s.api().filter((c) => c.init.method === 'PATCH');
@@ -653,19 +765,40 @@ test('[up42-orders-017] accepts one quotation with one PATCH', async (t) => {
   assert.equal(patches[0].url, QUOTE_URL);
   assert.equal(patches[0].init.headers['Content-Type'], MERGE);
   assert.equal(patches[0].init.body, '{"decision":"ACCEPTED"}');
-  const nocontent = await setup(t, { respond: (u, i) => (i.method === 'PATCH' ? empty(204) : good(u, i)) });
+  const nocontent = await setup(t, {
+    respond: (u, i) => (i.method === 'PATCH' ? empty(204) : good(u, i)),
+  });
   await placed(nocontent);
-  assert.equal((await nocontent.send({ route: 'accept', value: ACCEPT })).status, 200);
-  const poor = await setup(t, { respond: (u, i) => (i.method === 'PATCH' ? json({}, 402) : good(u, i)) });
+  assert.equal(
+    (await nocontent.send({ route: 'accept', value: ACCEPT })).status,
+    200,
+  );
+  const poor = await setup(t, {
+    respond: (u, i) => (i.method === 'PATCH' ? json({}, 402) : good(u, i)),
+  });
   await placed(poor);
-  errorOf(await poor.send({ route: 'accept', value: ACCEPT }), 402, 'insufficient_balance');
-  const refused = await setup(t, { respond: (u, i) => (i.method === 'PATCH' ? json({}, 409) : good(u, i)) });
+  errorOf(
+    await poor.send({ route: 'accept', value: ACCEPT }),
+    402,
+    'insufficient_balance',
+  );
+  const refused = await setup(t, {
+    respond: (u, i) => (i.method === 'PATCH' ? json({}, 409) : good(u, i)),
+  });
   await placed(refused);
-  errorOf(await refused.send({ route: 'accept', value: ACCEPT }), 502, 'accept_refused');
+  errorOf(
+    await refused.send({ route: 'accept', value: ACCEPT }),
+    502,
+    'accept_refused',
+  );
 });
 
 test('[up42-orders-018] stops after an unclear accept', async (t) => {
-  for (const make of [() => json({}, 500), () => Promise.reject(new Error('down')), () => json({}, 502)]) {
+  for (const make of [
+    () => json({}, 500),
+    () => Promise.reject(new Error('down')),
+    () => json({}, 502),
+  ]) {
     let accepted = false;
     const s = await setup(t, {
       respond: (u, i) => {
@@ -673,12 +806,18 @@ test('[up42-orders-018] stops after an unclear accept', async (t) => {
           accepted = true;
           return make();
         }
-        if (u === LIST && accepted) return json({ content: [quote({ decision: 'ACCEPTED' })] });
+        if (u === LIST && accepted)
+          return json({ content: [quote({ decision: 'ACCEPTED' })] });
         return good(u, i);
       },
     });
     await placed(s);
-    errorOf(await s.send({ route: 'accept', value: ACCEPT }), 502, 'accept_unclear', { maySpend: true });
+    errorOf(
+      await s.send({ route: 'accept', value: ACCEPT }),
+      502,
+      'accept_unclear',
+      { maySpend: true },
+    );
     assert.equal(s.api().filter((c) => c.init.method === 'PATCH').length, 1);
     s.advance(60001);
     errorOf(await s.send({ route: 'accept', value: ACCEPT }), 409, 'decided');
@@ -689,12 +828,24 @@ test('[up42-orders-018] stops after an unclear accept', async (t) => {
 test('[up42-orders-019] counts the accepts with an own count', async (t) => {
   const s = await setup(t, { env: { UP42_DAILY_ORDERS: '1' } });
   await placed(s);
-  const down = await setup(t, { respond: (u, i) => (i.method === 'PATCH' ? json({}, 500) : good(u, i)), env: { UP42_DAILY_ORDERS: '1' } });
+  const down = await setup(t, {
+    respond: (u, i) => (i.method === 'PATCH' ? json({}, 500) : good(u, i)),
+    env: { UP42_DAILY_ORDERS: '1' },
+  });
   await placed(down);
-  errorOf(await down.send({ route: 'accept', value: ACCEPT }), 502, 'accept_unclear', { maySpend: true });
+  errorOf(
+    await down.send({ route: 'accept', value: ACCEPT }),
+    502,
+    'accept_unclear',
+    { maySpend: true },
+  );
   down.advance(60001);
-  const patches = () => down.api().filter((c) => c.init.method === 'PATCH').length;
-  errorOf(await down.send({ route: 'accept', value: ACCEPT }), 429, 'budget', { used: 1, limit: 1 });
+  const patches = () =>
+    down.api().filter((c) => c.init.method === 'PATCH').length;
+  errorOf(await down.send({ route: 'accept', value: ACCEPT }), 429, 'budget', {
+    used: 1,
+    limit: 1,
+  });
   assert.equal(patches(), 1);
   assert.equal((await s.send({ route: 'accept', value: ACCEPT })).status, 200);
   assert.deepEqual((await s.file()).counts, { orders: 1, accepts: 1 });
@@ -713,7 +864,11 @@ test('[up42-orders-020] refuses a second accept while the first runs', async (t)
   const first = s.send({ route: 'accept', value: ACCEPT });
   await settle();
   errorOf(await s.send({ route: 'accept', value: ACCEPT }), 409, 'busy');
-  errorOf(await s.send({ route: 'reject', value: { quotationId: QUOTE } }), 409, 'busy');
+  errorOf(
+    await s.send({ route: 'reject', value: { quotationId: QUOTE } }),
+    409,
+    'busy',
+  );
   release();
   assert.equal((await first).status, 200);
   assert.equal(s.api().filter((c) => c.init.method === 'PATCH').length, 1);
@@ -740,7 +895,13 @@ test('[up42-orders-021] reports rejected credentials', async (t) => {
       await s.send(
         route === 'quotation'
           ? { route, suffix: `/?orderId=${ORDER}` }
-          : { route, value: route === 'order' ? request({ box: [10, 60, 10.04, 60.01] }) : value },
+          : {
+              route,
+              value:
+                route === 'order'
+                  ? request({ box: [10, 60, 10.04, 60.01] })
+                  : value,
+            },
       ),
       403,
       'credentials_rejected',
@@ -748,11 +909,23 @@ test('[up42-orders-021] reports rejected credentials', async (t) => {
     );
   }
   for (const route of ['accept', 'reject']) {
-    const p = await setup(t, { respond: (u, i) => (i.method === 'PATCH' ? json({}, 401) : good(u, i)) });
+    const p = await setup(t, {
+      respond: (u, i) => (i.method === 'PATCH' ? json({}, 401) : good(u, i)),
+    });
     await placed(p);
-    errorOf(await p.send({ route, value: route === 'accept' ? ACCEPT : { quotationId: QUOTE } }), 403, 'credentials_rejected', { keyRejected: true });
+    errorOf(
+      await p.send({
+        route,
+        value: route === 'accept' ? ACCEPT : { quotationId: QUOTE },
+      }),
+      403,
+      'credentials_rejected',
+      { keyRejected: true },
+    );
   }
-  const s = await setup(t, { respond: (u, i) => (u === TOKEN ? json({}, 401) : good(u, i)) });
+  const s = await setup(t, {
+    respond: (u, i) => (u === TOKEN ? json({}, 401) : good(u, i)),
+  });
   errorOf(await s.send(), 403, 'credentials_rejected', { keyRejected: true });
   assert.equal(s.calls.filter((c) => c.url !== TOKEN).length, 0);
 });
@@ -779,22 +952,34 @@ test('[up42-orders-022] sends only the five listed calls', async (t) => {
     }
     for (const c of s.api()) seen.add(`${c.init.method} ${c.url}`);
   }
-  assert.deepEqual([...seen].sort(), [
-    `GET ${LIST}`,
-    `PATCH ${QUOTE_URL}`,
-    `POST ${ORDER_URL}`,
-    `POST ${ESTIMATE}`,
-  ].sort());
+  assert.deepEqual(
+    [...seen].sort(),
+    [
+      `GET ${LIST}`,
+      `PATCH ${QUOTE_URL}`,
+      `POST ${ORDER_URL}`,
+      `POST ${ESTIMATE}`,
+    ].sort(),
+  );
   const dir = new URL('../../server/providers/up42-orders/', import.meta.url);
   let text = '';
-  for (const name of await readdir(dir)) text += await readFile(new URL(name, dir), 'utf8');
+  for (const name of await readdir(dir))
+    text += await readFile(new URL(name, dir), 'utf8');
   const one = (re) => (text.match(re) ?? []).length;
-  assert.equal(one(/extensions|cancellation|eulas|download-url|'DELETE'|'PUT'/g), 0);
+  assert.equal(
+    one(/extensions|cancellation|eulas|download-url|'DELETE'|'PUT'/g),
+    0,
+  );
   assert.equal(one(/\bACCEPTED\b/g), 1);
   assert.equal(one(/\bREJECTED\b/g), 1);
   assert.deepEqual(
     text.match(/\/v2\/[a-z/?=&0-9]+/g).sort(),
-    ['/v2/orders', '/v2/orders/estimate', '/v2/tasking/quotation/', '/v2/tasking/quotation?page=0&size=100'].sort(),
+    [
+      '/v2/orders',
+      '/v2/orders/estimate',
+      '/v2/tasking/quotation/',
+      '/v2/tasking/quotation?page=0&size=100',
+    ].sort(),
   );
 });
 
@@ -804,7 +989,9 @@ test('[up42-orders-023] keeps secrets out of the answers and the log', async (t)
     t.mock.method(console, m, (...a) => logs.push(a.join(' ')));
   const s = await setup(t, {
     respond: (u, i) =>
-      u === ESTIMATE ? json({ summary: { totalCredits: 1 }, x: 'fake-pass-ord' }) : good(u, i),
+      u === ESTIMATE
+        ? json({ summary: { totalCredits: 1 }, x: 'fake-pass-ord' })
+        : good(u, i),
   });
   const a = await s.send();
   errorOf(a, 502, 'bad_upstream');
@@ -815,9 +1002,13 @@ test('[up42-orders-023] keeps secrets out of the answers and the log', async (t)
 
 test('[up42-orders-024] shares one client in the local list', async (t) => {
   const old = { ...process.env };
-  Object.assign(process.env, envOf(await mkdtemp(join(tmpdir(), 'gev-up42-list-'))));
+  Object.assign(
+    process.env,
+    envOf(await mkdtemp(join(tmpdir(), 'gev-up42-list-'))),
+  );
   t.after(() => {
-    for (const k of Object.keys(process.env)) if (!(k in old)) delete process.env[k];
+    for (const k of Object.keys(process.env))
+      if (!(k in old)) delete process.env[k];
     Object.assign(process.env, old);
   });
   let logins = 0;
@@ -833,15 +1024,29 @@ test('[up42-orders-024] shares one client in the local list', async (t) => {
   const h = harness(plugins.filter((p) => p.name === 'up42-orders'));
   assert.equal((await h.send()).status, 200);
   assert.equal(logins, 1);
-  const own = up42TaskingPlugins({ client: createClient({ env: process.env, fetchImpl: fetch, now: Date.now, setTimer: () => 1, clearTimer: () => {} }) });
+  const own = up42TaskingPlugins({
+    client: createClient({
+      env: process.env,
+      fetchImpl: fetch,
+      now: Date.now,
+      setTimer: () => 1,
+      clearTimer: () => {},
+    }),
+  });
   assert.equal(own.length, plugins.length);
   assert.equal(own.at(-1).name, 'up42-orders');
   delete process.env.UP42_ORDERS;
-  errorOf(await harness([up42OrderProxy({ client: {} })]).send(), 404, 'orders_off');
+  errorOf(
+    await harness([up42OrderProxy({ client: {} })]).send(),
+    404,
+    'orders_off',
+  );
 });
 
 test('[up42-orders-025] rejects one quotation with one PATCH', async (t) => {
-  const s = await setup(t, { env: { UP42_DAILY_ORDERS: '1', UP42_ORDER_MAX_CREDITS: '1' } });
+  const s = await setup(t, {
+    env: { UP42_DAILY_ORDERS: '1', UP42_ORDER_MAX_CREDITS: '1' },
+  });
   // The cap and the count do not apply to a reject.
   const ok = await setup(t, { env: { UP42_DAILY_ORDERS: '1' } });
   await placed(ok);
@@ -860,18 +1065,34 @@ test('[up42-orders-025] rejects one quotation with one PATCH', async (t) => {
     [[quote({ orderId: OTHER_ORDER })], 409, 'not_ours'],
     [[quote({ decision: 'ACCEPTED' })], 409, 'decided'],
   ]) {
-    const x = await setup(t, { respond: (u, i) => (u === LIST ? json({ content }) : good(u, i)) });
+    const x = await setup(t, {
+      respond: (u, i) => (u === LIST ? json({ content }) : good(u, i)),
+    });
     await placed(x);
-    errorOf(await x.send({ route: 'reject', value: { quotationId: QUOTE } }), status, error);
-    assert.equal(x.api().some((c) => c.init.method === 'PATCH'), false);
+    errorOf(
+      await x.send({ route: 'reject', value: { quotationId: QUOTE } }),
+      status,
+      error,
+    );
+    assert.equal(
+      x.api().some((c) => c.init.method === 'PATCH'),
+      false,
+    );
   }
   for (const [make, error, extra] of [
     [() => json({}, 500), 'reject_unclear', {}],
     [() => json({}, 400), 'reject_refused', {}],
   ]) {
-    const y = await setup(t, { respond: (u, i) => (i.method === 'PATCH' ? make() : good(u, i)) });
+    const y = await setup(t, {
+      respond: (u, i) => (i.method === 'PATCH' ? make() : good(u, i)),
+    });
     await placed(y);
-    errorOf(await y.send({ route: 'reject', value: { quotationId: QUOTE } }), 502, error, extra);
+    errorOf(
+      await y.send({ route: 'reject', value: { quotationId: QUOTE } }),
+      502,
+      error,
+      extra,
+    );
     assert.equal(y.api().filter((c) => c.init.method === 'PATCH').length, 1);
   }
 });
@@ -881,14 +1102,24 @@ test('[up42-orders-026] keeps the ledger over a restart', async (t) => {
   await placed(first);
   const second = await setup(t, { dir: first.folder });
   errorOf(await second.send(), 409, 'duplicate', { orderId: ORDER });
-  const a = await second.send({ route: 'quotation', suffix: `/?orderId=${ORDER}` });
+  const a = await second.send({
+    route: 'quotation',
+    suffix: `/?orderId=${ORDER}`,
+  });
   assert.equal(a.status, 200);
-  assert.equal((await second.send({ route: 'accept', value: ACCEPT })).status, 200);
+  assert.equal(
+    (await second.send({ route: 'accept', value: ACCEPT })).status,
+    200,
+  );
   assert.deepEqual((await second.file()).counts, { orders: 1, accepts: 1 });
   second.advance(24 * 3600000);
   const third = await setup(t, { dir: first.folder });
   third.advance(24 * 3600000);
-  assert.equal((await third.send({ value: request({ box: [10, 60, 10.5, 60.01] }) })).status, 200);
+  assert.equal(
+    (await third.send({ value: request({ box: [10, 60, 10.5, 60.01] }) }))
+      .status,
+    200,
+  );
   assert.deepEqual((await third.file()).counts, { orders: 1, accepts: 0 });
   const files = await readdir(first.folder);
   assert.deepEqual(files, ['orders.json']);
@@ -899,15 +1130,44 @@ test('[up42-orders-026] keeps the ledger over a restart', async (t) => {
   assert.equal(await ledger.ready(), true);
   for (let i = 0; i < 501; i++)
     await ledger.add({ id: ORDER, key: `k${i}`, credits: 1 });
-  assert.equal((await readFile(join(first.folder, 'orders.json'), 'utf8')).split('"key"').length - 1, 500);
+  assert.equal(
+    (await readFile(join(first.folder, 'orders.json'), 'utf8')).split('"key"')
+      .length - 1,
+    500,
+  );
 });
 
 test('[up42-orders-027] stops when the ledger fails', async (t) => {
   const bodies = [
-    ['an invalid file', async (d) => writeFile(join(d, 'orders.json'), '{"day":1}')],
+    [
+      'an invalid file',
+      async (d) => writeFile(join(d, 'orders.json'), '{"day":1}'),
+    ],
     ['a broken file', async (d) => writeFile(join(d, 'orders.json'), '{')],
-    ['a bad order', async (d) => writeFile(join(d, 'orders.json'), JSON.stringify({ day: '2026-11-14', counts: { orders: 0, accepts: 0 }, orders: [{ id: 'x' }] }))],
-    ['a bad count', async (d) => writeFile(join(d, 'orders.json'), JSON.stringify({ day: '2026-11-14', counts: { orders: -1, accepts: 0 }, orders: [] }))],
+    [
+      'a bad order',
+      async (d) =>
+        writeFile(
+          join(d, 'orders.json'),
+          JSON.stringify({
+            day: '2026-11-14',
+            counts: { orders: 0, accepts: 0 },
+            orders: [{ id: 'x' }],
+          }),
+        ),
+    ],
+    [
+      'a bad count',
+      async (d) =>
+        writeFile(
+          join(d, 'orders.json'),
+          JSON.stringify({
+            day: '2026-11-14',
+            counts: { orders: -1, accepts: 0 },
+            orders: [],
+          }),
+        ),
+    ],
     ['a read fault', async (d) => mkdir(join(d, 'orders.json'))],
   ];
   for (const [, prepare] of bodies) {
@@ -920,7 +1180,11 @@ test('[up42-orders-027] stops when the ledger fails', async (t) => {
       ['reject', { quotationId: QUOTE }],
     ])
       errorOf(await s.send({ route, value }), 503, 'store_failed');
-    errorOf(await s.send({ route: 'quotation', suffix: `/?orderId=${ORDER}` }), 503, 'store_failed');
+    errorOf(
+      await s.send({ route: 'quotation', suffix: `/?orderId=${ORDER}` }),
+      503,
+      'store_failed',
+    );
     assert.equal(s.calls.length, 0);
   }
   const dir = await mkdtemp(join(tmpdir(), 'gev-up42-file-'));
@@ -930,18 +1194,24 @@ test('[up42-orders-027] stops when the ledger fails', async (t) => {
   assert.equal(s.calls.length, 0);
   // A write fault after an order keeps the order in memory.
   const late = await setup(t);
-  const a = await late.send({ value: request({ box: [10, 60, 10.01, 60.01] }) });
+  const a = await late.send({
+    value: request({ box: [10, 60, 10.01, 60.01] }),
+  });
   assert.equal(a.status, 200);
   await rm(late.folder, { recursive: true });
   await writeFile(late.folder, 'x');
-  const b = await late.send({ route: 'quotation', suffix: `/?orderId=${ORDER}` });
+  const b = await late.send({
+    route: 'quotation',
+    suffix: `/?orderId=${ORDER}`,
+  });
   assert.equal(b.status, 200);
   await rm(late.folder);
 });
 
 test('[up42-orders-027] stops with no call when a count cannot be written', async (t) => {
   const fs = {
-    readFile: async () => Promise.reject(Object.assign(new Error('none'), { code: 'ENOENT' })),
+    readFile: async () =>
+      Promise.reject(Object.assign(new Error('none'), { code: 'ENOENT' })),
     mkdir: async () => {},
     writeFile: async () => Promise.reject(new Error('full')),
     rename: async () => {},
@@ -955,14 +1225,22 @@ test('[up42-orders-027] stops with no call when a count cannot be written', asyn
   const flaky = {
     ...ok,
     writeFile: (...a) => write(...a),
-    readFile: async () => Promise.reject(Object.assign(new Error('none'), { code: 'ENOENT' })),
+    readFile: async () =>
+      Promise.reject(Object.assign(new Error('none'), { code: 'ENOENT' })),
   };
   const f = await setup(t, { fs: flaky });
   await placed(f);
   write = async () => Promise.reject(new Error('full'));
   f.advance(60001);
-  errorOf(await f.send({ route: 'accept', value: ACCEPT }), 503, 'store_failed');
-  assert.equal(f.api().some((c) => c.init.method === 'PATCH'), false);
+  errorOf(
+    await f.send({ route: 'accept', value: ACCEPT }),
+    503,
+    'store_failed',
+  );
+  assert.equal(
+    f.api().some((c) => c.init.method === 'PATCH'),
+    false,
+  );
 });
 
 test('[up42-orders-028] mounts the volume for the ledger', async () => {
@@ -971,7 +1249,10 @@ test('[up42-orders-028] mounts the volume for the ledger', async () => {
   assert.match(compose, /^ {6}- gev-up42:\/app\/\.gev-up42$/m);
   assert.match(compose, /^ {2}gev-up42:$/m);
   assert.match(await read('Dockerfile'), /\.gev-up42/);
-  assert.match(await read('server/standalone/unwatched-cache.js'), /\*\*\/\.gev-up42\/\*\*/);
+  assert.match(
+    await read('server/standalone/unwatched-cache.js'),
+    /\*\*\/\.gev-up42\/\*\*/,
+  );
   assert.match(await read('build/vite.js'), /\*\*\/\.gev-up42\/\*\*/);
 });
 
@@ -990,36 +1271,77 @@ test('[up42-orders-029] calls the API with a fixed origin', async (t) => {
         logins++;
         return json({ access_token: `fake-token-${logins}`, expires_in: 180 });
       }
-      return typeof status === 'function' ? status(init) : json({ a: 1 }, status);
+      return typeof status === 'function'
+        ? status(init)
+        : json({ a: 1 }, status);
     },
   });
   const opts = { statuses: [200] };
   for (const method of ['DELETE', 'PUT', 'get', '']) {
-    assert.deepEqual(await client.call(method, ESTIMATE, opts), { ok: false, kind: 'bad_upstream' });
+    assert.deepEqual(await client.call(method, ESTIMATE, opts), {
+      ok: false,
+      kind: 'bad_upstream',
+    });
   }
-  for (const url of ['http://api.up42.com/x', 'https://api.up42.com.evil.test/x', 'https://auth.up42.com/x', 'nope'])
-    assert.deepEqual(await client.call('GET', url, opts), { ok: false, kind: 'bad_upstream' });
+  for (const url of [
+    'http://api.up42.com/x',
+    'https://api.up42.com.evil.test/x',
+    'https://auth.up42.com/x',
+    'nope',
+  ])
+    assert.deepEqual(await client.call('GET', url, opts), {
+      ok: false,
+      kind: 'bad_upstream',
+    });
   assert.equal(calls.length, 0);
-  assert.deepEqual(await client.call('GET', LIST, opts), { ok: true, value: { a: 1 } });
+  assert.deepEqual(await client.call('GET', LIST, opts), {
+    ok: true,
+    value: { a: 1 },
+  });
   const get = calls.at(-1);
   assert.equal(get.init.body, undefined);
   assert.equal(get.init.headers['Content-Type'], undefined);
   await client.call('POST', ESTIMATE, { ...opts, body: { b: 2 } });
   assert.equal(calls.at(-1).init.headers['Content-Type'], 'application/json');
   assert.equal(calls.at(-1).init.body, '{"b":2}');
-  await client.call('PATCH', QUOTE_URL, { ...opts, body: { c: 3 }, type: MERGE });
+  await client.call('PATCH', QUOTE_URL, {
+    ...opts,
+    body: { c: 3 },
+    type: MERGE,
+  });
   assert.equal(calls.at(-1).init.headers['Content-Type'], MERGE);
-  assert.deepEqual(await client.call('GET', LIST, { statuses: [202] }), { ok: false, kind: 'upstream_failed', status: 200 });
+  assert.deepEqual(await client.call('GET', LIST, { statuses: [202] }), {
+    ok: false,
+    kind: 'upstream_failed',
+    status: 200,
+  });
   status = () => json({}, 404);
-  assert.deepEqual(await client.call('GET', LIST, opts), { ok: false, kind: 'upstream_failed', status: 404 });
+  assert.deepEqual(await client.call('GET', LIST, opts), {
+    ok: false,
+    kind: 'upstream_failed',
+    status: 404,
+  });
   let n = 0;
   status = () => (n++ === 0 ? json({}, 401) : json({ again: 1 }));
-  assert.deepEqual(await client.call('GET', LIST, opts), { ok: true, value: { again: 1 } });
+  assert.deepEqual(await client.call('GET', LIST, opts), {
+    ok: true,
+    value: { again: 1 },
+  });
   assert.equal(logins, 2);
   status = () => json({}, 401);
-  assert.deepEqual(await client.call('GET', LIST, opts), { ok: false, kind: 'credentials_rejected' });
+  assert.deepEqual(await client.call('GET', LIST, opts), {
+    ok: false,
+    kind: 'credentials_rejected',
+  });
   status = () => empty(204);
-  assert.deepEqual(await client.call('PATCH', QUOTE_URL, { statuses: [204], discard: true, body: {} }), { ok: true, value: null });
+  assert.deepEqual(
+    await client.call('PATCH', QUOTE_URL, {
+      statuses: [204],
+      discard: true,
+      body: {},
+    }),
+    { ok: true, value: null },
+  );
   logins = 0;
   const second = createClient({
     env: { UP42_USERNAME: 'fake-user-ord', UP42_PASSWORD: 'fake-pass-ord' },
@@ -1036,8 +1358,20 @@ test('[up42-orders-029] calls the API with a fixed origin', async (t) => {
       return json({}, 401);
     },
   });
-  assert.deepEqual(await second.call('GET', LIST, opts), { ok: false, kind: 'credentials_rejected' });
+  assert.deepEqual(await second.call('GET', LIST, opts), {
+    ok: false,
+    kind: 'credentials_rejected',
+  });
   assert.equal(logins, 2);
-  const bad = createClient({ env: {}, now: Date.now, setTimer: () => 1, clearTimer: () => {}, fetchImpl: async () => json({}, 401) });
-  assert.deepEqual(await bad.call('GET', LIST, opts), { ok: false, kind: 'credentials_rejected' });
+  const bad = createClient({
+    env: {},
+    now: Date.now,
+    setTimer: () => 1,
+    clearTimer: () => {},
+    fetchImpl: async () => json({}, 401),
+  });
+  assert.deepEqual(await bad.call('GET', LIST, opts), {
+    ok: false,
+    kind: 'credentials_rejected',
+  });
 });
