@@ -786,6 +786,20 @@ for (const [i, value] of [
     errorOf(await s.request({ products: true }), 502, 'bad_upstream');
     assert.equal(s.calls.length, 1);
   });
+test('[up42-quotes-014] reads the collection object that UP42 sends', () => {
+  assert.deepEqual(
+    normalizeProducts({
+      content: [{ id: ID, collection: { name: 'worldview-50cm-tasking' } }],
+    }),
+    [
+      {
+        id: '12345678-abcd-1234-abcd-123456789abc',
+        title: '12345678-abcd-1234-abcd-123456789abc',
+        collection: 'worldview-50cm-tasking',
+      },
+    ],
+  );
+});
 test('[up42-quotes-016] refuses an unknown product before login', async (t) => {
   const s = setup(t);
   errorOf(
