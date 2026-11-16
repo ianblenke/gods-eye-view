@@ -29,7 +29,7 @@ One object made the function return null, and the route then gave 502 bad_upstre
 
 ## Gates
 
-- The scenario `up42-quotes-014` has new tests. One test reads the real object. Two tests check that the name gets the same cleanup as a string. The mutation that reads only strings makes the first test fail.
+- The scenario `up42-quotes-014` has new tests. One test reads the real object. Two tests check that the name loses control characters and has at most 160 characters, as a string does. The mutation that reads only strings makes the first test fail.
 - The loop of `up42-quotes-015` has three new refusal cases: the number 7, null, and an object with the name 7.
 - The file normalize.js stays at 100% line, branch and function coverage. The ratchet command records the changed scenario hash.
 - `make lint` checks the prose. `make gates CHANGE=fix-up42-collection-object` runs all gates.

@@ -35,3 +35,4 @@ The delta replaces the text of scenario 014 of up42-quotes. The requirement text
 - Known limit `probe-snapshot`: The shape comes from the public product list on 2026-11-16. The tests use a fake fetch and do not repeat the probe.
 - Known limit `error-texts`: The page still shows its generic text for the codes bad_upstream, cross_origin and bad_body. This change does not add texts for them.
 - Known limit `empty-name`: A collection name that is empty, or has only control characters, gives an empty collection string. A string collection gave the same result before.
+- Known limit `control-characters-in-scenario`: Scenario 014 does not state that control characters leave the name. A test checks it. The requirement text and the scenario agree on all other facts.
