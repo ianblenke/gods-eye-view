@@ -37,7 +37,8 @@ export function normalizeProducts(v) {
       id: row.id.toLowerCase(),
       title: text(row.title) || row.id.toLowerCase(),
     };
-    if (row.collection !== undefined) product.collection = text(collectionName(row.collection));
+    if (row.collection !== undefined)
+      product.collection = text(collectionName(row.collection));
     products.push(product);
   }
   return products;
