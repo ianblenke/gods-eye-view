@@ -781,6 +781,8 @@ for (const [i, value] of [
   { content: [{ id: ID, title: 7 }] },
   { content: [{ id: ID, collection: {} }] },
   { content: [{ id: ID, collection: 7 }] },
+  { content: [{ id: ID, collection: null }] },
+  { content: [{ id: ID, collection: { name: 7 } }] },
 ].entries())
   test(`[up42-quotes-015] refuses public shape case ${i}`, async (t) => {
     const s = setup(t, { respond: () => json(value) });
@@ -800,6 +802,16 @@ test('[up42-quotes-014] reads the collection object that UP42 sends', () => {
       },
     ],
   );
+});
+test('[up42-quotes-014] cleans the name of the collection object', () => {
+  const [a, b] = normalizeProducts({
+    content: [
+      { id: ID, collection: { name: 'c'.repeat(161) } },
+      { id: OTHER, collection: { name: 'a\u0007b' } },
+    ],
+  });
+  assert.equal(a.collection, 'c'.repeat(160));
+  assert.equal(b.collection, 'ab');
 });
 test('[up42-quotes-016] refuses an unknown product before login', async (t) => {
   const s = setup(t);

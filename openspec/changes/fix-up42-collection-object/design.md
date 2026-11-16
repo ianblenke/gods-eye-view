@@ -18,7 +18,7 @@ One object made the function return null, and the route then gave 502 bad_upstre
 ## Decisions
 
 - A helper reads the collection name. A string gives itself. An object gives its name. Other values give undefined.
-  The code refuses a collection that is present and gives no string name. The old test for an empty object stays true.
+  The caller refuses a collection that is present and gives no string name. This includes an object with a name that is not a string.
 - The string form stays valid. This keeps the old tests and any older answer shape.
 - The requirement text stays the same. Only the scenario of `up42-quotes-014` changes.
 
@@ -29,6 +29,7 @@ One object made the function return null, and the route then gave 502 bad_upstre
 
 ## Gates
 
-- The scenario `up42-quotes-014` has one new test. The test fails when the helper reads only strings.
+- The scenario `up42-quotes-014` has new tests. One test reads the real object. Two tests check that the name gets the same cleanup as a string. The mutation that reads only strings makes the first test fail.
+- The loop of `up42-quotes-015` has three new refusal cases: the number 7, null, and an object with the name 7.
 - The file normalize.js stays at 100% line, branch and function coverage. The ratchet command records the changed scenario hash.
 - `make lint` checks the prose. `make gates CHANGE=fix-up42-collection-object` runs all gates.
