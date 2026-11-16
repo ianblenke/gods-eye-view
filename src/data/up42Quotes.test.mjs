@@ -780,6 +780,7 @@ for (const [i, value] of [
   { content: [{ id: 'bad' }] },
   { content: [{ id: ID, title: 7 }] },
   { content: [{ id: ID, collection: {} }] },
+  { content: [{ id: ID, collection: 7 }] },
 ].entries())
   test(`[up42-quotes-015] refuses public shape case ${i}`, async (t) => {
     const s = setup(t, { respond: () => json(value) });
