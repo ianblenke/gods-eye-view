@@ -16,6 +16,10 @@ function reasons(errors, key) {
   return errors.map((e) => text(e[key]));
 }
 
+// UP42 sends the collection as an object with a name; older shapes send a string.
+const collectionName = (c) =>
+  typeof c === 'string' ? c : object(c) ? c.name : undefined;
+
 /** Public discovery facts only. Invalid rows cannot grant membership. */
 export function normalizeProducts(v) {
   if (!object(v) || !Array.isArray(v.content)) return null;
@@ -25,14 +29,16 @@ export function normalizeProducts(v) {
       !object(row) ||
       !isProductId(row.id) ||
       (row.title !== undefined && typeof row.title !== 'string') ||
-      (row.collection !== undefined && typeof row.collection !== 'string')
+      (row.collection !== undefined &&
+        typeof collectionName(row.collection) !== 'string')
     )
       return null;
     const product = {
       id: row.id.toLowerCase(),
       title: text(row.title) || row.id.toLowerCase(),
     };
-    if (row.collection !== undefined) product.collection = text(row.collection);
+    if (row.collection !== undefined)
+      product.collection = text(collectionName(row.collection));
     products.push(product);
   }
   return products;

@@ -9249,17 +9249,22 @@
     "src/data/up42Quotes.test.mjs › [up42-quotes-013] checks either credential before the store"
   ],
   "up42-quotes-014": [
-    "src/data/up42Quotes.test.mjs › [up42-quotes-014] gives only public product facts without credentials"
+    "src/data/up42Quotes.test.mjs › [up42-quotes-014] cleans the name of the collection object",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-014] gives only public product facts without credentials",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-014] reads the collection object that UP42 sends"
   ],
   "up42-quotes-015": [
     "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 0",
     "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 1",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 10",
     "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 2",
     "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 3",
     "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 4",
     "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 5",
     "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 6",
     "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 7",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 8",
+    "src/data/up42Quotes.test.mjs › [up42-quotes-015] refuses public shape case 9",
     "src/data/up42Quotes.test.mjs › [up42-quotes-015] shares the public list and uses its exact expiry"
   ],
   "up42-quotes-016": [
