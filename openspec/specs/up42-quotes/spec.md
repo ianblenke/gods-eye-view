@@ -157,8 +157,8 @@ Origin: spec-first
 
 #### Scenario: Read the products `up42-quotes-014`
 
-- **WHEN** the public response contains content with UUID ids, optional titles and collections, each as a string or as an object with a string name
-- **THEN** the route gives products without credentials or a daily count; absent titles use the id; the collection is the string or the name; strings have at most 160 characters
+- **WHEN** the public response contains content with UUID ids, optional titles and collection strings
+- **THEN** the route gives products without credentials or a daily count; absent titles use the id; strings have at most 160 characters
 
 ### Requirement: Product cache
 
