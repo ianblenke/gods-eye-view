@@ -188,7 +188,7 @@ The route `GET /api/up42/thumbnail/<id>` sends a thumbnail only for a scene in a
 The newest kept answer with that id must have the thumbnail flag true.
 The route is off by default. Set `UP42_THUMBNAILS=true` only after you confirm the display terms.
 The server sends the bearer token only to `api.up42.com` and refuses redirects.
-It accepts only PNG, JPEG or WebP with at most 1 MiB and checks the first bytes.
+It accepts only PNG, JPEG or WebP with at most 4 MiB and checks the first bytes.
 It keeps at most 32 images in RAM, each for less than ten minutes, and allows 30 requests per minute.
 Thumbnail requests add no daily search count.
 
