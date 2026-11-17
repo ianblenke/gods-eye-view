@@ -1,7 +1,7 @@
 ## Why
 
 Many UP42 thumbnails from the vantor host are larger than 1 MiB.
-In a live test in Taichung, four of eight vantor thumbnails had 1.22 MiB to 2.82 MiB.
+In a live test in Taichung, four of eight vantor thumbnails were 1.22 MiB to 2.82 MiB in size.
 The server refused each of them as bad_upstream, and the page said "UP42 did not give the thumbnail".
 
 ## What Changes

@@ -24,7 +24,7 @@ The server stops at 1 MiB and gives bad_upstream.
 ## Risks / Trade-offs
 
 - The store can hold 128 MiB in the worst case. The risk is small, because a restart clears the store and the store keeps each thumbnail for only 10 minutes.
-- A later thumbnail above 4 MiB fails as before.
+- A thumbnail above 4 MiB still fails.
 
 ## Gates
 
