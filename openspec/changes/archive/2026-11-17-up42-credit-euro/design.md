@@ -1,7 +1,7 @@
 ## Context
 
-The page shows each UP42 price in credits.
-The server drops the fields creditsPerEur and currency of the estimate.
+The layer shows each UP42 price in credits.
+The server drops the fields creditsPerEur and currency of the estimate. The scenario of the estimate in the spec up42-quotes states this.
 
 ## Goals / Non-Goals
 
@@ -15,7 +15,7 @@ The server drops the fields creditsPerEur and currency of the estimate.
 
 - One function, withEuro, in orders.js gives the text "<n> credits (about EUR <n/100>)". quotes.js imports it.
 - The rate is a fixed 100 credits for EUR 1. A new setting needs a server route and more tests.
-- The four texts that ask for a decision use withEuro. The texts after the decision keep credits only.
+- The four texts with a credit amount before a decision use withEuro. The texts after the decision keep credits only.
 
 ## Risks / Trade-offs
 
@@ -23,7 +23,7 @@ The server drops the fields creditsPerEur and currency of the estimate.
 
 ## Gates
 
-- Scenario `up42-order-panel-005`, `up42-order-panel-007` and `up42-order-panel-008`: the tests compare each text with a literal string. A mutation that divides by 10, not 100, makes each of them fail.
-- Scenario `up42-quote-panel-007`: the tests compare the quote text with a literal string. The same mutation makes them fail.
+- Scenario `up42-order-panel-005`, `up42-order-panel-007` and `up42-order-panel-008`: the tests compare each text with a literal string. A mutation that divides by 10 and not by 100 makes each of them fail. The author ran it: 10 tests failed, and the tests of the scenarios 005, 007 and 008 are in that list.
+- Scenario `up42-quote-panel-007`: the tests compare the quote text with a literal string. The same mutation makes them fail. The test of the scenario 007 of up42-quote-panel is in the list of the failed tests.
 - The files orders.js and quotes.js stay at 100% line, branch and function coverage.
 - `make lint` checks the prose. `make gates CHANGE=up42-credit-euro` runs all gates.

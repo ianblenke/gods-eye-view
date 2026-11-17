@@ -14,15 +14,17 @@
 
 ## 3. Code
 
-- [x] 3.1 Add withEuro to orders.js and use it in the three order texts.
-- [x] 3.2 Use withEuro in the estimate text of quotes.js.
-- [x] 3.3 Add the changelog fragment.
+- [x] 3.1 Add withEuro to orders.js.
+- [x] 3.2 Use withEuro in the three order texts.
+- [x] 3.3 Use withEuro in the estimate text of quotes.js.
+- [x] 3.4 Add the changelog fragment.
 
 ## 4. Checks
 
 - [x] 4.1 Run the layer tests.
-- [x] 4.2 Run the mutation that divides by 10 and record the failed tests.
-- [ ] 4.3 Have the lead run the ratchet command.
-- [ ] 4.4 Have the lead run both review agents.
-- [ ] 4.5 Have the lead write review.md.
-- [ ] 4.6 Have the lead run make gates.
+- [x] 4.2 Run the mutation that divides by 10.
+- [x] 4.3 Record the failed tests.
+- [ ] 4.4 Have the lead run the ratchet command.
+- [ ] 4.5 Have the lead run both review agents.
+- [ ] 4.6 Have the lead write review.md.
+- [ ] 4.7 Have the lead run make gates.
