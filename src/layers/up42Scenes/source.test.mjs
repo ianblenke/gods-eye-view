@@ -500,13 +500,13 @@ test('[up42-scenes-layer-015] gives bad_answer for another media type or no Cont
   }
 });
 
-test('[up42-scenes-layer-015] reads a body of 1048576 bytes and gives bad_answer for one byte more', async () => {
-  const exact = new Uint8Array(1048576);
+test('[up42-scenes-layer-015] reads a body of 4194304 bytes and gives bad_answer for one byte more', async () => {
+  const exact = new Uint8Array(4194304);
   const fits = await thumbnail(make(() => image(exact, 'image/png')));
   assert.equal(fits.ok, true);
-  assert.equal(fits.blob.size, 1048576);
+  assert.equal(fits.blob.size, 4194304);
   const over = await thumbnail(
-    make(() => image(new Uint8Array(1048577), 'image/png')),
+    make(() => image(new Uint8Array(4194305), 'image/png')),
   );
   assert.deepEqual(over, { ok: false, status: 200, error: 'bad_answer' });
 });
