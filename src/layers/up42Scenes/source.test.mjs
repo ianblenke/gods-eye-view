@@ -125,6 +125,13 @@ test('[up42-scenes-layer-012] gives ok false for another body, for a status that
   assert.deepEqual(await rejecting.source.getStatus(), { ok: false });
 });
 
+test('[up42-scenes-layer-012] gives ok false for a number body and for an array of one flag', async () => {
+  for (const body of [5, [true], { configured: [true] }])
+    assert.deepEqual(await make(() => json(body)).source.getStatus(), {
+      ok: false,
+    });
+});
+
 test('[up42-scenes-layer-013] sends one POST with one header and the box and the dates as the body', async () => {
   const made = make(() => json(GOOD));
   const signal = new AbortController().signal;
@@ -168,6 +175,27 @@ test('[up42-scenes-layer-013] gives the result of the answer records for a good 
       used: 3,
       limit: 20,
     },
+  });
+});
+
+test('[up42-scenes-layer-013] sends the box and the dates of another search as the body', async () => {
+  const made = make(() => json(GOOD));
+  await made.source.searchScenes({
+    box: [-80.3, 25.7, -80.2, 25.8],
+    start: '2026-10-01',
+    end: '2026-11-16',
+  });
+  assert.equal(
+    made.calls[0].init.body,
+    '{"box":[-80.3,25.7,-80.2,25.8],"start":"2026-10-01","end":"2026-11-16"}',
+  );
+});
+
+test('[up42-scenes-layer-014] gives the status and the error of a 502 error body', async () => {
+  assert.deepEqual(await search(failing({ error: 'upstream_failed' }, 502)), {
+    ok: false,
+    status: 502,
+    error: 'upstream_failed',
   });
 });
 
