@@ -28,7 +28,7 @@ The server stops at 1 MiB and gives bad_upstream.
 
 ## Gates
 
-- Scenario `up42-thumbnails-010`: the tests use the exact numbers 4194304 and 4194305. The mutation that sets the size limit back to 1048576 makes the test `[up42-thumbnails-010] accepts exactly 4194304 bytes` fail.
-- Scenario `up42-scenes-layer-015`: the source test reads 4194304 bytes and refuses 4194305 bytes. The mutation that sets MAX_THUMBNAIL_BYTES back to 1 MiB makes the test `[up42-scenes-layer-015] reads a body of 4194304 bytes and gives bad_answer for one byte more` fail.
+- Scenario `up42-thumbnails-010`: the tests use the exact numbers 4194304 and 4194305. The mutation that sets the size limit back to 1048576 makes the test of exactly 4194304 bytes for scenario 010 fail.
+- Scenario `up42-scenes-layer-015`: the source test reads 4194304 bytes and refuses 4194305 bytes. The mutation that sets MAX_THUMBNAIL_BYTES back to 1 MiB makes the test of 4194304 bytes for scenario 015 fail.
 - The files auth.js and source.js stay at 100% line, branch and function coverage. The ratchet command records the changed scenario hashes.
 - `make lint` checks the prose. `make gates CHANGE=fix-up42-thumbnail-size` runs all gates.
