@@ -89,16 +89,20 @@ export const REJECTING = 'Rejecting the quotation…';
 export const NO_QUOTATION = 'UP42 has no quotation yet.';
 export const REJECTED = 'The quotation is rejected. No credits are spent.';
 
+// UP42 sells 100 credits for EUR 1 (docs.up42.com/getting-started/credits).
+export const withEuro = (credits) =>
+  `${credits} credits (about EUR ${(credits / 100).toFixed(2)})`;
+
 export const orderConfirmText = (title, amount) =>
-  `Order ${title} for this view? The estimate is ${amount} credits. This spends no credits yet.`;
+  `Order ${title} for this view? The estimate is ${withEuro(amount)}. This spends no credits yet.`;
 export const orderedText = (orderId) =>
   `Order ${orderId.slice(0, 8)} is placed. No credits are spent.`;
 export const quotationText = ({ credits: amount, decision }) =>
   decision === 'NOT_DECIDED'
-    ? `Quotation: ${amount} credits.`
+    ? `Quotation: ${withEuro(amount)}.`
     : `This quotation is ${decision.toLowerCase()}.`;
 export const acceptConfirmText = (amount) =>
-  `Accept the quotation of ${amount} credits? This spends ${amount} credits. UP42 cannot reverse it.`;
+  `Accept the quotation of ${withEuro(amount)}? This spends ${amount} credits. UP42 cannot reverse it.`;
 export const acceptedText = (amount) =>
   `The quotation is accepted. ${amount} credits are spent.`;
 export const rejectConfirmText = (amount) =>

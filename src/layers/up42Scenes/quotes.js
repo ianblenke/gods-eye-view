@@ -1,4 +1,5 @@
 /** Records and texts of the quote flow of the UP42 Scenes layer. */
+import { withEuro } from './orders.js';
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const MAX_TEXT = 160;
@@ -104,7 +105,7 @@ export function normalizeQuote(body) {
 const FACT_TEXT = {
   validation: (r) => r.status,
   estimate: (r) =>
-    `${r.credits} credits` +
+    withEuro(r.credits) +
     (Number.isFinite(r.size)
       ? ` for ${r.size}${r.unit ? ` ${r.unit}` : ''}`
       : ''),

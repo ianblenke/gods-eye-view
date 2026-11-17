@@ -15,7 +15,7 @@ const ORDER = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee';
 test('[up42-order-panel-005] states the amount and no spend in the order confirm text', () => {
   assert.equal(
     orderConfirmText('Pleiades', 120),
-    'Order Pleiades for this view? The estimate is 120 credits. This spends no credits yet.',
+    'Order Pleiades for this view? The estimate is 120 credits (about EUR 1.20). This spends no credits yet.',
   );
 });
 
@@ -29,7 +29,7 @@ test('[up42-order-panel-006] names the order with its first eight characters', (
 test('[up42-order-panel-007] gives the price of an undecided quotation and the decision of another', () => {
   assert.equal(
     quotationText({ credits: 90, decision: 'NOT_DECIDED' }),
-    'Quotation: 90 credits.',
+    'Quotation: 90 credits (about EUR 0.90).',
   );
   assert.equal(
     quotationText({ credits: 90, decision: 'ACCEPTED' }),
@@ -44,7 +44,7 @@ test('[up42-order-panel-007] gives the price of an undecided quotation and the d
 test('[up42-order-panel-008] states the spend and that it cannot be reversed in the accept text', () => {
   assert.equal(
     acceptConfirmText(90),
-    'Accept the quotation of 90 credits? This spends 90 credits. UP42 cannot reverse it.',
+    'Accept the quotation of 90 credits (about EUR 0.90)? This spends 90 credits. UP42 cannot reverse it.',
   );
 });
 

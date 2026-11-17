@@ -132,7 +132,7 @@ test('[up42-quote-panel-002] turns a check that is not valid into bad_answer and
 test('[up42-quote-panel-007] shows the facts of each check and the budget', () => {
   assert.equal(
     describeQuote(normalizeQuote(GOOD)),
-    'Validation: VALID · Estimate: 120 credits for 4 SQ_KM · Feasibility: FEASIBLE · Passes: 3 · Quotes today: 2 of 20. No order was made.',
+    'Validation: VALID · Estimate: 120 credits (about EUR 1.20) for 4 SQ_KM · Feasibility: FEASIBLE · Passes: 3 · Quotes today: 2 of 20. No order was made.',
   );
 });
 
@@ -148,7 +148,7 @@ test('[up42-quote-panel-007] shows an estimate without a size or a unit, a faile
   };
   assert.equal(
     describeQuote(quote),
-    'Estimate: 7 credits · Feasibility: not available (UP42 refused the credentials. Check UP42_USERNAME and UP42_PASSWORD in .env.) · Passes: not available (UP42 did not give a quote.) · This quote is kept from before. · Quotes today: 0 of 0. No order was made.',
+    'Estimate: 7 credits (about EUR 0.07) · Feasibility: not available (UP42 refused the credentials. Check UP42_USERNAME and UP42_PASSWORD in .env.) · Passes: not available (UP42 did not give a quote.) · This quote is kept from before. · Quotes today: 0 of 0. No order was made.',
   );
   assert.equal(
     describeQuote({
@@ -156,7 +156,7 @@ test('[up42-quote-panel-007] shows an estimate without a size or a unit, a faile
       results: { estimate: { ok: true, credits: 7, size: 2 } },
       cached: false,
     }),
-    'Estimate: 7 credits for 2 · Quotes today: 0 of 0. No order was made.',
+    'Estimate: 7 credits (about EUR 0.07) for 2 · Quotes today: 0 of 0. No order was made.',
   );
 });
 

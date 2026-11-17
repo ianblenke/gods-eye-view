@@ -89,7 +89,7 @@ const QUOTE = {
   budget: { used: 2, limit: 20 },
 };
 const QUOTE_TEXT =
-  'Validation: VALID · Estimate: 120 credits for 4 SQ_KM · Feasibility: FEASIBLE · Passes: 3 · Quotes today: 2 of 20. No order was made.';
+  'Validation: VALID · Estimate: 120 credits (about EUR 1.20) for 4 SQ_KM · Feasibility: FEASIBLE · Passes: 3 · Quotes today: 2 of 20. No order was made.';
 const BOX = [9.568326, 59.784163, 10.431674, 60.215837];
 
 function harness({
@@ -1929,7 +1929,7 @@ test('[up42-order-panel-005 up42-order-panel-006] confirms the order, sends it o
   h.byId('order').onClick();
   assert.equal(
     head(h),
-    'Order Product 2 for this view? The estimate is 120 credits. This spends no credits yet.',
+    'Order Product 2 for this view? The estimate is 120 credits (about EUR 1.20). This spends no credits yet.',
   );
   assert.deepEqual(h.chipIds().slice(3), ['order-confirm', 'order-cancel']);
   assert.equal(h.byId('order-confirm').label, 'Place order');
@@ -1979,21 +1979,21 @@ test('[up42-order-panel-007 up42-order-panel-008 up42-order-panel-009] reads the
     h.calls.getQuotation.map((o) => o.orderId),
     [ORDER_ID, ORDER_ID],
   );
-  assert.equal(head(h), 'Quotation: 90 credits.');
+  assert.equal(head(h), 'Quotation: 90 credits (about EUR 0.90).');
   assert.deepEqual(h.chipIds().slice(3), ['accept', 'reject', 'quotation']);
   await h.byId('quotation').onClick();
-  assert.equal(head(h), 'Quotation: 90 credits.');
+  assert.equal(head(h), 'Quotation: 90 credits (about EUR 0.90).');
   assert.equal(h.calls.getQuotation.length, 3);
   h.byId('accept').onClick();
   assert.equal(
     head(h),
-    'Accept the quotation of 90 credits? This spends 90 credits. UP42 cannot reverse it.',
+    'Accept the quotation of 90 credits (about EUR 0.90)? This spends 90 credits. UP42 cannot reverse it.',
   );
   assert.deepEqual(h.chipIds().slice(3), ['accept-confirm', 'order-cancel']);
   assert.equal(h.byId('accept-confirm').label, 'Accept and spend 90 credits');
   assert.equal(h.calls.acceptQuotation.length, 0);
   h.byId('order-cancel').onClick();
-  assert.equal(head(h), 'Quotation: 90 credits.');
+  assert.equal(head(h), 'Quotation: 90 credits (about EUR 0.90).');
   h.byId('accept').onClick();
   await h.byId('accept-confirm').onClick();
   assert.equal(h.calls.acceptQuotation.length, 1);

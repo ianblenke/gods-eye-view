@@ -7090,7 +7090,7 @@
     "change": "up42-tasking-orders"
   },
   "up42-order-panel-005": {
-    "hash": "866afbdd31fd0fbd22c1efc363d4c30e0e1805e92be9559eb2d2b3bb59119099",
+    "hash": "81abbb2af015bd81d5c88b93beb8f1f4c09c3ea20768483f3dc8d2b0e6261c00",
     "since": "2026-11-15",
     "change": "up42-tasking-orders"
   },
@@ -7100,12 +7100,12 @@
     "change": "up42-tasking-orders"
   },
   "up42-order-panel-007": {
-    "hash": "b5887779ece1b0a86810dc86ad039b629c10c4ec450fd20bc8874513621081e3",
+    "hash": "0ddf29eb7cde889541ce25c324cdcaecdb77172308c1f85d80ebe02270437204",
     "since": "2026-11-15",
     "change": "up42-tasking-orders"
   },
   "up42-order-panel-008": {
-    "hash": "2e6253835a6b09737c885c6a297bedfc9ccb4786f46cb523c225d76386747885",
+    "hash": "f4d44820a01a0ac8988fd7934d58c4d9eeaa25f5440bff1c37058129efbeaed7",
     "since": "2026-11-15",
     "change": "up42-tasking-orders"
   },
@@ -7325,7 +7325,7 @@
     "change": "up42-quote-panel"
   },
   "up42-quote-panel-007": {
-    "hash": "244d362547ecb988d070bcc6d456595b4c73659eb0f5d62b995920a0f8126df9",
+    "hash": "6f162991b78e9e3103348a9da437f4d933d0eaaa0fad6a541e0c81ed4acf50f9",
     "since": "2026-11-13",
     "change": "up42-quote-panel"
   },
