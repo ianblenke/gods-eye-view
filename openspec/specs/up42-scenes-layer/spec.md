@@ -132,7 +132,7 @@ Origin: spec-first
 - **AND** a layer without the option `now` uses `Date.now` as its clock
 
 ### Requirement: Browser source
-The source MUST read the status, send the search and get a thumbnail through the same-origin routes of the provider. It MUST read at most 8 MiB of a search answer and at most 1 MiB of a thumbnail.
+The source MUST read the status, send the search and get a thumbnail through the same-origin routes of the provider. It MUST read at most 8 MiB of a search answer and at most 4 MiB of a thumbnail.
 Origin: spec-first
 
 #### Scenario: Read the status route `up42-scenes-layer-012`
@@ -171,7 +171,7 @@ Origin: spec-first
 - **AND** the media type is the text of `Content-Type` before the first ";", with no white space at the start or the end, in lowercase
 - **AND** the header "IMAGE/PNG; charset=binary" gives the `type` "image/png"
 - **AND** a `2xx` answer with another media type or with no `Content-Type` gives `{ok:false, status, error:'bad_answer'}`
-- **AND** the source reads a body of 1048576 bytes, and a body of 1048577 bytes gives the error "bad_answer"
+- **AND** the source reads a body of 4194304 bytes, and a body of 4194305 bytes gives the error "bad_answer"
 - **AND** an answer with an HTTP status that is not `2xx` gives `{ok:false, status, error}`, where `error` is the text `error` of its JSON body
 - **AND** such an answer gives the error "unknown" for a JSON body without a text `error`, and "bad_answer" for a body that is not JSON
 - **AND** a rejection gives the status 0 and the error "unreachable"
