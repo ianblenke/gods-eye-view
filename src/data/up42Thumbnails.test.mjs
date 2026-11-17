@@ -578,8 +578,8 @@ for (const [index, respond] of [
   () => image(JPEG, 'image/png'),
   () => image(WEBP.slice(0, 11), 'image/webp'),
   () => image([...WEBP.slice(0, 8), 87, 65, 86, 69], 'image/webp'),
-  () => image([...PNG, ...new Array(1048569).fill(0)]),
-  () => image(PNG, 'image/png', { 'content-length': '1048577' }),
+  () => image([...PNG, ...new Array(4194297).fill(0)]),
+  () => image(PNG, 'image/png', { 'content-length': '4194305' }),
   () => new Response(null, { headers: { 'content-type': 'image/png' } }),
 ].entries())
   test(`[up42-thumbnails-010] refuses bad image case ${index}`, async (t) => {
@@ -591,8 +591,8 @@ for (const [index, respond] of [
     errorOf(await s.get(), 502, 'bad_upstream');
   });
 
-test('[up42-thumbnails-010] accepts exactly 1048576 bytes', async (t) => {
-  const bytes = [...PNG, ...new Array(1048568).fill(0)];
+test('[up42-thumbnails-010] accepts exactly 4194304 bytes', async (t) => {
+  const bytes = [...PNG, ...new Array(4194296).fill(0)];
   const s = install(t, {
     standalone: true,
     lookup: () => 'oneatlas',
@@ -600,7 +600,7 @@ test('[up42-thumbnails-010] accepts exactly 1048576 bytes', async (t) => {
   });
   const a = await s.get();
   assert.equal(a.status, 200);
-  assert.equal(a.bytes.length, 1048576);
+  assert.equal(a.bytes.length, 4194304);
   assert.deepEqual([...a.bytes], bytes);
 });
 
@@ -1247,7 +1247,7 @@ for (const size of ['declared', 'streamed'])
                       controller.enqueue(
                         size === 'declared'
                           ? Uint8Array.from(PNG)
-                          : new Uint8Array(1048577),
+                          : new Uint8Array(4194305),
                       );
                     },
                     cancel() {
@@ -1261,7 +1261,7 @@ for (const size of ['declared', 'streamed'])
                     headers: {
                       'content-type': 'image/png',
                       ...(size === 'declared'
-                        ? { 'content-length': '1048577' }
+                        ? { 'content-length': '4194305' }
                         : {}),
                     },
                   },

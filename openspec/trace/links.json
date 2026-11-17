@@ -9680,12 +9680,14 @@
     "src/layers/up42Scenes/layer.test.mjs › [up42-scenes-layer-011] uses Date.now as the clock when the caller gives no option now"
   ],
   "up42-scenes-layer-012": [
+    "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-012] gives ok false for a number body and for an array of one flag",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-012] gives ok false for another body, for a status that is not 2xx and for a rejection",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-012] sends one GET for the status route with the signal and reads configured"
   ],
   "up42-scenes-layer-013": [
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-013] gives the result of the answer records for a good answer",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-013] sends one POST with one header and the box and the dates as the body",
+    "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-013] sends the box and the dates of another search as the body",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-013] uses the fetch function of the page when the caller gives no fetch function"
   ],
   "up42-scenes-layer-014": [
@@ -9694,6 +9696,7 @@
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-014] gives the error unknown for a JSON body without a text error",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-014] gives the fetch function a signal of its own that follows the call and the 60 seconds",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-014] gives the status 0 and the error unreachable for a rejection",
+    "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-014] gives the status and the error of a 502 error body",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-014] gives the status, the error and the whole numbers of an error body",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-014] gives unreachable when the 60 seconds end while it reads the body",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-014] reads a body of 8388608 bytes and gives bad_answer for one byte more",
@@ -9707,7 +9710,7 @@
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-015] gives bad_answer for another media type or no Content-Type",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-015] gives the status and the error of an answer that is not 2xx",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-015] gives unreachable for a rejection and for a call that does not end in 20 seconds",
-    "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-015] reads a body of 1048576 bytes and gives bad_answer for one byte more",
+    "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-015] reads a body of 4194304 bytes and gives bad_answer for one byte more",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-015] removes its listener from the signal of the call and rejects when that signal aborts",
     "src/layers/up42Scenes/source.test.mjs › [up42-scenes-layer-015] sends one GET for the thumbnail with a signal of its own and no other option"
   ],
@@ -10183,7 +10186,7 @@
     "src/data/up42Thumbnails.test.mjs › [up42-thumbnails-009] stops after a refused second login"
   ],
   "up42-thumbnails-010": [
-    "src/data/up42Thumbnails.test.mjs › [up42-thumbnails-010] accepts exactly 1048576 bytes",
+    "src/data/up42Thumbnails.test.mjs › [up42-thumbnails-010] accepts exactly 4194304 bytes",
     "src/data/up42Thumbnails.test.mjs › [up42-thumbnails-010] accepts image case 0",
     "src/data/up42Thumbnails.test.mjs › [up42-thumbnails-010] accepts image case 1",
     "src/data/up42Thumbnails.test.mjs › [up42-thumbnails-010] accepts image case 2",

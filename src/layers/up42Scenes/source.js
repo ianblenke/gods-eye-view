@@ -13,7 +13,7 @@ import {
 import { normalizeProducts, normalizeQuote } from './quotes.js';
 
 export const MAX_SEARCH_BYTES = 8 * 1024 * 1024;
-export const MAX_THUMBNAIL_BYTES = 1024 * 1024;
+export const MAX_THUMBNAIL_BYTES = 4 * 1024 * 1024;
 const MAX_STATUS_BYTES = 1024 * 1024;
 export const SEARCH_TIMEOUT_MS = 60_000;
 export const PRODUCTS_TIMEOUT_MS = 20_000;

@@ -3,7 +3,6 @@ import {
   readResponseJsonCapped,
 } from '../common/http.js';
 import {
-  MAX_IMAGE_BYTES,
   hasImageSignature,
   isImageType,
   mediaTypeOf,
@@ -13,6 +12,8 @@ import { isSearchId } from './normalize.js';
 const TOKEN_URL =
   'https://auth.up42.com/realms/public/protocol/openid-connect/token';
 const API = 'https://api.up42.com';
+// UP42 thumbnails can have almost 3 MB; SkyWatch keeps its own smaller limit.
+const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
 const COLLECTIONS_PATH =
   '/v2/collections?type=ARCHIVE&integrations=SEARCH_AVAILABLE&size=100';
 const HOST = /^[a-z0-9][a-z0-9-]{0,63}$/;
