@@ -35,5 +35,5 @@ The lead must run the ratchet command to record the new hashes of the four scena
 
 - Known limit `fixed-rate`: A UP42 contract with another rate gives a wrong amount. The author read that a regional UP42 site (docs.sa.up42.com) states USD 1 for 100 credits. The layer cannot know the contract.
 - Known limit `rounding`: The amount has two decimals. A price with a fraction of a credit rounds to the nearest cent.
-- Known limit `not-everywhere`: These show credits only: the chip "Accept and spend", the sentence "This spends 90 credits.", the text after an accept and the reject confirm.
+- Known limit `not-everywhere`: Four texts show credits only. They are the chip "Accept and spend", the sentence "This spends 90 credits.", the text after an accept and the reject confirm.
 - Known limit `rounding-test`: No test sets a credit amount that is not whole, zero or large. A change of the rounding method would pass the tests.
