@@ -9,6 +9,7 @@
 
 - [x] 2.1 Change the tests for `up42-thumbnails-010` to the limit of 4194304 bytes.
 - [x] 2.2 Change the test for `up42-scenes-layer-015` to the limit of 4194304 bytes.
+- [x] 2.3 Keep the tests for `up42-scenes-layer-012`, `up42-scenes-layer-013` and `up42-scenes-layer-014` as they are. Their scenario text does not change.
 
 ## 3. Code
 
