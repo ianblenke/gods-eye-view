@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createTestVoiceUi } from '../testSupport/voiceUi.mjs';
 import test from 'node:test';
 import * as nodeTest from 'node:test';
 import { GevRealtimeController } from './realtimeController.js';
@@ -9,12 +10,7 @@ function controllerFixture({ runner = async () => ({ ok: true }) } = {}) {
   const statuses = [];
   const usage = [];
   const controller = new GevRealtimeController({
-    ui: {
-      root: { dataset: {}, classList: { remove() {} }, querySelectorAll: () => [] },
-      status: { textContent: '' },
-      detail: { textContent: '', title: '' },
-      errorDetail: { textContent: '' },
-    },
+    ui: createTestVoiceUi(),
     runner,
     debugSink: null,
   });

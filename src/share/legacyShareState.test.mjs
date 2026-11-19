@@ -22,6 +22,7 @@ import {
   fromLegacyShareState,
   toLegacyShareState,
 } from './legacyShareState.js';
+import { bindFakeCesiumCamera } from '../testSupport/fakeCameraPort.mjs';
 
 const DEG = Math.PI / 180;
 
@@ -47,7 +48,7 @@ function parseLegacy(hash) {
   globalThis.window = {
     location: { hash: body, href: `http://localhost/${body}` },
   };
-  const manager = new ShareLinkManager(stubViewer());
+  const manager = new ShareLinkManager(bindFakeCesiumCamera(stubViewer()));
   const parsed = manager.parseInitialHash();
   manager.destroy();
   return parsed;
@@ -87,11 +88,12 @@ function assertLegacyRoundTrip(hash) {
   return { parsed, state, encoded };
 }
 
-test('[share-codec-037] the HAL example survives the round trip and shrinks to 39 characters', () => {
+test('the HAL example survives the round trip and shrinks to 42 characters', () => {
   const { parsed, state, encoded } = assertLegacyRoundTrip(HAL_EXAMPLE_HASH);
   assert.equal(HAL_EXAMPLE_HASH.length, 302);
-  assert.equal(encoded.length, 39);
-  assert.equal(encoded, 'ARCg-SQYrah3ILAJKB4wO1IEAIQAEGIBNMgBC1o');
+  // Its long form predates the Space Missions panel: that entry says nothing.
+  assert.equal(encoded.length, 42);
+  assert.equal(encoded, 'ARCg-SQYrah3ILAJKB4wO1IEAIQAEGIDNLAByAELpA');
   assert.equal(parsed.roll, 360);
   assert.equal(state.roll, 0);
   assert.deepEqual(state.layerState.enabledLayerIds, [
@@ -107,7 +109,14 @@ test('[share-codec-037] the HAL example survives the round trip and shrinks to 3
   );
 });
 
-test('[share-codec-038] links from earlier long-form versions keep their historical meaning', () => {
+test('a long-form link to the retired Snow style opens as Normal', () => {
+  const snow = parseLegacy('v=2&lat=1&lon=2&style=snow&sp=d.90_w.20');
+  const normal = parseLegacy('v=2&lat=1&lon=2');
+  assert.equal(snow.style, 'normal');
+  assert.deepEqual(snow.styleParams, normal.styleParams);
+});
+
+test('links from earlier long-form versions keep their historical meaning', () => {
   for (const hash of [
     'lat=10&lon=20',
     'lat=37.7749&lon=-122.4194&alt=800&heading=0&pitch=-35&style=nvg&bloom=1&bi=84&sharpen=0&si=65&hud=tactical&hv=1&dm=BALANCED&dd=50&da=elastic&kf=16&ko=0&cr=0&map=photoreal',
@@ -137,7 +146,24 @@ test('[share-codec-038] links from earlier long-form versions keep their histori
   assert.equal(off.layerState.options.flights.models3d, false);
 });
 
-test('[share-codec-039] a tracking selection becomes a thing view and back', () => {
+test('Sonar beside the Minimal layout survives the compact form; older links do not name it', () => {
+  const { parsed, state } = assertLegacyRoundTrip(
+    'v=2&lat=10&lon=20&hud=minimal&hs=1',
+  );
+  assert.equal(parsed.hudSonar, true);
+  assert.equal(state.hudVariant, 'minimal');
+  assert.equal(state.hudSonar, true);
+  // Links made before `hs`: Minimal carries no Sonar, Cyber carries it in
+  // its own code.
+  for (const hud of ['minimal', 'cyber']) {
+    const old = assertLegacyRoundTrip(`v=2&lat=10&lon=20&hud=${hud}`);
+    assert.equal(old.parsed.hudSonar, false);
+    assert.equal(old.state.hudVariant, hud);
+    assert.equal(old.state.hudSonar, false);
+  }
+});
+
+test('a tracking selection becomes a thing view and back', () => {
   const flights = assertLegacyRoundTrip('v=2&lat=1&lon=2&l=f&lo=f.t.a1b2c3');
   assert.deepEqual(flights.state.view.entity, {
     kind: 'aircraft',
@@ -164,7 +190,7 @@ test('[share-codec-039] a tracking selection becomes a thing view and back', () 
   );
 });
 
-test('[share-codec-040] thing views the long form cannot express convert without one', () => {
+test('thing views the long form cannot express convert without one', () => {
   const layerState = createDefaultLayerState();
   layerState.enabledLayerIds = ['ais-live-vessels'];
   const vessel = toLegacyShareState({
@@ -176,7 +202,7 @@ test('[share-codec-040] thing views the long form cannot express convert without
   assert.deepEqual(vessel.layerState, layerState);
 });
 
-test('[share-codec-041] a thing view turns its layer on, with or without a layer set', () => {
+test('a thing view turns its layer on, with or without a layer set', () => {
   for (const layerState of [createDefaultLayerState(), null]) {
     const legacy = toLegacyShareState({
       layerState,
@@ -202,16 +228,18 @@ function generatedLegacyHash(random) {
   const int = (min, max) => min + Math.floor(random() * (max - min + 1));
   globalThis.window = { location: { hash: '', href: 'http://localhost/' } };
   const manager = new ShareLinkManager(
-    stubViewer({
-      position: {
-        latitude: (int(-899999, 899999) / 1e4) * DEG,
-        longitude: (int(-1799999, 1799999) / 1e4) * DEG,
-        height: pick(random, [int(-50, 3000), int(0, 30_000_000)]),
-      },
-      heading: int(0, 359) * DEG + (random() < 0.1 ? 0.99 * DEG : 0),
-      pitch: int(-90, 0) * DEG,
-      roll: pick(random, [0, 359.7 * DEG, int(0, 359) * DEG]),
-    }),
+    bindFakeCesiumCamera(
+      stubViewer({
+        position: {
+          latitude: (int(-899999, 899999) / 1e4) * DEG,
+          longitude: (int(-1799999, 1799999) / 1e4) * DEG,
+          height: pick(random, [int(-50, 3000), int(0, 30_000_000)]),
+        },
+        heading: int(0, 359) * DEG + (random() < 0.1 ? 0.99 * DEG : 0),
+        pitch: int(-90, 0) * DEG,
+        roll: pick(random, [0, 359.7 * DEG, int(0, 359) * DEG]),
+      }),
+    ),
   );
   const style = pick(random, VIEW_STYLES);
   manager.onStyleChange(style);
@@ -221,6 +249,7 @@ function generatedLegacyHash(random) {
     bloomVersion: pick(random, [1, 2]),
     sharpenIntensity: int(0, 100),
     hudVariant: pick(random, HUD_LAYOUTS),
+    hudSonar: random() < 0.5,
     hudVisible: random() < 0.5,
     detectionMode: pick(random, ['OFF', 'SPARSE', 'BALANCED', 'DENSE']),
     detectionDensity: density,
@@ -264,7 +293,7 @@ function generatedLegacyHash(random) {
   return params.toString();
 }
 
-test('[share-codec-042] links written by the long-form generator survive the compact form', () => {
+test('links written by the long-form generator survive the compact form', () => {
   const random = rng(0xc0dec);
   let totalLegacy = 0;
   let totalCompact = 0;
@@ -281,7 +310,7 @@ test('[share-codec-042] links written by the long-form generator survive the com
   );
 });
 
-test('[share-codec-043] the converter ignores non-objects and restore bookkeeping', () => {
+test('the converter ignores non-objects and restore bookkeeping', () => {
   // A malformed v2 layer list is reported by the long-form parser; the view
   // itself simply has no layer set.
   const invalid = parseLegacy('v=2&lat=1&lon=2&l=f.unknown');
@@ -295,10 +324,10 @@ test('[share-codec-043] the converter ignores non-objects and restore bookkeepin
   assert.equal(Object.hasOwn(state, 'layerStateInvalid'), false);
 });
 
-test('[share-codec-044] the converter knows every key of the long form’s parsed state', () => {
+test('the converter knows every key of the long form’s parsed state', () => {
   // A key the converter does not list would silently drop out of share codes.
   globalThis.window = { location: { hash: '', href: 'http://localhost/' } };
-  const manager = new ShareLinkManager(stubViewer({}));
+  const manager = new ShareLinkManager(bindFakeCesiumCamera(stubViewer({})));
   const parsed = manager._parseShareHash('v=2&lat=1&lon=2');
   assert.deepEqual(
     Object.keys(parsed).sort(),

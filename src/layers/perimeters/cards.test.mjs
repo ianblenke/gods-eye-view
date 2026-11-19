@@ -1,10 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {
-  perimeterAnchorDegrees,
-  buildIncidentCard,
-  containmentAccent,
-} from './cards.js';
+import { perimeterAnchorDegrees, buildIncidentCard } from './cards.js';
 
 const square = [
   [-108.2, 35.0],
@@ -20,7 +16,7 @@ const tiny = [
   [-107.01, 34.0],
 ];
 
-test('[perimeters-005] the card anchor is the mean of the outer vertices of the largest polygon', () => {
+test('the card anchors at the vertex mean of the largest polygon', () => {
   const anchor = perimeterAnchorDegrees([[tiny], [square]]);
   assert.ok(Math.abs(anchor.lon - -108.1) < 1e-9);
   assert.ok(Math.abs(anchor.lat - 35.1) < 1e-9);
@@ -93,7 +89,7 @@ test('multipart cards compare polygon areas along short dateline edges', () => {
   }
 });
 
-test('[perimeters-006] a full incident row renders name, size, containment, and ages', () => {
+test('a full incident row renders name, size, containment, and ages', () => {
   const now = 1758000000000;
   const card = buildIncidentCard(
     {
@@ -126,7 +122,7 @@ test('[perimeters-006] a full incident row renders name, size, containment, and 
   assert.equal(typeof card.accent, 'string');
 });
 
-test('[perimeters-006] missing attributes degrade to available facts instead of placeholders', () => {
+test('missing attributes degrade to available facts instead of placeholders', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -150,7 +146,7 @@ test('[perimeters-006] missing attributes degrade to available facts instead of 
   assert.deepEqual(card.details, ['containment unknown · RX']);
 });
 
-test('[perimeters-006] a known InciWeb page adds a link line to the card', () => {
+test('a known InciWeb page adds a link line to the card', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -178,7 +174,7 @@ test('[perimeters-006] a known InciWeb page adds a link line to the card', () =>
   assert.match(card.accessibilityLabel, /InciWeb/);
 });
 
-test('[perimeters-006] the selected card claims the selected paint lane, not the ambient lane', () => {
+test('the selected card claims the selected paint lane, not the ambient lane', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -206,7 +202,7 @@ test('[perimeters-006] the selected card claims the selected paint lane, not the
   assert.equal('collisionGroup' in card, false);
 });
 
-test('[perimeters-006] costs near a unit boundary promote to the larger unit', () => {
+test('costs near a unit boundary promote to the larger unit', () => {
   const base = {
     stableId: 'x',
     name: 'Any',
@@ -233,7 +229,7 @@ test('[perimeters-006] costs near a unit boundary promote to the larger unit', (
   assert.equal(costLine(4200000), '$4.2M to date');
 });
 
-test('[perimeters-006] a complex member names its complex on the card', () => {
+test('a complex member names its complex on the card', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -257,7 +253,7 @@ test('[perimeters-006] a complex member names its complex on the card', () => {
   assert.ok(card.details.includes('part of Rowe Creek Complex'));
 });
 
-test('[perimeters-006] a card without a link is not interactive', () => {
+test('a card without a link is not interactive', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -280,7 +276,7 @@ test('[perimeters-006] a card without a link is not interactive', () => {
   assert.equal(card.interactive, false);
 });
 
-test('[perimeters-006] partial incident details render only the facts that exist', () => {
+test('partial incident details render only the facts that exist', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -307,39 +303,33 @@ test('[perimeters-006] partial incident details render only the facts that exist
   ]);
 });
 
-test('[perimeters-006] full containment is green and a low cost has no text', () => {
-  assert.equal(containmentAccent(100), '#8bc34a');
-  const card = buildIncidentCard(
-    {
-      stableId: 'a',
-      name: '',
-      containedPct: 100,
-      costToDate: 999,
-      polygons: [],
-    },
-    0,
-  );
-  assert.equal(card.title, 'FIRE · Unnamed incident');
-  assert.equal(card.accent, '#8bc34a');
+test('a fire under one acre keeps its WFIGS size instead of reading 0 ac', () => {
+  const row = {
+    stableId: 'x',
+    name: 'Grey',
+    acres: 0.25,
+    containedPct: null,
+    state: 'US-WA',
+    category: 'WF',
+    discoveredTime: null,
+    updatedTime: null,
+    cause: null,
+    behavior: null,
+    personnel: null,
+    county: null,
+    costToDate: null,
+    complexity: null,
+  };
   assert.equal(
-    card.details.some((part) => part.includes('to date')),
-    false,
-  );
-});
-
-test('[perimeters-006] a negative age has no age text', () => {
-  const card = buildIncidentCard(
-    {
-      stableId: 'a',
-      name: 'A',
-      containedPct: 0,
-      discoveredTime: 100,
-      updatedTime: 100,
-    },
-    0,
+    buildIncidentCard(row, 1758000000000).details[0],
+    '0.25 ac · containment unknown · US-WA',
   );
   assert.equal(
-    card.details.some((part) => part.includes('ago')),
-    false,
+    buildIncidentCard({ ...row, acres: 0.01 }, 1758000000000).details[0],
+    '0.01 ac · containment unknown · US-WA',
+  );
+  assert.equal(
+    buildIncidentCard({ ...row, acres: 1.4 }, 1758000000000).details[0],
+    '1 ac · containment unknown · US-WA',
   );
 });

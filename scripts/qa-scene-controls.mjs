@@ -51,7 +51,7 @@ try {
       window.__qaSceneState.push(notification),
     );
   });
-  await page.click('[data-collapse-target="scene-panel"]');
+  await page.click('[data-rail-item="scene-panel"]');
   await page.click('#scene-new-btn');
   await page.waitForFunction(
     () =>
@@ -112,6 +112,39 @@ try {
         ),
     ),
   );
+  // A long rename keeps its editor visible inside the shot row.
+  await page.click('.scene-shot-label', { count: 2 });
+  await page.waitForSelector('.scene-shot-rename', { visible: true });
+  await page.type(
+    '.scene-shot-rename',
+    ' with a much longer title that runs well past the shot row',
+  );
+  await page.keyboard.press('End');
+  check(
+    'A long rename keeps the editor visible inside its shot row',
+    await page.evaluate(() => {
+      // The label clips with an ellipsis, which hides an editor that
+      // overflows it, so its content must fit its width.
+      const input = document.querySelector('.scene-shot-rename');
+      const label = input?.closest('.scene-shot-label');
+      const box = input?.getBoundingClientRect();
+      const style = input && getComputedStyle(input);
+      return (
+        !!box &&
+        box.width > 120 &&
+        box.height > 10 &&
+        label.scrollWidth <= label.clientWidth + 1 &&
+        style.visibility === 'visible' &&
+        style.borderTopWidth !== '0px' &&
+        document.activeElement === input
+      );
+    }),
+  );
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(
+    () => !document.querySelector('.scene-shot-rename'),
+  );
+
   await page.click('#scene-capture-btn');
   await page.waitForFunction(
     () => document.querySelectorAll('.scene-shot-row').length === 2,
@@ -251,7 +284,7 @@ try {
       panel.classList.contains('collapsed'),
     )
   )
-    await page.click('[data-collapse-target="scene-panel"]');
+    await page.click('[data-rail-item="scene-panel"]');
   await page.waitForSelector('#scene-download-btn', { visible: true });
   await page.click('#scene-download-btn');
   const metadata = await page.evaluate(async () =>
@@ -399,6 +432,10 @@ try {
       );
     }),
   );
+  promptValue = 'Disposal scene';
+  await page.click('#scene-new-btn');
+  await page.click('#scene-capture-btn');
+  await page.waitForSelector('.scene-shot-label', { visible: true });
   const teardown = await page.evaluate(async () => {
     const director = window.__godsEyeView.sceneDirector;
     const controls = director._controls;
@@ -415,12 +452,12 @@ try {
         return '{"scenes":[]}';
       },
     });
+    // A shot row held across disposal must not act once it is revoked.
+    const retainedLabel = document.querySelector('.scene-shot-label');
     const stopping = director.destroy();
     const notificationsAtStop = window.__qaSceneState.length;
-    const stoppedSynchronously =
-      controls.destroyed &&
-      controls.removers.length === 0 &&
-      controls.rowRemovers.length === 0;
+    const stoppedSynchronously = controls.destroyed;
+    retainedLabel?.click();
     document.getElementById('scene-new-btn').click();
     controls.run('capture');
     finish();
@@ -429,6 +466,7 @@ try {
     await director.destroy();
     return {
       stoppedSynchronously,
+      heldRowAction: Boolean(retainedLabel),
       stateStopped: window.__qaSceneState.length === notificationsAtStop,
       sameProject: director._project === project,
       noLateStatus:
@@ -438,7 +476,9 @@ try {
   });
   check(
     'Disposal revokes fixed and row actions before waiting for scene work',
-    teardown.stoppedSynchronously && teardown.rowsGone,
+    teardown.stoppedSynchronously &&
+      teardown.heldRowAction &&
+      teardown.rowsGone,
   );
   check(
     'Late import completion cannot replace the disposed project or status',

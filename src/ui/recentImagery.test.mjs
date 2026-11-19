@@ -1,5 +1,8 @@
+import * as Cesium from 'cesium';
+import '../testSupport/registerDom.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { assertSameNode } from '../testSupport/domAssert.mjs';
 import { readFileSync } from 'node:fs';
 import { createRecentImageryPanel } from './recentImagery.js';
 import { createRecentImageryLayer } from '../layers/recentImagery/index.js';
@@ -13,192 +16,81 @@ import {
   response,
   settle,
 } from '../layers/recentImagery/testDoubles.mjs';
+import { bindFakeCesiumCamera } from '../testSupport/fakeCameraPort.mjs';
+import { fakeGlobePort } from '../testSupport/fakeGlobePort.mjs';
 
 const S18 = 'S30:2026-09-18';
 const L16 = 'L30:2026-09-16';
 const V21 = 'VIIRS:2026-09-21';
 const V15 = 'VIIRS:2026-09-15';
 
-// ---- a small DOM double ------------------------------------------------------
-class FakeClassList {
-  constructor(node) {
-    this.node = node;
-  }
-  get names() {
-    return new Set(
-      String(this.node.className || '')
-        .split(/\s+/)
-        .filter(Boolean),
-    );
-  }
-  contains(name) {
-    return this.names.has(name);
-  }
-  toggle(name, force) {
-    const names = this.names;
-    const on = force === undefined ? !names.has(name) : Boolean(force);
-    if (on) names.add(name);
-    else names.delete(name);
-    this.node.className = [...names].join(' ');
-    return on;
-  }
-  add(...list) {
-    for (const name of list) this.toggle(name, true);
-  }
-  remove(...list) {
-    for (const name of list) this.toggle(name, false);
-  }
-}
-
-function matches(node, selector) {
-  if (selector.startsWith('.'))
-    return node.classList.contains(selector.slice(1));
-  if (selector.startsWith('#')) return node.id === selector.slice(1);
-  const attr = /^\[([\w-]+)(?:="([^"]*)")?\]$/.exec(selector);
-  if (!attr) return false;
-  const key = attr[1].startsWith('data-')
-    ? attr[1].slice(5).replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
-    : null;
-  const value = key ? node.dataset[key] : node.getAttribute(attr[1]);
-  return attr[2] === undefined ? value != null : value === attr[2];
-}
-
-class FakeElement {
-  constructor(tagName, ownerDocument) {
-    this.tagName = String(tagName).toUpperCase();
-    this.ownerDocument = ownerDocument;
-    this.children = [];
-    this.parentNode = null;
-    this.className = '';
-    this.dataset = {};
-    this.style = {};
-    this.attributes = new Map();
-    this.listeners = new Map();
-    this.hidden = false;
-    this.disabled = false;
-    this.id = '';
-    this.title = '';
-    this._text = '';
-    this.scrollTop = 0;
-    this.scrollLeft = 0;
-    this.focused = 0;
-    this.blurred = 0;
-  }
-  get classList() {
-    return new FakeClassList(this);
-  }
-  get textContent() {
-    return this.children.length
-      ? this.children.map((child) => child.textContent).join('')
-      : this._text;
-  }
-  set textContent(value) {
-    for (const child of this.children) child.parentNode = null;
-    this.children = [];
-    this._text = String(value);
-  }
-  setAttribute(name, value) {
-    this.attributes.set(name, String(value));
-  }
-  getAttribute(name) {
-    return this.attributes.get(name) ?? null;
-  }
-  removeAttribute(name) {
-    this.attributes.delete(name);
-  }
-  appendChild(child) {
-    return this.insertBefore(child, null);
-  }
-  insertBefore(child, reference) {
-    child.parentNode?.removeChild(child);
-    const index = reference ? this.children.indexOf(reference) : -1;
-    if (index < 0) this.children.push(child);
-    else this.children.splice(index, 0, child);
-    child.parentNode = this;
-    return child;
-  }
-  append(...children) {
-    for (const child of children) this.appendChild(child);
-  }
-  removeChild(child) {
-    this.children.splice(this.children.indexOf(child), 1);
-    child.parentNode = null;
-  }
-  remove() {
-    this.parentNode?.removeChild(this);
-  }
-  addEventListener(type, handler) {
-    if (!this.listeners.has(type)) this.listeners.set(type, new Set());
-    this.listeners.get(type).add(handler);
-  }
-  removeEventListener(type, handler) {
-    this.listeners.get(type)?.delete(handler);
-  }
-  /** Bubble an event from this node to the root. */
-  dispatch(type, init = {}) {
-    const event = {
-      type,
-      target: this,
-      defaultPrevented: false,
-      preventDefault() {
-        this.defaultPrevented = true;
-      },
-      ...init,
-    };
-    for (let node = this; node; node = node.parentNode)
-      for (const handler of [...(node.listeners.get(type) || [])])
-        handler(event);
-    return event;
-  }
-  click() {
-    if (!this.disabled) this.dispatch('click');
-  }
-  matches(selector) {
-    return matches(this, selector);
-  }
-  closest(selector) {
-    for (let node = this; node; node = node.parentNode)
-      if (matches(node, selector)) return node;
-    return null;
-  }
-  querySelector(selector) {
-    return this.find((node) => matches(node, selector));
-  }
-  find(predicate) {
-    for (const child of this.children) {
-      if (predicate(child)) return child;
-      const inner = child.find(predicate);
-      if (inner) return inner;
-    }
-    return null;
-  }
-  findAll(predicate, out = []) {
-    for (const child of this.children) {
-      if (predicate(child)) out.push(child);
-      child.findAll(predicate, out);
-    }
-    return out;
-  }
-  focus(options) {
-    this.focused += 1;
-    this.focusOptions = options;
-  }
-  blur() {
-    this.blurred += 1;
-  }
+// ---- the test document ------------------------------------------------------
+// The readout renders its cards with Vue, so it runs in a real document. These
+// test-only conveniences count focus, blur and listeners per element.
+const elementProto = globalThis.HTMLElement.prototype;
+const { focus: nativeFocus, blur: nativeBlur } = elementProto;
+elementProto.focus = function (options) {
+  this.focused = (this.focused || 0) + 1;
+  this.focusOptions = options;
+  return nativeFocus.call(this, options);
+};
+elementProto.blur = function () {
+  this.blurred = (this.blurred || 0) + 1;
+  return nativeBlur.call(this);
+};
+const listeners = new WeakMap();
+const { addEventListener: nativeAdd, removeEventListener: nativeRemove } =
+  globalThis.Element.prototype;
+globalThis.Element.prototype.addEventListener = function (
+  type,
+  handler,
+  ...rest
+) {
+  if (!listeners.has(this)) listeners.set(this, new Map());
+  const byType = listeners.get(this);
+  if (!byType.has(type)) byType.set(type, new Set());
+  byType.get(type).add(handler);
+  return nativeAdd.call(this, type, handler, ...rest);
+};
+globalThis.Element.prototype.removeEventListener = function (
+  type,
+  handler,
+  ...rest
+) {
+  listeners.get(this)?.get(type)?.delete(handler);
+  return nativeRemove.call(this, type, handler, ...rest);
+};
+Object.assign(globalThis.Element.prototype, {
   listenerCount() {
-    return [...this.listeners.values()].reduce((n, set) => n + set.size, 0);
-  }
-}
+    return [...(listeners.get(this)?.values() ?? [])].reduce(
+      (n, set) => n + set.size,
+      0,
+    );
+  },
+  /** The first descendant matching `predicate`, in document order. */
+  find(predicate) {
+    return [...this.querySelectorAll('*')].find(predicate) ?? null;
+  },
+  findAll(predicate) {
+    return [...this.querySelectorAll('*')].filter(predicate);
+  },
+  /** Bubble an event of `type` carrying `init`'s fields; returns the event. */
+  dispatch(type, init = {}) {
+    const event = new Event(type, { bubbles: true, cancelable: true });
+    for (const [key, value] of Object.entries(init))
+      Object.defineProperty(event, key, { value });
+    this.dispatchEvent(event);
+    return event;
+  },
+});
 
-/** The static rail panel skeleton from templates/context.html. */
+/** The static rail panel skeleton from views/ContextView.vue. */
 function fakeDocument() {
-  const document = {
-    documentElement: { clientWidth: 1200 },
-    createElement: (tag) => new FakeElement(tag, document),
-    getElementById: (id) => document.body.find((node) => node.id === id),
-  };
-  document.body = new FakeElement('body', document);
+  document.body.textContent = '';
+  Object.defineProperty(document.documentElement, 'clientWidth', {
+    configurable: true,
+    value: 1200,
+  });
   const panel = document.createElement('div');
   panel.id = 'recent-imagery-panel';
   panel.className = 'panel-collapsible collapsed';
@@ -240,6 +132,8 @@ function fixture({ fetchImpl, controller = fakeController() } = {}) {
     camera: {},
     scene: { canvas: { clientWidth: 1000 }, requestRender() {} },
   };
+  const globe = fakeGlobePort();
+  bindFakeCesiumCamera(viewer, { globe });
   layer.init(viewer);
   layer.attachMapStackController(controller);
   let active = false;
@@ -322,6 +216,7 @@ function fixture({ fetchImpl, controller = fakeController() } = {}) {
     ...dom,
     layer,
     viewer,
+    globe,
     renderer,
     thumbnails,
     catalog,
@@ -359,7 +254,7 @@ function part(f, id, name) {
 // ---- tests ---------------------------------------------------------------------
 test('[recent-imagery-043] the readout mounts in the rail body, hides while the layer is off and opens the panel once on first appearance', async () => {
   const f = fixture();
-  assert.equal(f.root.parentNode, f.body);
+  assertSameNode(f.root.parentNode, f.body);
   assert.equal(f.panel.hidden, true);
   assert.equal(f.count.textContent, '');
   await f.ready();
@@ -387,7 +282,7 @@ test('[recent-imagery-043] the readout mounts in the rail body, hides while the 
 test('[recent-imagery-043] the body is a fixed stack of seven blocks in a fixed order, each with a fixed height in the stylesheet', () => {
   const f = fixture();
   assert.deepEqual(
-    f.root.children.map((node) => node.id || node.className),
+    [...f.root.children].map((node) => node.id || node.className),
     [
       'ri-actions',
       'ri-notice',
@@ -521,7 +416,7 @@ test('[recent-imagery-043] no control changes place in the tree, no block is hid
         /height: 22px/,
       ],
       'details header': [
-        f.root.children.at(-1) === f.byId('ri-details')
+        [...f.root.children].at(-1) === f.byId('ri-details')
           ? header?.find((node) => node.classList.contains('rail-card-title'))
           : null,
         'rail-card-nowrap',
@@ -583,7 +478,7 @@ test('[recent-imagery-043] no control changes place in the tree, no block is hid
       const path = [];
       for (let at = node; at && at !== f.root; at = at.parentNode) {
         assert.equal(at.hidden, false, `${name} is never hidden`);
-        path.unshift(`${at.tagName}${at.parentNode.children.indexOf(at)}`);
+        path.unshift(`${at.tagName}${[...at.parentNode.children].indexOf(at)}`);
       }
       out[name] = path.join('/');
     }
@@ -705,7 +600,7 @@ test('[recent-imagery-044] cards carry thumbnail, date, sensor, cloud, START HER
     ],
     ['A', 'B', false, false],
   );
-  assert.equal(a.parentNode.children.indexOf(a), 0);
+  assert.equal([...a.parentNode.children].indexOf(a), 0);
   assert.equal(b.getAttribute('aria-label'), 'Pin Sep 18 as B');
   // A day is one slot only: B moves it.
   b.click();
@@ -958,9 +853,7 @@ test('[recent-imagery-046] an oversized box offers ZOOM IN in a fixed slot at th
   const f = fixture();
   const flights = [];
   f.viewer.scene.canvas.clientHeight = 500;
-  f.viewer.scene.ellipsoid = {
-    cartographicToCartesian: (c) => ({ ...c }),
-  };
+  f.viewer.scene.ellipsoid = Cesium.Ellipsoid.WGS84;
   Object.assign(f.viewer.camera, {
     frustum: { fovy: 2 * Math.atan(Math.tan(Math.PI / 6) / 2) },
     flyTo: (options) => flights.push(options),
@@ -969,7 +862,7 @@ test('[recent-imagery-046] an oversized box offers ZOOM IN in a fixed slot at th
   const zoom = f.byId('ri-zoom-in');
   assert.equal(zoom.tagName, 'BUTTON');
   assert.equal(zoom.textContent, 'ZOOM IN');
-  assert.equal(notice.children.at(-1), zoom, 'the right end of the line');
+  assert.equal([...notice.children].at(-1), zoom, 'the right end of the line');
   const reserved = () => [
     zoom.classList.contains('is-reserved'),
     zoom.disabled,
@@ -992,7 +885,9 @@ test('[recent-imagery-046] an oversized box offers ZOOM IN in a fixed slot at th
   assert.equal(flights.length, 1);
   assert.ok(
     Math.abs(
-      flights[0].destination.height - 400_000 / (2 * Math.tan(Math.PI / 6)),
+      Cesium.Ellipsoid.WGS84.cartesianToCartographic(flights[0].destination)
+        .height -
+        400_000 / (2 * Math.tan(Math.PI / 6)),
     ) < 1e-6,
   );
   // Another refusal has nothing to fit; a box that succeeds hides it again.
@@ -1022,7 +917,7 @@ test('[recent-imagery-047] the divider exists only while a swipe is live, labell
   };
   assert.equal(swap.tagName, 'BUTTON');
   assert.equal(swap.textContent, 'SWAP');
-  assert.equal(swap.parentNode, f.byId('ri-controls'));
+  assertSameNode(swap.parentNode, f.byId('ri-controls'));
   await f.ready();
   await f.settleLease();
   assert.equal(f.splits.length, 0, 'one image, no divider');
@@ -1033,6 +928,9 @@ test('[recent-imagery-047] the divider exists only while a swipe is live, labell
   assert.equal(f.splits.length, 1);
   assert.deepEqual(labels(), ['IMAGE', 'BASEMAP']);
   assert.equal(f.splits[0].options.id, 'recent-imagery-split-line');
+  // The divider moves the globe's split, through the renderer's globe port.
+  f.splits[0].options.scene.splitPosition = 0.3;
+  assert.equal(f.globe.imagery.getSplit(), 0.3);
   assert.deepEqual(swapState(), [false, false, 'false', 'false']);
   assert.deepEqual(directions(), ['left', undefined]);
   // VS BASEMAP: SWAP puts the image right of the basemap, and back.
@@ -1143,6 +1041,15 @@ test('[recent-imagery-048] opacity drives both images; EXPORT downloads the pin 
     failing.byId('ri-notice-text').textContent,
     'Export failed · HTTP 503',
   );
+  // A retained export after teardown neither fetches nor mounts again.
+  const fetched = f.fetches.length;
+  const container = f
+    .byId('ri-strip')
+    .closest('.recent-imagery-readout').parentElement;
+  f.readout.destroy();
+  assert.equal(await f.readout.exportImage('a'), false);
+  assert.equal(f.fetches.length, fetched);
+  assertSameNode(container.querySelector('.recent-imagery-readout'), null);
 });
 
 test('[recent-imagery-049] DETAILS is a collapsed rail card holding every note, and the empty-days toggle', async () => {
@@ -1199,7 +1106,7 @@ test('opening DETAILS scrolls its card into view, and closing it does not scroll
   await f.ready();
   // The body is 100 px high and scrolled 40 px; the card opens 150 px down.
   f.body.scrollTop = 40;
-  f.body.clientHeight = 100;
+  Object.defineProperty(f.body, 'clientHeight', { value: 100 });
   f.body.getBoundingClientRect = () => ({ top: 0 });
   const header = f
     .byId('ri-details')
@@ -1227,7 +1134,7 @@ test('[recent-imagery-043] destroy returns every listener, the divider and the p
   assert.equal(split.destroyed, true);
   assert.equal(f.root.listenerCount(), 0);
   assert.equal(f.strip.listenerCount(), 0);
-  assert.equal(f.root.parentNode, null);
+  assertSameNode(f.root.parentNode, null);
   assert.equal(f.document.getElementById('recent-imagery-panel').hidden, true);
   f.layer.setMode('ab');
   assert.equal(f.splits.length, 1, 'no renders after destroy');

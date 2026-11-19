@@ -8,9 +8,41 @@ import {
 } from '../../data/inputOwnership.js';
 import {
   isOwnedByOtherLayer,
-  registerPickOwner,
-  unregisterPickOwner,
+  setClickCardHitTest,
 } from '../../data/pickRegistry.js';
+import { fakeInput } from '../../input/testDoubles.mjs';
+import { bindFakeCesiumCamera } from '../../testSupport/fakeCameraPort.mjs';
+
+/** Record each click subscription the layer makes, as the old handler fakes did. */
+function recordHandlers(viewer, handlers) {
+  const fake = fakeInput(viewer);
+  const subscribe = fake.input.onClick;
+  fake.input.onClick = (fn) => {
+    const handler = {
+      destroyed: false,
+      // A live subscription hears clicks through the dispatcher; a removed
+      // one is called directly, as a queued callback would be.
+      click: (click) =>
+        handler.destroyed
+          ? fn({
+              screenPosition: click.position,
+              get pick() {
+                return viewer.scene.pick(click.position);
+              },
+            })
+          : fake.click(click.position),
+    };
+    handlers.push(handler);
+    const off = subscribe(fn);
+    return () => {
+      handler.destroyed = true;
+      off();
+    };
+  };
+}
+import * as contextStore from '../../data/contextStore.js';
+import { createGevActionRunner } from '../../voice/gevActions.js';
+import { fromRadians } from '../../geo/ellipsoid.js';
 
 const time = '2026-09-16T03:00:00.000Z';
 const storm = (id = 'ep152026') => ({
@@ -41,18 +73,25 @@ const snapshot = (storms = [storm()]) => ({
   reason: null,
 });
 const deferred = () => {
-  let resolve, reject;
-  const promise = new Promise((done, fail) => {
+  let resolve;
+  const promise = new Promise((done) => {
     resolve = done;
-    reject = fail;
   });
-  return { promise, resolve, reject };
+  return { promise, resolve };
 };
 
-test('[cyclones-019 cyclones-024] map selection yields to pointer owners and owns only its enabled handler', async () => {
+test('map selection yields to pointer owners and owns only its enabled handler', async (t) => {
   const handlers = [],
-    pickedEntity = {},
-    foreignEntity = {};
+    // A pick of an item in one of the layer's draw sets, and one of another
+    // layer's set: the dispatcher hands each to pickStorm as a draw hit.
+    pickedEntity = {
+      set: 'weather-cyclones:1:points',
+      id: 'cyclone:ep162026:center',
+    },
+    foreignEntity = {
+      set: 'other-layer:points',
+      id: 'cyclone:ep162026:center',
+    };
   let picked = { id: pickedEntity },
     overlayHit = null,
     overlayTests = 0,
@@ -63,42 +102,28 @@ test('[cyclones-019 cyclones-024] map selection yields to pointer owners and own
     setSelection() {},
     clear() {},
     destroy() {},
-    pickStorm: (value) => (value?.id === pickedEntity ? 'ep162026' : null),
+    pickStorm: (hit) =>
+      hit?.set === pickedEntity.set && hit.id === pickedEntity.id
+        ? 'ep162026'
+        : null,
     ownsPickId: (id) => id === 'cyclone:ep162026:center',
     getDiagnostics: () => ({}),
   };
-  const cesium = {
-    ScreenSpaceEventType: { LEFT_CLICK: 'left' },
-    ScreenSpaceEventHandler: class {
-      constructor(canvas) {
-        assert.ok(canvas);
-        handlers.push(this);
-        this.destroyed = false;
-      }
-      setInputAction(callback, type) {
-        assert.equal(type, 'left');
-        this.click = callback;
-      }
-      destroy() {
-        this.destroyed = true;
-      }
-      isDestroyed() {
-        return this.destroyed;
-      }
-    },
-  };
   const layer = createCyclonesLayer({
     feed: { getSnapshot: async () => snapshot([storm(), storm('ep162026')]) },
-    cesium,
     createRendering: () => rendering,
-    hitTestOverlay: () => {
-      overlayTests++;
-      return overlayHit;
-    },
   });
+  setClickCardHitTest(() => {
+    overlayTests++;
+    return overlayHit;
+  });
+  t.after(() => setClickCardHitTest(null));
   const canvas = new EventTarget();
   canvas.getBoundingClientRect = () => ({ left: 100, top: 200 });
   const viewer = {
+    get canvas() {
+      return this.scene?.canvas;
+    },
     scene: {
       canvas,
       pick() {
@@ -113,6 +138,8 @@ test('[cyclones-019 cyclones-024] map selection yields to pointer owners and own
       },
     },
   };
+  bindFakeCesiumCamera(viewer);
+  recordHandlers(viewer, handlers);
   layer.init(viewer);
   layer.setRowControlsListener(() => notices++);
   assert.equal(handlers.length, 0, 'disabled module installs no handler');
@@ -157,41 +184,15 @@ test('[cyclones-019 cyclones-024] map selection yields to pointer owners and own
     'foreground AIS card wins before scene picking',
   );
   assert.equal(layer.getDiagnostics().selectedId, 'ep152026');
-  // A native capture runs before an earlier sibling handler clears hit rects.
-  const up = new Event('pointerup');
-  Object.assign(up, { clientX: 110, clientY: 220 });
-  canvas.dispatchEvent(up);
-  overlayHit = null;
+  // Any other layer's card on top takes the click, not only a vessel's.
+  overlayHit = { sourceId: 'cctv', entryId: 'camera:1' };
   handlers[0].click(click);
   assert.equal(
     layer.getDiagnostics().selectedId,
     'ep152026',
-    'captured AIS hit survives synchronous sibling overlay rebuild',
+    'a camera card over the storm keeps the click',
   );
-  // A captured background hit remains background even if a sibling adds a card.
-  canvas.dispatchEvent(up);
-  overlayHit = { sourceId: 'ais-live-vessels', entryId: 'vessel:123' };
-  handlers[0].click(click);
-  assert.equal(layer.getDiagnostics().selectedId, 'ep162026');
-  layer.setParams({ stormId: 'ep152026' });
-  // A new gesture clears an unconsumed release snapshot.
-  canvas.dispatchEvent(up);
-  canvas.dispatchEvent(new Event('pointerdown'));
   overlayHit = null;
-  handlers[0].click(click);
-  assert.equal(layer.getDiagnostics().selectedId, 'ep162026');
-  layer.setParams({ stormId: 'ep152026' });
-  overlayHit = { sourceId: 'ais-live-vessels', entryId: 'vessel:123' };
-  canvas.dispatchEvent(up);
-  overlayHit = null;
-  handlers[0].click({ position: { x: 15, y: 25 } });
-  assert.equal(
-    layer.getDiagnostics().selectedId,
-    'ep162026',
-    'a different click cannot reuse the captured card',
-  );
-  layer.setParams({ stormId: 'ep152026' });
-  overlayHit = { sourceId: 'cctv', entryId: 'camera:1' };
   const before = notices;
   handlers[0].click(click);
   assert.equal(layer.getDiagnostics().selectedId, 'ep162026');
@@ -241,13 +242,12 @@ test('[cyclones-019 cyclones-024] map selection yields to pointer owners and own
   assert.equal(layer.getDiagnostics().selectionActive, false);
   const afterDisable = picks;
   const afterDisableOverlay = overlayTests;
-  canvas.dispatchEvent(up);
+  handlers[0].click(click);
   assert.equal(
     overlayTests,
     afterDisableOverlay,
-    'disable removes native capture listeners',
+    'a disabled layer reads no card',
   );
-  handlers[0].click(click);
   assert.equal(picks, afterDisable, 'queued disabled callback is inert');
   layer.enable();
   await layer.update();
@@ -266,25 +266,13 @@ test('[cyclones-019 cyclones-024] map selection yields to pointer owners and own
   );
   assert.equal(handlers[1].destroyed, true);
 });
-test('[cyclones-024] a click on a storm card or lead-hour label selects that storm without picking', async () => {
+test('a click on a storm card or lead-hour label selects that storm without picking', async (t) => {
   const handlers = [];
   let picks = 0,
     overlayHit = null,
     hostArgument;
   const layer = createCyclonesLayer({
     feed: { getSnapshot: async () => snapshot([storm(), storm('ep162026')]) },
-    cesium: {
-      ScreenSpaceEventType: { LEFT_CLICK: 'left' },
-      ScreenSpaceEventHandler: class {
-        constructor() {
-          handlers.push(this);
-        }
-        setInputAction(callback) {
-          this.click = callback;
-        }
-        destroy() {}
-      },
-    },
     overlayHost: 'host',
     createRendering: ({ overlayHost }) => {
       hostArgument = overlayHost;
@@ -298,11 +286,15 @@ test('[cyclones-024] a click on a storm card or lead-hour label selects that sto
         getDiagnostics: () => ({}),
       };
     },
-    hitTestOverlay: () => overlayHit,
   });
+  setClickCardHitTest(() => overlayHit);
+  t.after(() => setClickCardHitTest(null));
   const canvas = new EventTarget();
   canvas.getBoundingClientRect = () => ({ left: 0, top: 0 });
-  layer.init({
+  const viewer = {
+    get canvas() {
+      return this.scene?.canvas;
+    },
     scene: {
       canvas,
       pick() {
@@ -310,7 +302,9 @@ test('[cyclones-024] a click on a storm card or lead-hour label selects that sto
         return { content: {} };
       },
     },
-  });
+  };
+  recordHandlers(viewer, handlers);
+  layer.init(viewer);
   assert.equal(hostArgument, 'host', 'the overlay host reaches the renderer');
   layer.enable();
   await layer.update();
@@ -327,15 +321,11 @@ test('[cyclones-024] a click on a storm card or lead-hour label selects that sto
   overlayHit = { sourceId: 'weather-cyclones', entryId: 'storm:al019999' };
   handlers[0].click(click);
   assert.equal(layer.getDiagnostics().selectedId, 'ep152026');
-  // The native release snapshot carries the card identity too.
-  const up = new Event('pointerup');
-  Object.assign(up, { clientX: 10, clientY: 20 });
   overlayHit = { sourceId: 'weather-cyclones', entryId: 'storm:ep162026' };
-  canvas.dispatchEvent(up);
-  overlayHit = null;
   handlers[0].click(click);
   assert.equal(layer.getDiagnostics().selectedId, 'ep162026');
   assert.equal(picks, 0, 'card clicks never fall through to the scene');
+  overlayHit = null;
   handlers[0].click(click);
   assert.equal(picks, 1);
   assert.equal(layer.getDiagnostics().selectedId, null, 'empty map clears');
@@ -343,7 +333,7 @@ test('[cyclones-024] a click on a storm card or lead-hour label selects that sto
 });
 function harness(
   feed = { getSnapshot: async () => snapshot() },
-  { reducedMotion = false } = {},
+  { reducedMotion = false, context = null } = {},
 ) {
   const applied = [],
     navigation = [],
@@ -359,7 +349,10 @@ function harness(
     setSelection(id) {
       selection = id;
     },
-    getFocusSphere: () => ({ radius: 500000 }),
+    getFocusSphere: () => ({
+      center: { x: 6378137, y: 0, z: 0 },
+      radius: 500000,
+    }),
     clear() {
       cleared++;
     },
@@ -373,6 +366,7 @@ function harness(
   };
   const layer = createCyclonesLayer({
     feed,
+    context,
     createRendering: () => rendering,
     matchMedia: () => ({ matches: reducedMotion }),
     openLink: (url) => opened.push(url),
@@ -383,6 +377,7 @@ function harness(
         navigation.push({ sphere, options }),
     },
   };
+  bindFakeCesiumCamera(viewer);
   layer.init(viewer);
   layer.attachShellServices({
     runNavigation: (fn) => {
@@ -406,7 +401,267 @@ function harness(
     },
   };
 }
-test('[cyclones-023] refresh preserves selection intent, including explicit clears and missing storms', async () => {
+// Real shared-context store on a stand-in window; the voice runner reads it.
+async function withSharedContext(t, body) {
+  const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const host = new EventTarget();
+  Object.defineProperty(globalThis, 'window', {
+    configurable: true,
+    value: host,
+  });
+  const layers = [];
+  t.after(() => {
+    try {
+      for (const layer of layers) layer.destroy();
+    } finally {
+      if (previousWindow)
+        Object.defineProperty(globalThis, 'window', previousWindow);
+      else delete globalThis.window;
+    }
+  });
+  const events = [];
+  host.addEventListener('gev:entity-selected', ({ detail }) =>
+    events.push(['selected', detail.id]),
+  );
+  host.addEventListener('gev:entity-selection-cleared', ({ detail }) =>
+    events.push(['cleared', detail.layerId, detail.reason]),
+  );
+  // The voice runner bounds its basemap wait with the window timers.
+  Object.assign(host, { setTimeout, clearTimeout });
+  const cartographic = {
+    longitude: (-125.8 * Math.PI) / 180,
+    latitude: (15.5 * Math.PI) / 180,
+    height: 5_000_000,
+  };
+  const position = fromRadians(
+    cartographic.longitude,
+    cartographic.latitude,
+    cartographic.height,
+  );
+  const viewer = bindFakeCesiumCamera({
+    clock: { onTick: { addEventListener: () => () => {} } },
+    scene: { canvas: { addEventListener() {}, removeEventListener() {} } },
+    camera: {
+      moveEnd: { addEventListener() {} },
+      positionWC: position,
+      positionCartographic: cartographic,
+      heading: 0,
+      pitch: 0,
+    },
+  });
+  const runner = createGevActionRunner({
+    viewer,
+    styleManager: {},
+    dataManager: {
+      layers: new Map(),
+      isEnabled: (id) => id === 'weather-cyclones',
+      getAll: () => [],
+    },
+  });
+  const selectedProperties = async () => {
+    const result = await runner('get_entity_context', { scope: 'selected' });
+    assert.equal(result.scope, 'selected');
+    return result.selected.properties;
+  };
+  const store = contextStore.getContextStore();
+  const open = (feed) => {
+    const h = harness(feed, { context: contextStore });
+    layers.push(h.layer);
+    return h;
+  };
+  await body({ events, selectedProperties, store, open });
+}
+
+test('shared cyclone context distinguishes switches, deliberate clears and feed eviction', async (t) => {
+  await withSharedContext(
+    t,
+    async ({ events, selectedProperties, store, open }) => {
+      let next = snapshot([
+        { ...storm(), movement: { directionDegrees: 315, speedKt: 12 } },
+        {
+          ...storm('ep162026'),
+          movement: { directionDegrees: 0, speedKt: 10 },
+        },
+      ]);
+      const h = open({ getSnapshot: async () => next });
+      h.layer.enable();
+      await h.layer.update();
+      assert.deepEqual(
+        events,
+        [],
+        'the automatic first-storm row selection must not claim shared context',
+      );
+      assert.equal(store.entities.size, 0);
+
+      h.layer.setParams({ stormId: 'ep152026' });
+      assert.equal(store.entities.get('cyclone:ep152026').label, 'Fifteen-E');
+      let properties = await selectedProperties();
+      assert.equal(properties.classification, 'PTC');
+      assert.equal(properties.classificationName, 'Post-tropical cyclone');
+      assert.equal(properties.advisoryNumber, '10');
+      assert.equal(
+        properties.movementDirectionDegrees,
+        '315',
+        'selected storm movement should survive voice summarization',
+      );
+      assert.equal(properties.movementSpeedKt, '12');
+      assert.equal(
+        properties.advisoryUrl,
+        'https://www.nhc.noaa.gov/text/MIATCMEP5.shtml',
+      );
+      assert.equal(properties.staleCacheFetchedAt, undefined);
+
+      h.layer.setParams({ stormId: 'ep162026' });
+      properties = await selectedProperties();
+      assert.equal(
+        properties.movementDirectionDegrees,
+        '0',
+        'a due-north heading is a value, not a missing one',
+      );
+      assert.equal(properties.movementSpeedKt, '10');
+      assert.deepEqual(events, [
+        ['selected', 'cyclone:ep152026'],
+        ['selected', 'cyclone:ep162026'],
+      ]);
+      assert.deepEqual([...store.entities.keys()], ['cyclone:ep162026']);
+
+      next = snapshot([
+        { ...storm(), movement: { directionDegrees: 315, speedKt: 12 } },
+        { ...storm('ep162026'), movement: { directionDegrees: 0, speedKt: 0 } },
+      ]);
+      await h.layer.update();
+      assert.equal(events.length, 2, 'refresh must not announce selection');
+      properties = await selectedProperties();
+      assert.equal(
+        properties.movementSpeedKt,
+        '0',
+        'stationary is a value, refreshed into the selected record',
+      );
+
+      h.layer.setParams({ clear: true });
+      assert.deepEqual(events.at(-1), [
+        'cleared',
+        'weather-cyclones',
+        'deliberate',
+      ]);
+      assert.equal(store.entities.size, 0);
+
+      h.layer.setParams({ stormId: 'ep162026' });
+      next = snapshot([storm()]);
+      await h.layer.update();
+      assert.deepEqual(
+        events.at(-1),
+        ['cleared', 'weather-cyclones', 'evicted'],
+        'a vanished user-selected storm must clear instead of transferring context to the fallback row',
+      );
+      assert.equal(store.entities.size, 0);
+      assert.equal(store.selectedEntityId, null);
+
+      h.layer.setParams({ stormId: 'ep152026' });
+      h.layer.disable();
+      assert.deepEqual(events.at(-1), [
+        'cleared',
+        'weather-cyclones',
+        'deliberate',
+      ]);
+      assert.equal(store.entities.size, 0);
+    },
+  );
+});
+
+test('shared cyclone context is evicted when the source fails and marks a stale cache', async (t) => {
+  await withSharedContext(
+    t,
+    async ({ events, selectedProperties, store, open }) => {
+      let next = snapshot([{ ...storm(), classification: 'XX' }]);
+      let fail = false;
+      const h = open({
+        getSnapshot: async () => {
+          if (fail) throw new Error('Network unavailable');
+          return next;
+        },
+      });
+      h.layer.enable();
+      await h.layer.update();
+      h.layer.setParams({ stormId: 'ep152026' });
+      let properties = await selectedProperties();
+      assert.equal(properties.classification, 'XX');
+      assert.equal(
+        properties.classificationName,
+        undefined,
+        'an unknown code is not given a guessed meaning',
+      );
+
+      next = { ...snapshot(), stale: true };
+      await h.layer.update();
+      properties = await selectedProperties();
+      assert.equal(properties.staleCacheFetchedAt, time);
+      assert.equal(events.length, 1, 'refresh must not announce selection');
+
+      next = {
+        ...snapshot([]),
+        unavailable: true,
+        reason: 'Cyclone data unavailable',
+      };
+      await h.layer.update();
+      assert.deepEqual(events.at(-1), [
+        'cleared',
+        'weather-cyclones',
+        'evicted',
+      ]);
+      assert.equal(store.entities.size, 0);
+
+      next = snapshot();
+      await h.layer.update();
+      h.layer.setParams({ stormId: 'ep152026' });
+      assert.equal(store.selectedEntityId, 'cyclone:ep152026');
+      fail = true;
+      await h.layer.update();
+      assert.deepEqual(events.at(-1), [
+        'cleared',
+        'weather-cyclones',
+        'evicted',
+      ]);
+      assert.equal(store.entities.size, 0);
+      assert.equal(store.selectedEntityId, null);
+    },
+  );
+});
+
+test('cyclone clears leave another layer selection and its records alone', async (t) => {
+  await withSharedContext(t, async ({ events, store, open }) => {
+    const h = open({ getSnapshot: async () => snapshot() });
+    h.layer.enable();
+    await h.layer.update();
+    h.layer.setParams({ stormId: 'ep152026' });
+    const foreign = {};
+    contextStore.registerEntityContext(foreign, {
+      id: 'flight:abc123',
+      layerId: 'flights',
+      label: 'Foreign',
+    });
+    contextStore.selectEntityContext(foreign);
+    const before = events.length;
+
+    h.layer.setParams({ clear: true });
+    assert.equal(store.selectedEntityId, 'flight:abc123');
+    assert.ok(store.entities.has('flight:abc123'));
+    assert.equal(store.entities.has('cyclone:ep152026'), false);
+    assert.equal(
+      events.length,
+      before,
+      'no clear is reported for a foreign selection',
+    );
+
+    // A cyclone clear does not report a dangling foreign selection as evicted.
+    store.entities.delete('flight:abc123');
+    h.layer.disable();
+    assert.equal(store.selectedEntityId, 'flight:abc123');
+    assert.equal(events.length, before);
+  });
+});
+
+test('refresh preserves selection intent, including explicit clears and missing storms', async () => {
   let next = snapshot([storm(), storm('ep162026')]);
   const h = harness({ getSnapshot: async () => next });
   h.layer.enable();
@@ -445,7 +700,7 @@ test('[cyclones-023] refresh preserves selection intent, including explicit clea
   h.layer.destroy();
 });
 
-test('[cyclones-023] clearing while a refreshed data source is staging cannot reselect a storm', async () => {
+test('clearing while a refreshed data source is staging cannot reselect a storm', async () => {
   const staged = deferred();
   const staging = deferred();
   let calls = 0;
@@ -477,7 +732,7 @@ test('[cyclones-023] clearing while a refreshed data source is staging cannot re
   layer.destroy();
 });
 
-test('[cyclones-025] queued focus is revoked by selection changes, clears, refresh fallback and teardown', async () => {
+test('queued focus is revoked by selection changes, clears, refresh fallback and teardown', async () => {
   for (const change of ['select', 'clear', 'fallback', 'disable', 'destroy']) {
     let next = snapshot([storm(), storm('ep162026')]);
     const h = harness({ getSnapshot: async () => next });
@@ -500,7 +755,7 @@ test('[cyclones-025] queued focus is revoked by selection changes, clears, refre
   }
 });
 
-test('[cyclones-023 cyclones-025] only the latest queued focus runs and an unchanged selection survives refresh', async () => {
+test('only the latest queued focus runs and an unchanged selection survives refresh', async () => {
   const h = harness();
   const callbacks = [];
   h.layer.attachShellServices({ runNavigation: (fn) => callbacks.push(fn) });
@@ -516,7 +771,7 @@ test('[cyclones-023 cyclones-025] only the latest queued focus runs and an uncha
   assert.equal(h.navigation[0].options.duration, 1.4);
   h.layer.destroy();
 });
-test('[cyclones-021] classification display expands known codes without altering the source or guessing unknown meanings', async () => {
+test('classification display expands known codes without altering the source or guessing unknown meanings', async () => {
   for (const [code, label] of [
     ['PC', 'Potential tropical cyclone'],
     ['PTC', 'Post-tropical cyclone'],
@@ -543,7 +798,60 @@ test('[cyclones-021] classification display expands known codes without altering
     }
   }
 });
-test('[cyclones-021 cyclones-025] advisory selection uses accessible row descriptors and shared camera handoff', async () => {
+// Quantities join number and unit with a no-break space.
+const plain = (text) => text?.replace(/\u00a0/g, ' ') ?? null;
+test('an advisory without pressure, movement or link leaves those values out', async () => {
+  const record = {
+    ...storm(),
+    windKt: 85,
+    pressureHpa: null,
+    movement: { directionDegrees: null, speedKt: null },
+    advisoryUrl: null,
+  };
+  const h = harness({ getSnapshot: async () => snapshot([record]) });
+  try {
+    h.layer.enable();
+    await h.layer.update();
+    const { summary, info } = h.layer.getRowControls();
+    const intensity = summary.lines.find((line) => line.id === 'intensity');
+    assert.equal(plain(intensity.text), 'Maximum sustained wind: 85 kt');
+    assert.deepEqual(
+      summary.lines.map((line) => line.id),
+      ['position', 'intensity', 'geometry'],
+    );
+    assert.deepEqual(summary.actions, [], 'no advisory link to open');
+    assert.ok(plain(info).includes('Maximum sustained wind: 85 kt\n'));
+    for (const text of [info, ...summary.lines.map((line) => line.text)])
+      assert.doesNotMatch(text, /Unavailable|Pressure/);
+  } finally {
+    h.layer.destroy();
+  }
+});
+test('an advisory with only one of wind and pressure shows that one alone', async () => {
+  for (const [values, expected] of [
+    [{ windKt: null, pressureHpa: 990 }, 'Pressure: 990 hPa'],
+    [
+      { windKt: 60, pressureHpa: 990 },
+      'Maximum sustained wind: 60 kt · Pressure: 990 hPa',
+    ],
+    [{ windKt: null, pressureHpa: null }, null],
+  ]) {
+    const h = harness({
+      getSnapshot: async () => snapshot([{ ...storm(), ...values }]),
+    });
+    try {
+      h.layer.enable();
+      await h.layer.update();
+      const { summary, info } = h.layer.getRowControls();
+      const intensity = summary.lines.find((line) => line.id === 'intensity');
+      assert.equal(plain(intensity?.text), expected);
+      assert.doesNotMatch(info, /Unavailable|\n\n/);
+    } finally {
+      h.layer.destroy();
+    }
+  }
+});
+test('advisory selection uses accessible row descriptors and shared camera handoff', async () => {
   const h = harness(
     { getSnapshot: async () => snapshot([storm(), storm('ep162026')]) },
     { reducedMotion: true },
@@ -598,7 +906,7 @@ test('[cyclones-021 cyclones-025] advisory selection uses accessible row descrip
   h.layer.destroy();
   assert.equal(h.destroyed, 1);
 });
-test('[cyclones-020 cyclones-021] empty successful coverage, unavailable source and stale advisory are different states', async () => {
+test('empty successful coverage, unavailable source and stale advisory are different states', async () => {
   let next = snapshot([]);
   const h = harness({ getSnapshot: async () => next });
   h.layer.enable();
@@ -624,7 +932,7 @@ test('[cyclones-020 cyclones-021] empty successful coverage, unavailable source 
   assert.ok(h.cleared > 0);
   h.layer.destroy();
 });
-test('[cyclones-020] disabled and superseded sources cannot publish late advisories even if they ignore abort', async () => {
+test('disabled and superseded sources cannot publish late advisories even if they ignore abort', async () => {
   const first = deferred(),
     second = deferred();
   const signals = [];
@@ -657,7 +965,7 @@ test('[cyclones-020] disabled and superseded sources cannot publish late advisor
   assert.equal(disabled.layer.getDiagnostics().requestPending, false);
   disabled.layer.destroy();
 });
-test('[cyclones-020] external cancellation and acquisition failure cannot install or retain unlabeled advisory geometry', async () => {
+test('external cancellation and acquisition failure cannot install or retain unlabeled advisory geometry', async () => {
   let fail = false;
   const h = harness({
     getSnapshot: async () => {
@@ -678,1332 +986,4 @@ test('[cyclones-020] external cancellation and acquisition failure cannot instal
   assert.match(h.layer.getStats().error, /Network/);
   assert.ok(h.cleared > 0);
   h.layer.destroy();
-});
-
-/** A renderer that records its calls; each method can be replaced. */
-function fakeRendering(overrides = {}) {
-  const log = [];
-  const rendering = {
-    setSnapshot: async (value) => {
-      log.push(['snapshot', value]);
-      return true;
-    },
-    setSelection: (id) => log.push(['selection', id]),
-    getFocusSphere: () => ({ radius: 500000 }),
-    clear: () => log.push(['clear']),
-    destroy: () => log.push(['destroy']),
-    pickStorm: () => null,
-    ownsPickId: () => false,
-    getDiagnostics: () => ({ storms: 0 }),
-    ...overrides,
-  };
-  return { rendering, log };
-}
-const TITLE =
-  'Select a storm on the map, or choose a storm in the list to select it and move the camera. Click empty map space to clear the selection. NOAA NHC/CPHC advisory context. The cone describes forecast center-track uncertainty, not storm size or the full hazard area. Forecast point labels are source lead hours, not times computed from advisory issuance. Geometry follows the surface; height is not weather altitude. Consult the official advisory.';
-const DEFAULT_COVERAGE =
-  'Atlantic and eastern/central North Pacific; not worldwide cyclone coverage.';
-const ADVISORY_URL = 'https://www.nhc.noaa.gov/text/MIATCMEP5.shtml';
-
-/** A layer with a controllable feed and renderer. */
-function plainLayer({ feed, rendering = fakeRendering().rendering, ...rest }) {
-  const layer = createCyclonesLayer({
-    feed,
-    createRendering: () => rendering,
-    ...rest,
-  });
-  layer.init({ camera: {} });
-  return layer;
-}
-
-test('[cyclones-018] the layer has a fixed identity', () => {
-  const layer = createCyclonesLayer({
-    feed: { getSnapshot: async () => snapshot() },
-  });
-  assert.equal(layer.id, 'weather-cyclones');
-  assert.equal(layer.name, 'Cyclone advisories');
-  assert.equal(layer.icon, '◉');
-  assert.equal(layer.source, 'NOAA NHC / CPHC');
-  assert.equal(layer.updateInterval, 300000);
-});
-
-test('[cyclones-018] a call with no snapshot source throws a TypeError', () => {
-  for (const options of [
-    undefined,
-    {},
-    { feed: null },
-    { feed: {} },
-    { feed: { getSnapshot: 'not a function' } },
-  ])
-    assert.throws(() => createCyclonesLayer(options), {
-      name: 'TypeError',
-      message: 'Cyclones require a snapshot source',
-    });
-});
-
-test('[cyclones-019] the pick owner claims an id only after enable and before disable, when the renderer owns it exactly', () => {
-  const { rendering } = fakeRendering({
-    ownsPickId: (id) => (id === 'owned' ? true : id === 'truthy' ? 1 : false),
-  });
-  const layer = plainLayer({
-    feed: { getSnapshot: async () => snapshot() },
-    rendering,
-  });
-  assert.equal(isOwnedByOtherLayer('flights', 'owned'), false);
-  layer.enable();
-  assert.equal(isOwnedByOtherLayer('flights', 'owned'), true);
-  assert.equal(isOwnedByOtherLayer('flights', 'truthy'), false);
-  assert.equal(isOwnedByOtherLayer('flights', 'other'), false);
-  layer.disable();
-  assert.equal(isOwnedByOtherLayer('flights', 'owned'), false);
-  layer.enable();
-  layer.destroy();
-  assert.equal(isOwnedByOtherLayer('flights', 'owned'), false);
-  const bare = plainLayer({
-    feed: { getSnapshot: async () => snapshot() },
-    rendering: { clear() {}, destroy() {}, getDiagnostics: () => ({}) },
-  });
-  bare.enable();
-  assert.equal(isOwnedByOtherLayer('flights', 'owned'), false);
-  bare.destroy();
-});
-
-test('[cyclones-019] disable clears an earlier request error', async () => {
-  const layer = plainLayer({
-    feed: {
-      getSnapshot: async () => {
-        throw new Error('Lost source');
-      },
-    },
-  });
-  layer.enable();
-  await layer.update();
-  assert.equal(layer.getStats().error, 'Lost source');
-  layer.disable();
-  assert.equal(layer.getStats().error, null);
-  layer.destroy();
-});
-
-test('[cyclones-019] a second enable does not replace another pick owner', () => {
-  const layer = plainLayer({ feed: { getSnapshot: async () => snapshot() } });
-  layer.enable();
-  registerPickOwner('weather-cyclones', (id) => id === 'outside');
-  try {
-    layer.enable();
-    assert.equal(isOwnedByOtherLayer('flights', 'outside'), true);
-  } finally {
-    layer.destroy();
-    unregisterPickOwner('weather-cyclones');
-  }
-});
-
-test('[cyclones-023] clear calls the row listener', async () => {
-  const layer = plainLayer({ feed: { getSnapshot: async () => snapshot() } });
-  let notices = 0;
-  layer.setRowControlsListener(() => notices++);
-  layer.enable();
-  await layer.update();
-  const before = notices;
-  layer.setParams({ clear: true });
-  assert.equal(notices, before + 1);
-  layer.destroy();
-});
-
-test('[cyclones-023] refresh restores an unchanged selection to the renderer', async () => {
-  let selection = null;
-  const rendering = fakeRendering({
-    setSnapshot: async () => {
-      selection = null;
-      return true;
-    },
-    setSelection: (id) => {
-      selection = id;
-    },
-  }).rendering;
-  const layer = plainLayer({
-    feed: { getSnapshot: async () => snapshot() },
-    rendering,
-  });
-  layer.enable();
-  await layer.update();
-  assert.equal(selection, 'ep152026');
-  await layer.update();
-  assert.equal(selection, 'ep152026');
-  layer.destroy();
-});
-
-test('[cyclones-025] a truthy focus value does not queue a flight', async () => {
-  const calls = [];
-  const layer = plainLayer({ feed: { getSnapshot: async () => snapshot() } });
-  layer.attachShellServices({
-    runNavigation: (callback) => calls.push(callback),
-  });
-  layer.enable();
-  await layer.update();
-  layer.setParams({ focus: 'yes' });
-  assert.equal(calls.length, 0);
-  layer.destroy();
-});
-
-test('[cyclones-019] the layer installs no click handler without a canvas or without a Cesium handler class', () => {
-  const type = { LEFT_CLICK: 'left' };
-  class Handler {
-    constructor() {
-      throw new Error('no handler must be made');
-    }
-  }
-  for (const [label, cesium, viewer] of [
-    [
-      'no scene',
-      { ScreenSpaceEventType: type, ScreenSpaceEventHandler: Handler },
-      {},
-    ],
-    [
-      'no canvas',
-      { ScreenSpaceEventType: type, ScreenSpaceEventHandler: Handler },
-      { scene: {} },
-    ],
-    [
-      'no handler class',
-      { ScreenSpaceEventType: type },
-      { scene: { canvas: new EventTarget() } },
-    ],
-    [
-      'handler that is not a class',
-      { ScreenSpaceEventType: type, ScreenSpaceEventHandler: {} },
-      { scene: { canvas: new EventTarget() } },
-    ],
-  ]) {
-    const layer = createCyclonesLayer({
-      feed: { getSnapshot: async () => snapshot() },
-      cesium,
-      createRendering: () => fakeRendering().rendering,
-    });
-    layer.init(viewer);
-    layer.enable();
-    assert.equal(layer.getDiagnostics().enabled, true, label);
-    assert.equal(layer.getDiagnostics().selectionActive, false, label);
-    layer.destroy();
-  }
-});
-
-test('[cyclones-019] disable destroys the click handler once, and never when Cesium destroyed it already', () => {
-  for (const [label, isDestroyed, expected] of [
-    ['no isDestroyed method', undefined, 1],
-    ['isDestroyed is false', () => false, 1],
-    ['isDestroyed is true', () => true, 0],
-  ]) {
-    let destroys = 0;
-    class Handler {
-      setInputAction() {}
-      destroy() {
-        destroys++;
-      }
-    }
-    if (isDestroyed) Handler.prototype.isDestroyed = isDestroyed;
-    const layer = createCyclonesLayer({
-      feed: { getSnapshot: async () => snapshot() },
-      cesium: {
-        ScreenSpaceEventType: { LEFT_CLICK: 'left' },
-        ScreenSpaceEventHandler: Handler,
-      },
-      createRendering: () => fakeRendering().rendering,
-    });
-    layer.init({ scene: { canvas: new EventTarget() } });
-    layer.enable();
-    assert.equal(layer.getDiagnostics().selectionActive, true, label);
-    layer.disable();
-    layer.disable();
-    assert.equal(destroys, expected, label);
-    assert.equal(layer.getDiagnostics().selectionActive, false, label);
-    layer.destroy();
-  }
-});
-
-test('[cyclones-019] disable aborts the request, resets the state and clears the renderer, and destroy releases the renderer once', async () => {
-  const pending = deferred();
-  const signals = [];
-  const { rendering, log } = fakeRendering();
-  const layer = plainLayer({
-    feed: {
-      getSnapshot: ({ signal }) => {
-        signals.push(signal);
-        return pending.promise;
-      },
-    },
-    rendering,
-  });
-  layer.enable();
-  const work = layer.update();
-  assert.equal(layer.getStats().loading, true);
-  assert.equal(layer.getDiagnostics().requestPending, true);
-  layer.disable();
-  assert.equal(signals[0].aborted, true);
-  assert.deepEqual(layer.getStats(), {
-    count: 0,
-    lastUpdate: null,
-    loading: false,
-    error: null,
-    stale: false,
-    source: 'NOAA NHC / CPHC',
-    advisoryAt: null,
-    empty: false,
-  });
-  assert.deepEqual(
-    log.map(([kind]) => kind),
-    ['clear'],
-  );
-  pending.resolve(snapshot());
-  assert.equal(await work, false);
-  layer.destroy();
-  layer.destroy();
-  assert.deepEqual(
-    log.map(([kind]) => kind),
-    ['clear', 'clear', 'destroy'],
-  );
-  layer.enable();
-  assert.equal(layer.getDiagnostics().enabled, false);
-});
-
-test('[cyclones-019] a layer that never had a viewer can enable, disable and destroy', () => {
-  const layer = createCyclonesLayer({
-    feed: { getSnapshot: async () => snapshot() },
-  });
-  layer.enable();
-  layer.disable();
-  layer.destroy();
-  assert.deepEqual(layer.getDiagnostics(), {
-    enabled: false,
-    loading: false,
-    requestPending: false,
-    selectionActive: false,
-    selectedId: null,
-    selectionIntent: 'auto',
-    timerActive: false,
-  });
-});
-
-test('[cyclones-020] update does nothing for a disabled or destroyed layer', async () => {
-  let calls = 0;
-  const layer = plainLayer({
-    feed: {
-      getSnapshot: async () => {
-        calls++;
-        return snapshot();
-      },
-    },
-  });
-  assert.equal(await layer.update(), false);
-  layer.enable();
-  layer.disable();
-  assert.equal(await layer.update(), false);
-  layer.enable();
-  layer.destroy();
-  assert.equal(await layer.update(), false);
-  assert.equal(calls, 0);
-  assert.equal(layer.getStats().loading, false);
-});
-
-test('[cyclones-020] an update that the renderer does not apply returns false and keeps the earlier snapshot', async () => {
-  let apply = true;
-  let next = snapshot([storm(), storm('ep162026')]);
-  const { rendering } = fakeRendering({ setSnapshot: async () => apply });
-  const layer = plainLayer({
-    feed: { getSnapshot: async () => next },
-    rendering,
-  });
-  layer.enable();
-  assert.equal(await layer.update(), true);
-  assert.equal(layer.getStats().count, 2);
-  apply = false;
-  next = snapshot([storm()]);
-  assert.equal(await layer.update(), false);
-  assert.equal(layer.getStats().count, 2);
-  assert.equal(layer.getStats().loading, false);
-  assert.equal(layer.getStats().error, null);
-});
-
-test('[cyclones-020] a disable, a newer request or an abort while the renderer stages stops the update', async () => {
-  for (const how of ['disable', 'newer', 'abort']) {
-    const staged = deferred();
-    let stagings = 0;
-    const { rendering } = fakeRendering({
-      setSnapshot: (value) => {
-        if (value.storms.length !== 1) return true;
-        stagings++;
-        return staged.promise;
-      },
-    });
-    let next = snapshot([storm(), storm('ep162026')]);
-    const layer = plainLayer({
-      feed: { getSnapshot: async () => next },
-      rendering,
-    });
-    layer.enable();
-    assert.equal(await layer.update(), true, how);
-    next = snapshot([storm('ep162026')]);
-    const caller = new AbortController();
-    const second = layer.update(undefined, { signal: caller.signal });
-    await new Promise((resolve) => setImmediate(resolve));
-    assert.equal(stagings, 1, `${how}: the renderer stages`);
-    let third = null;
-    if (how === 'disable') layer.disable();
-    else if (how === 'abort') caller.abort();
-    else {
-      next = snapshot([storm(), storm('ep162026')]);
-      third = layer.update();
-    }
-    staged.resolve(true);
-    assert.equal(await second, false, how);
-    if (third) assert.equal(await third, true, how);
-    assert.equal(layer.getStats().count, how === 'disable' ? 0 : 2, how);
-    layer.destroy();
-  }
-});
-
-test('[cyclones-020] an unavailable snapshot clears the renderer, drops the selection and sets the error to its reason or to the default text', async () => {
-  let next = snapshot([storm(), storm('ep162026')]);
-  const { rendering, log } = fakeRendering();
-  const layer = plainLayer({
-    feed: { getSnapshot: async () => next },
-    rendering,
-  });
-  layer.enable();
-  await layer.update();
-  assert.equal(layer.getDiagnostics().selectedId, 'ep152026');
-  const before = log.filter(([kind]) => kind === 'snapshot').length;
-  next = {
-    ...snapshot([]),
-    unavailable: true,
-    reason: 'Cyclone data unavailable',
-  };
-  assert.equal(await layer.update(), true);
-  assert.equal(layer.getStats().error, 'Cyclone data unavailable');
-  assert.equal(layer.getDiagnostics().selectedId, null);
-  assert.equal(log.filter(([kind]) => kind === 'snapshot').length, before);
-  assert.equal(log.filter(([kind]) => kind === 'clear').length, 1);
-  assert.equal(layer.getStats().count, 0);
-  assert.equal(layer.getStats().empty, false);
-  next = { ...snapshot([]), unavailable: true, reason: null };
-  await layer.update();
-  assert.equal(layer.getStats().error, 'Cyclone advisories unavailable');
-  next = snapshot();
-  await layer.update();
-  assert.equal(layer.getStats().error, null);
-  assert.equal(layer.getDiagnostics().selectedId, 'ep152026');
-  layer.destroy();
-});
-
-test('[cyclones-020] a failed request sets the error to its message or to the default text, clears the state and returns true', async () => {
-  let failing = false;
-  let cause;
-  const { rendering, log } = fakeRendering();
-  const layer = plainLayer({
-    feed: {
-      getSnapshot: async () => {
-        if (failing) throw cause;
-        return snapshot();
-      },
-    },
-    rendering,
-  });
-  layer.enable();
-  for (const [reason, expected] of [
-    [new Error('Network unavailable'), 'Network unavailable'],
-    [new Error(''), 'Cyclone advisories unavailable'],
-    [{}, 'Cyclone advisories unavailable'],
-    ['text', 'Cyclone advisories unavailable'],
-    [undefined, 'Cyclone advisories unavailable'],
-  ]) {
-    failing = false;
-    await layer.update();
-    assert.equal(layer.getStats().count, 1);
-    assert.equal(layer.getStats().error, null);
-    assert.equal(layer.getDiagnostics().selectedId, 'ep152026');
-    const clears = log.filter(([kind]) => kind === 'clear').length;
-    failing = true;
-    cause = reason;
-    assert.equal(await layer.update(), true, expected);
-    assert.equal(layer.getStats().error, expected);
-    assert.equal(layer.getStats().count, 0);
-    assert.equal(layer.getDiagnostics().selectedId, null);
-    assert.equal(log.filter(([kind]) => kind === 'clear').length, clears + 1);
-  }
-  layer.destroy();
-});
-
-test('[cyclones-020] a failure of a request that a newer request or an abort replaced changes nothing', async () => {
-  const late = deferred();
-  let calls = 0;
-  const { rendering, log } = fakeRendering();
-  const layer = plainLayer({
-    feed: {
-      getSnapshot: ({ signal }) => {
-        calls++;
-        if (calls === 1) return late.promise;
-        if (calls === 2) return Promise.resolve(snapshot());
-        return new Promise((_resolve, reject) =>
-          signal.addEventListener('abort', () => reject(signal.reason), {
-            once: true,
-          }),
-        );
-      },
-    },
-    rendering,
-  });
-  layer.enable();
-  const old = layer.update();
-  const latest = layer.update();
-  assert.equal(await latest, true);
-  const clears = log.filter(([kind]) => kind === 'clear').length;
-  late.reject(new Error('late failure'));
-  assert.equal(await old, false);
-  assert.equal(layer.getStats().error, null);
-  assert.equal(layer.getStats().count, 1);
-  assert.equal(log.filter(([kind]) => kind === 'clear').length, clears);
-  const caller = new AbortController();
-  const stopped = layer.update(undefined, { signal: caller.signal });
-  caller.abort(new Error('caller stop'));
-  assert.equal(await stopped, false);
-  assert.equal(layer.getStats().error, null);
-  assert.equal(layer.getStats().count, 1);
-  assert.equal(layer.getStats().loading, false);
-  assert.equal(log.filter(([kind]) => kind === 'clear').length, clears);
-  layer.destroy();
-});
-
-test('[cyclones-020] a caller abort during the request aborts it, and the layer removes its listener when the call ends', async () => {
-  const caller = new AbortController();
-  const signals = [];
-  const layer = plainLayer({
-    feed: {
-      getSnapshot: ({ signal }) => {
-        signals.push(signal);
-        return signals.length === 1
-          ? new Promise((_resolve, reject) =>
-              signal.addEventListener('abort', () => reject(signal.reason), {
-                once: true,
-              }),
-            )
-          : Promise.resolve(snapshot());
-      },
-    },
-  });
-  layer.enable();
-  const work = layer.update(undefined, { signal: caller.signal });
-  assert.equal(signals[0].aborted, false);
-  const reason = new Error('caller stop');
-  caller.abort(reason);
-  assert.equal(await work, false);
-  assert.equal(signals[0].aborted, true);
-  assert.equal(signals[0].reason, reason);
-  assert.equal(layer.getDiagnostics().requestPending, false);
-  const other = new AbortController();
-  assert.equal(await layer.update(undefined, { signal: other.signal }), true);
-  other.abort(new Error('after the call'));
-  assert.equal(signals[1].aborted, false);
-  layer.destroy();
-});
-
-test('[cyclones-020] the listener runs at the start of a request and at the end of the newest request, and the load flag holds between', async () => {
-  const gates = [deferred(), deferred()];
-  let call = 0;
-  const layer = plainLayer({
-    feed: { getSnapshot: () => gates[call++].promise },
-  });
-  let notices = 0;
-  layer.setRowControlsListener(() => notices++);
-  layer.enable();
-  const first = layer.update();
-  assert.equal(notices, 1);
-  assert.equal(layer.getStats().loading, true);
-  const second = layer.update();
-  assert.equal(notices, 2);
-  gates[0].resolve(snapshot([storm('ep162026')]));
-  assert.equal(await first, false);
-  assert.equal(layer.getStats().loading, true);
-  assert.equal(layer.getDiagnostics().requestPending, true);
-  assert.equal(notices, 2);
-  gates[1].resolve(snapshot());
-  assert.equal(await second, true);
-  assert.equal(layer.getStats().loading, false);
-  assert.equal(layer.getDiagnostics().requestPending, false);
-  assert.equal(notices, 3);
-  layer.setRowControlsListener('not a function');
-  await layer.update().catch(() => {});
-  assert.equal(notices, 3);
-  layer.destroy();
-});
-
-test('[cyclones-021] the row controls of a selected storm with a coherent track and cone', async () => {
-  const record = {
-    ...storm(),
-    geometryStatus: 'current',
-    geometryAdvisoryNumber: '10',
-  };
-  const h = harness({ getSnapshot: async () => snapshot([record]) });
-  h.layer.enable();
-  await h.layer.update();
-  const detail =
-    'Fifteen-E · Post-tropical cyclone · Advisory 10 · issued 09-\u206016\u00a003:00\u00a0UTC';
-  assert.deepEqual(h.layer.getRowControls(), {
-    readout: true,
-    summary: {
-      label: 'Cyclones · NHC / CPHC',
-      coverage: 'Atlantic · E/C Pacific',
-      compact: '1 active storm · Fifteen-E selected',
-      actions: [
-        { id: 'advisory', label: 'Official advisory ↗', href: ADVISORY_URL },
-      ],
-      settings: [],
-      lines: [
-        {
-          id: 'position',
-          text: 'Position as of 09-\u206016\u00a003:00\u00a0UTC',
-          muted: true,
-        },
-        {
-          id: 'intensity',
-          text: 'Maximum sustained wind: 25\u00a0kt · Pressure: 1006\u00a0hPa',
-        },
-        {
-          id: 'geometry',
-          text: 'Track and cone match this advisory',
-          muted: true,
-        },
-      ],
-      detail,
-      status: null,
-      units: 'kt',
-    },
-    list: {
-      ariaLabel: 'Active NHC and CPHC cyclone advisories',
-      items: [
-        {
-          id: 'ep152026',
-          ordinal: 1,
-          lead: 'EP',
-          text: 'Fifteen-E · Post-tropical cyclone · 25\u00a0kt',
-          active: true,
-          params: { stormId: 'ep152026', focus: true },
-        },
-      ],
-    },
-    chips: [],
-    legendCategorical: true,
-    legend: [
-      { label: 'Advisory center / forecast track', color: '#7fe6ed' },
-      { label: 'Center-track uncertainty cone', color: '#7fe6ed44' },
-    ],
-    info: `${detail}\nPosition as of 09-\u206016\u00a003:00\u00a0UTC\nMaximum sustained wind: 25\u00a0kt · Pressure: 1006\u00a0hPa\nTrack and cone match this advisory\nAtlantic and eastern/central North Pacific`,
-    infoTitle: TITLE,
-  });
-  h.layer.destroy();
-});
-
-test('[cyclones-021] a code that names an inherited property of an object shows as it is', async () => {
-  for (const code of [
-    'toString',
-    'constructor',
-    '__proto__',
-    'hasOwnProperty',
-  ]) {
-    const record = { ...storm(), classification: code };
-    const h = harness({ getSnapshot: async () => snapshot([record]) });
-    h.layer.enable();
-    await h.layer.update();
-    const controls = h.layer.getRowControls();
-    assert.equal(
-      controls.summary.detail,
-      `Fifteen-E · ${code} · Advisory 10 · issued 09-\u206016\u00a003:00\u00a0UTC`,
-    );
-    assert.equal(
-      controls.list.items[0].text,
-      `Fifteen-E · ${code} · 25\u00a0kt`,
-    );
-    h.layer.destroy();
-  }
-});
-
-test('[cyclones-021] a storm with no wind, pressure or time shows Unavailable, and a geometry that waits shows the advisory number', async () => {
-  const record = {
-    ...storm(),
-    windKt: null,
-    pressureHpa: null,
-    issuedAt: null,
-    positionAt: null,
-    advisoryUrl: null,
-  };
-  const h = harness({ getSnapshot: async () => snapshot([record]) });
-  h.layer.enable();
-  await h.layer.update();
-  const controls = h.layer.getRowControls();
-  const detail =
-    'Fifteen-E · Post-tropical cyclone · Advisory 10 · issued Unavailable';
-  assert.equal(controls.summary.detail, detail);
-  assert.deepEqual(controls.summary.actions, []);
-  assert.deepEqual(controls.summary.lines, [
-    { id: 'position', text: 'Position as of Unavailable', muted: true },
-    {
-      id: 'intensity',
-      text: 'Maximum sustained wind: Unavailable · Pressure: Unavailable',
-    },
-    {
-      id: 'geometry',
-      text: 'Track/cone awaiting advisory 10',
-      muted: true,
-    },
-  ]);
-  assert.equal(controls.summary.status, 'Track/cone awaiting advisory 10');
-  assert.equal(
-    controls.list.items[0].text,
-    'Fifteen-E · Post-tropical cyclone · Wind unavailable',
-  );
-  assert.equal(
-    controls.info,
-    `${detail}\nPosition as of Unavailable\nMaximum sustained wind: Unavailable · Pressure: Unavailable\nTrack/cone awaiting advisory 10\nAtlantic and eastern/central North Pacific`,
-  );
-  h.layer.destroy();
-});
-
-test('[cyclones-021] a storm with the geometry status unavailable shows the text Track/cone unavailable', async () => {
-  const record = { ...storm(), geometryStatus: 'unavailable' };
-  const h = harness({ getSnapshot: async () => snapshot([record]) });
-  h.layer.enable();
-  await h.layer.update();
-  const controls = h.layer.getRowControls();
-  assert.equal(controls.summary.lines[2].text, 'Track/cone unavailable');
-  assert.equal(controls.summary.status, 'Track/cone unavailable');
-  assert.equal(controls.info.split('Track/cone unavailable').length - 1, 1);
-  h.layer.destroy();
-});
-
-test('[cyclones-021] the status shows the error first, then the stale text, then the wait text, then the geometry text', async () => {
-  const script = [];
-  const h = harness({ getSnapshot: () => script.shift()() });
-  const step = (run) => script.push(run);
-  const gate = deferred();
-  h.layer.enable();
-  step(() => gate.promise);
-  const first = h.layer.update();
-  const loading = h.layer.getRowControls();
-  assert.equal(loading.summary.status, 'Loading advisories…');
-  assert.equal(loading.summary.detail, 'Loading advisories…');
-  assert.equal(loading.summary.compact, 'Loading advisories…');
-  assert.deepEqual(loading.list.items, []);
-  assert.equal(
-    loading.info,
-    `Loading advisories…\nLoading advisories…\n${DEFAULT_COVERAGE}`,
-  );
-  gate.resolve(snapshot());
-  await first;
-  assert.equal(
-    h.layer.getRowControls().summary.status,
-    'Track/cone awaiting advisory 10',
-  );
-  const tail = (controls) => controls.info.split('\n').slice(-3).join('\n');
-  const more = deferred();
-  step(() => more.promise);
-  const second = h.layer.update();
-  assert.equal(h.layer.getRowControls().summary.status, 'Loading advisories…');
-  assert.equal(
-    tail(h.layer.getRowControls()),
-    'Track/cone awaiting advisory 10\nLoading advisories…\nAtlantic and eastern/central North Pacific',
-  );
-  more.resolve({ ...snapshot(), stale: true });
-  await second;
-  assert.equal(
-    h.layer.getRowControls().summary.status,
-    'Cached advisory · stale source',
-  );
-  assert.equal(
-    tail(h.layer.getRowControls()),
-    'Track/cone awaiting advisory 10\nCached advisory · stale source\nAtlantic and eastern/central North Pacific',
-  );
-  const third = deferred();
-  step(() => third.promise);
-  const refresh = h.layer.update();
-  assert.equal(
-    h.layer.getRowControls().summary.status,
-    'Cached advisory · stale source',
-    'the stale text wins over the loading text',
-  );
-  third.resolve(snapshot());
-  await refresh;
-  step(() => Promise.reject(new Error('Network unavailable')));
-  await h.layer.update();
-  const failed = h.layer.getRowControls();
-  assert.equal(failed.summary.status, 'Network unavailable');
-  assert.equal(failed.summary.detail, 'Advisories unavailable');
-  assert.equal(failed.summary.compact, 'Advisories unavailable');
-  assert.equal(
-    failed.info,
-    `Advisories unavailable\nNetwork unavailable\n${DEFAULT_COVERAGE}`,
-  );
-  assert.equal(failed.infoTitle, TITLE);
-  assert.deepEqual(failed.summary.lines, []);
-  assert.deepEqual(failed.legend, []);
-  assert.equal(failed.summary.coverage, 'Atlantic · E/C Pacific');
-  const last = deferred();
-  step(() => last.promise);
-  const retry = h.layer.update();
-  const retrying = h.layer.getRowControls();
-  assert.equal(retrying.summary.status, 'Network unavailable');
-  assert.equal(retrying.summary.detail, 'Loading advisories…');
-  last.resolve(snapshot());
-  await retry;
-  h.layer.destroy();
-});
-
-test('[cyclones-021] the detail counts the active storms when the layer has no selected storm, and it names the empty and the unavailable state', async () => {
-  let next = snapshot([storm(), storm('ep162026')]);
-  const h = harness({ getSnapshot: async () => next });
-  h.layer.enable();
-  await h.layer.update();
-  h.layer.setParams({ clear: true });
-  let controls = h.layer.getRowControls();
-  assert.equal(controls.summary.detail, '2 active storms');
-  assert.equal(controls.summary.compact, '2 active storms');
-  assert.equal(controls.summary.status, null);
-  assert.deepEqual(controls.summary.actions, []);
-  assert.deepEqual(controls.summary.lines, []);
-  assert.deepEqual(controls.legend, []);
-  assert.equal(
-    controls.info,
-    '2 active storms\nAtlantic and eastern/central North Pacific',
-  );
-  assert.deepEqual(
-    controls.list.items.map((item) => [item.ordinal, item.lead, item.active]),
-    [
-      [1, 'EP', false],
-      [2, 'EP', false],
-    ],
-  );
-  assert.equal(
-    controls.list.items[1].text,
-    'Another system · Post-tropical cyclone · 25\u00a0kt',
-  );
-  next = snapshot([storm()]);
-  await h.layer.update();
-  controls = h.layer.getRowControls();
-  assert.equal(controls.summary.detail, '1 active storm');
-  assert.equal(controls.summary.compact, '1 active storm');
-  next = snapshot([]);
-  await h.layer.update();
-  controls = h.layer.getRowControls();
-  assert.equal(controls.summary.detail, 'No active NHC/CPHC systems');
-  assert.equal(controls.summary.compact, 'No active NHC/CPHC systems');
-  assert.equal(controls.summary.status, null);
-  assert.deepEqual(controls.list.items, []);
-  assert.equal(
-    controls.info,
-    'No active NHC/CPHC systems\nAtlantic and eastern/central North Pacific',
-  );
-  next = {
-    ...snapshot([]),
-    unavailable: true,
-    reason: 'Cyclone data unavailable',
-  };
-  await h.layer.update();
-  controls = h.layer.getRowControls();
-  assert.equal(controls.summary.detail, 'Advisories unavailable');
-  assert.equal(controls.summary.status, 'Cyclone data unavailable');
-  assert.equal(
-    controls.info,
-    'Advisories unavailable\nCyclone data unavailable\nAtlantic and eastern/central North Pacific',
-  );
-  h.layer.destroy();
-});
-
-test('[cyclones-021] the row controls before the first update show the unavailable state and the default coverage', () => {
-  const h = harness();
-  const controls = h.layer.getRowControls();
-  assert.equal(controls.summary.detail, 'Advisories unavailable');
-  assert.equal(controls.summary.compact, 'Advisories unavailable');
-  assert.equal(controls.summary.status, null);
-  assert.deepEqual(controls.list.items, []);
-  assert.equal(controls.info, `Advisories unavailable\n${DEFAULT_COVERAGE}`);
-  h.layer.destroy();
-});
-
-test('[cyclones-022] getStats reports the count, the times, the flags and the source of each state', async () => {
-  const later = '2026-09-17T09:30:00.000Z';
-  const h = harness({
-    getSnapshot: async () => ({
-      ...snapshot([{ ...storm(), issuedAt: later }, storm('ep162026')]),
-      fetchedAt: 1758000000000,
-    }),
-  });
-  assert.deepEqual(h.layer.getStats(), {
-    count: 0,
-    lastUpdate: null,
-    loading: false,
-    error: null,
-    stale: false,
-    source: 'NOAA NHC / CPHC',
-    advisoryAt: null,
-    empty: false,
-  });
-  h.layer.enable();
-  await h.layer.update();
-  assert.deepEqual(h.layer.getStats(), {
-    count: 2,
-    lastUpdate: 1789637400000,
-    loading: false,
-    error: null,
-    stale: false,
-    source: 'NOAA NHC / CPHC',
-    advisoryAt: later,
-    empty: false,
-  });
-  h.layer.setParams({ clear: true });
-  assert.equal(h.layer.getStats().lastUpdate, 1758000000000);
-  assert.equal(h.layer.getStats().advisoryAt, null);
-  h.layer.destroy();
-});
-
-test('[cyclones-022] getStats reports a stale snapshot, an empty snapshot and an unavailable snapshot', async () => {
-  let next = { ...snapshot(), stale: true };
-  const h = harness({ getSnapshot: async () => next });
-  h.layer.enable();
-  await h.layer.update();
-  assert.equal(h.layer.getStats().stale, true);
-  assert.equal(h.layer.getStats().empty, false);
-  next = snapshot([]);
-  await h.layer.update();
-  assert.equal(h.layer.getStats().empty, true);
-  assert.equal(h.layer.getStats().stale, false);
-  assert.equal(h.layer.getStats().count, 0);
-  assert.equal(h.layer.getStats().lastUpdate, 1789527600000);
-  next = { ...snapshot([]), unavailable: true, reason: 'Down' };
-  await h.layer.update();
-  assert.equal(h.layer.getStats().empty, false);
-  assert.equal(h.layer.getStats().error, 'Down');
-  h.layer.destroy();
-});
-
-test('[cyclones-022] getDiagnostics joins the renderer diagnostics with the state of the layer', async () => {
-  const layer = plainLayer({
-    feed: { getSnapshot: async () => snapshot() },
-    rendering: fakeRendering({
-      getDiagnostics: () => ({ storms: 1, entities: 3, timerActive: true }),
-    }).rendering,
-  });
-  layer.enable();
-  await layer.update();
-  assert.deepEqual(layer.getDiagnostics(), {
-    storms: 1,
-    entities: 3,
-    enabled: true,
-    loading: false,
-    requestPending: false,
-    selectionActive: false,
-    selectedId: 'ep152026',
-    selectionIntent: 'auto',
-    timerActive: false,
-  });
-  layer.destroy();
-});
-
-test('[cyclones-023] setParams ignores an id that is not a string or not in the snapshot, and it does nothing after disable or destroy', async () => {
-  const h = harness({
-    getSnapshot: async () => snapshot([storm(), storm('ep162026')]),
-  });
-  let notices = 0;
-  h.layer.setRowControlsListener(() => notices++);
-  h.layer.setParams({ stormId: 'ep162026' });
-  assert.equal(h.selection, null);
-  h.layer.enable();
-  h.layer.setParams({ stormId: 'ep162026' });
-  assert.equal(h.layer.getDiagnostics().selectedId, null, 'no snapshot yet');
-  await h.layer.update();
-  const before = notices;
-  h.layer.setParams();
-  for (const params of [
-    {},
-    { stormId: 5 },
-    { stormId: 'al019999' },
-    { stormId: undefined },
-    { clear: false },
-    { clear: 'yes' },
-  ]) {
-    h.layer.setParams(params);
-    assert.equal(h.layer.getDiagnostics().selectedId, 'ep152026');
-    assert.equal(h.layer.getDiagnostics().selectionIntent, 'auto');
-  }
-  assert.equal(notices, before);
-  h.layer.setParams({ stormId: 'ep162026' });
-  assert.equal(h.layer.getDiagnostics().selectedId, 'ep162026');
-  assert.equal(notices, before + 1);
-  assert.equal(h.selection, 'ep162026');
-  h.layer.destroy();
-  h.layer.setParams({ clear: true });
-  assert.equal(h.layer.getDiagnostics().selectionIntent, 'auto');
-});
-
-test('[cyclones-025] an unavailable snapshot and a failed request cancel the queued focus', async () => {
-  for (const change of ['unavailable', 'failure']) {
-    let next = snapshot([storm()]);
-    const h = harness({
-      getSnapshot: async () => {
-        if (change === 'failure' && next === null)
-          throw new Error('Network unavailable');
-        return next;
-      },
-    });
-    const callbacks = [];
-    h.layer.attachShellServices({ runNavigation: (fn) => callbacks.push(fn) });
-    h.layer.enable();
-    await h.layer.update();
-    h.layer.setParams({ stormId: 'ep152026', focus: true });
-    assert.equal(callbacks.length, 1, change);
-    if (change === 'unavailable')
-      next = { ...snapshot([]), unavailable: true, reason: 'Down' };
-    else next = null;
-    await h.layer.update();
-    callbacks.shift()();
-    assert.equal(h.navigation.length, 0, change);
-    h.layer.destroy();
-  }
-});
-
-test('[cyclones-025] the flight goes to the focus sphere, the shell gets its result, and the listener runs when the services change', async () => {
-  const flights = [];
-  const layer = createCyclonesLayer({
-    feed: { getSnapshot: async () => snapshot() },
-    createRendering: () => ({
-      ...fakeRendering().rendering,
-      getFocusSphere: (id) => ({ radius: 700000, id }),
-    }),
-    matchMedia: () => ({ matches: false }),
-  });
-  const results = [];
-  layer.init({
-    camera: {
-      flyToBoundingSphere: (sphere, options) => {
-        flights.push({ sphere, options });
-        return 'flight handle';
-      },
-    },
-  });
-  let notices = 0;
-  layer.setRowControlsListener(() => notices++);
-  layer.attachShellServices({ runNavigation: (fn) => results.push(fn()) });
-  assert.equal(notices, 1);
-  layer.enable();
-  await layer.update();
-  layer.setParams({ stormId: 'ep152026', focus: true });
-  assert.deepEqual(flights, [
-    { sphere: { radius: 700000, id: 'ep152026' }, options: { duration: 1.4 } },
-  ]);
-  assert.deepEqual(results, ['flight handle']);
-  layer.destroy();
-});
-
-test('[cyclones-025] the layer queues no flight without a shell service, without a focus sphere or without a selected storm', async () => {
-  for (const [label, services, sphere, selectFirst] of [
-    ['no services', undefined, { radius: 1 }, true],
-    ['no runNavigation', {}, { radius: 1 }, true],
-    [
-      'runNavigation is not a function',
-      { runNavigation: 'x' },
-      { radius: 1 },
-      true,
-    ],
-    ['no focus sphere', { runNavigation: () => queued.push(1) }, null, true],
-    [
-      'no selected storm',
-      { runNavigation: () => queued.push(1) },
-      { radius: 1 },
-      false,
-    ],
-  ]) {
-    var queued = [];
-    const layer = createCyclonesLayer({
-      feed: { getSnapshot: async () => snapshot() },
-      createRendering: () => ({
-        ...fakeRendering().rendering,
-        getFocusSphere: () => sphere,
-      }),
-    });
-    layer.init({ camera: {} });
-    layer.attachShellServices(services);
-    layer.enable();
-    if (selectFirst) await layer.update();
-    layer.setParams({ focus: true });
-    if (selectFirst) layer.setParams({ stormId: 'ep152026', focus: true });
-    assert.deepEqual(queued, [], label);
-    layer.destroy();
-  }
-});
-
-test('[cyclones-025] the layer opens the advisory link only for a selected storm that has one', async () => {
-  const opened = [];
-  let record = storm();
-  const layer = plainLayer({
-    feed: { getSnapshot: async () => snapshot([record]) },
-    openLink: (url) => opened.push(url),
-  });
-  layer.enable();
-  layer.setParams({ advisory: true });
-  assert.deepEqual(opened, [], 'no storm yet');
-  await layer.update();
-  layer.setParams({ advisory: false });
-  layer.setParams({ advisory: 'yes' });
-  assert.deepEqual(opened, []);
-  layer.setParams({ advisory: true });
-  assert.deepEqual(opened, [ADVISORY_URL]);
-  record = { ...storm(), advisoryUrl: null };
-  await layer.update();
-  layer.setParams({ advisory: true });
-  assert.deepEqual(opened, [ADVISORY_URL]);
-  layer.destroy();
-});
-
-test('[cyclones-025] with no options the layer reads the global matchMedia and opens the advisory with the global open', async (t) => {
-  const queries = [];
-  const opened = [];
-  let reduced = true;
-  globalThis.matchMedia = function (query) {
-    queries.push([this, query]);
-    return { matches: reduced };
-  };
-  globalThis.open = (...args) => opened.push(args);
-  t.after(() => {
-    delete globalThis.matchMedia;
-    delete globalThis.open;
-  });
-  const flights = [];
-  const layer = createCyclonesLayer({
-    feed: { getSnapshot: async () => snapshot() },
-    createRendering: () => fakeRendering().rendering,
-  });
-  layer.init({
-    camera: {
-      flyToBoundingSphere: (_sphere, options) => flights.push(options),
-    },
-  });
-  layer.attachShellServices({ runNavigation: (fn) => fn() });
-  layer.enable();
-  await layer.update();
-  layer.setParams({ stormId: 'ep152026', focus: true });
-  reduced = false;
-  layer.setParams({ stormId: 'ep152026', focus: true });
-  assert.deepEqual(flights, [{ duration: 0 }, { duration: 1.4 }]);
-  assert.equal(queries.length, 2);
-  assert.equal(queries[0][0], globalThis);
-  assert.equal(queries[0][1], '(prefers-reduced-motion: reduce)');
-  layer.setParams({ advisory: true });
-  assert.deepEqual(opened, [[ADVISORY_URL, '_blank', 'noopener,noreferrer']]);
-  layer.destroy();
-});
-
-test('[cyclones-025] with no global matchMedia and no global open the focus uses the full duration and the link does nothing', async () => {
-  const flights = [];
-  const layer = createCyclonesLayer({
-    feed: { getSnapshot: async () => snapshot() },
-    createRendering: () => fakeRendering().rendering,
-  });
-  layer.init({
-    camera: {
-      flyToBoundingSphere: (_sphere, options) => flights.push(options),
-    },
-  });
-  layer.attachShellServices({ runNavigation: (fn) => fn() });
-  layer.enable();
-  await layer.update();
-  layer.setParams({ stormId: 'ep152026', focus: true });
-  assert.deepEqual(flights, [{ duration: 1.4 }]);
-  assert.doesNotThrow(() => layer.setParams({ advisory: true }));
-  layer.destroy();
-});
-
-const AIS = { sourceId: 'ais-live-vessels', entryId: 'vessel:1' };
-/** A layer with a fake click handler, a canvas at (100, 200) and a scripted pick. */
-async function mapLayer({ cesiumExtras = {}, picked, overlayHit = null } = {}) {
-  const handlers = [];
-  const state = { picked, overlayHit, picks: 0, overlayTests: 0 };
-  const layer = createCyclonesLayer({
-    feed: {
-      getSnapshot: async () => snapshot([storm(), storm('ep162026')]),
-    },
-    cesium: {
-      ScreenSpaceEventType: { LEFT_CLICK: 'left' },
-      ScreenSpaceEventHandler: class {
-        constructor() {
-          handlers.push(this);
-        }
-        setInputAction(callback) {
-          this.click = callback;
-        }
-        destroy() {}
-      },
-      ...cesiumExtras,
-    },
-    createRendering: () =>
-      fakeRendering({
-        pickStorm: (value) => (value?.id === 'entity' ? 'ep162026' : null),
-      }).rendering,
-    hitTestOverlay: () => {
-      state.overlayTests++;
-      return state.overlayHit;
-    },
-  });
-  const canvas = new EventTarget();
-  canvas.getBoundingClientRect = () => ({ left: 100, top: 200 });
-  layer.init({
-    scene: {
-      canvas,
-      pick() {
-        state.picks++;
-        return state.picked;
-      },
-    },
-  });
-  layer.enable();
-  await layer.update();
-  const release = (type, extra) =>
-    canvas.dispatchEvent(Object.assign(new Event(type), extra));
-  const click = (x = 10, y = 20) => handlers[0].click({ position: { x, y } });
-  return { layer, handlers, canvas, state, release, click };
-}
-
-test('[cyclones-024] a click on 3D Tiles content or on a tileset primitive clears the selection, and another primitive does not', async () => {
-  class Tileset {}
-  const m = await mapLayer({ cesiumExtras: { Cesium3DTileset: Tileset } });
-  const selected = () => m.layer.getDiagnostics().selectedId;
-  for (const [label, picked, cleared] of [
-    ['tileset primitive', { primitive: new Tileset() }, true],
-    ['content', { content: {} }, true],
-    ['content and primitive', { content: {}, primitive: {} }, true],
-    ['other primitive', { primitive: {} }, false],
-    ['no primitive', {}, false],
-    [
-      'entity id and tileset primitive',
-      { id: 'flight:1', primitive: new Tileset() },
-      false,
-    ],
-    ['entity id and content', { id: 'flight:1', content: {} }, false],
-  ]) {
-    m.layer.setParams({ stormId: 'ep152026' });
-    m.state.picked = picked;
-    m.click();
-    assert.equal(selected(), cleared ? null : 'ep152026', label);
-    assert.equal(
-      m.layer.getDiagnostics().selectionIntent,
-      cleared ? 'cleared' : 'user',
-      label,
-    );
-  }
-  m.state.picked = undefined;
-  m.layer.setParams({ stormId: 'ep152026' });
-  m.click();
-  assert.equal(selected(), null, 'no pick at all is empty map');
-  m.state.picked = { id: 'entity' };
-  m.click();
-  assert.equal(selected(), 'ep162026');
-  m.layer.destroy();
-});
-
-test('[cyclones-024] each release event records the overlay hit, and each press or cancel event clears it', async () => {
-  const m = await mapLayer({ picked: { content: {} } });
-  const at = { clientX: 110, clientY: 220 };
-  const touch = { changedTouches: [at] };
-  const captures = [
-    ['pointerup', at],
-    ['mouseup', at],
-    ['touchend', touch],
-  ];
-  const resets = [
-    'pointerdown',
-    'mousedown',
-    'touchstart',
-    'pointercancel',
-    'touchcancel',
-  ];
-  m.state.overlayHit = AIS;
-  for (const [type, extra] of captures) {
-    m.release(type, extra);
-    m.state.overlayHit = null;
-    const before = m.state.picks;
-    m.click();
-    assert.equal(m.state.picks, before, `${type} keeps the captured hit`);
-    m.state.overlayHit = AIS;
-  }
-  for (const reset of resets) {
-    m.release('pointerup', at);
-    m.release(reset);
-    m.state.overlayHit = null;
-    const before = m.state.picks;
-    m.click();
-    assert.equal(m.state.picks, before + 1, `${reset} clears the capture`);
-    m.state.overlayHit = AIS;
-  }
-  m.layer.destroy();
-});
-
-test('[cyclones-024] a release with no finite coordinates records nothing and clears the earlier record', async () => {
-  const m = await mapLayer({ picked: { content: {} } });
-  const tests = () => m.state.overlayTests;
-  for (const [label, extra] of [
-    ['no coordinates', {}],
-    ['x is not a number', { clientX: NaN, clientY: 220 }],
-    ['y is infinite', { clientX: 110, clientY: Infinity }],
-    ['x is text', { clientX: '110', clientY: 220 }],
-    ['touch with no coordinates', { changedTouches: [{}] }],
-  ]) {
-    const before = tests();
-    m.release('pointerup', extra);
-    assert.equal(tests(), before, label);
-  }
-  m.state.overlayHit = AIS;
-  m.release('pointerup', { clientX: 110, clientY: 220 });
-  m.state.overlayHit = null;
-  m.release('pointerup', {});
-  const picks = m.state.picks;
-  m.click();
-  assert.equal(m.state.picks, picks + 1, 'the earlier record is gone');
-  m.layer.destroy();
-});
-
-test('[cyclones-024] a captured hit serves a click within 1 px in both axes and no other click', async () => {
-  const m = await mapLayer({ picked: { content: {} } });
-  const at = { clientX: 110, clientY: 220 };
-  for (const [x, y, uses] of [
-    [10, 20, true],
-    [10.5, 20.5, true],
-    [9.5, 19.5, true],
-    [11, 20, false],
-    [10, 21, false],
-    [9, 20, false],
-    [10.5, 25, false],
-    [15, 20.5, false],
-  ]) {
-    m.state.overlayHit = AIS;
-    m.release('pointerup', at);
-    m.state.overlayHit = null;
-    const before = m.state.picks;
-    m.click(x, y);
-    assert.equal(m.state.picks, uses ? before : before + 1, `${x},${y}`);
-  }
-  m.layer.destroy();
-});
-
-test('[cyclones-024] a click with no position does nothing, and one capture serves one click only', async () => {
-  const m = await mapLayer({ picked: { id: 'entity' } });
-  m.handlers[0].click({});
-  m.handlers[0].click(undefined);
-  m.handlers[0].click({ position: null });
-  assert.equal(m.state.picks, 0);
-  assert.equal(m.state.overlayTests, 0);
-  assert.equal(m.layer.getDiagnostics().selectedId, 'ep152026');
-  m.state.overlayHit = AIS;
-  m.release('pointerup', { clientX: 110, clientY: 220 });
-  m.state.overlayHit = null;
-  m.click();
-  assert.equal(m.state.picks, 0);
-  m.click();
-  assert.equal(m.state.picks, 1);
-  assert.equal(m.layer.getDiagnostics().selectedId, 'ep162026');
-  m.layer.destroy();
 });
