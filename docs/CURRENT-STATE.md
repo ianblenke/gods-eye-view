@@ -202,7 +202,7 @@ implementations.
 
 ## Shipwrecks — EMODnet and Wikidata
 
-The Events group includes **Shipwrecks** (`shipwrecks`, share-link token `01`),
+The Events group includes **Shipwrecks** (`shipwrecks`, share-link token `06`),
 off by default. `/api/shipwrecks` downloads EMODnet Human Activities'
 `emodnet:heritageshipwrecks` WFS layer (about 7,000 wrecks in European waters
 compiled from SHOM, Ireland's National Monuments Service, Historic England and
@@ -245,7 +245,7 @@ not toggle this layer yet (prompt budget, as for the airspace layer).
 
 ## Wildlife Sightings — iNaturalist and Acartia
 
-**Wildlife Sightings** (`wildlife-sightings`, share-link token `9`) is off by
+**Wildlife Sightings** (`wildlife-sightings`, share-link token `0b`) is off by
 default in the Wildlife group between Events and Weather. CONFIRMED and six
 taxa presets round-trip in share links. Voice is off for this layer for now;
 it is outside analyst queries and DETECT. Community observations are not a
@@ -345,7 +345,7 @@ wall-clock budgets run in `npm run test:perf`. All 11 locales are supported.
 ## Prohibited & Restricted Airspace — FAA special-use airspace
 
 The Infrastructure group includes **Prohibited & Restricted Airspace** (`drone-airspace`,
-share-link token `8`), off by default. `/api/drone-airspace` pages the public
+share-link token `08`), off by default. `/api/drone-airspace` pages the public
 FAA Special Use Airspace FeatureServer for `TYPE_CODE` P (prohibited) and R
 (restricted), simplifies geometry, caches for an hour, and serves the last
 good snapshot as stale when a refresh fails. The globe draws ground-clamped
@@ -6120,7 +6120,7 @@ The incident card rounds the WFIGS size to whole acres, except under one acre,
 where it keeps the reported hundredths: a 0.25-acre fire reads `0.25 ac`, not
 `0 ac`.
 
-Prohibited & Restricted Airspace is off by default (share-link token `8`) and sits in
+Prohibited & Restricted Airspace is off by default (share-link token `08`) and sits in
 Infrastructure. The proxy pages `TYPE_CODE IN ('P','R')` from the FAA SUA
 FeatureServer, caps the body, and reuses a one-hour snapshot, serving the last
 good payload as stale for at most 24 hours when a refresh fails; the layer row
@@ -6902,7 +6902,7 @@ refreshes. A 304 confirms contact without appending history. Missing vehicles
 are removed after two missed polls; reports older than ten minutes and feeds
 silent for five minutes are removed. Credits appear when the feed is used.
 
-**Rail.** Rail is off by default, and share links use token `02`, with five
+**Rail.** Rail is off by default, and share links use token `07`, with five
 boolean options for its categories: `t` (urban), `l` (local), `r`
 (regional), `n` (national) and `i` (international), all on by default. It sits
 in the Movement panel directly after Transit and before Bike Share. The layer
@@ -8539,7 +8539,7 @@ request viewbox and continues searching without that geographic preference.
 - **Notices.** A section whose key the server lacks says "{provider} key required" and names the variable; a refused key says "{provider} refused its key"; a spent daily allowance says "{provider} limit reached for today". The other section keeps working.
 - **Source.** `sources.news` (`createNewsSource`, export `./layers/news/source`) reads same-origin `/api/news/*` with a 15 s timeout, a 4 MiB cap and record-by-record validation; `newsQueryAllowed` lets a host admit exactly the client's requests. Core's local server (`server/providers/news.js`) forwards only those GET requests to `GEV_NEWS_ORIGIN` when it is set.
 - **Built-in backend.** With `GEV_NEWS_ORIGIN` unset, Core answers the same routes itself (`server/providers/news/keyed.js`). **Conflicts** needs no key: the last 24 h of GDELT 2.0 event exports (15-minute files on `data.gdeltproject.org`, about 100 KB each), physical violence only (CAMEO roots 18–20), one report per story with copies of one agency story merged, placed at GDELT's location for it (a town the article's words name beats a bare country). Titles are the article's page title from GDELT's GKG export of the same quarter hour (about 6 MB each) for the newest 3 h, else the words of the article's address; GDELT's actor coding is never shown. With `LIVEUAMAP_API_KEY`, Liveuamap's mapped items stand beside GDELT's. **Local** reads World News API (`WORLDNEWSAPI_KEY`) by the source country at the view centre, once per country every 30 minutes (about 1.5 points a read, at most `WORLDNEWSAPI_DAILY_READS` reads a day, default 30), plus the Conflicts reports placed inside the area. A country's own stories keep World News API's category (politics, business, else other) and no severity: the rules read fighting and crises, and everyday headlines mislead them. Areas come from the bundled Natural Earth countries and disputed areas (`server/providers/news/areas.js`). Conflicts' categories, relevance and severity are bundled rules (`categorize.js`); a news server may replace them. A read with nothing current to serve (GDELT's, Liveuamap's or a country's) is waited for at most 10 s, under the client's 15 s timeout, and goes on past that for the next refresh. Meanwhile GDELT serves the exports read so far and Conflicts serves GDELT without Liveuamap; Local in a country answers unavailable (502) until its outlets' read lands, and serves them without the Conflicts reports while those are missing. A section left with nothing answers unavailable, and a refused key stays refused. A country's World News API news is kept for at most 1 hour and then deleted; a request that never reached World News API is not counted against the day's reads. A story with neither a page title nor words in its address is minor (GDELT's code alone), so it is not listed under Conflicts, and the hotspot counts leave minor reports out. The routes sit behind the cross-site gate for key-spending routes (`sameSiteGated`), a request line that is no URL answers 400, and a news server's 503 key states (`no_key`, `key_rejected`, `key_quota`) and `news_not_configured` are relayed as they are.
-- **State.** Share/restore token `00`, enabled-only. Voice is off for this layer (`VOICE_OFF_LAYERS`).
+- **State.** Share/restore token `05`, enabled-only. Voice is off for this layer (`VOICE_OFF_LAYERS`).
 
 ### S2 GhostMaps (October 2026)
 

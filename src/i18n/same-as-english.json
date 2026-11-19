@@ -295,7 +295,9 @@
     "{n} mm",
     "Route",
     "3D",
-    "KT"
+    "KT",
+    "Taiwan",
+    "Tampa"
   ],
   "es": [
     "1 min/s",
@@ -747,7 +749,8 @@
     "{n} min",
     "{n} mm",
     "3D",
-    "KT"
+    "KT",
+    "Tampa"
   ],
   "it": [
     "1 min/s",
@@ -980,7 +983,9 @@
     "{n} min",
     "{n} mm",
     "3D",
-    "KT"
+    "KT",
+    "Taiwan",
+    "Tampa"
   ],
   "ja": [
     "1090 MHz",
@@ -1258,7 +1263,9 @@
     "{n} min",
     "{n} mm",
     "3D",
-    "KT"
+    "KT",
+    "Taiwan",
+    "Tampa"
   ],
   "ru": [
     "1900–1945",
@@ -1495,7 +1502,9 @@
     "{n} min",
     "{n} mm",
     "3D",
-    "KT"
+    "KT",
+    "Taiwan",
+    "Tampa"
   ],
   "uk": [
     "1900–1945",
