@@ -3,7 +3,8 @@ import { msg } from '../../i18n/index.js';
 import { writeOshDetail } from './detail.js';
 import { placeOshEntities } from '../../data/oshSystems.js';
 import { isOshObservationFresh } from '../../data/oshObservations.js';
-import { horizonOccluder } from '../../data/iconOrientation.js';
+import { horizonFrom } from '../../geo/horizon.js';
+import { cameraOf } from '../../render/rendererOf.js';
 import { createVideoPlayer, createVideoView } from './videoPlayer.js';
 import { findLinkedCameraSystem } from './cameraLink.js';
 export { createOshSource } from './source.js';
@@ -156,7 +157,7 @@ export function createOshLayer({
    * reads none of them behind a guard.
    */
   function refreshHorizonVisibility() {
-    const occluder = horizonOccluder(_viewer.camera);
+    const occluder = horizonFrom(cameraOf(_viewer).pose().position);
     const now = Cesium.JulianDate.now();
     for (const entity of _dataSource.entities.values) {
       entity.show = occluder.isPointVisible(entity.position.getValue(now));

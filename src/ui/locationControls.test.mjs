@@ -343,7 +343,6 @@ test('[location-presets-008] a click on the Tampa pill flies to the downtown vie
   controls.destroy();
 });
 
-
 test('POI keys held with Cmd, Ctrl or Alt run no POI; Shift still does', () => {
   const f = fixture();
   const target = { matches: () => false };
