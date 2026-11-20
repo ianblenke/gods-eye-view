@@ -4442,5 +4442,9 @@
   "Bee Maps Bursts": "פרצי צילום של Bee Maps",
   "Taiwan": "טייוואן",
   "Tampa": "טמפה",
-  "OpenSensorHub selection": "בחירת OpenSensorHub"
+  "OpenSensorHub selection": "בחירת OpenSensorHub",
+  "Finding it…": "מחפש…",
+  "No reading at this time": "אין קריאה בזמן הזה",
+  "Last reading · {age}": "קריאה אחרונה · {age}",
+  "Find it": "מצא"
 }

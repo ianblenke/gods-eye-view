@@ -4548,5 +4548,9 @@
   "Bee Maps Bursts": "Серії зйомки Bee Maps",
   "Taiwan": "Тайвань",
   "Tampa": "Тампа",
-  "OpenSensorHub selection": "Вибір OpenSensorHub"
+  "OpenSensorHub selection": "Вибір OpenSensorHub",
+  "Finding it…": "Пошук…",
+  "No reading at this time": "Немає даних на цей час",
+  "Last reading · {age}": "Останні дані · {age}",
+  "Find it": "Знайти"
 }

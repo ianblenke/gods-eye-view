@@ -4336,5 +4336,9 @@
   "Bee Maps Bursts": "Bee Maps-serier",
   "Taiwan": "Taiwan",
   "Tampa": "Tampa",
-  "OpenSensorHub selection": "OpenSensorHub-val"
+  "OpenSensorHub selection": "OpenSensorHub-val",
+  "Finding it…": "Söker…",
+  "No reading at this time": "Ingen avläsning vid den här tiden",
+  "Last reading · {age}": "Senaste avläsning · {age}",
+  "Find it": "Hitta"
 }

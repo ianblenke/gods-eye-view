@@ -4442,5 +4442,9 @@
   "Bee Maps Bursts": "Raffiche Bee Maps",
   "Taiwan": "Taiwan",
   "Tampa": "Tampa",
-  "OpenSensorHub selection": "Selezione OpenSensorHub"
+  "OpenSensorHub selection": "Selezione OpenSensorHub",
+  "Finding it…": "Ricerca in corso…",
+  "No reading at this time": "Nessun dato a quest'ora",
+  "Last reading · {age}": "Ultimo dato · {age}",
+  "Find it": "Trova"
 }
