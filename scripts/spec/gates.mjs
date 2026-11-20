@@ -95,8 +95,14 @@ export function localEnvFiles(root, tracked) {
     .sort();
 }
 
+/** The loaders that each test run imports: the Vue loader, when the project has one. */
+export function loaderImports(root) {
+  return existsSync(path.join(root, 'build/registerVue.js')) ? ['./build/registerVue.js'] : [];
+}
+
 /** Make the node:test runs for the gates. */
-export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FILES, outDir, coverageDir }) {
+export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FILES, outDir, coverageDir, imports = [] }) {
+  const importFlags = imports.map((file) => `--import=${file}`);
   const allocation = new Set(allocationFiles);
   const main = testFiles.filter((file) => !allocation.has(file));
   const runs = [];
@@ -108,6 +114,7 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
       output: `${rawOutput}.sync`,
       rawOutput,
       args: [
+        ...importFlags,
         '--test',
         '--experimental-test-coverage',
         '--test-force-exit',
@@ -129,6 +136,7 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
         output: `${rawOutput}.sync`,
         rawOutput,
         args: [
+          ...importFlags,
           '--expose-gc',
           '--test',
           '--test-concurrency=1',
@@ -239,7 +247,8 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec, phase, m
   const resultsDir = mkdtempSync(path.join(tmpdir(), 'gev-spec-results-'));
   const coverageDir = mkdtempSync(path.join(tmpdir(), 'gev-spec-v8-'));
   try {
-    const runs = buildTestRuns({ testFiles, allocationFiles, outDir: resultsDir, coverageDir });
+    // Single-file components compile on import, as in `npm test`.
+    const runs = buildTestRuns({ testFiles, allocationFiles, outDir: resultsDir, coverageDir, imports: loaderImports(root) });
     // Each run's own trace reporter opens its `.sync` file lazily, on its first record, which
     // is not necessarily the first thing that touches that path: a test can write into it too
     // (src/tooling/spec/gates.test.mjs's [spec-trace-039 spec-trace-040] deliberately does, to

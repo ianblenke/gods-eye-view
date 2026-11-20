@@ -7,7 +7,7 @@ import { appendFileSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readd
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { buildTestRuns, childEnv, mergeRawCoverage, parseArgs, runGates } from '../../../scripts/spec/gates.mjs';
+import { buildTestRuns, childEnv, loaderImports, mergeRawCoverage, parseArgs, runGates } from '../../../scripts/spec/gates.mjs';
 import { protectedInput } from '../../../scripts/spec/lib/measurement.mjs';
 import { parseLcov, contentHash } from '../../../scripts/spec/lib/coverage.mjs';
 import { GUARD_PRELOAD, missingTestContext } from '../../../scripts/spec/lib/test-guard.mjs';
@@ -118,6 +118,21 @@ test('[coverage-gate-003] runs each tracked test file with coverage and the trac
     const files = raw.trim().split('\n').map((line) => JSON.parse(line).file);
     assert.deepEqual(files.sort(), ['src/math.test.mjs', 'tools/other.test.mjs']);
   });
+});
+
+test('[coverage-gate-102] loads the Vue loader in each test run when the project has one', () => {
+  const imports = ['./build/registerVue.js'];
+  const runs = buildTestRuns({ testFiles: ['src/a.test.mjs', 'src/alloc.test.mjs'], allocationFiles: ['src/alloc.test.mjs'], outDir: '/out', imports });
+  assert.deepEqual(runs[0].args.slice(0, 2), ['--import=./build/registerVue.js', '--test']);
+  assert.deepEqual(runs[1].args.slice(0, 3), ['--import=./build/registerVue.js', '--expose-gc', '--test']);
+  const project = mkdtempSync(path.join(tmpdir(), 'gev-loader-'));
+  assert.deepEqual(loaderImports(project), []);
+  mkdirSync(path.join(project, 'build'));
+  writeFileSync(path.join(project, 'build/registerVue.js'), '');
+  assert.deepEqual(loaderImports(project), ['./build/registerVue.js']);
+  rmSync(project, { recursive: true, force: true });
+  const plain = buildTestRuns({ testFiles: ['src/a.test.mjs'], allocationFiles: [], outDir: '/out' });
+  assert.equal(plain[0].args.some((arg) => arg.startsWith('--import=')), false);
 });
 
 test('[coverage-gate-007] runs the allocation tests alone with --expose-gc and no coverage', GUARDED_RUN, () => {
