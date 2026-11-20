@@ -9,7 +9,9 @@ Upstream added a renderer port. Code outside `src/render/cesium/` can no longer 
 ## What Changes
 
 - Merge the upstream commit `42559db10` in one merge. `design.md` gives the resolution of the 69 conflicts.
-- Port nine fork layer files to the renderer ports, so the two ratchet tests pass with the empty allow-lists: `beemaps`, `beemapsBursts`, `gdacs`, `osh`, `reticulum`, `sceneLayer`, `skywatchScenes` and `up42Scenes` (with `images.js`). Decision D1 gives the rules.
+- Port nine fork layer files to the renderer ports. Then the two ratchet tests pass with the empty allow-lists. Decision D1 gives the rules.
+  - The layers are `beemaps`, `beemapsBursts`, `gdacs`, `osh` and `reticulum`.
+  - The other layers are `sceneLayer`, `skywatchScenes` and `up42Scenes`, with its file `images.js`.
 - Keep the fork share tokens. Give the seven new upstream layers the tokens `05` to `0b`. Decision D2 gives the reason.
 - Remove the classification banner of the new upstream HUD. Decision D3 gives the reason.
 - Keep the Taiwan start flight on the camera port. Decision D4 gives the work.
@@ -38,7 +40,7 @@ The change adds no layer, no route and no QA script of the fork.
 
 ## Known limits and later changes
 
-- Known limit `share-links`: Share links of the seven new upstream layers from upstream do not decode in the fork, because the fork keeps its own tokens.
+- Known limit `share-links`: The fork does not decode the upstream share links of the seven new layers. The fork keeps its own tokens.
 - Known limit `locales`: The lead wrote the 21 fork texts for the nine new locales. No native speaker checked them.
 - Known limit `up42-image-alpha`: The UP42 image set draws opaque. The shape set has no alpha, so the old alpha of 0.85 is gone. The outlines do not draw over the images by a rule.
 - Known limit `osh-labels`: The OSH layer shows at most 500 overlay labels. The old Cesium labels had no limit.

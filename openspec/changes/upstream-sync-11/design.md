@@ -35,13 +35,18 @@ The change adds the new imports of the ported layers to the packages `reticulum`
 
 ### D2: Share tokens
 
-The check `scripts/check-layer-state-tokens.mjs` compares the registry with the published base of the fork. The tokens of the fork layers cannot change. They are: `air-quality` 8, `gnss-integrity` 7, `s2-ghostmaps` 03, `osh-systems` 3, `reticulum` 4, `beemaps` 5, `beemaps-bursts` 6, `gdacs` 9, `skywatch-scenes` 00, `planet-scenes` 01, `skyfi-scenes` 02 and `up42-scenes` 04.
+The check `scripts/check-layer-state-tokens.mjs` compares the registry with the published base of the fork. The tokens of the fork layers cannot change:
+
+- `air-quality` 8, `gnss-integrity` 7, `osh-systems` 3 and `reticulum` 4.
+- `beemaps` 5, `beemaps-bursts` 6 and `gdacs` 9.
+- `s2-ghostmaps` 03, `skywatch-scenes` 00, `planet-scenes` 01, `skyfi-scenes` 02 and `up42-scenes` 04.
 
 The seven new upstream layers get the next free tokens: `news` 05, `shipwrecks` 06, `rail` 07, `drone-airspace` 08, `sea-marks` 09, `ski-pistes` 0a and `wildlife-sightings` 0b. The next free token is 0c. The tests of the ledger use the one-character rows as the old ledger, and they remove `gdacs` where they need the last digit free.
 
 ### D3: HUD
 
 Upstream rewrote the HUD as the Vue view `src/ui/views/IntelHudView.vue`, and it kept a classification banner. The fork rule says that the HUD shows no classification marking. The change removes the field `classification` from `src/hud.js` and the element from the view.
+
 The view has no top bar. The scenario `hud-markings-003` named the three parts of the top bar, so the change retires it. The test file `src/hudMarkingsDom.test.mjs` is removed. The test `hud-markings-001` reads the view file too.
 
 ### D4: Start view and panels
@@ -53,7 +58,7 @@ The tests of `startup-view-001` to `-005` and of `location-presets-003`, `-004`,
 
 ### D5: New locales
 
-Upstream has nine new locales: ar, de, fr, he, it, ja, pt, sv and uk. Each locale needs the 21 fork texts. The lead wrote them. The file `zh-Hant.json` comes from `npm run i18n -- --zh-hant`. Texts that equal the English text are in `same-as-english.json`. The files are in the packages `reticulum` and `osh-layer`.
+Upstream has nine new locales: ar, de, fr, he, it, ja, pt, sv and uk. Each locale needs the 21 fork texts. The lead wrote them. The i18n script makes `zh-Hant.json` from the file `zh-CN.json`. Texts that equal the English text are in `same-as-english.json`. The files are in the packages `reticulum` and `osh-layer`.
 
 ### D6: Retired scenarios (rule 25)
 
