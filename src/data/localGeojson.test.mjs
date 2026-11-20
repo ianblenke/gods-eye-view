@@ -378,7 +378,10 @@ test('slow parked frames do not keep republishing the same local overlay cohort'
 
 test('real layer disable clears its published host entries and balances settle listeners', async (t) => {
   const env = await createRealLocalLayerHarness();
-  t.after(() => { env.layer.destroy(env.viewer); env.cleanup(); });
+  t.after(() => {
+    env.layer.destroy(env.viewer);
+    env.cleanup();
+  });
   env.preRender.raise();
   assert.ok(
     env.hostCalls.some(([type]) => type === 'entries'),
@@ -424,7 +427,10 @@ test('real layer disable clears its published host entries and balances settle l
 
 test('unchanged moveEnds do not rewrite the stem and real tip changes write it once', async (t) => {
   const env = await createRealLocalLayerHarness();
-  t.after(() => { env.layer.destroy(env.viewer); env.cleanup(); });
+  t.after(() => {
+    env.layer.destroy(env.viewer);
+    env.cleanup();
+  });
   env.preRender.raise();
   const stems = env.fake.set('stems');
   const dots = env.fake.set('dots');
@@ -712,7 +718,10 @@ test('a set the renderer refuses surfaces as an error instead of healthy stats',
 
 test('a loaded dataset is distinguishable from a dead one', async (t) => {
   const env = await createRealLocalLayerHarness();
-  t.after(() => { env.layer.destroy(env.viewer); env.cleanup(); });
+  t.after(() => {
+    env.layer.destroy(env.viewer);
+    env.cleanup();
+  });
   const stats = env.layer.getStats();
   assert.equal(stats.error, null);
   assert.ok(stats.count > 0);
