@@ -74,11 +74,6 @@ Origin: backfill
 - **WHEN** an observation callback or private inspection throws
 - **THEN** the observer keeps the action result or original callback error
 
-#### Scenario: Keep opaque action values `voice-panel-067`
-
-- **WHEN** an action returns an object or function without native Promise evidence
-- **THEN** the observer returns it unchanged and retires its key with reason unobserved-return-kind
-
 ### Requirement: Local inactivity
 
 The local inactivity helpers MUST report their current state and keep their local resources.

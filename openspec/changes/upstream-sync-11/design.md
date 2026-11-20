@@ -64,7 +64,7 @@ Upstream has nine new locales: ar, de, fr, he, it, ja, pt, sv and uk. Each local
 
 The fork wrote backfill tests for upstream code. Upstream changed that code in this range, and the fork tests no longer match it. The merge takes the upstream tests of those files. The change keeps three fork test files, which pass: `src/director/document.forkBackfill.test.mjs`, `src/layers/ghostMaps/records.forkBackfill.test.mjs` and `src/layers/perimeters/cards.forkBackfill.test.mjs`. The change deletes the other fork backfill tests.
 
-The change retires 199 scenarios in nine capabilities. The delta specs list them. After the archive, the lead adds the IDs to `openspec/trace/retired-ids.json` and removes their empty links from `openspec/trace/links.json`.
+The change retires 202 scenarios in nine capabilities. The delta specs list them. After the archive, the lead adds the IDs to `openspec/trace/retired-ids.json` and removes their empty links from `openspec/trace/links.json`.
 The scenario `coverage-gate-101` stays retired, because upstream rewrote `src/data/trafficTiming.test.mjs` and the new test runs in the process of the test runner.
 
 The change also rewrites tests, and it keeps their scenarios:

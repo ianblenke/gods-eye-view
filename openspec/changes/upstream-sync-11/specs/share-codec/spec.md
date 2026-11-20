@@ -16,6 +16,10 @@
 **Reason**: Upstream changed the share codec tables. It removed the style snow and changed the panel table. The fork tests of this requirement pinned the old tables, and they fail against the merged code. This change retires the scenarios `share-codec-016`, `share-codec-017`, `share-codec-018`, `share-codec-050`.
 **Migration**: None.
 
+### Requirement: View kinds
+**Reason**: Upstream changed the share codec tables. It removed the style snow and changed the panel table. The fork tests of this requirement pinned the old tables, and they fail against the merged code. This change retires the scenarios `share-codec-020`, `share-codec-021`, `share-codec-022`, `share-codec-062`, `share-codec-064`, `share-codec-030`, `share-codec-031`.
+**Migration**: None.
+
 ### Requirement: Follow offsets
 **Reason**: Upstream changed the share codec tables. It removed the style snow and changed the panel table. The fork tests of this requirement pinned the old tables, and they fail against the merged code. This change retires the scenarios `share-codec-023`, `share-codec-063`, `share-codec-024`, `share-codec-025`, `share-codec-051`, `share-codec-055`.
 **Migration**: None.
@@ -88,20 +92,4 @@ Origin: backfill
 
 - **WHEN** the caller computes CRC-8 for ASCII digits from one through nine
 - **THEN** the result equals 244
-
-### Requirement: View kinds
-
-The share codec MUST support the view kinds behavior in these scenarios.
-
-Origin: backfill
-
-#### Scenario: Known place kind `share-codec-062`
-
-- **WHEN** a payload names the place kind as text or code zero
-- **THEN** the decoder keeps the camera without a fallback or unknown-field report
-
-#### Scenario: Empty thing message `share-codec-064`
-
-- **WHEN** a payload contains an empty thing message without a fix
-- **THEN** the decoder keeps the camera and reports `missing-entity-kind`
 
