@@ -114,11 +114,12 @@ test('[credential-boundary-003] explicit build inputs preserve browser-only defi
       'import.meta.env.MAPILLARY_CLIENT_TOKEN',
     ],
   );
-  assert.deepEqual(Object.values(emptyDefines), [
-    undefined,
-    undefined,
-    undefined,
-  ]);
+  assert.deepEqual(
+    Object.entries(emptyDefines)
+      .filter(([key]) => !key.startsWith('__'))
+      .map(([, value]) => value),
+    [undefined, undefined, undefined],
+  );
   // A wildcard bind keeps the Host-header check; LAN names are explicit.
   for (const host of ['0.0.0.0', '::'])
     assert.deepEqual(

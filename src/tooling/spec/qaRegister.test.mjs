@@ -230,15 +230,15 @@ test('[qa-scripts-023] checks all tracked QA scripts in this repository', () => 
   const tracked = listTrackedFiles(PROJECT).filter((file) =>
     /^scripts\/qa-.*\.mjs$/.test(file),
   );
-  assert.equal(tracked.length, 114);
+  assert.equal(tracked.length, 115);
   const result = readQaRegister({
     root: PROJECT,
     tracked,
     manifest: readOwnership(PROJECT).manifest,
     adopts: tracked.map((file) => ({ file })),
   });
-  assert.equal(result.scripts.length, 114);
-  assert.equal(result.validQaScripts.size, 114);
+  assert.equal(result.scripts.length, 115);
+  assert.equal(result.validQaScripts.size, 115);
   assert.deepEqual(result.errors, []);
   assert.deepEqual(
     result.scripts.find(
