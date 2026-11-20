@@ -1025,6 +1025,102 @@ test('[coverage-gate-049] stops for a test that leaves a live timer', GUARDED_RU
   });
 });
 
+const LEAK_STUB = (root) => (command, args, options) => {
+  const result = spawnSync(command, args, options);
+  writeFileSync(
+    path.join(root, '.gev-cache/spec/guard-999.jsonl'),
+    `${JSON.stringify({ violations: [], checked: [], assertions: [], leaks: [{ file: 'src/math.test.mjs', resources: ['Timeout'] }] })}\n`,
+  );
+  return result;
+};
+const RECORD = 'openspec/trace/upstream-test-findings.json';
+const record = (files) => `${JSON.stringify({ version: 1, files })}\n`;
+
+test('[coverage-gate-103] excuses a recorded leak of an upstream test file', GUARDED_RUN, () => {
+  withFixture(
+    (root) => {
+      passes(root, ['init']);
+      write(root, { [RECORD]: record({ 'src/math.test.mjs': ['GATES-TEST-LEAK'] }) });
+      const check = run(root, ['check'], { spawn: LEAK_STUB(root) });
+      assert.equal(check.status, 0, check.output);
+      assert.doesNotMatch(check.output, /GATES-TEST-LEAK|GATES-FINDING/);
+    },
+  );
+});
+
+test('[coverage-gate-104] stops for an owned file with a recorded leak and for a leak with no record', GUARDED_RUN, () => {
+  withFixture(
+    (root) => {
+      passes(root, ['init']);
+      write(root, { [RECORD]: record({ 'src/math.test.mjs': ['TRACE-EMPTY-TEST-FILE'] }) });
+      const check = run(root, ['check'], { spawn: LEAK_STUB(root) });
+      assert.equal(check.status, 1);
+      assert.match(check.output, /ERROR GATES-TEST-LEAK src\/math\.test\.mjs/);
+    },
+  );
+  withFixture(
+    (root) => {
+      passes(root, ['init']);
+      write(root, { [RECORD]: record({ 'src/math.test.mjs': ['GATES-TEST-LEAK'] }) });
+      const check = run(root, ['check'], { spawn: LEAK_STUB(root) });
+      assert.equal(check.status, 1);
+      assert.match(check.output, /ERROR GATES-TEST-LEAK src\/math\.test\.mjs/);
+    },
+    { base: { 'openspec/ownership.json': '{"version":1,"owned":["src/math.test.mjs"]}\n' } },
+  );
+});
+
+test('[coverage-gate-105] stops for a record that lists a finding the run did not find', GUARDED_RUN, () => {
+  withFixture(
+    (root) => {
+      passes(root, ['init']);
+      write(root, { [RECORD]: record({ 'src/math.test.mjs': ['GATES-TEST-LEAK'] }) });
+      const check = run(root, ['check']);
+      assert.equal(check.status, 1);
+      assert.match(check.output, /ERROR GATES-FINDING-STALE src\/math\.test\.mjs/);
+    },
+  );
+  withFixture(
+    (root) => {
+      passes(root, ['init']);
+      write(root, { [RECORD]: record({ 'src/math.test.mjs': ['GATES-TEST-LEAK'] }) });
+      const check = run(root, ['check']);
+      assert.equal(check.status, 1);
+      assert.match(check.output, /ERROR GATES-FINDING-OWNED src\/math\.test\.mjs/);
+    },
+    { base: { 'openspec/ownership.json': '{"version":1,"owned":["src/math.test.mjs"]}\n' } },
+  );
+});
+
+test('[coverage-gate-106] writes the record of upstream findings with the findings command', GUARDED_RUN, () => {
+  withFixture((root) => {
+    passes(root, ['init']);
+    const result = run(root, ['findings'], { spawn: LEAK_STUB(root) });
+    assert.equal(result.status, 0, result.output);
+    assert.equal(readFileSync(path.join(root, RECORD), 'utf8'), '{\n  "version": 1,\n  "files": {\n    "src/math.test.mjs": [\n      "GATES-TEST-LEAK"\n    ]\n  }\n}\n');
+    assert.equal(run(root, ['check'], { spawn: LEAK_STUB(root) }).status, 0);
+  });
+  withFixture(
+    (root) => {
+      passes(root, ['init']);
+      const result = run(root, ['findings'], { spawn: LEAK_STUB(root) });
+      assert.equal(result.status, 1);
+      assert.match(result.output, /ERROR GATES-TEST-LEAK/);
+      assert.equal(existsSync(path.join(root, RECORD)), false);
+    },
+    { base: { 'openspec/ownership.json': '{"version":1,"owned":["src/math.test.mjs"]}\n' } },
+  );
+  withFixture(
+    (root) => {
+      passes(root, ['init']);
+      write(root, { [RECORD]: record({ 'src/math.test.mjs': ['GATES-TEST-LEAK'] }) });
+      const result = run(root, ['findings']);
+      assert.equal(result.status, 0, result.output);
+      assert.equal(readFileSync(path.join(root, RECORD), 'utf8'), '{\n  "version": 1,\n  "files": {}\n}\n');
+    },
+  );
+});
+
 test('[coverage-gate-050] does not stop for a test process without a live timer', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);

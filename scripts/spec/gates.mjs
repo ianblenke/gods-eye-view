@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import { readOwnership, isAdoptSource, validAdoptSources, ownershipAdvice, syncChangedLines, parseLineCoverage, coverageFaults, gapReport } from './lib/ownership.mjs';
+import { readFindings, splitFindings, writeFindings } from './lib/upstream-findings.mjs';
+import { readOwnership, classify, isAdoptSource, validAdoptSources, ownershipAdvice, syncChangedLines, parseLineCoverage, coverageFaults, gapReport } from './lib/ownership.mjs';
 import { changedInputs, trustMeasurement, writeMeasurement } from './lib/measurement.mjs';
 import { importReach, adoptableReached } from './lib/import-reach.mjs';
 import { spawnSync } from 'node:child_process';
@@ -50,9 +51,9 @@ const RUNNER = fileURLToPath(new URL('./lib/run-parallel.mjs', import.meta.url))
 const OUT_DIR = '.gev-cache/spec';
 const DEFAULT_BASE = 'origin/main';
 const LOCAL_ENV_FILE = /^\.env(\..+)?$/;
-const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive', 'adopt', 'rebaseline', 'report']);
+const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive', 'adopt', 'rebaseline', 'report', 'findings']);
 const OPTIONS = new Set(['--change', '--base', '--root', '--file', '--metric', '--lines', '--count', '--reason', '--from']);
-const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive|adopt|rebaseline|report> [--no-measure] [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>] [--from <commit>]';
+const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive|adopt|rebaseline|report|findings> [--no-measure] [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>] [--from <commit>]';
 
 /**
  * Read the command line. Throws the usage text for a bad command line.
@@ -326,7 +327,8 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec, phase, m
     errors.push(...trace.errors);
     writeTraceReport(root, trace.report);
 
-    return { errors, inventory, lineCoverage: parseLineCoverage(lcovText ?? '', root), qaScripts: qaRegister.scripts, testFiles, records, assertions, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
+    const split = splitFindings({ errors, isOwned: (file) => classify(manifest, file) === 'owned', recorded: readFindings(root) });
+    return { errors: split.errors, found: split.found, inventory, lineCoverage: parseLineCoverage(lcovText ?? '', root), qaScripts: qaRegister.scripts, testFiles, records, assertions, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
   } finally {
     rmSync(coverageDir, { recursive: true, force: true });
   }
@@ -356,7 +358,8 @@ function documentMeasurement({ root, change, openSpec, snapshot, phase, manifest
   const readFile = file => readFileSync(path.join(root, file), 'utf8');
   errors.push(...checkUntracked(listUntrackedFiles(root)));
   errors.push(...findCoverageFlags({ tracked, readFile }));
-  return { ...snapshot, specs, trace, qaScripts: qa.scripts, errors: [...errors, ...trace.errors, ...qa.errors], links: buildLinks(trace.report), current: currentGaps({ coverage: snapshot.coverage, untraced: trace.untraced }) };
+  const split = splitFindings({ errors: [...errors, ...trace.errors, ...qa.errors], isOwned: (file) => classify(manifest, file) === 'owned', recorded: readFindings(root) });
+  return { ...snapshot, specs, trace, qaScripts: qa.scripts, errors: split.errors, found: split.found, links: buildLinks(trace.report), current: currentGaps({ coverage: snapshot.coverage, untraced: trace.untraced }) };
 }
 
 function location(item) {
@@ -564,6 +567,15 @@ function runGateCommand({
   const notLoaded = measured.coverage.filter((item) => !item.loaded && !item.complete).length;
   const complete = measured.coverage.filter((item) => item.complete).length;
   log(`Coverage: ${measured.coverage.length} files, ${complete} complete, ${notLoaded} not loaded, ${measured.untrue.size} untrue.`);
+
+  if (command === 'findings') {
+    // The command records each finding of an upstream file, so those findings are not faults here.
+    const errors = measured.errors.filter((error) => error.code !== 'GATES-FINDING-STALE' && !measured.found[error.file]?.has(error.code));
+    if (errors.length > 0) return report(log, errors);
+    writeFindings(root, measured.found);
+    log(`Findings: wrote ${Object.keys(measured.found).length} files to the record.`);
+    return report(log, []);
+  }
 
   if (command === 'init') {
     if (measured.errors.length > 0) return report(log, measured.errors);

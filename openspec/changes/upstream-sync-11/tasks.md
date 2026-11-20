@@ -16,6 +16,7 @@
 - [x] 1.14 Keep the scenarios of `share-codec`: share-codec-001, share-codec-002, share-codec-003, share-codec-004, share-codec-005, share-codec-006, share-codec-007, share-codec-008, share-codec-009, share-codec-062, share-codec-064.
 - [x] 1.15 Keep the scenarios of `voice-panel`: voice-panel-002, voice-panel-004, voice-panel-005, voice-panel-006, voice-panel-007, voice-panel-008, voice-panel-010, voice-panel-030, voice-panel-031, voice-panel-033, voice-panel-034, voice-panel-035, voice-panel-036, voice-panel-037, voice-panel-038, voice-panel-039, voice-panel-040, voice-panel-041, voice-panel-042, voice-panel-043, voice-panel-045, voice-panel-046, voice-panel-047, voice-panel-067.
 - [x] 1.16 Add the Vue loader to each test run of the gate: coverage-gate-102.
+- [ ] 1.17 Record the findings of upstream test files, with the owner approval of 2026-11-20: coverage-gate-103, coverage-gate-104, coverage-gate-105 and coverage-gate-106.
 
 ## 2. Host evidence
 
