@@ -201,6 +201,15 @@ function encode(state) {
   return params.toString();
 }
 
+test('[osh-033] registers the OSH systems layer with token 3', () => {
+  assert.deepEqual(
+    LAYER_STATE_REGISTRY.find((entry) => entry.id === 'osh-systems'),
+    { id: 'osh-systems', token: '3', disposition: 'enabled-only' },
+  );
+  assert.equal(REGISTERED_LAYER_IDS.length, 48);
+  assert.deepEqual(REGISTERED_LAYER_IDS, [...REGISTERED_LAYER_IDS].sort());
+});
+
 test('production registry is exact, canonical, and rejects incomplete contracts', async () => {
   assert.equal(validateLayerStateRegistry(), true);
   assert.equal(REGISTERED_LAYER_IDS.length, 48);
