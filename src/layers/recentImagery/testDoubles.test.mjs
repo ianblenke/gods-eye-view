@@ -15,7 +15,8 @@ test('[recent-imagery-052] the renderer double moves both image slots to the nex
 test('[recent-imagery-052] the thumbnail double calls both probe subscribers', async () => {
   const { fakeThumbnails } = await import('./testDoubles.mjs');
   const t = fakeThumbnails();
-  const first = [], second = [];
+  const first = [],
+    second = [];
   t.subscribe((key) => first.push(key));
   t.subscribe((key) => second.push(key));
   t.probe('S30:2026-09-18', 'present');
@@ -31,6 +32,9 @@ test('[recent-imagery-052] the response doubles use different success and failur
 
 test('[recent-imagery-052] the day doubles give cloud ranges only to granule days', async () => {
   const { candidate } = await import('./testDoubles.mjs');
-  assert.deepEqual(candidate('S30', '2026-09-18', 12).cloud, { min: 12, max: 12 });
+  assert.deepEqual(candidate('S30', '2026-09-18', 12).cloud, {
+    min: 12,
+    max: 12,
+  });
   assert.equal(candidate('VIIRS', '2026-09-18', 12).cloud, null);
 });
