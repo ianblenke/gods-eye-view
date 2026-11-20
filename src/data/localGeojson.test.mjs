@@ -422,7 +422,7 @@ test('real layer disable clears its published host entries and balances settle l
   env.cleanup();
 });
 
-test('unchanged moveEnds do not rewrite the stem and real tip changes write it once', async () => {
+test('unchanged moveEnds do not rewrite the stem and real tip changes write it once', async (t) => {
   const env = await createRealLocalLayerHarness();
   t.after(() => { env.layer.destroy(env.viewer); env.cleanup(); });
   env.preRender.raise();
