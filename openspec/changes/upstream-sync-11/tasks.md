@@ -9,8 +9,7 @@
 - [x] 1.7 Port the nine fork layer files to the renderer ports.
 - [x] 1.8 Adapt the fork tests, and delete the fork backfill tests that fail against the upstream code.
 - [x] 1.9 Rename the fork changelog fragments that repeat an upstream number.
-
-- [x] 1.10 Keep the remaining scenarios of the modified requirements. They are listed by capability in the tasks 1.11 to 1.16.
+- [x] 1.10 Keep the remaining scenarios of the modified requirements. They are listed by capability in the tasks 1.11 to 1.15.
 - [x] 1.11 Keep the scenarios of `gdacs-layer`: gdacs-layer-018, gdacs-layer-019, gdacs-layer-020, gdacs-layer-021, gdacs-layer-022.
 - [x] 1.12 Keep the scenarios of `ghostmaps`: ghostmaps-036, ghostmaps-037, ghostmaps-038, ghostmaps-039, ghostmaps-040, ghostmaps-041, ghostmaps-042, ghostmaps-048, ghostmaps-049, ghostmaps-051, ghostmaps-052, ghostmaps-053, ghostmaps-057, ghostmaps-058, ghostmaps-062, ghostmaps-063, ghostmaps-064, ghostmaps-066, ghostmaps-067.
 - [x] 1.13 Keep the scenarios of `reticulum-layer`: reticulum-layer-017, reticulum-layer-018, reticulum-layer-019, reticulum-layer-020.
