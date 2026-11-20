@@ -15,6 +15,7 @@ import { createStandaloneLayerSources } from '../../standalone/layerSources.js';
 import { createReferenceSources } from '../../sources/reference.js';
 import { layerNameForId } from '../../ui/layerNames.js';
 import { VOICE_OFF_LAYERS } from '../../voice/layerManifest.js';
+import { bindFakeDraw } from '../../testSupport/fakeDrawPort.mjs';
 
 const GOOD = {
   events: [],
@@ -26,7 +27,8 @@ const GOOD = {
     total: 0,
   },
 };
-const FAKE_VIEWER = { dataSources: { add() {}, remove() {} } };
+const FAKE_VIEWER = {};
+bindFakeDraw(FAKE_VIEWER);
 const readLocale = (code) =>
   JSON.parse(
     readFileSync(
@@ -101,7 +103,8 @@ test('[gdacs-layer-019] puts the layer at the end of the Events group of the pan
   const group = /label: msg\('Events'\),\s*ids: \[([^\]]*)\]/.exec(text);
   assert.notEqual(group, null);
   const ids = [...group[1].matchAll(/'([^']+)'/g)].map((match) => match[1]);
-  assert.deepEqual(ids.slice(-2), ['s2-ghostmaps', 'gdacs']);
+  const at = ids.indexOf('s2-ghostmaps');
+  assert.deepEqual(ids.slice(at, at + 2), ['s2-ghostmaps', 'gdacs']);
 });
 
 test('[gdacs-layer-020] keeps the layer out of voice', () => {

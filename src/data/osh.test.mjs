@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { readStylesheet } from '../testSupport/readStylesheet.mjs';
-import { expandApplicationHtml } from '../../build/application-html.js';
-import * as Cesium from 'cesium';
+import { bindFakeDraw } from '../testSupport/fakeDrawPort.mjs';
+import { fakeInput } from '../input/testDoubles.mjs';
 import createOshLayer, { createOshLayer as createLayer, createOshPanelHosts } from './osh.js';
 import { createOshSource } from '../layers/osh/index.js';
 
@@ -101,26 +101,18 @@ function withGlobalDocument(t, documentLike) {
   });
 }
 
-/** A fake viewer that has only what the layer reads, and a capture of the left click. */
+/** A fake viewer that has only what the layer reads, and a way to click. */
 function clickableViewer(t) {
   const viewer = {
     scene: {
       canvas: { addEventListener() {}, removeEventListener() {} },
-      pick: () => ({ id: { id: 'osh:sys-fixture-1' } }),
+      pick: () => ({ id: { set: 'osh-systems:points', id: 'osh:sys-fixture-1' }, primitive: {} }),
     },
-    camera: { moveEnd: new Cesium.Event(), positionWC: Cesium.Cartesian3.fromDegrees(1, 2, 1_500_000) },
-    dataSources: { add: (dataSource) => dataSource, remove: () => true },
   };
-  const capture = { click: null };
-  const setInputAction = Cesium.ScreenSpaceEventHandler.prototype.setInputAction;
-  Cesium.ScreenSpaceEventHandler.prototype.setInputAction = function (action, type) {
-    if (type === Cesium.ScreenSpaceEventType.LEFT_CLICK) capture.click = action;
-    return setInputAction.call(this, action, type);
-  };
-  t.after(() => {
-    Cesium.ScreenSpaceEventHandler.prototype.setInputAction = setInputAction;
-  });
-  return { viewer, capture };
+  bindFakeDraw(viewer);
+  const driver = fakeInput(viewer);
+  t.after(() => driver.destroy());
+  return { viewer, capture: { click: () => driver.click() } };
 }
 
 const SYSTEM_RECORD = { id: 'sys-fixture-1', uid: 'urn:a', name: 'System A', description: null, lon: 1, lat: 2, alt: 0 };
@@ -157,13 +149,14 @@ test('[osh-089] createOshLayer() passes the panel host, the detail host and the 
     },
     createPlayer: () => ({ push() {}, close() {} }),
     documentImpl: { name: 'fake document' },
+    overlayHost: null,
   });
   const { viewer, capture } = clickableViewer(t);
   t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
-  capture.click({ position: {} });
+  capture.click();
   await settle();
   assert.equal(hosts.panelHost.hidden, false, 'the panel host shows');
   assert.match(hosts.detailHost.innerHTML, /Camera One/, 'the detail host holds the detail');
@@ -203,17 +196,14 @@ test('[osh-089] the default layer looks for the panel elements in the page and f
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
-  capture.click({ position: {} });
+  capture.click();
   await settle();
   assert.equal(elements['osh-panel'].hidden, false, 'the panel element shows');
   assert.match(elements['osh-panel-detail'].innerHTML, /System A/, 'the detail element holds the detail');
 });
 
 test('[osh-094] index.html has one element osh-panel, hidden at the start, and one video host and one detail host inside that element', () => {
-  // The page is index.html with its component templates expanded, as the build makes it.
-  const html = expandApplicationHtml(
-    readFileSync(new URL('../../index.html', import.meta.url), 'utf8'),
-  );
+  const html = readFileSync(new URL('../../index.html', import.meta.url), 'utf8');
   const opening = /<aside\b[^>]*\bid="osh-panel"[^>]*>/.exec(html);
   assert.ok(opening, 'the page has the element osh-panel');
   assert.match(opening[0], /\shidden[\s>]/, 'the panel is hidden until the layer shows it');

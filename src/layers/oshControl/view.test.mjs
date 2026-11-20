@@ -2,7 +2,7 @@ import test, { mock } from 'node:test';
 import assert from 'node:assert/strict';
 import { createOshCommandView } from './view.js';
 import { createOshLayer } from '../osh/index.js';
-import * as Cesium from 'cesium';
+import { bindFakeDraw } from '../../testSupport/fakeDrawPort.mjs';
 
 function fakeDocument() {
   const documentImpl = { activeElement: null, createElement(tagName) { return { tagName, children: [], textContent: '', value: '', hidden: false, disabled: false, append(...children) { this.children.push(...children); }, replaceChildren(...children) { this.children = [...children]; }, addEventListener(name, fn) { this[`on${name}`] = fn; }, click() { this.onclick?.(); }, focus() { documentImpl.activeElement = this; } }; } };
@@ -140,28 +140,23 @@ test('[osh-control-016 osh-control-017] Show and clear the optional command view
   const originalDocument = globalThis.document;
   globalThis.document = { addEventListener() {}, removeEventListener() {} };
   let clickAction;
-  const originalSetInputAction = Cesium.ScreenSpaceEventHandler.prototype.setInputAction;
-  Cesium.ScreenSpaceEventHandler.prototype.setInputAction = function (action, type) {
-    if (type === Cesium.ScreenSpaceEventType.LEFT_CLICK) clickAction = action;
-    return originalSetInputAction.call(this, action, type);
-  };
+  const input = () => ({ onClick(handler) { clickAction = (click) => handler({ ...click, drawHit: picked }); return () => {}; } });
   let picked = null;
-  const camera = { moveEnd: new Cesium.Event(), positionWC: Cesium.Cartesian3.fromDegrees(1, 2, 1_500_000) };
-  const viewer = { scene: { canvas: { addEventListener() {}, removeEventListener() {} }, pick() { return picked; } }, camera, dataSources: { add() {}, remove() {} } };
+  const viewer = {};
+  bindFakeDraw(viewer);
   const events = [];
   const commandView = { show(value) { events.push(['show', value]); }, clear() { events.push(['clear']); } };
   const source = { getSystems: async () => ({ keyRequired: false, systems: [{ id: 'sys-fixture-one', name: 'Fixture drone', lon: 1, lat: 2, alt: 0 }], stale: false }), getDatastreams: async () => ({ keyRequired: false, datastreams: [] }) };
-  const layer = createOshLayer({ source, commandView });
+  const layer = createOshLayer({ source, commandView, input });
   t.after(() => {
     layer.destroy(viewer);
-    Cesium.ScreenSpaceEventHandler.prototype.setInputAction = originalSetInputAction;
     if (originalDocument === undefined) delete globalThis.document;
     else globalThis.document = originalDocument;
   });
   layer.init(viewer);
   layer.enable(viewer);
   assert.equal(await layer.update(), true);
-  picked = { id: 'osh:sys-fixture-one' };
+  picked = { set: 'osh-systems:points', id: 'osh:sys-fixture-one', surface: false };
   clickAction({ position: {} });
   assert.deepEqual(events.at(-1), ['show', { systemId: 'sys-fixture-one', systemName: 'Fixture drone' }]);
   picked = null;

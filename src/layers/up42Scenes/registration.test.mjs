@@ -26,6 +26,8 @@ import {
   installRenderGovernor,
 } from '../../renderGovernor.js';
 import { VOICE_OFF_LAYERS } from '../../voice/layerManifest.js';
+import { framePortFor } from '../../testSupport/fakeFramePort.mjs';
+import { sceneViewer } from '../../testSupport/sceneViewer.mjs';
 import { sceneList } from './model.js';
 import { fakeStreetLevelProvider } from '../../testSupport/streetLevelFakes.mjs';
 
@@ -54,16 +56,12 @@ const ANSWER = {
   used: 1,
   limit: 20,
 };
-const viewer = () => ({
-  dataSources: { add() {}, remove() {} },
-  camera: {
-    pickEllipsoid: () => Cesium.Cartesian3.fromDegrees(10, 60),
-  },
-  scene: {
+const viewer = () =>
+  sceneViewer({
+    layerId: 'up42-scenes',
+    pick: () => Cesium.Cartesian3.fromDegrees(10, 60),
     canvas: { clientWidth: 800, clientHeight: 600 },
-    globe: { ellipsoid: Cesium.Ellipsoid.WGS84 },
-  },
-});
+  }).viewer;
 const readLocale = (code) =>
   JSON.parse(
     readFileSync(
@@ -214,9 +212,12 @@ test('[up42-scenes-layer-033] selects a scene through setLayerParams of the mana
 
 test('[up42-scenes-layer-033] gives the layer of the application the render governor, and an option requestRender replaces it', async (t) => {
   const frames = [];
-  installRenderGovernor({
-    scene: { requestRender: () => frames.push('frame') },
-  });
+  installRenderGovernor(
+    framePortFor({
+      requestRenderMode: true,
+      requestRender: () => frames.push('frame'),
+    }),
+  );
   t.after(() => _resetRenderGovernorForTest());
   const calls = { getStatus: 0, searchScenes: 0, getThumbnail: 0 };
   const view = viewer();
@@ -329,14 +330,14 @@ test('[up42-scenes-layer-037] gives both Chinese names for the shipped catalogs'
   assert.equal(readLocale('zh-Hant')['UP42 scenes'], 'UP42 影像場景');
 });
 
-test('[up42-scenes-layer-041] keeps 42 catalog layers with full, absent and changed sources', (t) => {
+test('[up42-scenes-layer-041] keeps 50 catalog layers with full, absent and changed sources', (t) => {
   const lifetime = new AbortController();
   t.after(() => lifetime.abort());
   const sources = createStandaloneLayerSources();
-  assert.equal(catalogOf(sources, lifetime.signal).layers.length, 42);
+  assert.equal(catalogOf(sources, lifetime.signal).layers.length, 50);
   delete sources.mapillary;
-  assert.equal(catalogOf(sources, lifetime.signal).layers.length, 42);
-  assert.equal(catalogOf({}, lifetime.signal).layers.length, 42);
+  assert.equal(catalogOf(sources, lifetime.signal).layers.length, 50);
+  assert.equal(catalogOf({}, lifetime.signal).layers.length, 50);
   const changed = createApplicationCatalog({
     sources,
     signal: lifetime.signal,
@@ -349,15 +350,17 @@ test('[up42-scenes-layer-041] keeps 42 catalog layers with full, absent and chan
       fakeStreetLevelProvider({ id: 'example', pickPrefix: 'example:' }),
     ],
   });
-  assert.equal(changed.layers.length, 42);
+  assert.equal(changed.layers.length, 50);
   assert.deepEqual(changed.get('street-level').providerIds, ['example']);
 });
 
-test('[up42-scenes-layer-041] keeps all 13 reference source keys in order', () => {
+test('[up42-scenes-layer-041] keeps all 15 reference source keys in order', () => {
   assert.deepEqual(Object.keys(createReferenceSources()), [
     'earthquakes',
     'air-quality',
     'fire-perimeters',
+    'drone-airspace',
+    'wildlife-sightings',
     'cables',
     'reticulum',
     'beemaps',
@@ -371,11 +374,11 @@ test('[up42-scenes-layer-041] keeps all 13 reference source keys in order', () =
   ]);
 });
 
-test('[up42-scenes-layer-041] keeps 41 registry and ledger entries and refuses the free token 05', () => {
-  assert.equal(REGISTERED_LAYER_IDS.length, 41);
-  assert.equal(new Set(REGISTERED_LAYER_IDS).size, 41);
-  assert.equal(LAYER_STATE_REGISTRY.length, 41);
-  assert.equal(Object.keys(LAYER_STATE_TOKEN_RESERVATIONS).length, 41);
+test('[up42-scenes-layer-041] keeps 48 registry and ledger entries and refuses the free token 0c', () => {
+  assert.equal(REGISTERED_LAYER_IDS.length, 48);
+  assert.equal(new Set(REGISTERED_LAYER_IDS).size, 48);
+  assert.equal(LAYER_STATE_REGISTRY.length, 48);
+  assert.equal(Object.keys(LAYER_STATE_TOKEN_RESERVATIONS).length, 48);
   assert.equal(LAYER_STATE_TOKEN_RESERVATIONS['up42-scenes'], '04');
   const rows = JSON.parse(
     readFileSync(
@@ -383,14 +386,14 @@ test('[up42-scenes-layer-041] keeps 41 registry and ledger entries and refuses t
       'utf8',
     ),
   );
-  assert.equal(rows.length, 41);
+  assert.equal(rows.length, 48);
   assert.deepEqual(
     rows.filter(([id]) => id === 'up42-scenes'),
     [['up42-scenes', '04']],
   );
-  assert.equal(nextLayerStateToken(), '05');
-  assert.equal(decodeLayerStateParams(new URLSearchParams('v=2&l=05')), null);
-  assert.equal(decodeLayerStateParams(new URLSearchParams('v=2&l=c.05')), null);
+  assert.equal(nextLayerStateToken(), '0c');
+  assert.equal(decodeLayerStateParams(new URLSearchParams('v=2&l=0c')), null);
+  assert.equal(decodeLayerStateParams(new URLSearchParams('v=2&l=c.0c')), null);
   const source = readFileSync(
     new URL('../../data/layerState.js', import.meta.url),
     'utf8',

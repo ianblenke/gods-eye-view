@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import * as Cesium from 'cesium';
+import { cssColor } from '../../render/color.js';
+import { sceneViewer } from '../../testSupport/sceneViewer.mjs';
 import { createUp42ScenesLayer } from './index.js';
 import { normalizeAnswer } from './records.js';
 
@@ -54,7 +56,7 @@ const image = () => ({
 
 function harness(
   t,
-  { scenes = three(), thumbnail = async () => image(), decode } = {},
+  { scenes = three(), thumbnail = async () => image(), decode, failImage } = {},
 ) {
   const state = { scenes, configured: true, searchError: null };
   const calls = [];
@@ -102,26 +104,32 @@ function harness(
     decodeImage: decode ?? fakeDecode,
     requestRender: (id) => renders.push(id),
   });
-  let ds;
-  const viewer = {
-    scene: { canvas: { clientWidth: 800, clientHeight: 600 }, globe: {} },
-    camera: { pickEllipsoid: () => Cesium.Cartesian3.fromDegrees(10, 60) },
-    dataSources: {
-      add(value) {
-        ds = value;
-      },
-      remove() {},
-    },
-  };
+  const view = sceneViewer({
+    layerId: 'up42-scenes',
+    pick: () => Cesium.Cartesian3.fromDegrees(10, 60),
+    canvas: { clientWidth: 800, clientHeight: 600 },
+  });
+  const { viewer } = view;
+  if (failImage) {
+    const shapes = view.draw.shapes;
+    view.draw.shapes = (spec) => {
+      const made = shapes(spec);
+      const set = made.set;
+      made.set = (items) => {
+        if (items.some(({ id }) => id === failImage)) throw new Error('SECRET');
+        return set(items);
+      };
+      return made;
+    };
+  }
   const controls = () => layer.getRowControls();
   const chip = () => controls().chips[1];
   const search = () => controls().chips[0].onClick();
-  const images = () =>
-    ds.entities.values.filter(
-      (entity) =>
-        entity.polygon?.material instanceof Cesium.ImageMaterialProperty,
-    );
-  const outline = (id) => ds.entities.getById(`up42-scenes:${id}`);
+  const images = () => [...(view.set('images')?.items.values() ?? [])];
+  const outline = (id) => ({
+    line: view.item('lines', id),
+    fill: view.item('fills', id),
+  });
   layer.setRowControlsListener(() => notices.push(controls().info));
   layer.init(viewer);
   layer.enable();
@@ -142,13 +150,16 @@ function harness(
     images,
     outline,
     maximum: () => maximum,
-    ds: () => ds,
+    view,
     async ready() {
       await layer.update();
       await search();
     },
   };
 }
+
+const expectColor = (actual, css, alpha) =>
+  assert.deepEqual(actual, [...cssColor(css).slice(0, 3), alpha]);
 
 const coordinates = (positions) =>
   positions.map((position) => {
@@ -376,7 +387,7 @@ test('[up42-scene-overlay-007] keeps two images after one failure and sends no r
   );
   assert.deepEqual(
     h.images().map(({ id }) => id),
-    ['up42-scenes:image:new', 'up42-scenes:image:old'],
+    ['up42-scenes:image:old', 'up42-scenes:image:new'],
   );
   await h.layer.update();
   h.layer.setParams({ scene: 'middle' });
@@ -405,13 +416,8 @@ test('[up42-scene-overlay-008] counts a rejected thumbnail with a fixed message'
 });
 
 test('[up42-scene-overlay-008] counts an image error and releases its URL', async (t) => {
-  const h = harness(t);
+  const h = harness(t, { failImage: 'up42-scenes:image:middle' });
   await h.ready();
-  const add = h.ds().entities.add.bind(h.ds().entities);
-  t.mock.method(h.ds().entities, 'add', (entity) => {
-    if (entity.id === 'up42-scenes:image:middle') throw new Error('SECRET');
-    return add(entity);
-  });
   h.chip().onClick();
   await tick();
   assert.equal(
@@ -442,7 +448,7 @@ test('[up42-scene-overlay-008] counts an object URL error', async (t) => {
   assert.deepEqual(h.revoked, []);
 });
 
-test('[up42-scene-overlay-009] draws every footprint vertex with the specified image material', async (t) => {
+test('[up42-scene-overlay-009] draws every footprint vertex with the specified image fill', async (t) => {
   const scenes = three();
   scenes.scenes[0].ring = [
     [21, 31],
@@ -461,30 +467,18 @@ test('[up42-scene-overlay-009] draws every footprint vertex with the specified i
   await h.ready();
   h.chip().onClick();
   await tick();
-  const polygon = h.images()[0].polygon;
-  assert.deepEqual(coordinates(polygon.hierarchy.getValue().positions), [
-    [10, 60],
-    [12, 61],
-    [11, 63],
-    [9, 62],
-    [10, 60],
-  ]);
+  const ring = (item) =>
+    item.geometry.rings[0].map(({ lon, lat }) => [lon, lat]);
   assert.deepEqual(
-    h
-      .images()
-      .map((entity) => [
-        entity.id,
-        coordinates(entity.polygon.hierarchy.getValue().positions),
-      ]),
+    h.images().map((item) => [item.id, ring(item)]),
     [
       [
-        'up42-scenes:image:new',
+        'up42-scenes:image:old',
         [
-          [10, 60],
-          [12, 61],
-          [11, 63],
-          [9, 62],
-          [10, 60],
+          [21, 31],
+          [23, 32],
+          [24, 35],
+          [21, 31],
         ],
       ],
       [
@@ -498,28 +492,25 @@ test('[up42-scene-overlay-009] draws every footprint vertex with the specified i
         ],
       ],
       [
-        'up42-scenes:image:old',
+        'up42-scenes:image:new',
         [
-          [21, 31],
-          [23, 32],
-          [24, 35],
-          [21, 31],
+          [10, 60],
+          [12, 61],
+          [11, 63],
+          [9, 62],
+          [10, 60],
         ],
       ],
     ],
   );
-  assert.equal(polygon.material.image.getValue(), 'blob:preview-1');
-  assert.equal(polygon.material.transparent.getValue(), true);
-  assert.deepEqual(
-    polygon.material.color.getValue(),
-    new Cesium.Color(1, 1, 1, 0.85),
-  );
+  const newest = h.images()[2];
+  assert.equal(newest.fill.image, 'blob:preview-1');
   assert.equal(h.urls[0] instanceof Blob, true);
   assert.equal(h.urls[0].type, 'image/png');
   assert.equal(await h.urls[0].text(), 'fake');
 });
 
-test('[up42-scene-overlay-010] gives ground polygons literal ranks with the newest highest', async (t) => {
+test('[up42-scene-overlay-010] draws ground polygons in order of rank with the newest last', async (t) => {
   const waits = new Map();
   const h = harness(t, {
     thumbnail: ({ id }) => {
@@ -535,33 +526,33 @@ test('[up42-scene-overlay-010] gives ground polygons literal ranks with the newe
     waits.get(id).resolve(image());
     await tick();
   }
+  // A later item draws over an earlier one: the newest scene is last.
   assert.deepEqual(
-    h.images().map(({ id, polygon }) => [id, polygon.zIndex.getValue()]),
+    h.images().map(({ id }) => id),
     [
-      ['up42-scenes:image:old', 1],
-      ['up42-scenes:image:middle', 2],
-      ['up42-scenes:image:new', 3],
+      'up42-scenes:image:old',
+      'up42-scenes:image:middle',
+      'up42-scenes:image:new',
     ],
   );
-  for (const { polygon } of h.images()) {
-    assert.equal(polygon.height, undefined);
-    assert.equal(polygon.heightReference.getValue(), 1);
-    assert.equal(polygon.perPositionHeight.getValue(), false);
+  for (const item of h.images()) {
+    assert.equal(item.height, 'clampGround');
+    assert.equal(item.clampTo, 'both');
   }
 });
 
-test('[up42-scene-overlay-011] keeps each outline above images and keeps the selected style', async (t) => {
+test('[up42-scene-overlay-011] draws each outline on the ground and keeps the selected style', async (t) => {
   const h = harness(t);
   await h.ready();
   h.chip().onClick();
   await tick();
   h.layer.setParams({ scene: 'middle' });
-  assert.equal(h.ds().entities.values.length, 6);
+  assert.equal(h.view.ids('lines').length, 3);
+  assert.equal(h.view.ids('fills').length, 1);
   for (const id of ['old', 'new', 'middle']) {
-    const line = h.outline(id).polyline;
-    assert.equal(line.zIndex.getValue(), 25);
-    assert.equal(line.clampToGround.getValue(), true);
-    assert.deepEqual(coordinates(line.positions.getValue()), [
+    const line = h.outline(id).line;
+    assert.equal(line.mode, 'draped');
+    assert.deepEqual(coordinates(line.positions), [
       [10, 60],
       [12, 61],
       [11, 63],
@@ -569,17 +560,10 @@ test('[up42-scene-overlay-011] keeps each outline above images and keeps the sel
       [10, 60],
     ]);
   }
-  assert.equal(h.outline('middle').polyline.width.getValue(), 3);
-  assert.deepEqual(
-    h.outline('middle').polyline.material.color.getValue(),
-    new Cesium.Color(250 / 255, 204 / 255, 21 / 255, 1),
-  );
-  assert.equal(h.outline('middle').polygon.zIndex.getValue(), 25);
-  assert.equal(h.outline('new').polyline.width.getValue(), 2);
-  assert.deepEqual(
-    h.outline('new').polyline.material.color.getValue(),
-    new Cesium.Color(56 / 255, 189 / 255, 248 / 255, 0.9),
-  );
+  assert.equal(h.outline('middle').line.widthPx, 3);
+  expectColor(h.outline('middle').line.style.color, '#facc15', 1);
+  assert.equal(h.outline('new').line.widthPx, 2);
+  expectColor(h.outline('new').line.style.color, '#38bdf8', 0.9);
 });
 
 test('[up42-scene-overlay-012] selects without a card and keeps each image unchanged', async (t) => {
@@ -589,43 +573,23 @@ test('[up42-scene-overlay-012] selects without a card and keeps each image uncha
   await h.ready();
   h.chip().onClick();
   await tick();
-  const entity = h.images()[0];
-  const material = entity.polygon.material;
+  const item = h.images()[0];
+  const style = (id, width, css, alpha) => {
+    assert.equal(h.outline(id).line.widthPx, width);
+    expectColor(h.outline(id).line.style.color, css, alpha);
+  };
   assert.equal(h.layer.setParams({ scene: 'new' }), true);
   assert.equal(h.controls().list.items[0].active, true);
-  assert.equal(h.outline('new').polyline.width.getValue(), 3);
-  assert.deepEqual(
-    h.outline('new').polyline.material.color.getValue(),
-    new Cesium.Color(250 / 255, 204 / 255, 21 / 255, 1),
-  );
-  assert.equal(h.outline('none').polyline.width.getValue(), 2);
-  assert.deepEqual(
-    h.outline('none').polyline.material.color.getValue(),
-    new Cesium.Color(56 / 255, 189 / 255, 248 / 255, 0.9),
-  );
+  style('new', 3, '#facc15', 1);
+  style('none', 2, '#38bdf8', 0.9);
   assert.equal(h.layer.setParams({ scene: 'none' }), true);
   assert.equal(h.controls().list.items[1].active, true);
-  assert.equal(h.outline('none').polyline.width.getValue(), 3);
-  assert.deepEqual(
-    h.outline('none').polyline.material.color.getValue(),
-    new Cesium.Color(250 / 255, 204 / 255, 21 / 255, 1),
-  );
-  assert.equal(h.outline('new').polyline.width.getValue(), 2);
-  assert.deepEqual(
-    h.outline('new').polyline.material.color.getValue(),
-    new Cesium.Color(56 / 255, 189 / 255, 248 / 255, 0.9),
-  );
+  style('none', 3, '#facc15', 1);
+  style('new', 2, '#38bdf8', 0.9);
   assert.equal(h.layer.setParams({ scene: null }), true);
-  for (const id of ['new', 'none']) {
-    assert.equal(h.outline(id).polyline.width.getValue(), 2);
-    assert.deepEqual(
-      h.outline(id).polyline.material.color.getValue(),
-      new Cesium.Color(56 / 255, 189 / 255, 248 / 255, 0.9),
-    );
-  }
+  for (const id of ['new', 'none']) style(id, 2, '#38bdf8', 0.9);
   await tick();
-  assert.equal(h.images()[0], entity);
-  assert.equal(h.images()[0].polygon.material, material);
+  assert.equal(h.images()[0], item);
   assert.equal(h.calls.length, 1);
   assert.equal(h.cards.length, 0);
   assert.equal(
@@ -659,7 +623,6 @@ for (const [scenario, end] of [
     assert.equal(h.images().length, 2);
     assert.equal(h.calls.length, 6);
     const oldSignals = h.calls.map(({ signal }) => signal);
-    const oldImages = h.images();
     h.state.scenes = answer([record('fresh', '2026-10-21T00:00:00Z')]);
     if (end === 'a new answer') await h.search();
     if (end === 'a second press') h.chip().onClick();
@@ -674,10 +637,6 @@ for (const [scenario, end] of [
     );
     assert.deepEqual(h.revoked, ['blob:preview-1', 'blob:preview-2']);
     assert.equal(h.images().length, 0);
-    assert.equal(
-      oldImages.some((entity) => h.ds().entities.contains(entity)),
-      false,
-    );
     for (let index = 2; index < 6; index += 1) pending[index].resolve(image());
     await tick();
     assert.equal(h.urls.length, 2);
@@ -692,7 +651,7 @@ for (const [scenario, end] of [
       assert.equal(h.images().length, 1);
     }
     if (end === 'a second press') {
-      assert.equal(h.ds().entities.values.length, 6);
+      assert.equal(h.view.ids('lines').length, 6);
       assert.equal(h.chip().label, 'Show images');
       h.layer.setParams({ scene: 'a' });
       await tick();
@@ -840,7 +799,6 @@ test('[up42-scene-overlay-013] switches the option off after an answer with no t
   h.chip().onClick();
   await tick();
   assert.equal(h.images().length, 3);
-  const oldImages = h.images();
   const oldSignals = h.calls.map(({ signal }) => signal);
   const old = h.chip().onClick;
   h.state.scenes = answer([record('none', undefined, false)]);
@@ -858,10 +816,6 @@ test('[up42-scene-overlay-013] switches the option off after an answer with no t
     'blob:preview-2',
     'blob:preview-3',
   ]);
-  assert.equal(
-    oldImages.some((entity) => h.ds().entities.contains(entity)),
-    false,
-  );
   old();
   assert.equal(h.images().length, 0);
   assert.equal(h.calls.length, 3);

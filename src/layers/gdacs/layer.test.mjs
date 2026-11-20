@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import * as Cesium from 'cesium';
+import { cssColor } from '../../render/color.js';
+import { fromDegrees } from '../../geo/ellipsoid.js';
+import { bindFakeDraw } from '../../testSupport/fakeDrawPort.mjs';
 import { createGdacsLayer } from './index.js';
 
 const ID = 'gdacs';
@@ -52,19 +54,8 @@ const deferred = () => {
 };
 
 function harness(getSnapshot = async () => snapshot(THREE)) {
-  const added = [];
-  const removed = [];
-  const viewer = {
-    dataSources: {
-      add(dataSource) {
-        added.push(dataSource);
-      },
-      remove(dataSource, destroy) {
-        added.splice(added.indexOf(dataSource), 1);
-        removed.push([dataSource, destroy]);
-      },
-    },
-  };
+  const viewer = {};
+  const { draw } = bindFakeDraw(viewer);
   const overlay = { entries: new Map(), visible: new Map(), calls: [] };
   const overlayHost = {
     setEntries(id, entries, options) {
@@ -88,7 +79,8 @@ function harness(getSnapshot = async () => snapshot(THREE)) {
     },
   };
   const layer = createGdacsLayer({ source, overlayHost });
-  return { layer, viewer, overlay, calls, added, removed };
+  const live = () => draw.set('gdacs:points');
+  return { layer, viewer, overlay, calls, live };
 }
 function enabled(getSnapshot) {
   const h = harness(getSnapshot);
@@ -96,8 +88,7 @@ function enabled(getSnapshot) {
   h.layer.enable(h.viewer);
   return h;
 }
-const entitiesOf = (h) => h.added[0].entities.values;
-const now = () => Cesium.JulianDate.now();
+const entitiesOf = (h) => [...(h.live()?.items.values() ?? [])];
 
 test('[gdacs-layer-001] describes the layer and refuses to create a layer with no source or no overlay host', () => {
   const { layer } = harness();
@@ -133,27 +124,26 @@ test('[gdacs-layer-001] describes the layer and refuses to create a layer with n
 test('[gdacs-layer-002] sends no request when init and enable run, refuses a second call of init, and accepts a call of init after destroy', async () => {
   const h = harness();
   h.layer.init(h.viewer);
-  assert.equal(h.added.length, 1);
-  assert.equal(h.added[0].show, false);
-  assert.equal(h.added[0].name, 'gdacs');
+  assert.equal(h.live() ? 1 : 0, 1);
+  assert.equal(h.live().show, false);
   assert.equal(h.overlay.visible.get(ID), false);
   h.layer.enable(h.viewer);
-  assert.equal(h.added[0].show, true);
+  assert.equal(h.live().show, true);
   assert.equal(h.overlay.visible.get(ID), true);
   assert.equal(h.calls.length, 0);
   assert.throws(() => h.layer.init(h.viewer), {
     message: 'GDACS layer is already initialized',
   });
-  assert.equal(h.added.length, 1);
+  assert.equal(h.live() ? 1 : 0, 1);
   h.layer.disable(h.viewer);
-  assert.equal(h.added[0].show, false);
+  assert.equal(h.live().show, false);
   assert.equal(h.overlay.visible.get(ID), false);
 
   h.layer.destroy(h.viewer);
-  assert.equal(h.added.length, 0);
+  assert.equal(h.live() ? 1 : 0, 0);
   h.layer.init(h.viewer);
   h.layer.enable(h.viewer);
-  assert.equal(h.added.length, 1);
+  assert.equal(h.live() ? 1 : 0, 1);
   assert.equal(await h.layer.update(h.viewer), true);
   assert.equal(entitiesOf(h).length, 3);
 });
@@ -175,26 +165,15 @@ test('[gdacs-layer-012] shows the points on the ground and the labels, and fills
   ];
   entities.forEach((entity, index) => {
     const entry = THREE[index];
-    assert.ok(
-      Cesium.Cartesian3.equals(
-        entity.position.getValue(now()),
-        Cesium.Cartesian3.fromDegrees(entry.longitude, entry.latitude),
-      ),
+    assert.deepEqual(
+      entity.pos,
+      fromDegrees(entry.longitude, entry.latitude),
       entry.id,
     );
     const [css, alpha, size] = expected[index];
-    assert.equal(entity.point.pixelSize.getValue(now()), size);
-    assert.ok(
-      Cesium.Color.equals(
-        entity.point.color.getValue(now()),
-        Cesium.Color.fromCssColorString(css).withAlpha(alpha),
-      ),
-      css,
-    );
-    assert.equal(
-      entity.point.heightReference.getValue(now()),
-      Cesium.HeightReference.CLAMP_TO_GROUND,
-    );
+    assert.equal(entity.pixelSize, size);
+    assert.deepEqual(entity.color, [...cssColor(css).slice(0, 3), alpha]);
+    assert.equal(entity.height, 'clampGround');
   });
   const call = h.overlay.calls.filter(([name]) => name === 'setEntries').at(-1);
   assert.equal(call[1], 'gdacs');
@@ -207,12 +186,7 @@ test('[gdacs-layer-012] shows the points on the ground and the labels, and fills
     call[2].map((entry) => entry.id),
     [hex(3), hex(1), hex(2)],
   );
-  assert.ok(
-    Cesium.Cartesian3.equals(
-      call[2][0].position,
-      Cesium.Cartesian3.fromDegrees(-120, 45),
-    ),
-  );
+  assert.deepEqual(call[2][0].position, fromDegrees(-120, 45));
   assert.equal(call[2][0].title, 'Event 3');
   assert.equal(call[2][0].accent, '#ef4444');
   const stats = h.layer.getStats();
@@ -268,13 +242,7 @@ test('[gdacs-layer-012] shows the points on the ground and the labels, and fills
   );
   for (const entry of labels) {
     const n = Number(entry.id.slice(3));
-    assert.ok(
-      Cesium.Cartesian3.equals(
-        entry.position,
-        Cesium.Cartesian3.fromDegrees(n, n),
-      ),
-      entry.id,
-    );
+    assert.deepEqual(entry.position, fromDegrees(n, n));
   }
 });
 
@@ -374,7 +342,7 @@ test('[gdacs-layer-016] polls only while the layer is enabled, and disable and a
   assert.equal(done.calls[0].signal.aborted, false);
   assert.equal(done.overlay.entries.has(ID), false);
   assert.equal(done.overlay.visible.get(ID), false);
-  assert.equal(done.added[0].show, false);
+  assert.equal(done.live().show, false);
 
   const waits = [];
   const h = enabled(() => {
@@ -433,9 +401,7 @@ test('[gdacs-layer-017] removes the data source and the labels when destroy runs
   const h = enabled();
   await h.layer.update(h.viewer);
   h.layer.destroy(h.viewer);
-  assert.equal(h.added.length, 0);
-  assert.equal(h.removed.length, 1);
-  assert.equal(h.removed[0][1], true);
+  assert.equal(h.live() ? 1 : 0, 0);
   assert.equal(h.overlay.entries.has(ID), false);
   assert.equal(h.overlay.visible.get(ID), false);
   assert.deepEqual(h.layer.getStats(), {
@@ -444,7 +410,6 @@ test('[gdacs-layer-017] removes the data source and the labels when destroy runs
     error: null,
   });
   h.layer.destroy(h.viewer);
-  assert.equal(h.removed.length, 1);
 
   let step = 0;
   const k = enabled(async () => {
@@ -475,7 +440,7 @@ test('[gdacs-layer-017] removes the data source and the labels when destroy runs
   const pending = g.layer.update(g.viewer);
   g.layer.destroy();
   assert.equal(g.calls[0].signal.aborted, true);
-  assert.equal(g.added.length, 0);
+  assert.equal(g.live() ? 1 : 0, 0);
   waits[0].resolve(snapshot(THREE));
   assert.equal(await pending, false);
   assert.equal(g.layer.getStats().count, 0);

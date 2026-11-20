@@ -14,8 +14,10 @@ import {
 import { createStandaloneLayerSources } from '../../standalone/layerSources.js';
 import { createReferenceSources } from '../../sources/reference.js';
 import { VOICE_OFF_LAYERS } from '../../voice/layerManifest.js';
+import { bindFakeDraw } from '../../testSupport/fakeDrawPort.mjs';
 
-const FAKE_VIEWER = { dataSources: { add() {}, remove() {} } };
+const FAKE_VIEWER = {};
+bindFakeDraw(FAKE_VIEWER);
 
 test('[beemaps-frames-024] registers the layer in the catalog, the source contract, the reference sources and the share link', async (t) => {
   const lifetime = new AbortController();

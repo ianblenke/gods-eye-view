@@ -1,5 +1,7 @@
-import * as Cesium from 'cesium';
+import { fromDegrees } from '../../geo/ellipsoid.js';
+import { drawOf } from '../../render/rendererOf.js';
 import { scenesBox, searchWindow } from '../skywatchScenes/box.js';
+import { footprintItems, viewCentre } from '../skywatchScenes/view.js';
 import { messagesFor } from './messages.js';
 import { modelFor } from './model.js';
 import { serviceOf } from './services.js';
@@ -9,62 +11,13 @@ const CARD_ID = 'selected';
 const SEARCH_LABEL = 'Search scenes here';
 const SEARCHING_LABEL = 'Searching…';
 
-/** The point under the middle of the screen, or null when it shows the sky. */
-function viewCentre(viewer) {
-  const canvas = viewer.scene?.canvas;
-  if (!canvas?.clientWidth || !canvas?.clientHeight) return null;
-  let position;
-  try {
-    const hit = viewer.camera.pickEllipsoid(
-      new Cesium.Cartesian2(canvas.clientWidth / 2, canvas.clientHeight / 2),
-      viewer.scene.globe?.ellipsoid,
-    );
-    // A sky pick gives undefined, and fromCartesian throws for it.
-    position = Cesium.Cartographic.fromCartesian(hit);
-  } catch {
-    return null;
-  }
-  if (!position) return null;
-  return {
-    lat: Cesium.Math.toDegrees(position.latitude),
-    lon: Cesium.Math.toDegrees(position.longitude),
-  };
-}
-
-/** The entity of one ring of a footprint, with the style of its selection. */
-function ringEntity(id, ring, style) {
-  const color = Cesium.Color.fromCssColorString(style.color);
-  const positions = Cesium.Cartesian3.fromDegreesArray(ring.flat());
-  return new Cesium.Entity({
-    id,
-    polyline: {
-      positions,
-      clampToGround: true,
-      width: style.width,
-      material: new Cesium.ColorMaterialProperty(
-        color.withAlpha(style.outlineAlpha),
-      ),
-    },
-    ...(style.fillAlpha > 0
-      ? {
-          polygon: {
-            hierarchy: new Cesium.PolygonHierarchy(positions),
-            material: new Cesium.ColorMaterialProperty(
-              color.withAlpha(style.fillAlpha),
-            ),
-          },
-        }
-      : {}),
-  });
-}
-
 /** The overlay entry of the thumbnail card of a scene. */
 function cardEntry(scene, image, size, { dateOf, footprintCentre }) {
   const centre = footprintCentre(scene.rings[0]);
   const date = dateOf(scene.time);
   return {
     id: CARD_ID,
-    position: Cesium.Cartesian3.fromDegrees(centre.lon, centre.lat),
+    position: fromDegrees(centre.lon, centre.lat),
     variant: 'thumbnail',
     paintLane: 'thumbnail',
     title: scene.provider === null ? date : `${date} ${scene.provider}`,
@@ -132,7 +85,8 @@ export function createSceneLayer(
       `${service.name} requires an overlay host with setEntries, clearSource and setVisible`,
     );
   let _viewer = null;
-  let _dataSource = null;
+  let _lines = null;
+  let _fills = null;
   let _enabled = false;
   let _statusRequest = null;
   let _request = null;
@@ -152,15 +106,20 @@ export function createSceneLayer(
   const notify = () => _listener?.();
 
   function showScenes() {
-    _dataSource.entities.removeAll();
+    const lines = [];
+    const fills = [];
     for (const scene of _answer.scenes) {
-      const style = footprintStyle(scene.id === _selectedId);
-      scene.rings.forEach((ring, index) => {
-        const id =
-          index === 0 ? `${ID}:${scene.id}` : `${ID}:${scene.id}:${index}`;
-        _dataSource.entities.add(ringEntity(id, ring, style));
-      });
+      const items = footprintItems(
+        (index) =>
+          index === 0 ? `${ID}:${scene.id}` : `${ID}:${scene.id}:${index}`,
+        scene.rings,
+        footprintStyle(scene.id === _selectedId),
+      );
+      lines.push(...items.lines);
+      fills.push(...items.fills);
     }
+    _lines.set(lines);
+    _fills.set(fills);
     requestRender(ID);
   }
 
@@ -300,23 +259,24 @@ export function createSceneLayer(
       if (_viewer)
         throw new Error(`${service.name} layer is already initialized`);
       _viewer = viewer;
-      _dataSource = new Cesium.CustomDataSource(ID);
-      _dataSource.show = false;
-      viewer.dataSources.add(_dataSource);
+      const draw = drawOf(viewer);
+      _lines = draw.lines({ id: `${ID}:lines`, clampTo: 'both', show: false });
+      _fills = draw.shapes({ id: `${ID}:fills`, clampTo: 'both', show: false });
       overlayHost.setVisible(ID, false);
     },
 
     enable() {
       _enabled = true;
-      _dataSource.show = true;
+      _lines.show = _fills.show = true;
       overlayHost.setVisible(ID, true);
     },
 
     disable() {
       reset();
       _enabled = false;
-      _dataSource.show = false;
-      _dataSource.entities.removeAll();
+      _lines.show = _fills.show = false;
+      _lines.clear();
+      _fills.clear();
       overlayHost.setVisible(ID, false);
       requestRender(ID);
     },
@@ -385,14 +345,15 @@ export function createSceneLayer(
       _listener = listener;
     },
 
-    destroy(viewer = _viewer) {
-      if (!_dataSource) return;
+    destroy() {
+      if (!_lines) return;
       reset();
       _enabled = false;
       _viewer = null;
       overlayHost.setVisible(ID, false);
-      viewer.dataSources.remove(_dataSource, true);
-      _dataSource = null;
+      _lines.dispose();
+      _fills.dispose();
+      _lines = _fills = null;
       requestRender(ID);
     },
 

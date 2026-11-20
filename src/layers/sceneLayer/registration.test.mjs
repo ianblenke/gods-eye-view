@@ -23,6 +23,8 @@ import {
   installRenderGovernor,
 } from '../../renderGovernor.js';
 import { VOICE_OFF_LAYERS } from '../../voice/layerManifest.js';
+import { framePortFor } from '../../testSupport/fakeFramePort.mjs';
+import { sceneViewer } from '../../testSupport/sceneViewer.mjs';
 import { modelFor } from './model.js';
 
 const SERVICES = [
@@ -96,16 +98,12 @@ for (const S of SERVICES) {
     used: 1,
     limit: 20,
   };
-  const viewer = () => ({
-    dataSources: { add() {}, remove() {} },
-    camera: {
-      pickEllipsoid: () => Cesium.Cartesian3.fromDegrees(10, 60),
-    },
-    scene: {
+  const viewer = () =>
+    sceneViewer({
+      layerId: S.layer,
+      pick: () => Cesium.Cartesian3.fromDegrees(10, 60),
       canvas: { clientWidth: 800, clientHeight: 600 },
-      globe: { ellipsoid: Cesium.Ellipsoid.WGS84 },
-    },
-  });
+    }).viewer;
   const readLocale = (code) =>
     JSON.parse(
       readFileSync(
@@ -247,9 +245,12 @@ for (const S of SERVICES) {
 
   test(`[scene-layers-031] ${S.label}: gives the layer of the application the render governor, and an option requestRender replaces it`, async (t) => {
     const frames = [];
-    installRenderGovernor({
-      scene: { requestRender: () => frames.push('frame') },
-    });
+    installRenderGovernor(
+      framePortFor({
+        requestRenderMode: true,
+        requestRender: () => frames.push('frame'),
+      }),
+    );
     t.after(() => _resetRenderGovernorForTest());
     const calls = { getStatus: 0, searchScenes: 0, getThumbnail: 0 };
     const view = viewer();

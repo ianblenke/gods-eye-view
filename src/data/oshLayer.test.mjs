@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import test, { before, after } from 'node:test';
 import * as Cesium from 'cesium';
-import { createOshLayer } from '../layers/osh/index.js';
+import { createOshLayer as createLayer } from '../layers/osh/index.js';
+import { bindFakeDraw } from '../testSupport/fakeDrawPort.mjs';
 import { OSH_CLOCK_SKEW_MAX_MS, OSH_FRESH_MAX_AGE_MS } from './oshObservations.js';
 
 let _originalDocument;
@@ -160,14 +161,74 @@ function fakeSource({
   return source;
 }
 
-/** A fake viewer with entity dataSources, a pickable scene and a click capture. */
+const SET_ID = 'osh-systems:points';
+
+/** Labels the layer gave its overlay host, by entity id. */
+let overlayEntries = new Map();
+let overlayShown = null;
+const overlayHost = {
+  setEntries(source, entries) {
+    assert.equal(source, 'osh-systems');
+    overlayEntries = new Map(entries.map((entry) => [entry.id, entry]));
+  },
+  setVisible(source, shown) {
+    assert.equal(source, 'osh-systems');
+    overlayShown = shown;
+  },
+  clearSource() {
+    overlayEntries = new Map();
+  },
+};
+
+/** The click handlers the layer holds on its viewer's input port. */
+let clickHandlers = new Set();
+let currentViewer = null;
+/** A click on what `viewer.scene.pick()` names: a draw hit, or none. */
+function fireClick(viewer) {
+  const picked = viewer.scene.pick();
+  const id = picked?.id?.id ?? picked?.id ?? null;
+  const drawHit = id
+    ? { set: id.startsWith('osh') ? SET_ID : 'other', id, surface: false }
+    : null;
+  for (const handler of [...clickHandlers]) handler({ drawHit, topHit: drawHit });
+}
+const input = (viewer) => ({
+  onClick(handler) {
+    clickHandlers.add(handler);
+    return () => clickHandlers.delete(handler);
+  },
+  viewer,
+});
+
+function createOshLayer(options) {
+  return createLayer({ overlayHost, input, ...options });
+}
+
+/**
+ * The entity the layer drew for `id`, as the draw port and the overlay host
+ * hold it: `item` is the point, `label` the overlay entry; the position is
+ * read back from the point.
+ */
+function entityOf(draw, id) {
+  const item = draw.set(SET_ID)?.items.get(id);
+  if (!item) return undefined;
+  const label = overlayEntries.get(id);
+  return {
+    id,
+    item,
+    label,
+    position: {
+      getValue: () => Cesium.Cartesian3.fromDegrees(item.pos.lon, item.pos.lat, item.pos.height),
+    },
+  };
+}
+
+/** A fake viewer bound to a fake draw port; entities are read through `dataSources[0]`. */
 function fakeViewer() {
-  const dataSources = [];
+  overlayEntries = new Map();
+  overlayShown = null;
+  clickHandlers = new Set();
   let picked = null;
-  const camera = { moveEnd: new Cesium.Event() };
-  function setCamera(lon, lat, height) {
-    camera.positionWC = Cesium.Cartesian3.fromDegrees(lon, lat, height);
-  }
   const viewer = {
     scene: {
       canvas: { addEventListener() {}, removeEventListener() {} },
@@ -175,48 +236,38 @@ function fakeViewer() {
         return picked;
       },
     },
-    camera,
-    dataSources: {
-      add(dataSource) {
-        dataSources.push(dataSource);
-        return dataSource;
+  };
+  currentViewer = viewer;
+  const { draw } = bindFakeDraw(viewer);
+  const source = {
+    get show() {
+      return draw.set(SET_ID)?.show;
+    },
+    entities: {
+      get values() {
+        return [...(draw.set(SET_ID)?.items.keys() ?? [])].map((id) => entityOf(draw, id));
       },
-      remove(dataSource) {
-        const index = dataSources.indexOf(dataSource);
-        if (index >= 0) dataSources.splice(index, 1);
-        return index >= 0;
-      },
+      getById: (id) => entityOf(draw, id),
     },
   };
-  // The repro height the firms horizon test also uses. From here the
-  // horizon half-angle is about 36 degrees, so SYSTEM_A, SYSTEM_B and
-  // FEATURE_A stay visible and the antipode fixtures do not.
-  setCamera(1, 2, 1_500_000);
+  const dataSources = {
+    get length() {
+      return draw.set(SET_ID) ? 1 : 0;
+    },
+    0: source,
+  };
   return {
     viewer,
+    draw,
     dataSources,
     setPicked(id) {
       picked = id === null ? null : { id };
-    },
-    setCamera,
-    raiseMoveEnd() {
-      camera.moveEnd.raiseEvent();
     },
   };
 }
 
 function withClickCapture(run) {
-  let clickAction = null;
-  const original = Cesium.ScreenSpaceEventHandler.prototype.setInputAction;
-  Cesium.ScreenSpaceEventHandler.prototype.setInputAction = function (action, type) {
-    if (type === Cesium.ScreenSpaceEventType.LEFT_CLICK) clickAction = action;
-    return original.call(this, action, type);
-  };
-  try {
-    return run(() => clickAction);
-  } finally {
-    Cesium.ScreenSpaceEventHandler.prototype.setInputAction = original;
-  }
+  return run(() => () => fireClick(currentViewer));
 }
 
 test('[osh-029] throws without a systems source', () => {
@@ -870,7 +921,7 @@ test('[osh-049] the system map is a union across refreshes', async (t) => {
     systems = [{ ...SYSTEM_A, name: 'System A Renamed' }, SYSTEM_B];
     await layer.update(viewer);
     const renamed = dataSources[0].entities.getById('osh:sys-fixture-1');
-    assert.equal(renamed.label.text.getValue(Cesium.JulianDate.now()), 'System A Renamed');
+    assert.equal(renamed.label.title, 'System A Renamed');
 
     // Refresh #4: keyRequired empties the whole map.
     keyRequired = true;
@@ -947,10 +998,8 @@ test('[osh-045] shows one entity per feature, with a label distance condition, a
   await layer.update(viewer);
   const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-1');
   assert.ok(entity);
-  assert.equal(entity.label.text.getValue(Cesium.JulianDate.now()), 'Feature A');
-  const condition = entity.label.distanceDisplayCondition.getValue(Cesium.JulianDate.now());
-  assert.equal(condition.near, 0);
-  assert.equal(condition.far, 200_000, 'the spec fixes this at 200 km');
+  assert.equal(entity.label.title, 'Feature A');
+  assert.equal(entity.label.maxDistance, 200_000, 'the spec fixes this at 200 km');
   assert.equal(layer.getStats().features, 2);
 });
 
@@ -1677,8 +1726,7 @@ test('[osh-057] a system with no record in the union map is named from the locat
   layer.enable(viewer);
   await layer.update(viewer);
   const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
-  assert.equal(entity.label.text.getValue(), 'Fixture Aircraft');
-  assert.equal(entity.properties.name.getValue(), null, 'no held system record was created');
+  assert.equal(entity.label.title, 'Fixture Aircraft');
 });
 
 test('[osh-057] only a location with systemName:null gives the id as the label', async (t) => {
@@ -1694,7 +1742,7 @@ test('[osh-057] only a location with systemName:null gives the id as the label',
   layer.enable(viewer);
   await layer.update(viewer);
   const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
-  assert.equal(entity.label.text.getValue(), 'sys-fixture-9');
+  assert.equal(entity.label.title, 'sys-fixture-9');
 });
 
 test('[osh-057] a refresh with no fresh location for that system removes the entity and counts it under unplaced', async (t) => {
@@ -1917,11 +1965,10 @@ test('[osh-061] the system entity\'s point and label draw on top, with the heigh
   layer.enable(viewer);
   await layer.update(viewer);
   const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
-  const now = Cesium.JulianDate.now();
-  assert.equal(entity.point.disableDepthTestDistance.getValue(now), Infinity);
-  assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
-  assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
-  assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
+  assert.equal(entity.item.disableDepthTest, Infinity);
+  assert.equal(entity.item.height, 'absolute');
+  // The label is drawn in screen space, over the depth test.
+  assert.equal(entity.label.horizonCull, true);
 });
 
 test('[osh-061] the feature entity\'s point and label draw on top, with the height reference NONE', async (t) => {
@@ -1933,11 +1980,10 @@ test('[osh-061] the feature entity\'s point and label draw on top, with the heig
   layer.enable(viewer);
   await layer.update(viewer);
   const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-1');
-  const now = Cesium.JulianDate.now();
-  assert.equal(entity.point.disableDepthTestDistance.getValue(now), Infinity);
-  assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
-  assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
-  assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
+  assert.equal(entity.item.disableDepthTest, Infinity);
+  assert.equal(entity.item.height, 'absolute');
+  // The label is drawn in screen space, over the depth test.
+  assert.equal(entity.label.horizonCull, true);
 });
 
 test('[osh-061] the re-added entity for a selected system draws on top, on its point and its label', async (t) => {
@@ -1973,14 +2019,10 @@ test('[osh-061] the re-added entity for a selected system draws on top, on its p
     locations = [];
     await layer.update(viewer);
     const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
-    const now = Cesium.JulianDate.now();
-    assert.equal(entity.point.disableDepthTestDistance.getValue(now), Infinity);
-    assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
-    // The re-add's label is the one site whose mechanism differs: it
-    // carries the values by reusing the previous refresh's LabelGraphics,
-    // not by passing through entityAlwaysOnTop() itself (D62).
-    assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
-    assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
+    assert.equal(entity.item.disableDepthTest, Infinity);
+    assert.equal(entity.item.height, 'absolute');
+    // The label is drawn in screen space, over the depth test.
+    assert.equal(entity.label.horizonCull, true);
   });
 });
 
@@ -2052,64 +2094,21 @@ test('[osh-061] a moved entity keeps the observation\'s altitude', async (t) => 
 
 // --- osh-062: hide an entity beyond the ellipsoid horizon ---
 
-test('[osh-062] a refresh under a camera that has not moved hides the antipode entities and shows the near ones', async (t) => {
+test('[osh-062] the renderer hides the points and the labels beyond the ellipsoid horizon', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_A, SYSTEM_FAR], fois: [FEATURE_A, FEATURE_FAR] });
   const layer = createOshLayer({ source });
-  const { viewer, dataSources } = fakeViewer();
+  const { viewer, draw, dataSources } = fakeViewer();
   layer.init(viewer);
   t.after(() => layer.destroy(viewer));
   layer.enable(viewer);
   await layer.update(viewer);
-  const near = dataSources[0].entities.getById('osh:sys-fixture-1');
-  const far = dataSources[0].entities.getById('osh:sys-fixture-far');
-  const nearFeature = dataSources[0].entities.getById('osh-foi:foi-fixture-1');
-  const farFeature = dataSources[0].entities.getById('osh-foi:foi-fixture-far');
-  assert.equal(near.show, true, 'an entity under the camera stays visible');
-  assert.equal(nearFeature.show, true);
-  assert.equal(far.show, false, 'an entity at the antipode starts hidden, before any moveEnd');
-  assert.equal(farFeature.show, false);
+  assert.equal(draw.set(SET_ID).spec.horizonCull, true);
+  assert.equal(dataSources[0].entities.values.length, 4, 'the layer hands over every entity, near and far');
+  for (const entity of dataSources[0].entities.values)
+    assert.equal(entity.label.horizonCull, true, entity.id);
 });
 
-test('[osh-062] a moveEnd over the antipode swaps which entities show', async (t) => {
-  const source = fakeSource({ systems: [SYSTEM_A, SYSTEM_FAR], fois: [] });
-  const layer = createOshLayer({ source });
-  const { viewer, dataSources, setCamera, raiseMoveEnd } = fakeViewer();
-  layer.init(viewer);
-  t.after(() => layer.destroy(viewer));
-  layer.enable(viewer);
-  await layer.update(viewer);
-  const near = dataSources[0].entities.getById('osh:sys-fixture-1');
-  const far = dataSources[0].entities.getById('osh:sys-fixture-far');
-  assert.equal(near.show, true);
-  assert.equal(far.show, false);
-
-  setCamera(-179, -2, 1_500_000);
-  raiseMoveEnd();
-  assert.equal(near.show, false, 'the near entity is now beyond the horizon');
-  assert.equal(far.show, true, 'the camera now sees the far entity');
-});
-
-test('[osh-062] a moveEnd raised while the layer is off still updates show, so enable() shows a correct set', async (t) => {
-  const source = fakeSource({ systems: [SYSTEM_A, SYSTEM_FAR], fois: [] });
-  const layer = createOshLayer({ source });
-  const { viewer, dataSources, setCamera, raiseMoveEnd } = fakeViewer();
-  layer.init(viewer);
-  t.after(() => layer.destroy(viewer));
-  layer.enable(viewer);
-  await layer.update(viewer);
-  layer.disable();
-
-  setCamera(-179, -2, 1_500_000);
-  raiseMoveEnd();
-
-  layer.enable(viewer);
-  const near = dataSources[0].entities.getById('osh:sys-fixture-1');
-  const far = dataSources[0].entities.getById('osh:sys-fixture-far');
-  assert.equal(near.show, false, 'updated while the layer was off');
-  assert.equal(far.show, true, 'enable() shows the set the listener already computed');
-});
-
-test('[osh-062] a poll move across the horizon hides the selected entity, and a later move back shows it', async (t) => {
+test('[osh-062] a poll move carries the selected point and its label, and a later move carries them back', async (t) => {
   t.mock.timers.enable({ apis: ['setInterval'] });
   let location = { lat: 2, lon: 1 };
   const source = {
@@ -2137,33 +2136,19 @@ test('[osh-062] a poll move across the horizon hides the selected entity, and a 
     setPicked('osh:sys-fixture-1');
     getClick()({ position: {} });
     await flush();
-    const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
-    assert.equal(entity.show, true, 'starts under the camera');
+    assert.equal(dataSources[0].entities.getById('osh:sys-fixture-1').item.pos.lon, 1, 'starts under the camera');
 
     location = { lat: -2, lon: -179 };
     t.mock.timers.tick(15_000);
     await flush();
-    assert.equal(entity.show, false, 'the poll carried it past the horizon');
+    assert.equal(dataSources[0].entities.getById('osh:sys-fixture-1').item.pos.lon, -179, 'the poll carried it to the far side');
+    assert.equal(overlayEntries.get('osh:sys-fixture-1').position.x < 0, true, 'and its label with it');
 
     location = { lat: 2, lon: 1 };
     t.mock.timers.tick(15_000);
     await flush();
-    assert.equal(entity.show, true, 'a later poll move brings it back into view');
+    assert.equal(dataSources[0].entities.getById('osh:sys-fixture-1').item.pos.lon, 1, 'a later poll move brings it back');
   });
-});
-
-test('[osh-062] init() adds one moveEnd listener, disable() keeps it, and destroy() removes it', (t) => {
-  const layer = createOshLayer({ source: fakeSource() });
-  const { viewer } = fakeViewer();
-  t.after(() => layer.destroy(viewer));
-  layer.init(viewer);
-  assert.equal(viewer.camera.moveEnd.numberOfListeners, 1);
-  layer.enable(viewer);
-  assert.equal(viewer.camera.moveEnd.numberOfListeners, 1);
-  layer.disable();
-  assert.equal(viewer.camera.moveEnd.numberOfListeners, 1, 'the listener stays while the layer is off');
-  layer.destroy(viewer);
-  assert.equal(viewer.camera.moveEnd.numberOfListeners, 0);
 });
 
 // --- osh-059: show one entity per stream-drawn feature ---
@@ -2590,7 +2575,7 @@ test('[osh-060] one entity id across a held refresh, a failed features read and 
   let entity = dataSources[0].entities.getById('osh-foi:foi-fixture-stable-1');
   assert.ok(entity);
   assert.ok(Cesium.Cartesian3.equalsEpsilon(entity.position.getValue(Cesium.JulianDate.now()), expectedPos, Cesium.Math.EPSILON6));
-  assert.equal(entity.label?.text?.getValue(Cesium.JulianDate.now()), 'Stable Feature');
+  assert.equal(entity.label?.title, 'Stable Feature');
   assert.equal(layer.getStats().partial, false);
   assert.equal(layer.getStats().placed.streamFeatures, 0);
 
@@ -2610,7 +2595,7 @@ test('[osh-060] one entity id across a held refresh, a failed features read and 
   entity = dataSources[0].entities.getById('osh-foi:foi-fixture-stable-1');
   assert.ok(entity);
   assert.ok(Cesium.Cartesian3.equalsEpsilon(entity.position.getValue(Cesium.JulianDate.now()), expectedPos, Cesium.Math.EPSILON6));
-  assert.equal(entity.label?.text?.getValue(Cesium.JulianDate.now()), 'Stable Feature');
+  assert.equal(entity.label?.title, 'Stable Feature');
   assert.equal(layer.getStats().partial, false);
   assert.equal(layer.getStats().placed.streamFeatures, 0);
 
@@ -2901,7 +2886,7 @@ test('[osh-073] a live observation with a fresh location moves the entity', asyn
   });
 });
 
-test('[osh-073] a live observation that moves the entity across the horizon hides it, and a later one shows it', async (t) => {
+test('[osh-073] a live observation that moves the point and its label, and a later one moves them again', async (t) => {
   const source = fakeSource({ live: true, datastreams: liveDatastreams(1) });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
@@ -2912,12 +2897,11 @@ test('[osh-073] a live observation that moves the entity across the horizon hide
     await layer.update(viewer);
     await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
     const [stream] = source.calls.live;
-    const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
-    assert.equal(entity.show, true, 'starts under the camera');
+    assert.equal(dataSources[0].entities.getById('osh:sys-fixture-1').item.pos.lon, 1, 'starts under the camera');
     stream.callbacks.onObservation(liveObservation({ location: { lat: -2, lon: -179, alt: 0 } }));
-    assert.equal(entity.show, false, 'the live move carried it past the horizon');
+    assert.equal(dataSources[0].entities.getById('osh:sys-fixture-1').item.pos.lon, -179, 'the live move carried it to the far side');
     stream.callbacks.onObservation(liveObservation({ location: { lat: 2, lon: 1, alt: 0 } }));
-    assert.equal(entity.show, true, 'a later live move brings it back into view');
+    assert.equal(dataSources[0].entities.getById('osh:sys-fixture-1').item.pos.lon, 1, 'a later live move brings it back');
   });
 });
 
