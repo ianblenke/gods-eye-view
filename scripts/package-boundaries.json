@@ -8598,7 +8598,11 @@
       "src/i18n/locales/ja.json",
       "src/i18n/locales/pt.json",
       "src/i18n/locales/sv.json",
-      "src/i18n/locales/uk.json"
+      "src/i18n/locales/uk.json",
+      "src/geo/ellipsoid.js",
+      "src/render/rendererOf.js",
+      "src/render/color.js",
+      "src/geo/vector.js"
     ],
     "external": ["cesium"]
   },
@@ -8622,7 +8626,11 @@
       "src/layers/beemaps/records.js",
       "src/layers/beemaps/model.js",
       "src/layers/beemaps/box.js",
-      "src/layers/beemaps/messages.js"
+      "src/layers/beemaps/messages.js",
+      "src/geo/ellipsoid.js",
+      "src/render/color.js",
+      "src/render/rendererOf.js",
+      "src/geo/vector.js"
     ],
     "external": ["cesium"]
   },
@@ -8647,7 +8655,11 @@
       "src/layers/beemapsBursts/model.js",
       "src/layers/beemapsBursts/box.js",
       "src/layers/beemaps/box.js",
-      "src/layers/beemapsBursts/messages.js"
+      "src/layers/beemapsBursts/messages.js",
+      "src/geo/ellipsoid.js",
+      "src/render/color.js",
+      "src/render/rendererOf.js",
+      "src/geo/vector.js"
     ],
     "external": ["cesium"]
   },
@@ -8738,7 +8750,15 @@
       "src/geo/horizon.js",
       "src/render/rendererOf.js",
       "src/geo/ellipsoid.js",
-      "src/geo/vector.js"
+      "src/geo/vector.js",
+      "src/input/dispatcher.js",
+      "src/data/inputOwnership.js",
+      "src/data/pickRegistry.js",
+      "src/data/scenePick.js",
+      "src/input/sensorPick.js",
+      "src/styles/styleStages.js",
+      "src/data/screenRotation.js",
+      "src/geo/frames.js"
     ],
     "external": ["cesium"]
   }
