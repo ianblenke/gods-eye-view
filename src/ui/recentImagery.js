@@ -249,8 +249,9 @@ export function createRecentImageryPanel({
   const opacity = root.querySelector('#ri-opacity');
 
   /**
-   * Content updates keep the body position.
-   * DETAILS can then move the body to show its card.
+   * The body is the scroll container and no render may move it: a
+   * re-render, a thumbnail arriving or a notification never sends the
+   * operator back to the top.
    */
   function preserveScroll(fn) {
     const top = Number(container.scrollTop) || 0;

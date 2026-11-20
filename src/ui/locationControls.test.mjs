@@ -4,6 +4,7 @@ import { LocationControls } from './locationControls.js';
 import * as Cesium from 'cesium';
 import { CITY_POIS } from '../cityPois.js';
 import { flyToPresetLocation } from '../locations.js';
+import { bindFakeCesiumCamera } from '../testSupport/fakeCameraPort.mjs';
 
 function node() {
   const classes = new Set();
@@ -196,9 +197,9 @@ test('location and POI keys route once while form controls retain typing', () =>
   assert.deepEqual(f.calls, [['poi', 'a', 1], ['reset']]);
 });
 
-test('[location-presets-003] shows the Taiwan pill first', () => {
-  const f = fixture();
+function presetControls(f, options = {}) {
   f.controls.destroy();
+  const views = [];
   const controls = new LocationControls({
     elements: f.elements,
     cities: CITY_POIS,
@@ -207,48 +208,16 @@ test('[location-presets-003] shows the Taiwan pill first', () => {
     onPoi: () => {},
     onSearch: () => {},
     onReset: () => {},
+    publish: (view) => views.push(view),
     doc: f.doc,
+    ...options,
   });
-  const pills = f.elements.pills.children;
-  assert.equal(pills.length, Object.keys(CITY_POIS).length);
-  assert.deepEqual(
-    pills.map((pill) => pill.dataset.locationId),
-    Object.keys(CITY_POIS),
-  );
-  assert.equal(pills[0].dataset.locationId, 'taiwan');
-  assert.equal(pills[0].textContent, 'Taiwan');
-  const ids = pills.map((pill) => pill.dataset.locationId);
-  assert.ok(ids.indexOf('taiwan') < ids.indexOf('austin'));
-  assert.equal(pills[ids.indexOf('austin')].textContent, 'Austin');
-  controls.destroy();
-});
+  return { controls, view: () => views.at(-1) };
+}
 
-test('[location-presets-007] shows the Tampa pill between the Taiwan and Austin pills', () => {
-  const f = fixture();
-  f.controls.destroy();
-  const controls = new LocationControls({
-    elements: f.elements,
-    cities: CITY_POIS,
-    getExpandedCity: () => null,
-    onCity: () => {},
-    onPoi: () => {},
-    onSearch: () => {},
-    onReset: () => {},
-    doc: f.doc,
-  });
-  const pills = f.elements.pills.children;
-  const ids = pills.map((pill) => pill.dataset.locationId);
-  assert.ok(ids.indexOf('taiwan') < ids.indexOf('tampa'));
-  assert.ok(ids.indexOf('tampa') < ids.indexOf('austin'));
-  assert.equal(pills[ids.indexOf('tampa')].textContent, 'Tampa');
-  controls.destroy();
-});
-
-test('[location-presets-004] a click on the Taiwan pill flies to the island view', () => {
-  const f = fixture();
-  f.controls.destroy();
+function flightViewer() {
   const flights = [];
-  const viewer = {
+  const viewer = bindFakeCesiumCamera({
     scene: { globe: null, canvas: { clientWidth: 0, clientHeight: 0 } },
     camera: {
       positionCartographic: { longitude: 0, latitude: 0, height: 1200 },
@@ -262,23 +231,46 @@ test('[location-presets-004] a click on the Taiwan pill flies to the island view
       lookAt() {},
       lookAtTransform() {},
     },
-  };
+  });
+  return { viewer, flights };
+}
+
+test('[location-presets-003] shows the Taiwan pill first', () => {
+  const { controls, view } = presetControls(fixture());
+  const pills = view().cities;
+  assert.deepEqual(
+    pills.map((pill) => pill.id),
+    Object.keys(CITY_POIS),
+  );
+  assert.equal(pills[0].id, 'taiwan');
+  assert.equal(pills[0].label, 'Taiwan');
+  const ids = pills.map((pill) => pill.id);
+  assert.ok(ids.indexOf('taiwan') < ids.indexOf('austin'));
+  assert.equal(pills[ids.indexOf('austin')].label, 'Austin');
+  controls.destroy();
+});
+
+test('[location-presets-007] shows the Tampa pill between the Taiwan and Austin pills', () => {
+  const { controls, view } = presetControls(fixture());
+  const pills = view().cities;
+  const ids = pills.map((pill) => pill.id);
+  assert.ok(ids.indexOf('taiwan') < ids.indexOf('tampa'));
+  assert.ok(ids.indexOf('tampa') < ids.indexOf('austin'));
+  assert.equal(pills[ids.indexOf('tampa')].label, 'Tampa');
+  controls.destroy();
+});
+
+test('[location-presets-004] a click on the Taiwan pill flies to the island view', () => {
+  const { viewer, flights } = flightViewer();
   const ids = [];
   let result = null;
-  const controls = new LocationControls({
-    elements: f.elements,
-    cities: CITY_POIS,
-    getExpandedCity: () => null,
+  const { controls } = presetControls(fixture(), {
     onCity: (id) => {
       ids.push(id);
       result = flyToPresetLocation(viewer, id);
     },
-    onPoi: () => {},
-    onSearch: () => {},
-    onReset: () => {},
-    doc: f.doc,
   });
-  f.elements.pills.children[0].fire('click');
+  controls.chooseCity('taiwan');
   assert.deepEqual(ids, ['taiwan']);
   assert.equal(flights.length, 1);
   assert.equal(flights[0].offset.range, 700000);
@@ -293,43 +285,16 @@ test('[location-presets-004] a click on the Taiwan pill flies to the island view
 });
 
 test('[location-presets-008] a click on the Tampa pill flies to the downtown view', () => {
-  const f = fixture();
-  f.controls.destroy();
-  const flights = [];
-  const viewer = {
-    scene: { globe: null, canvas: { clientWidth: 0, clientHeight: 0 } },
-    camera: {
-      positionCartographic: { longitude: 0, latitude: 0, height: 1200 },
-      cancelFlight() {},
-      flyTo(options) {
-        flights.push(options);
-      },
-      flyToBoundingSphere(sphere, options) {
-        flights.push({ sphere, ...options });
-      },
-      lookAt() {},
-      lookAtTransform() {},
-    },
-  };
+  const { viewer, flights } = flightViewer();
   const ids = [];
   let result = null;
-  const controls = new LocationControls({
-    elements: f.elements,
-    cities: CITY_POIS,
-    getExpandedCity: () => null,
+  const { controls } = presetControls(fixture(), {
     onCity: (id) => {
       ids.push(id);
       result = flyToPresetLocation(viewer, id);
     },
-    onPoi: () => {},
-    onSearch: () => {},
-    onReset: () => {},
-    doc: f.doc,
   });
-  const pill = f.elements.pills.children.find(
-    (child) => child.dataset.locationId === 'tampa',
-  );
-  pill.fire('click');
+  controls.chooseCity('tampa');
   assert.deepEqual(ids, ['tampa']);
   assert.equal(flights.length, 1);
   assert.equal(flights[0].offset.range, 650);

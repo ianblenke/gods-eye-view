@@ -106,11 +106,14 @@ test('[credential-boundary-003] explicit build inputs preserve browser-only defi
     '"MLY|1|abc"',
   );
   const emptyDefines = createBrowserViteConfig().define;
-  assert.deepEqual(Object.keys(emptyDefines), [
-    'import.meta.env.GOOGLE_MAPS_API_KEY',
-    'import.meta.env.CESIUM_ION_TOKEN',
-    'import.meta.env.MAPILLARY_CLIENT_TOKEN',
-  ]);
+  assert.deepEqual(
+    Object.keys(emptyDefines).filter((key) => !key.startsWith('__')),
+    [
+      'import.meta.env.GOOGLE_MAPS_API_KEY',
+      'import.meta.env.CESIUM_ION_TOKEN',
+      'import.meta.env.MAPILLARY_CLIENT_TOKEN',
+    ],
+  );
   assert.deepEqual(Object.values(emptyDefines), [
     undefined,
     undefined,

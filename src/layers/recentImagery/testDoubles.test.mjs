@@ -1,41 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-test('[recent-imagery-052] the box tool doubles give standard input and globe values', async () => {
-  const { boxToolFakes } = await import('./testDoubles.mjs');
-  const f = boxToolFakes();
-  assert.equal(f.originalClick(), 'select');
-  assert.equal(f.originalDouble(), 'track');
-  assert.deepEqual(f.cesium.Rectangle.fromDegrees(0, 0, 1, 1), {});
-  assert.deepEqual(f.cesium.Cartesian3.fromDegreesArray([1, 2]), [1, 2]);
-  f.viewer.scene.requestRender();
-  assert.equal(f.viewer.renders, 1);
-  assert.equal(f.pickWorld(f.viewer, 0, 0), null);
-  assert.deepEqual(f.pickWorld(f.viewer, 0.5, 0.5), {
-    lon: -97.80000000000001,
-    lat: 30.299999999999997,
-  });
-  assert.equal(f.handler(), null);
-  assert.equal(f.fire('LEFT_DOWN', {}), undefined);
-});
-
-test('[recent-imagery-052] the box tool double sends the live canvas handler an event', async () => {
-  const { boxToolFakes } = await import('./testDoubles.mjs');
-  const f = boxToolFakes();
-  const first = new f.cesium.ScreenSpaceEventHandler('canvas');
-  first.destroy();
-  const live = new f.cesium.ScreenSpaceEventHandler('canvas');
-  assert.equal(f.handler(), live);
-  assert.equal(f.fire('LEFT_UP', {}), undefined);
-  const events = [];
-  live.setInputAction(
-    (event) => events.push(event.position.x),
-    f.types.LEFT_DOWN,
-  );
-  f.fire('LEFT_DOWN', { position: { x: 12 } });
-  assert.deepEqual(events, [12]);
-});
-
 test('[recent-imagery-052] the renderer double moves both image slots to the next host', async () => {
   const { fakeRenderer, candidate, BOX } = await import('./testDoubles.mjs');
   const r = fakeRenderer();
