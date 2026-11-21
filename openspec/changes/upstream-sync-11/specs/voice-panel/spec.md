@@ -12,10 +12,6 @@
 **Reason**: Upstream renders the voice panel from a presenter and removed the test fixture of the old panel. The fork tests of this requirement used that fixture, and they fail against the merged code. This change retires the scenarios `voice-panel-049`, `voice-panel-050`, `voice-panel-051`, `voice-panel-052`, `voice-panel-053`, `voice-panel-054`, `voice-panel-055`, `voice-panel-056`, `voice-panel-057`, `voice-panel-058`, `voice-panel-066`.
 **Migration**: None.
 
-### Requirement: Test fixtures
-**Reason**: Upstream renders the voice panel from a presenter and removed the test fixture of the old panel. The fork tests of this requirement used that fixture, and they fail against the merged code. This change retires the scenarios `voice-panel-059`, `voice-panel-060`.
-**Migration**: None.
-
 ### Requirement: Voice request boundaries
 **Reason**: Upstream renders the voice panel from a presenter and removed the test fixture of the old panel. The fork tests of this requirement used that fixture, and they fail against the merged code. This change retires the scenarios `voice-panel-061`, `voice-panel-062`, `voice-panel-063`, `voice-panel-064`.
 **Migration**: None.
@@ -36,10 +32,20 @@ The action input helpers MUST report their current state and keep their local re
 
 Origin: backfill
 
+#### Scenario: Reject an absent action `voice-panel-001`
+
+- **WHEN** the caller supplies an absent or invalid action function
+- **THEN** the observer throws a TypeError
+
 #### Scenario: Keep synchronous action results `voice-panel-002`
 
 - **WHEN** an action returns a scalar or throws an error
 - **THEN** the observer keeps the result or error and reports its outcome
+
+#### Scenario: Keep native promises `voice-panel-003`
+
+- **WHEN** an action returns a native Promise
+- **THEN** the observer returns that Promise and reports its final outcome
 
 #### Scenario: Separate action keys `voice-panel-004`
 
@@ -69,10 +75,22 @@ Origin: backfill
 - **WHEN** the mount aborts or the owner retires pending actions
 - **THEN** the observer retires their keys and continues to call the action after disposal
 
+#### Scenario: Keep absent options `voice-panel-009`
+
+- **WHEN** the caller supplies null, undefined or no options
+- **THEN** the observer keeps the argument values and argument length
+
 #### Scenario: Isolate observer errors `voice-panel-010`
 
 - **WHEN** an observation callback or private inspection throws
 - **THEN** the observer keeps the action result or original callback error
+
+#### Scenario: Filter progress metadata `voice-panel-011`
+
+- **WHEN** an action calls its progress function
+- **THEN** the observer publishes progress only for a string data property named step
+- **AND** the observer includes a label only from a string data property named label
+- **AND** the observer does not publish other properties from the update
 
 ### Requirement: Local inactivity
 
@@ -165,3 +183,14 @@ Origin: backfill
 
 - **WHEN** the native observer retires audio or the owner destroys the observer
 - **THEN** the observer restores the original method functions that it still owns and keeps newer replacements
+
+### Requirement: Test fixtures
+
+The test fixtures helpers MUST report their current state and keep their local resources.
+
+Origin: backfill
+
+#### Scenario: Advance the test clock `voice-panel-060`
+
+- **WHEN** a test advances the controlled clock
+- **THEN** the clock calls only due tasks and respects task cancellation

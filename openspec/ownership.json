@@ -176,6 +176,9 @@
     "src/layers/ghostMaps/records.forkBackfill.test.mjs",
     "src/layers/perimeters/cards.forkBackfill.test.mjs",
     "src/tooling/spec/upstreamFindings.test.mjs",
-    "src/voice/panel/nativeActivityBranches.test.mjs"
+    "src/voice/panel/nativeActivityBranches.test.mjs",
+    "src/voice/panel/observers.forkBackfill.test.mjs",
+    "src/voice/panel/inactivityBranches.test.mjs",
+    "src/share/wireBranches.test.mjs"
   ]
 }

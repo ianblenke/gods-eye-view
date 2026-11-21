@@ -15,9 +15,9 @@
 - [x] 1.13 Keep these scenarios of `ghostmaps`: ghostmaps-052, ghostmaps-053, ghostmaps-057, ghostmaps-058, ghostmaps-062, ghostmaps-063, ghostmaps-064, ghostmaps-066, ghostmaps-067.
 - [x] 1.14 Keep these scenarios of `reticulum-layer`: reticulum-layer-017, reticulum-layer-018, reticulum-layer-019, reticulum-layer-020.
 - [x] 1.15 Keep these scenarios of `share-codec`: share-codec-001, share-codec-002, share-codec-003, share-codec-004, share-codec-005, share-codec-006, share-codec-007, share-codec-008, share-codec-009.
-- [x] 1.16 Keep these scenarios of `voice-panel`: voice-panel-002, voice-panel-004, voice-panel-005, voice-panel-006, voice-panel-007, voice-panel-008, voice-panel-010, voice-panel-030, voice-panel-031, voice-panel-033.
-- [x] 1.17 Keep these scenarios of `voice-panel`: voice-panel-034, voice-panel-035, voice-panel-036, voice-panel-037, voice-panel-038, voice-panel-039, voice-panel-040, voice-panel-041, voice-panel-042, voice-panel-043.
-- [x] 1.18 Keep these scenarios of `voice-panel`: voice-panel-045, voice-panel-046, voice-panel-047.
+- [x] 1.16 Keep these scenarios of `voice-panel`: voice-panel-001, voice-panel-002, voice-panel-003, voice-panel-004, voice-panel-005, voice-panel-006, voice-panel-007, voice-panel-008, voice-panel-009, voice-panel-010.
+- [x] 1.17 Keep these scenarios of `voice-panel`: voice-panel-011, voice-panel-030, voice-panel-031, voice-panel-033, voice-panel-034, voice-panel-035, voice-panel-036, voice-panel-037, voice-panel-038, voice-panel-039.
+- [x] 1.18 Keep these scenarios of `voice-panel`: voice-panel-040, voice-panel-041, voice-panel-042, voice-panel-043, voice-panel-045, voice-panel-046, voice-panel-047, voice-panel-060.
 - [x] 1.19 Add the Vue loader to each test run of the gate: coverage-gate-102.
 - [x] 1.20 Stop the trace gate from needing a test for a scenario that a modified requirement drops: spec-trace-055.
 - [ ] 1.21 Record the findings of upstream test files: coverage-gate-103, coverage-gate-104, coverage-gate-105 and coverage-gate-106.
