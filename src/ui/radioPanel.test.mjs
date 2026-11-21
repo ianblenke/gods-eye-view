@@ -257,7 +257,8 @@ test('the RTL-SDR card renders what LocalSdrControls presents', async (t) => {
   const receiver = sdrReceiver();
   const controls = new LocalSdrControls({ document, receiver, store: owner.store });
   t.after(() => controls.destroy());
-  const frame = () => new Promise((resolve) => setTimeout(resolve, 40));
+  // A loaded machine needs more than 40 ms to apply an update.
+  const frame = () => new Promise((resolve) => setTimeout(resolve, 1000));
   await nextTick();
   assert.equal($('sdr-connection-state').getAttribute('class'), null);
   assert.equal($('sdr-connect-btn').textContent, 'CONNECT');

@@ -666,8 +666,10 @@ test('a long line is read quickly', () => {
     `${','.repeat(20000)}!x`,
     `bearer x${','.repeat(20000)}z`,
   ]) {
-    const started = performance.now();
+    // CPU time, with room for the cost of coverage: a backtracking read takes minutes.
+    const started = process.cpuUsage();
     mayBePrivate(line);
-    assert.ok(performance.now() - started < 1000, line.slice(0, 12));
+    const used = process.cpuUsage(started);
+    assert.ok((used.user + used.system) / 1000 < 10_000, line.slice(0, 12));
   }
 });
