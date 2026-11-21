@@ -4247,17 +4247,17 @@
       "since": "2026-09-15"
     },
     "src/data/dataCredits.js": {
-      "loaded": false,
-      "lines": 948,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 6,
+      "branches": 2,
+      "functions": 1,
       "totals": {
         "lines": 948,
-        "branches": null,
-        "functions": null
+        "branches": 63,
+        "functions": 12
       },
       "sha": "e4d4df9f83e9a8fafa792fb933138ed5e6ad95bdaff118edbde27f5818318712",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -4487,17 +4487,17 @@
       "since": "2026-11-21"
     },
     "src/data/flowMatch.js": {
-      "loaded": false,
-      "lines": 296,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 8,
+      "functions": 0,
       "totals": {
         "lines": 296,
-        "branches": null,
-        "functions": null
+        "branches": 83,
+        "functions": 11
       },
       "sha": "60bc6f10f7fd3864c9fdbed36b8f15e724cbeaeef785fa5c7eb21959f2e9fceb",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -5657,17 +5657,17 @@
       "since": "2026-11-21"
     },
     "src/data/tomtomTiles.js": {
-      "loaded": false,
-      "lines": 138,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 2,
+      "functions": 0,
       "totals": {
         "lines": 138,
-        "branches": null,
-        "functions": null
+        "branches": 31,
+        "functions": 6
       },
       "sha": "f7554a0d96b847060e52d2b2116595d1bd416aec1a96bbb35e62a616a11b34ae",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -5792,17 +5792,17 @@
       "since": "2026-11-21"
     },
     "src/data/trafficQueue.js": {
-      "loaded": false,
-      "lines": 93,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 1,
+      "branches": 2,
+      "functions": 0,
       "totals": {
         "lines": 93,
-        "branches": null,
-        "functions": null
+        "branches": 20,
+        "functions": 3
       },
       "sha": "a9d119759c7aa5fffcd6eb10b052182f64be72b7e33baab317f883d31b279ada",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -6167,17 +6167,17 @@
       "since": "2026-11-21"
     },
     "src/geo/vector.js": {
-      "loaded": false,
-      "lines": 98,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
       "totals": {
         "lines": 98,
-        "branches": null,
-        "functions": null
+        "branches": 37,
+        "functions": 25
       },
       "sha": "8be185ff683f7523a21b70c1566d74b9d83bb42932d42bb26e471bd3d49a2cbb",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
@@ -6272,32 +6272,32 @@
       "since": "2026-09-15"
     },
     "src/i18n/index.js": {
-      "loaded": false,
-      "lines": 488,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 5,
+      "branches": 13,
+      "functions": 1,
       "totals": {
         "lines": 488,
-        "branches": null,
-        "functions": null
+        "branches": 162,
+        "functions": 34
       },
       "sha": "6029614472cb918722d9d3fbbe9402ac35746055ce0cf3e91c6eca70ef991e86",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
     "src/i18n/locale.js": {
-      "loaded": false,
-      "lines": 145,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 2,
+      "branches": 8,
+      "functions": 0,
       "totals": {
         "lines": 145,
-        "branches": null,
-        "functions": null
+        "branches": 45,
+        "functions": 9
       },
       "sha": "109f18b724771cef3be52932e9076bbdb9f4892f87035a2e38c1e8b37cc17e5c",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
@@ -9338,7 +9338,7 @@
       "functions": 3,
       "totals": {
         "lines": 1107,
-        "branches": 290,
+        "branches": 287,
         "functions": 65
       },
       "sha": "10205fc07340faff446114ed2aea3b4aed70d0703844ba907d18da854b4523ec",
@@ -10547,47 +10547,47 @@
       "since": "2026-09-25"
     },
     "src/layers/traffic/animation.js": {
-      "loaded": false,
-      "lines": 373,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 27,
+      "branches": 31,
+      "functions": 0,
       "totals": {
         "lines": 373,
-        "branches": null,
-        "functions": null
+        "branches": 83,
+        "functions": 7
       },
       "sha": "b01279c36126ff17b46f5ea00fd5b944fb262227e154454d9b41011e6183b989",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/controls.js": {
-      "loaded": false,
-      "lines": 475,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 62,
+      "branches": 20,
+      "functions": 1,
       "totals": {
         "lines": 475,
-        "branches": null,
-        "functions": null
+        "branches": 108,
+        "functions": 10
       },
       "sha": "786e05f1f36a9496d9fab9a70e55085674140614e26c9d552a405ab3d79e1f2e",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/flow.js": {
-      "loaded": false,
-      "lines": 578,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 38,
+      "branches": 31,
+      "functions": 2,
       "totals": {
         "lines": 578,
-        "branches": null,
-        "functions": null
+        "branches": 245,
+        "functions": 32
       },
       "sha": "776bc3813f64aba09fcd230fc1a49ac86805f5682cd95e0a3d188bb132ea9b77",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -10607,167 +10607,167 @@
       "since": "2026-09-15"
     },
     "src/layers/traffic/flowSource.js": {
-      "loaded": false,
-      "lines": 152,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 2,
+      "branches": 9,
+      "functions": 1,
       "totals": {
         "lines": 152,
-        "branches": null,
-        "functions": null
+        "branches": 48,
+        "functions": 21
       },
       "sha": "b867a9a3b7aec1b4883b34047b5331dc69a25eee48dc55faa1da87486bed49a0",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/footprint.js": {
-      "loaded": false,
-      "lines": 177,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 1,
+      "branches": 5,
+      "functions": 0,
       "totals": {
         "lines": 177,
-        "branches": null,
-        "functions": null
+        "branches": 55,
+        "functions": 24
       },
       "sha": "21d41ee8f0617c4538671568b849e6b13148086a79413243368142692d7940fb",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
     },
     "src/layers/traffic/index.js": {
-      "loaded": false,
-      "lines": 65,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 3,
+      "branches": 3,
+      "functions": 1,
       "totals": {
         "lines": 65,
-        "branches": null,
-        "functions": null
+        "branches": 6,
+        "functions": 3
       },
       "sha": "6838fefe8d8fbcbc569c4e79b6c6483382f2e60b0648825f5ad97764e142e2ec",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/ingestion.js": {
-      "loaded": false,
-      "lines": 667,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 68,
+      "branches": 32,
+      "functions": 5,
       "totals": {
         "lines": 667,
-        "branches": null,
-        "functions": null
+        "branches": 167,
+        "functions": 27
       },
       "sha": "f8c78e0bed0302c9189786c4c652b7981324f92c674bb8a4e5a8f9682942cf68",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/lifecycle.js": {
-      "loaded": false,
-      "lines": 241,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 29,
+      "branches": 9,
+      "functions": 1,
       "totals": {
         "lines": 241,
-        "branches": null,
-        "functions": null
+        "branches": 38,
+        "functions": 9
       },
       "sha": "747b7449831cf6ee710c85e39ba56bd8a01689d34bab03cade30e81a703febdb",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/model.js": {
-      "loaded": false,
-      "lines": 411,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 8,
+      "branches": 19,
+      "functions": 0,
       "totals": {
         "lines": 411,
-        "branches": null,
-        "functions": null
+        "branches": 131,
+        "functions": 13
       },
       "sha": "085faf76fc4f471be5715c2da9972ec9b1f4368b17768d8cb648ecc6ba5e1964",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/policy.js": {
-      "loaded": false,
-      "lines": 206,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 3,
+      "functions": 0,
       "totals": {
         "lines": 206,
-        "branches": null,
-        "functions": null
+        "branches": 5,
+        "functions": 1
       },
       "sha": "187b6be7751758cdf3b83c75c6a55a03467f9c841b190cd5afc0aec65ad88f2e",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/rendering.js": {
-      "loaded": false,
-      "lines": 375,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 64,
+      "branches": 19,
+      "functions": 2,
       "totals": {
         "lines": 375,
-        "branches": null,
-        "functions": null
+        "branches": 100,
+        "functions": 20
       },
       "sha": "c28e534d85c54389575553b20993837751d70a600f7005a6e743c6508c283b39",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/retention.js": {
-      "loaded": false,
-      "lines": 312,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 8,
+      "functions": 0,
       "totals": {
         "lines": 312,
-        "branches": null,
-        "functions": null
+        "branches": 122,
+        "functions": 17
       },
       "sha": "73af9c2aa4b00f3b06de7d09e88fee5f97619b36ebd3d5e7c6d772fbfedf549f",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
     },
     "src/layers/traffic/roadModes.js": {
-      "loaded": false,
-      "lines": 347,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 7,
+      "branches": 15,
+      "functions": 0,
       "totals": {
         "lines": 347,
-        "branches": null,
-        "functions": null
+        "branches": 105,
+        "functions": 25
       },
       "sha": "d7a6d5f9d9278e98ed1cab71e08d006df7f8c3baaf9151e0eb075317ccceab58",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
     },
     "src/layers/traffic/source.js": {
-      "loaded": false,
-      "lines": 424,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 4,
+      "branches": 15,
+      "functions": 4,
       "totals": {
         "lines": 424,
-        "branches": null,
-        "functions": null
+        "branches": 177,
+        "functions": 44
       },
       "sha": "91e0b768832b166973d932c70ebb5abe6aeecfac61391f4fbcebf45b681df157",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -10787,62 +10787,62 @@
       "since": "2026-11-21"
     },
     "src/layers/traffic/style.js": {
-      "loaded": false,
-      "lines": 202,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 6,
+      "branches": 11,
+      "functions": 1,
       "totals": {
         "lines": 202,
-        "branches": null,
-        "functions": null
+        "branches": 37,
+        "functions": 15
       },
       "sha": "e8a730c72c9a8315a2a86ff88d587b0cf53f8e7dfd5c6cab1e15bc0f18642400",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/surface.js": {
-      "loaded": false,
-      "lines": 448,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 4,
+      "branches": 9,
+      "functions": 0,
       "totals": {
         "lines": 448,
-        "branches": null,
-        "functions": null
+        "branches": 147,
+        "functions": 28
       },
       "sha": "4953cfbd0f2c999ef822a7cc7207ecbc19e9c3610ca0c1194d14e10678e89183",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
     },
     "src/layers/traffic/timing.js": {
-      "loaded": false,
-      "lines": 421,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 231,
+      "branches": 6,
+      "functions": 9,
       "totals": {
         "lines": 421,
-        "branches": null,
-        "functions": null
+        "branches": 15,
+        "functions": 16
       },
       "sha": "a8badd45d52ba2c8eefe7d2afa7b4789b35d654337fb7fd00ed9bea6ddf497d1",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/viewport.js": {
-      "loaded": false,
-      "lines": 262,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 56,
+      "branches": 12,
+      "functions": 4,
       "totals": {
         "lines": 262,
-        "branches": null,
-        "functions": null
+        "branches": 35,
+        "functions": 13
       },
       "sha": "8ffd3d83081ba2f1ffaad410f3c1fdddb7ba6021589a25c53ca5223b6b54da48",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -12467,17 +12467,17 @@
       "since": "2026-09-15"
     },
     "src/queries/heights.js": {
-      "loaded": false,
-      "lines": 204,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 3,
+      "branches": 1,
+      "functions": 0,
       "totals": {
         "lines": 204,
-        "branches": null,
-        "functions": null
+        "branches": 78,
+        "functions": 19
       },
       "sha": "203b400d668cf55f1f25f9c93159e9248eb181e9e1a56904b51f35a8206b7ba9",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
@@ -13129,7 +13129,7 @@
     "src/render/cesium/ports.js": {
       "loaded": true,
       "lines": 80,
-      "branches": 33,
+      "branches": 32,
       "functions": 23,
       "totals": {
         "lines": 861,
@@ -13667,17 +13667,17 @@
       "since": "2026-11-21"
     },
     "src/render/creditMarkup.js": {
-      "loaded": false,
-      "lines": 134,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 2,
+      "branches": 4,
+      "functions": 0,
       "totals": {
         "lines": 134,
-        "branches": null,
-        "functions": null
+        "branches": 51,
+        "functions": 7
       },
       "sha": "61beed6731c4756fc0f429d2d83190e168193bda7b0bffa6f2d9b8fea68a6c20",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
@@ -14057,17 +14057,17 @@
       "since": "2026-11-21"
     },
     "src/renderGovernor.js": {
-      "loaded": false,
-      "lines": 282,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 3,
+      "functions": 0,
       "totals": {
         "lines": 282,
-        "branches": null,
-        "functions": null
+        "branches": 71,
+        "functions": 20
       },
       "sha": "efc6f1bf10f2cb14ba1fb1065ad1f25fb6f8bb04219825c1fe56aefdd4e36ca8",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -14657,17 +14657,17 @@
       "since": "2026-09-25"
     },
     "src/services/groundFloor.js": {
-      "loaded": false,
-      "lines": 730,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 1,
+      "branches": 16,
+      "functions": 2,
       "totals": {
         "lines": 730,
-        "branches": null,
-        "functions": null
+        "branches": 172,
+        "functions": 29
       },
       "sha": "c6babc839e8d506c1fde0b08fb4d2dd7d033096d0cb6ba057668a51e17126c1b",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -14702,32 +14702,32 @@
       "since": "2026-09-25"
     },
     "src/services/requests.js": {
-      "loaded": false,
-      "lines": 226,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 3,
+      "branches": 11,
+      "functions": 0,
       "totals": {
         "lines": 226,
-        "branches": null,
-        "functions": null
+        "branches": 78,
+        "functions": 22
       },
       "sha": "0b969f83613ed474f4d80379f6689cdcc8022a31d9d8abbea3f619fdbda98d57",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/services/terrainHeights.js": {
-      "loaded": false,
-      "lines": 379,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 5,
+      "functions": 0,
       "totals": {
         "lines": 379,
-        "branches": null,
-        "functions": null
+        "branches": 87,
+        "functions": 13
       },
       "sha": "1c4c97944e5c91b99fb4ca1375ec13cda1e4218cd5139f5bbe6aa6469d132bb2",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -14867,17 +14867,17 @@
       "since": "2026-10-08"
     },
     "src/sources/featureGeometry.js": {
-      "loaded": false,
-      "lines": 327,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 22,
+      "branches": 16,
+      "functions": 2,
       "totals": {
         "lines": 327,
-        "branches": null,
-        "functions": null
+        "branches": 87,
+        "functions": 26
       },
       "sha": "18a6e2650e9869f00a13643acbf18d5e499fdeee546be7d086d75c62fd2bd6c8",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -15032,17 +15032,17 @@
       "since": "2026-11-21"
     },
     "src/sources/openFreeMap.js": {
-      "loaded": false,
-      "lines": 388,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 3,
+      "branches": 16,
+      "functions": 0,
       "totals": {
         "lines": 388,
-        "branches": null,
-        "functions": null
+        "branches": 112,
+        "functions": 23
       },
       "sha": "4b65a26f377518e5b602edcace874e59d68b24c53bdcf58fbbb06e3ffb17eb18",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
     },
@@ -15092,17 +15092,17 @@
       "since": "2026-09-25"
     },
     "src/sources/overpassFeatures.js": {
-      "loaded": false,
-      "lines": 235,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 7,
+      "branches": 4,
+      "functions": 1,
       "totals": {
         "lines": 235,
-        "branches": null,
-        "functions": null
+        "branches": 35,
+        "functions": 16
       },
       "sha": "1e0b333685cdf3bab5fa9f8c7e09f5b5ca3b4daf5d041772b73779270076d06e",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -15137,17 +15137,17 @@
       "since": "2026-09-25"
     },
     "src/sources/phaseTiming.js": {
-      "loaded": false,
-      "lines": 53,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 22,
+      "branches": 5,
+      "functions": 0,
       "totals": {
         "lines": 53,
-        "branches": null,
-        "functions": null
+        "branches": 17,
+        "functions": 3
       },
       "sha": "29dc00fc22553e1ce39dc3e8944837f7d48626524c79c132ec9a40ecb4c006b3",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
     },
@@ -15287,17 +15287,17 @@
       "since": "2026-09-25"
     },
     "src/sources/vectorTiles.js": {
-      "loaded": false,
-      "lines": 635,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 37,
+      "branches": 23,
+      "functions": 3,
       "totals": {
         "lines": 635,
-        "branches": null,
-        "functions": null
+        "branches": 228,
+        "functions": 70
       },
       "sha": "4aa10d420f8c8b77d9138e9eb8019f634430ad9b320eb6c2be71c77a27363e92",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
     },
@@ -18323,7 +18323,7 @@
       "functions": 1,
       "totals": {
         "lines": 192,
-        "branches": 56,
+        "branches": 57,
         "functions": 16
       },
       "sha": "43f4e36f1d9ce4e4337e178b05538ac35404847fe3db26367df46be8e20180ee",
@@ -26260,7 +26260,6 @@
     "src/data/trafficTiming.test.mjs": {
       "names": {
         "the timed parser stays source-equivalent to the production parser": 1,
-        "traffic timing pairs real ordering to the scheduling change and guards re-arms": 1,
         "traffic timing stays inert when the DEV flag is off under bare Node": 1
       },
       "origin": "pre-spec",
