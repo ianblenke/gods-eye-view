@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { classify } from './ownership.mjs';
 
 export const FINDINGS_FILE = 'openspec/trace/upstream-test-findings.json';
 /** The findings that the record can excuse, for a file that the fork does not own. */
@@ -21,7 +22,8 @@ export function writeFindings(root, found) {
  * errors that remain: each finding that the record does not list, each other error, and a fault
  * of the record.
  */
-export function splitFindings({ errors, isOwned, recorded }) {
+export function splitFindings({ errors, manifest, recorded }) {
+  const isOwned = (file) => classify(manifest, file) === 'owned';
   const found = {};
   const remaining = [];
   for (const error of errors) {

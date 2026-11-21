@@ -5,13 +5,13 @@ import path from 'node:path';
 import test from 'node:test';
 import { FINDINGS_FILE, readFindings, splitFindings, writeFindings } from '../../../scripts/spec/lib/upstream-findings.mjs';
 
-const owned = (file) => file === 'src/owned.test.mjs';
+const manifest = { version: 1, owned: ['src/owned.test.mjs'] };
 const leak = (file) => ({ code: 'GATES-TEST-LEAK', file, message: 'leak' });
 
 test('[coverage-gate-103] excuses a recorded finding of an upstream file', () => {
   const result = splitFindings({
     errors: [leak('src/up.test.mjs')],
-    isOwned: owned,
+    manifest,
     recorded: { 'src/up.test.mjs': ['GATES-TEST-LEAK'] },
   });
   assert.deepEqual(result.errors, []);
@@ -22,7 +22,7 @@ test('[coverage-gate-104] keeps the error of a finding that the record does not 
   const other = { code: 'TRACE-FAILED-TEST', file: 'src/up.test.mjs', message: 'failed' };
   const noFile = { code: 'TRACE-EMPTY-TEST-FILE', file: '', message: 'empty' };
   const errors = [leak('src/up.test.mjs'), leak('src/other.test.mjs'), leak('src/owned.test.mjs'), other, noFile];
-  const result = splitFindings({ errors, isOwned: owned, recorded: { 'src/other.test.mjs': ['TRACE-EMPTY-TEST-FILE'] } });
+  const result = splitFindings({ errors, manifest, recorded: { 'src/other.test.mjs': ['TRACE-EMPTY-TEST-FILE'] } });
   assert.deepEqual(
     result.errors.map((error) => `${error.code} ${error.file}`),
     [
@@ -40,7 +40,7 @@ test('[coverage-gate-104] keeps the error of a finding that the record does not 
 test('[coverage-gate-105] stops for a record that lists an owned file or a finding that is gone', () => {
   const result = splitFindings({
     errors: [leak('src/up.test.mjs')],
-    isOwned: owned,
+    manifest,
     recorded: {
       'src/owned.test.mjs': ['GATES-TEST-LEAK'],
       'src/up.test.mjs': ['GATES-TEST-LEAK', 'TRACE-EMPTY-TEST-FILE'],

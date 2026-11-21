@@ -846,7 +846,10 @@ test('a write that moves a row as it already moves keeps its segment', () => {
   assert.ok(!rowsSet.dirty.segments.empty, 'a new course is');
 });
 
-test('rows draw where the shared evaluator puts them, with the course it gives', () => {
+test('rows draw where the shared evaluator puts them, with the course it gives', (t) => {
+  // A frozen clock: the icons move at 240 m/s, so a millisecond of delay on a loaded machine
+  // moves a row more than the tolerance of 0.1 m.
+  t.mock.timers.enable({ apis: ['Date'], now: 1_700_000_000_000 });
   const t0 = Date.now();
   const fix = ecef(Cesium.Cartesian3.fromDegrees(-97.04, 32.9, 10_500));
   const to = { x: fix.x + 4000, y: fix.y - 2500, z: fix.z + 1200 };

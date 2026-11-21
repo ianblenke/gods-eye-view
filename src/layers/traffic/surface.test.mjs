@@ -370,6 +370,7 @@ test('surface keys follow the globe port’s surface identity, building nothing 
   const remove = observeTrafficSurface(viewer);
   const originalMap = Array.prototype.map;
   const originalJoin = Array.prototype.join;
+  const keys = [];
   let maps = 0,
     joins = 0;
   Array.prototype.map = function (...args) {
@@ -381,14 +382,20 @@ test('surface keys follow the globe port’s surface identity, building nothing 
     return originalJoin.apply(this, args);
   };
   try {
+    // Collect the keys, and check them after the loop: the gate counts each assertion, and
+    // its own code must not count as the array calls of the code under test.
     for (let i = 0; i < 1000; i++) {
       scene.postRender.raiseEvent();
-      assert.equal(trafficSurfaceKey(viewer), first);
+      keys.push(trafficSurfaceKey(viewer));
     }
   } finally {
     Array.prototype.map = originalMap;
     Array.prototype.join = originalJoin;
   }
+  assert.equal(
+    keys.every((key) => key === first),
+    true,
+  );
   assert.equal(maps, 0);
   assert.equal(joins, 0);
   tiles[1].show = false;

@@ -1016,6 +1016,25 @@ test('[osh-045] a feature with no name gets a point entity and no label', async 
   assert.equal(entity.label, undefined);
 });
 
+test('[osh-045] a viewer with no renderer input takes no clicks, and the layer still draws', async (t) => {
+  for (const noInput of [
+    () => {
+      throw new Error('This scene has no renderer to take input with');
+    },
+    () => undefined,
+  ]) {
+    clickHandlers = new Set();
+    const layer = createLayer({ source: fakeSource({ fois: [FEATURE_A] }), overlayHost, input: noInput });
+    const { viewer } = fakeViewer();
+    t.after(() => layer.destroy(viewer));
+    layer.init(viewer);
+    layer.enable(viewer);
+    await layer.update(viewer);
+    assert.equal(layer.getStats().features, 1);
+    assert.equal(clickHandlers.size, 0);
+  }
+});
+
 test('[osh-045] a click on a feature selects and polls its host, whether or not the host is in the systems list', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_A], fois: [FEATURE_A, FEATURE_ORPHAN] });
   const layer = createOshLayer({ source });

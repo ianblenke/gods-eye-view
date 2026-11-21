@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { readFindings, splitFindings, writeFindings } from './lib/upstream-findings.mjs';
-import { readOwnership, classify, isAdoptSource, validAdoptSources, ownershipAdvice, syncChangedLines, parseLineCoverage, coverageFaults, gapReport } from './lib/ownership.mjs';
+import { readOwnership, isAdoptSource, validAdoptSources, ownershipAdvice, syncChangedLines, parseLineCoverage, coverageFaults, gapReport } from './lib/ownership.mjs';
 import { changedInputs, trustMeasurement, writeMeasurement } from './lib/measurement.mjs';
 import { importReach, adoptableReached } from './lib/import-reach.mjs';
 import { spawnSync } from 'node:child_process';
@@ -327,7 +327,7 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec, phase, m
     errors.push(...trace.errors);
     writeTraceReport(root, trace.report);
 
-    const split = splitFindings({ errors, isOwned: (file) => classify(manifest, file) === 'owned', recorded: readFindings(root) });
+    const split = splitFindings({ errors, manifest, recorded: readFindings(root) });
     return { errors: split.errors, found: split.found, inventory, lineCoverage: parseLineCoverage(lcovText ?? '', root), qaScripts: qaRegister.scripts, testFiles, records, assertions, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
   } finally {
     rmSync(coverageDir, { recursive: true, force: true });
@@ -358,7 +358,7 @@ function documentMeasurement({ root, change, openSpec, snapshot, phase, manifest
   const readFile = file => readFileSync(path.join(root, file), 'utf8');
   errors.push(...checkUntracked(listUntrackedFiles(root)));
   errors.push(...findCoverageFlags({ tracked, readFile }));
-  const split = splitFindings({ errors: [...errors, ...trace.errors, ...qa.errors], isOwned: (file) => classify(manifest, file) === 'owned', recorded: readFindings(root) });
+  const split = splitFindings({ errors: [...errors, ...trace.errors, ...qa.errors], manifest, recorded: readFindings(root) });
   return { ...snapshot, specs, trace, qaScripts: qa.scripts, errors: split.errors, found: split.found, links: buildLinks(trace.report), current: currentGaps({ coverage: snapshot.coverage, untraced: trace.untraced }) };
 }
 

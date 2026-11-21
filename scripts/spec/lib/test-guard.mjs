@@ -87,8 +87,7 @@ export function createGuard({
     countAssertion() {
       const context = getContext();
       if (!context || !context.filePath) return;
-      // No array method here: a test can count the array calls of the code that it tests.
-      const file = path.relative(root, context.filePath).replaceAll(path.sep, '/');
+      const file = path.relative(root, context.filePath).split(path.sep).join('/');
       const key = `${file}\0${context.fullName}`;
       counts.set(key, (counts.get(key) || 0) + 1);
     },

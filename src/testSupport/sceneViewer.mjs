@@ -23,7 +23,7 @@ export function sceneViewer({ layerId, pick, canvas }) {
     draw,
     picks,
     set,
-    ids: (suffix) => [...(set(suffix)?.items.keys() ?? [])],
-    item: (suffix, id) => set(suffix)?.items.get(`${layerId}:${id}`),
+    ids: (suffix) => [...set(suffix).items.keys()],
+    item: (suffix, id) => set(suffix).items.get(`${layerId}:${id}`),
   };
 }
