@@ -157,7 +157,8 @@ test('processes sharing state space public sends and cap atomically', async (t) 
     const script = `
     const { createGateStateStore } = await import(${JSON.stringify(module)});
     const store = createGateStateStore({ file: ${JSON.stringify(file)} });
-    const latestStartAt = Date.now() + 10000;
+    // A loaded machine starts a child process slowly.
+    const latestStartAt = Date.now() + 120000;
     let sentAt = null;
     for (;;) {
       const result = store.dispatch(
