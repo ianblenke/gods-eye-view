@@ -2187,7 +2187,9 @@ test('a run resumed inside a flight goes on from that point of the path and cloc
     assert.ok(Math.abs(first.sceneElapsedSec - 0.3) < 1e-9, 'the clock starts at the moment');
     // The first frame is the seek's own framing, halfway from A to B.
     assert.ok(poses.length, 'the camera is driven from where it is');
-    assert.ok(Math.abs(poses[0].lat - -10) < 0.5, 'halfway from A to B');
+    // A loaded machine delays the first frame, and the flight moves 40 degrees in 0.2 s.
+    // A fresh flight from the shot start would be 20 degrees away.
+    assert.ok(Math.abs(poses[0].lat - -10) < 6, 'halfway from A to B');
     assert.deepEqual(await run, { started: true, shots: 1 });
     assert.equal(poses.at(-1).lat, -30, 'and ends on shot B');
     assert.equal(viewer.flights.length, 0, 'no fresh flight from the shot start');
