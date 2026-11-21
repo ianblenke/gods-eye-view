@@ -179,6 +179,9 @@
     "src/voice/panel/nativeActivityBranches.test.mjs",
     "src/voice/panel/observers.forkBackfill.test.mjs",
     "src/voice/panel/inactivityBranches.test.mjs",
-    "src/share/wireBranches.test.mjs"
+    "src/share/wireBranches.test.mjs",
+    "src/data/cockpitContactDot.test.mjs",
+    "src/layers/submarineCables/bundledSourceDefault.test.mjs",
+    "src/share/shareLinkPathBranches.test.mjs"
   ]
 }

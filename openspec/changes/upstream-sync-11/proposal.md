@@ -1,6 +1,6 @@
 ## Why
 
-The owner asked on 1976-11-19 to refresh the fork from upstream.
+The owner asked on 1966-11-19 to refresh the fork from upstream.
 Upstream has 2701 commits after the tenth sync, and its tree changed 4032 files since the shared ancestor `2bcdca1c9`.
 The fork changed 2006 commits in the same time. 153 files changed on both sides.
 
@@ -16,8 +16,9 @@ Upstream added a renderer port. Code outside `src/render/cesium/` can no longer 
 - Remove the classification banner of the new upstream HUD. Decision D3 gives the reason.
 - Keep the Taiwan start flight on the camera port. Decision D4 gives the work.
 - Add the 21 fork texts to the nine new locales. Decision D5 gives the limit.
-- Retire 197 scenarios and change two. Decision D6 lists them.
+- Retire 196 scenarios and change two. Decision D6 lists them.
 - Change the gate scripts in three ways. Decision D8 gives the changes.
+- Add the backfill scenarios `submarine-cables-001` and `cockpit-contact-dot-001` for two upstream files.
 - Run the adopt command for each upstream file that the merge brings and that has a coverage gap.
 
 ## Capabilities
@@ -29,7 +30,7 @@ None.
 ### Modified Capabilities
 
 - `gdacs-layer` and `reticulum-layer`: the scenarios `gdacs-layer-019` and `reticulum-layer-018` name the neighbour layer in the panel group, because upstream layers now follow the fork layers.
-- `coverage-gate`, `cyclones`, `ghostmaps`, `hud-markings`, `perimeters`, `recent-imagery`, `share-codec`, `voice-panel` and `wind`: scenarios are retired. Decision D6 gives the reason.
+- `cyclones`, `ghostmaps`, `hud-markings`, `perimeters`, `recent-imagery`, `share-codec`, `voice-panel` and `wind`: scenarios are retired. Decision D6 gives the reason.
 
 ## Impact
 
