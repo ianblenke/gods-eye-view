@@ -101,15 +101,14 @@ function legacyDefaultProjectWithoutNepalFixture() {
   const project = structuredClone(PROJECT_FIXTURE);
   project.scenes[0].id = 'bhote-koshi-flood';
   project.scenes[0].title = 'Bhote Koshi Flood Reconstruction';
-  project.scenes[0].shots = [
-    {
-      ...structuredClone(PROJECT_FIXTURE.scenes[0].shots[0]),
-      id: 'standalone-shot',
-      title: 'Shot 1',
-    },
-  ];
+  project.scenes[0].shots = [{
+    ...structuredClone(PROJECT_FIXTURE.scenes[0].shots[0]),
+    id: 'standalone-shot',
+    title: 'Shot 1',
+  }];
   return project;
 }
+
 
 test('Mailung clip trim estimates seven seconds and its exit, including older saved holds', () => {
   const { director, restore } = makeDirector();
@@ -119,35 +118,19 @@ test('Mailung clip trim estimates seven seconds and its exit, including older sa
     shot.sourcePackId = 'bhote-koshi-nepal-evidence-pack';
     shot.durationSec = 4.2;
     shot.holdSec = 15;
-    shot.layers = {
-      'bhote-koshi-2026': {
-        enabled: true,
-        params: {
-          presentation: 'scene-beat',
-          beatId: 'mailung-bazzar',
-        },
-      },
-    };
+    shot.layers = { 'bhote-koshi-2026': { enabled: true, params: {
+      presentation: 'scene-beat', beatId: 'mailung-bazzar',
+    } } };
     assert.equal(director._effectiveShotHoldSec(scene, shot), 7.65);
     assert.equal(director._shotRuntimeDurationSec(scene, shot), 4.2 + 7.65);
     const state = director._layerStatesForShot(scene, shot)['bhote-koshi-2026'];
     assert.equal(state.params.sceneContext.holdSec, 7.65);
     assert.equal(state.params.sceneControls.mediaPlaybackHoldSec, 7);
     assert.equal(state.params.sceneControls.minimumHoldSec, 7.65);
-    assert.equal(
-      shot.holdSec,
-      15,
-      'runtime correction does not rewrite saved shots',
-    );
+    assert.equal(shot.holdSec, 15, 'runtime correction does not rewrite saved shots');
     shot.layers['bhote-koshi-2026'].params.beatId = 'dandagaun';
-    assert.equal(
-      director._effectiveShotHoldSec(scene, shot),
-      15,
-      'other shots keep their authored hold',
-    );
-  } finally {
-    restore();
-  }
+    assert.equal(director._effectiveShotHoldSec(scene, shot), 15, 'other shots keep their authored hold');
+  } finally { restore(); }
 });
 
 test('Incident Corridor gives all overview pins time to reveal without rewriting saved shots', () => {
@@ -156,28 +139,24 @@ test('Incident Corridor gives all overview pins time to reveal without rewriting
     const scene = director._project.scenes[0];
     const shot = scene.shots[0];
     shot.holdSec = 0.9;
-    shot.layers = {
-      'bhote-koshi-locator': {
-        enabled: true,
-        params: { presentation: 'bhote-koshi-incident-places' },
-      },
-    };
+    shot.layers = { 'bhote-koshi-locator': {
+      enabled: true, params: { presentation: 'bhote-koshi-incident-places' },
+    } };
     assert.equal(director._effectiveShotHoldSec(scene, shot), 11);
     assert.equal(shot.holdSec, 0.9);
     shot.holdSec = 15;
     assert.equal(director._effectiveShotHoldSec(scene, shot), 15);
     shot.holdSec = 0.9;
-    shot.layers['bhote-koshi-locator'].params.presentation =
-      'bhote-koshi-flood-path';
+    shot.layers['bhote-koshi-locator'].params.presentation = 'bhote-koshi-flood-path';
     assert.equal(director._effectiveShotHoldSec(scene, shot), 0.9);
-    shot.layers['bhote-koshi-locator'].params.presentation =
-      'bhote-koshi-incident-places';
+    shot.layers['bhote-koshi-locator'].params.presentation = 'bhote-koshi-incident-places';
     shot.layers['bhote-koshi-locator'].enabled = false;
     assert.equal(director._effectiveShotHoldSec(scene, shot), 0.9);
   } finally {
     restore();
   }
 });
+
 
 test('scene clock seek resolves the exact shot phase and camera in both directions', async () => {
   const { director, restore } = makeDirector();
@@ -191,14 +170,11 @@ test('scene clock seek resolves the exact shot phase and camera in both directio
     assert.equal(await director.seekScene('scene-1', 0.99), true);
     assert.equal(await director.seekScene('scene-1', 0.25), true);
     assert.equal(await director.seekScene('missing', 0.5), false);
-    assert.deepEqual(
-      loads.map(({ sceneId, shotId }) => ({ sceneId, shotId })),
-      [
-        { sceneId: 'scene-1', shotId: 'shot-a' },
-        { sceneId: 'scene-1', shotId: 'shot-b' },
-        { sceneId: 'scene-1', shotId: 'shot-a' },
-      ],
-    );
+    assert.deepEqual(loads.map(({ sceneId, shotId }) => ({ sceneId, shotId })), [
+      { sceneId: 'scene-1', shotId: 'shot-a' },
+      { sceneId: 'scene-1', shotId: 'shot-b' },
+      { sceneId: 'scene-1', shotId: 'shot-a' },
+    ]);
     assert.equal(loads[0].options.sceneSeek.sceneProgress, 0);
     assert.equal(loads[0].options.sceneSeek.cameraProgress, 0);
     assert.ok(loads[1].options.sceneSeek.cameraProgress > 0.9);
@@ -225,36 +201,13 @@ test('same-shot seeking restores declared layer visibility after manual changes'
     const visualCalls = styleManager.visualCalls.length;
 
     assert.equal(await director.seekScene('scene-1', 0.25), true);
-    assert.equal(
-      styleManager.visualCalls.length,
-      visualCalls,
-      'do not rebuild the shot',
-    );
-    assert.equal(
-      director.getPlaybackTimingState().snapshot.sceneProgress,
-      0.25,
-    );
-    const enabled = new Map(
-      dataManager.getAll().map(({ id, enabled }) => [id, enabled]),
-    );
-    assert.equal(
-      enabled.get('flights'),
-      true,
-      "restore the shot's enabled layer",
-    );
-    assert.equal(
-      enabled.get('traffic'),
-      false,
-      "restore the shot's disabled layer",
-    );
-    assert.equal(
-      enabled.get('satellites'),
-      true,
-      'preserve undeclared operator layers',
-    );
-    assert.ok(
-      dataManager.setEnabledCalls.every(({ id }) => id !== 'satellites'),
-    );
+    assert.equal(styleManager.visualCalls.length, visualCalls, 'do not rebuild the shot');
+    assert.equal(director.getPlaybackTimingState().snapshot.sceneProgress, 0.25);
+    const enabled = new Map(dataManager.getAll().map(({ id, enabled }) => [id, enabled]));
+    assert.equal(enabled.get('flights'), true, 'restore the shot\'s enabled layer');
+    assert.equal(enabled.get('traffic'), false, 'restore the shot\'s disabled layer');
+    assert.equal(enabled.get('satellites'), true, 'preserve undeclared operator layers');
+    assert.ok(dataManager.setEnabledCalls.every(({ id }) => id !== 'satellites'));
   } finally {
     await director.destroy();
     restore();
@@ -274,21 +227,11 @@ test('same-shot seeking reports refusal when a manually disabled layer cannot be
     const visualCalls = styleManager.visualCalls.length;
 
     assert.equal(await director.seekScene('scene-1', 0.25), false);
-    assert.equal(
-      dataManager.getAll().find(({ id }) => id === 'flights').enabled,
-      false,
-    );
+    assert.equal(dataManager.getAll().find(({ id }) => id === 'flights').enabled, false);
     const timing = director.getPlaybackTimingState();
     assert.equal(timing.activeTimers, 0);
-    assert.ok(
-      Math.abs(timing.snapshot.sceneProgress - 0.1) < 1e-9,
-      'keep the last settled seek position',
-    );
-    assert.equal(
-      styleManager.visualCalls.length,
-      visualCalls,
-      'do not rebuild the shot',
-    );
+    assert.ok(Math.abs(timing.snapshot.sceneProgress - 0.1) < 1e-9, 'keep the last settled seek position');
+    assert.equal(styleManager.visualCalls.length, visualCalls, 'do not rebuild the shot');
   } finally {
     await director.destroy();
     restore();
@@ -304,10 +247,7 @@ test('same-shot seeking restores visibility a manual toggle is still changing', 
     assert.equal(await director.seekScene('scene-1', 0.25), true);
     await disabling;
     await settle();
-    assert.equal(
-      dataManager.getAll().find(({ id }) => id === 'flights').enabled,
-      true,
-    );
+    assert.equal(dataManager.getAll().find(({ id }) => id === 'flights').enabled, true);
   } finally {
     await director.destroy();
     restore();
@@ -315,8 +255,7 @@ test('same-shot seeking restores visibility a manual toggle is still changing', 
 });
 
 test('same-shot seeking restores a layer whose superseded LOAD transition rolls back', async () => {
-  const { director, dataManager, styleManager, viewer, restore } =
-    makeDirector();
+  const { director, dataManager, styleManager, viewer, restore } = makeDirector();
   const lifecycle = new LayerLifecycle(viewer);
   for (const id of ['flights', 'traffic', 'satellites']) {
     lifecycle.register({
@@ -334,26 +273,17 @@ test('same-shot seeking restores a layer whose superseded LOAD transition rolls 
     await dataManager.setEnabled('flights', false);
     dataManager.setEnabledCalls.length = 0;
     const reload = director.loadShot('scene-1', 'shot-a', { flyDuration: 0 });
-    for (let i = 0; i < 20 && !dataManager.setEnabledCalls.length; i++)
-      await Promise.resolve();
-    assert.equal(
-      dataManager.getLayerLifecycleState('flights').lifecycleState,
-      'enabling',
-    );
+    for (let i = 0; i < 20 && !dataManager.setEnabledCalls.length; i++) await Promise.resolve();
+    assert.equal(dataManager.getLayerLifecycleState('flights').lifecycleState, 'enabling');
 
     assert.equal(await director.seekScene('scene-1', 0.25), true);
     await reload;
     await settle();
-    assert.equal(
-      dataManager.getAll().find(({ id }) => id === 'flights').enabled,
-      true,
-    );
+    assert.equal(dataManager.getAll().find(({ id }) => id === 'flights').enabled, true);
 
     await realDirector.loadShot('scene-1', 'shot-a', { flyDuration: 0 });
     await lifecycle.setEnabled('flights', false);
-    const queuedReload = realDirector.loadShot('scene-1', 'shot-a', {
-      flyDuration: 0,
-    });
+    const queuedReload = realDirector.loadShot('scene-1', 'shot-a', { flyDuration: 0 });
     for (let i = 0; i < 20 && !lifecycle.isEffectivelyEnabled('flights'); i++) {
       await Promise.resolve();
     }
@@ -377,11 +307,7 @@ test('same-shot seeking restores a layer whose superseded LOAD transition rolls 
       return false;
     };
     assert.equal(await realDirector.seekScene('scene-1', 0.4), false);
-    assert.equal(
-      navClaims,
-      1,
-      'camera refusal fails the seek without falling back to LOAD',
-    );
+    assert.equal(navClaims, 1, 'camera refusal fails the seek without falling back to LOAD');
   } finally {
     await realDirector.destroy();
     await director.destroy();
@@ -391,11 +317,9 @@ test('same-shot seeking restores a layer whose superseded LOAD transition rolls 
 
 test('same-shot seeking rolls back earlier layers and preserves Context, clock and camera when a later layer is refused', async () => {
   let refuse = () => false;
-  const { director, dataManager, styleManager, viewer, restore } = makeDirector(
-    {
-      data: { refuse: (id, on) => refuse(id, on) },
-    },
-  );
+  const { director, dataManager, styleManager, viewer, restore } = makeDirector({
+    data: { refuse: (id, on) => refuse(id, on) },
+  });
   try {
     const shot = director._project.scenes[0].shots[0];
     shot.layers = {
@@ -421,39 +345,16 @@ test('same-shot seeking rolls back earlier layers and preserves Context, clock a
       false,
       'stop the plan before later ids are written',
     );
-    const enabled = new Map(
-      dataManager.getAll().map(({ id, enabled }) => [id, enabled]),
-    );
-    assert.equal(
-      enabled.get('flights'),
-      false,
-      'first stale layer stays disabled',
-    );
-    assert.equal(
-      enabled.get('traffic'),
-      false,
-      'refused second layer stays disabled',
-    );
-    assert.equal(
-      enabled.get('satellites'),
-      false,
-      'later stale layer is never written',
-    );
+    const enabled = new Map(dataManager.getAll().map(({ id, enabled }) => [id, enabled]));
+    assert.equal(enabled.get('flights'), false, 'first stale layer stays disabled');
+    assert.equal(enabled.get('traffic'), false, 'refused second layer stays disabled');
+    assert.equal(enabled.get('satellites'), false, 'later stale layer is never written');
     assert.equal(styleManager.contextMode, 'flights');
     assert.deepEqual(styleManager.contextExits, []);
-    assert.equal(
-      viewer.views.length,
-      viewsBefore,
-      'camera stays at the pre-seek pose',
-    );
-    assert.equal(
-      styleManager.visualCalls.length,
-      visualCalls,
-      'do not rebuild the shot',
-    );
+    assert.equal(viewer.views.length, viewsBefore, 'camera stays at the pre-seek pose');
+    assert.equal(styleManager.visualCalls.length, visualCalls, 'do not rebuild the shot');
     assert.ok(
-      Math.abs(director.getPlaybackTimingState().snapshot.sceneProgress - 0.1) <
-        1e-9,
+      Math.abs(director.getPlaybackTimingState().snapshot.sceneProgress - 0.1) < 1e-9,
       'clock stays at the last settled seek position',
     );
   } finally {
@@ -491,21 +392,14 @@ test('same-shot seeking aborts in-flight admission when superseded by an early-r
     const seek = director.seekScene('scene-1', 0.25);
     for (
       let i = 0;
-      i < 20 &&
-      lifecycle.getLayerLifecycleState('flights').lifecycleState !== 'enabling';
+      i < 20 && lifecycle.getLayerLifecycleState('flights').lifecycleState !== 'enabling';
       i++
     ) {
       await Promise.resolve();
     }
-    assert.equal(
-      lifecycle.getLayerLifecycleState('flights').lifecycleState,
-      'enabling',
-    );
+    assert.equal(lifecycle.getLayerLifecycleState('flights').lifecycleState, 'enabling');
     const admissionSignal = director._loadAbort?.signal;
-    assert.ok(
-      admissionSignal,
-      'same-shot seek installs an admission controller',
-    );
+    assert.ok(admissionSignal, 'same-shot seek installs an admission controller');
 
     const missingLoad = director.loadShot('missing', 'nope');
     assert.equal(
@@ -514,24 +408,15 @@ test('same-shot seeking aborts in-flight admission when superseded by an early-r
       'missing load aborts the admission controller before returning',
     );
     assert.equal((await missingLoad).reason, 'shot-not-found');
-    assert.equal(
-      viewer.views.length,
-      viewsBefore,
-      'shortcut has not committed before abort',
-    );
+    assert.equal(viewer.views.length, viewsBefore, 'shortcut has not committed before abort');
 
     releaseEnable();
     assert.equal(await seek, false);
     await settle();
-    assert.equal(
-      lifecycle.isEnabled('flights'),
-      false,
-      'layer is not restored',
-    );
+    assert.equal(lifecycle.isEnabled('flights'), false, 'layer is not restored');
     assert.equal(viewer.views.length, viewsBefore, 'setView is not called');
     assert.ok(
-      Math.abs(director.getPlaybackTimingState().snapshot.sceneProgress - 0.1) <
-        1e-9,
+      Math.abs(director.getPlaybackTimingState().snapshot.sceneProgress - 0.1) < 1e-9,
       'sceneProgress stays at the last settled value',
     );
 
@@ -547,11 +432,7 @@ test('same-shot seeking aborts in-flight admission when superseded by an early-r
       return null;
     };
     assert.equal(await director.seekScene('scene-1', 0.25), false);
-    assert.equal(
-      loadFallbackCalls,
-      0,
-      'stale seek returning null must not start _loadShot',
-    );
+    assert.equal(loadFallbackCalls, 0, 'stale seek returning null must not start _loadShot');
     director._seekLoadedShot = origSeekLoadedShot;
   } finally {
     releaseEnable?.();
@@ -583,21 +464,14 @@ test('a rejected loadShot does not cancel an in-flight LOAD', async () => {
     const load = director.loadShot('scene-1', 'shot-a', { flyDuration: 0 });
     for (
       let i = 0;
-      i < 20 &&
-      lifecycle.getLayerLifecycleState('flights').lifecycleState !== 'enabling';
+      i < 20 && lifecycle.getLayerLifecycleState('flights').lifecycleState !== 'enabling';
       i++
     ) {
       await Promise.resolve();
     }
-    assert.equal(
-      lifecycle.getLayerLifecycleState('flights').lifecycleState,
-      'enabling',
-    );
+    assert.equal(lifecycle.getLayerLifecycleState('flights').lifecycleState, 'enabling');
 
-    assert.equal(
-      (await director.loadShot('missing', 'nope')).reason,
-      'shot-not-found',
-    );
+    assert.equal((await director.loadShot('missing', 'nope')).reason, 'shot-not-found');
     holdEnable = false;
     releaseEnable();
     assert.equal((await load)?.started, true, 'the valid LOAD still lands');
@@ -630,7 +504,7 @@ test('refused same-shot seek rollback keeps a manual toggle still in flight', as
     assert.equal(
       dataManager.getAll().find(({ id }) => id === 'flights').enabled,
       true,
-      "rollback restores the operator's intended state, not the stale committed one",
+      'rollback restores the operator\'s intended state, not the stale committed one',
     );
   } finally {
     await director.destroy();
@@ -641,9 +515,7 @@ test('refused same-shot seek rollback keeps a manual toggle still in flight', as
 test('reopening the same shot reapplies its look while ordinary seeks reuse it', async () => {
   const project = structuredClone(PROJECT_FIXTURE);
   project.scenes[0].shots[0].visual.style = 'retro';
-  const { director, dataManager, styleManager, restore } = makeDirector({
-    project,
-  });
+  const { director, dataManager, styleManager, restore } = makeDirector({ project });
   try {
     await director.loadShot('scene-1', 'shot-a', { flyDuration: 0 });
     await styleManager.applyVisualState({ style: 'normal' });
@@ -654,19 +526,12 @@ test('reopening the same shot reapplies its look while ordinary seeks reuse it',
     assert.equal(await director.seekScene('scene-1', 0.25), true);
     assert.deepEqual(dataManager.setEnabledCalls, []);
     assert.equal(styleManager.visualCalls.length, visualCalls);
-    assert.equal(
-      director.getPlaybackTimingState().snapshot.sceneProgress,
-      0.25,
-    );
+    assert.equal(director.getPlaybackTimingState().snapshot.sceneProgress, 0.25);
 
-    assert.equal(
-      await director.seekScene('scene-1', 0.25, { reloadShot: true }),
-      true,
-    );
+    assert.equal(await director.seekScene('scene-1', 0.25, { reloadShot: true }), true);
     assert.equal(styleManager.visualCalls.length, visualCalls + 1);
     assert.equal(styleManager.visualStates.at(-1).style, 'retro');
-    const { sceneProgress, seeking } =
-      director.getPlaybackTimingState().snapshot;
+    const { sceneProgress, seeking } = director.getPlaybackTimingState().snapshot;
     assert.equal(sceneProgress, 0.25);
     assert.equal(seeking, true);
   } finally {
@@ -678,30 +543,24 @@ test('reopening the same shot reapplies its look while ordinary seeks reuse it',
 test('scene clock subscribers receive authoritative forward playback snapshots', () => {
   const { director, restore } = makeDirector();
   const snapshots = [];
-  const unsubscribe = director.subscribeSceneClock((snapshot) =>
-    snapshots.push(snapshot),
-  );
+  const unsubscribe = director.subscribeSceneClock((snapshot) => snapshots.push(snapshot));
   try {
     const scene = director._project.scenes[0];
     director._publishSceneClock(scene, scene.shots[0], 0.1, { running: true });
     director._publishSceneClock(scene, scene.shots[1], 0.3, { running: true });
     unsubscribe();
     director._publishSceneClock(scene, scene.shots[1], 0.4, { running: false });
-    assert.deepEqual(
-      snapshots.map(({ shotId, sceneElapsedSec, running }) => ({
-        shotId,
-        sceneElapsedSec,
-        running,
-      })),
-      [
-        { shotId: 'shot-a', sceneElapsedSec: 0.1, running: true },
-        { shotId: 'shot-b', sceneElapsedSec: 0.3, running: true },
-      ],
-    );
+    assert.deepEqual(snapshots.map(({ shotId, sceneElapsedSec, running }) => ({
+      shotId, sceneElapsedSec, running,
+    })), [
+      { shotId: 'shot-a', sceneElapsedSec: 0.1, running: true },
+      { shotId: 'shot-b', sceneElapsedSec: 0.3, running: true },
+    ]);
   } finally {
     restore();
   }
 });
+
 
 test('the Nepal evidence pack appends once and applies the approved corridor framing', () => {
   const project = nepalProjectFixture();
@@ -710,10 +569,7 @@ test('the Nepal evidence pack appends once and applies the approved corridor fra
   try {
     const scene = director._project.scenes[0];
     const originalShotIds = scene.shots.map(({ id }) => id);
-    const first = director.appendShotPack(
-      'scene-1',
-      'bhote-koshi-nepal-evidence-pack',
-    );
+    const first = director.appendShotPack('scene-1', 'bhote-koshi-nepal-evidence-pack');
     assert.deepEqual(first, {
       appended: true,
       updated: false,
@@ -721,25 +577,21 @@ test('the Nepal evidence pack appends once and applies the approved corridor fra
       patchedShotCount: 14,
       firstShotId: scene.shots[8].id,
     });
-    assert.deepEqual(
-      scene.shots.slice(0, 8).map(({ id }) => id),
-      originalShotIds,
-    );
+    assert.deepEqual(scene.shots.slice(0, 8).map(({ id }) => id), originalShotIds);
     assert.equal(scene.shots.length, 25);
     assert.ok(scene.releaseLayerIds.includes('bhote-koshi-2026'));
     assert.ok(scene.releaseLayerIds.includes('bhote-koshi-locator'));
-    assert.equal(
-      scene.appliedShotPacks[0].id,
-      'bhote-koshi-nepal-evidence-pack',
-    );
+    assert.equal(scene.appliedShotPacks[0].id, 'bhote-koshi-nepal-evidence-pack');
     assert.equal(scene.appliedShotPacks[0].version, 18);
-    assert.deepEqual(Object.keys(scene.appliedShotPacks[0].shotBindings), [
-      ...NEPAL_ORIGINAL_SHOT_TITLES,
-      ...scene.shots.slice(8).map(({ title }) => title),
-    ]);
+    assert.deepEqual(
+      Object.keys(scene.appliedShotPacks[0].shotBindings),
+      [...NEPAL_ORIGINAL_SHOT_TITLES, ...scene.shots.slice(8).map(({ title }) => title)],
+    );
     assert.deepEqual(
       scene.shots.map((shot) => shot.visual.mapStack),
-      [...Array(25).fill('photoreal')],
+      [
+        ...Array(25).fill('photoreal'),
+      ],
     );
     assert.deepEqual(
       scene.shots.map((shot) => shot.layers['bhote-koshi-2026'].params.beatId),
@@ -752,23 +604,11 @@ test('the Nepal evidence pack appends once and applies the approved corridor fra
         'bidur-trishuli-bridge',
         'gyirong-border-gate',
         'immediate-collapse-viewpoint',
-        'immediate-collapse-viewpoint',
-        'debris-dammed-lake',
-        'second-landslide',
-        'gyirong-border-gate',
-        'timure-cluster',
-        'syabru-besi',
-        'dhunche',
-        'mailung-upper-trishuli',
-        'mailung-bazzar',
-        'dandagaun',
-        'dandagaun-viewpoint',
-        'betrawati-bazaar',
-        'bhainse',
-        'bidur-trishuli-bridge',
-        'devighat-taadi-khola-bridge',
-        'charaudi',
-        'final-view',
+        'immediate-collapse-viewpoint', 'debris-dammed-lake', 'second-landslide',
+        'gyirong-border-gate', 'timure-cluster', 'syabru-besi', 'dhunche',
+        'mailung-upper-trishuli', 'mailung-bazzar', 'dandagaun', 'dandagaun-viewpoint',
+        'betrawati-bazaar', 'bhainse', 'bidur-trishuli-bridge',
+        'devighat-taadi-khola-bridge', 'charaudi', 'final-view',
       ],
     );
     assert.deepEqual(
@@ -790,9 +630,9 @@ test('the Nepal evidence pack appends once and applies the approved corridor fra
       },
     );
     assert.deepEqual(
-      scene.shots
-        .slice(12, 14)
-        .map((shot) => shot.layers['bhote-koshi-2026'].params.sceneControls),
+      scene.shots.slice(12, 14).map(
+        (shot) => shot.layers['bhote-koshi-2026'].params.sceneControls,
+      ),
       [
         {
           imageryComparison: true,
@@ -815,19 +655,11 @@ test('the Nepal evidence pack appends once and applies the approved corridor fra
     );
     for (const shot of scene.shots) {
       assert.equal(shot.layers['bhote-koshi-2026'].enabled, true);
-      assert.equal(
-        shot.layers['bhote-koshi-2026'].params.presentation,
-        'scene-beat',
-      );
+      assert.equal(shot.layers['bhote-koshi-2026'].params.presentation, 'scene-beat');
     }
     assert.deepEqual(
-      scene.shots
-        .slice(0, 8)
-        .filter((_, index) => index !== 4)
-        .map(({ camera }) => camera),
-      originalShots
-        .filter((_, index) => index !== 4)
-        .map(({ camera }) => camera),
+      scene.shots.slice(0, 8).filter((_, index) => index !== 4).map(({ camera }) => camera),
+      originalShots.filter((_, index) => index !== 4).map(({ camera }) => camera),
     );
     assert.deepEqual(scene.shots[4].camera, {
       lat: 28.0529,
@@ -861,25 +693,15 @@ test('installed v12 Nepal pack inserts ten points without replacing renamed came
     first.director.appendShotPack('scene-1', recipe.id);
     legacy = structuredClone(first.director._project);
     const scene = legacy.scenes[0];
-    scene.shots = scene.shots.filter(
-      (shot) =>
-        !shot.sourcePackId ||
-        recipe.previousRequiredSourcePackBeatIds.includes(
-          shot.layers['bhote-koshi-2026'].params.beatId,
-        ),
-    );
+    scene.shots = scene.shots.filter((shot) => !shot.sourcePackId
+      || recipe.previousRequiredSourcePackBeatIds.includes(shot.layers['bhote-koshi-2026'].params.beatId));
     scene.appliedShotPacks[0].version = 12;
     const ids = new Set(scene.shots.map(({ id }) => id));
     scene.appliedShotPacks[0].shotBindings = Object.fromEntries(
-      Object.entries(scene.appliedShotPacks[0].shotBindings).filter(([, id]) =>
-        ids.has(id),
-      ),
-    );
+      Object.entries(scene.appliedShotPacks[0].shotBindings).filter(([, id]) => ids.has(id)));
     scene.shots[8].title = 'My collapse camera';
     scene.shots[8].camera.heading = 149;
-  } finally {
-    first.restore();
-  }
+  } finally { first.restore(); }
   const originalShots = structuredClone(legacy.scenes[0].shots);
   const upgraded = makeDirector({ project: legacy });
   try {
@@ -891,21 +713,13 @@ test('installed v12 Nepal pack inserts ten points without replacing renamed came
       assert.deepEqual(current.camera, old.camera);
       assert.equal(current.title, old.title);
     }
-    assert.deepEqual(
-      scene.shots
-        .filter((shot) => shot.sourcePackId)
-        .map((shot) => shot.layers['bhote-koshi-2026'].params.beatId),
-      recipe.requiredSourcePackBeatIds,
-    );
+    assert.deepEqual(scene.shots.filter((shot) => shot.sourcePackId).map((shot) =>
+      shot.layers['bhote-koshi-2026'].params.beatId), recipe.requiredSourcePackBeatIds);
     assert.equal(scene.appliedShotPacks[0].version, 18);
-    assert.equal(
-      upgraded.director.appendShotPack(scene.id, recipe.id).reason,
-      'already-appended',
-    );
-  } finally {
-    upgraded.restore();
-  }
+    assert.equal(upgraded.director.appendShotPack(scene.id, recipe.id).reason, 'already-appended');
+  } finally { upgraded.restore(); }
 });
+
 
 test('startup selects the first scene after upgrading a later scene’s shot pack', () => {
   const first = makeDirector({ project: nepalProjectFixture() });
@@ -916,67 +730,37 @@ test('startup selects the first scene after upgrading a later scene’s shot pac
     legacy = structuredClone(first.director._project);
     const scene = legacy.scenes[0];
     scene.id = 'nepal';
-    scene.shots = scene.shots.filter(
-      (shot) =>
-        !shot.sourcePackId ||
-        recipe.previousRequiredSourcePackBeatIds.includes(
-          shot.layers['bhote-koshi-2026'].params.beatId,
-        ),
-    );
+    scene.shots = scene.shots.filter((shot) => !shot.sourcePackId
+      || recipe.previousRequiredSourcePackBeatIds.includes(shot.layers['bhote-koshi-2026'].params.beatId));
     scene.appliedShotPacks[0].version = 12;
     const ids = new Set(scene.shots.map(({ id }) => id));
     scene.appliedShotPacks[0].shotBindings = Object.fromEntries(
-      Object.entries(scene.appliedShotPacks[0].shotBindings).filter(([, id]) =>
-        ids.has(id),
-      ),
-    );
+      Object.entries(scene.appliedShotPacks[0].shotBindings).filter(([, id]) => ids.has(id)));
     // An ordinary scene comes first; the pack to upgrade is in the second.
     legacy.scenes.unshift(structuredClone(PROJECT_FIXTURE.scenes[0]));
-  } finally {
-    first.restore();
-  }
+  } finally { first.restore(); }
   const upgraded = makeDirector({ project: legacy });
   try {
     const { director } = upgraded;
-    assert.equal(
-      director._project.scenes[1].appliedShotPacks[0].version,
-      18,
-      'the pack was upgraded',
-    );
+    assert.equal(director._project.scenes[1].appliedShotPacks[0].version, 18, 'the pack was upgraded');
     assert.equal(director._selectedSceneId, 'scene-1');
     assert.equal(director._selectedShotId, 'shot-a');
-  } finally {
-    upgraded.restore();
-  }
+  } finally { upgraded.restore(); }
 });
 
 test('a legacy three-shot Nepal browser project bootstraps to the current 25-shot sequence', () => {
   const project = legacyThreeShotNepalProjectFixture();
   const originalIds = project.scenes[0].shots.map(({ id }) => id);
-  const originalCameras = project.scenes[0].shots.map(({ camera }) =>
-    structuredClone(camera),
-  );
+  const originalCameras = project.scenes[0].shots.map(({ camera }) => structuredClone(camera));
   const { director, restore } = makeDirector({ project });
   try {
     const scene = director._project.scenes[0];
     assert.equal(scene.shots.length, 25);
-    assert.deepEqual(
-      scene.shots.map(({ title }) => title),
-      getSceneAppendRecipeById('bhote-koshi-nepal-evidence-pack')
-        .requiredShotTitles,
-    );
-    assert.deepEqual(
-      scene.shots.slice(0, 3).map(({ id }) => id),
-      originalIds,
-    );
-    assert.deepEqual(
-      scene.shots.slice(0, 3).map(({ camera }) => camera),
-      originalCameras,
-    );
-    assert.equal(
-      scene.appliedShotPacks[0].id,
-      'bhote-koshi-nepal-evidence-pack',
-    );
+    assert.deepEqual(scene.shots.map(({ title }) => title),
+      getSceneAppendRecipeById('bhote-koshi-nepal-evidence-pack').requiredShotTitles);
+    assert.deepEqual(scene.shots.slice(0, 3).map(({ id }) => id), originalIds);
+    assert.deepEqual(scene.shots.slice(0, 3).map(({ camera }) => camera), originalCameras);
+    assert.equal(scene.appliedShotPacks[0].id, 'bhote-koshi-nepal-evidence-pack');
     assert.equal(scene.appliedShotPacks[0].version, 18);
     // displayShotTitle trusts these bindings to localize the bootstrap shots.
     for (const shot of scene.shots.slice(0, 8)) {
@@ -1014,22 +798,18 @@ test('the Nepal pack upgrades the upper-valley shots without duplicating evidenc
   initial.director.appendShotPack('scene-1', 'bhote-koshi-nepal-evidence-pack');
   const project = structuredClone(initial.director._project);
   initial.restore();
-  project.scenes[0].appliedShotPacks = [
-    {
-      id: 'bhote-koshi-nepal-evidence-pack',
-      version: 4,
-    },
-  ];
+  project.scenes[0].appliedShotPacks = [{
+    id: 'bhote-koshi-nepal-evidence-pack',
+    version: 4,
+  }];
   for (const shot of project.scenes[0].shots.slice(0, 8)) {
     delete shot.layers['bhote-koshi-2026'];
   }
   const originalLength = project.scenes[0].shots.length;
   const originalIds = project.scenes[0].shots.map(({ id }) => id);
-  const originalCameras = project.scenes[0].shots.map(({ camera }) =>
-    structuredClone(camera),
-  );
-  const originalLocators = project.scenes[0].shots.map((shot) =>
-    structuredClone(shot.layers['bhote-koshi-locator']),
+  const originalCameras = project.scenes[0].shots.map(({ camera }) => structuredClone(camera));
+  const originalLocators = project.scenes[0].shots.map(
+    (shot) => structuredClone(shot.layers['bhote-koshi-locator']),
   );
   const { director, restore } = makeDirector({ project });
   try {
@@ -1039,14 +819,8 @@ test('the Nepal pack upgrades the upper-valley shots without duplicating evidenc
       { appended: false, reason: 'already-appended' },
     );
     assert.equal(scene.shots.length, originalLength);
-    assert.deepEqual(
-      scene.shots.map(({ id }) => id),
-      originalIds,
-    );
-    assert.deepEqual(
-      scene.shots.map(({ camera }) => camera),
-      originalCameras,
-    );
+    assert.deepEqual(scene.shots.map(({ id }) => id), originalIds);
+    assert.deepEqual(scene.shots.map(({ camera }) => camera), originalCameras);
     assert.deepEqual(
       scene.shots.map((shot) => shot.layers['bhote-koshi-locator']),
       originalLocators,
@@ -1060,18 +834,11 @@ test('the Nepal pack upgrades the upper-valley shots without duplicating evidenc
       roll: 0,
     });
     assert.equal(scene.appliedShotPacks[0].version, 18);
-    assert.equal(
-      Object.keys(scene.appliedShotPacks[0].shotBindings).length,
-      25,
-    );
-    assert.ok(
-      scene.shots.every(
-        (shot) =>
-          shot.layers['bhote-koshi-2026']?.enabled === true &&
-          shot.layers['bhote-koshi-2026']?.params?.presentation ===
-            'scene-beat',
-      ),
-    );
+    assert.equal(Object.keys(scene.appliedShotPacks[0].shotBindings).length, 25);
+    assert.ok(scene.shots.every((shot) => (
+      shot.layers['bhote-koshi-2026']?.enabled === true
+      && shot.layers['bhote-koshi-2026']?.params?.presentation === 'scene-beat'
+    )));
     const afterUpgrade = structuredClone(scene);
     assert.deepEqual(
       director.appendShotPack('scene-1', 'bhote-koshi-nepal-evidence-pack'),
@@ -1083,25 +850,20 @@ test('the Nepal pack upgrades the upper-valley shots without duplicating evidenc
   }
 });
 
+
 test('an older default project gains the complete selectable Nepal scene once', () => {
   const project = legacyDefaultProjectWithoutNepalFixture();
   const { director, restore } = makeDirector({
     project,
-    data: {
-      registered: [...REGISTERED, 'bhote-koshi-2026', 'bhote-koshi-locator'],
-    },
+    data: { registered: [...REGISTERED, 'bhote-koshi-2026', 'bhote-koshi-locator'] },
   });
   try {
-    const nepal = director._project.scenes.find(
-      ({ title }) => title === 'Nepal Flood Incident',
-    );
+    const nepal = director._project.scenes.find(({ title }) => title === 'Nepal Flood Incident');
     assert.ok(nepal);
     assert.equal(nepal.shots.length, 25);
     assert.equal(nepal.shots[0].title, 'Global Incident Context');
     assert.equal(nepal.shots.at(-1).title, 'Final view');
-    assert.deepEqual(director._project.installedBuiltInSceneIds, [
-      'bhote-koshi-nepal-scene',
-    ]);
+    assert.deepEqual(director._project.installedBuiltInSceneIds, ['bhote-koshi-nepal-scene']);
   } finally {
     restore();
   }
@@ -1113,9 +875,7 @@ test('a previously installed Nepal scene stays deleted when its marker remains',
   const { director, restore } = makeDirector({ project });
   try {
     assert.equal(
-      director._project.scenes.some(
-        ({ title }) => title === 'Nepal Flood Incident',
-      ),
+      director._project.scenes.some(({ title }) => title === 'Nepal Flood Incident'),
       false,
     );
   } finally {
@@ -1124,16 +884,10 @@ test('a previously installed Nepal scene stays deleted when its marker remains',
 });
 
 test('public defaults include Nepal without an extra standalone flood recipe', () => {
-  assert.equal(
-    SCENE_RECIPES.some((item) => item.id === 'bhote-koshi-flood'),
-    false,
-  );
-  assert.equal(
-    SCENE_RECIPES.filter((item) => item.id === 'bhote-koshi-nepal-scene')
-      .length,
-    1,
-  );
+  assert.equal(SCENE_RECIPES.some((item) => item.id === 'bhote-koshi-flood'), false);
+  assert.equal(SCENE_RECIPES.filter((item) => item.id === 'bhote-koshi-nepal-scene').length, 1);
 });
+
 
 test('an existing public default project gains Nepal without replacing authored shots', () => {
   const project = structuredClone(PROJECT_FIXTURE);
@@ -1141,51 +895,30 @@ test('an existing public default project gains Nepal without replacing authored 
   const original = structuredClone(project.scenes[0].shots);
   const { director, restore } = makeDirector({ project });
   try {
-    assert.deepEqual(
-      director._project.scenes[0].shots.map(({ id, camera }) => ({
-        id,
-        camera,
-      })),
-      original.map(({ id, camera }) => ({ id, camera })),
-    );
+    assert.deepEqual(director._project.scenes[0].shots.map(({ id, camera }) => ({ id, camera })),
+      original.map(({ id, camera }) => ({ id, camera })));
     assert.equal(director._project.scenes[1].title, 'Nepal Flood Incident');
     assert.equal(director._project.scenes[1].shots.length, 25);
-    assert.deepEqual(director._project.installedBuiltInSceneIds, [
-      'bhote-koshi-nepal-scene',
-    ]);
-  } finally {
-    restore();
-  }
+    assert.deepEqual(director._project.installedBuiltInSceneIds, ['bhote-koshi-nepal-scene']);
+  } finally { restore(); }
 });
 
 test('Nepal comparison shots load Esri beneath Vantor even from a saved OSM or photoreal shot', async () => {
   const { director, styleManager, restore } = makeDirector({
     project: nepalProjectFixture(),
-    data: {
-      registered: [...REGISTERED, 'bhote-koshi-2026', 'bhote-koshi-locator'],
-    },
+    data: { registered: [...REGISTERED, 'bhote-koshi-2026', 'bhote-koshi-locator'] },
   });
   try {
     director.appendShotPack('scene-1', 'bhote-koshi-nepal-evidence-pack');
     const scene = director._project.scenes[0];
-    const comparisonShots = scene.shots.filter(
-      (shot) =>
-        director._layerStatesForShot(scene, shot)['bhote-koshi-2026']?.params
-          ?.sceneControls?.imageryComparison,
-    );
-    assert.ok(
-      comparisonShots.length >= 2,
-      'the real comparison beats must be exercised',
-    );
+    const comparisonShots = scene.shots.filter((shot) =>
+      director._layerStatesForShot(scene, shot)['bhote-koshi-2026']?.params?.sceneControls?.imageryComparison);
+    assert.ok(comparisonShots.length >= 2, 'the real comparison beats must be exercised');
     for (const shot of comparisonShots) {
       for (const prior of ['osm', 'photoreal']) {
         shot.visual.mapStack = prior;
         await director.loadShot(scene.id, shot.id, { flyDuration: 0.2 });
-        assert.equal(
-          styleManager.visualStates.at(-1).mapStack,
-          'esri-imagery',
-          shot.title,
-        );
+        assert.equal(styleManager.visualStates.at(-1).mapStack, 'esri-imagery', shot.title);
       }
     }
   } finally {
@@ -1199,9 +932,7 @@ test('all saved Nepal shots choose a usable map in keyed and keyless runtimes wi
   const { director, styleManager, restore } = makeDirector({
     project: nepalProjectFixture(),
     isMapStackAvailable: (id) => id === 'photoreal' && photorealAvailable,
-    data: {
-      registered: [...REGISTERED, 'bhote-koshi-2026', 'bhote-koshi-locator'],
-    },
+    data: { registered: [...REGISTERED, 'bhote-koshi-2026', 'bhote-koshi-locator'] },
   });
   try {
     director.appendShotPack('scene-1', 'bhote-koshi-nepal-evidence-pack');
@@ -1210,34 +941,17 @@ test('all saved Nepal shots choose a usable map in keyed and keyless runtimes wi
     for (const available of [false, true, false]) {
       photorealAvailable = available;
       for (const shot of scene.shots) {
-        const comparison = director._layerStatesForShot(scene, shot)[
-          'bhote-koshi-2026'
-        ]?.params?.sceneControls?.imageryComparison;
+        const comparison = director._layerStatesForShot(scene, shot)
+          ['bhote-koshi-2026']?.params?.sceneControls?.imageryComparison;
         const visual = director._visualStateForShot(shot);
-        assert.equal(
-          visual.mapStack,
-          available && !comparison ? 'photoreal' : 'esri-imagery',
-          shot.title,
-        );
+        assert.equal(visual.mapStack, available && !comparison ? 'photoreal' : 'esri-imagery', shot.title);
       }
-      await director.loadShot(scene.id, scene.shots[0].id, {
-        flyDuration: 0.2,
-      });
-      assert.equal(
-        styleManager.visualStates.at(-1).mapStack,
-        available ? 'photoreal' : 'esri-imagery',
-      );
+      await director.loadShot(scene.id, scene.shots[0].id, { flyDuration: 0.2 });
+      assert.equal(styleManager.visualStates.at(-1).mapStack, available ? 'photoreal' : 'esri-imagery');
     }
     assert.deepEqual(scene.shots, savedShots);
-    const unrelated = {
-      visual: { mapStack: 'photoreal' },
-      layers: { flights: { enabled: true } },
-    };
-    assert.equal(
-      director._visualStateForShot(unrelated),
-      unrelated.visual,
-      'other scenes keep their provider policy',
-    );
+    const unrelated = { visual: { mapStack: 'photoreal' }, layers: { flights: { enabled: true } } };
+    assert.equal(director._visualStateForShot(unrelated), unrelated.visual, 'other scenes keep their provider policy');
   } finally {
     await director.destroy();
     restore();
@@ -1246,66 +960,39 @@ test('all saved Nepal shots choose a usable map in keyed and keyless runtimes wi
 
 /** The layer registry as main.js builds it (src/main.js dataManager.register calls). */
 const REGISTERED = [
-  'flights',
-  'military',
-  'earthquakes',
-  'satellites',
-  'rocket-launches',
-  'traffic',
-  'cctv',
-  'radio',
-  'bikeshare',
-  'ais-live-vessels',
-  'military-installations',
-  'military-awareness',
-  'local-datacenters',
-  'local-dams',
-  'telegeography-submarine-cables',
-  'local-firms',
+  'flights', 'military', 'earthquakes', 'satellites', 'rocket-launches', 'traffic',
+  'cctv', 'radio', 'bikeshare', 'ais-live-vessels', 'military-installations',
+  'military-awareness', 'local-datacenters', 'local-dams',
+  'telegeography-submarine-cables', 'local-firms',
 ];
+
 
 const PROJECT_FIXTURE = {
   version: 3,
-  scenes: [
-    {
-      id: 'scene-1',
-      title: 'Fixture Scene',
-      shots: [
-        {
-          id: 'shot-a',
-          title: 'Shot A',
-          durationSec: 0.2,
-          holdSec: 0,
-          camera: {
-            lat: 10,
-            lon: 20,
-            alt: 500000,
-            heading: 0,
-            pitch: -40,
-            roll: 0,
-          },
-          visual: { style: 'normal' },
-          layers: { flights: { enabled: true } },
-        },
-        {
-          id: 'shot-b',
-          title: 'Shot B',
-          durationSec: 0.2,
-          holdSec: 0,
-          camera: {
-            lat: -30,
-            lon: 140,
-            alt: 900000,
-            heading: 0,
-            pitch: -40,
-            roll: 0,
-          },
-          visual: { style: 'retro' },
-          layers: { traffic: { enabled: true } },
-        },
-      ],
-    },
-  ],
+  scenes: [{
+    id: 'scene-1',
+    title: 'Fixture Scene',
+    shots: [
+      {
+        id: 'shot-a',
+        title: 'Shot A',
+        durationSec: 0.2,
+        holdSec: 0,
+        camera: { lat: 10, lon: 20, alt: 500000, heading: 0, pitch: -40, roll: 0 },
+        visual: { style: 'normal' },
+        layers: { flights: { enabled: true } },
+      },
+      {
+        id: 'shot-b',
+        title: 'Shot B',
+        durationSec: 0.2,
+        holdSec: 0,
+        camera: { lat: -30, lon: 140, alt: 900000, heading: 0, pitch: -40, roll: 0 },
+        visual: { style: 'retro' },
+        layers: { traffic: { enabled: true } },
+      },
+    ],
+  }],
 };
 
 /**
@@ -1316,37 +1003,24 @@ const PROJECT_FIXTURE = {
 function installSceneRuntime(project = PROJECT_FIXTURE, { storage } = {}) {
   const originalDocument = globalThis.document;
   const originalLocalStorage = globalThis.localStorage;
-  const noopClassList = {
-    add() {},
-    remove() {},
-    toggle() {},
-    contains: () => false,
-  };
+  const noopClassList = { add() {}, remove() {}, toggle() {}, contains: () => false };
 
   globalThis.document = {
     getElementById: () => null,
-    createElement: () => ({
-      classList: noopClassList,
-      style: {},
-      appendChild() {},
-      remove() {},
-    }),
+    createElement: () => ({ classList: noopClassList, style: {}, appendChild() {}, remove() {} }),
     addEventListener() {},
     removeEventListener() {},
     body: { classList: noopClassList, appendChild() {} },
   };
-  const stored = new Map(
-    storage
-      ? Object.entries(storage)
-      : [['godsEyeView.sceneProject.v2', JSON.stringify(project)]],
-  );
+  const stored = new Map(storage
+    ? Object.entries(storage)
+    : [['godsEyeView.sceneProject.v2', JSON.stringify(project)]]);
   globalThis.localStorage = {
     stored,
     full: false,
     getItem: (key) => stored.get(key) ?? null,
     setItem(key, value) {
-      if (this.full)
-        throw new DOMException('quota exceeded', 'QuotaExceededError');
+      if (this.full) throw new DOMException('quota exceeded', 'QuotaExceededError');
       stored.set(key, value);
     },
     removeItem: (key) => stored.delete(key),
@@ -1366,10 +1040,7 @@ function installSceneRuntime(project = PROJECT_FIXTURE, { storage } = {}) {
  * abort leaves NO half-applied layer — which is the whole point of passing the
  * signal rather than only checking a boolean afterwards.
  */
-function fakeDataManager({
-  registered = REGISTERED,
-  refuse = () => false,
-} = {}) {
+function fakeDataManager({ registered = REGISTERED, refuse = () => false } = {}) {
   const enabled = new Map();
   const pending = new Map();
   const setEnabledCalls = [];
@@ -1379,9 +1050,7 @@ function fakeDataManager({
     setEnabledCalls,
     subscribeVisibilityRequests(listener) {
       this.visibilityListener = listener;
-      return () => {
-        this.visibilityListener = null;
-      };
+      return () => { this.visibilityListener = null; };
     },
     setParamsCalls,
     committed,
@@ -1393,13 +1062,7 @@ function fakeDataManager({
       return {
         enabled: on,
         lifecycleState:
-          target === undefined
-            ? on
-              ? 'enabled'
-              : 'disabled'
-            : target
-              ? 'enabling'
-              : 'disabling',
+          target === undefined ? (on ? 'enabled' : 'disabled') : target ? 'enabling' : 'disabling',
       };
     },
     isEffectivelyEnabled: (id) => pending.get(id) ?? !!enabled.get(id),
@@ -1436,14 +1099,7 @@ function fakeStyleManager({ contextMode = null } = {}) {
       manager.visualCalls.push({ visual, isCurrent: options.isCurrent });
       return true;
     },
-    getCameraState: () => ({
-      lat: 0,
-      lon: 0,
-      alt: 1000,
-      heading: 0,
-      pitch: -40,
-      roll: 0,
-    }),
+    getCameraState: () => ({ lat: 0, lon: 0, alt: 1000, heading: 0, pitch: -40, roll: 0 }),
     getVisualState: () => ({ style: 'normal' }),
     setRecordingMode() {},
     getContextModeState: () => ({ mode: manager.contextMode, entering: null }),
@@ -1464,9 +1120,7 @@ function fakeViewer() {
   return bindFakeCesiumCamera({
     flights,
     views,
-    get cancelledFlights() {
-      return cancelled;
-    },
+    get cancelledFlights() { return cancelled; },
     camera: {
       flyTo(options) {
         flights.push(options);
@@ -1475,9 +1129,7 @@ function fakeViewer() {
       setView(options) {
         views.push(options);
       },
-      cancelFlight() {
-        cancelled++;
-      },
+      cancelFlight() { cancelled++; },
     },
   });
 }
@@ -1489,9 +1141,7 @@ async function settle(turns = 8) {
 
 /** Build a director over doubles, with the fixture project loaded. */
 function makeDirector(options = {}) {
-  const restore = installSceneRuntime(options.project, {
-    storage: options.storage,
-  });
+  const restore = installSceneRuntime(options.project, { storage: options.storage });
   const storage = globalThis.localStorage;
   const viewer = fakeViewer();
   const styleManager = fakeStyleManager(options.style);
@@ -1509,19 +1159,9 @@ test('only Play Shot or a scene run grants transient media authority; LOAD, Stop
   const { director, dataManager, restore } = makeDirector();
   let owner = null;
   const owners = [];
-  dataManager.layers = new Map([
-    [
-      'flights',
-      {
-        module: {
-          setSceneMediaPlayback(value = null) {
-            owner = value;
-            if (value) owners.push(value.shotId);
-          },
-        },
-      },
-    ],
-  ]);
+  dataManager.layers = new Map([['flights', { module: {
+    setSceneMediaPlayback(value = null) { owner = value; if (value) owners.push(value.shotId); },
+  } }]]);
   try {
     await director.loadShot('scene-1', 'shot-a', { flyDuration: 0 });
     assert.equal(owner, null, 'passive LOAD is not playback');
@@ -1529,18 +1169,10 @@ test('only Play Shot or a scene run grants transient media authority; LOAD, Stop
     assert.equal(owner?.shotId, 'shot-a');
     assert.equal(owner.token.cancelled, false);
     await director.loadShot('missing-scene', 'missing-shot');
-    assert.equal(
-      owner?.shotId,
-      'shot-a',
-      'rejected navigation does not revoke another action',
-    );
+    assert.equal(owner?.shotId, 'shot-a', 'rejected navigation does not revoke another action');
     director._running = true;
     await director.loadShot('scene-1', 'shot-b');
-    assert.equal(
-      owner?.shotId,
-      'shot-a',
-      'LOAD refused during a run cannot stop its media',
-    );
+    assert.equal(owner?.shotId, 'shot-a', 'LOAD refused during a run cannot stop its media');
     director._running = false;
     await director.loadShot('scene-1', 'shot-b', { flyDuration: 0 });
     assert.equal(owner, null, 'replacement LOAD revokes the prior replay');
@@ -1550,27 +1182,16 @@ test('only Play Shot or a scene run grants transient media authority; LOAD, Stop
     director._sleep = async () => {};
     owners.length = 0;
     await director.startScene('scene-1', { single: true, preview: false });
-    assert.deepEqual(
-      owners,
-      ['shot-a'],
-      'only enabled opt-in layers receive playback authority',
-    );
+    assert.deepEqual(owners, ['shot-a'], 'only enabled opt-in layers receive playback authority');
     assert.equal(owner, null, 'run completion releases the last shot owner');
-  } finally {
-    await director.destroy();
-    restore();
-  }
+  } finally { await director.destroy(); restore(); }
 });
 
 test('cross-scene replay grants media ownership only after the previous scene releases its layers', async () => {
   const { director, dataManager, restore } = makeDirector();
   let owner = null;
   const events = [];
-  const media = {
-    setSceneMediaPlayback(value = null) {
-      owner = value;
-    },
-  };
+  const media = { setSceneMediaPlayback(value = null) { owner = value; } };
   dataManager.layers = new Map([['flights', { module: media }]]);
   const setEnabled = dataManager.setEnabled.bind(dataManager);
   dataManager.setEnabled = async (id, enabled, options) => {
@@ -1590,134 +1211,67 @@ test('cross-scene replay grants media ownership only after the previous scene re
     events.length = 0;
     const result = await director.replayShot(target.id, 'shot-a');
     assert.equal(result.started, true);
-    assert.deepEqual(
-      events.slice(0, 2),
-      [
-        { enabled: false, owner: null },
-        { enabled: true, owner: 'shot-a' },
-      ],
-      'old-scene disable must finish before granting the new owner',
-    );
+    assert.deepEqual(events.slice(0, 2), [
+      { enabled: false, owner: null },
+      { enabled: true, owner: 'shot-a' },
+    ], 'old-scene disable must finish before granting the new owner');
     assert.equal(owner?.sceneId, target.id);
     assert.equal(owner?.token.cancelled, false);
     director.stopScene();
     assert.equal(owner, null);
-  } finally {
-    await director.destroy();
-    restore();
-  }
+  } finally { await director.destroy(); restore(); }
 });
 
 test('scene camera waits for provider completion and fade rather than the saved media hold', async () => {
   const { director, viewer, dataManager, restore } = makeDirector();
   let release;
   let pending = true;
-  const gate = new Promise((resolve) => {
-    release = resolve;
-  });
+  const gate = new Promise((resolve) => { release = resolve; });
   try {
     const scene = director._project.scenes[0];
     scene.shots[0].layers.flights.params = { beatId: 'trimmed' };
-    dataManager.layers = new Map([
-      [
-        'flights',
-        {
-          module: {
-            getSceneShotMediaHold: (id) =>
-              id === 'trimmed' ? { pending, maxWaitMs: 20000 } : null,
-          },
-        },
-      ],
-    ]);
+    dataManager.layers = new Map([['flights', { module: {
+      getSceneShotMediaHold: (id) => id === 'trimmed' ? { pending, maxWaitMs: 20000 } : null,
+    } }]]);
     const waits = [];
-    director._sleep = async (ms) => {
-      waits.push(ms);
-      if (ms === 70) await gate;
-    };
-    const run = director.startScene('scene-1', {
-      single: true,
-      preview: false,
-    });
+    director._sleep = async (ms) => { waits.push(ms); if (ms === 70) await gate; };
+    const run = director.startScene('scene-1', { single: true, preview: false });
     await settle(40);
-    assert.equal(
-      viewer.flights.length,
-      1,
-      'no next flight while source is starting, playing or fading',
-    );
+    assert.equal(viewer.flights.length, 1, 'no next flight while source is starting, playing or fading');
     assert.deepEqual(waits, [70]);
-    pending = false;
-    release();
+    pending = false; release();
     await run;
-    assert.equal(
-      viewer.flights.length,
-      2,
-      'the next shot starts immediately after owned media completion',
-    );
-  } finally {
-    release();
-    await director.destroy();
-    restore();
-  }
+    assert.equal(viewer.flights.length, 2, 'the next shot starts immediately after owned media completion');
+  } finally { release(); await director.destroy(); restore(); }
 });
 
 test('Stop cancels a provider-owned shot hold and late completion cannot fly the next camera', async () => {
   const { director, viewer, dataManager, restore } = makeDirector();
   let release;
-  const gate = new Promise((resolve) => {
-    release = resolve;
-  });
+  const gate = new Promise((resolve) => { release = resolve; });
   try {
-    dataManager.layers = new Map([
-      [
-        'flights',
-        {
-          module: {
-            getSceneShotMediaHold: () => ({ pending: true, maxWaitMs: 20000 }),
-          },
-        },
-      ],
-    ]);
+    dataManager.layers = new Map([['flights', { module: {
+      getSceneShotMediaHold: () => ({ pending: true, maxWaitMs: 20000 }),
+    } }]]);
     director._sleep = () => gate;
-    const run = director.startScene('scene-1', {
-      single: true,
-      preview: false,
-    });
+    const run = director.startScene('scene-1', { single: true, preview: false });
     await settle(40);
     assert.equal(viewer.flights.length, 1);
-    director.stopScene('test stop');
-    release();
-    await run;
+    director.stopScene('test stop'); release(); await run;
     assert.equal(viewer.flights.length, 1);
     assert.equal(director.running, false);
-  } finally {
-    release();
-    await director.destroy();
-    restore();
-  }
+  } finally { release(); await director.destroy(); restore(); }
 });
 
 test('a provider-owned hold fails boundedly if its owner never settles', async () => {
   const { director, restore } = makeDirector();
   try {
-    director.dataManager.layers = new Map([
-      [
-        'flights',
-        {
-          module: {
-            getSceneShotMediaHold: () => ({ pending: true, maxWaitMs: 0 }),
-          },
-        },
-      ],
-    ]);
+    director.dataManager.layers = new Map([['flights', { module: {
+      getSceneShotMediaHold: () => ({ pending: true, maxWaitMs: 0 }),
+    } }]]);
     const scene = director._project.scenes[0];
-    await assert.rejects(
-      director._holdShot(scene, scene.shots[0], { cancelled: false }),
-      /bounded playback window/,
-    );
-  } finally {
-    await director.destroy();
-    restore();
-  }
+    await assert.rejects(director._holdShot(scene, scene.shots[0], { cancelled: false }), /bounded playback window/);
+  } finally { await director.destroy(); restore(); }
 });
 
 /** The layer map a shipped recipe declares, in normalized form. */
@@ -1734,41 +1288,21 @@ test('destroyed directors refuse seek, replay, adjacent and continuation without
     await director.destroy();
     director._loadedSceneId = 'scene-1';
     assert.equal(await director.seekScene('scene-1', 0), false);
-    assert.equal(
-      (await director.replayShot('scene-1', 'shot-a')).started,
-      false,
-    );
-    assert.equal(
-      await director.loadAdjacentShot('scene-1', 'shot-a', 1),
-      false,
-    );
-    assert.equal(
-      (await director.continueScene('scene-1', 'shot-a')).started,
-      false,
-    );
+    assert.equal((await director.replayShot('scene-1', 'shot-a')).started, false);
+    assert.equal(await director.loadAdjacentShot('scene-1', 'shot-a', 1), false);
+    assert.equal((await director.continueScene('scene-1', 'shot-a')).started, false);
     assert.equal(viewer.flights.length, 0);
     assert.equal(dataManager.setParamsCalls.length, 0);
-  } finally {
-    restore();
-  }
+  } finally { restore(); }
 });
 
 test('replay, adjacent and seek report layer refusal rather than success', async () => {
   const { director, restore } = makeDirector({ data: { refuse: () => true } });
   try {
-    assert.equal(
-      (await director.replayShot('scene-1', 'shot-a')).started,
-      false,
-    );
-    assert.equal(
-      await director.loadAdjacentShot('scene-1', 'shot-a', 1),
-      false,
-    );
+    assert.equal((await director.replayShot('scene-1', 'shot-a')).started, false);
+    assert.equal(await director.loadAdjacentShot('scene-1', 'shot-a', 1), false);
     assert.equal(await director.seekScene('scene-1', 0), false);
-  } finally {
-    await director.destroy();
-    restore();
-  }
+  } finally { await director.destroy(); restore(); }
 });
 
 test('a seek waiting for run teardown is revoked by newer Stop, Load, Start or destroy', async () => {
@@ -1776,10 +1310,7 @@ test('a seek waiting for run teardown is revoked by newer Stop, Load, Start or d
     const { director, restore } = makeDirector();
     try {
       let release;
-      director._waitForRunIdle = () =>
-        new Promise((resolve) => {
-          release = resolve;
-        });
+      director._waitForRunIdle = () => new Promise((resolve) => { release = resolve; });
       director._running = true;
       director._runToken = { cancelled: false };
       const seek = director.seekScene('scene-1', 0);
@@ -1793,10 +1324,7 @@ test('a seek waiting for run teardown is revoked by newer Stop, Load, Start or d
       release();
       assert.equal(await seek, false, action);
       await newer;
-    } finally {
-      await director.destroy();
-      restore();
-    }
+    } finally { await director.destroy(); restore(); }
   }
 });
 
@@ -1806,53 +1334,25 @@ test('explicit scene-layer OFF revokes continuation during enable, flight and ho
     try {
       director._project.scenes[0].releaseLayerIds = ['flights'];
       let release;
-      const gate = new Promise((resolve) => {
-        release = resolve;
-      });
+      const gate = new Promise((resolve) => { release = resolve; });
       if (phase === 'enable') {
         const enable = dataManager.setEnabled.bind(dataManager);
-        dataManager.setEnabled = async (...args) => {
-          await gate;
-          return enable(...args);
-        };
+        dataManager.setEnabled = async (...args) => { await gate; return enable(...args); };
       } else if (phase === 'flight') director._flyCamera = () => gate;
       else director._sleep = () => gate;
       director._project.scenes[0].shots[0].holdSec = 1;
-      const run = director.startScene('scene-1', {
-        single: true,
-        preview: false,
-      });
+      const run = director.startScene('scene-1', { single: true, preview: false });
       await settle(40);
       const token = director._runToken;
-      dataManager.visibilityListener({
-        layerId: 'flights',
-        enabled: false,
-        origin: 'scene',
-      });
+      dataManager.visibilityListener({ layerId: 'flights', enabled: false, origin: 'scene' });
       assert.equal(token.cancelled, false);
-      dataManager.visibilityListener({
-        layerId: 'flights',
-        enabled: false,
-        origin: 'user',
-      });
+      dataManager.visibilityListener({ layerId: 'flights', enabled: false, origin: 'user' });
       assert.equal(token.cancelled, true, phase);
-      dataManager.visibilityListener({
-        layerId: 'flights',
-        enabled: false,
-        origin: 'tool',
-      });
+      dataManager.visibilityListener({ layerId: 'flights', enabled: false, origin: 'tool' });
       release();
       await run;
-      assert.equal(
-        dataManager.committed.some(
-          ({ id, enabled }) => id === 'traffic' && enabled,
-        ),
-        false,
-      );
-    } finally {
-      await director.destroy();
-      restore();
-    }
+      assert.equal(dataManager.committed.some(({ id, enabled }) => id === 'traffic' && enabled), false);
+    } finally { await director.destroy(); restore(); }
   }
 });
 
@@ -1862,9 +1362,7 @@ test('scene preview owns recording chrome while panel playback leaves it availab
     const recording = [];
     const playback = [];
     let release;
-    const flight = new Promise((resolve) => {
-      release = resolve;
-    });
+    const flight = new Promise((resolve) => { release = resolve; });
     director._flyCamera = () => flight;
     styleManager.setRecordingMode = (active) => recording.push(active);
     director._setPlaybackActive = (active) => playback.push(active);
@@ -1878,11 +1376,7 @@ test('scene preview owns recording chrome while panel playback leaves it availab
       await run;
       assert.deepEqual(recording, preview ? [true, false] : []);
       assert.deepEqual(playback, preview ? [true, false] : []);
-    } finally {
-      release();
-      await director.destroy();
-      restore();
-    }
+    } finally { release(); await director.destroy(); restore(); }
   }
 });
 
@@ -1892,10 +1386,7 @@ test('the director reconciles only the layers a shot declares', async () => {
   // Pinned here rather than only on the helper, because the walk lived here.
   const { director, dataManager, restore } = makeDirector();
   try {
-    await director._applyLayerStates({
-      flights: { enabled: true },
-      satellites: { enabled: false },
-    });
+    await director._applyLayerStates({ flights: { enabled: true }, satellites: { enabled: false } });
     assert.deepEqual(
       dataManager.setEnabledCalls.map(({ id, enabled }) => ({ id, enabled })),
       [
@@ -1915,34 +1406,19 @@ test('a shot captured while tracking never re-establishes tracking on playback',
   const { director, dataManager, restore } = makeDirector();
   try {
     await director._applyLayerStates({
-      flights: {
-        enabled: true,
-        params: { models3d: true, selectedFlightsTrackingId: 'a835af' },
-      },
-      military: {
-        enabled: true,
-        params: { selectedMilitaryTrackingId: 'ae1460' },
-      },
-      satellites: {
-        enabled: true,
-        params: { catalog: 'dense', selectedSatTrackingId: 25544 },
-      },
+      flights: { enabled: true, params: { models3d: true, selectedFlightsTrackingId: 'a835af' } },
+      military: { enabled: true, params: { selectedMilitaryTrackingId: 'ae1460' } },
+      satellites: { enabled: true, params: { catalog: 'dense', selectedSatTrackingId: 25544 } },
     });
 
-    const pushed = Object.fromEntries(
-      dataManager.setParamsCalls.map((call) => [call.id, call.params]),
-    );
+    const pushed = Object.fromEntries(dataManager.setParamsCalls.map((call) => [call.id, call.params]));
     assert.deepEqual(pushed.flights, { models3d: true });
     assert.deepEqual(pushed.satellites, { catalog: 'dense' });
     // Nothing survived military's params, so nothing is pushed at all.
     assert.equal(Object.hasOwn(pushed, 'military'), false);
     for (const call of dataManager.setParamsCalls) {
       for (const key of SCENE_TRACKING_PARAM_KEYS) {
-        assert.equal(
-          Object.hasOwn(call.params, key),
-          false,
-          `${call.id} leaked ${key}`,
-        );
+        assert.equal(Object.hasOwn(call.params, key), false, `${call.id} leaked ${key}`);
       }
     }
   } finally {
@@ -1952,16 +1428,10 @@ test('a shot captured while tracking never re-establishes tracking on playback',
 
 test('playback leaves every Context mode alone', async () => {
   for (const contextMode of [null, 'flights']) {
-    const { director, styleManager, restore } = makeDirector({
-      style: { contextMode },
-    });
+    const { director, styleManager, restore } = makeDirector({ style: { contextMode } });
     try {
       await director._applyLayerStates({ flights: { enabled: true } });
-      assert.deepEqual(
-        styleManager.contextExits,
-        [],
-        `${contextMode} must not be exited`,
-      );
+      assert.deepEqual(styleManager.contextExits, [], `${contextMode} must not be exited`);
     } finally {
       restore();
     }
@@ -1982,9 +1452,7 @@ test('a refused layer is reported, never counted as applied', async () => {
     assert.deepEqual(result.applied, ['traffic']);
     // Params must not be pushed at a layer whose transition was vetoed.
     assert.deepEqual(dataManager.setParamsCalls, []);
-    const refusals = director._activeRun.events.filter(
-      (event) => event.type === 'shot_layers_refused',
-    );
+    const refusals = director._activeRun.events.filter((event) => event.type === 'shot_layers_refused');
     assert.equal(refusals.length, 1);
     assert.deepEqual(refusals[0].payload, { layerIds: ['flights'] });
   } finally {
@@ -2002,19 +1470,13 @@ test('cancellation between two layers ends the reconcile where it stands', async
     return settled;
   };
   try {
-    const result = await director._applyLayerStates(
-      {
-        flights: { enabled: true },
-        satellites: { enabled: true },
-        traffic: { enabled: true },
-      },
-      token,
-    );
+    const result = await director._applyLayerStates({
+      flights: { enabled: true },
+      satellites: { enabled: true },
+      traffic: { enabled: true },
+    }, token);
 
-    assert.deepEqual(
-      dataManager.setEnabledCalls.map((call) => call.id),
-      ['flights'],
-    );
+    assert.deepEqual(dataManager.setEnabledCalls.map((call) => call.id), ['flights']);
     assert.equal(result.cancelled, true);
   } finally {
     restore();
@@ -2024,23 +1486,16 @@ test('cancellation between two layers ends the reconcile where it stands', async
 test('STOP during a suspended visual transition lands no layer changes', async () => {
   // Repro shape from review: applyVisualState suspends (a map-stack switch),
   // STOP arrives, the visual resolves — and the shot's layer pass still ran.
-  const { director, viewer, styleManager, dataManager, restore } =
-    makeDirector();
+  const { director, viewer, styleManager, dataManager, restore } = makeDirector();
   let releaseVisual;
   styleManager.applyVisualState = (visual) => {
     styleManager.visualStates.push(visual);
-    return new Promise((resolve) => {
-      releaseVisual = resolve;
-    });
+    return new Promise((resolve) => { releaseVisual = resolve; });
   };
   try {
     const run = director.startScene('scene-1', { single: true });
     await settle();
-    assert.equal(
-      styleManager.visualStates.length,
-      1,
-      'the run must be parked on the visual await',
-    );
+    assert.equal(styleManager.visualStates.length, 1, 'the run must be parked on the visual await');
 
     director.stopScene('Stopped (Esc)');
     releaseVisual();
@@ -2058,34 +1513,19 @@ test('STOP between two layers lands no further layer changes', async () => {
   const { director, dataManager, restore } = makeDirector({
     project: {
       version: 3,
-      scenes: [
-        {
-          id: 'scene-1',
-          title: 'Fixture Scene',
-          shots: [
-            {
-              id: 'shot-a',
-              title: 'Shot A',
-              durationSec: 0.2,
-              holdSec: 0,
-              camera: {
-                lat: 10,
-                lon: 20,
-                alt: 500000,
-                heading: 0,
-                pitch: -40,
-                roll: 0,
-              },
-              visual: { style: 'normal' },
-              layers: {
-                flights: { enabled: true },
-                satellites: { enabled: true },
-                traffic: { enabled: true },
-              },
-            },
-          ],
-        },
-      ],
+      scenes: [{
+        id: 'scene-1',
+        title: 'Fixture Scene',
+        shots: [{
+          id: 'shot-a',
+          title: 'Shot A',
+          durationSec: 0.2,
+          holdSec: 0,
+          camera: { lat: 10, lon: 20, alt: 500000, heading: 0, pitch: -40, roll: 0 },
+          visual: { style: 'normal' },
+          layers: { flights: { enabled: true }, satellites: { enabled: true }, traffic: { enabled: true } },
+        }],
+      }],
     },
   });
   const inner = dataManager.setEnabled.bind(dataManager);
@@ -2096,10 +1536,7 @@ test('STOP between two layers lands no further layer changes', async () => {
   };
   try {
     await director.startScene('scene-1', { single: true });
-    assert.deepEqual(
-      dataManager.setEnabledCalls.map((call) => call.id),
-      ['flights'],
-    );
+    assert.deepEqual(dataManager.setEnabledCalls.map((call) => call.id), ['flights']);
   } finally {
     restore();
   }
@@ -2113,33 +1550,22 @@ test('STOP aborts the layer transition in flight, not merely the next one', asyn
   const { director, dataManager, restore } = makeDirector({
     project: {
       version: 3,
-      scenes: [
-        {
-          id: 'scene-1',
-          title: 'Fixture Scene',
-          shots: [
-            {
-              id: 'shot-a',
-              title: 'Shot A',
-              durationSec: 0.2,
-              holdSec: 0,
-              camera: {
-                lat: 10,
-                lon: 20,
-                alt: 500000,
-                heading: 0,
-                pitch: -40,
-                roll: 0,
-              },
-              visual: { style: 'normal' },
-              layers: {
-                flights: { enabled: true, params: { models3d: true } },
-                satellites: { enabled: true },
-              },
-            },
-          ],
-        },
-      ],
+      scenes: [{
+        id: 'scene-1',
+        title: 'Fixture Scene',
+        shots: [{
+          id: 'shot-a',
+          title: 'Shot A',
+          durationSec: 0.2,
+          holdSec: 0,
+          camera: { lat: 10, lon: 20, alt: 500000, heading: 0, pitch: -40, roll: 0 },
+          visual: { style: 'normal' },
+          layers: {
+            flights: { enabled: true, params: { models3d: true } },
+            satellites: { enabled: true },
+          },
+        }],
+      }],
     },
   });
   const inner = dataManager.setEnabled.bind(dataManager);
@@ -2151,30 +1577,14 @@ test('STOP aborts the layer transition in flight, not merely the next one', asyn
   try {
     await director.startScene('scene-1', { single: true });
 
-    assert.equal(
-      dataManager.setEnabledCalls.length,
-      1,
-      'only the in-flight layer is touched',
-    );
+    assert.equal(dataManager.setEnabledCalls.length, 1, 'only the in-flight layer is touched');
     assert.ok(
       dataManager.setEnabledCalls[0].signal instanceof AbortSignal,
       'the run must hand its abort signal to every transition',
     );
-    assert.equal(
-      dataManager.setEnabledCalls[0].signal.aborted,
-      true,
-      'STOP must abort that signal',
-    );
-    assert.deepEqual(
-      dataManager.committed,
-      [],
-      'an aborted transition must not commit',
-    );
-    assert.deepEqual(
-      dataManager.setParamsCalls,
-      [],
-      'no params for a layer that never moved',
-    );
+    assert.equal(dataManager.setEnabledCalls[0].signal.aborted, true, 'STOP must abort that signal');
+    assert.deepEqual(dataManager.committed, [], 'an aborted transition must not commit');
+    assert.deepEqual(dataManager.setParamsCalls, [], 'no params for a layer that never moved');
   } finally {
     restore();
   }
@@ -2185,9 +1595,7 @@ test('a newer LOAD aborts the previous LOAD transition rather than disowning it'
   const gates = [];
   styleManager.applyVisualState = (visual, options = {}) => {
     styleManager.visualCalls.push({ visual, isCurrent: options.isCurrent });
-    return new Promise((resolve) => {
-      gates.push(resolve);
-    });
+    return new Promise((resolve) => { gates.push(resolve); });
   };
   try {
     const first = director.loadShot('scene-1', 'shot-a');
@@ -2198,10 +1606,7 @@ test('a newer LOAD aborts the previous LOAD transition rather than disowning it'
     await Promise.all([first, second]);
 
     // Only the newer LOAD reconciled, and it carried a live (unaborted) signal.
-    assert.deepEqual(
-      dataManager.setEnabledCalls.map((call) => call.id),
-      ['traffic'],
-    );
+    assert.deepEqual(dataManager.setEnabledCalls.map((call) => call.id), ['traffic']);
     assert.ok(dataManager.setEnabledCalls[0].signal instanceof AbortSignal);
     assert.equal(dataManager.setEnabledCalls[0].signal.aborted, false);
   } finally {
@@ -2222,22 +1627,12 @@ test('applyVisualState gates the map-stack switch on both sides of its await', (
   // never issues one — every normalized scene shot omits it — so a stale
   // switch would otherwise stand on the globe.
   const source = readShellSource();
-  const method = source.match(
-    /\n {2}async applyVisualState\([\s\S]*?\n {2}\}\n/,
-  );
+  const method = source.match(/\n {2}async applyVisualState\([\s\S]*?\n {2}\}\n/);
   assert.ok(method, 'applyVisualState is missing from the UI shell source');
-  assert.match(
-    method[0],
-    /async applyVisualState\(state = \{\}, \{ isCurrent = null \} = \{\}\)/,
-  );
+  assert.match(method[0], /async applyVisualState\(state = \{\}, \{ isCurrent = null \} = \{\}\)/);
 
-  const mapStackBlock = method[0].match(
-    /if \(state\.mapStack\) \{[\s\S]*?\n {4}\}/,
-  );
-  assert.ok(
-    mapStackBlock,
-    'the map-stack block is missing from applyVisualState',
-  );
+  const mapStackBlock = method[0].match(/if \(state\.mapStack\) \{[\s\S]*?\n {4}\}/);
+  assert.ok(mapStackBlock, 'the map-stack block is missing from applyVisualState');
   const block = mapStackBlock[0];
 
   // Before: an already-superseded caller must not start the switch at all.
@@ -2253,11 +1648,7 @@ test('applyVisualState gates the map-stack switch on both sides of its await', (
     'a switch superseded mid-flight must be reverted to the stack the winner inherited',
   );
   // And only what is still ours — a newer switch owns the globe, never revert it.
-  assert.match(
-    block,
-    /getSwitchGeneration/,
-    'the revert must consult the switch generation',
-  );
+  assert.match(block, /getSwitchGeneration/, 'the revert must consult the switch generation');
   assert.match(
     block,
     /if \(globeIsStillOurs && stackBefore && landed !== stackBefore\) \{\s*await this\._setMapStack\(stackBefore/,
@@ -2274,9 +1665,7 @@ test('a superseded LOAD is refused its visual commit', async () => {
   const gates = [];
   styleManager.applyVisualState = (visual, options = {}) => {
     styleManager.visualCalls.push({ visual, isCurrent: options.isCurrent });
-    return new Promise((resolve) => {
-      gates.push(resolve);
-    });
+    return new Promise((resolve) => { gates.push(resolve); });
   };
   try {
     const first = director.loadShot('scene-1', 'shot-a');
@@ -2287,21 +1676,9 @@ test('a superseded LOAD is refused its visual commit', async () => {
     await Promise.all([first, second]);
 
     const [stale, live] = styleManager.visualCalls;
-    assert.equal(
-      typeof stale.isCurrent,
-      'function',
-      'the visual call must carry a liveness predicate',
-    );
-    assert.equal(
-      stale.isCurrent(),
-      false,
-      'the superseded LOAD must be refused its commit',
-    );
-    assert.equal(
-      live.isCurrent(),
-      true,
-      'the live LOAD must still be allowed to commit',
-    );
+    assert.equal(typeof stale.isCurrent, 'function', 'the visual call must carry a liveness predicate');
+    assert.equal(stale.isCurrent(), false, 'the superseded LOAD must be refused its commit');
+    assert.equal(live.isCurrent(), true, 'the live LOAD must still be allowed to commit');
   } finally {
     restore();
   }
@@ -2312,27 +1689,17 @@ test('a run refuses the visual commit of a shot cancelled mid-transition', async
   let releaseVisual;
   styleManager.applyVisualState = (visual, options = {}) => {
     styleManager.visualCalls.push({ visual, isCurrent: options.isCurrent });
-    return new Promise((resolve) => {
-      releaseVisual = resolve;
-    });
+    return new Promise((resolve) => { releaseVisual = resolve; });
   };
   const run = director.startScene('scene-1', { single: true });
   try {
     await settle();
     const call = styleManager.visualCalls[0];
-    assert.equal(
-      typeof call.isCurrent,
-      'function',
-      'the visual call must carry a liveness predicate',
-    );
+    assert.equal(typeof call.isCurrent, 'function', 'the visual call must carry a liveness predicate');
     assert.equal(call.isCurrent(), true, 'live while the run owns the shot');
 
     director.stopScene('Stopped (Esc)');
-    assert.equal(
-      call.isCurrent(),
-      false,
-      'STOP must revoke the pending commit',
-    );
+    assert.equal(call.isCurrent(), false, 'STOP must revoke the pending commit');
   } finally {
     // Always let the run finish: _finishRun() owns the progress interval, so a
     // failed assertion that skipped this would leave a live timer behind and
@@ -2347,14 +1714,11 @@ test('a run refuses the visual commit of a shot cancelled mid-transition', async
 test('the newest LOAD wins when two loads race', async () => {
   // Both loads suspend on their visual await; the OLDER one resolves second.
   // Without a generation it completes last and overwrites the newer intent.
-  const { director, viewer, styleManager, dataManager, restore } =
-    makeDirector();
+  const { director, viewer, styleManager, dataManager, restore } = makeDirector();
   const gates = [];
   styleManager.applyVisualState = (visual) => {
     styleManager.visualStates.push(visual);
-    return new Promise((resolve) => {
-      gates.push(resolve);
-    });
+    return new Promise((resolve) => { gates.push(resolve); });
   };
   try {
     const first = director.loadShot('scene-1', 'shot-a');
@@ -2383,10 +1747,7 @@ test('a scene run supersedes a LOAD still suspended on its visual await', async 
   let calls = 0;
   styleManager.applyVisualState = (visual) => {
     styleManager.visualStates.push(visual);
-    if (++calls === 1)
-      return new Promise((resolve) => {
-        releaseLoadVisual = resolve;
-      });
+    if (++calls === 1) return new Promise((resolve) => { releaseLoadVisual = resolve; });
     return Promise.resolve();
   };
   try {
@@ -2412,21 +1773,12 @@ test('destroy drains cancelled LOAD work before its viewer can be discarded', as
   let finishVisual;
   const dataManager = fakeDataManager();
   const viewer = bindFakeCesiumCamera({ camera: { cancelFlight() {} } });
-  const director = new SceneDirector(
-    viewer,
-    {
-      applyVisualState: () =>
-        new Promise((resolve) => {
-          finishVisual = resolve;
-        }),
-    },
-    dataManager,
-  );
+  const director = new SceneDirector(viewer, {
+    applyVisualState: () => new Promise((resolve) => { finishVisual = resolve; }),
+  }, dataManager);
   const loading = director.loadShot('scene-1', 'shot-a');
   let destroyed = false;
-  const stopping = director.destroy().then(() => {
-    destroyed = true;
-  });
+  const stopping = director.destroy().then(() => { destroyed = true; });
   await Promise.resolve();
   assert.equal(destroyed, false);
   finishVisual();
@@ -2443,16 +1795,12 @@ test('Scene snapshots are immutable and editing outcomes retain the affected sho
     director._activeRun = null;
     director.selectShot('scene-1');
     const seen = [];
-    const unsubscribe = director.subscribe((notification) =>
-      seen.push(notification),
-    );
+    const unsubscribe = director.subscribe((notification) => seen.push(notification));
     assert.equal(seen[0].initial, true);
     assert.equal(seen[0].state.selectedShotId, 'shot-a');
     assert.ok(Object.isFrozen(seen[0].state));
     director.captureShot();
-    const captured = seen.find(
-      ({ change }) => change?.type === 'shot-captured',
-    );
+    const captured = seen.find(({ change }) => change?.type === 'shot-captured');
     assert.equal(captured.change.index, 2);
     assert.ok(Object.isFrozen(captured.change.shot.camera));
     const id = captured.change.shot.id;
@@ -2466,9 +1814,7 @@ test('Scene snapshots are immutable and editing outcomes retain the affected sho
     director.captureShot();
     assert.equal(seen.length, count);
     await director.destroy();
-  } finally {
-    restore();
-  }
+  } finally { restore(); }
 });
 
 test('moveShot reorders a scene, saves it and publishes shot-moved; not past the ends, not while playing', async () => {
@@ -2476,14 +1822,11 @@ test('moveShot reorders a scene, saves it and publishes shot-moved; not past the
   try {
     director._activeRun = null;
     const seen = [];
-    director.subscribe(({ change }) => {
-      if (change) seen.push(change);
-    });
+    director.subscribe(({ change }) => { if (change) seen.push(change); });
     const order = () => director._project.scenes[0].shots.map(({ id }) => id);
     const saved = () =>
-      JSON.parse(
-        localStorage.getItem('godsEyeView.sceneProject.v2'),
-      ).scenes[0].shots.map(({ id }) => id);
+      JSON.parse(localStorage.getItem('godsEyeView.sceneProject.v2'))
+        .scenes[0].shots.map(({ id }) => id);
 
     assert.equal(director.moveShot('scene-1', 'shot-b', 0), true);
     assert.deepEqual(order(), ['shot-b', 'shot-a']);
@@ -2496,10 +1839,7 @@ test('moveShot reorders a scene, saves it and publishes shot-moved; not past the
     seen.length = 0;
     director._controls.actions.moveShot('scene-1', 'shot-b', 1);
     assert.deepEqual(order(), ['shot-a', 'shot-b']);
-    assert.deepEqual(
-      seen.map(({ type }) => type),
-      ['shot-moved'],
-    );
+    assert.deepEqual(seen.map(({ type }) => type), ['shot-moved']);
 
     // Past an end it stays at the end; at its place, unknown, or playing, nothing moves.
     assert.equal(director.moveShot('scene-1', 'shot-b', 5), false);
@@ -2511,9 +1851,7 @@ test('moveShot reorders a scene, saves it and publishes shot-moved; not past the
     director._running = false;
     assert.deepEqual(order(), ['shot-a', 'shot-b']);
     await director.destroy();
-  } finally {
-    restore();
-  }
+  } finally { restore(); }
 });
 
 test('Scene load outcomes exclude superseded and disposed completions', async () => {
@@ -2521,24 +1859,16 @@ test('Scene load outcomes exclude superseded and disposed completions', async ()
   try {
     director._activeRun = null;
     const seen = [];
-    director.subscribe(({ change }) => {
-      if (change) seen.push(change);
-    });
+    director.subscribe(({ change }) => { if (change) seen.push(change); });
     const pending = [];
-    styleManager.applyVisualState = () =>
-      new Promise((resolve) => pending.push(resolve));
+    styleManager.applyVisualState = () => new Promise((resolve) => pending.push(resolve));
     const old = director.loadShot('scene-1', 'shot-a');
     const current = director.loadShot('scene-1', 'shot-b');
     pending[1]();
     await current;
     pending[0]();
     await old;
-    assert.deepEqual(
-      seen
-        .filter((change) => change.type === 'shot-loaded')
-        .map((change) => change.shot.id),
-      ['shot-b'],
-    );
+    assert.deepEqual(seen.filter((change) => change.type === 'shot-loaded').map((change) => change.shot.id), ['shot-b']);
     const late = director.loadShot('scene-1', 'shot-a');
     const disposal = director.destroy();
     const count = seen.length;
@@ -2546,9 +1876,7 @@ test('Scene load outcomes exclude superseded and disposed completions', async ()
     await Promise.all([late, disposal]);
     director.subscribe(() => assert.fail('disposed director must not notify'));
     assert.equal(seen.length, count);
-  } finally {
-    restore();
-  }
+  } finally { restore(); }
 });
 
 test('invalid and unsupported imports retain the current project, selection and saved bytes', async () => {
@@ -2557,101 +1885,57 @@ test('invalid and unsupported imports retain the current project, selection and 
     const project = director._project;
     const selected = director._selectedShotId;
     const saved = localStorage.getItem('godsEyeView.sceneProject.v2');
-    for (const value of [
-      '{}',
-      '{"version":99,"scenes":[]}',
-      '{"scenes":[{"shots":"bad"}]}',
-    ]) {
-      await director.importProjectFile({
-        name: 'bad.json',
-        text: async () => value,
-      });
+    for (const value of ['{}', '{"version":99,"scenes":[]}', '{"scenes":[{"shots":"bad"}]}']) {
+      await director.importProjectFile({ name: 'bad.json', text: async () => value });
       assert.equal(director._project, project);
       assert.equal(director._selectedShotId, selected);
       assert.equal(localStorage.getItem('godsEyeView.sceneProject.v2'), saved);
       assert.match(director._presentation.status, /Import failed: \$/);
     }
     let read = false;
-    await director.importProjectFile({
-      size: 6 * 1024 * 1024,
-      text: async () => {
-        read = true;
-      },
-    });
+    await director.importProjectFile({ size: 6 * 1024 * 1024, text: async () => { read = true; } });
     assert.equal(read, false);
     assert.equal(director._project, project);
-  } finally {
-    restore();
-  }
+  } finally { restore(); }
 });
 
 test('newer imports win delayed file reads, and an empty project is preserved', async () => {
   const { director, restore } = makeDirector();
   try {
     let release;
-    const older = director.importProjectFile({
-      name: 'old.json',
-      text: () =>
-        new Promise((resolve) => {
-          release = resolve;
-        }),
-    });
-    await director.importProjectFile({
-      name: 'empty.json',
-      text: async () => '{"version":3,"scenes":[]}',
-    });
+    const older = director.importProjectFile({ name: 'old.json', text: () => new Promise((resolve) => { release = resolve; }) });
+    await director.importProjectFile({ name: 'empty.json', text: async () => '{"version":3,"scenes":[]}' });
     release(JSON.stringify(PROJECT_FIXTURE));
     await older;
     assert.deepEqual(director._project.scenes, []);
     assert.equal(director._selectedSceneId, null);
-    assert.deepEqual(
-      JSON.parse(localStorage.getItem('godsEyeView.sceneProject.v2')).scenes,
-      [],
-    );
-  } finally {
-    restore();
-  }
+    assert.deepEqual(JSON.parse(localStorage.getItem('godsEyeView.sceneProject.v2')).scenes, []);
+  } finally { restore(); }
 });
 
 test('unsupported stored documents cannot be overwritten by fallback edits', async () => {
-  const { director, restore } = makeDirector({
-    project: { version: 99, scenes: [] },
-  });
+  const { director, restore } = makeDirector({ project: { version: 99, scenes: [] } });
   try {
     const saved = localStorage.getItem('godsEyeView.sceneProject.v2');
     assert.ok(director._storageReadError);
     director._project.scenes[0].title = 'Fallback edit';
     director._saveProject();
     assert.equal(localStorage.getItem('godsEyeView.sceneProject.v2'), saved);
-    await director.importProjectFile({
-      name: 'valid.json',
-      text: async () => JSON.stringify(PROJECT_FIXTURE),
-    });
+    await director.importProjectFile({ name: 'valid.json', text: async () => JSON.stringify(PROJECT_FIXTURE) });
     assert.equal(director._storageReadError, null);
-    assert.equal(
-      JSON.parse(localStorage.getItem('godsEyeView.sceneProject.v2')).version,
-      7,
-    );
-  } finally {
-    restore();
-  }
+    assert.equal(JSON.parse(localStorage.getItem('godsEyeView.sceneProject.v2')).version, 7);
+  } finally { restore(); }
 });
 
 test('valid import settles a cancelled load before replacing the project', async () => {
   const { director, styleManager, restore } = makeDirector();
   let release;
-  styleManager.applyVisualState = () =>
-    new Promise((resolve) => {
-      release = resolve;
-    });
+  styleManager.applyVisualState = () => new Promise((resolve) => { release = resolve; });
   try {
     const before = director._project;
     const load = director.loadShot('scene-1', 'shot-a');
     await settle();
-    const importing = director.importProjectFile({
-      name: 'empty.json',
-      text: async () => '{"version":3,"scenes":[]}',
-    });
+    const importing = director.importProjectFile({ name: 'empty.json', text: async () => '{"version":3,"scenes":[]}' });
     await settle();
     assert.equal(director._project, before, 'old work still owns cleanup');
     release(true);
@@ -2659,9 +1943,7 @@ test('valid import settles a cancelled load before replacing the project', async
     assert.deepEqual(director._project.scenes, []);
     assert.equal(director._pendingWork.size, 0);
     assert.equal(director.getPlaybackTimingState().activeTimers, 0);
-  } finally {
-    restore();
-  }
+  } finally { restore(); }
 });
 
 test('a delayed import cannot publish after disposal', async () => {
@@ -2669,20 +1951,12 @@ test('a delayed import cannot publish after disposal', async () => {
   let release;
   try {
     const before = director._project;
-    const reading = director.importProjectFile({
-      name: 'empty.json',
-      text: () =>
-        new Promise((resolve) => {
-          release = resolve;
-        }),
-    });
+    const reading = director.importProjectFile({ name: 'empty.json', text: () => new Promise((resolve) => { release = resolve; }) });
     await director.destroy();
     release('{"version":3,"scenes":[]}');
     await reading;
     assert.equal(director._project, before);
-  } finally {
-    restore();
-  }
+  } finally { restore(); }
 });
 
 test('invalid authored edits cannot persist an unreadable project over a good save', () => {
@@ -2690,77 +1964,52 @@ test('invalid authored edits cannot persist an unreadable project over a good sa
   try {
     const before = localStorage.getItem('godsEyeView.sceneProject.v2');
     let notice;
-    director._toastStorageError = (message) => {
-      notice = message();
-    };
+    director._toastStorageError = (message) => { notice = message(); };
     director._project.scenes[0].shots[0].camera.lat = 91;
     director._saveProject();
     assert.equal(localStorage.getItem('godsEyeView.sceneProject.v2'), before);
     assert.match(notice, /camera.lat/);
-  } finally {
-    restore();
-  }
+  } finally { restore(); }
 });
 
 test('zero camera pitch is preserved by both immediate placement and ordinary flight', async () => {
   const { director, viewer, restore } = makeDirector();
   try {
     let placed;
-    viewer.camera.setView = (options) => {
-      placed = options;
-    };
+    viewer.camera.setView = (options) => { placed = options; };
     const pose = { lat: 10, lon: 20, alt: 500, heading: 0, pitch: 0, roll: 0 };
     director._setCameraView(pose);
     assert.equal(placed.orientation.pitch, 0);
     await director._flyCamera(pose, 0.2, { cancelled: false });
     assert.equal(viewer.flights.at(-1).orientation.pitch, 0);
-  } finally {
-    restore();
-  }
+  } finally { restore(); }
 });
 
 test('camera refusal starts no authored frame or playback clock', async () => {
   const { director, styleManager, viewer, restore } = makeDirector();
   try {
     const shot = director._project.scenes[0].shots[0];
-    shot.move = {
-      from: { ...shot.camera, altitudeReference: 'ellipsoid' },
-      easing: 'linear',
-    };
+    shot.move = { from: { ...shot.camera, altitudeReference: 'ellipsoid' }, easing: 'linear' };
     styleManager.runImmediateNavigation = () => false;
-    assert.equal(
-      (await director.startScene('scene-1', { single: true })).reason,
-      'camera-unavailable',
-    );
+    assert.equal((await director.startScene('scene-1', { single: true })).reason, 'camera-unavailable');
     assert.equal(director._cameraMotion.active, false);
     assert.equal(director.getPlaybackTimingState().activeTimers, 0);
     assert.deepEqual(viewer.flights, []);
-  } finally {
-    restore();
-  }
+  } finally { restore(); }
 });
 
 test('an unreadable saved project does not overwrite its recovery checkpoint (#971)', async () => {
   const unreadable = '{"version":99,"scenes":[]}';
   const warn = console.warn;
   console.warn = () => {};
-  const { director, storage, restore } = makeDirector({
-    storage: {
-      'godsEyeView.sceneProject.v2': unreadable,
-      'godsEyeView.sceneProject.checkpoint.v1': 'EARLIER-CHECKPOINT',
-    },
-  });
+  const { director, storage, restore } = makeDirector({ storage: {
+    'godsEyeView.sceneProject.v2': unreadable,
+    'godsEyeView.sceneProject.checkpoint.v1': 'EARLIER-CHECKPOINT',
+  } });
   try {
     assert.equal(storage.stored.get('godsEyeView.sceneProject.v2'), unreadable);
-    assert.equal(
-      storage.stored.get('godsEyeView.sceneProject.checkpoint.v1'),
-      'EARLIER-CHECKPOINT',
-    );
-  } finally {
-    console.warn = warn;
-    await director.destroy();
-    restore();
-  }
+    assert.equal(storage.stored.get('godsEyeView.sceneProject.checkpoint.v1'), 'EARLIER-CHECKPOINT');
+  } finally { console.warn = warn; await director.destroy(); restore(); }
 });
 
 test('a capture, update or import that cannot be saved keeps the "Scene not saved" status (#971)', async () => {
@@ -2768,71 +2017,37 @@ test('a capture, update or import that cannot be saved keeps the "Scene not save
   console.warn = () => {};
   const { director, storage, restore } = makeDirector();
   let status = '';
-  director.subscribe(({ state }) => {
-    status = state.status;
-  });
+  director.subscribe(({ state }) => { status = state.status; });
   try {
     storage.full = true;
     director._selectedSceneId = 'scene-1';
     director._selectedShotId = 'shot-a';
     director.captureShot();
-    assert.match(
-      status,
-      /^Scene not saved/,
-      'failed capture keeps the save failure',
-    );
+    assert.match(status, /^Scene not saved/, 'failed capture keeps the save failure');
     director.updateSelectedShot();
-    assert.match(
-      status,
-      /^Scene not saved/,
-      'failed update keeps the save failure',
-    );
-    assert.equal(
-      await director.importProjectFile(
-        { name: 'fixture.json' },
-        { prepared: { project: structuredClone(PROJECT_FIXTURE), assets: [] } },
-      ),
-      true,
-    );
-    assert.match(
-      status,
-      /^Scene not saved/,
-      'failed import keeps the save failure',
-    );
+    assert.match(status, /^Scene not saved/, 'failed update keeps the save failure');
+    assert.equal(await director.importProjectFile(
+      { name: 'fixture.json' },
+      { prepared: { project: structuredClone(PROJECT_FIXTURE), assets: [] } },
+    ), true);
+    assert.match(status, /^Scene not saved/, 'failed import keeps the save failure');
     const toast = useStatusStore(applicationPinia()).toast;
     assert.equal(toast.visible, true);
     assert.match(toast.text, /^Scene not saved/, 'the page toast says so too');
-  } finally {
-    console.warn = warn;
-    await director.destroy();
-    restore();
-  }
+  } finally { console.warn = warn; await director.destroy(); restore(); }
 });
 
 test('startScene resolves its result, resumes after a shot without a scene id, and counts distinct scenes (#971)', async () => {
   const { director, restore } = makeDirector();
   try {
     const options = { single: true, preview: false };
-    assert.deepEqual(await director.startScene('scene-1', options), {
-      started: true,
-      shots: 2,
-    });
-    assert.equal(
-      director._lastRun.scenesRun,
-      1,
-      'one scene with two shots is one scene run',
-    );
+    assert.deepEqual(await director.startScene('scene-1', options), { started: true, shots: 2 });
+    assert.equal(director._lastRun.scenesRun, 1, 'one scene with two shots is one scene run');
     assert.deepEqual(
-      await director.startScene(undefined, {
-        ...options,
-        afterShotId: 'shot-a',
-      }),
+      await director.startScene(undefined, { ...options, afterShotId: 'shot-a' }),
       { started: true, shots: 1 },
     );
-  } finally {
-    await director.destroy();
-    restore();
-  }
+  } finally { await director.destroy(); restore(); }
 });
 
 test('a revoked scene release turns no further layer off', async () => {
@@ -2851,16 +2066,9 @@ test('a revoked scene release turns no further layer off', async () => {
     };
     const releasing = director._releaseSceneLayers(director._project.scenes[0]);
     await settle();
-    assert.deepEqual(
-      calls.map(({ id }) => id),
-      ['flights'],
-    );
+    assert.deepEqual(calls.map(({ id }) => id), ['flights']);
     director.revokeSceneRelease();
-    assert.equal(
-      calls[0].signal.aborted,
-      true,
-      'the disable under way is aborted',
-    );
+    assert.equal(calls[0].signal.aborted, true, 'the disable under way is aborted');
     finishFirst(true);
     assert.equal(await releasing, false);
     assert.deepEqual(
@@ -2873,26 +2081,15 @@ test('a revoked scene release turns no further layer off', async () => {
       calls.push({ id, enabled, signal });
       return true;
     };
-    assert.equal(
-      await director._releaseSceneLayers(director._project.scenes[0]),
-      true,
-    );
-    assert.deepEqual(
-      calls.slice(1).map(({ id }) => id),
-      ['flights', 'traffic'],
-    );
-  } finally {
-    await director.destroy();
-    restore();
-  }
+    assert.equal(await director._releaseSceneLayers(director._project.scenes[0]), true);
+    assert.deepEqual(calls.slice(1).map(({ id }) => id), ['flights', 'traffic']);
+  } finally { await director.destroy(); restore(); }
 });
 
 test('a revocation also covers the release a stopped run reaches later', async () => {
   const project = structuredClone(PROJECT_FIXTURE);
   project.scenes[0].releaseLayerIds = ['flights'];
-  const { director, styleManager, dataManager, restore } = makeDirector({
-    project,
-  });
+  const { director, styleManager, dataManager, restore } = makeDirector({ project });
   try {
     // The run's visual phase hangs and ignores Stop, as a stuck teardown does.
     let settlePhase;
@@ -2917,32 +2114,23 @@ test('a revocation also covers the release a stopped run reaches later', async (
     await director.startScene('scene-1', { single: true, preview: true });
     assert.ok(
       dataManager.setEnabledCalls.some(
-        ({ id, enabled, signal }) =>
-          id === 'flights' && !enabled && !signal?.aborted,
+        ({ id, enabled, signal }) => id === 'flights' && !enabled && !signal?.aborted,
       ),
     );
-  } finally {
-    await director.destroy();
-    restore();
-  }
+  } finally { await director.destroy(); restore(); }
 });
 
 test('a hold resumed partway waits for a clip that starts again, else only its rest', async () => {
   const hold = async (pendingReads) => {
     let reads = 0;
     const module = {
-      getSceneShotMediaHold: () => ({
-        pending: reads++ < pendingReads,
-        maxWaitMs: 20000,
-      }),
+      getSceneShotMediaHold: () => ({ pending: reads++ < pendingReads, maxWaitMs: 20000 }),
       sceneShotRestartsMedia: () => pendingReads > 0,
     };
     const waits = [];
     await SceneDirector.prototype._holdShot.call(
       {
-        _layerStatesForShot: () => ({
-          media: { enabled: true, params: { beatId: 'b' } },
-        }),
+        _layerStatesForShot: () => ({ media: { enabled: true, params: { beatId: 'b' } } }),
         dataManager: { layers: new Map([['media', { module }]]) },
         _effectiveShotHoldSec: () => 3,
         _sleep: async (ms) => waits.push(ms),
@@ -2993,38 +2181,18 @@ test('a run resumed inside a flight goes on from that point of the path and cloc
       preview: false,
     });
     // A loaded machine needs more than 40 ms for the first frame.
-    for (
-      let wait = 0;
-      wait < 200 && !(clock.some((snap) => snap.running) && poses.length);
-      wait += 1
-    )
-      await settle(10);
+    for (let wait = 0; wait < 200 && !(clock.some((snap) => snap.running) && poses.length); wait += 1) await settle(10);
     const first = clock.find((snap) => snap.running);
-    assert.equal(
-      first.shotId,
-      'shot-b',
-      'starts in the shot that moment is in',
-    );
-    assert.ok(
-      Math.abs(first.sceneElapsedSec - 0.3) < 1e-9,
-      'the clock starts at the moment',
-    );
+    assert.equal(first.shotId, 'shot-b', 'starts in the shot that moment is in');
+    assert.ok(Math.abs(first.sceneElapsedSec - 0.3) < 1e-9, 'the clock starts at the moment');
     // The first frame is the seek's own framing, halfway from A to B.
     assert.ok(poses.length, 'the camera is driven from where it is');
     assert.ok(Math.abs(poses[0].lat - -10) < 0.5, 'halfway from A to B');
     assert.deepEqual(await run, { started: true, shots: 1 });
     assert.equal(poses.at(-1).lat, -30, 'and ends on shot B');
-    assert.equal(
-      viewer.flights.length,
-      0,
-      'no fresh flight from the shot start',
-    );
+    assert.equal(viewer.flights.length, 0, 'no fresh flight from the shot start');
     assert.equal(director._lastRun.wasCancelled, false);
-  } finally {
-    await director.destroy();
-    restoreFrames();
-    restore();
-  }
+  } finally { await director.destroy(); restoreFrames(); restore(); }
 });
 
 test('a run resumed inside a hold plays its layers on from the seek’s state and waits only the rest of it', async () => {
@@ -3070,38 +2238,27 @@ test('a run resumed inside a hold plays its layers on from the seek’s state an
     const seekStates = layerCalls.filter(({ options }) => options?.sceneSeek);
     assert.equal(seekStates.length, 1, 'shot A’s layers are given the moment');
     assert.equal(seekStates[0].shot.id, 'shot-a');
-    assert.ok(
-      Math.abs(seekStates[0].options.sceneSeek.holdElapsedSec - 0.4) < 1e-9,
-    );
+    assert.ok(Math.abs(seekStates[0].options.sceneSeek.holdElapsedSec - 0.4) < 1e-9);
     // Then they play on from that moment: shot A settles without the seek.
     const after = layerCalls.slice(layerCalls.indexOf(seekStates[0]) + 1);
     const played = after.find(({ shot }) => shot.id === 'shot-a');
     assert.ok(played, 'shot A’s layers go back to running playback');
     assert.equal(played.options.cameraSettled, true);
     assert.equal(played.options.sceneSeek, undefined);
-  } finally {
-    await director.destroy();
-    restore();
-  }
+  } finally { await director.destroy(); restore(); }
 });
 
 test('a caught run failure resolves as run-failed, not success (#971)', async () => {
   const { director, styleManager, restore } = makeDirector();
   const warn = console.warn;
   console.warn = () => {};
-  styleManager.applyVisualState = async () => {
-    throw new Error('visual failed');
-  };
+  styleManager.applyVisualState = async () => { throw new Error('visual failed'); };
   try {
     assert.deepEqual(
       await director.startScene('scene-1', { single: true, preview: false }),
       { started: false, reason: 'run-failed' },
     );
-  } finally {
-    console.warn = warn;
-    await director.destroy();
-    restore();
-  }
+  } finally { console.warn = warn; await director.destroy(); restore(); }
 });
 test('listShots gives a scene its shots in order, each starting where the last ends', () => {
   const { director, restore } = makeDirector();
@@ -3485,10 +2642,7 @@ test('an import keeps the current scene, else picks a non-built-in scene, else t
       true,
     );
     assert.equal(director._selectedSceneId, 'mine');
-    assert.deepEqual(
-      director.draftScenes().map(({ id }) => id),
-      ['mine'],
-    );
+    assert.deepEqual(director.draftScenes().map(({ id }) => id), ['mine']);
   } finally {
     restore();
   }
@@ -3591,10 +2745,7 @@ test('SAVE TO STORIES and tags that cannot be saved roll back and show the save 
     assert.deepEqual(director.storyScenes(), []);
     assert.match(director._presentation.status, /^Scene not saved/);
 
-    assert.equal(
-      director.setSceneStoryTags('scene-1', ['Floods', 'Storms']),
-      false,
-    );
+    assert.equal(director.setSceneStoryTags('scene-1', ['Floods', 'Storms']), false);
     assert.deepEqual(director._project.scenes[0].storyTags, ['Storms']);
     assert.equal(director.setSceneStoryTags('scene-1', []), false);
     assert.deepEqual(director._project.scenes[0].storyTags, ['Storms']);
@@ -3616,10 +2767,7 @@ test('SAVE TO STORIES and tags that cannot be saved roll back and show the save 
     director._toggleSelectedSceneInStories();
     assert.equal(director._project.scenes[0].stories, true);
     assert.match(director._presentation.status, /^Scene not saved/);
-  } finally {
-    console.warn = warn;
-    restore();
-  }
+  } finally { console.warn = warn; restore(); }
 });
 
 test('story thumbnail and tags survive a reload and an export/import round trip', async () => {
