@@ -19,4 +19,3 @@
 ### Requirement: Globe display
 **Reason**: Upstream moved the wind layer to the renderer ports. The fork tests of this requirement used the old Cesium objects, and they fail against the merged code. The merge takes the upstream tests of the layer. This change retires the scenarios `wind-023`, `wind-024`, `wind-025`, `wind-026`, `wind-027`, `wind-028`, `wind-029`, `wind-030`, `wind-031`, `wind-032`, `wind-033`, `wind-034`, `wind-035`.
 **Migration**: None.
-

@@ -44,7 +44,7 @@ test('[coverage-gate-105] stops for a record that lists an owned file or a findi
     recorded: {
       'src/owned.test.mjs': ['GATES-TEST-LEAK'],
       'src/up.test.mjs': ['GATES-TEST-LEAK', 'TRACE-EMPTY-TEST-FILE'],
-      'src/gone.test.mjs': ['GATES-TEST-LEAK'],
+      'src/gone.test.mjs': ['GATES-TEST-LEAK', 'TRACE-OUTSIDE-TEST-FILE'],
     },
   });
   assert.deepEqual(

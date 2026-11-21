@@ -19,4 +19,3 @@
 ### Requirement: Storm selection
 **Reason**: Upstream moved the cyclone layer to the renderer ports. The fork tests of this requirement used the old Cesium objects, and they fail against the merged code. The merge takes the upstream tests of the layer. This change retires the scenarios `cyclones-023`, `cyclones-024`, `cyclones-025`.
 **Migration**: None.
-

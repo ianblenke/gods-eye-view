@@ -570,7 +570,9 @@ function runGateCommand({
 
   if (command === 'findings') {
     // The command records each finding of an upstream file, so those findings are not faults here.
-    const errors = measured.errors.filter((error) => error.code !== 'GATES-FINDING-STALE' && !measured.found[error.file]?.has(error.code));
+    // The adopt command handles the QA header errors of upstream scripts later.
+    const skipped = new Set(['GATES-FINDING-STALE', 'QA-HEADER']);
+    const errors = measured.errors.filter((error) => !skipped.has(error.code) && !measured.found[error.file]?.has(error.code));
     if (errors.length > 0) return report(log, errors);
     writeFindings(root, measured.found);
     log(`Findings: wrote ${Object.keys(measured.found).length} files to the record.`);

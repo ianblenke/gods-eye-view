@@ -1,11 +1,23 @@
 ## REMOVED Requirements
 
+### Requirement: Action input
+**Reason**: Upstream renders the voice panel from a presenter and removed the test fixture of the old panel. The fork tests of this requirement used that fixture, and they fail against the merged code. This change retires the scenarios `voice-panel-001`, `voice-panel-003`, `voice-panel-009`, `voice-panel-011`, `voice-panel-067`. The change keeps the other scenarios in a new requirement of the same capability.
+**Migration**: None.
+
 ### Requirement: Panel presentation
 **Reason**: Upstream renders the voice panel from a presenter and removed the test fixture of the old panel. The fork tests of this requirement used that fixture, and they fail against the merged code. This change retires the scenarios `voice-panel-012`, `voice-panel-013`, `voice-panel-014`, `voice-panel-015`, `voice-panel-016`, `voice-panel-017`, `voice-panel-071`, `voice-panel-018`, `voice-panel-019`, `voice-panel-020`.
 **Migration**: None.
 
 ### Requirement: Browser preferences
 **Reason**: Upstream renders the voice panel from a presenter and removed the test fixture of the old panel. The fork tests of this requirement used that fixture, and they fail against the merged code. This change retires the scenarios `voice-panel-021`, `voice-panel-022`, `voice-panel-023`, `voice-panel-024`, `voice-panel-025`, `voice-panel-026`, `voice-panel-027`, `voice-panel-028`, `voice-panel-072`, `voice-panel-029`.
+**Migration**: None.
+
+### Requirement: Local inactivity
+**Reason**: Upstream renders the voice panel from a presenter and removed the test fixture of the old panel. The fork tests of this requirement used that fixture, and they fail against the merged code. This change retires the scenarios `voice-panel-032`, `voice-panel-065`. The change keeps the other scenarios in a new requirement of the same capability.
+**Migration**: None.
+
+### Requirement: Native activity
+**Reason**: Upstream renders the voice panel from a presenter and removed the test fixture of the old panel. The fork tests of this requirement used that fixture, and they fail against the merged code. This change retires the scenarios `voice-panel-044`, `voice-panel-048`. The change keeps the other scenarios in a new requirement of the same capability.
 **Migration**: None.
 
 ### Requirement: Panel host
@@ -28,9 +40,9 @@
 **Reason**: Upstream renders the voice panel from a presenter and removed the test fixture of the old panel. The fork tests of this requirement used that fixture, and they fail against the merged code. This change retires the scenarios `voice-panel-070`.
 **Migration**: None.
 
-## MODIFIED Requirements
+## ADDED Requirements
 
-### Requirement: Action input
+### Requirement: Action input after sync 11
 
 The action input helpers MUST report their current state and keep their local resources.
 
@@ -74,7 +86,7 @@ Origin: backfill
 - **WHEN** an observation callback or private inspection throws
 - **THEN** the observer keeps the action result or original callback error
 
-### Requirement: Local inactivity
+### Requirement: Local inactivity after sync 11
 
 The local inactivity helpers MUST report their current state and keep their local resources.
 
@@ -100,7 +112,7 @@ Origin: backfill
 - **WHEN** the owner destroys the timer or changes its epoch
 - **THEN** the timer cancels its task and ignores stale callbacks and later updates
 
-### Requirement: Native activity
+### Requirement: Native activity after sync 11
 
 The native activity helpers MUST report their current state and keep their local resources.
 
@@ -165,4 +177,3 @@ Origin: backfill
 
 - **WHEN** the native observer retires audio or the owner destroys the observer
 - **THEN** the observer restores the original method functions that it still owns and keeps newer replacements
-

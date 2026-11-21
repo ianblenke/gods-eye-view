@@ -1,5 +1,9 @@
 ## REMOVED Requirements
 
+### Requirement: Wire primitives
+**Reason**: Upstream changed the share codec tables. It removed the style snow and changed the panel table. The fork tests of this requirement pinned the old tables, and they fail against the merged code. This change retires the scenarios `share-codec-053`. The change keeps the other scenarios in a new requirement of the same capability.
+**Migration**: None.
+
 ### Requirement: Field registry
 **Reason**: Upstream changed the share codec tables. It removed the style snow and changed the panel table. The fork tests of this requirement pinned the old tables, and they fail against the merged code. This change retires the scenarios `share-codec-010`, `share-codec-032`, `share-codec-059`, `share-codec-033`, `share-codec-056`.
 **Migration**: None.
@@ -40,9 +44,9 @@
 **Reason**: Upstream changed the share codec tables. It removed the style snow and changed the panel table. The fork tests of this requirement pinned the old tables, and they fail against the merged code. This change retires the scenarios `share-codec-058`.
 **Migration**: None.
 
-## MODIFIED Requirements
+## ADDED Requirements
 
-### Requirement: Wire primitives
+### Requirement: Wire primitives after sync 11
 
 The share codec MUST support the wire primitives behavior in these scenarios.
 
@@ -92,4 +96,3 @@ Origin: backfill
 
 - **WHEN** the caller computes CRC-8 for ASCII digits from one through nine
 - **THEN** the result equals 244
-

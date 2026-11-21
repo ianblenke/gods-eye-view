@@ -119,4 +119,3 @@
 ### Requirement: Show the DETAILS card
 **Reason**: Upstream moved the Recent Imagery layer to the renderer ports and renders its panel with Vue. The fork tests of this requirement used the old objects, and they fail against the merged code. The merge takes the upstream tests. This change retires the scenarios `recent-imagery-055`.
 **Migration**: None.
-

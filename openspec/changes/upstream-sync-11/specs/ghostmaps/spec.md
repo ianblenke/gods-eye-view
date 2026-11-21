@@ -4,13 +4,17 @@
 **Reason**: Upstream moved the GhostMaps layer to the renderer ports. The fork tests of this requirement used the old Cesium objects, and they fail against the merged code. The merge takes the upstream tests of the layer. This change retires the scenarios `ghostmaps-029`, `ghostmaps-030`, `ghostmaps-031`, `ghostmaps-032`, `ghostmaps-033`, `ghostmaps-034`.
 **Migration**: None.
 
+### Requirement: Local boundary checks
+**Reason**: Upstream moved the GhostMaps layer to the renderer ports. The fork tests of this requirement used the old Cesium objects, and they fail against the merged code. The merge takes the upstream tests of the layer. This change retires the scenarios `ghostmaps-043`, `ghostmaps-044`, `ghostmaps-045`, `ghostmaps-046`, `ghostmaps-047`, `ghostmaps-050`, `ghostmaps-054`, `ghostmaps-055`, `ghostmaps-056`, `ghostmaps-059`, `ghostmaps-060`, `ghostmaps-061`, `ghostmaps-065`. The change keeps the other scenarios in a new requirement of the same capability.
+**Migration**: None.
+
 ### Requirement: Catalog request input
 **Reason**: Upstream moved the GhostMaps layer to the renderer ports. The fork tests of this requirement used the old Cesium objects, and they fail against the merged code. The merge takes the upstream tests of the layer. This change retires the scenarios `ghostmaps-068`.
 **Migration**: None.
 
-## MODIFIED Requirements
+## ADDED Requirements
 
-### Requirement: Local boundary checks
+### Requirement: Local boundary checks after sync 11
 
 The local helpers MUST guard invalid input and report service state.
 
@@ -110,4 +114,3 @@ Origin: backfill
 
 - **WHEN** an event client subscribes before the first check completes
 - **THEN** the proxy sends the current catalog before that check completes
-

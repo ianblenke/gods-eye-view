@@ -4,11 +4,10 @@
 **Reason**: Upstream rewrote the traffic timing test, and the new test runs in the same process. The scenario named the child process of the old test. This change retires the scenarios `coverage-gate-101`.
 **Migration**: None.
 
-
 ## ADDED Requirements
 
 ### Requirement: Vue loader in test runs
-The gate MUST give each test run the Vue loader of the project, when the project has one. Then a test can import a single-file component.
+The gate MUST give each test run the Vue loader of the project, when the project has one, so a test can import a single-file component.
 Origin: spec-first
 
 #### Scenario: Load the Vue loader `coverage-gate-102`
@@ -17,12 +16,7 @@ Origin: spec-first
 - **AND** a test run for a project with no such file has no `--import` option
 
 ### Requirement: Recorded findings of upstream test files
-The gate MUST excuse three findings for a test file that the ownership manifest does not list.
-- A live timer at the end of its test process (`GATES-TEST-LEAK`).
-- A test that a helper file registers (`TRACE-OUTSIDE-TEST-FILE`).
-- A test file that reports no tests (`TRACE-EMPTY-TEST-FILE`).
-
-The gate MUST excuse a finding only when the file `openspec/trace/upstream-test-findings.json` records the file and the finding. The gate MUST NOT excuse a finding for an owned file.
+The gate MUST excuse three findings for a test file that the ownership manifest does not list: a live timer at the end of its test process (`GATES-TEST-LEAK`), a test that a helper file registers (`TRACE-OUTSIDE-TEST-FILE`), and a test file that reports no tests (`TRACE-EMPTY-TEST-FILE`). The gate MUST excuse a finding only when the file `openspec/trace/upstream-test-findings.json` records the file and the finding. The gate MUST NOT excuse a finding for an owned file.
 Origin: spec-first
 
 #### Scenario: Excuse a recorded finding of an upstream file `coverage-gate-103`
@@ -35,7 +29,7 @@ Origin: spec-first
 - **AND** a finding for an owned file always keeps its error
 
 #### Scenario: Stop for a record that no longer fits `coverage-gate-105`
-- **WHEN** the record lists an owned file, or lists a code that the run did not find for the file
+- **WHEN** the record lists an owned file, or lists a code other than `GATES-TEST-LEAK` that the run did not find for the file
 - **THEN** the gate stops with the error `GATES-FINDING-OWNED` for the owned file
 - **AND** the gate stops with the error `GATES-FINDING-STALE` for the code that the run did not find
 

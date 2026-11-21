@@ -1074,7 +1074,7 @@ test('[coverage-gate-105] stops for a record that lists a finding the run did no
   withFixture(
     (root) => {
       passes(root, ['init']);
-      write(root, { [RECORD]: record({ 'src/math.test.mjs': ['GATES-TEST-LEAK'] }) });
+      write(root, { [RECORD]: record({ 'src/math.test.mjs': ['TRACE-EMPTY-TEST-FILE'] }) });
       const check = run(root, ['check']);
       assert.equal(check.status, 1);
       assert.match(check.output, /ERROR GATES-FINDING-STALE src\/math\.test\.mjs/);
@@ -1099,6 +1099,14 @@ test('[coverage-gate-106] writes the record of upstream findings with the findin
     assert.equal(result.status, 0, result.output);
     assert.equal(readFileSync(path.join(root, RECORD), 'utf8'), '{\n  "version": 1,\n  "files": {\n    "src/math.test.mjs": [\n      "GATES-TEST-LEAK"\n    ]\n  }\n}\n');
     assert.equal(run(root, ['check'], { spawn: LEAK_STUB(root) }).status, 0);
+  });
+  withFixture((root) => {
+    passes(root, ['init']);
+    write(root, { 'scripts/qa-example.mjs': 'export {};\n' });
+    git(root, 'add', 'scripts/qa-example.mjs');
+    const result = run(root, ['findings'], { spawn: LEAK_STUB(root) });
+    assert.equal(result.status, 0, result.output);
+    assert.equal(existsSync(path.join(root, RECORD)), true);
   });
   withFixture(
     (root) => {

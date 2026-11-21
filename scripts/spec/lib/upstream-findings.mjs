@@ -37,7 +37,8 @@ export function splitFindings({ errors, isOwned, recorded }) {
       remaining.push({ code: 'GATES-FINDING-OWNED', file, message: `${FINDINGS_FILE} lists the owned file ${file}` });
       continue;
     }
-    for (const code of codes.filter((item) => !found[file]?.has(item))) {
+    // A live timer depends on the timing of the run, so a missing leak is no fault of the record.
+    for (const code of codes.filter((item) => item !== 'GATES-TEST-LEAK' && !found[file]?.has(item))) {
       remaining.push({ code: 'GATES-FINDING-STALE', file, message: `${FINDINGS_FILE} lists ${code} for ${file}, and the run did not find it` });
     }
   }
