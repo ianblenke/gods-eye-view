@@ -1,0 +1,353 @@
+{
+  "version": 1,
+  "files": {
+    "src/annotations/screenAnnotationRenderer.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/app/embedTerrainTakeover.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/app/scene.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/celestialRingView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/cockpitSignalFocus.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/data/aisLiveVessels.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/data/bhoteKoshiPanelView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/data/firmsHorizonCull.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/data/geoImportFeatures.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/data/managerPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/data/satelliteClass.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/data/trackedModelForm.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/data/trafficTiming.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/firstRunLauncherView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/awareness/directionOverlay.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/awareness/rangeRing.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/cctv/lifecycle.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/flights/feedLatency.test.mjs": [
+      "TRACE-EMPTY-TEST-FILE"
+    ],
+    "src/layers/launches/failedEntry.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/launches/replayOverlay.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/military/feedLatency.test.mjs": [
+      "TRACE-EMPTY-TEST-FILE"
+    ],
+    "src/layers/satellites/cockpitSubject.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/satellites/ingestion.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/satellites/stale.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/streetLevel/photoViewer.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/streetLevel/photoViewers.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/streetLevel/providers/mapillary/replacePlay.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/wind/inspectionMarker.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/overlays/worldOverlayActionsView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/render/cesium/input.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/scenes/dataPacks/presentationView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/scenes/director.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/scenes/interactionsView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/scenes/sharingDialogs.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/stories/boot.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/stories/controller.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/stories/keyboard.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/stories/thumbs.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/streetLevelLifecycle.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/streetLevelReplacement.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/testSupport/aircraftFeedLatency.mjs": [
+      "TRACE-OUTSIDE-TEST-FILE"
+    ],
+    "src/textChatServer.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/tooling/transitQa.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/awarenessPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cctvPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cctvPicker.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cockpitBridge.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cockpitBriefing.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cockpitContext.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cockpitEntryGate.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cockpitInstruments.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cockpitOrbital.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cockpitOrbitalFocus.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cockpitOrbitalView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cockpitPresence.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cockpitSubjectView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cockpitUtilityControls.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/commandDock.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/contextPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/creditLineHeight.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/creditsView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/displayPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/displayPanelActions.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/frameRateView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/globeActions.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/i18n.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/imagerySplitView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/layerFinder.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/layerPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/layerPanel/layerRows.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/localePickerView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/missionPanels.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/newsPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/omnibarGuide.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/panelChromeButtons.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/providerSettings.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/radioPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/radioPanelActions.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/radioTuner.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/rail/fieldValue.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/railCards.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/railEdgeScroll.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/recentImagery.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/renderFailureView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/safeFrameView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/sceneSharingView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/sdrCardActions.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/statusChipsView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/storiesCredit.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/storiesView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/streetLevelControls.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/styleParameters.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/toastView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/views/intelHudView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/views/mountApplicationViews.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/views/panels/DataLibraryDialog.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/views/panels/DrawMarkList.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/views/panels/GeoImport.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/views/panels/StreetLevelPhotoViewer.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/views/panels/WorldTimeline.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/weatherPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/wildlifeSightingCard.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/chatAttachments.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/chatControlView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/gevActions.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/gevRealtime.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/globeResetConfirmation.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/panel/host.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/panel/manualPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/panel/preferencesView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/pointAndAsk.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/pointerReticleView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/realtimeCostPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/viewportCapture.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/voiceCard.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/voice/voiceControlView.test.mjs": [
+      "GATES-TEST-LEAK"
+    ]
+  }
+}
