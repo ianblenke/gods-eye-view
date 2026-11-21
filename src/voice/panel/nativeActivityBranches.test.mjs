@@ -78,3 +78,17 @@ test('[voice-panel-038] a retired audio method that a caller kept changes no sta
   assert.equal(changes.length, before);
   observer.destroy();
 });
+
+test('[voice-panel-046] an audio content part marks the pending response as heard, and a text part does not', () => {
+  const turns = { observeSpeech() {} };
+  const controller = { _turns: turns, _input: { pushToTalkKeyHeld: false } };
+  const observer = observeNativeActivity({ adapter: { controller }, nativeProvider: 'openai' });
+  observer.handle({ type: 'state', state: 'listening' });
+  turns.observeSpeech({ type: 'response.created', response: { id: 'r-audio' } });
+  turns.observeSpeech({ type: 'response.created', response: { id: 'r-text' } });
+  turns.observeSpeech({ type: 'response.content_part.added', response_id: 'r-audio', part: { type: 'output_audio' } });
+  turns.observeSpeech({ type: 'response.content_part.added', response_id: 'r-text', part: { type: 'text' } });
+  turns.observeSpeech({ type: 'response.done', response: { id: 'r-text', status: 'completed', output: [{ type: 'message', content: [{ type: 'text' }] }] } });
+  assert.equal(observer.snapshot().known, false);
+  observer.destroy();
+});
