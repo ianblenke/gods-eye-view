@@ -175,6 +175,7 @@
     "src/director/document.forkBackfill.test.mjs",
     "src/layers/ghostMaps/records.forkBackfill.test.mjs",
     "src/layers/perimeters/cards.forkBackfill.test.mjs",
-    "src/tooling/spec/upstreamFindings.test.mjs"
+    "src/tooling/spec/upstreamFindings.test.mjs",
+    "src/voice/panel/nativeActivityBranches.test.mjs"
   ]
 }

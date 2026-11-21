@@ -26,7 +26,7 @@ test('[perimeters-005] the card anchor is the mean of the outer vertices of the 
   assert.ok(Math.abs(anchor.lat - 35.1) < 1e-9);
 });
 
-test('incident cards stay at the dateline for closed, reversed and rotated outlines', () => {
+test('[perimeters-005] incident cards stay at the dateline for closed, reversed and rotated outlines', () => {
   const vertices = [
     [179, 10],
     [-179, 10],
@@ -43,7 +43,7 @@ test('incident cards stay at the dateline for closed, reversed and rotated outli
   }
 });
 
-test('incident card longitude treats vertices at either sign of 180 as the same meridian', () => {
+test('[perimeters-005] incident card longitude treats vertices at either sign of 180 as the same meridian', () => {
   for (const boundary of [-180, 180]) {
     const ring = [
       [179, 10],
@@ -59,7 +59,7 @@ test('incident card longitude treats vertices at either sign of 180 as the same 
   }
 });
 
-test('multipart cards compare polygon areas along short dateline edges', () => {
+test('[perimeters-005] multipart cards compare polygon areas along short dateline edges', () => {
   const ordinary = [
     [10, 20],
     [11, 20],
