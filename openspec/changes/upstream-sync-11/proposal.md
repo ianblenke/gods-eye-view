@@ -17,6 +17,7 @@ Upstream added a renderer port. Code outside `src/render/cesium/` can no longer 
 - Keep the Taiwan start flight on the camera port. Decision D4 gives the work.
 - Add the 21 fork texts to the nine new locales. Decision D5 gives the limit.
 - Retire 202 scenarios and change two. Decision D6 lists them.
+- Change the gate scripts in three ways. Decision D8 gives the changes.
 - Run the adopt command for each upstream file that the merge brings and that has a coverage gap.
 
 ## Capabilities

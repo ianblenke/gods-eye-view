@@ -1,9 +1,5 @@
 ## REMOVED Requirements
 
-### Requirement: Wire primitives
-**Reason**: Upstream changed the share codec tables. It removed the style snow and changed the panel table. The fork tests of this requirement pinned the old tables, and they fail against the merged code. This change retires the scenarios `share-codec-053`. The change keeps the other scenarios in a new requirement of the same capability.
-**Migration**: None.
-
 ### Requirement: Field registry
 **Reason**: Upstream changed the share codec tables. It removed the style snow and changed the panel table. The fork tests of this requirement pinned the old tables, and they fail against the merged code. This change retires the scenarios `share-codec-010`, `share-codec-032`, `share-codec-059`, `share-codec-033`, `share-codec-056`.
 **Migration**: None.
@@ -44,9 +40,9 @@
 **Reason**: Upstream changed the share codec tables. It removed the style snow and changed the panel table. The fork tests of this requirement pinned the old tables, and they fail against the merged code. This change retires the scenarios `share-codec-058`.
 **Migration**: None.
 
-## ADDED Requirements
+## MODIFIED Requirements
 
-### Requirement: Wire primitives after sync 11
+### Requirement: Wire primitives
 
 The share codec MUST support the wire primitives behavior in these scenarios.
 

@@ -78,3 +78,13 @@ The change also rewrites tests, and it keeps their scenarios:
 ### D7: Fragments of the changelog
 
 Upstream fragments in `changelog.d/` use the numbers 1431 to 1438 too. The change renames the fork fragments `143x-up42-*.md` to `943x-up42-*.md`, so no number repeats.
+
+### D8: Gate changes
+
+Three changes of the gate scripts in `scripts/spec/` came from this sync. The owner approved the second change on 2026-11-20.
+
+- Each test run of the gate loads the Vue loader of the project (`coverage-gate-102`). Upstream tests import single-file components.
+- The gate records the findings of upstream test files in `openspec/trace/upstream-test-findings.json` (`coverage-gate-103` to `coverage-gate-106`). The three findings are a live timer, a test that a helper registers and a test file with no tests. The finding of an owned file keeps its error. The findings command writes the record.
+- A scenario that a modified requirement drops needs no test while the change is active (`spec-trace-055`). The archive command removes that scenario.
+
+The change also repairs five upstream tests that failed in the gate and passed alone: `decode`, `placeSuggestions`, `radioPanel`, `gpuIcons` and `nominatimGuardLifecycle`, and one director test. Each limit now fits the load of the gate, and each test still fails for the fault that it names.

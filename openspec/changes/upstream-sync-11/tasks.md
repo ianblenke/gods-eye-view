@@ -19,7 +19,8 @@
 - [x] 1.17 Keep these scenarios of `voice-panel`: voice-panel-034, voice-panel-035, voice-panel-036, voice-panel-037, voice-panel-038, voice-panel-039, voice-panel-040, voice-panel-041, voice-panel-042, voice-panel-043.
 - [x] 1.18 Keep these scenarios of `voice-panel`: voice-panel-045, voice-panel-046, voice-panel-047.
 - [x] 1.19 Add the Vue loader to each test run of the gate: coverage-gate-102.
-- [ ] 1.20 Record the findings of upstream test files: coverage-gate-103, coverage-gate-104, coverage-gate-105 and coverage-gate-106.
+- [x] 1.20 Stop the trace gate from needing a test for a scenario that a modified requirement drops: spec-trace-055.
+- [ ] 1.21 Record the findings of upstream test files: coverage-gate-103, coverage-gate-104, coverage-gate-105 and coverage-gate-106.
 
 ## 2. Host evidence
 

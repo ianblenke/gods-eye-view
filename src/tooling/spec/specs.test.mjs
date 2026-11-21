@@ -235,6 +235,46 @@ test('[spec-trace-019] stops for a removed scenario that is not retired', () => 
   );
 });
 
+test('[spec-trace-055] counts a scenario that a modified requirement drops as removed, and no other scenario', () => {
+  const two = [
+    '## Requirements',
+    '',
+    '### Requirement: Labels',
+    'The globe MUST show a label for each aircraft.',
+    'Origin: backfill',
+    '',
+    '#### Scenario: Show a label `flights-004`',
+    '- **WHEN** an aircraft is in view',
+    '- **THEN** the globe shows its label',
+    '',
+    '#### Scenario: Hide a label `flights-005`',
+    '- **WHEN** an aircraft is out of view',
+    '- **THEN** the globe hides its label',
+    '',
+  ].join('\n');
+  const modified = SPEC.replace('## Requirements', '## MODIFIED Requirements');
+  const added = SPEC.replace('## Requirements', '## ADDED Requirements').replace('Labels', 'Names');
+  withRoot(
+    {
+      'openspec/specs/flights/spec.md': two,
+      'openspec/changes/drop-one/specs/flights/spec.md': `${modified}\n${added.split('\n').slice(2).join('\n').replace('flights-004', 'flights-006')}`,
+    },
+    (root) => {
+      const result = loadSpecs(root);
+      assert.deepEqual([...result.removedIds], ['flights-005']);
+    },
+  );
+  withRoot(
+    {
+      'openspec/specs/flights/spec.md': two,
+      'openspec/changes/keep-all/specs/flights/spec.md': two.replace('## Requirements', '## MODIFIED Requirements'),
+    },
+    (root) => {
+      assert.deepEqual([...loadSpecs(root).removedIds], []);
+    },
+  );
+});
+
 test('[spec-trace-047] changes the hash of each scenario when the name or the text of its requirement changes', () => {
   const hashOf = (text) => parseSpecFile(text, WHERE).scenarios[0].hash;
   const original = hashOf(SPEC);
