@@ -1,7 +1,7 @@
 ## Context
 
 Base commit: `872006a5`, the merge of pull request 29 of the fork.
-Upstream commit: `42559db10b6af9a9049fb78f24204cf036c4e807`, the head of `upstream/main` on 1966-11-19.
+Upstream commits: `42559db10b6af9a9049fb78f24204cf036c4e807`, the head of `upstream/main` on 2026-11-19, and `7f2dc81cf69cbf1541ac4547bdef916ebec02e7c`, the head of 2026-11-20. The change has one merge for each commit. Upstream has later commits (head `918435ddc` on 2026-11-21), and sync 12 takes them.
 The shared ancestor is the commit `2bcdca1c9`, which sync 10 merged.
 
 The clone `upstream-sync-11` holds the merge. It uses the image `gods-eye-view:sync11`, which the lead built from the merged lock file. The fork image `gods-eye-view:local` stays as it is.
@@ -71,7 +71,7 @@ The fork wrote backfill tests for upstream code. Upstream changed that code in t
 
 The change deletes the other fork backfill tests.
 
-The change retires 196 scenarios in nine capabilities. The delta specs list them. After the archive, the lead adds the IDs to `openspec/trace/retired-ids.json` and removes their empty links from `openspec/trace/links.json`.
+The change retires 196 scenarios in eight capabilities. The delta specs list them. After the archive, the lead adds the IDs to `openspec/trace/retired-ids.json` and removes their empty links from `openspec/trace/links.json`.
 The scenario `coverage-gate-101` stays. The merge carries the child process of the fork into the new upstream version of `src/data/trafficTiming.test.mjs`.
 
 The change also rewrites tests, and it keeps their scenarios:
@@ -88,7 +88,7 @@ Upstream fragments in `changelog.d/` use the numbers 1431 to 1438 too. The chang
 
 ### D8: Gate changes
 
-Three changes of the gate scripts in `scripts/spec/` came from this sync. The owner approved the second change on 1966-11-20.
+Three changes of the gate scripts in `scripts/spec/` came from this sync. The owner approved the second change on 2026-11-20.
 
 - Each test run of the gate loads the Vue loader of the project (`coverage-gate-102`). Upstream tests import single-file components.
 - The gate records the findings of upstream test files in `openspec/trace/upstream-test-findings.json` (`coverage-gate-103` to `coverage-gate-106`). The three findings are a live timer, a test that a helper registers and a test file with no tests. The finding of an owned file keeps its error. The findings command writes the record.
