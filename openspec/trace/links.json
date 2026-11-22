@@ -938,6 +938,9 @@
     "src/data/beemapsCredits.test.mjs › [beemaps-source-035] starts at 0 for another date or no file and starts again when the date changes",
     "src/data/beemapsCredits.test.mjs › [beemaps-source-035] writes the credit file for one addition at a time, and the last addition gives the final text"
   ],
+  "cable-bundled-source-001": [
+    "src/layers/submarineCables/bundledSourceDefault.test.mjs › [cable-bundled-source-001] the bundled source reads both files with the global fetch when it is given none"
+  ],
   "change-review-001": [
     "src/tooling/spec/review.test.mjs › [change-review-001] does not stop for a passed review with all the fields, the closed findings and the agent outputs"
   ],
@@ -1098,7 +1101,7 @@
     "src/tooling/spec/ciFiles.test.mjs › [ci-gates-013] pins a Node release with the fix for the Brotli flaw"
   ],
   "cockpit-contact-dot-001": [
-    "src/data/cockpitContactDot.test.mjs › [cockpit-contact-dot-001] the contact dot is drawn once and every later call gives the same data URL"
+    "src/data/cockpitContactDot.test.mjs › [cockpit-contact-dot-001] the cockpit draws the contact dot once, and every later call gives the same data URL"
   ],
   "coverage-gate-001": [
     "src/tooling/spec/inventory.test.mjs › [coverage-gate-001] includes each tracked JS and TypeScript file in the inventory"
@@ -1571,8 +1574,8 @@
     "src/tooling/spec/gates.test.mjs › [coverage-gate-102] loads the Vue loader in each test run when the project has one"
   ],
   "coverage-gate-103": [
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-103] excuses a recorded leak of an upstream test file",
-    "src/tooling/spec/upstreamFindings.test.mjs › [coverage-gate-103] excuses a recorded finding of an upstream file"
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-103] gives no error for a recorded leak of an upstream test file",
+    "src/tooling/spec/upstreamFindings.test.mjs › [coverage-gate-103] gives no error for a recorded finding of an upstream file"
   ],
   "coverage-gate-104": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-104] stops for an owned file with a recorded leak and for a leak with no record",
@@ -3687,7 +3690,7 @@
     "src/layers/gdacs/registration.test.mjs › [gdacs-layer-018] registers the layer in the catalog, the source contract, the reference sources and the share link"
   ],
   "gdacs-layer-019": [
-    "src/layers/gdacs/registration.test.mjs › [gdacs-layer-019] puts the layer at the end of the Events group of the panel"
+    "src/layers/gdacs/registration.test.mjs › [gdacs-layer-019] puts the layer in the Events group of the panel, right after s2-ghostmaps"
   ],
   "gdacs-layer-020": [
     "src/layers/gdacs/registration.test.mjs › [gdacs-layer-020] keeps the layer out of voice"
@@ -6445,7 +6448,7 @@
     "src/layers/reticulum/registration.test.mjs › [reticulum-layer-017] registers the layer in the catalog, the source contract, the reference sources and the share link"
   ],
   "reticulum-layer-018": [
-    "src/layers/reticulum/registration.test.mjs › [reticulum-layer-018] puts the layer at the end of the Infrastructure group of the panel"
+    "src/layers/reticulum/registration.test.mjs › [reticulum-layer-018] puts the layer in the Infrastructure group of the panel, right after local-dams"
   ],
   "reticulum-layer-019": [
     "src/layers/reticulum/registration.test.mjs › [reticulum-layer-019] keeps the layer out of voice"
@@ -6869,7 +6872,7 @@
   ],
   "share-codec-003": [
     "src/share/wire.test.mjs › [share-codec-003] zigzag maps small magnitudes of either sign to small codes",
-    "src/share/wireBranches.test.mjs › [share-codec-003] a signed field round-trips through a signed varint, and a value past the limit is refused"
+    "src/share/wireBranches.test.mjs › [share-codec-003] a signed field round-trips through a signed varint, and the codec refuses a value past the limit"
   ],
   "share-codec-004": [
     "src/share/wire.test.mjs › [share-codec-004] varints round-trip up to the largest safe integer"
@@ -7767,7 +7770,7 @@
     "src/tooling/spec/trace.test.mjs › [spec-trace-054] does not stop for a main scenario that an active change removes"
   ],
   "spec-trace-055": [
-    "src/tooling/spec/specs.test.mjs › [spec-trace-055] counts a scenario that a modified requirement drops as removed, and no other scenario"
+    "src/tooling/spec/specs.test.mjs › [spec-trace-055] counts only a scenario that a modified requirement drops as removed"
   ],
   "startup-view-001": [
     "src/app/startView.test.mjs › [startup-view-001] flies to the Taiwan pose"
@@ -7925,9 +7928,6 @@
   ],
   "ste-lint-045": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-045] gives a clear error for invalid registry JSON"
-  ],
-  "submarine-cables-001": [
-    "src/layers/submarineCables/bundledSourceDefault.test.mjs › [submarine-cables-001] the bundled source reads both files with the global fetch when it is given none"
   ],
   "up42-order-panel-001": [
     "src/layers/up42Scenes/orderSource.test.mjs › [up42-order-panel-001 up42-order-panel-002 up42-order-panel-003] stops each order call after 60 seconds with no repeat",
@@ -9351,22 +9351,24 @@
   "voice-panel-031": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-031] actual activity resets but silent unchanged snapshots do not"
   ],
-  "voice-panel-032": [],
+  "voice-panel-032": [
+    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-032] the timer cancels when the activity stops being quiet, and it refuses a bad new limit",
+    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-032] the timer uses five minutes for a limit that is not a whole number from 0 to 60"
+  ],
   "voice-panel-033": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-033] expiry rereads held, unknown and pending counts despite missing update"
   ],
   "voice-panel-034": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-034] pending siblings and held-before-connect forbid timer; stale callback cannot expire",
-    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-034] the timer cancels when the activity stops being quiet, and refuses a bad new limit",
-    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-034] the timer stops at once for a signal that is already aborted",
-    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-034] the timer takes five minutes for a limit that is not a whole number of minutes from 0 to 60"
+    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-034] the timer stops at once for a signal that has aborted"
   ],
   "voice-panel-035": [
     "src/voice/panel/nativeActivity.test.mjs › [voice-panel-035] custom host never inspected, including hostile controller getter",
     "src/voice/panel/observers.forkBackfill.test.mjs › [voice-panel-035] A custom observer ignores state changes and sends no notice"
   ],
   "voice-panel-036": [
-    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech"
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-036] PTT hold is direct before connect; silent automatic stream is not admitted speech",
+    "src/voice/panel/nativeActivityBranches.test.mjs › [voice-panel-036] a native speech observer reads an event with no type, and the events that start and stop speech"
   ],
   "voice-panel-037": [
     "src/voice/panel/nativeActivity.test.mjs › [voice-panel-037] queue-to-drain, clear and close use current instance, without an acoustic claim"
@@ -9380,8 +9382,7 @@
   ],
   "voice-panel-040": [
     "src/voice/panel/nativeActivity.test.mjs › [voice-panel-040] method receiver/args/result and throw are exact; abort restores wrappers",
-    "src/voice/panel/nativeActivityBranches.test.mjs › [voice-panel-040] a failing text callback leaves the native method result exact",
-    "src/voice/panel/nativeActivityBranches.test.mjs › [voice-panel-040] a signal that is already aborted destroys the observer at once"
+    "src/voice/panel/nativeActivityBranches.test.mjs › [voice-panel-040] a text callback that throws leaves the native method result exact"
   ],
   "voice-panel-041": [
     "src/voice/panel/nativeActivity.test.mjs › [voice-panel-041] OpenAI response.done does not drain output; absent lifecycle remains unknown",
@@ -9397,15 +9398,15 @@
   ],
   "voice-panel-044": [],
   "voice-panel-045": [
-    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-045] overlapping silent replies resolve independently and audio output items remain unknown until playback",
-    "src/voice/panel/nativeActivityBranches.test.mjs › [voice-panel-045] a native speech observer reads an event with no type, and the start and the stop of speech"
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-045] overlapping silent replies resolve independently and audio output items remain unknown until playback"
   ],
   "voice-panel-046": [
     "src/voice/panel/nativeActivity.test.mjs › [voice-panel-046] silent OpenAI replies cannot clear unresolved older audio or incomplete output metadata",
     "src/voice/panel/nativeActivityBranches.test.mjs › [voice-panel-046] an audio content part marks the pending response as heard, and a text part does not"
   ],
   "voice-panel-047": [
-    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-047] Gemini restores each retired audio immediately across repeated same-mount restarts"
+    "src/voice/panel/nativeActivity.test.mjs › [voice-panel-047] Gemini restores each retired audio immediately across repeated same-mount restarts",
+    "src/voice/panel/nativeActivityBranches.test.mjs › [voice-panel-047] a signal that has aborted destroys the observer at once"
   ],
   "voice-panel-048": [],
   "voice-panel-049": [],

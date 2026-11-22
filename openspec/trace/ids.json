@@ -679,6 +679,11 @@
     "since": "2026-10-17",
     "change": "beemaps-frames-limits"
   },
+  "cable-bundled-source-001": {
+    "hash": "b578e866929077fd4e3fb1b5775abb9d211aef23ae8648d63f8e109eaeae5f74",
+    "since": "2026-11-22",
+    "change": "upstream-sync-11"
+  },
   "change-review-001": {
     "hash": "21c5b8e200f5c036a2697637ba12b6943b5e0217d7fe5c8a0e2ab9e31d62e28e",
     "since": "2026-09-14",
@@ -1435,22 +1440,22 @@
     "change": "upstream-sync-11"
   },
   "coverage-gate-103": {
-    "hash": "f3afd8bff752acede96c29d504dda2dfab324ff54335a2b04cdbd308661939f7",
+    "hash": "bf402c089212cc11b662edee8c0807dd69fff0971805259d17a577557ca5b04e",
     "since": "2026-11-22",
     "change": "upstream-sync-11"
   },
   "coverage-gate-104": {
-    "hash": "112f505c940f575296f80f105fbcd472882908dd21b9dd63eee208dc6234d61c",
+    "hash": "c6b2c76232f484206dc61d5ca16ec108e69ed2e89a483d4968293f68dae37339",
     "since": "2026-11-22",
     "change": "upstream-sync-11"
   },
   "coverage-gate-105": {
-    "hash": "4ec4e16ee3f997176c676bf2905fbceb8f5e599872b9c68978de8d4d4d54e3eb",
+    "hash": "1fb2ffeb7a0198f0cc40e3a8284abbb7cf52574ddbd222127a0b2feb97feb0fb",
     "since": "2026-11-22",
     "change": "upstream-sync-11"
   },
   "coverage-gate-106": {
-    "hash": "735b70efa18a80da5bfd8b003ef112c882f71076997abf1b48b302a9d4e0d617",
+    "hash": "59e256cb4ab60766bc0731c3a6a2b6b88047e941911fabd858ddaf9267a37f6a",
     "since": "2026-11-22",
     "change": "upstream-sync-11"
   },
@@ -3435,7 +3440,7 @@
     "change": "backfill-ghostmaps"
   },
   "hud-markings-001": {
-    "hash": "bf07f3ac338e3fd2d2154e6b57509df6157b73411cd9031a3d84856c0ef48c0a",
+    "hash": "c80747d14de4e4e0de89a7331ef6ac4434e528b0b8b67f5c055a978d6c64e732",
     "since": "2026-09-16",
     "change": "remove-classification-banner"
   },
@@ -3705,7 +3710,7 @@
     "change": "osh-fusion"
   },
   "osh-033": {
-    "hash": "381abdc4aa262b7bb205c26e998d24e8af02d8f7faffd2481bdc91fcbe45770b",
+    "hash": "bdd63fa5239f3cc70fc7bff77296c0dff689df47153bf7cdf3cb6f87b387c5a9",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -3845,12 +3850,12 @@
     "change": "osh-draw-unheld-features"
   },
   "osh-061": {
-    "hash": "a758aeb66a9a856a94deaa591f6d06eda9e6128bc52d936cacc43a81e1ac389b",
+    "hash": "3c50dd059f27c89a657bd05b256413c97eedf5e2df4014a5ef1f12749b1bb2c5",
     "since": "2026-09-20",
     "change": "osh-marker-depth"
   },
   "osh-062": {
-    "hash": "f583692210743257187f19987884087a0f8be600db370e0c742a3204b5db78ae",
+    "hash": "dc85bd6726a11e9457de8a89f1eb21ff9cd7ff4e39256561e7716e449114a22e",
     "since": "2026-09-20",
     "change": "osh-marker-depth"
   },
@@ -6855,7 +6860,7 @@
     "change": "simplify-ledger"
   },
   "spec-trace-055": {
-    "hash": "eec5ea46826e252cc62030f247d794c02ce4d0ee26453eb8a94fc9904e90b410",
+    "hash": "3cea17dc5301fd212659c4678067d29e7586f089c60542a09cdfdc3f6fdb0962",
     "since": "2026-11-22",
     "change": "upstream-sync-11"
   },
@@ -7108,11 +7113,6 @@
     "hash": "ce4619e27a44481863329b2e4c5172df8ce3e48a00ca1a2406b6785540e31542",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
-  },
-  "submarine-cables-001": {
-    "hash": "f8951d070be7a4b9c970fa34aff0613a7e2a937c5bda7fb11007c2f5e1329d90",
-    "since": "2026-11-22",
-    "change": "upstream-sync-11"
   },
   "up42-order-panel-001": {
     "hash": "574807123f61728682392f10b950d551db2fa5d2ab960589b7b2a06f82fce06f",
@@ -7610,17 +7610,17 @@
     "change": "up42-scene-overlay"
   },
   "up42-scene-overlay-009": {
-    "hash": "4aa67b33b5930bdd556186585dec0d1b11ff2b94ad0ed14b01ace181261ca970",
+    "hash": "b5b32a360c176e9e59fafd144f152904dc6ce0eb369e96be4a658256d2d6f4ea",
     "since": "2026-11-08",
     "change": "up42-scene-overlay"
   },
   "up42-scene-overlay-010": {
-    "hash": "ebfce02f04887346f745fcc773d833bdf5c4b139987e45c8c6f4a5288883d446",
+    "hash": "c02c3a22b2840761699b2a788f5a4742aa2f0469db3b4cd99773c1b1553b94b9",
     "since": "2026-11-08",
     "change": "up42-scene-overlay"
   },
   "up42-scene-overlay-011": {
-    "hash": "dcb4538f3d59253d816f96269ad07bcdd6fb142bdb5ab8846ca0a14c9753ec02",
+    "hash": "af6e596a343cf4fac061411f341ea0aeeaca36803fed2b03bfe88aa653370711",
     "since": "2026-11-08",
     "change": "up42-scene-overlay"
   },
