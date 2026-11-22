@@ -345,7 +345,7 @@ Origin: spec-first
 #### Scenario: Register the layer with a stable token `osh-033`
 - **WHEN** the test reads the production layer registry
 - **THEN** it has an entry `{id:'osh-systems', token:'3', disposition:'enabled-only'}`
-- **AND** the registry has 41 entries, sorted by id
+- **AND** the registry has 48 entries, sorted by id
 
 #### Scenario: Read the three lists per refresh, and stay correct when the features or the locations are unavailable `osh-046`
 - **WHEN** the layer updates and the features getter or the locations getter throws
@@ -573,20 +573,17 @@ Origin: spec-first
 
 #### Scenario: Draw every entity on top of the terrain, at its own altitude `osh-061`
 - **WHEN** the layer draws a system entity, a feature entity, or the entity it re-adds for a selected system
-- **THEN** the entity's point carries `disableDepthTestDistance` equal to positive infinity
-- **AND** a label on that entity carries `disableDepthTestDistance` equal to positive infinity
-- **AND** the point and the label carry `heightReference` equal to `NONE`
+- **THEN** the point of the entity has `disableDepthTest` equal to positive infinity and the height mode `absolute`
+- **AND** a label on that entity is a screen-space entry with `horizonCull` equal to true
 - **AND** the entity's position keeps the altitude its record carries, so a record with `alt:100` sits 100 metres above the ellipsoid
 - **AND** the entity the layer moves for a fresh observation keeps that observation's altitude in the same way
 
-#### Scenario: Hide an entity beyond the horizon `osh-062`
-- **WHEN** the camera's `moveEnd` event fires, or a refresh draws the entities, or the poll moves the selected entity
-- **THEN** each system entity and each feature entity beyond the ellipsoid horizon from the camera has `show:false`
-- **AND** each entity inside the horizon has `show:true`
-- **AND** a later `moveEnd` from a camera that sees a hidden entity restores `show:true`
-- **AND** a refresh under a camera that has not moved hides a newly drawn entity beyond the horizon, before any `moveEnd`
-- **AND** a poll move that carries the selected entity beyond the horizon hides it, and a later move that brings it back shows it
-- **AND** the layer adds one `moveEnd` listener at `init()`, keeps it while the layer is off, and removes it at `destroy()`
+#### Scenario: Let the renderer hide the points beyond the horizon `osh-062`
+- **WHEN** a refresh draws the entities, or the poll moves the selected entity
+- **THEN** the layer makes its point set with `horizonCull` equal to true, and gives the set every entity, near and far
+- **AND** each label entry of an entity has `horizonCull` equal to true
+- **AND** a poll move to the far side moves the point and the label of the selected entity
+- **AND** a later poll move brings them back
 
 ### Requirement: Live observations
 The provider MUST relay the live observations of one datastream as server-sent events, from one upstream WebSocket for each datastream. The handshake MUST be a GET, and the provider MUST send no message frame to the server. The layer MUST update the detail of the selected system from the stream, and MUST poll a datastream whose stream is not open.
