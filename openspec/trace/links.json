@@ -9204,20 +9204,18 @@
     "src/voice/panel/observers.forkBackfill.test.mjs › [voice-panel-011] The progress metadata uses data fields in case 4"
   ],
   "voice-panel-030": [
-    "src/voice/panel/inactivity.test.mjs › [voice-panel-030] one clock; quiet arms default five minutes; busy blocks and quiescence rearms"
+    "src/voice/panel/inactivity.test.mjs › [voice-panel-030] one clock; quiet arms default five minutes; busy blocks and quiescence rearms",
+    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-030] the timer arms five minutes for a limit that is not a whole number from 0 to 60"
   ],
   "voice-panel-031": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-031] actual activity resets but silent unchanged snapshots do not"
-  ],
-  "voice-panel-032": [
-    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-032] the timer cancels when the activity stops being quiet, and it refuses a bad new limit",
-    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-032] the timer uses five minutes for a limit that is not a whole number from 0 to 60"
   ],
   "voice-panel-033": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-033] expiry rereads held, unknown and pending counts despite missing update"
   ],
   "voice-panel-034": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-034] pending siblings and held-before-connect forbid timer; stale callback cannot expire",
+    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-034] the timer cancels when the activity stops being quiet, and it refuses a bad new limit",
     "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-034] the timer stops at once for a signal that has aborted"
   ],
   "voice-panel-035": [
