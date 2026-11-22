@@ -235,7 +235,7 @@ test('[spec-trace-019] stops for a removed scenario that is not retired', () => 
   );
 });
 
-test('[spec-trace-055] counts a scenario that a modified requirement drops as removed, and no other scenario', () => {
+test('[spec-trace-055] counts only a scenario that a modified requirement drops as removed', () => {
   const two = [
     '## Requirements',
     '',

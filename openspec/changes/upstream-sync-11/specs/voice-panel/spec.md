@@ -21,7 +21,7 @@
 **Migration**: None.
 
 ### Requirement: Native activity notices
-**Reason**: Upstream renders the voice panel from a presenter and removed the test fixture of the old panel. The fork tests of this requirement used that fixture, and they fail against the merged code. This change retires the scenarios `voice-panel-070`.
+**Reason**: Upstream renders the voice panel from a presenter and removed the test fixture of the old panel. The fork tests of this requirement used that fixture, and they fail against the merged code. This change retires the scenario `voice-panel-070`.
 **Migration**: None.
 
 ## MODIFIED Requirements

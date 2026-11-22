@@ -18,6 +18,14 @@ import {
   validateKeySetupUpdates,
 } from './keySetupCore.mjs';
 
+// The build defines these four vue-i18n flags beside the credential names.
+const VUE_I18N_FLAGS = [
+  '__VUE_I18N_FULL_INSTALL__',
+  '__VUE_I18N_LEGACY_API__',
+  '__INTLIFY_PROD_DEVTOOLS__',
+  '__INTLIFY_DROP_MESSAGE_COMPILER__',
+];
+
 test('provider requirements name the registry env vars and next step', () => {
   assert.equal(
     keySetupRequirement('cesium-ion'),
@@ -777,7 +785,7 @@ test('[credential-boundary-005] the client-exposed registry names equal the name
   const defineNames = new Set(
     Object.keys(createBrowserViteConfig().define)
       // The build's own vue-i18n flags (`__VUE_I18N_*`) are not credentials.
-      .filter((key) => !key.startsWith('__'))
+      .filter((key) => !VUE_I18N_FLAGS.includes(key))
       .map((key) => key.replace('import.meta.env.', '')),
   );
   assert.deepEqual(clientExposed, defineNames);

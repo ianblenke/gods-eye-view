@@ -87,7 +87,7 @@ test('[reticulum-layer-017] registers the layer in the catalog, the source contr
   );
 });
 
-test('[reticulum-layer-018] puts the layer at the end of the Infrastructure group of the panel', () => {
+test('[reticulum-layer-018] puts the layer in the Infrastructure group of the panel, right after local-dams', () => {
   const text = readFileSync(
     fileURLToPath(new URL('../../ui/layerPanel.js', import.meta.url)),
     'utf8',

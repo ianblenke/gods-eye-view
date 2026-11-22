@@ -1,7 +1,7 @@
 ## Context
 
 Base commit: `872006a5`, the merge of pull request 29 of the fork.
-Upstream commits: `42559db10b6af9a9049fb78f24204cf036c4e807`, the head of `upstream/main` on 2026-11-19, and `7f2dc81cf69cbf1541ac4547bdef916ebec02e7c`, the head of 2026-11-20. The change has one merge for each commit. Upstream has later commits (head `918435ddc` on 2026-11-21), and sync 12 takes them.
+Upstream commits: `42559db10b6af9a9049fb78f24204cf036c4e807`, the head of `upstream/main` on 2026-11-19, and `7f2dc81cf69cbf1541ac4547bdef916ebec02e7c`, the head of 2026-11-20. The change has one merge for each commit. Upstream has later commits (head `918435ddc` on 2026-11-21), and sync 12 merges them.
 The shared ancestor is the commit `2bcdca1c9`, which sync 10 merged.
 
 The clone `upstream-sync-11` holds the merge. It uses the image `gods-eye-view:sync11`, which the lead built from the merged lock file. The fork image `gods-eye-view:local` stays as it is.
@@ -10,7 +10,7 @@ The clone `upstream-sync-11` holds the merge. It uses the image `gods-eye-view:s
 
 **Goals:**
 - Bring the upstream code into the fork with the fork layers, tokens and Docker files intact.
-- Keep the two ratchet tests of the renderer boundary green with empty allow-lists.
+- Keep the two boundary tests of the renderer green with empty allow-lists.
 - Keep every test file green, run one file at a time.
 
 **Non-Goals:**
@@ -19,9 +19,9 @@ The clone `upstream-sync-11` holds the merge. It uses the image `gods-eye-view:s
 
 ## Decisions
 
-### D1: Port the fork layers to the renderer ports
+### D1: Move the fork layers to the renderer ports
 
-Upstream gives no exception to the ratchet. The rule 18 of `AGENTS.md` forbids to make a gate weaker. The change ports the fork layers.
+Upstream gives no exception to the ratchet. Rule 18 of `AGENTS.md` says: do not make a gate weaker. The change moves the fork layers.
 
 - `gdacs`, `reticulum` and `beemaps` draw one point set with `drawOf(viewer).points(...)`.
 - `beemapsBursts` draws one shape set of rectangles.
@@ -41,7 +41,7 @@ The check `scripts/check-layer-state-tokens.mjs` compares the registry with the 
 - `beemaps` 5, `beemaps-bursts` 6 and `gdacs` 9.
 - `s2-ghostmaps` 03, `skywatch-scenes` 00, `planet-scenes` 01, `skyfi-scenes` 02 and `up42-scenes` 04.
 
-The seven new upstream layers get the next free tokens: `news` 05, `shipwrecks` 06, `rail` 07, `drone-airspace` 08, `sea-marks` 09, `ski-pistes` 0a and `wildlife-sightings` 0b. The next free token is 0c. The tests of the ledger use the one-character rows as the old ledger, and they remove `gdacs` where they need the last digit free.
+The seven new upstream layers get the next free tokens: `news` 05, `shipwrecks` 06, `rail` 07, `drone-airspace` 08, `sea-marks` 09, `ski-pistes` 0a and `wildlife-sightings` 0b. The next free token is 0c. The tests of the ledger take the rows with one character as the old ledger. Where a test needs the last digit free, it removes `gdacs`.
 
 ### D3: HUD
 
@@ -74,6 +74,8 @@ The change deletes the other fork backfill tests.
 The change retires 196 scenarios in eight capabilities. The delta specs list them. After the archive, the lead adds the IDs to `openspec/trace/retired-ids.json` and removes their empty links from `openspec/trace/links.json`.
 The scenario `coverage-gate-101` stays. The merge carries the child process of the fork into the new upstream version of `src/data/trafficTiming.test.mjs`.
 
+The change also writes again the text of nine scenarios. The new text says what the tests prove after the move. The scenarios are `osh-033`, `osh-061`, `osh-062`, `up42-scene-overlay-009`, `-010`, `-011`, `hud-markings-001`, `gdacs-layer-019` and `reticulum-layer-018`.
+
 The change also rewrites tests, and it keeps their scenarios:
 - The test of `osh-033` counts 48 layers.
 - The tests of `osh-061`, `osh-062` and `osh-073` read the draw set.
@@ -88,10 +90,11 @@ Upstream fragments in `changelog.d/` use the numbers 1431 to 1438 too. The chang
 
 ### D8: Gate changes
 
-Three changes of the gate scripts in `scripts/spec/` came from this sync. The owner approved the second change on 2026-11-20.
+Four changes of the gate scripts in `scripts/spec/` came from this sync.
 
 - Each test run of the gate loads the Vue loader of the project (`coverage-gate-102`). Upstream tests import single-file components.
-- The gate records the findings of upstream test files in `openspec/trace/upstream-test-findings.json` (`coverage-gate-103` to `coverage-gate-106`). The three findings are a live timer, a test that a helper registers and a test file with no tests. The finding of an owned file keeps its error. The findings command writes the record.
+- The main test run uses at most half of the processors (`coverage-gate-107`). Tests with a time limit meet less load.
+- The gate gives no error for three findings of an upstream test file when the record `openspec/trace/upstream-test-findings.json` lists them (`coverage-gate-103` to `coverage-gate-106`). The three findings are a live timer, a test that a helper registers and a test file with no tests. The finding of an owned file keeps its error. The findings command writes the record. The owner approved this change on 2026-11-20.
 - A scenario that a modified requirement drops needs no test while the change is active (`spec-trace-055`). The archive command removes that scenario.
 
-The change also repairs five upstream tests that failed in the gate and passed alone: `decode`, `placeSuggestions`, `radioPanel`, `gpuIcons` and `nominatimGuardLifecycle`, and one director test. Each limit now fits the load of the gate, and each test still fails for the fault that it names.
+The change also repairs upstream tests that failed in the gate and passed alone. They are `decode`, `placeSuggestions`, `radioPanel`, `gpuIcons`, `nominatimGuardLifecycle`, `commandDock`, `cctvPanel`, `surface` and one director test. Each limit now fits the load of the gate. Each test still fails for the fault that it names.

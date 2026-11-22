@@ -17,7 +17,7 @@ function geminiController() {
   return { controller, callbacks };
 }
 
-test('[voice-panel-040] a failing text callback leaves the native method result exact', () => {
+test('[voice-panel-040] a text callback that throws leaves the native method result exact', () => {
   const { controller } = geminiController();
   controller.sendTextCommand = () => 'sent';
   const observer = observeNativeActivity({
@@ -31,7 +31,7 @@ test('[voice-panel-040] a failing text callback leaves the native method result 
   observer.destroy();
 });
 
-test('[voice-panel-040] a signal that is already aborted destroys the observer at once', () => {
+test('[voice-panel-047] a signal that has aborted destroys the observer at once', () => {
   const { controller } = geminiController();
   const original = controller.input.setMicrophoneEnabled;
   const abort = new AbortController();
@@ -45,7 +45,7 @@ test('[voice-panel-040] a signal that is already aborted destroys the observer a
   observer.destroy();
 });
 
-test('[voice-panel-045] a native speech observer reads an event with no type, and the start and the stop of speech', () => {
+test('[voice-panel-036] a native speech observer reads an event with no type, and the events that start and stop speech', () => {
   const turns = { observeSpeech() {} };
   const controller = { _turns: turns, _input: { pushToTalkKeyHeld: false } };
   const observer = observeNativeActivity({ adapter: { controller }, nativeProvider: 'openai' });

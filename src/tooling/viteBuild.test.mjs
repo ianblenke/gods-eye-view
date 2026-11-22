@@ -16,6 +16,14 @@ import * as providers from '../../server/providers/local.js';
 import { apiNotFoundPlugin } from '../../server/standalone/api-not-found.js';
 import { makeFixtureRoot } from './fixtureRoot.mjs';
 
+// The build defines these four vue-i18n flags beside the credential names.
+const VUE_I18N_FLAGS = [
+  '__VUE_I18N_FULL_INSTALL__',
+  '__VUE_I18N_LEGACY_API__',
+  '__INTLIFY_PROD_DEVTOOLS__',
+  '__INTLIFY_DROP_MESSAGE_COMPILER__',
+];
+
 const nominatimStorageDir = await makeFixtureRoot('gev-build-composition-');
 test.after(() => rm(nominatimStorageDir, { recursive: true, force: true }));
 
@@ -107,7 +115,7 @@ test('[credential-boundary-003] explicit build inputs preserve browser-only defi
   );
   const emptyDefines = createBrowserViteConfig().define;
   assert.deepEqual(
-    Object.keys(emptyDefines).filter((key) => !key.startsWith('__')),
+    Object.keys(emptyDefines).filter((key) => !VUE_I18N_FLAGS.includes(key)),
     [
       'import.meta.env.GOOGLE_MAPS_API_KEY',
       'import.meta.env.CESIUM_ION_TOKEN',
@@ -116,7 +124,7 @@ test('[credential-boundary-003] explicit build inputs preserve browser-only defi
   );
   assert.deepEqual(
     Object.entries(emptyDefines)
-      .filter(([key]) => !key.startsWith('__'))
+      .filter(([key]) => !VUE_I18N_FLAGS.includes(key))
       .map(([, value]) => value),
     [undefined, undefined, undefined],
   );

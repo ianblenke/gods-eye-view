@@ -153,7 +153,7 @@ Origin: spec-first
 
 #### Scenario: Put the layer in the Infrastructure group `reticulum-layer-018`
 - **WHEN** a test reads the groups of the layer panel
-- **THEN** the group "Infrastructure" has the layer "reticulum" right after the layer "local-dams"
+- **THEN** the group "Infrastructure" ends with the layer "reticulum", after "local-dams"
 
 #### Scenario: Keep the layer out of voice `reticulum-layer-019`
 - **WHEN** a test reads the list `VOICE_OFF_LAYERS`

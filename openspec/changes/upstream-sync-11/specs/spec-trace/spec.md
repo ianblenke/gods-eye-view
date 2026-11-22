@@ -1,6 +1,6 @@
 ## ADDED Requirements
 
-### Requirement: Removal of a scenario by a modified requirement
+### Requirement: Scenario that a modified requirement drops
 The trace gate MUST NOT need a passing test for a scenario that a modified requirement of an active change drops. The archive command removes that scenario from the main spec.
 Origin: spec-first
 

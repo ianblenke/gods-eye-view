@@ -8,7 +8,7 @@ import { FINDINGS_FILE, readFindings, splitFindings, writeFindings } from '../..
 const manifest = { version: 1, owned: ['src/owned.test.mjs'] };
 const leak = (file) => ({ code: 'GATES-TEST-LEAK', file, message: 'leak' });
 
-test('[coverage-gate-103] excuses a recorded finding of an upstream file', () => {
+test('[coverage-gate-103] gives no error for a recorded finding of an upstream file', () => {
   const result = splitFindings({
     errors: [leak('src/up.test.mjs')],
     manifest,

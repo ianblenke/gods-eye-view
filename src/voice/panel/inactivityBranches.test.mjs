@@ -24,7 +24,7 @@ function clock() {
   };
 }
 
-test('[voice-panel-034] the timer takes five minutes for a limit that is not a whole number of minutes from 0 to 60', () => {
+test('[voice-panel-032] the timer uses five minutes for a limit that is not a whole number from 0 to 60', () => {
   for (const minutes of [-1, 61, 2.5, 'x']) {
     const timers = clock();
     const inactivity = createVoiceInactivity({ readActivity: () => QUIET, readPending: () => false, minutes, setTimer: timers.setTimer, clearTimer: timers.clearTimer, now: timers.now });
@@ -33,14 +33,14 @@ test('[voice-panel-034] the timer takes five minutes for a limit that is not a w
   }
 });
 
-test('[voice-panel-034] the timer stops at once for a signal that is already aborted', () => {
+test('[voice-panel-034] the timer stops at once for a signal that has aborted', () => {
   const abort = new AbortController();
   abort.abort();
   const inactivity = createVoiceInactivity({ readActivity: () => QUIET, readPending: () => false, signal: abort.signal });
   assert.equal(inactivity.snapshot().disposed, true);
 });
 
-test('[voice-panel-034] the timer cancels when the activity stops being quiet, and refuses a bad new limit', () => {
+test('[voice-panel-032] the timer cancels when the activity stops being quiet, and it refuses a bad new limit', () => {
   const timers = clock();
   let activity = QUIET;
   const inactivity = createVoiceInactivity({ readActivity: () => activity, readPending: () => false, setTimer: timers.setTimer, clearTimer: timers.clearTimer, now: timers.now });

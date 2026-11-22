@@ -5,7 +5,7 @@
 **Migration**: None.
 
 ### Requirement: Catalog request input
-**Reason**: Upstream moved the GhostMaps layer to the renderer ports. The fork tests of this requirement used the old Cesium objects, and they fail against the merged code. The merge takes the upstream tests of the layer. This change retires the scenarios `ghostmaps-068`.
+**Reason**: Upstream moved the GhostMaps layer to the renderer ports. The fork tests of this requirement used the old Cesium objects, and they fail against the merged code. The merge takes the upstream tests of the layer. This change retires the scenario `ghostmaps-068`.
 **Migration**: None.
 
 ## MODIFIED Requirements

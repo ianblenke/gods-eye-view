@@ -10,15 +10,14 @@ Origin: spec-first
 - **AND** a test run for a project with no such file has no `--import` option
 
 ### Requirement: Recorded findings of upstream test files
-The gate MUST excuse three findings for a test file that the ownership manifest does not list.
+The gate MUST give no error for one of three findings of an upstream test file. The record `openspec/trace/upstream-test-findings.json` must list the file with the code of the finding. The gate MUST NOT give such an exception for an owned file.
 - A live timer at the end of its test process (`GATES-TEST-LEAK`).
 - A test that a helper file registers (`TRACE-OUTSIDE-TEST-FILE`).
 - A test file that reports no tests (`TRACE-EMPTY-TEST-FILE`).
 
-The gate MUST excuse a finding only when the file `openspec/trace/upstream-test-findings.json` records the file and the finding. The gate MUST NOT excuse a finding for an owned file.
 Origin: spec-first
 
-#### Scenario: Excuse a recorded finding of an upstream file `coverage-gate-103`
+#### Scenario: Give no error for a recorded finding of an upstream file `coverage-gate-103`
 - **WHEN** a finding names an upstream file, and the record lists the file with the code of the finding
 - **THEN** the gate gives no error for the finding
 
@@ -31,11 +30,12 @@ Origin: spec-first
 - **WHEN** the record lists an owned file, or lists a code other than `GATES-TEST-LEAK` that the run did not find for the file
 - **THEN** the gate stops with the error `GATES-FINDING-OWNED` for the owned file
 - **AND** the gate stops with the error `GATES-FINDING-STALE` for the code that the run did not find
+- **AND** the gate gives no stale error for `GATES-TEST-LEAK`, because a live timer depends on the timing of the run
 
 #### Scenario: Write the record with the findings command `coverage-gate-106`
-- **WHEN** the findings command runs, and the run has no other error
-- **THEN** the command writes the record with each finding of an upstream file, sorted by file and by code
-- **AND** the command stops for any other error and does not write the record
+- **WHEN** the findings command runs
+- **THEN** the command stops for each error except `GATES-FINDING-STALE`, `QA-HEADER` and the findings of upstream files that it records
+- **AND** when no other error remains, the command writes the record with each finding of an upstream file, sorted by file and by code
 
 ### Requirement: Limit of parallel test processes
 The main test run of the gate MUST use at most half of the processors at the same time, and at least two. Then a test with a time limit meets less load from the other tests.

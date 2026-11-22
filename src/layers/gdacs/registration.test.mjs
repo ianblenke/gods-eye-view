@@ -95,7 +95,7 @@ test('[gdacs-layer-018] registers the layer in the catalog, the source contract,
   );
 });
 
-test('[gdacs-layer-019] puts the layer at the end of the Events group of the panel', () => {
+test('[gdacs-layer-019] puts the layer in the Events group of the panel, right after s2-ghostmaps', () => {
   const text = readFileSync(
     fileURLToPath(new URL('../../ui/layerPanel.js', import.meta.url)),
     'utf8',

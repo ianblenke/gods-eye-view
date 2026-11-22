@@ -442,7 +442,7 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
       "[gap-ledger-079] records a coverage waiver, allows the rise in the ratchet command and passes the check",
       "[gap-ledger-080] stops the waive command for a fault in its options",
       "[coverage-gate-049] stops for a test that leaves a live timer",
-      "[coverage-gate-103] excuses a recorded leak of an upstream test file",
+      "[coverage-gate-103] gives no error for a recorded leak of an upstream test file",
       "[coverage-gate-104] stops for an owned file with a recorded leak and for a leak with no record",
       "[coverage-gate-105] stops for a record that lists a finding the run did not find",
       "[coverage-gate-106] writes the record of upstream findings with the findings command",

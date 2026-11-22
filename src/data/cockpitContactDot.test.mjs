@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { cockpitContactDotImage } from './cockpitContactDot.js';
 
-test('[cockpit-contact-dot-001] the contact dot is drawn once and every later call gives the same data URL', () => {
+test('[cockpit-contact-dot-001] the cockpit draws the contact dot once, and every later call gives the same data URL', () => {
   const calls = [];
   const context = new Proxy({}, { get: (_, key) => (...args) => calls.push([key, args]), set: () => true });
   const original = globalThis.document;

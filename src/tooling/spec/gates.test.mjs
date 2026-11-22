@@ -1046,7 +1046,7 @@ const LEAK_STUB = (root) => (command, args, options) => {
 const RECORD = 'openspec/trace/upstream-test-findings.json';
 const record = (files) => `${JSON.stringify({ version: 1, files })}\n`;
 
-test('[coverage-gate-103] excuses a recorded leak of an upstream test file', GUARDED_RUN, () => {
+test('[coverage-gate-103] gives no error for a recorded leak of an upstream test file', GUARDED_RUN, () => {
   withFixture(
     (root) => {
       passes(root, ['init']);

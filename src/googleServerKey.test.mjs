@@ -9,6 +9,14 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { loadApiKey } from '../tools/streetview-headings.mjs';
 
+// The build defines these four vue-i18n flags beside the credential names.
+const VUE_I18N_FLAGS = [
+  '__VUE_I18N_FULL_INSTALL__',
+  '__VUE_I18N_LEGACY_API__',
+  '__INTLIFY_PROD_DEVTOOLS__',
+  '__INTLIFY_DROP_MESSAGE_COMPILER__',
+];
+
 /** Run fn with the two Google key env vars set to the given values, then restore. */
 function withKeys({ server, browser }, fn) {
   const previous = {
@@ -214,7 +222,7 @@ test('[credential-boundary-003] lists three public names and no server key in th
     );
     // The build's own vue-i18n flags (`__VUE_I18N_*`) are not credentials.
     assert.deepEqual(
-      Object.keys(defines).filter((key) => !key.startsWith('__')),
+      Object.keys(defines).filter((key) => !VUE_I18N_FLAGS.includes(key)),
       [
         'import.meta.env.GOOGLE_MAPS_API_KEY',
         'import.meta.env.CESIUM_ION_TOKEN',
