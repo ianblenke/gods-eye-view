@@ -1586,6 +1586,9 @@
     "src/tooling/spec/gates.test.mjs › [coverage-gate-106] writes the record of upstream findings with the findings command",
     "src/tooling/spec/upstreamFindings.test.mjs › [coverage-gate-106] reads no record when the file is absent and writes a sorted record"
   ],
+  "coverage-gate-107": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-107] runs at most half of the processors of the machine at the same time, and at least two"
+  ],
   "credential-boundary-001": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] a fixture build has only the four allowed sentinels",
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] every secret sentinel stays out of the built output, by name"

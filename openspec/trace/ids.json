@@ -1454,6 +1454,11 @@
     "since": "2026-11-22",
     "change": "upstream-sync-11"
   },
+  "coverage-gate-107": {
+    "hash": "bda5fe420b1ad60b5af1a5bb38a87b27b9646a0fa0ad1b7e1ca6f87e94af79dd",
+    "since": "2026-11-22",
+    "change": "upstream-sync-11"
+  },
   "credential-boundary-001": {
     "hash": "85a103eb9d7ba249fb78bf1b422b413ad69259efa0985971941c2ef466b6a623",
     "since": "2026-09-23",

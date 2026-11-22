@@ -2359,7 +2359,7 @@
     "server/providers/vessels/ais-store.js": {
       "loaded": true,
       "lines": 11,
-      "branches": 23,
+      "branches": 22,
       "functions": 1,
       "totals": {
         "lines": 418,
@@ -3293,7 +3293,7 @@
       "functions": 3,
       "totals": {
         "lines": 219,
-        "branches": 73,
+        "branches": 64,
         "functions": 12
       },
       "sha": "5bc47f045ff191d579e0ca02d53150c0530e69a8f9bee020b3ee4fe2b692a9e3",
@@ -7583,7 +7583,7 @@
       "functions": 1,
       "totals": {
         "lines": 429,
-        "branches": 115,
+        "branches": 123,
         "functions": 28
       },
       "sha": "803e7065c5abe1e3bbeb3a8c79602b4481e9fa89b4ae74dd9c56d44a57789e96",
@@ -7943,7 +7943,7 @@
       "functions": 3,
       "totals": {
         "lines": 514,
-        "branches": 88,
+        "branches": 87,
         "functions": 28
       },
       "sha": "5587832be2452a06feaf7ade05d039c27fc062fdefb8658727da4054d8384097",
@@ -8918,7 +8918,7 @@
       "functions": 0,
       "totals": {
         "lines": 574,
-        "branches": 151,
+        "branches": 146,
         "functions": 23
       },
       "sha": "91e501522a0946194cd525d8364f22175c75b1e1126fc19e86261197b03be447",
@@ -8933,7 +8933,7 @@
       "functions": 3,
       "totals": {
         "lines": 1107,
-        "branches": 287,
+        "branches": 290,
         "functions": 65
       },
       "sha": "10205fc07340faff446114ed2aea3b4aed70d0703844ba907d18da854b4523ec",
@@ -11408,7 +11408,7 @@
       "functions": 0,
       "totals": {
         "lines": 820,
-        "branches": 332,
+        "branches": 331,
         "functions": 55
       },
       "sha": "eef2f9badb280ae6a4cb6170873519663ae6e9619a88e21bbd7ba443254da4b4",
@@ -11693,7 +11693,7 @@
       "functions": 7,
       "totals": {
         "lines": 1028,
-        "branches": 242,
+        "branches": 241,
         "functions": 41
       },
       "sha": "08fca9209538315e0ee75782beaf2caeb3e52456f597077586f240bd07d95512",
@@ -16388,7 +16388,7 @@
       "functions": 2,
       "totals": {
         "lines": 187,
-        "branches": 28,
+        "branches": 30,
         "functions": 9
       },
       "sha": "598a66d7bf13867384ffbe907b6b8c58ecbb753017ffa66c0237554191634ed0",
