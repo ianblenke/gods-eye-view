@@ -1450,7 +1450,7 @@
     "change": "upstream-sync-11"
   },
   "coverage-gate-105": {
-    "hash": "1fb2ffeb7a0198f0cc40e3a8284abbb7cf52574ddbd222127a0b2feb97feb0fb",
+    "hash": "08667724b2582d4020998a85aeb04f1670fde10e88e84aac4a706316c0d8a0d3",
     "since": "2026-11-22",
     "change": "upstream-sync-11"
   },
@@ -1475,7 +1475,7 @@
     "change": "credential-boundary"
   },
   "credential-boundary-003": {
-    "hash": "f45d293c30403b1624f10f3d5198d6e6bde86f0490340002005f5f9709fbac6c",
+    "hash": "715624b72f3ac6235771a562639c5a3a8e46a4096277c85c058d5a86f48c7a77",
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
@@ -1485,12 +1485,12 @@
     "change": "credential-boundary"
   },
   "credential-boundary-005": {
-    "hash": "9c4691e97769510ed8024dd44b51652dbf54fbb436620b75e9a396e271d16e95",
+    "hash": "9b60193caa776494e053609ef12b35ccae3a1fbefaef1b7ad1074c2e7ead0c59",
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
   "credential-boundary-006": {
-    "hash": "217f14dc20cf3a6685406b61ac624d7933492ecefa8bc60f0f263afd92f6177b",
+    "hash": "3741ec7b68aba5bf2df5f7f9f80a5e3df373c7c9dbff0f4c40a1d2e0224e96cd",
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
@@ -3855,7 +3855,7 @@
     "change": "osh-marker-depth"
   },
   "osh-062": {
-    "hash": "dc85bd6726a11e9457de8a89f1eb21ff9cd7ff4e39256561e7716e449114a22e",
+    "hash": "3dc22a6c8ddfa15233fb854084c68945d369243ff683b2307afc962d1c261ccd",
     "since": "2026-09-20",
     "change": "osh-marker-depth"
   },

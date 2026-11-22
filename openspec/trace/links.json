@@ -5088,9 +5088,9 @@
     "src/data/oshLayer.test.mjs › [osh-061] a feature entity keeps its own altitude",
     "src/data/oshLayer.test.mjs › [osh-061] a moved entity keeps the observation's altitude",
     "src/data/oshLayer.test.mjs › [osh-061] a system placed from a fresh location keeps its altitude",
-    "src/data/oshLayer.test.mjs › [osh-061] the feature entity's point and label draw on top, with the height reference NONE",
+    "src/data/oshLayer.test.mjs › [osh-061] the feature entity's point and label draw on top, with the height mode absolute",
     "src/data/oshLayer.test.mjs › [osh-061] the re-added entity for a selected system draws on top, on its point and its label",
-    "src/data/oshLayer.test.mjs › [osh-061] the system entity's point and label draw on top, with the height reference NONE"
+    "src/data/oshLayer.test.mjs › [osh-061] the system entity's point and label draw on top, with the height mode absolute"
   ],
   "osh-062": [
     "src/data/oshLayer.test.mjs › [osh-062] a poll move carries the selected point and its label, and a later move carries them back",
@@ -9346,20 +9346,19 @@
   "voice-panel-028": [],
   "voice-panel-029": [],
   "voice-panel-030": [
-    "src/voice/panel/inactivity.test.mjs › [voice-panel-030] one clock; quiet arms default five minutes; busy blocks and quiescence rearms"
+    "src/voice/panel/inactivity.test.mjs › [voice-panel-030] one clock; quiet arms default five minutes; busy blocks and quiescence rearms",
+    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-030] the timer arms five minutes for a limit that is not a whole number from 0 to 60"
   ],
   "voice-panel-031": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-031] actual activity resets but silent unchanged snapshots do not"
   ],
-  "voice-panel-032": [
-    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-032] the timer cancels when the activity stops being quiet, and it refuses a bad new limit",
-    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-032] the timer uses five minutes for a limit that is not a whole number from 0 to 60"
-  ],
+  "voice-panel-032": [],
   "voice-panel-033": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-033] expiry rereads held, unknown and pending counts despite missing update"
   ],
   "voice-panel-034": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-034] pending siblings and held-before-connect forbid timer; stale callback cannot expire",
+    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-034] the timer cancels when the activity stops being quiet, and it refuses a new limit that is not valid",
     "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-034] the timer stops at once for a signal that has aborted"
   ],
   "voice-panel-035": [
