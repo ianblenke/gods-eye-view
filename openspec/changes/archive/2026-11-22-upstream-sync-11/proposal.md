@@ -18,7 +18,7 @@ Upstream added a renderer port. Code outside `src/render/cesium/` can no longer 
 - Add the 21 fork texts to the nine new locales. Decision D5 gives the limit.
 - Retire 196 scenarios and change two. Decision D6 lists them.
 - Change the gate scripts in three ways. Decision D8 gives the changes.
-- Add the backfill scenarios `submarine-cables-001` and `cockpit-contact-dot-001` for two upstream files.
+- Add the backfill scenarios `cable-bundled-source-001` and `cockpit-contact-dot-001` for two upstream files.
 - Run the adopt command for each upstream file that the merge brings and that has a coverage gap.
 
 ## Capabilities

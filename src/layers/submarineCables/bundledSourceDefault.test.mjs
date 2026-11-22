@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createBundledCableSource } from './bundledSource.js';
 
-test('[submarine-cables-001] the bundled source reads both files with the global fetch when it is given none', async (t) => {
+test('[cable-bundled-source-001] the bundled source reads both files with the global fetch when it is given none', async (t) => {
   const urls = [];
   t.mock.method(globalThis, 'fetch', async (url) => {
     urls.push(String(url));
