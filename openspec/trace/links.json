@@ -938,6 +938,9 @@
     "src/data/beemapsCredits.test.mjs › [beemaps-source-035] starts at 0 for another date or no file and starts again when the date changes",
     "src/data/beemapsCredits.test.mjs › [beemaps-source-035] writes the credit file for one addition at a time, and the last addition gives the final text"
   ],
+  "cable-bundled-source-001": [
+    "src/layers/submarineCables/bundledSourceDefault.test.mjs › [cable-bundled-source-001] the bundled source reads both files with the global fetch when it is given none"
+  ],
   "change-review-001": [
     "src/tooling/spec/review.test.mjs › [change-review-001] does not stop for a passed review with all the fields, the closed findings and the agent outputs"
   ],
@@ -7801,9 +7804,6 @@
   ],
   "ste-lint-045": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-045] gives a clear error for invalid registry JSON"
-  ],
-  "submarine-cables-001": [
-    "src/layers/submarineCables/bundledSourceDefault.test.mjs › [submarine-cables-001] the bundled source reads both files with the global fetch when it is given none"
   ],
   "up42-order-panel-001": [
     "src/layers/up42Scenes/orderSource.test.mjs › [up42-order-panel-001 up42-order-panel-002 up42-order-panel-003] stops each order call after 60 seconds with no repeat",
