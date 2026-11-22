@@ -38,7 +38,7 @@ Origin: spec-first
 - **AND** the command stops for any other error and does not write the record
 
 ### Requirement: Limit of parallel test processes
-The gate MUST run at most half of the processors of the machine at the same time in its main test run, and at least two. Then a test with a time limit meets less load from the other tests.
+The main test run of the gate MUST use at most half of the processors at the same time, and at least two. Then a test with a time limit meets less load from the other tests.
 Origin: spec-first
 
 #### Scenario: Run half of the processors `coverage-gate-107`
