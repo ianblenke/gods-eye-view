@@ -21,7 +21,8 @@
 - [x] 1.19 Add the Vue loader to each test run of the gate: coverage-gate-102.
 - [x] 1.20 Stop the trace gate from needing a test for a scenario that a modified requirement drops: spec-trace-055.
 - [x] 1.21 Write the backfill scenarios for two upstream files: submarine-cables-001 and cockpit-contact-dot-001.
-- [ ] 1.22 Record the findings of upstream test files: coverage-gate-103, coverage-gate-104, coverage-gate-105 and coverage-gate-106.
+- [x] 1.22 Limit the parallel test processes of the gate to half of the processors: coverage-gate-107.
+- [ ] 1.23 Record the findings of upstream test files: coverage-gate-103, coverage-gate-104, coverage-gate-105 and coverage-gate-106.
 
 ## 2. Host evidence
 

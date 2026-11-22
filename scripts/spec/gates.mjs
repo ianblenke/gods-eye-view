@@ -5,7 +5,7 @@ import { changedInputs, trustMeasurement, writeMeasurement } from './lib/measure
 import { importReach, adoptableReached } from './lib/import-reach.mjs';
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { availableParallelism, tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { ALLOCATION_TEST_FILES } from '../run-unit-tests.mjs';
@@ -102,7 +102,7 @@ export function loaderImports(root) {
 }
 
 /** Make the node:test runs for the gates. */
-export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FILES, outDir, coverageDir, imports = [] }) {
+export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FILES, outDir, coverageDir, imports = [], parallelism = availableParallelism() }) {
   const importFlags = imports.map((file) => `--import=${file}`);
   const allocation = new Set(allocationFiles);
   const main = testFiles.filter((file) => !allocation.has(file));
@@ -117,6 +117,7 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
       args: [
         ...importFlags,
         '--test',
+        `--test-concurrency=${Math.max(2, Math.floor(parallelism / 2))}`,
         '--experimental-test-coverage',
         '--test-force-exit',
         '--test-coverage-exclude=**/*.test.mjs',

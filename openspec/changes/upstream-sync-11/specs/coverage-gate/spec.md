@@ -36,3 +36,11 @@ Origin: spec-first
 - **WHEN** the findings command runs, and the run has no other error
 - **THEN** the command writes the record with each finding of an upstream file, sorted by file and by code
 - **AND** the command stops for any other error and does not write the record
+
+### Requirement: Limit of parallel test processes
+The gate MUST run at most half of the processors of the machine at the same time in its main test run, and at least two. Then a test with a time limit meets less load from the other tests.
+Origin: spec-first
+
+#### Scenario: Run half of the processors `coverage-gate-107`
+- **WHEN** the gate builds the main test run
+- **THEN** the run has the option `--test-concurrency` with half of the processors, rounded down, and at least 2

@@ -106,7 +106,8 @@ function reviewFor(root, change, folder = `openspec/changes/${change}`) {
 
 test('[coverage-gate-003] runs each tracked test file with coverage and the trace reporter', GUARDED_RUN, () => {
   const [main] = buildTestRuns({ testFiles: ['src/a.test.mjs', 'tools/b.test.mjs'], allocationFiles: [], outDir: '/out' });
-  assert.deepEqual(main.args.slice(0, 2), ['--test', '--experimental-test-coverage']);
+  assert.equal(main.args[0], '--test');
+  assert.ok(main.args.includes('--experimental-test-coverage'));
   assert.ok(main.args.includes('--test-reporter-destination=/out/lcov.info'));
   assert.deepEqual([main.output, main.rawOutput, main.args.slice(-2)], ['/out/tests-main.jsonl.sync', '/out/tests-main.jsonl', ['src/a.test.mjs', 'tools/b.test.mjs']]);
   assert.deepEqual(buildTestRuns({ testFiles: [], allocationFiles: [], outDir: '/out' }), []);
@@ -123,7 +124,8 @@ test('[coverage-gate-003] runs each tracked test file with coverage and the trac
 test('[coverage-gate-102] loads the Vue loader in each test run when the project has one', () => {
   const imports = ['./build/registerVue.js'];
   const runs = buildTestRuns({ testFiles: ['src/a.test.mjs', 'src/alloc.test.mjs'], allocationFiles: ['src/alloc.test.mjs'], outDir: '/out', imports });
-  assert.deepEqual(runs[0].args.slice(0, 2), ['--import=./build/registerVue.js', '--test']);
+  assert.equal(runs[0].args[0], '--import=./build/registerVue.js');
+  assert.equal(runs[0].args[1], '--test');
   assert.deepEqual(runs[1].args.slice(0, 3), ['--import=./build/registerVue.js', '--expose-gc', '--test']);
   const project = mkdtempSync(path.join(tmpdir(), 'gev-loader-'));
   assert.deepEqual(loaderImports(project), []);
@@ -133,6 +135,14 @@ test('[coverage-gate-102] loads the Vue loader in each test run when the project
   rmSync(project, { recursive: true, force: true });
   const plain = buildTestRuns({ testFiles: ['src/a.test.mjs'], allocationFiles: [], outDir: '/out' });
   assert.equal(plain[0].args.some((arg) => arg.startsWith('--import=')), false);
+});
+
+test('[coverage-gate-107] runs at most half of the processors of the machine at the same time, and at least two', () => {
+  const concurrency = (parallelism) => buildTestRuns({ testFiles: ['src/a.test.mjs'], allocationFiles: [], outDir: '/out', parallelism })[0].args.find((arg) => arg.startsWith('--test-concurrency='));
+  assert.equal(concurrency(16), '--test-concurrency=8');
+  assert.equal(concurrency(5), '--test-concurrency=2');
+  assert.equal(concurrency(1), '--test-concurrency=2');
+  assert.match(concurrency(undefined), /^--test-concurrency=\d+$/);
 });
 
 test('[coverage-gate-007] runs the allocation tests alone with --expose-gc and no coverage', GUARDED_RUN, () => {
