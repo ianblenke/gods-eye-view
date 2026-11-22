@@ -3,7 +3,6 @@
 ## Purpose
 Describe how the proxy reads the GhostMaps repository on GitHub, and how the layer shows the KMZ products of that repository on the globe.
 ## Requirements
-
 ### Requirement: Catalog data
 
 The catalog MUST select current product files from valid repository entries.
@@ -180,43 +179,6 @@ Origin: backfill
 - **WHEN** KML data exceeds a feature or position limit
 - **THEN** the reader sets the over flag and stops before it adds the excess feature
 
-### Requirement: Browser layer
-
-The browser layer MUST own product data, selection cards and local resources.
-
-Origin: backfill
-
-#### Scenario: Own image URLs `ghostmaps-029`
-
-- **WHEN** the KML reader or entity constructor stops after image allocation
-- **THEN** the layer revokes each allocated image URL
-
-#### Scenario: Draw product geometry `ghostmaps-030`
-
-- **WHEN** a product contains supported geometry
-- **THEN** the layer creates entities at the point, line, polygon and hole coordinates
-
-#### Scenario: Store product choice `ghostmaps-031`
-
-- **WHEN** the person changes a product chip
-- **THEN** the layer stores the selected product ids
-
-#### Scenario: Sync product data `ghostmaps-032`
-
-- **WHEN** a catalog of active products changes a product version or removes a product
-- **THEN** the layer requests each product whose version changes by its id and new version before it replaces that data source
-- **AND** the layer removes an absent product
-
-#### Scenario: Select report cards `ghostmaps-033`
-
-- **WHEN** the person selects a loaded marker
-- **THEN** the layer publishes a card with the report fields
-
-#### Scenario: Report layer state `ghostmaps-034`
-
-- **WHEN** the layer receives catalog or stream data
-- **THEN** the layer reports product chips, totals and connection state
-
 ### Requirement: Application factory
 
 The application factory MUST supply the standard layer hosts and accept caller options.
@@ -269,31 +231,6 @@ Origin: backfill
 - **WHEN** a file response returns an HTTP error
 - **THEN** the source rejects the response with an error
 
-#### Scenario: Reject an absent catalog source `ghostmaps-043`
-
-- **WHEN** the caller supplies no catalog method
-- **THEN** the layer constructor rejects the source
-
-#### Scenario: Guard catalog updates `ghostmaps-044`
-
-- **WHEN** an absent viewer, absent catalog or cancellation prevents the layer from an update
-- **THEN** the layer does not mount new product data
-
-#### Scenario: Read stored product choice `ghostmaps-045`
-
-- **WHEN** the layer reads a stored choice or receives invalid storage data
-- **THEN** the layer uses the stored ids or the default selection
-
-#### Scenario: Guard card input `ghostmaps-046`
-
-- **WHEN** a card host, viewer or valid feature is absent
-- **THEN** the layer does not publish a new card
-
-#### Scenario: Keep a plain card `ghostmaps-047`
-
-- **WHEN** a selected feature lacks a source link or an external host
-- **THEN** the layer publishes a card without an activation callback
-
 #### Scenario: Report check errors `ghostmaps-048`
 
 - **WHEN** a branch or tree check fails
@@ -303,11 +240,6 @@ Origin: backfill
 
 - **WHEN** the watcher reads optional commit metadata
 - **THEN** the catalog holds the first message line or an empty value, and gives the parsed date or null
-
-#### Scenario: Cull local point pins `ghostmaps-050`
-
-- **WHEN** the layer loads a product with a camera position, or a frame follows a camera change
-- **THEN** the layer hides far pins and shows near pins
 
 #### Scenario: Reject absent KML data `ghostmaps-051`
 
@@ -324,21 +256,6 @@ Origin: backfill
 - **WHEN** the event source is absent
 - **THEN** the source reports a closed stream
 
-#### Scenario: Close a selected card `ghostmaps-054`
-
-- **WHEN** a person selects empty ground, selects an invalid marker or deactivates the selected product
-- **THEN** the layer clears the selected card
-
-#### Scenario: Keep the current card `ghostmaps-055`
-
-- **WHEN** the pointer or another layer owns the input, or the person activates another product
-- **THEN** the layer keeps the current card
-
-#### Scenario: Open the first source link `ghostmaps-056`
-
-- **WHEN** a selected report supplies source links and an external host
-- **THEN** the card opens the first source link on activation
-
 #### Scenario: Reject invalid disk data `ghostmaps-057`
 
 - **WHEN** the disk catalog contains an invalid commit or products value
@@ -348,21 +265,6 @@ Origin: backfill
 
 - **WHEN** the API marks a tree as truncated
 - **THEN** the watcher records a warning and accepts the tree
-
-#### Scenario: Report layer errors `ghostmaps-059`
-
-- **WHEN** a file or catalog method fails
-- **THEN** the layer reports the error text
-
-#### Scenario: Keep image URLs until removal `ghostmaps-060`
-
-- **WHEN** the layer loads a product with packed images and then disables the product
-- **THEN** the layer keeps the images until it removes that product
-
-#### Scenario: Report invalid KML files `ghostmaps-061`
-
-- **WHEN** a KMZ contains no KML document
-- **THEN** the layer reports a file error without a data source
 
 #### Scenario: Read an absent edition name `ghostmaps-062`
 
@@ -379,11 +281,6 @@ Origin: backfill
 - **WHEN** the event route already holds 64 subscribers
 - **THEN** the proxy rejects the new subscriber with HTTP 429 without a subscription or heartbeat timer
 
-#### Scenario: Keep one input handler `ghostmaps-065`
-
-- **WHEN** the layer receives repeated enable calls
-- **THEN** the layer keeps one input handler
-
 #### Scenario: Read absent refs `ghostmaps-066`
 
 - **WHEN** the branch advertisement is absent
@@ -394,13 +291,3 @@ Origin: backfill
 - **WHEN** an event client subscribes before the first check completes
 - **THEN** the proxy sends the current catalog before that check completes
 
-### Requirement: Catalog request input
-
-The browser layer MUST set a supplied caller signal on the catalog request options object itself.
-
-Origin: backfill
-
-#### Scenario: Pass a caller signal `ghostmaps-068`
-
-- **WHEN** a caller supplies a signal for a catalog update
-- **THEN** the layer sets that signal on the request options object itself

@@ -2,7 +2,6 @@
 
 ## Purpose
 Link each test to the spec scenarios that it tests. Stop the build for a test or a scenario without a correct link.
-
 ## Requirements
 ### Requirement: Scenario IDs
 Each scenario in a spec MUST have one stable ID at the end of its heading. The ID format is `<capability>-<NNN>`. `<capability>` is the name of the spec folder and `<NNN>` is three digits.
@@ -299,4 +298,14 @@ Origin: spec-first
 - **AND** `openspec/specs/` still has that requirement with one or more scenarios
 - **THEN** the trace gate does not stop the build for a scenario of that requirement with no test
 - **AND** the gate counts that scenario with the scenarios that wait for a test
+
+### Requirement: Removal of a scenario by a modified requirement
+The trace gate MUST NOT need a passing test for a scenario that a modified requirement of an active change drops. The archive command removes that scenario from the main spec.
+Origin: spec-first
+
+#### Scenario: Do not stop for a scenario that a modified requirement drops `spec-trace-055`
+- **WHEN** the delta spec of an active change has a modified requirement
+- **AND** `openspec/specs/` has a scenario of that requirement that the delta spec does not list
+- **THEN** the trace gate does not stop the build for that scenario when it has no test
+- **AND** the gate still needs a test for each scenario that the delta spec lists
 
