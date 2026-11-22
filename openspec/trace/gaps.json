@@ -7973,7 +7973,7 @@
       "functions": 1,
       "totals": {
         "lines": 429,
-        "branches": 123,
+        "branches": 115,
         "functions": 28
       },
       "sha": "803e7065c5abe1e3bbeb3a8c79602b4481e9fa89b4ae74dd9c56d44a57789e96",
@@ -9338,7 +9338,7 @@
       "functions": 3,
       "totals": {
         "lines": 1107,
-        "branches": 287,
+        "branches": 290,
         "functions": 65
       },
       "sha": "10205fc07340faff446114ed2aea3b4aed70d0703844ba907d18da854b4523ec",
@@ -10548,8 +10548,8 @@
     },
     "src/layers/traffic/animation.js": {
       "loaded": true,
-      "lines": 27,
-      "branches": 31,
+      "lines": 24,
+      "branches": 29,
       "functions": 0,
       "totals": {
         "lines": 373,
@@ -11843,7 +11843,7 @@
       "functions": 0,
       "totals": {
         "lines": 820,
-        "branches": 332,
+        "branches": 331,
         "functions": 55
       },
       "sha": "eef2f9badb280ae6a4cb6170873519663ae6e9619a88e21bbd7ba443254da4b4",
@@ -18323,7 +18323,7 @@
       "functions": 1,
       "totals": {
         "lines": 192,
-        "branches": 57,
+        "branches": 56,
         "functions": 16
       },
       "sha": "43f4e36f1d9ce4e4337e178b05538ac35404847fe3db26367df46be8e20180ee",
@@ -28569,6 +28569,19 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
+    "src/layers/flights/feedLatency.test.mjs": {
+      "names": {
+        "flights: a feed 90 s late every 30 s is drawn about two minutes behind, every contact between real reports, with no jump or stall": 1,
+        "flights: a fresh fallback feed for four polls and reports that do not move on: no jump, no stall, no kink": 1,
+        "flights: a fresh feed is drawn a poll and a few seconds behind, never under the 30 s floor": 1,
+        "flights: a two-minute outage on a straight leg: contacts coast on at their speed and carry on along their reports": 1,
+        "flights: an outage through a turn no report showed: off by more than 5 km it jumps once onto its reports, as a break; nothing else jumps": 1,
+        "flights: following the world clock, contacts draw at the world's time and deliveries leave the delay alone": 1,
+        "flights: reports that give a speed of 0 still draw the tracked aircraft along its path, with no jump or stall": 1
+      },
+      "origin": "upstream-sync-11",
+      "since": "2026-11-22"
+    },
     "src/layers/flights/icons.test.mjs": {
       "names": {
         "a contact that comes back dimmed re-arms the idle focus pass": 1,
@@ -29299,6 +29312,19 @@
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
+    },
+    "src/layers/military/feedLatency.test.mjs": {
+      "names": {
+        "military: a feed 90 s late every 30 s is drawn about two minutes behind, every contact between real reports, with no jump or stall": 1,
+        "military: a fresh fallback feed for four polls and reports that do not move on: no jump, no stall, no kink": 1,
+        "military: a fresh feed is drawn a poll and a few seconds behind, never under the 15 s floor": 1,
+        "military: a two-minute outage on a straight leg: contacts coast on at their speed and carry on along their reports": 1,
+        "military: an outage through a turn no report showed: off by more than 5 km it jumps once onto its reports, as a break; nothing else jumps": 1,
+        "military: following the world clock, contacts draw at the world's time and deliveries leave the delay alone": 1,
+        "military: reports that give a speed of 0 still draw the tracked aircraft along its path, with no jump or stall": 1
+      },
+      "origin": "upstream-sync-11",
+      "since": "2026-11-22"
     },
     "src/layers/military/ingestion.test.mjs": {
       "names": {
