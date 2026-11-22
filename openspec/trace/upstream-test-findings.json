@@ -339,6 +339,9 @@
     ],
     "src/voice/voiceControlView.test.mjs": [
       "GATES-TEST-LEAK"
+    ],
+    "src/data/tr3bRegistry.test.mjs": [
+      "GATES-TEST-LEAK"
     ]
   }
 }
