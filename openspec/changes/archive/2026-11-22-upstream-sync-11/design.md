@@ -31,7 +31,7 @@ Upstream gives no exception to the ratchet. Rule 18 of `AGENTS.md` says: do not 
 
 The tests use `bindFakeCesiumCamera` and fake draw, query and input ports. The test viewer `src/testSupport/sceneViewer.mjs` serves the three scene layers.
 
-The change adds the new imports of the ported layers to the packages `reticulum`, `beemaps`, `beemaps-bursts` and `osh-layer` in `scripts/package-boundaries.json`.
+The change adds the new imports of the moved layers to the packages `reticulum`, `beemaps`, `beemaps-bursts` and `osh-layer` in `scripts/package-boundaries.json`.
 
 ### D2: Share tokens
 
