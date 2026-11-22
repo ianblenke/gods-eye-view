@@ -751,21 +751,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "scripts/shot-sink.mjs": {
-      "loaded": false,
-      "lines": 43,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 43,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "cbcbc004b32f295b64dfac0b89267a2fe4b21655f34a6273271b369957998d42",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "scripts/spec/lib/test-guard.mjs": {
       "loaded": true,
       "lines": 0,
@@ -773,7 +758,7 @@
       "functions": 0,
       "totals": {
         "lines": 318,
-        "branches": 151,
+        "branches": 153,
         "functions": 39
       },
       "sha": "9451e6303105436c50adc39c30c65ef875c0871c318a6ca26a81e3a94f1ebe9f",
@@ -875,10 +860,10 @@
       "loaded": true,
       "lines": 7,
       "branches": 14,
-      "functions": 4,
+      "functions": 3,
       "totals": {
         "lines": 289,
-        "branches": 152,
+        "branches": 154,
         "functions": 43
       },
       "sha": "a9c14461cf844f3b97ad7a14869cb84b347c4f9eccb55fa00f6e9797308cb243",
@@ -1381,21 +1366,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "server/providers/common/query.js": {
-      "loaded": true,
-      "lines": 1,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 12,
-        "branches": 11,
-        "functions": 2
-      },
-      "sha": "da5cbb8b4f7f3e67850dd4e7ae13cbe6aa96f7c7ea120a683f5cade06b1ddd98",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "server/providers/common/request.js": {
       "loaded": true,
       "lines": 4,
@@ -1568,7 +1538,7 @@
       "functions": 0,
       "totals": {
         "lines": 79,
-        "branches": 35,
+        "branches": 38,
         "functions": 3
       },
       "sha": "b96fb7ae5584235f1e604ee5a8afd069f6607fcc509e4c9bdd59e73af91ef064",
@@ -1988,7 +1958,7 @@
       "functions": 2,
       "totals": {
         "lines": 159,
-        "branches": 37,
+        "branches": 38,
         "functions": 9
       },
       "sha": "e9525f180d067c3dbfcaa4d2e30b69133296a2b2ee3a75360fa84d1837a40ff8",
@@ -2852,14 +2822,14 @@
       "since": "2026-10-08"
     },
     "src/app/errors.js": {
-      "loaded": false,
-      "lines": 25,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 11,
+      "branches": 4,
+      "functions": 0,
       "totals": {
         "lines": 25,
-        "branches": null,
-        "functions": null
+        "branches": 6,
+        "functions": 1
       },
       "sha": "661b15de03e9a65953c8681ad0a3a6f5b7670c755de6e565da7af1979bdc9ece",
       "untrue": false,
@@ -2970,21 +2940,6 @@
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
-    },
-    "src/app/layers/firms.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 1,
-      "totals": {
-        "lines": 36,
-        "branches": 3,
-        "functions": 2
-      },
-      "sha": "c68cb924ca724dd6de77c9b85fd75fa7f0ee9ea8e8e4330a35cab8ac5152f896",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
     },
     "src/app/layers/fleetModels.js": {
       "loaded": true,
@@ -3166,21 +3121,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/app/layers/traffic.js": {
-      "loaded": false,
-      "lines": 12,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 12,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "d56fc25fe185e5ad792f9ec6b0200b716e68363d9850b04f05f9fcf80c86d2d4",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
     "src/app/layers/transit.js": {
       "loaded": true,
       "lines": 0,
@@ -3316,21 +3256,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/app/viewer.js": {
-      "loaded": true,
-      "lines": 24,
-      "branches": 8,
-      "functions": 1,
-      "totals": {
-        "lines": 159,
-        "branches": 26,
-        "functions": 8
-      },
-      "sha": "357211cfc9d4da699e0abea846378d8b221c013a7397bdbb7c968a4a1bf49ded",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/awarenessEcho.js": {
       "loaded": true,
       "lines": 0,
@@ -3349,29 +3274,14 @@
     "src/bloom.js": {
       "loaded": true,
       "lines": 2,
-      "branches": 3,
+      "branches": 2,
       "functions": 0,
       "totals": {
         "lines": 89,
-        "branches": 13,
+        "branches": 14,
         "functions": 5
       },
       "sha": "7d67152d956e2658c1de9262c337d086eb46031bb79c6d211acce5b8bfc2de1b",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
-    "src/camera.js": {
-      "loaded": true,
-      "lines": 11,
-      "branches": 0,
-      "functions": 1,
-      "totals": {
-        "lines": 99,
-        "branches": 12,
-        "functions": 7
-      },
-      "sha": "79786074c6144f92314e78ba0b54be3edcdd6c8f51b1d0f2725418c581262a13",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3676,21 +3586,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/creditKeyboard.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 3,
-      "functions": 0,
-      "totals": {
-        "lines": 84,
-        "branches": 31,
-        "functions": 9
-      },
-      "sha": "f351feb7314daf60256a1dc88cb6ec7e42731cb619b5ff9b2a49f39db166872b",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/cyberSonar.js": {
       "loaded": true,
       "lines": 6,
@@ -3702,21 +3597,6 @@
         "functions": 35
       },
       "sha": "93763e32297a9e518bf3532888a05651662e70e1758d12f7109a919c0dec56ad",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/cyberSonarGpu.js": {
-      "loaded": true,
-      "lines": 8,
-      "branches": 9,
-      "functions": 4,
-      "totals": {
-        "lines": 295,
-        "branches": 76,
-        "functions": 14
-      },
-      "sha": "9efd93c9207ff9f0676ebaca834358f38acd71a76d4d31bb3366b44699b48588",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -4066,21 +3946,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/data/cameraSensitivity.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 4,
-      "functions": 0,
-      "totals": {
-        "lines": 93,
-        "branches": 23,
-        "functions": 5
-      },
-      "sha": "2ec513939a89a43cf3f3a35c95b3c19573af16ada05b370950f378c0443b93bd",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/data/cctvCards.js": {
       "loaded": true,
       "lines": 0,
@@ -4193,7 +4058,7 @@
       "functions": 0,
       "totals": {
         "lines": 129,
-        "branches": 34,
+        "branches": 35,
         "functions": 3
       },
       "sha": "0a13435f624f7da4a15701598b793ef4d93aa46de8fa62f880ecd61480f1938f",
@@ -4208,7 +4073,7 @@
       "functions": 1,
       "totals": {
         "lines": 691,
-        "branches": 281,
+        "branches": 285,
         "functions": 40
       },
       "sha": "7b756ec02fd07622a6c8e106a214713ef14a747dd3c87d0d195fbe2d223d5618",
@@ -4358,7 +4223,7 @@
       "functions": 0,
       "totals": {
         "lines": 55,
-        "branches": 46,
+        "branches": 51,
         "functions": 1
       },
       "sha": "5bfe81076c446b9b4910bb3620f291ad03bb2eaf13199265afedd546acf9d0d6",
@@ -4373,7 +4238,7 @@
       "functions": 0,
       "totals": {
         "lines": 151,
-        "branches": 64,
+        "branches": 69,
         "functions": 7
       },
       "sha": "91027f43a9a9578df27f35c100734cab96bf091e869f85aa4b2b8fa5a5b9a38e",
@@ -4622,17 +4487,17 @@
       "since": "2026-11-21"
     },
     "src/data/geoid.js": {
-      "loaded": false,
-      "lines": 99,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 14,
+      "branches": 1,
+      "functions": 3,
       "totals": {
         "lines": 99,
-        "branches": null,
-        "functions": null
+        "branches": 3,
+        "functions": 4
       },
       "sha": "d4673a156760f2f9b6f0d98f8eda8fceaf1c4e60f1d9d4837a78aefd17a060ca",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -4651,29 +4516,14 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/data/groundFloor.js": {
-      "loaded": false,
-      "lines": 33,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 33,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "ab7b6ff387d48310fb9d5318e5e3da3499e1608ed19b587cc3f57419dbacbc8f",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
     "src/data/gtfsRealtime.js": {
       "loaded": true,
-      "lines": 2,
+      "lines": 0,
       "branches": 8,
       "functions": 0,
       "totals": {
         "lines": 273,
-        "branches": 130,
+        "branches": 143,
         "functions": 14
       },
       "sha": "e6ee987a159cf59d52ef0243b9156dd1229c24e62e486c303c16734c7fd955fd",
@@ -4695,21 +4545,6 @@
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
-    },
-    "src/data/iconOrientation.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 5,
-      "functions": 0,
-      "totals": {
-        "lines": 377,
-        "branches": 38,
-        "functions": 6
-      },
-      "sha": "827ace4ca6ebb4f8c15e501c09826cac7cb25701c0d16464e68881dd8341bb69",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
     },
     "src/data/iconSegment.d.ts": {
       "loaded": false,
@@ -4801,21 +4636,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/data/installationNames.js": {
-      "loaded": false,
-      "lines": 28,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 28,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "b6e6abd9b126274a88f2c3479d59e5d661f550135eabdff8ca147283d163890d",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
     "src/data/irishRail.js": {
       "loaded": true,
       "lines": 0,
@@ -4834,11 +4654,11 @@
     "src/data/labelArbiter.js": {
       "loaded": true,
       "lines": 21,
-      "branches": 63,
+      "branches": 62,
       "functions": 0,
       "totals": {
         "lines": 1271,
-        "branches": 457,
+        "branches": 456,
         "functions": 61
       },
       "sha": "da178072243462227e064ffcc3f0d79ac2956bf4de7a066d01ac82756d51b184",
@@ -5281,29 +5101,14 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/data/pointerOwnerNames.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 24,
-        "branches": 6,
-        "functions": 1
-      },
-      "sha": "25865160eb123521d617d80d1ae18b7300359ec261f5a9c187141523f8fc9add",
-      "untrue": false,
-      "origin": "upstream-sync-6",
-      "since": "2026-10-17"
-    },
     "src/data/radioCountry.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 4,
+      "branches": 3,
       "functions": 0,
       "totals": {
         "lines": 119,
-        "branches": 27,
+        "branches": 28,
         "functions": 3
       },
       "sha": "97aa812cac30739c0b1761a929f22b34e99cd598e672ced9ad564b3f410af0a8",
@@ -5543,28 +5348,13 @@
       "functions": 0,
       "totals": {
         "lines": 458,
-        "branches": 105,
+        "branches": 107,
         "functions": 12
       },
       "sha": "d23c5820941c07884e448742675200ec383febd9eba4eb01fe0ea0819cab1720",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/data/scenePick.js": {
-      "loaded": true,
-      "lines": 4,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 98,
-        "branches": 32,
-        "functions": 3
-      },
-      "sha": "fff67a58eba50d9a09149a4fb3ebee720d392a00e4fb614d069b10ec386b73f0",
-      "untrue": false,
-      "origin": "upstream-sync-6",
-      "since": "2026-10-17"
     },
     "src/data/screenRotation.js": {
       "loaded": true,
@@ -5578,36 +5368,6 @@
       },
       "sha": "44995ea583e429867411919d303c3f51c83be397cac4370f39a9268619ee44ac",
       "untrue": false,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
-    "src/data/spriteOrder.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 4,
-      "functions": 0,
-      "totals": {
-        "lines": 78,
-        "branches": 26,
-        "functions": 4
-      },
-      "sha": "d2ab8fc37e51d98ce5747071510b9e70e487f4031c6beed8b5761a7ed1501c8c",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
-    "src/data/terrainHeights.js": {
-      "loaded": false,
-      "lines": 10,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 10,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "33774cd3e5c02f6b66d96c68dcb794879c8fba95f0f3621b6beb300b95461585",
-      "untrue": true,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
@@ -5625,21 +5385,6 @@
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/data/tileBudget.js": {
-      "loaded": false,
-      "lines": 53,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 53,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "5d800107528557a2f69de43db26f1aa54dd6a54395eddc74ee8720c0df08a8c8",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
     },
     "src/data/timelineHistory.js": {
       "loaded": true,
@@ -5686,21 +5431,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/data/trackedCamera.js": {
-      "loaded": true,
-      "lines": 42,
-      "branches": 10,
-      "functions": 1,
-      "totals": {
-        "lines": 236,
-        "branches": 26,
-        "functions": 9
-      },
-      "sha": "86eebfd4c72bcac8425fc165bb565271dab3f054317271db237147bd14dc224d",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/data/trackedReadout.js": {
       "loaded": true,
       "lines": 3,
@@ -5745,51 +5475,6 @@
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/data/trafficBounds.js": {
-      "loaded": false,
-      "lines": 173,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 173,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "b311e5cabf2e910570d22a863c23502d5e5bd33a410959d86ecb0037a689ac8b",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
-    "src/data/trafficFlowStyle.js": {
-      "loaded": false,
-      "lines": 80,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 80,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "3c696483337dbad5525d090af4449deea445f9a34c9b323313187326707d0c9b",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
-    "src/data/trafficPresetStyle.js": {
-      "loaded": false,
-      "lines": 150,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 150,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "89eadf49f5c985e62e679c4615bf7e9e6527659d61d7c62056f2b4784f4b722f",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
     },
     "src/data/trafficQueue.js": {
       "loaded": true,
@@ -6061,21 +5746,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/geo/ellipsoid.js": {
-      "loaded": false,
-      "lines": 265,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 265,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "b12716969ea64e0893d585b6d7de2daf09d81adceab7788c1fa0fb6045f45074",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
     "src/geo/eyeMoves.js": {
       "loaded": true,
       "lines": 0,
@@ -6178,21 +5848,6 @@
       },
       "sha": "8be185ff683f7523a21b70c1566d74b9d83bb42932d42bb26e471bd3d49a2cbb",
       "untrue": false,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
-    "src/geoDistance.js": {
-      "loaded": false,
-      "lines": 70,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 70,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "ce84efc906c32175f0f2ab907ca876f59ffa1f10fc841fc80c30c8737e7e1506",
-      "untrue": true,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
@@ -6301,21 +5956,6 @@
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
-    "src/i18n/marker.js": {
-      "loaded": false,
-      "lines": 7,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 7,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "8b9c5d7a233d59205e7e74428bf5c8a6bd8e916a45737e44b199c02593199c41",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
     "src/input/dispatcher.js": {
       "loaded": true,
       "lines": 6,
@@ -6413,7 +6053,7 @@
       "functions": 0,
       "totals": {
         "lines": 399,
-        "branches": 138,
+        "branches": 139,
         "functions": 23
       },
       "sha": "644ddbd58f9aa7bd7a3f51f8a6dea6b1c0be254f44da704a0bf824f3f56ae58c",
@@ -7096,21 +6736,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/layers/cctv/headingConfidence.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 51,
-        "branches": 13,
-        "functions": 2
-      },
-      "sha": "ec65a4312a31c10798df0ce20fa5e5feecb4eb6fe48d1ee766512f7dd11a22bc",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/layers/cctv/health.js": {
       "loaded": true,
       "lines": 29,
@@ -7786,21 +7411,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/layers/flights/modelSpec.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 52,
-        "branches": 6,
-        "functions": 1
-      },
-      "sha": "11fad61ac2633e379a8ef03f0aa5779e78faa0720d04441860ad23918146e068",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/layers/flights/motion.js": {
       "loaded": true,
       "lines": 108,
@@ -8419,11 +8029,11 @@
     "src/layers/launches/source.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 2,
+      "branches": 1,
       "functions": 0,
       "totals": {
         "lines": 37,
-        "branches": 16,
+        "branches": 17,
         "functions": 6
       },
       "sha": "110abf21ff19b2e1c228ba8bd29b68c04a636ed42591936b558d14cd46a2876f",
@@ -8701,21 +8311,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/layers/military/rendering.js": {
-      "loaded": true,
-      "lines": 397,
-      "branches": 38,
-      "functions": 5,
-      "totals": {
-        "lines": 1125,
-        "branches": 135,
-        "functions": 33
-      },
-      "sha": "26292ad2177d83ae38fbd02a6deb8931b3d61a843a94656f71b778a1e02943a5",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/layers/military/snapshotRenderer.js": {
       "loaded": true,
       "lines": 16,
@@ -8944,11 +8539,11 @@
     "src/layers/radio/clustering.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 25,
+      "branches": 24,
       "functions": 0,
       "totals": {
         "lines": 266,
-        "branches": 84,
+        "branches": 86,
         "functions": 25
       },
       "sha": "fe275fe77b115b98b78c0138332bb8de91d299802e5211fde7edd29654aa3f91",
@@ -8958,13 +8553,13 @@
     },
     "src/layers/radio/controls.js": {
       "loaded": true,
-      "lines": 23,
+      "lines": 15,
       "branches": 1,
-      "functions": 2,
+      "functions": 1,
       "totals": {
         "lines": 119,
-        "branches": 6,
-        "functions": 4
+        "branches": 8,
+        "functions": 5
       },
       "sha": "0a50fb06df71b760a20f5f3c685450e8daa907802b524702c218ac5d2b86a05f",
       "untrue": false,
@@ -9038,7 +8633,7 @@
       "functions": 0,
       "totals": {
         "lines": 153,
-        "branches": 56,
+        "branches": 58,
         "functions": 12
       },
       "sha": "29dc29060ab7e6447f789cefa75841c8675722db773e922c5f4c6e18c4149aca",
@@ -9338,7 +8933,7 @@
       "functions": 3,
       "totals": {
         "lines": 1107,
-        "branches": 290,
+        "branches": 287,
         "functions": 65
       },
       "sha": "10205fc07340faff446114ed2aea3b4aed70d0703844ba907d18da854b4523ec",
@@ -10069,11 +9664,11 @@
     "src/layers/streetLevel/providers/google/viewer.js": {
       "loaded": true,
       "lines": 12,
-      "branches": 14,
+      "branches": 12,
       "functions": 1,
       "totals": {
         "lines": 290,
-        "branches": 113,
+        "branches": 114,
         "functions": 32
       },
       "sha": "0f8c3d510075b15b88fb5e740108ae8da04c799bebb40ccc914d21027305e7b7",
@@ -10592,17 +10187,17 @@
       "since": "2026-09-15"
     },
     "src/layers/traffic/flowDecode.js": {
-      "loaded": false,
-      "lines": 83,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 4,
+      "branches": 11,
+      "functions": 0,
       "totals": {
         "lines": 83,
-        "branches": null,
-        "functions": null
+        "branches": 23,
+        "functions": 1
       },
       "sha": "860c4218ff6795e196178ef46f900cdbde020354340bb1c69ca42dc3dfb19d58",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -10770,21 +10365,6 @@
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/layers/traffic/state.js": {
-      "loaded": false,
-      "lines": 318,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 318,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "c408322d4f1a1b9ebfb9a493460d9e00747a1e4cd01d7d1d05d0fa1281303816",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
     },
     "src/layers/traffic/style.js": {
       "loaded": true,
@@ -11070,21 +10650,6 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/layers/vessels/cameraArea.js": {
-      "loaded": true,
-      "lines": 14,
-      "branches": 6,
-      "functions": 0,
-      "totals": {
-        "lines": 33,
-        "branches": 8,
-        "functions": 1
-      },
-      "sha": "3db55367d53c905a142fe93fadf390b0aaae162f38ceb05188f3f90d690bf769",
-      "untrue": false,
-      "origin": "upstream-sync-3",
-      "since": "2026-10-08"
     },
     "src/layers/vessels/cards.js": {
       "loaded": true,
@@ -11809,11 +11374,11 @@
     "src/layers/wind/presentation.js": {
       "loaded": true,
       "lines": 1,
-      "branches": 6,
+      "branches": 8,
       "functions": 0,
       "totals": {
         "lines": 132,
-        "branches": 39,
+        "branches": 48,
         "functions": 10
       },
       "sha": "4407cc8d0416477eac979be28a3a8f8f7e47c97af1a2bb813233f6aa406e774f",
@@ -11843,7 +11408,7 @@
       "functions": 0,
       "totals": {
         "lines": 820,
-        "branches": 331,
+        "branches": 332,
         "functions": 55
       },
       "sha": "eef2f9badb280ae6a4cb6170873519663ae6e9619a88e21bbd7ba443254da4b4",
@@ -12109,11 +11674,11 @@
     "src/locationStatus.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 2,
+      "branches": 1,
       "functions": 0,
       "totals": {
         "lines": 66,
-        "branches": 16,
+        "branches": 17,
         "functions": 3
       },
       "sha": "5bd4a4adb7b6440e750307a40b86a3c893079cbf7df82f3e0991ac1cf9e22530",
@@ -12138,13 +11703,13 @@
     },
     "src/logoGaze.js": {
       "loaded": true,
-      "lines": 123,
-      "branches": 0,
-      "functions": 1,
+      "lines": 99,
+      "branches": 3,
+      "functions": 9,
       "totals": {
         "lines": 181,
-        "branches": 9,
-        "functions": 2
+        "branches": 14,
+        "functions": 12
       },
       "sha": "61c630088e7b3c0dfdb4734e4adc02a65f1b4e299fc46b1d002243f0ecf68284",
       "untrue": false,
@@ -12211,21 +11776,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/maps/credits.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 25,
-        "branches": 14,
-        "functions": 3
-      },
-      "sha": "7408f8eea01a9ae65527b4739588720360b046fd9051eedc605c3c89da862914",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/maps/defaultSources.js": {
       "loaded": true,
       "lines": 0,
@@ -12271,21 +11821,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/maps/google3d.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 7,
-      "functions": 0,
-      "totals": {
-        "lines": 130,
-        "branches": 37,
-        "functions": 10
-      },
-      "sha": "7a92523193e4dc13c019bf4fa2e303957d7121af5c657364e9143c1b2226beb4",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/maps/googleTokens.js": {
       "loaded": true,
       "lines": 0,
@@ -12293,28 +11828,13 @@
       "functions": 1,
       "totals": {
         "lines": 66,
-        "branches": 25,
+        "branches": 26,
         "functions": 7
       },
       "sha": "385caa2d907f9c781e016e0dcc03c8e6520c5b0e410a4b1578daff997f381a41",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
-    },
-    "src/maps/imagery.js": {
-      "loaded": true,
-      "lines": 14,
-      "branches": 1,
-      "functions": 2,
-      "totals": {
-        "lines": 66,
-        "branches": 20,
-        "functions": 6
-      },
-      "sha": "71b78a9d634f677b9f2de45ceb38e35fd72e5ffbab880cd2b8a8b31bf3bf4ec4",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
     },
     "src/maps/imageryComparison.js": {
       "loaded": true,
@@ -12327,21 +11847,6 @@
         "functions": 10
       },
       "sha": "82e0a5a05aabeab78b72e55b4a89c91200f81255521f2c5461b63807d0a71df3",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/maps/terrain.js": {
-      "loaded": true,
-      "lines": 7,
-      "branches": 1,
-      "functions": 1,
-      "totals": {
-        "lines": 64,
-        "branches": 12,
-        "functions": 4
-      },
-      "sha": "39b4a522c6d51e64986cdb8ac71c62bf29747bae01c9524ea0c4d13f6bd7d8af",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -12458,7 +11963,7 @@
       "functions": 1,
       "totals": {
         "lines": 158,
-        "branches": 50,
+        "branches": 51,
         "functions": 13
       },
       "sha": "5dfc35cc9dd6554b642fec0dc4b130b909d7b49c0e1cd72d8a2f14d4b83ae06e",
@@ -13321,21 +12826,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/render/color.js": {
-      "loaded": false,
-      "lines": 255,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 255,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "7cfbfb850b8cb56044f87b114bc71d8095777a50a30c158d2155dfdfd2f7f228",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
     "src/render/conformance/cameraRunner.js": {
       "loaded": true,
       "lines": 1,
@@ -13831,21 +13321,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/render/rendererOf.js": {
-      "loaded": false,
-      "lines": 483,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 483,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "57c8b28573036bac5b084f8a840a0b72e2523bac8ef976b189a43a62a6b837e9",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
     "src/render/stub/camera.d.ts": {
       "loaded": false,
       "lines": 58,
@@ -14070,21 +13545,6 @@
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/sceneCommandRelease.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 74,
-        "branches": 24,
-        "functions": 6
-      },
-      "sha": "7857acb62a0f5b70b43c202a3d8571ede3ef93b6243409f8b3fd0112808043d7",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
     },
     "src/scenes/cameraMotion.js": {
       "loaded": true,
@@ -14318,7 +13778,7 @@
       "functions": 1,
       "totals": {
         "lines": 175,
-        "branches": 85,
+        "branches": 86,
         "functions": 15
       },
       "sha": "dad4c68d0a0e2c676a5b1631f542f8fd1e0ed923f66b443dc4a3b9fb0b3d77aa",
@@ -14642,17 +14102,17 @@
       "since": "2026-09-25"
     },
     "src/services/application.js": {
-      "loaded": false,
-      "lines": 47,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 15,
+      "branches": 0,
+      "functions": 1,
       "totals": {
         "lines": 47,
-        "branches": null,
-        "functions": null
+        "branches": 3,
+        "functions": 3
       },
       "sha": "5526c0aec5f2934f28449b161a559dcf94152847a1b1572ea135355fbceec685",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -14791,21 +14251,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/sky/starrySky.js": {
-      "loaded": true,
-      "lines": 113,
-      "branches": 15,
-      "functions": 12,
-      "totals": {
-        "lines": 451,
-        "branches": 58,
-        "functions": 26
-      },
-      "sha": "25d17d32c63546393dc8376ac657c5c0b0ecf01b86a2e9e192a0bb69acad7dae",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
     "src/sky/stars.js": {
       "loaded": true,
       "lines": 0,
@@ -14835,21 +14280,6 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/sources/capability.js": {
-      "loaded": false,
-      "lines": 21,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 21,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "c778bcc4a60ca3a1689de7c3e6c7c8378fc5f7d1a0353fef4b56327153270e62",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
     },
     "src/sources/eventPacks.js": {
       "loaded": true,
@@ -14881,21 +14311,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/sources/featureSource.js": {
-      "loaded": false,
-      "lines": 20,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 20,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "c573266530ab2b37fa3f69aa04eb515f075d632e47bd6600ec7ac114ccb17bb9",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
-    },
     "src/sources/gbfsStations.js": {
       "loaded": true,
       "lines": 9,
@@ -14912,17 +14327,17 @@
       "since": "2026-10-08"
     },
     "src/sources/httpBody.js": {
-      "loaded": false,
-      "lines": 129,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 3,
+      "functions": 3,
       "totals": {
         "lines": 129,
-        "branches": null,
-        "functions": null
+        "branches": 86,
+        "functions": 13
       },
       "sha": "e486290915f80a6429419a3189ebbfff02f3d12b9e3406358060c04afa11c48d",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -14987,17 +14402,17 @@
       "since": "2026-09-15"
     },
     "src/sources/militaryTileGeometry.js": {
-      "loaded": false,
-      "lines": 352,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 2,
+      "branches": 15,
+      "functions": 0,
       "totals": {
         "lines": 352,
-        "branches": null,
-        "functions": null
+        "branches": 157,
+        "functions": 47
       },
       "sha": "d8319cbe97d4ccc6d05bec433dd3bd465e5af504017c5a426c214df5620b4414",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
     },
@@ -15107,32 +14522,32 @@
       "since": "2026-09-25"
     },
     "src/sources/overpassFeaturesRecords.js": {
-      "loaded": false,
-      "lines": 76,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 6,
+      "functions": 0,
       "totals": {
         "lines": 76,
-        "branches": null,
-        "functions": null
+        "branches": 43,
+        "functions": 12
       },
       "sha": "02c76a9d56f7949f0b788aee02fdaabdab33910f4a92c23f3d2cd5c8bac4e4b9",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/sources/overpassRoads.js": {
-      "loaded": false,
-      "lines": 27,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 25,
+      "branches": 0,
+      "functions": 1,
       "totals": {
         "lines": 27,
-        "branches": null,
-        "functions": null
+        "branches": 1,
+        "functions": 1
       },
       "sha": "90553e9e92600b4e6d5f82d99bc1ea1ef19259ce533392e15abd683ca82f2afe",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -15154,7 +14569,7 @@
     "src/sources/radioBrowser.js": {
       "loaded": true,
       "lines": 2,
-      "branches": 10,
+      "branches": 9,
       "functions": 0,
       "totals": {
         "lines": 170,
@@ -15197,34 +14612,19 @@
       "since": "2026-09-25"
     },
     "src/sources/requestDeadline.js": {
-      "loaded": false,
-      "lines": 43,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
       "totals": {
         "lines": 43,
-        "branches": null,
-        "functions": null
+        "branches": 13,
+        "functions": 8
       },
       "sha": "12c5d18c2a3de111ca266f2d03640bc6bc8efe6601440b72bdcb120c62bbed69",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
-    },
-    "src/sources/sourceSlot.js": {
-      "loaded": false,
-      "lines": 52,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 52,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "588fa56e25b5300632116091aff8cb118ad0ae3a9cd5c0bb121f265f93a9fab7",
-      "untrue": true,
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
     },
     "src/sources/tle.js": {
       "loaded": true,
@@ -16418,7 +15818,7 @@
       "functions": 0,
       "totals": {
         "lines": 151,
-        "branches": 74,
+        "branches": 76,
         "functions": 5
       },
       "sha": "31914e206147d0769c56152dc238a169c0b23b5b5adb28e166ee6c21a60946b3",
@@ -16440,21 +15840,6 @@
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
-    },
-    "src/ui/actionButton.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 41,
-        "branches": 6,
-        "functions": 1
-      },
-      "sha": "3e7a30f7dbe14836aae166fef94dbe47d31ec2a6ebf7d5dc84818ad9eb1494c5",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
     },
     "src/ui/aircraftDisplay.js": {
       "loaded": true,
@@ -16587,21 +15972,6 @@
         "functions": 3
       },
       "sha": "f6a4e9f5c3f23916447e9815831bfeb3b96eb069a0f122b3fe42c6f8ed8f0056",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/ui/chipGroup.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 53,
-        "branches": 26,
-        "functions": 4
-      },
-      "sha": "30c849e73a82eaef8de6432c3633ea2e1c24d5bcaca70c2095356a6f48a79fe7",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -17086,21 +16456,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/ui/cyberSonarControls.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 86,
-        "branches": 31,
-        "functions": 3
-      },
-      "sha": "64b01e3d5c89c96ce3d2e21f86ddf1c543bebd6af2817b7d45c66a5006d7507c",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/ui/displayBindings.js": {
       "loaded": true,
       "lines": 63,
@@ -17146,21 +16501,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/ui/displayPanelScroll.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 6,
-        "branches": 7,
-        "functions": 1
-      },
-      "sha": "45f01167c5114505666e5da0011acc940ee6d00dc28787fb9064a9cbf31f627f",
-      "untrue": false,
-      "origin": "gates-coverage-race",
-      "since": "2026-10-03"
-    },
     "src/ui/entityContextBridge.js": {
       "loaded": true,
       "lines": 167,
@@ -17190,21 +16530,6 @@
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
-    },
-    "src/ui/formField.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 36,
-        "branches": 5,
-        "functions": 1
-      },
-      "sha": "bd3d5fce3a326adb951455b915a6a7bd0a50445743232f561e9a258559d7765a",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
     },
     "src/ui/frameRateMonitor.js": {
       "loaded": true,
@@ -17404,11 +16729,11 @@
     "src/ui/localSdrPresentation.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 10,
+      "branches": 9,
       "functions": 0,
       "totals": {
         "lines": 226,
-        "branches": 82,
+        "branches": 81,
         "functions": 13
       },
       "sha": "7e79160bf67bddd1609835f9eb8d4c1e36a5ad08420b38d3ca22382ac41d7ad2",
@@ -17828,7 +17153,7 @@
       "functions": 0,
       "totals": {
         "lines": 135,
-        "branches": 38,
+        "branches": 39,
         "functions": 4
       },
       "sha": "39d3e7db6d2cc77ce1fd4fe54e65dcca95932e958375d6c1597b061d8e01cea6",
@@ -17941,21 +17266,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/ui/railTimeline.js": {
-      "loaded": true,
-      "lines": 1,
-      "branches": 7,
-      "functions": 5,
-      "totals": {
-        "lines": 216,
-        "branches": 50,
-        "functions": 23
-      },
-      "sha": "3486d58453ae8a9a1ccd942900607c99a1761116834d7a9758dcd588a1ba4578",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/ui/recentImagery.js": {
       "loaded": true,
       "lines": 25,
@@ -18001,21 +17311,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/ui/rowList.js": {
-      "loaded": true,
-      "lines": 3,
-      "branches": 10,
-      "functions": 0,
-      "totals": {
-        "lines": 74,
-        "branches": 30,
-        "functions": 3
-      },
-      "sha": "01a385a5eefb160109924ccd6d62d20c77c014e17e8c1e5fd28293aa790787ae",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/ui/sceneControls.js": {
       "loaded": true,
       "lines": 5,
@@ -18060,21 +17355,6 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/ui/segmentedControl.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 109,
-        "branches": 48,
-        "functions": 15
-      },
-      "sha": "fcca52d5215090b3d290c15ef74d56215b95f0497e61daa692240842281170a2",
-      "untrue": false,
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
     },
     "src/ui/shareFollow.js": {
       "loaded": true,
@@ -18649,11 +17929,11 @@
     "src/voice/cloudVoiceAuth.js": {
       "loaded": true,
       "lines": 6,
-      "branches": 4,
+      "branches": 3,
       "functions": 0,
       "totals": {
         "lines": 41,
-        "branches": 12,
+        "branches": 11,
         "functions": 4
       },
       "sha": "079e2f2101349ec1d4fe20a3a722251fe48bf3ba82b292d1db8ac943354cb36e",
@@ -19144,11 +18424,11 @@
     "src/voice/realtimePreferences.js": {
       "loaded": true,
       "lines": 4,
-      "branches": 3,
+      "branches": 2,
       "functions": 0,
       "totals": {
         "lines": 84,
-        "branches": 21,
+        "branches": 20,
         "functions": 5
       },
       "sha": "273fea87294ef74635f55b332b21cdf7290c48bd6a8e26fdf51ff5a675b9d81e",
@@ -19403,7 +18683,7 @@
       "functions": 0,
       "totals": {
         "lines": 540,
-        "branches": 110,
+        "branches": 111,
         "functions": 24
       },
       "sha": "d6b4b1817d583ffcacab59d1e13388eb0a0c5654df0a6f4826316efd7e40e8a0",
@@ -21272,22 +20552,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/creditKeyboard.test.mjs": {
-      "names": {
-        "Cesium Data attribution and close controls join the keyboard tab order": 1,
-        "English keeps Cesium attribution texts": 1,
-        "Enter opens and closes attribution on initial keydown": 1,
-        "Escape and backdrop dismissal close attribution and restore its disclosure": 1,
-        "Space opens and closes attribution only on key release": 1,
-        "credit keyboard setup is idempotent and safely declines incomplete markup": 1,
-        "es: Cesium attribution link and lightbox title are translated": 1,
-        "held activation keys do not repeat open or close actions": 1,
-        "losing focus during a Space hold cancels release activation": 1,
-        "ru: Cesium attribution link and lightbox title are translated": 1
-      },
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/cyberSonar.test.mjs": {
       "names": {
         "Cyber contact tint moves from cool-muted to warm-bright with the sector": 1,
@@ -21305,19 +20569,6 @@
         "the sweep corrects delayed starts and reacquires restarted animations without per-frame writes": 1,
         "turning Sonar on seeds and releases the compositor sweep phase": 1,
         "unswept white map symbols retain a bright readable Cyber tint": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/cyberSonarGpu.test.mjs": {
-      "names": {
-        "GPU shader transform is isolated, settings-driven, and precedes native fragment classification": 1,
-        "adapter never walks contacts, touches other scenes, or transforms pick-only passes": 1,
-        "disposal does not overwrite a successor update owner": 1,
-        "program swaps, layer removal and late shader failure release only adapter resources": 1,
-        "render demand follows batch bounds, including horizon culling, without far-plane rejection": 1,
-        "stable commands reuse uniforms and derived pipelines while all native fields remain live": 1,
-        "unknown native shaders fail closed without losing native commands": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -26104,44 +25355,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/data/trackedModelRegime.test.mjs": {
-      "names": {
-        "a missing camera height reads as infinitely far out, never as \"zoomed in\"": 1,
-        "an orbit sitting AT the boundary never flaps": 1,
-        "both layers gate the tracked-model load and record its failures": 1,
-        "enter and exit thresholds are ASYMMETRIC — the anti-flap band": 1,
-        "flights: a converted TR-3B never takes the model, at any zoom": 1,
-        "flights: a held snap is dropped when measured ground contradicts it": 1,
-        "flights: a rejecting GLB loader is bounded, not a per-frame retry loop": 1,
-        "flights: deselect + re-track the SAME contact re-enters at the ENTER ceiling": 1,
-        "flights: deselecting drops the regime even zoomed all the way in": 1,
-        "flights: grounded fleet handoff waits through terrain load and keeps one visual owner": 1,
-        "flights: grounded tracked model waits for a valid terrain snap with no visual gap": 1,
-        "flights: production fleet loader admits a HIDDEN primitive and fails back to 2D": 1,
-        "flights: the failure latch clears on a same-icao re-track too": 1,
-        "flights: the tracked contact goes 3D with the fleet 3D toggle OFF": 1,
-        "flights: the tracked regime is hysteretic across a live zoom in/out": 1,
-        "flights: turning the fleet toggle ON does not disturb the tracked regime": 1,
-        "militaryFlights: a converted TR-3B never takes the model, at any zoom": 1,
-        "militaryFlights: a held snap is dropped when measured ground contradicts it": 1,
-        "militaryFlights: a rejecting GLB loader is bounded, not a per-frame retry loop": 1,
-        "militaryFlights: deselect + re-track the SAME contact re-enters at the ENTER ceiling": 1,
-        "militaryFlights: deselecting drops the regime even zoomed all the way in": 1,
-        "militaryFlights: grounded fleet handoff waits through terrain load and keeps one visual owner": 1,
-        "militaryFlights: grounded tracked model waits for a valid terrain snap with no visual gap": 1,
-        "militaryFlights: production fleet loader admits a HIDDEN primitive and fails back to 2D": 1,
-        "militaryFlights: the failure latch clears on a same-icao re-track too": 1,
-        "militaryFlights: the tracked contact goes 3D with the fleet 3D toggle OFF": 1,
-        "militaryFlights: the tracked regime is hysteretic across a live zoom in/out": 1,
-        "militaryFlights: turning the fleet toggle ON does not disturb the tracked regime": 1,
-        "the regime enters at the enter ceiling and leaves only past the exit ceiling": 1,
-        "the tracked 3D takeover sits at the owner-playtested swap distance": 1,
-        "the tracked contact swaps NEARER than the fleet — a recorded inversion, not a bug": 1,
-        "the tracked regime never consults the fleet models3d toggle": 1
-      },
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/data/trackedReadout.test.mjs": {
       "names": {
         "civilian and military trail heads use the lower-centre model anchor": 1,
@@ -29145,13 +28358,6 @@
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
-    },
-    "src/layers/launches/panelScroll.test.mjs": {
-      "names": {
-        "rendering a selected mission resets the nearest theme-appropriate Context scroller": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
     },
     "src/layers/launches/replay.test.mjs": {
       "names": {
@@ -32985,21 +32191,6 @@
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
-    "src/maps/sourceFactories.test.mjs": {
-      "names": {
-        "Bing ion metadata and construction failures propagate without another source": 1,
-        "Esri uses Re:Earth without keys and preserves ion terrain when configured": 1,
-        "both Bing ion stacks use HTTPS and retain ion and per-tile attribution": 1,
-        "both Google 3D routes keep tiles drawing while draped imagery loads": 1,
-        "cancellation after ion metadata prevents terrain construction": 1,
-        "credentialed source factories reject an omitted token instead of consuming an SDK default": 1,
-        "imagery and terrain pass their own ion token without relying on SDK defaults": 1,
-        "other ion imagery assets keep the standard SDK factory": 1,
-        "unreachable keyless terrain falls back to flat terrain marked as a fallback": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/maps/terrainRetry.test.mjs": {
       "names": {
         "Cesium copies the policy onto every derived tile resource and honours its verdicts": 1,
@@ -35649,22 +34840,6 @@
       "origin": "upstream-sync-9",
       "since": "2026-10-27"
     },
-    "src/sky/starrySky.test.mjs": {
-      "names": {
-        "a clock outside the IAU 2006 tables (1970-01-01T00:00:00Z) settles on TEME instead of re-rendering every frame": 1,
-        "a clock outside the IAU 2006 tables (2060-01-01T00:00:00Z) settles on TEME instead of re-rendering every frame": 1,
-        "a render update uploads six opaque black environment faces only once": 1,
-        "destroy releases both the background and model environment maps": 1,
-        "the ICRF rotation is preferred and TEME fills in while tables load": 1,
-        "the Milky Way glow scales with its visibility, for styles that hide it": 1,
-        "the TEME fallback keeps the celestial pole on the Earth axis": 1,
-        "the rotation is reused only within the clock epsilon": 1,
-        "the sky draws nothing when hidden, outside 3D, or in a pick pass": 1,
-        "the sky-box adapter was validated against this engine version": 1
-      },
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
-    },
     "src/sky/stars.test.mjs": {
       "names": {
         "B−V colours run from blue-white to orange with the peak channel at 1": 1,
@@ -36183,26 +35358,6 @@
       },
       "origin": "upstream-sync-8",
       "since": "2026-10-21"
-    },
-    "src/testSupport/aircraftFeedLatency.mjs": {
-      "names": {
-        "flights: a feed 90 s late every 30 s is drawn about two minutes behind, every contact between real reports, with no jump or stall": 1,
-        "flights: a fresh fallback feed for four polls and reports that do not move on: no jump, no stall, no kink": 1,
-        "flights: a fresh feed is drawn a poll and a few seconds behind, never under the 30 s floor": 1,
-        "flights: a two-minute outage on a straight leg: contacts coast on at their speed and carry on along their reports": 1,
-        "flights: an outage through a turn no report showed: off by more than 5 km it jumps once onto its reports, as a break; nothing else jumps": 1,
-        "flights: following the world clock, contacts draw at the world's time and deliveries leave the delay alone": 1,
-        "flights: reports that give a speed of 0 still draw the tracked aircraft along its path, with no jump or stall": 1,
-        "military: a feed 90 s late every 30 s is drawn about two minutes behind, every contact between real reports, with no jump or stall": 1,
-        "military: a fresh fallback feed for four polls and reports that do not move on: no jump, no stall, no kink": 1,
-        "military: a fresh feed is drawn a poll and a few seconds behind, never under the 15 s floor": 1,
-        "military: a two-minute outage on a straight leg: contacts coast on at their speed and carry on along their reports": 1,
-        "military: an outage through a turn no report showed: off by more than 5 km it jumps once onto its reports, as a break; nothing else jumps": 1,
-        "military: following the world clock, contacts draw at the world's time and deliveries leave the delay alone": 1,
-        "military: reports that give a speed of 0 still draw the tracked aircraft along its path, with no jump or stall": 1
-      },
-      "origin": "upstream-sync-11",
-      "since": "2026-11-21"
     },
     "src/textChatServer.test.mjs": {
       "names": {
@@ -37719,14 +36874,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/ui/chipGroup.test.mjs": {
-      "names": {
-        "a chip colour is set once, changed, and cleared through a CSS variable": 1,
-        "keyed chips retain focus, reflect state, reorder and remove without redundant writes": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/ui/cockpitBodyClasses.test.mjs": {
       "names": {
         "no stylesheet rule matches a Cockpit body class on another element": 1,
@@ -38455,15 +37602,6 @@
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
-    "src/ui/cyberPanelDisclosure.test.mjs": {
-      "names": {
-        "explicit Cyber opening collapses peers and claims their restoration lanes": 1,
-        "non-Cyber explicit panels and restored preferences retain their existing policy": 1,
-        "opening already-expanded Radio reveals Context and closes Display": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/ui/cyberSonarControls.test.mjs": {
       "names": {
         "maps all settings to the slider owner and reads actual state, including zero": 1,
@@ -38477,59 +37615,6 @@
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/ui/cyberTheme.test.mjs": {
-      "names": {
-        "CCTV and Context keep their headers outside Cyber-only scroll bodies": 1,
-        "Cyber Cockpit Display uses the released briefing lane instead of the legacy viewport cap": 1,
-        "Cyber Cockpit keeps Data Layers inside its bounded rail": 1,
-        "Cyber Display uses a red title without a panel-specific center tab": 1,
-        "Cyber Radio retains upstream nested Context ownership": 1,
-        "Cyber Voice clips its decoration without clipping descendant help and errors": 1,
-        "Cyber clipped expand controls retain an inset keyboard-focus outline in map and cockpit": 1,
-        "Cyber cockpit launchers share Data Layers frame and expand-control treatment": 1,
-        "Cyber desktop cockpit collapsed utility frames match the 50px Data Layers frame": 1,
-        "Cyber dock pins escape the tray mask and its decoration overrides the legacy arrow geometry": 1,
-        "Cyber is a canonical HUD layout with a safe Tactical fallback": 1,
-        "Cyber keeps Sonar on/off without the removed CSS effect switch or dimmer": 1,
-        "Cyber lower-left telemetry tracks the credit anchor with clearance for its logo row": 1,
-        "Cyber omits only the fictional classification and system header lines": 1,
-        "Cyber panels retain clean edges without the added footer band": 1,
-        "Cyber right panels preserve intrinsic sizing and the shared rail allocation": 1,
-        "Cyber setup uses a compact toolbar icon and highlights the north-up letter": 1,
-        "Cyber side panels share one width and one framed surface material": 1,
-        "Cyber visual defaults update the style, thermal palette and render state": 1,
-        "Cyber voice telemetry renders a live scan scope without replacing audio ownership": 1,
-        "Display and voice HUD routes preserve explicit Cyber entry and exit authority": 1,
-        "a preset explicitly selected in Cyber survives exit and resets for re-entry": 1,
-        "an authoritative same-Cyber reset clears local preset ownership": 1,
-        "an explicit same-value FLIR choice is preserved on Cyber exit": 1,
-        "an explicit transition into Cyber selects FLIR with Ironbow 0.42 once": 1,
-        "leaving Cyber without a preset choice restores the prior visual preset": 1,
-        "non-Cyber style presets and explicit HUD choices remain authoritative": 1,
-        "scene and share HUD transitions do not restore a local pre-Cyber preset": 1,
-        "scene and share restoration override Cyber and preserve restored Cyber parameters": 1,
-        "scope choice and expanded feather survive every HUD layout and both restore paths": 1,
-        "shared panel hooks affect only opted-in rail surfaces without overriding disclosure and concealment": 1,
-        "the Cyber HUD owns the global shell skin and leaving it restores defaults": 1,
-        "the Display selector, voice schema and final stylesheet expose Cyber": 1,
-        "visual styles retain Cyber through real preset application without dropping other defaults": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/ui/displayControls.test.mjs": {
-      "names": {
-        "controls read current values without preventing native input behavior": 1,
-        "destroyed and replaced controls cannot issue stale actions": 1,
-        "optional controls are absent safely and subscriptions stay instance-owned": 1,
-        "sonar on/off control cannot fire after disposal": 1,
-        "style, allocation and model choices retain their current data attributes": 1,
-        "the Cyber sonar control is an optional owned display action": 1,
-        "the native Scope checkbox reads checked state on change and disposes its listener": 1
-      },
-      "origin": "pre-spec",
-      "since": "2026-09-15"
     },
     "src/ui/displayGroups.test.mjs": {
       "names": {
@@ -39287,17 +38372,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/ui/localeSwitchReload.test.mjs": {
-      "names": {
-        "modules register their own unsaved work": 1,
-        "nothing to lose: the switch reloads without asking": 1,
-        "the language already active neither asks nor reloads": 1,
-        "the prompt reads in the active language": 1,
-        "unsaved calibration or the open cockpit: the switch asks first": 1
-      },
-      "origin": "upstream-sync-6",
-      "since": "2026-10-17"
-    },
     "src/ui/locationControls.test.mjs": {
       "names": {
         "POI keys held with Cmd, Ctrl or Alt run no POI; Shift still does": 1,
@@ -39654,15 +38728,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/ui/panelChrome.radioOwnership.test.mjs": {
-      "names": {
-        "adaptive rail restore hides compact Radio before revealing Context": 1,
-        "opening an already-open Context still closes a stale compact Radio disclosure": 1,
-        "real PanelChrome constructor wires rail restore to compact Radio owner": 1
-      },
-      "origin": "upstream-sync-8",
-      "since": "2026-10-21"
-    },
     "src/ui/panelChromeButtons.test.mjs": {
       "names": {
         "Cockpit entry folds the Space Missions panel away and exit brings it back": 1,
@@ -39947,15 +39012,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/ui/railTimeline.test.mjs": {
-      "names": {
-        "identical updates write nothing; controls call actions and destruction cancels commits": 1,
-        "observed history label and endpoint times track the advertised tick range": 1,
-        "preview is immediate, commits are coalesced and the drag DOM and tick mapping stay stable": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/ui/recentImagery.test.mjs": {
       "names": {
         "DETAILS is a collapsed rail card holding every note, and the empty-days toggle": 1,
@@ -40075,19 +39131,6 @@
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
-    },
-    "src/ui/segmentedControl.test.mjs": {
-      "names": {
-        "clicks emit current values once, including reselection; disabled controls do not emit": 1,
-        "controlled restoration updates selection without emitting or stealing focus": 1,
-        "delegated imagery keys navigate from the controlled value, not stale focus": 1,
-        "disposal revokes detached controls and replacement subscriptions fire once": 1,
-        "legacy click-only groups leave arrows and tab order to their existing owner": 1,
-        "pure value navigation can be reused without a DOM": 1,
-        "radio navigation wraps, skips disabled choices, and retains Home/End semantics": 1
-      },
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
     },
     "src/ui/setMapStackReason.test.mjs": {
       "names": {
@@ -40258,15 +39301,6 @@
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/ui/statusBadge.test.mjs": {
-      "names": {
-        "badges paint literal translated text without installing announcement or interaction semantics": 1,
-        "coverage badges keep keyed identity, hide empty coverage and never claim feed health": 1,
-        "painting preserves feature state, live regions and focus with zero identical writes": 1
-      },
-      "origin": "upstream-sync-9",
-      "since": "2026-10-27"
     },
     "src/ui/statusChipOwners.test.mjs": {
       "names": {

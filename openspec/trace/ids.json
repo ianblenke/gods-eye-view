@@ -924,6 +924,11 @@
     "since": "2026-10-25",
     "change": "bump-node-brotli-fix"
   },
+  "cockpit-contact-dot-001": {
+    "hash": "3329396bef20a0605750e8e990541aa3c9ceaa5bbb628e12752e57a66f9ee4b8",
+    "since": "2026-11-22",
+    "change": "upstream-sync-11"
+  },
   "coverage-gate-001": {
     "hash": "22565bebf0824c441282127bbb46b08ae6f67a08a29b7661d1e2ae231ca0366a",
     "since": "2026-09-14",
@@ -1423,6 +1428,31 @@
     "hash": "7786e97682903d11870a6cb46c4110eeff68ae85d6430102d487166b9da38e2a",
     "since": "2026-10-10",
     "change": "traffic-timing-child"
+  },
+  "coverage-gate-102": {
+    "hash": "42759fffc83b612b75a160cbe4c836b02d6b291ff0e2b5d6fbfe73ccfb290670",
+    "since": "2026-11-22",
+    "change": "upstream-sync-11"
+  },
+  "coverage-gate-103": {
+    "hash": "f3afd8bff752acede96c29d504dda2dfab324ff54335a2b04cdbd308661939f7",
+    "since": "2026-11-22",
+    "change": "upstream-sync-11"
+  },
+  "coverage-gate-104": {
+    "hash": "112f505c940f575296f80f105fbcd472882908dd21b9dd63eee208dc6234d61c",
+    "since": "2026-11-22",
+    "change": "upstream-sync-11"
+  },
+  "coverage-gate-105": {
+    "hash": "4ec4e16ee3f997176c676bf2905fbceb8f5e599872b9c68978de8d4d4d54e3eb",
+    "since": "2026-11-22",
+    "change": "upstream-sync-11"
+  },
+  "coverage-gate-106": {
+    "hash": "735b70efa18a80da5bfd8b003ef112c882f71076997abf1b48b302a9d4e0d617",
+    "since": "2026-11-22",
+    "change": "upstream-sync-11"
   },
   "credential-boundary-001": {
     "hash": "85a103eb9d7ba249fb78bf1b422b413ad69259efa0985971941c2ef466b6a623",
@@ -2905,7 +2935,7 @@
     "change": "gdacs-layer"
   },
   "gdacs-layer-019": {
-    "hash": "ddc2524e8bb12e9f564e5cf5bd8a71f6c8028521c00d322c8b9b28066e62ba9d",
+    "hash": "bc8971b763098be82ae52b5338f0ba8bf94f0950d7ad7fd64e882ad545bb3560",
     "since": "2026-10-19",
     "change": "gdacs-layer"
   },
@@ -5250,7 +5280,7 @@
     "change": "reticulum-layer"
   },
   "reticulum-layer-018": {
-    "hash": "f118020b83a025609a84e5cafa3cdb9372996d542904a891cec8f1901270943d",
+    "hash": "9b31fca5adde1c5ea65712773df0058ab5bd6f2a46fa221c7e5d7e25df8c94fb",
     "since": "2026-10-13",
     "change": "reticulum-layer"
   },
@@ -6819,6 +6849,11 @@
     "since": "2026-09-16",
     "change": "simplify-ledger"
   },
+  "spec-trace-055": {
+    "hash": "eec5ea46826e252cc62030f247d794c02ce4d0ee26453eb8a94fc9904e90b410",
+    "since": "2026-11-22",
+    "change": "upstream-sync-11"
+  },
   "startup-view-001": {
     "hash": "2cc5fdbc56df6d309dd06dc6cee4384bbf082097892036b255868fd52741c9f0",
     "since": "2026-09-27",
@@ -7068,6 +7103,11 @@
     "hash": "ce4619e27a44481863329b2e4c5172df8ce3e48a00ca1a2406b6785540e31542",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
+  },
+  "submarine-cables-001": {
+    "hash": "f8951d070be7a4b9c970fa34aff0613a7e2a937c5bda7fb11007c2f5e1329d90",
+    "since": "2026-11-22",
+    "change": "upstream-sync-11"
   },
   "up42-order-panel-001": {
     "hash": "574807123f61728682392f10b950d551db2fa5d2ab960589b7b2a06f82fce06f",
