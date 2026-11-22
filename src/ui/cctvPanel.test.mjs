@@ -479,14 +479,17 @@ test('a live camera swaps the still frame for the video canvas', async (t) => {
 test('the scene summary types in, then holds the whole text', async (t) => {
   const { controls, byId } = panel(t);
   const text = 'Austin CCTV · 5th St / Congress Ave';
+  // A mock clock: the typing steps three characters every 20 ms, and a loaded machine
+  // cannot make a real wait of 30 ms show the whole text or none of it.
+  t.mock.timers.enable({ apis: ['setInterval'] });
   controls._typeCctvSummary(text);
   await nextTick();
   assert.equal(byId('cctv-summary').textContent, '');
-  await new Promise((resolve) => setTimeout(resolve, 30));
+  t.mock.timers.tick(40);
   await nextTick();
   const partial = byId('cctv-summary').textContent;
   assert.ok(partial.length > 0 && partial.length < text.length, partial);
-  await new Promise((resolve) => setTimeout(resolve, 400));
+  t.mock.timers.tick(400);
   await nextTick();
   assert.equal(byId('cctv-summary').textContent, text);
 });
