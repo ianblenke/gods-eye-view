@@ -64,6 +64,43 @@ Origin: backfill
 - **THEN** it returns the catalog or page dates when the response is valid
 - **AND** it rejects an HTTP error or an abort
 
+### Requirement: Layer entities
+The layer MUST draw polygons and MUST keep its source and selection state in step with each snapshot.
+Origin: backfill
+
+#### Scenario: Draw the perimeter entities `perimeters-010`
+- **WHEN** the layer accepts a snapshot
+- **THEN** it makes one filled entity and one fire line for each polygon
+- **AND** the legend counts incidents in four containment bands
+
+#### Scenario: Keep current entity identity `perimeters-011`
+- **WHEN** a new snapshot has the same incident facts in a new order
+- **THEN** the layer keeps the entity objects
+- **AND** the analyst records have facts and anchor coordinates but no polygons
+
+#### Scenario: Own the layer life cycle `perimeters-012`
+- **WHEN** the layer starts, stops or ends
+- **THEN** it shows or hides the data source and the card
+- **AND** a late response after the layer stops or ends changes no entities
+
+#### Scenario: Select an incident on a map click `perimeters-013`
+- **WHEN** a person clicks a perimeter or empty map space
+- **THEN** the layer shows the incident card or clears it
+- **AND** a pick owned by another layer keeps the card
+
+#### Scenario: Resolve the selected card link `perimeters-014`
+- **WHEN** a person selects an incident with a matched page
+- **THEN** the card gets a link only after the page passes the time check
+- **AND** a page error or a stale page leaves the card without a link
+
+#### Scenario: Stop a late link check `perimeters-015`
+- **WHEN** selection, disable or destroy stops a page check
+- **THEN** a late result does not add a link to the card
+
+#### Scenario: Keep the perimeter refresh independent `perimeters-016`
+- **WHEN** the catalog request has an error or does not end
+- **THEN** the perimeter update can complete
+
 ### Requirement: Provider proxy
 The proxy MUST use fixed upstream routes, a bounded read and a cache for each route.
 Origin: backfill

@@ -21,7 +21,7 @@ The clone `upstream-sync-11` holds the merge. It uses the image `gods-eye-view:s
 
 ### D1: Move the fork layers to the renderer ports
 
-Upstream gives no exception to the ratchet. Rule 18 of `AGENTS.md` says: do not make a gate weaker. The change moves the fork layers.
+Upstream gives no exception to the boundary tests. Rule 18 of `AGENTS.md` says: do not make a gate weaker. The change moves the fork layers.
 
 - `gdacs`, `reticulum` and `beemaps` draw one point set with `drawOf(viewer).points(...)`.
 - `beemapsBursts` draws one shape set of rectangles.
@@ -47,7 +47,7 @@ The seven new upstream layers get the next free tokens: `news` 05, `shipwrecks` 
 
 Upstream rewrote the HUD as the Vue view `src/ui/views/IntelHudView.vue`, and it kept a classification banner. The fork rule says that the HUD shows no classification marking. The change removes the field `classification` from `src/hud.js` and the element from the view.
 
-The view has no top bar. The scenario `hud-markings-003` named the three parts of the top bar, so the change retires it. The test file `src/hudMarkingsDom.test.mjs` is removed. The test `hud-markings-001` reads the view file too.
+The view has no top bar. The scenario `hud-markings-003` named the three parts of the top bar, so the change retires it. The change removes the test file `src/hudMarkingsDom.test.mjs`. The test `hud-markings-001` reads the view file too.
 
 ### D4: Start view and panels
 
@@ -74,7 +74,7 @@ The change deletes the other fork backfill tests.
 The change retires 196 scenarios in eight capabilities. The delta specs list them. After the archive, the lead adds the IDs to `openspec/trace/retired-ids.json` and removes their empty links from `openspec/trace/links.json`.
 The scenario `coverage-gate-101` stays. The merge carries the child process of the fork into the new upstream version of `src/data/trafficTiming.test.mjs`.
 
-The change also writes again the text of nine scenarios. The new text says what the tests prove after the move. The scenarios are `osh-033`, `osh-061`, `osh-062`, `up42-scene-overlay-009`, `-010`, `-011`, `hud-markings-001`, `gdacs-layer-019` and `reticulum-layer-018`.
+The change also writes again the text of twelve scenarios. The new text says what the tests prove after the move. The scenarios are `credential-boundary-003`, `-005`, `-006`, `osh-033`, `osh-061`, `osh-062`, `up42-scene-overlay-009`, `-010`, `-011`, `hud-markings-001`, `gdacs-layer-019` and `reticulum-layer-018`.
 
 The change also rewrites tests, and it keeps their scenarios:
 - The test of `osh-033` counts 48 layers.

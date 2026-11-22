@@ -29,16 +29,17 @@
 - [x] 1.27 Keep these scenarios of `voice-panel`: voice-panel-038, voice-panel-039.
 - [x] 1.28 Keep these scenarios of `voice-panel`: voice-panel-040, voice-panel-041, voice-panel-042, voice-panel-043, voice-panel-045, voice-panel-046, voice-panel-047, voice-panel-060.
 - [x] 1.29 Keep these scenarios of `osh`: osh-028, osh-029, osh-030, osh-031, osh-032, osh-033, osh-046, osh-049.
-- [x] 1.30 Keep these scenarios of `osh`: osh-057, osh-031, osh-059, osh-061, osh-062.
+- [x] 1.30 Keep these scenarios of `osh`: osh-057, osh-061, osh-062.
 - [x] 1.31 Keep these scenarios of `up42-scene-overlay`: up42-scene-overlay-001, up42-scene-overlay-002, up42-scene-overlay-003, up42-scene-overlay-004, up42-scene-overlay-005, up42-scene-overlay-006, up42-scene-overlay-007, up42-scene-overlay-008.
 - [x] 1.32 Keep these scenarios of `up42-scene-overlay`: up42-scene-overlay-009, up42-scene-overlay-010, up42-scene-overlay-011, up42-scene-overlay-012, up42-scene-overlay-013, up42-scene-overlay-014, up42-scene-overlay-015, up42-scene-overlay-016.
 - [x] 1.33 Keep these scenarios of `up42-scene-overlay`: up42-scene-overlay-017, up42-scene-overlay-018, up42-scene-overlay-019, up42-scene-overlay-020, up42-scene-overlay-021.
 - [x] 1.34 Keep these scenarios of `hud-markings`: hud-markings-001, hud-markings-002, hud-markings-004.
-- [x] 1.35 Add the Vue loader to each test run of the gate: coverage-gate-102.
-- [x] 1.36 Limit the parallel test processes of the gate to half of the processors: coverage-gate-107.
-- [x] 1.37 Stop the trace gate from needing a test for a scenario that a modified requirement drops: spec-trace-055.
-- [x] 1.38 Write the backfill scenarios for two upstream files: cable-bundled-source-001 and cockpit-contact-dot-001.
-- [x] 1.39 Record the findings of upstream test files: coverage-gate-103, coverage-gate-104, coverage-gate-105 and coverage-gate-106.
+- [x] 1.35 Keep these scenarios of `credential-boundary`: credential-boundary-001, credential-boundary-002, credential-boundary-003, credential-boundary-004, credential-boundary-016, credential-boundary-005, credential-boundary-006.
+- [x] 1.36 Add the Vue loader to each test run of the gate: coverage-gate-102.
+- [x] 1.37 Limit the parallel test processes of the gate to half of the processors: coverage-gate-107.
+- [x] 1.38 Stop the trace gate from needing a test for a scenario that a modified requirement drops: spec-trace-055.
+- [x] 1.39 Write the backfill scenarios for two upstream files: cable-bundled-source-001 and cockpit-contact-dot-001.
+- [x] 1.40 Record the findings of upstream test files: coverage-gate-103, coverage-gate-104, coverage-gate-105 and coverage-gate-106.
 
 ## 2. Host evidence
 

@@ -1975,7 +1975,7 @@ test('[osh-057] getStats().placed.stream counts only the stream-placed system, n
 
 // --- osh-061: every entity draws on top of the depth test, at its own altitude ---
 
-test('[osh-061] the system entity\'s point and label draw on top, with the height reference NONE', async (t) => {
+test('[osh-061] the system entity\'s point and label draw on top, with the height mode absolute', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_A] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
@@ -1990,7 +1990,7 @@ test('[osh-061] the system entity\'s point and label draw on top, with the heigh
   assert.equal(entity.label.horizonCull, true);
 });
 
-test('[osh-061] the feature entity\'s point and label draw on top, with the height reference NONE', async (t) => {
+test('[osh-061] the feature entity\'s point and label draw on top, with the height mode absolute', async (t) => {
   const source = fakeSource({ fois: [FEATURE_A] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
@@ -2167,6 +2167,7 @@ test('[osh-062] a poll move carries the selected point and its label, and a late
     t.mock.timers.tick(15_000);
     await flush();
     assert.equal(dataSources[0].entities.getById('osh:sys-fixture-1').item.pos.lon, 1, 'a later poll move brings it back');
+    assert.equal(overlayEntries.get('osh:sys-fixture-1').position.x > 0, true, 'and its label with it');
   });
 });
 

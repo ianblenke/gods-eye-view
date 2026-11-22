@@ -59,7 +59,7 @@ test('[voice-panel-034] the timer stops at once for a signal that has aborted', 
   assert.equal(inactivity.snapshot().disposed, true);
 });
 
-test('[voice-panel-034] the timer cancels when the activity stops being quiet, and it refuses a bad new limit', () => {
+test('[voice-panel-034] the timer cancels when the activity stops being quiet, and it refuses a new limit that is not valid', () => {
   const timers = clock();
   let activity = QUIET;
   const inactivity = createVoiceInactivity({

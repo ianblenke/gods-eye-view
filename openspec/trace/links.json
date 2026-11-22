@@ -1690,6 +1690,20 @@
     "src/layers/cyclones/labels.test.mjs › [cyclones-011] only the prefixes storm and lead, in lower case and at the start, give a storm id",
     "src/layers/cyclones/labels.test.mjs › [cyclones-011] storm identity resolves from card and lead-hour ids only"
   ],
+  "cyclones-012": [],
+  "cyclones-013": [],
+  "cyclones-014": [],
+  "cyclones-015": [],
+  "cyclones-016": [],
+  "cyclones-017": [],
+  "cyclones-018": [],
+  "cyclones-019": [],
+  "cyclones-020": [],
+  "cyclones-021": [],
+  "cyclones-022": [],
+  "cyclones-023": [],
+  "cyclones-024": [],
+  "cyclones-025": [],
   "cyclones-026": [
     "src/data/cyclonesEarlyAdvisory.test.mjs › [cyclones-026] parseCycloneStatus accepts an advisory time and a position time 26 or 90 minutes ahead of the clock"
   ],
@@ -3992,6 +4006,12 @@
     "src/layers/ghostMaps/kml.test.mjs › [ghostmaps-028] The reader caps the feature total",
     "src/layers/ghostMaps/kml.test.mjs › [ghostmaps-028] The reader caps the position total"
   ],
+  "ghostmaps-029": [],
+  "ghostmaps-030": [],
+  "ghostmaps-031": [],
+  "ghostmaps-032": [],
+  "ghostmaps-033": [],
+  "ghostmaps-034": [],
   "ghostmaps-035": [
     "src/app/layers/ghostMaps.test.mjs › [ghostmaps-035] The application factory accepts a source and host options",
     "src/app/layers/ghostMaps.test.mjs › [ghostmaps-035] The application factory creates the standard input handler"
@@ -4020,6 +4040,11 @@
   "ghostmaps-042": [
     "src/layers/ghostMaps/source.test.mjs › [ghostmaps-042] The source rejects a file response error"
   ],
+  "ghostmaps-043": [],
+  "ghostmaps-044": [],
+  "ghostmaps-045": [],
+  "ghostmaps-046": [],
+  "ghostmaps-047": [],
   "ghostmaps-048": [
     "server/providers/ghostMaps.test.mjs › [ghostmaps-014 ghostmaps-048] The default helpers use fetch log and warning callbacks",
     "server/providers/ghostMaps.test.mjs › [ghostmaps-048] A failed response tolerates a body cancel error",
@@ -4033,6 +4058,7 @@
     "server/providers/ghostMaps.test.mjs › [ghostmaps-049] The watcher records the empty message and date",
     "server/providers/ghostMaps.test.mjs › [ghostmaps-049] The watcher records the message and date"
   ],
+  "ghostmaps-050": [],
   "ghostmaps-051": [
     "src/layers/ghostMaps/kml.test.mjs › [ghostmaps-051] The reader accepts an absent document"
   ],
@@ -4045,6 +4071,9 @@
   "ghostmaps-053": [
     "src/layers/ghostMaps/source.test.mjs › [ghostmaps-053] An absent event source reports a closed stream"
   ],
+  "ghostmaps-054": [],
+  "ghostmaps-055": [],
+  "ghostmaps-056": [],
   "ghostmaps-057": [
     "server/providers/ghostMaps.test.mjs › [ghostmaps-057] The disk catalog checks invalid commit data",
     "server/providers/ghostMaps.test.mjs › [ghostmaps-057] The disk catalog checks invalid products data"
@@ -4052,6 +4081,9 @@
   "ghostmaps-058": [
     "server/providers/ghostMaps.test.mjs › [ghostmaps-058] The watcher handles a truncated tree"
   ],
+  "ghostmaps-059": [],
+  "ghostmaps-060": [],
+  "ghostmaps-061": [],
   "ghostmaps-062": [
     "src/layers/ghostMaps/catalog.test.mjs › [ghostmaps-062] The edition parser accepts an absent name"
   ],
@@ -4061,18 +4093,21 @@
   "ghostmaps-064": [
     "server/providers/ghostMaps.test.mjs › [ghostmaps-064] The event route caps subscribers"
   ],
+  "ghostmaps-065": [],
   "ghostmaps-066": [
     "src/layers/ghostMaps/catalog.test.mjs › [ghostmaps-066] The ref parser accepts an absent advertisement"
   ],
   "ghostmaps-067": [
     "server/providers/ghostMaps.test.mjs › [ghostmaps-067] The event route sends the current catalog before the first check completes"
   ],
+  "ghostmaps-068": [],
   "hud-markings-001": [
     "src/hudMarkings.test.mjs › [hud-markings-001] shows no classification marking in a HUD file, in any letter case"
   ],
   "hud-markings-002": [
     "src/hudMarkings.test.mjs › [hud-markings-002] has no classification element in the HUD code"
   ],
+  "hud-markings-003": [],
   "hud-markings-004": [
     "src/hudMarkings.test.mjs › [hud-markings-004] has no style rule for the removed element"
   ],
@@ -5844,6 +5879,13 @@
     "src/layers/perimeters/inciweb.test.mjs › [perimeters-009] the index source requests the same-origin full catalog",
     "src/layers/perimeters/inciweb.test.mjs › [perimeters-009] the publication source fetches timestamps and honors cancellation"
   ],
+  "perimeters-010": [],
+  "perimeters-011": [],
+  "perimeters-012": [],
+  "perimeters-013": [],
+  "perimeters-014": [],
+  "perimeters-015": [],
+  "perimeters-016": [],
   "perimeters-017": [
     "server/providers/firePerimeters.test.mjs › [perimeters-017] a property can mark a page limit",
     "server/providers/firePerimeters.test.mjs › [perimeters-017] a zero length page stops the feed request",
@@ -6265,6 +6307,11 @@
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-017] the thumbnail order has each index once with different numeric bounds",
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-017] thumbnails load the focused card, then the visible cards outward, then the margins"
   ],
+  "recent-imagery-018": [],
+  "recent-imagery-019": [],
+  "recent-imagery-020": [],
+  "recent-imagery-021": [],
+  "recent-imagery-022": [],
   "recent-imagery-023": [
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026 recent-imagery-053] an Error and an AbortError from the fetch give different states",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-027] a listener error or a URL error does not stop the release of images",
@@ -6300,6 +6347,30 @@
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-027] the default loader owns its URLs and releases them",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-027] clear and destroy revoke every resident thumbnail"
   ],
+  "recent-imagery-028": [],
+  "recent-imagery-029": [],
+  "recent-imagery-030": [],
+  "recent-imagery-031": [],
+  "recent-imagery-032": [],
+  "recent-imagery-033": [],
+  "recent-imagery-034": [],
+  "recent-imagery-035": [],
+  "recent-imagery-036": [],
+  "recent-imagery-037": [],
+  "recent-imagery-038": [],
+  "recent-imagery-039": [],
+  "recent-imagery-040": [],
+  "recent-imagery-041": [],
+  "recent-imagery-042": [],
+  "recent-imagery-043": [],
+  "recent-imagery-044": [],
+  "recent-imagery-045": [],
+  "recent-imagery-046": [],
+  "recent-imagery-047": [],
+  "recent-imagery-048": [],
+  "recent-imagery-049": [],
+  "recent-imagery-050": [],
+  "recent-imagery-051": [],
   "recent-imagery-052": [
     "src/layers/recentImagery/testDoubles.test.mjs › [recent-imagery-052] the day doubles give cloud ranges only to granule days",
     "src/layers/recentImagery/testDoubles.test.mjs › [recent-imagery-052] the renderer double moves both image slots to the next host",
@@ -6317,6 +6388,7 @@
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-054] the model does not read a parent product getter",
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-054] the model rejects parent product keys"
   ],
+  "recent-imagery-055": [],
   "recent-imagery-056": [
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-013 recent-imagery-056] a latitude that is not finite gives unknown coverage",
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-013 recent-imagery-056] an invalid footprint point gives unknown coverage",
@@ -6820,6 +6892,41 @@
   "share-codec-009": [
     "src/share/wire.test.mjs › [share-codec-009] crc8 is CRC-8/SMBUS and catches every burst of up to 8 bits"
   ],
+  "share-codec-010": [],
+  "share-codec-011": [],
+  "share-codec-012": [],
+  "share-codec-013": [],
+  "share-codec-014": [],
+  "share-codec-015": [],
+  "share-codec-016": [],
+  "share-codec-017": [],
+  "share-codec-018": [],
+  "share-codec-019": [],
+  "share-codec-020": [],
+  "share-codec-021": [],
+  "share-codec-022": [],
+  "share-codec-023": [],
+  "share-codec-024": [],
+  "share-codec-025": [],
+  "share-codec-026": [],
+  "share-codec-027": [],
+  "share-codec-028": [],
+  "share-codec-029": [],
+  "share-codec-030": [],
+  "share-codec-031": [],
+  "share-codec-032": [],
+  "share-codec-033": [],
+  "share-codec-034": [],
+  "share-codec-035": [],
+  "share-codec-036": [],
+  "share-codec-037": [],
+  "share-codec-038": [],
+  "share-codec-039": [],
+  "share-codec-040": [],
+  "share-codec-041": [],
+  "share-codec-042": [],
+  "share-codec-043": [],
+  "share-codec-044": [],
   "share-codec-045": [
     "src/share/shareLinkPath.test.mjs › [share-codec-045] a share path names its code and the app base path",
     "src/share/shareLinkPathBranches.test.mjs › [share-codec-045] a share path with a bad percent escape keeps the code as it is written"
@@ -6830,6 +6937,23 @@
   "share-codec-047": [
     "src/share/shareLinkPath.test.mjs › [share-codec-047] a share link sits under the app root without the sender ?lang"
   ],
+  "share-codec-048": [],
+  "share-codec-049": [],
+  "share-codec-050": [],
+  "share-codec-051": [],
+  "share-codec-052": [],
+  "share-codec-053": [],
+  "share-codec-054": [],
+  "share-codec-055": [],
+  "share-codec-056": [],
+  "share-codec-057": [],
+  "share-codec-058": [],
+  "share-codec-059": [],
+  "share-codec-060": [],
+  "share-codec-061": [],
+  "share-codec-062": [],
+  "share-codec-063": [],
+  "share-codec-064": [],
   "skyfi-source-001": [
     "src/data/skyfiProxy.test.mjs › [skyfi-source-001] localProviderPlugins holds the scenes plugin once",
     "src/data/skyfiProxy.test.mjs › [skyfi-source-001] mounts the two routes and passes other paths to next"
@@ -9203,19 +9327,39 @@
     "src/voice/panel/observers.forkBackfill.test.mjs › [voice-panel-011] The progress metadata uses data fields in case 3",
     "src/voice/panel/observers.forkBackfill.test.mjs › [voice-panel-011] The progress metadata uses data fields in case 4"
   ],
+  "voice-panel-012": [],
+  "voice-panel-013": [],
+  "voice-panel-014": [],
+  "voice-panel-015": [],
+  "voice-panel-016": [],
+  "voice-panel-017": [],
+  "voice-panel-018": [],
+  "voice-panel-019": [],
+  "voice-panel-020": [],
+  "voice-panel-021": [],
+  "voice-panel-022": [],
+  "voice-panel-023": [],
+  "voice-panel-024": [],
+  "voice-panel-025": [],
+  "voice-panel-026": [],
+  "voice-panel-027": [],
+  "voice-panel-028": [],
+  "voice-panel-029": [],
   "voice-panel-030": [
-    "src/voice/panel/inactivity.test.mjs › [voice-panel-030] one clock; quiet arms default five minutes; busy blocks and quiescence rearms",
-    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-030] the timer arms five minutes for a limit that is not a whole number from 0 to 60"
+    "src/voice/panel/inactivity.test.mjs › [voice-panel-030] one clock; quiet arms default five minutes; busy blocks and quiescence rearms"
   ],
   "voice-panel-031": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-031] actual activity resets but silent unchanged snapshots do not"
+  ],
+  "voice-panel-032": [
+    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-032] the timer cancels when the activity stops being quiet, and it refuses a bad new limit",
+    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-032] the timer uses five minutes for a limit that is not a whole number from 0 to 60"
   ],
   "voice-panel-033": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-033] expiry rereads held, unknown and pending counts despite missing update"
   ],
   "voice-panel-034": [
     "src/voice/panel/inactivity.test.mjs › [voice-panel-034] pending siblings and held-before-connect forbid timer; stale callback cannot expire",
-    "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-034] the timer cancels when the activity stops being quiet, and it refuses a bad new limit",
     "src/voice/panel/inactivityBranches.test.mjs › [voice-panel-034] the timer stops at once for a signal that has aborted"
   ],
   "voice-panel-035": [
@@ -9252,6 +9396,7 @@
     "src/voice/panel/nativeActivity.test.mjs › [voice-panel-043] Gemini presentation-only pending does not block idle; retired/deferred work still does",
     "src/voice/panel/nativeActivity.test.mjs › [voice-panel-043] Gemini queue-only work blocks idle, queue drain rearms, expiry rereads delayed queue"
   ],
+  "voice-panel-044": [],
   "voice-panel-045": [
     "src/voice/panel/nativeActivity.test.mjs › [voice-panel-045] overlapping silent replies resolve independently and audio output items remain unknown until playback"
   ],
@@ -9263,10 +9408,34 @@
     "src/voice/panel/nativeActivity.test.mjs › [voice-panel-047] Gemini restores each retired audio immediately across repeated same-mount restarts",
     "src/voice/panel/nativeActivityBranches.test.mjs › [voice-panel-047] a signal that has aborted destroys the observer at once"
   ],
+  "voice-panel-048": [],
+  "voice-panel-049": [],
+  "voice-panel-050": [],
+  "voice-panel-051": [],
+  "voice-panel-052": [],
+  "voice-panel-053": [],
+  "voice-panel-054": [],
+  "voice-panel-055": [],
+  "voice-panel-056": [],
+  "voice-panel-057": [],
+  "voice-panel-058": [],
+  "voice-panel-059": [],
   "voice-panel-060": [
     "src/voice/panel/observers.forkBackfill.test.mjs › [voice-panel-060] The clock checks all due tasks and a cancelled sibling",
     "src/voice/panel/observers.forkBackfill.test.mjs › [voice-panel-060] The clock runs due tasks once and cancels named tasks"
   ],
+  "voice-panel-061": [],
+  "voice-panel-062": [],
+  "voice-panel-063": [],
+  "voice-panel-064": [],
+  "voice-panel-065": [],
+  "voice-panel-066": [],
+  "voice-panel-067": [],
+  "voice-panel-068": [],
+  "voice-panel-069": [],
+  "voice-panel-070": [],
+  "voice-panel-071": [],
+  "voice-panel-072": [],
   "wind-001": [
     "src/layers/wind/fields.test.mjs › [wind-001] scalar read rejects absent and invalid data",
     "src/layers/wind/fields.test.mjs › [wind-001] scalar samples preserve normalized units, geometry, poles and the date-line seam"
@@ -9282,6 +9451,19 @@
   "wind-004": [
     "src/layers/wind/fields.test.mjs › [wind-004] temperature uses a fixed Celsius scale with visible everyday gradients"
   ],
+  "wind-005": [],
+  "wind-006": [],
+  "wind-007": [],
+  "wind-008": [],
+  "wind-009": [],
+  "wind-010": [],
+  "wind-011": [],
+  "wind-012": [],
+  "wind-013": [],
+  "wind-014": [],
+  "wind-015": [],
+  "wind-016": [],
+  "wind-017": [],
   "wind-018": [
     "src/layers/wind/fields.test.mjs › [wind-018] hot-loop sampling fills the supplied output without allocating a replacement",
     "src/layers/wind/model.test.mjs › [wind-018] sampleWind interpolates, wraps, clamps, and rejects non-finite input"
@@ -9295,6 +9477,21 @@
     "src/layers/wind/presentation.test.mjs › [wind-020] captured reading reformats without changing its sample and produces a portable result block",
     "src/layers/wind/presentation.test.mjs › [wind-020] unit chips show one active speed unit"
   ],
+  "wind-021": [],
+  "wind-022": [],
+  "wind-023": [],
+  "wind-024": [],
+  "wind-025": [],
+  "wind-026": [],
+  "wind-027": [],
+  "wind-028": [],
+  "wind-029": [],
+  "wind-030": [],
+  "wind-031": [],
+  "wind-032": [],
+  "wind-033": [],
+  "wind-034": [],
+  "wind-035": [],
   "wind-036": [
     "src/layers/wind/source.test.mjs › [wind-036] default fetch reads an unavailable manifest",
     "src/layers/wind/source.test.mjs › [wind-036] wind source requests optional companions and splits exact U/V/scalar byte regions",

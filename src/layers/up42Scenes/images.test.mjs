@@ -522,7 +522,8 @@ test('[up42-scene-overlay-010] draws ground polygons in order of rank with the n
   await h.ready();
   h.chip().onClick();
   await tick();
-  for (const id of ['old', 'middle', 'new']) {
+  // The images arrive from the newest to the oldest, and the set still holds them oldest first.
+  for (const id of ['new', 'middle', 'old']) {
     waits.get(id).resolve(image());
     await tick();
   }

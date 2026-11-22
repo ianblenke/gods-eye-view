@@ -30,7 +30,7 @@ Origin: spec-first
 - **WHEN** the record lists an owned file, or lists a code other than `GATES-TEST-LEAK` that the run did not find for the file
 - **THEN** the gate stops with the error `GATES-FINDING-OWNED` for the owned file
 - **AND** the gate stops with the error `GATES-FINDING-STALE` for the code that the run did not find
-- **AND** the gate gives no stale error for `GATES-TEST-LEAK`, because a live timer depends on the timing of the run
+- **AND** the gate gives no stale error for `GATES-TEST-LEAK`, because the run time decides whether a live timer occurs
 
 #### Scenario: Write the record with the findings command `coverage-gate-106`
 - **WHEN** the findings command runs

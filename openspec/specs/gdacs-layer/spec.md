@@ -199,7 +199,7 @@ Origin: spec-first
 
 #### Scenario: Put the layer in the Events group `gdacs-layer-019`
 - **WHEN** a test reads the groups of the layer panel
-- **THEN** the group "Events" has the layer "gdacs" right after the layer "s2-ghostmaps"
+- **THEN** the group "Events" ends with the layer "gdacs", after "gnss-integrity"
 
 #### Scenario: Keep the layer out of voice `gdacs-layer-020`
 - **WHEN** a test reads the list `VOICE_OFF_LAYERS`

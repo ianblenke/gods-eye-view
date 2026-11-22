@@ -3293,7 +3293,7 @@
       "functions": 3,
       "totals": {
         "lines": 219,
-        "branches": 63,
+        "branches": 64,
         "functions": 12
       },
       "sha": "5bc47f045ff191d579e0ca02d53150c0530e69a8f9bee020b3ee4fe2b692a9e3",
@@ -11408,7 +11408,7 @@
       "functions": 0,
       "totals": {
         "lines": 820,
-        "branches": 331,
+        "branches": 332,
         "functions": 55
       },
       "sha": "eef2f9badb280ae6a4cb6170873519663ae6e9619a88e21bbd7ba443254da4b4",
@@ -14378,7 +14378,7 @@
       "functions": 0,
       "totals": {
         "lines": 292,
-        "branches": 86,
+        "branches": 85,
         "functions": 20
       },
       "sha": "d0a0d364c1c9107d222d6df6bc9572c9b4cac981c42c39e24957e7c96abae45e",
@@ -17603,7 +17603,7 @@
       "functions": 1,
       "totals": {
         "lines": 192,
-        "branches": 57,
+        "branches": 56,
         "functions": 16
       },
       "sha": "43f4e36f1d9ce4e4337e178b05538ac35404847fe3db26367df46be8e20180ee",

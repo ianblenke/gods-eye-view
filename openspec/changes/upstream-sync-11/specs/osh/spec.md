@@ -105,7 +105,7 @@ Origin: spec-first
 - **AND** the entity's position keeps the altitude its record carries, so a record with `alt:100` sits 100 metres above the ellipsoid
 - **AND** the entity the layer moves for a fresh observation keeps that observation's altitude in the same way
 
-#### Scenario: Leave the hiding beyond the horizon to the renderer `osh-062`
+#### Scenario: Let the renderer hide the points beyond the horizon `osh-062`
 - **WHEN** a refresh draws the entities, or the poll moves the selected entity
 - **THEN** the layer makes its point set with `horizonCull` equal to true, and gives the set every entity, near and far
 - **AND** each label entry of an entity has `horizonCull` equal to true
