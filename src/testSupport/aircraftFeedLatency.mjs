@@ -4,7 +4,6 @@
  * frame, and where its contacts and the tracked trail were drawn judged
  * against where they really were.
  */
-import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   distanceToPath,
@@ -89,8 +88,13 @@ function assertTrail(sim, maxOffPathM) {
   }
 }
 
-/** Register the feed-latency tests for one aircraft layer. */
-export function feedLatencyTests(layer, floorSec) {
+/**
+ * The feed-latency tests for one aircraft layer, as `[name, body]` pairs. The test file
+ * registers each pair itself, so the gate finds each test in the test file.
+ */
+export function feedLatencyCases(layer, floorSec) {
+  const cases = [];
+  const test = (name, body) => cases.push([name, body]);
   test(`${layer}: a feed 90 s late every 30 s is drawn about two minutes behind, every contact between real reports, with no jump or stall`, () => {
     const sim = run(layer);
     assertSmoothMotion(sim);
@@ -190,4 +194,5 @@ export function feedLatencyTests(layer, floorSec) {
     assert.equal(sim.flightState._displayDelay.lagCount, 0);
     for (const f of sim.frames) assert.equal(f.displayMs, f.nowMs);
   });
+  return cases;
 }

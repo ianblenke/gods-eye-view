@@ -52,17 +52,11 @@
     "src/layers/cctv/lifecycle.test.mjs": [
       "GATES-TEST-LEAK"
     ],
-    "src/layers/flights/feedLatency.test.mjs": [
-      "TRACE-EMPTY-TEST-FILE"
-    ],
     "src/layers/launches/failedEntry.test.mjs": [
       "GATES-TEST-LEAK"
     ],
     "src/layers/launches/replayOverlay.test.mjs": [
       "GATES-TEST-LEAK"
-    ],
-    "src/layers/military/feedLatency.test.mjs": [
-      "TRACE-EMPTY-TEST-FILE"
     ],
     "src/layers/satellites/cockpitSubject.test.mjs": [
       "GATES-TEST-LEAK"
@@ -120,9 +114,6 @@
     ],
     "src/streetLevelReplacement.test.mjs": [
       "GATES-TEST-LEAK"
-    ],
-    "src/testSupport/aircraftFeedLatency.mjs": [
-      "TRACE-OUTSIDE-TEST-FILE"
     ],
     "src/textChatServer.test.mjs": [
       "GATES-TEST-LEAK"
