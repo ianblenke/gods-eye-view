@@ -1998,7 +1998,8 @@ test('the OpenStreetMap credit shows while Photon suggestions do', async (t) => 
   const { type, key, credits } = recordingOmnibar(t);
   await type('Tokyo');
   // A loaded machine needs more than 800 ms for the suggestions.
-  for (let wait = 0; wait < 300 && credits.length === 0; wait += 1) await settle(10);
+  for (let wait = 0; wait < 300 && credits.length === 0; wait += 1)
+    await settle(10);
   assert.deepEqual(credits, [true]);
   await key('Escape');
   await nextTick();
