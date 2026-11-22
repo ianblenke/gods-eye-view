@@ -6,7 +6,13 @@ test('[cable-bundled-source-001] the bundled source reads both files with the gl
   const urls = [];
   t.mock.method(globalThis, 'fetch', async (url) => {
     urls.push(String(url));
-    return { ok: true, json: async () => ({ type: 'FeatureCollection', file: String(url).split('/').at(-1) }) };
+    return {
+      ok: true,
+      json: async () => ({
+        type: 'FeatureCollection',
+        file: String(url).split('/').at(-1),
+      }),
+    };
   });
   const snapshot = await createBundledCableSource().fetch();
   assert.equal(urls.length, 2);
@@ -14,6 +20,9 @@ test('[cable-bundled-source-001] the bundled source reads both files with the gl
   assert.ok(urls[1].endsWith('/landing-point-geo.json'));
   assert.deepEqual(snapshot, {
     cables: { type: 'FeatureCollection', file: 'cable-geo.json' },
-    landingPoints: { type: 'FeatureCollection', file: 'landing-point-geo.json' },
+    landingPoints: {
+      type: 'FeatureCollection',
+      file: 'landing-point-geo.json',
+    },
   });
 });
