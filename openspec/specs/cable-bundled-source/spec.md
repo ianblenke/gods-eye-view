@@ -1,4 +1,4 @@
-# submarine-cables Specification
+# cable-bundled-source Specification
 
 ## Purpose
 Describe how the bundled source gives the submarine cable data to the layer.
