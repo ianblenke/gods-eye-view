@@ -4,9 +4,9 @@ Verdict: PASS
 Reviewers: spec-adversary, ste-adversary
 Date: 2026-11-22
 Gates: make gates CHANGE=upstream-sync-11 passed
-Rounds: 3
+Rounds: 4
 Scope: diff 8047d72a2
-Reviewed-Tree: 046410cfc9fc8b684dc6a3c7f603bdab1d77640bf1a66d275ddcee860ca048ed
+Reviewed-Tree: 987f58cff56faf2d6d6867ed72e0fa69a394436818baaca70b604ca5d711a507
 
 ## Rule 21 check
 
@@ -17,6 +17,8 @@ Resolved files: `build/vite.js`, `CHANGELOG.md`, `DATA_SOURCES.md`, `docs/CURREN
 ## Findings
 
 Round 1 (commit `08b1338c2`, scope full) and round 2 (commit `8047d72a2`, scope diff `08b1338c2`) gave FAIL from both reviewers. The lead corrected every critical and major finding. Round 3 (commit `5918fcb1a`, scope diff `8047d72a2`) gave PASS from both reviewers. The reports are in `review/round-1/`, `review/round-2/` and `review/round-3/`.
+
+Round 4 (commit `2d584a033`, narrow confirmation) followed the first CI run of the pull request. The Node jobs hit their 20 minute limit because the upstream test `src/render/unboundCamera.test.mjs` parsed each module again for each entry (653 s in one file). The lead cached the parse (27 s) and raised the job limits to 30 and 45 minutes in `.github/workflows/ci.yml`. The spec adversary gave PASS with no findings. The STE adversary did not run again, because the change adds no prose.
 
 Minor findings of round 3. The lead (Claude) accepts these by name, and the owner can overrule:
 
