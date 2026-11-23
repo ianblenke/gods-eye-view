@@ -1,8 +1,11 @@
-import test from 'node:test';
+import test, { mock } from 'node:test';
 import assert from 'node:assert/strict';
 import { createInteraction } from './interaction.js';
 import { RADIO_PICK_WINDOW_PX } from './policy.js';
 import { radioStationIdFromPick } from './rendering.js';
+import { createSelection } from './selection.js';
+import { fakeInput } from '../../input/testDoubles.mjs';
+import { bindFakeDraw } from '../../testSupport/fakeDrawPort.mjs';
 
 function interaction() {
   const state = { _stationById: new Map([['kexp', {}]]) };
@@ -107,4 +110,86 @@ test("a station under another layer's card does not act", () => {
   assert.equal(radio.pickedRadioStationAt(tap(null, station)), null, 'exact');
   top = { sourceId: 'radio', entryId: 'radio:kexp' };
   assert.equal(radio.pickedRadioStationAt(tap()), 'kexp', 'our own card');
+});
+
+test('an installed interaction selects the clicked station and polls the horizon on a timer', (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  const viewer = {
+    scene: {
+      canvas: { addEventListener() {}, removeEventListener() {} },
+      pick: () => undefined,
+    },
+  };
+  bindFakeDraw(viewer);
+  const driver = fakeInput(viewer);
+  t.after(() => driver.destroy());
+  const selected = [];
+  const visibility = [];
+  const state = {
+    _stationById: new Map([['kexp', {}]]),
+    _viewer: viewer,
+    _enabled: true,
+  };
+  const { installInteraction, removeInteraction } = createInteraction({
+    state,
+    services: {
+      picking: {
+        resolvePickId: () => null,
+        isOwnedByOtherLayer: () => false,
+        registerPickOwner() {},
+        unregisterPickOwner() {},
+      },
+      overlays: { setOverlaySourceVisible() {} },
+    },
+    parts: {
+      rendering: {
+        radioStationIdFromPick: () => 'kexp',
+        updateRenderVisibility: (options) => visibility.push(options),
+      },
+      selection: {
+        selectRadioStation: (...call) => selected.push(call),
+      },
+    },
+  });
+  installInteraction();
+  driver.click();
+  assert.deepEqual(selected, [['kexp', { autoplay: true, origin: 'user' }]]);
+  t.mock.timers.tick(250);
+  assert.deepEqual(visibility, [{ force: false }]);
+  removeInteraction();
+  t.mock.timers.tick(500);
+  assert.equal(visibility.length, 1);
+});
+
+test('a selection redraws its entity once more after 1300 ms while it stays selected', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  let redraws = 0;
+  const state = {
+    _stationById: new Map([['kexp', { id: 'kexp', lat: 1, lon: 2 }]]),
+    _selectionGeneration: 0,
+    _sessionGeneration: 0,
+    _selectedId: null,
+    _selectionTimer: null,
+  };
+  const { selectRadioStation } = createSelection({
+    state,
+    services: { ground: { warmGroundFloor() {} } },
+    parts: {
+      interaction: { radioPresentationAllowed: () => true },
+      rendering: { updateSelectionEntity: () => redraws++ },
+      navigation: {
+        radioCameraNavigationOwnsSelection: () => true,
+        invalidateRadioCameraNavigation() {},
+        focusStation() {},
+      },
+      tuning: { endRadioTuning() {} },
+      presentation: { emitState() {}, emitPlaybackControl() {} },
+      playback: { stopRadioPlayback() {}, playSelectedRadio() {} },
+    },
+  });
+  assert.equal(selectRadioStation('kexp'), true);
+  assert.equal(redraws, 1);
+  t.mock.timers.tick(1300);
+  assert.equal(redraws, 2);
+  assert.equal(state._selectionTimer, null);
 });

@@ -118,6 +118,9 @@
     "src/textChatServer.test.mjs": [
       "GATES-TEST-LEAK"
     ],
+    "src/tooling/previewServing.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
     "src/tooling/transitQa.test.mjs": [
       "GATES-TEST-LEAK"
     ],
