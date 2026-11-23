@@ -222,7 +222,14 @@ function browserTarget(declaration) {
   return null;
 }
 
+const specifierCache = new Map();
+
 function specifiersOf(file) {
+  if (!specifierCache.has(file)) specifierCache.set(file, readSpecifiers(file));
+  return specifierCache.get(file);
+}
+
+function readSpecifiers(file) {
   let code = readFileSync(path.join(root, file), 'utf8');
   if (file.endsWith('.vue')) {
     const { descriptor } = parseSfc(code, { filename: file });

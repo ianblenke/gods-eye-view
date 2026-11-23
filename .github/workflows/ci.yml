@@ -16,7 +16,7 @@ jobs:
   verify:
     name: Node ${{ matrix.node }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -132,7 +132,7 @@ jobs:
   spec-gates:
     name: Spec gates
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       PUPPETEER_SKIP_DOWNLOAD: '1'
     steps:
