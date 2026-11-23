@@ -50,7 +50,7 @@ The change adds no layer, no route and no QA script of the fork.
 
 - Known limit `share-links`: An upstream share link can enable a wrong layer in the fork. The fork keeps its own tokens. Upstream gave the seven new layers the tokens `00`, `01`, `02`, `8`, `6`, `7` and `9`. The fork gave those tokens to other layers. Upstream also gave `air-quality`, `gnss-integrity` and `s2-ghostmaps` the tokens `4`, `3` and `5`. The fork gave those tokens to other layers.
 - Known limit `locales`: The lead wrote the 21 fork texts for the nine new locales. No native speaker checked them.
-- Known limit `up42-image-alpha`: The UP42 image set draws opaque. The shape set has no alpha, so the old alpha of 0.85 is gone. No rule puts the outlines above the images.
+- Known limit `up42-image-alpha`: The UP42 image set draws with no transparency. The shape set has no alpha, so the old alpha of 0.85 is gone. No rule puts the outlines above the images.
 - Known limit `osh-labels`: The OSH layer shows at most 500 overlay labels. The old Cesium labels had no limit.
 - Known limit `osh-horizon`: The renderer hides the OSH points beyond the horizon. No test of the fork shows that the renderer hides them. The layer sets `horizonCull`, and the tests check its value.
 - Known limit `cesium-words`: Some scenarios of `reticulum-layer`, `gdacs-layer`, `up42-scenes-layer`, `beemaps-frames` and `beemaps-bursts` still use words of Cesium, for example "entity". The moved tests check the same behavior through the draw port. A later change can write the scenarios again.
