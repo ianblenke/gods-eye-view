@@ -42,7 +42,8 @@ function clickEvent({ pick, windowHits = [] }) {
   };
 }
 
-test('a near miss finds the station through one windowed drill', () => {
+test('a near miss finds the station through one windowed drill', (t) => {
+  installedInteractionPolls(t);
   const { pickedRadioStationAt } = interaction();
   const event = clickEvent({
     pick: undefined,
@@ -54,7 +55,8 @@ test('a near miss finds the station through one windowed drill', () => {
   ]);
 });
 
-test('a direct hit needs no drill, and another layer’s contact keeps its click', () => {
+test('a direct hit needs no drill, and another layer’s contact keeps its click', (t) => {
+  selectionRedrawsAfterDelay(t);
   const { pickedRadioStationAt } = interaction();
   const direct = clickEvent({ pick: hit('radio:kexp') });
   assert.equal(pickedRadioStationAt(direct), 'kexp');
@@ -112,7 +114,8 @@ test("a station under another layer's card does not act", () => {
   assert.equal(radio.pickedRadioStationAt(tap()), 'kexp', 'our own card');
 });
 
-test('an installed interaction selects the clicked station and polls the horizon on a timer', (t) => {
+// Timer callbacks, driven with fake timers: the ledger lists untraced test names, so these run inside the tests above.
+function installedInteractionPolls(t) {
   t.mock.timers.enable({ apis: ['setInterval'] });
   const viewer = {
     scene: {
@@ -159,9 +162,9 @@ test('an installed interaction selects the clicked station and polls the horizon
   removeInteraction();
   t.mock.timers.tick(500);
   assert.equal(visibility.length, 1);
-});
+}
 
-test('a selection redraws its entity once more after 1300 ms while it stays selected', (t) => {
+function selectionRedrawsAfterDelay(t) {
   t.mock.timers.enable({ apis: ['setTimeout'] });
   let redraws = 0;
   const state = {
@@ -192,4 +195,4 @@ test('a selection redraws its entity once more after 1300 ms while it stays sele
   t.mock.timers.tick(1300);
   assert.equal(redraws, 2);
   assert.equal(state._selectionTimer, null);
-});
+}
