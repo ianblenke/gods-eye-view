@@ -1,7 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as Cesium from 'cesium';
-import { START_VIEW, flyToStartView, startApplicationView } from '../camera.js';
+import {
+  TAIWAN_VIEW,
+  flyToStartView,
+  startApplicationView,
+} from '../camera.js';
+import { bindFakeCesiumCamera } from '../testSupport/fakeCameraPort.mjs';
 
 function cameraFixture() {
   const views = [];
@@ -17,14 +22,14 @@ function cameraFixture() {
     destroy() {
       destroyed = true;
     },
-    viewer: {
+    viewer: bindFakeCesiumCamera({
       isDestroyed: () => destroyed,
       camera: {
         setView: (view) => views.push(view),
         flyTo: (view) => flights.push(view),
         cancelFlight: () => cancelled++,
       },
-    },
+    }),
   };
 }
 
@@ -52,15 +57,16 @@ function applicationFixture(hasShareState) {
 
 test('[startup-view-001] flies to the Taiwan pose', (t) => {
   t.mock.timers.enable({ apis: ['setTimeout'] });
-  assert.deepEqual(START_VIEW, {
-    longitude: 120.6485,
-    latitude: 24.18,
-    heightM: 217,
-    headingDeg: 0,
-    pitchDeg: -35,
-    rollDeg: 0,
+  assert.deepEqual(TAIWAN_VIEW, {
+    lon: 120.6485,
+    lat: 24.18,
+    height: 217,
+    heading: 0,
+    pitch: -35,
   });
-  const { camera: { flights } } = applicationFixture(false);
+  const {
+    camera: { flights },
+  } = applicationFixture(false);
   t.mock.timers.tick(500);
   assert.equal(flights.length, 1);
   const [lon, lat, height] = position(flights[0]);

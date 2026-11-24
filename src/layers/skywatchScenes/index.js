@@ -1,5 +1,7 @@
-import * as Cesium from 'cesium';
+import { fromDegrees } from '../../geo/ellipsoid.js';
+import { drawOf } from '../../render/rendererOf.js';
 import { scenesBox, searchWindow } from './box.js';
+import { footprintItems, viewCentre } from './view.js';
 import {
   LOADING_THUMBNAIL,
   NO_THUMBNAIL,
@@ -24,62 +26,13 @@ const SEARCH_LABEL = 'Search scenes here';
 const SEARCHING_LABEL = 'Searching…';
 const NO_KEY = describeFailure({ status: 0, error: 'no_key' });
 
-/** The point under the middle of the screen, or null when it shows the sky. */
-function viewCentre(viewer) {
-  const canvas = viewer.scene?.canvas;
-  if (!canvas?.clientWidth || !canvas?.clientHeight) return null;
-  let hit;
-  try {
-    hit = viewer.camera.pickEllipsoid(
-      new Cesium.Cartesian2(canvas.clientWidth / 2, canvas.clientHeight / 2),
-      viewer.scene.globe?.ellipsoid,
-    );
-  } catch {
-    return null;
-  }
-  if (!hit) return null;
-  const position = Cesium.Cartographic.fromCartesian(hit);
-  return {
-    lat: Cesium.Math.toDegrees(position.latitude),
-    lon: Cesium.Math.toDegrees(position.longitude),
-  };
-}
-
-/** The entity of the footprint of a scene, with the style of its selection. */
-function footprintEntity(scene, selected) {
-  const style = footprintStyle(selected);
-  const color = Cesium.Color.fromCssColorString(style.color);
-  const positions = Cesium.Cartesian3.fromDegreesArray(scene.ring.flat());
-  return new Cesium.Entity({
-    id: `${ID}:${scene.id}`,
-    polyline: {
-      positions,
-      clampToGround: true,
-      width: style.width,
-      material: new Cesium.ColorMaterialProperty(
-        color.withAlpha(style.outlineAlpha),
-      ),
-    },
-    ...(style.fillAlpha > 0
-      ? {
-          polygon: {
-            hierarchy: new Cesium.PolygonHierarchy(positions),
-            material: new Cesium.ColorMaterialProperty(
-              color.withAlpha(style.fillAlpha),
-            ),
-          },
-        }
-      : {}),
-  });
-}
-
 /** The overlay entry of the thumbnail card of a scene. */
 function cardEntry(scene, image, size) {
   const centre = footprintCentre(scene.ring);
   const date = dateOf(scene.time);
   return {
     id: CARD_ID,
-    position: Cesium.Cartesian3.fromDegrees(centre.lon, centre.lat),
+    position: fromDegrees(centre.lon, centre.lat),
     variant: 'thumbnail',
     paintLane: 'thumbnail',
     title: scene.provider === null ? date : `${date} ${scene.provider}`,
@@ -129,7 +82,8 @@ export function createSkywatchScenesLayer({
       'SkyWatch Scenes requires an overlay host with setEntries, clearSource and setVisible',
     );
   let _viewer = null;
-  let _dataSource = null;
+  let _lines = null;
+  let _fills = null;
   let _enabled = false;
   let _statusRequest = null;
   let _request = null;
@@ -149,12 +103,19 @@ export function createSkywatchScenesLayer({
   const notify = () => _listener?.();
 
   function showScenes() {
-    _dataSource.entities.removeAll();
+    const lines = [];
+    const fills = [];
     for (const scene of _answer.scenes) {
-      _dataSource.entities.add(
-        footprintEntity(scene, scene.id === _selectedId),
+      const items = footprintItems(
+        () => `${ID}:${scene.id}`,
+        [scene.ring],
+        footprintStyle(scene.id === _selectedId),
       );
+      lines.push(...items.lines);
+      fills.push(...items.fills);
     }
+    _lines.set(lines);
+    _fills.set(fills);
     requestRender(ID);
   }
 
@@ -294,23 +255,24 @@ export function createSkywatchScenesLayer({
       if (_viewer)
         throw new Error('SkyWatch Scenes layer is already initialized');
       _viewer = viewer;
-      _dataSource = new Cesium.CustomDataSource(ID);
-      _dataSource.show = false;
-      viewer.dataSources.add(_dataSource);
+      const draw = drawOf(viewer);
+      _lines = draw.lines({ id: `${ID}:lines`, clampTo: 'both', show: false });
+      _fills = draw.shapes({ id: `${ID}:fills`, clampTo: 'both', show: false });
       overlayHost.setVisible(ID, false);
     },
 
     enable() {
       _enabled = true;
-      _dataSource.show = true;
+      _lines.show = _fills.show = true;
       overlayHost.setVisible(ID, true);
     },
 
     disable() {
       reset();
       _enabled = false;
-      _dataSource.show = false;
-      _dataSource.entities.removeAll();
+      _lines.show = _fills.show = false;
+      _lines.clear();
+      _fills.clear();
       overlayHost.setVisible(ID, false);
       requestRender(ID);
     },
@@ -379,14 +341,15 @@ export function createSkywatchScenesLayer({
       _listener = listener;
     },
 
-    destroy(viewer = _viewer) {
-      if (!_dataSource) return;
+    destroy() {
+      if (!_lines) return;
       reset();
       _enabled = false;
       _viewer = null;
       overlayHost.setVisible(ID, false);
-      viewer.dataSources.remove(_dataSource, true);
-      _dataSource = null;
+      _lines.dispose();
+      _fills.dispose();
+      _lines = _fills = null;
       requestRender(ID);
     },
 

@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import * as Cesium from 'cesium';
+import { fromDegrees } from '../../geo/ellipsoid.js';
+import { cssColor } from '../../render/color.js';
+import { bindFakeDraw } from '../../testSupport/fakeDrawPort.mjs';
 import { createBeemapsLayer } from './index.js';
 
 const NOW = Date.UTC(2026, 9, 15, 12, 0, 0);
@@ -42,7 +44,7 @@ const STATUS_FAILED = 'The server did not give the status of the key.';
 function harness({
   status = async () => ({ ok: true, configured: true }),
   frames = async () => ({ ok: true, answer: THREE }),
-  pick = () => Cesium.Cartesian3.fromDegrees(10.0031, 59.9976),
+  pick = () => fromDegrees(10.0031, 59.9976),
   canvas = { clientWidth: 800, clientHeight: 600 },
 } = {}) {
   const calls = { getStatus: [], getFrames: [] };
@@ -56,7 +58,6 @@ function harness({
       return frames(options);
     },
   };
-  const added = [];
   const listeners = [];
   const picks = [];
   const handlers = {};
@@ -68,30 +69,25 @@ function harness({
     raiseEvent: () => (handlers[name] ?? []).forEach((handler) => handler()),
   });
   const viewer = {
-    dataSources: {
-      add: (dataSource) => added.push(dataSource),
-      remove(dataSource, destroy) {
-        added.splice(added.indexOf(dataSource), 1);
-        viewer.removed = [dataSource, destroy];
-      },
-    },
     camera: {
-      positionWC: Cesium.Cartesian3.fromDegrees(0, 0, 1e7),
       changed: watch('camera.changed'),
       moveStart: watch('camera.moveStart'),
       moveEnd: watch('camera.moveEnd'),
+    },
+    scene: {
+      canvas,
+      preRender: watch('scene.preRender'),
+      postRender: watch('scene.postRender'),
+    },
+  };
+  const { draw } = bindFakeDraw(viewer, {
+    query: {
       pickEllipsoid: (...args) => {
         picks.push(args);
         return pick(...args);
       },
     },
-    scene: {
-      canvas,
-      globe: { ellipsoid: Cesium.Ellipsoid.WGS84 },
-      preRender: watch('scene.preRender'),
-      postRender: watch('scene.postRender'),
-    },
-  };
+  });
   const clock = { t: NOW };
   const layer = createBeemapsLayer({ source, now: () => clock.t });
   const chip = () => layer.getRowControls().chips[0];
@@ -100,13 +96,12 @@ function harness({
     layer,
     viewer,
     calls,
-    added,
     listeners,
     picks,
     clock,
     chip,
     info,
-    dataSource: () => added[0],
+    dataSource: () => draw.set('beemaps:points'),
     async ready() {
       layer.init(viewer);
       layer.enable(viewer);
@@ -156,7 +151,6 @@ test('[beemaps-frames-002] asks only for the status and adds no listener to the 
     [11, 61],
     [12, 62],
   ]) {
-    viewer.camera.positionWC = Cesium.Cartesian3.fromDegrees(lon, lat, 1e7);
     for (const name of ['moveStart', 'changed', 'moveEnd'])
       viewer.camera[name].raiseEvent();
     viewer.scene.preRender.raiseEvent();
@@ -385,9 +379,7 @@ test('[beemaps-frames-008] builds the box from the point under the middle of the
   );
   assert.equal(h.calls.getFrames[0].signal instanceof AbortSignal, true);
   assert.equal(h.picks.length, 1);
-  assert.equal(h.picks[0][0].x, 400);
-  assert.equal(h.picks[0][0].y, 300);
-  assert.equal(h.picks[0][1], Cesium.Ellipsoid.WGS84);
+  assert.deepEqual(h.picks[0], [400, 300]);
 });
 
 test('[beemaps-frames-009] sends no request and names the reason for a view that has no box', async () => {
@@ -421,7 +413,7 @@ test('[beemaps-frames-009] sends no request and names the reason for a view that
   await flat.chip().onClick();
   assert.equal(flat.calls.getFrames.length, 0);
   const north = harness({
-    pick: () => Cesium.Cartesian3.fromDegrees(0, 80.003),
+    pick: () => fromDegrees(0, 80.003),
   });
   await north.ready();
   await north.chip().onClick();
@@ -431,7 +423,7 @@ test('[beemaps-frames-009] sends no request and names the reason for a view that
     'Move the view to a latitude from -80 to 80 degrees and press again.',
   );
   const edge = harness({
-    pick: () => Cesium.Cartesian3.fromDegrees(179.999, 0),
+    pick: () => fromDegrees(179.999, 0),
   });
   await edge.ready();
   await edge.chip().onClick();
@@ -440,12 +432,6 @@ test('[beemaps-frames-009] sends no request and names the reason for a view that
     edge.info(),
     'Move the view away from the 180th meridian and press again.',
   );
-  const noGlobe = harness();
-  noGlobe.viewer.scene.globe = undefined;
-  await noGlobe.ready();
-  await noGlobe.chip().onClick();
-  assert.equal(noGlobe.calls.getFrames.length, 1);
-  assert.equal(noGlobe.picks[0][1], undefined);
   const noScene = harness();
   noScene.viewer.scene = undefined;
   await noScene.ready();
@@ -457,13 +443,12 @@ test('[beemaps-frames-019] shows one point on the ground for each frame, with th
   const h = harness();
   await h.ready();
   await h.chip().onClick();
-  const entities = h.dataSource().entities.values;
+  const entities = [...h.dataSource().items.values()];
   assert.equal(entities.length, 3);
   assert.deepEqual(
     entities.map((entity) => entity.id),
     [`beemaps:${hex(1)}`, `beemaps:${hex(200)}`, `beemaps:${hex(1000)}`],
   );
-  const julian = Cesium.JulianDate.now();
   const expected = [
     [8, 1],
     [7, 0.7],
@@ -471,14 +456,9 @@ test('[beemaps-frames-019] shows one point on the ground for each frame, with th
   ];
   entities.forEach((entity, index) => {
     const [size, alpha] = expected[index];
-    assert.equal(entity.point.pixelSize.getValue(julian), size);
-    const color = entity.point.color.getValue(julian);
-    assert.equal(color.alpha, alpha);
-    assert.equal(Cesium.Color.fromAlpha(color, 1).toCssHexString(), '#f59e0b');
-    assert.equal(
-      entity.point.heightReference.getValue(julian),
-      Cesium.HeightReference.CLAMP_TO_GROUND,
-    );
+    assert.equal(entity.pixelSize, size);
+    assert.deepEqual(entity.color, [...cssColor('#f59e0b').slice(0, 3), alpha]);
+    assert.equal(entity.height, 'clampGround');
   });
   assert.deepEqual(h.layer.getStats(), {
     count: 3,
@@ -493,12 +473,11 @@ test('[beemaps-frames-019] styles each point with the age at the time of the clo
   await h.ready();
   h.clock.t = later;
   await h.chip().onClick();
-  const julian = Cesium.JulianDate.now();
-  const entities = h.dataSource().entities.values;
+  const entities = [...h.dataSource().items.values()];
   assert.equal(entities.length, 3);
   for (const entity of entities) {
-    assert.equal(entity.point.pixelSize.getValue(julian), 6);
-    assert.equal(entity.point.color.getValue(julian).alpha, 0.4);
+    assert.equal(entity.pixelSize, 6);
+    assert.equal(entity.color[3], 0.4);
   }
   assert.equal(h.layer.getStats().lastUpdate, later);
 });
@@ -512,16 +491,8 @@ test('[beemaps-frames-019] puts each point at the position of its frame', async 
   });
   await h.ready();
   await h.chip().onClick();
-  const [entity] = h.dataSource().entities.values;
-  const position = entity.position.getValue(Cesium.JulianDate.now());
-  assert.equal(
-    Cesium.Cartesian3.equalsEpsilon(
-      position,
-      Cesium.Cartesian3.fromDegrees(-45.25, 12.5),
-      1e-6,
-    ),
-    true,
-  );
+  const [entity] = [...h.dataSource().items.values()];
+  assert.deepEqual(entity.pos, fromDegrees(-45.25, 12.5));
 });
 
 test('[beemaps-frames-019] replaces the points of the first answer with those of the second', async () => {
@@ -537,7 +508,7 @@ test('[beemaps-frames-019] replaces the points of the first answer with those of
   h.clock.t = NOW + 1000;
   await h.chip().onClick();
   assert.deepEqual(
-    h.dataSource().entities.values.map((entity) => entity.id),
+    [...h.dataSource().items.values()].map((entity) => entity.id),
     [`beemaps:${hex(5)}`],
   );
   assert.deepEqual(h.layer.getStats(), {
@@ -558,7 +529,7 @@ test('[beemaps-frames-020] keeps the points and shows the message when a later p
   await h.ready();
   await h.chip().onClick();
   await h.chip().onClick();
-  assert.equal(h.dataSource().entities.values.length, 3);
+  assert.equal([...h.dataSource().items.values()].length, 3);
   assert.equal(
     h.info(),
     'The daily limit of 20 requests is used. · 3 frames · newest 2026-10-15 · requests today 3 of 20 · credits left 998',
@@ -577,7 +548,7 @@ test('[beemaps-frames-020] shows the message of a first press that fails and kee
   });
   await h.ready();
   await h.chip().onClick();
-  assert.equal(h.dataSource().entities.values.length, 0);
+  assert.equal([...h.dataSource().items.values()].length, 0);
   assert.equal(
     h.info(),
     'Only the machine that runs the server can fetch frames. Start the app with make up-codex.',
@@ -588,13 +559,13 @@ test('[beemaps-frames-020] shows the message of a first press that fails and kee
 test('[beemaps-frames-020] keeps the points when a press has no box', async () => {
   let sky = false;
   const h = harness({
-    pick: () => (sky ? undefined : Cesium.Cartesian3.fromDegrees(10, 60)),
+    pick: () => (sky ? undefined : fromDegrees(10, 60)),
   });
   await h.ready();
   await h.chip().onClick();
   sky = true;
   await h.chip().onClick();
-  assert.equal(h.dataSource().entities.values.length, 3);
+  assert.equal([...h.dataSource().items.values()].length, 3);
   assert.equal(h.calls.getFrames.length, 1);
   assert.equal(h.layer.getStats().count, 3);
 });
@@ -625,7 +596,7 @@ test('[beemaps-frames-021] aborts the request on disable and ignores the late an
   assert.equal(h.calls.getFrames[0].signal.aborted, true);
   wait.resolve({ ok: true, answer: THREE });
   await pressed;
-  assert.equal(h.dataSource().entities.values.length, 0);
+  assert.equal([...h.dataSource().items.values()].length, 0);
   assert.equal(h.dataSource().show, false);
   assert.equal(h.layer.getStats().count, 0);
   h.layer.enable(h.viewer);
@@ -645,7 +616,7 @@ test('[beemaps-frames-021] shows no point after disable and no message after the
   await h.chip().onClick();
   await h.chip().onClick();
   h.layer.disable(h.viewer);
-  assert.equal(h.dataSource().entities.values.length, 0);
+  assert.equal([...h.dataSource().items.values()].length, 0);
   h.layer.enable(h.viewer);
   assert.equal(h.dataSource().show, true);
   assert.equal(h.info(), HINT);
@@ -728,13 +699,11 @@ test('[beemaps-frames-022] releases the data source and aborts the request on de
   const wait = deferred();
   const h = harness({ frames: () => wait.promise });
   await h.ready();
-  const dataSource = h.dataSource();
   const pressed = h.chip().onClick();
   await tick();
   h.layer.destroy(h.viewer);
   assert.equal(h.calls.getFrames[0].signal.aborted, true);
-  assert.deepEqual(h.added, []);
-  assert.deepEqual(h.viewer.removed, [dataSource, true]);
+  assert.equal(h.dataSource(), undefined);
   wait.resolve({ ok: true, answer: THREE });
   await pressed;
   assert.deepEqual(h.layer.getStats(), {
@@ -742,9 +711,7 @@ test('[beemaps-frames-022] releases the data source and aborts the request on de
     lastUpdate: null,
     error: null,
   });
-  h.viewer.removed = null;
   h.layer.destroy(h.viewer);
-  assert.equal(h.viewer.removed, null);
 });
 
 test('[beemaps-frames-022] clears the points of a layer that shows them on destroy', async () => {
@@ -765,13 +732,13 @@ test('[beemaps-frames-022] can be initialized again after destroy', () => {
   h.layer.init(h.viewer);
   h.layer.destroy(h.viewer);
   h.layer.init(h.viewer);
-  assert.equal(h.added.length, 1);
+  assert.notEqual(h.dataSource(), undefined);
 });
 
 test('[beemaps-frames-022] destroys a layer that was never initialized', () => {
   const h = harness();
   h.layer.destroy(h.viewer);
-  assert.deepEqual(h.added, []);
+  assert.equal(h.dataSource(), undefined);
 });
 
 test('[beemaps-frames-023] tells the panel when a request starts and ends and when an update ends', async () => {

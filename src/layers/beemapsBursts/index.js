@@ -1,4 +1,6 @@
-import * as Cesium from 'cesium';
+import { toLonLatH } from '../../geo/ellipsoid.js';
+import { hexColor } from '../../render/color.js';
+import { canvasOf, drawOf, queryOf } from '../../render/rendererOf.js';
 import { burstBox } from './box.js';
 import {
   QUOTE_ENDED,
@@ -24,23 +26,20 @@ const SOURCE_METHODS = ['getStatus', 'quote', 'confirm', 'list'];
 
 /** The point under the middle of the screen, or null when it shows the sky. */
 function viewCentre(viewer) {
-  const canvas = viewer.scene?.canvas;
+  const canvas = canvasOf(viewer);
   if (!canvas?.clientWidth || !canvas?.clientHeight) return null;
   let hit;
   try {
-    hit = viewer.camera.pickEllipsoid(
-      new Cesium.Cartesian2(canvas.clientWidth / 2, canvas.clientHeight / 2),
-      viewer.scene.globe?.ellipsoid,
+    hit = queryOf(viewer).pickEllipsoid(
+      canvas.clientWidth / 2,
+      canvas.clientHeight / 2,
     );
   } catch {
     return null;
   }
   if (!hit) return null;
-  const position = Cesium.Cartographic.fromCartesian(hit);
-  return {
-    lat: Cesium.Math.toDegrees(position.latitude),
-    lon: Cesium.Math.toDegrees(position.longitude),
-  };
+  const position = toLonLatH(hit);
+  return position && { lat: position.lat, lon: position.lon };
 }
 
 /** An idempotency key of 32 hexadecimal characters. */
@@ -69,7 +68,7 @@ export function createBeemapsBurstsLayer({
       'Bee Maps Bursts needs a source with getStatus, quote, confirm and list',
     );
   let _viewer = null;
-  let _dataSource = null;
+  let _boxes = null;
   let _enabled = false;
   let _statusRequest = null;
   let _request = null;
@@ -92,19 +91,13 @@ export function createBeemapsBurstsLayer({
 
   const notify = () => _listener?.();
 
-  function addBox(id, bbox, style) {
-    if (_dataSource.entities.getById(id)) return;
-    _dataSource.entities.add(
-      new Cesium.Entity({
-        id,
-        rectangle: {
-          coordinates: Cesium.Rectangle.fromDegrees(...bbox),
-          material: Cesium.Color.fromCssColorString(style.color).withAlpha(
-            style.alpha,
-          ),
-        },
-      }),
-    );
+  function boxItem(id, bbox, style) {
+    const [west, south, east, north] = bbox;
+    return {
+      id,
+      geometry: { kind: 'rectangle', rect: { west, south, east, north } },
+      fill: hexColor(style.color, style.alpha),
+    };
   }
 
   /** The bursts of the last list, then the bursts that a confirm created and the list lacks. */
@@ -115,14 +108,17 @@ export function createBeemapsBurstsLayer({
   }
 
   function draw() {
-    if (!_dataSource) return;
-    _dataSource.entities.removeAll();
-    if (_quote) addBox(QUOTE_ENTITY_ID, _quote.bbox, QUOTE_STYLE);
+    if (!_boxes) return;
+    const items = [];
+    if (_quote) items.push(boxItem(QUOTE_ENTITY_ID, _quote.bbox, QUOTE_STYLE));
     for (const burst of knownBursts()) {
       if (burst.bbox) {
-        addBox(`beemaps-bursts:${burst.id}`, burst.bbox, burstStyle(burst));
+        items.push(
+          boxItem(`beemaps-bursts:${burst.id}`, burst.bbox, burstStyle(burst)),
+        );
       }
     }
+    _boxes.set(items);
     requestRender('beemaps-bursts');
   }
 
@@ -344,20 +340,21 @@ export function createBeemapsBurstsLayer({
     init(viewer) {
       if (_viewer) throw new Error('Bee Maps Bursts is already initialized');
       _viewer = viewer;
-      _dataSource = new Cesium.CustomDataSource('beemaps-bursts');
-      _dataSource.show = false;
-      viewer.dataSources.add(_dataSource);
+      _boxes = drawOf(viewer).shapes({
+        id: 'beemaps-bursts:boxes',
+        show: false,
+      });
     },
 
     enable() {
       _enabled = true;
-      _dataSource.show = true;
+      _boxes.show = true;
     },
 
     disable() {
       reset();
       _enabled = false;
-      _dataSource.show = false;
+      _boxes.show = false;
     },
 
     async update() {
@@ -455,17 +452,15 @@ export function createBeemapsBurstsLayer({
       _listener = listener;
     },
 
-    destroy(viewer = _viewer) {
+    destroy() {
       reset();
       _enabled = false;
       _confirming = null;
       _confirmText = null;
       _mustList = false;
       _viewer = null;
-      if (_dataSource) {
-        viewer.dataSources.remove(_dataSource, true);
-        _dataSource = null;
-      }
+      _boxes?.dispose();
+      _boxes = null;
     },
 
     getStats() {

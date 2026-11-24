@@ -23,9 +23,10 @@ Origin: spec-first
 - **AND** the built output has the `VITE_AIS_LIVE_MAX_ROWS` sentinel
 
 #### Scenario: Keep the `define` list at the three public names `credential-boundary-003`
-- **WHEN** the test reads `Object.keys()` of the `define` of the browser config
+- **WHEN** the test reads `Object.keys()` of the `define` of the browser config, and leaves out the four flags of vue-i18n
 - **THEN** it deep-equals `import.meta.env.GOOGLE_MAPS_API_KEY`, `import.meta.env.CESIUM_ION_TOKEN` and `import.meta.env.MAPILLARY_CLIENT_TOKEN`, in order
 - **AND** with no parameters, all three `define` values are `undefined`
+- **AND** the four flags are `__VUE_I18N_FULL_INSTALL__`, `__VUE_I18N_LEGACY_API__`, `__INTLIFY_PROD_DEVTOOLS__` and `__INTLIFY_DROP_MESSAGE_COMPILER__`
 
 #### Scenario: Keep key-shaped literals out of browser source `credential-boundary-004`
 - **WHEN** the test reads `index.html`, every file under `build/`, and every non-test file under `src/`, as text
@@ -45,11 +46,11 @@ The key registry MUST mark as client-exposed exactly the names in the `define` o
 Origin: spec-first
 
 #### Scenario: The registry and the `define` list agree `credential-boundary-005`
-- **WHEN** the test reads every registry entry marked client-exposed, and every name in the `define` of the browser build
+- **WHEN** the test reads every registry entry marked client-exposed, and every name in the `define` of the browser build except the four flags of vue-i18n
 - **THEN** the two name sets are equal
 
 #### Scenario: Document each credential name that the server reads `credential-boundary-006`
-- **WHEN** the test reads the `.js` and `.mjs` files under `server/`, `scripts/` and `tools/`
+- **WHEN** the test reads the `.js` and `.mjs` files under `server/`, `scripts/` and `tools/`, and leaves out the test files
 - **AND** it finds each name in `process.env.NAME`, `env.NAME`, `env['NAME']`, a destructured `process.env` or `env`, or a quoted string
 - **AND** the name ends in `_KEY`, `_TOKEN`, `_SECRET` or `_PASSWORD`
 - **THEN** every name found is in the registry, in `.env.example`, or in both

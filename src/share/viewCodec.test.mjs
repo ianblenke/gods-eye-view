@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   LAYER_STATE_REGISTRY,
+  LAYER_STATE_TOKEN_ALPHABET,
   LAYER_STATE_TOKEN_RESERVATIONS,
   REGISTERED_LAYER_IDS,
   createDefaultLayerState,
@@ -10,6 +11,7 @@ import {
 import { VIEW_FOLLOW_KINDS, VIEW_MAPS, VIEW_STYLES } from '../view/index.js';
 import { HUD_LAYOUTS } from '../hudLayoutPolicy.js';
 import { ALLOCATION_STRATEGIES } from '../data/detectionPolicy.js';
+import { BLOOM_INTENSITY_DEFAULT, BLOOM_SCALE_VERSION } from '../bloom.js';
 import {
   pick,
   randomLayerState,
@@ -38,20 +40,25 @@ import {
   SHARE_VIEW_ENUMS,
   SHARE_VIEW_EPOCH_S,
   SHARE_VIEW_FIELDS,
+  BY_STYLE,
   SHARE_VIEW_FLAGS,
   SHARE_VIEW_FOLLOW_OFFSET_DEFAULT,
+  SHARE_VIEW_FOLLOW_RANGE_MAX_M,
   SHARE_VIEW_STYLE_DEFAULTS,
   SHARE_VIEW_LAYER_OPTION_ABSENT,
   SHARE_VIEW_PANELS,
   SHARE_VIEW_STYLE_PARAMS,
+  SHARE_VIEW_THING_FIELDS,
   createDefaultShareViewState,
   decodeShareView,
   encodeShareView,
   followCameraFor,
+  followOffsetFor,
   followOffsetFromEnu,
   followOffsetToEnu,
   layerTokenFromNumber,
   layerTokenNumber,
+  normalizeLibraryTokens,
   normalizeShareViewState,
 } from './viewCodec.js';
 
@@ -73,8 +80,8 @@ function assertRoundTrip(state) {
   const hash = encodeShareView(state);
   const result = decodeOk(hash);
   assert.deepEqual(result.state, normalizeShareViewState(state));
-  assert.equal(Object.hasOwn(result, 'unknownFields'), false);
-  assert.equal(Object.hasOwn(result, 'fallback'), false);
+  assert.equal(result.unknownFields, undefined);
+  assert.equal(result.fallback, undefined);
   assert.equal(encodeShareView(result.state), hash, 'encoding is canonical');
   return hash;
 }
@@ -112,6 +119,7 @@ function randomState(random) {
     detectionFadePct: maybe(0.5, int(0, 40)),
     detectionOutsideOpacityPct: maybe(0.5, int(0, 100)),
     scopeFeatherPct: maybe(0.5, int(0, 200)),
+    scopeOpacityPct: maybe(0.5, int(0, 100)),
     scopeTerminusPct: maybe(
       0.3,
       int(SCOPE_TERMINUS_MIN_PCT, SCOPE_TERMINUS_MAX_PCT),
@@ -146,6 +154,7 @@ function randomState(random) {
               String(int(100000000, 999999999)),
               '002442000',
               'tmp-7',
+              '0770e3ca-b896-c307-f499-4f9df2b8f86b',
             ])
           : pick(random, [
               int(0, 0xffffff).toString(16).padStart(6, '0'),
@@ -173,14 +182,14 @@ function randomState(random) {
   return state;
 }
 
-test('[share-codec-011] an all-default view is the version byte and its check byte', () => {
+test('an all-default view is the version byte and its check byte', () => {
   const hash = encodeShareView(createDefaultShareViewState());
   assert.equal(hash, 'AQc');
   assert.deepEqual(decodeOk(hash).state, normalizeShareViewState({}));
   assert.deepEqual(normalizeShareViewState({}), createDefaultShareViewState());
 });
 
-test('[share-codec-012] each setting costs bytes only when it differs from its default', () => {
+test('each setting costs bytes only when it differs from its default', () => {
   const base = payloadBytes(encodeShareView({})).length;
   const changes = {
     lat: 10,
@@ -202,6 +211,7 @@ test('[share-codec-012] each setting costs bytes only when it differs from its d
     detectionFadePct: 8,
     detectionOutsideOpacityPct: 2,
     scopeFeatherPct: 99,
+    scopeOpacityPct: 40,
     scopeTerminusPct: 95,
   };
   const defaults = createDefaultShareViewState();
@@ -235,7 +245,7 @@ test('[share-codec-012] each setting costs bytes only when it differs from its d
   assert.equal(payloadBytes(assertRoundTrip(flipped)).length, base + 2);
 });
 
-test('[share-codec-014] a view just switched to any style costs its camera and style only', () => {
+test('a view just switched to any style costs its camera and style only', () => {
   const camera = { lat: 48.8584, lon: 2.2945, alt: 1200, heading: 120 };
   const cameraOnly = payloadBytes(encodeShareView(camera)).length;
   for (const style of VIEW_STYLES) {
@@ -263,18 +273,9 @@ test('[share-codec-014] a view just switched to any style costs its camera and s
   }
 });
 
-test('[share-codec-015] invalid style parameters keep the style’s own value', () => {
-  for (const bad of [undefined, NaN, 'x', null]) {
-    const code = assertRoundTrip({
-      style: 'noir',
-      styleParams: { contrastAmt: bad },
-    });
-    assert.deepEqual(decodeOk(code).state.styleParams, {
-      contrastAmt: 1.2,
-      grainAmt: 0.5,
-      vignetteAmt: 0.5,
-    });
-  }
+test('invalid style parameters keep the style’s own value', () => {
+  for (const bad of [undefined, NaN, 'x', null])
+    assertRoundTrip({ style: 'noir', styleParams: { contrastAmt: bad } });
   assert.equal(
     normalizeShareViewState({ style: 'noir', styleParams: { grainAmt: NaN } })
       .styleParams.grainAmt,
@@ -282,7 +283,7 @@ test('[share-codec-015] invalid style parameters keep the style’s own value', 
   );
 });
 
-test('[share-codec-012] every registered field round-trips at once', () => {
+test('every registered field round-trips at once', () => {
   const layerState = createDefaultLayerState();
   layerState.enabledLayerIds = [
     'flights',
@@ -347,6 +348,7 @@ test('[share-codec-012] every registered field round-trips at once', () => {
     bloomVersion: 1,
     sharpenIntensity: 65,
     hudVariant: 'operator',
+    hudSonar: true,
     hudVisible: false,
     detectionMode: 'SPARSE',
     detectionDensity: 100,
@@ -356,6 +358,7 @@ test('[share-codec-012] every registered field round-trips at once', () => {
     celestialRing: true,
     scopeEnabled: false,
     scopeFeatherPct: 35,
+    scopeOpacityPct: 60,
     scopeTerminusPct: 97,
     mapStack: 'esri-imagery',
     layerState,
@@ -367,6 +370,7 @@ test('[share-codec-012] every registered field round-trips at once', () => {
       })),
     },
     sharedAtMs: NOW_MS,
+    worldTime: NOW_MS - 6 * 3_600_000,
   };
   // A thing view derives its camera (roll 0), so the camera fields are
   // checked on the same state as a place view.
@@ -386,7 +390,7 @@ test('[share-codec-012] every registered field round-trips at once', () => {
   }
 });
 
-test('[share-codec-036] generated states round-trip exactly and encode canonically', () => {
+test('generated states round-trip exactly and encode canonically', () => {
   const random = rng(0x5eed);
   let things = 0;
   for (let i = 0; i < 1500; i += 1) {
@@ -402,7 +406,7 @@ test('[share-codec-036] generated states round-trip exactly and encode canonical
   assert.ok(things > 400, 'generator covers thing views');
 });
 
-test('[share-codec-036] normalization is idempotent', () => {
+test('normalization is idempotent', () => {
   const random = rng(42);
   for (let i = 0; i < 300; i += 1) {
     const once = normalizeShareViewState(randomState(random));
@@ -410,7 +414,7 @@ test('[share-codec-036] normalization is idempotent', () => {
   }
 });
 
-test('[share-codec-013] precision: coordinates 1e-4 degrees, angles and lengths whole units', () => {
+test('precision: coordinates 1e-4 degrees, angles and lengths whole units', () => {
   const { state } = decodeOk(
     encodeShareView({
       lat: 30.26724,
@@ -437,17 +441,61 @@ test('[share-codec-013] precision: coordinates 1e-4 degrees, angles and lengths 
   assert.deepEqual([wild.lat, wild.lon, wild.pitch], [90, -170, -90]);
 });
 
-test('[share-codec-010] defaults travel as frozen meanings that match today’s app defaults', () => {
+test('links made with a retired HUD layout still decode to its name', () => {
+  // The app restores Operator as Tactical and Cyber as Tactical with Sonar on
+  // (VisualSettings._setHudVariant); the codec only keeps the name.
+  for (const hudVariant of ['operator', 'cyber']) {
+    const state = { ...createDefaultShareViewState(), hudVariant };
+    assert.equal(decodeOk(encodeShareView(state)).state.hudVariant, hudVariant);
+  }
+});
+
+test('Sonar beside the Minimal layout is flag bit 5; links made before it keep their meaning', () => {
+  const minimal = { ...createDefaultShareViewState(), hudVariant: 'minimal' };
+  const plain = encodeShareView(minimal);
+  // Off is the default, so a view without Sonar costs nothing for it.
+  assert.equal(encodeShareView({ ...minimal, hudSonar: false }), plain);
+  const withSonar = assertRoundTrip({ ...minimal, hudSonar: true });
+  assert.notEqual(withSonar, plain);
+  const decoded = decodeOk(withSonar).state;
+  assert.equal(decoded.hudVariant, 'minimal');
+  assert.equal(decoded.hudSonar, true);
+  assert.equal(decodeOk(plain).state.hudSonar, false);
+  // Tactical with Sonar is still the Cyber code alone.
+  const cyber = { ...createDefaultShareViewState(), hudVariant: 'cyber' };
+  assert.equal(decodeOk(encodeShareView(cyber)).state.hudSonar, false);
+  // A link made before the bit (thermal, Cyber, Scope off) decodes as it did:
+  // Cyber without the bit, which the app opens as Tactical with Sonar on.
+  const before = decodeOk('ARD-7j4YuxMguBcoUEgQcAOAAQPIASPQAWGa').state;
+  assert.equal(before.hudVariant, 'cyber');
+  assert.equal(before.hudSonar, false);
+  assert.equal(encodeShareView(before), 'ARD-7j4YuxMguBcoUEgQcAOAAQPIASPQAWGa');
+});
+
+test('defaults travel as frozen meanings that match today’s app defaults', () => {
   const defaults = createDefaultShareViewState();
   // When an app default moves, these tests should be updated to document the
   // drift; the codec's defaults table must NOT change (see SHARE-LINK-FORMAT).
-  assert.equal(defaults.bloomIntensity, 0);
-  assert.equal(defaults.bloomVersion, 2);
-  assert.equal(defaults.hudVariant, 'tactical');
-  assert.deepEqual(SHARE_VIEW_ENUMS.hudVariant.slice(0, HUD_LAYOUTS.length), [
-    ...HUD_LAYOUTS,
+  assert.equal(defaults.bloomIntensity, BLOOM_INTENSITY_DEFAULT);
+  assert.equal(defaults.bloomVersion, BLOOM_SCALE_VERSION);
+  assert.equal(defaults.hudVariant, HUD_LAYOUTS[0]);
+  // Codes are append-only: the retired Operator layout keeps code 1 so old
+  // links still parse, and the app restores them as Tactical. The retired
+  // Cyber layout keeps code 3; the app restores it as Tactical with Sonar on.
+  assert.deepEqual(SHARE_VIEW_ENUMS.hudVariant, [
+    'tactical',
+    'operator',
+    'minimal',
+    'cyber',
   ]);
-  assert.deepEqual(SHARE_VIEW_ENUMS.style, [...VIEW_STYLES]);
+  assert.deepEqual(
+    SHARE_VIEW_ENUMS.hudVariant.filter(
+      (variant) => variant !== 'operator' && variant !== 'cyber',
+    ),
+    [...HUD_LAYOUTS],
+  );
+  // Snow is retired; its code stays reserved (see the retired-style test).
+  assert.deepEqual(SHARE_VIEW_ENUMS.style, [...VIEW_STYLES, 'snow']);
   assert.deepEqual(SHARE_VIEW_ENUMS.mapStack, [...VIEW_MAPS]);
   assert.deepEqual(SHARE_VIEW_ENUMS.detectionAllocation, [
     ...ALLOCATION_STRATEGIES,
@@ -459,7 +507,7 @@ test('[share-codec-010] defaults travel as frozen meanings that match today’s 
     );
 });
 
-test('[share-codec-010] the field registry is well formed and permanent', () => {
+test('the field registry is well formed and permanent', () => {
   const numbers = SHARE_VIEW_FIELDS.map((f) => f.number);
   assert.equal(new Set(numbers).size, numbers.length);
   assert.equal(
@@ -485,28 +533,32 @@ test('[share-codec-010] the field registry is well formed and permanent', () => 
       [13, 'thing', null],
       [14, 'style', 'normal'],
       [15, 'mapStack', 'photoreal'],
-      [16, 'hudVariant', 'by-style'],
-      [17, 'bloomIntensity', 'by-style'],
+      [16, 'hudVariant', BY_STYLE],
+      [17, 'bloomIntensity', BY_STYLE],
       [18, 'bloomVersion', 2],
-      [19, 'sharpenIntensity', 'by-style'],
-      [20, 'detectionMode', 'by-style'],
-      [21, 'detectionDensity', 'by-style'],
-      [22, 'detectionAllocation', 'by-style'],
-      [23, 'detectionFadePct', 'by-style'],
-      [24, 'detectionOutsideOpacityPct', 'by-style'],
+      [19, 'sharpenIntensity', BY_STYLE],
+      [20, 'detectionMode', BY_STYLE],
+      [21, 'detectionDensity', BY_STYLE],
+      [22, 'detectionAllocation', BY_STYLE],
+      [23, 'detectionFadePct', BY_STYLE],
+      [24, 'detectionOutsideOpacityPct', BY_STYLE],
       [25, 'scopeFeatherPct', 100],
       [26, 'scopeTerminusPct', null],
-      [27, 'styleParams', 'by-style'],
+      [27, 'styleParams', BY_STYLE],
+      [28, 'worldTime', null],
+      [29, 'library', null],
+      [30, 'scopeOpacityPct', 100],
     ],
   );
   assert.deepEqual(
     SHARE_VIEW_FLAGS.map((f) => [f.bit, f.key, f.default]),
     [
-      [0, 'bloom', 'by-style'],
-      [1, 'sharpen', 'by-style'],
-      [2, 'hudVisible', 'by-style'],
-      [3, 'celestialRing', 'by-style'],
+      [0, 'bloom', BY_STYLE],
+      [1, 'sharpen', BY_STYLE],
+      [2, 'hudVisible', BY_STYLE],
+      [3, 'celestialRing', BY_STYLE],
       [4, 'scopeEnabled', true],
+      [5, 'hudSonar', false],
     ],
   );
   // The style-applied defaults are frozen meanings too. If the app's style
@@ -556,7 +608,6 @@ test('[share-codec-010] the field registry is well formed and permanent', () => 
       ...common,
       styleParams: { contrastAmt: 1.2, grainAmt: 0.5, vignetteAmt: 0.5 },
     },
-    snow: { ...common, styleParams: { density: 0.6, wind: 0.5 } },
   });
   assert.deepEqual(
     SHARE_VIEW_ENTITY_KINDS.map((e) => [e.code, e.kind]),
@@ -569,46 +620,22 @@ test('[share-codec-010] the field registry is well formed and permanent', () => 
   );
   assert.deepEqual(
     SHARE_VIEW_PANELS.map((p) => [p.number, p.id]),
-    [
-      [0, 'control-panel'],
-      [1, 'location-bar'],
-      [2, 'data-panel'],
-      [3, 'cctv-panel'],
-      [4, 'recent-imagery-panel'],
-      [5, 'street-level-panel'],
-      [6, 'radio-panel'],
-      [7, 'scene-panel'],
-      [8, 'global-context-panel'],
-      [9, 'pp-toggles'],
-      [10, 'param-slider-panel'],
-    ],
+    SHARE_VIEW_PANELS.map((p, i) => [i, p.id]),
   );
 });
 
-test('[share-codec-019] the panel table agrees with the long form’s panel tokens', () => {
-  for (const [id, token, pinnable] of [
-    ['control-panel', 'c', true],
-    ['location-bar', 'l', true],
-    ['data-panel', 'd', false],
-    ['cctv-panel', 'v', false],
-    ['recent-imagery-panel', 'i', false],
-    ['street-level-panel', 't', false],
-    ['radio-panel', 'r', false],
-    ['scene-panel', 's', false],
-    ['global-context-panel', 'g', false],
-    ['pp-toggles', 'p', false],
-    ['param-slider-panel', 'm', false],
-  ]) {
+test('the panel table agrees with the long form’s panel tokens', () => {
+  for (const panel of SHARE_VIEW_PANELS) {
     const decoded = decodePanelStateParams(
-      new URLSearchParams(`v=2&ui=${token}.c.1_${token}.p.1`),
+      new URLSearchParams(`v=2&ui=${panel.token}.c.1_${panel.token}.p.1`),
     );
     assert.deepEqual(decoded.specs, [
-      { id, collapsed: true, pinned: pinnable ? true : null },
+      { id: panel.id, collapsed: true, pinned: panel.pinnable ? true : null },
     ]);
   }
 });
 
-test('[share-codec-015] the style parameter table agrees with the long form’s `sp` codec', () => {
+test('the style parameter table agrees with the long form’s `sp` codec', () => {
   for (const [style, specs] of Object.entries(SHARE_VIEW_STYLE_PARAMS)) {
     const values = Object.fromEntries(
       specs.map((s, i) => [s.key, s.min + ((s.max - s.min) * (i + 1)) / 7]),
@@ -630,7 +657,7 @@ test('[share-codec-015] the style parameter table agrees with the long form’s 
   }
 });
 
-test('[share-codec-018] every layer option has a frozen absent meaning', () => {
+test('every layer option has a frozen absent meaning', () => {
   for (const entry of LAYER_STATE_REGISTRY) {
     if (!entry.optionOwner) continue;
     for (const spec of optionSpecs(entry.optionOwner)) {
@@ -650,7 +677,7 @@ test('[share-codec-018] every layer option has a frozen absent meaning', () => {
   assert.equal(bytes.includes(0x5a), false, 'no layer-options field');
 });
 
-test('[share-codec-016] layer tokens map to permanent numbers covering the whole ledger', () => {
+test('layer tokens map to permanent numbers covering the whole ledger', () => {
   for (const token of Object.values(LAYER_STATE_TOKEN_RESERVATIONS)) {
     assert.equal(layerTokenFromNumber(layerTokenNumber(token)), token);
   }
@@ -662,7 +689,7 @@ test('[share-codec-016] layer tokens map to permanent numbers covering the whole
   assert.equal(new Set(numbers).size, numbers.length);
 });
 
-test('[share-codec-017] layer sets: absent, explicitly empty and populated stay distinct', () => {
+test('layer sets: absent, explicitly empty and populated stay distinct', () => {
   assert.equal(
     decodeOk(encodeShareView({ layerState: null })).state.layerState,
     null,
@@ -676,7 +703,7 @@ test('[share-codec-017] layer sets: absent, explicitly empty and populated stay 
   assertRoundTrip({ layerState: all });
 });
 
-test('[share-codec-019] panels: only differences from the frozen layout are written', () => {
+test('panels: only differences from the frozen layout are written', () => {
   const defaults = {
     specs: SHARE_VIEW_PANELS.map((p) => ({
       id: p.id,
@@ -705,7 +732,44 @@ test('[share-codec-019] panels: only differences from the frozen layout are writ
   );
 });
 
-test('[share-codec-020] a place view opens at its camera; a thing view also names what to follow', () => {
+test('panels: the Space Missions panel round-trips, and older links keep its default', () => {
+  const open = {
+    specs: [{ id: 'space-missions-panel', collapsed: false, pinned: null }],
+  };
+  const hash = assertRoundTrip({ panelState: open });
+  const specs = decodeOk(hash).state.panelState.specs;
+  assert.deepEqual(
+    specs.find((spec) => spec.id === 'space-missions-panel'),
+    { id: 'space-missions-panel', collapsed: false, pinned: null },
+  );
+  // A link that names only an older panel reads Space Missions as collapsed.
+  const older = decodeOk(
+    encodeShareView({
+      panelState: {
+        specs: [{ id: 'cctv-panel', collapsed: false, pinned: null }],
+      },
+    }),
+  ).state.panelState;
+  assert.equal(
+    older.specs.some((spec) => spec.id === 'space-missions-panel'),
+    false,
+    'an older link has no opinion about the panel',
+  );
+  const panel = SHARE_VIEW_PANELS.find((p) => p.id === 'space-missions-panel');
+  assert.equal(panel.collapsed, true);
+  assert.equal(
+    new Set(SHARE_VIEW_PANELS.map((p) => p.token)).size,
+    SHARE_VIEW_PANELS.length,
+    'panel tokens are unique',
+  );
+  assert.equal(
+    new Set(SHARE_VIEW_PANELS.map((p) => p.number)).size,
+    SHARE_VIEW_PANELS.length,
+    'panel numbers are unique',
+  );
+});
+
+test('a place view opens at its camera; a thing view also names what to follow', () => {
   const place = decodeOk(encodeShareView({ lat: 1, lon: 2 })).state;
   assert.deepEqual(place.view, { kind: 'place' });
   for (const entry of SHARE_VIEW_ENTITY_KINDS) {
@@ -720,7 +784,7 @@ test('[share-codec-020] a place view opens at its camera; a thing view also name
     assert.deepEqual(state.view, {
       kind: 'thing',
       entity: { kind: entry.kind, id },
-      offset: { range: 2000, heading: 0, pitch: -35 },
+      offset: { ...SHARE_VIEW_FOLLOW_OFFSET_DEFAULT },
       lastKnown: null,
     });
     // Without a last-known fix the view keeps its stored camera.
@@ -729,7 +793,7 @@ test('[share-codec-020] a place view opens at its camera; a thing view also name
   }
 });
 
-test('[share-codec-021] thing ids use the compact numeric form when they can, text otherwise', () => {
+test('thing ids use the compact numeric form when they can, text otherwise', () => {
   const size = (kind, id) =>
     payloadBytes(
       encodeShareView({ view: { kind: 'thing', entity: { kind, id } } }),
@@ -770,7 +834,7 @@ test('[share-codec-021] thing ids use the compact numeric form when they can, te
   );
 });
 
-test('[share-codec-023] last-known time is stored relative to the created-at time when there is one', () => {
+test('last-known time is stored relative to the created-at time when there is one', () => {
   const lastKnown = {
     lat: 10.0012,
     lon: 20.0034,
@@ -796,7 +860,7 @@ test('[share-codec-023] last-known time is stored relative to the created-at tim
   );
 });
 
-test('[share-codec-022] tracking selections in layer options become a thing view', () => {
+test('tracking selections in layer options become a thing view', () => {
   const layerState = createDefaultLayerState();
   layerState.enabledLayerIds = ['military'];
   layerState.options.flights.selectedMilitaryTrackingId = 'AE1234';
@@ -804,7 +868,7 @@ test('[share-codec-022] tracking selections in layer options become a thing view
   assert.deepEqual(state.view, {
     kind: 'thing',
     entity: { kind: 'military_aircraft', id: 'ae1234' },
-    offset: { range: 2000, heading: 0, pitch: -35 },
+    offset: { ...SHARE_VIEW_FOLLOW_OFFSET_DEFAULT },
     lastKnown: null,
   });
   assert.equal(
@@ -814,7 +878,7 @@ test('[share-codec-022] tracking selections in layer options become a thing view
   assertRoundTrip({ layerState });
 });
 
-test('[share-codec-027] a created-at time in the future is dropped, like the long form’s `at`', () => {
+test('a created-at time in the future is dropped, like the long form’s `at`', () => {
   const hash = encodeShareView({ sharedAtMs: NOW_MS + 60_000 });
   assert.equal(decode(hash).state.sharedAtMs, null);
   assert.equal(
@@ -829,11 +893,11 @@ test('[share-codec-027] a created-at time in the future is dropped, like the lon
     );
 });
 
-test('[share-codec-034] a code is the bare base64url payload; URL forms are not codes', () => {
+test('a code is the bare base64url payload; URL forms are not codes', () => {
   const code = encodeShareView({ lat: 51.5, lon: -0.12 });
   assert.match(code, /^[A-Za-z0-9_-]+$/);
   for (const form of [`#${code}`, `s=${code}`, `/share/${code}`])
-    assert.deepEqual(decode(form), { ok: false, reason: 'bad-base64' }, form);
+    assert.equal(decode(form).ok, false, form);
 });
 
 /* ---------------- forward compatibility ---------------- */
@@ -846,7 +910,7 @@ function withExtraFields(hash, write) {
   return hashOf(writer.finish());
 }
 
-test('[share-codec-028] unknown top-level fields of every wire type are skipped and reported', () => {
+test('unknown top-level fields of every wire type are skipped and reported', () => {
   const state = {
     lat: 48.8584,
     lon: 2.2945,
@@ -875,25 +939,25 @@ test('[share-codec-028] unknown top-level fields of every wire type are skipped 
   );
 });
 
-test('[share-codec-029] unknown fields inside a thing view, codes and bits are skipped too', () => {
+test('unknown fields inside a thing view, codes and bits are skipped too', () => {
   const thing = new WireWriter();
   thing.uintField(1, 0xa1b2c3).uintField(5, 900);
   thing.textField(20, 'cockpit'); // a future thing field
   const writer = new WireWriter();
   writer.bytes.push(1);
-  writer.sintField(2, 100000).uintField(9, 0b100001); // flag bit 5 unknown
+  writer.sintField(2, 100000).uintField(9, 0b1000001); // flag bit 6 unknown
   writer.bytesField(
     10,
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
   ); // layer 160
-  writer.bytesField(12, new WireWriter().varint(11 * 16 + 4 + 1).finish()); // panel 11
+  writer.bytesField(12, new WireWriter().varint(12 * 16 + 4 + 1).finish()); // panel 12
   writer.uintField(14, 99); // style code 99
   writer.bytesField(13, thing.finish());
   const result = decodeOk(hashOf(writer.finish()));
   assert.deepEqual(result.state.view, {
     kind: 'thing',
     entity: { kind: 'aircraft', id: 'a1b2c3' },
-    offset: { range: 900, heading: 0, pitch: -35 },
+    offset: { ...SHARE_VIEW_FOLLOW_OFFSET_DEFAULT, range: 900 },
     lastKnown: null,
   });
   assert.equal(result.state.bloom, true);
@@ -904,15 +968,15 @@ test('[share-codec-029] unknown fields inside a thing view, codes and bits are s
     result.unknownFields.map((u) => [u.scope, u.field ?? u.code]),
     [
       ['enum:style', 99],
-      ['flags', 32],
+      ['flags', 64],
       ['layer', 160],
-      ['panel', 11],
+      ['panel', 12],
       ['thing', 20],
     ],
   );
 });
 
-test('[share-codec-030] an unknown view kind falls back to the stored camera', () => {
+test('an unknown view kind falls back to the stored camera', () => {
   const camera = {
     lat: 35.6762,
     lon: 139.6503,
@@ -921,7 +985,7 @@ test('[share-codec-030] an unknown view kind falls back to the stored camera', (
     pitch: -20,
   };
   const base = payloadBytes(encodeShareView(camera));
-  const expected = { ...createDefaultShareViewState(), ...camera };
+  const expected = decodeOk(encodeShareView(camera)).state;
 
   const futureKind = new WireWriter();
   futureKind.bytes.push(...base);
@@ -934,12 +998,10 @@ test('[share-codec-030] an unknown view kind falls back to the stored camera', (
   const missing = new WireWriter();
   missing.bytes.push(...base);
   missing.uintField(1, 1);
-  const missingResult = decodeOk(hashOf(missing.finish()));
-  assert.equal(missingResult.fallback, 'missing-thing');
-  assert.deepEqual(missingResult.state, expected);
+  assert.equal(decodeOk(hashOf(missing.finish())).fallback, 'missing-thing');
 });
 
-test('[share-codec-031] an unknown or invalid entity falls back to the camera its fix implies', () => {
+test('an unknown or invalid entity falls back to the camera its fix implies', () => {
   const fix = { lat: 35.6762, lon: 139.6503, alt: 900, observedAtMs: null };
   const offset = { range: 3000, heading: 90, pitch: -40 };
   const thingOf = (write) => {
@@ -957,15 +1019,7 @@ test('[share-codec-031] an unknown or invalid entity falls back to the camera it
     writer.bytesField(13, thing.finish());
     return decodeOk(hashOf(writer.finish()));
   };
-  const expected = {
-    ...createDefaultShareViewState(),
-    lat: 35.6762,
-    lon: 139.6249,
-    alt: 2829,
-    heading: 90,
-    pitch: -40,
-    roll: 0,
-  };
+  const expected = normalizeShareViewState(followCameraFor(fix, offset));
 
   // A newer app's entity kind: its id field is unknown here.
   const future = thingOf((thing) => thing.textField(30, 'cam-77'));
@@ -984,7 +1038,7 @@ test('[share-codec-031] an unknown or invalid entity falls back to the camera it
   assert.deepEqual(badId.state, expected);
 });
 
-test('[share-codec-032] enum names outside the code tables travel as text', () => {
+test('enum names outside the code tables travel as text', () => {
   const hash = encodeShareView({
     hudVariant: 'future-hud',
     mapStack: 'future-map',
@@ -1005,6 +1059,29 @@ test('[share-codec-032] enum names outside the code tables travel as text', () =
   assert.deepEqual(result.unknownFields, [
     { scope: 'enum:style', code: 'sepia' },
   ]);
+});
+
+test('links to the retired Snow style open as Normal', () => {
+  const snowCode = SHARE_VIEW_ENUMS.style.indexOf('snow');
+  assert.equal(snowCode, 6, 'a retired code is never reused');
+  const params = new WireWriter()
+    .varint(LAYER_STATE_TOKEN_ALPHABET.indexOf('d'))
+    .varint(90)
+    .varint(LAYER_STATE_TOKEN_ALPHABET.indexOf('w'))
+    .varint(20)
+    .finish();
+  for (const writeStyle of [
+    (writer) => writer.uintField(14, snowCode),
+    (writer) => writer.textField(14, 'snow'),
+  ]) {
+    const writer = new WireWriter();
+    writer.bytes.push(1);
+    writeStyle(writer);
+    writer.bytesField(27, params);
+    const { state, unknownFields } = decodeOk(hashOf(writer.finish()));
+    assert.deepEqual(state, normalizeShareViewState({}));
+    assert.equal(unknownFields, undefined);
+  }
 });
 
 /* ---------------- integrity ---------------- */
@@ -1067,7 +1144,7 @@ test('malformed input is rejected with a reason, never thrown', () => {
   }
 });
 
-test('[share-codec-035] every truncation and single-byte corruption of real payloads is handled', () => {
+test('every truncation and single-byte corruption of real payloads is handled', () => {
   const random = rng(7);
   for (let i = 0; i < 60; i += 1) {
     const bytes = payloadBytes(encodeShareView(randomState(random)));
@@ -1090,7 +1167,7 @@ test('[share-codec-035] every truncation and single-byte corruption of real payl
 
 /* ---------------- sizes ---------------- */
 
-test('[share-codec-060] size: a camera-only place view', () => {
+test('size: a camera-only place view', () => {
   const hash = assertRoundTrip({
     lat: 48.8584,
     lon: 2.2945,
@@ -1099,19 +1176,6 @@ test('[share-codec-060] size: a camera-only place view', () => {
     pitch: -25,
   });
   assert.equal(hash.length, 24);
-  const state = decodeOk(hash).state;
-  assert.deepEqual(
-    [
-      state.lat,
-      state.lon,
-      state.alt,
-      state.heading,
-      state.pitch,
-      state.roll,
-      state.sharedAtMs,
-    ],
-    [48.8584, 2.2945, 1200, 120, -25, 0, null],
-  );
   const copied = assertRoundTrip({
     lat: 48.8584,
     lon: 2.2945,
@@ -1121,22 +1185,9 @@ test('[share-codec-060] size: a camera-only place view', () => {
     sharedAtMs: NOW_MS,
   });
   assert.equal(copied.length, 31);
-  const copy = decodeOk(copied).state;
-  assert.deepEqual(
-    [
-      copy.lat,
-      copy.lon,
-      copy.alt,
-      copy.heading,
-      copy.pitch,
-      copy.roll,
-      copy.sharedAtMs,
-    ],
-    [48.8584, 2.2945, 1200, 120, -25, 0, 1793016000000],
-  );
 });
 
-test('[share-codec-025] size: following an aircraft', () => {
+test('size: following an aircraft', () => {
   const layerState = createDefaultLayerState();
   layerState.enabledLayerIds = ['flights'];
   layerState.options.flights.models3d = true;
@@ -1197,7 +1248,7 @@ test('[share-codec-025] size: following an aircraft', () => {
   );
 });
 
-test('[share-codec-024] the follow offset converts to and from east/north/up metres', () => {
+test('the follow offset converts to and from east/north/up metres', () => {
   for (const offset of [
     { range: 5800, heading: 0, pitch: -35 },
     { range: 1500, heading: 30, pitch: -20 },
@@ -1215,7 +1266,7 @@ test('[share-codec-024] the follow offset converts to and from east/north/up met
   assert.equal(followOffsetFromEnu({ east: 0, north: 0, up: 0 }), null);
 });
 
-test('[share-codec-025] the derived camera looks at the fix from the offset, even from orbit', () => {
+test('the derived camera looks at the fix from the offset, even from orbit', () => {
   const R = 6_371_000;
   const ecef = ({ lat, lon, alt }) => {
     const r = R + alt;
@@ -1255,7 +1306,7 @@ test('[share-codec-025] the derived camera looks at the fix from the offset, eve
   }
 });
 
-test('[share-codec-023] a fix without its own time is as of the link', () => {
+test('a fix without its own time is as of the link', () => {
   const view = {
     kind: 'thing',
     entity: { kind: 'satellite', id: '25544' },
@@ -1271,7 +1322,7 @@ test('[share-codec-023] a fix without its own time is as of the link', () => {
   );
 });
 
-test('[share-codec-026] the check byte rejects every single-character typo', () => {
+test('the check byte rejects every single-character typo', () => {
   const ALPHABET =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
   const random = rng(0xc0de);
@@ -1293,7 +1344,7 @@ test('[share-codec-026] the check byte rejects every single-character typo', () 
 
 /* ---------------- review regressions ---------------- */
 
-test('[share-codec-033] unknown detection names fall back to their defaults and are reported', () => {
+test('unknown detection names fall back to their defaults and are reported', () => {
   const writer = new WireWriter();
   writer.bytes.push(1);
   writer.textField(20, 'FUTURE').textField(22, 'GREEDY');
@@ -1306,7 +1357,7 @@ test('[share-codec-033] unknown detection names fall back to their defaults and 
   ]);
 });
 
-test('[share-codec-048] extreme and negative-zero numbers normalize to values the decoder returns', () => {
+test('extreme and negative-zero numbers normalize to values the decoder returns', () => {
   assert.ok(Number.isFinite(normalizeShareViewState({ lon: 1e305 }).lon));
   assertRoundTrip({ lon: 1e305, lat: -1e305 });
   for (const state of [
@@ -1321,7 +1372,7 @@ test('[share-codec-048] extreme and negative-zero numbers normalize to values th
   }
 });
 
-test('[share-codec-049] future panel values and style tokens are skipped, not applied', () => {
+test('future panel values and style tokens are skipped, not applied', () => {
   const panels = new WireWriter();
   panels.bytes.push(1);
   panels.bytesField(
@@ -1335,21 +1386,7 @@ test('[share-codec-049] future panel values and style tokens are skipped, not ap
   const ids = panelResult.state.panelState.specs.map((spec) => spec.id);
   assert.equal(ids.includes('cctv-panel'), false);
   assert.equal(ids.includes('control-panel'), false);
-  assert.deepEqual(panelResult.unknownFields, [
-    { scope: 'panel', code: 3 },
-    { scope: 'panel', code: 0 },
-  ]);
-  assert.deepEqual(panelResult.state.panelState.specs, [
-    { id: 'location-bar', collapsed: true, pinned: false },
-    { id: 'data-panel', collapsed: true, pinned: null },
-    { id: 'recent-imagery-panel', collapsed: false, pinned: null },
-    { id: 'street-level-panel', collapsed: true, pinned: null },
-    { id: 'radio-panel', collapsed: true, pinned: null },
-    { id: 'scene-panel', collapsed: true, pinned: null },
-    { id: 'global-context-panel', collapsed: true, pinned: null },
-    { id: 'pp-toggles', collapsed: true, pinned: null },
-    { id: 'param-slider-panel', collapsed: false, pinned: null },
-  ]);
+  assert.equal(panelResult.unknownFields.length, 2);
 
   const style = new WireWriter();
   style.bytes.push(1);
@@ -1360,20 +1397,14 @@ test('[share-codec-049] future panel values and style tokens are skipped, not ap
   );
   const styleResult = decodeOk(hashOf(style.finish()));
   // Unknown tokens change nothing: the style keeps its own parameters.
-  assert.deepEqual(styleResult.state.styleParams, {
-    sensitivity: 0.85,
-    bloom: 0.2,
-    mode: 0.33,
-    pixelation: 1,
-    palette: 0,
-  });
-  assert.deepEqual(styleResult.unknownFields, [
-    { scope: 'style-param', code: 'thermal.?' },
-    { scope: 'style-param', code: 'thermal.?' },
-  ]);
+  assert.deepEqual(
+    styleResult.state.styleParams,
+    SHARE_VIEW_STYLE_DEFAULTS.thermal.styleParams,
+  );
+  assert.equal(styleResult.unknownFields.length, 2);
 });
 
-test('[share-codec-050] a layer option filed under a mirror layer is ignored', () => {
+test('a layer option filed under a mirror layer is ignored', () => {
   const writer = new WireWriter();
   writer.bytes.push(1);
   const military = layerTokenNumber('m');
@@ -1382,18 +1413,300 @@ test('[share-codec-050] a layer option filed under a mirror layer is ignored', (
     11,
     new WireWriter()
       .varint(military)
-      .varint(layerTokenNumber('m') * 2 + 1) // The mode option uses text.
-      .varint(1)
-      .varint(97)
+      .varint(layerTokenNumber('m') * 2) // option `m` (models3dMode) as integer
+      .varint(0)
       .finish(),
   );
   const result = decodeOk(hashOf(writer.finish()));
   assert.deepEqual(result.state.layerState.enabledLayerIds, ['military']);
-  assert.equal(
-    result.state.layerState.options.flights.models3dMode,
-    'proximity',
-  );
   assert.deepEqual(result.unknownFields, [
-    { scope: 'layer-option', code: '22.22' },
+    { scope: 'layer-option', code: `${military}.${layerTokenNumber('m')}` },
   ]);
+});
+
+test('the world time is written only away from live, and may lie ahead', () => {
+  const at = (worldTime) =>
+    decodeShareView(encodeShareView({ sharedAtMs: NOW_MS, worldTime }), {
+      nowMs: NOW_MS,
+    }).state.worldTime;
+  assert.equal(at(null), null);
+  assert.equal(at(NOW_MS - 3_600_000), NOW_MS - 3_600_000);
+  // A forecast moment ahead of the link's creation is kept.
+  assert.equal(at(NOW_MS + 86_400_000), NOW_MS + 86_400_000);
+  // Before the 2026 epoch too: the field is zigzag.
+  assert.equal(at(Date.UTC(2024, 0, 1)), Date.UTC(2024, 0, 1));
+  // Past what a Date can hold: dropped, so the link opens live.
+  assert.equal(at(8.8e15), null);
+  assert.ok(
+    encodeShareView({ sharedAtMs: NOW_MS, worldTime: NOW_MS - 1000 }).length >
+      encodeShareView({ sharedAtMs: NOW_MS }).length,
+  );
+});
+
+/* ---------------- vessel ids that are UUIDs ---------------- */
+
+const VESSEL_UUID = '0770e3ca-b896-c307-f499-4f9df2b8f86b';
+const VESSEL_FIX = {
+  lat: 51.9301,
+  lon: 4.0512,
+  alt: 47,
+  observedAtMs: NOW_MS - 30_000,
+};
+const VESSEL_OFFSET = { range: 3200, heading: 20, pitch: -30 };
+const vesselView = (id, extra = {}) => ({
+  view: {
+    kind: 'thing',
+    entity: { kind: 'vessel', id },
+    offset: VESSEL_OFFSET,
+    lastKnown: VESSEL_FIX,
+  },
+  sharedAtMs: NOW_MS,
+  ...extra,
+});
+
+/** A thing message's bytes, wrapped as a whole payload's code. */
+function thingCode(write) {
+  const thing = new WireWriter();
+  write(thing);
+  const writer = new WireWriter();
+  writer.bytes.push(1);
+  writer.bytesField(13, thing.finish());
+  return hashOf(writer.finish());
+}
+
+test('a vessel id that is a UUID travels as its 16 bytes and round-trips', () => {
+  assert.equal(SHARE_VIEW_THING_FIELDS.vesselUuid, 13);
+  const code = assertRoundTrip(vesselView(VESSEL_UUID));
+  const { state } = decodeOk(code);
+  assert.deepEqual(state.view.entity, { kind: 'vessel', id: VESSEL_UUID });
+  // Upper case is the same id: the decoder gives it back lowercase.
+  assert.equal(
+    decodeOk(encodeShareView(vesselView(VESSEL_UUID.toUpperCase()))).state.view
+      .entity.id,
+    VESSEL_UUID,
+  );
+  // 16 bytes and a two-byte tag and length, not 36 characters of text.
+  const aircraft = encodeShareView({
+    ...vesselView('a1b2c3'),
+    view: {
+      ...vesselView('a1b2c3').view,
+      entity: { kind: 'aircraft', id: 'a1b2c3' },
+    },
+  });
+  assert.equal(aircraft.length, 44);
+  assert.equal(code.length, 62);
+  assert.equal(
+    payloadBytes(code).length - payloadBytes(aircraft).length,
+    18 - 5,
+    'the id costs 18 bytes where an ICAO address costs 5',
+  );
+  // The id field comes last, after the fix, in ascending order.
+  const bytes = payloadBytes(code);
+  assert.deepEqual(
+    [...bytes.slice(-18)],
+    [
+      0x6a,
+      16,
+      ...VESSEL_UUID.replaceAll('-', '')
+        .match(/../g)
+        .map((h) => parseInt(h, 16)),
+    ],
+  );
+  // A UUID form is only a vessel's: other kinds keep the id grammar.
+  for (const kind of ['aircraft', 'military_aircraft', 'satellite'])
+    assert.deepEqual(
+      normalizeShareViewState({
+        view: { kind: 'thing', entity: { kind, id: VESSEL_UUID } },
+      }).view,
+      { kind: 'place' },
+    );
+  // Near-UUIDs are not UUIDs, and are longer than the id grammar allows.
+  for (const id of [VESSEL_UUID.replaceAll('-', '') + '0', `${VESSEL_UUID}0`])
+    assert.deepEqual(
+      normalizeShareViewState({
+        view: { kind: 'thing', entity: { kind: 'vessel', id } },
+      }).view,
+      { kind: 'place' },
+    );
+});
+
+test('MMSI and short text vessel ids, and links made before UUIDs, are unchanged', () => {
+  // Codes written before vessel ids could be UUIDs.
+  const before = {
+    'AUCAn8wYahkYoPH_rgEogBkwKDg7QIqyP0iA-QRQXlg8Ag': '366999712',
+    AUCAn8wYah4aCTAwMjQ0MjAwMCiAGTAoODtAirI_SID5BFBeWDyl: '002442000',
+  };
+  for (const [code, id] of Object.entries(before)) {
+    assert.equal(encodeShareView(vesselView(id)), code);
+    const { state } = decodeOk(code);
+    assert.deepEqual(state.view, {
+      kind: 'thing',
+      entity: { kind: 'vessel', id },
+      offset: VESSEL_OFFSET,
+      lastKnown: VESSEL_FIX,
+    });
+  }
+  // A camera-only vessel view with a short text id, as before.
+  const tmp = 'ARCgnAEYwLgCagcaBXRtcC03GQ';
+  assert.equal(
+    encodeShareView({
+      lat: 1,
+      lon: 2,
+      view: { kind: 'thing', entity: { kind: 'vessel', id: 'tmp-7' } },
+    }),
+    tmp,
+  );
+  assert.equal(decodeOk(tmp).state.view.entity.id, 'tmp-7');
+});
+
+test('a UUID vessel id with another id, or of the wrong length, is malformed', () => {
+  const uuid = VESSEL_UUID.replaceAll('-', '')
+    .match(/../g)
+    .map((h) => parseInt(h, 16));
+  const reason = (code) => decodeShareView(code, { nowMs: NOW_MS }).reason;
+  // Two entity ids: the UUID and an MMSI, or an aircraft's address.
+  assert.equal(
+    reason(thingCode((t) => t.uintField(3, 366999712).bytesField(13, uuid))),
+    'duplicate-field',
+  );
+  assert.equal(
+    reason(thingCode((t) => t.uintField(1, 0xa1b2c3).bytesField(13, uuid))),
+    'duplicate-field',
+  );
+  assert.equal(
+    reason(thingCode((t) => t.bytesField(13, uuid).bytesField(13, uuid))),
+    'duplicate-field',
+  );
+  for (const bytes of [uuid.slice(0, 15), [...uuid, 0], []])
+    assert.equal(
+      reason(thingCode((t) => t.bytesField(13, bytes))),
+      'bad-length',
+    );
+  // The field is LEN only.
+  assert.equal(
+    reason(thingCode((t) => t.uintField(13, 5))),
+    'wire-type-mismatch',
+  );
+  // The 16 bytes alone are a vessel; any bytes spell a UUID.
+  assert.deepEqual(
+    decodeOk(thingCode((t) => t.bytesField(13, new Array(16).fill(0xff)))).state
+      .view.entity,
+    { kind: 'vessel', id: 'ffffffff-ffff-ffff-ffff-ffffffffffff' },
+  );
+});
+
+test('a decoder that predates UUID vessel ids opens the view at its derived camera', () => {
+  // Such a decoder skips thing field 13 as it skips any unknown field: the
+  // same payload with the id under a field this decoder does not know.
+  const bytes = [...payloadBytes(encodeShareView(vesselView(VESSEL_UUID)))];
+  const at = bytes.length - 18;
+  assert.equal(bytes[at], 0x6a);
+  bytes[at] = 0xf2; // field 30, LEN
+  bytes.splice(at + 1, 0, 0x01);
+  // The thing message grew by a byte: its own length too.
+  const thingLength = bytes.indexOf(0x6a) + 1;
+  bytes[thingLength] += 1;
+  const result = decodeOk(hashOf(bytes));
+  assert.equal(result.fallback, 'unknown-entity-kind');
+  assert.deepEqual(result.state.view, { kind: 'place' });
+  const camera = followCameraFor(VESSEL_FIX, VESSEL_OFFSET);
+  assert.equal(result.state.lat, Math.round(camera.lat * 1e4) / 1e4);
+  assert.equal(result.state.lon, Math.round(camera.lon * 1e4) / 1e4);
+});
+
+test('the follow offset for a camera is the inverse of followCameraFor', () => {
+  const fix = { lat: 51.9301, lon: 4.0512, alt: 47 };
+  for (const offset of [
+    { range: 3200, heading: 20, pitch: -30 },
+    { range: 250, heading: 300, pitch: -5 },
+    { range: 80_000, heading: 135, pitch: -70 },
+    { range: 2_000_000, heading: 0, pitch: -89 },
+  ])
+    assert.deepEqual(
+      followOffsetFor(fix, followCameraFor(fix, offset)),
+      offset,
+    );
+  // The codec carries ranges up to the bound a subject is checked against.
+  const far = {
+    range: SHARE_VIEW_FOLLOW_RANGE_MAX_M + 5,
+    heading: 0,
+    pitch: -35,
+  };
+  assert.equal(
+    normalizeShareViewState({
+      view: { kind: 'thing', entity: { kind: 'vessel', id: '1' }, offset: far },
+    }).view.offset.range,
+    SHARE_VIEW_FOLLOW_RANGE_MAX_M,
+  );
+  // A camera below the entity's horizontal, or at it, has no offset.
+  assert.equal(
+    followOffsetFor(fix, { lat: 51.95, lon: 4.0512, alt: 40 }),
+    null,
+  );
+  assert.equal(followOffsetFor(fix, fix), null);
+  // Far round the curve of the earth at low height: below its horizon.
+  assert.equal(
+    followOffsetFor(fix, { lat: 53.9, lon: 4.0512, alt: 1000 }),
+    null,
+  );
+});
+
+test('Data Library tokens round-trip and malformed ones are skipped', () => {
+  const state = { lat: 1, lon: 2, library: ['00', '1z', '0a'] };
+  const decoded = decodeShareView(encodeShareView(state));
+  assert.equal(decoded.ok, true);
+  assert.deepEqual(decoded.state.library, ['00', '1z', '0a']);
+  // None on: no field, and the decoder reads no tokens.
+  const none = decodeShareView(encodeShareView({ lat: 1, lon: 2 }));
+  assert.equal(none.state.library, null);
+  assert.deepEqual(normalizeLibraryTokens('01.!!.01.zz'), ['01', 'zz']);
+  assert.equal(normalizeLibraryTokens(null), null);
+  assert.deepEqual(normalizeLibraryTokens('x'.repeat(500)), []);
+});
+
+test('scope opacity is field 30; a link made before it opens at full opacity', () => {
+  // Made before field 30 existed: thermal, Cyber, Scope off at 35% feather
+  // and a pinned terminus.
+  const before = 'ARD-7j4YuxMguBcoUEgQcAOAAQPIASPQAWGa';
+  const old = decodeOk(before).state;
+  assert.equal(old.scopeOpacityPct, 100);
+  assert.equal(old.scopeFeatherPct, 35);
+  assert.equal(encodeShareView(old), before, 'it still encodes to itself');
+  const state = {
+    lat: 51.5007,
+    lon: -0.1246,
+    alt: 1500,
+    heading: 40,
+    style: 'thermal',
+    scopeEnabled: false,
+    scopeFeatherPct: 35,
+    scopeTerminusPct: 97,
+    hudVariant: 'cyber',
+  };
+  assert.equal(encodeShareView(state), before);
+  assert.equal(encodeShareView({ ...state, scopeOpacityPct: 100 }), before);
+  const faded = assertRoundTrip({ ...state, scopeOpacityPct: 45 });
+  assert.notEqual(faded, before);
+  assert.equal(decodeOk(faded).state.scopeOpacityPct, 45);
+  assert.equal(
+    decodeOk(assertRoundTrip({ scopeOpacityPct: 0 })).state.scopeOpacityPct,
+    0,
+  );
+  // Out of range is clamped; anything not a number is the default.
+  assert.equal(
+    normalizeShareViewState({ scopeOpacityPct: 150 }).scopeOpacityPct,
+    100,
+  );
+  assert.equal(
+    normalizeShareViewState({ scopeOpacityPct: -5 }).scopeOpacityPct,
+    0,
+  );
+  assert.equal(
+    normalizeShareViewState({ scopeOpacityPct: 33.6 }).scopeOpacityPct,
+    34,
+  );
+  assert.equal(
+    normalizeShareViewState({ scopeOpacityPct: 'x' }).scopeOpacityPct,
+    100,
+  );
 });

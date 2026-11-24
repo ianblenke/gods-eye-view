@@ -73,7 +73,7 @@ test('v3 unversioned bloom already uses scale 2 and is not migrated again in lat
       }),
     ),
   );
-  assert.equal(project.version, 6);
+  assert.equal(project.version, 7);
   assert.equal(project.scenes[0].shots[0].visual.bloom.intensity, 50);
 });
 test('[director-046 director-047 director-048] move endpoints, easing, shortest arcs and hold agree with scene seeking', () => {

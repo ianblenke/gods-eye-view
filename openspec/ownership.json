@@ -170,6 +170,18 @@
     "src/tooling/spec/trace.test.mjs",
     "src/tooling/spec/traceReporter.test.mjs",
     "src/tooling/spec/v8Merge.test.mjs",
-    "src/ui/styles/osh-panel.css"
+    "src/ui/styles/osh-panel.css",
+    "src/testSupport/sceneViewer.mjs",
+    "src/director/document.forkBackfill.test.mjs",
+    "src/layers/ghostMaps/records.forkBackfill.test.mjs",
+    "src/layers/perimeters/cards.forkBackfill.test.mjs",
+    "src/tooling/spec/upstreamFindings.test.mjs",
+    "src/voice/panel/nativeActivityBranches.test.mjs",
+    "src/voice/panel/observers.forkBackfill.test.mjs",
+    "src/voice/panel/inactivityBranches.test.mjs",
+    "src/share/wireBranches.test.mjs",
+    "src/data/cockpitContactDot.test.mjs",
+    "src/layers/submarineCables/bundledSourceDefault.test.mjs",
+    "src/share/shareLinkPathBranches.test.mjs"
   ]
 }

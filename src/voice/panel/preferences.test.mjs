@@ -3,7 +3,10 @@ import assert from 'node:assert/strict';
 import {
   createVoicePreferences,
   bindPreferenceControls,
+  VOICE_PREVIEW_STORAGE_KEY as P,
+  VOICE_TIMEOUT_STORAGE_KEY as T,
 } from './preferences.js';
+import { createTestVoiceUi } from '../../testSupport/voiceUi.mjs';
 
 function storage(entries = {}, mode = 'normal') {
   const values = new Map(Object.entries(entries));
@@ -23,39 +26,14 @@ function storage(entries = {}, mode = 'normal') {
     },
   };
 }
-class Element {
-  value = '';
-  checked = false;
-  textContent = '';
-  hidden = false;
-  listeners = new Set();
-  addEventListener(type, listener) {
-    assert.equal(type, 'change');
-    this.listeners.add(listener);
-  }
-  removeEventListener(type, listener) {
-    assert.equal(type, 'change');
-    this.listeners.delete(listener);
-  }
-  change(value) {
-    if (typeof value === 'boolean') this.checked = value;
-    else this.value = value;
-    for (const listener of [...this.listeners]) listener();
-  }
-}
+// A panel control whose timeout field shows `custom` minutes, as a view
+// would display before the binder renders.
 function controls(custom = '7') {
-  const ui = Object.fromEntries(
-    [
-      'voicePreviewInput',
-      'voicePreviewNote',
-      'voiceTimeoutSelect',
-      'voiceTimeoutInput',
-      'voiceTimeoutNote',
-    ].map((key) => [key, new Element()]),
-  );
-  ui.voiceTimeoutInput.value = custom;
+  const ui = createTestVoiceUi({ panel: true });
+  ui.update('preferences', { timeoutMinutes: custom });
   return ui;
 }
+const fields = (ui) => ui.state.preferences;
 const copy = {
   previewNote: 'Preview local',
   timeoutNote: 'Provider limits still apply',
@@ -65,19 +43,12 @@ function bind(ui, preferences, onChange) {
   return bindPreferenceControls({ ui, preferences, copy, onChange });
 }
 
-test('[voice-panel-021] defaults and restore are passive; legacy None and stored custom restore', () => {
+test('defaults and restore are passive; legacy None and stored custom restore', () => {
   for (const [entries, minutes, previewEnabled] of [
     [{}, 5, true],
-    [
-      {
-        ['godsEyeView.voice.previewEnabled']: 'false',
-        ['godsEyeView.voice.inactivityMinutes']: 'none',
-      },
-      0,
-      false,
-    ],
-    [{ ['godsEyeView.voice.inactivityMinutes']: '17' }, 17, true],
-    [{ ['godsEyeView.voice.inactivityMinutes']: 'broken' }, 5, true],
+    [{ [P]: 'false', [T]: 'none' }, 0, false],
+    [{ [T]: '17' }, 17, true],
+    [{ [T]: 'broken' }, 5, true],
   ]) {
     const disk = storage(entries);
     const prefs = createVoicePreferences({ storage: disk });
@@ -93,33 +64,22 @@ test('[voice-panel-021] defaults and restore are passive; legacy None and stored
   }
 });
 
-test('[voice-panel-022] exact valid values, presets, None and serialized readback', () => {
+test('exact valid values, presets, None and serialized readback', () => {
   const disk = storage();
   const prefs = createVoicePreferences({ storage: disk });
-  for (const [value, expected, text] of [
-    [3, 3, '3'],
-    [5, 5, '5'],
-    [10, 10, '10'],
-    [15, 15, '15'],
-    ['1', 1, '1'],
-    ['60', 60, '60'],
-    [0, 0, 'none'],
-  ]) {
+  for (const value of [3, 5, 10, 15, '1', '60', 0]) {
     const result = prefs.setMinutes(value);
     assert.equal(result.ok, true);
     assert.equal(result.applied, true);
     assert.equal(result.persisted, true);
-    assert.equal(result.minutes, expected);
+    assert.equal(result.minutes, Number(value));
     assert.deepEqual(disk.writes.at(-1), [
-      'godsEyeView.voice.inactivityMinutes',
-      text,
+      T,
+      Number(value) === 0 ? 'none' : String(Number(value)),
     ]);
   }
   assert.equal(prefs.setPreviewEnabled(false).previewEnabled, false);
-  assert.deepEqual(disk.writes.at(-1), [
-    'godsEyeView.voice.previewEnabled',
-    'false',
-  ]);
+  assert.deepEqual(disk.writes.at(-1), [P, 'false']);
 });
 
 test('fractional, malformed, coercible and out-of-range inputs never write or notify', () => {
@@ -166,9 +126,9 @@ for (const mode of ['throw', 'noop', 'mismatch', 'readthrow', 'missing']) {
     const prefs = createVoicePreferences({ storage: disk });
     const a = controls();
     const bindingA = bind(a, prefs);
-    a.voicePreviewInput.change(false);
-    a.voiceTimeoutSelect.change('custom');
-    a.voiceTimeoutInput.change('19');
+    a.emit('preview-change', false);
+    a.emit('timeout-select', 'custom');
+    a.emit('timeout-input', '19');
     assert.deepEqual(prefs.snapshot(), {
       previewEnabled: false,
       minutes: 19,
@@ -179,20 +139,20 @@ for (const mode of ['throw', 'noop', 'mismatch', 'readthrow', 'missing']) {
     const writeCount = disk?.writes.length;
     const b = controls();
     const bindingB = bind(b, prefs);
-    assert.equal(b.voicePreviewInput.checked, false);
-    assert.equal(b.voiceTimeoutInput.value, '19');
-    assert.match(b.voicePreviewNote.textContent, /Not saved/);
-    assert.match(b.voiceTimeoutNote.textContent, /Not saved/);
-    assert.equal(disk?.writes.length === writeCount, true);
-    a.voicePreviewInput.change(true);
-    a.voiceTimeoutSelect.change('3');
+    assert.equal(fields(b).previewChecked, false);
+    assert.equal(fields(b).timeoutMinutes, '19');
+    assert.match(fields(b).previewNote, /Not saved/);
+    assert.match(fields(b).timeoutNote, /Not saved/);
+    assert.equal(disk?.writes.length, writeCount);
+    a.emit('preview-change', true);
+    a.emit('timeout-select', '3');
     assert.equal(prefs.snapshot().minutes, 19);
     assert.equal(prefs.snapshot().previewEnabled, false);
     bindingB.dispose();
   });
 }
 
-test('[voice-panel-025] same-value retry really writes and clears warnings after storage recovers', () => {
+test('same-value retry really writes and clears warnings after storage recovers', () => {
   const disk = storage();
   const original = disk.setItem;
   disk.setItem = () => {
@@ -203,7 +163,7 @@ test('[voice-panel-025] same-value retry really writes and clears warnings after
   bind(ui, prefs);
   prefs.setPreviewEnabled(false);
   prefs.setMinutes(12);
-  assert.match(ui.voiceTimeoutNote.textContent, /Not saved/);
+  assert.match(fields(ui).timeoutNote, /Not saved/);
   disk.setItem = original;
   const timeout = prefs.setMinutes(12);
   const preview = prefs.setPreviewEnabled(false);
@@ -212,66 +172,84 @@ test('[voice-panel-025] same-value retry really writes and clears warnings after
   assert.equal(timeout.persisted, true);
   assert.equal(preview.persisted, true);
   assert.deepEqual(disk.writes, [
-    ['godsEyeView.voice.inactivityMinutes', '12'],
-    ['godsEyeView.voice.previewEnabled', 'false'],
+    [T, '12'],
+    [P, 'false'],
   ]);
-  assert.equal(ui.voiceTimeoutNote.textContent, 'Provider limits still apply');
-  assert.equal(ui.voicePreviewNote.textContent, 'Preview local');
+  assert.equal(fields(ui).timeoutNote, copy.timeoutNote);
+  assert.equal(fields(ui).previewNote, copy.previewNote);
 });
 
-test('[voice-panel-026] Custom commits displayed valid value immediately, even when equal to preset', () => {
+test('Custom commits displayed valid value immediately, even when equal to preset', () => {
   const disk = storage();
   const prefs = createVoicePreferences({ storage: disk });
   const ui = controls('10');
   bind(ui, prefs);
   assert.equal(disk.writes.length, 0);
-  ui.voiceTimeoutSelect.change('custom');
+  ui.emit('timeout-select', 'custom');
   assert.equal(prefs.snapshot().minutes, 10);
-  assert.equal(ui.voiceTimeoutSelect.value, 'custom');
-  assert.equal(ui.voiceTimeoutInput.hidden, false);
-  assert.deepEqual(disk.writes, [
-    ['godsEyeView.voice.inactivityMinutes', '10'],
-  ]);
-  ui.voiceTimeoutInput.change('23');
-  ui.voiceTimeoutSelect.change('5');
-  assert.equal(ui.voiceTimeoutInput.value, '23');
-  assert.equal(ui.voiceTimeoutInput.hidden, true);
-  ui.voiceTimeoutSelect.change('custom');
+  assert.equal(fields(ui).timeoutChoice, 'custom');
+  assert.equal(fields(ui).timeoutInputHidden, false);
+  assert.deepEqual(disk.writes, [[T, '10']]);
+  ui.emit('timeout-input', '23');
+  ui.emit('timeout-select', '5');
+  assert.equal(fields(ui).timeoutMinutes, '23');
+  assert.equal(fields(ui).timeoutInputHidden, true);
+  ui.emit('timeout-select', 'custom');
   assert.equal(prefs.snapshot().minutes, 23);
-  assert.equal(ui.voiceTimeoutInput.value, '23');
+  assert.equal(fields(ui).timeoutMinutes, '23');
 });
 
-test('[voice-panel-027] invalid control edits restore valid state without writes; None remains distinct', () => {
-  const disk = storage({ ['godsEyeView.voice.inactivityMinutes']: '17' });
+test('invalid control edits restore valid state without writes; None remains distinct', () => {
+  const disk = storage({ [T]: '17' });
   const prefs = createVoicePreferences({ storage: disk });
   const ui = controls();
   bind(ui, prefs);
-  assert.equal(ui.voiceTimeoutInput.value, '17');
+  assert.equal(fields(ui).timeoutMinutes, '17');
   for (const value of ['1.5', '', '61', '0']) {
-    ui.voiceTimeoutInput.change(value);
-    assert.equal(ui.voiceTimeoutInput.value, '17');
+    // Each refused edit republishes the applied value, so the view writes it
+    // back over what was typed.
+    const revision = fields(ui).revision;
+    ui.emit('timeout-input', value);
+    assert.equal(fields(ui).timeoutMinutes, '17');
+    assert.ok(fields(ui).revision > revision);
     assert.equal(prefs.snapshot().minutes, 17);
   }
-  ui.voiceTimeoutSelect.change('malformed');
-  assert.equal(ui.voiceTimeoutSelect.value, 'custom');
+  ui.emit('timeout-select', 'malformed');
+  assert.equal(fields(ui).timeoutChoice, 'custom');
   assert.equal(disk.writes.length, 0);
-  ui.voiceTimeoutSelect.change('0');
+  ui.emit('timeout-select', '0');
   assert.equal(prefs.snapshot().minutes, 0);
-  assert.equal(ui.voiceTimeoutInput.hidden, true);
-  ui.voiceTimeoutInput.value = 'bad';
-  ui.voiceTimeoutSelect.change('custom');
-  assert.equal(ui.voiceTimeoutSelect.value, '0');
+  assert.equal(fields(ui).timeoutInputHidden, true);
+  // The field shows an invalid value when Custom is chosen.
+  ui.update('preferences', { timeoutMinutes: 'bad' });
+  ui.emit('timeout-select', 'custom');
+  assert.equal(fields(ui).timeoutChoice, '0');
   assert.equal(prefs.snapshot().minutes, 0);
-  assert.deepEqual(disk.writes, [
-    ['godsEyeView.voice.inactivityMinutes', 'none'],
-  ]);
+  assert.deepEqual(disk.writes, [[T, 'none']]);
 });
 
-test('[voice-panel-028] model snapshots cannot mutate state; unsubscribe and binder disposal release ownership', () => {
+test('model snapshots cannot mutate state; unsubscribe and binder disposal release ownership', () => {
   const prefs = createVoicePreferences({ storage: storage() });
   const ui = controls();
+  // Count the binder's field listeners still attached.
+  const attached = new Set();
+  const on = ui.on;
+  ui.on = (name, listener) => {
+    const off = on(name, listener);
+    const entry = { name };
+    attached.add(entry);
+    return () => {
+      attached.delete(entry);
+      off();
+    };
+  };
   let calls = 0;
   const binding = bind(ui, prefs, () => calls++);
+  assert.deepEqual([...attached].map((entry) => entry.name).sort(), [
+    'preview-change',
+    'timeout-input',
+    'timeout-select',
+  ]);
   const snap = prefs.snapshot();
   snap.minutes = 41;
   assert.equal(prefs.snapshot().minutes, 5);
@@ -284,9 +262,15 @@ test('[voice-panel-028] model snapshots cannot mutate state; unsubscribe and bin
   unsub();
   binding.dispose();
   binding.dispose();
+  assert.equal(attached.size, 0);
   prefs.setMinutes(12);
   assert.equal(calls, 1);
-  assert.equal(ui.voiceTimeoutInput.value, '11');
-  for (const element of Object.values(ui))
-    assert.equal(element.listeners.size, 0);
+  assert.equal(fields(ui).timeoutMinutes, '11');
+  // A disposed binder no longer answers its fields.
+  ui.emit('timeout-select', '3');
+  ui.emit('timeout-input', '9');
+  ui.emit('preview-change', false);
+  assert.equal(prefs.snapshot().minutes, 12);
+  assert.equal(prefs.snapshot().previewEnabled, true);
+  assert.equal(fields(ui).timeoutMinutes, '11');
 });

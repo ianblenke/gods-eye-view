@@ -1,14 +1,12 @@
-import * as Cesium from 'cesium';
-
 /** Own the image queue and object URLs of one answer. */
-export function createSceneImages({ source, entities, changed, decodeImage }) {
+export function createSceneImages({ source, images, changed, decodeImage }) {
   let batch = null;
 
   function release() {
     if (batch === null) return;
     batch.controller.abort();
-    for (const [id, url] of batch.urls) {
-      entities().removeById(id);
+    images().clear();
+    for (const url of batch.urls.values()) {
       URL.revokeObjectURL(url);
     }
     batch = null;
@@ -26,6 +24,7 @@ export function createSceneImages({ source, entities, changed, decodeImage }) {
     const own = {
       controller: new AbortController(),
       urls: new Map(),
+      items: new Map(),
       failed: 0,
     };
     batch = own;
@@ -46,25 +45,27 @@ export function createSceneImages({ source, entities, changed, decodeImage }) {
           if (signal.aborted) return;
           if (bitmap === null) throw new Error('Thumbnail decode failed');
           url = URL.createObjectURL(result.blob);
-          const entity = entities().add(
-            new Cesium.Entity({
-              id: `up42-scenes:image:${scene.id}`,
-              polygon: {
-                hierarchy: new Cesium.PolygonHierarchy(
-                  Cesium.Cartesian3.fromDegreesArray(scene.ring.flat()),
-                ),
-                heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-                perPositionHeight: false,
-                zIndex: selected.length - rank,
-                material: new Cesium.ImageMaterialProperty({
-                  image: url,
-                  transparent: true,
-                  color: Cesium.Color.WHITE.withAlpha(0.85),
-                }),
-              },
-            }),
+          // shortcut: the image draws opaque, not at alpha 0.85, and the
+          // outlines are not forced above it; upgrade when the draw port has
+          // image alpha and a draw order for draped sets.
+          const id = `up42-scenes:image:${scene.id}`;
+          const item = {
+            id,
+            geometry: {
+              kind: 'polygon',
+              rings: [scene.ring.map(([lon, lat]) => ({ lon, lat }))],
+            },
+            fill: { image: url },
+            height: 'clampGround',
+            clampTo: 'both',
+          };
+          // The newest scene (rank 0) draws last, so it is on top.
+          const next = new Map(own.items).set(rank, item);
+          images().set(
+            [...next.keys()].sort((a, b) => b - a).map((key) => next.get(key)),
           );
-          own.urls.set(entity.id, url);
+          own.items = next;
+          own.urls.set(id, url);
         } catch {
           if (url !== null) URL.revokeObjectURL(url);
           if (signal.aborted) return;

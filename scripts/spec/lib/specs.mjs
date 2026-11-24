@@ -442,6 +442,14 @@ export function loadSpecs(root) {
           for (const scenario of item.scenarios) removedIds.add(scenario.id);
         }
       }
+      // A modified requirement keeps only the scenarios that the change lists. The archive command drops the others.
+      const deltaFile = `openspec/changes/${change}/specs/${capability}/spec.md`;
+      for (const item of requirements.filter((entry) => entry.file === deltaFile && !entry.removed)) {
+        const main = requirements.find((entry) => entry.file === mainFile && !entry.removed && entry.name === item.name);
+        for (const scenario of main?.scenarios ?? []) {
+          if (!item.scenarios.some((kept) => kept.id === scenario.id)) removedIds.add(scenario.id);
+        }
+      }
     }
   }
   return { scenarios, mainIds, retired, requirements, orphans, changeIds, removedIds, errors };

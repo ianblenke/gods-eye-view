@@ -1,4 +1,6 @@
-import * as Cesium from 'cesium';
+import { fromDegrees } from '../../geo/ellipsoid.js';
+import { drawOf } from '../../render/rendererOf.js';
+import { cssColor } from '../../render/color.js';
 import { msg } from '../../i18n/index.js';
 import {
   RETICULUM_COLLISION_CAPACITY,
@@ -20,7 +22,7 @@ export function createReticulumLayer({ source, overlayHost } = {}) {
   if (!overlayHost) throw new TypeError('Reticulum requires an overlay host');
   let _viewer = null;
   let _request = null;
-  let _dataSource = null;
+  let _points = null;
   let _count = 0;
   let _lastUpdate = null;
   let _lastError = null;
@@ -29,31 +31,24 @@ export function createReticulumLayer({ source, overlayHost } = {}) {
 
   function createPoint(item, position) {
     const style = pointStyle(item);
-    return new Cesium.Entity({
+    const [r, g, b] = cssColor(style.color);
+    return {
       id: `reticulum:${item.id}`,
-      position,
-      point: {
-        pixelSize: style.size,
-        color: Cesium.Color.fromCssColorString(style.color).withAlpha(
-          style.alpha,
-        ),
-        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-      },
-    });
+      pos: position,
+      pixelSize: style.size,
+      color: [r, g, b, style.alpha],
+      height: 'clampGround',
+    };
   }
 
   function showInterfaces(interfaces) {
     const positions = new Map();
     const points = interfaces.map((item) => {
-      const position = Cesium.Cartesian3.fromDegrees(
-        item.longitude,
-        item.latitude,
-      );
+      const position = fromDegrees(item.longitude, item.latitude);
       positions.set(item.id, position);
       return createPoint(item, position);
     });
-    _dataSource.entities.removeAll();
-    for (const point of points) _dataSource.entities.add(point);
+    _points.set(points);
     overlayHost.setEntries(
       SOURCE_ID,
       selectLabelCohort(interfaces).map((item, index) =>
@@ -68,7 +63,7 @@ export function createReticulumLayer({ source, overlayHost } = {}) {
   }
 
   function clearInterfaces() {
-    _dataSource.entities.removeAll();
+    _points.clear();
     overlayHost.clearSource(SOURCE_ID);
   }
 
@@ -82,15 +77,13 @@ export function createReticulumLayer({ source, overlayHost } = {}) {
     init(viewer) {
       if (_viewer) throw new Error('Reticulum layer is already initialized');
       _viewer = viewer;
-      _dataSource = new Cesium.CustomDataSource('reticulum');
-      _dataSource.show = false;
-      viewer.dataSources.add(_dataSource);
+      _points = drawOf(viewer).points({ id: 'reticulum:points', show: false });
       overlayHost.setVisible(SOURCE_ID, false);
     },
 
     enable() {
       _enabled = true;
-      _dataSource.show = true;
+      _points.show = true;
       overlayHost.setVisible(SOURCE_ID, true);
     },
 
@@ -98,7 +91,7 @@ export function createReticulumLayer({ source, overlayHost } = {}) {
       _request?.abort();
       _request = null;
       _enabled = false;
-      _dataSource.show = false;
+      _points.show = false;
       overlayHost.clearSource(SOURCE_ID);
       overlayHost.setVisible(SOURCE_ID, false);
     },
@@ -136,17 +129,15 @@ export function createReticulumLayer({ source, overlayHost } = {}) {
       return updated;
     },
 
-    destroy(viewer = _viewer) {
+    destroy() {
       _request?.abort();
       _request = null;
       _viewer = null;
       _enabled = false;
       overlayHost.clearSource(SOURCE_ID);
       overlayHost.setVisible(SOURCE_ID, false);
-      if (_dataSource) {
-        viewer.dataSources.remove(_dataSource, true);
-        _dataSource = null;
-      }
+      _points?.dispose();
+      _points = null;
       _count = 0;
       _lastUpdate = null;
       _lastError = null;

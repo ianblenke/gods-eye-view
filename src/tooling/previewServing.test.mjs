@@ -7,11 +7,17 @@ import { localProviderPlugins } from '../../server/providers/local.js';
 import { apiNotFoundPlugin } from '../../server/standalone/api-not-found.js';
 import { makeFixtureRoot } from './fixtureRoot.mjs';
 
+const nominatimStorageDir = await makeFixtureRoot('gev-preview-composition-');
+test.after(() => rm(nominatimStorageDir, { recursive: true, force: true }));
+
 test('data providers have both hooks; credential editing stays development-only', () => {
-  const plugins = localProviderPlugins();
+  const plugins = localProviderPlugins({ nominatimStorageDir });
   assert.ok(plugins.some(({ name }) => name === 'fire-perimeters'));
   assert.ok(plugins.some(({ name }) => name === 'gnss-integrity'));
   assert.ok(plugins.some(({ name }) => name === 'ghostmaps'));
+  assert.ok(plugins.some(({ name }) => name === 'drone-airspace'));
+  assert.ok(plugins.some(({ name }) => name === 'inaturalist'));
+  assert.ok(plugins.some(({ name }) => name === 'acartia'));
   for (const plugin of plugins) {
     if (plugin.name === 'gev-key-setup') {
       assert.equal(plugin.configurePreviewServer, undefined);
@@ -89,12 +95,11 @@ test('real dev and built-preview servers serve provider JSON and terminate unkno
   for (const isPreview of [false, true]) {
     const config = {
       ...base,
-      plugins: [...localProviderPlugins(), apiNotFoundPlugin()],
-      // The fixture page has no script to bundle and no file to watch. Vite's dependency
-      // optimizer and its file watcher each arm timers that are still live when the test
-      // process exits (found on the CI runner).
-      optimizeDeps: { noDiscovery: true, include: [] },
-      server: { host: '127.0.0.1', port: 0, hmr: false, watch: null },
+      plugins: [
+        ...localProviderPlugins({ nominatimStorageDir }),
+        apiNotFoundPlugin(),
+      ],
+      server: { host: '127.0.0.1', port: 0, hmr: false },
       preview: { host: '127.0.0.1', port: 0 },
     };
     const server = isPreview
@@ -111,6 +116,8 @@ test('real dev and built-preview servers serve provider JSON and terminate unkno
         ['/api/fire-perimeters/inciweb/publication/invalid', 400],
         ['/api/gnss-integrity?lat=invalid', 400],
         ['/api/ghostmaps/unknown', 404],
+        ['/api/inaturalist/unknown', 404],
+        ['/api/acartia/unknown', 404],
         ['/api/terrain/heights?points=invalid', 400],
         ['/api/overpass', 405],
         ['/api/overpass/status', 200],
@@ -122,6 +129,9 @@ test('real dev and built-preview servers serve provider JSON and terminate unkno
         ['/api/mapillary/status', 200],
         ['/api/mapillary/tiles/coverage/14/1/2', 503],
         ['/api/radio/unknown', 404],
+        ['/api/library/catalog', 200],
+        ['/api/library/tile/nasa-black-marble/0/0/0', 404],
+        ['/api/library/tile/gvp-holocene-volcanoes/0/0/0', 404],
         ['/api/setup/status', isPreview ? 404 : 200],
         ['/api/setup/update', 404],
         ['/api/does-not-exist', 404],
@@ -173,7 +183,6 @@ test('real dev and built-preview servers serve provider JSON and terminate unkno
       }
     } finally {
       await server.close();
-      await new Promise((resolve) => setTimeout(resolve, 60));
     }
   }
 });

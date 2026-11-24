@@ -13,6 +13,7 @@ import {
 import { createStandaloneLayerSources } from '../../standalone/layerSources.js';
 import { createReferenceSources } from '../../sources/reference.js';
 import { VOICE_OFF_LAYERS } from '../../voice/layerManifest.js';
+import { bindFakeDraw } from '../../testSupport/fakeDrawPort.mjs';
 
 const GOOD = {
   interfaces: [],
@@ -24,7 +25,8 @@ const GOOD = {
     total: 0,
   },
 };
-const FAKE_VIEWER = { dataSources: { add() {}, remove() {} } };
+const FAKE_VIEWER = {};
+bindFakeDraw(FAKE_VIEWER);
 
 test('[reticulum-layer-017] registers the layer in the catalog, the source contract, the reference sources and the share link', async (t) => {
   const lifetime = new AbortController();
@@ -85,7 +87,7 @@ test('[reticulum-layer-017] registers the layer in the catalog, the source contr
   );
 });
 
-test('[reticulum-layer-018] puts the layer at the end of the Infrastructure group of the panel', () => {
+test('[reticulum-layer-018] puts the layer in the Infrastructure group of the panel, right after local-dams', () => {
   const text = readFileSync(
     fileURLToPath(new URL('../../ui/layerPanel.js', import.meta.url)),
     'utf8',
@@ -95,7 +97,8 @@ test('[reticulum-layer-018] puts the layer at the end of the Infrastructure grou
   );
   assert.ok(group);
   const ids = [...group[1].matchAll(/'([^']+)'/g)].map((match) => match[1]);
-  assert.deepEqual(ids.slice(-2), ['local-dams', 'reticulum']);
+  const at = ids.indexOf('local-dams');
+  assert.deepEqual(ids.slice(at, at + 2), ['local-dams', 'reticulum']);
 });
 
 test('[reticulum-layer-019] keeps the layer out of voice', () => {

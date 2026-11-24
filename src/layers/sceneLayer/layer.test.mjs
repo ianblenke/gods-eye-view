@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import * as Cesium from 'cesium';
+import { cssColor } from '../../render/color.js';
+import { sceneViewer } from '../../testSupport/sceneViewer.mjs';
 import { createSceneLayer } from './index.js';
 import {
   boxAreaKm2,
@@ -86,8 +88,6 @@ for (const S of SERVICES) {
     return { promise, resolve, reject };
   };
   const tick = () => new Promise((resolve) => setImmediate(resolve));
-  // The globe of the fake viewer has an ellipsoid of its own, so a default value cannot pass for it.
-  const GLOBE_ELLIPSOID = Cesium.Ellipsoid.clone(Cesium.Ellipsoid.WGS84);
   const HINT = `A press searches 92 days of the ${S.label} archive in a 48 km box at the view centre.`;
   const STATUS_FAILED = 'The server did not give the status of the key.';
   const NO_KEY = `No ${S.label} key. Set ${S.key} in .env and restart the app.`;
@@ -140,42 +140,8 @@ for (const S of SERVICES) {
       setVisible: (...args) => overlay.push(['setVisible', ...args]),
     };
     const renders = [];
-    const added = [];
-    const listeners = [];
-    const picks = [];
-    const handlers = {};
-    const watch = (name) => ({
-      addEventListener: (handler) => {
-        listeners.push(name);
-        (handlers[name] ??= []).push(handler);
-      },
-      raiseEvent: () => (handlers[name] ?? []).forEach((handler) => handler()),
-    });
-    const viewer = {
-      dataSources: {
-        add: (dataSource) => added.push(dataSource),
-        remove(dataSource, destroy) {
-          added.splice(added.indexOf(dataSource), 1);
-          viewer.removed = [dataSource, destroy];
-        },
-      },
-      camera: {
-        positionWC: Cesium.Cartesian3.fromDegrees(0, 0, 1e7),
-        changed: watch('camera.changed'),
-        moveStart: watch('camera.moveStart'),
-        moveEnd: watch('camera.moveEnd'),
-        pickEllipsoid: (...args) => {
-          picks.push(args);
-          return pick(...args);
-        },
-      },
-      scene: {
-        canvas,
-        globe: { ellipsoid: GLOBE_ELLIPSOID },
-        preRender: watch('scene.preRender'),
-        postRender: watch('scene.postRender'),
-      },
-    };
+    const scene = sceneViewer({ layerId: S.layer, pick, canvas });
+    const { viewer, picks } = scene;
     const clock = { t: NOW };
     const layer = createSceneLayer(S.service, {
       source,
@@ -194,14 +160,14 @@ for (const S of SERVICES) {
     const chip = () => layer.getRowControls().chips[0];
     const info = () => layer.getRowControls().info;
     const list = () => layer.getRowControls().list;
-    const entity = (id) => added[0]?.entities.getById(`${S.layer}:${id}`);
+    const line = (id) => scene.item('lines', id);
+    const fill = (id) => scene.item('fills', id);
     const cards = () => overlay.filter(([name]) => name === 'setEntries');
     return {
       layer,
       viewer,
       calls,
-      added,
-      listeners,
+      scene,
       picks,
       clock,
       overlay,
@@ -209,9 +175,9 @@ for (const S of SERVICES) {
       chip,
       info,
       list,
-      entity,
+      line,
+      fill,
       cards,
-      dataSource: () => added[0],
       async ready() {
         layer.init(viewer);
         layer.enable(viewer);
@@ -225,16 +191,8 @@ for (const S of SERVICES) {
       },
     };
   }
-  const colorOf = (graphics) => graphics.material.color.getValue();
   const expectColor = (actual, css, alpha) =>
-    assert.equal(
-      Cesium.Color.equals(
-        actual,
-        Cesium.Color.fromCssColorString(css).withAlpha(alpha),
-      ),
-      true,
-      `${actual} ${css} ${alpha}`,
-    );
+    assert.deepEqual(actual, [...cssColor(css).slice(0, 3), alpha]);
 
   test(`[scene-layers-001] ${S.label}: describes the layer and has a method setParams`, () => {
     const { layer } = harness();
@@ -301,20 +259,11 @@ for (const S of SERVICES) {
     assert.throws(() => layer.init(viewer), /already initialized/);
   });
 
-  test(`[scene-layers-002] ${S.label}: asks only for the status and adds no listener to the camera or the scene`, async () => {
-    const { layer, viewer, calls, listeners } = harness();
+  test(`[scene-layers-002] ${S.label}: asks only for the status, with no camera port or scene event`, async () => {
+    const { layer, viewer, calls } = harness();
     layer.init(viewer);
     layer.enable(viewer);
-    for (const [lon, lat] of [
-      [10, 60],
-      [11, 61],
-      [12, 62],
-    ]) {
-      viewer.camera.positionWC = Cesium.Cartesian3.fromDegrees(lon, lat, 1e7);
-      for (const name of ['moveStart', 'changed', 'moveEnd'])
-        viewer.camera[name].raiseEvent();
-      viewer.scene.preRender.raiseEvent();
-      viewer.scene.postRender.raiseEvent();
+    for (let count = 0; count < 3; count += 1) {
       await layer.update();
     }
     layer.disable(viewer);
@@ -322,7 +271,6 @@ for (const S of SERVICES) {
     assert.equal(calls.getStatus.length, 3);
     assert.equal(calls.searchScenes.length, 0);
     assert.equal(calls.getThumbnail.length, 0);
-    assert.deepEqual(listeners, []);
   });
 
   test(`[scene-layers-002] ${S.label}: reads the status only while it is enabled`, async () => {
@@ -517,16 +465,11 @@ for (const S of SERVICES) {
     );
   });
 
-  test(`[scene-layers-008] ${S.label}: picks the middle of the canvas on the ellipsoid of the globe and sends its box`, async () => {
+  test(`[scene-layers-008] ${S.label}: picks the middle of the canvas on the ellipsoid and sends its box`, async () => {
     const h = harness({ pick: () => Cesium.Cartesian3.fromDegrees(10, 60) });
     await h.searched();
     assert.equal(h.picks.length, 1);
-    const [position, ellipsoid] = h.picks[0];
-    assert.equal(position.x, 400);
-    assert.equal(position.y, 300);
-    assert.equal(ellipsoid, GLOBE_ELLIPSOID);
-    assert.notEqual(ellipsoid, Cesium.Ellipsoid.WGS84);
-    assert.notEqual(ellipsoid, Cesium.Ellipsoid.default);
+    assert.deepEqual(h.picks[0], [400, 300]);
     assert.deepEqual(
       h.calls.searchScenes[0].bbox,
       [9.568326, 59.784163, 10.431674, 60.215837],
@@ -597,36 +540,36 @@ for (const S of SERVICES) {
   test(`[scene-layers-022] ${S.label}: shows one polyline on the ground for each scene, with the style of a footprint that is not selected`, async () => {
     const h = harness();
     await h.searched();
-    const entities = h.dataSource().entities.values;
-    assert.deepEqual(
-      entities.map(({ id }) => id),
-      [`${S.layer}:a`, `${S.layer}:b`, `${S.layer}:c`],
-    );
+    assert.deepEqual(h.scene.ids('lines'), [
+      `${S.layer}:a`,
+      `${S.layer}:b`,
+      `${S.layer}:c`,
+    ]);
+    assert.deepEqual(h.scene.ids('fills'), []);
     for (const item of THREE.scenes) {
-      const found = h.entity(item.id);
-      const positions = found.polyline.positions.getValue();
-      assert.equal(positions.length, item.rings[0].length);
+      const found = h.line(item.id);
+      assert.equal(found.positions.length, item.rings[0].length);
       item.rings[0].forEach(([lon, lat], index) =>
         assert.equal(
           Cesium.Cartesian3.equalsEpsilon(
-            positions[index],
+            found.positions[index],
             Cesium.Cartesian3.fromDegrees(lon, lat),
             1e-6,
           ),
           true,
         ),
       );
-      assert.equal(found.polyline.clampToGround.getValue(), true);
-      assert.equal(found.polyline.width.getValue(), 2);
-      expectColor(colorOf(found.polyline), '#38bdf8', 0.9);
-      assert.equal(found.polygon, undefined);
+      assert.equal(found.mode, 'draped');
+      assert.equal(found.widthPx, 2);
+      expectColor(found.style.color, '#38bdf8', 0.9);
     }
     assert.deepEqual(h.layer.getStats(), {
       count: 3,
       lastUpdate: NOW,
       error: null,
     });
-    assert.equal(h.dataSource().show, true);
+    assert.equal(h.scene.set('lines').show, true);
+    assert.equal(h.scene.set('fills').show, true);
   });
 
   test(`[scene-layers-022] ${S.label}: gives the list of the answer and replaces the footprints and the list with a second answer`, async () => {
@@ -643,10 +586,7 @@ for (const S of SERVICES) {
     assert.equal(h.list().ariaLabel, `${S.list}`);
     h.clock.t = NOW + MINUTE;
     await h.chip().onClick();
-    assert.deepEqual(
-      h.dataSource().entities.values.map(({ id }) => id),
-      [`${S.layer}:z`],
-    );
+    assert.deepEqual(h.scene.ids('lines'), [`${S.layer}:z`]);
     assert.deepEqual(
       h.list().items.map(({ id }) => id),
       ['scene:z'],
@@ -666,7 +606,7 @@ for (const S of SERVICES) {
     assert.deepEqual(h.renders, [`${S.layer}`, `${S.layer}`, `${S.layer}`]);
     const quiet = harness({ withRender: false });
     await quiet.searched();
-    assert.equal(quiet.dataSource().entities.values.length, 3);
+    assert.equal(quiet.scene.ids('lines').length, 3);
   });
 
   test(`[scene-layers-023] ${S.label}: keeps the footprints, the list and the selection when a press fails`, async () => {
@@ -682,7 +622,7 @@ for (const S of SERVICES) {
     assert.equal(h.cards().length, 1);
     const clears = h.overlay.filter(([name]) => name === 'clearSource').length;
     await h.chip().onClick();
-    assert.equal(h.dataSource().entities.values.length, 3);
+    assert.equal(h.scene.ids('lines').length, 3);
     assert.equal(h.list().items.length, 3);
     assert.equal(h.list().items[0].active, true);
     assert.equal(
@@ -714,7 +654,7 @@ for (const S of SERVICES) {
     await h.searched();
     where.at = undefined;
     await h.chip().onClick();
-    assert.equal(h.dataSource().entities.values.length, 3);
+    assert.equal(h.scene.ids('lines').length, 3);
     assert.equal(
       h.info(),
       `Point the view at the ground and press again. · ${ANSWER_TEXT}`,
@@ -767,8 +707,9 @@ for (const S of SERVICES) {
     await press;
     await tick();
     for (const made of [h, second]) {
-      assert.equal(made.dataSource().show, false);
-      assert.equal(made.dataSource().entities.values.length, 0);
+      assert.equal(made.scene.set('lines').show, false);
+      assert.equal(made.scene.ids('lines').length, 0);
+      assert.equal(made.scene.ids('fills').length, 0);
       assert.equal(made.layer.getStats().count, 0);
     }
     assert.equal(h.calls.decode.length, 0);
@@ -839,11 +780,10 @@ for (const S of SERVICES) {
     await h.searched();
     assert.equal(h.layer.setParams({ scene: 'a' }), true);
     const thumbSignal = h.calls.getThumbnail[0].signal;
-    const dataSource = h.dataSource();
     h.layer.destroy(h.viewer);
     assert.equal(thumbSignal.aborted, true);
-    assert.equal(h.added.length, 0);
-    assert.deepEqual(h.viewer.removed, [dataSource, true]);
+    assert.equal(h.scene.set('lines'), undefined);
+    assert.equal(h.scene.set('fills'), undefined);
     assert.deepEqual(h.layer.getStats(), {
       count: 0,
       lastUpdate: null,
@@ -860,7 +800,7 @@ for (const S of SERVICES) {
     await tick();
     assert.equal(h.calls.decode.length, 0);
     h.layer.init(h.viewer);
-    assert.equal(h.added.length, 1);
+    assert.notEqual(h.scene.set('lines'), undefined);
     const never = harness();
     assert.doesNotThrow(() => never.layer.destroy(never.viewer));
     assert.deepEqual(never.overlay, []);
@@ -918,17 +858,17 @@ for (const S of SERVICES) {
     const h = harness();
     await h.searched();
     assert.equal(h.layer.setParams({ scene: 'b' }), true);
-    const selected = h.entity('b');
-    assert.equal(selected.polyline.width.getValue(), 3);
-    expectColor(colorOf(selected.polyline), '#facc15', 1);
-    expectColor(colorOf(selected.polygon), '#facc15', 0.25);
-    const hierarchy = selected.polygon.hierarchy.getValue();
-    assert.equal(hierarchy.positions.length, 4);
+    const selected = h.line('b');
+    assert.equal(selected.widthPx, 3);
+    expectColor(selected.style.color, '#facc15', 1);
+    const filled = h.fill('b');
+    expectColor(filled.fill, '#facc15', 0.25);
+    assert.equal(filled.geometry.rings[0].length, 4);
     for (const id of ['a', 'c']) {
-      const other = h.entity(id);
-      assert.equal(other.polyline.width.getValue(), 2);
-      expectColor(colorOf(other.polyline), '#38bdf8', 0.9);
-      assert.equal(other.polygon, undefined);
+      const other = h.line(id);
+      assert.equal(other.widthPx, 2);
+      expectColor(other.style.color, '#38bdf8', 0.9);
+      assert.equal(h.fill(id), undefined);
     }
     assert.deepEqual(
       h.list().items.map(({ active, params }) => [active, params.scene]),
@@ -947,7 +887,7 @@ for (const S of SERVICES) {
     assert.equal(h.layer.setParams({ scene: 'a' }), true);
     assert.equal(h.calls.getThumbnail.length, 1);
     assert.equal(h.layer.setParams({ scene: null }), true);
-    assert.equal(h.entity('a').polygon, undefined);
+    assert.equal(h.fill('a'), undefined);
     assert.equal(
       h.list().items.every(({ active }) => active === false),
       true,
@@ -1001,7 +941,7 @@ for (const S of SERVICES) {
     await h.searched();
     assert.equal(h.layer.setParams({ scene: 'a' }), true);
     await h.chip().onClick();
-    assert.equal(h.entity('a').polygon, undefined);
+    assert.equal(h.fill('a'), undefined);
     assert.equal(
       h.list().items.every(({ active }) => active === false),
       true,
@@ -1377,27 +1317,28 @@ for (const S of SERVICES) {
   test(`[scene-layers-022] ${S.label}: shows one entity for each ring of a footprint and counts the scenes`, async () => {
     const h = harness({ scenes: async () => ({ ok: true, answer: MULTI }) });
     await h.searched();
-    const entities = h.dataSource().entities.values;
-    assert.deepEqual(
-      entities.map(({ id }) => id),
-      [`${S.layer}:m`, `${S.layer}:m:1`, `${S.layer}:m:2`, `${S.layer}:n`],
-    );
+    assert.deepEqual(h.scene.ids('lines'), [
+      `${S.layer}:m`,
+      `${S.layer}:m:1`,
+      `${S.layer}:m:2`,
+      `${S.layer}:n`,
+    ]);
+    assert.deepEqual(h.scene.ids('fills'), []);
     const rings = [RING, SHIFT(1), SHIFT(2)];
     ['', ':1', ':2'].forEach((suffix, index) => {
-      const found = h.dataSource().entities.getById(`${S.layer}:m${suffix}`);
-      const positions = found.polyline.positions.getValue();
-      assert.equal(positions.length, rings[index].length);
+      const found = h.line(`m${suffix}`);
+      assert.equal(found.positions.length, rings[index].length);
       rings[index].forEach(([lon, lat], at) =>
         assert.equal(
-          Cesium.Cartesian3.equals(
-            positions[at],
+          Cesium.Cartesian3.equalsEpsilon(
+            found.positions[at],
             Cesium.Cartesian3.fromDegrees(lon, lat),
+            1e-6,
           ),
           true,
         ),
       );
-      assert.equal(found.polygon, undefined);
-      assert.equal(found.polyline.clampToGround.getValue(), true);
+      assert.equal(found.mode, 'draped');
     });
     assert.equal(h.layer.getStats().count, 2);
   });
@@ -1407,18 +1348,16 @@ for (const S of SERVICES) {
     await h.searched();
     assert.equal(h.layer.setParams({ scene: 'm' }), true);
     for (const suffix of ['', ':1', ':2']) {
-      const found = h.dataSource().entities.getById(`${S.layer}:m${suffix}`);
-      expectColor(colorOf(found.polyline), '#facc15', 1);
-      expectColor(colorOf(found.polygon), '#facc15', 0.25);
-      assert.equal(found.polyline.width.getValue(), 3);
+      expectColor(h.line(`m${suffix}`).style.color, '#facc15', 1);
+      expectColor(h.fill(`m${suffix}`).fill, '#facc15', 0.25);
+      assert.equal(h.line(`m${suffix}`).widthPx, 3);
     }
-    expectColor(colorOf(h.entity('n').polyline), '#38bdf8', 0.9);
-    assert.equal(h.entity('n').polygon, undefined);
+    expectColor(h.line('n').style.color, '#38bdf8', 0.9);
+    assert.equal(h.fill('n'), undefined);
     assert.equal(h.layer.setParams({ scene: null }), true);
-    for (const found of h.dataSource().entities.values) {
-      assert.equal(found.polygon, undefined, found.id);
-      expectColor(colorOf(found.polyline), '#38bdf8', 0.9);
-    }
+    assert.deepEqual(h.scene.ids('fills'), []);
+    for (const found of h.scene.set('lines').items.values())
+      expectColor(found.style.color, '#38bdf8', 0.9);
   });
 
   test(`[scene-layers-028] ${S.label}: puts the card at the centre of the first ring`, async () => {

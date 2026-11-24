@@ -1,29 +1,65 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createPlaceSearch, createGoogleGeocoder, createPhotonGeocoder } from './index.js';
+import {
+  createPlaceSearch,
+  createGoogleGeocoder,
+  createPhotonGeocoder,
+} from './index.js';
 import { createStandalonePlaceSearch } from '../standalone/placeSearch.js';
 import { photonExtentToBounds } from '../keylessGeocoder.js';
-const feature = { geometry: { type: 'Point', coordinates: [105.85, 21.03] }, properties: { name: 'Hà Nội', type: 'city' } };
+const feature = {
+  geometry: { type: 'Point', coordinates: [105.85, 21.03] },
+  properties: { name: 'Hà Nội', type: 'city' },
+};
 const hit = () => Response.json({ features: [feature] });
 // The answer of the upstream route /api/google/geocode when the server has no key.
-const keylessRouteAnswer = { configured: false, status: 'REQUEST_DENIED', results: [], error: null };
+const keylessRouteAnswer = {
+  configured: false,
+  status: 'REQUEST_DENIED',
+  results: [],
+  error: null,
+};
 
 test('malformed successful Photon responses remain retryable', async () => {
-  for (const malformed of [{ error: 'temporary failure' }, { features: {} }, { features: [{ geometry: { coordinates: [null, 1] } }] }]) {
+  for (const malformed of [
+    { error: 'temporary failure' },
+    { features: {} },
+    { features: [{ geometry: { coordinates: [null, 1] } }] },
+  ]) {
     let calls = 0;
-    const provider = createPhotonGeocoder({ fetchImpl: async () => ++calls === 1 ? Response.json(malformed) : hit() });
-    assert.deepEqual(await provider.geocode('Hanoi'), { place: null, answered: false });
+    const provider = createPhotonGeocoder({
+      fetchImpl: async () => (++calls === 1 ? Response.json(malformed) : hit()),
+    });
+    assert.deepEqual(await provider.geocode('Hanoi'), {
+      place: null,
+      answered: false,
+    });
     assert.equal((await provider.geocode('Hanoi')).place.name, 'Hà Nội');
     assert.equal(calls, 2);
   }
 });
 
 test('standalone geocoding falls back after Google connection, JSON and refusal failures', async () => {
-  for (const fail of [() => { throw new Error('offline'); }, () => new Response('invalid json'), () => Response.json({ configured: true, status: 'REQUEST_DENIED', results: [] })]) {
+  for (const fail of [
+    () => {
+      throw new Error('offline');
+    },
+    () => new Response('invalid json'),
+    () =>
+      Response.json({
+        configured: true,
+        status: 'REQUEST_DENIED',
+        results: [],
+      }),
+  ]) {
     const urls = [];
-    const service = createStandalonePlaceSearch({ resolveApiKey: () => 'fixture', fetchImpl: async (url) => {
-      urls.push(url); return url.includes('/api/google/geocode') ? fail() : hit();
-    } });
+    const service = createStandalonePlaceSearch({
+      resolveApiKey: () => 'fixture',
+      fetchImpl: async (url) => {
+        urls.push(url);
+        return url.includes('/api/google/geocode') ? fail() : hit();
+      },
+    });
     const result = await service.geocode('Hanoi');
     assert.equal(result.place.name, 'Hà Nội');
     assert.equal(result.fallbackUsed, true);
@@ -32,13 +68,19 @@ test('standalone geocoding falls back after Google connection, JSON and refusal 
 });
 
 test('[credential-boundary-020] a keyless server answers configured:false and the search then uses Photon', async () => {
-  const service = createStandalonePlaceSearch({ resolveApiKey: () => 'fixture', fetchImpl: async (url) => {
-    if (String(url).startsWith('/api/google/geocode')) {
-      return Response.json(keylessRouteAnswer);
-    }
-    assert.equal(new URL(url, 'http://localhost').hostname, 'photon.komoot.io');
-    return hit();
-  } });
+  const service = createStandalonePlaceSearch({
+    resolveApiKey: () => 'fixture',
+    fetchImpl: async (url) => {
+      if (String(url).startsWith('/api/google/geocode')) {
+        return Response.json(keylessRouteAnswer);
+      }
+      assert.equal(
+        new URL(url, 'http://localhost').hostname,
+        'photon.komoot.io',
+      );
+      return hit();
+    },
+  });
   assert.equal((await service.geocode('Hanoi')).place.lat, 21.03);
 });
 
@@ -46,16 +88,26 @@ test('[credential-boundary-020] a configured:false answer gives answered:false, 
   // The keyless route gives no answer. So the misses of Photon and of the
   // Nominatim route do not make a definitive miss, and the next search asks again.
   const urls = [];
-  const service = createStandalonePlaceSearch({ resolveApiKey: () => 'fixture', fetchImpl: async (url) => {
-    urls.push(String(url));
-    if (String(url).startsWith('/api/google/geocode')) return Response.json(keylessRouteAnswer);
-    // The last-resort Nominatim route answers a miss in the shape of Google.
-    if (String(url).startsWith('/api/geocode')) return Response.json({ status: 'ZERO_RESULTS', results: [] });
-    return Response.json({ features: [] });
-  } });
-  const routeRequests = () => urls.filter((url) => url.startsWith('/api/google/geocode')).length;
-  assert.deepEqual(await service.geocode('nowhere at all'), { place: null, answered: false });
-  assert.equal(urls.length, 3);
+  const service = createStandalonePlaceSearch({
+    resolveApiKey: () => 'fixture',
+    fetchImpl: async (url) => {
+      urls.push(String(url));
+      if (String(url).startsWith('/api/google/geocode'))
+        return Response.json(keylessRouteAnswer);
+      // The last-resort Nominatim route answers a miss in the shape of Google.
+      if (String(url).startsWith('/api/geocode'))
+        return Response.json({ status: 'ZERO_RESULTS', results: [] });
+      return Response.json({ features: [] });
+    },
+  });
+  const routeRequests = () =>
+    urls.filter((url) => url.startsWith('/api/google/geocode')).length;
+  assert.deepEqual(await service.geocode('nowhere at all'), {
+    place: null,
+    answered: false,
+  });
+  // The search asks the Nominatim route's status first: Photon, then the status, then the search itself.
+  assert.equal(urls.length, 4);
   assert.equal(routeRequests(), 1);
   // Photon keeps its own miss, but the search itself asks the route again.
   await service.geocode('nowhere at all');
@@ -64,14 +116,24 @@ test('[credential-boundary-020] a configured:false answer gives answered:false, 
 
 test('[credential-boundary-020] without a browser key, the search sends no request to the Google route, and the Google step gives answered:true', async () => {
   const urls = [];
-  const service = createStandalonePlaceSearch({ resolveApiKey: () => '', fetchImpl: async (url) => {
-    urls.push(String(url));
-    if (String(url).startsWith('/api/geocode')) return Response.json({ status: 'ZERO_RESULTS', results: [] });
-    return Response.json({ features: [] });
-  } });
-  assert.deepEqual(await service.geocode('nowhere at all'), { place: null, answered: true });
-  assert.equal(urls.some((url) => url.startsWith('/api/google/geocode')), false);
-  assert.equal(urls.length, 2);
+  const service = createStandalonePlaceSearch({
+    resolveApiKey: () => '',
+    fetchImpl: async (url) => {
+      urls.push(String(url));
+      if (String(url).startsWith('/api/geocode'))
+        return Response.json({ status: 'ZERO_RESULTS', results: [] });
+      return Response.json({ features: [] });
+    },
+  });
+  assert.deepEqual(await service.geocode('nowhere at all'), {
+    place: null,
+    answered: true,
+  });
+  assert.equal(
+    urls.some((url) => url.startsWith('/api/google/geocode')),
+    false,
+  );
+  assert.equal(urls.length, 3);
 });
 
 // The route answers 429 from its limiter and 502 when the upstream fetch fails,
@@ -79,20 +141,32 @@ test('[credential-boundary-020] without a browser key, the search sends no reque
 // gives answered:false when the search reads it, so the test of the status gives
 // a body that reads as an answer.
 const routeErrorBodies = {
-  429: { status: 'OVER_QUERY_LIMIT', results: [], error: 'Rate limit exceeded' },
-  502: { status: 'UNKNOWN_ERROR', results: [], error: 'Google Geocoding request failed' },
+  429: {
+    status: 'OVER_QUERY_LIMIT',
+    results: [],
+    error: 'Rate limit exceeded',
+  },
+  502: {
+    status: 'UNKNOWN_ERROR',
+    results: [],
+    error: 'Google Geocoding request failed',
+  },
 };
 const routeError = (status, photon, body = routeErrorBodies[status]) => {
   const urls = [];
-  const service = createStandalonePlaceSearch({ resolveApiKey: () => 'fixture', fetchImpl: async (url) => {
-    urls.push(String(url));
-    if (String(url).startsWith('/api/google/geocode')) {
-      return Response.json(body, { status });
-    }
-    // The last-resort Nominatim route answers a miss in the shape of Google.
-    if (String(url).startsWith('/api/geocode')) return Response.json({ status: 'ZERO_RESULTS', results: [] });
-    return photon();
-  } });
+  const service = createStandalonePlaceSearch({
+    resolveApiKey: () => 'fixture',
+    fetchImpl: async (url) => {
+      urls.push(String(url));
+      if (String(url).startsWith('/api/google/geocode')) {
+        return Response.json(body, { status });
+      }
+      // The last-resort Nominatim route answers a miss in the shape of Google.
+      if (String(url).startsWith('/api/geocode'))
+        return Response.json({ status: 'ZERO_RESULTS', results: [] });
+      return photon();
+    },
+  });
   return { service, urls };
 };
 
@@ -101,10 +175,21 @@ test('[credential-boundary-020] an HTTP error answer from the route and a Photon
   // A ZERO_RESULTS body gives answered:true when the search reads it, so only the status gives answered:false.
   const answers = {};
   for (const status of [429, 502]) {
-    const { service, urls } = routeError(status, () => Response.json({ features: [] }), { status: 'ZERO_RESULTS', results: [] });
+    const { service, urls } = routeError(
+      status,
+      () => Response.json({ features: [] }),
+      { status: 'ZERO_RESULTS', results: [] },
+    );
     answers[status] = await service.geocode('nowhere at all');
-    assert.equal(new URL(urls[1], 'http://localhost').hostname, 'photon.komoot.io');
-    assert.equal(urls.length, 3, 'the Nominatim route is the last resort after the Photon miss');
+    assert.equal(
+      new URL(urls[1], 'http://localhost').hostname,
+      'photon.komoot.io',
+    );
+    assert.equal(
+      urls.length,
+      4,
+      'the Nominatim route is the last resort after the Photon miss',
+    );
   }
   assert.deepEqual(answers, {
     429: { place: null, answered: false },
@@ -125,13 +210,20 @@ test('[credential-boundary-020] after an HTTP error answer from the route, the s
 
 test('[credential-boundary-020] the geocode request URL is same-origin, with address and bounds, and no key', async () => {
   let captured;
-  const service = createStandalonePlaceSearch({ resolveApiKey: () => 'fixture', fetchImpl: async (url) => {
-    if (String(url).startsWith('/api/google/geocode')) {
-      captured = new URL(url, 'http://localhost');
-      return Response.json({ configured: true, status: 'ZERO_RESULTS', results: [] });
-    }
-    return hit();
-  } });
+  const service = createStandalonePlaceSearch({
+    resolveApiKey: () => 'fixture',
+    fetchImpl: async (url) => {
+      if (String(url).startsWith('/api/google/geocode')) {
+        captured = new URL(url, 'http://localhost');
+        return Response.json({
+          configured: true,
+          status: 'ZERO_RESULTS',
+          results: [],
+        });
+      }
+      return hit();
+    },
+  });
   await service.geocode('Hanoi', { bias: '1,1|2,2' });
   assert.equal(captured.pathname, '/api/google/geocode');
   assert.equal(captured.searchParams.get('address'), 'Hanoi');
@@ -140,38 +232,73 @@ test('[credential-boundary-020] the geocode request URL is same-origin, with add
 });
 
 test('cancellation before lookup makes no request', async () => {
-  const controller = new AbortController(); controller.abort();
+  const controller = new AbortController();
+  controller.abort();
   let calls = 0;
-  const provider = createPhotonGeocoder({ fetchImpl: async () => { calls++; return hit(); } });
-  await assert.rejects(provider.geocode('Hanoi', { signal: controller.signal }), { name: 'AbortError' });
+  const provider = createPhotonGeocoder({
+    fetchImpl: async () => {
+      calls++;
+      return hit();
+    },
+  });
+  await assert.rejects(
+    provider.geocode('Hanoi', { signal: controller.signal }),
+    { name: 'AbortError' },
+  );
   assert.equal(calls, 0);
 });
 
 test('cancellation stops Photon retries and does not cache a late response', async () => {
   const controller = new AbortController();
   let calls = 0;
-  const provider = createPhotonGeocoder({ fetchImpl: async () => {
-    calls++; if (calls === 1) controller.abort(); return hit();
-  } });
-  await assert.rejects(provider.geocode('Hanoi', { bias: '1,1|2,2', signal: controller.signal }), { name: 'AbortError' });
+  const provider = createPhotonGeocoder({
+    fetchImpl: async () => {
+      calls++;
+      if (calls === 1) controller.abort();
+      return hit();
+    },
+  });
+  await assert.rejects(
+    provider.geocode('Hanoi', { bias: '1,1|2,2', signal: controller.signal }),
+    { name: 'AbortError' },
+  );
   assert.equal(calls, 1);
   assert.equal((await provider.geocode('Hanoi')).place.name, 'Hà Nội');
   assert.equal(calls, 2);
 });
 
 test('a Google request cancelled by its caller never starts the fallback', async () => {
-  const controller = new AbortController(); let fallbackCalls = 0;
-  const service = createPlaceSearch({ providers: [
-    createGoogleGeocoder({ request: async () => { controller.abort(); return Response.json({ status: 'ZERO_RESULTS', results: [] }); } }),
-    { geocode: async () => { fallbackCalls++; return { place: null, answered: true }; } },
-  ] });
-  await assert.rejects(service.geocode('missing', { signal: controller.signal }), { name: 'AbortError' });
+  const controller = new AbortController();
+  let fallbackCalls = 0;
+  const service = createPlaceSearch({
+    providers: [
+      createGoogleGeocoder({
+        request: async () => {
+          controller.abort();
+          return Response.json({ status: 'ZERO_RESULTS', results: [] });
+        },
+      }),
+      {
+        geocode: async () => {
+          fallbackCalls++;
+          return { place: null, answered: true };
+        },
+      },
+    ],
+  });
+  await assert.rejects(
+    service.geocode('missing', { signal: controller.signal }),
+    { name: 'AbortError' },
+  );
   assert.equal(fallbackCalls, 0);
 });
 
 test('service lifetime cancellation also rejects cache hits', async () => {
   const controller = new AbortController();
-  const service = createPlaceSearch({ signal: controller.signal, providers: [createPhotonGeocoder({ fetchImpl: async () => hit() })] });
+  const service = createPlaceSearch({
+    signal: controller.signal,
+    providers: [createPhotonGeocoder({ fetchImpl: async () => hit() })],
+  });
   assert.ok((await service.geocode('Hanoi')).place);
   controller.abort();
   await assert.rejects(service.geocode('Hanoi'), { name: 'AbortError' });
@@ -179,10 +306,17 @@ test('service lifetime cancellation also rejects cache hits', async () => {
 
 test('one cancelled caller cannot cancel another caller of the same service', async () => {
   const controller = new AbortController();
-  const service = createPlaceSearch({ providers: [{ async geocode(_query, { signal }) {
-    await new Promise((resolve) => setImmediate(resolve)); signal.throwIfAborted();
-    return { place: { lat: 1, lng: 2 }, answered: true };
-  } }] });
+  const service = createPlaceSearch({
+    providers: [
+      {
+        async geocode(_query, { signal }) {
+          await new Promise((resolve) => setImmediate(resolve));
+          signal.throwIfAborted();
+          return { place: { lat: 1, lng: 2 }, answered: true };
+        },
+      },
+    ],
+  });
   const first = service.geocode('same', { signal: controller.signal });
   const second = service.geocode('same');
   controller.abort();
@@ -191,11 +325,28 @@ test('one cancelled caller cannot cancel another caller of the same service', as
 });
 
 test('definitive misses expire while outage outcomes are never cached', async () => {
-  let now = 0, calls = 0, answered = true;
-  const service = createPlaceSearch({ now: () => now, providers: [{ async geocode() { calls++; return { place: null, answered }; } }] });
-  await service.geocode('miss'); await service.geocode('miss'); assert.equal(calls, 1);
-  now = 30_001; answered = false;
-  await service.geocode('miss'); await service.geocode('miss'); assert.equal(calls, 3);
+  let now = 0,
+    calls = 0,
+    answered = true;
+  const service = createPlaceSearch({
+    now: () => now,
+    providers: [
+      {
+        async geocode() {
+          calls++;
+          return { place: null, answered };
+        },
+      },
+    ],
+  });
+  await service.geocode('miss');
+  await service.geocode('miss');
+  assert.equal(calls, 1);
+  now = 30_001;
+  answered = false;
+  await service.geocode('miss');
+  await service.geocode('miss');
+  assert.equal(calls, 3);
 });
 
 test('wrapped and nonnumeric Photon bounds are omitted', () => {

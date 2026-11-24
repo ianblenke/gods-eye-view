@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createApplicationGhostMaps } from './ghostMaps.js';
+import '../../render/cesium/unbound.js';
 
 function property(t, key, value) {
   const old = Object.getOwnPropertyDescriptor(globalThis, key);
@@ -49,7 +50,7 @@ test('[ghostmaps-035] The application factory accepts a source and host options'
   layer.enable();
   assert.equal(await layer.update(), true);
   assert.equal(catalogs, 1);
-  assert.deepEqual(reads, ['gev.ghostmaps.products']);
+  assert.deepEqual(reads, ['gev.ghostmaps.products', 'gev.ghostmaps.ageDays']);
   assert.equal(subscriptions, 1);
   assert.equal(layer.getStats().commit, 'caller-head');
   assert.deepEqual(

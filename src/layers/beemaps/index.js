@@ -1,4 +1,6 @@
-import * as Cesium from 'cesium';
+import { fromDegrees, toLonLatH } from '../../geo/ellipsoid.js';
+import { cssColor } from '../../render/color.js';
+import { canvasOf, drawOf, queryOf } from '../../render/rendererOf.js';
 import { framesBox } from './box.js';
 import { STATUS_FAILED, describeFailure, describeReason } from './messages.js';
 import { pointStyle, readoutText } from './model.js';
@@ -10,23 +12,20 @@ const NO_KEY = describeFailure({ status: 0, error: 'no_key' });
 
 /** The point under the middle of the screen, or null when it shows the sky. */
 function viewCentre(viewer) {
-  const canvas = viewer.scene?.canvas;
+  const canvas = canvasOf(viewer);
   if (!canvas?.clientWidth || !canvas?.clientHeight) return null;
   let hit;
   try {
-    hit = viewer.camera.pickEllipsoid(
-      new Cesium.Cartesian2(canvas.clientWidth / 2, canvas.clientHeight / 2),
-      viewer.scene.globe?.ellipsoid,
+    hit = queryOf(viewer).pickEllipsoid(
+      canvas.clientWidth / 2,
+      canvas.clientHeight / 2,
     );
   } catch {
     return null;
   }
   if (!hit) return null;
-  const position = Cesium.Cartographic.fromCartesian(hit);
-  return {
-    lat: Cesium.Math.toDegrees(position.latitude),
-    lon: Cesium.Math.toDegrees(position.longitude),
-  };
+  const { lat, lon } = toLonLatH(hit);
+  return { lat, lon };
 }
 
 /**
@@ -42,7 +41,7 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
       'Bee Maps requires a source with getStatus and getFrames',
     );
   let _viewer = null;
-  let _dataSource = null;
+  let _points = null;
   let _enabled = false;
   let _statusRequest = null;
   let _request = null;
@@ -58,24 +57,20 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
   const notify = () => _listener?.();
 
   function showFrames(frames) {
-    _dataSource.entities.removeAll();
     const time = now();
-    for (const frame of frames) {
-      const style = pointStyle(frame.time, time);
-      _dataSource.entities.add(
-        new Cesium.Entity({
+    _points.set(
+      frames.map((frame) => {
+        const style = pointStyle(frame.time, time);
+        const [r, g, b] = cssColor(style.color);
+        return {
           id: `beemaps:${frame.id}`,
-          position: Cesium.Cartesian3.fromDegrees(frame.lon, frame.lat),
-          point: {
-            pixelSize: style.size,
-            color: Cesium.Color.fromCssColorString(style.color).withAlpha(
-              style.alpha,
-            ),
-            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-          },
-        }),
-      );
-    }
+          pos: fromDegrees(frame.lon, frame.lat),
+          pixelSize: style.size,
+          color: [r, g, b, style.alpha],
+          height: 'clampGround',
+        };
+      }),
+    );
   }
 
   function reset() {
@@ -142,21 +137,19 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
     init(viewer) {
       if (_viewer) throw new Error('Bee Maps layer is already initialized');
       _viewer = viewer;
-      _dataSource = new Cesium.CustomDataSource('beemaps');
-      _dataSource.show = false;
-      viewer.dataSources.add(_dataSource);
+      _points = drawOf(viewer).points({ id: 'beemaps:points', show: false });
     },
 
     enable() {
       _enabled = true;
-      _dataSource.show = true;
+      _points.show = true;
     },
 
     disable() {
       reset();
       _enabled = false;
-      _dataSource.show = false;
-      _dataSource.entities.removeAll();
+      _points.show = false;
+      _points.clear();
     },
 
     async update() {
@@ -208,14 +201,12 @@ export function createBeemapsLayer({ source, now = Date.now } = {}) {
       _listener = listener;
     },
 
-    destroy(viewer = _viewer) {
+    destroy() {
       reset();
       _enabled = false;
       _viewer = null;
-      if (_dataSource) {
-        viewer.dataSources.remove(_dataSource, true);
-        _dataSource = null;
-      }
+      _points?.dispose();
+      _points = null;
     },
 
     getStats() {

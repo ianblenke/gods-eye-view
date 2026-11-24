@@ -94,19 +94,24 @@ test('a tile that is not a line list fails, so it is asked for again rather than
 
 test('a tile whose segments all share one point decodes in linear time', () => {
   // [P, Q_i, P]: every chain step looks at the same start point's list.
-  // 60k: the old quadratic chaining took over a second; capped and linear
-  // decoding takes tens of milliseconds.
-  const lines = Array.from({ length: 60_000 }, (_, i) => ({
-    track: [at(0, 0), at(1 + i * 1e-6, 1), at(0, 0)],
-  }));
-  // CPU time and not wall time: a loaded machine cannot fail the test.
-  const started = process.cpuUsage();
-  const { sequences } = decodeCoverageTile({ lines }, TILE);
-  const used = process.cpuUsage(started);
-  const ms = (used.user + used.system) / 1000;
+  // Linear decoding takes twice the CPU time for twice the lines; the old
+  // quadratic chaining took four times as long. The two sizes are measured
+  // in the same process, so a slow or loaded machine cannot fail the test.
+  const decodeLines = (count) => {
+    const lines = Array.from({ length: count }, (_, i) => ({
+      track: [at(0, 0), at(1 + i * 1e-6, 1), at(0, 0)],
+    }));
+    const started = process.cpuUsage();
+    const { sequences } = decodeCoverageTile({ lines }, TILE);
+    const used = process.cpuUsage(started);
+    return { sequences, ms: (used.user + used.system) / 1000 };
+  };
+  decodeLines(2_000);
+  const small = decodeLines(30_000);
+  const { sequences, ms } = decodeLines(60_000);
   assert.ok(
-    ms < 1_000,
-    `${Math.round(ms)} ms (quadratic chaining took ~200 ms per 20k and grows fourfold per doubling)`,
+    ms < small.ms * 3,
+    `${Math.round(ms)} ms for 60k lines and ${Math.round(small.ms)} ms for 30k (quadratic chaining takes four times as long for twice the lines)`,
   );
   const points = sequences.reduce((sum, s) => sum + s.parts[0].length, 0);
   assert.ok(sequences.every((s) => s.parts[0].length <= MAX_LINE_POINTS));

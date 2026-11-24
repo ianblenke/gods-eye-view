@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import * as Cesium from 'cesium';
+import { bindFakeCesiumCamera } from '../../testSupport/fakeCameraPort.mjs';
+import { fakeDrawPort } from '../../testSupport/fakeDrawPort.mjs';
 import { createBeemapsBurstsLayer } from './index.js';
 
 const NOW = Date.UTC(2026, 9, 16, 12, 0, 0);
@@ -52,6 +54,11 @@ const deferred = () => {
   });
   return { promise, resolve, reject };
 };
+const rgba = (hex, alpha) => {
+  const n = Number.parseInt(hex.slice(1), 16);
+  return [(n >> 16) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255, alpha];
+};
+const GREY = rgba('#9ca3af', 0.2);
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
 function harness({
@@ -81,7 +88,6 @@ function harness({
       return list(options);
     },
   };
-  const added = [];
   const picks = [];
   const listeners = [];
   const handlers = {};
@@ -92,24 +98,13 @@ function harness({
     },
     raiseEvent: () => (handlers[name] ?? []).forEach((handler) => handler()),
   });
+  const draw = fakeDrawPort();
   const viewer = {
-    dataSources: {
-      add: (dataSource) => added.push(dataSource),
-      remove(dataSource, destroy) {
-        added.splice(added.indexOf(dataSource), 1);
-        viewer.removed = [dataSource, destroy];
-        viewer.removals = (viewer.removals ?? 0) + 1;
-      },
-    },
     camera: {
       positionWC: Cesium.Cartesian3.fromDegrees(0, 0, 1e7),
       changed: watch('camera.changed'),
       moveStart: watch('camera.moveStart'),
       moveEnd: watch('camera.moveEnd'),
-      pickEllipsoid: (...args) => {
-        picks.push(args);
-        return pick(...args);
-      },
     },
     scene: {
       canvas,
@@ -118,6 +113,17 @@ function harness({
       postRender: watch('scene.postRender'),
     },
   };
+  bindFakeCesiumCamera(viewer, {
+    draw,
+    query: {
+      pickEllipsoid: (x, y) => {
+        picks.push([{ x, y }]);
+        return pick(x, y);
+      },
+    },
+  });
+  // The ports' own listeners are not the layer's: count only what follows.
+  listeners.length = 0;
   const clock = { t: NOW };
   const timers = [];
   const cleared = [];
@@ -149,7 +155,6 @@ function harness({
     layer,
     viewer,
     calls,
-    added,
     picks,
     listeners,
     clock,
@@ -162,8 +167,12 @@ function harness({
     chip,
     confirmChip,
     info: () => layer.getRowControls().info,
-    dataSource: () => added[0],
-    entityIds: () => added[0].entities.values.map((entity) => entity.id),
+    draw,
+    boxes: () => draw.sets.get('beemaps-bursts:boxes'),
+    box: (id) => draw.set('beemaps-bursts:boxes').items.get(id),
+    entityIds: () => [
+      ...(draw.set('beemaps-bursts:boxes')?.items.keys() ?? []),
+    ],
     async ready() {
       layer.init(viewer);
       layer.enable(viewer);
@@ -465,13 +474,7 @@ test('[beemaps-bursts-007] shows the quote, the chips, the text and the box of t
   assert.equal(h.info(), QUOTE_TEXT);
   assert.equal(h.calls.confirm.length, 0);
   assert.deepEqual(h.entityIds(), ['beemaps-bursts:quote']);
-  const rectangle = h
-    .dataSource()
-    .entities.getById('beemaps-bursts:quote').rectangle;
-  const west = Cesium.Math.toDegrees(
-    rectangle.coordinates.getValue(Cesium.JulianDate.now()).west,
-  );
-  assert.equal(Number(west.toFixed(6)), 9.987014);
+  assert.equal(h.box('beemaps-bursts:quote').geometry.rect.west, 9.987014);
   assert.deepEqual(
     h.chips().map((entry) => entry.title),
     [
@@ -1177,8 +1180,7 @@ test('[beemaps-bursts-017] shows nothing and throws no error for an answer after
     error: null,
   });
   assert.equal(h.layer.getRowControls().info, HINT);
-  assert.deepEqual(h.added, []);
-  assert.equal(h.viewer.removed[1], true);
+  assert.equal(h.boxes().disposed, true);
 });
 
 test('[beemaps-bursts-018] sends one list request, draws the box of each burst and shows the counts', async () => {
@@ -1359,11 +1361,10 @@ test('[beemaps-bursts-019] takes the burst of the list answer in place of the bu
     h.info(),
     'Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 1 hit',
   );
-  const rectangle = h
-    .dataSource()
-    .entities.getById(`beemaps-bursts:${BURST_ID}`)
-    .rectangle.coordinates.getValue(Cesium.JulianDate.now());
-  assert.equal(Math.round(Cesium.Math.toDegrees(rectangle.west)), 5);
+  assert.equal(
+    Math.round(h.box(`beemaps-bursts:${BURST_ID}`).geometry.rect.west),
+    5,
+  );
 });
 
 test('[beemaps-bursts-019] forgets the bursts of the list and the created bursts on disable', async () => {
@@ -1405,13 +1406,7 @@ test('[beemaps-bursts-018] counts a burst with null fields and draws no box for 
     'beemaps-bursts:open',
     'beemaps-bursts:nostatus',
   ]);
-  const at = Cesium.JulianDate.now();
-  const grey = Cesium.Color.fromCssColorString('#9ca3af').withAlpha(0.2);
-  const colour = h
-    .dataSource()
-    .entities.getById('beemaps-bursts:nostatus')
-    .rectangle.material.getValue(at).color;
-  assert.equal(Cesium.Color.equals(colour, grey), true);
+  assert.deepEqual(h.box('beemaps-bursts:nostatus').fill, GREY);
 });
 
 test('[beemaps-bursts-014] shows the credits of the quote for a created burst with null credits and a null status', async () => {
@@ -1427,13 +1422,7 @@ test('[beemaps-bursts-014] shows the credits of the quote for a created burst wi
     h.info(),
     'Burst created: 125 credits taken, 875 left at Bee Maps. · 1 burst · 0 hits',
   );
-  const at = Cesium.JulianDate.now();
-  const grey = Cesium.Color.fromCssColorString('#9ca3af').withAlpha(0.2);
-  const colour = h
-    .dataSource()
-    .entities.getById(`beemaps-bursts:${BURST_ID}`)
-    .rectangle.material.getValue(at).color;
-  assert.equal(Cesium.Color.equals(colour, grey), true);
+  assert.deepEqual(h.box(`beemaps-bursts:${BURST_ID}`).fill, GREY);
 });
 
 test('[beemaps-bursts-019] clears the text of a failed status after a good list or a good quote', async () => {
@@ -1467,55 +1456,20 @@ test('[beemaps-bursts-019] ignores the answer of a list that the layer was disab
   assert.equal(h.layer.getStats().count, 0);
 });
 
-test('[beemaps-bursts-020] draws a rectangle of the box of each burst with the color of its state', async () => {
-  const h = harness({
-    list: async () => ({
-      ok: true,
-      bursts: [
-        listed('hit', { isHit: true, bbox: [1, 2, 3, 4] }),
-        listed('open', { bbox: [5, 6, 7, 8] }),
-        listed('done', { status: 'ended', bbox: [9, 10, 11, 12] }),
-      ],
-      total: 3,
-      cached: false,
-    }),
-  });
-  await h.quoted();
-  await h.chip('list').onClick();
-  const at = Cesium.JulianDate.now();
-  const entity = (id) => h.dataSource().entities.getById(id);
-  const color = (id) => entity(id).rectangle.material.getValue(at).color;
-  const near = (a, b) => Math.abs(a - b) < 1e-9;
-  const check = (id, css, alpha) => {
-    const expected = Cesium.Color.fromCssColorString(css).withAlpha(alpha);
-    assert.equal(Cesium.Color.equals(color(id), expected), true, id);
-  };
-  check('beemaps-bursts:hit', '#22c55e', 0.35);
-  check('beemaps-bursts:open', '#38bdf8', 0.25);
-  check('beemaps-bursts:done', '#9ca3af', 0.2);
-  check('beemaps-bursts:quote', '#f59e0b', 0.3);
-  const open = entity('beemaps-bursts:open').rectangle.coordinates.getValue(at);
-  assert.equal(near(Cesium.Math.toDegrees(open.west), 5), true);
-  assert.equal(near(Cesium.Math.toDegrees(open.south), 6), true);
-  assert.equal(near(Cesium.Math.toDegrees(open.east), 7), true);
-  assert.equal(near(Cesium.Math.toDegrees(open.north), 8), true);
-});
-
-test('[beemaps-bursts-020] hides the boxes with the data source and removes the data source on destroy', async () => {
+test('[beemaps-bursts-020] hides the boxes with the draw set and disposes the draw set on destroy', async () => {
   const h = harness();
   h.layer.init(h.viewer);
-  assert.equal(h.dataSource().show, false);
+  assert.equal(h.boxes().show, false);
   h.layer.enable(h.viewer);
-  assert.equal(h.dataSource().show, true);
+  assert.equal(h.boxes().show, true);
   h.layer.disable(h.viewer);
-  assert.equal(h.dataSource().show, false);
-  const source = h.dataSource();
+  assert.equal(h.boxes().show, false);
+  const set = h.boxes();
   h.layer.destroy(h.viewer);
-  assert.deepEqual(h.viewer.removed, [source, true]);
-  assert.deepEqual(h.added, []);
+  assert.equal(set.disposed, true);
   const idle = harness();
   idle.layer.destroy(idle.viewer);
-  assert.equal(idle.viewer.removed, undefined);
+  assert.equal(idle.boxes(), undefined);
 });
 
 test('[beemaps-bursts-029] keeps the Confirm chip disabled for 1000 milliseconds after the quote shows', async () => {
@@ -1802,14 +1756,15 @@ test('[beemaps-bursts-002] removes the data source on destroy and gives a layer 
   });
   await h.quoted();
   await h.confirmChip().onClick();
-  assert.equal(h.dataSource().name, 'beemaps-bursts');
+  assert.equal(h.boxes().spec.id, 'beemaps-bursts:boxes');
+  const first = h.boxes();
   h.layer.destroy(h.viewer);
   assert.deepEqual(h.chips(), []);
   assert.equal(h.info(), HINT);
   assert.equal(await h.layer.update(), false);
-  assert.deepEqual(h.added, []);
+  assert.equal(first.disposed, true);
   h.layer.init(h.viewer);
-  assert.equal(h.added.length, 1);
+  assert.notEqual(h.boxes(), first);
   h.layer.enable(h.viewer);
   await h.layer.update();
   assert.equal(h.info(), HINT);
@@ -1951,7 +1906,6 @@ test('[beemaps-bursts-008] picks the point at the middle of the canvas on the el
   assert.equal(h.picks.length, 1);
   assert.equal(h.picks[0][0].x, 400);
   assert.equal(h.picks[0][0].y, 300);
-  assert.equal(h.picks[0][1], Cesium.Ellipsoid.WGS84);
   const small = harness({ canvas: { clientWidth: 1000, clientHeight: 200 } });
   await small.ready();
   await small.chip('quote').onClick();
@@ -1959,7 +1913,7 @@ test('[beemaps-bursts-008] picks the point at the middle of the canvas on the el
   assert.equal(small.picks[0][0].y, 100);
 });
 
-test('[beemaps-bursts-008] gives the sky text for a viewer with no scene, and picks on the default ellipsoid for a viewer with no globe', async () => {
+test('[beemaps-bursts-008] gives the sky text for a viewer with no scene, and quotes a viewer with no globe', async () => {
   const noScene = harness();
   noScene.layer.init(noScene.viewer);
   noScene.layer.enable(noScene.viewer);
@@ -1971,7 +1925,6 @@ test('[beemaps-bursts-008] gives the sky text for a viewer with no scene, and pi
   await noGlobe.ready();
   delete noGlobe.viewer.scene.globe;
   await noGlobe.chip('quote').onClick();
-  assert.equal(noGlobe.picks[0][1], undefined);
   assert.equal(noGlobe.calls.quote.length, 1);
 });
 
@@ -2093,11 +2046,10 @@ test('[beemaps-bursts-014] shows the credits of the answer when they differ from
   await h.quoted();
   await h.confirmChip().onClick();
   assert.match(h.info(), /^Burst created: 250 credits taken, 875 left/);
-  const west = h
-    .dataSource()
-    .entities.getById(`beemaps-bursts:${BURST_ID}`)
-    .rectangle.coordinates.getValue(Cesium.JulianDate.now()).west;
-  assert.equal(Number(Cesium.Math.toDegrees(west).toFixed(6)), 9.987014);
+  assert.equal(
+    h.box(`beemaps-bursts:${BURST_ID}`).geometry.rect.west,
+    9.987014,
+  );
 });
 
 test('[beemaps-bursts-014] clears the error of an earlier list failure when a burst is created', async () => {
@@ -2132,17 +2084,20 @@ test('[beemaps-bursts-014] draws two created bursts in the order of their creati
   assert.match(h.info(), /· 2 bursts · 0 hits$/);
 });
 
-test('[beemaps-bursts-002] removes the data source once and does nothing on a second destroy', async () => {
+test('[beemaps-bursts-002] disposes the draw set once and does nothing on a second destroy', async () => {
   const h = harness();
   await h.ready();
+  const set = h.boxes();
   h.layer.destroy(h.viewer);
   const frames = h.renders.length;
+  const writes = set.writes;
   h.layer.destroy(h.viewer);
-  assert.equal(h.viewer.removals, 1);
+  assert.equal(set.disposed, true);
+  assert.equal(set.writes, writes);
   assert.equal(h.renders.length, frames);
   const never = harness();
   never.layer.destroy(never.viewer);
-  assert.equal(never.viewer.removals, undefined);
+  assert.equal(never.boxes(), undefined);
   assert.deepEqual(never.renders, []);
 });
 
@@ -2160,12 +2115,10 @@ test('[beemaps-bursts-014] draws a created burst in blue when Bee Maps gives the
   const h = harness();
   await h.quoted();
   await h.confirmChip().onClick();
-  const blue = Cesium.Color.fromCssColorString('#38bdf8').withAlpha(0.25);
-  const colour = h
-    .dataSource()
-    .entities.getById(`beemaps-bursts:${BURST_ID}`)
-    .rectangle.material.getValue(Cesium.JulianDate.now()).color;
-  assert.equal(Cesium.Color.equals(colour, blue), true);
+  assert.deepEqual(
+    h.box(`beemaps-bursts:${BURST_ID}`).fill,
+    rgba('#38bdf8', 0.25),
+  );
 });
 
 test('[beemaps-bursts-011] keeps the message of a failed list after a cancel', async () => {

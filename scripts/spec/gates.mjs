@@ -1,10 +1,11 @@
 #!/usr/bin/env node
+import { readFindings, splitFindings, writeFindings } from './lib/upstream-findings.mjs';
 import { readOwnership, isAdoptSource, validAdoptSources, ownershipAdvice, syncChangedLines, parseLineCoverage, coverageFaults, gapReport } from './lib/ownership.mjs';
 import { changedInputs, trustMeasurement, writeMeasurement } from './lib/measurement.mjs';
 import { importReach, adoptableReached } from './lib/import-reach.mjs';
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { availableParallelism, tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { ALLOCATION_TEST_FILES } from '../run-unit-tests.mjs';
@@ -50,9 +51,9 @@ const RUNNER = fileURLToPath(new URL('./lib/run-parallel.mjs', import.meta.url))
 const OUT_DIR = '.gev-cache/spec';
 const DEFAULT_BASE = 'origin/main';
 const LOCAL_ENV_FILE = /^\.env(\..+)?$/;
-const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive', 'adopt', 'rebaseline', 'report']);
+const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive', 'adopt', 'rebaseline', 'report', 'findings']);
 const OPTIONS = new Set(['--change', '--base', '--root', '--file', '--metric', '--lines', '--count', '--reason', '--from']);
-const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive|adopt|rebaseline|report> [--no-measure] [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>] [--from <commit>]';
+const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive|adopt|rebaseline|report|findings> [--no-measure] [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>] [--from <commit>]';
 
 /**
  * Read the command line. Throws the usage text for a bad command line.
@@ -95,8 +96,14 @@ export function localEnvFiles(root, tracked) {
     .sort();
 }
 
+/** The loaders that each test run imports: the Vue loader, when the project has one. */
+export function loaderImports(root) {
+  return existsSync(path.join(root, 'build/registerVue.js')) ? ['./build/registerVue.js'] : [];
+}
+
 /** Make the node:test runs for the gates. */
-export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FILES, outDir, coverageDir }) {
+export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FILES, outDir, coverageDir, imports = [], parallelism = availableParallelism() }) {
+  const importFlags = imports.map((file) => `--import=${file}`);
   const allocation = new Set(allocationFiles);
   const main = testFiles.filter((file) => !allocation.has(file));
   const runs = [];
@@ -108,7 +115,9 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
       output: `${rawOutput}.sync`,
       rawOutput,
       args: [
+        ...importFlags,
         '--test',
+        `--test-concurrency=${Math.max(2, Math.floor(parallelism / 2))}`,
         '--experimental-test-coverage',
         '--test-force-exit',
         '--test-coverage-exclude=**/*.test.mjs',
@@ -129,6 +138,7 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
         output: `${rawOutput}.sync`,
         rawOutput,
         args: [
+          ...importFlags,
           '--expose-gc',
           '--test',
           '--test-concurrency=1',
@@ -239,7 +249,8 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec, phase, m
   const resultsDir = mkdtempSync(path.join(tmpdir(), 'gev-spec-results-'));
   const coverageDir = mkdtempSync(path.join(tmpdir(), 'gev-spec-v8-'));
   try {
-    const runs = buildTestRuns({ testFiles, allocationFiles, outDir: resultsDir, coverageDir });
+    // Single-file components compile on import, as in `npm test`.
+    const runs = buildTestRuns({ testFiles, allocationFiles, outDir: resultsDir, coverageDir, imports: loaderImports(root) });
     // Each run's own trace reporter opens its `.sync` file lazily, on its first record, which
     // is not necessarily the first thing that touches that path: a test can write into it too
     // (src/tooling/spec/gates.test.mjs's [spec-trace-039 spec-trace-040] deliberately does, to
@@ -317,7 +328,8 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec, phase, m
     errors.push(...trace.errors);
     writeTraceReport(root, trace.report);
 
-    return { errors, inventory, lineCoverage: parseLineCoverage(lcovText ?? '', root), qaScripts: qaRegister.scripts, testFiles, records, assertions, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
+    const split = splitFindings({ errors, manifest, recorded: readFindings(root) });
+    return { errors: split.errors, found: split.found, inventory, lineCoverage: parseLineCoverage(lcovText ?? '', root), qaScripts: qaRegister.scripts, testFiles, records, assertions, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
   } finally {
     rmSync(coverageDir, { recursive: true, force: true });
   }
@@ -347,7 +359,8 @@ function documentMeasurement({ root, change, openSpec, snapshot, phase, manifest
   const readFile = file => readFileSync(path.join(root, file), 'utf8');
   errors.push(...checkUntracked(listUntrackedFiles(root)));
   errors.push(...findCoverageFlags({ tracked, readFile }));
-  return { ...snapshot, specs, trace, qaScripts: qa.scripts, errors: [...errors, ...trace.errors, ...qa.errors], links: buildLinks(trace.report), current: currentGaps({ coverage: snapshot.coverage, untraced: trace.untraced }) };
+  const split = splitFindings({ errors: [...errors, ...trace.errors, ...qa.errors], manifest, recorded: readFindings(root) });
+  return { ...snapshot, specs, trace, qaScripts: qa.scripts, errors: split.errors, found: split.found, links: buildLinks(trace.report), current: currentGaps({ coverage: snapshot.coverage, untraced: trace.untraced }) };
 }
 
 function location(item) {
@@ -555,6 +568,17 @@ function runGateCommand({
   const notLoaded = measured.coverage.filter((item) => !item.loaded && !item.complete).length;
   const complete = measured.coverage.filter((item) => item.complete).length;
   log(`Coverage: ${measured.coverage.length} files, ${complete} complete, ${notLoaded} not loaded, ${measured.untrue.size} untrue.`);
+
+  if (command === 'findings') {
+    // The command records each finding of an upstream file, so those findings are not faults here.
+    // The adopt command handles the QA header errors of upstream scripts later.
+    const skipped = new Set(['GATES-FINDING-STALE', 'QA-HEADER']);
+    const errors = measured.errors.filter((error) => !skipped.has(error.code) && !measured.found[error.file]?.has(error.code));
+    if (errors.length > 0) return report(log, errors);
+    writeFindings(root, measured.found);
+    log(`Findings: wrote ${Object.keys(measured.found).length} files to the record.`);
+    return report(log, []);
+  }
 
   if (command === 'init') {
     if (measured.errors.length > 0) return report(log, measured.errors);

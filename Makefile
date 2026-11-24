@@ -17,7 +17,7 @@ CHANGE_ARG := $(if $(CHANGE),--change $(CHANGE),)
 BASE_ARG := $(if $(BASE),--base $(BASE),)
 FROM_ARG := $(if $(FROM),--from $(FROM),)
 
-.PHONY: up up-codex up-reticulum up-codex-reticulum down-reticulum down image ensure-image test gates gates-docs precheck gates-init ratchet adopt lint tree
+.PHONY: up up-codex up-reticulum up-codex-reticulum down-reticulum down image ensure-image test gates gates-docs precheck gates-init ratchet adopt findings lint tree
 
 up:
 	docker compose build
@@ -67,6 +67,9 @@ ratchet: ensure-image
 
 adopt: ensure-image
 	$(GATES) adopt $(CHANGE_ARG) $(BASE_ARG) $(FROM_ARG)
+
+findings: ensure-image
+	$(GATES) findings $(CHANGE_ARG) $(BASE_ARG)
 
 
 lint: ensure-image

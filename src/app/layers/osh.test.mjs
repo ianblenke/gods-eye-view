@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import * as Cesium from 'cesium';
+import { bindFakeDraw } from '../../testSupport/fakeDrawPort.mjs';
+import { fakeInput } from '../../input/testDoubles.mjs';
 import { createSurfaceServices } from '../surfaceServices.js';
 import { createApplicationCatalog } from '../constructCatalog.js';
 import { createApplicationOsh } from './osh.js';
@@ -81,35 +82,17 @@ test('[osh-096] builds the OSH systems layer in the catalog with the production 
     asked.push(path);
     return { ok: true, status: 200, json: async () => bodies[path] };
   });
-  let click = null;
-  const setInputAction = Cesium.ScreenSpaceEventHandler.prototype.setInputAction;
-  Cesium.ScreenSpaceEventHandler.prototype.setInputAction = function (action, type) {
-    if (type === Cesium.ScreenSpaceEventType.LEFT_CLICK) click = action;
-    return setInputAction.call(this, action, type);
-  };
-  t.after(() => {
-    Cesium.ScreenSpaceEventHandler.prototype.setInputAction = setInputAction;
-  });
-  const viewer = {
-    scene: { canvas: { addEventListener() {}, removeEventListener() {} }, pick: () => ({ id: { id: 'osh:sys-fixture-1' } }) },
-    camera: { moveEnd: new Cesium.Event(), positionWC: Cesium.Cartesian3.fromDegrees(1, 2, 1_500_000) },
-    dataSources: { add: (dataSource) => dataSource, remove: () => true },
-  };
-  const lifetime = new AbortController();
-  t.after(() => lifetime.abort());
-  const catalog = createApplicationCatalog({
-    sources: createStandaloneLayerSources(),
-    signal: lifetime.signal,
-    surface: fixtureSurface(lifetime.signal),
-  });
-  const layer = catalog.get('osh-systems');
+  const viewer = { scene: { canvas: { addEventListener() {}, removeEventListener() {} }, pick: () => ({ id: { set: 'osh-systems:points', id: 'osh:sys-fixture-1' }, primitive: {} }) } };
+  bindFakeDraw(viewer);
+  const click = fakeInput(viewer).click;
+  const layer = createApplicationOsh({ overlayHost: { setEntries() {}, setVisible() {}, clearSource() {} } });
   t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   assert.ok(asked.includes('/api/osh/systems'), 'the layer reads the same-origin route of the systems');
   const changed = nextHostChange(t, elements['osh-panel-detail'], 'innerHTML');
-  click({ position: {} });
+  click();
   await changed;
   assert.equal(elements['osh-panel'].hidden, false, 'the panel element shows');
   assert.match(elements['osh-panel-detail'].innerHTML, /System A/, 'the detail element holds the name of the system');
@@ -146,27 +129,16 @@ test('[osh-control-032] builds a real command view only when the page has the co
     asked.push(path);
     return { ok: true, status: 200, json: async () => bodies[path] };
   });
-  let click = null;
-  const setInputAction = Cesium.ScreenSpaceEventHandler.prototype.setInputAction;
-  Cesium.ScreenSpaceEventHandler.prototype.setInputAction = function (action, type) {
-    if (type === Cesium.ScreenSpaceEventType.LEFT_CLICK) click = action;
-    return setInputAction.call(this, action, type);
-  };
-  t.after(() => {
-    Cesium.ScreenSpaceEventHandler.prototype.setInputAction = setInputAction;
-  });
-  const viewer = {
-    scene: { canvas: { addEventListener() {}, removeEventListener() {} }, pick: () => ({ id: { id: 'osh:sys-fixture-1' } }) },
-    camera: { moveEnd: new Cesium.Event(), positionWC: Cesium.Cartesian3.fromDegrees(1, 2, 1_500_000) },
-    dataSources: { add: (dataSource) => dataSource, remove: () => true },
-  };
-  const layer = createApplicationOsh();
+  const viewer = { scene: { canvas: { addEventListener() {}, removeEventListener() {} }, pick: () => ({ id: { set: 'osh-systems:points', id: 'osh:sys-fixture-1' }, primitive: {} }) } };
+  bindFakeDraw(viewer);
+  const click = fakeInput(viewer).click;
+  const layer = createApplicationOsh({ overlayHost: { setEntries() {}, setVisible() {}, clearSource() {} } });
   t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   const changed = nextHostChange(t, elements['osh-panel-control'], 'hidden', () => asked.includes('/api/control/osh/targets?system=sys-fixture-1'));
-  click({ position: {} });
+  click();
   await changed;
   assert.ok(asked.includes('/api/control/osh/targets?system=sys-fixture-1'), 'a real command view reads the control targets route for the picked system');
   assert.equal(elements['osh-panel-control'].hidden, true, 'the flag is off, so the view keeps its host hidden');
@@ -186,27 +158,16 @@ test('[osh-control-032] builds the layer with no command view when the page has 
     asked.push(path);
     return { ok: true, status: 200, json: async () => bodies[path] ?? { systems: [], fois: [], locations: [] } };
   });
-  let click = null;
-  const setInputAction = Cesium.ScreenSpaceEventHandler.prototype.setInputAction;
-  Cesium.ScreenSpaceEventHandler.prototype.setInputAction = function (action, type) {
-    if (type === Cesium.ScreenSpaceEventType.LEFT_CLICK) click = action;
-    return setInputAction.call(this, action, type);
-  };
-  t.after(() => {
-    Cesium.ScreenSpaceEventHandler.prototype.setInputAction = setInputAction;
-  });
-  const viewer = {
-    scene: { canvas: { addEventListener() {}, removeEventListener() {} }, pick: () => ({ id: { id: 'osh:sys-fixture-1' } }) },
-    camera: { moveEnd: new Cesium.Event(), positionWC: Cesium.Cartesian3.fromDegrees(1, 2, 1_500_000) },
-    dataSources: { add: (dataSource) => dataSource, remove: () => true },
-  };
-  const layer = createApplicationOsh();
+  const viewer = { scene: { canvas: { addEventListener() {}, removeEventListener() {} }, pick: () => ({ id: { set: 'osh-systems:points', id: 'osh:sys-fixture-1' }, primitive: {} }) } };
+  bindFakeDraw(viewer);
+  const click = fakeInput(viewer).click;
+  const layer = createApplicationOsh({ overlayHost: { setEntries() {}, setVisible() {}, clearSource() {} } });
   t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   const changed = nextHostChange(t, elements['osh-panel-detail'], 'innerHTML');
-  click({ position: {} });
+  click();
   await changed;
   assert.equal(elements['osh-panel-detail'].innerHTML.includes('System A'), true, 'the selection itself still works with no command view');
   assert.equal(asked.some((path) => path.startsWith('/api/control/osh/targets')), false, 'with no command view, a selection never reads the control targets route');

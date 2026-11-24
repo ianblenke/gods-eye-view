@@ -50,17 +50,17 @@ Origin: spec-first
 
 #### Scenario: Draw the footprint image `up42-scene-overlay-009`
 - **WHEN** a thumbnail request succeeds
-- **THEN** one polygon uses all vertices of that scene ring in their original order
-- **AND** its image material uses an object URL, transparent true and white with alpha 0.85
+- **THEN** one polygon item uses all vertices of that scene ring in their original order
+- **AND** its image fill is the object URL of the thumbnail
 
-#### Scenario: Keep the newest image on top `up42-scene-overlay-010`
+#### Scenario: Draw the newest image last `up42-scene-overlay-010`
 - **WHEN** three images have ranks from newest to oldest
-- **THEN** their polygon zIndex values are 3, 2 and 1
-- **AND** each polygon clamps to the ground without a fixed height
+- **THEN** the image set holds them from the oldest to the newest, so the newest draws over the others
+- **AND** each polygon item clamps to the ground and to the tiles, without a fixed height
 
 #### Scenario: Keep the footprint outlines `up42-scene-overlay-011`
 - **WHEN** the option shows images and a person selects a scene
-- **THEN** all footprint outlines stay above the images with zIndex 25
+- **THEN** each footprint outline is a line on the ground with the ring of its scene
 - **AND** the selected outline keeps width 3 and yellow; other outlines keep width 2 and blue
 
 #### Scenario: Select without a card `up42-scene-overlay-012`
@@ -118,3 +118,4 @@ Origin: spec-first
 - **AND** each successful decode closes its bitmap before the layer creates the object URL
 - **AND** each decode result after release adds no image entity or object URL
 - **AND** each bitmap from a late decode closes
+
