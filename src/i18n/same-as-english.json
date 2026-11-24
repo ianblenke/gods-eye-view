@@ -297,7 +297,11 @@
     "3D",
     "KT",
     "Taiwan",
-    "Tampa"
+    "Tampa",
+    "ON AIR",
+    "Stream",
+    "{seconds} s",
+    "Mode"
   ],
   "es": [
     "1 min/s",
@@ -492,7 +496,9 @@
     "{n} min",
     "{n} mm",
     "3D",
-    "KT"
+    "KT",
+    "Manual",
+    "{seconds} s"
   ],
   "fr": [
     "1 min/s",
@@ -538,7 +544,7 @@
     "Conversation",
     "Country",
     "Cyan",
-    "Cyclones · NHC / CPHC",
+    "Cyclones · NHC / CPHC · JTWC",
     "DENSE",
     "DEST ---°",
     "DEST {bearing}",
@@ -750,7 +756,8 @@
     "{n} mm",
     "3D",
     "KT",
-    "Tampa"
+    "Tampa",
+    "{seconds} s"
   ],
   "it": [
     "1 min/s",
@@ -985,7 +992,8 @@
     "3D",
     "KT",
     "Taiwan",
-    "Tampa"
+    "Tampa",
+    "{seconds} s"
   ],
   "ja": [
     "1090 MHz",
@@ -1265,7 +1273,9 @@
     "3D",
     "KT",
     "Taiwan",
-    "Tampa"
+    "Tampa",
+    "Manual",
+    "{seconds} s"
   ],
   "ru": [
     "1900–1945",
@@ -1504,7 +1514,8 @@
     "3D",
     "KT",
     "Taiwan",
-    "Tampa"
+    "Tampa",
+    "{seconds} s"
   ],
   "uk": [
     "1900–1945",

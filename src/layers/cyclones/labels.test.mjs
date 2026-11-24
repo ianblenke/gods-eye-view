@@ -327,3 +327,7 @@ test('[cyclones-011] only the prefixes storm and lead, in lower case and at the 
   ])
     assert.equal(cycloneStormIdFromEntryId(value), null, String(value));
 });
+
+test('a danger area label names its storm', () => {
+  assert.equal(cycloneStormIdFromEntryId('area:sh042027'), 'sh042027');
+});
