@@ -20,7 +20,7 @@ const validPayload = {
   ],
 };
 
-test('[perimeters-001] a successful response yields the fires and the pieces', async () => {
+test('[perimeters-001] a successful response gives the fires and the pieces', async () => {
   let requested;
   const source = createWfigsPerimeterSource({
     fetchImpl: async (url) => {
@@ -190,7 +190,7 @@ test('[perimeters-001] a live signal accepts a complete source response', async 
   assert.deepEqual([snapshot.fires, snapshot.pieces], [[], []]);
 });
 
-test('[perimeters-021] a failed refresh serves the last snapshot marked stale for a day, then refuses', async () => {
+test('[perimeters-021] a failed refresh serves the last snapshot as stale data for 24 hours, and then gives status 502', async () => {
   let clock = 1_000_000_000;
   let up = true;
   const plugin = firePerimetersProxy({

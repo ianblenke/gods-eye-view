@@ -1326,7 +1326,7 @@ function jtwc() {
   return value;
 }
 
-test('[cyclones-003 cyclones-004 cyclones-005] a JTWC warning is accepted with its danger area and its own links, never with a cone', () => {
+test('[cyclones-003 cyclones-004 cyclones-005] the validator accepts a JTWC storm with its danger area and its own links, and never with a cone', () => {
   const [storm] = validateCycloneSnapshot(jtwc()).storms;
   assert.equal(storm.agency, 'jtwc');
   assert.equal(storm.cone, null);
@@ -1341,7 +1341,7 @@ test('[cyclones-003 cyclones-004 cyclones-005] a JTWC warning is accepted with i
     (s) => (s.cone = s.dangerArea),
     (s) => (s.dangerArea = null),
     (s) => (s.agency = 'jma'),
-    (s) => (s.id = 'al042027'),
+    (s) => Object.assign(s, { id: 'al042027', basin: 'AL' }),
     (s) => (s.basin = 'WP'),
     (s) => (s.advisoryUrl = 'https://www.nhc.noaa.gov/text/MIATCMEP5.shtml'),
     (s) => (s.advisoryUrl = 'https://www.metoc.navy.mil/jtwc/other.txt'),
@@ -1375,7 +1375,7 @@ test('[cyclones-003 cyclones-004 cyclones-005] a JTWC warning is accepted with i
   );
 });
 
-test('[cyclones-003 cyclones-004 cyclones-005] each JTWC basin and outlook is accepted, and a pending warning takes no danger area', () => {
+test('[cyclones-003 cyclones-004 cyclones-005] the validator accepts each JTWC basin and outlook, and rejects a pending storm with a danger area', () => {
   for (const prefix of ['wp', 'io', 'sh', 'ep', 'cp']) {
     const value = jtwc();
     value.storms[0].id = `${prefix}042027`;
@@ -1387,13 +1387,18 @@ test('[cyclones-003 cyclones-004 cyclones-005] each JTWC basin and outlook is ac
       prefix.toUpperCase(),
     );
   }
-  for (const link of [
-    'https://www.metoc.navy.mil/jtwc/products/sh0427web.txt?x=1',
-    'https://www.metoc.navy.mil/jtwc/products/SH0427web.txt',
+  const products = 'https://www.metoc.navy.mil/jtwc/products/';
+  for (const [key, name] of [
+    ['advisoryUrl', 'sh0427web.txt?x=1'],
+    ['advisoryUrl', 'SH0427web.txt'],
+    ['advisoryUrl', 'sh042web.txt'],
+    ['advisoryUrl', 'sh04270web.txt'],
+    ['outlookUrl', 'other.txt'],
+    ['outlookUrl', 'abpwweb.txt?x=1'],
   ]) {
     const value = jtwc();
-    value.storms[0].advisoryUrl = link;
-    assert.throws(() => validateCycloneSnapshot(value), /Malformed/);
+    value.storms[0][key] = products + name;
+    assert.throws(() => validateCycloneSnapshot(value), /Malformed/, name);
   }
   const pending = jtwc();
   Object.assign(pending.storms[0], {
@@ -1403,4 +1408,29 @@ test('[cyclones-003 cyclones-004 cyclones-005] each JTWC basin and outlook is ac
     track: null,
   });
   assert.throws(() => validateCycloneSnapshot(pending), /Malformed/);
+});
+
+test('[cyclones-005] the validator rejects a wrong or unbounded danger area', () => {
+  const closed = (size) => [
+    ...Array.from({ length: size - 1 }, (_, index) => [index / 1000, 0]),
+    [0, 0],
+  ];
+  const withArea = (dangerArea) => {
+    const value = jtwc();
+    value.storms[0].dangerArea = dangerArea;
+    return value;
+  };
+  const polygon = (...rings) => ({ type: 'Polygon', coordinates: rings });
+  assert.ok(validateCycloneSnapshot(withArea(polygon(closed(9000)))));
+  for (const [label, area] of [
+    ['a line', { type: 'LineString', coordinates: closed(4) }],
+    ['an open ring', polygon(closed(5).slice(0, 4))],
+    ['a ring of three pairs', polygon(closed(3))],
+    ['too many coordinates', polygon(...[1, 2, 3].map(() => closed(9000)))],
+  ])
+    assert.throws(
+      () => validateCycloneSnapshot(withArea(area)),
+      /Malformed/,
+      label,
+    );
 });

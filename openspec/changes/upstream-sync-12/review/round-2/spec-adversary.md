@@ -1,0 +1,19 @@
+Spec adversary review of `upstream-sync-12`, round 2, scope diff `d96d9c8bd`. Tree read: `/home/ianblenke/docker/gev-work/upstream-sync-12`, HEAD `693a5a757` (as you gave it; I could not run git), plus the uncommitted archive and the `openspec/specs/` edits. The only gate error in `gates-docs-r2.log` is `REVIEW-MISSING`. Paths below are relative to that clone.
+
+The round-1 findings on the viewer assertion, `perimeters-001`, the area label (`cyclones-009` and `cyclones-011`), `perimeters-021`, the exporter known limit, the director comment and the `DATA_SOURCES.md` dash are corrected. The JTWC finding is corrected in the spec text, but its tests do not assert all of the new lines.
+
+- [ ] FINDING critical `src/layers/cyclones/source.test.mjs:1329-1406` The rewritten `cyclones-005` says that a cone or a danger area has the type `Polygon` or `MultiPolygon`, and its ring, list, pair and coordinate bounds apply to that geometry. No test gives the validator a wrong or unbounded danger area. The only type assertion is on a valid one (line 1333), and the wrong-form and bound tests use only tracks and cones. If `source.js:179` becomes `dangerArea = raw.dangerArea ?? null`, the JTWC tests still pass by my reading: the accept, missing-area, agency and pending cases do not depend on geometry validation. A search of the `src` test files shows no other validator test with a bad danger area. This is the trust boundary for the new JTWC geometry. Add tagged JTWC cases for a wrong type, an open ring, and a danger area that exceeds the 25000 coordinate total, then run that mutation.
+
+- [ ] FINDING major `src/layers/cyclones/source.test.mjs:1344` The case for a JTWC storm id that does not fit its agency cannot fail for that reason. It sets `s.id = 'al042027'` but keeps the basin `SH`, so the basin check at `source.js:195` throws the same error. If you add `al` to the JTWC id pattern at `source.js:59`, no test fails. The `wp012026` case at line 1360 isolates only the NHC rule. Set the basin to `AL` in the same case. This is the `cyclones-003` line "a storm id that does not fit its agency".
+
+- [ ] FINDING major `src/layers/cyclones/source.test.mjs:1340-1397` No test rejects a wrong JTWC outlook link on the JTWC host. The only rejected JTWC outlook (line 1349) is an NHC URL, which the origin check refuses before the path matters. If `source.js:62` becomes `outlook: /./`, all the cases still pass, so the `cyclones-004` line on the two outlook paths with no query is only half asserted. Add `https://www.metoc.navy.mil/jtwc/products/other.txt` and `.../abpwweb.txt?x=1` as rejected outlook links. A rejected advisory link with three or five digits would also hold the "four digits" words, which no case checks now.
+
+- [ ] FINDING minor `openspec/specs/perimeters/spec.md:102-105` (and the archived delta) The THEN line of `perimeters-021` still says that the proxy serves the last good rows as stale data if they exist, with no age limit. The new AND line says that the perimeter route gives status 502 for rows older than 24 hours. Bound the THEN line, for example "if they exist and the next line permits it".
+
+- [ ] FINDING minor `src/layers/cyclones/labels.test.mjs:331-342` `cyclones-009` says that each entry is an interactive tactical card in the group `ambient-card` that culls at the horizon. No test asserts this for the new area label, so removing `...SHARED_CARD` at `labels.js:125` passes. Assert these four fields on the area entry.
+
+- [ ] FINDING minor `openspec/changes/archive/2026-11-25-upstream-sync-12/proposal.md:30` The Impact list of rewritten tests omits the tests that now serve `cyclones-003`, `004`, `005`, `009`, `011` and `perimeters-021`. Add them.
+
+Verdict: FAIL
+
+Not checked: I ran no code and no mutation (the lead's five mutations and the survivors above come from reading only), and I read only the `upstream-sync-12` count in `history.jsonl` and the affected entries in `links.json`.

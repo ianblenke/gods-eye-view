@@ -34,6 +34,6 @@ Origin: backfill
 
 #### Scenario: Keep good rows after a feed error `perimeters-021`
 - **WHEN** a feed refresh fails or returns a bad payload
-- **THEN** the proxy serves the last good rows as stale data if they exist
+- **THEN** the proxy serves the last good rows as stale data if they exist, except old rows of the perimeter route
 - **AND** it does not cache a bad payload as an empty result
-- **AND** the perimeter route serves stale rows that are 24 hours old, and gives status 502 for older rows
+- **AND** the perimeter route serves stale rows with an age of 24 hours or less, and gives status 502 for older rows

@@ -27,7 +27,7 @@ The eleventh sync merged upstream up to `7f2dc81cf`. Upstream has 265 commits af
 
 ## Impact
 
-Rule 25: the merge breaks tests with a scenario ID for upstream code. The change writes again the scenarios that the section Modified Capabilities names. It writes again the tests of `cyclones-001`, `perimeters-001`, `perimeters-005`, `perimeters-006`, `recent-imagery-023` and `recent-imagery-027`.
+Rule 25: the merge breaks tests with a scenario ID for upstream code. The change writes again each scenario that the section Modified Capabilities names, other than the new `director-111`. It writes again or adds tests of `cyclones-001`, `cyclones-003`, `cyclones-004`, `cyclones-005`, `cyclones-009`, `cyclones-011`, `live-sources-007`, `perimeters-001`, `perimeters-002`, `perimeters-005`, `perimeters-006`, `perimeters-021`, `recent-imagery-023` and `recent-imagery-027`.
 
 Rule 23: the change adds one test file that the fork writes: `src/ui/contextActions.forkBackfill.test.mjs`. The change adds it to `openspec/ownership.json`.
 
@@ -39,4 +39,4 @@ The change adds no layer, no route and no QA script of the fork.
 - Known limit `later-upstream`: Upstream has more commits after `fca2c81d8`. The next sync merges them.
 - Known limit `resume-timing`: The test of `director-111` uses real timers. Upstream removed its test of this behavior because that test depends on time. A slow machine can make the test fail.
 - Known limit `contacts-tab`: Upstream removed the start of the Contacts mode from the phone Context tab. The fork takes this change.
-- Known limit `exporter-coverage`: The gate does not measure the failed write of the child process in `blenderCameraPartialWrite.test.mjs`. D2 gives the reason.
+- Known limit `exporter-coverage`: The gate does not measure the child process in `blenderCameraPartialWrite.test.mjs` that cannot write its file. D2 gives the reason.

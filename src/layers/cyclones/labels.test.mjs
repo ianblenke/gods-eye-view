@@ -200,7 +200,7 @@ test('[cyclones-010] publisher republishes on snapshots and selection changes, a
   assert.equal(calls.length, 2, 'a cleared publisher stays quiet');
 });
 
-test('[cyclones-011] storm identity resolves from card and lead-hour ids', () => {
+test('[cyclones-011] a card id and a lead-hour label id give the storm id', () => {
   assert.equal(cycloneStormIdFromEntryId('storm:al062026'), 'al062026');
   assert.equal(cycloneStormIdFromEntryId('lead:al062026:24'), 'al062026');
   for (const value of ['vessel:123', 'storm:', 'lead:', '', null, undefined])
@@ -328,7 +328,7 @@ test('[cyclones-011] only the prefixes storm, lead and area, in lower case and a
     assert.equal(cycloneStormIdFromEntryId(value), null, String(value));
 });
 
-test('[cyclones-009] a selected storm with a danger area gets an area label after its lead labels', () => {
+test('[cyclones-009] a selected storm with a danger area gets an area label after its lead-hour labels', () => {
   const [fay] = storms();
   const stormed = { ...fay, dangerArea: anchor(-60, 20) };
   const entries = cycloneOverlayEntries([stormed], fay.id);
@@ -338,9 +338,13 @@ test('[cyclones-009] a selected storm with a danger area gets an area label afte
   assert.equal(area.title, '34-knot wind danger area');
   assert.deepEqual(area.details, []);
   assert.equal(area.priority, 300);
+  assert.deepEqual(
+    [area.cardStyle, area.collisionGroup, area.horizonCull, area.interactive],
+    ['tactical', 'ambient-card', true, true],
+  );
   assert.equal(cycloneOverlayEntries([stormed], null).length, 1);
 });
 
-test('[cyclones-011] a danger area label names its storm', () => {
+test('[cyclones-011] an area label id gives its storm id', () => {
   assert.equal(cycloneStormIdFromEntryId('area:sh042027'), 'sh042027');
 });

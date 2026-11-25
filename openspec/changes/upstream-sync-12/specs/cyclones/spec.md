@@ -11,7 +11,7 @@ Origin: backfill
 - **AND** this holds for a `stale` or `unavailable` flag that is not a boolean
 - **AND** this holds for a `storms` value that is not an array, and for more than 32 storms
 - **AND** this holds for an agency other than `nhc` and `jtwc`, and a storm with no agency is an NHC storm
-- **AND** this holds for a storm id that does not fit its agency, with six digits in lower case
+- **AND** this holds for a storm id that is not a prefix of its agency in lower case and then six digits
 - **AND** the NHC prefixes are `al`, `ep` and `cp`, and the JTWC prefixes are `wp`, `io`, `sh`, `ep` and `cp`
 - **AND** this holds for an id that appears twice
 - **AND** this holds for a geometry status other than `current`, `pending` or `unavailable`
@@ -72,7 +72,7 @@ Origin: backfill
 - **AND** a storm card has the priority 1000 plus the wind in knots, or 1000 for a wind that is not a number
 - **AND** the selected storm card has the largest safe integer as its priority
 - **AND** the selected card has `protected` set to `true`, the variant `selected` and the accent `#ffe19a`
-- **AND** each other card has the variant `card` and the accent `#7fe6ed`
+- **AND** each other storm card has the variant `card` and the accent `#7fe6ed`
 - **AND** the gap of a card is 20 px for the selected storm and 17 px for another storm
 - **AND** the leader of a card starts 14 px from the point for the selected storm and 11 px for another storm
 - **AND** a lead-hour label has the id `lead:<id>:<hours>`, the title `<hours> h`, no detail, and a gap of 13 px
