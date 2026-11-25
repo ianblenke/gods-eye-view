@@ -15,18 +15,19 @@ The eleventh sync merged upstream up to `7f2dc81cf`. Upstream has 265 commits af
 
 ### New Capabilities
 
-None yet. A later task adds a backfill capability if an upstream file needs it.
+- `context-contacts-entry`: a Contacts request keeps the tracked aircraft.
 
 ### Modified Capabilities
 
 - `live-sources`: the scenario `live-sources-007` names the new license text of the Ontario cameras.
+- `director`: the new scenario `director-111` covers a run that resumes inside a flight.
 - `perimeters`: the source returns fires and pieces. The scenario `perimeters-001` says so.
 
 ## Impact
 
 Rule 25: the merge breaks tests with a scenario ID for upstream code. The change writes again the scenarios `live-sources-007` and `perimeters-001`. It writes again the tests of `cyclones-001`, `perimeters-001`, `perimeters-005`, `perimeters-006`, `recent-imagery-023` and `recent-imagery-027`.
 
-Rule 23: this plan adds no code file that the fork writes. It will add a line to the manifest for a new file of the fork, if the merge needs one.
+Rule 23: the change adds one test file that the fork writes: `src/ui/contextActions.forkBackfill.test.mjs`. The change adds it to `openspec/ownership.json`.
 
 The change adds no layer, no route and no QA script of the fork.
 

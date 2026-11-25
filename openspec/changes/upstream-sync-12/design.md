@@ -12,6 +12,10 @@ The plan commit comes before the merge commit. The merge uses `git rerere`, so a
 
 The test `blenderCameraPartialWrite.test.mjs` runs a child process with a file size limit of 32 KiB. The child inherits the coverage folder, and the limit cuts its coverage file. Then the coverage merge of the gate stops with a JSON error. The change gives that child an empty `NODE_V8_COVERAGE`, so it writes no coverage file. The retry of the same test still measures the tool.
 
+### D3: Two backfill tests keep the coverage
+
+Upstream removed the tests of the phone Context tab and the test of a resumed flight. The files `contextActions.js`, `director.js` and `cameraMotion.js` did not change, so they lost coverage. The ledger does not accept a larger gap. The change keeps the fork edit of the resumed flight test as `director-111`. It adds `context-contacts-entry-001` for the Contacts request.
+
 ## Risks
 
 A change to the renderer ports or the layer tokens by upstream can break the fork layers. The tasks check this after the merge.

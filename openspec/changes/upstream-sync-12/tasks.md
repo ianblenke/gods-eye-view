@@ -7,6 +7,7 @@
 - [x] 1.5 Adapt the fork tests to the merged code.
 - [x] 1.6 Keep these scenarios of `live-sources`: live-sources-006, live-sources-007, live-sources-008, live-sources-009.
 - [x] 1.7 Keep these scenarios of `perimeters`: perimeters-001, perimeters-002.
+- [x] 1.8 Write the backfill scenarios for the lost coverage: director-111 and context-contacts-entry-001.
 
 ## 2. Host evidence
 
