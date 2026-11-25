@@ -4,16 +4,16 @@
 Show fire perimeters from the WFIGS feed. Link an incident card to InciWeb when it applies. Own the perimeter entities and their selection on the globe.
 ## Requirements
 ### Requirement: Perimeter snapshot
-The source MUST return rows from a valid same-origin response and MUST reject a bad response.
+The source MUST return the fires and the pieces of a valid same-origin response and MUST reject a bad response.
 Origin: backfill
 
 #### Scenario: Read a complete snapshot `perimeters-001`
 - **WHEN** the source gets a valid response
-- **THEN** it returns the rows from the response
+- **THEN** it returns one fire for each row of the response, with one piece for each polygon of the row
 - **AND** it uses the same-origin route
 
 #### Scenario: Reject a bad source response `perimeters-002`
-- **WHEN** the source gets an HTTP error or a response with no rows
+- **WHEN** the source gets an HTTP error or a response with no `rows` list
 - **THEN** it rejects the response
 - **AND** an abort after the body read rejects the response
 
@@ -40,7 +40,7 @@ Origin: backfill
 - **THEN** the anchor is the mean of the outer vertices of the largest polygon
 
 #### Scenario: Show incident facts `perimeters-006`
-- **WHEN** the card model gets an incident row
+- **WHEN** the card model gets a fire of the snapshot
 - **THEN** it shows available facts, age and cost
 - **AND** it uses the reported containment to set the accent
 - **AND** a card with a link is interactive
@@ -100,8 +100,9 @@ Origin: backfill
 
 #### Scenario: Keep good rows after a feed error `perimeters-021`
 - **WHEN** a feed refresh fails or returns a bad payload
-- **THEN** the proxy serves the last good rows as stale data if they exist
+- **THEN** the proxy serves the last good rows as stale data if they exist, except old rows of the perimeter route
 - **AND** it does not cache a bad payload as an empty result
+- **AND** the perimeter route serves stale rows with an age of 24 hours or less, and gives status 502 for older rows
 
 ### Requirement: Shared upstream work
 The proxy MUST share one active request for each route.

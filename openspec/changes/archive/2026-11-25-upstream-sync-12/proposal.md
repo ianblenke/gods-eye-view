@@ -39,4 +39,5 @@ The change adds no layer, no route and no QA script of the fork.
 - Known limit `later-upstream`: Upstream has more commits after `fca2c81d8`. The next sync merges them.
 - Known limit `resume-timing`: The test of `director-111` uses real timers. Upstream removed its test of this behavior because that test depends on time. A slow machine can make the test fail.
 - Known limit `contacts-tab`: Upstream removed the start of the Contacts mode from the phone Context tab. The fork takes this change.
-- Known limit `exporter-coverage`: The gate does not measure the child process in `blenderCameraPartialWrite.test.mjs` that cannot write its file. D2 gives the reason.
+- Known limit `exporter-coverage`: The gate does not measure the child process in `blenderCameraPartialWrite.test.mjs` that has the file size limit. D2 gives the reason.
+- Known limit `jtwc-digits`: No test rejects a JTWC storm id with five or seven digits. The tests for the digit count use NHC ids.

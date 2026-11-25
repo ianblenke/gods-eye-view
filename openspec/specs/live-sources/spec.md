@@ -41,7 +41,7 @@ Origin: backfill
 - **AND** the source has numeric row coordinates, ground elevation 200 meters and image feed type
 - **AND** `cityId` is ontario and `provider` is Ontario 511
 - **AND** `sourceKind` is ontario-511-open-data and `snapshotUrl` equals `url`
-- **AND** the `license` field is Open Government Licence - Ontario
+- **AND** the `license` field is Open Government Licence – Ontario
 - **AND** the loader converts the selected ID, location, roadway and view description values to strings with no spaces at the start or end
 - **AND** the loader uses capitalized ID and coordinate fields first unless null or absent
 - **AND** the loader uses capitalized location, roadway and view text fields that are not empty first, before lower case text fields
