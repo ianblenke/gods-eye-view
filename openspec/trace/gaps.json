@@ -14254,11 +14254,11 @@
     "src/search/placeSuggestions.js": {
       "loaded": true,
       "lines": 2,
-      "branches": 27,
+      "branches": 26,
       "functions": 0,
       "totals": {
         "lines": 745,
-        "branches": 251,
+        "branches": 252,
         "functions": 28
       },
       "sha": "0b85ebb956265e669c8a42c796722b4ff44e170cd3c306b10303653f79e55f15",

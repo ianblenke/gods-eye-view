@@ -1525,7 +1525,7 @@
     "change": "backfill-cyclones"
   },
   "cyclones-003": {
-    "hash": "acbda9f774f0b4da69c584a975b0bd754791ad5e41f6d318aff6711ad51885cd",
+    "hash": "d2413ce7f0969fd8cad6a6b4d3ea174a5098f7155ffdedca46894cf16f134879",
     "since": "2026-09-26",
     "change": "backfill-cyclones"
   },
@@ -1555,7 +1555,7 @@
     "change": "backfill-cyclones"
   },
   "cyclones-009": {
-    "hash": "42ee50c47ab684750d4a479fe3836c0c24635d2688733480eb8aeb0e6060e6e2",
+    "hash": "e9ea011a151f4357a4349f5e2014fa1651fac308c80d4d8c444830b2ed5f390d",
     "since": "2026-09-26",
     "change": "backfill-cyclones"
   },
@@ -4390,7 +4390,7 @@
     "change": "backfill-perimeters"
   },
   "perimeters-021": {
-    "hash": "292c8c24874ba7fb38e0acd102b7feaab013651b770480dac6fab4b55ad712a4",
+    "hash": "d429d38073ef380de13c97598dd64b5a614d366fdf6122e71802d4b8798a3049",
     "since": "2026-09-27",
     "change": "backfill-perimeters"
   },
