@@ -32,4 +32,4 @@ The change adds no layer, no route and no QA script of the fork.
 
 ## Known limits and later changes
 
-None yet. Each limit is added after the merge and the gates.
+- Known limit `leak-record`: The record `openspec/trace/upstream-test-findings.json` gets 7 more upstream test files with a live timer. The record has no end date.
