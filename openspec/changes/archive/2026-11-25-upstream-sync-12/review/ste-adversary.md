@@ -2,8 +2,6 @@
 
 **Round-2 STE findings:** S1 to S9 are corrected. The corrections added no major fault. The `cyclones` and `perimeters` delta lines that I compared agree with `openspec/specs/`. `gates-docs-r3.log` shows no new STE warning that needs a correction. The `read` warning at `<change>/design.md:29` is a verb, and "abort" is a technical noun.
 
-Verdict: PASS
-
 - [ ] FINDING minor S1 `<change>/specs/perimeters/spec.md:37`, `openspec/specs/perimeters/spec.md:103` "except old rows of the perimeter route". "old" is vague, and only the later AND line gives the limit. Write: "**THEN** the proxy serves the last good rows as stale data if they exist, except rows of the perimeter route with an age of more than 24 hours". This agrees with `firePerimeters.js:174-178`.
 
 - [ ] FINDING minor S2 `<change>/proposal.md:42` "the child process in `blenderCameraPartialWrite.test.mjs` that cannot write its file". "its file" can be the output file of the export or the coverage file. The text is true under each meaning. Write: "The gate does not measure the child process in `blenderCameraPartialWrite.test.mjs` that has the file size limit. D2 gives the reason."

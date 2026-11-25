@@ -16,7 +16,7 @@ Resolved files: `.env.example`, `DATA_SOURCES.md`, `openspec/ownership.json`, `o
 
 ## Findings
 
-Round 1 and round 2 gave FAIL from both reviewers. The lead corrected each finding of these two rounds. Round 3 gave PASS from both reviewers. The reports are in `review/`, `review/round-1/` and `review/round-2/`.
+Round 1 and round 2 gave FAIL from both reviewers. The lead corrected each finding of these two rounds. Round 3 gave PASS from both reviewers. The reports are in `review/`, `review/round-1/` and `review/round-2/`. The STE report of round 3 had the line `Verdict: PASS` two times. The lead removed the first one, because the gate permits one verdict line.
 
 - [x] FINDING critical (spec adversary, round 1) The Contacts test had a viewer check that was not able to fail. The test now connects the viewer to the flight layer.
 - [x] FINDING critical (spec adversary, round 1) No test of `perimeters-001` checked the pieces. A new test checks each fire and each piece.
