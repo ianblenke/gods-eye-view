@@ -758,7 +758,7 @@
       "functions": 0,
       "totals": {
         "lines": 318,
-        "branches": 153,
+        "branches": 158,
         "functions": 39
       },
       "sha": "9451e6303105436c50adc39c30c65ef875c0871c318a6ca26a81e3a94f1ebe9f",
@@ -1208,7 +1208,7 @@
       "functions": 2,
       "totals": {
         "lines": 920,
-        "branches": 257,
+        "branches": 260,
         "functions": 33
       },
       "sha": "081fb44bf31052bcc88ac8e975af679b0c7aa9eda4cc3555f26d59eb0061dc71",
@@ -4058,7 +4058,7 @@
       "functions": 0,
       "totals": {
         "lines": 531,
-        "branches": 152,
+        "branches": 153,
         "functions": 23
       },
       "sha": "4e2eb1de478e00706b08636618f453a8b02ed695993f6c8282300e58d2c97a54",
@@ -4248,12 +4248,12 @@
     },
     "src/data/entityContext.js": {
       "loaded": true,
-      "lines": 254,
-      "branches": 112,
+      "lines": 247,
+      "branches": 106,
       "functions": 12,
       "totals": {
         "lines": 1657,
-        "branches": 456,
+        "branches": 485,
         "functions": 90
       },
       "sha": "094cf1d191ff73807f0d43d920d58074a2233d154d63e40bc334069654d35cf2",
@@ -4413,12 +4413,12 @@
     },
     "src/data/focusDeemphasis.js": {
       "loaded": true,
-      "lines": 90,
-      "branches": 23,
-      "functions": 6,
+      "lines": 40,
+      "branches": 20,
+      "functions": 5,
       "totals": {
         "lines": 554,
-        "branches": 95,
+        "branches": 98,
         "functions": 23
       },
       "sha": "24e93c95277c2363eb3cfc691e9cebc68921939d954bb8b37c96fe7ec07ddf0b",
@@ -4763,7 +4763,7 @@
       "functions": 14,
       "totals": {
         "lines": 2498,
-        "branches": 706,
+        "branches": 709,
         "functions": 132
       },
       "sha": "77fcd33e3e0a03791045fda5c6baf9103922b7cb5d0cfa2bfd0ab9d2fe1730ff",
@@ -4774,11 +4774,11 @@
     "src/data/localGeojsonCore.js": {
       "loaded": true,
       "lines": 22,
-      "branches": 65,
+      "branches": 64,
       "functions": 3,
       "totals": {
         "lines": 1822,
-        "branches": 518,
+        "branches": 519,
         "functions": 98
       },
       "sha": "f9a5c1d340c1f3c221a306b175f548dab123cbc74f58a4e180a077c49d5a8d94",
@@ -4872,21 +4872,6 @@
         "functions": 7
       },
       "sha": "28a3dcd6416547cace9f3a626dc6ac9fbae5530bdf5dbd28645548670a37a233",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
-    "src/data/meshFloorSampler.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 7,
-        "branches": 2,
-        "functions": 0
-      },
-      "sha": "5ad2289abe3648d1c8f1c02148aa88fed77b049c6ed61f7b3de51fc45d24c5c7",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5078,7 +5063,7 @@
       "functions": 0,
       "totals": {
         "lines": 235,
-        "branches": 88,
+        "branches": 90,
         "functions": 12
       },
       "sha": "399f09f1a153c73dec12d6225a4418e05475b04c84c848277af80f4a02c8fd08",
@@ -5918,7 +5903,7 @@
       "functions": 0,
       "totals": {
         "lines": 98,
-        "branches": 37,
+        "branches": 38,
         "functions": 25
       },
       "sha": "8be185ff683f7523a21b70c1566d74b9d83bb42932d42bb26e471bd3d49a2cbb",
@@ -6708,12 +6693,12 @@
     },
     "src/layers/cctv/controls.js": {
       "loaded": true,
-      "lines": 157,
-      "branches": 14,
-      "functions": 7,
+      "lines": 139,
+      "branches": 18,
+      "functions": 3,
       "totals": {
         "lines": 377,
-        "branches": 29,
+        "branches": 37,
         "functions": 15
       },
       "sha": "aff46f7218aa40aa6cd8ccd3702920bcf28f127f7c49132880e2e74f4abd11f7",
@@ -6768,12 +6753,12 @@
     },
     "src/layers/cctv/geometry.js": {
       "loaded": true,
-      "lines": 66,
-      "branches": 35,
+      "lines": 64,
+      "branches": 34,
       "functions": 2,
       "totals": {
         "lines": 746,
-        "branches": 110,
+        "branches": 119,
         "functions": 32
       },
       "sha": "1c2a00877a9e92130a4e1316314f9d914809d1b8cf3946ed55f918422fe6c3cd",
@@ -6783,13 +6768,13 @@
     },
     "src/layers/cctv/geometryQueue.js": {
       "loaded": true,
-      "lines": 136,
-      "branches": 15,
-      "functions": 5,
+      "lines": 71,
+      "branches": 23,
+      "functions": 4,
       "totals": {
         "lines": 469,
-        "branches": 55,
-        "functions": 19
+        "branches": 77,
+        "functions": 24
       },
       "sha": "a082bdd732f0738ca25e16f5e1edcd52429d3d3f5bd24a9aaa68f72d075381cd",
       "untrue": false,
@@ -6798,12 +6783,12 @@
     },
     "src/layers/cctv/ground.js": {
       "loaded": true,
-      "lines": 111,
-      "branches": 24,
-      "functions": 4,
+      "lines": 98,
+      "branches": 22,
+      "functions": 3,
       "totals": {
         "lines": 434,
-        "branches": 46,
+        "branches": 48,
         "functions": 17
       },
       "sha": "17d57c6627cbb06226ed5cb19593e2969a38bb9ff18c0a2381484dfc17587494",
@@ -6938,7 +6923,7 @@
       "functions": 2,
       "totals": {
         "lines": 373,
-        "branches": 82,
+        "branches": 83,
         "functions": 15
       },
       "sha": "298b8cf893308774afae56eaa80d829919dbfa49d95202d544023d949f672105",
@@ -6953,7 +6938,7 @@
       "functions": 10,
       "totals": {
         "lines": 468,
-        "branches": 45,
+        "branches": 49,
         "functions": 25
       },
       "sha": "e18c45ff8534b12a996624f0d6ac9dc6c005f6c6a87c55e7d53eca13b1238e8a",
@@ -6964,11 +6949,11 @@
     "src/layers/cctv/rendering.js": {
       "loaded": true,
       "lines": 70,
-      "branches": 50,
+      "branches": 49,
       "functions": 6,
       "totals": {
         "lines": 1300,
-        "branches": 414,
+        "branches": 419,
         "functions": 61
       },
       "sha": "dbf777d08351e0913ab848f2650d9eea19015d57355bf9987dc1d28b5a1175fa",
@@ -8658,12 +8643,12 @@
     },
     "src/layers/radio/interaction.js": {
       "loaded": true,
-      "lines": 15,
-      "branches": 2,
-      "functions": 2,
+      "lines": 5,
+      "branches": 5,
+      "functions": 1,
       "totals": {
         "lines": 128,
-        "branches": 36,
+        "branches": 40,
         "functions": 10
       },
       "sha": "c8ac3a29e5439a433835b6f1ba51fb05e2171f48571d66e1437a7effded27685",
@@ -9128,7 +9113,7 @@
       "functions": 0,
       "totals": {
         "lines": 230,
-        "branches": 94,
+        "branches": 95,
         "functions": 15
       },
       "sha": "295a8170ce692e42ba50cc8cbb4eedc28db650012bfe1b005c69127f9a6239d9",
@@ -11618,7 +11603,7 @@
       "functions": 0,
       "totals": {
         "lines": 820,
-        "branches": 331,
+        "branches": 332,
         "functions": 55
       },
       "sha": "eef2f9badb280ae6a4cb6170873519663ae6e9619a88e21bbd7ba443254da4b4",
@@ -12053,7 +12038,7 @@
       "functions": 1,
       "totals": {
         "lines": 124,
-        "branches": 42,
+        "branches": 43,
         "functions": 10
       },
       "sha": "82e0a5a05aabeab78b72e55b4a89c91200f81255521f2c5461b63807d0a71df3",
@@ -13913,7 +13898,7 @@
       "functions": 0,
       "totals": {
         "lines": 425,
-        "branches": 164,
+        "branches": 168,
         "functions": 22
       },
       "sha": "9b3512c986b3e516f343091cfd58dd4f7cf8115f8c8bded4d0e2b116f1d6e7a9",
@@ -14269,11 +14254,11 @@
     "src/search/placeSuggestions.js": {
       "loaded": true,
       "lines": 2,
-      "branches": 26,
+      "branches": 27,
       "functions": 0,
       "totals": {
         "lines": 745,
-        "branches": 249,
+        "branches": 251,
         "functions": 28
       },
       "sha": "0b85ebb956265e669c8a42c796722b4ff44e170cd3c306b10303653f79e55f15",
@@ -14543,7 +14528,7 @@
       "functions": 3,
       "totals": {
         "lines": 129,
-        "branches": 86,
+        "branches": 87,
         "functions": 13
       },
       "sha": "e486290915f80a6429419a3189ebbfff02f3d12b9e3406358060c04afa11c48d",
@@ -15338,7 +15323,7 @@
       "functions": 4,
       "totals": {
         "lines": 107,
-        "branches": 30,
+        "branches": 31,
         "functions": 21
       },
       "sha": "1d673b6bcaf60ddf43e84210d81aa78646c132a118f633b469d1f9f747f7fb94",
@@ -15484,7 +15469,7 @@
     "src/testSupport/kartaViewFakes.mjs": {
       "loaded": true,
       "lines": 4,
-      "branches": 3,
+      "branches": 2,
       "functions": 2,
       "totals": {
         "lines": 242,
@@ -15668,7 +15653,7 @@
       "functions": 2,
       "totals": {
         "lines": 545,
-        "branches": 214,
+        "branches": 215,
         "functions": 55
       },
       "sha": "a1bb3b694a77981e3a5400318b724467a5e26b8b4da4fc81b321af7497c0c924",
@@ -15713,7 +15698,7 @@
       "functions": 0,
       "totals": {
         "lines": 374,
-        "branches": 144,
+        "branches": 145,
         "functions": 30
       },
       "sha": "7397cca54bd86ed61a1263ac5996a3b1b1bc53cb6e99b6932699679d591da8c5",
@@ -16128,13 +16113,13 @@
     },
     "src/ui/cctvBindings.js": {
       "loaded": true,
-      "lines": 95,
-      "branches": 7,
-      "functions": 13,
+      "lines": 78,
+      "branches": 11,
+      "functions": 12,
       "totals": {
         "lines": 163,
-        "branches": 14,
-        "functions": 17
+        "branches": 21,
+        "functions": 19
       },
       "sha": "de6eace5e7c7140b66a6a1ad0754336707495fc1d8d68d06ac02300d07c28918",
       "untrue": false,
@@ -16144,11 +16129,11 @@
     "src/ui/cctvCalibration.js": {
       "loaded": true,
       "lines": 15,
-      "branches": 8,
+      "branches": 6,
       "functions": 7,
       "totals": {
         "lines": 189,
-        "branches": 46,
+        "branches": 44,
         "functions": 21
       },
       "sha": "6c64c8807ace0b2464492d97eb124d6c9f29c44f4d534b113435887462e9d771",
@@ -16208,7 +16193,7 @@
       "functions": 0,
       "totals": {
         "lines": 59,
-        "branches": 17,
+        "branches": 20,
         "functions": 3
       },
       "sha": "f6a4e9f5c3f23916447e9815831bfeb3b96eb069a0f122b3fe42c6f8ed8f0056",
@@ -16658,7 +16643,7 @@
       "functions": 1,
       "totals": {
         "lines": 225,
-        "branches": 40,
+        "branches": 42,
         "functions": 7
       },
       "sha": "c794ff142b5422e4e5df376bebb96bfd9899caa39a73ec16f59a45dfd819bd9b",
@@ -17168,7 +17153,7 @@
       "functions": 5,
       "totals": {
         "lines": 1670,
-        "branches": 484,
+        "branches": 486,
         "functions": 133
       },
       "sha": "aecc314338f1c545bdc85f87995f04b88f3ebb7949cab37fb682ccbdc99f9c97",
@@ -18248,7 +18233,7 @@
       "functions": 1,
       "totals": {
         "lines": 389,
-        "branches": 166,
+        "branches": 167,
         "functions": 24
       },
       "sha": "fc6e93a4c42c8a16909215cb1639a84963382b780a16a01a975e9b93ef89756a",
@@ -18488,7 +18473,7 @@
       "functions": 7,
       "totals": {
         "lines": 427,
-        "branches": 158,
+        "branches": 159,
         "functions": 46
       },
       "sha": "c8863524a8b4a0cd84d444b17007ea5dd89582c2cd01ffdc6525c24f342e4053",
@@ -18938,7 +18923,7 @@
       "functions": 0,
       "totals": {
         "lines": 337,
-        "branches": 152,
+        "branches": 153,
         "functions": 24
       },
       "sha": "5d74721016c222bfc52d3300a3102a068e09f2bd1df5bbf135583914265d92dd",
