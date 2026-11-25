@@ -16,6 +16,14 @@ The test `blenderCameraPartialWrite.test.mjs` runs a child process with a file s
 
 Upstream removed the tests of the phone Context tab and the test of a resumed flight. The files `contextActions.js`, `director.js` and `cameraMotion.js` did not change, so they lost coverage. The ledger does not accept a larger gap. The change keeps the fork edit of the resumed flight test as `director-111`. It adds `context-contacts-entry-001` for the Contacts request.
 
+### D4: The resolutions of the conflicts
+
+- `.env.example` keeps the fork list of the Google routes and adds the upstream lines on the Street View fallback.
+- `DATA_SOURCES.md` keeps the fork row for GDACS and adds the upstream row for JTWC. The Ontario 511 row keeps the fork text and adds the upstream words on Kitchener.
+- `format-scope.json`, `package-boundaries.json` and `same-as-english.json` keep the entries of the two sides. The change removes one entry that occurred two times.
+- The conflicted test files keep the fork tests with their IDs and the new upstream tests. Where a conflict is only the test name, the test keeps the fork name.
+- `director.test.mjs` first took the upstream removal of the resumed flight test. D3 gives the later change.
+
 ## Risks
 
-A change to the renderer ports or the layer tokens by upstream can break the fork layers. The tasks check this after the merge.
+The merge changes the shapes of the perimeter, cyclone and recent imagery records. A fork test that read the old shape failed, and the change corrected it.
