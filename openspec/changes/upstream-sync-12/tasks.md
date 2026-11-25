@@ -13,12 +13,12 @@
 - [x] 2.1 Run each test file alone in the image.
 - [x] 2.2 Run `make precheck`.
 - [x] 2.3 Run `make lint`.
-- [ ] 2.4 Run `openspec validate --specs`.
+- [x] 2.4 Run `openspec validate --specs`.
 
 ## 3. Lead work in the image
 
-- [ ] 3.1 Check the second parent of the merge commit against the upstream remote.
-- [ ] 3.2 Run the adopt command for each upstream file with a coverage gap.
+- [x] 3.1 Check the second parent of the merge commit against the upstream remote.
+- [x] 3.2 Run the adopt command for each upstream file with a coverage gap.
 - [ ] 3.3 Run `make ratchet CHANGE=upstream-sync-12`.
 - [ ] 3.4 Run the two review agents in each round.
 - [ ] 3.5 Write review.md.
