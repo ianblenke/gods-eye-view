@@ -2,7 +2,7 @@
 
 ### Requirement: Ontario row rules
 The Ontario pack MUST apply its current row, view, source and cap rules to the camera list that the request returns.
-Origin: spec-first
+Origin: backfill
 
 #### Scenario: Select valid rows and image views `live-sources-006`
 - **WHEN** the camera list that the request returns has rows with IDs, coordinates and camera views

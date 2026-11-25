@@ -2,7 +2,7 @@
 
 ### Requirement: Perimeter snapshot
 The source MUST return the fires and the pieces of a valid same-origin response and MUST reject a bad response.
-Origin: spec-first
+Origin: backfill
 
 #### Scenario: Read a complete snapshot `perimeters-001`
 - **WHEN** the source gets a valid response

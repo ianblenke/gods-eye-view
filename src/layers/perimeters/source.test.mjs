@@ -93,7 +93,12 @@ test('[perimeters-002] an upstream failure surfaces its HTTP status', async () =
 });
 
 test('[perimeters-002] a malformed successful response is never accepted as an empty snapshot', async () => {
-  for (const payload of [{}, { rows: null }, { rows: {} }]) {
+  for (const payload of [
+    {},
+    { rows: null },
+    { rows: {} },
+    { fires: [], pieces: [] },
+  ]) {
     const source = createWfigsPerimeterSource({
       fetchImpl: async () => Response.json(payload),
     });
