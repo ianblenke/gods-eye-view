@@ -27971,13 +27971,6 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
-    "src/layers/cyclones/labels.test.mjs": {
-      "names": {
-        "a danger area label names its storm": 1
-      },
-      "origin": "upstream-sync-12",
-      "since": "2026-11-25"
-    },
     "src/layers/cyclones/rendering.test.mjs": {
       "names": {
         "a JTWC danger area is drawn apart from any cone, with a dashed edge and its name for the selected storm": 1,
@@ -27994,13 +27987,6 @@
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/layers/cyclones/source.test.mjs": {
-      "names": {
-        "a JTWC warning is accepted with its danger area and its own links, never with a cone": 1
-      },
-      "origin": "upstream-sync-12",
-      "since": "2026-11-25"
     },
     "src/layers/directions/source.test.mjs": {
       "names": {
@@ -29316,7 +29302,6 @@
     },
     "src/layers/perimeters/source.test.mjs": {
       "names": {
-        "a failed refresh serves the last snapshot marked stale for a day, then refuses": 1,
         "getSnapshot works when taken off its source object": 1,
         "the snapshot carries the proxy staleness and fetch time": 1
       },

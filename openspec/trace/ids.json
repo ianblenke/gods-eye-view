@@ -935,7 +935,7 @@
     "change": "upstream-sync-11"
   },
   "context-contacts-entry-001": {
-    "hash": "3d230443a6c8cf13d205e6da64efab4f6775aaf463a0746923f7421afd669876",
+    "hash": "7f42c1e655a7294142b4a8eca8f8f2fcfbdefb4fbdf9e88dc779e89c8dc16547",
     "since": "2026-11-25",
     "change": "upstream-sync-12"
   },
@@ -1525,17 +1525,17 @@
     "change": "backfill-cyclones"
   },
   "cyclones-003": {
-    "hash": "813aaba29eea994180c46e9c2ff73fd7139938156dc9c3942c29e8951928ccb6",
+    "hash": "acbda9f774f0b4da69c584a975b0bd754791ad5e41f6d318aff6711ad51885cd",
     "since": "2026-09-26",
     "change": "backfill-cyclones"
   },
   "cyclones-004": {
-    "hash": "5d4ff736f39f75a0f5d8bf0d454e83491b8678a0769029d6087bc54dd9bdd7bc",
+    "hash": "3bdeb5e2f89cfa3902f1af711e881f0a25025f3a56438d3e480cc2815be65d8e",
     "since": "2026-09-26",
     "change": "backfill-cyclones"
   },
   "cyclones-005": {
-    "hash": "1d8e15ab2e16811fdb565a38ebca5dffff36a2db5fd7066bb4816afb34fd40ea",
+    "hash": "f893efa88a09809b8f71171088096871e19dede93418f6b1fc7ff7f22287325f",
     "since": "2026-09-26",
     "change": "backfill-cyclones"
   },
@@ -1555,7 +1555,7 @@
     "change": "backfill-cyclones"
   },
   "cyclones-009": {
-    "hash": "143c2691fd6e96cfa47a254734d71eecc7e9068419db07e0ae9ce83eaecadace",
+    "hash": "42ee50c47ab684750d4a479fe3836c0c24635d2688733480eb8aeb0e6060e6e2",
     "since": "2026-09-26",
     "change": "backfill-cyclones"
   },
@@ -1565,7 +1565,7 @@
     "change": "backfill-cyclones"
   },
   "cyclones-011": {
-    "hash": "a19ffb509bd041b4084e31c519cf0f55c4917079a3a5e33c8662b7e556254230",
+    "hash": "685ad8a4c3e5548130c93e3e4a2394078804d301881d117184a65a88250d1ec1",
     "since": "2026-09-26",
     "change": "backfill-cyclones"
   },
@@ -2140,7 +2140,7 @@
     "change": "backfill-director-packs-sharing"
   },
   "director-111": {
-    "hash": "f47306faa8b9a8589b4a912aeafa11c4dc8374abd7d433e56718ed458528d6f8",
+    "hash": "20b7798bca16c212cd1bc8723a8c216b05c6a6849a91066d055fbc9d340d434e",
     "since": "2026-11-25",
     "change": "upstream-sync-12"
   },
@@ -4330,7 +4330,7 @@
     "change": "backfill-perimeters"
   },
   "perimeters-002": {
-    "hash": "8a31dd12c9859389dde88a0107f6be3091f0b2cfe71188b2e1c1e96b327fd149",
+    "hash": "11bc55033e1bc3d67262f48fa6a4834dd463ac0480291c54f4443f166c5168e7",
     "since": "2026-09-27",
     "change": "backfill-perimeters"
   },
@@ -4350,7 +4350,7 @@
     "change": "backfill-perimeters"
   },
   "perimeters-006": {
-    "hash": "8252021cdf99eb4154b0e9f99268cbb68c1d6c554fee0a4174f253c6cba04976",
+    "hash": "10938a452b164378c336f9645caf2e43176821a9cb25f7797b4a4dddc901d13d",
     "since": "2026-09-27",
     "change": "backfill-perimeters"
   },
@@ -4390,7 +4390,7 @@
     "change": "backfill-perimeters"
   },
   "perimeters-021": {
-    "hash": "37f724e35811df1e5f5d28ccb446db1dd4fc8278d2093f88adc1ff13a93eb359",
+    "hash": "292c8c24874ba7fb38e0acd102b7feaab013651b770480dac6fab4b55ad712a4",
     "since": "2026-09-27",
     "change": "backfill-perimeters"
   },
