@@ -338,6 +338,8 @@ test('[cyclones-001] the projection holds exactly the named fields, as copies, w
         id: 'al012026',
         name: 'Test storm',
         classification: 'HU',
+        agency: 'nhc',
+        dangerArea: null,
         basin: 'AL',
         position: { longitude: -60.5, latitude: 20.25 },
         positionAt: '2026-09-16T04:00:00.000Z',

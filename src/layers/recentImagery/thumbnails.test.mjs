@@ -339,6 +339,8 @@ test('[recent-imagery-023 recent-imagery-027] the default loader owns its URLs a
       status: 'present',
       objectUrl: 'blob:default',
       acquisitionTime: null,
+      availableBoxes: [BOX],
+      emptyBoxes: [],
       loading: false,
     });
     loader.destroy();

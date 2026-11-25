@@ -128,9 +128,9 @@ test('[perimeters-001] the default source calls the host fetch', async () => {
     return Response.json({ rows: [] });
   };
   try {
-    const rows = await createWfigsPerimeterSource().getSnapshot();
+    const snapshot = await createWfigsPerimeterSource().getSnapshot();
     assert.equal(path, '/api/fire-perimeters');
-    assert.deepEqual(rows, []);
+    assert.deepEqual([snapshot.fires, snapshot.pieces], [[], []]);
   } finally {
     globalThis.fetch = oldFetch;
   }
@@ -158,7 +158,8 @@ test('[perimeters-001] a live signal accepts a complete source response', async 
   const source = createWfigsPerimeterSource({
     fetchImpl: async () => Response.json({ rows: [] }),
   });
-  assert.deepEqual(await source.getSnapshot({ signal }), []);
+  const snapshot = await source.getSnapshot({ signal });
+  assert.deepEqual([snapshot.fires, snapshot.pieces], [[], []]);
 });
 
 test('a failed refresh serves the last snapshot marked stale for a day, then refuses', async () => {

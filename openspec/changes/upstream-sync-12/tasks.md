@@ -1,16 +1,18 @@
 ## 1. Plan, merge and fork edits
 
-- [ ] 1.1 Write the change plan.
-- [ ] 1.2 Merge the upstream commit `fca2c81d8`.
-- [ ] 1.3 Resolve the 13 conflicts of the merge.
-- [ ] 1.4 Keep the fork tokens and give new upstream layers a free token.
-- [ ] 1.5 Adapt the fork tests to the merged code.
+- [x] 1.1 Write the change plan.
+- [x] 1.2 Merge the upstream commit `fca2c81d8`.
+- [x] 1.3 Resolve the 13 conflicts of the merge.
+- [x] 1.4 Check that the merge adds no layer that needs a share token.
+- [x] 1.5 Adapt the fork tests to the merged code.
+- [x] 1.6 Keep these scenarios of `live-sources`: live-sources-006, live-sources-007, live-sources-008, live-sources-009.
+- [x] 1.7 Keep these scenarios of `perimeters`: perimeters-001, perimeters-002.
 
 ## 2. Host evidence
 
-- [ ] 2.1 Run each test file alone in the image.
-- [ ] 2.2 Run `make precheck`.
-- [ ] 2.3 Run `make lint`.
+- [x] 2.1 Run each test file alone in the image.
+- [x] 2.2 Run `make precheck`.
+- [x] 2.3 Run `make lint`.
 - [ ] 2.4 Run `openspec validate --specs`.
 
 ## 3. Lead work in the image

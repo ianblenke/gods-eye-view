@@ -206,7 +206,7 @@ test('[live-sources-007] set all source fields', async (t) => {
     url: 'https://511on.ca/map/Cctv/A_1.-',
     snapshotUrl: 'https://511on.ca/map/Cctv/A_1.-',
     sourceKind: 'ontario-511-open-data',
-    license: 'Open Government Licence - Ontario',
+    license: 'Open Government Licence – Ontario',
   });
   for (const key of [
     'id',
