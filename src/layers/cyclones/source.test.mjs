@@ -1326,7 +1326,7 @@ function jtwc() {
   return value;
 }
 
-test('a JTWC warning is accepted with its danger area and its own links, never with a cone', () => {
+test('[cyclones-003 cyclones-004 cyclones-005] a JTWC warning is accepted with its danger area and its own links, never with a cone', () => {
   const [storm] = validateCycloneSnapshot(jtwc()).storms;
   assert.equal(storm.agency, 'jtwc');
   assert.equal(storm.cone, null);
@@ -1373,4 +1373,34 @@ test('a JTWC warning is accepted with its danger area and its own links, never w
     validateCycloneSnapshot(pending).storms[0].geometryStatus,
     'pending',
   );
+});
+
+test('[cyclones-003 cyclones-004 cyclones-005] each JTWC basin and outlook is accepted, and a pending warning takes no danger area', () => {
+  for (const prefix of ['wp', 'io', 'sh', 'ep', 'cp']) {
+    const value = jtwc();
+    value.storms[0].id = `${prefix}042027`;
+    value.storms[0].basin = prefix.toUpperCase();
+    value.storms[0].outlookUrl =
+      'https://www.metoc.navy.mil/jtwc/products/abioweb.txt';
+    assert.equal(
+      validateCycloneSnapshot(value).storms[0].basin,
+      prefix.toUpperCase(),
+    );
+  }
+  for (const link of [
+    'https://www.metoc.navy.mil/jtwc/products/sh0427web.txt?x=1',
+    'https://www.metoc.navy.mil/jtwc/products/SH0427web.txt',
+  ]) {
+    const value = jtwc();
+    value.storms[0].advisoryUrl = link;
+    assert.throws(() => validateCycloneSnapshot(value), /Malformed/);
+  }
+  const pending = jtwc();
+  Object.assign(pending.storms[0], {
+    geometryStatus: 'pending',
+    geometryAdvisoryNumber: null,
+    forecastPoints: [],
+    track: null,
+  });
+  assert.throws(() => validateCycloneSnapshot(pending), /Malformed/);
 });

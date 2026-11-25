@@ -22,8 +22,8 @@ Upstream removed the tests of the phone Context tab and the test of a resumed fl
 - `DATA_SOURCES.md` keeps the fork row for GDACS and adds the upstream row for JTWC. The Ontario 511 row keeps the fork text and adds the upstream words on Kitchener.
 - `format-scope.json`, `package-boundaries.json` and `same-as-english.json` keep the entries of the two sides. The change removes one entry that occurred two times.
 - The conflicted test files keep the fork tests with their IDs and the new upstream tests. Where a conflict is only the test name, the test keeps the fork name.
-- `director.test.mjs` first took the upstream removal of the resumed flight test. D3 gives the later change.
+- The merge first removed the resumed flight test from `director.test.mjs`, as upstream did. D3 gives the later change.
 
 ## Risks
 
-The merge changes the shapes of the perimeter, cyclone and recent imagery records. A fork test that read the old shape failed, and the change corrected it.
+The merge changes the shapes of the perimeter, cyclone and recent imagery records. A fork test that read the old shape failed, and the change corrected the test.

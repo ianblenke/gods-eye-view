@@ -71,7 +71,8 @@ test(
           process.execPath,
           ...argsFor(input, out),
         ],
-        // The size limit also cuts the coverage file of the child, so it writes none.
+        // The size limit also cuts the coverage file of the child. Thus the
+        // child must write no coverage file.
         { encoding: 'utf8', env: { ...process.env, NODE_V8_COVERAGE: '' } },
       );
       assert.equal(r.status, 1, r.stderr);

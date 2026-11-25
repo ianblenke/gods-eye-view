@@ -2162,7 +2162,7 @@ function installAnimationFrames() {
   };
 }
 
-test('[director-111] a run resumed inside a flight goes on from that point of the path and clock', async () => {
+test('[director-111] a run resumed inside a flight continues from the same moment of the path and the clock', async () => {
   const { director, viewer, restore } = makeDirector();
   const restoreFrames = installAnimationFrames();
   const clock = [];
@@ -2180,7 +2180,7 @@ test('[director-111] a run resumed inside a flight goes on from that point of th
       fromProgress: 0.75,
       preview: false,
     });
-    // A loaded machine needs more than 40 ms for the first frame.
+    // Let the pending awaits of the director run until the first frame.
     for (let wait = 0; wait < 200 && !(clock.some((snap) => snap.running) && poses.length); wait += 1) await settle(10);
     const first = clock.find((snap) => snap.running);
     assert.equal(first.shotId, 'shot-b', 'starts in the shot that moment is in');

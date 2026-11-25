@@ -90,7 +90,7 @@ test('[perimeters-005] multipart cards compare polygon areas along short datelin
   }
 });
 
-test('[perimeters-006] a full incident row renders name, size, containment, and ages', () => {
+test('[perimeters-006] a fire with all facts renders name, size, containment, and ages', () => {
   const now = 1758000000000;
   const card = buildIncidentCard(
     {

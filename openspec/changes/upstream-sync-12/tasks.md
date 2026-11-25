@@ -5,9 +5,12 @@
 - [x] 1.3 Resolve the 13 conflicts of the merge.
 - [x] 1.4 Check that the merge adds no layer that needs a share token.
 - [x] 1.5 Adapt the fork tests to the merged code.
-- [x] 1.6 Keep these scenarios of `live-sources`: live-sources-006, live-sources-007, live-sources-008, live-sources-009.
-- [x] 1.7 Keep these scenarios of `perimeters`: perimeters-001, perimeters-002.
+- [x] 1.6 Keep these scenario IDs of `live-sources`: live-sources-006, live-sources-007, live-sources-008, live-sources-009.
+- [x] 1.7 Keep these scenario IDs of `perimeters`: perimeters-001, perimeters-002.
 - [x] 1.8 Write the backfill scenarios for the lost coverage: director-111 and context-contacts-entry-001.
+- [x] 1.9 Keep these scenario IDs of `cyclones`: cyclones-003, cyclones-004, cyclones-005.
+- [x] 1.10 Keep these scenario IDs of `cyclones`: cyclones-009, cyclones-010, cyclones-011.
+- [x] 1.11 Keep these scenario IDs of `perimeters`: perimeters-005, perimeters-006, perimeters-021.
 
 ## 2. Host evidence
 

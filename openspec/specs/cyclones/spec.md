@@ -1,7 +1,7 @@
 # cyclones Specification
 
 ## Purpose
-Show the storm advisories of the National Hurricane Center on the globe. Check each snapshot of the advisories before the layer uses it. Show the label, the track and the cone of each storm. Let a person select a storm and move the camera to it.
+Show the storm advisories of the National Hurricane Center and of the Joint Typhoon Warning Center on the globe. Check each snapshot of the advisories before the layer uses it. Show the label, the track and the cone or the danger area of each storm. Let a person select a storm and move the camera to it.
 ## Requirements
 ### Requirement: Snapshot projection
 The snapshot validator MUST return a new snapshot that has only the named fields. It MUST tell empty coverage from an unavailable source.

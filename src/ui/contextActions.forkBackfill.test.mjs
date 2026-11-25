@@ -3,7 +3,7 @@ import test from 'node:test';
 import { ContextControls } from './contextControls.js';
 import { withEntityRecord } from '../data/entityRecords.js';
 
-test('[context-contacts-entry-001] a Contacts request enters Contacts and keeps the tracked aircraft', async () => {
+test('[context-contacts-entry-001] a Contacts request starts the Contacts mode and keeps the tracked aircraft', async () => {
   const calls = [];
   const viewer = {
     trackedEntity: withEntityRecord({}, { trackedId: 'flights:abc123' }),
@@ -33,6 +33,8 @@ test('[context-contacts-entry-001] a Contacts request enters Contacts and keeps 
     setEnabled: async (id, value) => {
       calls.push({ id, value });
       if (!value) enabled.delete(id);
+      // The flight layer drops the tracked aircraft when it stops.
+      if (id === 'flights' && !value) viewer.trackedEntity = null;
       return true;
     },
     _setEnabledWithIntent: (id, value) => {

@@ -20,7 +20,7 @@ const validPayload = {
   ],
 };
 
-test('[perimeters-001] a successful response yields normalized perimeter rows', async () => {
+test('[perimeters-001] a successful response yields the fires and the pieces', async () => {
   let requested;
   const source = createWfigsPerimeterSource({
     fetchImpl: async (url) => {
@@ -83,6 +83,29 @@ test('[perimeters-001] a truncated response pages until the feed is complete', a
     ['fire-1', 'fire-2', 'fire-3'],
   );
   assert.deepEqual(requests, [null, '1', '2']);
+});
+
+test('[perimeters-001] each row gives one fire and each polygon gives one piece', async () => {
+  const rows = [
+    { stableId: 'one', polygons: [[ring]] },
+    { stableId: 'two', polygons: [[ring], [ring]] },
+  ];
+  const source = createWfigsPerimeterSource({
+    fetchImpl: async () => Response.json({ rows }),
+  });
+  const snapshot = await source.getSnapshot();
+  assert.deepEqual(
+    snapshot.fires.map((fire) => fire.id),
+    ['one', 'two'],
+  );
+  assert.deepEqual(
+    snapshot.pieces.map((piece) => [piece.fireId, piece.polygons]),
+    [
+      ['one', [[ring]]],
+      ['two', [[ring]]],
+      ['two', [[ring]]],
+    ],
+  );
 });
 
 test('[perimeters-002] an upstream failure surfaces its HTTP status', async () => {
@@ -167,7 +190,7 @@ test('[perimeters-001] a live signal accepts a complete source response', async 
   assert.deepEqual([snapshot.fires, snapshot.pieces], [[], []]);
 });
 
-test('a failed refresh serves the last snapshot marked stale for a day, then refuses', async () => {
+test('[perimeters-021] a failed refresh serves the last snapshot marked stale for a day, then refuses', async () => {
   let clock = 1_000_000_000;
   let up = true;
   const plugin = firePerimetersProxy({
@@ -207,8 +230,10 @@ test('a failed refresh serves the last snapshot marked stale for a day, then ref
   assert.equal(stale.staleHeader, true);
   assert.equal(stale.body.stale, true);
   assert.equal(stale.body.fetchedAt, fresh.body.fetchedAt);
-  clock += 2 * 60 * 60 * 1000;
-  assert.equal((await ask()).status, 502, 'a day-old snapshot is not served');
+  clock += 60 * 60 * 1000;
+  assert.equal((await ask()).status, 200, 'a snapshot of 24 hours is served');
+  clock += 1;
+  assert.equal((await ask()).status, 502, 'an older snapshot is not served');
 });
 
 test('the snapshot carries the proxy staleness and fetch time', async () => {
