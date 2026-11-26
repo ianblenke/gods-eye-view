@@ -20,7 +20,7 @@ const validPayload = {
   ],
 };
 
-test('[perimeters-001] a successful response yields normalized perimeter rows', async () => {
+test('[perimeters-001] a successful response gives the fires and the pieces', async () => {
   let requested;
   const source = createWfigsPerimeterSource({
     fetchImpl: async (url) => {
@@ -30,9 +30,13 @@ test('[perimeters-001] a successful response yields normalized perimeter rows', 
       });
     },
   });
-  const rows = await source.getSnapshot();
-  assert.equal(rows.length, 1);
-  assert.equal(rows[0].stableId, '2026-NMGNF-000123');
+  const snapshot = await source.getSnapshot();
+  assert.deepEqual(
+    snapshot.fires.map((fire) => fire.id),
+    ['2026-NMGNF-000123'],
+  );
+  assert.deepEqual(snapshot.pieces[0].polygons, [[ring]]);
+  assert.equal(snapshot.at, null);
   assert.equal(requested, '/api/fire-perimeters');
 });
 
@@ -81,6 +85,29 @@ test('[perimeters-001] a truncated response pages until the feed is complete', a
   assert.deepEqual(requests, [null, '1', '2']);
 });
 
+test('[perimeters-001] each row gives one fire and each polygon gives one piece', async () => {
+  const rows = [
+    { stableId: 'one', polygons: [[ring]] },
+    { stableId: 'two', polygons: [[ring], [ring]] },
+  ];
+  const source = createWfigsPerimeterSource({
+    fetchImpl: async () => Response.json({ rows }),
+  });
+  const snapshot = await source.getSnapshot();
+  assert.deepEqual(
+    snapshot.fires.map((fire) => fire.id),
+    ['one', 'two'],
+  );
+  assert.deepEqual(
+    snapshot.pieces.map((piece) => [piece.fireId, piece.polygons]),
+    [
+      ['one', [[ring]]],
+      ['two', [[ring]]],
+      ['two', [[ring]]],
+    ],
+  );
+});
+
 test('[perimeters-002] an upstream failure surfaces its HTTP status', async () => {
   const source = createWfigsPerimeterSource({
     fetchImpl: async () => ({ ok: false, status: 503 }),
@@ -89,7 +116,12 @@ test('[perimeters-002] an upstream failure surfaces its HTTP status', async () =
 });
 
 test('[perimeters-002] a malformed successful response is never accepted as an empty snapshot', async () => {
-  for (const payload of [{}, { rows: null }, { rows: {} }]) {
+  for (const payload of [
+    {},
+    { rows: null },
+    { rows: {} },
+    { fires: [], pieces: [] },
+  ]) {
     const source = createWfigsPerimeterSource({
       fetchImpl: async () => Response.json(payload),
     });
@@ -124,9 +156,9 @@ test('[perimeters-001] the default source calls the host fetch', async () => {
     return Response.json({ rows: [] });
   };
   try {
-    const rows = await createWfigsPerimeterSource().getSnapshot();
+    const snapshot = await createWfigsPerimeterSource().getSnapshot();
     assert.equal(path, '/api/fire-perimeters');
-    assert.deepEqual(rows, []);
+    assert.deepEqual([snapshot.fires, snapshot.pieces], [[], []]);
   } finally {
     globalThis.fetch = oldFetch;
   }
@@ -154,10 +186,11 @@ test('[perimeters-001] a live signal accepts a complete source response', async 
   const source = createWfigsPerimeterSource({
     fetchImpl: async () => Response.json({ rows: [] }),
   });
-  assert.deepEqual(await source.getSnapshot({ signal }), []);
+  const snapshot = await source.getSnapshot({ signal });
+  assert.deepEqual([snapshot.fires, snapshot.pieces], [[], []]);
 });
 
-test('a failed refresh serves the last snapshot marked stale for a day, then refuses', async () => {
+test('[perimeters-021] a failed refresh serves the last snapshot as stale data for 24 hours, and then gives status 502', async () => {
   let clock = 1_000_000_000;
   let up = true;
   const plugin = firePerimetersProxy({
@@ -197,26 +230,26 @@ test('a failed refresh serves the last snapshot marked stale for a day, then ref
   assert.equal(stale.staleHeader, true);
   assert.equal(stale.body.stale, true);
   assert.equal(stale.body.fetchedAt, fresh.body.fetchedAt);
-  clock += 2 * 60 * 60 * 1000;
-  assert.equal((await ask()).status, 502, 'a day-old snapshot is not served');
+  clock += 60 * 60 * 1000;
+  assert.equal((await ask()).status, 200, 'a snapshot of 24 hours is served');
+  clock += 1;
+  assert.equal((await ask()).status, 502, 'an older snapshot is not served');
 });
 
-test('the snapshot detail carries the proxy staleness and fetch time', async () => {
+test('the snapshot carries the proxy staleness and fetch time', async () => {
   const fetchedAt = Date.UTC(2026, 9, 25, 12);
   const source = createWfigsPerimeterSource({
     fetchImpl: async () => Response.json({ rows: [], stale: true, fetchedAt }),
   });
-  assert.deepEqual(await source.getSnapshotDetail(), {
-    rows: [],
-    stale: true,
-    fetchedAt,
-  });
-  assert.deepEqual(await source.getSnapshot(), []);
+  const snapshot = await source.getSnapshot();
+  assert.equal(snapshot.stale, true);
+  assert.equal(snapshot.fetchedAt, fetchedAt);
+  assert.deepEqual([snapshot.fires, snapshot.pieces], [[], []]);
 });
 
 test('getSnapshot works when taken off its source object', async () => {
   const { getSnapshot } = createWfigsPerimeterSource({
     fetchImpl: async () => Response.json({ rows: [] }),
   });
-  assert.deepEqual(await getSnapshot(), []);
+  assert.deepEqual((await getSnapshot()).fires, []);
 });

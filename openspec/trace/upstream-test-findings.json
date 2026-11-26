@@ -1,6 +1,27 @@
 {
   "version": 1,
   "files": {
+    "src/data/cctvExplicitPickEndsOpening.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/layers/recentImagery/source.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/cctvPickerOpening.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/contextCardFrame.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/livePanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/pageRootClasses.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/stationPanel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
     "src/annotations/screenAnnotationRenderer.test.mjs": [
       "GATES-TEST-LEAK"
     ],

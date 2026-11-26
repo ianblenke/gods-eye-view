@@ -200,7 +200,7 @@ test('[cyclones-010] publisher republishes on snapshots and selection changes, a
   assert.equal(calls.length, 2, 'a cleared publisher stays quiet');
 });
 
-test('[cyclones-011] storm identity resolves from card and lead-hour ids only', () => {
+test('[cyclones-011] a card id and a lead-hour label id give the storm id', () => {
   assert.equal(cycloneStormIdFromEntryId('storm:al062026'), 'al062026');
   assert.equal(cycloneStormIdFromEntryId('lead:al062026:24'), 'al062026');
   for (const value of ['vessel:123', 'storm:', 'lead:', '', null, undefined])
@@ -314,7 +314,7 @@ test('[cyclones-010] with no host option the publisher uses the shared world ove
   assert.equal(entries(), 0);
 });
 
-test('[cyclones-011] only the prefixes storm and lead, in lower case and at the start, give a storm id', () => {
+test('[cyclones-011] only the prefixes storm, lead and area, in lower case and at the start, give a storm id', () => {
   assert.equal(cycloneStormIdFromEntryId('storm:al062026:extra'), 'al062026');
   assert.equal(cycloneStormIdFromEntryId('lead:al062026:'), 'al062026');
   assert.equal(cycloneStormIdFromEntryId('storm:a:b:c'), 'a');
@@ -326,4 +326,25 @@ test('[cyclones-011] only the prefixes storm and lead, in lower case and at the 
     {},
   ])
     assert.equal(cycloneStormIdFromEntryId(value), null, String(value));
+});
+
+test('[cyclones-009] a selected storm with a danger area gets an area label after its lead-hour labels', () => {
+  const [fay] = storms();
+  const stormed = { ...fay, dangerArea: anchor(-60, 20) };
+  const entries = cycloneOverlayEntries([stormed], fay.id);
+  const area = entries.at(-1);
+  assert.equal(entries.length, fay.forecasts.length + 2);
+  assert.equal(area.id, 'area:al062026');
+  assert.equal(area.title, '34-knot wind danger area');
+  assert.deepEqual(area.details, []);
+  assert.equal(area.priority, 300);
+  assert.deepEqual(
+    [area.cardStyle, area.collisionGroup, area.horizonCull, area.interactive],
+    ['tactical', 'ambient-card', true, true],
+  );
+  assert.equal(cycloneOverlayEntries([stormed], null).length, 1);
+});
+
+test('[cyclones-011] an area label id gives its storm id', () => {
+  assert.equal(cycloneStormIdFromEntryId('area:sh042027'), 'sh042027');
 });

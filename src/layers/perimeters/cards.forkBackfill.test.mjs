@@ -1,10 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {
-  perimeterAnchorDegrees,
-  buildIncidentCard,
-  containmentAccent,
-} from './cards.js';
+import { buildIncidentCard, containmentAccent } from './cards.js';
+import { perimeterAnchorDegrees } from './records.js';
 
 const square = [
   [-108.2, 35.0],
@@ -93,11 +90,11 @@ test('[perimeters-005] multipart cards compare polygon areas along short datelin
   }
 });
 
-test('[perimeters-006] a full incident row renders name, size, containment, and ages', () => {
+test('[perimeters-006] the card of a fire with all facts shows the name, the size, the containment and the ages', () => {
   const now = 1758000000000;
   const card = buildIncidentCard(
     {
-      stableId: '2026-NMGNF-000123',
+      id: '2026-NMGNF-000123',
       name: 'Frijoles',
       acres: 15956.4,
       containedPct: 74,
@@ -129,7 +126,7 @@ test('[perimeters-006] a full incident row renders name, size, containment, and 
 test('[perimeters-006] missing attributes degrade to available facts instead of placeholders', () => {
   const card = buildIncidentCard(
     {
-      stableId: 'x',
+      id: 'x',
       name: null,
       acres: null,
       containedPct: null,
@@ -153,7 +150,7 @@ test('[perimeters-006] missing attributes degrade to available facts instead of 
 test('[perimeters-006] a known InciWeb page adds a link line to the card', () => {
   const card = buildIncidentCard(
     {
-      stableId: 'x',
+      id: 'x',
       name: 'Timber',
       acres: 25426,
       containedPct: 44,
@@ -181,7 +178,7 @@ test('[perimeters-006] a known InciWeb page adds a link line to the card', () =>
 test('[perimeters-006] the selected card claims the selected paint lane, not the ambient lane', () => {
   const card = buildIncidentCard(
     {
-      stableId: 'x',
+      id: 'x',
       name: 'Any',
       acres: 1,
       containedPct: 1,
@@ -208,7 +205,7 @@ test('[perimeters-006] the selected card claims the selected paint lane, not the
 
 test('[perimeters-006] costs near a unit boundary promote to the larger unit', () => {
   const base = {
-    stableId: 'x',
+    id: 'x',
     name: 'Any',
     acres: null,
     containedPct: null,
@@ -236,7 +233,7 @@ test('[perimeters-006] costs near a unit boundary promote to the larger unit', (
 test('[perimeters-006] a complex member names its complex on the card', () => {
   const card = buildIncidentCard(
     {
-      stableId: 'x',
+      id: 'x',
       name: 'Crosswhite',
       acres: 342923,
       containedPct: 99,
@@ -260,7 +257,7 @@ test('[perimeters-006] a complex member names its complex on the card', () => {
 test('[perimeters-006] a card without a link is not interactive', () => {
   const card = buildIncidentCard(
     {
-      stableId: 'x',
+      id: 'x',
       name: 'Crosswhite',
       acres: 1,
       containedPct: 1,
@@ -283,7 +280,7 @@ test('[perimeters-006] a card without a link is not interactive', () => {
 test('[perimeters-006] partial incident details render only the facts that exist', () => {
   const card = buildIncidentCard(
     {
-      stableId: 'x',
+      id: 'x',
       name: 'Whiskey',
       acres: 542,
       containedPct: 48,
@@ -311,7 +308,7 @@ test('[perimeters-006] full containment is green and a low cost has no text', ()
   assert.equal(containmentAccent(100), '#8bc34a');
   const card = buildIncidentCard(
     {
-      stableId: 'a',
+      id: 'a',
       name: '',
       containedPct: 100,
       costToDate: 999,
@@ -330,7 +327,7 @@ test('[perimeters-006] full containment is green and a low cost has no text', ()
 test('[perimeters-006] a negative age has no age text', () => {
   const card = buildIncidentCard(
     {
-      stableId: 'a',
+      id: 'a',
       name: 'A',
       containedPct: 0,
       discoveredTime: 100,

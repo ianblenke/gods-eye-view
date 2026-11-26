@@ -1,7 +1,7 @@
 # cyclones Specification
 
 ## Purpose
-Show the storm advisories of the National Hurricane Center on the globe. Check each snapshot of the advisories before the layer uses it. Show the label, the track and the cone of each storm. Let a person select a storm and move the camera to it.
+Show the storm advisories of the National Hurricane Center and of the Joint Typhoon Warning Center on the globe. Check each snapshot of the advisories before the layer uses it. Show the label, the track and the cone or the danger area of each storm. Let a person select a storm and move the camera to it.
 ## Requirements
 ### Requirement: Snapshot projection
 The snapshot validator MUST return a new snapshot that has only the named fields. It MUST tell empty coverage from an unavailable source.
@@ -33,11 +33,13 @@ Origin: backfill
 - **AND** this holds for a `null` snapshot and for a schema version other than 1
 - **AND** this holds for a `stale` or `unavailable` flag that is not a boolean
 - **AND** this holds for a `storms` value that is not an array, and for more than 32 storms
-- **AND** this holds for a storm id that is not `al`, `ep` or `cp` with six digits in lower case
+- **AND** this holds for an agency other than `nhc` and `jtwc`, and a storm with no agency is an NHC storm
+- **AND** this holds for a storm id that is not a prefix of its agency in lower case and then six digits
+- **AND** the NHC prefixes are `al`, `ep` and `cp`, and the JTWC prefixes are `wp`, `io`, `sh`, `ep` and `cp`
 - **AND** this holds for an id that appears twice
 - **AND** this holds for a geometry status other than `current`, `pending` or `unavailable`
 - **AND** this holds for a basin that is not the upper-case form of the first two letters of the storm id
-- **AND** the validator accepts 32 storms and the three basins `AL`, `EP` and `CP`
+- **AND** the validator accepts 32 storms, the NHC basins `AL`, `EP` and `CP`, and the JTWC basins `WP`, `IO` and `SH`
 
 #### Scenario: Reject a wrong text, number, time, advisory number or link `cyclones-004`
 - **WHEN** `validateCycloneSnapshot()` gets a snapshot with one wrong value in a text, a number, a time, an advisory number or a link
@@ -57,19 +59,24 @@ Origin: backfill
 - **AND** a `null` position, a `null` coordinate, a `null` lead time and a storm with no `movement` object are wrong
 - **AND** a time is right only in the exact form `YYYY-MM-DDTHH:mm:ss.sssZ` for a real date
 - **AND** an advisory number is `0`, or one to three digits with no zero at the start, and then one optional capital letter
-- **AND** a link is `null`, or an `https` URL on the host `www.nhc.noaa.gov` with no port, no user, no password and no fragment
-- **AND** an advisory link has the path `/text/CODE.shtml` with capital letters and digits, and no query
-- **AND** an outlook link has the path `/gtwo.php` and the query `basin=atlc&fdays=7`, or the same query with the basin `epac` or `cpac`
+- **AND** a link is `null`, or an `https` URL on the host of the agency with no port, no user, no password and no fragment
+- **AND** the host is `www.nhc.noaa.gov` for NHC and `www.metoc.navy.mil` for JTWC
+- **AND** an NHC advisory link has the path `/text/CODE.shtml` with capital letters and digits, and no query
+- **AND** an NHC outlook link has the path `/gtwo.php` and the query `basin=atlc&fdays=7`, or the same query with the basin `epac` or `cpac`
+- **AND** a JTWC advisory link has the path `/jtwc/products/` and then two lower-case letters, four digits and `web.txt`, with no query
+- **AND** a JTWC outlook link has the path `/jtwc/products/abpwweb.txt` or `/jtwc/products/abioweb.txt`, with no query
 - **AND** a link text of more than 256 characters is wrong
 
 #### Scenario: Reject wrong or unbounded geometry `cyclones-005`
 - **WHEN** `validateCycloneSnapshot()` gets a snapshot with geometry that is wrong for its status, wrong in form, or over a bound
 - **THEN** it throws the error `Malformed cyclone snapshot`
-- **AND** a `current` storm needs a track, a cone and one forecast point at least
+- **AND** a `current` storm needs a track, an area and one forecast point at least
+- **AND** the area is a cone for an NHC storm and a danger area for a JTWC storm
+- **AND** an NHC storm with a danger area is wrong, and a JTWC storm with a cone is wrong
 - **AND** the geometry advisory number of a `current` storm equals its advisory number
-- **AND** a storm with the status `pending` or `unavailable` has no track, no cone and no forecast point
+- **AND** a storm with the status `pending` or `unavailable` has no track, no area and no forecast point
 - **AND** the list of forecast points is an array, a lead time repeats in no storm, and a lead time is never `null`
-- **AND** a track has the type `LineString` or `MultiLineString`, and a cone has the type `Polygon` or `MultiPolygon`
+- **AND** a track has the type `LineString` or `MultiLineString`, and a cone or a danger area has the type `Polygon` or `MultiPolygon`
 - **AND** a position pair has two finite numbers in range
 - **AND** a line has 2 to 10000 pairs, and a list of lines, rings or polygons has 1 to 128 items
 - **AND** a ring has 4 to 10000 pairs, and its last pair equals its first pair
@@ -118,7 +125,7 @@ Origin: backfill
 - **AND** a storm card has the priority 1000 plus the wind in knots, or 1000 for a wind that is not a number
 - **AND** the selected storm card has the largest safe integer as its priority
 - **AND** the selected card has `protected` set to `true`, the variant `selected` and the accent `#ffe19a`
-- **AND** each other card has the variant `card` and the accent `#7fe6ed`
+- **AND** each other storm card has the variant `card` and the accent `#7fe6ed`
 - **AND** the gap of a card is 20 px for the selected storm and 17 px for another storm
 - **AND** the leader of a card starts 14 px from the point for the selected storm and 11 px for another storm
 - **AND** a lead-hour label has the id `lead:<id>:<hours>`, the title `<hours> h`, no detail, and a gap of 13 px
@@ -126,6 +133,8 @@ Origin: backfill
 - **AND** a lead-hour label has a maximum distance of 4000000 m with a hard cutoff, and a storm card has no distance limit
 - **AND** each entry is an interactive tactical card in the collision group `ambient-card` that culls at the horizon
 - **AND** a selected storm with no forecast list gets no lead-hour label
+- **AND** a selected storm with a danger area gets one area label after its lead-hour labels
+- **AND** the area label has the id `area:<id>`, the title `34-knot wind danger area`, no detail and the priority 300
 
 #### Scenario: Publish the labels to the overlay host `cyclones-010`
 - **WHEN** a person calls `setSnapshot()`, `setSelection()` and `clear()` on the result of `createCycloneLabels()`
@@ -140,7 +149,7 @@ Origin: backfill
 
 #### Scenario: Find the storm of a label entry id `cyclones-011`
 - **WHEN** `cycloneStormIdFromEntryId()` gets an entry id
-- **THEN** it returns the storm id from `storm:<id>` and from `lead:<id>:<hours>`
+- **THEN** it returns the storm id from `storm:<id>`, from `lead:<id>:<hours>` and from `area:<id>`
 - **AND** it returns `null` for another prefix, for a prefix in upper case, and for a prefix not at the start
 - **AND** it returns `null` for an id with no text after the prefix
 - **AND** it returns `null` for `null`, for `undefined`, for a number and for a plain object

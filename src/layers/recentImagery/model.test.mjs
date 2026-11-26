@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 
 import {
   boxFromPin,
+  lonSpanDeg,
+  nonCrossingBoxes,
   boxFromRectangle,
   boxSideKm,
   coverageFor,
@@ -53,9 +55,18 @@ function hls(product, day, clouds, extra = {}) {
 
 test('[recent-imagery-006] validateBox refuses dateline, polar, degenerate, invalid and oversized boxes', () => {
   const reason = (box) => validateBox(box).reason;
+  const dateline = validateBox({ west: 179, south: 0, east: -179, north: 1 });
+  assert.equal(dateline.ok, true);
+  assert.equal(dateline.box.west, 179);
+  assert.equal(dateline.box.east, -179);
   assert.equal(
-    reason({ west: 179, south: 0, east: -179, north: 1 }),
-    'dateline',
+    reason({ west: 170, south: 0, east: -170, north: 1 }),
+    'too-large',
+    'a 20° dateline arc is still over the 1,000 km cap',
+  );
+  assert.equal(
+    reason({ west: 180, south: 0, east: -180, north: 1 }),
+    'degenerate',
   );
   assert.equal(
     reason({ west: 0, south: 84, east: 0.5, north: 85.05111 }),
@@ -69,10 +80,6 @@ test('[recent-imagery-006] validateBox refuses dateline, polar, degenerate, inva
   assert.equal(
     validateBox({ west: 0, south: 84, east: 0.5, north: 85.05111 }).message,
     'Imagery stops at ±85.05° latitude',
-  );
-  assert.equal(
-    validateBox({ west: 179, south: 0, east: -179, north: 1 }).message,
-    'Select one side of the dateline',
   );
   assert.equal(
     validateBox({ west: 0, south: 84.9, east: 0.05, north: 85 }).ok,
@@ -137,6 +144,10 @@ test('[recent-imagery-007] ZOOM IN: the height whose top-down view is 400 km wid
     lon: 10,
     lat: 5,
   });
+  assert.deepEqual(boxCentre({ west: 179, south: 0, east: -179, north: 2 }), {
+    lon: 180,
+    lat: 1,
+  });
   assert.equal(boxCentre(null), null);
 });
 
@@ -149,6 +160,13 @@ test('[recent-imagery-007] box width is the longitude span at the mid-latitude, 
   const nearlyGlobal = { west: -179.9, south: 30, east: 179.9, north: 30.1 };
   assert.ok(boxSideKm(nearlyGlobal).width > 30000);
   assert.equal(validateBox(nearlyGlobal).reason, 'too-large');
+  const crossing = boxSideKm({
+    west: 179,
+    south: -0.5,
+    east: -179,
+    north: 0.5,
+  });
+  assert.ok(Math.abs(crossing.width - 222.64) < 0.01, String(crossing.width));
 });
 
 test('[recent-imagery-008] boxFromPin builds a 10 km square within 2% at any latitude and refuses what cannot validate', () => {
@@ -167,7 +185,12 @@ test('[recent-imagery-008] boxFromPin builds a 10 km square within 2% at any lat
   assert.ok(Math.abs(boxSideKm(boxFromPin(10, 10, 50)).width - 50) < 1);
   assert.equal(boxFromPin(NaN, 0), null);
   assert.equal(boxFromPin(0, 0, 5000), null, 'over the cap');
-  assert.equal(boxFromPin(179.99, 0), null, 'would cross the dateline');
+  assert.equal(boxFromPin(181, 0), null, 'longitude out of range');
+  assert.equal(
+    boxFromPin(0, 0, 400000),
+    null,
+    'half-width of 90 degrees or more',
+  );
   assert.equal(boxFromPin(0, 89), null, 'clamped to a degenerate polar box');
   assert.equal(boxFromPin(0, 85.04).north, 85.0511, 'clamped, still valid');
 });
@@ -296,6 +319,34 @@ test('[recent-imagery-013] coverage samples the box corners and centre against t
     'full',
   );
   assert.equal(coverageFor(withRings(null), BOX), 'unknown');
+});
+
+test('coverage of a dateline box uses the short arc, not the long way', () => {
+  const box = { west: 179, south: 0, east: -179, north: 1 };
+  const ring = (west, east, south = -0.1, north = 1.1) => [
+    [west, south],
+    [east, south],
+    [east, north],
+    [west, north],
+  ];
+  const withRings = (...rings) => ({
+    granules: rings.map((footprint) => granule({ footprint })),
+  });
+  assert.equal(
+    coverageFor(withRings(ring(178.5, -178.5)), box),
+    'full',
+    'one footprint that crosses ±180',
+  );
+  assert.equal(
+    coverageFor(withRings(ring(178.9, 180), ring(-180, -178.9)), box),
+    'full',
+    'a pair split exactly at ±180',
+  );
+  assert.equal(
+    coverageFor(withRings(ring(179, 180)), box),
+    'partial',
+    'one side does not cover the other',
+  );
 });
 
 test('[recent-imagery-014] START HERE is the newest all-clear HLS day; unknown cloud is never clear', () => {
@@ -428,6 +479,17 @@ test('[recent-imagery-016] GIBS templates put y before x; Worldview snapshots ta
   assert.throws(
     () => wvsSnapshotUrl({ product: 'S30', day: 'x', box: null }),
     TypeError,
+  );
+  assert.throws(
+    () =>
+      wvsSnapshotUrl({
+        product: 'S30',
+        day: '2026-09-18',
+        box: { west: 179, south: 0, east: -179, north: 1 },
+        width: 64,
+        height: 64,
+      }),
+    /snapshot cannot cross the dateline/,
   );
 });
 
@@ -978,4 +1040,53 @@ test('[recent-imagery-054] the model does not read a parent product getter', () 
 test('[recent-imagery-056] a footprint with an absent point gives unknown coverage', () => {
   const footprint = [, [-97, 31], [-98, 31]];
   assert.equal(coverageFor({ granules: [{ footprint }] }, BOX), 'unknown');
+});
+
+test('boxFromPin returns the short-arc box for a pin near the dateline', () => {
+  const near = (a, b) => Math.abs(a - b) < 1e-6;
+  const half = 5 / 111.32; // 5 km in degrees at the equator, about 0.04492
+  const spanOk = (box) => {
+    const { width, height } = boxSideKm(box);
+    assert.ok(Math.abs(width - 10) < 0.2, `width ${width}`);
+    assert.ok(Math.abs(height - 10) < 0.2, `height ${height}`);
+    assert.ok(lonSpanDeg(box.west, box.east) < 1, 'never a ~360 degree span');
+  };
+  // 179.9 and -179.9 are 0.1 degrees from the line: a 10 km box stays on one side.
+  for (const lon of [179.9, -179.9]) {
+    const box = boxFromPin(lon, 0);
+    spanOk(box);
+    assert.ok(box.west < box.east, `no wrap needed at ${lon}`);
+    assert.ok(near((box.west + box.east) / 2, lon));
+  }
+  // A pin on the line, or close enough that the box passes it, wraps.
+  for (const lon of [180, -180, 179.99, -179.99]) {
+    const box = boxFromPin(lon, 0);
+    spanOk(box);
+    assert.ok(box.west > box.east, `crossing at ${lon}`);
+    assert.ok(box.west <= 180 && box.east >= -180, 'edges stay within +-180');
+    assert.ok(
+      near(
+        box.west,
+        (lon > 0 || lon === -180 ? Math.abs(lon) : 360 + lon) - half,
+      ),
+    );
+    assert.equal(
+      nonCrossingBoxes(box).length,
+      2,
+      'splits for tiling and Worldview',
+    );
+    assert.ok(
+      Math.abs(
+        Math.abs(boxCentre(box).lon) - Math.abs(lon === -180 ? 180 : lon),
+      ) < 1e-6,
+    );
+  }
+  // 0 is an ordinary box.
+  const mid = boxFromPin(0, 0);
+  spanOk(mid);
+  assert.ok(mid.west < mid.east && near(mid.west, -half));
+  // Off the equator the east-west extent widens but stays a short arc.
+  const high = boxFromPin(-179.99, 60);
+  spanOk(high);
+  assert.ok(high.west > high.east);
 });

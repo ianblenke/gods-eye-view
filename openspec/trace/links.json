@@ -1103,6 +1103,9 @@
   "cockpit-contact-dot-001": [
     "src/data/cockpitContactDot.test.mjs › [cockpit-contact-dot-001] the cockpit draws the contact dot once, and every later call gives the same data URL"
   ],
+  "context-contacts-entry-001": [
+    "src/ui/contextActions.forkBackfill.test.mjs › [context-contacts-entry-001] a Contacts request starts the Contacts mode and keeps the tracked aircraft"
+  ],
   "coverage-gate-001": [
     "src/tooling/spec/inventory.test.mjs › [coverage-gate-001] includes each tracked JS and TypeScript file in the inventory"
   ],
@@ -1637,11 +1640,15 @@
   ],
   "cyclones-003": [
     "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] mismatched, malformed or unbounded cyclone geometry is rejected whole",
+    "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] the validator accepts a JTWC storm with its danger area and its own links, and never with a cone",
+    "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] the validator accepts each JTWC basin and outlook, and rejects a pending storm with a danger area",
     "src/layers/cyclones/source.test.mjs › [cyclones-003] a stale geometry status is invalid even without geometry",
     "src/layers/cyclones/source.test.mjs › [cyclones-003] the validator rejects a wrong snapshot shape or storm identity"
   ],
   "cyclones-004": [
     "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] mismatched, malformed or unbounded cyclone geometry is rejected whole",
+    "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] the validator accepts a JTWC storm with its danger area and its own links, and never with a cone",
+    "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] the validator accepts each JTWC basin and outlook, and rejects a pending storm with a danger area",
     "src/layers/cyclones/source.test.mjs › [cyclones-004] a missing movement direction is invalid",
     "src/layers/cyclones/source.test.mjs › [cyclones-004] an advisory number of up to three digits and one capital letter is the only form accepted",
     "src/layers/cyclones/source.test.mjs › [cyclones-004] the validator rejects a link that is not an official NHC link and accepts each official form",
@@ -1651,8 +1658,11 @@
   ],
   "cyclones-005": [
     "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] mismatched, malformed or unbounded cyclone geometry is rejected whole",
+    "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] the validator accepts a JTWC storm with its danger area and its own links, and never with a cone",
+    "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] the validator accepts each JTWC basin and outlook, and rejects a pending storm with a danger area",
     "src/layers/cyclones/source.test.mjs › [cyclones-005] a point type stays invalid with a valid polygon shape",
     "src/layers/cyclones/source.test.mjs › [cyclones-005] the validator rejects a track or a cone of a wrong form",
+    "src/layers/cyclones/source.test.mjs › [cyclones-005] the validator rejects a wrong or unbounded danger area",
     "src/layers/cyclones/source.test.mjs › [cyclones-005] the validator rejects geometry that does not fit the status of its storm",
     "src/layers/cyclones/source.test.mjs › [cyclones-005] the validator rejects more than 500 forecast points or more than 25,000 coordinates"
   ],
@@ -1676,6 +1686,7 @@
   ],
   "cyclones-009": [
     "src/layers/cyclones/labels.test.mjs › [cyclones-009] a card with no classification has no detail line, and a selected storm with no forecast list has no lead-hour label",
+    "src/layers/cyclones/labels.test.mjs › [cyclones-009] a selected storm with a danger area gets an area label after its lead-hour labels",
     "src/layers/cyclones/labels.test.mjs › [cyclones-009] card priority is 1000 plus the wind, the largest safe integer for the selected storm and 500 minus the lead hours for a lead label",
     "src/layers/cyclones/labels.test.mjs › [cyclones-009] entries satisfy the shared host contract and keep the 4,000 km lead-hour rule",
     "src/layers/cyclones/labels.test.mjs › [cyclones-009] storm cards join the fire and vessel card tier with fire-card clearance"
@@ -1687,8 +1698,9 @@
     "src/layers/cyclones/labels.test.mjs › [cyclones-010] with no host option the publisher uses the shared world overlay"
   ],
   "cyclones-011": [
-    "src/layers/cyclones/labels.test.mjs › [cyclones-011] only the prefixes storm and lead, in lower case and at the start, give a storm id",
-    "src/layers/cyclones/labels.test.mjs › [cyclones-011] storm identity resolves from card and lead-hour ids only"
+    "src/layers/cyclones/labels.test.mjs › [cyclones-011] a card id and a lead-hour label id give the storm id",
+    "src/layers/cyclones/labels.test.mjs › [cyclones-011] an area label id gives its storm id",
+    "src/layers/cyclones/labels.test.mjs › [cyclones-011] only the prefixes storm, lead and area, in lower case and at the start, give a storm id"
   ],
   "cyclones-026": [
     "src/data/cyclonesEarlyAdvisory.test.mjs › [cyclones-026] parseCycloneStatus accepts an advisory time and a position time 26 or 90 minutes ahead of the clock"
@@ -3152,6 +3164,9 @@
     "src/director/sharing/sharing.test.mjs › [director-110] The preview reports no external content without source packs",
     "src/director/sharing/sharing.test.mjs › [director-110] The preview reports ships as absent when only traffic is configured",
     "src/director/sharing/sharing.test.mjs › [director-110] The preview reports traffic as absent without layer IDs"
+  ],
+  "director-111": [
+    "src/scenes/director.test.mjs › [director-111] a run resumed inside a flight continues from the same moment of the path and the clock"
   ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
@@ -5779,8 +5794,9 @@
   ],
   "perimeters-001": [
     "src/layers/perimeters/source.test.mjs › [perimeters-001] a live signal accepts a complete source response",
-    "src/layers/perimeters/source.test.mjs › [perimeters-001] a successful response yields normalized perimeter rows",
+    "src/layers/perimeters/source.test.mjs › [perimeters-001] a successful response gives the fires and the pieces",
     "src/layers/perimeters/source.test.mjs › [perimeters-001] a truncated response pages until the feed is complete",
+    "src/layers/perimeters/source.test.mjs › [perimeters-001] each row gives one fire and each polygon gives one piece",
     "src/layers/perimeters/source.test.mjs › [perimeters-001] the default source calls the host fetch"
   ],
   "perimeters-002": [
@@ -5813,13 +5829,13 @@
   "perimeters-006": [
     "src/layers/perimeters/cards.forkBackfill.test.mjs › [perimeters-006] a card without a link is not interactive",
     "src/layers/perimeters/cards.forkBackfill.test.mjs › [perimeters-006] a complex member names its complex on the card",
-    "src/layers/perimeters/cards.forkBackfill.test.mjs › [perimeters-006] a full incident row renders name, size, containment, and ages",
     "src/layers/perimeters/cards.forkBackfill.test.mjs › [perimeters-006] a known InciWeb page adds a link line to the card",
     "src/layers/perimeters/cards.forkBackfill.test.mjs › [perimeters-006] a negative age has no age text",
     "src/layers/perimeters/cards.forkBackfill.test.mjs › [perimeters-006] costs near a unit boundary promote to the larger unit",
     "src/layers/perimeters/cards.forkBackfill.test.mjs › [perimeters-006] full containment is green and a low cost has no text",
     "src/layers/perimeters/cards.forkBackfill.test.mjs › [perimeters-006] missing attributes degrade to available facts instead of placeholders",
     "src/layers/perimeters/cards.forkBackfill.test.mjs › [perimeters-006] partial incident details render only the facts that exist",
+    "src/layers/perimeters/cards.forkBackfill.test.mjs › [perimeters-006] the card of a fire with all facts shows the name, the size, the containment and the ages",
     "src/layers/perimeters/cards.forkBackfill.test.mjs › [perimeters-006] the selected card claims the selected paint lane, not the ambient lane"
   ],
   "perimeters-007": [
@@ -5871,7 +5887,8 @@
   ],
   "perimeters-021": [
     "src/data/firePerimetersProxy.test.mjs › [perimeters-021] a failed refresh serves the last good perimeter snapshot as stale",
-    "src/data/firePerimetersProxy.test.mjs › [perimeters-021] malformed WFIGS data does not become a cached empty snapshot"
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-021] malformed WFIGS data does not become a cached empty snapshot",
+    "src/layers/perimeters/source.test.mjs › [perimeters-021] a failed refresh serves the last snapshot as stale data for 24 hours, and then gives status 502"
   ],
   "perimeters-022": [
     "src/data/firePerimetersProxy.test.mjs › [perimeters-022] concurrent requests share one upstream operation for every route"

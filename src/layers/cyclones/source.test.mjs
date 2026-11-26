@@ -338,6 +338,8 @@ test('[cyclones-001] the projection holds exactly the named fields, as copies, w
         id: 'al012026',
         name: 'Test storm',
         classification: 'HU',
+        agency: 'nhc',
+        dangerArea: null,
         basin: 'AL',
         position: { longitude: -60.5, latitude: 20.25 },
         positionAt: '2026-09-16T04:00:00.000Z',
@@ -1305,4 +1307,130 @@ test('[cyclones-008] a finished call leaves no deadline timer and no listener on
     caller.abort(new Error('after the call'));
     assert.equal(request.aborted, false, `listener ended, status ${status}`);
   }
+});
+
+/** The current advisory as a JTWC warning with its 34-knot danger area. */
+function jtwc() {
+  const value = current(),
+    storm = value.storms[0];
+  Object.assign(storm, {
+    id: 'sh042027',
+    agency: 'jtwc',
+    basin: 'SH',
+    classification: 'TC',
+    advisoryUrl: 'https://www.metoc.navy.mil/jtwc/products/sh0427web.txt',
+    outlookUrl: 'https://www.metoc.navy.mil/jtwc/products/abpwweb.txt',
+    dangerArea: storm.cone,
+    cone: null,
+  });
+  return value;
+}
+
+test('[cyclones-003 cyclones-004 cyclones-005] the validator accepts a JTWC storm with its danger area and its own links, and never with a cone', () => {
+  const [storm] = validateCycloneSnapshot(jtwc()).storms;
+  assert.equal(storm.agency, 'jtwc');
+  assert.equal(storm.cone, null);
+  assert.equal(storm.dangerArea.type, 'MultiPolygon');
+  assert.equal(
+    storm.advisoryUrl,
+    'https://www.metoc.navy.mil/jtwc/products/sh0427web.txt',
+  );
+  // A snapshot from before agencies is NHC's.
+  assert.equal(validateCycloneSnapshot(current()).storms[0].agency, 'nhc');
+  for (const change of [
+    (s) => (s.cone = s.dangerArea),
+    (s) => (s.dangerArea = null),
+    (s) => (s.agency = 'jma'),
+    (s) => Object.assign(s, { id: 'al042027', basin: 'AL' }),
+    (s) => (s.basin = 'WP'),
+    (s) => (s.advisoryUrl = 'https://www.nhc.noaa.gov/text/MIATCMEP5.shtml'),
+    (s) => (s.advisoryUrl = 'https://www.metoc.navy.mil/jtwc/other.txt'),
+    (s) =>
+      (s.outlookUrl = 'https://www.nhc.noaa.gov/gtwo.php?basin=epac&fdays=7'),
+  ]) {
+    const value = jtwc();
+    change(value.storms[0]);
+    assert.throws(() => validateCycloneSnapshot(value), /Malformed/);
+  }
+  // NHC keeps its cone and never carries a danger area; its ids stay its own.
+  const nhc = current();
+  nhc.storms[0].dangerArea = nhc.storms[0].cone;
+  assert.throws(() => validateCycloneSnapshot(nhc), /Malformed/);
+  const western = current();
+  western.storms[0].id = 'wp012026';
+  western.storms[0].basin = 'WP';
+  assert.throws(() => validateCycloneSnapshot(western), /Malformed/);
+  // A pending JTWC warning carries no geometry.
+  const pending = jtwc();
+  Object.assign(pending.storms[0], {
+    geometryStatus: 'pending',
+    geometryAdvisoryNumber: null,
+    forecastPoints: [],
+    track: null,
+    dangerArea: null,
+  });
+  assert.equal(
+    validateCycloneSnapshot(pending).storms[0].geometryStatus,
+    'pending',
+  );
+});
+
+test('[cyclones-003 cyclones-004 cyclones-005] the validator accepts each JTWC basin and outlook, and rejects a pending storm with a danger area', () => {
+  for (const prefix of ['wp', 'io', 'sh', 'ep', 'cp']) {
+    const value = jtwc();
+    value.storms[0].id = `${prefix}042027`;
+    value.storms[0].basin = prefix.toUpperCase();
+    value.storms[0].outlookUrl =
+      'https://www.metoc.navy.mil/jtwc/products/abioweb.txt';
+    assert.equal(
+      validateCycloneSnapshot(value).storms[0].basin,
+      prefix.toUpperCase(),
+    );
+  }
+  const products = 'https://www.metoc.navy.mil/jtwc/products/';
+  for (const [key, name] of [
+    ['advisoryUrl', 'sh0427web.txt?x=1'],
+    ['advisoryUrl', 'SH0427web.txt'],
+    ['advisoryUrl', 'sh042web.txt'],
+    ['advisoryUrl', 'sh04270web.txt'],
+    ['outlookUrl', 'other.txt'],
+    ['outlookUrl', 'abpwweb.txt?x=1'],
+  ]) {
+    const value = jtwc();
+    value.storms[0][key] = products + name;
+    assert.throws(() => validateCycloneSnapshot(value), /Malformed/, name);
+  }
+  const pending = jtwc();
+  Object.assign(pending.storms[0], {
+    geometryStatus: 'pending',
+    geometryAdvisoryNumber: null,
+    forecastPoints: [],
+    track: null,
+  });
+  assert.throws(() => validateCycloneSnapshot(pending), /Malformed/);
+});
+
+test('[cyclones-005] the validator rejects a wrong or unbounded danger area', () => {
+  const closed = (size) => [
+    ...Array.from({ length: size - 1 }, (_, index) => [index / 1000, 0]),
+    [0, 0],
+  ];
+  const withArea = (dangerArea) => {
+    const value = jtwc();
+    value.storms[0].dangerArea = dangerArea;
+    return value;
+  };
+  const polygon = (...rings) => ({ type: 'Polygon', coordinates: rings });
+  assert.ok(validateCycloneSnapshot(withArea(polygon(closed(9000)))));
+  for (const [label, area] of [
+    ['a line', { type: 'LineString', coordinates: closed(4) }],
+    ['an open ring', polygon(closed(5).slice(0, 4))],
+    ['a ring of three pairs', polygon(closed(3))],
+    ['too many coordinates', polygon(...[1, 2, 3].map(() => closed(9000)))],
+  ])
+    assert.throws(
+      () => validateCycloneSnapshot(withArea(area)),
+      /Malformed/,
+      label,
+    );
 });

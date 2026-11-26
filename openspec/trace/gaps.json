@@ -52,11 +52,11 @@
       "branches": 7,
       "functions": 1,
       "totals": {
-        "lines": 272,
+        "lines": 274,
         "branches": 39,
         "functions": 10
       },
-      "sha": "2d5c5ed1e91e250c02dab5af199909ff562e555a88edc303ab78a8b3fde35b14",
+      "sha": "457d0dd8fb97198e7a2d127ac7431f1118d69e7db550cc42ec9b06dccb160df9",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -78,15 +78,15 @@
     },
     "dev/conformance/main.js": {
       "loaded": false,
-      "lines": 256,
+      "lines": 259,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 256,
+        "lines": 259,
         "branches": null,
         "functions": null
       },
-      "sha": "18539fce3546871e3408db0e81a299d5bce8ea64aa6f723ec8b89154bccdc5e0",
+      "sha": "2f14683ff5e2ecef6cf56ffd33d9650996b55df0731cd7c0ba01cf8f7d5e87e7",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -487,11 +487,11 @@
       "branches": 28,
       "functions": 5,
       "totals": {
-        "lines": 821,
+        "lines": 823,
         "branches": 269,
         "functions": 61
       },
-      "sha": "b4ae0248fe8e637202c6742aa70a204af6ef94ea3361170b2bc46e321c96e3ae",
+      "sha": "124728c173437e8ef7cb30657ef041c80cdb331865297fe72a88ee45fe331fbf",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -758,7 +758,7 @@
       "functions": 0,
       "totals": {
         "lines": 318,
-        "branches": 153,
+        "branches": 158,
         "functions": 39
       },
       "sha": "9451e6303105436c50adc39c30c65ef875c0871c318a6ca26a81e3a94f1ebe9f",
@@ -1128,15 +1128,15 @@
     },
     "server/providers/cctv.js": {
       "loaded": true,
-      "lines": 166,
-      "branches": 54,
+      "lines": 91,
+      "branches": 57,
       "functions": 1,
       "totals": {
-        "lines": 798,
-        "branches": 221,
-        "functions": 18
+        "lines": 833,
+        "branches": 273,
+        "functions": 19
       },
-      "sha": "58dd7df8c207e5dec4da300e7bccce4d5f4ea94d3ab038b2cff79c25e1d1390c",
+      "sha": "95a05913b06e5af06047abc03568f15551c0f6048d954193824c00e0f4e47f9f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1190,13 +1190,13 @@
       "loaded": true,
       "lines": 0,
       "branches": 5,
-      "functions": 1,
+      "functions": 0,
       "totals": {
-        "lines": 154,
-        "branches": 52,
-        "functions": 6
+        "lines": 129,
+        "branches": 45,
+        "functions": 4
       },
-      "sha": "b4ba067698a0a5d06712270fcd63a8a17caea0ca362af947d6ba37e0fc3eaf2c",
+      "sha": "b852f4599eb63314ebd9b2112cb94e85c04b412008b91d75fe978464a4987ce1",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -1208,7 +1208,7 @@
       "functions": 2,
       "totals": {
         "lines": 920,
-        "branches": 257,
+        "branches": 260,
         "functions": 33
       },
       "sha": "081fb44bf31052bcc88ac8e975af679b0c7aa9eda4cc3555f26d59eb0061dc71",
@@ -1278,30 +1278,30 @@
     },
     "server/providers/cctv/sources.js": {
       "loaded": true,
-      "lines": 206,
-      "branches": 225,
-      "functions": 3,
+      "lines": 197,
+      "branches": 224,
+      "functions": 4,
       "totals": {
-        "lines": 4115,
-        "branches": 1330,
-        "functions": 122
+        "lines": 4079,
+        "branches": 1318,
+        "functions": 121
       },
-      "sha": "8213baf800ffe5e9f0614f861d83a87a0bfc7e017ab12b61aee111553200294b",
+      "sha": "5ac800c84e139b8a17d1fade3eae92097bedcdf826bd248d116a736134b284a4",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "server/providers/cctv/stream.js": {
       "loaded": true,
-      "lines": 7,
-      "branches": 17,
+      "lines": 3,
+      "branches": 14,
       "functions": 2,
       "totals": {
-        "lines": 350,
-        "branches": 144,
+        "lines": 353,
+        "branches": 149,
         "functions": 28
       },
-      "sha": "7906d4998054d530d8a5884c5ff18c30089afafb9fa8a8ff374b56324d17b37b",
+      "sha": "ab39712fc78f79ea8315928c9db74b7a37f24e3515f5617b09a3019e43c21647",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -1428,15 +1428,15 @@
     },
     "server/providers/cyclones.js": {
       "loaded": true,
-      "lines": 2,
-      "branches": 12,
+      "lines": 6,
+      "branches": 16,
       "functions": 2,
       "totals": {
-        "lines": 426,
-        "branches": 182,
-        "functions": 46
+        "lines": 511,
+        "branches": 204,
+        "functions": 56
       },
-      "sha": "fd118214b4b5d50d355f1b90c8d2a244194c26825a2ccee574273339fc25a89d",
+      "sha": "43241d1ca46e97ac319f53b6a4fb57768e0501efef384bbd77560e4895537f2d",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -1635,6 +1635,21 @@
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
+    },
+    "server/providers/jtwc.js": {
+      "loaded": true,
+      "lines": 2,
+      "branches": 41,
+      "functions": 1,
+      "totals": {
+        "lines": 459,
+        "branches": 200,
+        "functions": 36
+      },
+      "sha": "fe6e5ee7edaf5cebfdc876e62332531a1ec3d9764822edb0876109f42b55f94f",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "server/providers/library.js": {
       "loaded": true,
@@ -2047,26 +2062,26 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 48,
+        "lines": 56,
         "branches": 10,
         "functions": 3
       },
-      "sha": "c045a6bf5421d7c792c6819e94e659315f614c209e52d01166903b9e7b5e89dd",
+      "sha": "ca307cfb8e3616e8dd2f04e620c505d0cfec785d06aba9d1bcd23e84dca35341",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
     "server/providers/places/google.js": {
       "loaded": true,
-      "lines": 41,
-      "branches": 13,
-      "functions": 2,
+      "lines": 23,
+      "branches": 9,
+      "functions": 0,
       "totals": {
-        "lines": 497,
-        "branches": 137,
+        "lines": 501,
+        "branches": 167,
         "functions": 21
       },
-      "sha": "ef644f3aba20c2a7722d613e382950dc073f8ac0af1e3af5173a7bb438b18ecf",
+      "sha": "788cfaa64848fe8eac49dd0348f9d1fe6c34707fc5a0c828e483a56ff26c8f6b",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2280,6 +2295,21 @@
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
+    },
+    "server/providers/space/issTelemetry.js": {
+      "loaded": true,
+      "lines": 31,
+      "branches": 12,
+      "functions": 3,
+      "totals": {
+        "lines": 468,
+        "branches": 129,
+        "functions": 27
+      },
+      "sha": "6f1be14576bfe95fe8cae5c56b81b85a40c7d9e0efe99584d3822ee3eba127a0",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "server/providers/space/launch-library.js": {
       "loaded": true,
@@ -2688,15 +2718,15 @@
     },
     "src/annotations/screenAnnotationRenderer.js": {
       "loaded": true,
-      "lines": 120,
-      "branches": 64,
+      "lines": 115,
+      "branches": 56,
       "functions": 5,
       "totals": {
-        "lines": 1041,
-        "branches": 284,
-        "functions": 59
+        "lines": 1140,
+        "branches": 329,
+        "functions": 64
       },
-      "sha": "cc666dacc5c25f56b1f103f5598ac9a15a759020c1f598b1fcf7881480456423",
+      "sha": "cf210ca6ba53655a6f6d8710b89a8c669b71cbf19bc9cbc2155f5ac9a53f791f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2764,14 +2794,14 @@
     "src/app/constructCatalog.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 6,
+      "branches": 7,
       "functions": 4,
       "totals": {
-        "lines": 273,
-        "branches": 19,
+        "lines": 278,
+        "branches": 21,
         "functions": 6
       },
-      "sha": "00b84b1b11baa2fa8ec1f5ce41635bfbd4d803391cdac0640cb2df63df838c4b",
+      "sha": "82dd9360725bbca69c6f6106d04f989cc2cd7948b7b54d391a78bf2a76420594",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -3037,11 +3067,11 @@
       "branches": 0,
       "functions": 1,
       "totals": {
-        "lines": 24,
-        "branches": 2,
+        "lines": 34,
+        "branches": 4,
         "functions": 2
       },
-      "sha": "9b5362376f2759f89e53efbebfb8457b74ba38f199d137ea20001d717ae570d7",
+      "sha": "ddc2ee41bdc114bfe741b0641686e64ab3765fabb07bfedca0b9c91dfa5b980f",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -3075,6 +3105,21 @@
       "untrue": false,
       "origin": "upstream-sync-5",
       "since": "2026-10-10"
+    },
+    "src/app/layers/satellites.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 0,
+      "functions": 1,
+      "totals": {
+        "lines": 29,
+        "branches": 2,
+        "functions": 2
+      },
+      "sha": "1bcc2174d251551e3b4ade26398f3f959cb9721a5c43a0d3bbf7bf8ad8f253d2",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/app/layers/shipwrecks.js": {
       "loaded": true,
@@ -3243,15 +3288,15 @@
     },
     "src/app/tools.js": {
       "loaded": false,
-      "lines": 385,
+      "lines": 388,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 385,
+        "lines": 388,
         "branches": null,
         "functions": null
       },
-      "sha": "b056406d0e18b21d1410bc34aeb78e0a7c6c771674c314aef76810344cd2975c",
+      "sha": "a7cc5f8424adcd394c39d1986a8be77d37ba185c37cda2c18d6261ce3af2aa90",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -3802,11 +3847,11 @@
       "branches": 68,
       "functions": 5,
       "totals": {
-        "lines": 1234,
-        "branches": 584,
+        "lines": 1244,
+        "branches": 591,
         "functions": 64
       },
-      "sha": "514b59d9f94ee8d3e48589ea9697d8199a65e8b5b9ef8c27bd157156c2f41f16",
+      "sha": "31362971a4aa90bb1274100c1e0c1af5bb73c6ea3baeb2240a3ce7b7a1582a84",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3858,15 +3903,15 @@
     },
     "src/data/bhoteKoshiEmbeddedMedia.js": {
       "loaded": true,
-      "lines": 273,
+      "lines": 222,
       "branches": 62,
-      "functions": 17,
+      "functions": 16,
       "totals": {
-        "lines": 1238,
+        "lines": 1186,
         "branches": 353,
-        "functions": 97
+        "functions": 96
       },
-      "sha": "763881bcb3ae5ded7b5e4abda100741795d24f4af91f440338b5da585d70d4c9",
+      "sha": "0b1924d510003620e2734939e0c8a861d53b7ad46e3dd944ac4c6d3208e98181",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -4013,7 +4058,7 @@
       "functions": 0,
       "totals": {
         "lines": 531,
-        "branches": 152,
+        "branches": 153,
         "functions": 23
       },
       "sha": "4e2eb1de478e00706b08636618f453a8b02ed695993f6c8282300e58d2c97a54",
@@ -4117,11 +4162,11 @@
       "branches": 2,
       "functions": 1,
       "totals": {
-        "lines": 948,
+        "lines": 972,
         "branches": 63,
         "functions": 12
       },
-      "sha": "e4d4df9f83e9a8fafa792fb933138ed5e6ad95bdaff118edbde27f5818318712",
+      "sha": "41b6c3ebf52fbee7531ebd04a0d6f48df4cdb441e316836d6875f8ef3ae23802",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4203,12 +4248,12 @@
     },
     "src/data/entityContext.js": {
       "loaded": true,
-      "lines": 254,
-      "branches": 112,
+      "lines": 247,
+      "branches": 106,
       "functions": 12,
       "totals": {
         "lines": 1657,
-        "branches": 456,
+        "branches": 485,
         "functions": 90
       },
       "sha": "094cf1d191ff73807f0d43d920d58074a2233d154d63e40bc334069654d35cf2",
@@ -4368,12 +4413,12 @@
     },
     "src/data/focusDeemphasis.js": {
       "loaded": true,
-      "lines": 90,
-      "branches": 23,
-      "functions": 6,
+      "lines": 40,
+      "branches": 20,
+      "functions": 5,
       "totals": {
         "lines": 554,
-        "branches": 95,
+        "branches": 98,
         "functions": 23
       },
       "sha": "24e93c95277c2363eb3cfc691e9cebc68921939d954bb8b37c96fe7ec07ddf0b",
@@ -4718,7 +4763,7 @@
       "functions": 14,
       "totals": {
         "lines": 2498,
-        "branches": 706,
+        "branches": 709,
         "functions": 132
       },
       "sha": "77fcd33e3e0a03791045fda5c6baf9103922b7cb5d0cfa2bfd0ab9d2fe1730ff",
@@ -4729,11 +4774,11 @@
     "src/data/localGeojsonCore.js": {
       "loaded": true,
       "lines": 22,
-      "branches": 65,
+      "branches": 64,
       "functions": 3,
       "totals": {
         "lines": 1822,
-        "branches": 518,
+        "branches": 519,
         "functions": 98
       },
       "sha": "f9a5c1d340c1f3c221a306b175f548dab123cbc74f58a4e180a077c49d5a8d94",
@@ -4831,32 +4876,17 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/data/meshFloorSampler.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 7,
-        "branches": 2,
-        "functions": 0
-      },
-      "sha": "5ad2289abe3648d1c8f1c02148aa88fed77b049c6ed61f7b3de51fc45d24c5c7",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/data/militaryAwarenessEngine.js": {
       "loaded": true,
       "lines": 0,
       "branches": 10,
       "functions": 0,
       "totals": {
-        "lines": 183,
-        "branches": 71,
-        "functions": 9
+        "lines": 212,
+        "branches": 82,
+        "functions": 12
       },
-      "sha": "3c7b4aa819f57aa12ae698b77269ebdd970168633f4abbde3b71625b02b37277",
+      "sha": "5cf1d430dd191812d5a32c50c143c06a5fb2fcb7c2fb61498607efcedf9c19ef",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5033,7 +5063,7 @@
       "functions": 0,
       "totals": {
         "lines": 235,
-        "branches": 88,
+        "branches": 90,
         "functions": 12
       },
       "sha": "399f09f1a153c73dec12d6225a4418e05475b04c84c848277af80f4a02c8fd08",
@@ -5656,6 +5686,36 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/data/youtubeApi.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 3,
+      "functions": 0,
+      "totals": {
+        "lines": 68,
+        "branches": 17,
+        "functions": 7
+      },
+      "sha": "a25bf1dd7dc77138aacd2b074c268a2a2af3dea801d608ff45781478c3adb4fb",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/data/youtubeLivePlayer.js": {
+      "loaded": true,
+      "lines": 4,
+      "branches": 2,
+      "functions": 0,
+      "totals": {
+        "lines": 124,
+        "branches": 32,
+        "functions": 11
+      },
+      "sha": "af10aa6a063e6acdfc0412ecc0058a91eb81e54d6868731aca3b1f1e63cf64fe",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/director/document.js": {
       "loaded": true,
       "lines": 0,
@@ -5767,11 +5827,11 @@
       "branches": 12,
       "functions": 1,
       "totals": {
-        "lines": 146,
-        "branches": 25,
-        "functions": 9
+        "lines": 175,
+        "branches": 26,
+        "functions": 10
       },
-      "sha": "e04a7698d3de8673e4b50bed57dc1c54ef2915c04136796a15ee9ef6f9f60dae",
+      "sha": "76c76e11fd332e617164985a7ea6359340a0d4ebfd96be633ca8c8d0958ee943",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -5843,7 +5903,7 @@
       "functions": 0,
       "totals": {
         "lines": 98,
-        "branches": 37,
+        "branches": 38,
         "functions": 25
       },
       "sha": "8be185ff683f7523a21b70c1566d74b9d83bb42932d42bb26e471bd3d49a2cbb",
@@ -5868,15 +5928,15 @@
     },
     "src/hud.js": {
       "loaded": true,
-      "lines": 76,
+      "lines": 62,
       "branches": 58,
-      "functions": 8,
+      "functions": 7,
       "totals": {
-        "lines": 1227,
-        "branches": 249,
-        "functions": 62
+        "lines": 1345,
+        "branches": 292,
+        "functions": 69
       },
-      "sha": "9564d67feb70d9fdbd04e2ec7736a8f67c694574f0043863298d538fbc25a0fe",
+      "sha": "539fd91d48d32675e75ec5ecd124a250c06f3dc36c3cd3ea7d14558a393103f6",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6334,14 +6394,14 @@
     "src/layers/awareness/navigation.js": {
       "loaded": true,
       "lines": 3,
-      "branches": 16,
+      "branches": 15,
       "functions": 2,
       "totals": {
-        "lines": 277,
-        "branches": 73,
-        "functions": 29
+        "lines": 255,
+        "branches": 59,
+        "functions": 25
       },
-      "sha": "d14e8c0672181a163bd541e16e24f65c0329429c5581d8b1d05f4f2647e1dba8",
+      "sha": "de545b4ad195bfbdc116918db5d5e7f16661420f4630834101d23c6d9cc129d4",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6633,12 +6693,12 @@
     },
     "src/layers/cctv/controls.js": {
       "loaded": true,
-      "lines": 157,
-      "branches": 14,
-      "functions": 7,
+      "lines": 139,
+      "branches": 18,
+      "functions": 3,
       "totals": {
         "lines": 377,
-        "branches": 29,
+        "branches": 37,
         "functions": 15
       },
       "sha": "aff46f7218aa40aa6cd8ccd3702920bcf28f127f7c49132880e2e74f4abd11f7",
@@ -6678,27 +6738,27 @@
     },
     "src/layers/cctv/frames.js": {
       "loaded": true,
-      "lines": 111,
-      "branches": 26,
+      "lines": 106,
+      "branches": 23,
       "functions": 3,
       "totals": {
-        "lines": 408,
-        "branches": 49,
-        "functions": 12
+        "lines": 432,
+        "branches": 66,
+        "functions": 13
       },
-      "sha": "33f6a3101143a6dc0eb704544b15190d97b1d0d664e6b05925ceb524e56a4b20",
+      "sha": "d2d64803c239c92b9792213d6f07812d2a67a54b8e3e95481570715bfb53efd7",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/cctv/geometry.js": {
       "loaded": true,
-      "lines": 66,
-      "branches": 35,
+      "lines": 64,
+      "branches": 34,
       "functions": 2,
       "totals": {
         "lines": 746,
-        "branches": 110,
+        "branches": 119,
         "functions": 32
       },
       "sha": "1c2a00877a9e92130a4e1316314f9d914809d1b8cf3946ed55f918422fe6c3cd",
@@ -6708,13 +6768,13 @@
     },
     "src/layers/cctv/geometryQueue.js": {
       "loaded": true,
-      "lines": 136,
-      "branches": 15,
-      "functions": 5,
+      "lines": 71,
+      "branches": 23,
+      "functions": 4,
       "totals": {
         "lines": 469,
-        "branches": 55,
-        "functions": 19
+        "branches": 77,
+        "functions": 24
       },
       "sha": "a082bdd732f0738ca25e16f5e1edcd52429d3d3f5bd24a9aaa68f72d075381cd",
       "untrue": false,
@@ -6723,12 +6783,12 @@
     },
     "src/layers/cctv/ground.js": {
       "loaded": true,
-      "lines": 111,
-      "branches": 24,
-      "functions": 4,
+      "lines": 98,
+      "branches": 22,
+      "functions": 3,
       "totals": {
         "lines": 434,
-        "branches": 46,
+        "branches": 48,
         "functions": 17
       },
       "sha": "17d57c6627cbb06226ed5cb19593e2969a38bb9ff18c0a2381484dfc17587494",
@@ -6843,15 +6903,15 @@
     },
     "src/layers/cctv/navigation.js": {
       "loaded": true,
-      "lines": 34,
+      "lines": 28,
       "branches": 12,
-      "functions": 2,
+      "functions": 1,
       "totals": {
-        "lines": 282,
-        "branches": 69,
+        "lines": 281,
+        "branches": 73,
         "functions": 16
       },
-      "sha": "f34c9048c2caa2579b3c0bd4ceb85e7c526a3302d93b71c7d2de6bd5e2c93564",
+      "sha": "0faab9c257bf46c053127402fd52fd4a990188746b79049f73b35f003d460005",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6863,7 +6923,7 @@
       "functions": 2,
       "totals": {
         "lines": 373,
-        "branches": 82,
+        "branches": 83,
         "functions": 15
       },
       "sha": "298b8cf893308774afae56eaa80d829919dbfa49d95202d544023d949f672105",
@@ -6878,7 +6938,7 @@
       "functions": 10,
       "totals": {
         "lines": 468,
-        "branches": 45,
+        "branches": 49,
         "functions": 25
       },
       "sha": "e18c45ff8534b12a996624f0d6ac9dc6c005f6c6a87c55e7d53eca13b1238e8a",
@@ -6889,11 +6949,11 @@
     "src/layers/cctv/rendering.js": {
       "loaded": true,
       "lines": 70,
-      "branches": 50,
+      "branches": 49,
       "functions": 6,
       "totals": {
         "lines": 1300,
-        "branches": 414,
+        "branches": 419,
         "functions": 61
       },
       "sha": "dbf777d08351e0913ab848f2650d9eea19015d57355bf9987dc1d28b5a1175fa",
@@ -6903,15 +6963,15 @@
     },
     "src/layers/cctv/selection.js": {
       "loaded": true,
-      "lines": 12,
-      "branches": 10,
+      "lines": 9,
+      "branches": 9,
       "functions": 1,
       "totals": {
-        "lines": 286,
-        "branches": 61,
+        "lines": 292,
+        "branches": 66,
         "functions": 13
       },
-      "sha": "032398bbc2408966b6d8af763dc5f084cbaa54ecd7a3c2b5ab16f854eec0081b",
+      "sha": "cfea127b50bd8b9a92e610d9b24c63b3bccd8a73d2316df6edcfc231700fe868",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6922,11 +6982,11 @@
       "branches": 4,
       "functions": 1,
       "totals": {
-        "lines": 79,
+        "lines": 77,
         "branches": 23,
         "functions": 9
       },
-      "sha": "86e27a443081c88dcf5908892283b75543b07600e067e66879944c719cc0aca4",
+      "sha": "2a88e9326c372ee8bdb3fcced80b023eda8158cdca7fdc4bf185b02be0ce34ff",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6937,11 +6997,11 @@
       "branches": 5,
       "functions": 2,
       "totals": {
-        "lines": 188,
+        "lines": 189,
         "branches": 26,
         "functions": 16
       },
-      "sha": "bf178000179d02f34ecf725f6ba3e061fe42c5f381f7bf917a917b632b0953f1",
+      "sha": "b2e988a27156c92ef968276d8a00ba31a347b1bce25fa7dd620236e4dc56a2c2",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6967,11 +7027,11 @@
       "branches": 24,
       "functions": 2,
       "totals": {
-        "lines": 552,
-        "branches": 218,
-        "functions": 37
+        "lines": 593,
+        "branches": 248,
+        "functions": 39
       },
-      "sha": "17d2c67fcd331d849e24b79f77052a0f3922d3b9249b5d9eb2a5bada3d3166e9",
+      "sha": "a88402c16d538c6510203ce7f199482a234a761549c0c786ca6f4679ff874620",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -6982,11 +7042,11 @@
       "branches": 4,
       "functions": 0,
       "totals": {
-        "lines": 276,
-        "branches": 58,
-        "functions": 24
+        "lines": 336,
+        "branches": 76,
+        "functions": 26
       },
-      "sha": "4fc380b6c9b088ec15ce849567734250d62346010cbbbccc97d68a4051dd52e1",
+      "sha": "ff6a1e50f46d2013497c698326141e5f3ec8b6026febeaa3b607461e2fbe3844",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -7462,11 +7522,11 @@
       "branches": 55,
       "functions": 11,
       "totals": {
-        "lines": 1059,
-        "branches": 268,
+        "lines": 1061,
+        "branches": 271,
         "functions": 36
       },
-      "sha": "20f4b71af745e2098ecd7fdb75b981db32366d188ff99a915bb708e6892d36cb",
+      "sha": "207f2cc7804dcfda71a9a7a1712380ec454136e0240a194df6b34d7c298d69f5",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7477,11 +7537,11 @@
       "branches": 6,
       "functions": 0,
       "totals": {
-        "lines": 557,
-        "branches": 186,
+        "lines": 568,
+        "branches": 192,
         "functions": 13
       },
-      "sha": "d952cc510d0a85bf03fd196f196b3838c8f5f526190c657fbe38124d2dc2bc33",
+      "sha": "23d5a6315050ba0cbaa13276886f4b62a79681903c6dcf0c8d472559e599853e",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -7534,14 +7594,14 @@
     "src/layers/flights/tracking.js": {
       "loaded": true,
       "lines": 122,
-      "branches": 73,
+      "branches": 76,
       "functions": 7,
       "totals": {
-        "lines": 1406,
-        "branches": 272,
+        "lines": 1412,
+        "branches": 275,
         "functions": 57
       },
-      "sha": "245af4967066efac8bda645e6dbbbb40d9c3c1437d949113ebe47f2251ae5a17",
+      "sha": "9cf950472f704e8807e26175666b222fa5bad0f28ea63118a9f029d8b5b670b1",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7638,15 +7698,15 @@
     },
     "src/layers/installations/controls.js": {
       "loaded": true,
-      "lines": 20,
-      "branches": 16,
-      "functions": 4,
+      "lines": 11,
+      "branches": 19,
+      "functions": 3,
       "totals": {
-        "lines": 281,
-        "branches": 67,
-        "functions": 12
+        "lines": 310,
+        "branches": 83,
+        "functions": 13
       },
-      "sha": "4fbec0b53e53eb56d83fdd7175d5d6cb2a30abe41cfebc5a5a6671cda788812b",
+      "sha": "8e9fd3ee482494482f611ee9bab605204012fc9ba1aeed0d2f565ae8c8427e0b",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7717,11 +7777,11 @@
       "branches": 4,
       "functions": 0,
       "totals": {
-        "lines": 298,
-        "branches": 78,
-        "functions": 22
+        "lines": 329,
+        "branches": 93,
+        "functions": 23
       },
-      "sha": "b8ad600f0b28094848493d0d4f46437ca50eacc7d12744db583fad202e21124a",
+      "sha": "d3fb432db51a27c8201a9a283d608a4c5798134c529c59947c6ac0354a4a349a",
       "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
@@ -7744,14 +7804,14 @@
     "src/layers/installations/selection.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 3,
+      "branches": 4,
       "functions": 0,
       "totals": {
-        "lines": 87,
-        "branches": 39,
-        "functions": 7
+        "lines": 128,
+        "branches": 53,
+        "functions": 9
       },
-      "sha": "1fb4f548078b7872541dd293b0ecf27b81bbb001353534a4af6b0d3fe2812380",
+      "sha": "e7d1792c87d654d90e242e1e6c650f72fb8d454d41e906bda202cccb56340052",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -8284,14 +8344,14 @@
     "src/layers/military/queries.js": {
       "loaded": true,
       "lines": 57,
-      "branches": 58,
+      "branches": 59,
       "functions": 7,
       "totals": {
-        "lines": 870,
-        "branches": 223,
+        "lines": 875,
+        "branches": 227,
         "functions": 32
       },
-      "sha": "8464abd3929d4a2185e73751b91dde75444b029683686cec7b480919d3c63c8b",
+      "sha": "a986d9b109283a28fda43c751e64dfe61b5a1dbe7b25046115069cbc1b4e63ad",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -8302,11 +8362,11 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 305,
-        "branches": 84,
+        "lines": 312,
+        "branches": 89,
         "functions": 8
       },
-      "sha": "5a7c6dfc31b1f7c82b59123f4fe3a9319a5c3bbd168b34681510dfa5de49565b",
+      "sha": "5fdcf58759f3986d9caf1077384961297cc485236d56338e4649c881afd44dbf",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -8344,14 +8404,14 @@
     "src/layers/military/tracking.js": {
       "loaded": true,
       "lines": 110,
-      "branches": 81,
+      "branches": 83,
       "functions": 6,
       "totals": {
-        "lines": 1317,
-        "branches": 257,
+        "lines": 1323,
+        "branches": 259,
         "functions": 54
       },
-      "sha": "ba9504a1f61f8d7a18cc70cf34ca65e40b88da1a825e3722eaebdad32d345d91",
+      "sha": "487495731e9211c2e3eeedb1a1d6c8e8e805bdd832070eaca3e0276308873f0e",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -8482,26 +8542,26 @@
       "branches": 4,
       "functions": 0,
       "totals": {
-        "lines": 237,
-        "branches": 88,
-        "functions": 11
+        "lines": 194,
+        "branches": 79,
+        "functions": 10
       },
-      "sha": "0776f08b2e083bb53b85ab19a792840e61971777381e47693b4b16361621694e",
+      "sha": "bd29e332b4b60b3ee19ae12f6c6cc38241bc81c5fde4758eb360948fed815516",
       "untrue": false,
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
     "src/layers/perimeters/index.js": {
       "loaded": true,
-      "lines": 2,
-      "branches": 18,
+      "lines": 1,
+      "branches": 22,
       "functions": 1,
       "totals": {
-        "lines": 493,
-        "branches": 139,
-        "functions": 35
+        "lines": 627,
+        "branches": 189,
+        "functions": 49
       },
-      "sha": "5628cd35319671a2b25799de8043a96edc8680dae9e7253701ae0b1e63d1ac98",
+      "sha": "fbd5906a752467e1da542fc423493e1e0d86cf5e4fb29088ee7543a96054ac53",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -8583,12 +8643,12 @@
     },
     "src/layers/radio/interaction.js": {
       "loaded": true,
-      "lines": 15,
-      "branches": 2,
-      "functions": 2,
+      "lines": 5,
+      "branches": 5,
+      "functions": 1,
       "totals": {
         "lines": 128,
-        "branches": 36,
+        "branches": 40,
         "functions": 10
       },
       "sha": "c8ac3a29e5439a433835b6f1ba51fb05e2171f48571d66e1437a7effded27685",
@@ -9053,7 +9113,7 @@
       "functions": 0,
       "totals": {
         "lines": 230,
-        "branches": 94,
+        "branches": 95,
         "functions": 15
       },
       "sha": "295a8170ce692e42ba50cc8cbb4eedc28db650012bfe1b005c69127f9a6239d9",
@@ -9082,11 +9142,11 @@
       "branches": 47,
       "functions": 6,
       "totals": {
-        "lines": 1487,
-        "branches": 562,
-        "functions": 108
+        "lines": 1553,
+        "branches": 599,
+        "functions": 110
       },
-      "sha": "9464eb49ca85926f720a339bf8aedbfed8c625f3b250bc6c970bee391760a3c5",
+      "sha": "ddca74ad5fc950488ff8c5c6532b91521211e997867e1716a36da1337cee525f",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -9094,44 +9154,44 @@
     "src/layers/recentImagery/model.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 2,
+      "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 671,
-        "branches": 263,
-        "functions": 76
+        "lines": 740,
+        "branches": 290,
+        "functions": 82
       },
-      "sha": "12839197063ebc1b88b880d18a4c50d7d130c158e5950c61bd6789f2c0a49045",
+      "sha": "ac7ac5f3f0139191f69be128d25ef4369a11efc491e51e9c29ef5a274b1de36b",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/layers/recentImagery/rendering.js": {
       "loaded": true,
-      "lines": 3,
+      "lines": 0,
       "branches": 4,
-      "functions": 1,
+      "functions": 0,
       "totals": {
-        "lines": 364,
-        "branches": 87,
-        "functions": 28
+        "lines": 437,
+        "branches": 119,
+        "functions": 36
       },
-      "sha": "9fce4fa65719e0ee2d33a1e3966a6f9a38673317075a81f1996a49e01cc0a9c2",
+      "sha": "3c360cdde258b17952c52608f784924e2aff80c70a709ff954e537bd4f570e6b",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
     "src/layers/recentImagery/source.js": {
       "loaded": true,
-      "lines": 0,
-      "branches": 0,
+      "lines": 4,
+      "branches": 1,
       "functions": 1,
       "totals": {
-        "lines": 36,
-        "branches": 6,
-        "functions": 5
+        "lines": 177,
+        "branches": 54,
+        "functions": 25
       },
-      "sha": "ea955beaf60bec5c167d684915205a2dbe9c51cd2e9b6fdb01ef2408b4f7e5db",
+      "sha": "0d36050a18786d8469c9dfd2b45cb579e4fb77fe89d49ebbfea92897859f349b",
       "untrue": false,
       "origin": "upstream-sync-5",
       "since": "2026-10-10"
@@ -9142,11 +9202,11 @@
       "branches": 0,
       "functions": 10,
       "totals": {
-        "lines": 359,
+        "lines": 366,
         "branches": 88,
         "functions": 72
       },
-      "sha": "ed8df7783e622c2255313666715e6c3dd3b818905588efb904112f00875cddc2",
+      "sha": "bfdf4fb987beeda10ab04c6645aa98f860d7d055c77225cc37ce744cce415052",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -9157,11 +9217,11 @@
       "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 317,
-        "branches": 112,
-        "functions": 26
+        "lines": 352,
+        "branches": 124,
+        "functions": 28
       },
-      "sha": "ddc92559e8ed6ae702b51842cfcec1ed697c938cd96f1e3961c315986844ffc6",
+      "sha": "18f70a6a199415476a0e985d88f2be1b3dc0456ad5f0c4d3be2cff5a828fdeb8",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -9202,26 +9262,26 @@
       "branches": 6,
       "functions": 0,
       "totals": {
-        "lines": 306,
-        "branches": 78,
-        "functions": 11
+        "lines": 330,
+        "branches": 83,
+        "functions": 12
       },
-      "sha": "92847e0b4a457cf4d86f7dfe2411c6ca2d0fee9829538e4e7402b9be2e31c9c7",
+      "sha": "79870aedff1d96a3c91baff46404f34ef4b672b992ddfa549aa841cb9237e193",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
     "src/layers/satellites/controls.js": {
       "loaded": true,
-      "lines": 99,
-      "branches": 47,
-      "functions": 4,
+      "lines": 101,
+      "branches": 49,
+      "functions": 5,
       "totals": {
-        "lines": 797,
-        "branches": 214,
-        "functions": 30
+        "lines": 816,
+        "branches": 219,
+        "functions": 31
       },
-      "sha": "99af3ac6e76fb7b8f7f6559a09b0da7fcdba5eeee0ffa14f444712bc9d42ec13",
+      "sha": "29a08cb27161e2f243be3d7d588eb598aa2481982b2efb5adf1449bc849b1812",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -9230,13 +9290,13 @@
       "loaded": true,
       "lines": 0,
       "branches": 1,
-      "functions": 0,
+      "functions": 1,
       "totals": {
-        "lines": 81,
+        "lines": 103,
         "branches": 3,
-        "functions": 1
+        "functions": 2
       },
-      "sha": "f93adea793d14bc28fe2bb11a761a84ec083ee488680982a64f314d798365aa3",
+      "sha": "00bc3d8d433397959b368c3ea8d2f0ffcb96970109e8ab97ac9b56a5bb48281d",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -9258,18 +9318,78 @@
     },
     "src/layers/satellites/interaction.js": {
       "loaded": true,
-      "lines": 7,
-      "branches": 6,
+      "lines": 14,
+      "branches": 7,
       "functions": 0,
       "totals": {
-        "lines": 89,
-        "branches": 25,
+        "lines": 102,
+        "branches": 28,
         "functions": 5
       },
-      "sha": "8f7c8cb7a558ebab8f61a81491a7dad876e3911cbe67a3fe216120fcd8c981ca",
+      "sha": "3da73810ba6bf9a985e621e26c5dfd60f1417aefd665abc4c75cea0a21ef8ab5",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
+    },
+    "src/layers/satellites/issArticulation.js": {
+      "loaded": true,
+      "lines": 42,
+      "branches": 10,
+      "functions": 4,
+      "totals": {
+        "lines": 834,
+        "branches": 148,
+        "functions": 53
+      },
+      "sha": "23256a098a3f1ef0ea33ddaf354104991bc8d01e514fff09c9287530f7af7d9c",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/issModel.js": {
+      "loaded": true,
+      "lines": 26,
+      "branches": 0,
+      "functions": 3,
+      "totals": {
+        "lines": 144,
+        "branches": 4,
+        "functions": 6
+      },
+      "sha": "11bed3bafcd6d2c4f5da4aded54119f4f58cf7360d4fa07c734cf01cf1a32b0f",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/issStation.js": {
+      "loaded": true,
+      "lines": 9,
+      "branches": 6,
+      "functions": 13,
+      "totals": {
+        "lines": 227,
+        "branches": 18,
+        "functions": 24
+      },
+      "sha": "6883870b486124be12e1321cb66b680983e513629b3afd0eaf0a6bf708779953",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/issTelemetry.js": {
+      "loaded": true,
+      "lines": 8,
+      "branches": 3,
+      "functions": 4,
+      "totals": {
+        "lines": 301,
+        "branches": 80,
+        "functions": 20
+      },
+      "sha": "c3e97c47f948efee0d985331902582c579072daca4f668e4a4a306abe0ee55dc",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/layers/satellites/labels.js": {
       "loaded": true,
@@ -9288,15 +9408,15 @@
     },
     "src/layers/satellites/lifecycle.js": {
       "loaded": true,
-      "lines": 31,
-      "branches": 3,
+      "lines": 34,
+      "branches": 5,
       "functions": 2,
       "totals": {
-        "lines": 213,
-        "branches": 14,
+        "lines": 221,
+        "branches": 18,
         "functions": 9
       },
-      "sha": "8268301df7f7cb77a4b13fe9ee7662d5b89bf61e7898bc6bea557744e5565f4b",
+      "sha": "ea5ef3044247f6c2f20c49216b752abea33140810f78591132d3d0eb9ca61bf9",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -9337,11 +9457,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 257,
-        "branches": 9,
-        "functions": 4
+        "lines": 407,
+        "branches": 17,
+        "functions": 6
       },
-      "sha": "ec171cc782456467987bf905e88e818203dac01819803b990b95abd14457378d",
+      "sha": "e8edcb090d1eae217e76eea8b81ab1a9f680c543c694b99f48f61e556f384513",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -9364,14 +9484,14 @@
     "src/layers/satellites/rendering.js": {
       "loaded": true,
       "lines": 29,
-      "branches": 31,
+      "branches": 28,
       "functions": 4,
       "totals": {
-        "lines": 887,
-        "branches": 165,
-        "functions": 52
+        "lines": 946,
+        "branches": 218,
+        "functions": 58
       },
-      "sha": "a7c37d93e3fa7afedb3b20e58ec404b487378db76a49f3b7cb67b271410c3430",
+      "sha": "b8141ac3f8f2a3f0e0d4dc646f1784df8b8e5d7a50f53b2e380ca2d8a0e43dd3",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -9406,6 +9526,51 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
+    "src/layers/satellites/stationModel.js": {
+      "loaded": true,
+      "lines": 44,
+      "branches": 25,
+      "functions": 6,
+      "totals": {
+        "lines": 850,
+        "branches": 163,
+        "functions": 43
+      },
+      "sha": "6b68d5dfefb2107afa35f52e6aa8b1edffce5a052d4aba941f7a67325aff197d",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/stationModels.js": {
+      "loaded": true,
+      "lines": 5,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 92,
+        "branches": 27,
+        "functions": 7
+      },
+      "sha": "d184aeaf11b4b48a9a078b157275181f2e107d52d36f8304a9c07bc16595e3b2",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/stationPanel.js": {
+      "loaded": true,
+      "lines": 21,
+      "branches": 9,
+      "functions": 4,
+      "totals": {
+        "lines": 376,
+        "branches": 126,
+        "functions": 37
+      },
+      "sha": "70108bb51cec5759e27fbcbb5946070645d58f7596f086121c43de4d72115b0e",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/layers/satellites/testing.js": {
       "loaded": true,
       "lines": 0,
@@ -9421,17 +9586,47 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/layers/satellites/tiangongArticulation.js": {
+      "loaded": true,
+      "lines": 11,
+      "branches": 9,
+      "functions": 4,
+      "totals": {
+        "lines": 484,
+        "branches": 100,
+        "functions": 47
+      },
+      "sha": "0368614aaeb02f646e5a201b841189a1d447269032a78eadc4e87e52ceb84b69",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/tiangongStation.js": {
+      "loaded": true,
+      "lines": 13,
+      "branches": 0,
+      "functions": 11,
+      "totals": {
+        "lines": 141,
+        "branches": 11,
+        "functions": 21
+      },
+      "sha": "9ab26bd3d57995afe7245f7edd252bfc5fbdbebf0597c76a49c42f27be22316d",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/layers/satellites/tracking.js": {
       "loaded": true,
-      "lines": 31,
-      "branches": 30,
-      "functions": 0,
+      "lines": 32,
+      "branches": 34,
+      "functions": 1,
       "totals": {
-        "lines": 494,
-        "branches": 84,
-        "functions": 15
+        "lines": 559,
+        "branches": 108,
+        "functions": 19
       },
-      "sha": "63833ab6557944da1b5c12d5bfa69e6ef98ffe153e4203f9e035ff0bbf602ef8",
+      "sha": "51b3fed159b4e616a5e9bcd828e9675720c199c631bc4fedfea13653406c17ea",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -10567,11 +10762,11 @@
       "branches": 44,
       "functions": 3,
       "totals": {
-        "lines": 1283,
-        "branches": 378,
-        "functions": 69
+        "lines": 1266,
+        "branches": 370,
+        "functions": 68
       },
-      "sha": "66c1cf92f2a219a8658bcc54e966433f2742f7e23004acc3d4a2dea0864ec9cc",
+      "sha": "763ed06163d3aea363cec848f07f33a435d4dd27f61bf55bda783559ee6aeefb",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -10957,11 +11152,11 @@
       "branches": 27,
       "functions": 5,
       "totals": {
-        "lines": 863,
+        "lines": 865,
         "branches": 368,
         "functions": 76
       },
-      "sha": "92a161717d0856fdc4aba5a23bc46e6e208037eb1038aa9c8f027b571890c612",
+      "sha": "8b30cec67541d4db1f390f5921fb8b59fef62b7a87be2b32e6a486a309e6947d",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -10987,11 +11182,11 @@
       "branches": 20,
       "functions": 6,
       "totals": {
-        "lines": 783,
+        "lines": 792,
         "branches": 308,
         "functions": 68
       },
-      "sha": "1b2d69d6eed0f71f962c813ac211033c313ac0f86e86e58bef755a1b3c09e2ea",
+      "sha": "01984a9da9ab8282dbcb07dbcfb557d04d2b4a2c7213622d815a6b7d7a7aa5d6",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -11408,7 +11603,7 @@
       "functions": 0,
       "totals": {
         "lines": 820,
-        "branches": 331,
+        "branches": 332,
         "functions": 55
       },
       "sha": "eef2f9badb280ae6a4cb6170873519663ae6e9619a88e21bbd7ba443254da4b4",
@@ -11843,7 +12038,7 @@
       "functions": 1,
       "totals": {
         "lines": 124,
-        "branches": 42,
+        "branches": 43,
         "functions": 10
       },
       "sha": "82e0a5a05aabeab78b72e55b4a89c91200f81255521f2c5461b63807d0a71df3",
@@ -11943,15 +12138,15 @@
     },
     "src/overlays/worldOverlayDraw.js": {
       "loaded": true,
-      "lines": 48,
-      "branches": 85,
-      "functions": 2,
+      "lines": 51,
+      "branches": 83,
+      "functions": 3,
       "totals": {
-        "lines": 1244,
+        "lines": 1246,
         "branches": 379,
-        "functions": 44
+        "functions": 45
       },
-      "sha": "f9238d1d13d2c3f589a6df349f9d3d9b6eee856ef71f3f0f7bd1d8b4dc63956d",
+      "sha": "26725c8574df033de1ab685357a3e2c4d5316ca06d49bd10b7f2648f71298469",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -12067,11 +12262,11 @@
       "branches": 9,
       "functions": 2,
       "totals": {
-        "lines": 710,
-        "branches": 179,
-        "functions": 60
+        "lines": 766,
+        "branches": 198,
+        "functions": 63
       },
-      "sha": "cbb1fa3b7342cd91424ecb770d9d143e0d83bca74e2304c3f9aa561fad150d83",
+      "sha": "447a808896d5086ebf15d5bcd58f0ddebd78a86b6fa794dbb5d520cded90ad1a",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -12213,15 +12408,15 @@
     },
     "src/render/cesium/draw.js": {
       "loaded": true,
-      "lines": 125,
-      "branches": 164,
-      "functions": 13,
+      "lines": 151,
+      "branches": 183,
+      "functions": 14,
       "totals": {
-        "lines": 5566,
-        "branches": 2042,
-        "functions": 343
+        "lines": 6169,
+        "branches": 2284,
+        "functions": 372
       },
-      "sha": "3af8c83bd2609bd77cf1f1bbd79e4233914f9d5a04f5cc29e819321f33aa6034",
+      "sha": "46d4bd1fbd779d476a92949f9fdb60d9d6254fe72026cf208d5f1cedb125a8fe",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -12259,14 +12454,14 @@
     "src/render/cesium/drawModels.js": {
       "loaded": true,
       "lines": 241,
-      "branches": 72,
+      "branches": 74,
       "functions": 14,
       "totals": {
-        "lines": 1328,
-        "branches": 345,
-        "functions": 60
+        "lines": 1385,
+        "branches": 378,
+        "functions": 62
       },
-      "sha": "af26925786deac416c83bfa7bee751edf9d805672d7478a29b8c987560838fee",
+      "sha": "d231c2e738f790e99fbc95729403fa12f4d8f55c5f9ffc3dbfe01717ffef0814",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -12423,15 +12618,15 @@
     },
     "src/render/cesium/harness.js": {
       "loaded": false,
-      "lines": 281,
+      "lines": 288,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 281,
+        "lines": 288,
         "branches": null,
         "functions": null
       },
-      "sha": "f34606468b16bdcb9e2543a996729d881fb44f81c342dc494f4fc5b90cfd2654",
+      "sha": "ce9bf32c673d6480ee347ea832430e467b15084eb53ea1c16d5f2738bcdcf581",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -12634,14 +12829,14 @@
     "src/render/cesium/ports.js": {
       "loaded": true,
       "lines": 80,
-      "branches": 32,
+      "branches": 34,
       "functions": 23,
       "totals": {
-        "lines": 861,
-        "branches": 193,
+        "lines": 874,
+        "branches": 196,
         "functions": 91
       },
-      "sha": "3ecb69d7be175929649349135163370e1ab4be9e26593d0f2569aaf061be50ae",
+      "sha": "30a486ad1e1cc051699ec38853b522c5a918d3efeca6844f420efba3533a17f6",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -12858,15 +13053,15 @@
     },
     "src/render/conformance/checks/ports.js": {
       "loaded": true,
-      "lines": 894,
-      "branches": 126,
-      "functions": 84,
+      "lines": 1138,
+      "branches": 136,
+      "functions": 94,
       "totals": {
-        "lines": 6425,
-        "branches": 758,
-        "functions": 562
+        "lines": 6867,
+        "branches": 800,
+        "functions": 589
       },
-      "sha": "bf89be0fb511a51489d93564db42aa025c84ac81e8ad467567c44d9a7aefdd36",
+      "sha": "8ac252adfae08b9211a365041dcbed207d6394c764dfea2f5352ad5ce3ba31ef",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -12888,15 +13083,15 @@
     },
     "src/render/conformance/index.d.ts": {
       "loaded": false,
-      "lines": 255,
+      "lines": 257,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 255,
+        "lines": 257,
         "branches": null,
         "functions": null
       },
-      "sha": "c4babe5962a4de1d4f3cf74f496a887678f8ed63b10ca6c6cf2387a5e13bfb5c",
+      "sha": "1cd678f1f570a4a7e2a85f6cc1412b57a73e80193ec742234279ecb21b9f1ecb",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -12963,30 +13158,30 @@
     },
     "src/render/contract/camera.d.ts": {
       "loaded": false,
-      "lines": 394,
+      "lines": 403,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 394,
+        "lines": 403,
         "branches": null,
         "functions": null
       },
-      "sha": "ce5605b94e5845d0dbcb00f01e503b46755c20a8d9f25308ae94f9594de7d556",
+      "sha": "bda60a60d97fab2119e049a2f65652ae73d8e4a681b93e45d636debc442f5e5f",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
     "src/render/contract/common.d.ts": {
       "loaded": false,
-      "lines": 221,
+      "lines": 231,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 221,
+        "lines": 231,
         "branches": null,
         "functions": null
       },
-      "sha": "28d4fbb115f2d0a9e21244389608085fded16aa53997a799a26e3ab6f2b32d85",
+      "sha": "0b03f7a548926bfee90fc270a525ce50f27b3d021c1464eb4eece1c8f22d7153",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -13008,15 +13203,15 @@
     },
     "src/render/contract/draw.d.ts": {
       "loaded": false,
-      "lines": 678,
+      "lines": 755,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 678,
+        "lines": 755,
         "branches": null,
         "functions": null
       },
-      "sha": "186d94df1109316bd5c506ab9e4ffaef7fefd1094eaab8b6968295d5fe515aa3",
+      "sha": "b23e9b89dbce4c85b3ea1ed4164454589e7d65e77ef6b336c2b9cf004c2cbbe4",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -13053,15 +13248,15 @@
     },
     "src/render/contract/globe.d.ts": {
       "loaded": false,
-      "lines": 399,
+      "lines": 404,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 399,
+        "lines": 404,
         "branches": null,
         "functions": null
       },
-      "sha": "4896e3afac08858afa3496fe75aff6a981c711e9d5857886df3025af620f0514",
+      "sha": "df98f7533a6e6428a2b7c75eacb1dafa024a39cc5f388b885e1c05ad92c20f69",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -13087,11 +13282,11 @@
       "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 470,
+        "lines": 476,
         "branches": 48,
         "functions": 8
       },
-      "sha": "94bf9a535808deb10f42a3f0f15bcb277cb707a0b7850147660b1b00c22e66bd",
+      "sha": "5bbb509023453dd5e99a1264a3f83d92c9b93646c37d942ae8ee192d579cea30",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -13372,26 +13567,26 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 53,
+        "lines": 55,
         "branches": 11,
         "functions": 9
       },
-      "sha": "dc4ee950b44721ae690adc277def66aa01627d612ffb79d60d73aff37a687e78",
+      "sha": "b28342da0cc512fe1962659944f6bf03b6e52a54a0aac06c89dc0a26391a5b2e",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
     "src/render/stub/index.js": {
       "loaded": true,
-      "lines": 69,
-      "branches": 114,
-      "functions": 27,
+      "lines": 85,
+      "branches": 120,
+      "functions": 28,
       "totals": {
-        "lines": 2189,
-        "branches": 736,
-        "functions": 248
+        "lines": 2272,
+        "branches": 769,
+        "functions": 253
       },
-      "sha": "d08f48fb9c8b2b379849d490eb1cf9ba54df767fa49398a8a6c3162b1f5fdcb9",
+      "sha": "c2442bb94c96be942a126f7c7532ba62b096a2a53ae9e945d5e7ae9781a86513",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -13703,7 +13898,7 @@
       "functions": 0,
       "totals": {
         "lines": 425,
-        "branches": 164,
+        "branches": 168,
         "functions": 22
       },
       "sha": "9b3512c986b3e516f343091cfd58dd4f7cf8115f8c8bded4d0e2b116f1d6e7a9",
@@ -13774,14 +13969,14 @@
     "src/scenes/shotPresentation.js": {
       "loaded": true,
       "lines": 15,
-      "branches": 14,
+      "branches": 13,
       "functions": 1,
       "totals": {
-        "lines": 175,
-        "branches": 86,
-        "functions": 15
+        "lines": 181,
+        "branches": 90,
+        "functions": 16
       },
-      "sha": "dad4c68d0a0e2c676a5b1631f542f8fd1e0ed923f66b443dc4a3b9fb0b3d77aa",
+      "sha": "9bf95ed0ceb82ecadbc99d957d627e4782edc5901c1880c1ff625443abc8dec4",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -14063,7 +14258,7 @@
       "functions": 0,
       "totals": {
         "lines": 745,
-        "branches": 249,
+        "branches": 252,
         "functions": 28
       },
       "sha": "0b85ebb956265e669c8a42c796722b4ff44e170cd3c306b10303653f79e55f15",
@@ -14333,7 +14528,7 @@
       "functions": 3,
       "totals": {
         "lines": 129,
-        "branches": 86,
+        "branches": 87,
         "functions": 13
       },
       "sha": "e486290915f80a6429419a3189ebbfff02f3d12b9e3406358060c04afa11c48d",
@@ -15031,6 +15226,21 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
+    "src/testSupport/cctvProviderHarness.mjs": {
+      "loaded": true,
+      "lines": 1,
+      "branches": 2,
+      "functions": 2,
+      "totals": {
+        "lines": 94,
+        "branches": 22,
+        "functions": 18
+      },
+      "sha": "6561ba8c24bd46ce6acd8d87ee3db10c65f27eeb5c42d072ee4db6bba2d4805d",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/testSupport/fakeCameraPort.mjs": {
       "loaded": true,
       "lines": 2,
@@ -15053,10 +15263,10 @@
       "functions": 2,
       "totals": {
         "lines": 288,
-        "branches": 89,
+        "branches": 92,
         "functions": 32
       },
-      "sha": "e94add6a08a47fa1428dbd77d0e0449f8d7c86fe90e81a90981f1dc784664fde",
+      "sha": "14666381697ca1bbf01cae48aa42b38f86fdf6bbac616ec6876842d16f77ec24",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -15113,7 +15323,7 @@
       "functions": 4,
       "totals": {
         "lines": 107,
-        "branches": 30,
+        "branches": 31,
         "functions": 21
       },
       "sha": "1d673b6bcaf60ddf43e84210d81aa78646c132a118f633b469d1f9f747f7fb94",
@@ -15259,7 +15469,7 @@
     "src/testSupport/kartaViewFakes.mjs": {
       "loaded": true,
       "lines": 4,
-      "branches": 3,
+      "branches": 2,
       "functions": 2,
       "totals": {
         "lines": 242,
@@ -15443,13 +15653,28 @@
       "functions": 2,
       "totals": {
         "lines": 545,
-        "branches": 214,
+        "branches": 215,
         "functions": 55
       },
       "sha": "a1bb3b694a77981e3a5400318b724467a5e26b8b4da4fc81b321af7497c0c924",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
+    },
+    "src/tooling/blenderCamera.js": {
+      "loaded": true,
+      "lines": 3,
+      "branches": 9,
+      "functions": 2,
+      "totals": {
+        "lines": 403,
+        "branches": 71,
+        "functions": 25
+      },
+      "sha": "a7c4cc2cb64842b668f1c672194478c2488d05e11c76507b24ecddfab116a81f",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/tooling/trackArrivalObservation.mjs": {
       "loaded": true,
@@ -15473,7 +15698,7 @@
       "functions": 0,
       "totals": {
         "lines": 374,
-        "branches": 144,
+        "branches": 145,
         "functions": 30
       },
       "sha": "7397cca54bd86ed61a1263ac5996a3b1b1bc53cb6e99b6932699679d591da8c5",
@@ -15619,14 +15844,14 @@
     "src/tools/queries/environment.js": {
       "loaded": true,
       "lines": 2,
-      "branches": 39,
+      "branches": 35,
       "functions": 2,
       "totals": {
-        "lines": 538,
-        "branches": 119,
-        "functions": 35
+        "lines": 537,
+        "branches": 122,
+        "functions": 33
       },
-      "sha": "6748fe43e3a7a193aebbfe09e28d0b1c58aee15772b6ec7caaa75a59e7cddc5c",
+      "sha": "1a90418e451e7b360fbdafa6a238eca784ec5e358140b63676b9f6c8eae80281",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -15667,11 +15892,11 @@
       "branches": 5,
       "functions": 0,
       "totals": {
-        "lines": 124,
+        "lines": 126,
         "branches": 27,
         "functions": 2
       },
-      "sha": "bc425d29af72e8ddd8d18cb13bf673f06926b449d4fb3e50e07ead9d73f1e156",
+      "sha": "466e27dac4145a9db1f9c1ccef2f8825460df86135048593340747649347acec",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -15686,7 +15911,7 @@
         "branches": 8,
         "functions": 5
       },
-      "sha": "7ccd35116657b5af450f3628369d4d03fbc5498f54a30de163d869621676e274",
+      "sha": "0642986f77427119a59e21f1b00efc63bc0439a4c939235aa1f4bc5516c16519",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -15858,15 +16083,15 @@
     },
     "src/ui/applicationShell.js": {
       "loaded": true,
-      "lines": 1259,
-      "branches": 12,
-      "functions": 55,
+      "lines": 1306,
+      "branches": 11,
+      "functions": 56,
       "totals": {
-        "lines": 2033,
-        "branches": 97,
-        "functions": 87
+        "lines": 2055,
+        "branches": 79,
+        "functions": 86
       },
-      "sha": "cd8a14fe6753950638c20f0276997ba76e5d1f74a3e47b94803fd472bae89658",
+      "sha": "6d46a9fcd10c795800cbb4ae1d76161261e05b8829ff4f2e036640b5f7acc548",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -15888,13 +16113,13 @@
     },
     "src/ui/cctvBindings.js": {
       "loaded": true,
-      "lines": 95,
-      "branches": 7,
-      "functions": 13,
+      "lines": 78,
+      "branches": 11,
+      "functions": 12,
       "totals": {
         "lines": 163,
-        "branches": 14,
-        "functions": 17
+        "branches": 21,
+        "functions": 19
       },
       "sha": "de6eace5e7c7140b66a6a1ad0754336707495fc1d8d68d06ac02300d07c28918",
       "untrue": false,
@@ -15904,11 +16129,11 @@
     "src/ui/cctvCalibration.js": {
       "loaded": true,
       "lines": 15,
-      "branches": 8,
+      "branches": 6,
       "functions": 7,
       "totals": {
         "lines": 189,
-        "branches": 46,
+        "branches": 44,
         "functions": 21
       },
       "sha": "6c64c8807ace0b2464492d97eb124d6c9f29c44f4d534b113435887462e9d771",
@@ -15918,15 +16143,15 @@
     },
     "src/ui/cctvControls.js": {
       "loaded": true,
-      "lines": 21,
-      "branches": 6,
-      "functions": 7,
+      "lines": 9,
+      "branches": 1,
+      "functions": 4,
       "totals": {
-        "lines": 169,
-        "branches": 31,
-        "functions": 23
+        "lines": 184,
+        "branches": 36,
+        "functions": 25
       },
-      "sha": "3a210804336ae23de210b9f937444727b1e1392dbd13dba7f628e2ac7f237637",
+      "sha": "0f8ed28d96d297416e54727548bbd3b1e34a5f2057e089c61bc520fc24a56022",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -15934,29 +16159,29 @@
     "src/ui/cctvFrames.js": {
       "loaded": true,
       "lines": 8,
-      "branches": 6,
+      "branches": 7,
       "functions": 1,
       "totals": {
-        "lines": 208,
-        "branches": 53,
-        "functions": 13
+        "lines": 221,
+        "branches": 56,
+        "functions": 14
       },
-      "sha": "ce3816b67b6f2cfa0c6fc73579ba41b1f3e4ba8cbe26f53972f52718a6e52eaf",
+      "sha": "1557a5b62411c4147b5f16e5cffdcd926ad5fa754dac2d9c9c3e23e94af2f00b",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/ui/cctvPresentation.js": {
       "loaded": true,
-      "lines": 15,
-      "branches": 20,
-      "functions": 1,
+      "lines": 0,
+      "branches": 15,
+      "functions": 0,
       "totals": {
-        "lines": 410,
-        "branches": 200,
+        "lines": 439,
+        "branches": 228,
         "functions": 15
       },
-      "sha": "60f6d267840c03097431dea3b0d39ffbdc846f78c4460c59d5e8dc50e9fb5a95",
+      "sha": "c0f53dc304b30cc8110143c80e5c11b7831d2b76d7cd40b712d180305953a762",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -15968,7 +16193,7 @@
       "functions": 0,
       "totals": {
         "lines": 59,
-        "branches": 17,
+        "branches": 20,
         "functions": 3
       },
       "sha": "f6a4e9f5c3f23916447e9815831bfeb3b96eb069a0f122b3fe42c6f8ed8f0056",
@@ -15993,15 +16218,15 @@
     },
     "src/ui/cockpitBriefing.js": {
       "loaded": true,
-      "lines": 3,
-      "branches": 26,
+      "lines": 9,
+      "branches": 27,
       "functions": 0,
       "totals": {
-        "lines": 383,
-        "branches": 124,
-        "functions": 21
+        "lines": 410,
+        "branches": 131,
+        "functions": 23
       },
-      "sha": "abea9e0c3009e051387f5d9bb800dd5904ff27fc6d2c756bf8275493f7fe6d2d",
+      "sha": "24187bb2dbce5964a56cbaa15eba509358240ff466b59aa415f76b06ded09039",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -16038,30 +16263,30 @@
     },
     "src/ui/cockpitController.js": {
       "loaded": true,
-      "lines": 35,
+      "lines": 37,
       "branches": 6,
-      "functions": 31,
+      "functions": 32,
       "totals": {
-        "lines": 848,
-        "branches": 148,
-        "functions": 135
+        "lines": 880,
+        "branches": 155,
+        "functions": 139
       },
-      "sha": "0e81ece6840030d3341f62dc1c75d89ef5796cc99299f2227b0218630d6102af",
+      "sha": "131216185244a5682acaf7ab493e880b967501d075ba0f276452c2a66c03a8d8",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/ui/cockpitCoordinator.js": {
       "loaded": true,
-      "lines": 183,
-      "branches": 24,
-      "functions": 13,
+      "lines": 154,
+      "branches": 37,
+      "functions": 12,
       "totals": {
-        "lines": 574,
-        "branches": 103,
-        "functions": 35
+        "lines": 623,
+        "branches": 138,
+        "functions": 37
       },
-      "sha": "b745f892457d17360b0f272f17d3b27b13afd105c7c58176d22d84f29645ab87",
+      "sha": "d4512f130fb0fbcf927476d24426709164d4ae4819327b18ccbfafb368fd3ca9",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -16128,15 +16353,15 @@
     },
     "src/ui/cockpitOrbitalFocus.js": {
       "loaded": true,
-      "lines": 11,
-      "branches": 19,
+      "lines": 13,
+      "branches": 21,
       "functions": 0,
       "totals": {
-        "lines": 478,
-        "branches": 143,
-        "functions": 23
+        "lines": 509,
+        "branches": 155,
+        "functions": 25
       },
-      "sha": "5784ac58e69bdd35bae8fcf8d2dd10fa5038745410bce06fc665c01c1a530233",
+      "sha": "944e1178789af0bf54aa3ad2511873c554e30ae4b5351f83298d0dc1a450eac2",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -16148,10 +16373,10 @@
       "functions": 0,
       "totals": {
         "lines": 194,
-        "branches": 53,
+        "branches": 54,
         "functions": 9
       },
-      "sha": "0626a772fba598dea12bf06eb6b85734ef43fe38c2cb73d8f2619054fd356b9e",
+      "sha": "f5fbbbffd3fd6e924feef543a5fe0e6c3454c750515f77155a3b1c2981acb57f",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -16173,15 +16398,15 @@
     },
     "src/ui/cockpitOrbitalView.js": {
       "loaded": true,
-      "lines": 6,
-      "branches": 25,
+      "lines": 7,
+      "branches": 30,
       "functions": 3,
       "totals": {
-        "lines": 714,
-        "branches": 177,
-        "functions": 32
+        "lines": 853,
+        "branches": 256,
+        "functions": 36
       },
-      "sha": "0476241de385fd57abcd797507aa5f097fe8549e0f9fb8930fef77da8413e617",
+      "sha": "13ba00705c9628bbf3d3ae266acd1ef9395478aac90663d8edbcb72f65ea19e1",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -16233,15 +16458,15 @@
     },
     "src/ui/cockpitTrackingController.js": {
       "loaded": true,
-      "lines": 6,
-      "branches": 38,
+      "lines": 8,
+      "branches": 40,
       "functions": 3,
       "totals": {
-        "lines": 837,
-        "branches": 347,
+        "lines": 857,
+        "branches": 355,
         "functions": 48
       },
-      "sha": "0d2209b7b2508ddd2a6beb3f18f95e558c0c16d29eccd7fe0592e9245b9c3cca",
+      "sha": "579128b5c4ecceca33b81446344d8a9f26056284b1ac28ba95d29b7fadf0ad63",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -16418,7 +16643,7 @@
       "functions": 1,
       "totals": {
         "lines": 225,
-        "branches": 40,
+        "branches": 42,
         "functions": 7
       },
       "sha": "c794ff142b5422e4e5df376bebb96bfd9899caa39a73ec16f59a45dfd819bd9b",
@@ -16579,14 +16804,14 @@
     "src/ui/imageryBoxTool.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 12,
+      "branches": 13,
       "functions": 0,
       "totals": {
-        "lines": 204,
-        "branches": 66,
+        "lines": 211,
+        "branches": 71,
         "functions": 22
       },
-      "sha": "cee1e420e4acd9d0da5ebbf84eaf38f6138ab6a980a8d771f8b0ef4725eb9b80",
+      "sha": "9fc81f5a2228e42397e250a603ef09fe19573722b3cc5dacee2ff66833b56538",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -16711,6 +16936,21 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
+    "src/ui/liveControls.js": {
+      "loaded": true,
+      "lines": 6,
+      "branches": 17,
+      "functions": 0,
+      "totals": {
+        "lines": 374,
+        "branches": 107,
+        "functions": 35
+      },
+      "sha": "4cea08f304b19c97b9e09660be790183e42a1a271d2358dd660b3e02d3eb8894",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/ui/localSdrControls.js": {
       "loaded": true,
       "lines": 14,
@@ -16822,11 +17062,11 @@
       "branches": 20,
       "functions": 2,
       "totals": {
-        "lines": 544,
-        "branches": 209,
-        "functions": 53
+        "lines": 526,
+        "branches": 202,
+        "functions": 51
       },
-      "sha": "e9c931b37f5b2aa89716a3d599b963ee38b6c827f00d7d16ac3dadcebf167198",
+      "sha": "c0079837789bbd98ff41cda74da097335367f0d6db06c59161fb47939e48abef",
       "untrue": false,
       "origin": "upstream-sync-9",
       "since": "2026-10-27"
@@ -16913,7 +17153,7 @@
       "functions": 5,
       "totals": {
         "lines": 1670,
-        "branches": 484,
+        "branches": 486,
         "functions": 133
       },
       "sha": "aecc314338f1c545bdc85f87995f04b88f3ebb7949cab37fb682ccbdc99f9c97",
@@ -17191,6 +17431,21 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
+    "src/ui/rail/rootClass.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 6,
+      "functions": 1,
+      "totals": {
+        "lines": 161,
+        "branches": 40,
+        "functions": 16
+      },
+      "sha": "2499bc3cbdc0eb42f09dda3c7c9c31d6823279ce989a5d60be874865bd56d07f",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/ui/rail/utcClock.js": {
       "loaded": true,
       "lines": 0,
@@ -17268,15 +17523,15 @@
     },
     "src/ui/recentImagery.js": {
       "loaded": true,
-      "lines": 25,
-      "branches": 56,
+      "lines": 20,
+      "branches": 53,
       "functions": 7,
       "totals": {
-        "lines": 966,
-        "branches": 364,
-        "functions": 72
+        "lines": 988,
+        "branches": 381,
+        "functions": 73
       },
-      "sha": "80e5d6fdd7e7a209f600fe05f1557101c9d0fb64e617113dac812d3ba14200de",
+      "sha": "450eb98179278a352525de8fa7d54dc64f238a2ad128bff4085599bfcfdc73c3",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -17448,15 +17703,15 @@
     },
     "src/ui/spotConditions.js": {
       "loaded": true,
-      "lines": 177,
-      "branches": 0,
-      "functions": 12,
+      "lines": 88,
+      "branches": 19,
+      "functions": 8,
       "totals": {
-        "lines": 248,
-        "branches": 1,
-        "functions": 12
+        "lines": 236,
+        "branches": 32,
+        "functions": 20
       },
-      "sha": "0b0983a3d26add6dd9c195e9b6d2bd8f416f34b745211caf0605e389af34da1d",
+      "sha": "4596e2b4285adce01e3f244ea872cc3f08df0da20bd126a99b5fda31354232c5",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -17524,14 +17779,14 @@
     "src/ui/stores/entityCard.js": {
       "loaded": true,
       "lines": 91,
-      "branches": 34,
+      "branches": 32,
       "functions": 19,
       "totals": {
-        "lines": 479,
-        "branches": 76,
-        "functions": 39
+        "lines": 519,
+        "branches": 94,
+        "functions": 44
       },
-      "sha": "f0ee0bfb7418617e3aa3fb60a020de80e1cdacac55dcd77453c61a122a4d7fe9",
+      "sha": "16d0254ba5d7ad3bab7c0b7b9acdfccafd7453c04919c4e83f22d528ca5eb253",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -17599,14 +17854,14 @@
     "src/ui/stores/worldTime.js": {
       "loaded": true,
       "lines": 1,
-      "branches": 5,
+      "branches": 6,
       "functions": 1,
       "totals": {
-        "lines": 192,
-        "branches": 57,
+        "lines": 193,
+        "branches": 58,
         "functions": 16
       },
-      "sha": "43f4e36f1d9ce4e4337e178b05538ac35404847fe3db26367df46be8e20180ee",
+      "sha": "56a4c87f1365876b753b29422b9d5a7d5de6ca29eb2ce13d9d7257356bcbbd86",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -17978,7 +18233,7 @@
       "functions": 1,
       "totals": {
         "lines": 389,
-        "branches": 166,
+        "branches": 167,
         "functions": 24
       },
       "sha": "fc6e93a4c42c8a16909215cb1639a84963382b780a16a01a975e9b93ef89756a",
@@ -18048,15 +18303,15 @@
     },
     "src/voice/gevActions.js": {
       "loaded": true,
-      "lines": 1000,
-      "branches": 473,
-      "functions": 38,
+      "lines": 1018,
+      "branches": 482,
+      "functions": 40,
       "totals": {
-        "lines": 6287,
-        "branches": 2013,
-        "functions": 268
+        "lines": 6341,
+        "branches": 2042,
+        "functions": 279
       },
-      "sha": "c593f05d6d6c9607a66b88376f24e4cde0dc3b2166f296e5532e6985e29f0b2f",
+      "sha": "c1ad0f375516273c6281ed6a10a39233810653f90ab7d1e25898c29babbca80d",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -18083,10 +18338,10 @@
       "functions": 3,
       "totals": {
         "lines": 405,
-        "branches": 194,
+        "branches": 192,
         "functions": 33
       },
-      "sha": "616b9a94e4dc59450ab5599301f508576c464d8a79f64df0a2c6d27554cec87e",
+      "sha": "e2a4d811787403c0697835360c5babe2b58fbe27814a708d0361bfac555b9836",
       "untrue": false,
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -18112,11 +18367,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 656,
+        "lines": 657,
         "branches": 48,
         "functions": 25
       },
-      "sha": "3c584e5466bc55b3cd3890c55799b33848fa85c8c888320cfb4824e8aec4cac5",
+      "sha": "b03f39ee152a9bffdf75bf3d721932d218e27fe3b2c039479494355df731f431",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -18218,7 +18473,7 @@
       "functions": 7,
       "totals": {
         "lines": 427,
-        "branches": 158,
+        "branches": 159,
         "functions": 46
       },
       "sha": "c8863524a8b4a0cd84d444b17007ea5dd89582c2cd01ffdc6525c24f342e4053",
@@ -18559,14 +18814,14 @@
     "src/voice/sessionCommands.js": {
       "loaded": true,
       "lines": 13,
-      "branches": 12,
+      "branches": 16,
       "functions": 4,
       "totals": {
-        "lines": 351,
-        "branches": 153,
-        "functions": 38
+        "lines": 433,
+        "branches": 185,
+        "functions": 44
       },
-      "sha": "2eb4f485fa550a807e9fd88dc29a3096ccaa98745318372f5568c6456830e03f",
+      "sha": "8b9a46d329875f7e62a744a457bccd6b1a12d3d18da5f28cf60e384f69bdf958",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -18652,11 +18907,11 @@
       "branches": 7,
       "functions": 1,
       "totals": {
-        "lines": 151,
-        "branches": 64,
+        "lines": 153,
+        "branches": 66,
         "functions": 16
       },
-      "sha": "7b318db6514db884bd03526ae41afe9b98f1378ae7d296d3d58b593d166c64a5",
+      "sha": "073d342c581bd190cc8e5724c789a78c7b68584bb39cbd529eea213dbd4c131b",
       "untrue": false,
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
@@ -18668,7 +18923,7 @@
       "functions": 0,
       "totals": {
         "lines": 337,
-        "branches": 152,
+        "branches": 153,
         "functions": 24
       },
       "sha": "5d74721016c222bfc52d3300a3102a068e09f2bd1df5bbf135583914265d92dd",
@@ -18796,6 +19051,21 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "tools/export-blender-camera.mjs": {
+      "loaded": true,
+      "lines": 8,
+      "branches": 6,
+      "functions": 1,
+      "totals": {
+        "lines": 122,
+        "branches": 16,
+        "functions": 4
+      },
+      "sha": "77bad41e83d10ced02304f94e3d07b103c37187d742b6273f5fdee0e85b945ae",
+      "untrue": false,
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "tools/pano-pinhole.mjs": {
       "loaded": false,
       "lines": 372,
@@ -18888,6 +19158,11 @@
     },
     "server/providers/cctv/ontario511.test.mjs": {
       "names": {
+        "Ontario encodes reserved key characters and refuses credential-bearing redirects": 1,
+        "Ontario invalid-json failures cannot log reflected keys or request URLs": 1,
+        "Ontario names a refused redirect and a system code without the request text": 1,
+        "Ontario releases the body of an error response": 1,
+        "Ontario transport failures cannot log reflected keys or request URLs": 1,
         "a 400 points at the key by name, never by value": 1,
         "a 401 points at the key by name, never by value": 1,
         "a 403 points at the key by name, never by value": 1,
@@ -19003,6 +19278,21 @@
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
+    },
+    "server/providers/jtwc.test.mjs": {
+      "names": {
+        "a danger swath crossing the antimeridian is kept, its longitudes wrapped": 1,
+        "a warning reads as a pending JTWC storm with its forecast": 1,
+        "classes come from the subject; broken warnings throw": 1,
+        "every listed storm is read with its overlay; an unreadable overlay leaves its geometry unavailable": 1,
+        "one storm whose warning cannot be read or parsed never stops the others": 1,
+        "product prefixes are season-year ATCF ids": 1,
+        "the KML is read out of the KMZ": 1,
+        "the danger swath makes the geometry current only for its own warning": 1,
+        "the feed lists the storms of the warning items and refuses anything else": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "server/providers/library.test.mjs": {
       "names": {
@@ -19124,6 +19414,26 @@
       },
       "origin": "upstream-sync-9",
       "since": "2026-10-27"
+    },
+    "server/providers/space/issTelemetry.test.mjs": {
+      "names": {
+        "a lost or silent connection is retried on a ladder, and stale events are ignored": 1,
+        "a reconnect cannot mark the previous socket's joint samples live": 1,
+        "a refused or ended session starts over": 1,
+        "a session that keeps ending soon after its snapshot climbs the retry ladder": 1,
+        "an oversized or malformed frame is dropped without taking the relay down": 1,
+        "an update line decodes against the previous field values": 1,
+        "no station clock tick for 20 s, or a clock without signal, is no-signal": 1,
+        "only ISS_TELEMETRY_ENABLED=1 switches the relay on": 1,
+        "switched on, the route opens the feed once and serves the snapshot": 1,
+        "the feed's stamp is hours from the day before January 1st": 1,
+        "the relay opens on the first request, subscribes, and reports live values": 1,
+        "the route is off by default and never opens the feed": 1,
+        "with nobody asking for two minutes the connection closes and the values go": 1,
+        "without a socket library the relay says unavailable": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "server/providers/transitHistory.test.mjs": {
       "names": {
@@ -19440,15 +19750,28 @@
       "names": {
         "Preview avoids the map callout without moving its world anchor": 1,
         "a callout whose text changes is sized to the new text": 1,
+        "a lone label beyond the horizon just outside the view stays hidden": 1,
+        "a low-angle cached roof stays visible when range endpoints fail different tests": 1,
         "a mark hidden from Draw is not drawn or placed, and comes back when shown": 1,
         "a multipart area with holes draws every visible part and keeps holes open": 1,
         "a pin renders its reticle, leader and callout on the page board": 1,
         "a removed mark fades out, then leaves the board": 1,
+        "a visible area ring keeps a vertex past the horizon only at 0 m": 1,
         "an add that throws after inserting its group unwinds instead of orphaning it": 1,
+        "an arrow crossing the view between two off-view ends on a plateau is drawn": 1,
         "an arrow defines its arrowhead and drops the dash once drawn on": 1,
+        "an arrow to an off-view peak points at the peak, not at 0 m below it": 1,
+        "an arrow wholly beyond the horizon is not drawn across the screen": 1,
+        "an arrow whose end crosses the 2h screen limit only at 0 m keeps its connector": 1,
+        "an arrow whose far end is past the horizon only at 0 m keeps its connector": 1,
+        "an arrow with one endpoint outside a real frustum keeps its visible connector": 1,
         "an earlier renderer leaves a later renderer's board alone": 1,
+        "an upward-looking arrow keeps a far end that is behind the eye only at 0 m": 1,
         "annotation fade consumes the actual tracked host paint rectangle after layout": 1,
-        "outline upgrade preserves the existing SVG group identity": 1
+        "height retries beyond the first budget are served under sparse passes": 1,
+        "hidden and back-facing annotations do not sample; visible unresolved heights have bounded retries": 1,
+        "outline upgrade preserves the existing SVG group identity": 1,
+        "points refused longest are sampled before newer refusals": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -19549,7 +19872,8 @@
         "Mapillary can be omitted or replaced without changing catalog membership": 1,
         "a GNSS integrity source can set the layer evidence window": 1,
         "catalogs construct distinct layers and classification from their supplied source": 1,
-        "invalid or already cancelled construction fails before classification can acquire": 1
+        "invalid or already cancelled construction fails before classification can acquire": 1,
+        "perimeterOptions reach Fire Perimeters: inciweb false never asks InciWeb": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -19628,6 +19952,14 @@
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
+    },
+    "src/app/layers/perimeters.test.mjs": {
+      "names": {
+        "inciweb: false never asks InciWeb": 1,
+        "inciweb: true asks InciWeb": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/app/layers/streetLevel.test.mjs": {
       "names": {
@@ -20156,6 +20488,7 @@
         "share startup isolates panel defaults from recipient-local collapse preferences": 1,
         "the Contact panel never hides itself out from under its own NEXT button": 1,
         "the cockpit reads its aircraft from the layer the camera follows": 1,
+        "the unread Stories announcement waits until Cockpit closes": 1,
         "voice Cockpit entry honours a requested contact layer before it enters": 1,
         "voice Cockpit entry refuses when the entry gate is shut": 1
       },
@@ -21103,6 +21436,7 @@
         "helpers: haversine sanity + scope radius": 1,
         "mixed off/loading/unavailable layers refuse; a partly answerable query says so": 1,
         "off, loading and unavailable layers are refused distinctly; a real zero stays ok": 1,
+        "perimeter age follows the snapshot time of the remembered rows": 1,
         "ranking 250k rows stays within a budget and yields to the page": 1,
         "returned items are copies: mutating them cannot change the remembered answer": 1,
         "time fields filter by ISO and derive ageHours; the feed window is exposed": 1,
@@ -21570,16 +21904,41 @@
         "Tarktee DATEX image parser rejects non-official hosts": 1,
         "Tarktee DATEX parsers join location UUIDs to image URLs": 1,
         "Tarktee DATEX requests wait 30 s, past the slow answers measured live": 1,
-        "Tarktee loader cancels fulfilled bodies when either fetch rejects > https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraImages, delayed sibling: false": 1,
-        "Tarktee loader cancels fulfilled bodies when either fetch rejects > https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraImages, delayed sibling: true": 1,
-        "Tarktee loader cancels fulfilled bodies when either fetch rejects > https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraLocations, delayed sibling: false": 1,
-        "Tarktee loader cancels fulfilled bodies when either fetch rejects > https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraLocations, delayed sibling: true": 1,
+        "Tarktee aborts a pending sibling when https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraImages rejects": 1,
+        "Tarktee aborts a pending sibling when https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraLocations rejects": 1,
+        "Tarktee aborts pending headers as soon as its sibling returns an HTTP error": 1,
+        "Tarktee cancels a late sibling when https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraImages rejects before headers": 1,
+        "Tarktee cancels a late sibling when https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraLocations rejects before headers": 1,
+        "Tarktee cancels a received sibling when https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraImages rejects before headers": 1,
+        "Tarktee cancels a received sibling when https://tarktee.transpordiamet.ee/api/v1/datex/roadCameraLocations rejects before headers": 1,
+        "Tarktee cancels both lengthless streams when one exceeds the byte cap": 1,
         "Tarktee loader cancels the sibling body when one feed fails or overflows the byte cap": 1,
         "Tarktee loader deduplicates cameras sharing an image number before the cap": 1,
         "Tarktee loader refuses a redirect and cancels both response bodies": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
+    },
+    "src/data/cctvEstoniaBodyPhase.test.mjs": {
+      "names": {
+        "Tarktee aborts /img pending headers when /loc declares a body over the byte cap": 1,
+        "Tarktee aborts /img pending headers when /loc resets the connection mid-body": 1,
+        "Tarktee aborts /loc pending headers when /img declares a body over the byte cap": 1,
+        "Tarktee aborts /loc pending headers when /img resets the connection mid-body": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/data/cctvExplicitPickEndsOpening.test.mjs": {
+      "names": {
+        "an explicit NEAREST (focusNearest) pick of the re-opened camera ends the opening pick": 1,
+        "an explicit focusNearestToPoint pick of the re-opened camera ends the opening pick": 1,
+        "an explicit selectCamera pick of the re-opened camera ends the opening pick": 1,
+        "an explicit setParams({ selectedCameraId }) pick of the re-opened camera ends the opening pick": 1,
+        "without a pick, the next settled move still follows the view": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/data/cctvFintraffic.test.mjs": {
       "names": {
@@ -21674,6 +22033,18 @@
       "origin": "upstream-sync-8",
       "since": "2026-10-21"
     },
+    "src/data/cctvHlsMiddleware.test.mjs": {
+      "names": {
+        "a cross-site request can neither read nor release a live HLS lease": 1,
+        "a failing HLS upstream with free slots is still reported degraded": 1,
+        "a lease keeps working after its viewer reconnects from another address": 1,
+        "ninth viewer frame fallback preserves active camera health": 1,
+        "third camera frame fallback keeps absent health": 1,
+        "viewers behind one shared address get every slot, and no more": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/data/cctvHlsStream.test.mjs": {
       "names": {
         "HLS downloads still reject declared and chunked bodies above 8 MiB": 1,
@@ -21753,6 +22124,7 @@
         "CCTV_LITHUANIA_ENABLED=true makes no Lithuania request": 1,
         "Lithuania joins by ID and uses WGS84 latitude/longitude, never LKS-94 metres": 1,
         "a failed catalog cancels the sibling request instead of waiting for the timeout": 1,
+        "a malformed catalog cancels the sibling request instead of waiting for the timeout": 1,
         "a redirected catalog is reported as not followed": 1,
         "an empty CCTV_LITHUANIA_ENABLED makes no Lithuania request": 1,
         "an unset CCTV_LITHUANIA_ENABLED makes no Lithuania request": 1,
@@ -21811,7 +22183,9 @@
         "a video camera is still relayed by /media": 1,
         "an MJPEG camera is still relayed by /media": 1,
         "an unregistered camera id is refused by /media the same way": 1,
-        "every CCTV route refuses cross-site requests and admits the app itself": 1
+        "every CCTV route refuses cross-site requests and admits the app itself": 1,
+        "the Street View fallback frames catalog cameras only, from the catalog position": 1,
+        "the Street View fallback spends a per-IP Google budget, and only with a key": 1
       },
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
@@ -21931,6 +22305,13 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/data/cctvRefusedViewerBadge.test.mjs": {
+      "names": {
+        "a capacity-refused viewer is not shown its fallback frame as live and ok": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/data/cctvSourcePins.test.mjs": {
       "names": {
         "TfL JamCams keep only frames inside the official bucket, by parsed URL": 1,
@@ -21939,6 +22320,13 @@
       },
       "origin": "upstream-sync-9",
       "since": "2026-10-27"
+    },
+    "src/data/cctvStreetViewDisconnect.test.mjs": {
+      "names": {
+        "a client that disconnects mid-fetch stays inside its own Street View budget": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/data/cctvTaiwan.test.mjs": {
       "names": {
@@ -22270,6 +22658,11 @@
     },
     "src/data/cyclonesProxy.test.mjs": {
       "names": {
+        "JTWC reads go through the bounded fetch with no redirects": 1,
+        "JTWC storms join NHC’s, and NHC’s advisory wins for a storm both list": 1,
+        "a JTWC that hangs or answers 500 leaves NHC’s answer unchanged": 1,
+        "a cached answer drops each storm whose own advisory is past use, not all of them": 1,
+        "a failed JTWC read keeps its last storms and leaves NHC’s answer fresh": 1,
         "advisories published before their nominal time are accepted, far-future ones are not": 1,
         "advisory and position times are bounded at 90 minutes ahead and 12 hours old": 1,
         "coherent geometry is retained with holes/dateline while older advisory geometry is omitted": 1,
@@ -22302,6 +22695,7 @@
         "the Houston camera credit names TranStar's terms and the permission they require": 1,
         "the NYC camera credit carries NYC DOT’s requested disclaimer": 1,
         "the News layer credits its built-in sources": 1,
+        "the Ontario 511 camera credit carries the licence attribution statement": 1,
         "the PR #1506 camera packs are credited with their sources and terms": 1,
         "the UCS Satellite Database is acknowledged with its version and webpage": 1,
         "the always-on rail credit names live feeds only, never timetables": 1,
@@ -22643,6 +23037,13 @@
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
+    },
+    "src/data/firePerimetersProxy.test.mjs": {
+      "names": {
+        "the WFIGS query asks for the mapping and edit times, and rows keep both": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/data/firms-calendar-validity.test.mjs": {
       "names": {
@@ -23395,6 +23796,8 @@
     },
     "src/data/infrastructure.test.mjs": {
       "names": {
+        "Acaray and Yacyretá appear once each with OSM provenance": 1,
+        "Acaray and Yacyretá each get a stem, a selection context and an analyst record": 1,
         "consumer build includes only infrastructure code and resolves assets under a non-root base": 1,
         "dataset URLs still name the complete bundled sources": 1,
         "infrastructure factory preserves identity and creates independent state without loading": 1,
@@ -23632,6 +24035,18 @@
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
+    },
+    "src/data/liveStreams.test.mjs": {
+      "names": {
+        "a key no stream names, or no keys at all, finds nothing": 1,
+        "a subject known by several keys gets the union, each stream once": 1,
+        "every listed stream is a complete YouTube entry with a distinct id": 1,
+        "the ISS streams attach to the station key, in list order": 1,
+        "the player is created on the privacy-enhanced host, muted, with the API on": 1,
+        "the watch link is the video page on YouTube proper": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/data/localGeojson.analyst.test.mjs": {
       "names": {
@@ -25828,6 +26243,30 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/data/youtubeApi.test.mjs": {
+      "names": {
+        "a load slower than 5 s fails, and the next call loads afresh": 1,
+        "a script that fails to load is removed, and the next call loads afresh": 1,
+        "the API loads once per document, and a loaded one is reused": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/data/youtubeLivePlayer.test.mjs": {
+      "names": {
+        "a stream that never starts playing is offline when the start timer runs out": 1,
+        "a timer that fires after playback began changes nothing": 1,
+        "a video that ends, or errors for any other reason, reads as offline": 1,
+        "an API that does not load reads as offline, which Try again can change": 1,
+        "destroy before the API loads builds no player": 1,
+        "destroy empties the host, destroys the player and silences later events": 1,
+        "embedding refused by the owner is unavailable, which no retry would change": 1,
+        "playing clears the start timer; the same state is not reported twice": 1,
+        "the player is built on the privacy host with the live parameters, once the API loads": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/devCctv.test.mjs": {
       "names": {
         "CCTV preset preserves explicit LAN and source overrides with a warning": 1,
@@ -26247,6 +26686,7 @@
         "an oversized upstream body is dropped rather than buffered": 1,
         "an upstream failure reaches the browser as fixed public text": 1,
         "geocoder query and viewport bias are validated before Google is paid": 1,
+        "only a Geocoding answer is kept by the browser": 1,
         "the geocode routes keep the key server-side and answer in Google shape": 1
       },
       "origin": "upstream-sync-6",
@@ -27335,11 +27775,18 @@
       "names": {
         "a 16:9 still fills the canvas": 1,
         "a 4:3 still is pillarboxed at full height": 1,
+        "a failed pixel signature redraws rather than assuming equal content": 1,
         "a missing or zero dimension falls back to the full canvas": 1,
+        "a plane the renderer cannot show is not fetched, but a forced refresh is": 1,
+        "a plane the renderer may show fetches its picture": 1,
+        "a skipped refresh does not use up the interval": 1,
         "a source wider than 16:9 is letterboxed at full width": 1,
         "a still is drawn into its fitted rectangle over a full matte": 1,
+        "changed pixels redraw even when the fitted rectangle is unchanged": 1,
         "same pixels at a new aspect redraw at the new fit": 1,
-        "same pixels at the same size skip the redraw": 1
+        "same pixels at a new resolution with the same fit skip the redraw": 1,
+        "same pixels at the same size skip the redraw": 1,
+        "what cannot be judged counts as visible": 1
       },
       "origin": "upstream-sync-8",
       "since": "2026-10-21"
@@ -27443,6 +27890,7 @@
         "a view pass writes only the icons it changes, in one write": 1,
         "cards go only where the horizon lets the camera see": 1,
         "focus de-emphasis fades each icon from its own color": 1,
+        "focus release restores video hue and alpha after the style throttle": 1,
         "focus uses the painted half-width and half-height of each count": 1,
         "hover picks the underlying camera only outside a painted count": 1,
         "the icons go with the viewer that drew them, whichever tears down": 1,
@@ -27458,6 +27906,7 @@
         "a count click preserves the provisional opening pick until the view settles": 1,
         "a count click yields to a card above it and to another layer's object, not to a CCTV icon": 1,
         "same-camera selection does not notify or mutate snapshot-feed state": 1,
+        "same-camera selection ends the opening pick without notifying snapshot feeds": 1,
         "same-camera selection notifies browser-overlay feeds so playback can retry": 1
       },
       "origin": "upstream-sync-11",
@@ -27500,8 +27949,10 @@
     },
     "src/layers/cyclones/index.test.mjs": {
       "names": {
+        "a JTWC warning reads as a warning, notes the official regional centre and its danger area": 1,
         "a click on a storm card or lead-hour label selects that storm without picking": 1,
         "advisory selection uses accessible row descriptors and shared camera handoff": 1,
+        "an NHC advisory carries no JTWC note and keeps its cone legend": 1,
         "an advisory with only one of wind and pressure shows that one alone": 1,
         "an advisory without pressure, movement or link leaves those values out": 1,
         "classification display expands known codes without altering the source or guessing unknown meanings": 1,
@@ -27522,6 +27973,7 @@
     },
     "src/layers/cyclones/rendering.test.mjs": {
       "names": {
+        "a JTWC danger area is drawn apart from any cone, with a dashed edge and its name for the selected storm": 1,
         "a click names a storm only through a current item of its own sets": 1,
         "advisory geometry keeps polygon parts, holes and geographic seam coordinates": 1,
         "an aborted or destroyed update keeps what is drawn": 1,
@@ -27893,7 +28345,10 @@
         "a contact reported with no course faces the way its newer fixes went": 1,
         "a contact with no altitude yet is marked as drawn at an invented height; a held one is not": 1,
         "a ground vehicle or station with no altitude stands on the ground; an aircraft does not": 1,
+        "a landing before the geoid loads sits at 0 m, not at its approach height": 1,
+        "a landing with a cold surface cell sits on the geoid, not at its approach height": 1,
         "a low contact near the view carries the ground under it; others carry none": 1,
+        "a parked contact whose surface cell goes cold holds its ground height": 1,
         "a repeated fix time marks the contact as not updated; removal is unchanged": 1,
         "a route belongs to its callsign: a new callsign drops it, a blank one keeps it": 1,
         "a surface emitter category stands on the ground, before and after the model set loads": 1,
@@ -27903,7 +28358,6 @@
         "civil record owners isolate state and preserve partial, missing-poll and landed retention": 1,
         "civil records keep aviation units separate from render height and survive missing fields": 1,
         "complete snapshots age out vanished aircraft and retain position-less ones unless landed": 1,
-        "ground transitions preserve last render height while a surface cell is cold": 1,
         "the tracked contact is stale from its first missed update and kept until ten minutes after its newest fix": 1
       },
       "origin": "upstream-sync",
@@ -28152,6 +28606,14 @@
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
+    "src/layers/installations/labelBoxClick.test.mjs": {
+      "names": {
+        "a click on the site's own label box finds the site": 1,
+        "another layer's card painted over the site's label keeps the click": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/layers/installations/lifecycle.test.mjs": {
       "names": {
         "enable restores cached installation credits before a refresh: empty": 1,
@@ -28167,6 +28629,7 @@
         "Contacts camera motion reprojects and declutters existing labels without source loads or primitive replacement": 1,
         "Contacts can select a point outside the normal title cap or an unnamed polygon": 1,
         "canonical aliases transfer named marker ownership without replacing markers or labels": 1,
+        "labelAt finds the site whose label box was painted at a point, in CSS px": 1,
         "selection promotes exactly one entry and deselection restores that same label": 1,
         "the bounded host cohort ranks wide points and polygon titles by area": 1,
         "wide and polygon titles use the Data Centers entry contract and persistent shared domain": 1,
@@ -28199,8 +28662,10 @@
       "names": {
         "a click on a named marker point selects its site; again releases it": 1,
         "a click on a site dot or its outline selects the site; another set does not": 1,
+        "a click on a site's label box selects it where nothing else is drawn under it": 1,
         "another layer's card over a site keeps the click": 1,
         "destroy removes all installation context listeners": 1,
+        "destroy withdraws the label claim": 1,
         "entity selection and clear still release the installation card and fill": 1,
         "flights programmatic selection clears the installation card and fill (context first: false)": 1,
         "flights programmatic selection clears the installation card and fill (context first: true)": 1,
@@ -28566,7 +29031,9 @@
     },
     "src/layers/military/records.test.mjs": {
       "names": {
+        "a grounded military contact holds a ground altitude it reported earlier": 1,
         "a military contact reported with no course faces the way its newer fixes went": 1,
+        "a military contact that lands with no altitude sits on the ground, not at its last airborne height": 1,
         "a repeated military fix time marks the contact as not updated; removal is unchanged": 1,
         "an airborne military contact reported with no altitude is marked as drawn at an invented height": 1,
         "complete military snapshots age out vanished aircraft and retain position-less ones unless landed": 1,
@@ -28761,51 +29228,82 @@
         "a fire under one acre keeps its WFIGS size instead of reading 0 ac": 1,
         "a full incident row renders name, size, containment, and ages": 1,
         "a known InciWeb page adds a link line to the card": 1,
+        "ages count from the moment shown, not from the clock": 1,
         "costs near a unit boundary promote to the larger unit": 1,
-        "incident card longitude treats vertices at either sign of 180 as the same meridian": 1,
-        "incident cards stay at the dateline for closed, reversed and rotated outlines": 1,
         "missing attributes degrade to available facts instead of placeholders": 1,
-        "multipart cards compare polygon areas along short dateline edges": 1,
         "partial incident details render only the facts that exist": 1,
-        "the card anchors at the vertex mean of the largest polygon": 1,
         "the selected card claims the selected paint lane, not the ambient lane": 1
       },
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
+    "src/layers/perimeters/inciweb.test.mjs": {
+      "names": {
+        "same-name pages list newest first, falling back to the complex": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/layers/perimeters/ownership.test.mjs": {
       "names": {
+        "a WFIGS fire without poly_DateCurrent redraws when its outline moves": 1,
         "a click on a mission label over the incident card never opens its InciWeb page, and keeps the card open": 1,
         "a complex member resolves to its complex page from the catalog": 1,
+        "a failed read keeps the picture and reports the error": 1,
         "a failed refresh after a stale snapshot reads as the failure, not stale": 1,
         "a hanging InciWeb index fetch never blocks the perimeter refresh": 1,
+        "a historical card checks its complex page when every own-name page is of another season": 1,
+        "a historical card links the same-name page of its own fire, whatever the snapshot time": 1,
+        "a historical card moves past a page that fails to load, and retries it on a new selection": 1,
+        "a live card retries a page that failed to load on the next read": 1,
+        "a malformed snapshot is an error, not an empty map": 1,
         "a matched incident card carries the InciWeb line and click-through": 1,
         "a pick selects only an item of the layer's own sets": 1,
+        "a piece of a fire the snapshot does not list is dropped": 1,
         "a refresh that drops the selected incident also drops its card": 1,
+        "a refresh the host cancelled through refreshLayer publishes nothing": 1,
+        "a selected fire keeps its card while listed, even with no pieces left": 1,
         "a stale or unverifiable publication yields no link": 1,
         "a stale snapshot reads stale, dated by its own fetch, and a fresh one clears it": 1,
+        "a verified page keeps its link when another same-name page fails to load": 1,
         "an InciWeb outage never breaks the perimeter refresh": 1,
         "an unmatched incident renders no InciWeb line and card clicks stay inert": 1,
         "analyst records expose incident facts without geometry payloads": 1,
         "another layer's overlay on top keeps a click off the area": 1,
         "clicking a perimeter publishes its incident card; empty space clears it": 1,
-        "containment legend uses the existing thresholds, colours and incident counts": 1,
         "disable removes the click handler, pick ownership, and any card": 1,
-        "each perimeter polygon draws as one clamped fill with its draped fire line": 1,
+        "each piece draws as a clamped fill and its outline as draped lines, coloured by age": 1,
+        "historical analyst records hold no time after the moment shown": 1,
         "incident-link verification aborts on destroy and ignores late completion": 1,
         "incident-link verification aborts on disable and ignores late completion": 1,
         "incident-link verification aborts on selection and ignores late completion": 1,
         "late refresh cannot publish after disable or destroy": 1,
-        "unchanged snapshots draw nothing again even if source ordering changes": 1
+        "the card ages from the moment the snapshot shows": 1,
+        "the layer redraws on a new revision or a change of age band, and only then": 1,
+        "the legend counts fires by their last growth at the moment shown, with the source note": 1,
+        "the live legend counts a fire in the band its drawn piece shows": 1
       },
       "origin": "upstream-sync-10",
       "since": "2026-10-28"
     },
+    "src/layers/perimeters/records.test.mjs": {
+      "names": {
+        "a perimeter without its mapping time falls back to the last edit; a future time is unknown": 1,
+        "each WFIGS polygon becomes one piece of its fire, born when it was mapped": 1,
+        "incident card longitude treats vertices at either sign of 180 as the same meridian": 1,
+        "incident cards stay at the dateline for closed, reversed and rotated outlines": 1,
+        "multipart cards compare polygon areas along short dateline edges": 1,
+        "the card anchors at the vertex mean of the largest polygon": 1,
+        "the revision follows fire ids and update times, not feed order": 1,
+        "the snapshot carries staleness": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/layers/perimeters/source.test.mjs": {
       "names": {
-        "a failed refresh serves the last snapshot marked stale for a day, then refuses": 1,
         "getSnapshot works when taken off its source object": 1,
-        "the snapshot detail carries the proxy staleness and fetch time": 1
+        "the snapshot carries the proxy staleness and fetch time": 1
       },
       "origin": "upstream-sync-10",
       "since": "2026-10-28"
@@ -29101,6 +29599,13 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
+    "src/layers/recentImagery/catalog.test.mjs": {
+      "names": {
+        "a dateline box goes to CMR as it is: CMR reads west > east as the short box": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/layers/recentImagery/cmr-raw-page-budget.test.mjs": {
       "names": {
         "a non-page-multiple limit never returns more admitted records than its budget": 1,
@@ -29124,26 +29629,46 @@
         "A / B: A pins, the focused day previews as B against it, B pins, and a day is in one slot only": 1,
         "CLEAR after a re-lease hands Google 3D back and does not take Esri again": 1,
         "CLEAR forgets the box, pins, preview, pending pick, opacity, split and the tool; mode and sources survive": 1,
+        "Escape ends a deferred hand-over, and a followed pick keeps Esri through it": 1,
         "Escape order: clearPreview takes the preview off and keeps pins; nothing to clear says so": 1,
         "IMAGE: SHOW pins a day, focus stops moving the map, a second SHOW moves the pin and unpinning drops the layer at once": 1,
         "SWAP trades the sides of a live divider, again restores, never publishes and resets on a new comparison or CLEAR": 1,
         "USE VIEW takes the camera rectangle and refuses a view over the cap instead of shrinking it": 1,
         "VS BASEMAP: the day swipes on the left with no second layer; the preview swipes too; the lease borrows Esri": 1,
         "ZOOM IN: an oversized box or view flies top-down to its centre at the height whose view is 400 km wide": 1,
+        "a VIIRS dateline day with data on one side drapes only that side through the real layer": 1,
+        "a box dragged across the dateline is searched, listed and draped as one box": 1,
         "a card click previews at once; a repeat click is a no-op and focus follows": 1,
         "a catalog failure is exposed and leaves nothing draped": 1,
         "a catalog of partial-coverage days still yields a START HERE day, labelled partial": 1,
         "a controller subscription moves the drape to the new host on every settled switch": 1,
+        "a dateline day both halves confirm empty never drapes and leaves the strip": 1,
+        "a deferred hand-over goes ahead once the pick fails or its source turns off": 1,
         "a lease that cannot reach the Esri map never shows the divider and says why": 1,
         "a manual switch to Google 3D while a day is shown takes Esri back once and the divider stays": 1,
         "a new box takes the old drapes down at once; pins the new catalog still lists survive": 1,
+        "a new probe of a shown dateline day hands the renderer the halves it now allows": 1,
+        "a pick dropped for an empty card lets a deferred hand-over go ahead at once": 1,
+        "a pick still being probed or debounced survives a late empty result for the automatic preview": 1,
+        "a pick that probes empty after the automatic day lets the next ranked day drape": 1,
+        "a pick whose probe failed does not block the hand-over": 1,
         "a pinned day still being probed drapes once the probe says present": 1,
         "a re-lease refused by another owner says so, drapes without a swipe and does not loop": 1,
+        "a re-probe of a present HLS dateline day keeps a half confirmed empty when that half fails this time": 1,
+        "a re-probe of a present HLS dateline day takes a fresh empty half when the shown half has no Data-Present": 1,
+        "a re-probe of a present VIIRS dateline day keeps a half that failed this time": 1,
         "a refused box is loud, says its size and persists until a box succeeds; so does a tool refusal": 1,
         "a refused lease is guidance and the images still drape without a swipe": 1,
+        "a shown HLS day on a plain box stays draped after a probe without Data-Present": 1,
         "a valid box searches and previews the START HERE day alone in IMAGE mode": 1,
         "a voice search cancelled mid-flight says so instead of looking empty": 1,
         "alpha, split and visible range notify without re-rendering the row": 1,
+        "an HLS dateline day leaves out a half confirmed empty when the other half answers 503": 1,
+        "an HLS dateline day leaves out a half confirmed empty when the other half never answers": 1,
+        "an HLS dateline day leaves out a half confirmed empty when the other half rejects": 1,
+        "an HLS day draped before its probe keeps its layers when the probe confirms a dateline box": 1,
+        "an HLS day draped before its probe keeps its layers when the probe confirms a plain box": 1,
+        "an arrow-key pick waiting out the debounce keeps Esri through an empty automatic result": 1,
         "an automatic fallback to Google 3D drops the swipe instead of re-leasing Esri; a manual switch re-leases once (stats poll)": 1,
         "an automatic fallback to Google 3D drops the swipe instead of re-leasing Esri; a manual switch re-leases once (subscription)": 1,
         "an automatic overview that probes empty hands over to the next ranked day": 1,
@@ -29155,6 +29680,7 @@
         "disable after a re-lease hands Google 3D back and does not take Esri again": 1,
         "disable releases the lease, hides the drapes and cancels the tool; pins come back on enable": 1,
         "empty auto VIIRS re-requests a cancelled successor": 1,
+        "focus on an empty automatic day moves to the next ranked day, not the nearest card, and it drapes once present": 1,
         "pinning an offscreen day probes it at once": 1,
         "restored pins outside the visible strip window are probed and swipe once present": 1,
         "restored pins the catalog no longer lists are dropped and START HERE previews": 1,
@@ -29164,32 +29690,69 @@
         "the focused day is the enriched strip entry, never the raw catalog candidate": 1,
         "the renderer is bound with the viewer's globe port, and the attached tileset while that is the host": 1,
         "turning a source off hides its cards and drapes, disarms its pending preview and labels its pins \"Source off\"": 1,
+        "turning off the source of a followed pick does not block the hand-over": 1,
         "unpin then pin before the release settles recovers the lease": 1,
         "with SELECT BOX armed, Escape clears the preview first and the next Escape cancels the tool": 1,
+        "with empty days shown, an off-screen successor is probed once the visible days return empty": 1,
+        "with empty days shown, focus leaves an empty automatic overview with the hand-over and its successor drapes": 1,
         "without a host the drapes hide and say so; the stats poll rebinds when no subscription exists": 1,
         "without a lease (another owner held it first) a switch to Google 3D takes nothing": 1
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
+    "src/layers/recentImagery/model.test.mjs": {
+      "names": {
+        "boxFromPin returns the short-arc box for a pin near the dateline": 1,
+        "coverage of a dateline box uses the short arc, not the long way": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/layers/recentImagery/rendering.test.mjs": {
       "names": {
+        "a dateline box drapes one layer on each side of ±180 and removes both": 1,
+        "a probe that narrows or widens a dateline drape keeps the layer of the unchanged half": 1,
         "a slot drapes one GIBS layer bounded to the box; the same day only restyles it": 1,
         "above the tile limit a request defers silently; its settlement asks for exactly one frame": 1,
         "against the basemap slot a splits left with no second layer, and leaving the swipe only restyles it": 1,
+        "an HLS dateline day drapes every half not confirmed empty, a VIIRS one only the confirmed halves": 1,
         "both slots share the budget; a renderer deferral or throw frees its slot": 1,
+        "evidence going from none to empty removes the drape": 1,
+        "no allowed half, or halves of another box, drapes nothing": 1,
         "rapid replacement never owns more than two layers": 1,
         "replacement imagery uses source-owned tile URLs and credit and tears down normally": 1,
         "the box preview draws a ground fill and a draped dashed edge, hidden rather than dropped between drags": 1,
-        "the renderer leaves the surface to the globe port; no host removes the layers; a new port rebuilds them": 1
+        "the drag preview draws a wrapped fill and outline across the dateline": 1,
+        "the renderer drapes only the halves the probe allows, and rebind keeps them": 1,
+        "the renderer leaves the surface to the globe port; no host removes the layers; a new port rebuilds them": 1,
+        "widening slot a over the dateline keeps it below slot b on both sides": 1,
+        "without per-half evidence a VIIRS dateline box drapes nothing, a plain VIIRS box and an HLS dateline box still drape": 1
       },
       "origin": "upstream-sync-5",
       "since": "2026-10-10"
     },
     "src/layers/recentImagery/source.test.mjs": {
       "names": {
+        "a S30 half that answered without a presence is neither present nor empty": 1,
+        "a S30 half that hung is neither present nor empty": 1,
+        "a S30 half that rejected is neither present nor empty": 1,
+        "a VIIRS half that answered without a presence is neither present nor empty": 1,
+        "a VIIRS half that hung is neither present nor empty": 1,
+        "a VIIRS half that rejected is neither present nor empty": 1,
+        "a crossing box is empty only when both halves are confirmed empty": 1,
+        "a crossing box is not called empty when the other half failed": 1,
+        "a crossing box probes both halves and is present when only the narrow half has data": 1,
+        "a crossing box with both halves present shows the wider half and keeps both presentBoxes": 1,
+        "a crossing box with data only on the wider half is present and shows the wider side": 1,
+        "a dateline thumbnail is requested as two non-crossing halves, never as a crossing BBOX": 1,
+        "a half whose transport ignores AbortSignal is still bounded by its deadline": 1,
+        "a rejected half does not hide data on the other half, and never reads as empty": 1,
+        "a successful probe leaves no deadline timer behind": 1,
         "cancelled thumbnail acquisition does not return stale responses or retry": 1,
-        "imagery source routes catalog, thumbnails and tiles through supplied adapters": 1
+        "imagery source routes catalog, thumbnails and tiles through supplied adapters": 1,
+        "synchronous abort inside an abort-ignoring fetch settles immediately": 1,
+        "the caller's cancellation rejects at once and stops every half": 1
       },
       "origin": "upstream-sync-5",
       "since": "2026-10-10"
@@ -29204,10 +29767,13 @@
     "src/layers/recentImagery/thumbnails.test.mjs": {
       "names": {
         "a cancelled re-fetch of a known-present day keeps its status and is retryable": 1,
+        "a dateline day whose halves both hang is an error, not \"checking\" forever": 1,
         "a known-present day requested during abort settlement can be cancelled again": 1,
         "a known-present day requested during abort settlement restarts without another intent change": 1,
+        "a re-probe of a present day drops a half only when it is confirmed empty": 1,
         "injected thumbnail acquisition owns requests while the loader releases object URLs": 1,
-        "retain aborts stale acquisition while allowing the current intent to start": 1
+        "retain aborts stale acquisition while allowing the current intent to start": 1,
+        "the loader proves a dateline day present from one half and hands that half on": 1
       },
       "origin": "upstream-sync-5",
       "since": "2026-10-10"
@@ -29247,10 +29813,13 @@
         "a GNSS satellite carries its class and an orbital speed": 1,
         "a catalog refresh while held keeps the subject and its companions hidden": 1,
         "a held subject ignores the layer Escape; refocus restores the follow": 1,
+        "a satellite docked to the ISS draws no ring of its own: the ISS’s shows": 1,
         "a subject that is not tracked holds nothing": 1,
         "holding the subject hides its dot, ring, docked companions and bracket": 1,
         "no subject while the layer is off or nothing is tracked": 1,
+        "releasing a satellite leaves no focus rectangle, even when a follow listener reads it": 1,
         "the ground track bearing comes from the SGP4 velocity, less the Earth turning": 1,
+        "the station offers its mount only while the Cockpit rides it": 1,
         "the subject says what it is, which TLE it flies, and who owns and runs it": 1,
         "the subject says whether its class may be ridden": 1,
         "the tracked satellite is a subject read from the per-frame sample": 1,
@@ -29283,6 +29852,90 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
+    "src/layers/satellites/issArticulation.test.mjs": {
+      "names": {
+        "a direction steps along the arc, capped, and lands on the target": 1,
+        "a dish aims its rest boresight (+Y) at the direction, pivot in place": 1,
+        "a joint keeps the answer nearer its last one, and holds near its axis": 1,
+        "a joint matrix leaves its pivot in place": 1,
+        "angles step the short way round, capped": 1,
+        "in sunlight every array faces the Sun, masts across it": 1,
+        "in the shadow the arrays feather along the flight direction": 1,
+        "relay directions are unit vectors, highest above the station first": 1,
+        "the Sun lands on the model axes: port, zenith, forward": 1,
+        "the arm sways gently about the filed pose, and only where it is set to": 1,
+        "the model file has both dish nodes": 1,
+        "the model file has every joint node, beta joints under their alpha": 1,
+        "the radiators stay edge-on to the Sun": 1,
+        "the shadow is the cylinder behind the Earth": 1,
+        "the smaller arms sway too, and their joints are in the model file": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/issCommand.test.mjs": {
+      "names": {
+        "an object docked to the ISS is the station too": 1,
+        "one zoom step shortens the follow offset on its own bearing, and stops at the range": 1,
+        "the fast orbit turns the Sun once per lap, part of it in shadow": 1,
+        "the zoom eases in to its range and stops there, never past it": 1,
+        "the zoom is offered only from far away": 1,
+        "the zoom needs the camera following the station's target, framed": 1,
+        "the zoom range only ever shortens, settles at the target range and never runs away": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/issModel.test.mjs": {
+      "names": {
+        "TEME to Earth-fixed axes keeps the position eciToGeodetic uses": 1,
+        "a tracked ISS keeps its model with its class hidden": 1,
+        "flight axes refuse a degenerate state": 1,
+        "flight axes: orthonormal, z away from the Earth, x along the motion": 1,
+        "the Cockpit hold hides the model": 1,
+        "the ISS model shows on the same terms as its dot": 1,
+        "the model axes are a proper rotation of the flight axes": 1,
+        "the model is the ISS by NORAD number, at its real 109 m span": 1,
+        "the native span and centre match the shipped asset": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/issMounts.test.mjs": {
+      "names": {
+        "Kibo’s card names it and gives its facts, marked for translation": 1,
+        "a mount goes to the world on the axes the model is placed with": 1,
+        "every mount is on or beside the model, with a usable view frame": 1,
+        "the Cupola’s card names it and gives its facts, marked for translation": 1,
+        "the station offers its views in order, Nauka first": 1,
+        "the view frame is unit and square whatever the mount says": 1,
+        "the view is named after the entry, without the catalog’s \"ISS (…)\"": 1,
+        "the view shown is the one asked for, else the first; the next wraps round": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/issTelemetry.test.mjs": {
+      "names": {
+        "a page that opens during a loss of signal learns when the feed last had data": 1,
+        "a relay route that is not there reads as unavailable, not as connecting forever": 1,
+        "a relay that is switched off is asked once and never again": 1,
+        "a snapshot missing a joint gives no pose; missing dish angles give no dish": 1,
+        "destroy stops the feed, even with a request in flight": 1,
+        "no signal, a failed request or an old answer all give no pose": 1,
+        "recorded telemetry turns every array toward where the Sun was": 1,
+        "the feed asks only while the model is drawn, every five seconds": 1,
+        "the joint lists line up with the model joints they drive": 1,
+        "the latest epoch is the newest dated item, and nothing without one": 1,
+        "the other sign on any joint turns its arrays away from the Sun": 1,
+        "the recorded dish angles point at the relay satellite": 1,
+        "the status says where the angles stand: pending, live, disabled": 1,
+        "with a telemetry pose the joints take its angles, each side its own": 1,
+        "without a pose, or in Manual, the joints keep their computed rules": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/layers/satellites/motion.test.mjs": {
       "names": {
         "an element set SGP4 cannot propagate has no sample": 1,
@@ -29303,6 +29956,7 @@
     },
     "src/layers/satellites/offCesium.test.mjs": {
       "names": {
+        "a dot handed to a station model draws only beyond its range; the tracked dot too": 1,
         "no part of the layer drives Cesium": 1,
         "point styles keep the colours the dots were drawn in": 1,
         "positions read back from the drawn dots match the Cesium geodetic conversion": 1,
@@ -29358,6 +30012,101 @@
       },
       "origin": "upstream-sync-8",
       "since": "2026-10-21"
+    },
+    "src/layers/satellites/stationModel.test.mjs": {
+      "names": {
+        "a model still loading counts as undrawn out of range and is released": 1,
+        "a station without views on its model hides it while the Cockpit rides the station, its own entry or a docked one": 1,
+        "posed, the model sits on the station with its flight axes as heading, pitch and roll": 1,
+        "the dots and the ring come back when the model may not show, and on destroy": 1,
+        "the model loads once the camera nears its range, measured from the dot as drawn": 1,
+        "turning the layer off, or a while undrawn, releases the model; the next approach asks for it again": 1,
+        "until the renderer has the model the dots stand at every distance, and stay so when it fails to load": 1,
+        "within its range the model stands in for the dots and hides the ring; beyond it the dots draw": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/stationModels.test.mjs": {
+      "names": {
+        "an entry is drawn by the model at its own number, or one standing in for it": 1,
+        "the layer knows the ISS and Tiangong, each with a LIVE key": 1,
+        "the layer-state readers take the parts as built, or none": 1,
+        "the selected station: itself, a docked companion by position, by orbit, or by stand-in": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/stationPanel.test.mjs": {
+      "names": {
+        "Manual pauses telemetry and offers the controls; Automatic hands the joints back": 1,
+        "a new subscriber gets the current view at once: nothing while no station is selected": 1,
+        "actions without a station are refused; destroy publishes nothing": 1,
+        "choices apply to the articulation; an unknown choice is refused": 1,
+        "every sync re-reads the telemetry status for the status line": 1,
+        "frame after frame, the section is republished only when the age crosses a whole second": 1,
+        "leaving the station in Manual hands its joints back and takes the section down": 1,
+        "selecting the station publishes it in Automatic with its defaults": 1,
+        "sliders clamp to their range and refuse non-numbers": 1,
+        "the section is away while the Cockpit holds the rail, and while the layer is off": 1,
+        "the zoom is offered, and runs, only while the follow camera is on the station": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/stationResume.test.mjs": {
+      "names": {
+        "ISS: Resume gives the Canadarm2 joints the sway does not move their filed pose back": 1,
+        "Tiangong: resuming an arm gives its held joints their folded pose back, and only that arm": 1,
+        "a node given no matrix leaves the item’s nodes, as a model node goes back to its authored pose": 1,
+        "the ISS's Automatic lets telemetry back in and hands every part back": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/tiangongArticulation.test.mjs": {
+      "names": {
+        "a lab wing faces the Sun exactly: alpha across it, beta onto it": 1,
+        "a one-axis wing turns its cell side onto the Sun, as far as its axis allows": 1,
+        "in the Earth's shadow every wing turns flat to the Earth, edge into the flight": 1,
+        "the antenna aims at Tianlian, not TDRS: unit vectors, highest first": 1,
+        "the arms sway on one side of rest only, so they lift off the hull": 1,
+        "the joint table is the model build's: 37 nodes, every kind, frozen": 1,
+        "the model file has every joint node, under its parent, with an identity rest": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/tiangongModel.test.mjs": {
+      "names": {
+        "Tiangong is CSS (TIANHE) by NORAD number, drawn at the file's meters": 1,
+        "a station hidden for the Cockpit stays hidden; the dot's rules otherwise": 1,
+        "the ISS spec keeps the ISS's own rules": 1,
+        "the shipped asset is centred on the station, in meters, with its own textures": 1,
+        "the station's modules are CSS (…) entries; ships are vehicles": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/tiangongMounts.test.mjs": {
+      "names": {
+        "every mount is outside the hull, with a usable view frame": 1,
+        "the spec’s mount gives the view asked for in the world, else the first": 1,
+        "the station offers its views in order, Tianhe first": 1,
+        "the view is named after the entry, without the catalog’s \"CSS (…)\"": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/layers/satellites/tiangongStation.test.mjs": {
+      "names": {
+        "Automatic hands the Sun, the wings and the arms back": 1,
+        "a wing slider sets that wing alone, in radians; the group resume frees them all": 1,
+        "the description offers one slider per wing joint: two on Tianhe, eight on the labs": 1,
+        "the driver holds a wing set by hand at its angle while the others follow the Sun": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/layers/shipwrecks/cards.test.mjs": {
       "names": {
@@ -32493,6 +33242,13 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/parameterDefaults.test.mjs": {
+      "names": {
+        "no parameter default calls a method through an optional chain": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/perfTestRunner.test.mjs": {
       "names": {
         "test:perf discovers every benchmark and enables timing budgets in a serial process": 1,
@@ -32798,16 +33554,25 @@
         "Cesium’s own controls under the camera port retrace the drags and wheels, each wheel sent back in the input port’s lines": 1,
         "a Cesium viewer with no renderer bound gets a camera port over its own camera": 1,
         "a cancelled flight has let go before its callbacks, so they can fly again": 1,
+        "a corner can be in view when the mount and centre are outside": 1,
         "a flight Cesium does not start ends cancelled rather than never": 1,
+        "a low viewer can see a plane beyond the WGS84 horizon": 1,
+        "a nearby plane below the ellipsoid is visible to low and high viewers": 1,
+        "a non-finite camera direction leaves visibility unknown": 1,
+        "a plane behind the camera is outside the frustum": 1,
+        "a plane in front of the camera is visible": 1,
         "a pose measures heading, pitch and roll as Cesium does, and leaves the camera as it was": 1,
         "an unmoved camera answers its pose from the last read; any change reads it anew": 1,
         "commands announce themselves first; flights raise flightEnd once each": 1,
+        "deep viewers do not lose nearby planes to the horizon test": 1,
         "endFrame world ends a flight out of a lookAt frame": 1,
         "followFrame is there only with its capability": 1,
         "setFov holds the vertical angle across resizes, and waits for a first one": 1,
         "setFov(null) gives the angle back: Cesium’s own fov again, kept as Cesium keeps it": 1,
         "the camera port gives the clock its own tick back as it goes": 1,
-        "the camera port retraces the reference flights, views and frames": 1
+        "the camera port retraces the reference flights, views and frames": 1,
+        "the horizon rejects a negative-height plane on the far side": 1,
+        "visiblePoints is there only with its capability, and unknown outside 3D": 1
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -32917,6 +33682,7 @@
         "a material drawing a blob from an atlas slot keeps that blob alive after the slot changes": 1,
         "a model load superseded or failed settles once": 1,
         "a model past its pixel cap is scaled down each frame; fades and culls too": 1,
+        "a model poses its named nodes once ready, writes only what changed, and gives a dropped one its own pose back": 1,
         "a model set that recedes fades its models toward the limb with their focus; focus alone dims": 1,
         "a moved clamped fill is hidden where a rebuild in flight still draws it": 1,
         "a moved clamped fill shows again where the retiring host draws it when the host drawing it alone goes unbuilt": 1,
@@ -33010,7 +33776,7 @@
         "the cyclones layer draws clamped dots, draped tracks and holed cones on a viewer of its own": 1,
         "the directions layer draws its markers, flowing route and maneuver dots on a viewer of its own": 1,
         "the earthquakes layer draws its discs as ground fills on a viewer of its own": 1,
-        "the fire perimeters layer draws holed ground fills and draped fire lines on a viewer of its own": 1,
+        "the fire perimeters layer draws holed ground fills and draped outlines on a viewer of its own": 1,
         "the installations layer draws its named markers as outlined point primitives on a viewer of its own": 1,
         "the installations layer draws its site dots, outlines and selected dot on a viewer of its own": 1,
         "the local ADS-B layer draws its aircraft, 978 MHz rings and trail head on a viewer of its own": 1,
@@ -33062,6 +33828,41 @@
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
+    },
+    "src/render/cesium/drawLineAges.test.mjs": {
+      "names": {
+        "a draped aged line draws by a ground primitive of its own, its times along its length": 1,
+        "a draped line’s age texels lie along it by distance, and a long line takes more rows": 1,
+        "a polyline’s age texels: a point at the place of the one before it is dropped, the rest even along it, times in seconds before the newest": 1,
+        "a windowed line is cut on the scene clock: time passing changes its material, never its line": 1,
+        "a windowed line’s age texels carry its span, in seconds; an endless one cuts at now alone": 1,
+        "an aged line built anew lets its old material go once its primitive is gone": 1,
+        "an aged line fades on the scene clock: time passing changes its material, never its line": 1,
+        "an aged line given new points and times moves in place and takes the new times": 1,
+        "an aged line made first leaves its style’s type named as a plain material of it is": 1,
+        "segment colours fade with age too, each segment with its own two times": 1,
+        "without the capability a line ignores its age fade; with it a bad fade is refused": 1,
+        "without the window’s capability a line ignores its span and draws whole": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/render/cesium/drawLineBreaks.test.mjs": {
+      "names": {
+        "a draped line in runs drapes a ground piece a run; a solid segmented one a ground instance a segment, none across a break": 1,
+        "a draped line in runs whose first run is later than its second times each run by its own points": 1,
+        "a line in runs takes packed positions and breaks": 1,
+        "a revealed line in runs reveals them in order, along their own length": 1,
+        "a run of a line that fades with age takes its own points’ times": 1,
+        "an arrow in runs has a head at the end of each run": 1,
+        "an undraped line in runs is a polyline a run in its collection, each picked as the line": 1,
+        "changed breaks draw the line anew; the same ones change it in place": 1,
+        "segment colours and shows stay a pair of positions; the pairs across a break draw nothing": 1,
+        "where the scene cannot drape, a draped line in runs draws a run over the surface each, hidden past the horizon": 1,
+        "without the capability a line ignores its breaks; with it bad breaks are refused": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/render/cesium/drawModels.test.mjs": {
       "names": {
@@ -33876,6 +34677,7 @@
         "a setBase that ends while a later one’s style still loads is settled; the later one then replaces it": 1,
         "a slow vector setBase a later setBase supersedes changes nothing, nor one the destroy ends": 1,
         "a throwing listener with no error listener is reported and the frame goes on": 1,
+        "point visibility capability is optional and the stub reports unknown": 1,
         "the after-destroy check fails a renderer whose sets keep items once it is destroyed": 1,
         "the progress check fails a renderer that never says what it loads": 1,
         "the resize check fails a renderer whose resize does not follow its container": 1,
@@ -34089,7 +34891,6 @@
         "a revocation also covers the release a stopped run reaches later": 1,
         "a revoked scene release turns no further layer off": 1,
         "a run refuses the visual commit of a shot cancelled mid-transition": 1,
-        "a run resumed inside a flight goes on from that point of the path and clock": 1,
         "a run resumed inside a hold plays its layers on from the seek’s state and waits only the rest of it": 1,
         "a scene run supersedes a LOAD still suspended on its visual await": 1,
         "a scene without shots cannot be saved to Stories": 1,
@@ -35524,6 +36325,80 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/tooling/blender-cut-time.test.mjs": {
+      "names": {
+        "nine shot cut": 1,
+        "six shot seek total": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/tooling/blender-import-timing.test.mjs": {
+      "names": {
+        "Director import timing": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/tooling/blender-legacy-numbers.test.mjs": {
+      "names": {
+        "legacy numeric fields": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/tooling/blenderCamera.test.mjs": {
+      "names": {
+        "CLI works in paths with spaces and refuses overwrites or invalid projection": 1,
+        "ENU translation uses WGS84 meters and ellipsoid heights": 1,
+        "OpenUSD parses the stage": 1,
+        "USD stage is Z-up meters with one camera per shot and per-frame matrices": 1,
+        "USD stage records rational fps and portrait apertures": 1,
+        "a frame before the exclusive scene end is never dropped": 1,
+        "a scene is selected by sceneId": 1,
+        "anchors, cubic moves, cuts, holds and rational frame timing are sampled": 1,
+        "cardinal cameras use Blender X right, Y up, negative Z forward": 1,
+        "changed tangent frames and nonzero roll match an independent Cesium Camera": 1,
+        "explicit horizontal lens works for landscape and portrait output": 1,
+        "invalid or ambiguous input fails before export": 1,
+        "long decimal timelines do not gain a rounding-only frame": 1,
+        "projection settings cannot be silently clamped by Blender": 1,
+        "registered minimum holds and evidence-sequence durations shift later shots": 1,
+        "shot timing follows Director runtime holds, not only the saved holdSec": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/tooling/blenderCameraBom.test.mjs": {
+      "names": {
+        "a UTF-8 BOM scene exports like the same scene without BOM (Director import accepts both)": 1,
+        "the input file size limit includes the UTF-8 BOM": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/tooling/blenderCameraFifoInput.test.mjs": {
+      "names": {
+        "a FIFO --input without a writer is rejected as non-regular instead of hanging": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/tooling/blenderCameraPartialWrite.test.mjs": {
+      "names": {
+        "a failed write leaves no partial stage and a retry succeeds": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/tooling/blenderCameraStderr.test.mjs": {
+      "names": {
+        "exporter diagnostics with a shot ID are one line without raw control bytes": 1,
+        "validator diagnostics from document field names are one line without raw control bytes": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/tooling/boundedCache.test.mjs": {
       "names": {
         "an expired entry is not served": 1,
@@ -35995,6 +36870,10 @@
         "Google middleware resolves credentials per request and preserves search responses (dev)": 1,
         "Google middleware resolves credentials per request and preserves search responses (preview)": 1,
         "OSRM routing preserves aliases, cache, span guards and upstream failure behavior": 1,
+        "a Places empty answer ({}) is a 200 with Cache-Control private, max-age=300": 1,
+        "a Places transport failure is a 502 with Cache-Control no-store": 1,
+        "a Places unreadable 200 is a 502 with Cache-Control no-store": 1,
+        "a Places unreadable 429 is a 429 with Cache-Control no-store": 1,
         "a budget spent in the outbound queue is reported as busy, not as an outage": 1,
         "a pathological maneuver count is bounded before it reaches the browser": 1,
         "a routing outage is reported as one, not as \"no route found\"": 1,
@@ -36494,6 +37373,7 @@
     },
     "src/tools/queries/environment.test.mjs": {
       "names": {
+        "a fire is in the area when one of its pieces is": 1,
         "a fire perimeter enclosing the whole area is found": 1,
         "brief sections use a named place at its own point": 1,
         "composites reach their sections through the catalog": 1,
@@ -36501,6 +37381,7 @@
         "fire perimeter coordinates stay at the dateline for closed and multipart outlines": 1,
         "fire perimeter queries include dateline interiors and exclude the opposite meridian": 1,
         "fire perimeters are placed by their outline and sorted by size": 1,
+        "get_fire_perimeters rejects a snapshot that breaks the contract": 1,
         "installation names wait for the name pack, briefly": 1,
         "map features name what is at a location and report an unconfigured server": 1,
         "military awareness gathers contacts around a point and marks failures": 1,
@@ -36825,6 +37706,7 @@
         "ADJUST, SAVE and RESET follow whether a camera can be calibrated": 1,
         "Escape claims calibration cancellation and disposal prevents late commits": 1,
         "FOCUS waits for an active camera while the other buttons work": 1,
+        "a camera picked while the panel is collapsed shows its own still on expanding": 1,
         "a camera switch cancels calibration before old blur can change the new camera": 1,
         "a disabled layer disables every button but the switch": 1,
         "a layer that was never on leaves an open panel alone": 1,
@@ -36837,6 +37719,7 @@
         "blur alone commits the draft; an empty draft changes nothing": 1,
         "coverage reads its mode, or the older on/off flag": 1,
         "keys typed into a pose chip stay in it": 1,
+        "leaving the Cameras sheet stops the live video and coming back starts it again": 1,
         "losing the active camera resets the CAL chip": 1,
         "switching the layer off collapses the panel it opened": 1,
         "the buttons stay the elements the controls listen on": 1,
@@ -36845,7 +37728,9 @@
         "the meta line of a disabled layer does not describe its last camera": 1,
         "the panel keeps its initial markup until the controls render": 1,
         "the panel meta line reads a bearing that rounds to north as HDG 0°": 1,
-        "the scene summary types in, then holds the whole text": 1
+        "the scene summary types in, then holds the whole text": 1,
+        "the still preview is fetched only while the tab and the panel are shown": 1,
+        "the still preview waits for the Cameras sheet on phones": 1
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -36866,6 +37751,15 @@
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
+    },
+    "src/ui/cctvPickerOpening.test.mjs": {
+      "names": {
+        "FOCUS on the shown camera keeps it after a pan": 1,
+        "leaving the picker without a pick lets the camera follow a pan": 1,
+        "the opening camera shows as its own option": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/ui/cctvVideo.test.mjs": {
       "names": {
@@ -36949,11 +37843,16 @@
         "pages, the cycle toggle and the source follow the controller": 1,
         "ready, cached, empty and unavailable each label the news differently": 1,
         "regional news and local conditions render what the region returned": 1,
+        "the LIVE page loads the stream only on Play, stops it when left, and its controls reach LiveControls": 1,
+        "the automatic cycle never turns to the LIVE page and waits while it is shown": 1,
         "the card and its toggle render the collapse the controller presents": 1,
         "the card is labelled in the UI language": 1,
         "the news banner is hidden by the stylesheet, not only by the attribute": 1,
         "the news footer follows the news state across page changes, not a static RECENT": 1,
-        "the route card sits in the briefing card, hidden until a route": 1
+        "the route card sits in the briefing card, hidden until a route": 1,
+        "the stream going while LIVE is shown falls back to Live Signals with three pages": 1,
+        "with a stream the LIVE page is the fourth, reached by the arrows and its tab": 1,
+        "without a stream the briefing keeps its three pages and hides the LIVE tab": 1
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -37037,6 +37936,9 @@
         "a provider's view reports its subject, refuses voice entry and ends with its layer": 1,
         "a ride handed to an aircraft on a layer Contacts turned on keeps that layer": 1,
         "a tracked satellite needs Satellites on for the ORBIT entry": 1,
+        "a voice entry asking for a military class follows the nearest match without Contacts": 1,
+        "a voice entry whose followed aircraft already matches stays on it": 1,
+        "a voice entry with no matching aircraft says so and follows nothing": 1,
         "other layers may be turned off during a session; the ridden layer ends it": 1,
         "the readout entry reads BRIDGE for a selected vessel": 1,
         "the readout offers the same entry, labelled by kind, and enters on click": 1,
@@ -37096,6 +37998,7 @@
         "RETURN to a satellite that left the catalogue offers the one before it": 1,
         "a click a tool owns is left alone": 1,
         "a click on a site marker focuses it through the layer; a click elsewhere eases back": 1,
+        "a click on a site's label box focuses it, as one on its dot does": 1,
         "a double-click on a site focuses it and keeps the orbital view": 1,
         "a satellite row rides it, staying in orbit; RETURN goes back": 1,
         "a site row turns the camera onto it, holds it, and reads its off-nadir angle": 1,
@@ -37103,6 +38006,8 @@
         "an arrow during the ease back from a focus turns on the arrows’ clock": 1,
         "another layer's card over the orbital view keeps the click": 1,
         "another site row switches the focus; the held site row ends it": 1,
+        "from a station view, a site beyond 45° of where the view looks is not focused": 1,
+        "from a station view, a site row turns the camera onto it from the view’s own point and holds it": 1,
         "in orbit Live Signals lists the sites getNearby finds and the nearest satellites": 1,
         "leaving orbit leaves no orbital rows to act on": 1,
         "reduced motion cuts onto the site, back, and between satellites": 1,
@@ -37133,6 +38038,8 @@
         "a satellite with no ground track stays north-up": 1,
         "a shut orbit gate keeps the entry hidden and refuses entry": 1,
         "a tracked satellite offers an ORBIT entry in Contacts and the readout": 1,
+        "a view with a card of its own shows it in place of the entry’s identity": 1,
+        "a view with no entry, or one that cannot be ridden, keeps the subject": 1,
         "a zoom button that turns off hands focus to the other one": 1,
         "a zoom step animates with blur and a lock tick": 1,
         "a zoom step holds a soft focus until its imagery loads": 1,
@@ -37144,9 +38051,12 @@
         "back to nadir from past the limb, the sensor waits for the view": 1,
         "contact navigation stays with the satellite": 1,
         "double-clicking the followed satellite enters the orbital view": 1,
+        "each station view rides its own entry, so the card describes that module": 1,
         "each zoom step sets the field of view; exit restores it exactly": 1,
         "entering takes the camera and shows only the orbital HUD": 1,
         "from 8x the place lookup asks for the populated place in view": 1,
+        "leaving a station view selects Nauka; leaving any other keeps the satellite": 1,
+        "leaving the plain orbital view refocuses the satellite ridden": 1,
         "looking past the limb shows no sensor swath; a GEO view draws no strip": 1,
         "losing the satellite ends the view without refocusing it": 1,
         "off nadir the sensor strip stays and its swath reads approximate": 1,
@@ -37159,12 +38069,18 @@
         "the TLE age is measured from the time the satellite is shown at": 1,
         "the camera sits on the satellite looking at the Earth centre, north up": 1,
         "the camera turns to the ground track, so the picture scrolls along it": 1,
+        "the chosen view is kept while the model is away, and one view has no arrows": 1,
+        "the left arrow steps back through the views, wrapping round": 1,
         "the orbital view reads the TLE age on each HUD publish": 1,
         "the readout says OFF-NADIR while the view is tilted": 1,
         "the sensor strip follows the view through a zoom step, not ahead of it": 1,
+        "the station is ridden from its mount: the camera sits there and looks along it": 1,
+        "the station opens on its first view and the arrows step through the rest": 1,
+        "the view arrows do nothing outside a station view": 1,
         "the wheel steps the orbital zoom one notch at a time": 1,
         "tilt and zoom keys leave fields, sliders and open utilities alone": 1,
-        "tracking an aircraft from orbit ends the view and keeps that tracking": 1
+        "tracking an aircraft from orbit ends the view and keeps that tracking": 1,
+        "without a mount the same satellite keeps the nadir picture, and gets it back": 1
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -37537,6 +38453,19 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
+    "src/ui/contextCardFrame.test.mjs": {
+      "names": {
+        "desktop: a card that mounts asks for the still": 1,
+        "desktop: a card that unmounts stops the still, and a remount resumes it": 1,
+        "desktop: the Context card keeps refreshing while the accordion folds CCTV": 1,
+        "desktop: the bigger view is released when the card unmounts, also in the tick it closes": 1,
+        "phone: a camera picked with the Context sheet open gets its still": 1,
+        "phone: the bigger view keeps refreshing after the layout turns phone, and stops once closed": 1,
+        "phone: the card on a closed Context sheet waits": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/ui/contextControls.test.mjs": {
       "names": {
         "Context starts with an explicit idle snapshot": 1,
@@ -37567,7 +38496,8 @@
         "a Contacts transition keeps the tab focusable until it settles": 1,
         "before ContextControls renders, the switch shows its initial markup": 1,
         "the nearby sites search is busy, without native disable, until it settles": 1,
-        "the panel carries the mode beside the classes its chrome writes": 1
+        "the panel carries the mode beside the classes its chrome writes": 1,
+        "with Context closed, the collapsible sections are already in the page for PanelChrome": 1
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
@@ -37765,12 +38695,12 @@
         "a share link, scene or saved view naming Cyber opens Tactical with Sonar on": 1,
         "a shared scope opacity is restored and rides in the next share state": 1,
         "links and scene shots record Tactical with Sonar as the Cyber code, and only that": 1,
-        "narrow Omnibar corners clear the World Timeline over the dock": 1,
         "scope choice and expanded feather survive every HUD layout and both restore paths": 1,
         "shared panel hooks affect only opted-in rail surfaces without overriding disclosure and concealment": 1,
         "style presets keep their own HUD layout and never touch Sonar": 1,
         "stylesheets carry no Cyber theme and show the sweep only while Sonar is on": 1,
         "the Display panel offers Sonar as an opt-in toggle under the HUD layout": 1,
+        "the Omnibar dock sits above the World Timeline, and narrow corners clear the dock": 1,
         "the desktop bottom row: credits on the Power Up baseline, the dock lifted, the corners level": 1
       },
       "origin": "upstream-sync-11",
@@ -37787,6 +38717,8 @@
     },
     "src/ui/imageryBoxTool.test.mjs": {
       "names": {
+        "a drag across the dateline is the short box, not a box round the world": 1,
+        "a drag whose short arc is still over the size limit is refused as too large": 1,
         "a newer tool taking the pointer mid-drag cancels the session and returns everything": 1,
         "a session claims the pointer, borrows the stock clicks, freezes the camera only mid-drag and returns everything with the box": 1,
         "a session takes the pointer from another tool, which is told": 1,
@@ -38253,6 +39185,49 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
+    "src/ui/liveControls.test.mjs": {
+      "names": {
+        "Play without the host element in the page, or without a selection, does nothing": 1,
+        "a new selection stops the stream; the same entry selected again keeps it": 1,
+        "a selection no stream names keeps the section away; the plain key counts too": 1,
+        "a selection that moves straight on to an entry with the same stream keeps the player": 1,
+        "a view that is hidden removes the player only when it is in that view": 1,
+        "clearing the selection takes the section down; another layer clearing does not": 1,
+        "constructed with the Cockpit already on, playLive uses the page's screen": 1,
+        "destroy stops the stream, detaches the actions and publishes nothing": 1,
+        "entering or leaving the Cockpit removes the player: the view now shown offers Play again": 1,
+        "entering the Cockpit without the page's screen in the page removes the player": 1,
+        "nothing selected publishes no section; a selection with streams publishes them": 1,
+        "playLive builds the player for the chosen stream in the section, once; Try again builds it anew": 1,
+        "selecting a station with streams builds no player until Play": 1,
+        "the 2 s refresh publishes nothing when nothing changed": 1,
+        "the Cockpit going on or off with nothing playing builds nothing": 1,
+        "the arrows step through the streams, wrapping, and a playing stream hands over": 1,
+        "the chosen stream going from the list stops it and picks the first that remains": 1,
+        "the layer is asked again on the timer: an entry that settles as docked gains the streams": 1,
+        "with one stream there is nothing to cycle": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
+    "src/ui/livePanel.test.mjs": {
+      "names": {
+        "a different stream chosen while idle waits for Play too": 1,
+        "a language change keeps the same screen element and neither stops nor restarts the stream": 1,
+        "a stream that cannot be embedded says so, without Try again": 1,
+        "a view shows the subject, the stream and Play under the IP notice, and loads nothing by itself": 1,
+        "an offline stream shows the fallback card with Try again, and is not restarted by itself": 1,
+        "collapsing the section, or Context, stops the player; opening it starts nothing": 1,
+        "publishing null hides the section again": 1,
+        "starting shows the waiting dot and says LOADING": 1,
+        "the arrows step through the streams": 1,
+        "while playing the badge says ON AIR with the blinking dot, and there is no card": 1,
+        "with one stream there are no arrows and no counter": 1,
+        "without a view the section is hidden and shows OFF": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/ui/localAdsbGuidanceI18n.test.mjs": {
       "names": {
         "Local ADS-B guidance hint is translated in the layer row": 1
@@ -38455,17 +39430,15 @@
         "destroy puts panels back and removes the shell": 1,
         "downward sheet pull closes through borrowed-panel lifecycle and returns tab focus": 1,
         "every tab names a sheet and every sheet panel maps back to its sheet": 1,
-        "failed mobile Contacts entry uses the existing notice and cancelled/disposed entries stay quiet": 1,
         "focus moves into the sheet and returns to the tab on close": 1,
         "focus that moved before the tab bar renders stays where it went": 1,
         "layout settling after a sheet opens is part of opening": 1,
-        "manual Context opens the existing transaction without disabling the tracked aircraft": 1,
-        "manual Context respects an active mode, busy transitions, missing tracks and disposal": 1,
         "multitouch, cancellation, sheet changes and desktop transitions abandon the gesture": 1,
         "native controls and custom sliders keep touch gestures": 1,
         "on phones the News panel shows in the Context sheet only, like Weather": 1,
         "one sheet at a time, presented with aria-expanded and a backdrop": 1,
         "only taps on a tab toggle sheets": 1,
+        "opening the Context tab only presents its panel and starts no Context mode": 1,
         "pressing a tab opens its sheet, pressing it again closes it": 1,
         "share state and restores follow the preference, not layout collapse": 1,
         "sheets borrow panels and put them back exactly as they were": 1,
@@ -38475,7 +39448,6 @@
         "the phone shell keeps the required attribution visible": 1,
         "the share link keeps the state from before the sheets": 1,
         "the shell publishes whether it is on and which sheet is open": 1,
-        "the tab-open callback reports only a successful manual opening": 1,
         "touches outside the active sheet and destroyed listeners cannot dismiss or claim a gesture": 1
       },
       "origin": "upstream-sync-9",
@@ -38727,6 +39699,27 @@
       },
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
+    },
+    "src/ui/pageRootClasses.test.mjs": {
+      "names": {
+        "Stories follows a loading screen removed, added later, nested or renamed": 1,
+        "Stories holds loading-screen-shown while the loading screen shows": 1,
+        "Stories mounted before the loading screen follows it once it is added": 1,
+        "Stories without a loading screen holds no class": 1,
+        "a held class stays until its last holder lets go": 1,
+        "a launcher removed outside the welcome view clears launcher-shown": 1,
+        "launcher-shown is on while the first-run launcher is on the page": 1,
+        "no rule hangs a :has() on body, and every root class keeps its weight": 1,
+        "the HUD holds hud-minimal-active only while the Minimal HUD is active": 1,
+        "the Omnibar holds has-omnibar, its results and focus inside it": 1,
+        "the World Timeline holds has-world-timeline while it is drawn": 1,
+        "the dock holds dock-has-voice and assistant-voice-mode with its voice control": 1,
+        "the language picker holds has-locale-picker while it is drawn": 1,
+        "the panel stack holds left-panel-open while a panel directly in it is open": 1,
+        "v-root-class: mounted, updated, swapped and unmounted": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/ui/panelChromeButtons.test.mjs": {
       "names": {
@@ -39015,6 +40008,7 @@
     "src/ui/recentImagery.test.mjs": {
       "names": {
         "DETAILS is a collapsed rail card holding every note, and the empty-days toggle": 1,
+        "DETAILS shows partial coverage for a dateline day with one side empty, unknown when a side did not answer": 1,
         "Escape clears the preview first, then cancels the box tool, then blurs the strip": 1,
         "an oversized box offers ZOOM IN in a fixed slot at the end of the notice line; it asks the layer to fit": 1,
         "cards carry thumbnail, date, sensor, cloud, START HERE and PREVIEW; the chips follow the mode without moving": 1,
@@ -39293,6 +40287,13 @@
       "origin": "upstream-sync-11",
       "since": "2026-11-21"
     },
+    "src/ui/spotConditions.test.mjs": {
+      "names": {
+        "a wildfire is placed at its card anchor, not its first ring": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/ui/stateOwners.test.mjs": {
       "names": {
         "navigation generations belong to their owner and teardown closes both entry paths": 1,
@@ -39301,6 +40302,18 @@
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
+    },
+    "src/ui/stationPanel.test.mjs": {
+      "names": {
+        "Automatic shows the subject, the live telemetry age, the Sun line and the note": 1,
+        "Manual shows the groups with the active choice, the sliders and the resume button": 1,
+        "publishing null hides the section again": 1,
+        "the mode buttons and the zoom button call the owner": 1,
+        "the status line words each telemetry state, with ages in seconds or minutes": 1,
+        "without a view the section is hidden": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
     },
     "src/ui/statusChipOwners.test.mjs": {
       "names": {
@@ -39389,6 +40402,7 @@
     },
     "src/ui/storiesView.test.mjs": {
       "names": {
+        "the announcement stays unread when a lazy Stories open resolves to false": 1,
         "the story screen previews a drag and seeks once on release": 1
       },
       "origin": "upstream-sync-11",
@@ -39508,6 +40522,13 @@
       "origin": "upstream-sync-6",
       "since": "2026-10-17"
     },
+    "src/ui/styles/iconGuard.test.mjs": {
+      "names": {
+        "an icon's glyph stays in its box under a page-wide jQuery UI .ui-icon rule": 1
+      },
+      "origin": "upstream-sync-12",
+      "since": "2026-11-25"
+    },
     "src/ui/surface-tab-order.test.mjs": {
       "names": {
         "surface cycling never targets deliberately excluded controls": 1
@@ -39574,9 +40595,18 @@
     },
     "src/ui/views/intelHudView.test.mjs": {
       "names": {
+        "a HUD displayed again shows current readouts at once": 1,
+        "a HUD not displayed runs no timers, and a reply typing out is shown whole": 1,
+        "a HUD shown while not displayed refreshes when it is displayed": 1,
+        "a HUD that is not displayed works out and publishes no readouts": 1,
+        "a readout keeps its text node and changes its text": 1,
+        "a summary being worked out when the HUD goes is dropped and asked again": 1,
+        "a view unmounted leaves the HUD at rest until a mounted view says": 1,
         "the corners are in the document from mount, before IntelHUD presents them": 1,
         "the first view renders the corners, edges and bottom bar": 1,
         "the selected vessel readout shows while a vessel is selected": 1,
+        "the vessel and language wait while the HUD is not displayed": 1,
+        "the view reports whether #intel-hud is displayed, and IntelHUD follows": 1,
         "visibility, variant, style colors and readouts follow IntelHUD": 1
       },
       "origin": "upstream-sync-11",
@@ -39655,9 +40685,9 @@
         "a tick shows its label on hover, and a tap by it goes to its mark": 1,
         "on a track that runs over years, only the last minutes are near now": 1,
         "paused just before the end, play carries on rather than restarting": 1,
+        "play does nothing at live, and runs in real time from a time in the past": 1,
         "play held for a layer to load shows a spinner once the hold lasts": 1,
         "play holds at the end of a track that reaches past now": 1,
-        "play runs in real time, from the start of the track when at live": 1,
         "the pointer shows the nearer of two ticks within 6 px, and a zoom or a pan clears it": 1,
         "the speed chosen sets how fast play runs, at once while playing": 1,
         "the speed shown follows the world clock, and Play runs at its rate": 1,
@@ -40352,8 +41382,6 @@
     "src/voice/gevActions.test.mjs": {
       "names": {
         "ALPR common names toggle only the registered camera layer through the normal voice action": 1,
-        "Cockpit entry establishes Contacts WITHOUT claiming the visual lane": 1,
-        "Cockpit entry rollback also stays inert on the visual lane": 1,
         "Cockpit refuses every named voice camera route before camera or selection mutation": 1,
         "Contacts follow-ups filter the cohort that was actually displayed": 1,
         "Data Layers voice inventory hides the Context coordinator while current-view truth retains it": 1,
@@ -40367,10 +41395,14 @@
         "a chained orbit preserves its current destination flight while still stamping authority": 1,
         "a degenerate depth pick does not escape the view-target prewarm": 1,
         "a drag during the first of two chained fly-tos still drops the queued motion": 1,
+        "a failed military voice entry switches off only the layer it switched on": 1,
+        "a failed voice Cockpit entry leaves the Context mode as it was": 1,
         "a fly-to that stops a running motion says so": 1,
         "a genuine set_context_mode request DOES claim the visual lane": 1,
         "a lookup cancelled by a newer one that finds nothing does not hide the flight that landed": 1,
         "a lost cross-mode switch reports every mode field in the shared vocabulary": 1,
+        "a military voice Cockpit entry switches Military Flights on as a plain layer, never Contacts": 1,
+        "a military voice entry waits for a just-switched-on layer to report its first data": 1,
         "a motion acts at a landed flight that a later failed lookup replaced": 1,
         "a motion behind a geocoded fly-to yields to a search started while it flies": 1,
         "a motion beside a fly-to that finds nothing never acts at an earlier reply's flight": 1,
@@ -40389,7 +41421,6 @@
         "a motion runs at its flight when a later fly-to finds nothing (lands first)": 1,
         "a motion runs at its flight when a later fly-to finds nothing (not found first)": 1,
         "a motion sent after a fly-to that found nothing still waits for the flight before it": 1,
-        "a nested Cockpit rollback result is translated too": 1,
         "a newer analyst call wins over an overlapping Contacts scan": 1,
         "a newer voice action makes an older deferred navigation authority inert": 1,
         "a partial analyst card shows one partial chip": 1,
@@ -40410,22 +41441,20 @@
         "analyst-only lookup distinguishes duplicate names and uses canonical aircraft IDs": 1,
         "analyst_query and get_current_view_state carry stale feed provenance": 1,
         "analyst_query counts the whole loaded set, not a 2,000-record slice": 1,
+        "analyst_query keeps a fire's discovery time apart from its last growth": 1,
         "analyst_query keeps canonical IDs raw so numbered references still fly to the station": 1,
         "analyst_query keeps its answer when one record has an out-of-range time": 1,
         "analyst_query keeps transit route IDs raw so a follow-up filter still matches": 1,
         "analyst_query refusals carry their code and the allowed values": 1,
         "bad move_camera arguments are refused without waiting for a flight": 1,
         "community Radio names remain untrusted data and cannot redirect model-visible routing": 1,
-        "control_cockpit adopts the newest selection after Contacts settles": 1,
         "control_cockpit cancellation is inert when Contacts is already active": 1,
-        "control_cockpit contains entry exceptions and still restores the prior Context mode": 1,
-        "control_cockpit delegates selected-flight adoption to the canonical cockpit owner": 1,
-        "control_cockpit does not mutate selection when Contacts entry fails": 1,
+        "control_cockpit contains entry exceptions and passes the prior track for rollback": 1,
+        "control_cockpit delegates selected-flight adoption to the canonical cockpit owner and leaves Context alone": 1,
         "control_cockpit enter skips selected non-flight context": 1,
+        "control_cockpit enters on the current selection and keeps the prior track for rollback": 1,
         "control_cockpit forwards schema-valid navigation filters": 1,
         "control_cockpit resolves spoken TR-3B spellings to the tr3b class id": 1,
-        "control_cockpit restores the prior Context mode after Cockpit entry fails": 1,
-        "control_cockpit rolls Contacts back when the turn becomes stale at commit": 1,
         "dependent voice navigation waits for the destination viewport to arrive": 1,
         "different OSM siblings from one response do not race the server slot or memory": 1,
         "every live basemap is reachable by its own id — no enum value without a voice alias": 1,
@@ -40526,6 +41555,7 @@
         "voice CCTV focus reports cockpit ownership": 1,
         "voice CCTV focus reports tracking ownership separately from no active camera": 1,
         "voice CCTV select, next, prev, and nearest report tracking-refused flights after selection": 1,
+        "voice Cockpit entry, entered or failed, never changes the Context mode": 1,
         "voice Radio Pause while disabled is a truthful playback-only no-op": 1,
         "voice Radio Stop rechecks ownership after an awaited player boundary": 1,
         "voice Radio Volume waits for settled certain lifecycle authority": 1,
@@ -40771,9 +41801,10 @@
         "a box changed by hand mid-search is left alone, not pinned under the old name": 1,
         "a box the layer refuses is refused with its reason, and the layer is turned on first": 1,
         "a catalog failure is not reported as \"no imagery\"": 1,
-        "a mixed antimeridian area gets the deliberate imagery date-line refusal": 1,
+        "a mixed antimeridian area is searched as its short-arc box": 1,
         "a pin replaced by hand while it loads is not narrated as still loading": 1,
         "a refused box leaves the operator panel sources and mode as they were": 1,
+        "a small area across the date line is pinned at its short-arc centre": 1,
         "a superseded search is cancelled before anything is pinned": 1,
         "an already-aborted search does not change the imagery panel": 1,
         "an area handle searches its bounding box; the view and pointer have their own boxes": 1,
@@ -40885,9 +41916,15 @@
         "Provider Settings uses its ready dialog handlers and refuses unavailable or cancelled requests": 1,
         "a failed typed turn keeps follow-up memory; a stop or voice error clears it": 1,
         "a panel that yielded to a tray expands in the centre once it closes": 1,
+        "a slow voice selection never replaces a card clicked since it was asked": 1,
+        "a typed chat selection opens its Context card and steps the docked chat panel down": 1,
         "a typed message sends, shows the reply and is recalled with Up": 1,
         "a voice panel asked for from chat leaves unrelated focus alone": 1,
-        "active provider output reveals Preview after done; manual choice wins until genuine input, replays do not reset idle": 1,
+        "a voice selection in Cockpit leaves the hidden Context card alone": 1,
+        "a voice selection in Cockpit, as Cockpit reports it, leaves the Context card alone": 1,
+        "a voice selection leaves a voice panel above the dock as it is": 1,
+        "a voice selection opens its Context card, steps the docked voice panel down and keeps the reply": 1,
+        "active provider output reveals Preview after done; manual choice wins until genuine input, replays change nothing": 1,
         "actual binder/card has launcher toggle, Settings tab toggle, focus and disabled Preview": 1,
         "actual control default remains opt-out; panel markup has unique controlled panes and an outside alert": 1,
         "actual facade remount keeps failed-save live preferences/view and manual close, with no restore writes or focus theft": 1,
@@ -40915,6 +41952,7 @@
         "the mic button closes chat and minimize collapses voice to a bar": 1,
         "the voice inactivity timeout never ends a typed chat session": 1,
         "the voice panel close turns voice off": 1,
+        "the voice panel keeps the last reply until the next turn starts": 1,
         "transient native OpenAI response activity does not announce connection unavailability": 1,
         "unavailable host refuses direct voice operations before Cockpit or preference effects": 1,
         "undocking while a tray is open brings the panel back as its bar": 1,
@@ -41355,6 +42393,7 @@
     },
     "src/voice/voiceCard.test.mjs": {
       "names": {
+        "a card without an idle deadline keeps its reply until the next turn": 1,
         "a new hidden reply with identical words is still a fresh announcement": 1,
         "additive presentation gates retain the current localized reducer labels": 1,
         "controls: card controls without a voice control are inert": 1,
