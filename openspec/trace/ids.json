@@ -6255,7 +6255,7 @@
     "change": "upstream-sync-11"
   },
   "startup-view-001": {
-    "hash": "a94ce411b69ac7f6a971ff001a9155357f47623ac41757125cda378fd85cf523",
+    "hash": "d0a7cf3e16de5fd90848177c3b188b838379c0f8d8fe45964944c63b3c73122b",
     "since": "2026-09-27",
     "change": "set-startup-view"
   },
@@ -6280,12 +6280,12 @@
     "change": "set-startup-view"
   },
   "startup-view-006": {
-    "hash": "d593095cd0f3e188c5b5be6888ccaba608b4542e69d51c537164e135dcd949a5",
+    "hash": "5dfce10caadcf7851bf370fedeee2989cbb1fc19afba238fd46eb42c7f9b28d8",
     "since": "2026-11-26",
     "change": "upstream-sync-13"
   },
   "startup-view-007": {
-    "hash": "1f99d593c8961b7974080db95e9d7c7dd802cec937b4966bf6a678660744875c",
+    "hash": "bd873cbd82ab4a574bccac92fc6c278b026470219f2c93eae7e70a6f012bca37",
     "since": "2026-11-26",
     "change": "upstream-sync-13"
   },

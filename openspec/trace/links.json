@@ -7680,7 +7680,7 @@
     "src/app/startView.test.mjs › [startup-view-006] with an opening, the camera gets the Taiwan pose with no flight"
   ],
   "startup-view-007": [
-    "src/app/startView.test.mjs › [startup-view-007] the controls start no flight only for a page that gets an opening"
+    "src/app/startView.test.mjs › [startup-view-007] with no share state, the controls start no flight only for a page that gets an opening"
   ],
   "ste-lint-001": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-001] checks each Markdown file in openspec"
