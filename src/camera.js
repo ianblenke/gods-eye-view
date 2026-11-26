@@ -65,17 +65,23 @@ export function flyToStartView(viewer) {
   };
 }
 
-/** Set the start view and loader text for the application. */
+/**
+ * Set the start view and loader text for the application. With `opening`, the
+ * opening (src/app/openingIntro.js) ends where the camera stands, so the
+ * camera goes to Taiwan at once: a flight would move it during the opening.
+ */
 export function startApplicationView({
   viewer,
   hasShareState,
   loaderStatus,
   defer,
+  opening = false,
 }) {
-  if (!hasShareState) {
-    loaderStatus.textContent = t('Flying to Taiwan...');
-    defer(flyToStartView(viewer));
-  } else {
+  if (hasShareState) {
     loaderStatus.textContent = t('Restoring shared view...');
+    return;
   }
+  loaderStatus.textContent = t('Flying to Taiwan...');
+  if (opening) applyStartView(viewer, TAIWAN_VIEW);
+  else defer(flyToStartView(viewer));
 }

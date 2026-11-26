@@ -19,6 +19,7 @@ None yet. A later task adds a backfill capability if an upstream file needs it.
 
 ### Modified Capabilities
 
+- `startup-view`: upstream adds an opening animation. The animation now ends at the Taiwan pose. The change adds `startup-view-006` and `startup-view-007`, and writes again `startup-view-001`.
 - `location-presets`: the change retires `location-presets-003` and `location-presets-007`. It writes again the requirement text of `location-presets-004` and `location-presets-008`.
 
 ## Impact

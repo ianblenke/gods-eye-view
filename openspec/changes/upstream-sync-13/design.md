@@ -19,6 +19,12 @@ Purpose at archive time of `location-presets`: Keep the location presets in a kn
 - `mountApplicationViews.test.mjs` gives its camera double a `flyTo` function, because the fork starts with a timed flight above Taiwan.
 - `qaAircraftViewSheetOutput.test.mjs` starts a child process with the permission model. The coverage preload of the gate cannot run in that child. The change gives the child an empty `NODE_V8_COVERAGE` and empty `NODE_OPTIONS`.
 
+### D4: The opening ends on Taiwan
+
+Upstream plays an opening animation that ends where the camera stands. The fork flight to Taiwan would move the camera during the animation. The owner chose on 2026-11-26 that the opening lands on Taiwan. With an opening, the camera goes to the Taiwan pose at once. With no opening, the fork flight stays.
+
+Purpose at archive time of `startup-view`: Start the application at a known view when the page loads. Show the Taiwan view when the page has no share link. Keep the share link view when the page has one.
+
 ## Risks
 
 An upstream change to a shape that a fork test reads can break the test. The tasks check this after the merge.

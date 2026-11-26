@@ -1,4 +1,5 @@
 import { catalogControlServices } from './catalog.js';
+import { openingWanted } from './openingIntro.js';
 import { StyleManager } from '../ui/composition.js';
 import { applyStartView, startApplicationView, START_VIEW } from '../camera.js';
 import { initCockpitCloudEffects } from '../cockpitCloudEffects.js';
@@ -91,6 +92,7 @@ export function createApplicationControls({
     hasShareState: styleManager.hasShareState,
     loaderStatus,
     defer,
+    opening: openingWanted(),
   });
 
   return { styleManager, weatherEffects, cockpitCloudEffects };

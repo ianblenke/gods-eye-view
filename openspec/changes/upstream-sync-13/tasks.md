@@ -7,6 +7,9 @@
 - [x] 1.5 Adapt the fork tests to the merged code.
 - [x] 1.6 Retire the two pill scenarios of `location-presets`.
 - [x] 1.7 Keep these scenario IDs of `location-presets`: location-presets-004, location-presets-008.
+- [x] 1.8 End the opening on the Taiwan pose.
+- [x] 1.9 Keep these scenario IDs of `startup-view`: startup-view-001, startup-view-006, startup-view-007.
+- [ ] 1.10 Write the two Purpose lines of D2 and D4 at archive time.
 
 ## 2. Host evidence
 
