@@ -4504,12 +4504,10 @@
   "location-presets-002": [
     "src/locations.test.mjs › [location-presets-002] gives Taiwan five valid places"
   ],
-  "location-presets-003": [
-    "src/ui/locationControls.test.mjs › [location-presets-003] shows the Taiwan pill first"
-  ],
+  "location-presets-003": [],
   "location-presets-004": [
     "src/locations.test.mjs › [location-presets-004] flies to the island view",
-    "src/ui/locationControls.test.mjs › [location-presets-004] a click on the Taiwan pill flies to the island view"
+    "src/ui/locationControls.test.mjs › [location-presets-004] a choice of the Taiwan preset flies to the island view"
   ],
   "location-presets-005": [
     "src/search/offlineGeocoders.test.mjs › [location-presets-005] finds Taiwan by name or id"
@@ -4517,11 +4515,9 @@
   "location-presets-006": [
     "src/locations.test.mjs › [location-presets-006] gives Tampa five valid places"
   ],
-  "location-presets-007": [
-    "src/ui/locationControls.test.mjs › [location-presets-007] shows the Tampa pill between the Taiwan and Austin pills"
-  ],
+  "location-presets-007": [],
   "location-presets-008": [
-    "src/ui/locationControls.test.mjs › [location-presets-008] a click on the Tampa pill flies to the downtown view"
+    "src/ui/locationControls.test.mjs › [location-presets-008] a choice of the Tampa preset flies to the downtown view"
   ],
   "osh-001": [
     "src/data/oshProxy.test.mjs › [osh-001] reports no key on the status route when OSH_URL is not set"
@@ -7666,7 +7662,7 @@
     "src/tooling/spec/specs.test.mjs › [spec-trace-055] counts only a scenario that a modified requirement drops as removed"
   ],
   "startup-view-001": [
-    "src/app/startView.test.mjs › [startup-view-001] flies to the Taiwan pose"
+    "src/app/startView.test.mjs › [startup-view-001] flies to the Taiwan pose with no opening"
   ],
   "startup-view-002": [
     "src/app/startView.test.mjs › [startup-view-002] starts high above Taiwan after 500 ms"
@@ -7679,6 +7675,12 @@
   ],
   "startup-view-005": [
     "src/app/startView.test.mjs › [startup-view-005] shows the Taiwan flight text"
+  ],
+  "startup-view-006": [
+    "src/app/startView.test.mjs › [startup-view-006] an opening starts at the Taiwan pose with no flight"
+  ],
+  "startup-view-007": [
+    "src/app/startView.test.mjs › [startup-view-007] the controls start a flight only where the page plays no opening"
   ],
   "ste-lint-001": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-001] checks each Markdown file in openspec"

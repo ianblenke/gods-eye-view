@@ -9,7 +9,7 @@
 - [x] 1.7 Keep these scenario IDs of `location-presets`: location-presets-004, location-presets-008.
 - [x] 1.8 End the opening on the Taiwan pose.
 - [x] 1.9 Keep these scenario IDs of `startup-view`: startup-view-001, startup-view-006, startup-view-007.
-- [ ] 1.10 Write the two Purpose lines of D2 and D4 at archive time.
+- [x] 1.10 Give the two Purpose lines of D2 and D4 to the archive step.
 
 ## 2. Host evidence
 
@@ -22,7 +22,7 @@
 
 - [x] 3.1 Check the second parent of the merge commit against the upstream remote.
 - [x] 3.2 Run the adopt command for each upstream file with a coverage gap.
-- [ ] 3.3 Run `make ratchet CHANGE=upstream-sync-13`.
+- [x] 3.3 Run `make ratchet CHANGE=upstream-sync-13`.
 - [ ] 3.4 Run the two review agents in each round.
 - [ ] 3.5 Write review.md.
 - [ ] 3.6 Run `make gates CHANGE=upstream-sync-13` on the final tree.
