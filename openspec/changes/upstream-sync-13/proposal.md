@@ -19,11 +19,13 @@ None yet. A later task adds a backfill capability if an upstream file needs it.
 
 ### Modified Capabilities
 
-None yet. The design document lists each modified capability after the merge.
+- `location-presets`: the change retires `location-presets-003` and `location-presets-007`. It writes again the requirement text of `location-presets-004` and `location-presets-008`.
 
 ## Impact
 
 Rule 23: this plan adds no code file that the fork writes.
+
+Rule 25: upstream deleted the location bar. The owner chose on 2026-11-26 to follow upstream. The two pill scenarios are retired. One upstream test, `mountApplicationViews.test.mjs`, gets a camera double with a `flyTo` function, because the fork starts with a timed flight.
 
 The change adds no layer, no route and no QA script of the fork.
 

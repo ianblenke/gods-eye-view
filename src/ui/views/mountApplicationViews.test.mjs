@@ -104,7 +104,8 @@ async function countInspector(t, requestServices, constructControls) {
   });
   const flyToBounds = t.mock.fn(noop);
   const unbind = bindRenderer(viewer, {
-    camera: { ...port, setView: noop, cancelFlight: noop, flyToBounds },
+    // The fork starts the application with a timed flight above Taiwan.
+    camera: { ...port, setView: noop, cancelFlight: noop, flyTo: noop, flyToBounds },
     frame: { on: () => noop, requestRender: noop },
     globe: { weather: {} },
   });

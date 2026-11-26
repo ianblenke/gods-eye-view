@@ -138,32 +138,7 @@ function flightViewer() {
   return { viewer, flights };
 }
 
-test('[location-presets-003] shows the Taiwan pill first', () => {
-  const { controls, view } = presetControls(fixture());
-  const pills = view().cities;
-  assert.deepEqual(
-    pills.map((pill) => pill.id),
-    Object.keys(CITY_POIS),
-  );
-  assert.equal(pills[0].id, 'taiwan');
-  assert.equal(pills[0].label, 'Taiwan');
-  const ids = pills.map((pill) => pill.id);
-  assert.ok(ids.indexOf('taiwan') < ids.indexOf('austin'));
-  assert.equal(pills[ids.indexOf('austin')].label, 'Austin');
-  controls.destroy();
-});
-
-test('[location-presets-007] shows the Tampa pill between the Taiwan and Austin pills', () => {
-  const { controls, view } = presetControls(fixture());
-  const pills = view().cities;
-  const ids = pills.map((pill) => pill.id);
-  assert.ok(ids.indexOf('taiwan') < ids.indexOf('tampa'));
-  assert.ok(ids.indexOf('tampa') < ids.indexOf('austin'));
-  assert.equal(pills[ids.indexOf('tampa')].label, 'Tampa');
-  controls.destroy();
-});
-
-test('[location-presets-004] a click on the Taiwan pill flies to the island view', () => {
+test('[location-presets-004] a choice of the Taiwan preset flies to the island view', () => {
   const { viewer, flights } = flightViewer();
   const ids = [];
   let result = null;
@@ -187,7 +162,7 @@ test('[location-presets-004] a click on the Taiwan pill flies to the island view
   controls.destroy();
 });
 
-test('[location-presets-008] a click on the Tampa pill flies to the downtown view', () => {
+test('[location-presets-008] a choice of the Tampa preset flies to the downtown view', () => {
   const { viewer, flights } = flightViewer();
   const ids = [];
   let result = null;
