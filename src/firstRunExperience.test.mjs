@@ -774,11 +774,9 @@ test('markup, startup ordering and accessibility remain pinned', async () => {
   );
 
   assert.match(startup, /styleManager\.initialRestorePromise/);
-  assert.ok(
-    startup.indexOf("loadingScreen.classList.add('hidden')") <
-      startup.indexOf(
-        "loadingScreen.addEventListener('transitionend', revealFirstRun",
-      ),
+  assert.match(
+    startup,
+    /loadingScreen\.classList\.add\('hidden'\);\s*revealAfterCover\(\);/,
   );
   assert.match(
     startup,
@@ -1111,10 +1109,12 @@ test('the voice TOOL SCHEMA matches the pinned contract — the mission mapping 
   // adds the analyst area scopes and the osm-places layer.
   // control_cockpit states the own-layer entry rule (Contacts not required).
   // Fire Perimeters queries add lastGrowthTime.
-  assert.equal(block.length, 31387, 'serialized tool schema length drifted');
+  // The dock's Location and Visual Presets trays leave set_panel_open's
+  // targets; Visual (pp-toggles) takes the presets' names.
+  assert.equal(block.length, 31372, 'serialized tool schema length drifted');
   assert.equal(
     crypto.createHash('sha256').update(block).digest('hex'),
-    '909bc8924e5ad6adf599406d462d325a703d18993176d96498cbb057240a58b6',
+    'eb5b72106e50a9c472addad32b3d8fab7ce3b01e37d09fbb76dc7b226791b257',
     'the first-run missions must ride EXISTING tools: no schema edit, no cache bust',
   );
   const instructions = fs.readFileSync(

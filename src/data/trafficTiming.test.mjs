@@ -223,6 +223,8 @@ test('[coverage-gate-101] traffic timing pairs real ordering to the scheduling c
       configFile: false,
       appType: 'custom',
       logLevel: 'silent',
+      // No watcher: it opens an inotify watch per file and directory of the repo
+      // and fails with ENOSPC on a host whose limit is spent.
       // No dependency optimizer and no file watcher: in src/tooling/previewServing.test.mjs, each
       // started timers that were still live when the test process exited (found on the CI runner).
       optimizeDeps: { noDiscovery: true, include: [] },
