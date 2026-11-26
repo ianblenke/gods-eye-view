@@ -31,4 +31,6 @@ The change adds no layer, no route and no QA script of the fork.
 
 ## Known limits and later changes
 
+- Known limit `leak-record`: The record `openspec/trace/upstream-test-findings.json` gets 6 more upstream test files with a live timer. The record has no end date.
+- Known limit `qa-coverage`: The gate does not measure the child process of `qaAircraftViewSheetOutput.test.mjs`.
 - Known limit `later-upstream`: Upstream has more commits after `7646568a9` at a later time. The next sync merges them.

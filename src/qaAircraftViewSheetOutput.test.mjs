@@ -27,7 +27,9 @@ test('the QA rejects invalid subject names before creating its output', async ()
       '--permission', '--allow-fs-read=*', '--allow-addons',
       path.join(repo, 'scripts/qa-aircraft-view-sheet.mjs'),
       '--manifest', path.join(dir, 'm.json'), '--out', out, '--sizes', '4', '--zoom', '1',
-    ], { encoding: 'utf8' });
+      // The permission model stops the coverage preload of the gate, so the
+      // child gets no coverage folder and no Node options.
+    ], { encoding: 'utf8', env: { ...process.env, NODE_V8_COVERAGE: '', NODE_OPTIONS: '' } });
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /subject name/);
     assert.equal(fs.existsSync(path.join(dir, 'qa', 'escaped.png')), false);
