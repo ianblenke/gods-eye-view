@@ -36,4 +36,4 @@ The change adds no layer, no route and no QA script of the fork.
 - Known limit `leak-record`: The record `openspec/trace/upstream-test-findings.json` gets 6 more upstream test files with a live timer. The record has no end date.
 - Known limit `qa-coverage`: The gate does not measure the child process of `qaAircraftViewSheetOutput.test.mjs`.
 - Known limit `later-upstream`: Upstream will have more commits after `7646568a9`. The next sync merges them.
-- Known limit `opening-fallback`: Some pages show no opening animation although `openingWanted` returns true. Examples are a Street Level link with no share state, a logo that is not inline, and a host with no opening. The camera then stays at the Taiwan pose with no flight.
+- Known limit `opening-fallback`: With no share state and no rejected share code, some pages show no opening animation although `openingWanted` returns true. Examples are a Street Level link, a logo that is not inline, and a host with no opening. The camera then stays at the Taiwan pose with no flight.

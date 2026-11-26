@@ -24,8 +24,8 @@
 - [x] 3.1 Check the second parent of the merge commit against the upstream remote.
 - [x] 3.2 Run the adopt command for each upstream file with a coverage gap.
 - [x] 3.3 Run `make ratchet CHANGE=upstream-sync-13`.
-- [ ] 3.4 Run the two review agents in each round.
-- [ ] 3.5 Write review.md.
+- [x] 3.4 Run the two review agents in each round.
+- [x] 3.5 Write review.md.
 - [ ] 3.6 Run `make gates CHANGE=upstream-sync-13` on the final tree.
 - [ ] 3.7 Open the pull request.
 - [ ] 3.8 Merge the pull request only when the owner says so.

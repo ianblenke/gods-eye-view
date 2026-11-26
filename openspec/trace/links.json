@@ -4504,7 +4504,6 @@
   "location-presets-002": [
     "src/locations.test.mjs › [location-presets-002] gives Taiwan five valid places"
   ],
-  "location-presets-003": [],
   "location-presets-004": [
     "src/locations.test.mjs › [location-presets-004] flies to the island view",
     "src/ui/locationControls.test.mjs › [location-presets-004] a choice of the Taiwan preset flies to the island view"
@@ -4515,7 +4514,6 @@
   "location-presets-006": [
     "src/locations.test.mjs › [location-presets-006] gives Tampa five valid places"
   ],
-  "location-presets-007": [],
   "location-presets-008": [
     "src/ui/locationControls.test.mjs › [location-presets-008] a choice of the Tampa preset flies to the downtown view"
   ],
