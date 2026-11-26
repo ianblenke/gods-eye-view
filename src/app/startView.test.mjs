@@ -156,7 +156,7 @@ test('[startup-view-006] with an opening, the camera gets the Taiwan pose with n
   assert.equal(deferred.length, 0);
 });
 
-test('[startup-view-007] the controls start no flight only for a page that gets an opening', (t) => {
+test('[startup-view-007] with no share state, the controls start no flight only for a page that gets an opening', (t) => {
   const uninstall = installVueDom();
   t.after(uninstall);
   t.mock.timers.enable({ apis: ['setTimeout'] });
