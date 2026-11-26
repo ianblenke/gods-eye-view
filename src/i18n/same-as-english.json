@@ -56,7 +56,9 @@
     "{n} hPa",
     "{kind} {name}",
     "{speed} {direction}",
-    "3D"
+    "3D",
+    "{utc} UTC",
+    "UTC"
   ],
   "de": [
     "1090 MHz",
@@ -298,10 +300,13 @@
     "KT",
     "Taiwan",
     "Tampa",
+    "{utc} UTC",
     "ON AIR",
     "Stream",
     "{seconds} s",
-    "Mode"
+    "Mode",
+    "UTC",
+    "Radius"
   ],
   "es": [
     "1 min/s",
@@ -479,7 +484,6 @@
     "Inspector",
     "{n} m",
     "{n} km",
-    "Error",
     "Squawk",
     "MMSI",
     "ICAO24",
@@ -497,8 +501,10 @@
     "{n} mm",
     "3D",
     "KT",
+    "{utc} UTC",
     "Manual",
-    "{seconds} s"
+    "{seconds} s",
+    "UTC"
   ],
   "fr": [
     "1 min/s",
@@ -652,7 +658,6 @@
     "Source",
     "Station",
     "Station {id}",
-    "Style",
     "Suggestions",
     "TAGS · {tags}",
     "TEMP",
@@ -757,7 +762,11 @@
     "3D",
     "KT",
     "Tampa",
-    "{seconds} s"
+    "{seconds} s",
+    "{utc} UTC",
+    "contact",
+    "train",
+    "UTC"
   ],
   "it": [
     "1 min/s",
@@ -993,7 +1002,9 @@
     "KT",
     "Taiwan",
     "Tampa",
-    "{seconds} s"
+    "{seconds} s",
+    "{utc} UTC",
+    "UTC"
   ],
   "ja": [
     "1090 MHz",
@@ -1077,7 +1088,8 @@
     "{n} hPa",
     "{n} mm",
     "3D",
-    "KT"
+    "KT",
+    "UTC"
   ],
   "pt": [
     "1 min/s",
@@ -1274,8 +1286,10 @@
     "KT",
     "Taiwan",
     "Tampa",
+    "{utc} UTC",
     "Manual",
-    "{seconds} s"
+    "{seconds} s",
+    "UTC"
   ],
   "ru": [
     "1900–1945",
@@ -1320,7 +1334,9 @@
     "M {n}",
     "{n}%",
     "{kind} {name}",
-    "3D"
+    "3D",
+    "{utc} UTC",
+    "UTC"
   ],
   "sv": [
     "STATION",
@@ -1515,7 +1531,9 @@
     "KT",
     "Taiwan",
     "Tampa",
-    "{seconds} s"
+    "{seconds} s",
+    "{utc} UTC",
+    "UTC"
   ],
   "uk": [
     "1900–1945",
@@ -1554,7 +1572,9 @@
     "M {n}",
     "{n}%",
     "{kind} {name}",
-    "3D"
+    "3D",
+    "{utc} UTC",
+    "UTC"
   ],
   "zh-CN": [
     "1090 MHz",
@@ -1639,7 +1659,8 @@
     "{n} MW",
     "{n}%",
     "{n} hPa",
-    "3D"
+    "3D",
+    "UTC"
   ],
   "zh-Hant": [
     "1090 MHz",
@@ -1724,7 +1745,8 @@
     "{n} MW",
     "{n}%",
     "{n} hPa",
-    "3D"
+    "3D",
+    "UTC"
   ],
   "he": [
     "{speed} kn",
@@ -1841,6 +1863,8 @@
     "{n} hPa",
     "{kind} {name}",
     "3D",
-    "KT"
+    "KT",
+    "{utc} UTC",
+    "UTC"
   ]
 }

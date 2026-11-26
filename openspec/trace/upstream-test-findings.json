@@ -1,6 +1,24 @@
 {
   "version": 1,
   "files": {
+    "src/app/openingIntro.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/hudSummaryGate.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/render/cesium/commandDrag.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/aircraftCardModel.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/views/cardWeatherSignal.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
+    "src/ui/views/roadFraming.test.mjs": [
+      "GATES-TEST-LEAK"
+    ],
     "src/data/cctvExplicitPickEndsOpening.test.mjs": [
       "GATES-TEST-LEAK"
     ],

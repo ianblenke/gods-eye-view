@@ -6,7 +6,11 @@ import {
   flyToStartView,
   startApplicationView,
 } from '../camera.js';
+import '../testSupport/stubMgrs.mjs';
+import { installVueDom } from '../testSupport/vueDom.mjs';
 import { bindFakeCesiumCamera } from '../testSupport/fakeCameraPort.mjs';
+
+const { createApplicationControls } = await import('./controls.js');
 
 function cameraFixture() {
   const views = [];
@@ -42,7 +46,7 @@ function position(view) {
   ];
 }
 
-function applicationFixture(hasShareState) {
+function applicationFixture(hasShareState, opening) {
   const camera = cameraFixture();
   const loaderStatus = { textContent: '' };
   const deferred = [];
@@ -51,11 +55,12 @@ function applicationFixture(hasShareState) {
     hasShareState,
     loaderStatus,
     defer: (stop) => deferred.push(stop),
+    opening,
   });
   return { camera, loaderStatus, deferred };
 }
 
-test('[startup-view-001] flies to the Taiwan pose', (t) => {
+test('[startup-view-001] flies to the Taiwan pose with no opening', (t) => {
   t.mock.timers.enable({ apis: ['setTimeout'] });
   assert.deepEqual(TAIWAN_VIEW, {
     lon: 120.6485,
@@ -66,7 +71,7 @@ test('[startup-view-001] flies to the Taiwan pose', (t) => {
   });
   const {
     camera: { flights },
-  } = applicationFixture(false);
+  } = applicationFixture(false, false);
   t.mock.timers.tick(500);
   assert.equal(flights.length, 1);
   const [lon, lat, height] = position(flights[0]);
@@ -133,4 +138,66 @@ test('[startup-view-005] shows the Taiwan flight text', (t) => {
   t.mock.timers.tick(500);
   assert.equal(camera.flights.length, 0);
   assert.equal(camera.cancelled, 1);
+});
+
+test('[startup-view-006] with an opening, the camera gets the Taiwan pose with no flight', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const { camera, loaderStatus, deferred } = applicationFixture(false, true);
+  t.mock.timers.tick(500);
+  assert.equal(camera.flights.length, 0);
+  assert.equal(camera.views.length, 1);
+  const [lon, lat, height] = position(camera.views[0]);
+  assert.ok(Math.abs(lon - 120.6485) < 1e-8);
+  assert.ok(Math.abs(lat - 24.18) < 1e-8);
+  assert.ok(Math.abs(height - 217) < 1e-5);
+  assert.equal(camera.views[0].orientation.heading, 0);
+  assert.equal(camera.views[0].orientation.pitch, Cesium.Math.toRadians(-35));
+  assert.equal(loaderStatus.textContent, 'Flying to Taiwan...');
+  assert.equal(deferred.length, 0);
+});
+
+test('[startup-view-007] with no share state, the controls start no flight only for a page that gets an opening', (t) => {
+  const uninstall = installVueDom();
+  t.after(uninstall);
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  let rejectedShareCode = null;
+  class Controls {
+    hasShareState = false;
+    shareLinkManager = { rejectedShareCode };
+    orbitController = { stop() {} };
+    hud = { destroy() {} };
+    dispose() {}
+  }
+  const start = (reducedMotion) => {
+    globalThis.window.matchMedia = () => ({
+      matches: reducedMotion,
+      addEventListener() {},
+      removeEventListener() {},
+    });
+    const camera = cameraFixture();
+    const cleanups = [];
+    createApplicationControls({
+      scene: {
+        viewer: camera.viewer,
+        mapStackController: {},
+        operations: {
+          surface: { controlServices: {} },
+          searchAndFlyTo() {},
+          requests: { regional: {}, weather: {} },
+        },
+      },
+      loaderStatus: {},
+      Controls,
+      catalog: { get: (id) => ({ id }) },
+      defer: (cleanup) => cleanups.push(cleanup),
+    });
+    t.mock.timers.tick(500);
+    const flights = camera.flights.length;
+    for (const cleanup of cleanups.reverse()) cleanup();
+    return flights;
+  };
+  assert.equal(start(false), 0);
+  assert.equal(start(true), 1);
+  rejectedShareCode = 'bad-code';
+  assert.equal(start(false), 1);
 });

@@ -1,4 +1,5 @@
 import { catalogControlServices } from './catalog.js';
+import { openingWanted } from './openingIntro.js';
 import { StyleManager } from '../ui/composition.js';
 import { applyStartView, startApplicationView, START_VIEW } from '../camera.js';
 import { initCockpitCloudEffects } from '../cockpitCloudEffects.js';
@@ -30,6 +31,7 @@ export function createApplicationControls({
   loaderStatus,
   Controls = StyleManager,
   services,
+  spotWeatherService = operations.requests.weather,
   catalog,
   placeSearch,
   defer,
@@ -44,6 +46,7 @@ export function createApplicationControls({
   // Initialize the style manager (post-processing, HUD, locations, share links)
   const styleManager = new Controls(viewer, {
     services: {
+      fetchSpotWeather: (...args) => spotWeatherService.getConditions(...args),
       ...services,
       ...operations.surface.controlServices,
       searchAndFlyTo: operations.searchAndFlyTo,
@@ -89,6 +92,9 @@ export function createApplicationControls({
     hasShareState: styleManager.hasShareState,
     loaderStatus,
     defer,
+    // A rejected share code gets no opening (src/app/startupChrome.js).
+    opening:
+      openingWanted() && !styleManager.shareLinkManager?.rejectedShareCode,
   });
 
   return { styleManager, weatherEffects, cockpitCloudEffects };

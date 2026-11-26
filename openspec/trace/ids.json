@@ -3360,7 +3360,7 @@
     "change": "add-taiwan-location"
   },
   "location-presets-004": {
-    "hash": "a1665612018aee5dbd6c3a60c94ad75b74378b0d29ece9446a6545c00a8bf81c",
+    "hash": "b8e59a4d5b039b5ff8d49b33d9675e82bc9cb96378f83400da5e14ac6369faa5",
     "since": "2026-09-27",
     "change": "add-taiwan-location"
   },
@@ -3380,7 +3380,7 @@
     "change": "tampa-preset"
   },
   "location-presets-008": {
-    "hash": "3bb91fa60e05b14bfe5e3a630baf6f96dd98b5cb9a142054067cce68c2fec9b3",
+    "hash": "fadf87e9928a792ea4e3d1cc38c1609402c8998ab74682b6801d6a7255c34c20",
     "since": "2026-10-11",
     "change": "tampa-preset"
   },
@@ -6255,7 +6255,7 @@
     "change": "upstream-sync-11"
   },
   "startup-view-001": {
-    "hash": "2cc5fdbc56df6d309dd06dc6cee4384bbf082097892036b255868fd52741c9f0",
+    "hash": "d0a7cf3e16de5fd90848177c3b188b838379c0f8d8fe45964944c63b3c73122b",
     "since": "2026-09-27",
     "change": "set-startup-view"
   },
@@ -6278,6 +6278,16 @@
     "hash": "43d8e65b88d028b94974f32c42e65e4a44e0b593b1b71e0e835dd8130abd4a9b",
     "since": "2026-09-27",
     "change": "set-startup-view"
+  },
+  "startup-view-006": {
+    "hash": "5dfce10caadcf7851bf370fedeee2989cbb1fc19afba238fd46eb42c7f9b28d8",
+    "since": "2026-11-26",
+    "change": "upstream-sync-13"
+  },
+  "startup-view-007": {
+    "hash": "bd873cbd82ab4a574bccac92fc6c278b026470219f2c93eae7e70a6f012bca37",
+    "since": "2026-11-26",
+    "change": "upstream-sync-13"
   },
   "ste-lint-001": {
     "hash": "6cf27754c7f72012bb06e5ce4e6db5767612760d487b71d51aa7a7f4fb4a933d",

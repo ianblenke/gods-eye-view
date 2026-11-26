@@ -1760,8 +1760,6 @@ async function main() {
           const has = (name) => panel.classList.contains(name);
           manager._presentPanel(panel, {
             collapsed: has('collapsed'),
-            pinned: has('dock-pinned'),
-            pinnedTop: has('dock-pinned-top'),
             auto: has('layout-auto-collapsed') ? 'layout' : has('accordion-collapsed') ? 'accordion' : null,
           });
         }
@@ -2337,8 +2335,6 @@ async function main() {
           const has = (name) => panel.classList.contains(name);
           manager._presentPanel(panel, {
             collapsed: has('collapsed'),
-            pinned: has('dock-pinned'),
-            pinnedTop: has('dock-pinned-top'),
             auto: has('layout-auto-collapsed') ? 'layout' : has('accordion-collapsed') ? 'accordion' : null,
           });
         }

@@ -29,7 +29,7 @@ export function applyStartView(viewer, view = START_VIEW) {
   });
 }
 
-/** The pose of the application start flight: a street view above Taiwan. */
+/** The pose of the application start: a street view above Taiwan. */
 export const TAIWAN_VIEW = Object.freeze({
   lon: 120.6485,
   lat: 24.18,
@@ -65,17 +65,24 @@ export function flyToStartView(viewer) {
   };
 }
 
-/** Set the start view and loader text for the application. */
+/**
+ * Set the start view and the loader text for the application. With share
+ * state, set only the loader text. If not, and with `opening`, put the camera
+ * at Taiwan at once. The opening (src/app/openingIntro.js) ends where the
+ * camera stands, and a flight moves the camera during the opening.
+ */
 export function startApplicationView({
   viewer,
   hasShareState,
   loaderStatus,
   defer,
+  opening = false,
 }) {
-  if (!hasShareState) {
-    loaderStatus.textContent = t('Flying to Taiwan...');
-    defer(flyToStartView(viewer));
-  } else {
+  if (hasShareState) {
     loaderStatus.textContent = t('Restoring shared view...');
+    return;
   }
+  loaderStatus.textContent = t('Flying to Taiwan...');
+  if (opening) applyStartView(viewer, TAIWAN_VIEW);
+  else defer(flyToStartView(viewer));
 }
