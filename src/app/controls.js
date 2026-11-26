@@ -92,7 +92,9 @@ export function createApplicationControls({
     hasShareState: styleManager.hasShareState,
     loaderStatus,
     defer,
-    opening: openingWanted(),
+    // A rejected share code gets no opening (src/app/startupChrome.js).
+    opening:
+      openingWanted() && !styleManager.shareLinkManager?.rejectedShareCode,
   });
 
   return { styleManager, weatherEffects, cockpitCloudEffects };

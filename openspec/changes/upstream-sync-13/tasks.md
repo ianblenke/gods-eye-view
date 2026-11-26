@@ -4,12 +4,13 @@
 - [x] 1.2 Merge the upstream commit `7646568a9`.
 - [x] 1.3 Resolve the 12 conflicts of the merge.
 - [x] 1.4 Check the share tokens of each new upstream layer.
-- [x] 1.5 Adapt the fork tests to the merged code.
+- [x] 1.5 Change the fork tests to agree with the merged code.
 - [x] 1.6 Retire the two pill scenarios of `location-presets`.
 - [x] 1.7 Keep these scenario IDs of `location-presets`: location-presets-004, location-presets-008.
-- [x] 1.8 End the opening on the Taiwan pose.
-- [x] 1.9 Keep these scenario IDs of `startup-view`: startup-view-001, startup-view-006, startup-view-007.
-- [x] 1.10 Give the two Purpose lines of D2 and D4 to the archive step.
+- [x] 1.8 Write the tests of startup-view-001, startup-view-006 and startup-view-007.
+- [x] 1.9 End the opening on the Taiwan pose when the page has no share state.
+- [x] 1.10 Keep these scenario IDs of `startup-view`: startup-view-001, startup-view-006, startup-view-007.
+- [x] 1.11 Give the two Purpose lines of D2 and D4 to the archive step.
 
 ## 2. Host evidence
 

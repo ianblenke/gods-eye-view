@@ -140,7 +140,7 @@ test('[startup-view-005] shows the Taiwan flight text', (t) => {
   assert.equal(camera.cancelled, 1);
 });
 
-test('[startup-view-006] an opening starts at the Taiwan pose with no flight', (t) => {
+test('[startup-view-006] with an opening, the camera gets the Taiwan pose with no flight', (t) => {
   t.mock.timers.enable({ apis: ['setTimeout'] });
   const { camera, loaderStatus, deferred } = applicationFixture(false, true);
   t.mock.timers.tick(500);
@@ -151,20 +151,19 @@ test('[startup-view-006] an opening starts at the Taiwan pose with no flight', (
   assert.ok(Math.abs(lat - 24.18) < 1e-8);
   assert.ok(Math.abs(height - 217) < 1e-5);
   assert.equal(camera.views[0].orientation.heading, 0);
-  assert.equal(
-    camera.views[0].orientation.pitch,
-    Cesium.Math.toRadians(-35),
-  );
+  assert.equal(camera.views[0].orientation.pitch, Cesium.Math.toRadians(-35));
   assert.equal(loaderStatus.textContent, 'Flying to Taiwan...');
   assert.equal(deferred.length, 0);
 });
 
-test('[startup-view-007] the controls start a flight only where the page plays no opening', (t) => {
+test('[startup-view-007] the controls start no flight only for a page that gets an opening', (t) => {
   const uninstall = installVueDom();
   t.after(uninstall);
   t.mock.timers.enable({ apis: ['setTimeout'] });
+  let rejectedShareCode = null;
   class Controls {
     hasShareState = false;
+    shareLinkManager = { rejectedShareCode };
     orbitController = { stop() {} };
     hud = { destroy() {} };
     dispose() {}
@@ -199,4 +198,6 @@ test('[startup-view-007] the controls start a flight only where the page plays n
   };
   assert.equal(start(false), 0);
   assert.equal(start(true), 1);
+  rejectedShareCode = 'bad-code';
+  assert.equal(start(false), 1);
 });
