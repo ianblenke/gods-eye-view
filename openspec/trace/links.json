@@ -7677,10 +7677,10 @@
     "src/app/startView.test.mjs › [startup-view-005] shows the Taiwan flight text"
   ],
   "startup-view-006": [
-    "src/app/startView.test.mjs › [startup-view-006] an opening starts at the Taiwan pose with no flight"
+    "src/app/startView.test.mjs › [startup-view-006] with an opening, the camera gets the Taiwan pose with no flight"
   ],
   "startup-view-007": [
-    "src/app/startView.test.mjs › [startup-view-007] the controls start a flight only where the page plays no opening"
+    "src/app/startView.test.mjs › [startup-view-007] the controls start no flight only for a page that gets an opening"
   ],
   "ste-lint-001": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-001] checks each Markdown file in openspec"

@@ -2917,11 +2917,11 @@
       "branches": 1,
       "functions": 1,
       "totals": {
-        "lines": 99,
-        "branches": 9,
+        "lines": 101,
+        "branches": 10,
         "functions": 8
       },
-      "sha": "6a0b0bbe48c53183fabbda56b93e1d6ffd0c1d86a2803215a0300d37aa0a2838",
+      "sha": "374973eec8314d6a66685924163e37bcc9415ec35aef7cbe8b29a29c41714072",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -3293,7 +3293,7 @@
       "functions": 1,
       "totals": {
         "lines": 412,
-        "branches": 95,
+        "branches": 94,
         "functions": 29
       },
       "sha": "fe2f005f9832dcbd5af2d60d44b28e5338677d63b11fbf3c50df6d38db99b3cc",
